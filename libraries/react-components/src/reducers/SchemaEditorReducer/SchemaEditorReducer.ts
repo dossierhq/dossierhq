@@ -93,7 +93,7 @@ export interface SchemaFieldDraft {
 }
 
 export interface SchemaIndexDraft extends SchemaIndexSpecification {
-  status: 'new' | '';
+  status: 'new' | '' | 'changed';
   existingIndexSpec: SchemaIndexSpecification | null;
 }
 
@@ -281,6 +281,25 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
 
 function withResolvedFieldStatus(state: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
   const newStatus = resolveFieldStatus(state);
+  if (newStatus === state.status) return state;
+  return { ...state, status: newStatus };
+}
+
+function resolveIndexStatus(state: Readonly<SchemaIndexDraft>): SchemaIndexDraft['status'] {
+  if (!state.existingIndexSpec) {
+    return 'new';
+  }
+  if (state.name !== state.existingIndexSpec.name) {
+    return 'changed';
+  }
+  if (state.type !== state.existingIndexSpec.type) {
+    return 'changed';
+  }
+  return '';
+}
+
+function withResolvedIndexStatus(state: Readonly<SchemaIndexDraft>): Readonly<SchemaIndexDraft> {
+  const newStatus = resolveIndexStatus(state);
   if (newStatus === state.status) return state;
   return { ...state, status: newStatus };
 }
@@ -895,9 +914,7 @@ class ChangePatternPatternAction extends PatternAction {
     if (draft.pattern === this.pattern) {
       return draft;
     }
-    const newDraft = { ...draft, pattern: this.pattern };
-    newDraft.status = resolvePatternStatus(newDraft);
-    return newDraft;
+    return withResolvedPatternStatus({ ...draft, pattern: this.pattern });
   }
 }
 
@@ -1213,6 +1230,45 @@ class RenameFieldAction extends FieldAction {
   }
 }
 
+class RenameIndexAction implements SchemaEditorStateAction {
+  selector: SchemaIndexSelector;
+  name: string;
+
+  constructor(selector: SchemaIndexSelector, name: string) {
+    this.selector = selector;
+    this.name = name;
+  }
+
+  reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
+    // Rename index
+    let newState: SchemaEditorState = {
+      ...state,
+      indexes: state.indexes.map((it) => {
+        if (it.name === this.selector.name) {
+          return withResolvedIndexStatus({ ...it, name: this.name });
+        }
+        return it;
+      }),
+      activeSelector: { kind: 'index', name: this.name },
+      activeSelectorMenuScrollSignal: state.activeSelectorMenuScrollSignal + 1,
+      activeSelectorEditorScrollSignal: state.activeSelectorEditorScrollSignal + 1,
+    };
+
+    // Sort indexes
+    newState.indexes.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Rename references to index in fields
+    newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
+      if (fieldDraft.index === this.selector.name) {
+        return { ...fieldDraft, index: this.name };
+      }
+      return fieldDraft;
+    });
+
+    return newState;
+  }
+}
+
 class RenamePatternAction implements SchemaEditorStateAction {
   selector: SchemaPatternSelector;
   name: string;
@@ -1250,11 +1306,8 @@ class RenamePatternAction implements SchemaEditorStateAction {
 
     // Rename references to pattern in fields
     newState = reduceFieldsOfAllTypes(newState, (fieldDraft) => {
-      if (fieldDraft.matchPattern?.includes(this.selector.name)) {
-        return {
-          ...fieldDraft,
-          matchPattern: this.name,
-        };
+      if (fieldDraft.matchPattern === this.selector.name) {
+        return { ...fieldDraft, matchPattern: this.name };
       }
       return fieldDraft;
     });
@@ -1592,6 +1645,7 @@ export const SchemaEditorActions = {
   DeletePattern: DeletePatternAction,
   DeleteType: DeleteTypeAction,
   RenameField: RenameFieldAction,
+  RenameIndex: RenameIndexAction,
   RenamePattern: RenamePatternAction,
   RenameType: RenameTypeAction,
   ReorderFields: ReorderFieldsAction,
@@ -1755,7 +1809,12 @@ function getTransientMigrationsFromEditorState(
     actions.push({ action: 'deleteIndex', index });
   }
 
-  //TODO: add support for renaming indexes
+  for (const indexDraft of state.indexes) {
+    const existingName = indexDraft.existingIndexSpec?.name;
+    if (existingName && existingName !== indexDraft.name) {
+      actions.push({ action: 'renameIndex', index: existingName, newName: indexDraft.name });
+    }
+  }
 
   return actions;
 }

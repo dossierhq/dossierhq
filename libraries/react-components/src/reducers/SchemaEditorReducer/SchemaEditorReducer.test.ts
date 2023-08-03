@@ -1632,6 +1632,36 @@ describe('RenameFieldAction', () => {
   });
 });
 
+describe('RenameIndexAction', () => {
+  test('rename existing index', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'EntityType',
+              fields: [{ name: 'fieldA', type: FieldType.String, index: 'oldName' }],
+            },
+          ],
+          indexes: [{ name: 'oldName', type: 'unique' }],
+        }).valueOrThrow(),
+      ),
+      new SchemaEditorActions.RenameIndex({ kind: 'index', name: 'oldName' }, 'newName'),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
+
+    expect(state.entityTypes[0].status).toBe('changed');
+
+    expect(state.entityTypes[0].fields[0].index).toBe('newName');
+    expect(state.entityTypes[0].fields[0].status).toBe('changed');
+
+    expect(state.indexes[0].name).toBe('newName');
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+});
+
 describe('RenamePatternAction', () => {
   test('rename pattern used as authKeyPattern and matchPattern', () => {
     const state = reduceSchemaEditorStateActions(

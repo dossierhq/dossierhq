@@ -186,6 +186,7 @@ export function SchemaEditorScreen({
                   key={indexDraft.name}
                   indexDraft={indexDraft}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
+                  onAddOrRenameIndex={setAddOrRenameIndexSelector}
                 />
               ))}
               {schemaEditorState.patterns.map((patternDraft) => (
@@ -338,9 +339,11 @@ function TypeEditorRows({
 function IndexEditorRows({
   indexDraft,
   dispatchSchemaEditorState,
+  onAddOrRenameIndex,
 }: {
   indexDraft: SchemaIndexDraft;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
+  onAddOrRenameIndex: (selector: SchemaIndexSelector) => void;
 }) {
   const indexSelector = useMemo(
     () => ({ kind: 'index', name: indexDraft.name }) as const,
@@ -356,7 +359,7 @@ function IndexEditorRows({
   );
 
   const dropDownItems = [
-    // { id: 'rename', title: 'Rename index' },
+    { id: 'rename', title: 'Rename index' },
     { id: 'delete', title: 'Delete index' },
   ] as const;
 
@@ -366,12 +369,12 @@ function IndexEditorRows({
         case 'delete':
           dispatchSchemaEditorState(new SchemaEditorActions.DeleteIndex(indexSelector));
           break;
-        // case 'rename':
-        // onRenameIndex(indexSelector);
-        // break;
+        case 'rename':
+          onAddOrRenameIndex(indexSelector);
+          break;
       }
     },
-    [dispatchSchemaEditorState, indexSelector],
+    [dispatchSchemaEditorState, onAddOrRenameIndex, indexSelector],
   );
 
   return (
@@ -391,6 +394,7 @@ function IndexEditorRows({
                 renderItem={(item) => item.title}
                 onItemClick={handleDropdownItemClick}
               />
+              {indexDraft.status ? <TypeDraftStatusTag status={indexDraft.status} /> : null}
             </Level.Item>
           </Level.Right>
         </Level>
@@ -468,14 +472,12 @@ function PatternEditorRows({
           </Level.Left>
           <Level.Right>
             <Level.Item>
-              {dropDownItems.length > 0 ? (
-                <ButtonDropdown
-                  items={dropDownItems}
-                  left
-                  renderItem={(item) => item.title}
-                  onItemClick={handleDropdownItemClick}
-                />
-              ) : null}
+              <ButtonDropdown
+                items={dropDownItems}
+                left
+                renderItem={(item) => item.title}
+                onItemClick={handleDropdownItemClick}
+              />
               {patternDraft.status ? <TypeDraftStatusTag status={patternDraft.status} /> : null}
             </Level.Item>
           </Level.Right>

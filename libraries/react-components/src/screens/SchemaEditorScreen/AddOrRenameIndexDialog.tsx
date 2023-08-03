@@ -62,7 +62,7 @@ export function AddOrRenameIndexDialog({
         if (selector === 'add') {
           dispatchSchemaEditorState(new SchemaEditorActions.AddIndex(name));
         } else {
-          // TODO dispatchSchemaEditorState(new SchemaEditorActions.RenameIndex(selector, name));
+          dispatchSchemaEditorState(new SchemaEditorActions.RenameIndex(selector, name));
         }
       }
       onClose();

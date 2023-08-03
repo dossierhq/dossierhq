@@ -4620,6 +4620,102 @@ exports[`RenameFieldAction > rename existing value item field 2`] = `
 }
 `;
 
+exports[`RenameIndexAction > rename existing index 1`] = `
+{
+  "activeSelector": {
+    "kind": "index",
+    "name": "newName",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "deletedValueTypes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "fieldA",
+      ],
+      "existingName": "EntityType",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newName",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityType",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newName",
+      "status": "changed",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+  "valueTypes": [],
+}
+`;
+
+exports[`RenameIndexAction > rename existing index 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newName",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newName",
+      "type": "unique",
+    },
+  ],
+  "transientMigrations": [
+    {
+      "action": "renameIndex",
+      "index": "oldName",
+      "newName": "newName",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPattern 1`] = `
 {
   "activeSelector": {
