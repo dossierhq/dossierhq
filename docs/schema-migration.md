@@ -29,12 +29,12 @@ This document describes what migrations are supported and what impact they have.
 | `values`          | `String`               | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
 | `index`           | `String`               | No     | Changing the index is not supported.                                                                                  |
 
-| Index property   | Change | Description                                                                                                                                            |
-| ---------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Adding new index | Yes    |                                                                                                                                                        |
-| Deleting index   | No     | Deleting an index is currently not supported in the web interface, but if you remove an index from all fields it will be deleted automatically.        |
-| `name`           | No     | Renaming an index is currently not supported in the web interface, but you can create a new index and change all existing fields to use the new index. |
-| `type`           | No     | Changing the type is currently not supported.                                                                                                          |
+| Index property   | Change | Description                                                                        |
+| ---------------- | ------ | ---------------------------------------------------------------------------------- |
+| Adding new index | Yes    |                                                                                    |
+| Deleting index   | Yes    | Deleting an index removes it from all fields using the index. Requires validation. |
+| `name`           | Yes    |                                                                                    |
+| `type`           | No     | Changing the type is not supported.                                                |
 
 | Pattern property   | Change | Description                                                                          |
 | ------------------ | ------ | ------------------------------------------------------------------------------------ |
