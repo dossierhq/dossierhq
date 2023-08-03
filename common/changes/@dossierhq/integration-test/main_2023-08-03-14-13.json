@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Support transient migrations effects to db",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

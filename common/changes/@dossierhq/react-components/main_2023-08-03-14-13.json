@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Support renaming and deleting indexes",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

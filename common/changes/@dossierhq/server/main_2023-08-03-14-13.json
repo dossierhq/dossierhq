@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support transient migrations effects to db",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
