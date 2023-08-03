@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Wed, 02 Aug 2023 10:08:15 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Aug 2023 14:22:11 GMT and should not be manually modified.
+
+## 0.4.1
+Thu, 03 Aug 2023 14:22:11 GMT
+
+### Updates
+
+- Support renaming and deleting indexes
 
 ## 0.4.0
 Wed, 02 Aug 2023 10:08:15 GMT

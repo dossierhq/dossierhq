@@ -2,6 +2,18 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.4.1",
+      "tag": "@dossierhq/react-components_v0.4.1",
+      "date": "Thu, 03 Aug 2023 14:22:11 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support renaming and deleting indexes"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.0",
       "tag": "@dossierhq/react-components_v0.4.0",
       "date": "Wed, 02 Aug 2023 10:08:15 GMT",
