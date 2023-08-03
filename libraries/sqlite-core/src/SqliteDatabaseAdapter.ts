@@ -66,6 +66,7 @@ import { publishedEntitySearchEntities } from './published-entity/searchEntities
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateCountEntitiesWithTypes } from './schema/updateCountEntitiesWithTypes.js';
 import { schemaUpdateDeleteValueTypesFromIndexes } from './schema/updateDeleteValueTypesFromIndexes.js';
+import { schemaUpdateModifyIndexes } from './schema/updateModifyIndexes.js';
 import { schemaUpdateRenameTypes } from './schema/updateRenameTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 import { Mutex } from './utils/MutexUtils.js';
@@ -232,6 +233,7 @@ function createOuterAdapter(
       schemaUpdateCountEntitiesWithTypes(database, ...args),
     schemaUpdateDeleteValueTypesFromIndexes: (...args) =>
       schemaUpdateDeleteValueTypesFromIndexes(database, ...args),
+    schemaUpdateModifyIndexes: (...args) => schemaUpdateModifyIndexes(database, ...args),
     schemaUpdateRenameTypes: (...args) => schemaUpdateRenameTypes(database, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(database, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(database, ...args),

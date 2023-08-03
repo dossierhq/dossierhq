@@ -54,6 +54,7 @@ import { publishedEntitySearchEntities } from './published-entity/searchEntities
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateCountEntitiesWithTypes } from './schema/updateCountEntitiesWithTypes.js';
 import { schemaUpdateDeleteValueTypesFromIndexes } from './schema/updateDeleteValueTypesFromIndexes.js';
+import { schemaUpdateModifyIndexes } from './schema/updateModifyIndexes.js';
 import { schemaUpdateRenameTypes } from './schema/updateRenameTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 
@@ -152,6 +153,7 @@ export function createPostgresDatabaseAdapterAdapter(
       schemaUpdateCountEntitiesWithTypes(databaseAdapter, ...args),
     schemaUpdateDeleteValueTypesFromIndexes: (...args) =>
       schemaUpdateDeleteValueTypesFromIndexes(databaseAdapter, ...args),
+    schemaUpdateModifyIndexes: (...args) => schemaUpdateModifyIndexes(databaseAdapter, ...args),
     schemaUpdateRenameTypes: (...args) => schemaUpdateRenameTypes(databaseAdapter, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(databaseAdapter, ...args),
     withNestedTransaction: (...args) => withNestedTransaction(databaseAdapter, ...args),

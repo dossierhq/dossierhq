@@ -54,7 +54,11 @@ export async function schemaUpdateSpecification(
     }
 
     // Calculate impact of schema change
-    const impactResult = calculateSchemaChangeImpact(oldSchema, newSchema);
+    const impactResult = calculateSchemaChangeImpact(
+      oldSchema,
+      newSchema,
+      update.transientMigrations ?? null,
+    );
     if (impactResult.isError()) return impactResult;
     const { dirtyEntitiesSelector } = impactResult.value;
 
@@ -94,6 +98,14 @@ export async function schemaUpdateSpecification(
       impactResult.value.renameValueTypes,
     );
     if (renameTypesResult.isError()) return renameTypesResult;
+
+    // Update unique indexes
+    const modifyIndexesResult = await databaseAdapter.schemaUpdateModifyIndexes(
+      context,
+      impactResult.value.deleteUniqueValueIndexes,
+      impactResult.value.renameUniqueValueIndexes,
+    );
+    if (modifyIndexesResult.isError()) return modifyIndexesResult;
 
     // Mark entities as dirty
     if (dirtyEntitiesSelector) {

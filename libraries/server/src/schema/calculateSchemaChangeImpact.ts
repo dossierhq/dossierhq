@@ -3,6 +3,7 @@ import {
   notOk,
   ok,
   type AdminEntityTypeSpecification,
+  type AdminSchemaTransientMigrationAction,
   type AdminSchemaWithMigrations,
   type AdminValueTypeSpecification,
   type ErrorType,
@@ -13,11 +14,14 @@ import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/
 export function calculateSchemaChangeImpact(
   previous: AdminSchemaWithMigrations,
   next: AdminSchemaWithMigrations,
+  transientMigrations: AdminSchemaTransientMigrationAction[] | null,
 ): Result<
   {
     deleteEntityTypes: string[];
     renameEntityTypes: Record<string, string>;
     renameValueTypes: Record<string, string>;
+    deleteUniqueValueIndexes: string[];
+    renameUniqueValueIndexes: Record<string, string>;
     dirtyEntitiesSelector: DatabaseManagementMarkEntitiesDirtySelectorArg | null;
     deleteValueTypes: string[];
   },
@@ -31,6 +35,8 @@ export function calculateSchemaChangeImpact(
   const renameEntityTypes: Record<string, string> = {};
   const deleteValueTypes: string[] = [];
   const renameValueTypes: Record<string, string> = {};
+  const deleteUniqueValueIndexes: string[] = [];
+  const renameUniqueValueIndexes: Record<string, string> = {};
 
   const migrationActions = next.collectMigrationActionsSinceVersion(previous.spec.version);
 
@@ -114,6 +120,31 @@ export function calculateSchemaChangeImpact(
     }
   }
 
+  for (const actionSpec of transientMigrations ?? []) {
+    const existingRename = Object.entries(renameUniqueValueIndexes).find(
+      ([, newName]) => newName === actionSpec.index,
+    );
+
+    switch (actionSpec.action) {
+      case 'deleteIndex':
+        if (existingRename) {
+          deleteUniqueValueIndexes.push(existingRename[0]);
+          delete renameUniqueValueIndexes[existingRename[0]];
+        } else {
+          deleteUniqueValueIndexes.push(actionSpec.index);
+        }
+        break;
+      case 'renameIndex': {
+        if (existingRename) {
+          renameUniqueValueIndexes[existingRename[0]] = actionSpec.newName;
+        } else {
+          renameUniqueValueIndexes[actionSpec.index] = actionSpec.newName;
+        }
+        break;
+      }
+    }
+  }
+
   let dirtyEntitiesSelector = null;
   if (
     validateEntityTypes.size !== 0 ||
@@ -135,6 +166,8 @@ export function calculateSchemaChangeImpact(
     renameValueTypes,
     dirtyEntitiesSelector,
     deleteValueTypes,
+    deleteUniqueValueIndexes,
+    renameUniqueValueIndexes,
   });
 }
 

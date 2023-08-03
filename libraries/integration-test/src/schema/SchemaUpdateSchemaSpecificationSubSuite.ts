@@ -44,7 +44,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
   updateSchemaSpecification_removeAllFieldsFromMigrationValueItem,
   updateSchemaSpecification_removeAllTemporaryValueTypes,
-  //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes,
+  //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes, add when we can delete entities
   updateSchemaSpecification_concurrentUpdates,
   updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
@@ -76,6 +76,8 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem,
   updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem,
   updateSchemaSpecification_addingIndexToField,
+  updateSchemaSpecification_deleteIndexClearsIndexDirectly,
+  updateSchemaSpecification_renameIndexMaintainsLinkDirectly,
   updateSchemaSpecification_errorWrongVersion,
   updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExistingEntities,
 ];
@@ -2357,6 +2359,107 @@ async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTe
     return ok(undefined);
   });
   assertOkResult(result);
+}
+
+async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+  const indexName = fieldName as AppAdminUniqueIndexes;
+  const uniqueValue = 'unique value';
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    const { schemaSpecification } = (
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [
+          {
+            name: 'MigrationEntity',
+            fields: [{ name: fieldName, type: 'String', index: indexName }],
+          },
+        ],
+        indexes: [{ name: indexName, type: 'unique' }],
+      })
+    ).valueOrThrow();
+
+    // Create entity with unique value
+    assertOkResult(
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: uniqueValue } }),
+      ),
+    );
+
+    // Delete unique index and add another index with the same name
+    assertOkResult(
+      await adminClient.updateSchemaSpecification({
+        version: schemaSpecification.version + 1,
+        transientMigrations: [{ action: 'deleteIndex', index: indexName }],
+      }),
+    );
+
+    // Don't process the entity, the unique index should be updated directly
+
+    return ok(undefined);
+  });
+  assertOkResult(result);
+
+  // Check that we can't fetch the old entity with the unique index
+  const firstGetResult = await adminClient.getEntity({ index: indexName, value: uniqueValue });
+  assertErrorResult(firstGetResult, ErrorType.NotFound, 'No such entity');
+}
+
+async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
+  server,
+}: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+  const oldIndexName = fieldName as AppAdminUniqueIndexes;
+  const newIndexName = `${fieldName}New` as AppAdminUniqueIndexes;
+  const uniqueValue = 'unique value';
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new field
+    const { schemaSpecification } = (
+      await adminClient.updateSchemaSpecification({
+        entityTypes: [
+          {
+            name: 'MigrationEntity',
+            fields: [{ name: fieldName, type: 'String', index: oldIndexName }],
+          },
+        ],
+        indexes: [{ name: oldIndexName, type: 'unique' }],
+      })
+    ).valueOrThrow();
+
+    // Create entity with unique value
+    const { entity } = (
+      await adminClient.createEntity(
+        copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: uniqueValue } }),
+      )
+    ).valueOrThrow();
+
+    // Rename unique index
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      version: schemaSpecification.version + 1,
+      transientMigrations: [{ action: 'renameIndex', index: oldIndexName, newName: newIndexName }],
+    });
+    assertOkResult(secondUpdateResult);
+
+    // Don't process the entity, the unique index should be updated directly
+
+    return ok({ id: entity.id });
+  });
+  const reference = result.valueOrThrow();
+
+  // Check that the unique index works
+  const entity = (
+    await adminClient.getEntity({ index: newIndexName, value: uniqueValue })
+  ).valueOrThrow();
+
+  assertEquals(entity.id, reference.id);
 }
 
 async function updateSchemaSpecification_errorWrongVersion({ server }: SchemaTestContext) {

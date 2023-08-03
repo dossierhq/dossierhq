@@ -602,6 +602,12 @@ export interface DatabaseAdapter<
     valueTypes: string[],
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
+  schemaUpdateModifyIndexes(
+    context: TransactionContext,
+    deleteUniqueValueIndexes: string[],
+    renameUniqueValueIndexes: Record<string, string>,
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
   schemaUpdateSpecification(
     context: TransactionContext,
     schemaSpec: AdminSchemaSpecificationWithMigrations,
