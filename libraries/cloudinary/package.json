@@ -29,7 +29,7 @@
     "directory": "libraries/cloudinary"
   },
   "dependencies": {
-    "@cloudinary/url-gen": "~1.11.0",
+    "@cloudinary/url-gen": "~1.11.1",
     "@dossierhq/design": "workspace:*",
     "react": "~18.2.0",
     "tslib": "~2.6.1"
@@ -42,7 +42,7 @@
     "@rushstack/heft": "0.58.1",
     "@types/react": "~18.2.18",
     "eslint": "~8.46.0",
-    "prettier": "3.0.0",
+    "prettier": "3.0.1",
     "typescript": "~5.1.6"
   }
 }

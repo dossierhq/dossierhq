@@ -59,12 +59,12 @@
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.6.13",
     "playground-example-generator": "workspace:*",
-    "prettier": "3.0.0",
+    "prettier": "3.0.1",
     "storybook": "~7.2.0",
     "typescript": "~5.1.6",
     "uuid": "~9.0.0",
     "vite": "~4.4.8",
-    "vitest": "~0.33.0"
+    "vitest": "~0.34.1"
   },
   "dependencies": {
     "@dossierhq/core": "workspace:*",

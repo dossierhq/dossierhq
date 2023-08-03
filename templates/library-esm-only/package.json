@@ -34,8 +34,8 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.58.1",
     "eslint": "~8.46.0",
-    "prettier": "3.0.0",
+    "prettier": "3.0.1",
     "typescript": "~5.1.6",
-    "vitest": "~0.33.0"
+    "vitest": "~0.34.1"
   }
 }
