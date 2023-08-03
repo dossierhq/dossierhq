@@ -401,6 +401,5 @@
       "type": "unique"
     }
   ],
-  "migrations": [],
-  "version": 2
+  "migrations": []
 }

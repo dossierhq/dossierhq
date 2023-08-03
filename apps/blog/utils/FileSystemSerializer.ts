@@ -66,8 +66,10 @@ export function createFilesystemAdminMiddleware(
 }
 
 async function updateSchemaSpecification(schemaSpecification: AdminSchemaSpecification) {
+  const { version, ...schemaSpecificationWithoutVersion } = schemaSpecification;
+
   const schemaSpecificationPath = path.join('data', 'schema.json');
-  const schemaSpecificationJson = JSON.stringify(schemaSpecification, null, 2) + '\n';
+  const schemaSpecificationJson = JSON.stringify(schemaSpecificationWithoutVersion, null, 2) + '\n';
   await fs.writeFile(schemaSpecificationPath, schemaSpecificationJson);
 }
 
