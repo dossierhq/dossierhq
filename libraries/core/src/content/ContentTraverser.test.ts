@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import type { ItemTraverseNode } from './ItemTraverser.js';
-import { ItemTraverseNodeType, traverseEntity, traverseValueItem } from './ItemTraverser.js';
-import { contentValuePathToString } from './content/ContentPath.js';
-import { createRichText, createRichTextValueItemNode } from './content/RichTextUtils.js';
-import { AdminSchema } from './schema/AdminSchema.js';
-import type { PublishedSchema } from './schema/PublishedSchema.js';
-import { FieldType } from './schema/SchemaSpecification.js';
+import { AdminSchema } from '../schema/AdminSchema.js';
+import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import { FieldType } from '../schema/SchemaSpecification.js';
+import { contentValuePathToString } from './ContentPath.js';
+import type { ItemTraverseNode } from './ContentTraverser.js';
+import { ItemTraverseNodeType, traverseEntity, traverseValueItem } from './ContentTraverser.js';
+import { createRichText, createRichTextValueItemNode } from './RichTextUtils.js';
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [

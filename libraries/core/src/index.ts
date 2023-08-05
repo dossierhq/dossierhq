@@ -18,14 +18,6 @@ export type {
   Result,
 } from './ErrorResult.js';
 export {
-  ItemTraverseNodeErrorType,
-  ItemTraverseNodeType,
-  traverseEntity,
-  traverseItemField,
-  traverseValueItem,
-} from './ItemTraverser.js';
-export type { ItemTraverseNode } from './ItemTraverser.js';
-export {
   copyEntity,
   isBooleanField,
   isBooleanItemField,
@@ -201,6 +193,14 @@ export {
   contentValuePathToString as contentValuePathToString,
   type ContentValuePath,
 } from './content/ContentPath.js';
+export {
+  ItemTraverseNodeErrorType,
+  ItemTraverseNodeType,
+  traverseEntity,
+  traverseItemField,
+  traverseValueItem,
+} from './content/ContentTraverser.js';
+export type { ItemTraverseNode } from './content/ContentTraverser.js';
 export {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,

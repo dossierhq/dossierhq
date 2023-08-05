@@ -3,17 +3,17 @@ import {
   isRichTextItemField,
   isRichTextValueItemNode,
   isValueItemItemField,
-} from './ItemUtils.js';
-import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
-import type { ContentValuePath } from './content/ContentPath.js';
-import type { AdminSchema } from './schema/AdminSchema.js';
-import type { PublishedSchema } from './schema/PublishedSchema.js';
+} from '../ItemUtils.js';
+import type { EntityLike, RichTextNode, ValueItem } from '../Types.js';
+import type { AdminSchema } from '../schema/AdminSchema.js';
+import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
   AdminEntityTypeSpecification,
   AdminValueTypeSpecification,
   PublishedEntityTypeSpecification,
   PublishedValueTypeSpecification,
-} from './schema/SchemaSpecification.js';
+} from '../schema/SchemaSpecification.js';
+import type { ContentValuePath } from './ContentPath.js';
 
 export const ItemTraverseNodeType = {
   error: 'error',
