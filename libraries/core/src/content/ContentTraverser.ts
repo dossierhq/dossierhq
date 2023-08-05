@@ -159,14 +159,14 @@ function* traverseItem<TSchema extends AdminSchema | PublishedSchema>(
     const fieldPath = [...path, fieldSpec.name];
     const fieldValue = fields?.[fieldSpec.name];
 
-    yield* traverseItemField(schema, fieldPath, fieldSpec, fieldValue);
+    yield* traverseContentField(schema, fieldPath, fieldSpec, fieldValue);
   }
 }
 
-export function* traverseItemField<TSchema extends AdminSchema | PublishedSchema>(
+export function* traverseContentField<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   value: unknown,
 ): Generator<ContentTraverseNode<TSchema>> {
   const fieldNode: ContentTraverseNodeField<TSchema> = {
@@ -195,17 +195,17 @@ export function* traverseItemField<TSchema extends AdminSchema | PublishedSchema
     for (let i = 0; i < value.length; i += 1) {
       const fieldItemPath = [...path, i];
       const fieldItem = value[i] as unknown;
-      yield* traverseItemFieldValue(schema, fieldItemPath, fieldSpec, fieldItem);
+      yield* traverseContentFieldValue(schema, fieldItemPath, fieldSpec, fieldItem);
     }
   } else {
-    yield* traverseItemFieldValue(schema, path, fieldSpec, value);
+    yield* traverseContentFieldValue(schema, path, fieldSpec, value);
   }
 }
 
-function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
+function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   itemValue: unknown,
 ): Generator<ContentTraverseNode<TSchema>> {
   if (Array.isArray(itemValue)) {
@@ -258,7 +258,7 @@ function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
 function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   node: RichTextNode,
 ): Generator<ContentTraverseNode<TSchema>> {
   if (typeof node !== 'object') {

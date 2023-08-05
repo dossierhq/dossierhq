@@ -12,7 +12,7 @@ import {
   assertIsDefined,
   isEntityNameAsRequested,
   normalizeFieldValue,
-  traverseItemField,
+  traverseContentField,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
 } from '@dossierhq/core';
@@ -584,13 +584,13 @@ function validateField(
   previousErrors: ValidationIssue[],
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
-  for (const node of traverseItemField(adminSchema, [], fieldSpec, value)) {
+  for (const node of traverseContentField(adminSchema, [], fieldSpec, value)) {
     const error = validateTraverseNodeForSave(adminSchema, node);
     if (error) errors.push(error);
   }
   if (!adminOnly) {
     const publishedSchema = adminSchema.toPublishedSchema();
-    for (const node of traverseItemField(publishedSchema, [], fieldSpec, value)) {
+    for (const node of traverseContentField(publishedSchema, [], fieldSpec, value)) {
       const error = validateTraverseNodeForPublish(adminSchema, node);
       if (error) errors.push(error);
     }

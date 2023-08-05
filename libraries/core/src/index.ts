@@ -196,8 +196,8 @@ export {
 export {
   ContentTraverseNodeErrorType,
   ContentTraverseNodeType,
+  traverseContentField,
   traverseEntity,
-  traverseItemField,
   traverseValueItem,
 } from './content/ContentTraverser.js';
 export type { ContentTraverseNode } from './content/ContentTraverser.js';

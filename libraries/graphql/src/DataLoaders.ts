@@ -39,7 +39,7 @@ import {
   isValueItemField,
   isValueItemListField,
   ContentTraverseNodeType,
-  traverseItemField,
+  traverseContentField,
 } from '@dossierhq/core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
@@ -298,7 +298,7 @@ function extractEntityIdsForRichTextField(
   value: RichText,
 ) {
   const referencesCollector = createReferencesCollector();
-  for (const node of traverseItemField(schema, [fieldSpec.name], fieldSpec, value)) {
+  for (const node of traverseContentField(schema, [fieldSpec.name], fieldSpec, value)) {
     referencesCollector.collect(node);
   }
   return referencesCollector.result;
