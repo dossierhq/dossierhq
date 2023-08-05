@@ -2,11 +2,11 @@ import 'dotenv/config';
 //
 import {
   copyEntity,
+  createRichText,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   type AdminEntityCreate,
@@ -494,12 +494,8 @@ async function createRichTextsEntities(
           ]),
           code: CODE_BLOCK,
           list: [
-            createRichText([
-              createRichTextParagraphNode([createRichTextTextNode('First')]),
-            ]),
-            createRichText([
-              createRichTextParagraphNode([createRichTextTextNode('Second')]),
-            ]),
+            createRichText([createRichTextParagraphNode([createRichTextTextNode('First')])]),
+            createRichText([createRichTextParagraphNode([createRichTextTextNode('Second')])]),
           ],
           adminOnly: createRichText([
             createRichTextParagraphNode([createRichTextTextNode('Admin only field.')]),
