@@ -786,7 +786,7 @@ async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityT
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    'entity.fields.title: Multiline string not allowed',
+    'entity.fields.title: Value cannot contain line breaks',
   );
 
   const getResult = await client.getEntity({ id });

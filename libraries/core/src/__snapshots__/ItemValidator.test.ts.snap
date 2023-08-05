@@ -73,6 +73,20 @@ exports[`Validate entity string > Fail: matchPattern unmatched string item in li
 ]
 `;
 
+exports[`Validate entity string > Fail: multiline=false string with line break 1`] = `
+[
+  {
+    "message": "Value cannot contain line breaks",
+    "path": [
+      "entity",
+      "fields",
+      "normal",
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`Validate entity string > Fail: values unmatched string 1`] = `
 [
   {

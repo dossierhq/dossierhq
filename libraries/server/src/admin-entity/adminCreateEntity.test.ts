@@ -191,7 +191,7 @@ describe('Admin adminCreateEntity', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.fields.title: Multiline string not allowed',
+      'entity.fields.title: Value cannot contain line breaks',
     );
     expect(
       getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter),

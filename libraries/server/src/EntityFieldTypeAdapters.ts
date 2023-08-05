@@ -153,7 +153,7 @@ const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], 
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) => {
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) => {
     if (typeof data !== 'string') {
       return {
         encodedValue: null,
@@ -167,15 +167,7 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], 
       };
     }
 
-    const validationIssues: SaveValidationIssue[] = [];
-    if (fieldSpec.type === FieldType.String && !fieldSpec.multiline && data.includes('\n')) {
-      validationIssues.push({
-        type: 'save',
-        path,
-        message: `Multiline string not allowed`,
-      });
-    }
-    return { encodedValue: data, validationIssues };
+    return { encodedValue: data, validationIssues: [] };
   },
   decodeData: (it) => it,
   decodeJson: (json) => json as string,

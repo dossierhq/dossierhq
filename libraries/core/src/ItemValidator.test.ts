@@ -34,8 +34,10 @@ const adminSchema = AdminSchema.createAndValidate({
       name: 'StringsEntity',
       authKeyPattern: 'noneSubject',
       fields: [
+        { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
         { name: 'requiredAndAdminOnly', type: FieldType.String, adminOnly: true, required: true },
+        { name: 'multiline', type: FieldType.String, multiline: true },
         { name: 'pattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'patternList', type: FieldType.String, list: true, matchPattern: 'fooBarBaz' },
         {
@@ -415,6 +417,26 @@ describe('Validate entity string', () => {
       validateEntity(
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
           fields: { patternList: ['foo', 'will not match'] },
+        }),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  test('Pass: multiline string', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
+          fields: { multiline: 'foo\nbar\nbaz' },
+        }),
+      ),
+    ).toEqual([]);
+  });
+
+  test('Fail: multiline=false string with line break', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
+          fields: { normal: 'foo\nbar\nbaz' },
         }),
       ),
     ).toMatchSnapshot();

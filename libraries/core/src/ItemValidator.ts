@@ -203,6 +203,13 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
             };
           }
         }
+        if (!stringFieldSpec.multiline && LINE_BREAK_REGEX.test(node.value)) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: 'Value cannot contain line breaks',
+          };
+        }
         if (stringFieldSpec.values.length > 0) {
           const match = stringFieldSpec.values.some((it) => it.value === node.value);
           if (!match) {
