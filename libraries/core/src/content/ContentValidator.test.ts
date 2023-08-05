@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { copyEntity } from '../ItemUtils.js';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from '../Types.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { normalizeEntityFields } from './ContentNormalizer.js';
 import { ContentTraverseNodeErrorType, traverseEntity } from './ContentTraverser.js';
+import { copyEntity } from './ContentUtils.js';
 import {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,

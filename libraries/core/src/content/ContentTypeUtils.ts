@@ -21,10 +21,10 @@ import type {
   RichTextTextNode,
   RichTextValueItemNode,
   ValueItem,
-} from './Types.js';
-import { RichTextNodeType } from './Types.js';
-import type { FieldSpecification, FieldValueTypeMap } from './schema/SchemaSpecification.js';
-import { FieldType } from './schema/SchemaSpecification.js';
+} from '../Types.js';
+import { RichTextNodeType } from '../Types.js';
+import type { FieldSpecification, FieldValueTypeMap } from '../schema/SchemaSpecification.js';
+import { FieldType } from '../schema/SchemaSpecification.js';
 
 type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType> = Omit<
   TNode,
@@ -307,82 +307,4 @@ export function isItemEntity(
   item: ValueItem | PublishedEntity | AdminEntity,
 ): item is PublishedEntity {
   return !isItemValueItem(item) && !isItemAdminEntity(item);
-}
-
-export function copyEntity<
-  T extends
-    | AdminEntity<string, object>
-    | AdminEntityCreate<AdminEntity<string, object>>
-    | PublishedEntity<string, object>,
->(
-  entity: T,
-  changes: { id?: string; info?: Partial<T['info']>; fields?: Partial<T['fields']> },
-): T {
-  const copy = { ...entity };
-  if (typeof changes.id === 'string') {
-    copy.id = changes.id;
-  }
-  if (changes.info) {
-    copy.info = { ...entity.info };
-    for (const [key, value] of Object.entries(changes.info)) {
-      (copy.info as unknown as Record<string, unknown>)[key] = value;
-    }
-  }
-  if (changes.fields) {
-    const fieldsCopy: Record<string, unknown> = { ...entity.fields };
-    copy.fields = fieldsCopy;
-    for (const [key, value] of Object.entries(changes.fields)) {
-      fieldsCopy[key] = value;
-    }
-  }
-  return copy;
-}
-
-export function isEntityNameAsRequested(currentName: string, requestedName: string): boolean {
-  if (requestedName === currentName) {
-    return true;
-  }
-  const hashIndex = currentName.lastIndexOf('#');
-  if (hashIndex < 0) {
-    return false;
-  }
-  const currentWithoutUniqueNumber = currentName.slice(0, hashIndex);
-  return requestedName === currentWithoutUniqueNumber;
-}
-
-export function isFieldValueEqual(a: unknown, b: unknown): boolean {
-  if (a === b) return true;
-
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-  if (a === null || a === undefined || b === null || b === undefined) {
-    return false; // if a or be are not defined they can't be equal
-  }
-
-  if (Array.isArray(a)) {
-    if (!Array.isArray(b)) return false;
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i += 1) {
-      if (!isFieldValueEqual(a[i], b[i])) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  if (typeof a === 'object') {
-    if (typeof b !== 'object' || a === null || b === null) return false;
-    const aKeys = Object.keys(a);
-    const bKeys = Object.keys(b);
-    if (aKeys.length !== bKeys.length) return false;
-    for (const key of aKeys) {
-      if (
-        !isFieldValueEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])
-      ) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  return false;
 }

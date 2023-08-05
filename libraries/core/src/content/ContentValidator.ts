@@ -1,5 +1,4 @@
 import { assertExhaustive, assertIsDefined } from '../Asserts.js';
-import { isNumberItemField, isRichTextTextNode, isStringItemField } from '../ItemUtils.js';
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
@@ -11,6 +10,7 @@ import type {
 import type { ContentValuePath } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
+import { isNumberItemField, isRichTextTextNode, isStringItemField } from './ContentTypeUtils.js';
 
 export interface SaveValidationIssue {
   type: 'save';

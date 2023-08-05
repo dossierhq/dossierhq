@@ -1,6 +1,6 @@
 import { assertExhaustive } from '../Asserts.js';
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
-import { isFieldValueEqual } from '../ItemUtils.js';
+import { isFieldValueEqual } from '../utils/isFieldValueEqual.js';
 import {
   FieldType,
   type AdminEntityTypeSpecification,

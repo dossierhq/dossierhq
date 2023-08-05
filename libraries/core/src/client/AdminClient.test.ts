@@ -2,7 +2,6 @@ import { describe, expect, test, vi } from 'vitest';
 import { assertIsDefined } from '../Asserts.js';
 import { expectOkResult, expectResultValue } from '../CoreTestUtils.js';
 import { ok } from '../ErrorResult.js';
-import { copyEntity } from '../ItemUtils.js';
 import { NoOpLogger } from '../Logger.js';
 import type {
   AdminEntity,
@@ -14,6 +13,7 @@ import type {
   AdminEntityUpsertPayload,
 } from '../Types.js';
 import { AdminEntityStatus, PublishingEventKind } from '../Types.js';
+import { copyEntity } from '../content/ContentUtils.js';
 import type {
   AdminClient,
   AdminClientJsonOperationArgs,
