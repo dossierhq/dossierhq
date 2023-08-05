@@ -1,26 +1,26 @@
-import { RichTextNodeType } from './schema/SchemaSpecification.js';
 import {
   IS_UNMERGEABLE,
   TEXT_TYPE_TO_FORMAT,
   type HeadingTagType,
   type TextFormatType,
-} from './third-party/Lexical.js';
-import type {
-  EntityReference,
-  RichText,
-  RichTextEntityLinkNode,
-  RichTextEntityNode,
-  RichTextHeadingNode,
-  RichTextLineBreakNode,
-  RichTextListItemNode,
-  RichTextListNode,
-  RichTextNode,
-  RichTextParagraphNode,
-  RichTextTabNode,
-  RichTextTextNode,
-  RichTextValueItemNode,
-  ValueItem,
-} from './Types.js';
+} from '../third-party/Lexical.js';
+import {
+  RichTextNodeType,
+  type EntityReference,
+  type RichText,
+  type RichTextEntityLinkNode,
+  type RichTextEntityNode,
+  type RichTextHeadingNode,
+  type RichTextLineBreakNode,
+  type RichTextListItemNode,
+  type RichTextListNode,
+  type RichTextNode,
+  type RichTextParagraphNode,
+  type RichTextTabNode,
+  type RichTextTextNode,
+  type RichTextValueItemNode,
+  type ValueItem,
+} from '../Types.js';
 
 export function createRichText(children: RichTextNode[]): RichText {
   return {

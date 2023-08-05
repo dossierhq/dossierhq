@@ -11,13 +11,13 @@ import {
   type PublishValidationIssue,
   type SaveValidationIssue,
 } from './ItemValidator.js';
-import {
-  createRichTextParagraphNode,
-  createRichText,
-  createRichTextTextNode,
-} from './RichTextUtils.js';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
 import { normalizeEntityFields } from './content/ContentNormalizer.js';
+import {
+  createRichText,
+  createRichTextParagraphNode,
+  createRichTextTextNode,
+} from './content/RichTextUtils.js';
 import { AdminSchema } from './schema/AdminSchema.js';
 import { FieldType } from './schema/SchemaSpecification.js';
 

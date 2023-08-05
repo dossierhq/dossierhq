@@ -2,10 +2,10 @@ import { assertExhaustive } from '../Asserts.js';
 import type { ErrorType, Result } from '../ErrorResult.js';
 import { notOk, ok } from '../ErrorResult.js';
 import { isRichTextElementNode } from '../ItemUtils.js';
-import type { EntityLike, RichText, ValueItem } from '../Types.js';
+import { RichTextNodeType, type EntityLike, type RichText, type ValueItem } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { AdminFieldSpecification } from '../schema/SchemaSpecification.js';
-import { FieldType, RichTextNodeType } from '../schema/SchemaSpecification.js';
+import { FieldType } from '../schema/SchemaSpecification.js';
 
 // TODO move ItemTransformer to core and use it for normalization (null transformer -> normalization)
 export function normalizeEntityFields<TEntity extends EntityLike>(

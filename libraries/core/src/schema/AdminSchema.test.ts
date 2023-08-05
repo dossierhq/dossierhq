@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { expectErrorResult, expectOkResult } from '../CoreTestUtils.js';
 import { ErrorType } from '../ErrorResult.js';
+import { RichTextNodeType } from '../Types.js';
 import { AdminSchema } from './AdminSchema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
-  RichTextNodeType,
   type AdminFieldSpecification,
   type BooleanFieldSpecification,
   type PublishedSchemaSpecification,

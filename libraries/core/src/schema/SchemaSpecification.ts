@@ -1,5 +1,6 @@
 import type { LooseAutocomplete } from '../TypeUtils.js';
 import type { EntityReference, Location, RichText, ValueItem } from '../Types.js';
+import { RichTextNodeType } from '../Types.js';
 
 export interface AdminEntityTypeSpecification {
   name: string;
@@ -50,24 +51,6 @@ export const FieldType = {
   ValueItem: 'ValueItem',
 } as const;
 export type FieldType = (typeof FieldType)[keyof typeof FieldType];
-
-export const RichTextNodeType = {
-  code: 'code',
-  'code-highlight': 'code-highlight',
-  entity: 'entity',
-  entityLink: 'entityLink',
-  heading: 'heading',
-  linebreak: 'linebreak',
-  link: 'link',
-  list: 'list',
-  listitem: 'listitem',
-  paragraph: 'paragraph',
-  root: 'root',
-  tab: 'tab',
-  text: 'text',
-  valueItem: 'valueItem',
-} as const;
-export type RichTextNodeType = (typeof RichTextNodeType)[keyof typeof RichTextNodeType];
 
 interface SharedFieldSpecification {
   name: string;

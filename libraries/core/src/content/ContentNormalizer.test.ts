@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest';
 import { assertIsDefined } from '../Asserts.js';
-import { createRichTextParagraphNode, createRichText } from '../RichTextUtils.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import {
@@ -8,6 +7,7 @@ import {
   normalizeFieldValue,
   normalizeValueItem,
 } from './ContentNormalizer.js';
+import { createRichText, createRichTextParagraphNode } from './RichTextUtils.js';
 
 const schema = AdminSchema.createAndValidate({
   entityTypes: [

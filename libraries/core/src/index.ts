@@ -129,21 +129,6 @@ export type {
   PublishedClientOperation,
   PublishedExceptionClient,
 } from './PublishedClient.js';
-export {
-  createRichTextEntityLinkNode,
-  createRichTextEntityNode,
-  createRichTextHeadingNode,
-  createRichTextLineBreakNode,
-  createRichTextListItemNode,
-  createRichTextListNode,
-  createRichTextParagraphNode,
-  createRichText,
-  createRichTextTabNode,
-  createRichTextTextAndWhitespaceNodes,
-  createRichTextTextNode,
-  createRichTextValueItemNode,
-  richTextTextNodeHasFormat,
-} from './RichTextUtils.js';
 export { LoggingClientMiddleware } from './SharedClient.js';
 export type { ClientContext, ContextProvider } from './SharedClient.js';
 export {
@@ -151,6 +136,7 @@ export {
   AdminQueryOrder,
   PublishedQueryOrder,
   PublishingEventKind,
+  RichTextNodeType,
 } from './Types.js';
 export type {
   AdminEntity,
@@ -221,13 +207,24 @@ export {
   contentValuePathToString as contentValuePathToString,
   type ContentValuePath,
 } from './content/ContentPath.js';
+export {
+  createRichText,
+  createRichTextEntityLinkNode,
+  createRichTextEntityNode,
+  createRichTextHeadingNode,
+  createRichTextLineBreakNode,
+  createRichTextListItemNode,
+  createRichTextListNode,
+  createRichTextParagraphNode,
+  createRichTextTabNode,
+  createRichTextTextAndWhitespaceNodes,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
+  richTextTextNodeHasFormat,
+} from './content/RichTextUtils.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
-export {
-  FieldType,
-  REQUIRED_RICH_TEXT_NODES,
-  RichTextNodeType,
-} from './schema/SchemaSpecification.js';
+export { FieldType, REQUIRED_RICH_TEXT_NODES } from './schema/SchemaSpecification.js';
 export type {
   AdminBooleanFieldSpecificationUpdate,
   AdminEntityFieldSpecificationUpdate,

@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeType, traverseEntity, traverseValueItem } from './ItemTraverser.js';
-import { createRichText, createRichTextValueItemNode } from './RichTextUtils.js';
 import { contentValuePathToString } from './content/ContentPath.js';
+import { createRichText, createRichTextValueItemNode } from './content/RichTextUtils.js';
 import { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
 import { FieldType } from './schema/SchemaSpecification.js';

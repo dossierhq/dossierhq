@@ -22,8 +22,9 @@ import type {
   RichTextValueItemNode,
   ValueItem,
 } from './Types.js';
+import { RichTextNodeType } from './Types.js';
 import type { FieldSpecification, FieldValueTypeMap } from './schema/SchemaSpecification.js';
-import { FieldType, RichTextNodeType } from './schema/SchemaSpecification.js';
+import { FieldType } from './schema/SchemaSpecification.js';
 
 type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType> = Omit<
   TNode,

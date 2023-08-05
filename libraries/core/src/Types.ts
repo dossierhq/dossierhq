@@ -96,6 +96,24 @@ export type RichTextEntityLinkNode = Spread<{ reference: EntityReference }, Rich
 
 export type RichTextValueItemNode = Spread<{ data: ValueItem }, SerializedDecoratorBlockNode>;
 
+export const RichTextNodeType = {
+  code: 'code',
+  'code-highlight': 'code-highlight',
+  entity: 'entity',
+  entityLink: 'entityLink',
+  heading: 'heading',
+  linebreak: 'linebreak',
+  link: 'link',
+  list: 'list',
+  listitem: 'listitem',
+  paragraph: 'paragraph',
+  root: 'root',
+  tab: 'tab',
+  text: 'text',
+  valueItem: 'valueItem',
+} as const;
+export type RichTextNodeType = (typeof RichTextNodeType)[keyof typeof RichTextNodeType];
+
 /** Geographic location using EPSG:4326/WGS 84 */
 export interface Location {
   /** South/north -90°/90° */
