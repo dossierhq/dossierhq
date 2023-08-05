@@ -6,7 +6,7 @@ import type {
   PublishedEntity,
   PublishedSchema,
 } from '@dossierhq/core';
-import { isLocationItemField, ItemTraverseNodeType, traverseEntity } from '@dossierhq/core';
+import { isLocationItemField, ContentTraverseNodeType, traverseEntity } from '@dossierhq/core';
 import { MapContainer } from '@dossierhq/leaflet';
 import type { Dispatch, ReactNode } from 'react';
 import { useCallback } from 'react';
@@ -89,7 +89,7 @@ function extractEntityLocations(
 ) {
   const locations: Location[] = [];
   for (const node of traverseEntity(schema, ['entity'], entity)) {
-    if (node.type === ItemTraverseNodeType.fieldItem) {
+    if (node.type === ContentTraverseNodeType.fieldItem) {
       if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
         locations.push(node.value);
       }

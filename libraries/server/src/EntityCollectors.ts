@@ -1,5 +1,5 @@
 import {
-  ItemTraverseNodeType,
+  ContentTraverseNodeType,
   assertIsDefined,
   isEntityItemField,
   isLocationItemField,
@@ -10,10 +10,10 @@ import {
   isStringItemField,
   isValueItemItemField,
   type AdminSchema,
+  type ContentTraverseNode,
+  type ContentValuePath,
   type EntityFieldSpecification,
   type EntityReference,
-  type ItemTraverseNode,
-  type ContentValuePath,
   type Location,
   type PublishedSchema,
   type RichTextFieldSpecification,
@@ -37,14 +37,14 @@ export interface RequestedReference {
 export function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const fullTextSearchText: string[] = [];
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
+        case ContentTraverseNodeType.fieldItem:
           if (isStringItemField(node.fieldSpec, node.value) && node.value) {
             fullTextSearchText.push(node.value);
           }
           break;
-        case ItemTraverseNodeType.richTextNode: {
+        case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextTextNode(richTextNode) && richTextNode.text) {
             fullTextSearchText.push(richTextNode.text);
@@ -63,14 +63,14 @@ export function createFullTextSearchCollector<TSchema extends AdminSchema | Publ
 export function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const references = new Set<string>();
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
+        case ContentTraverseNodeType.fieldItem:
           if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             references.add(node.value.id);
           }
           break;
-        case ItemTraverseNodeType.richTextNode: {
+        case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             references.add(richTextNode.reference.id);
@@ -90,9 +90,9 @@ export function createRequestedReferencesCollector<
 >() {
   const requestedReferences: RequestedReference[] = [];
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
+        case ContentTraverseNodeType.fieldItem:
           if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             const entityItemFieldSpec = node.fieldSpec as EntityFieldSpecification;
             requestedReferences.push({
@@ -104,7 +104,7 @@ export function createRequestedReferencesCollector<
             });
           }
           break;
-        case ItemTraverseNodeType.richTextNode: {
+        case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             const richTextFieldSpecification = node.fieldSpec as RichTextFieldSpecification;
@@ -131,9 +131,9 @@ export function createUniqueIndexCollector<TSchema extends AdminSchema | Publish
 ) {
   const uniqueIndexValues: UniqueIndexValueCollection = new Map();
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem: {
+        case ContentTraverseNodeType.fieldItem: {
           const indexName = 'index' in node.fieldSpec ? node.fieldSpec.index : undefined;
           if (indexName && isStringItemField(node.fieldSpec, node.value) && node.value) {
             const indexValues = uniqueIndexValues.get(indexName);
@@ -163,9 +163,9 @@ export function createUniqueIndexCollector<TSchema extends AdminSchema | Publish
 export function createLocationsCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const locations: Location[] = [];
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
+        case ContentTraverseNodeType.fieldItem:
           if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
             locations.push(node.value);
           }
@@ -181,14 +181,14 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
 export function createValueTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const result = new Set<string>();
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
+        case ContentTraverseNodeType.fieldItem:
           if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
             result.add(node.value.type);
           }
           break;
-        case ItemTraverseNodeType.richTextNode: {
+        case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextValueItemNode(richTextNode)) {
             result.add(richTextNode.data.type);

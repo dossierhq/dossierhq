@@ -3,8 +3,8 @@ import { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { contentValuePathToString } from './ContentPath.js';
-import type { ItemTraverseNode } from './ContentTraverser.js';
-import { ItemTraverseNodeType, traverseEntity, traverseValueItem } from './ContentTraverser.js';
+import type { ContentTraverseNode } from './ContentTraverser.js';
+import { ContentTraverseNodeType, traverseEntity, traverseValueItem } from './ContentTraverser.js';
 import { createRichText, createRichTextValueItemNode } from './RichTextUtils.js';
 
 const adminSchema = AdminSchema.createAndValidate({
@@ -34,19 +34,19 @@ const adminSchema = AdminSchema.createAndValidate({
 const publishedSchema = adminSchema.toPublishedSchema();
 
 function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
-  generator: Generator<ItemTraverseNode<TSchema>>,
+  generator: Generator<ContentTraverseNode<TSchema>>,
 ) {
   const result = [];
   for (const node of generator) {
     const path = contentValuePathToString(node.path);
     switch (node.type) {
-      case ItemTraverseNodeType.error:
+      case ContentTraverseNodeType.error:
         result.push({ type: node.type, path, message: node.message });
         break;
-      case ItemTraverseNodeType.field:
+      case ContentTraverseNodeType.field:
         result.push({ type: node.type, path, value: node.value });
         break;
-      case ItemTraverseNodeType.valueItem:
+      case ContentTraverseNodeType.valueItem:
         result.push({ type: node.type, path, valueItem: node.valueItem });
         break;
       default: {

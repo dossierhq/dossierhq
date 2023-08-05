@@ -1,5 +1,5 @@
 import {
-  ItemTraverseNodeType,
+  ContentTraverseNodeType,
   isLocationItemField,
   type AdminEntity,
   type AdminSchema,
@@ -202,7 +202,7 @@ function extractDraftLocations(
 
     if (schema) {
       for (const node of traverseEntityEditorDraft(schema, draftState)) {
-        if (node.type === ItemTraverseNodeType.fieldItem) {
+        if (node.type === ContentTraverseNodeType.fieldItem) {
           if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
             considerLocation(draftState, node.value);
           }

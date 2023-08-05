@@ -12,7 +12,7 @@ import type {
   EntitySamplingOptions,
   EntitySamplingPayload,
   EntityVersionReference,
-  ItemTraverseNode,
+  ContentTraverseNode,
   PageInfo,
   Paging,
   PublishedClient,
@@ -38,7 +38,7 @@ import {
   isRichTextField,
   isValueItemField,
   isValueItemListField,
-  ItemTraverseNodeType,
+  ContentTraverseNodeType,
   traverseItemField,
 } from '@dossierhq/core';
 import type { GraphQLResolveInfo } from 'graphql';
@@ -308,14 +308,14 @@ function extractEntityIdsForRichTextField(
 function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const references = new Set<string>();
   return {
-    collect: (node: ItemTraverseNode<TSchema>) => {
+    collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
-        case ItemTraverseNodeType.fieldItem:
+        case ContentTraverseNodeType.fieldItem:
           if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
             references.add(node.value.id);
           }
           break;
-        case ItemTraverseNodeType.richTextNode: {
+        case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextEntityNode(richTextNode) || isRichTextEntityLinkNode(richTextNode)) {
             references.add(richTextNode.reference.id);

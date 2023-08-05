@@ -9,8 +9,8 @@ import type {
   StringFieldSpecification,
 } from '../schema/SchemaSpecification.js';
 import type { ContentValuePath } from './ContentPath.js';
-import type { ItemTraverseNode } from './ContentTraverser.js';
-import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ContentTraverser.js';
+import type { ContentTraverseNode } from './ContentTraverser.js';
+import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
 
 export interface SaveValidationIssue {
   type: 'save';
@@ -170,13 +170,13 @@ function validateName(path: ContentValuePath, name: string): SaveValidationIssue
 
 export function validateTraverseNodeForSave<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  node: ItemTraverseNode<TSchema>,
+  node: ContentTraverseNode<TSchema>,
 ): SaveValidationIssue | null {
   const nodeType = node.type;
   switch (nodeType) {
-    case ItemTraverseNodeType.field:
+    case ContentTraverseNodeType.field:
       break;
-    case ItemTraverseNodeType.fieldItem:
+    case ContentTraverseNodeType.fieldItem:
       if (isNumberItemField(node.fieldSpec, node.value) && node.value !== null) {
         const numberFieldSpec = node.fieldSpec as NumberFieldSpecification;
         if (numberFieldSpec.integer && !Number.isInteger(node.value)) {
@@ -218,9 +218,9 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
         }
       }
       break;
-    case ItemTraverseNodeType.error:
+    case ContentTraverseNodeType.error:
       return { type: 'save', path: node.path, message: node.message };
-    case ItemTraverseNodeType.richTextNode: {
+    case ContentTraverseNodeType.richTextNode: {
       const richTextFieldSpec = node.fieldSpec as RichTextFieldSpecification;
       if (richTextFieldSpec.richTextNodes && richTextFieldSpec.richTextNodes.length > 0) {
         if (!richTextFieldSpec.richTextNodes.includes(node.node.type)) {
@@ -247,7 +247,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
       }
       break;
     }
-    case ItemTraverseNodeType.valueItem:
+    case ContentTraverseNodeType.valueItem:
       break;
     default:
       assertExhaustive(nodeType);
@@ -257,10 +257,10 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
 
 export function validateTraverseNodeForPublish(
   adminSchema: AdminSchema,
-  node: ItemTraverseNode<PublishedSchema>,
+  node: ContentTraverseNode<PublishedSchema>,
 ): PublishValidationIssue | null {
   switch (node.type) {
-    case ItemTraverseNodeType.field:
+    case ContentTraverseNodeType.field:
       if (node.fieldSpec.required && node.value === null) {
         return {
           type: 'publish',
@@ -269,9 +269,9 @@ export function validateTraverseNodeForPublish(
         };
       }
       break;
-    case ItemTraverseNodeType.error:
+    case ContentTraverseNodeType.error:
       if (
-        node.errorType === ItemTraverseNodeErrorType.missingTypeSpec &&
+        node.errorType === ContentTraverseNodeErrorType.missingTypeSpec &&
         node.kind === 'valueItem'
       ) {
         const adminTypeSpec = adminSchema.getValueTypeSpecification(node.typeName);

@@ -194,13 +194,13 @@ export {
   type ContentValuePath,
 } from './content/ContentPath.js';
 export {
-  ItemTraverseNodeErrorType,
-  ItemTraverseNodeType,
+  ContentTraverseNodeErrorType,
+  ContentTraverseNodeType,
   traverseEntity,
   traverseItemField,
   traverseValueItem,
 } from './content/ContentTraverser.js';
-export type { ItemTraverseNode } from './content/ContentTraverser.js';
+export type { ContentTraverseNode } from './content/ContentTraverser.js';
 export {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,

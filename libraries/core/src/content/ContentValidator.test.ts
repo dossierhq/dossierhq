@@ -4,7 +4,7 @@ import type { AdminEntity, AdminEntityCreate, EntityLike } from '../Types.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { normalizeEntityFields } from './ContentNormalizer.js';
-import { ItemTraverseNodeErrorType, traverseEntity } from './ContentTraverser.js';
+import { ContentTraverseNodeErrorType, traverseEntity } from './ContentTraverser.js';
 import {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,
@@ -341,7 +341,7 @@ describe('validateTraverseNodeForSave', () => {
       validateTraverseNodeForSave(adminSchema, {
         type: 'error',
         path: ['entity', 'foo'],
-        errorType: ItemTraverseNodeErrorType.generic,
+        errorType: ContentTraverseNodeErrorType.generic,
         message: 'Error message',
       }),
     ).toMatchSnapshot();
