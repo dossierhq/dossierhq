@@ -1,13 +1,9 @@
 import { assertExhaustive, assertIsDefined } from './Asserts.js';
 import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ItemTraverser.js';
-import {
-  isNumberItemField,
-  isRichTextTextNode,
-  isStringItemField,
-  type ItemValuePath,
-} from './ItemUtils.js';
+import { isNumberItemField, isRichTextTextNode, isStringItemField } from './ItemUtils.js';
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from './Types.js';
+import type { ItemValuePath } from './content/ContentPath.js';
 import type { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
 import type {

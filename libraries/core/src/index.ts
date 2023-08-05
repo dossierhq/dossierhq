@@ -83,9 +83,7 @@ export {
   isValueItemField,
   isValueItemItemField,
   isValueItemListField,
-  visitorPathToString,
 } from './ItemUtils.js';
-export type { ItemValuePath } from './ItemUtils.js';
 export {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,
@@ -219,6 +217,7 @@ export {
   normalizeFieldValue,
   normalizeValueItem,
 } from './content/ContentNormalizer.js';
+export { visitorPathToString, type ItemValuePath } from './content/ContentPath.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
 export {

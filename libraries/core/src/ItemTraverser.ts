@@ -1,4 +1,3 @@
-import type { ItemValuePath } from './ItemUtils.js';
 import {
   isRichTextElementNode,
   isRichTextItemField,
@@ -6,6 +5,7 @@ import {
   isValueItemItemField,
 } from './ItemUtils.js';
 import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
+import type { ItemValuePath } from './content/ContentPath.js';
 import type { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
 import type {
