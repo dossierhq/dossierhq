@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeType, traverseEntity, traverseValueItem } from './ItemTraverser.js';
 import { createRichTextRootNode, createRichTextValueItemNode } from './RichTextUtils.js';
-import { visitorPathToString } from './content/ContentPath.js';
+import { contentValuePathToString } from './content/ContentPath.js';
 import { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
 import { FieldType } from './schema/SchemaSpecification.js';
@@ -38,7 +38,7 @@ function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
 ) {
   const result = [];
   for (const node of generator) {
-    const path = visitorPathToString(node.path);
+    const path = contentValuePathToString(node.path);
     switch (node.type) {
       case ItemTraverseNodeType.error:
         result.push({ type: node.type, path, message: node.message });

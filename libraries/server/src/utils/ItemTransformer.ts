@@ -4,7 +4,7 @@ import {
   isValueItemItemField,
   notOk,
   ok,
-  visitorPathToString,
+  contentValuePathToString,
   type AdminSchema,
   type EntityLike,
   type ErrorType,
@@ -62,7 +62,7 @@ export function transformEntity<
   const typeSpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!typeSpec) {
     return notOk.BadRequest(
-      `${visitorPathToString(path)}: Unknown entity type: ${entity.info.type}`,
+      `${contentValuePathToString(path)}: Unknown entity type: ${entity.info.type}`,
     );
   }
 
@@ -83,7 +83,7 @@ export function transformValueItem<
 ): Result<ValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const typeSpec = schema.getValueTypeSpecification(item.type);
   if (!typeSpec) {
-    return notOk.BadRequest(`${visitorPathToString(path)}: Unknown value type: ${item.type}`);
+    return notOk.BadRequest(`${contentValuePathToString(path)}: Unknown value type: ${item.type}`);
   }
 
   const transformResult = transformItemFields(schema, path, typeSpec, item, mapper);

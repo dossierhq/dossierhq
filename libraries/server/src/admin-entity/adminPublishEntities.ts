@@ -14,7 +14,7 @@ import {
   createErrorResult,
   notOk,
   ok,
-  visitorPathToString,
+  contentValuePathToString,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
@@ -177,7 +177,7 @@ export async function adminPublishEntities(
           uniqueIndexResult.value.conflictingValues
             .map(
               ({ index, value, path }) =>
-                `${versionInfo.uuid}:${visitorPathToString(
+                `${versionInfo.uuid}:${contentValuePathToString(
                   path,
                 )}: Value is not unique (${index}:${value})`,
             )
@@ -278,7 +278,7 @@ async function collectVersionsInfo(
       if (validateFields.validationIssues.length > 0) {
         const firstValidationIssue = validateFields.validationIssues[0];
         return notOk.BadRequest(
-          `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
+          `${contentValuePathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
         );
       }
       const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =

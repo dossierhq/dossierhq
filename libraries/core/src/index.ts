@@ -217,7 +217,10 @@ export {
   normalizeFieldValue,
   normalizeValueItem,
 } from './content/ContentNormalizer.js';
-export { visitorPathToString, type ContentValuePath } from './content/ContentPath.js';
+export {
+  contentValuePathToString as contentValuePathToString,
+  type ContentValuePath,
+} from './content/ContentPath.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
 export {

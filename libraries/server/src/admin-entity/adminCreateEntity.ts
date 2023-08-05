@@ -3,7 +3,7 @@ import {
   notOk,
   ok,
   validateEntityInfoForCreate,
-  visitorPathToString,
+  contentValuePathToString,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
@@ -41,7 +41,7 @@ export async function adminCreateEntity(
   const validationIssue = validateEntityInfoForCreate(adminSchema, ['entity'], entity);
   if (validationIssue) {
     return notOk.BadRequest(
-      `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
+      `${contentValuePathToString(validationIssue.path)}: ${validationIssue.message}`,
     );
   }
 
@@ -70,7 +70,7 @@ export async function adminCreateEntity(
   if (encodeResult.value.validationIssues.length > 0) {
     const firstValidationIssue = encodeResult.value.validationIssues[0];
     return notOk.BadRequest(
-      `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
+      `${contentValuePathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
     );
   }
   const encodeEntityResult = encodeResult.value;
@@ -126,7 +126,7 @@ export async function adminCreateEntity(
         uniqueIndexResult.value.conflictingValues
           .map(
             ({ index, value, path }) =>
-              `${visitorPathToString(path)}: Value is not unique (${index}:${value})`,
+              `${contentValuePathToString(path)}: Value is not unique (${index}:${value})`,
           )
           .join('\n'),
       );

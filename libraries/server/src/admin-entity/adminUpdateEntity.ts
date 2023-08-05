@@ -3,7 +3,7 @@ import {
   notOk,
   ok,
   validateEntityInfoForUpdate,
-  visitorPathToString,
+  contentValuePathToString,
   type AdminEntityMutationOptions,
   type AdminEntityUpdate,
   type AdminEntityUpdatePayload,
@@ -57,7 +57,7 @@ export async function adminUpdateEntity(
     );
     if (validationIssue) {
       return notOk.BadRequest(
-        `${visitorPathToString(validationIssue.path)}: ${validationIssue.message}`,
+        `${contentValuePathToString(validationIssue.path)}: ${validationIssue.message}`,
       );
     }
 
@@ -107,7 +107,7 @@ export async function adminUpdateEntity(
     if (encodeResult.value.validationIssues.length > 0) {
       const firstValidationIssue = encodeResult.value.validationIssues[0];
       return notOk.BadRequest(
-        `${visitorPathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
+        `${contentValuePathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
       );
     }
     const { data, name } = encodeResult.value;
@@ -154,7 +154,7 @@ export async function adminUpdateEntity(
         uniqueIndexResult.value.conflictingValues
           .map(
             ({ index, value, path }) =>
-              `${visitorPathToString(path)}: Value is not unique (${index}:${value})`,
+              `${contentValuePathToString(path)}: Value is not unique (${index}:${value})`,
           )
           .join('\n'),
       );

@@ -6,7 +6,7 @@ import {
   isRichTextValueItemNode,
   isValueItemItemField,
   ok,
-  visitorPathToString,
+  contentValuePathToString,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { transformEntity } from './ItemTransformer.js';
@@ -54,15 +54,15 @@ describe('transformEntity', () => {
     const calls: unknown[][] = [];
     const transformed = transformEntity(ADMIN_SCHEMA, [], ENTITY_1, {
       transformField: (path, _fieldSpec, value) => {
-        calls.push(['transformField', visitorPathToString(path)]);
+        calls.push(['transformField', contentValuePathToString(path)]);
         return ok(value);
       },
       transformFieldItem: (path, _fieldSpec, value) => {
-        calls.push(['transformFieldItem', visitorPathToString(path)]);
+        calls.push(['transformFieldItem', contentValuePathToString(path)]);
         return ok(value);
       },
       transformRichTextNode: (path, _fieldSpec, node) => {
-        calls.push(['transformRichTextNode', visitorPathToString(path)]);
+        calls.push(['transformRichTextNode', contentValuePathToString(path)]);
         return ok(node);
       },
     }).valueOrThrow();

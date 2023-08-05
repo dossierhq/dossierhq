@@ -1,6 +1,6 @@
 export type ContentValuePath = (string | number)[];
 
-export function visitorPathToString(path: ContentValuePath): string {
+export function contentValuePathToString(path: ContentValuePath): string {
   let result = '';
   for (const segment of path) {
     if (Number.isInteger(segment)) {
