@@ -1,5 +1,20 @@
-import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from './ErrorResult.js';
-import { ErrorType, notOk, ok } from './ErrorResult.js';
+import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from '../ErrorResult.js';
+import { ErrorType, notOk, ok } from '../ErrorResult.js';
+import type {
+  Connection,
+  Edge,
+  EntityReference,
+  EntitySamplingOptions,
+  EntitySamplingPayload,
+  Paging,
+  PublishedEntity,
+  PublishedQuery,
+  PublishedSearchQuery,
+  UniqueIndexReference,
+  ValueItem,
+} from '../Types.js';
+import type { PublishedSchemaSpecification } from '../schema/SchemaSpecification.js';
+import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import type { JsonConnection, JsonEdge, JsonPublishedEntity, JsonResult } from './JsonUtils.js';
 import {
   convertJsonConnection,
@@ -15,21 +30,6 @@ import type {
   OperationWithoutCallbacks,
 } from './SharedClient.js';
 import { executeOperationPipeline } from './SharedClient.js';
-import type { LooseAutocomplete } from './utils/TypeUtils.js';
-import type {
-  Connection,
-  Edge,
-  EntityReference,
-  EntitySamplingOptions,
-  EntitySamplingPayload,
-  Paging,
-  PublishedEntity,
-  PublishedQuery,
-  PublishedSearchQuery,
-  UniqueIndexReference,
-  ValueItem,
-} from './Types.js';
-import type { PublishedSchemaSpecification } from './schema/SchemaSpecification.js';
 
 export interface PublishedClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,

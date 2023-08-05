@@ -1,13 +1,13 @@
-import type { AdminClient } from './AdminClient.js';
 import {
   ErrorType,
   createErrorResult,
   notOk,
   type ErrorResult,
   type PromiseResult,
-} from './ErrorResult.js';
-import { NoOpLogger } from './Logger.js';
-import type { AdminEntity, AdvisoryLockOptions, AdvisoryLockPayload, ValueItem } from './Types.js';
+} from '../ErrorResult.js';
+import { NoOpLogger } from '../Logger.js';
+import type { AdminEntity, AdvisoryLockOptions, AdvisoryLockPayload, ValueItem } from '../Types.js';
+import type { AdminClient } from './AdminClient.js';
 
 interface AdvisoryLockHelperOptions extends AdvisoryLockOptions {
   acquireInterval: number;

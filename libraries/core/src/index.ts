@@ -1,18 +1,3 @@
-export {
-  AdminClientModifyingOperations,
-  AdminClientOperationName,
-  convertJsonAdminClientResult,
-  createBaseAdminClient,
-  executeAdminClientOperationFromJson,
-} from './AdminClient.js';
-export type {
-  AdminClient,
-  AdminClientJsonOperationArgs,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  AdminExceptionClient,
-} from './AdminClient.js';
-export { withAdvisoryLock } from './AdvisoryLockUtils.js';
 export { assertExhaustive, assertIsDefined } from './Asserts.js';
 export {
   ErrorResultError,
@@ -84,44 +69,8 @@ export {
   isValueItemItemField,
   isValueItemListField,
 } from './ItemUtils.js';
-export {
-  convertJsonConnection,
-  convertJsonEdge,
-  convertJsonEntityHistory,
-  convertJsonPublishingHistory,
-  convertJsonResult,
-} from './JsonUtils.js';
-export type {
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonEntityVersionInfo,
-  JsonPublishingHistory,
-  JsonResult,
-} from './JsonUtils.js';
 export { NoOpLogger, createConsoleLogger } from './Logger.js';
 export type { Logger } from './Logger.js';
-export {
-  getAllNodesForConnection,
-  getAllPagesForConnection,
-  getPagingInfo,
-} from './PagingUtils.js';
-export type { PagingInfo } from './PagingUtils.js';
-export {
-  PublishedClientOperationName,
-  convertJsonPublishedClientResult,
-  createBasePublishedClient,
-  executePublishedClientOperationFromJson,
-} from './PublishedClient.js';
-export type {
-  PublishedClient,
-  PublishedClientJsonOperationArgs,
-  PublishedClientMiddleware,
-  PublishedClientOperation,
-  PublishedExceptionClient,
-} from './PublishedClient.js';
-export { LoggingClientMiddleware } from './SharedClient.js';
-export type { ClientContext, ContextProvider } from './SharedClient.js';
 export {
   AdminEntityStatus,
   AdminQueryOrder,
@@ -188,7 +137,61 @@ export type {
   UniqueIndexReference,
   ValueItem,
 } from './Types.js';
-export { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from './UrlQueryUtils.js';
+export {
+  AdminClientModifyingOperations,
+  AdminClientOperationName,
+  convertJsonAdminClientResult,
+  createBaseAdminClient,
+  executeAdminClientOperationFromJson,
+} from './client/AdminClient.js';
+export type {
+  AdminClient,
+  AdminClientJsonOperationArgs,
+  AdminClientMiddleware,
+  AdminClientOperation,
+  AdminExceptionClient,
+} from './client/AdminClient.js';
+export { withAdvisoryLock } from './client/AdvisoryLockUtils.js';
+export {
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonEntityHistory,
+  convertJsonPublishingHistory,
+  convertJsonResult,
+} from './client/JsonUtils.js';
+export type {
+  JsonConnection,
+  JsonEdge,
+  JsonEntityHistory,
+  JsonEntityVersionInfo,
+  JsonPublishingHistory,
+  JsonResult,
+} from './client/JsonUtils.js';
+export {
+  getAllNodesForConnection,
+  getAllPagesForConnection,
+  getPagingInfo,
+} from './client/PagingUtils.js';
+export type { PagingInfo } from './client/PagingUtils.js';
+export {
+  PublishedClientOperationName,
+  convertJsonPublishedClientResult,
+  createBasePublishedClient,
+  executePublishedClientOperationFromJson,
+} from './client/PublishedClient.js';
+export type {
+  PublishedClient,
+  PublishedClientJsonOperationArgs,
+  PublishedClientMiddleware,
+  PublishedClientOperation,
+  PublishedExceptionClient,
+} from './client/PublishedClient.js';
+export { LoggingClientMiddleware } from './client/SharedClient.js';
+export type { ClientContext, ContextProvider } from './client/SharedClient.js';
+export {
+  decodeURLSearchParamsParam,
+  encodeObjectToURLSearchParams,
+} from './client/UrlQueryUtils.js';
 export {
   normalizeEntityFields,
   normalizeFieldValue,

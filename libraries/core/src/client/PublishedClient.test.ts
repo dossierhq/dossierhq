@@ -1,8 +1,9 @@
 import { describe, expect, test, vi } from 'vitest';
-import { expectOkResult, expectResultValue } from './CoreTestUtils.js';
-import { ok } from './ErrorResult.js';
+import { expectOkResult, expectResultValue } from '../CoreTestUtils.js';
+import { ok } from '../ErrorResult.js';
+import { NoOpLogger } from '../Logger.js';
+import type { PublishedEntity } from '../Types.js';
 import { convertJsonResult } from './JsonUtils.js';
-import { NoOpLogger } from './Logger.js';
 import type {
   PublishedClient,
   PublishedClientJsonOperationArgs,
@@ -16,7 +17,6 @@ import {
   executePublishedClientOperationFromJson,
 } from './PublishedClient.js';
 import type { ClientContext } from './SharedClient.js';
-import type { PublishedEntity } from './Types.js';
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   publishedClient: PublishedClient,

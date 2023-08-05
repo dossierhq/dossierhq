@@ -1,5 +1,5 @@
-import type { ErrorType, Result } from './ErrorResult.js';
-import { createErrorResult, ok } from './ErrorResult.js';
+import type { ErrorType, Result } from '../ErrorResult.js';
+import { createErrorResult, ok } from '../ErrorResult.js';
 import type {
   AdminEntity,
   AdminEntityCreatePayload,
@@ -16,7 +16,7 @@ import type {
   PublishedEntityInfo,
   PublishingEvent,
   PublishingHistory,
-} from './Types.js';
+} from '../Types.js';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
   pageInfo: PageInfo;

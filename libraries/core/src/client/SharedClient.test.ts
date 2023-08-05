@@ -1,7 +1,7 @@
 import { describe, test } from 'vitest';
-import { expectErrorResult, expectResultValue } from './CoreTestUtils.js';
-import { ErrorType, ok } from './ErrorResult.js';
-import { NoOpLogger } from './Logger.js';
+import { expectErrorResult, expectResultValue } from '../CoreTestUtils.js';
+import { ErrorType, ok } from '../ErrorResult.js';
+import { NoOpLogger } from '../Logger.js';
 import type {
   ClientContext,
   Middleware,

@@ -6,37 +6,7 @@ import {
   type OkFromResult,
   type PromiseResult,
   type Result,
-} from './ErrorResult.js';
-import type {
-  JsonAdminEntity,
-  JsonAdminEntityCreatePayload,
-  JsonAdminEntityUpdatePayload,
-  JsonAdminEntityUpsertPayload,
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonPublishingHistory,
-  JsonPublishingResult,
-  JsonResult,
-} from './JsonUtils.js';
-import {
-  convertJsonAdminEntity,
-  convertJsonConnection,
-  convertJsonEdge,
-  convertJsonEntityHistory,
-  convertJsonPublishingHistory,
-  convertJsonPublishingResult,
-  convertJsonResult,
-} from './JsonUtils.js';
-import type {
-  ClientContext,
-  ContextProvider,
-  Middleware,
-  Operation,
-  OperationWithoutCallbacks,
-} from './SharedClient.js';
-import { executeOperationPipeline } from './SharedClient.js';
-import type { LooseAutocomplete } from './utils/TypeUtils.js';
+} from '../ErrorResult.js';
 import type {
   AdminEntity,
   AdminEntityArchivePayload,
@@ -66,13 +36,43 @@ import type {
   PublishingHistory,
   UniqueIndexReference,
   ValueItem,
-} from './Types.js';
+} from '../Types.js';
 import type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
   AdminSchemaSpecificationWithMigrations,
   SchemaSpecificationUpdatePayload,
-} from './schema/SchemaSpecification.js';
+} from '../schema/SchemaSpecification.js';
+import type { LooseAutocomplete } from '../utils/TypeUtils.js';
+import type {
+  JsonAdminEntity,
+  JsonAdminEntityCreatePayload,
+  JsonAdminEntityUpdatePayload,
+  JsonAdminEntityUpsertPayload,
+  JsonConnection,
+  JsonEdge,
+  JsonEntityHistory,
+  JsonPublishingHistory,
+  JsonPublishingResult,
+  JsonResult,
+} from './JsonUtils.js';
+import {
+  convertJsonAdminEntity,
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonEntityHistory,
+  convertJsonPublishingHistory,
+  convertJsonPublishingResult,
+  convertJsonResult,
+} from './JsonUtils.js';
+import type {
+  ClientContext,
+  ContextProvider,
+  Middleware,
+  Operation,
+  OperationWithoutCallbacks,
+} from './SharedClient.js';
+import { executeOperationPipeline } from './SharedClient.js';
 
 export interface AdminClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,

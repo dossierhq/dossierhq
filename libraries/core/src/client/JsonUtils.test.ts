@@ -1,6 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
-import { ErrorType, notOk, ok } from './ErrorResult.js';
+import { expectErrorResult, expectOkResult } from '../CoreTestUtils.js';
+import { ErrorType, notOk, ok } from '../ErrorResult.js';
+import type { Connection, Edge, EntityHistory, PublishingHistory } from '../Types.js';
+import { PublishingEventKind } from '../Types.js';
 import type {
   JsonConnection,
   JsonEdge,
@@ -15,8 +17,6 @@ import {
   convertJsonPublishingHistory,
   convertJsonResult,
 } from './JsonUtils.js';
-import type { Connection, Edge, EntityHistory, PublishingHistory } from './Types.js';
-import { PublishingEventKind } from './Types.js';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
   edgeProperty: string;
