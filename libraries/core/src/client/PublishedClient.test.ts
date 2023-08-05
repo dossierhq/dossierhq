@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { expectOkResult, expectResultValue } from '../CoreTestUtils.js';
+import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { ok } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type { PublishedEntity } from '../Types.js';

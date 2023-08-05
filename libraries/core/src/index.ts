@@ -1,4 +1,3 @@
-export { assertExhaustive, assertIsDefined } from './Asserts.js';
 export {
   ErrorResultError,
   ErrorType,
@@ -263,4 +262,6 @@ export type {
   StringFieldSpecification,
   ValueItemFieldSpecification,
 } from './schema/SchemaSpecification.js';
+// TODO stop exporting assertExhaustive, assertIsDefined
+export { assertExhaustive, assertIsDefined } from './utils/Asserts.js';
 export { isFieldValueEqual } from './utils/isFieldValueEqual.js';

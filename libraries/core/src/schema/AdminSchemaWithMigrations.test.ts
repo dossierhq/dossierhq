@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult } from '../CoreTestUtils.js';
+import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { ErrorType } from '../ErrorResult.js';
 import { RichTextNodeType } from '../Types.js';
 import { AdminSchemaWithMigrations } from './AdminSchema.js';

@@ -1,4 +1,4 @@
-import { assertExhaustive, assertIsDefined } from '../Asserts.js';
+import { assertExhaustive, assertIsDefined } from '../utils/Asserts.js';
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';

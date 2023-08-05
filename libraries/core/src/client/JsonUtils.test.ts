@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult, expectOkResult } from '../CoreTestUtils.js';
+import { expectErrorResult, expectOkResult } from '../test/CoreTestUtils.js';
 import { ErrorType, notOk, ok } from '../ErrorResult.js';
 import type { Connection, Edge, EntityHistory, PublishingHistory } from '../Types.js';
 import { PublishingEventKind } from '../Types.js';

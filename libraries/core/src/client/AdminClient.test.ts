@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
-import { assertIsDefined } from '../Asserts.js';
-import { expectOkResult, expectResultValue } from '../CoreTestUtils.js';
+import { assertIsDefined } from '../utils/Asserts.js';
+import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { ok } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type {

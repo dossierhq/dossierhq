@@ -1,4 +1,4 @@
-import { assertIsDefined } from '../Asserts.js';
+import { assertIsDefined } from '../utils/Asserts.js';
 import type { ErrorType, PromiseResult, Result } from '../ErrorResult.js';
 import { notOk } from '../ErrorResult.js';
 import type { Logger } from '../Logger.js';

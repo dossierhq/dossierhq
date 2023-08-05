@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult, expectOkResult } from './CoreTestUtils.js';
 import type { Result } from './ErrorResult.js';
-import { createErrorResultFromError, ErrorType, notOk, ok } from './ErrorResult.js';
+import { ErrorType, createErrorResultFromError, notOk, ok } from './ErrorResult.js';
+import { expectErrorResult, expectOkResult } from './test/CoreTestUtils.js';
 import { createMockLogger } from './test/MockLogger.js';
 
 describe('createErrorResultFromError()', () => {

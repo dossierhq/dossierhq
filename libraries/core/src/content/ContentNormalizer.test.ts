@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { assertIsDefined } from '../Asserts.js';
+import { assertIsDefined } from '../utils/Asserts.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import {

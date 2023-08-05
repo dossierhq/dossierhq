@@ -1,5 +1,5 @@
 import { expect } from 'vitest';
-import type { ErrorType, OkResult, Result } from './ErrorResult.js';
+import type { ErrorType, OkResult, Result } from '../ErrorResult.js';
 
 export function expectOkResult<TOk, TError extends ErrorType>(
   actual: Result<unknown, ErrorType>,

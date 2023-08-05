@@ -1,4 +1,4 @@
-import { assertExhaustive } from '../Asserts.js';
+import { assertExhaustive } from '../utils/Asserts.js';
 import type { ErrorType, Result } from '../ErrorResult.js';
 import { notOk, ok } from '../ErrorResult.js';
 import { RichTextNodeType, type EntityLike, type RichText, type ValueItem } from '../Types.js';
