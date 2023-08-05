@@ -345,27 +345,7 @@ describe('validateTraverseNodeForSave', () => {
   });
 });
 
-describe('Validate entity', () => {
-  test('Fail: integer with float value', () => {
-    expect(
-      validateEntity(copyEntity(NUMBERS_ENTITY_CREATE_DEFAULT, { fields: { integer: 1.2345 } })),
-    ).toMatchSnapshot();
-  });
-
-  test('Pass: matchPattern matched string', () => {
-    expect(
-      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'baz' } })),
-    ).toEqual([]);
-  });
-
-  test('Fail: matchPattern unmatched string', () => {
-    expect(
-      validateEntity(
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'will not match' } }),
-      ),
-    ).toMatchSnapshot();
-  });
-
+describe('Validate entity shared', () => {
   test('Pass: required and adminOnly with no value', () => {
     expect(
       validateEntity(
@@ -377,6 +357,46 @@ describe('Validate entity', () => {
   test('Fail: required with no value', () => {
     expect(
       validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { required: null } })),
+    ).toMatchSnapshot();
+  });
+});
+
+describe('Validate entity number', () => {
+  test('Fail: integer with float value', () => {
+    expect(
+      validateEntity(copyEntity(NUMBERS_ENTITY_CREATE_DEFAULT, { fields: { integer: 1.2345 } })),
+    ).toMatchSnapshot();
+  });
+});
+
+describe('Validate entity richText', () => {
+  test('Fail: rich text text node with line break', () => {
+    expect(
+      validateEntity(
+        copyEntity(RICH_TEXTS_ENTITY_CREATE_DEFAULT, {
+          fields: {
+            anyNodes: createRichTextRootNode([
+              createRichTextParagraphNode([createRichTextTextNode('hello\nworld')]),
+            ]),
+          },
+        }),
+      ),
+    ).toMatchSnapshot();
+  });
+});
+
+describe('Validate entity string', () => {
+  test('Pass: matchPattern matched string', () => {
+    expect(
+      validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'baz' } })),
+    ).toEqual([]);
+  });
+
+  test('Fail: matchPattern unmatched string', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { pattern: 'will not match' } }),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -429,21 +449,9 @@ describe('Validate entity', () => {
       ),
     ).toMatchSnapshot();
   });
+});
 
-  test('Fail: rich text text node with line break', () => {
-    expect(
-      validateEntity(
-        copyEntity(RICH_TEXTS_ENTITY_CREATE_DEFAULT, {
-          fields: {
-            anyNodes: createRichTextRootNode([
-              createRichTextParagraphNode([createRichTextTextNode('hello\nworld')]),
-            ]),
-          },
-        }),
-      ),
-    ).toMatchSnapshot();
-  });
-
+describe('Validate entity valueItem', () => {
   test('Fail: admin only value item in normal field', () => {
     expect(
       validateEntity(

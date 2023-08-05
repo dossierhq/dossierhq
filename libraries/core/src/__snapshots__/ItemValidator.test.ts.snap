@@ -1,20 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Validate entity > Fail: admin only value item in normal field 1`] = `
-[
-  {
-    "message": "Value item of type AdminOnlyValueItem is adminOnly",
-    "path": [
-      "entity",
-      "fields",
-      "any",
-    ],
-    "type": "publish",
-  },
-]
-`;
-
-exports[`Validate entity > Fail: integer with float value 1`] = `
+exports[`Validate entity number > Fail: integer with float value 1`] = `
 [
   {
     "message": "Value must be an integer",
@@ -28,50 +14,7 @@ exports[`Validate entity > Fail: integer with float value 1`] = `
 ]
 `;
 
-exports[`Validate entity > Fail: matchPattern unmatched string 1`] = `
-[
-  {
-    "message": "Value does not match pattern fooBarBaz",
-    "path": [
-      "entity",
-      "fields",
-      "pattern",
-    ],
-    "type": "save",
-  },
-]
-`;
-
-exports[`Validate entity > Fail: matchPattern unmatched string item in list 1`] = `
-[
-  {
-    "message": "Value does not match pattern fooBarBaz",
-    "path": [
-      "entity",
-      "fields",
-      "patternList",
-      1,
-    ],
-    "type": "save",
-  },
-]
-`;
-
-exports[`Validate entity > Fail: required with no value 1`] = `
-[
-  {
-    "message": "Required field is empty",
-    "path": [
-      "entity",
-      "fields",
-      "required",
-    ],
-    "type": "publish",
-  },
-]
-`;
-
-exports[`Validate entity > Fail: rich text text node with line break 1`] = `
+exports[`Validate entity richText > Fail: rich text text node with line break 1`] = `
 [
   {
     "message": "Rich text text nodes cannot contain line breaks, use linebreak nodes instead",
@@ -87,7 +30,50 @@ exports[`Validate entity > Fail: rich text text node with line break 1`] = `
 ]
 `;
 
-exports[`Validate entity > Fail: values unmatched string 1`] = `
+exports[`Validate entity shared > Fail: required with no value 1`] = `
+[
+  {
+    "message": "Required field is empty",
+    "path": [
+      "entity",
+      "fields",
+      "required",
+    ],
+    "type": "publish",
+  },
+]
+`;
+
+exports[`Validate entity string > Fail: matchPattern unmatched string 1`] = `
+[
+  {
+    "message": "Value does not match pattern fooBarBaz",
+    "path": [
+      "entity",
+      "fields",
+      "pattern",
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity string > Fail: matchPattern unmatched string item in list 1`] = `
+[
+  {
+    "message": "Value does not match pattern fooBarBaz",
+    "path": [
+      "entity",
+      "fields",
+      "patternList",
+      1,
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity string > Fail: values unmatched string 1`] = `
 [
   {
     "message": "Value does not match any of the allowed values",
@@ -101,7 +87,7 @@ exports[`Validate entity > Fail: values unmatched string 1`] = `
 ]
 `;
 
-exports[`Validate entity > Fail: values unmatched string list 1`] = `
+exports[`Validate entity string > Fail: values unmatched string list 1`] = `
 [
   {
     "message": "Value does not match any of the allowed values",
@@ -112,6 +98,20 @@ exports[`Validate entity > Fail: values unmatched string list 1`] = `
       1,
     ],
     "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity valueItem > Fail: admin only value item in normal field 1`] = `
+[
+  {
+    "message": "Value item of type AdminOnlyValueItem is adminOnly",
+    "path": [
+      "entity",
+      "fields",
+      "any",
+    ],
+    "type": "publish",
   },
 ]
 `;
