@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
-import { copyEntity, normalizeEntityFields } from './ItemUtils.js';
+import { copyEntity } from './ItemUtils.js';
 import {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,
@@ -17,6 +17,7 @@ import {
   createRichTextTextNode,
 } from './RichTextUtils.js';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
+import { normalizeEntityFields } from './content/ContentNormalizer.js';
 import { AdminSchema } from './schema/AdminSchema.js';
 import { FieldType } from './schema/SchemaSpecification.js';
 

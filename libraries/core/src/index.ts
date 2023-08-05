@@ -83,9 +83,6 @@ export {
   isValueItemField,
   isValueItemItemField,
   isValueItemListField,
-  normalizeEntityFields,
-  normalizeFieldValue,
-  normalizeValueItem,
   visitorPathToString,
 } from './ItemUtils.js';
 export type { ItemValuePath } from './ItemUtils.js';
@@ -217,6 +214,11 @@ export type {
   ValueItem,
 } from './Types.js';
 export { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from './UrlQueryUtils.js';
+export {
+  normalizeEntityFields,
+  normalizeFieldValue,
+  normalizeValueItem,
+} from './content/ContentNormalizer.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
 export {
