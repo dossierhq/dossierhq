@@ -10,7 +10,7 @@ import {
   assertOkResult,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   ok,
 } from '@dossierhq/core';
@@ -381,7 +381,7 @@ describe('create*Entity()', () => {
         entity: { id: barId },
       } = createBarResult.value;
 
-      const body = createRichTextRootNode([
+      const body = createRichText([
         createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
         createRichTextEntityNode({ id: barId }),
       ]);
@@ -477,7 +477,7 @@ describe('create*Entity()', () => {
           ...emptyFooFields,
           title: 'Foo title',
           summary: 'Foo summary',
-          body: createRichTextRootNode([
+          body: createRichText([
             createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
             createRichTextEntityNode({ id: barId }),
           ]),

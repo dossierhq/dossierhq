@@ -1,7 +1,7 @@
 import type { EntityReference, Location } from '@dossierhq/core';
 import {
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,
 } from '@dossierhq/core';
@@ -113,7 +113,7 @@ async function createPersonalNote(
         info: { type: 'PersonalNote', authKey: 'subject', name: `Note: ${userName}` },
         fields: {
           placeOfBusiness: { id: placeOfBusiness.id },
-          note: createRichTextRootNode([
+          note: createRichText([
             createRichTextParagraphNode([
               createRichTextTextNode(
                 `This is a personal note about ${placeOfBusiness.fields.name} that only ${userName} can see.`,

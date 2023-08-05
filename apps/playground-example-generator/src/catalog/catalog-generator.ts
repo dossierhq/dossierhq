@@ -6,7 +6,7 @@ import {
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   type AdminEntityCreate,
@@ -454,7 +454,7 @@ async function createRichTextsEntities(
   };
   const minimalPublish = copyEntity(minimal, {
     fields: {
-      required: createRichTextRootNode([
+      required: createRichText([
         createRichTextParagraphNode([
           createRichTextTextNode('Hello '),
           createRichTextTextNode('World!', { format: ['bold'] }),
@@ -479,14 +479,14 @@ async function createRichTextsEntities(
         id: id('rich-texts-filled'),
         info: { name: 'RichTexts filled' },
         fields: {
-          normal: createRichTextRootNode([
+          normal: createRichText([
             createRichTextParagraphNode([
               createRichTextTextNode('Hello '),
               createRichTextTextNode('World!', { format: ['bold'] }),
             ]),
             createRichTextValueItemNode(faker.helpers.arrayElement(cloudinaryImageValueItems)),
           ]),
-          minimal: createRichTextRootNode([
+          minimal: createRichText([
             createRichTextParagraphNode([
               createRichTextTextNode('Hello '),
               createRichTextTextNode('World!', { format: ['bold'] }),
@@ -494,29 +494,29 @@ async function createRichTextsEntities(
           ]),
           code: CODE_BLOCK,
           list: [
-            createRichTextRootNode([
+            createRichText([
               createRichTextParagraphNode([createRichTextTextNode('First')]),
             ]),
-            createRichTextRootNode([
+            createRichText([
               createRichTextParagraphNode([createRichTextTextNode('Second')]),
             ]),
           ],
-          adminOnly: createRichTextRootNode([
+          adminOnly: createRichText([
             createRichTextParagraphNode([createRichTextTextNode('Admin only field.')]),
           ]),
-          stringsEntity: createRichTextRootNode([
+          stringsEntity: createRichText([
             createRichTextEntityNode(stringsEntities[1]),
             createRichTextParagraphNode([
               createRichTextTextNode('There is an strings entity above'),
             ]),
           ]),
-          numbersEntityLink: createRichTextRootNode([
+          numbersEntityLink: createRichText([
             createRichTextParagraphNode([
               createRichTextTextNode('Hello '),
               createRichTextEntityLinkNode(numbersEntities[0], [createRichTextTextNode('World!')]),
             ]),
           ]),
-          nestedValueItem: createRichTextRootNode([
+          nestedValueItem: createRichText([
             createRichTextValueItemNode<AdminNestedValueItem>({
               type: 'NestedValueItem',
               text: 'root',
@@ -535,7 +535,7 @@ async function createRichTextsEntities(
         id: id('rich-texts-value-item-validation'),
         info: { name: 'RichTexts validation of value items' },
         fields: {
-          normal: createRichTextRootNode([
+          normal: createRichText([
             //TODO add draft entity node when we check it in the editor (currently checked on server only)
             createRichTextParagraphNode([
               createRichTextTextNode('Required fields are not allowed to be empty:'),
@@ -550,7 +550,7 @@ async function createRichTextsEntities(
               requiredListMatchPattern: null,
             }),
           ]),
-          adminOnly: createRichTextRootNode([
+          adminOnly: createRichText([
             createRichTextParagraphNode([
               createRichTextTextNode(
                 'Since this field is admin only it can contain references to unpublished entities',
@@ -582,20 +582,20 @@ async function createRichTextsEntities(
         id: id('rich-texts-invalid'),
         info: { name: 'RichTexts invalid' },
         fields: {
-          minimal: createRichTextRootNode([
+          minimal: createRichText([
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
-          stringsEntity: createRichTextRootNode([
+          stringsEntity: createRichText([
             createRichTextEntityNode(numbersEntities[0]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
-          numbersEntityLink: createRichTextRootNode([
+          numbersEntityLink: createRichText([
             createRichTextEntityLinkNode(stringsEntities[0], [
               createRichTextTextNode('Link to string entity'),
             ]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
-          nestedValueItem: createRichTextRootNode([
+          nestedValueItem: createRichText([
             createRichTextValueItemNode<AdminCloudinaryImage>(cloudinaryImageValueItems[0]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),

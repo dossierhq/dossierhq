@@ -1,7 +1,7 @@
 import {
   AdminSchemaWithMigrations,
   FieldType,
-  createRichTextRootNode,
+  createRichText,
   createRichTextValueItemNode,
   isRichTextValueItemNode,
   isValueItemItemField,
@@ -36,7 +36,7 @@ const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
 const ENTITY_1 = Object.freeze({
   info: { type: 'ValueItemsEntity' },
   fields: {
-    richText: createRichTextRootNode([createRichTextValueItemNode({ type: 'NestedValueItem' })]),
+    richText: createRichText([createRichTextValueItemNode({ type: 'NestedValueItem' })]),
     valueItem: {
       type: 'NestedValueItem',
       string: '1',

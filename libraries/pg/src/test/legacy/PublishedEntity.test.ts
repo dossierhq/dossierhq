@@ -9,7 +9,7 @@ import {
   AdminEntityStatus,
   FieldType,
   assertOkResult,
-  createRichTextRootNode,
+  createRichText,
   createRichTextValueItemNode,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
@@ -326,7 +326,7 @@ describe('searchEntities() boundingBox', () => {
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: {
-          body: createRichTextRootNode([
+          body: createRichText([
             createRichTextValueItemNode({
               type: 'PublishedEntityStringedLocation',
               string: 'Hello location',

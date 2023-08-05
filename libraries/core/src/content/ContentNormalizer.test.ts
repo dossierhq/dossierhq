@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { assertIsDefined } from '../Asserts.js';
-import { createRichTextParagraphNode, createRichTextRootNode } from '../RichTextUtils.js';
+import { createRichTextParagraphNode, createRichText } from '../RichTextUtils.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import {
@@ -150,7 +150,7 @@ describe('normalizeFieldValue()', () => {
       normalizeFieldValue(
         schema,
         getEntityFieldSpec(schema, 'Foo', 'richText'),
-        createRichTextRootNode([createRichTextParagraphNode([])]),
+        createRichText([createRichTextParagraphNode([])]),
       ),
     ).toBe(null);
   });

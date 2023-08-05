@@ -22,8 +22,7 @@ import type {
   ValueItem,
 } from './Types.js';
 
-// TODO name is not correct, we create a document with a root node
-export function createRichTextRootNode(children: RichTextNode[]): RichText {
+export function createRichText(children: RichTextNode[]): RichText {
   return {
     root: {
       direction: 'ltr',

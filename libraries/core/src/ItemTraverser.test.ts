@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeType, traverseEntity, traverseValueItem } from './ItemTraverser.js';
-import { createRichTextRootNode, createRichTextValueItemNode } from './RichTextUtils.js';
+import { createRichText, createRichTextValueItemNode } from './RichTextUtils.js';
 import { contentValuePathToString } from './content/ContentPath.js';
 import { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
@@ -94,7 +94,7 @@ describe('traverseEntity', () => {
       traverseEntity(adminSchema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
-          richText: createRichTextRootNode([
+          richText: createRichText([
             createRichTextValueItemNode({ type: 'TwoStrings', string1: 'two-1', string2: 'two-2' }),
           ]),
         },

@@ -5,7 +5,7 @@ import {
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   getAllNodesForConnection,
@@ -691,7 +691,7 @@ async function searchEntities_linksToOneReferenceFromRichText({ server }: AdminE
 
   const referenceResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
-      fields: { richText: createRichTextRootNode([createRichTextEntityNode({ id: titleOnlyId })]) },
+      fields: { richText: createRichText([createRichTextEntityNode({ id: titleOnlyId })]) },
     }),
   );
   assertOkResult(referenceResult);
@@ -713,7 +713,7 @@ async function searchEntities_linksToOneReferenceFromLinkRichText({
   const referenceResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
-        richText: createRichTextRootNode([
+        richText: createRichText([
           createRichTextParagraphNode([
             createRichTextEntityLinkNode({ id: titleOnlyId }, [
               createRichTextTextNode('link text'),
@@ -743,7 +743,7 @@ async function searchEntities_linksToOneReferenceFromValueItemInRichText({
   const referenceResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
-        richText: createRichTextRootNode([
+        richText: createRichText([
           createRichTextValueItemNode<AdminReferencesValue>({
             type: 'ReferencesValue',
             reference: { id: titleOnlyId },
@@ -890,7 +890,7 @@ async function searchEntities_boundingBoxOneInsideFromValueItemInRichText({
   const createResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
-        richText: createRichTextRootNode([
+        richText: createRichText([
           createRichTextValueItemNode<AdminLocationsValue>({
             type: 'LocationsValue',
             location: center,

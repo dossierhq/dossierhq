@@ -2,7 +2,7 @@ import {
   AdminSchemaWithMigrations,
   FieldType,
   createRichTextHeadingNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   type RichText,
@@ -113,7 +113,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichTextRootNode([
+      richText: createRichText([
         createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
         createRichTextValueItemNode({
           type: 'ValueItem',
@@ -150,7 +150,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichTextRootNode([
+      richText: createRichText([
         createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
         createRichTextValueItemNode({
           type: 'ValueItem',
@@ -288,7 +288,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichTextRootNode([
+      richText: createRichText([
         createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
         createRichTextValueItemNode({
           type: 'ValueItem',
@@ -350,7 +350,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichTextRootNode([
+      richText: createRichText([
         createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
         createRichTextValueItemNode({
           type: 'ValueItem',

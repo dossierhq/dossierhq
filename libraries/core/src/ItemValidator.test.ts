@@ -13,7 +13,7 @@ import {
 } from './ItemValidator.js';
 import {
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
 } from './RichTextUtils.js';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
@@ -378,7 +378,7 @@ describe('Validate entity richText', () => {
       validateEntity(
         copyEntity(RICH_TEXTS_ENTITY_CREATE_DEFAULT, {
           fields: {
-            anyNodes: createRichTextRootNode([
+            anyNodes: createRichText([
               createRichTextParagraphNode([createRichTextTextNode('hello\nworld')]),
             ]),
           },

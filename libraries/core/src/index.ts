@@ -137,7 +137,7 @@ export {
   createRichTextListItemNode,
   createRichTextListNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTabNode,
   createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,

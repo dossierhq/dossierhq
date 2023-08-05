@@ -3,7 +3,7 @@ import {
   copyEntity,
   createRichTextEntityLinkNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   ErrorType,
 } from '@dossierhq/core';
@@ -390,7 +390,7 @@ async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntity
     await client.createEntity(
       copyEntity(RICH_TEXTS_CREATE, {
         fields: {
-          richText: createRichTextRootNode([
+          richText: createRichText([
             createRichTextParagraphNode([
               createRichTextEntityLinkNode({ id: titleOnlyId }, [
                 createRichTextTextNode('link text'),

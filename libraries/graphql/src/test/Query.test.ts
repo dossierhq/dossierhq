@@ -4,7 +4,7 @@ import {
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   FieldType,
   notOk,
@@ -256,7 +256,7 @@ describe('node()', () => {
 
   test('Query rich text', async () => {
     const { adminClient } = server;
-    const body = createRichTextRootNode([
+    const body = createRichText([
       createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
     ]);
     const createFooResult = await adminClient.createEntity({
@@ -348,7 +348,7 @@ describe('node()', () => {
       )
     ).valueOrThrow();
 
-    const body = createRichTextRootNode([
+    const body = createRichText([
       createRichTextEntityNode({ id: bar1Id }),
       createRichTextParagraphNode([
         createRichTextEntityLinkNode({ id: bar2Id }, [createRichTextTextNode('Hello world')]),

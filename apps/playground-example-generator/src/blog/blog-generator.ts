@@ -2,7 +2,7 @@ import 'dotenv/config';
 //
 import {
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
 } from '@dossierhq/core';
@@ -53,10 +53,10 @@ async function createBlogPost(
           authors: faker.helpers
             .arrayElements(persons, Math.random() < 0.2 ? 2 : 1)
             .map((it) => ({ id: it.id })),
-          description: createRichTextRootNode([
+          description: createRichText([
             createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),
           ]),
-          body: createRichTextRootNode([
+          body: createRichText([
             createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),
             createRichTextValueItemNode(faker.helpers.arrayElement(images)),
             createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),

@@ -10,7 +10,7 @@ import {
   assertOkResult,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   getAllPagesForConnection,
@@ -588,7 +588,7 @@ describe('adminEntity()', () => {
 
   test('Query rich text field', async () => {
     const { adminClient } = server;
-    const body = createRichTextRootNode([
+    const body = createRichText([
       createRichTextParagraphNode([createRichTextTextNode('Hello foo world')]),
     ]);
     const createFooResult = await adminClient.createEntity({
@@ -678,7 +678,7 @@ describe('adminEntity()', () => {
         },
       } = createBar2Result.value;
 
-      const body = createRichTextRootNode([
+      const body = createRichText([
         createRichTextEntityNode({ id: bar1Id }),
         createRichTextValueItemNode({
           type: 'QueryAdminStringedBar',

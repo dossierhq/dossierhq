@@ -6,7 +6,7 @@ import {
   PublishingEventKind,
   copyEntity,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
 } from '@dossierhq/core';
@@ -1413,7 +1413,7 @@ describe('createEntity()', () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
-        bodyList: createRichTextRootNode([]),
+        bodyList: createRichText([]),
       },
     });
     expectErrorResult(
@@ -1427,7 +1427,7 @@ describe('createEntity()', () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
-        body: [createRichTextRootNode([])],
+        body: [createRichText([])],
       },
     });
     expectErrorResult(
@@ -1583,7 +1583,7 @@ describe('searchEntities() boundingBox', () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
-        body: createRichTextRootNode([
+        body: createRichText([
           createRichTextValueItemNode({
             type: 'EntityAdminStringedLocation',
             string: 'Hello location',
@@ -2791,7 +2791,7 @@ describe('publishEntities()', () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
-        body: createRichTextRootNode([
+        body: createRichText([
           createRichTextValueItemNode({ type: 'EntityAdminOneString', one: null }),
         ]),
       },

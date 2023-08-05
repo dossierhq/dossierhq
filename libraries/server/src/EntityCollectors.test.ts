@@ -1,14 +1,14 @@
 import type { AdminSchemaSpecificationUpdate, EntityLike } from '@dossierhq/core';
 import {
   AdminSchema,
+  FieldType,
+  createRichText,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
-  FieldType,
   traverseEntity,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
@@ -189,13 +189,13 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {
-          richText: createRichTextRootNode([
+          richText: createRichText([
             createRichTextParagraphNode([createRichTextTextNode('one one')]),
             createRichTextValueItemNode({ type: 'EntityCodecValueOne', string: 'one two' }),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Header text')]),
           ]),
           richTexts: [
-            createRichTextRootNode([createRichTextParagraphNode([createRichTextTextNode('two')])]),
+            createRichText([createRichTextParagraphNode([createRichTextTextNode('two')])]),
           ],
         },
       }),
@@ -256,7 +256,7 @@ describe('collectDataFromEntity', () => {
         info: { type: 'EntityCodecFoo' },
         fields: {
           valueOne: { type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
-          richText: createRichTextRootNode([
+          richText: createRichText([
             createRichTextValueItemNode({
               type: 'EntityCodecValueOne',
               location: { lat: 3, lng: 4 },
@@ -431,7 +431,7 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {
-          richText: createRichTextRootNode([
+          richText: createRichText([
             createRichTextEntityNode({ id: 'barId1' }),
             createRichTextEntityLinkNode({ id: 'barId2' }, [createRichTextTextNode('bar')]),
             createRichTextValueItemNode({ type: 'EntityCodecValueOne', bar: { id: 'bar3Id' } }),
@@ -542,9 +542,7 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {
-          richText: createRichTextRootNode([
-            createRichTextValueItemNode({ type: 'EntityCodecValueOne' }),
-          ]),
+          richText: createRichText([createRichTextValueItemNode({ type: 'EntityCodecValueOne' })]),
         },
       }),
     ).toMatchInlineSnapshot(`

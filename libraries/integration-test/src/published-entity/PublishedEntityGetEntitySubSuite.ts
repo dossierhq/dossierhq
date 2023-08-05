@@ -4,7 +4,7 @@ import {
   assertIsDefined,
   copyEntity,
   createRichTextHeadingNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   ErrorType,
@@ -227,7 +227,7 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   const createResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
-        richText: createRichTextRootNode([createRichTextValueItemNode(adminLocationsValueItem)]),
+        richText: createRichText([createRichTextValueItemNode(adminLocationsValueItem)]),
       },
     }),
     { publish: true },
@@ -341,7 +341,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
       server,
       adminClient,
       {
-        richText: createRichTextRootNode([
+        richText: createRichText([
           createRichTextValueItemNode({ type: 'AdminOnlyValue' }),
           createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')]),
         ]),
@@ -355,9 +355,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
   assertSame(publishedEntity.info.valid, false);
   assertEquals(
     publishedEntity.fields.richText,
-    createRichTextRootNode([
-      createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')]),
-    ]),
+    createRichText([createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')])]),
   );
 }
 

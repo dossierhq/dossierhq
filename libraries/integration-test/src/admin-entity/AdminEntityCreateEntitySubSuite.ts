@@ -4,7 +4,7 @@ import {
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichTextRootNode,
+  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   ErrorType,
@@ -472,7 +472,7 @@ async function createEntity_withUniqueIndexValueSameValueInTwoIndexes({
 }
 
 async function createEntity_withRichTextField({ server }: AdminEntityTestContext) {
-  const richText = createRichTextRootNode([
+  const richText = createRichText([
     createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
   ]);
   const client = adminClientForMainPrincipal(server);
@@ -505,10 +505,10 @@ async function createEntity_withRichTextField({ server }: AdminEntityTestContext
 }
 
 async function createEntity_withRichTextListField({ server }: AdminEntityTestContext) {
-  const richText1 = createRichTextRootNode([
+  const richText1 = createRichText([
     createRichTextParagraphNode([createRichTextTextNode('Hello world 1')]),
   ]);
-  const richText2 = createRichTextRootNode([
+  const richText2 = createRichText([
     createRichTextParagraphNode([createRichTextTextNode('Hello world 2')]),
   ]);
   const client = adminClientForMainPrincipal(server);
@@ -546,7 +546,7 @@ async function createEntity_withRichTextFieldWithReference({ server }: AdminEnti
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnlyResult);
 
-  const richText = createRichTextRootNode([
+  const richText = createRichText([
     createRichTextParagraphNode([
       createRichTextEntityNode({ id: createTitleOnlyResult.value.entity.id }),
     ]),
@@ -585,7 +585,7 @@ async function createEntity_withRichTextFieldWithLinkReference({ server }: Admin
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnlyResult);
 
-  const richText = createRichTextRootNode([
+  const richText = createRichText([
     createRichTextParagraphNode([
       createRichTextEntityLinkNode({ id: createTitleOnlyResult.value.entity.id }, [
         createRichTextTextNode('Hello world'),
@@ -625,7 +625,7 @@ async function createEntity_withRichTextFieldWithValueItem({ server }: AdminEnti
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnlyResult);
 
-  const richText = createRichTextRootNode([
+  const richText = createRichText([
     createRichTextParagraphNode([
       createRichTextValueItemNode<AdminReferencesValue>({
         type: 'ReferencesValue',
@@ -861,7 +861,7 @@ async function createEntity_errorRichTextWithUnsupportedEntityNode({
     copyEntity(RICH_TEXTS_CREATE, {
       id,
       fields: {
-        richTextMinimal: createRichTextRootNode([createRichTextEntityNode({ id: referenceId })]),
+        richTextMinimal: createRichText([createRichTextEntityNode({ id: referenceId })]),
       },
     }),
   );
@@ -886,7 +886,7 @@ async function createEntity_errorRichTextWithUnsupportedLinkEntityType({
     copyEntity(RICH_TEXTS_CREATE, {
       id,
       fields: {
-        richTextLimitedTypes: createRichTextRootNode([
+        richTextLimitedTypes: createRichText([
           createRichTextEntityLinkNode({ id: referenceId }, [createRichTextTextNode('link text')]),
         ]),
       },
