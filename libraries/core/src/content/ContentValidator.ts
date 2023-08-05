@@ -1,16 +1,16 @@
-import { assertExhaustive, assertIsDefined } from './Asserts.js';
-import type { ItemTraverseNode } from './ItemTraverser.js';
-import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ItemTraverser.js';
-import { isNumberItemField, isRichTextTextNode, isStringItemField } from './ItemUtils.js';
-import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from './Types.js';
-import type { ContentValuePath } from './content/ContentPath.js';
-import type { AdminSchema } from './schema/AdminSchema.js';
-import type { PublishedSchema } from './schema/PublishedSchema.js';
+import { assertExhaustive, assertIsDefined } from '../Asserts.js';
+import type { ItemTraverseNode } from '../ItemTraverser.js';
+import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from '../ItemTraverser.js';
+import { isNumberItemField, isRichTextTextNode, isStringItemField } from '../ItemUtils.js';
+import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '../Types.js';
+import type { AdminSchema } from '../schema/AdminSchema.js';
+import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
   NumberFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
-} from './schema/SchemaSpecification.js';
+} from '../schema/SchemaSpecification.js';
+import type { ContentValuePath } from './ContentPath.js';
 
 export interface SaveValidationIssue {
   type: 'save';

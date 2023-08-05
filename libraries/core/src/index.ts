@@ -85,15 +85,6 @@ export {
   isValueItemListField,
 } from './ItemUtils.js';
 export {
-  groupValidationIssuesByTopLevelPath,
-  validateEntityInfo,
-  validateEntityInfoForCreate,
-  validateEntityInfoForUpdate,
-  validateTraverseNodeForPublish,
-  validateTraverseNodeForSave,
-} from './ItemValidator.js';
-export type { PublishValidationIssue, SaveValidationIssue } from './ItemValidator.js';
-export {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
@@ -207,6 +198,15 @@ export {
   contentValuePathToString as contentValuePathToString,
   type ContentValuePath,
 } from './content/ContentPath.js';
+export {
+  groupValidationIssuesByTopLevelPath,
+  validateEntityInfo,
+  validateEntityInfoForCreate,
+  validateEntityInfoForUpdate,
+  validateTraverseNodeForPublish,
+  validateTraverseNodeForSave,
+} from './content/ContentValidator.js';
+export type { PublishValidationIssue, SaveValidationIssue } from './content/ContentValidator.js';
 export {
   createRichText,
   createRichTextEntityLinkNode,

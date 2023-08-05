@@ -1,6 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { ItemTraverseNodeErrorType, traverseEntity } from './ItemTraverser.js';
-import { copyEntity } from './ItemUtils.js';
+import { ItemTraverseNodeErrorType, traverseEntity } from '../ItemTraverser.js';
+import { copyEntity } from '../ItemUtils.js';
+import type { AdminEntity, AdminEntityCreate, EntityLike } from '../Types.js';
+import { AdminSchema } from '../schema/AdminSchema.js';
+import { FieldType } from '../schema/SchemaSpecification.js';
+import { normalizeEntityFields } from './ContentNormalizer.js';
 import {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,
@@ -10,16 +14,12 @@ import {
   validateTraverseNodeForSave,
   type PublishValidationIssue,
   type SaveValidationIssue,
-} from './ItemValidator.js';
-import type { AdminEntity, AdminEntityCreate, EntityLike } from './Types.js';
-import { normalizeEntityFields } from './content/ContentNormalizer.js';
+} from './ContentValidator.js';
 import {
   createRichText,
   createRichTextParagraphNode,
   createRichTextTextNode,
-} from './content/RichTextUtils.js';
-import { AdminSchema } from './schema/AdminSchema.js';
-import { FieldType } from './schema/SchemaSpecification.js';
+} from './RichTextUtils.js';
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
