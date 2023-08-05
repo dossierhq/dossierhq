@@ -21,7 +21,7 @@ import {
   type AdminSchemaWithMigrations,
   type EntityLike,
   type ErrorType,
-  type ItemValuePath,
+  type ContentValuePath,
   type PromiseResult,
   type PublishedEntity,
   type PublishedFieldSpecification,
@@ -341,7 +341,7 @@ function decodeRichTextField(
   encodedValue: RichText,
 ): RichText | null {
   //TODO add paths to decoding
-  const path: ItemValuePath = [];
+  const path: ContentValuePath = [];
   return transformRichText(path, encodedValue, (_path, node) => {
     if (isRichTextValueItemNode(node)) {
       const data = decodeValueItemField(schema, fieldSpec, 'json', node.data);
@@ -595,7 +595,7 @@ export async function encodeAdminEntity(
 function encodeFieldItemOrList(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification,
-  path: ItemValuePath,
+  path: ContentValuePath,
   data: unknown,
 ): EncodedValue {
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
@@ -649,7 +649,7 @@ function encodeFieldItemOrList(
 function encodeValueItemField(
   schema: AdminSchema,
   fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>,
-  path: ItemValuePath,
+  path: ContentValuePath,
   data: ValueItem | null,
 ): EncodedValue {
   if (Array.isArray(data)) {

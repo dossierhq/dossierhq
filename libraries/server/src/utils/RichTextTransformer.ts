@@ -5,7 +5,7 @@ import {
   notOk,
   ok,
   type ErrorType,
-  type ItemValuePath,
+  type ContentValuePath,
   type Result,
   type RichText,
   type RichTextElementNode,
@@ -13,7 +13,7 @@ import {
 } from '@dossierhq/core';
 
 export type RichTextNodeTransformer<TError extends ErrorType> = (
-  path: ItemValuePath,
+  path: ContentValuePath,
   node: Readonly<RichTextNode>,
 ) => Result<Readonly<RichTextNode | null>, TError>;
 
@@ -21,7 +21,7 @@ export function transformRichText<
   T extends Readonly<RichText> | RichText,
   TError extends ErrorType,
 >(
-  path: ItemValuePath,
+  path: ContentValuePath,
   richText: T,
   transformer: RichTextNodeTransformer<TError>,
 ): Result<T | null, TError | typeof ErrorType.Generic> {
@@ -52,7 +52,7 @@ export function transformRichText<
 }
 
 function transformNode<TError extends ErrorType>(
-  path: ItemValuePath,
+  path: ContentValuePath,
   node: Readonly<RichTextNode>,
   transformer: RichTextNodeTransformer<TError>,
 ): Result<Readonly<RichTextNode | null>, TError> {

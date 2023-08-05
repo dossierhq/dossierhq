@@ -8,7 +8,7 @@ import {
   type AdminSchema,
   type EntityLike,
   type ErrorType,
-  type ItemValuePath,
+  type ContentValuePath,
   type PublishedSchema,
   type Result,
   type RichTextNode,
@@ -24,7 +24,7 @@ interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError 
    * @returns `ok(null)` -> no value, `ok(undefined)` -> delete field, `ok(value)` -> new value
    */
   transformField: (
-    path: ItemValuePath,
+    path: ContentValuePath,
     fieldSpec:
       | TSchema['spec']['entityTypes'][number]['fields'][number]
       | TSchema['spec']['valueTypes'][number]['fields'][number],
@@ -32,7 +32,7 @@ interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError 
   ) => Result<Readonly<unknown> | null | undefined, TError>;
 
   transformFieldItem: (
-    path: ItemValuePath,
+    path: ContentValuePath,
     fieldSpec:
       | TSchema['spec']['entityTypes'][number]['fields'][number]
       | TSchema['spec']['valueTypes'][number]['fields'][number],
@@ -40,7 +40,7 @@ interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError 
   ) => Result<Readonly<unknown> | null | undefined, TError>;
 
   transformRichTextNode: (
-    path: ItemValuePath,
+    path: ContentValuePath,
     fieldSpec:
       | TSchema['spec']['entityTypes'][number]['fields'][number]
       | TSchema['spec']['valueTypes'][number]['fields'][number],
@@ -55,7 +55,7 @@ export function transformEntity<
   TError extends ErrorType,
 >(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   entity: TEntity,
   mapper: ItemTransformer<TSchema, TError>,
 ): Result<TEntity, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
@@ -77,7 +77,7 @@ export function transformValueItem<
   TError extends ErrorType,
 >(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   item: ValueItem,
   mapper: ItemTransformer<TSchema, TError>,
 ): Result<ValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
@@ -97,7 +97,7 @@ function transformItemFields<
   TError extends ErrorType,
 >(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['valueTypes'][number],
   fields: Record<string, unknown>,
   mapper: ItemTransformer<TSchema, TError>,
@@ -135,7 +135,7 @@ function transformItemField<
   TError extends ErrorType,
 >(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
   mapper: ItemTransformer<TSchema, TError>,
@@ -202,7 +202,7 @@ function transformItemFieldValue<
   TError extends ErrorType,
 >(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
   mapper: ItemTransformer<TSchema, TError>,

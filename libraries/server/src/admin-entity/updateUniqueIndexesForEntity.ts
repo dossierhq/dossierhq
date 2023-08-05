@@ -1,4 +1,4 @@
-import { ok, type ErrorType, type ItemValuePath, type PromiseResult } from '@dossierhq/core';
+import { ok, type ErrorType, type ContentValuePath, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityUniqueIndexReference,
@@ -9,7 +9,7 @@ import type {
 import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
 
 interface ConflictingUniqueIndexValuePayload {
-  conflictingValues: (DatabaseAdminEntityUniqueIndexValue & { path: ItemValuePath })[];
+  conflictingValues: (DatabaseAdminEntityUniqueIndexValue & { path: ContentValuePath })[];
 }
 
 export async function updateUniqueIndexesForEntity(

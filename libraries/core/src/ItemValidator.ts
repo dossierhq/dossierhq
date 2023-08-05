@@ -3,7 +3,7 @@ import type { ItemTraverseNode } from './ItemTraverser.js';
 import { ItemTraverseNodeErrorType, ItemTraverseNodeType } from './ItemTraverser.js';
 import { isNumberItemField, isRichTextTextNode, isStringItemField } from './ItemUtils.js';
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from './Types.js';
-import type { ItemValuePath } from './content/ContentPath.js';
+import type { ContentValuePath } from './content/ContentPath.js';
 import type { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
 import type {
@@ -14,13 +14,13 @@ import type {
 
 export interface SaveValidationIssue {
   type: 'save';
-  path: ItemValuePath;
+  path: ContentValuePath;
   message: string;
 }
 
 export interface PublishValidationIssue {
   type: 'publish';
-  path: ItemValuePath;
+  path: ContentValuePath;
   message: string;
 }
 
@@ -28,7 +28,7 @@ const LINE_BREAK_REGEX = /[\r\n]/;
 
 export function validateEntityInfo(
   adminSchema: AdminSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   entity: AdminEntity,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
@@ -44,7 +44,7 @@ export function validateEntityInfo(
 
 export function validateEntityInfoForCreate(
   adminSchema: AdminSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   entity: AdminEntityCreate,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
@@ -69,7 +69,7 @@ export function validateEntityInfoForCreate(
 }
 
 export function validateEntityInfoForUpdate(
-  path: ItemValuePath,
+  path: ContentValuePath,
   existingEntity: { info: { type: string; authKey: string; version: number } },
   entity: AdminEntityUpdate,
 ): SaveValidationIssue | null {
@@ -108,7 +108,7 @@ export function validateEntityInfoForUpdate(
 
 function validateTypeAndAuthKey(
   adminSchema: AdminSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   entity: AdminEntityCreate | AdminEntity,
 ): SaveValidationIssue | null {
   // info.type
@@ -153,7 +153,7 @@ function validateTypeAndAuthKey(
   return null;
 }
 
-function validateName(path: ItemValuePath, name: string): SaveValidationIssue | null {
+function validateName(path: ContentValuePath, name: string): SaveValidationIssue | null {
   if (!name) {
     return { type: 'save', path: [...path, 'info', 'name'], message: 'Name is required' };
   }

@@ -10,7 +10,7 @@ import {
   type EntityLike,
   type EntityReference,
   type ErrorType,
-  type ItemValuePath,
+  type ContentValuePath,
   type Location,
   type PromiseResult,
   type PublishValidationIssue,
@@ -35,7 +35,7 @@ import {
 
 export function validateAdminFieldValuesAndCollectInfo(
   adminSchema: AdminSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   entity: AdminEntity | AdminEntityCreate,
 ): {
   validationIssues: SaveValidationIssue[];
@@ -140,7 +140,7 @@ export async function validateReferencedEntitiesForSaveAndCollectInfo(
 export function validatePublishedFieldValuesAndCollectInfo(
   adminSchema: AdminSchema,
   publishedSchema: PublishedSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   type: string,
   entityFields: Record<string, unknown>,
 ): {

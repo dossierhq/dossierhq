@@ -4,7 +4,7 @@ import {
   type EntityReference,
   type FieldSpecification,
   type FieldValueTypeMap,
-  type ItemValuePath,
+  type ContentValuePath,
   type Location,
   type SaveValidationIssue,
 } from '@dossierhq/core';
@@ -17,7 +17,7 @@ export interface EncodedValue<T = unknown> {
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   encodeData(
     fieldSpec: AdminFieldSpecification,
-    path: ItemValuePath,
+    path: ContentValuePath,
     decodedData: TDecoded,
   ): EncodedValue<TEncoded | null>;
   decodeData(encodedData: TEncoded): TDecoded;
@@ -25,7 +25,7 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) =>
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) =>
     typeof data === 'boolean'
       ? { encodedValue: data, validationIssues: [] }
       : {
@@ -43,7 +43,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entity], string> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) => {
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => {
     if (Array.isArray(data)) {
       return {
         encodedValue: null,
@@ -84,7 +84,7 @@ const locationCodec: FieldTypeAdapter<
   FieldValueTypeMap[typeof FieldType.Location],
   [number, number]
 > = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) => {
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => {
     if (Array.isArray(data)) {
       return {
         encodedValue: null,
@@ -135,7 +135,7 @@ const locationCodec: FieldTypeAdapter<
 };
 
 const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], number> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) =>
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) =>
     typeof data === 'number'
       ? { encodedValue: data, validationIssues: [] }
       : {
@@ -153,7 +153,7 @@ const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], 
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ItemValuePath, data) => {
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => {
     if (typeof data !== 'string') {
       return {
         encodedValue: null,

@@ -5,7 +5,7 @@ import {
   isValueItemItemField,
 } from './ItemUtils.js';
 import type { EntityLike, RichTextNode, ValueItem } from './Types.js';
-import type { ItemValuePath } from './content/ContentPath.js';
+import type { ContentValuePath } from './content/ContentPath.js';
 import type { AdminSchema } from './schema/AdminSchema.js';
 import type { PublishedSchema } from './schema/PublishedSchema.js';
 import type {
@@ -40,14 +40,14 @@ export type ItemTraverseNode<TSchema extends AdminSchema | PublishedSchema> =
   | ItemTraverseNodeRichTextNode<TSchema>;
 
 interface ItemTraverseNodeErrorGeneric {
-  path: ItemValuePath;
+  path: ContentValuePath;
   type: 'error';
   errorType: 'generic';
   message: string;
 }
 
 interface ItemTraverseNodeErrorMissingTypeSpec {
-  path: ItemValuePath;
+  path: ContentValuePath;
   type: 'error';
   errorType: 'missingTypeSpec';
   message: string;
@@ -56,28 +56,28 @@ interface ItemTraverseNodeErrorMissingTypeSpec {
 }
 
 interface ItemTraverseNodeField<TSchema extends AdminSchema | PublishedSchema> {
-  path: ItemValuePath;
+  path: ContentValuePath;
   type: 'field';
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number];
   value: unknown;
 }
 
 interface ItemTraverseNodeFieldItem<TSchema extends AdminSchema | PublishedSchema> {
-  path: ItemValuePath;
+  path: ContentValuePath;
   type: 'fieldItem';
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number];
   value: unknown;
 }
 
 interface ItemTraverseNodeValueItem<TSchema extends AdminSchema | PublishedSchema> {
-  path: ItemValuePath;
+  path: ContentValuePath;
   type: 'valueItem';
   valueSpec: TSchema['spec']['valueTypes'][number];
   valueItem: ValueItem;
 }
 
 interface ItemTraverseNodeRichTextNode<TSchema extends AdminSchema | PublishedSchema> {
-  path: ItemValuePath;
+  path: ContentValuePath;
   type: 'richTextNode';
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number];
   node: RichTextNode;
@@ -85,7 +85,7 @@ interface ItemTraverseNodeRichTextNode<TSchema extends AdminSchema | PublishedSc
 
 export function* traverseEntity<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   item: EntityLike,
 ): Generator<ItemTraverseNode<TSchema>> {
   const entitySpec = schema.getEntityTypeSpecification(item.info.type);
@@ -106,7 +106,7 @@ export function* traverseEntity<TSchema extends AdminSchema | PublishedSchema>(
 
 export function* traverseValueItem<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   item: ValueItem,
 ): Generator<ItemTraverseNode<TSchema>> {
   if (item.type === undefined) {
@@ -146,7 +146,7 @@ export function* traverseValueItem<TSchema extends AdminSchema | PublishedSchema
 
 function* traverseItem<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   typeSpec:
     | AdminEntityTypeSpecification
     | AdminValueTypeSpecification
@@ -164,7 +164,7 @@ function* traverseItem<TSchema extends AdminSchema | PublishedSchema>(
 
 export function* traverseItemField<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   value: unknown,
 ): Generator<ItemTraverseNode<TSchema>> {
@@ -203,7 +203,7 @@ export function* traverseItemField<TSchema extends AdminSchema | PublishedSchema
 
 function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   itemValue: unknown,
 ): Generator<ItemTraverseNode<TSchema>> {
@@ -256,7 +256,7 @@ function* traverseItemFieldValue<TSchema extends AdminSchema | PublishedSchema>(
 
 function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
-  path: ItemValuePath,
+  path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
   node: RichTextNode,
 ): Generator<ItemTraverseNode<TSchema>> {

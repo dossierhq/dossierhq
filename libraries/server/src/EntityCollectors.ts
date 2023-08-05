@@ -13,21 +13,21 @@ import {
   type EntityFieldSpecification,
   type EntityReference,
   type ItemTraverseNode,
-  type ItemValuePath,
+  type ContentValuePath,
   type Location,
   type PublishedSchema,
   type RichTextFieldSpecification,
 } from '@dossierhq/core';
 
 export interface UniqueIndexValue {
-  path: ItemValuePath;
+  path: ContentValuePath;
   value: string;
 }
 
 export type UniqueIndexValueCollection = Map<string, UniqueIndexValue[]>;
 
 export interface RequestedReference {
-  path: ItemValuePath;
+  path: ContentValuePath;
   uuids: string[];
   isRichTextLink: boolean;
   entityTypes: string[] | undefined;
