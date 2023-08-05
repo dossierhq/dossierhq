@@ -1,4 +1,4 @@
-import type { LooseAutocomplete } from '../TypeUtils.js';
+import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import type { EntityReference, Location, RichText, ValueItem } from '../Types.js';
 import { RichTextNodeType } from '../Types.js';
 

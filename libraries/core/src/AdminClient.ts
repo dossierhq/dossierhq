@@ -36,7 +36,7 @@ import type {
   OperationWithoutCallbacks,
 } from './SharedClient.js';
 import { executeOperationPipeline } from './SharedClient.js';
-import type { LooseAutocomplete } from './TypeUtils.js';
+import type { LooseAutocomplete } from './utils/TypeUtils.js';
 import type {
   AdminEntity,
   AdminEntityArchivePayload,
