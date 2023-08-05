@@ -1,22 +1,19 @@
+import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
+import type { EntityLike, RichTextNode, ValueItem } from '../Types.js';
+import type { AdminSchema } from '../schema/AdminSchema.js';
+import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import { contentValuePathToString, type ContentValuePath } from './ContentPath.js';
 import {
   isRichTextItemField,
   isRichTextValueItemNode,
   isValueItemItemField,
-  notOk,
-  ok,
-  contentValuePathToString,
-  type AdminSchema,
-  type EntityLike,
-  type ErrorType,
-  type ContentValuePath,
-  type PublishedSchema,
-  type Result,
-  type RichTextNode,
-  type ValueItem,
-} from '@dossierhq/core';
+} from './ContentTypeUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
 
-interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError extends ErrorType> {
+interface ContentTransformer<
+  TSchema extends AdminSchema | PublishedSchema,
+  TError extends ErrorType,
+> {
   /**
    * @param path
    * @param fieldSpec
@@ -25,31 +22,24 @@ interface ItemTransformer<TSchema extends AdminSchema | PublishedSchema, TError 
    */
   transformField: (
     path: ContentValuePath,
-    fieldSpec:
-      | TSchema['spec']['entityTypes'][number]['fields'][number]
-      | TSchema['spec']['valueTypes'][number]['fields'][number],
+    fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
     value: Readonly<unknown> | null,
   ) => Result<Readonly<unknown> | null | undefined, TError>;
 
   transformFieldItem: (
     path: ContentValuePath,
-    fieldSpec:
-      | TSchema['spec']['entityTypes'][number]['fields'][number]
-      | TSchema['spec']['valueTypes'][number]['fields'][number],
+    fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
     value: Readonly<unknown> | null,
   ) => Result<Readonly<unknown> | null | undefined, TError>;
 
   transformRichTextNode: (
     path: ContentValuePath,
-    fieldSpec:
-      | TSchema['spec']['entityTypes'][number]['fields'][number]
-      | TSchema['spec']['valueTypes'][number]['fields'][number],
+    fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
     node: Readonly<RichTextNode>,
   ) => Result<Readonly<RichTextNode | null>, TError>;
 }
 
-// TODO should this be transformEntityFields()? see normalizeEntityFields()
-export function transformEntity<
+export function transformEntityFields<
   TSchema extends AdminSchema | PublishedSchema,
   TEntity extends EntityLike,
   TError extends ErrorType,
@@ -57,8 +47,8 @@ export function transformEntity<
   schema: TSchema,
   path: ContentValuePath,
   entity: TEntity,
-  mapper: ItemTransformer<TSchema, TError>,
-): Result<TEntity, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  transformer: ContentTransformer<TSchema, TError>,
+): Result<TEntity['fields'], TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const typeSpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!typeSpec) {
     return notOk.BadRequest(
@@ -66,10 +56,16 @@ export function transformEntity<
     );
   }
 
-  const transformResult = transformItemFields(schema, path, typeSpec, entity.fields, mapper);
+  const transformResult = transformContentFields(
+    schema,
+    path,
+    typeSpec,
+    entity.fields,
+    transformer,
+  );
   if (transformResult.isError()) return transformResult;
-  if (transformResult.value === entity.fields) return ok(entity);
-  return ok({ ...entity, fields: transformResult.value });
+  if (transformResult.value === entity.fields) return ok(entity.fields);
+  return ok(transformResult.value);
 }
 
 export function transformValueItem<
@@ -79,20 +75,20 @@ export function transformValueItem<
   schema: TSchema,
   path: ContentValuePath,
   item: ValueItem,
-  mapper: ItemTransformer<TSchema, TError>,
+  transformer: ContentTransformer<TSchema, TError>,
 ): Result<ValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const typeSpec = schema.getValueTypeSpecification(item.type);
   if (!typeSpec) {
     return notOk.BadRequest(`${contentValuePathToString(path)}: Unknown value type: ${item.type}`);
   }
 
-  const transformResult = transformItemFields(schema, path, typeSpec, item, mapper);
+  const transformResult = transformContentFields(schema, path, typeSpec, item, transformer);
   if (transformResult.isError()) return transformResult;
   if (transformResult.value === item) return ok(item);
   return ok({ ...transformResult.value, type: item.type });
 }
 
-function transformItemFields<
+function transformContentFields<
   TSchema extends AdminSchema | PublishedSchema,
   TError extends ErrorType,
 >(
@@ -100,7 +96,7 @@ function transformItemFields<
   path: ContentValuePath,
   typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['valueTypes'][number],
   fields: Record<string, unknown>,
-  mapper: ItemTransformer<TSchema, TError>,
+  transformer: ContentTransformer<TSchema, TError>,
 ): Result<
   Record<string, unknown>,
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -110,7 +106,13 @@ function transformItemFields<
   for (const fieldSpec of typeSpec.fields) {
     const fieldPath = [...path, fieldSpec.name];
     const originalValue = fields[fieldSpec.name] as Readonly<unknown>;
-    const transformResult = transformItemField(schema, fieldPath, fieldSpec, originalValue, mapper);
+    const transformResult = transformContentField(
+      schema,
+      fieldPath,
+      fieldSpec,
+      originalValue,
+      transformer,
+    );
     if (transformResult.isError()) return transformResult;
 
     if (transformResult.value !== originalValue) {
@@ -130,17 +132,17 @@ function transformItemFields<
   return ok(newFields);
 }
 
-function transformItemField<
+function transformContentField<
   TSchema extends AdminSchema | PublishedSchema,
   TError extends ErrorType,
 >(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
-  mapper: ItemTransformer<TSchema, TError>,
+  transformer: ContentTransformer<TSchema, TError>,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const transformFieldResult = mapper.transformField(path, fieldSpec, originalValue);
+  const transformFieldResult = transformer.transformField(path, fieldSpec, originalValue);
   if (transformFieldResult.isError()) return transformFieldResult;
   let value = transformFieldResult.value;
 
@@ -162,12 +164,12 @@ function transformItemField<
       const fieldItemPath = [...path, i];
       const fieldItem = value[i] as Readonly<unknown>;
 
-      const transformFieldValueResult = transformItemFieldValue(
+      const transformFieldValueResult = transformContentFieldValue(
         schema,
         fieldItemPath,
         fieldSpec,
         fieldItem,
-        mapper,
+        transformer,
       );
       if (transformFieldValueResult.isError()) return transformFieldValueResult;
       const newFieldItem = transformFieldValueResult.value;
@@ -183,12 +185,12 @@ function transformItemField<
       value = newItems.length > 0 ? newItems : null;
     }
   } else {
-    const transformFieldValueResult = transformItemFieldValue(
+    const transformFieldValueResult = transformContentFieldValue(
       schema,
       path,
       fieldSpec,
       value,
-      mapper,
+      transformer,
     );
     if (transformFieldValueResult.isError()) return transformFieldValueResult;
     value = transformFieldValueResult.value;
@@ -197,40 +199,42 @@ function transformItemField<
   return ok(value);
 }
 
-function transformItemFieldValue<
+function transformContentFieldValue<
   TSchema extends AdminSchema | PublishedSchema,
   TError extends ErrorType,
 >(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
-  mapper: ItemTransformer<TSchema, TError>,
+  transformer: ContentTransformer<TSchema, TError>,
 ): Result<
   Readonly<unknown> | undefined | null,
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const transformFieldItemResult = mapper.transformFieldItem(path, fieldSpec, originalValue);
+  const transformFieldItemResult = transformer.transformFieldItem(path, fieldSpec, originalValue);
   if (transformFieldItemResult.isError()) return transformFieldItemResult;
   const value = transformFieldItemResult.value;
 
   if (isValueItemItemField(fieldSpec, value) && value) {
-    return transformValueItem(schema, path, value, mapper);
+    return transformValueItem(schema, path, value, transformer);
   } else if (isRichTextItemField(fieldSpec, value) && value) {
     return transformRichText(path, value, (path, node) => {
-      const nodeResult = mapper.transformRichTextNode(path, fieldSpec, node);
+      const nodeResult = transformer.transformRichTextNode(path, fieldSpec, node);
       if (nodeResult.isError()) return nodeResult;
       const transformedNode = nodeResult.value;
 
       if (transformedNode && isRichTextValueItemNode(transformedNode)) {
         const valueItem = transformedNode.data;
 
-        const valueItemResult = transformValueItem(schema, path, valueItem, mapper);
+        const valueItemResult = transformValueItem(schema, path, valueItem, transformer);
         if (valueItemResult.isError()) return valueItemResult;
-        const mappedValueItem = valueItemResult.value;
+        const transformedValueItem = valueItemResult.value;
 
-        if (mappedValueItem !== valueItem) {
-          return ok(mappedValueItem ? { ...transformedNode, data: mappedValueItem } : null);
+        if (transformedValueItem !== valueItem) {
+          return ok(
+            transformedValueItem ? { ...transformedNode, data: transformedValueItem } : null,
+          );
         }
       }
       return ok(transformedNode);

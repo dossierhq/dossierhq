@@ -11,6 +11,8 @@ import {
   normalizeEntityFields,
   notOk,
   ok,
+  transformEntityFields,
+  transformRichText,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityTypeSpecification,
@@ -19,9 +21,8 @@ import {
   type AdminSchema,
   type AdminSchemaMigrationAction,
   type AdminSchemaWithMigrations,
-  type EntityLike,
-  type ErrorType,
   type ContentValuePath,
+  type ErrorType,
   type PromiseResult,
   type PublishedEntity,
   type PublishedFieldSpecification,
@@ -42,14 +43,12 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { type UniqueIndexValueCollection } from './EntityCollectors.js';
-import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import type { EncodedValue } from './EntityFieldTypeAdapters.js';
+import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import {
   validateAdminFieldValuesAndCollectInfo,
   validateReferencedEntitiesForSaveAndCollectInfo,
 } from './EntityValidator.js';
-import { transformEntity } from './utils/ItemTransformer.js';
-import { transformRichText } from './utils/RichTextTransformer.js';
 
 export interface EncodeAdminEntityResult {
   validationIssues: SaveValidationIssue[];
@@ -142,9 +141,9 @@ function applySchemaMigrationsToFieldValues(
   );
 
   const transformResult: Result<
-    EntityLike,
+    Record<string, unknown>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
-  > = transformEntity(
+  > = transformEntityFields(
     adminSchema,
     [],
     { info: { type: targetEntityType }, fields: migratedFieldValues },
@@ -170,7 +169,7 @@ function applySchemaMigrationsToFieldValues(
   );
 
   if (transformResult.isError()) return transformResult;
-  return ok(transformResult.value.fields);
+  return ok(transformResult.value);
 }
 
 function getStartingEntityType(

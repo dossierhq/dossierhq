@@ -148,6 +148,7 @@ export {
   contentValuePathToString as contentValuePathToString,
   type ContentValuePath,
 } from './content/ContentPath.js';
+export { transformEntityFields, transformValueItem } from './content/ContentTransformer.js';
 export {
   ContentTraverseNodeErrorType,
   ContentTraverseNodeType,
@@ -207,6 +208,7 @@ export {
   validateTraverseNodeForSave,
 } from './content/ContentValidator.js';
 export type { PublishValidationIssue, SaveValidationIssue } from './content/ContentValidator.js';
+export { transformRichText } from './content/RichTextTransformer.js';
 export {
   createRichText,
   createRichTextEntityLinkNode,

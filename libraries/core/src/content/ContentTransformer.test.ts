@@ -1,15 +1,11 @@
-import {
-  AdminSchemaWithMigrations,
-  FieldType,
-  createRichText,
-  createRichTextValueItemNode,
-  isRichTextValueItemNode,
-  isValueItemItemField,
-  ok,
-  contentValuePathToString,
-} from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import { transformEntity } from './ItemTransformer.js';
+import { ok } from '../ErrorResult.js';
+import { createRichText, createRichTextValueItemNode } from '../content/RichTextUtils.js';
+import { AdminSchemaWithMigrations } from '../schema/AdminSchema.js';
+import { FieldType } from '../schema/SchemaSpecification.js';
+import { contentValuePathToString } from './ContentPath.js';
+import { transformEntityFields } from './ContentTransformer.js';
+import { isRichTextValueItemNode, isValueItemItemField } from './ContentTypeUtils.js';
 
 const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
   entityTypes: [
@@ -52,7 +48,7 @@ const ENTITY_1 = Object.freeze({
 describe('transformEntity', () => {
   test('identity', () => {
     const calls: unknown[][] = [];
-    const transformed = transformEntity(ADMIN_SCHEMA, [], ENTITY_1, {
+    const transformed = transformEntityFields(ADMIN_SCHEMA, [], ENTITY_1, {
       transformField: (path, _fieldSpec, value) => {
         calls.push(['transformField', contentValuePathToString(path)]);
         return ok(value);
@@ -66,12 +62,12 @@ describe('transformEntity', () => {
         return ok(node);
       },
     }).valueOrThrow();
-    expect(transformed).toBe(ENTITY_1);
+    expect(transformed).toBe(ENTITY_1.fields);
     expect(calls).toMatchSnapshot();
   });
 
   test('delete all value items', () => {
-    const transformed = transformEntity(ADMIN_SCHEMA, [], ENTITY_1, {
+    const transformed = transformEntityFields(ADMIN_SCHEMA, [], ENTITY_1, {
       transformField: (_path, _fieldSpec, value) => ok(value),
       transformFieldItem: (_path, fieldSpec, value) => {
         if (isValueItemItemField(fieldSpec, value)) return ok(null);

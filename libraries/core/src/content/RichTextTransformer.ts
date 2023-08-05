@@ -1,16 +1,11 @@
+import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
+import type { RichText, RichTextElementNode, RichTextNode } from '../Types.js';
+import type { ContentValuePath } from './ContentPath.js';
 import {
   isRichTextElementNode,
   isRichTextParagraphNode,
   isRichTextRootNode,
-  notOk,
-  ok,
-  type ErrorType,
-  type ContentValuePath,
-  type Result,
-  type RichText,
-  type RichTextElementNode,
-  type RichTextNode,
-} from '@dossierhq/core';
+} from './ContentTypeUtils.js';
 
 export type RichTextNodeTransformer<TError extends ErrorType> = (
   path: ContentValuePath,

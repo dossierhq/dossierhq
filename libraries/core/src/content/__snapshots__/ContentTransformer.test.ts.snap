@@ -2,14 +2,9 @@
 
 exports[`transformEntity > delete all value items 1`] = `
 {
-  "fields": {
-    "richText": null,
-    "valueItem": null,
-    "valueItemList": null,
-  },
-  "info": {
-    "type": "ValueItemsEntity",
-  },
+  "richText": null,
+  "valueItem": null,
+  "valueItemList": null,
 }
 `;
 

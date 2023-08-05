@@ -1,14 +1,13 @@
-import {
-  ErrorType,
-  RichTextNodeType,
-  createRichTextParagraphNode,
-  createRichText,
-  createRichTextTextNode,
-  ok,
-} from '@dossierhq/core';
-import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
+import { ErrorType, ok } from '../ErrorResult.js';
+import { RichTextNodeType } from '../Types.js';
+import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
+import {
+  createRichText,
+  createRichTextParagraphNode,
+  createRichTextTextNode,
+} from './RichTextUtils.js';
 
 describe('transformRichText', () => {
   test('return null root', () => {

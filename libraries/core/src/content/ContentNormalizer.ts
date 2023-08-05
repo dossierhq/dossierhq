@@ -10,7 +10,7 @@ import { isRichTextElementNode } from './ContentTypeUtils.js';
 // TODO move ItemTransformer to core and use it for normalization (null transformer -> normalization)
 export function normalizeEntityFields<TEntity extends EntityLike>(
   schema: AdminSchema,
-  entity: EntityLike,
+  entity: TEntity,
   options?: { excludeOmitted: boolean },
 ): Result<TEntity['fields'], typeof ErrorType.BadRequest> {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
