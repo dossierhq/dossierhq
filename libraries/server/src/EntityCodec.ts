@@ -43,7 +43,6 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { type UniqueIndexValueCollection } from './EntityCollectors.js';
-import type { EncodedValue } from './EntityFieldTypeAdapters.js';
 import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import {
   validateAdminFieldValuesAndCollectInfo,
@@ -57,6 +56,12 @@ export interface EncodeAdminEntityResult {
   data: Record<string, unknown>;
   entityIndexes: DatabaseEntityIndexesArg;
   uniqueIndexValues: UniqueIndexValueCollection;
+}
+
+//TODO remove when all validations are moved to core
+export interface EncodedValue<T = unknown> {
+  encodedValue: T;
+  validationIssues: SaveValidationIssue[];
 }
 
 /** `optimized` is the original way of encoding/decoding values, using type adapters and saving less
@@ -623,7 +628,10 @@ function encodeFieldItemOrList(
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeRichTextField(decodedItem);
       } else {
-        encodedItemResult = fieldAdapter.encodeData(fieldSpec, itemPath, decodedItem);
+        encodedItemResult = {
+          encodedValue: fieldAdapter.encodeData(decodedItem),
+          validationIssues: [],
+        };
       }
       if (encodedItemResult.encodedValue !== null) {
         encodedItems.push(encodedItemResult.encodedValue);
@@ -643,7 +651,7 @@ function encodeFieldItemOrList(
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(data);
   }
-  return fieldAdapter.encodeData(fieldSpec, path, data);
+  return { encodedValue: fieldAdapter.encodeData(data), validationIssues: [] };
 }
 
 function encodeValueItemField(
