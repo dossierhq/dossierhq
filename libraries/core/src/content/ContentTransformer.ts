@@ -100,7 +100,9 @@ export function transformValueItem<
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<TValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   if (!item.type) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: Value item has no type`);
+    return notOk.BadRequest(
+      `${contentValuePathToString([...path, 'type'])}: Missing a ValueItem type`,
+    );
   }
   const typeSpec = schema.getValueTypeSpecification(item.type);
   if (!typeSpec) {

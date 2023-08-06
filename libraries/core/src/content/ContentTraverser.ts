@@ -115,12 +115,12 @@ export function* traverseValueItem<TSchema extends AdminSchema | PublishedSchema
   path: ContentValuePath,
   item: ValueItem,
 ): Generator<ContentTraverseNode<TSchema>> {
-  if (item.type === undefined) {
+  if (!item.type) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
-      path,
+      path: [...path, 'type'],
       errorType: ContentTraverseNodeErrorType.generic,
-      message: 'Missing type',
+      message: 'Missing a ValueItem type',
     };
     yield errorNode;
     return;

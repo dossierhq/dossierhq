@@ -160,7 +160,11 @@ describe('transformEntity', () => {
       },
     });
     const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
-    expectErrorResult(result, ErrorType.BadRequest, 'entity.valueItem: Value item has no type');
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity.valueItem.type: Missing a ValueItem type',
+    );
   });
 
   test('error: use unsupported field name in value item', () => {
@@ -217,6 +221,10 @@ describe('transformValueItem', () => {
       {} as ValueItem,
       IDENTITY_TRANSFORMER,
     );
-    expectErrorResult(transformed, ErrorType.BadRequest, 'valueItem: Value item has no type');
+    expectErrorResult(
+      transformed,
+      ErrorType.BadRequest,
+      'valueItem.type: Missing a ValueItem type',
+    );
   });
 });

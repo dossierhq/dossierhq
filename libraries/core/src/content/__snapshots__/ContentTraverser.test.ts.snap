@@ -1353,6 +1353,92 @@ exports[`traverseEntity > traversable: expect string[], get string 1`] = `
 ]
 `;
 
+exports[`traverseEntity > traversable: expect valueItem, get other 1`] = `
+[
+  {
+    "path": "entity.fields.valueItem",
+    "type": "field",
+    "value": "string value",
+  },
+  {
+    "message": "Expected a ValueItem object, got string",
+    "path": "entity.fields.valueItem",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.valueItemList",
+    "type": "field",
+    "value": [
+      {
+        "lat": 1,
+        "lng": 2,
+      },
+    ],
+  },
+  {
+    "message": "Missing a ValueItem type",
+    "path": "entity.fields.valueItemList[0].type",
+    "type": "error",
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect valueItem, get valueItem[] 1`] = `
+[
+  {
+    "path": "entity.fields.valueItem",
+    "type": "field",
+    "value": [
+      {
+        "type": "TwoStrings",
+      },
+    ],
+  },
+  {
+    "message": "Expected single ValueItem, got a list",
+    "path": "entity.fields.valueItem",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.valueItemList",
+    "type": "field",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect valueItem[], get valueItem 1`] = `
+[
+  {
+    "path": "entity.fields.valueItem",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "list": false,
+      "name": "valueItem",
+      "required": false,
+      "type": "ValueItem",
+      "valueTypes": [],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "valueItem",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "message": "Expected a list of ValueItem, got object",
+    "path": "entity.fields.valueItemList",
+    "type": "error",
+  },
+]
+`;
+
 exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
 [
   {
@@ -1409,6 +1495,16 @@ exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
     ],
     "type": "fieldItem",
     "value": undefined,
+  },
+]
+`;
+
+exports[`traverseValueItem > No type 1`] = `
+[
+  {
+    "message": "Missing a ValueItem type",
+    "path": "valueItem.type",
+    "type": "error",
   },
 ]
 `;

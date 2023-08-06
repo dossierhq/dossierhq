@@ -1371,7 +1371,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Value item has no type',
+      'entity.fields.twoStrings.type: Missing a ValueItem type',
     );
   });
 

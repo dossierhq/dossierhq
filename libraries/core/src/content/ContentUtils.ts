@@ -8,6 +8,7 @@ import type {
   RichTextNode,
 } from '../Types.js';
 import { FieldType, type FieldSpecification } from '../schema/SchemaSpecification.js';
+import { assertExhaustive } from '../utils/Asserts.js';
 import type { Mutable } from '../utils/TypeUtils.js';
 import type { ContentValuePath } from './ContentPath.js';
 import { isRichTextRootNode } from './ContentTypeUtils.js';
@@ -70,15 +71,17 @@ export function checkFieldItemTraversable(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): { path: ContentValuePath; message: string } | null {
+  const { type } = fieldSpec;
+
   if (value === null || value === undefined) {
     return null;
   }
 
   if (Array.isArray(value)) {
-    return { path: [], message: `Expected single ${fieldSpec.type}, got a list` };
+    return { path: [], message: `Expected single ${type}, got a list` };
   }
 
-  switch (fieldSpec.type) {
+  switch (type) {
     case FieldType.Boolean: {
       if (typeof value !== 'boolean') {
         return { path: [], message: `Expected a boolean, got ${typeof value}` };
@@ -147,6 +150,20 @@ export function checkFieldItemTraversable(
       }
       break;
     }
+    case FieldType.ValueItem: {
+      if (typeof value !== 'object') {
+        return { path: [], message: `Expected a ValueItem object, got ${typeof value}` };
+      }
+      if (!('type' in value)) {
+        return { path: ['type'], message: `Missing a ValueItem type` };
+      }
+      if (typeof value.type !== 'string') {
+        return { path: ['type'], message: `Expected a ValueItem type, got ${typeof value}` };
+      }
+      break;
+    }
+    default:
+      assertExhaustive(type);
   }
   return null;
 }

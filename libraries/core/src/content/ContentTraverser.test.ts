@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+import type { ValueItem } from '../Types.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
@@ -54,6 +55,13 @@ const adminSchema = AdminSchema.createAndValidate({
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
+      ],
+    },
+    {
+      name: 'ValueItemsEntity',
+      fields: [
+        { name: 'valueItem', type: FieldType.ValueItem },
+        { name: 'valueItemList', type: FieldType.ValueItem, list: true },
       ],
     },
     {
@@ -525,12 +533,81 @@ describe('traverseEntity', () => {
       ]
     `);
   });
+
+  test('traversable: expect valueItem, get valueItem[]', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'ValueItemsEntity' },
+        fields: { valueItem: [{ type: 'TwoStrings' }] },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single ValueItem, got a list",
+          "path": "entity.fields.valueItem",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect valueItem[], get valueItem', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'ValueItemsEntity' },
+        fields: { valueItemList: { type: 'TwoStrings' } },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a list of ValueItem, got object",
+          "path": "entity.fields.valueItemList",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect valueItem, get other', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'ValueItemsEntity' },
+        fields: { valueItem: 'string value', valueItemList: [{ lat: 1, lng: 2 }] },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a ValueItem object, got string",
+          "path": "entity.fields.valueItem",
+          "type": "error",
+        },
+        {
+          "message": "Missing a ValueItem type",
+          "path": "entity.fields.valueItemList[0].type",
+          "type": "error",
+        },
+      ]
+    `);
+  });
 });
 
 describe('traverseValueItem', () => {
   test('Empty TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
       traverseValueItem(adminSchema, ['valueItem'], { type: 'TwoStrings' }),
+    );
+    expect(nodes).toMatchSnapshot();
+  });
+
+  test('No type', () => {
+    const nodes = collectTraverseNodes(
+      traverseValueItem(adminSchema, ['valueItem'], {} as ValueItem),
     );
     expect(nodes).toMatchSnapshot();
   });
