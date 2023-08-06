@@ -15,6 +15,20 @@ import {
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
     {
+      name: 'BooleansEntity',
+      fields: [
+        { name: 'boolean', type: FieldType.Boolean },
+        { name: 'booleanList', type: FieldType.Boolean, list: true },
+      ],
+    },
+    {
+      name: 'EntitiesEntity',
+      fields: [
+        { name: 'entity', type: FieldType.Entity },
+        { name: 'entityList', type: FieldType.Entity, list: true },
+      ],
+    },
+    {
       name: 'Foo',
       fields: [
         { name: 'string', type: FieldType.String },
@@ -124,12 +138,12 @@ describe('traverseEntity', () => {
     expect(nodes).toMatchSnapshot();
   });
 
-  test('Foo entity string[] where string is expected', () => {
+  test('traversable: expect boolean, get boolean[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'Foo' },
+        info: { type: 'BooleansEntity' },
         fields: {
-          string: ['string1', 'string2'],
+          boolean: [true, false],
         },
       }),
     );
@@ -137,15 +151,108 @@ describe('traverseEntity', () => {
     expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
       [
         {
-          "message": "Expected single String, got a list",
-          "path": "entity.fields.string",
+          "message": "Expected single Boolean, got a list",
+          "path": "entity.fields.boolean",
           "type": "error",
         },
       ]
     `);
   });
 
-  test('Foo entity richText[] where richText is expected', () => {
+  test('traversable: expect boolean[], get boolean', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'BooleansEntity' },
+        fields: {
+          booleanList: true,
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a list of Boolean, got boolean",
+          "path": "entity.fields.booleanList",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect boolean, get string', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'BooleansEntity' },
+        fields: {
+          boolean: 'string value',
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a boolean, got string",
+          "path": "entity.fields.boolean",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect entity, get entity[]', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'EntitiesEntity' },
+        fields: { entity: [{ id: 'id1' }, { id: 'id2' }] },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single Entity, got a list",
+          "path": "entity.fields.entity",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect entity[], get entity', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'EntitiesEntity' },
+        fields: { entitiesList: { id: '123' } },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot('[]');
+  });
+
+  test('traversable: expect entity, get string', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'EntitiesEntity' },
+        fields: {
+          entity: 'string value',
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected an entity reference, got string",
+          "path": "entity.fields.entity",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect richText, get richText[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
         info: { type: 'Foo' },
@@ -168,7 +275,28 @@ describe('traverseEntity', () => {
     `);
   });
 
-  test('Foo entity string where string[] is expected', () => {
+  test('traversable: expect string, get string[]', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {
+          string: ['string1', 'string2'],
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single String, got a list",
+          "path": "entity.fields.string",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect string[], get string[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
         info: { type: 'Foo' },

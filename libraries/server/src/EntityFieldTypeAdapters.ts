@@ -25,57 +25,19 @@ export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) =>
-    typeof data === 'boolean'
-      ? { encodedValue: data, validationIssues: [] }
-      : {
-          encodedValue: null,
-          validationIssues: [
-            {
-              type: 'save',
-              path,
-              message: `Expected boolean, got ${Array.isArray(data) ? 'list' : typeof data}`,
-            },
-          ],
-        },
+  encodeData: (_fieldSpec: AdminFieldSpecification, _path: ContentValuePath, data) => ({
+    encodedValue: data,
+    validationIssues: [],
+  }),
   decodeData: (it) => it,
   decodeJson: (json) => json as boolean,
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entity], string> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => {
-    if (Array.isArray(data)) {
-      return {
-        encodedValue: null,
-        validationIssues: [{ type: 'save', path, message: `Expected entity reference, got list` }],
-      };
-    }
-    if (typeof data !== 'object') {
-      return {
-        encodedValue: null,
-        validationIssues: [
-          {
-            type: 'save',
-            path,
-            message: `Expected entity reference, got ${typeof data}`,
-          },
-        ],
-      };
-    }
-    if (typeof data.id !== 'string') {
-      return {
-        encodedValue: null,
-        validationIssues: [
-          {
-            type: 'save',
-            path: [...path, 'id'],
-            message: `Expected string, got ${typeof data.id}`,
-          },
-        ],
-      };
-    }
-    return { encodedValue: data.id, validationIssues: [] };
-  },
+  encodeData: (_fieldSpec: AdminFieldSpecification, _path: ContentValuePath, data) => ({
+    encodedValue: data.id,
+    validationIssues: [],
+  }),
   decodeData: (it) => ({ id: it }),
   decodeJson: (json) => json as EntityReference,
 };

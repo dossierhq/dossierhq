@@ -76,23 +76,41 @@ export function checkFieldItemTraversable(
     return `Expected single ${fieldSpec.type}, got a list`;
   }
 
-  if (fieldSpec.type === FieldType.RichText) {
-    if (typeof value !== 'object') {
-      return `Expected a RichText object, got ${typeof value}`;
+  switch (fieldSpec.type) {
+    case FieldType.Boolean: {
+      if (typeof value !== 'boolean') {
+        return `Expected a boolean, got ${typeof value}`;
+      }
+      break;
     }
-    const root = (value as RichText).root;
-
-    if (!root) {
-      return `RichText object is missing root`;
+    case FieldType.Entity: {
+      if (typeof value !== 'object') {
+        return `Expected an entity reference, got ${typeof value}`;
+      }
+      if (typeof (value as EntityLike).id !== 'string') {
+        return `Expected an entity reference with an id, got ${typeof (value as EntityLike).id}`;
+      }
+      break;
     }
+    case FieldType.RichText: {
+      if (typeof value !== 'object') {
+        return `Expected a RichText object, got ${typeof value}`;
+      }
+      const root = (value as RichText).root;
 
-    const rootTraversalError = checkRichTextNodeTraversable(root);
-    if (rootTraversalError) {
-      return `Invalid RichText root: ${rootTraversalError}`;
-    }
+      if (!root) {
+        return `RichText object is missing root`;
+      }
 
-    if (!isRichTextRootNode(root)) {
-      return `RichText root is not a valid RichText node, (got ${(root as RichTextNode).type})`;
+      const rootTraversalError = checkRichTextNodeTraversable(root);
+      if (rootTraversalError) {
+        return `Invalid RichText root: ${rootTraversalError}`;
+      }
+
+      if (!isRichTextRootNode(root)) {
+        return `RichText root is not a valid RichText node, (got ${(root as RichTextNode).type})`;
+      }
+      break;
     }
   }
   return null;
