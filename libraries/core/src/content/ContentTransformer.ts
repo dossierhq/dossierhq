@@ -200,7 +200,11 @@ export function transformContentField<
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const traversableError = checkFieldTraversable(fieldSpec, originalValue);
   if (traversableError) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableError}`);
+    return notOk.BadRequest(
+      `${contentValuePathToString([...path, ...traversableError.path])}: ${
+        traversableError.message
+      }`,
+    );
   }
 
   const transformFieldResult = transformer.transformField(path, fieldSpec, originalValue);
@@ -268,7 +272,11 @@ function transformContentFieldValue<
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const traversableError = checkFieldItemTraversable(fieldSpec, originalValue);
   if (traversableError) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableError}`);
+    return notOk.BadRequest(
+      `${contentValuePathToString([...path, ...traversableError.path])}: ${
+        traversableError.message
+      }`,
+    );
   }
 
   const transformFieldItemResult = transformer.transformFieldItem(path, fieldSpec, originalValue);

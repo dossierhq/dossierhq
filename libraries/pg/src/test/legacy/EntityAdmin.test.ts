@@ -1497,7 +1497,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Invalid RichText root: Expected a RichText node, got string',
+      'entity.fields.body.root: Expected a RichText node, got string',
     );
   });
 

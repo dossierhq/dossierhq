@@ -178,9 +178,9 @@ export function* traverseContentField<TSchema extends AdminSchema | PublishedSch
   if (traversableError) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
-      path,
+      path: [...path, ...traversableError.path],
       errorType: ContentTraverseNodeErrorType.generic,
-      message: traversableError,
+      message: traversableError.message,
     };
     yield errorNode;
     return;
@@ -220,9 +220,9 @@ function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchem
   if (traversableError) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
-      path,
+      path: [...path, ...traversableError.path],
       errorType: ContentTraverseNodeErrorType.generic,
-      message: traversableError,
+      message: traversableError.message,
     };
     yield errorNode;
     return;
@@ -274,9 +274,9 @@ function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   if (traversableError) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
-      path,
+      path: [...path, ...traversableError.path],
       errorType: ContentTraverseNodeErrorType.generic,
-      message: traversableError,
+      message: traversableError.message,
     };
     yield errorNode;
     return;

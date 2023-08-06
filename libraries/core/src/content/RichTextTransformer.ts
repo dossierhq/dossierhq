@@ -54,7 +54,11 @@ function transformNode<TError extends ErrorType>(
 ): Result<Readonly<RichTextNode | null>, TError | typeof ErrorType.BadRequest> {
   const traversableError = checkRichTextNodeTraversable(node);
   if (traversableError) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableError}`);
+    return notOk.BadRequest(
+      `${contentValuePathToString([...path, ...traversableError.path])}: ${
+        traversableError.message
+      }`,
+    );
   }
 
   const transformResult = transformer(path, node);

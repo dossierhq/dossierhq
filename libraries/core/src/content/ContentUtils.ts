@@ -8,6 +8,7 @@ import type {
 } from '../Types.js';
 import { FieldType, type FieldSpecification } from '../schema/SchemaSpecification.js';
 import type { Mutable } from '../utils/TypeUtils.js';
+import type { ContentValuePath } from './ContentPath.js';
 import { isRichTextRootNode } from './ContentTypeUtils.js';
 
 export function isEntityNameAsRequested(currentName: string, requestedName: string): boolean {
@@ -55,10 +56,10 @@ export function copyEntity<
 export function checkFieldTraversable(
   fieldSpec: FieldSpecification,
   value: unknown,
-): string | null {
+): { path: ContentValuePath; message: string } | null {
   if (fieldSpec.list) {
     if (value !== null && value !== undefined && !Array.isArray(value)) {
-      return `Expected a list of ${fieldSpec.type}, got ${typeof value}`;
+      return { path: [], message: `Expected a list of ${fieldSpec.type}, got ${typeof value}` };
     }
   }
   return null;
@@ -67,48 +68,56 @@ export function checkFieldTraversable(
 export function checkFieldItemTraversable(
   fieldSpec: FieldSpecification,
   value: unknown,
-): string | null {
+): { path: ContentValuePath; message: string } | null {
   if (value === null || value === undefined) {
     return null;
   }
 
   if (Array.isArray(value)) {
-    return `Expected single ${fieldSpec.type}, got a list`;
+    return { path: [], message: `Expected single ${fieldSpec.type}, got a list` };
   }
 
   switch (fieldSpec.type) {
     case FieldType.Boolean: {
       if (typeof value !== 'boolean') {
-        return `Expected a boolean, got ${typeof value}`;
+        return { path: [], message: `Expected a boolean, got ${typeof value}` };
       }
       break;
     }
     case FieldType.Entity: {
       if (typeof value !== 'object') {
-        return `Expected an entity reference, got ${typeof value}`;
+        return { path: [], message: `Expected an entity reference, got ${typeof value}` };
       }
       if (typeof (value as EntityLike).id !== 'string') {
-        return `Expected an entity reference with an id, got ${typeof (value as EntityLike).id}`;
+        return {
+          path: ['id'],
+          message: `Expected an entity reference id, got ${typeof (value as EntityLike).id}`,
+        };
       }
       break;
     }
     case FieldType.RichText: {
       if (typeof value !== 'object') {
-        return `Expected a RichText object, got ${typeof value}`;
+        return { path: [], message: `Expected a RichText object, got ${typeof value}` };
       }
       const root = (value as RichText).root;
 
       if (!root) {
-        return `RichText object is missing root`;
+        return { path: [], message: `RichText object is missing root` };
       }
 
       const rootTraversalError = checkRichTextNodeTraversable(root);
       if (rootTraversalError) {
-        return `Invalid RichText root: ${rootTraversalError}`;
+        return { path: ['root', ...rootTraversalError.path], message: rootTraversalError.message };
       }
 
       if (!isRichTextRootNode(root)) {
-        return `RichText root is not a valid RichText node, (got ${(root as RichTextNode).type})`;
+        return {
+          path: ['root'],
+          message: `RichText root is not a valid RichText node, (got ${
+            (root as RichTextNode).type
+          })`,
+        };
       }
       break;
     }
@@ -116,15 +125,17 @@ export function checkFieldItemTraversable(
   return null;
 }
 
-export function checkRichTextNodeTraversable(node: RichTextNode): string | null {
+export function checkRichTextNodeTraversable(
+  node: RichTextNode,
+): { path: ContentValuePath; message: string } | null {
   if (!node || typeof node !== 'object') {
-    return `Expected a RichText node, got ${typeof node}`;
+    return { path: [], message: `Expected a RichText node, got ${typeof node}` };
   }
   if (typeof node.type !== 'string') {
-    return `RichText node is missing type`;
+    return { path: [], message: `RichText node is missing type` };
   }
   if ('children' in node && !Array.isArray(node.children)) {
-    return `RichText node children is not an array`;
+    return { path: [], message: `RichText node children is not an array` };
   }
   return null;
 }

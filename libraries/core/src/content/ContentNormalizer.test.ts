@@ -246,7 +246,7 @@ describe('normalizeContentField()', () => {
         root: 'hello world',
       }),
       ErrorType.BadRequest,
-      'field: Invalid RichText root: Expected a RichText node, got string',
+      'field.root: Expected a RichText node, got string',
     );
   });
 });
