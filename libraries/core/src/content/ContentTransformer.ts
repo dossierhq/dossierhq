@@ -37,14 +37,14 @@ export interface ContentTransformer<
   transformField: (
     path: ContentValuePath,
     fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
-    value: Readonly<unknown> | null,
-  ) => Result<Readonly<unknown> | null | undefined, TError>;
+    value: unknown,
+  ) => Result<unknown, TError>;
 
   transformFieldItem: (
     path: ContentValuePath,
     fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
-    value: Readonly<unknown> | null,
-  ) => Result<Readonly<unknown> | null | undefined, TError>;
+    value: unknown,
+  ) => Result<unknown, TError>;
 
   transformRichTextNode: (
     path: ContentValuePath,
@@ -188,14 +188,14 @@ function transformContentFields<
   return ok(newFields);
 }
 
-function transformContentField<
+export function transformContentField<
   TSchema extends AdminSchema | PublishedSchema,
   TError extends ErrorType,
 >(
   schema: TSchema,
   path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
-  originalValue: Readonly<unknown> | null,
+  originalValue: unknown,
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const traversableErrors = checkFieldTraversable(fieldSpec, originalValue);
@@ -208,24 +208,15 @@ function transformContentField<
   let value = transformFieldResult.value;
 
   if (value === null || value === undefined) {
-    return ok(value);
+    return ok(null);
   }
 
   if (fieldSpec.list) {
-    if (value === null || value === undefined) {
-      return ok(value);
-    }
-    if (!Array.isArray(value)) {
-      return notOk.BadRequest(
-        `${contentValuePathToString(path)}: Expected list got ${typeof value}`,
-      );
-    }
-
     let changedItems = false;
     const newItems: unknown[] = [];
-    for (let i = 0; i < value.length; i += 1) {
+    for (let i = 0; i < (value as []).length; i += 1) {
       const fieldItemPath = [...path, i];
-      const fieldItem = value[i] as Readonly<unknown>;
+      const fieldItem = (value as Readonly<unknown>[])[i];
 
       const transformFieldValueResult = transformContentFieldValue(
         schema,
@@ -274,10 +265,7 @@ function transformContentFieldValue<
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
   transformer: ContentTransformer<TSchema, TError>,
-): Result<
-  Readonly<unknown> | undefined | null,
-  TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
-> {
+): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const traversableErrors = checkFieldItemTraversable(fieldSpec, originalValue);
   if (traversableErrors.length > 0) {
     return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
@@ -311,6 +299,7 @@ function transformContentFieldValue<
       return ok(transformedNode);
     });
   } else if (isStringItemField(fieldSpec, value)) {
+    //TODO support trimming of strings?
     if (!value) {
       return ok(null); // Empty string => null
     }

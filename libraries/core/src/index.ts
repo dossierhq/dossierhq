@@ -134,8 +134,8 @@ export {
   encodeObjectToURLSearchParams,
 } from './client/UrlQueryUtils.js';
 export {
+  normalizeContentField,
   normalizeEntityFields,
-  normalizeFieldValue,
   normalizeValueItem,
 } from './content/ContentNormalizer.js';
 export {

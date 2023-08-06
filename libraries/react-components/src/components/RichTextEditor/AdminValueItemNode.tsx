@@ -1,30 +1,29 @@
-import type {
-  AdminSchema,
-  PublishValidationIssue,
-  RichTextValueItemNode,
-  SaveValidationIssue,
-  ValueItem,
-} from '@dossierhq/core';
 import {
+  RichTextNodeType,
   createRichTextValueItemNode,
   normalizeValueItem,
-  RichTextNodeType,
   traverseValueItem,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
+  type AdminSchema,
+  type PublishValidationIssue,
+  type RichTextValueItemNode,
+  type SaveValidationIssue,
+  type ValueItem,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
-import type {
-  EditorConfig,
-  ElementFormatType,
-  LexicalCommand,
-  LexicalEditor,
-  LexicalNode,
-  NodeKey,
+import {
+  $getNodeByKey,
+  createCommand,
+  type EditorConfig,
+  type ElementFormatType,
+  type LexicalCommand,
+  type LexicalEditor,
+  type LexicalNode,
+  type NodeKey,
 } from 'lexical';
-import { $getNodeByKey, createCommand } from 'lexical';
 import { useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueItemFieldEditor.js';
@@ -115,7 +114,7 @@ function validateItemValue(
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
   if (adminSchema) {
-    const normalizeResult = normalizeValueItem(adminSchema, value);
+    const normalizeResult = normalizeValueItem(adminSchema, [], value);
     const valueToValidate = normalizeResult.isOk() ? normalizeResult.value : value;
     for (const node of traverseValueItem(adminSchema, [], valueToValidate)) {
       const error = validateTraverseNodeForSave(adminSchema, node);

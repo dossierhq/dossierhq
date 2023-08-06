@@ -1,20 +1,18 @@
-import type {
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityTypeSpecification,
-  AdminEntityUpdate,
-  AdminFieldSpecification,
-  AdminSchema,
-  PublishValidationIssue,
-  SaveValidationIssue,
-} from '@dossierhq/core';
 import {
   assertIsDefined,
   isEntityNameAsRequested,
-  normalizeFieldValue,
   traverseContentField,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
+  type AdminEntity,
+  type AdminEntityCreate,
+  type AdminEntityTypeSpecification,
+  type AdminEntityUpdate,
+  type AdminFieldSpecification,
+  type AdminSchema,
+  type PublishValidationIssue,
+  type SaveValidationIssue,
+  normalizeContentField,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 
@@ -366,7 +364,9 @@ class SetFieldAction extends EntityEditorFieldAction {
       return fieldState;
     }
 
-    const normalizedValue = normalizeFieldValue(schema, fieldState.fieldSpec, this.value);
+    const normalizeResult = normalizeContentField(schema, [], fieldState.fieldSpec, this.value);
+    const normalizedValue = normalizeResult.isOk() ? normalizeResult.value : this.value;
+
     const validationIssues = validateField(
       schema,
       fieldState.fieldSpec,
@@ -610,7 +610,8 @@ function createEditorEntityDraftState(
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
     const adminOnly = entitySpec.adminOnly || fieldSpec.adminOnly;
-    const normalizedValue = normalizeFieldValue(schema, fieldSpec, value);
+    const normalizationResult = normalizeContentField(schema, [], fieldSpec, value);
+    const normalizedValue = normalizationResult.isOk() ? normalizationResult.value : value;
     const validationIssues = validateField(schema, fieldSpec, adminOnly, normalizedValue, []);
     return { status: '', fieldSpec, adminOnly, value, normalizedValue, validationIssues };
   });
