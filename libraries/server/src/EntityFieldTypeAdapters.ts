@@ -1,10 +1,10 @@
 import {
   FieldType,
   type AdminFieldSpecification,
+  type ContentValuePath,
   type EntityReference,
   type FieldSpecification,
   type FieldValueTypeMap,
-  type ContentValuePath,
   type Location,
   type SaveValidationIssue,
 } from '@dossierhq/core';
@@ -46,7 +46,7 @@ const locationCodec: FieldTypeAdapter<
   FieldValueTypeMap[typeof FieldType.Location],
   [number, number]
 > = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => ({
+  encodeData: (_fieldSpec: AdminFieldSpecification, _path: ContentValuePath, data) => ({
     encodedValue: [data.lat, data.lng],
     validationIssues: [],
   }),
@@ -55,7 +55,7 @@ const locationCodec: FieldTypeAdapter<
 };
 
 const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], number> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => ({
+  encodeData: (_fieldSpec: AdminFieldSpecification, _path: ContentValuePath, data) => ({
     encodedValue: data,
     validationIssues: [],
   }),
@@ -64,22 +64,10 @@ const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], 
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => {
-    if (typeof data !== 'string') {
-      return {
-        encodedValue: null,
-        validationIssues: [
-          {
-            type: 'save',
-            path,
-            message: `Expected string, got ${Array.isArray(data) ? 'list' : typeof data}`,
-          },
-        ],
-      };
-    }
-
-    return { encodedValue: data, validationIssues: [] };
-  },
+  encodeData: (_fieldSpec: AdminFieldSpecification, _path: ContentValuePath, data) => ({
+    encodedValue: data,
+    validationIssues: [],
+  }),
   decodeData: (it) => it,
   decodeJson: (json) => json as string,
 };

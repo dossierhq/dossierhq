@@ -141,6 +141,12 @@ export function checkFieldItemTraversable(
       }
       break;
     }
+    case FieldType.String: {
+      if (typeof value !== 'string') {
+        return { path: [], message: `Expected a string, got ${typeof value}` };
+      }
+      break;
+    }
   }
   return null;
 }

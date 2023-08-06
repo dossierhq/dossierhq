@@ -1170,62 +1170,28 @@ exports[`traverseEntity > traversable: expect number[], get number 1`] = `
 ]
 `;
 
-exports[`traverseEntity > traversable: expect richText, get richText[] 1`] = `
+exports[`traverseEntity > traversable: expect richText, get other 1`] = `
 [
   {
-    "path": "entity.fields.string",
+    "path": "entity.fields.richText",
+    "type": "field",
+    "value": "string value",
+  },
+  {
+    "message": "Expected a RichText object, got string",
+    "path": "entity.fields.richText",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.richTextList",
     "type": "field",
     "value": undefined,
   },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "index": null,
-      "list": false,
-      "matchPattern": null,
-      "multiline": false,
-      "name": "string",
-      "required": false,
-      "type": "String",
-      "values": [],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "string",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
-  {
-    "path": "entity.fields.stringList",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "path": "entity.fields.twoStrings",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "list": false,
-      "name": "twoStrings",
-      "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "twoStrings",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect richText, get richText[] 1`] = `
+[
   {
     "path": "entity.fields.richText",
     "type": "field",
@@ -1267,77 +1233,15 @@ exports[`traverseEntity > traversable: expect richText, get richText[] 1`] = `
     "type": "error",
   },
   {
-    "path": "entity.fields.adminOnlyString",
+    "path": "entity.fields.richTextList",
     "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": true,
-      "index": null,
-      "list": false,
-      "matchPattern": null,
-      "multiline": false,
-      "name": "adminOnlyString",
-      "required": false,
-      "type": "String",
-      "values": [],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "adminOnlyString",
-    ],
-    "type": "fieldItem",
     "value": undefined,
   },
 ]
 `;
 
-exports[`traverseEntity > traversable: expect string, get string[] 1`] = `
+exports[`traverseEntity > traversable: expect richText[], get richText 1`] = `
 [
-  {
-    "path": "entity.fields.string",
-    "type": "field",
-    "value": [
-      "string1",
-      "string2",
-    ],
-  },
-  {
-    "message": "Expected single String, got a list",
-    "path": "entity.fields.string",
-    "type": "error",
-  },
-  {
-    "path": "entity.fields.stringList",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "path": "entity.fields.twoStrings",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "list": false,
-      "name": "twoStrings",
-      "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "twoStrings",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
   {
     "path": "entity.fields.richText",
     "type": "field",
@@ -1364,34 +1268,57 @@ exports[`traverseEntity > traversable: expect string, get string[] 1`] = `
     "value": undefined,
   },
   {
-    "path": "entity.fields.adminOnlyString",
+    "message": "Expected a list of RichText, got object",
+    "path": "entity.fields.richTextList",
+    "type": "error",
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect string, get other 1`] = `
+[
+  {
+    "path": "entity.fields.string",
     "type": "field",
-    "value": undefined,
+    "value": 1,
   },
   {
-    "fieldSpec": {
-      "adminOnly": true,
-      "index": null,
-      "list": false,
-      "matchPattern": null,
-      "multiline": false,
-      "name": "adminOnlyString",
-      "required": false,
-      "type": "String",
-      "values": [],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "adminOnlyString",
-    ],
-    "type": "fieldItem",
+    "message": "Expected a string, got number",
+    "path": "entity.fields.string",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
     "value": undefined,
   },
 ]
 `;
 
-exports[`traverseEntity > traversable: expect string[], get string[] 1`] = `
+exports[`traverseEntity > traversable: expect string, get string[] 1`] = `
+[
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": [
+      "string1",
+      "string2",
+    ],
+  },
+  {
+    "message": "Expected single String, got a list",
+    "path": "entity.fields.string",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect string[], get string 1`] = `
 [
   {
     "path": "entity.fields.string",
@@ -1422,80 +1349,6 @@ exports[`traverseEntity > traversable: expect string[], get string[] 1`] = `
     "message": "Expected a list of String, got string",
     "path": "entity.fields.stringList",
     "type": "error",
-  },
-  {
-    "path": "entity.fields.twoStrings",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "list": false,
-      "name": "twoStrings",
-      "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "twoStrings",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
-  {
-    "path": "entity.fields.richText",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "entityTypes": [],
-      "linkEntityTypes": [],
-      "list": false,
-      "name": "richText",
-      "required": false,
-      "richTextNodes": [],
-      "type": "RichText",
-      "valueTypes": [],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "richText",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
-  {
-    "path": "entity.fields.adminOnlyString",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": true,
-      "index": null,
-      "list": false,
-      "matchPattern": null,
-      "multiline": false,
-      "name": "adminOnlyString",
-      "required": false,
-      "type": "String",
-      "values": [],
-    },
-    "path": [
-      "entity",
-      "fields",
-      "adminOnlyString",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
   },
 ]
 `;

@@ -43,6 +43,20 @@ const adminSchema = AdminSchema.createAndValidate({
       ],
     },
     {
+      name: 'RichTextsEntity',
+      fields: [
+        { name: 'richText', type: FieldType.RichText },
+        { name: 'richTextList', type: FieldType.RichText, list: true },
+      ],
+    },
+    {
+      name: 'StringsEntity',
+      fields: [
+        { name: 'string', type: FieldType.String },
+        { name: 'stringList', type: FieldType.String, list: true },
+      ],
+    },
+    {
       name: 'Foo',
       fields: [
         { name: 'string', type: FieldType.String },
@@ -393,7 +407,7 @@ describe('traverseEntity', () => {
   test('traversable: expect richText, get richText[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'Foo' },
+        info: { type: 'RichTextsEntity' },
         fields: {
           richText: [
             createRichText([createRichTextParagraphNode([createRichTextTextNode('hello')])]),
@@ -413,13 +427,53 @@ describe('traverseEntity', () => {
     `);
   });
 
+  test('traversable: expect richText[], get richText', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'RichTextsEntity' },
+        fields: {
+          richTextList: createRichText([
+            createRichTextParagraphNode([createRichTextTextNode('hello')]),
+          ]),
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a list of RichText, got object",
+          "path": "entity.fields.richTextList",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect richText, get other', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'RichTextsEntity' },
+        fields: { richText: 'string value' },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a RichText object, got string",
+          "path": "entity.fields.richText",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
   test('traversable: expect string, get string[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'Foo' },
-        fields: {
-          string: ['string1', 'string2'],
-        },
+        info: { type: 'StringsEntity' },
+        fields: { string: ['string1', 'string2'] },
       }),
     );
     expect(nodes).toMatchSnapshot();
@@ -434,13 +488,11 @@ describe('traverseEntity', () => {
     `);
   });
 
-  test('traversable: expect string[], get string[]', () => {
+  test('traversable: expect string[], get string', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'Foo' },
-        fields: {
-          stringList: 'one string',
-        },
+        info: { type: 'StringsEntity' },
+        fields: { stringList: 'one string' },
       }),
     );
     expect(nodes).toMatchSnapshot();
@@ -449,6 +501,25 @@ describe('traverseEntity', () => {
         {
           "message": "Expected a list of String, got string",
           "path": "entity.fields.stringList",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect string, get other', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'StringsEntity' },
+        fields: { string: 1 },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a string, got number",
+          "path": "entity.fields.string",
           "type": "error",
         },
       ]

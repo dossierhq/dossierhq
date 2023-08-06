@@ -1539,7 +1539,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.location: Expected {lat: number, lng: number}, got [object Object]',
+      'entity.fields.location: Expected {lat: number, lng: number}, got {lat: undefined, lng: undefined}',
     );
   });
 
