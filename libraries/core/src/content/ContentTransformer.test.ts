@@ -1,11 +1,13 @@
 import { describe, expect, test } from 'vitest';
-import { ok } from '../ErrorResult.js';
+import { ErrorType, ok } from '../ErrorResult.js';
 import { createRichText, createRichTextValueItemNode } from '../content/RichTextUtils.js';
-import { AdminSchemaWithMigrations } from '../schema/AdminSchema.js';
+import { AdminSchemaWithMigrations, type AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
+import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { contentValuePathToString } from './ContentPath.js';
-import { transformEntityFields } from './ContentTransformer.js';
+import { transformEntityFields, type ContentTransformer } from './ContentTransformer.js';
 import { isRichTextValueItemNode, isValueItemItemField } from './ContentTypeUtils.js';
+import { copyEntity } from './ContentUtils.js';
 
 const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
   entityTypes: [
@@ -45,6 +47,12 @@ const ENTITY_1 = Object.freeze({
   },
 });
 
+const IDENTITY_TRANSFORMER: ContentTransformer<AdminSchema, typeof ErrorType.Generic> = {
+  transformField: (path, _fieldSpec, value) => ok(value),
+  transformFieldItem: (path, _fieldSpec, value) => ok(value),
+  transformRichTextNode: (path, _fieldSpec, node) => ok(node),
+};
+
 describe('transformEntity', () => {
   test('identity', () => {
     const calls: unknown[][] = [];
@@ -77,5 +85,34 @@ describe('transformEntity', () => {
         ok(isRichTextValueItemNode(node) ? null : node),
     }).valueOrThrow();
     expect(transformed).toMatchSnapshot();
+  });
+
+  test('error: use unsupported field name in entity', () => {
+    const copy = copyEntity(ENTITY_1, {
+      fields: { unsupported: 'hello' } as Partial<typeof ENTITY_1.fields>,
+    });
+    const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity: ValueItemsEntity does not include the fields: unsupported',
+    );
+  });
+
+  test('error: use unsupported field name in value item', () => {
+    const copy = copyEntity(ENTITY_1, {
+      fields: {
+        valueItem: {
+          type: 'NestedValueItem',
+          unsupported: 'hello',
+        } as unknown as typeof ENTITY_1.fields.valueItem,
+      },
+    });
+    const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity.valueItem: NestedValueItem does not include the fields: unsupported',
+    );
   });
 });

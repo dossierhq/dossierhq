@@ -41,12 +41,12 @@ export interface ContentTransformer<
 
 export function transformEntityFields<
   TSchema extends AdminSchema | PublishedSchema,
-  TEntity extends EntityLike,
+  TEntity extends EntityLike<string, object>,
   TError extends ErrorType,
 >(
   schema: TSchema,
   path: ContentValuePath,
-  entity: TEntity,
+  entity: Readonly<TEntity>,
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<TEntity['fields'], TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const typeSpec = schema.getEntityTypeSpecification(entity.info.type);
@@ -60,7 +60,8 @@ export function transformEntityFields<
     schema,
     path,
     typeSpec,
-    entity.fields,
+    'entity',
+    entity.fields as Record<string, unknown>,
     transformer,
   );
   if (transformResult.isError()) return transformResult;
@@ -82,7 +83,14 @@ export function transformValueItem<
     return notOk.BadRequest(`${contentValuePathToString(path)}: Unknown value type: ${item.type}`);
   }
 
-  const transformResult = transformContentFields(schema, path, typeSpec, item, transformer);
+  const transformResult = transformContentFields(
+    schema,
+    path,
+    typeSpec,
+    'value',
+    item,
+    transformer,
+  );
   if (transformResult.isError()) return transformResult;
   if (transformResult.value === item) return ok(item);
   return ok({ ...transformResult.value, type: item.type });
@@ -95,17 +103,25 @@ function transformContentFields<
   schema: TSchema,
   path: ContentValuePath,
   typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['valueTypes'][number],
+  kind: 'entity' | 'value',
   fields: Record<string, unknown>,
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<
   Record<string, unknown>,
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
+  const unsupportedFieldNames = new Set(Object.keys(fields));
+  if (kind === 'value') {
+    unsupportedFieldNames.delete('type');
+  }
+
   let changedFields = false;
   const newFields: Record<string, unknown> = {};
   for (const fieldSpec of typeSpec.fields) {
     const fieldPath = [...path, fieldSpec.name];
     const originalValue = fields[fieldSpec.name] as Readonly<unknown>;
+    unsupportedFieldNames.delete(fieldSpec.name);
+
     const transformResult = transformContentField(
       schema,
       fieldPath,
@@ -123,6 +139,14 @@ function transformContentFields<
     if (transformResult.value !== undefined) {
       newFields[fieldSpec.name] = transformResult.value;
     }
+  }
+
+  if (unsupportedFieldNames.size > 0) {
+    return notOk.BadRequest(
+      `${contentValuePathToString(path)}: ${typeSpec.name} does not include the fields: ${[
+        ...unsupportedFieldNames,
+      ].join(', ')}`,
+    );
   }
 
   if (!changedFields) {
