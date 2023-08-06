@@ -105,7 +105,7 @@ const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
 function validateEntity(entity: EntityLike) {
   const normalizedEntity = {
     ...entity,
-    fields: normalizeEntityFields(adminSchema, entity).valueOrThrow(),
+    fields: normalizeEntityFields(adminSchema, ['entity'], entity).valueOrThrow(),
   };
 
   const errors: (SaveValidationIssue | PublishValidationIssue)[] = [];

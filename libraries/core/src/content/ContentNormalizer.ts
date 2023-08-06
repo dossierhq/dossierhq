@@ -4,6 +4,7 @@ import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { AdminFieldSpecification } from '../schema/SchemaSpecification.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { assertExhaustive } from '../utils/Asserts.js';
+import type { ContentValuePath } from './ContentPath.js';
 import {
   IDENTITY_TRANSFORMER,
   transformEntityFields,
@@ -11,21 +12,21 @@ import {
 } from './ContentTransformer.js';
 import { isRichTextElementNode } from './ContentTypeUtils.js';
 
-//TODO add path
 export function normalizeEntityFields<TEntity extends EntityLike<string, object>>(
   schema: AdminSchema,
+  path: ContentValuePath,
   entity: Readonly<TEntity>,
   options?: { excludeOmittedEntityFields: boolean },
 ): Result<TEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return transformEntityFields(schema, ['entity', 'fields'], entity, IDENTITY_TRANSFORMER, options);
+  return transformEntityFields(schema, [...path, 'fields'], entity, IDENTITY_TRANSFORMER, options);
 }
 
-//TODO add path
 export function normalizeValueItem<TValueItem extends ValueItem<string, object>>(
   schema: AdminSchema,
+  path: ContentValuePath,
   valueItem: Readonly<TValueItem>,
 ): Result<TValueItem, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return transformValueItem(schema, ['valueItem'], valueItem, IDENTITY_TRANSFORMER);
+  return transformValueItem(schema, path, valueItem, IDENTITY_TRANSFORMER);
 }
 
 //TODO add path

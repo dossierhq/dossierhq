@@ -47,7 +47,10 @@ function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: 
 describe('normalizeEntityFields', () => {
   test('empty Foo', () => {
     expect(
-      normalizeEntityFields(schema, { info: { type: 'Foo' }, fields: {} }).valueOrThrow(),
+      normalizeEntityFields(schema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {},
+      }).valueOrThrow(),
     ).toMatchSnapshot();
   });
 
@@ -55,6 +58,7 @@ describe('normalizeEntityFields', () => {
     expect(
       normalizeEntityFields(
         schema,
+        ['entity'],
         { info: { type: 'Foo' }, fields: {} },
         { excludeOmittedEntityFields: true },
       ).valueOrThrow(),
@@ -63,7 +67,7 @@ describe('normalizeEntityFields', () => {
 
   test('empty fields in value item', () => {
     expect(
-      normalizeEntityFields(schema, {
+      normalizeEntityFields(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: { twoStrings: { type: 'TwoStrings', string1: '', string2: null } },
       }).valueOrThrow(),
@@ -72,7 +76,7 @@ describe('normalizeEntityFields', () => {
 
   test('empty fields in value item in rich text', () => {
     expect(
-      normalizeEntityFields(schema, {
+      normalizeEntityFields(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
           richText: createRichText([
@@ -86,12 +90,18 @@ describe('normalizeEntityFields', () => {
 
 describe('normalizeValueItem', () => {
   test('empty TwoStrings', () => {
-    expect(normalizeValueItem(schema, { type: 'TwoStrings' }).valueOrThrow()).toMatchSnapshot();
+    expect(
+      normalizeValueItem(schema, ['entity'], { type: 'TwoStrings' }).valueOrThrow(),
+    ).toMatchSnapshot();
   });
 
   test('TwoStrings with empty strings', () => {
     expect(
-      normalizeValueItem(schema, { type: 'TwoStrings', string1: '', string2: null }).valueOrThrow(),
+      normalizeValueItem(schema, ['entity'], {
+        type: 'TwoStrings',
+        string1: '',
+        string2: null,
+      }).valueOrThrow(),
     ).toMatchSnapshot();
   });
 });

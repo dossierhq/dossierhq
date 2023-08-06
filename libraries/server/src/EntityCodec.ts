@@ -437,7 +437,7 @@ export function resolveCreateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const normalizedResult = normalizeEntityFields(schema, entity);
+  const normalizedResult = normalizeEntityFields(schema, ['entity'], entity);
   if (normalizedResult.isError()) return normalizedResult;
   result.fields = normalizedResult.value;
 
@@ -489,6 +489,7 @@ export function resolveUpdateEntity(
 
   const normalizedResult = normalizeEntityFields(
     schema,
+    ['entity'],
     { ...entity, info: { type: result.info.type } },
     { excludeOmittedEntityFields: true },
   );

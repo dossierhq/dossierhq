@@ -218,7 +218,7 @@ async function validateAndCollectInfoFromAdminEntity(
     );
   }
 
-  const normalizedResult = normalizeEntityFields(adminSchema, entity);
+  const normalizedResult = normalizeEntityFields(adminSchema, ['entity'], entity);
   if (normalizedResult.isError()) {
     return convertErrorResultForValidation(
       context,
