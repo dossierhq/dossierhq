@@ -46,70 +46,19 @@ const locationCodec: FieldTypeAdapter<
   FieldValueTypeMap[typeof FieldType.Location],
   [number, number]
 > = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => {
-    if (Array.isArray(data)) {
-      return {
-        encodedValue: null,
-        validationIssues: [{ type: 'save', path, message: `Expected location, got list` }],
-      };
-    }
-    if (typeof data !== 'object') {
-      return {
-        encodedValue: null,
-        validationIssues: [
-          {
-            type: 'save',
-            path,
-            message: `Expected location object, got ${typeof data}`,
-          },
-        ],
-      };
-    }
-    const { lat, lng } = data;
-    if (typeof lat !== 'number' || typeof lng !== 'number') {
-      const validationIssues: SaveValidationIssue[] = [];
-      if (typeof lat !== 'number' && typeof lng !== 'number') {
-        validationIssues.push({
-          type: 'save',
-          path,
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
-          message: `Expected {lat: number, lng: number}, got ${data}`,
-        });
-      } else if (typeof lat !== 'number') {
-        validationIssues.push({
-          type: 'save',
-          path: [...path, 'lat'],
-          message: `Expected number, got ${typeof lat}`,
-        });
-      } else {
-        validationIssues.push({
-          type: 'save',
-          path: [...path, 'lng'],
-          message: `Expected number, got ${typeof lng}`,
-        });
-      }
-      return { encodedValue: null, validationIssues };
-    }
-    return { encodedValue: [lat, lng], validationIssues: [] };
-  },
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => ({
+    encodedValue: [data.lat, data.lng],
+    validationIssues: [],
+  }),
   decodeData: ([lat, lng]) => ({ lat, lng }),
   decodeJson: (json) => json as Location,
 };
 
 const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], number> = {
-  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) =>
-    typeof data === 'number'
-      ? { encodedValue: data, validationIssues: [] }
-      : {
-          encodedValue: null,
-          validationIssues: [
-            {
-              type: 'save',
-              path,
-              message: `Expected number, got ${Array.isArray(data) ? 'list' : typeof data}`,
-            },
-          ],
-        },
+  encodeData: (_fieldSpec: AdminFieldSpecification, path: ContentValuePath, data) => ({
+    encodedValue: data,
+    validationIssues: [],
+  }),
   decodeData: (it) => it,
   decodeJson: (json) => json as number,
 };

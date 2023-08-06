@@ -29,6 +29,20 @@ const adminSchema = AdminSchema.createAndValidate({
       ],
     },
     {
+      name: 'LocationsEntity',
+      fields: [
+        { name: 'location', type: FieldType.Location },
+        { name: 'locationList', type: FieldType.Location, list: true },
+      ],
+    },
+    {
+      name: 'NumbersEntity',
+      fields: [
+        { name: 'number', type: FieldType.Number },
+        { name: 'numberList', type: FieldType.Number, list: true },
+      ],
+    },
+    {
       name: 'Foo',
       fields: [
         { name: 'string', type: FieldType.String },
@@ -246,6 +260,130 @@ describe('traverseEntity', () => {
         {
           "message": "Expected an entity reference, got string",
           "path": "entity.fields.entity",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect location, get location[]', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'LocationsEntity' },
+        fields: { location: [{ lat: 1, lng: 2 }] },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single Location, got a list",
+          "path": "entity.fields.location",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect location[], get location', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'LocationsEntity' },
+        fields: { locationList: { lat: 1, lng: 2 } },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a list of Location, got object",
+          "path": "entity.fields.locationList",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect location, get other', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'LocationsEntity' },
+        fields: { location: 'string value', locationList: [{}, { lat: '123', lng: 123 }] },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a Location object, got string",
+          "path": "entity.fields.location",
+          "type": "error",
+        },
+        {
+          "message": "Expected {lat: number, lng: number}, got {lat: undefined, lng: undefined}",
+          "path": "entity.fields.locationList[0]",
+          "type": "error",
+        },
+        {
+          "message": "Expected {lat: number, lng: number}, got {lat: string, lng: number}",
+          "path": "entity.fields.locationList[1]",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect number, get number[]', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'NumbersEntity' },
+        fields: { number: [1, 2, 3] },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single Number, got a list",
+          "path": "entity.fields.number",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect number[], get number', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'NumbersEntity' },
+        fields: { numberList: 123 },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a list of Number, got number",
+          "path": "entity.fields.numberList",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('traversable: expect number, get other', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'NumbersEntity' },
+        fields: { number: 'string value' },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a number, got string",
+          "path": "entity.fields.number",
           "type": "error",
         },
       ]

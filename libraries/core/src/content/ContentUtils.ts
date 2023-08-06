@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   EntityLike,
+  Location,
   PublishedEntity,
   RichText,
   RichTextNode,
@@ -93,6 +94,25 @@ export function checkFieldItemTraversable(
           path: ['id'],
           message: `Expected an entity reference id, got ${typeof (value as EntityLike).id}`,
         };
+      }
+      break;
+    }
+    case FieldType.Location: {
+      if (typeof value !== 'object') {
+        return { path: [], message: `Expected a Location object, got ${typeof value}` };
+      }
+      const { lat, lng } = value as Location;
+      if (typeof lat !== 'number' || typeof lng !== 'number') {
+        return {
+          path: [],
+          message: `Expected {lat: number, lng: number}, got {lat: ${typeof lat}, lng: ${typeof lng}}`,
+        };
+      }
+      break;
+    }
+    case FieldType.Number: {
+      if (typeof value !== 'number') {
+        return { path: [], message: `Expected a number, got ${typeof value}` };
       }
       break;
     }

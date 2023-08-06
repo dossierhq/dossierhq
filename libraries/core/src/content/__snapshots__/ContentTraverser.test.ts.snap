@@ -1002,6 +1002,174 @@ exports[`traverseEntity > traversable: expect entity[], get entity 1`] = `
 ]
 `;
 
+exports[`traverseEntity > traversable: expect location, get location[] 1`] = `
+[
+  {
+    "path": "entity.fields.location",
+    "type": "field",
+    "value": [
+      {
+        "lat": 1,
+        "lng": 2,
+      },
+    ],
+  },
+  {
+    "message": "Expected single Location, got a list",
+    "path": "entity.fields.location",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.locationList",
+    "type": "field",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect location, get other 1`] = `
+[
+  {
+    "path": "entity.fields.location",
+    "type": "field",
+    "value": "string value",
+  },
+  {
+    "message": "Expected a Location object, got string",
+    "path": "entity.fields.location",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.locationList",
+    "type": "field",
+    "value": [
+      {},
+      {
+        "lat": "123",
+        "lng": 123,
+      },
+    ],
+  },
+  {
+    "message": "Expected {lat: number, lng: number}, got {lat: undefined, lng: undefined}",
+    "path": "entity.fields.locationList[0]",
+    "type": "error",
+  },
+  {
+    "message": "Expected {lat: number, lng: number}, got {lat: string, lng: number}",
+    "path": "entity.fields.locationList[1]",
+    "type": "error",
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect location[], get location 1`] = `
+[
+  {
+    "path": "entity.fields.location",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "list": false,
+      "name": "location",
+      "required": false,
+      "type": "Location",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "location",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "message": "Expected a list of Location, got object",
+    "path": "entity.fields.locationList",
+    "type": "error",
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect number, get number[] 1`] = `
+[
+  {
+    "path": "entity.fields.number",
+    "type": "field",
+    "value": [
+      1,
+      2,
+      3,
+    ],
+  },
+  {
+    "message": "Expected single Number, got a list",
+    "path": "entity.fields.number",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.numberList",
+    "type": "field",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect number, get other 1`] = `
+[
+  {
+    "path": "entity.fields.number",
+    "type": "field",
+    "value": "string value",
+  },
+  {
+    "message": "Expected a number, got string",
+    "path": "entity.fields.number",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.numberList",
+    "type": "field",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect number[], get number 1`] = `
+[
+  {
+    "path": "entity.fields.number",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "integer": false,
+      "list": false,
+      "name": "number",
+      "required": false,
+      "type": "Number",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "number",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "message": "Expected a list of Number, got number",
+    "path": "entity.fields.numberList",
+    "type": "error",
+  },
+]
+`;
+
 exports[`traverseEntity > traversable: expect richText, get richText[] 1`] = `
 [
   {
