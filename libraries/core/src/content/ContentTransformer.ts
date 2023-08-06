@@ -54,7 +54,7 @@ export interface ContentTransformer<
 }
 
 interface TransformEntityFieldsOptions {
-  excludeOmitted?: boolean;
+  excludeOmittedEntityFields?: boolean;
 }
 
 export function transformEntityFields<
@@ -150,7 +150,7 @@ function transformContentFields<
     const originalValue = fields[fieldSpec.name] as Readonly<unknown>;
     unsupportedFieldNames.delete(fieldSpec.name);
 
-    if (options?.excludeOmitted && !(fieldSpec.name in fields)) {
+    if (kind === 'entity' && options?.excludeOmittedEntityFields && !(fieldSpec.name in fields)) {
       continue;
     }
 

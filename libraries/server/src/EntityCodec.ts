@@ -490,7 +490,7 @@ export function resolveUpdateEntity(
   const normalizedResult = normalizeEntityFields(
     schema,
     { ...entity, info: { type: result.info.type } },
-    { excludeOmitted: true },
+    { excludeOmittedEntityFields: true },
   );
   if (normalizedResult.isError()) return normalizedResult;
   const normalizedFields = normalizedResult.value;

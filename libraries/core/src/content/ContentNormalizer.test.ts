@@ -51,12 +51,12 @@ describe('normalizeEntityFields', () => {
     ).toMatchSnapshot();
   });
 
-  test('empty Foo (excludeOmitted)', () => {
+  test('empty Foo (excludeOmittedEntityFields)', () => {
     expect(
       normalizeEntityFields(
         schema,
         { info: { type: 'Foo' }, fields: {} },
-        { excludeOmitted: true },
+        { excludeOmittedEntityFields: true },
       ).valueOrThrow(),
     ).toEqual({});
   });

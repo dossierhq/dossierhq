@@ -12,11 +12,10 @@ import {
 import { isRichTextElementNode } from './ContentTypeUtils.js';
 
 //TODO add path
-//TODO rename excludeOmitted to excludeOmittedEntityFields
 export function normalizeEntityFields<TEntity extends EntityLike<string, object>>(
   schema: AdminSchema,
   entity: Readonly<TEntity>,
-  options?: { excludeOmitted: boolean },
+  options?: { excludeOmittedEntityFields: boolean },
 ): Result<TEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return transformEntityFields(schema, ['entity', 'fields'], entity, IDENTITY_TRANSFORMER, options);
 }
