@@ -5,7 +5,12 @@ import { FieldType } from '../schema/SchemaSpecification.js';
 import { contentValuePathToString } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeType, traverseEntity, traverseValueItem } from './ContentTraverser.js';
-import { createRichText, createRichTextValueItemNode } from './RichTextUtils.js';
+import {
+  createRichText,
+  createRichTextParagraphNode,
+  createRichTextTextNode,
+  createRichTextValueItemNode,
+} from './RichTextUtils.js';
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
@@ -33,28 +38,34 @@ const adminSchema = AdminSchema.createAndValidate({
 
 const publishedSchema = adminSchema.toPublishedSchema();
 
+type CollectedNode = { type: ContentTraverseNodeType } & Record<string, unknown>;
+
 function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
   generator: Generator<ContentTraverseNode<TSchema>>,
 ) {
-  const result = [];
+  const payload: CollectedNode[] = [];
   for (const node of generator) {
     const path = contentValuePathToString(node.path);
     switch (node.type) {
       case ContentTraverseNodeType.error:
-        result.push({ type: node.type, path, message: node.message });
+        payload.push({ type: node.type, path, message: node.message });
         break;
       case ContentTraverseNodeType.field:
-        result.push({ type: node.type, path, value: node.value });
+        payload.push({ type: node.type, path, value: node.value });
         break;
       case ContentTraverseNodeType.valueItem:
-        result.push({ type: node.type, path, valueItem: node.valueItem });
+        payload.push({ type: node.type, path, valueItem: node.valueItem });
         break;
       default: {
-        result.push(node);
+        payload.push(node as unknown as CollectedNode);
       }
     }
   }
-  return result;
+  return payload;
+}
+
+function filterErrorTraverseNodes(nodes: CollectedNode[]) {
+  return nodes.filter((node) => node.type === ContentTraverseNodeType.error);
 }
 
 describe('traverseEntity', () => {
@@ -111,6 +122,71 @@ describe('traverseEntity', () => {
       }),
     );
     expect(nodes).toMatchSnapshot();
+  });
+
+  test('Foo entity string[] where string is expected', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {
+          string: ['string1', 'string2'],
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single String, got a list",
+          "path": "entity.fields.string",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('Foo entity richText[] where richText is expected', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {
+          richText: [
+            createRichText([createRichTextParagraphNode([createRichTextTextNode('hello')])]),
+          ],
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected single RichText, got a list",
+          "path": "entity.fields.richText",
+          "type": "error",
+        },
+      ]
+    `);
+  });
+
+  test('Foo entity string where string[] is expected', () => {
+    const nodes = collectTraverseNodes(
+      traverseEntity(adminSchema, ['entity'], {
+        info: { type: 'Foo' },
+        fields: {
+          stringList: 'one string',
+        },
+      }),
+    );
+    expect(nodes).toMatchSnapshot();
+    expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
+      [
+        {
+          "message": "Expected a list of String, got string",
+          "path": "entity.fields.stringList",
+          "type": "error",
+        },
+      ]
+    `);
   });
 });
 

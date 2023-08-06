@@ -302,7 +302,7 @@ async function createBarWithFooBazReferences(
     const bars = [...new Array<undefined>(bazReferencesPerEntity - 1)].map(() => ({ id: barId }));
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz: ' + i, authKey: 'none' },
-      fields: { bar: { id: barId }, bars },
+      fields: { bar: { id: barId }, bars: bars.length > 0 ? bars : null },
     });
     if (expectOkResult(createBazResult)) {
       bazEntities.push(createBazResult.value.entity);
@@ -1267,7 +1267,11 @@ describe('createEntity()', () => {
       fields: { invalid: 'hello' },
     });
 
-    expectErrorResult(result, ErrorType.BadRequest, 'Unsupported field names: invalid');
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'entity.fields: EntityAdminFoo does not include the fields: invalid',
+    );
   });
 
   test('Error: Create EntityAdminFoo with reference to missing entity', async () => {
@@ -1308,7 +1312,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.tags: Expected list got string',
+      'entity.fields.tags: Expected a list of String, got string',
     );
   });
 
@@ -1322,7 +1326,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.title: Expected single String got list',
+      'entity.fields.title: Expected single String, got a list',
     );
   });
 
@@ -1336,7 +1340,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bars: Expected list got object',
+      'entity.fields.bars: Expected a list of Entity, got object',
     );
   });
 
@@ -1353,7 +1357,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bar: Expected single Entity got list',
+      'entity.fields.bar: Expected single Entity, got a list',
     );
   });
 
@@ -1364,7 +1368,11 @@ describe('createEntity()', () => {
         twoStrings: { one: 'One', two: 'Two' },
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.twoStrings: Missing type');
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.fields.twoStrings: Value item has no type',
+    );
   });
 
   test('Error: value type with invalid type', async () => {
@@ -1405,7 +1413,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: Unsupported field names: invalid',
+      'entity.fields.oneString: EntityAdminOneString does not include the fields: invalid',
     );
   });
 
@@ -1419,7 +1427,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.bodyList: Expected list got object',
+      'entity.fields.bodyList: Expected a list of RichText, got object',
     );
   });
 
@@ -1433,7 +1441,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Expected single RichText got list',
+      'entity.fields.body: Expected single RichText, got a list',
     );
   });
 
@@ -1444,7 +1452,11 @@ describe('createEntity()', () => {
         body: createRichTextParagraphNode([createRichTextTextNode('')]),
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.body: Missing root');
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.fields.body: RichText object is missing root',
+    );
   });
 
   test('Error: rich text with string', async () => {
@@ -1457,7 +1469,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Expected object got string',
+      'entity.fields.body: Expected a RichText object, got string',
     );
   });
 
@@ -1468,7 +1480,11 @@ describe('createEntity()', () => {
         body: {},
       },
     });
-    expectErrorResult(createResult, ErrorType.BadRequest, 'entity.fields.body: Missing root');
+    expectErrorResult(
+      createResult,
+      ErrorType.BadRequest,
+      'entity.fields.body: RichText object is missing root',
+    );
   });
 
   test('Error: rich text, root as string', async () => {
@@ -1481,7 +1497,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.body: Expected object got string',
+      'entity.fields.body: Invalid RichText root: Expected a RichText node, got string',
     );
   });
 
@@ -1495,7 +1511,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.locations: Expected list got object',
+      'entity.fields.locations: Expected a list of Location, got object',
     );
   });
 
@@ -1509,7 +1525,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.location: Expected single Location got list',
+      'entity.fields.location: Expected single Location, got a list',
     );
   });
 
@@ -1537,7 +1553,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStringsList: Expected list got object',
+      'entity.fields.twoStringsList: Expected a list of ValueItem, got object',
     );
   });
 
@@ -1554,7 +1570,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Expected single ValueItem got list',
+      'entity.fields.twoStrings: Expected single ValueItem, got a list',
     );
   });
 });

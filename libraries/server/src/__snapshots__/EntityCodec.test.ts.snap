@@ -44,12 +44,16 @@ exports[`applySchemaMigrationsToFieldValues deleteField > nested value item 1`] 
       "version": 1,
     },
   },
+  "valueItem": null,
+  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFieldValues deleteType > nested value item 1`] = `
 {
+  "richText": null,
   "valueItem": null,
+  "valueItemList": null,
 }
 `;
 
@@ -85,11 +89,15 @@ exports[`applySchemaMigrationsToFieldValues deleteType > value item in rich text
       "version": 1,
     },
   },
+  "valueItem": null,
+  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFieldValues deleteType > value item list 1`] = `
 {
+  "richText": null,
+  "valueItem": null,
   "valueItemList": null,
 }
 `;
@@ -140,6 +148,8 @@ exports[`applySchemaMigrationsToFieldValues renameField > value item in rich tex
       "version": 1,
     },
   },
+  "valueItem": null,
+  "valueItemList": null,
 }
 `;
 
@@ -189,5 +199,7 @@ exports[`applySchemaMigrationsToFieldValues renameType > value item in rich text
       "version": 1,
     },
   },
+  "valueItem": null,
+  "valueItemList": null,
 }
 `;

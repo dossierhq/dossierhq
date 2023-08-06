@@ -9,6 +9,48 @@ exports[`normalizeEntityFields > empty Foo 1`] = `
 }
 `;
 
+exports[`normalizeEntityFields > empty fields in value item 1`] = `
+{
+  "richText": null,
+  "string": null,
+  "stringList": null,
+  "twoStrings": {
+    "string1": null,
+    "string2": null,
+    "type": "TwoStrings",
+  },
+}
+`;
+
+exports[`normalizeEntityFields > empty fields in value item in rich text 1`] = `
+{
+  "richText": {
+    "root": {
+      "children": [
+        {
+          "data": {
+            "string1": null,
+            "string2": null,
+            "type": "TwoStrings",
+          },
+          "format": "",
+          "type": "valueItem",
+          "version": 1,
+        },
+      ],
+      "direction": "ltr",
+      "format": "",
+      "indent": 0,
+      "type": "root",
+      "version": 1,
+    },
+  },
+  "string": null,
+  "stringList": null,
+  "twoStrings": null,
+}
+`;
+
 exports[`normalizeValueItem > TwoStrings with empty strings 1`] = `
 {
   "string1": null,

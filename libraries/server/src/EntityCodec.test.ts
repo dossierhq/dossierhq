@@ -72,6 +72,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
+        "richText": null,
         "valueItem": {
           "child2": {
             "child2": {
@@ -85,6 +86,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
           "string2": "1",
           "type": "ValueItem",
         },
+        "valueItemList": null,
       }
     `);
   });
@@ -195,6 +197,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
+        "richText": null,
         "valueItem": {
           "child": {
             "child": {
@@ -205,6 +208,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
           },
           "type": "ValueItem",
         },
+        "valueItemList": null,
       }
     `);
   });
@@ -234,6 +238,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
+        "richText": null,
         "valueItem": {
           "child": {
             "child": {
@@ -247,6 +252,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
           "string": "1",
           "type": "ValueItem2",
         },
+        "valueItemList": null,
       }
     `);
   });
@@ -266,6 +272,8 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
+        "richText": null,
+        "valueItem": null,
         "valueItemList": [
           {
             "child": null,
@@ -390,6 +398,7 @@ describe('applySchemaMigrationsToFieldValues combos', () => {
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
+        "richText": null,
         "valueItem": {
           "child": {
             "child": {
@@ -403,6 +412,7 @@ describe('applySchemaMigrationsToFieldValues combos', () => {
           "string2": "1",
           "type": "ValueItem2",
         },
+        "valueItemList": null,
       }
     `);
   });

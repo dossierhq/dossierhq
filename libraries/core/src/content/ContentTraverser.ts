@@ -14,6 +14,11 @@ import {
   isRichTextValueItemNode,
   isValueItemItemField,
 } from './ContentTypeUtils.js';
+import {
+  checkFieldItemTraversable as traversableErrors,
+  checkFieldTraversable,
+  checkRichTextNodeTraversable,
+} from './ContentUtils.js';
 
 export const ContentTraverseNodeType = {
   error: 'error',
@@ -59,14 +64,14 @@ interface ContentTraverseNodeErrorMissingTypeSpec {
 interface ContentTraverseNodeField<TSchema extends AdminSchema | PublishedSchema> {
   path: ContentValuePath;
   type: 'field';
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number];
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number];
   value: unknown;
 }
 
 interface ContentTraverseNodeFieldItem<TSchema extends AdminSchema | PublishedSchema> {
   path: ContentValuePath;
   type: 'fieldItem';
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number];
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number];
   value: unknown;
 }
 
@@ -80,7 +85,7 @@ interface ContentTraverseNodeValueItem<TSchema extends AdminSchema | PublishedSc
 interface ContentTraverseNodeRichTextNode<TSchema extends AdminSchema | PublishedSchema> {
   path: ContentValuePath;
   type: 'richTextNode';
-  fieldSpec: TSchema['spec']['entityTypes'][number]['fields'][number];
+  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number];
   node: RichTextNode;
 }
 
@@ -169,6 +174,18 @@ export function* traverseContentField<TSchema extends AdminSchema | PublishedSch
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   value: unknown,
 ): Generator<ContentTraverseNode<TSchema>> {
+  const traversableErrors = checkFieldTraversable(fieldSpec, value);
+  if (traversableErrors.length > 0) {
+    const errorNode: ContentTraverseNodeErrorGeneric = {
+      type: ContentTraverseNodeType.error,
+      path,
+      errorType: ContentTraverseNodeErrorType.generic,
+      message: traversableErrors.join(', '),
+    };
+    yield errorNode;
+    return;
+  }
+
   const fieldNode: ContentTraverseNodeField<TSchema> = {
     type: ContentTraverseNodeType.field,
     path,
@@ -181,21 +198,12 @@ export function* traverseContentField<TSchema extends AdminSchema | PublishedSch
     if (value === null || value === undefined) {
       return;
     }
-    if (!Array.isArray(value)) {
-      const errorNode: ContentTraverseNodeErrorGeneric = {
-        type: ContentTraverseNodeType.error,
-        path,
-        errorType: ContentTraverseNodeErrorType.generic,
-        message: `Expected list got ${typeof value}`,
-      };
-      yield errorNode;
-      return;
-    }
-
-    for (let i = 0; i < value.length; i += 1) {
-      const fieldItemPath = [...path, i];
-      const fieldItem = value[i] as unknown;
-      yield* traverseContentFieldValue(schema, fieldItemPath, fieldSpec, fieldItem);
+    if (Array.isArray(value)) {
+      for (let i = 0; i < value.length; i += 1) {
+        const fieldItemPath = [...path, i];
+        const fieldItem = value[i] as unknown;
+        yield* traverseContentFieldValue(schema, fieldItemPath, fieldSpec, fieldItem);
+      }
     }
   } else {
     yield* traverseContentFieldValue(schema, path, fieldSpec, value);
@@ -208,12 +216,13 @@ function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchem
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   itemValue: unknown,
 ): Generator<ContentTraverseNode<TSchema>> {
-  if (Array.isArray(itemValue)) {
+  const fieldItemValueErrors = traversableErrors(fieldSpec, itemValue);
+  if (fieldItemValueErrors.length > 0) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.generic,
-      message: `Expected single ${fieldSpec.type} got list`,
+      message: fieldItemValueErrors.join(', '),
     };
     yield errorNode;
     return;
@@ -261,12 +270,13 @@ function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   node: RichTextNode,
 ): Generator<ContentTraverseNode<TSchema>> {
-  if (typeof node !== 'object') {
+  const traversableErrors = checkRichTextNodeTraversable(node);
+  if (traversableErrors.length > 0) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.generic,
-      message: `Expected object got ${typeof node}`,
+      message: traversableErrors.join(', '),
     };
     yield errorNode;
     return;

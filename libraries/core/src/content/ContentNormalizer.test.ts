@@ -1,13 +1,17 @@
 import { describe, expect, test } from 'vitest';
-import { assertIsDefined } from '../utils/Asserts.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
+import { assertIsDefined } from '../utils/Asserts.js';
 import {
   normalizeEntityFields,
   normalizeFieldValue,
   normalizeValueItem,
 } from './ContentNormalizer.js';
-import { createRichText, createRichTextParagraphNode } from './RichTextUtils.js';
+import {
+  createRichText,
+  createRichTextParagraphNode,
+  createRichTextValueItemNode,
+} from './RichTextUtils.js';
 
 const schema = AdminSchema.createAndValidate({
   entityTypes: [
@@ -55,6 +59,28 @@ describe('normalizeEntityFields', () => {
         { excludeOmitted: true },
       ).valueOrThrow(),
     ).toEqual({});
+  });
+
+  test('empty fields in value item', () => {
+    expect(
+      normalizeEntityFields(schema, {
+        info: { type: 'Foo' },
+        fields: { twoStrings: { type: 'TwoStrings', string1: '', string2: null } },
+      }).valueOrThrow(),
+    ).toMatchSnapshot();
+  });
+
+  test('empty fields in value item in rich text', () => {
+    expect(
+      normalizeEntityFields(schema, {
+        info: { type: 'Foo' },
+        fields: {
+          richText: createRichText([
+            createRichTextValueItemNode({ type: 'TwoStrings', string1: '', string2: null }),
+          ]),
+        },
+      }).valueOrThrow(),
+    ).toMatchSnapshot();
   });
 });
 

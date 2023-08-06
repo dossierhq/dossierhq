@@ -420,7 +420,7 @@ export function resolveCreateEntity(
   entity: AdminEntityCreate,
 ): Result<
   { createEntity: AdminEntityCreate; entitySpec: AdminEntityTypeSpecification },
-  typeof ErrorType.BadRequest
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const result: AdminEntityCreate = {
     info: {

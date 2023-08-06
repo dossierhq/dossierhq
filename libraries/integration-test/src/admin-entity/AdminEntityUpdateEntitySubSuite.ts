@@ -683,7 +683,11 @@ async function updateEntity_errorInvalidField({ server }: AdminEntityTestContext
     id,
     fields: { invalid: 'hello' },
   } as AdminEntityUpdate<AdminTitleOnly>);
-  assertErrorResult(updateResult, ErrorType.BadRequest, 'Unsupported field names: invalid');
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'entity.fields: TitleOnly does not include the fields: invalid',
+  );
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, createResult.value.entity);

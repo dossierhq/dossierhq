@@ -1,11 +1,12 @@
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import type { RichText, RichTextElementNode, RichTextNode } from '../Types.js';
-import type { ContentValuePath } from './ContentPath.js';
+import { contentValuePathToString, type ContentValuePath } from './ContentPath.js';
 import {
   isRichTextElementNode,
   isRichTextParagraphNode,
   isRichTextRootNode,
 } from './ContentTypeUtils.js';
+import { checkRichTextNodeTraversable } from './ContentUtils.js';
 
 export type RichTextNodeTransformer<TError extends ErrorType> = (
   path: ContentValuePath,
@@ -19,7 +20,7 @@ export function transformRichText<
   path: ContentValuePath,
   richText: T,
   transformer: RichTextNodeTransformer<TError>,
-): Result<T | null, TError | typeof ErrorType.Generic> {
+): Result<T | null, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const transformResult = transformNode(path, richText.root, transformer);
   if (transformResult.isError()) return transformResult;
   const newRoot = transformResult.value;
@@ -50,7 +51,12 @@ function transformNode<TError extends ErrorType>(
   path: ContentValuePath,
   node: Readonly<RichTextNode>,
   transformer: RichTextNodeTransformer<TError>,
-): Result<Readonly<RichTextNode | null>, TError> {
+): Result<Readonly<RichTextNode | null>, TError | typeof ErrorType.BadRequest> {
+  const traversableErrors = checkRichTextNodeTraversable(node);
+  if (traversableErrors.length > 0) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
+  }
+
   const transformResult = transformer(path, node);
   if (transformResult.isError()) return transformResult;
   const newNode = transformResult.value;

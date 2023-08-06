@@ -627,7 +627,11 @@ async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaT
     },
     { publish: true },
   );
-  assertErrorResult(updateResult, ErrorType.BadRequest, `Unsupported field names: ${fieldName}`);
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    `entity.fields: MigrationEntity does not include the fields: ${fieldName}`,
+  );
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField({
@@ -990,7 +994,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Unsupported field names: ${fieldName}`,
+    `entity.fields.any: MigrationValueItem does not include the fields: ${fieldName}`,
   );
 }
 
@@ -1136,7 +1140,7 @@ async function updateSchemaSpecification_renameFieldOnEntity({ server }: SchemaT
   assertErrorResult(
     updatedOldNameResult,
     ErrorType.BadRequest,
-    `Unsupported field names: ${oldFieldName}`,
+    `entity.fields: MigrationEntity does not include the fields: ${oldFieldName}`,
   );
 }
 
@@ -1309,7 +1313,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   assertErrorResult(
     updatedOldNameResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Unsupported field names: ${oldFieldName}`,
+    `entity.fields.any: MigrationValueItem does not include the fields: ${oldFieldName}`,
   );
 }
 

@@ -6,9 +6,23 @@ import { contentValuePathToString, type ContentValuePath } from './ContentPath.j
 import {
   isRichTextItemField,
   isRichTextValueItemNode,
+  isStringItemField,
   isValueItemItemField,
 } from './ContentTypeUtils.js';
+import { checkFieldItemTraversable, checkFieldTraversable } from './ContentUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
+
+export const IDENTITY_TRANSFORMER: ContentTransformer<AdminSchema, typeof ErrorType.BadRequest> = {
+  transformField(_path, _fieldSpec, value) {
+    return ok(value);
+  },
+  transformFieldItem(_path, _fieldSpec, value) {
+    return ok(value);
+  },
+  transformRichTextNode(_path, _fieldSpec, node) {
+    return ok(node);
+  },
+};
 
 export interface ContentTransformer<
   TSchema extends AdminSchema | PublishedSchema,
@@ -39,6 +53,10 @@ export interface ContentTransformer<
   ) => Result<Readonly<RichTextNode | null>, TError>;
 }
 
+interface TransformEntityFieldsOptions {
+  excludeOmitted?: boolean;
+}
+
 export function transformEntityFields<
   TSchema extends AdminSchema | PublishedSchema,
   TEntity extends EntityLike<string, object>,
@@ -48,11 +66,12 @@ export function transformEntityFields<
   path: ContentValuePath,
   entity: Readonly<TEntity>,
   transformer: ContentTransformer<TSchema, TError>,
+  options?: TransformEntityFieldsOptions,
 ): Result<TEntity['fields'], TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const typeSpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!typeSpec) {
     return notOk.BadRequest(
-      `${contentValuePathToString(path)}: Unknown entity type: ${entity.info.type}`,
+      `${contentValuePathToString(path)}: Couldn’t find spec for entity type ${entity.info.type}`,
     );
   }
 
@@ -63,6 +82,7 @@ export function transformEntityFields<
     'entity',
     entity.fields as Record<string, unknown>,
     transformer,
+    options,
   );
   if (transformResult.isError()) return transformResult;
   if (transformResult.value === entity.fields) return ok(entity.fields);
@@ -71,16 +91,22 @@ export function transformEntityFields<
 
 export function transformValueItem<
   TSchema extends AdminSchema | PublishedSchema,
+  TValueItem extends ValueItem<string, object>,
   TError extends ErrorType,
 >(
   schema: TSchema,
   path: ContentValuePath,
-  item: ValueItem,
+  item: Readonly<TValueItem>,
   transformer: ContentTransformer<TSchema, TError>,
-): Result<ValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): Result<TValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  if (!item.type) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: Value item has no type`);
+  }
   const typeSpec = schema.getValueTypeSpecification(item.type);
   if (!typeSpec) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: Unknown value type: ${item.type}`);
+    return notOk.BadRequest(
+      `${contentValuePathToString(path)}: Couldn’t find spec for value type ${item.type}`,
+    );
   }
 
   const transformResult = transformContentFields(
@@ -90,10 +116,11 @@ export function transformValueItem<
     'value',
     item,
     transformer,
+    undefined,
   );
   if (transformResult.isError()) return transformResult;
   if (transformResult.value === item) return ok(item);
-  return ok({ ...transformResult.value, type: item.type });
+  return ok({ ...transformResult.value, type: item.type } as TValueItem);
 }
 
 function transformContentFields<
@@ -106,6 +133,7 @@ function transformContentFields<
   kind: 'entity' | 'value',
   fields: Record<string, unknown>,
   transformer: ContentTransformer<TSchema, TError>,
+  options: TransformEntityFieldsOptions | undefined,
 ): Result<
   Record<string, unknown>,
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -122,6 +150,10 @@ function transformContentFields<
     const originalValue = fields[fieldSpec.name] as Readonly<unknown>;
     unsupportedFieldNames.delete(fieldSpec.name);
 
+    if (options?.excludeOmitted && !(fieldSpec.name in fields)) {
+      continue;
+    }
+
     const transformResult = transformContentField(
       schema,
       fieldPath,
@@ -130,15 +162,15 @@ function transformContentFields<
       transformer,
     );
     if (transformResult.isError()) return transformResult;
+    let transformedValue = transformResult.value;
+    if (transformedValue === undefined) {
+      transformedValue = null;
+    }
 
-    if (transformResult.value !== originalValue) {
+    if (transformedValue !== originalValue) {
       changedFields = true;
     }
-
-    // If undefined, delete the field.
-    if (transformResult.value !== undefined) {
-      newFields[fieldSpec.name] = transformResult.value;
-    }
+    newFields[fieldSpec.name] = transformedValue;
   }
 
   if (unsupportedFieldNames.size > 0) {
@@ -166,6 +198,11 @@ function transformContentField<
   originalValue: Readonly<unknown> | null,
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const traversableErrors = checkFieldTraversable(fieldSpec, originalValue);
+  if (traversableErrors.length > 0) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
+  }
+
   const transformFieldResult = transformer.transformField(path, fieldSpec, originalValue);
   if (transformFieldResult.isError()) return transformFieldResult;
   let value = transformFieldResult.value;
@@ -179,7 +216,9 @@ function transformContentField<
       return ok(value);
     }
     if (!Array.isArray(value)) {
-      return notOk.BadRequest(`Expected list got ${typeof value}`);
+      return notOk.BadRequest(
+        `${contentValuePathToString(path)}: Expected list got ${typeof value}`,
+      );
     }
 
     let changedItems = false;
@@ -206,7 +245,10 @@ function transformContentField<
       }
     }
     if (changedItems) {
-      value = newItems.length > 0 ? newItems : null;
+      value = newItems;
+    }
+    if (Array.isArray(value) && value.length === 0) {
+      value = null;
     }
   } else {
     const transformFieldValueResult = transformContentFieldValue(
@@ -236,6 +278,11 @@ function transformContentFieldValue<
   Readonly<unknown> | undefined | null,
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
+  const traversableErrors = checkFieldItemTraversable(fieldSpec, originalValue);
+  if (traversableErrors.length > 0) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
+  }
+
   const transformFieldItemResult = transformer.transformFieldItem(path, fieldSpec, originalValue);
   if (transformFieldItemResult.isError()) return transformFieldItemResult;
   const value = transformFieldItemResult.value;
@@ -263,6 +310,10 @@ function transformContentFieldValue<
       }
       return ok(transformedNode);
     });
+  } else if (isStringItemField(fieldSpec, value)) {
+    if (!value) {
+      return ok(null); // Empty string => null
+    }
   }
 
   return ok(value);
