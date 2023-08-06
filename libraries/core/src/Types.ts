@@ -40,9 +40,13 @@ export interface PublishedEntityInfo<
   createdAt: Date;
 }
 
-export interface EntityLike {
-  info: { type: string };
-  fields: Record<string, unknown>;
+export interface EntityLike<
+  TType extends string = string,
+  TFields extends object = Record<string, unknown>,
+> {
+  id?: string;
+  info: { type: TType };
+  fields: TFields;
 }
 
 export interface EntityReference {

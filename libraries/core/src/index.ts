@@ -7,17 +7,14 @@ export {
   createErrorResultFromError,
   notOk,
   ok,
+  type ErrorFromResult,
+  type ErrorResult,
+  type OkFromResult,
+  type OkResult,
+  type PromiseResult,
+  type Result,
 } from './ErrorResult.js';
-export type {
-  ErrorFromResult,
-  ErrorResult,
-  OkFromResult,
-  OkResult,
-  PromiseResult,
-  Result,
-} from './ErrorResult.js';
-export { NoOpLogger, createConsoleLogger } from './Logger.js';
-export type { Logger } from './Logger.js';
+export { NoOpLogger, createConsoleLogger, type Logger } from './Logger.js';
 export {
   AdminEntityStatus,
   AdminQueryOrder,
@@ -90,13 +87,11 @@ export {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-} from './client/AdminClient.js';
-export type {
-  AdminClient,
-  AdminClientJsonOperationArgs,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  AdminExceptionClient,
+  type AdminClient,
+  type AdminClientJsonOperationArgs,
+  type AdminClientMiddleware,
+  type AdminClientOperation,
+  type AdminExceptionClient,
 } from './client/AdminClient.js';
 export { withAdvisoryLock } from './client/AdvisoryLockUtils.js';
 export {
@@ -105,36 +100,35 @@ export {
   convertJsonEntityHistory,
   convertJsonPublishingHistory,
   convertJsonResult,
-} from './client/JsonUtils.js';
-export type {
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonEntityVersionInfo,
-  JsonPublishingHistory,
-  JsonResult,
+  type JsonConnection,
+  type JsonEdge,
+  type JsonEntityHistory,
+  type JsonEntityVersionInfo,
+  type JsonPublishingHistory,
+  type JsonResult,
 } from './client/JsonUtils.js';
 export {
   getAllNodesForConnection,
   getAllPagesForConnection,
   getPagingInfo,
+  type PagingInfo,
 } from './client/PagingUtils.js';
-export type { PagingInfo } from './client/PagingUtils.js';
 export {
   PublishedClientOperationName,
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
+  type PublishedClient,
+  type PublishedClientJsonOperationArgs,
+  type PublishedClientMiddleware,
+  type PublishedClientOperation,
+  type PublishedExceptionClient,
 } from './client/PublishedClient.js';
-export type {
-  PublishedClient,
-  PublishedClientJsonOperationArgs,
-  PublishedClientMiddleware,
-  PublishedClientOperation,
-  PublishedExceptionClient,
-} from './client/PublishedClient.js';
-export { LoggingClientMiddleware } from './client/SharedClient.js';
-export type { ClientContext, ContextProvider } from './client/SharedClient.js';
+export {
+  LoggingClientMiddleware,
+  type ClientContext,
+  type ContextProvider,
+} from './client/SharedClient.js';
 export {
   decodeURLSearchParamsParam,
   encodeObjectToURLSearchParams,
@@ -148,15 +142,19 @@ export {
   contentValuePathToString as contentValuePathToString,
   type ContentValuePath,
 } from './content/ContentPath.js';
-export { transformEntityFields, transformValueItem } from './content/ContentTransformer.js';
+export {
+  transformEntityFields,
+  transformValueItem,
+  type ContentTransformer,
+} from './content/ContentTransformer.js';
 export {
   ContentTraverseNodeErrorType,
   ContentTraverseNodeType,
   traverseContentField,
   traverseEntity,
   traverseValueItem,
+  type ContentTraverseNode,
 } from './content/ContentTraverser.js';
-export type { ContentTraverseNode } from './content/ContentTraverser.js';
 export {
   isBooleanField,
   isBooleanItemField,
@@ -206,8 +204,9 @@ export {
   validateEntityInfoForUpdate,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
+  type PublishValidationIssue,
+  type SaveValidationIssue,
 } from './content/ContentValidator.js';
-export type { PublishValidationIssue, SaveValidationIssue } from './content/ContentValidator.js';
 export { transformRichText } from './content/RichTextTransformer.js';
 export {
   createRichText,

@@ -1,15 +1,19 @@
 import {
   AdminEntityStatus,
+  ErrorType,
   copyEntity,
+  createRichText,
   createRichTextEntityLinkNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
-  ErrorType,
 } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminAdminOnlyValue } from '../SchemaTypes.js';
+import {
+  type AdminAdminOnlyValue,
+  type AdminReferences,
+  type AdminTitleOnly,
+} from '../SchemaTypes.js';
 import {
   REFERENCES_CREATE,
   RICH_TEXTS_CREATE,
@@ -153,7 +157,10 @@ async function publishEntities_twoEntitiesReferencingEachOther({ server }: Admin
     entity: { id: id2 },
   } = create2Result.value;
 
-  const update1Result = await client.updateEntity({ id: id1, fields: { any: { id: id2 } } });
+  const update1Result = await client.updateEntity<AdminReferences>({
+    id: id1,
+    fields: { any: { id: id2 } },
+  });
   assertOkResult(update1Result);
 
   const publishResult = await client.publishEntities([
@@ -193,7 +200,10 @@ async function publishEntities_publishAlreadyPublishedEntity({ server }: AdminEn
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
+  const updateResult = await client.updateEntity<AdminTitleOnly>({
+    id,
+    fields: { title: 'Updated title' },
+  });
   assertOkResult(updateResult);
   const {
     entity: {

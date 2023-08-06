@@ -44,18 +44,6 @@ import type {
   SchemaSpecificationUpdatePayload,
 } from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
-import type {
-  JsonAdminEntity,
-  JsonAdminEntityCreatePayload,
-  JsonAdminEntityUpdatePayload,
-  JsonAdminEntityUpsertPayload,
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonPublishingHistory,
-  JsonPublishingResult,
-  JsonResult,
-} from './JsonUtils.js';
 import {
   convertJsonAdminEntity,
   convertJsonConnection,
@@ -64,15 +52,25 @@ import {
   convertJsonPublishingHistory,
   convertJsonPublishingResult,
   convertJsonResult,
+  type JsonAdminEntity,
+  type JsonAdminEntityCreatePayload,
+  type JsonAdminEntityUpdatePayload,
+  type JsonAdminEntityUpsertPayload,
+  type JsonConnection,
+  type JsonEdge,
+  type JsonEntityHistory,
+  type JsonPublishingHistory,
+  type JsonPublishingResult,
+  type JsonResult,
 } from './JsonUtils.js';
-import type {
-  ClientContext,
-  ContextProvider,
-  Middleware,
-  Operation,
-  OperationWithoutCallbacks,
+import {
+  executeOperationPipeline,
+  type ClientContext,
+  type ContextProvider,
+  type Middleware,
+  type Operation,
+  type OperationWithoutCallbacks,
 } from './SharedClient.js';
-import { executeOperationPipeline } from './SharedClient.js';
 
 export interface AdminClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
@@ -165,7 +163,7 @@ export interface AdminClient<
   >;
 
   createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: AdminEntityCreate<T>,
+    entity: Readonly<AdminEntityCreate<T>>,
     options?: AdminEntityMutationOptions,
   ): PromiseResult<
     AdminEntityCreatePayload<T>,
@@ -176,7 +174,7 @@ export interface AdminClient<
   >;
 
   updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: AdminEntityUpdate<T>,
+    entity: Readonly<AdminEntityUpdate<T>>,
     options?: AdminEntityMutationOptions,
   ): PromiseResult<
     AdminEntityUpdatePayload<T>,
@@ -187,7 +185,7 @@ export interface AdminClient<
   >;
 
   upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: AdminEntityUpsert<T>,
+    entity: Readonly<AdminEntityUpsert<T>>,
     options?: AdminEntityMutationOptions,
   ): PromiseResult<
     AdminEntityUpsertPayload<T>,

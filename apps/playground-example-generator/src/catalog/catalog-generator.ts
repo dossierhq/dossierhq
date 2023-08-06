@@ -10,6 +10,9 @@ import {
   createRichTextTextNode,
   createRichTextValueItemNode,
   type AdminEntityCreate,
+  type AdminEntityCreatePayload,
+  type ErrorType,
+  type PromiseResult,
   type RichText,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
@@ -234,7 +237,13 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
   };
   const minimalPublish = copyEntity(minimal, { fields: { required: true } });
 
-  const results = [
+  const results: PromiseResult<
+    AdminEntityCreatePayload<AdminBooleansEntity>,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  >[] = [
     adminClient.createEntity(copyEntity(minimal, { id: id('booleans-minimal') })),
 
     adminClient.createEntity(
@@ -334,6 +343,7 @@ async function createEntitiesEntities(
       { publish: true },
     ),
   ];
+
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
@@ -349,7 +359,13 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
     fields: { required: malmo, requiredList: [london] },
   });
 
-  const results = [
+  const results: PromiseResult<
+    AdminEntityCreatePayload<AdminLocationsEntity>,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  >[] = [
     adminClient.createEntity(copyEntity(minimal, { id: id('locations-minimal') })),
 
     adminClient.createEntity(
@@ -390,7 +406,13 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
     fields: { required: 1.23, requiredList: [4.56, 7.89], requiredIntegerList: [1, 2, 3] },
   });
 
-  const results = [
+  const results: PromiseResult<
+    AdminEntityCreatePayload<AdminNumbersEntity>,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  >[] = [
     adminClient.createEntity(copyEntity(minimal, { id: id('numbers-minimal') })),
 
     adminClient.createEntity(
@@ -626,7 +648,13 @@ async function createStringsEntities(adminClient: AppAdminClient) {
     },
   });
 
-  const results = [
+  const results: PromiseResult<
+    AdminEntityCreatePayload<AdminStringsEntity>,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  >[] = [
     adminClient.createEntity(copyEntity(minimal, { id: id('strings-minimal') })),
 
     adminClient.createEntity(

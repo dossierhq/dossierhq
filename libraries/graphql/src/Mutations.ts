@@ -23,7 +23,7 @@ import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 export async function createEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  entity: AdminEntityCreate,
+  entity: Readonly<AdminEntityCreate>,
   options: AdminEntityMutationOptions,
 ): Promise<AdminEntityCreatePayload> {
   const adminClient = context.adminClient.valueOrThrow();
@@ -38,7 +38,7 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  entity: AdminEntityUpdate,
+  entity: Readonly<AdminEntityUpdate>,
   options: AdminEntityMutationOptions,
 ): Promise<AdminEntityUpdatePayload> {
   const adminClient = context.adminClient.valueOrThrow();
@@ -53,7 +53,7 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 export async function upsertEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  entity: AdminEntityUpsert,
+  entity: Readonly<AdminEntityUpsert>,
   options: AdminEntityMutationOptions,
 ): Promise<AdminEntityUpsertPayload> {
   const adminClient = context.adminClient.valueOrThrow();

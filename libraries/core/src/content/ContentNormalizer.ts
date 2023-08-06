@@ -1,13 +1,11 @@
-import { assertExhaustive } from '../utils/Asserts.js';
-import type { ErrorType, Result } from '../ErrorResult.js';
-import { notOk, ok } from '../ErrorResult.js';
+import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import { RichTextNodeType, type EntityLike, type RichText, type ValueItem } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { AdminFieldSpecification } from '../schema/SchemaSpecification.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
+import { assertExhaustive } from '../utils/Asserts.js';
 import { isRichTextElementNode } from './ContentTypeUtils.js';
 
-// TODO move ItemTransformer to core and use it for normalization (null transformer -> normalization)
 export function normalizeEntityFields<TEntity extends EntityLike>(
   schema: AdminSchema,
   entity: TEntity,
@@ -31,7 +29,7 @@ export function normalizeEntityFields<TEntity extends EntityLike>(
     const fieldValue = normalizeFieldValue(
       schema,
       fieldSpec,
-      entity.fields?.[fieldSpec.name] ?? null,
+      (entity.fields as Record<string, unknown> | undefined)?.[fieldSpec.name] ?? null,
     );
     fields[fieldSpec.name] = fieldValue;
   }

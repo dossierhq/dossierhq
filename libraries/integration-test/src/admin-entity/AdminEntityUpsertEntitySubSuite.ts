@@ -3,7 +3,7 @@ import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminTitleOnly } from '../SchemaTypes.js';
+import type { AdminTitleOnly, AppAdminEntity } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import {
   SUBJECT_ONLY_UPSERT,
@@ -200,7 +200,7 @@ async function upsertEntity_errorUpdateNoAuthKey({ server }: AdminEntityTestCont
       // no authKey
     },
     fields: {},
-  } as AdminEntityUpsert);
+  } as AdminEntityUpsert<AppAdminEntity>);
 
   assertErrorResult(result, ErrorType.BadRequest, 'entity.info.authKey: AuthKey is required');
 }

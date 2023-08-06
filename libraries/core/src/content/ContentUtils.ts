@@ -1,4 +1,5 @@
-import type { AdminEntity, AdminEntityCreate, PublishedEntity } from '../Types.js';
+import type { AdminEntity, AdminEntityCreate, EntityLike, PublishedEntity } from '../Types.js';
+import type { Mutable } from '../utils/TypeUtils.js';
 
 export function isEntityNameAsRequested(currentName: string, requestedName: string): boolean {
   if (requestedName === currentName) {
@@ -16,12 +17,13 @@ export function copyEntity<
   T extends
     | AdminEntity<string, object>
     | AdminEntityCreate<AdminEntity<string, object>>
-    | PublishedEntity<string, object>,
+    | PublishedEntity<string, object>
+    | EntityLike<string, object>,
 >(
-  entity: T,
+  entity: Readonly<T> | T,
   changes: { id?: string; info?: Partial<T['info']>; fields?: Partial<T['fields']> },
-): T {
-  const copy = { ...entity };
+): Readonly<T> {
+  const copy: Mutable<T> = { ...entity };
   if (typeof changes.id === 'string') {
     copy.id = changes.id;
   }
@@ -32,7 +34,7 @@ export function copyEntity<
     }
   }
   if (changes.fields) {
-    const fieldsCopy: Record<string, unknown> = { ...entity.fields };
+    const fieldsCopy = { ...entity.fields } as Record<string, unknown>;
     copy.fields = fieldsCopy;
     for (const [key, value] of Object.entries(changes.fields)) {
       fieldsCopy[key] = value;

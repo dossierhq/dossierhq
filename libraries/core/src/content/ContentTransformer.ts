@@ -10,7 +10,7 @@ import {
 } from './ContentTypeUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
 
-interface ContentTransformer<
+export interface ContentTransformer<
   TSchema extends AdminSchema | PublishedSchema,
   TError extends ErrorType,
 > {
