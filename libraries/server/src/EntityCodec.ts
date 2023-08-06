@@ -2,6 +2,7 @@ import {
   AdminEntityStatus,
   FieldType,
   assertExhaustive,
+  assertIsDefined,
   isFieldValueEqual,
   isRichTextField,
   isRichTextItemField,
@@ -32,7 +33,6 @@ import {
   type RichTextValueItemNode,
   type SaveValidationIssue,
   type ValueItem,
-  type ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -286,17 +286,12 @@ function decodeFieldItemOrList(
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
       if (fieldSpec.type === FieldType.ValueItem) {
-        const decodedItem = decodeValueItemField(
-          schema,
-          fieldSpec,
-          codecMode,
-          encodedItem as ValueItem,
-        );
+        const decodedItem = decodeValueItemField(schema, codecMode, encodedItem as ValueItem);
         if (decodedItem) {
           decodedItems.push(decodedItem);
         }
       } else if (fieldSpec.type === FieldType.RichText) {
-        decodedItems.push(decodeRichTextField(schema, fieldSpec, encodedItem as RichText));
+        decodedItems.push(decodeRichTextField(schema, encodedItem as RichText));
       } else {
         decodedItems.push(
           codecMode === 'optimized'
@@ -308,10 +303,10 @@ function decodeFieldItemOrList(
     return decodedItems.length > 0 ? decodedItems : null;
   }
   if (fieldSpec.type === FieldType.ValueItem) {
-    return decodeValueItemField(schema, fieldSpec, codecMode, fieldValue as ValueItem);
+    return decodeValueItemField(schema, codecMode, fieldValue as ValueItem);
   }
   if (fieldSpec.type === FieldType.RichText) {
-    return decodeRichTextField(schema, fieldSpec, fieldValue as RichText);
+    return decodeRichTextField(schema, fieldValue as RichText);
   }
   return codecMode === 'optimized'
     ? fieldAdapter.decodeData(fieldValue)
@@ -320,7 +315,6 @@ function decodeFieldItemOrList(
 
 function decodeValueItemField(
   schema: AdminSchema | PublishedSchema,
-  _fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   codecMode: CodecMode,
   encodedValue: ValueItem,
 ): ValueItem | null {
@@ -341,14 +335,13 @@ function decodeValueItemField(
 
 function decodeRichTextField(
   schema: AdminSchema | PublishedSchema,
-  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   encodedValue: RichText,
 ): RichText | null {
   //TODO add paths to decoding
   const path: ContentValuePath = [];
   return transformRichText(path, encodedValue, (_path, node) => {
     if (isRichTextValueItemNode(node)) {
-      const data = decodeValueItemField(schema, fieldSpec, 'json', node.data);
+      const data = decodeValueItemField(schema, 'json', node.data);
       if (!data) {
         return ok(null);
       }
@@ -619,12 +612,7 @@ function encodeFieldItemOrList(
 
       let encodedItemResult: EncodedValue;
       if (isValueItemItemField(fieldSpec, decodedItem)) {
-        encodedItemResult = encodeValueItemField(
-          schema,
-          fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
-          itemPath,
-          decodedItem,
-        );
+        encodedItemResult = encodeValueItemField(schema, itemPath, decodedItem);
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
         encodedItemResult = encodeRichTextField(decodedItem);
       } else {
@@ -642,12 +630,7 @@ function encodeFieldItemOrList(
   }
 
   if (isValueItemField(fieldSpec, data)) {
-    return encodeValueItemField(
-      schema,
-      fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>,
-      path,
-      data,
-    );
+    return encodeValueItemField(schema, path, data);
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(data);
   }
@@ -656,64 +639,18 @@ function encodeFieldItemOrList(
 
 function encodeValueItemField(
   schema: AdminSchema,
-  fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>,
   path: ContentValuePath,
   data: ValueItem | null,
 ): EncodedValue {
-  if (Array.isArray(data)) {
-    return {
-      validationIssues: [{ type: 'save', path, message: 'Expected single value, got list' }],
-      encodedValue: null,
-    };
-  }
-  if (typeof data !== 'object' || !data) {
-    return {
-      validationIssues: [{ type: 'save', path, message: `Expected object, got ${typeof data}` }],
-      encodedValue: null,
-    };
-  }
+  if (!data) return { encodedValue: null, validationIssues: [] };
 
   const value = data;
   const valueType = value.type;
-  if (!valueType) {
-    return {
-      validationIssues: [{ type: 'save', path, message: 'Missing type' }],
-      encodedValue: null,
-    };
-  }
   const valueSpec = schema.getValueTypeSpecification(valueType);
-  if (!valueSpec) {
-    return {
-      validationIssues: [{ type: 'save', path, message: `Unknown value type ${valueType}` }],
-      encodedValue: null,
-    };
-  }
+  assertIsDefined(valueSpec);
 
   // From here on we can encode the value item so add validation issues instead of returning
   const validationIssues: SaveValidationIssue[] = [];
-
-  if (
-    fieldSpec.valueTypes &&
-    fieldSpec.valueTypes.length > 0 &&
-    fieldSpec.valueTypes.indexOf(valueType) < 0
-  ) {
-    validationIssues.push({
-      type: 'save',
-      path,
-      message: `Value item of type ${valueType} is not allowed`,
-    });
-  }
-
-  const unsupportedFields = new Set(Object.keys(value));
-  unsupportedFields.delete('type');
-  valueSpec.fields.forEach((it) => unsupportedFields.delete(it.name));
-  if (unsupportedFields.size > 0) {
-    validationIssues.push({
-      type: 'save',
-      path,
-      message: `Unsupported field names: ${[...unsupportedFields].join(', ')}`,
-    });
-  }
 
   const encodedValue: ValueItem = { type: valueType };
 

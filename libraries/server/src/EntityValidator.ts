@@ -52,7 +52,6 @@ export function validateAdminFieldValuesAndCollectInfo(
   const valueTypesCollector = createValueTypesCollector();
   const uniqueIndexCollector = createUniqueIndexCollector(adminSchema);
 
-  // TODO move all validation to this setup from the encoding
   for (const node of traverseEntity(adminSchema, path, entity)) {
     const validationIssue = validateTraverseNodeForSave(adminSchema, node);
     if (validationIssue) {
