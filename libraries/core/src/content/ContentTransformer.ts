@@ -198,9 +198,9 @@ export function transformContentField<
   originalValue: unknown,
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const traversableErrors = checkFieldTraversable(fieldSpec, originalValue);
-  if (traversableErrors.length > 0) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
+  const traversableError = checkFieldTraversable(fieldSpec, originalValue);
+  if (traversableError) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableError}`);
   }
 
   const transformFieldResult = transformer.transformField(path, fieldSpec, originalValue);
@@ -266,9 +266,9 @@ function transformContentFieldValue<
   originalValue: Readonly<unknown> | null,
   transformer: ContentTransformer<TSchema, TError>,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const traversableErrors = checkFieldItemTraversable(fieldSpec, originalValue);
-  if (traversableErrors.length > 0) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
+  const traversableError = checkFieldItemTraversable(fieldSpec, originalValue);
+  if (traversableError) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableError}`);
   }
 
   const transformFieldItemResult = transformer.transformFieldItem(path, fieldSpec, originalValue);

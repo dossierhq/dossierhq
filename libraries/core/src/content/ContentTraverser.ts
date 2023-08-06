@@ -174,13 +174,13 @@ export function* traverseContentField<TSchema extends AdminSchema | PublishedSch
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   value: unknown,
 ): Generator<ContentTraverseNode<TSchema>> {
-  const traversableErrors = checkFieldTraversable(fieldSpec, value);
-  if (traversableErrors.length > 0) {
+  const traversableError = checkFieldTraversable(fieldSpec, value);
+  if (traversableError) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.generic,
-      message: traversableErrors.join(', '),
+      message: traversableError,
     };
     yield errorNode;
     return;
@@ -216,13 +216,13 @@ function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchem
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   itemValue: unknown,
 ): Generator<ContentTraverseNode<TSchema>> {
-  const fieldItemValueErrors = traversableErrors(fieldSpec, itemValue);
-  if (fieldItemValueErrors.length > 0) {
+  const traversableError = traversableErrors(fieldSpec, itemValue);
+  if (traversableError) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.generic,
-      message: fieldItemValueErrors.join(', '),
+      message: traversableError,
     };
     yield errorNode;
     return;
@@ -270,13 +270,13 @@ function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   node: RichTextNode,
 ): Generator<ContentTraverseNode<TSchema>> {
-  const traversableErrors = checkRichTextNodeTraversable(node);
-  if (traversableErrors.length > 0) {
+  const traversableError = checkRichTextNodeTraversable(node);
+  if (traversableError) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.generic,
-      message: traversableErrors.join(', '),
+      message: traversableError,
     };
     yield errorNode;
     return;

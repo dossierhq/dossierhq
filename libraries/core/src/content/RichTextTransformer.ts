@@ -52,9 +52,9 @@ function transformNode<TError extends ErrorType>(
   node: Readonly<RichTextNode>,
   transformer: RichTextNodeTransformer<TError>,
 ): Result<Readonly<RichTextNode | null>, TError | typeof ErrorType.BadRequest> {
-  const traversableErrors = checkRichTextNodeTraversable(node);
-  if (traversableErrors.length > 0) {
-    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableErrors.join(', ')}`);
+  const traversableError = checkRichTextNodeTraversable(node);
+  if (traversableError) {
+    return notOk.BadRequest(`${contentValuePathToString(path)}: ${traversableError}`);
   }
 
   const transformResult = transformer(path, node);

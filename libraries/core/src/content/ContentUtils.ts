@@ -52,57 +52,61 @@ export function copyEntity<
   return copy;
 }
 
-//TODO maybe return type is single string
-export function checkFieldTraversable(fieldSpec: FieldSpecification, value: unknown): string[] {
+export function checkFieldTraversable(
+  fieldSpec: FieldSpecification,
+  value: unknown,
+): string | null {
   if (fieldSpec.list) {
     if (value !== null && value !== undefined && !Array.isArray(value)) {
-      return [`Expected a list of ${fieldSpec.type}, got ${typeof value}`];
+      return `Expected a list of ${fieldSpec.type}, got ${typeof value}`;
     }
   }
-  return [];
+  return null;
 }
 
-//TODO maybe return type is single string
-export function checkFieldItemTraversable(fieldSpec: FieldSpecification, value: unknown): string[] {
+export function checkFieldItemTraversable(
+  fieldSpec: FieldSpecification,
+  value: unknown,
+): string | null {
   if (value === null || value === undefined) {
-    return [];
+    return null;
   }
 
   if (Array.isArray(value)) {
-    return [`Expected single ${fieldSpec.type}, got a list`];
+    return `Expected single ${fieldSpec.type}, got a list`;
   }
 
   if (fieldSpec.type === FieldType.RichText) {
     if (typeof value !== 'object') {
-      return [`Expected a RichText object, got ${typeof value}`];
+      return `Expected a RichText object, got ${typeof value}`;
     }
     const root = (value as RichText).root;
 
     if (!root) {
-      return [`RichText object is missing root`];
+      return `RichText object is missing root`;
     }
 
-    const rootTraversalErrors = checkRichTextNodeTraversable(root);
-    if (rootTraversalErrors.length > 0) {
-      return rootTraversalErrors.map((error) => `Invalid RichText root: ${error}`);
+    const rootTraversalError = checkRichTextNodeTraversable(root);
+    if (rootTraversalError) {
+      return `Invalid RichText root: ${rootTraversalError}`;
     }
 
     if (!isRichTextRootNode(root)) {
-      return [`RichText root is not a valid RichText node, (got ${(root as RichTextNode).type})`];
+      return `RichText root is not a valid RichText node, (got ${(root as RichTextNode).type})`;
     }
   }
-  return [];
+  return null;
 }
 
-export function checkRichTextNodeTraversable(node: RichTextNode): string[] {
+export function checkRichTextNodeTraversable(node: RichTextNode): string | null {
   if (!node || typeof node !== 'object') {
-    return [`Expected a RichText node, got ${typeof node}`];
+    return `Expected a RichText node, got ${typeof node}`;
   }
   if (typeof node.type !== 'string') {
-    return [`RichText node is missing type`];
+    return `RichText node is missing type`;
   }
   if ('children' in node && !Array.isArray(node.children)) {
-    return [`RichText node children is not an array`];
+    return `RichText node children is not an array`;
   }
-  return [];
+  return null;
 }
