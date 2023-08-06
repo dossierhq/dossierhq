@@ -56,10 +56,20 @@ const adminSchema = AdminSchema.createAndValidate({
     },
     {
       name: 'ValueItemsEntity',
-      fields: [{ name: 'any', type: FieldType.ValueItem }],
+      fields: [
+        { name: 'any', type: FieldType.ValueItem },
+        { name: 'stringsValueItem', type: FieldType.ValueItem, valueTypes: ['StringsValueItem'] },
+      ],
     },
   ],
-  valueTypes: [{ name: 'AdminOnlyValueItem', adminOnly: true, fields: [] }],
+  valueTypes: [
+    { name: 'AdminOnlyValueItem', adminOnly: true, fields: [] },
+    {
+      name: 'NumbersValueItem',
+      fields: [{ name: 'integer', type: FieldType.Number, integer: true }],
+    },
+    { name: 'StringsValueItem', fields: [{ name: 'string', type: FieldType.String }] },
+  ],
   patterns: [
     { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
     { name: 'noneSubject', pattern: '^(none|subject)$' },
@@ -481,6 +491,18 @@ describe('Validate entity valueItem', () => {
         copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
           fields: {
             any: { type: 'AdminOnlyValueItem' },
+          },
+        }),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  test('Fail: wrong type, not matching valueTypes', () => {
+    expect(
+      validateEntity(
+        copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
+          fields: {
+            stringsValueItem: { type: 'NumbersValueItem', integer: 1 },
           },
         }),
       ),

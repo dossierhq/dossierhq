@@ -130,6 +130,20 @@ exports[`Validate entity valueItem > Fail: admin only value item in normal field
 ]
 `;
 
+exports[`Validate entity valueItem > Fail: wrong type, not matching valueTypes 1`] = `
+[
+  {
+    "message": "Value item of type NumbersValueItem is not allowed in field (supported types: StringsValueItem)",
+    "path": [
+      "entity",
+      "fields",
+      "stringsValueItem",
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`validateEntityInfo > authKey not matching pattern 1`] = `
 {
   "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(none|subject)$)",

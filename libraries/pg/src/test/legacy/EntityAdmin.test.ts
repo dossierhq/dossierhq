@@ -1399,7 +1399,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: Value item of type EntityAdminTwoStrings is not allowed',
+      'entity.fields.oneString: Value item of type EntityAdminTwoStrings is not allowed in field (supported types: EntityAdminOneString)',
     );
   });
 

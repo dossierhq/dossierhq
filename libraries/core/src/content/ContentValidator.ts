@@ -6,11 +6,18 @@ import type {
   NumberFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
+  ValueItemFieldSpecification,
 } from '../schema/SchemaSpecification.js';
 import type { ContentValuePath } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
-import { isNumberItemField, isRichTextTextNode, isStringItemField } from './ContentTypeUtils.js';
+import {
+  isNumberItemField,
+  isRichTextTextNode,
+  isStringItemField,
+  isValueItemItemField,
+} from './ContentTypeUtils.js';
+
 
 export interface SaveValidationIssue {
   type: 'save';
@@ -216,6 +223,22 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
             };
           }
         }
+      } else if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
+        const valueItemFieldSpec = node.fieldSpec as ValueItemFieldSpecification;
+        if (
+          valueItemFieldSpec.valueTypes.length > 0 &&
+          !valueItemFieldSpec.valueTypes.includes(node.value.type)
+        ) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: `Value item of type ${
+              node.value.type
+            } is not allowed in field (supported types: ${valueItemFieldSpec.valueTypes.join(
+              ', ',
+            )})`,
+          };
+        }
       }
       break;
     case ContentTraverseNodeType.error:
@@ -248,6 +271,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
       break;
     }
     case ContentTraverseNodeType.valueItem:
+      // Is checked in fieldItem above
       break;
     default:
       assertExhaustive(nodeType);
