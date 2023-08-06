@@ -26,6 +26,7 @@
     "build:watch": "heft build-watch",
     "clean": "heft clean",
     "db:cli": "./scripts/db-cli.sh",
+    "db:clear": "./scripts/db-clear.sh",
     "db:dump-schema": "./scripts/db-dump-schema.sh",
     "db:migrate": "./scripts/db-migrate.sh && ./scripts/db-dump-schema.sh",
     "eslint:check": "eslint .",
