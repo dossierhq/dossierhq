@@ -58,12 +58,6 @@ export interface EncodeAdminEntityResult {
   uniqueIndexValues: UniqueIndexValueCollection;
 }
 
-//TODO remove when all validations are moved to core
-export interface EncodedValue<T = unknown> {
-  encodedValue: T;
-  validationIssues: SaveValidationIssue[];
-}
-
 /** `optimized` is the original way of encoding/decoding values, using type adapters and saving less
  * data than the json. Used by entity fields, and value items in entities.
  * For Rich Text, `json` is used, which means values are saved as is. Value items within rich text
@@ -564,15 +558,7 @@ export async function encodeAdminEntity(
         continue;
       }
       const fieldPath = [...path, 'fields', fieldSpec.name];
-      const { encodedValue, validationIssues } = encodeFieldItemOrList(
-        schema,
-        fieldSpec,
-        fieldPath,
-        data,
-      );
-      if (validationIssues.length > 0) {
-        result.validationIssues.push(...validationIssues);
-      }
+      const encodedValue = encodeFieldItemOrList(schema, fieldSpec, fieldPath, data);
       result.data[fieldSpec.name] = encodedValue;
     }
   }
@@ -595,38 +581,27 @@ function encodeFieldItemOrList(
   fieldSpec: AdminFieldSpecification,
   path: ContentValuePath,
   data: unknown,
-): EncodedValue {
+) {
   const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
   if (fieldSpec.list) {
-    if (!Array.isArray(data)) {
-      return {
-        validationIssues: [{ type: 'save', path, message: 'Expected list' }],
-        encodedValue: null,
-      };
-    }
     const encodedItems: unknown[] = [];
-    const validationIssues: SaveValidationIssue[] = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < (data as []).length; i++) {
       const decodedItem = (data as unknown[])[i];
       const itemPath = [...path, i];
 
-      let encodedItemResult: EncodedValue;
+      let encodedItem: unknown;
       if (isValueItemItemField(fieldSpec, decodedItem)) {
-        encodedItemResult = encodeValueItemField(schema, itemPath, decodedItem);
+        encodedItem = encodeValueItemField(schema, itemPath, decodedItem);
       } else if (isRichTextItemField(fieldSpec, decodedItem)) {
-        encodedItemResult = encodeRichTextField(decodedItem);
+        encodedItem = encodeRichTextField(decodedItem);
       } else {
-        encodedItemResult = {
-          encodedValue: fieldAdapter.encodeData(decodedItem),
-          validationIssues: [],
-        };
+        encodedItem = fieldAdapter.encodeData(decodedItem);
       }
-      if (encodedItemResult.encodedValue !== null) {
-        encodedItems.push(encodedItemResult.encodedValue);
+      if (encodedItem !== null) {
+        encodedItems.push(encodedItem);
       }
-      validationIssues.push(...encodedItemResult.validationIssues);
     }
-    return { encodedValue: encodedItems.length > 0 ? encodedItems : null, validationIssues };
+    return encodedItems.length > 0 ? encodedItems : null;
   }
 
   if (isValueItemField(fieldSpec, data)) {
@@ -634,23 +609,20 @@ function encodeFieldItemOrList(
   } else if (isRichTextField(fieldSpec, data)) {
     return encodeRichTextField(data);
   }
-  return { encodedValue: fieldAdapter.encodeData(data), validationIssues: [] };
+  return fieldAdapter.encodeData(data);
 }
 
 function encodeValueItemField(
   schema: AdminSchema,
   path: ContentValuePath,
   data: ValueItem | null,
-): EncodedValue {
-  if (!data) return { encodedValue: null, validationIssues: [] };
+): ValueItem | null {
+  if (!data) return null;
 
   const value = data;
   const valueType = value.type;
   const valueSpec = schema.getValueTypeSpecification(valueType);
   assertIsDefined(valueSpec);
-
-  // From here on we can encode the value item so add validation issues instead of returning
-  const validationIssues: SaveValidationIssue[] = [];
 
   const encodedValue: ValueItem = { type: valueType };
 
@@ -660,17 +632,15 @@ function encodeValueItemField(
       continue; // Skip empty fields
     }
     const fieldPath = [...path, fieldSpec.name];
-    const { encodedValue: encodedFieldValue, validationIssues: fieldValidationIssues } =
-      encodeFieldItemOrList(schema, fieldSpec, fieldPath, fieldValue);
+    const encodedFieldValue = encodeFieldItemOrList(schema, fieldSpec, fieldPath, fieldValue);
     encodedValue[fieldSpec.name] = encodedFieldValue;
-    validationIssues.push(...fieldValidationIssues);
   }
 
-  return { encodedValue, validationIssues };
+  return encodedValue;
 }
 
-function encodeRichTextField(data: RichText | null): EncodedValue {
-  return { encodedValue: data, validationIssues: [] };
+function encodeRichTextField(data: RichText | null) {
+  return data;
 }
 
 export const forTest = {
