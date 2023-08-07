@@ -12,12 +12,13 @@ import type { ContentValuePath } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
 import {
+  isEntityItemField,
+  isLocationItemField,
   isNumberItemField,
   isRichTextTextNode,
   isStringItemField,
   isValueItemItemField,
 } from './ContentTypeUtils.js';
-
 
 export interface SaveValidationIssue {
   type: 'save';
@@ -184,7 +185,25 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
     case ContentTraverseNodeType.field:
       break;
     case ContentTraverseNodeType.fieldItem:
-      if (isNumberItemField(node.fieldSpec, node.value) && node.value !== null) {
+      if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
+        const invalidKeys = Object.keys(node.value).filter((it) => it !== 'id');
+        if (invalidKeys.length > 0) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: `Invalid keys for Entity: ${invalidKeys.join(', ')}`,
+          };
+        }
+      } else if (isLocationItemField(node.fieldSpec, node.value) && node.value) {
+        const invalidKeys = Object.keys(node.value).filter((it) => it !== 'lat' && it !== 'lng');
+        if (invalidKeys.length > 0) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: `Invalid keys for Location: ${invalidKeys.join(', ')}`,
+          };
+        }
+      } else if (isNumberItemField(node.fieldSpec, node.value) && node.value !== null) {
         const numberFieldSpec = node.fieldSpec as NumberFieldSpecification;
         if (numberFieldSpec.integer && !Number.isInteger(node.value)) {
           return {

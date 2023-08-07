@@ -1,5 +1,33 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Validate entity entity > Fail: reference with extra keys 1`] = `
+[
+  {
+    "message": "Invalid keys for Entity: version",
+    "path": [
+      "entity",
+      "fields",
+      "normal",
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity location > Fail: extra keys in location object 1`] = `
+[
+  {
+    "message": "Invalid keys for Location: extra",
+    "path": [
+      "entity",
+      "fields",
+      "normal",
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`Validate entity number > Fail: integer with float value 1`] = `
 [
   {

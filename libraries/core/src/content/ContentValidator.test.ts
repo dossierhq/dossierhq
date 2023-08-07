@@ -23,6 +23,11 @@ import {
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
+    { name: 'EntitiesEntity', fields: [{ name: 'normal', type: FieldType.Entity }] },
+    {
+      name: 'LocationsEntity',
+      fields: [{ name: 'normal', type: FieldType.Location }],
+    },
     {
       name: 'NumbersEntity',
       fields: [{ name: 'integer', type: FieldType.Number, integer: true }],
@@ -75,6 +80,16 @@ const adminSchema = AdminSchema.createAndValidate({
     { name: 'noneSubject', pattern: '^(none|subject)$' },
   ],
 }).valueOrThrow();
+
+const ENTITIES_ENTITY_DEFAULT: AdminEntityCreate = {
+  info: { type: 'EntitiesEntity', name: 'EntitiesEntity', authKey: 'none' },
+  fields: {},
+};
+
+const LOCATIONS_ENTITY_DEFAULT: AdminEntityCreate = {
+  info: { type: 'LocationsEntity', name: 'LocationsEntity', authKey: 'none' },
+  fields: {},
+};
 
 const NUMBERS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
   info: { type: 'NumbersEntity', name: 'NumbersEntity', authKey: 'none' },
@@ -370,6 +385,30 @@ describe('Validate entity shared', () => {
   test('Fail: required with no value', () => {
     expect(
       validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { required: null } })),
+    ).toMatchSnapshot();
+  });
+});
+
+describe('Validate entity entity', () => {
+  test('Fail: reference with extra keys', () => {
+    expect(
+      validateEntity(
+        copyEntity(ENTITIES_ENTITY_DEFAULT, {
+          fields: { normal: { id: '123', version: 123 } },
+        }),
+      ),
+    ).toMatchSnapshot();
+  });
+});
+
+describe('Validate entity location', () => {
+  test('Fail: extra keys in location object', () => {
+    expect(
+      validateEntity(
+        copyEntity(LOCATIONS_ENTITY_DEFAULT, {
+          fields: { normal: { lat: 1, lng: 2, extra: 'extra' } },
+        }),
+      ),
     ).toMatchSnapshot();
   });
 });
