@@ -29,7 +29,7 @@ import {
   validateAdminFieldValuesAndCollectInfo,
   validateReferencedEntitiesForSaveAndCollectInfo,
 } from './EntityValidator.js';
-import { legacyEncodeEntityFields } from './shared-entity/legacyEncodeEntityFields.js';
+import { encodeEntityFields } from './shared-entity/encodeEntityFields.js';
 import {
   migrateAndDecodeAdminEntityFields,
   migrateAndDecodePublishedEntityFields,
@@ -251,12 +251,13 @@ export async function encodeAdminEntity(
   const path = ['entity'];
   const validation = validateAdminFieldValuesAndCollectInfo(schema, path, entity);
 
+  const encodedPayload = encodeEntityFields(schema, entitySpec, path, entity.fields);
+
   const payload: EncodeAdminEntityPayload = {
+    ...encodedPayload,
     validationIssues: validation.validationIssues,
     type: entity.info.type,
     name: entity.info.name,
-    fields: legacyEncodeEntityFields(schema, entitySpec, path, entity.fields),
-    encodeVersion: 0,
     entityIndexes: {
       referenceIds: [],
       locations: validation.locations,
