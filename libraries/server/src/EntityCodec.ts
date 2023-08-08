@@ -441,7 +441,7 @@ export function resolveCreateEntity(
 
 export function resolveUpdateEntity(
   schema: AdminSchemaWithMigrations,
-  entity: AdminEntityUpdate,
+  entityUpdate: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
   { changed: boolean; entity: AdminEntity; entitySpec: AdminEntityTypeSpecification },
@@ -452,10 +452,10 @@ export function resolveUpdateEntity(
       ? AdminEntityStatus.modified
       : entityInfo.status;
 
-  const result: AdminEntity = {
-    id: entity.id,
+  const entity: AdminEntity = {
+    id: entityUpdate.id,
     info: {
-      name: entity.info?.name ?? entityInfo.name,
+      name: entityUpdate.info?.name ?? entityInfo.name,
       type: entityInfo.type,
       version: entityInfo.version + 1,
       authKey: entityInfo.authKey,
@@ -468,9 +468,9 @@ export function resolveUpdateEntity(
     fields: {},
   };
 
-  const entitySpec = schema.getEntityTypeSpecification(result.info.type);
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
+    return notOk.BadRequest(`Entity type ${entity.info.type} doesn’t exist`);
   }
 
   const migratedExistingFieldsResult = applySchemaMigrationsToFieldValues(
@@ -486,16 +486,16 @@ export function resolveUpdateEntity(
   const normalizedUpdateFieldsResult = normalizeEntityFields(
     schema,
     ['entity'],
-    { ...entity, info: { type: result.info.type } },
+    { ...entityUpdate, info: { type: entity.info.type } },
     { excludeOmittedEntityFields: true, keepExtraFields: true },
   );
   if (normalizedUpdateFieldsResult.isError()) return normalizedUpdateFieldsResult;
   const normalizedUpdateFields = normalizedUpdateFieldsResult.value;
 
-  const invalidUpdateFieldNames = new Set(Object.keys(normalizedUpdateFields));
+  const extraUpdateFieldNames = new Set(Object.keys(normalizedUpdateFields));
 
   let changed = false;
-  if (result.info.name !== entityInfo.name) {
+  if (entity.info.name !== entityInfo.name) {
     changed = true;
   }
   for (const fieldSpec of entitySpec.fields) {
@@ -507,37 +507,37 @@ export function resolveUpdateEntity(
       migratedExistingFields[fieldName] ?? null,
     );
 
-    invalidUpdateFieldNames.delete(fieldName);
+    extraUpdateFieldNames.delete(fieldName);
     if (fieldName in normalizedUpdateFields) {
       const newFieldValue = normalizedUpdateFields[fieldName];
       if (!isFieldValueEqual(previousFieldValue, newFieldValue)) {
         changed = true;
       }
-      result.fields[fieldName] = newFieldValue;
+      entity.fields[fieldName] = newFieldValue;
     } else {
-      result.fields[fieldName] = previousFieldValue;
+      entity.fields[fieldName] = previousFieldValue;
     }
   }
 
-  if (invalidUpdateFieldNames.size > 0) {
+  if (extraUpdateFieldNames.size > 0) {
     return notOk.BadRequest(
       `entity.fields: ${entitySpec.name} does not include the fields: ${[
-        ...invalidUpdateFieldNames,
+        ...extraUpdateFieldNames,
       ].join(', ')}`,
     );
   }
 
   if (!changed) {
-    result.info.version = entityInfo.version;
-    result.info.status = entityInfo.status;
-    result.info.valid = entityInfo.valid;
+    entity.info.version = entityInfo.version;
+    entity.info.status = entityInfo.status;
+    entity.info.valid = entityInfo.valid;
 
-    if (!result.info.valid) {
+    if (!entity.info.valid) {
       return notOk.BadRequest('No change to entity that is already invalid');
     }
   }
 
-  return ok({ changed, entity: result, entitySpec });
+  return ok({ changed, entity: entity, entitySpec });
 }
 
 export async function encodeAdminEntity(
