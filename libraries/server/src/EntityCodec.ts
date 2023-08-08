@@ -1,31 +1,24 @@
 import {
   AdminEntityStatus,
-  assertExhaustive,
   isFieldValueEqual,
-  isRichTextValueItemNode,
-  isValueItemItemField,
   normalizeEntityFields,
   notOk,
   ok,
-  transformEntityFields,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminSchema,
-  type AdminSchemaMigrationAction,
   type AdminSchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
   type PublishedEntity,
   type Result,
   type SaveValidationIssue,
-  type ValueItem,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
-  DatabaseEntityFieldsPayload,
   DatabaseEntityIndexesArg,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
@@ -36,8 +29,11 @@ import {
   validateAdminFieldValuesAndCollectInfo,
   validateReferencedEntitiesForSaveAndCollectInfo,
 } from './EntityValidator.js';
-import { legacyDecodeEntityFields } from './shared-entity/legacyDecodeEntityFields.js';
 import { legacyEncodeEntityFields } from './shared-entity/legacyEncodeEntityFields.js';
+import {
+  migrateAndDecodeAdminEntityFields,
+  migrateAndDecodePublishedEntityFields,
+} from './shared-entity/migrateAndDecodeEntityFields.js';
 
 export interface EncodeAdminEntityPayload {
   validationIssues: SaveValidationIssue[];
@@ -59,15 +55,12 @@ export function decodePublishedEntity(
     return notOk.BadRequest(`No entity spec for type ${values.type} (id: ${values.id})`);
   }
 
-  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
+  const decodeResult = migrateAndDecodePublishedEntityFields(
     adminSchema,
-    values.type,
+    entitySpec,
     values.entityFields,
   );
-  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
-  const migratedFields = migratedFieldValuesResult.value;
-
-  const decodedFields = legacyDecodeEntityFields(publishedSchema, entitySpec, migratedFields);
+  if (decodeResult.isError()) return decodeResult;
 
   const entity: PublishedEntity = {
     id: values.id,
@@ -78,174 +71,26 @@ export function decodePublishedEntity(
       createdAt: values.createdAt,
       valid: values.validPublished,
     },
-    fields: decodedFields,
+    fields: decodeResult.value,
   };
 
   return ok(entity);
 }
 
-function applySchemaMigrationsToFieldValues(
-  adminSchema: AdminSchemaWithMigrations,
-  targetEntityType: string,
-  entityFields: DatabaseEntityFieldsPayload,
-): Result<Record<string, unknown>, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const actions = adminSchema.collectMigrationActionsSinceVersion(entityFields.schemaVersion);
-
-  if (actions.length === 0) {
-    return ok(entityFields.fields);
-  }
-
-  const entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[] = [];
-  const valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[] = [];
-  for (const action of actions) {
-    if ('entityType' in action) {
-      entityTypeActions.push(action);
-    } else {
-      valueTypeActions.push(action);
-    }
-  }
-
-  const startingEntityType = getStartingEntityType(targetEntityType, entityTypeActions);
-
-  const migratedFieldValues = migrateEntityFields(
-    startingEntityType,
-    entityFields.fields,
-    entityTypeActions,
-  );
-
-  const transformResult: Result<
-    Record<string, unknown>,
-    typeof ErrorType.BadRequest | typeof ErrorType.Generic
-  > = transformEntityFields(
-    adminSchema,
-    [],
-    { info: { type: targetEntityType }, fields: migratedFieldValues },
-    {
-      transformField: (_path, _fieldSpec, value) => {
-        return ok(value);
-      },
-      transformFieldItem: (_path, fieldSpec, value) => {
-        if (isValueItemItemField(fieldSpec, value) && value) {
-          return ok(migrateValueItem(value, valueTypeActions));
-        }
-        return ok(value);
-      },
-      transformRichTextNode: (_path, _fieldSpec, node) => {
-        if (isRichTextValueItemNode(node)) {
-          const valueItem = migrateValueItem(node.data, valueTypeActions);
-          if (!valueItem) return ok(null);
-          return ok({ ...node, data: valueItem });
-        }
-        return ok(node);
-      },
-    },
-  );
-
-  if (transformResult.isError()) return transformResult;
-  return ok(transformResult.value);
-}
-
-function getStartingEntityType(
-  targetEntityType: string,
-  entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
-) {
-  let entityType = targetEntityType;
-  for (let i = entityTypeActions.length - 1; i >= 0; i--) {
-    const action = entityTypeActions[i];
-    if (action.action === 'renameType' && action.newName === entityType) {
-      entityType = action.entityType;
-    }
-  }
-  return entityType;
-}
-
-function migrateEntityFields(
-  startingEntityType: string,
-  originalFields: Record<string, unknown>,
-  entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
-) {
-  let changed = false;
-  let entityType = startingEntityType;
-  const migratedFields = { ...originalFields };
-  for (const actionSpec of entityTypeActions) {
-    const { action } = actionSpec;
-    switch (action) {
-      case 'deleteField':
-        if (actionSpec.entityType === entityType) {
-          delete migratedFields[actionSpec.field];
-          changed = true;
-        }
-        break;
-      case 'renameField':
-        if (actionSpec.entityType === entityType) {
-          if (actionSpec.field in migratedFields) {
-            migratedFields[actionSpec.newName] = migratedFields[actionSpec.field];
-            delete migratedFields[actionSpec.field];
-            changed = true;
-          }
-        }
-        break;
-      case 'renameType':
-        if (actionSpec.entityType === entityType) {
-          entityType = actionSpec.newName;
-        }
-        break;
-    }
-  }
-  return changed ? migratedFields : originalFields;
-}
-
-function migrateValueItem(
-  originalValueItem: ValueItem | null,
-  valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
-): ValueItem | null {
-  if (!originalValueItem) return null;
-
-  const valueItem = { ...originalValueItem };
-
-  for (const actionSpec of valueTypeActions) {
-    const { action } = actionSpec;
-    switch (action) {
-      case 'deleteField':
-        if (actionSpec.valueType === valueItem.type) {
-          delete valueItem[actionSpec.field];
-        }
-        break;
-      case 'renameField':
-        if (actionSpec.valueType === valueItem.type) {
-          if (actionSpec.field in valueItem) {
-            valueItem[actionSpec.newName] = valueItem[actionSpec.field];
-            delete valueItem[actionSpec.field];
-          }
-        }
-        break;
-      case 'deleteType':
-        if (actionSpec.valueType === valueItem.type) {
-          return null;
-        }
-        break;
-      case 'renameType':
-        if (actionSpec.valueType === valueItem.type) {
-          valueItem.type = actionSpec.newName;
-        }
-        break;
-      default:
-        assertExhaustive(action);
-    }
-  }
-  return valueItem;
-}
-
 export function decodeAdminEntity(
-  schema: AdminSchemaWithMigrations,
+  adminSchema: AdminSchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
 ): Result<AdminEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const entitySpec = schema.getEntityTypeSpecification(values.type);
+  const entitySpec = adminSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     return notOk.BadRequest(`No entity spec for type ${values.type}`);
   }
 
-  const decodedResult = decodeAdminEntityFields(schema, entitySpec, values.entityFields);
+  const decodedResult = migrateAndDecodeAdminEntityFields(
+    adminSchema,
+    entitySpec,
+    values.entityFields,
+  );
   if (decodedResult.isError()) return decodedResult;
   const fields = decodedResult.value;
 
@@ -266,23 +111,6 @@ export function decodeAdminEntity(
   };
 
   return ok(entity);
-}
-
-export function decodeAdminEntityFields(
-  schema: AdminSchemaWithMigrations,
-  entitySpec: AdminEntityTypeSpecification,
-  entityFields: DatabaseEntityFieldsPayload,
-): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
-    schema,
-    entitySpec.name,
-    entityFields,
-  );
-  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
-  const migratedFieldValues = migratedFieldValuesResult.value;
-
-  const fields = legacyDecodeEntityFields(schema, entitySpec, migratedFieldValues);
-  return ok(fields);
 }
 
 export function resolveCreateEntity(
@@ -318,7 +146,7 @@ export function resolveCreateEntity(
 }
 
 export function resolveUpdateEntity(
-  schema: AdminSchemaWithMigrations,
+  adminSchema: AdminSchemaWithMigrations,
   entityUpdate: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
@@ -346,28 +174,22 @@ export function resolveUpdateEntity(
     fields: {},
   };
 
-  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
+  const entitySpec = adminSchema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${entity.info.type} doesn’t exist`);
   }
 
-  const migratedExistingFieldsResult = applySchemaMigrationsToFieldValues(
-    schema,
-    entitySpec.name,
+  const decodeResult = migrateAndDecodeAdminEntityFields(
+    adminSchema,
+    entitySpec,
     entityInfo.entityFields,
   );
-  if (migratedExistingFieldsResult.isError()) return migratedExistingFieldsResult;
-  const migratedExistingFields = migratedExistingFieldsResult.value;
-
-  const decodedExistingFields = legacyDecodeEntityFields(
-    schema,
-    entitySpec,
-    migratedExistingFields,
-  );
+  if (decodeResult.isError()) return decodeResult;
+  const decodedExistingFields = decodeResult.value;
 
   // Keep extra fields so we can fail on validation
   const normalizedUpdateFieldsResult = normalizeEntityFields(
-    schema,
+    adminSchema,
     ['entity'],
     { ...entityUpdate, info: { type: entity.info.type } },
     { excludeOmittedEntityFields: true, keepExtraFields: true },
@@ -429,8 +251,6 @@ export async function encodeAdminEntity(
   const path = ['entity'];
   const validation = validateAdminFieldValuesAndCollectInfo(schema, path, entity);
 
-  // TODO consider not encoding data and use it as is
-
   const payload: EncodeAdminEntityPayload = {
     validationIssues: validation.validationIssues,
     type: entity.info.type,
@@ -458,7 +278,3 @@ export async function encodeAdminEntity(
 
   return ok(payload);
 }
-
-export const forTest = {
-  applySchemaMigrationsToFieldValues,
-};

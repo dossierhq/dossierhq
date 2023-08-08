@@ -21,13 +21,14 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import { decodeAdminEntity, decodeAdminEntityFields, encodeAdminEntity } from '../EntityCodec.js';
+import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
 import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
 import {
   validatePublishedFieldValuesAndCollectInfo,
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
 import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
+import { migrateAndDecodeAdminEntityFields } from '../shared-entity/migrateAndDecodeEntityFields.js';
 
 export interface ProcessDirtyEntityPayload {
   id: string;
@@ -255,6 +256,7 @@ async function validateAndCollectInfoFromPublishedEntity(
   type: string,
   entityFields: DatabaseEntityFieldsPayload,
 ): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
+  const publishedSchema = adminSchema.toPublishedSchema();
   const entitySpec = adminSchema.getEntityTypeSpecification(type);
   if (!entitySpec) {
     return convertErrorResultForValidation(
@@ -274,7 +276,8 @@ async function validateAndCollectInfoFromPublishedEntity(
     );
   }
 
-  const decodeResult = decodeAdminEntityFields(adminSchema, entitySpec, entityFields);
+  // In order to validate the published entity we need the admin entity fields
+  const decodeResult = migrateAndDecodeAdminEntityFields(adminSchema, entitySpec, entityFields);
   if (decodeResult.isError()) {
     return convertErrorResultForValidation(
       context,
@@ -287,7 +290,7 @@ async function validateAndCollectInfoFromPublishedEntity(
 
   const validateFields = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,
-    adminSchema.toPublishedSchema(),
+    publishedSchema,
     ['entity'],
     type,
     decodedEntityFields,

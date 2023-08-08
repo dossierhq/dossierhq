@@ -18,7 +18,6 @@ import type { DatabaseAdapter, DatabaseResolvedEntityReference } from '@dossierh
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import { decodeAdminEntityFields } from '../EntityCodec.js';
 import { type UniqueIndexValueCollection } from '../EntityCollectors.js';
 import {
   validatePublishedFieldValuesAndCollectInfo,
@@ -26,6 +25,7 @@ import {
 } from '../EntityValidator.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
+import { migrateAndDecodeAdminEntityFields } from '../shared-entity/migrateAndDecodeEntityFields.js';
 
 interface VersionInfoToBePublished {
   effect: 'published';
@@ -257,7 +257,12 @@ async function collectVersionsInfo(
         validPublished: validPublished ?? true,
       });
     } else {
-      const entityFieldsResult = decodeAdminEntityFields(adminSchema, entitySpec, entityFields);
+      // In order to validate the published entity we need the admin entity fields
+      const entityFieldsResult = migrateAndDecodeAdminEntityFields(
+        adminSchema,
+        entitySpec,
+        entityFields,
+      );
       if (entityFieldsResult.isError()) return entityFieldsResult;
 
       const validateFields = validatePublishedFieldValuesAndCollectInfo(

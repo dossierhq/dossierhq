@@ -9,9 +9,7 @@ import {
   type RichTextValueItemNode,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import { forTest } from './EntityCodec.js';
-
-const { applySchemaMigrationsToFieldValues } = forTest;
+import { applySchemaMigrationsToFields } from './applySchemaMigrationsToFields.js';
 
 const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
   entityTypes: [
@@ -35,7 +33,7 @@ const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
   ],
 }).valueOrThrow();
 
-describe('applySchemaMigrationsToFieldValues renameField', () => {
+describe('applySchemaMigrationsToFields renameField', () => {
   test('nested value item', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
@@ -59,7 +57,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -118,7 +116,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -148,7 +146,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
   });
 });
 
-describe('applySchemaMigrationsToFieldValues deleteField', () => {
+describe('applySchemaMigrationsToFields deleteField', () => {
   test('nested value item', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
@@ -159,7 +157,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -196,7 +194,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -230,7 +228,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
   });
 });
 
-describe('applySchemaMigrationsToFieldValues renameType', () => {
+describe('applySchemaMigrationsToFields renameType', () => {
   test('nested value item', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
@@ -241,7 +239,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -287,7 +285,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -319,7 +317,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -349,13 +347,13 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
   });
 });
 
-describe('applySchemaMigrationsToFieldValues deleteType', () => {
+describe('applySchemaMigrationsToFields deleteType', () => {
   test('nested value item', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -378,7 +376,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
       migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -393,7 +391,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
       migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
@@ -411,7 +409,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
   });
 });
 
-describe('applySchemaMigrationsToFieldValues combos', () => {
+describe('applySchemaMigrationsToFields combos', () => {
   test('rename type and field', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
@@ -425,7 +423,7 @@ describe('applySchemaMigrationsToFieldValues combos', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: 0,
       fields: {
