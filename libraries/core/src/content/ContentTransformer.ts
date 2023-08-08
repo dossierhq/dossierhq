@@ -16,13 +16,13 @@ export const IDENTITY_TRANSFORMER: ContentTransformer<
   AdminSchema | PublishedSchema,
   typeof ErrorType.BadRequest
 > = {
-  transformField(_path, _fieldSpec, value) {
+  transformField(_schema, _path, _fieldSpec, value) {
     return ok(value);
   },
-  transformFieldItem(_path, _fieldSpec, value) {
+  transformFieldItem(_schema, _path, _fieldSpec, value) {
     return ok(value);
   },
-  transformRichTextNode(_path, _fieldSpec, node) {
+  transformRichTextNode(_schema, _path, _fieldSpec, node) {
     return ok(node);
   },
 };
@@ -38,18 +38,21 @@ export interface ContentTransformer<
    * @returns `ok(null)` -> no value, `ok(undefined)` -> delete field, `ok(value)` -> new value
    */
   transformField: (
+    schema: TSchema,
     path: ContentValuePath,
     fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
     value: unknown,
   ) => Result<unknown, TError>;
 
   transformFieldItem: (
+    schema: TSchema,
     path: ContentValuePath,
     fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
     value: unknown,
   ) => Result<unknown, TError>;
 
   transformRichTextNode: (
+    schema: TSchema,
     path: ContentValuePath,
     fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
     node: Readonly<RichTextNode>,
@@ -232,7 +235,7 @@ export function transformContentField<
     );
   }
 
-  const transformFieldResult = transformer.transformField(path, fieldSpec, originalValue);
+  const transformFieldResult = transformer.transformField(schema, path, fieldSpec, originalValue);
   if (transformFieldResult.isError()) return transformFieldResult;
   let value = transformFieldResult.value;
 
@@ -307,7 +310,12 @@ function transformContentFieldValue<
     );
   }
 
-  const transformFieldItemResult = transformer.transformFieldItem(path, fieldSpec, originalValue);
+  const transformFieldItemResult = transformer.transformFieldItem(
+    schema,
+    path,
+    fieldSpec,
+    originalValue,
+  );
   if (transformFieldItemResult.isError()) return transformFieldItemResult;
   const value = transformFieldItemResult.value;
 
@@ -315,7 +323,7 @@ function transformContentFieldValue<
     return transformValueItem(schema, path, value, transformer, options);
   } else if (isRichTextItemField(fieldSpec, value) && value) {
     return transformRichText(path, value, (path, node) => {
-      const nodeResult = transformer.transformRichTextNode(path, fieldSpec, node);
+      const nodeResult = transformer.transformRichTextNode(schema, path, fieldSpec, node);
       if (nodeResult.isError()) return nodeResult;
       const transformedNode = nodeResult.value;
 

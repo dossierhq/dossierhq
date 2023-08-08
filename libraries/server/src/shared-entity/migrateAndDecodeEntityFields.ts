@@ -67,7 +67,7 @@ function migrateAndDecodeEntityFields<TSchema extends AdminSchemaWithMigrations 
           info: { type: entitySpec.name },
           fields: migratedFieldValues,
         },
-        createTransformer(decodeSchema),
+        DECODE_TRANSFORMER,
       );
       if (normalizeResult.isError()) return normalizeResult;
       return ok(normalizeResult.value);
@@ -77,35 +77,31 @@ function migrateAndDecodeEntityFields<TSchema extends AdminSchemaWithMigrations 
   }
 }
 
-function createTransformer(schema: AdminSchemaWithMigrations | PublishedSchema) {
-  //TODO add schema to callback
-  const DECODE_TRANSFORMER: ContentTransformer<
-    AdminSchemaWithMigrations | PublishedSchema,
-    typeof ErrorType.Generic
-  > = {
-    transformField(_path, _fieldSpec, value: unknown) {
-      return ok(value);
-    },
-    transformFieldItem(_path, fieldSpec, value: unknown) {
-      if (isValueItemItemField(fieldSpec, value)) {
-        const valueType = value?.type;
-        if (valueType && !schema.getValueTypeSpecification(valueType)) {
-          // Could be that the value type was deleted or made adminOnly (when decoding published entities)
-          return ok(null);
-        }
+const DECODE_TRANSFORMER: ContentTransformer<
+  AdminSchemaWithMigrations | PublishedSchema,
+  typeof ErrorType.Generic
+> = {
+  transformField(_schema, _path, _fieldSpec, value: unknown) {
+    return ok(value);
+  },
+  transformFieldItem(schema, _path, fieldSpec, value: unknown) {
+    if (isValueItemItemField(fieldSpec, value)) {
+      const valueType = value?.type;
+      if (valueType && !schema.getValueTypeSpecification(valueType)) {
+        // Could be that the value type was deleted or made adminOnly (when decoding published entities)
+        return ok(null);
       }
-      return ok(value);
-    },
-    transformRichTextNode(_path, _fieldSpec, node) {
-      if (isRichTextValueItemNode(node)) {
-        const valueType = node.data.type;
-        if (valueType && !schema.getValueTypeSpecification(valueType)) {
-          // Could be that the value type was deleted or made adminOnly (when decoding published entities)
-          return ok(null);
-        }
+    }
+    return ok(value);
+  },
+  transformRichTextNode(schema, _path, _fieldSpec, node) {
+    if (isRichTextValueItemNode(node)) {
+      const valueType = node.data.type;
+      if (valueType && !schema.getValueTypeSpecification(valueType)) {
+        // Could be that the value type was deleted or made adminOnly (when decoding published entities)
+        return ok(null);
       }
-      return ok(node);
-    },
-  };
-  return DECODE_TRANSFORMER;
-}
+    }
+    return ok(node);
+  },
+};

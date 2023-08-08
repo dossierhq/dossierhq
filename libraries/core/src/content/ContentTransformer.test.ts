@@ -73,15 +73,15 @@ describe('transformEntity', () => {
   test('identity', () => {
     const calls: unknown[][] = [];
     const transformed = transformEntityFields(ADMIN_SCHEMA, [], VALUE_ITEMS_ENTITY_1, {
-      transformField: (path, _fieldSpec, value) => {
+      transformField: (_schema, path, _fieldSpec, value) => {
         calls.push(['transformField', contentValuePathToString(path)]);
         return ok(value);
       },
-      transformFieldItem: (path, _fieldSpec, value) => {
+      transformFieldItem: (_schema, path, _fieldSpec, value) => {
         calls.push(['transformFieldItem', contentValuePathToString(path)]);
         return ok(value);
       },
-      transformRichTextNode: (path, _fieldSpec, node) => {
+      transformRichTextNode: (_schema, path, _fieldSpec, node) => {
         calls.push(['transformRichTextNode', contentValuePathToString(path)]);
         return ok(node);
       },
@@ -92,12 +92,12 @@ describe('transformEntity', () => {
 
   test('delete all value items', () => {
     const transformed = transformEntityFields(ADMIN_SCHEMA, [], VALUE_ITEMS_ENTITY_1, {
-      transformField: (_path, _fieldSpec, value) => ok(value),
-      transformFieldItem: (_path, fieldSpec, value) => {
+      transformField: (_schema, _path, _fieldSpec, value) => ok(value),
+      transformFieldItem: (_schema, _path, fieldSpec, value) => {
         if (isValueItemItemField(fieldSpec, value)) return ok(null);
         return ok(value);
       },
-      transformRichTextNode: (_path, _fieldSpec, node) =>
+      transformRichTextNode: (_schema, _path, _fieldSpec, node) =>
         ok(isRichTextValueItemNode(node) ? null : node),
     }).valueOrThrow();
     expect(transformed).toMatchSnapshot();

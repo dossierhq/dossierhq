@@ -49,16 +49,16 @@ export function applySchemaMigrationsToFields(
     [],
     { info: { type: targetEntityType }, fields: migratedFieldValues },
     {
-      transformField: (_path, _fieldSpec, value) => {
+      transformField: (_schema, _path, _fieldSpec, value) => {
         return ok(value);
       },
-      transformFieldItem: (_path, fieldSpec, value) => {
+      transformFieldItem: (_schema, _path, fieldSpec, value) => {
         if (isValueItemItemField(fieldSpec, value) && value) {
           return ok(migrateValueItem(value, valueTypeActions));
         }
         return ok(value);
       },
-      transformRichTextNode: (_path, _fieldSpec, node) => {
+      transformRichTextNode: (_schema, _path, _fieldSpec, node) => {
         if (isRichTextValueItemNode(node)) {
           const valueItem = migrateValueItem(node.data, valueTypeActions);
           if (!valueItem) return ok(null);
