@@ -58,6 +58,19 @@ exports[`Validate entity richText > Fail: rich text text node with line break 1`
 ]
 `;
 
+exports[`Validate entity shared > Fail: extra entity fields 1`] = `
+[
+  {
+    "message": "Invalid fields for entity of type StringsEntity: extra",
+    "path": [
+      "entity",
+      "fields",
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`Validate entity shared > Fail: required with no value 1`] = `
 [
   {
@@ -154,6 +167,20 @@ exports[`Validate entity valueItem > Fail: admin only value item in normal field
       "any",
     ],
     "type": "publish",
+  },
+]
+`;
+
+exports[`Validate entity valueItem > Fail: extra fields 1`] = `
+[
+  {
+    "message": "Invalid fields for value item of type NumbersValueItem: extra",
+    "path": [
+      "entity",
+      "fields",
+      "any",
+    ],
+    "type": "save",
   },
 ]
 `;

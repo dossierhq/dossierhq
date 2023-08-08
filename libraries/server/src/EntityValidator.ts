@@ -169,7 +169,10 @@ export function validatePublishedFieldValuesAndCollectInfo(
       validationIssues.push(publishIssue);
     }
 
-    const saveIssue = validateTraverseNodeForSave(publishedSchema, node);
+    // Ignore extra fields since they are not included in the published schema
+    const saveIssue = validateTraverseNodeForSave(publishedSchema, node, {
+      ignoreExtraContentFields: true,
+    });
     if (saveIssue) {
       validationIssues.push(saveIssue);
     }

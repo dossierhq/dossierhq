@@ -3,6 +3,16 @@
 exports[`traverseEntity > Empty Foo entity 1`] = `
 [
   {
+    "entity": {
+      "fields": {},
+      "info": {
+        "type": "Foo",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.string",
     "type": "field",
     "value": undefined,
@@ -111,6 +121,27 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
 
 exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "string": "string1",
+        "stringList": [
+          "string2.1",
+          "string2.2",
+        ],
+        "twoStrings": {
+          "string1": "two-1",
+          "string2": "two-2",
+          "type": "TwoStrings",
+        },
+      },
+      "info": {
+        "type": "Foo",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.string",
     "type": "field",
@@ -334,6 +365,38 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
 
 exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "richText": {
+          "root": {
+            "children": [
+              {
+                "data": {
+                  "string1": "two-1",
+                  "string2": "two-2",
+                  "type": "TwoStrings",
+                },
+                "format": "",
+                "type": "valueItem",
+                "version": 1,
+              },
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "root",
+            "version": 1,
+          },
+        },
+      },
+      "info": {
+        "type": "Foo",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.string",
     "type": "field",
@@ -617,6 +680,18 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
 exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "adminOnlyString": "Hello admin only",
+      },
+      "info": {
+        "type": "Foo",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.string",
     "type": "field",
     "value": undefined,
@@ -697,6 +772,21 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
 
 exports[`traverseEntity > Foo with two strings in list 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "stringList": [
+          "string1",
+          "string2",
+        ],
+      },
+      "info": {
+        "type": "Foo",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.string",
     "type": "field",
@@ -852,6 +942,21 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
 exports[`traverseEntity > traversable: expect boolean, get boolean[] 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "boolean": [
+          true,
+          false,
+        ],
+      },
+      "info": {
+        "type": "BooleansEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.boolean",
     "type": "field",
     "value": [
@@ -875,6 +980,18 @@ exports[`traverseEntity > traversable: expect boolean, get boolean[] 1`] = `
 exports[`traverseEntity > traversable: expect boolean, get string 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "boolean": "string value",
+      },
+      "info": {
+        "type": "BooleansEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.boolean",
     "type": "field",
     "value": "string value",
@@ -894,6 +1011,18 @@ exports[`traverseEntity > traversable: expect boolean, get string 1`] = `
 
 exports[`traverseEntity > traversable: expect boolean[], get boolean 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "booleanList": true,
+      },
+      "info": {
+        "type": "BooleansEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.boolean",
     "type": "field",
@@ -926,6 +1055,25 @@ exports[`traverseEntity > traversable: expect boolean[], get boolean 1`] = `
 exports[`traverseEntity > traversable: expect entity, get entity[] 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "entity": [
+          {
+            "id": "id1",
+          },
+          {
+            "id": "id2",
+          },
+        ],
+      },
+      "info": {
+        "type": "EntitiesEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.entity",
     "type": "field",
     "value": [
@@ -953,6 +1101,18 @@ exports[`traverseEntity > traversable: expect entity, get entity[] 1`] = `
 exports[`traverseEntity > traversable: expect entity, get string 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "entity": "string value",
+      },
+      "info": {
+        "type": "EntitiesEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.entity",
     "type": "field",
     "value": "string value",
@@ -972,6 +1132,20 @@ exports[`traverseEntity > traversable: expect entity, get string 1`] = `
 
 exports[`traverseEntity > traversable: expect entity[], get entity 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "entitiesList": {
+          "id": "123",
+        },
+      },
+      "info": {
+        "type": "EntitiesEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.entity",
     "type": "field",
@@ -1005,6 +1179,23 @@ exports[`traverseEntity > traversable: expect entity[], get entity 1`] = `
 exports[`traverseEntity > traversable: expect location, get location[] 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "location": [
+          {
+            "lat": 1,
+            "lng": 2,
+          },
+        ],
+      },
+      "info": {
+        "type": "LocationsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.location",
     "type": "field",
     "value": [
@@ -1029,6 +1220,25 @@ exports[`traverseEntity > traversable: expect location, get location[] 1`] = `
 
 exports[`traverseEntity > traversable: expect location, get other 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "location": "string value",
+        "locationList": [
+          {},
+          {
+            "lat": "123",
+            "lng": 123,
+          },
+        ],
+      },
+      "info": {
+        "type": "LocationsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.location",
     "type": "field",
@@ -1066,6 +1276,21 @@ exports[`traverseEntity > traversable: expect location, get other 1`] = `
 exports[`traverseEntity > traversable: expect location[], get location 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "locationList": {
+          "lat": 1,
+          "lng": 2,
+        },
+      },
+      "info": {
+        "type": "LocationsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.location",
     "type": "field",
     "value": undefined,
@@ -1097,6 +1322,22 @@ exports[`traverseEntity > traversable: expect location[], get location 1`] = `
 exports[`traverseEntity > traversable: expect number, get number[] 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "number": [
+          1,
+          2,
+          3,
+        ],
+      },
+      "info": {
+        "type": "NumbersEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.number",
     "type": "field",
     "value": [
@@ -1121,6 +1362,18 @@ exports[`traverseEntity > traversable: expect number, get number[] 1`] = `
 exports[`traverseEntity > traversable: expect number, get other 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "number": "string value",
+      },
+      "info": {
+        "type": "NumbersEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.number",
     "type": "field",
     "value": "string value",
@@ -1140,6 +1393,18 @@ exports[`traverseEntity > traversable: expect number, get other 1`] = `
 
 exports[`traverseEntity > traversable: expect number[], get number 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "numberList": 123,
+      },
+      "info": {
+        "type": "NumbersEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.number",
     "type": "field",
@@ -1173,6 +1438,18 @@ exports[`traverseEntity > traversable: expect number[], get number 1`] = `
 exports[`traverseEntity > traversable: expect richText, get other 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "richText": "string value",
+      },
+      "info": {
+        "type": "RichTextsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.richText",
     "type": "field",
     "value": "string value",
@@ -1192,6 +1469,48 @@ exports[`traverseEntity > traversable: expect richText, get other 1`] = `
 
 exports[`traverseEntity > traversable: expect richText, get richText[] 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "richText": [
+          {
+            "root": {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "hello",
+                      "type": "text",
+                      "version": 1,
+                    },
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "paragraph",
+                  "version": 1,
+                },
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "root",
+              "version": 1,
+            },
+          },
+        ],
+      },
+      "info": {
+        "type": "RichTextsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.richText",
     "type": "field",
@@ -1243,6 +1562,46 @@ exports[`traverseEntity > traversable: expect richText, get richText[] 1`] = `
 exports[`traverseEntity > traversable: expect richText[], get richText 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "richTextList": {
+          "root": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "hello",
+                    "type": "text",
+                    "version": 1,
+                  },
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "paragraph",
+                "version": 1,
+              },
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "root",
+            "version": 1,
+          },
+        },
+      },
+      "info": {
+        "type": "RichTextsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.richText",
     "type": "field",
     "value": undefined,
@@ -1278,6 +1637,18 @@ exports[`traverseEntity > traversable: expect richText[], get richText 1`] = `
 exports[`traverseEntity > traversable: expect string, get other 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "string": 1,
+      },
+      "info": {
+        "type": "StringsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.string",
     "type": "field",
     "value": 1,
@@ -1297,6 +1668,21 @@ exports[`traverseEntity > traversable: expect string, get other 1`] = `
 
 exports[`traverseEntity > traversable: expect string, get string[] 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "string": [
+          "string1",
+          "string2",
+        ],
+      },
+      "info": {
+        "type": "StringsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.string",
     "type": "field",
@@ -1320,6 +1706,18 @@ exports[`traverseEntity > traversable: expect string, get string[] 1`] = `
 
 exports[`traverseEntity > traversable: expect string[], get string 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "stringList": "one string",
+      },
+      "info": {
+        "type": "StringsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.string",
     "type": "field",
@@ -1356,6 +1754,24 @@ exports[`traverseEntity > traversable: expect string[], get string 1`] = `
 exports[`traverseEntity > traversable: expect valueItem, get other 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "valueItem": "string value",
+        "valueItemList": [
+          {
+            "lat": 1,
+            "lng": 2,
+          },
+        ],
+      },
+      "info": {
+        "type": "ValueItemsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.valueItem",
     "type": "field",
     "value": "string value",
@@ -1386,6 +1802,22 @@ exports[`traverseEntity > traversable: expect valueItem, get other 1`] = `
 exports[`traverseEntity > traversable: expect valueItem, get valueItem[] 1`] = `
 [
   {
+    "entity": {
+      "fields": {
+        "valueItem": [
+          {
+            "type": "TwoStrings",
+          },
+        ],
+      },
+      "info": {
+        "type": "ValueItemsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
     "path": "entity.fields.valueItem",
     "type": "field",
     "value": [
@@ -1409,6 +1841,20 @@ exports[`traverseEntity > traversable: expect valueItem, get valueItem[] 1`] = `
 
 exports[`traverseEntity > traversable: expect valueItem[], get valueItem 1`] = `
 [
+  {
+    "entity": {
+      "fields": {
+        "valueItemList": {
+          "type": "TwoStrings",
+        },
+      },
+      "info": {
+        "type": "ValueItemsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
   {
     "path": "entity.fields.valueItem",
     "type": "field",

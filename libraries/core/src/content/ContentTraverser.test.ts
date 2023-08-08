@@ -97,6 +97,9 @@ function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
   for (const node of generator) {
     const path = contentValuePathToString(node.path);
     switch (node.type) {
+      case ContentTraverseNodeType.entity:
+        payload.push({ type: node.type, path, entity: node.entity });
+        break;
       case ContentTraverseNodeType.error:
         payload.push({ type: node.type, path, message: node.message });
         break;

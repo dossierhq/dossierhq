@@ -1270,7 +1270,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.fields: EntityAdminFoo does not include the fields: invalid',
+      'entity.fields: Invalid fields for entity of type EntityAdminFoo: invalid',
     );
   });
 
@@ -1413,7 +1413,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: EntityAdminOneString does not include the fields: invalid',
+      'entity.fields.oneString: Invalid fields for value item of type EntityAdminOneString: invalid',
     );
   });
 

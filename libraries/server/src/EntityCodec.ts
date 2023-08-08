@@ -429,7 +429,10 @@ export function resolveCreateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const normalizedResult = normalizeEntityFields(schema, ['entity'], entity);
+  // Keep extra fields so we can fail on validation
+  const normalizedResult = normalizeEntityFields(schema, ['entity'], entity, {
+    keepExtraFields: true,
+  });
   if (normalizedResult.isError()) return normalizedResult;
   result.fields = normalizedResult.value;
 
@@ -470,23 +473,26 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
   }
 
-  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
+  const migratedExistingFieldsResult = applySchemaMigrationsToFieldValues(
     schema,
     entitySpec.name,
     entityInfo.schemaVersion,
     entityInfo.fieldValues,
   );
-  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
-  const migratedFieldValues = migratedFieldValuesResult.value;
+  if (migratedExistingFieldsResult.isError()) return migratedExistingFieldsResult;
+  const migratedExistingFields = migratedExistingFieldsResult.value;
 
-  const normalizedResult = normalizeEntityFields(
+  // Keep extra fields so we can fail on validation
+  const normalizedUpdateFieldsResult = normalizeEntityFields(
     schema,
     ['entity'],
     { ...entity, info: { type: result.info.type } },
-    { excludeOmittedEntityFields: true },
+    { excludeOmittedEntityFields: true, keepExtraFields: true },
   );
-  if (normalizedResult.isError()) return normalizedResult;
-  const normalizedFields = normalizedResult.value;
+  if (normalizedUpdateFieldsResult.isError()) return normalizedUpdateFieldsResult;
+  const normalizedUpdateFields = normalizedUpdateFieldsResult.value;
+
+  const invalidUpdateFieldNames = new Set(Object.keys(normalizedUpdateFields));
 
   let changed = false;
   if (result.info.name !== entityInfo.name) {
@@ -498,11 +504,12 @@ export function resolveUpdateEntity(
       schema,
       fieldSpec,
       'optimized',
-      migratedFieldValues[fieldName] ?? null,
+      migratedExistingFields[fieldName] ?? null,
     );
 
-    if (fieldName in normalizedFields) {
-      const newFieldValue = normalizedFields[fieldName];
+    invalidUpdateFieldNames.delete(fieldName);
+    if (fieldName in normalizedUpdateFields) {
+      const newFieldValue = normalizedUpdateFields[fieldName];
       if (!isFieldValueEqual(previousFieldValue, newFieldValue)) {
         changed = true;
       }
@@ -510,6 +517,14 @@ export function resolveUpdateEntity(
     } else {
       result.fields[fieldName] = previousFieldValue;
     }
+  }
+
+  if (invalidUpdateFieldNames.size > 0) {
+    return notOk.BadRequest(
+      `entity.fields: ${entitySpec.name} does not include the fields: ${[
+        ...invalidUpdateFieldNames,
+      ].join(', ')}`,
+    );
   }
 
   if (!changed) {

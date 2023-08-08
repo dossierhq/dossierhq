@@ -53,8 +53,12 @@ export interface ContentTransformer<
   ) => Result<Readonly<RichTextNode | null>, TError>;
 }
 
-interface TransformEntityFieldsOptions {
+export interface ContentTransformerEntityFieldsOptions extends ContentTransformerOptions {
   excludeOmittedEntityFields?: boolean;
+}
+
+export interface ContentTransformerOptions {
+  keepExtraFields?: boolean;
 }
 
 export function transformEntityFields<
@@ -66,7 +70,7 @@ export function transformEntityFields<
   path: ContentValuePath,
   entity: Readonly<TEntity>,
   transformer: ContentTransformer<TSchema, TError>,
-  options?: TransformEntityFieldsOptions,
+  options?: ContentTransformerEntityFieldsOptions,
 ): Result<TEntity['fields'], TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const typeSpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!typeSpec) {
@@ -98,6 +102,7 @@ export function transformValueItem<
   path: ContentValuePath,
   item: Readonly<TValueItem>,
   transformer: ContentTransformer<TSchema, TError>,
+  options?: ContentTransformerOptions,
 ): Result<TValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   if (!item.type) {
     return notOk.BadRequest(
@@ -118,7 +123,7 @@ export function transformValueItem<
     'value',
     item,
     transformer,
-    undefined,
+    options,
   );
   if (transformResult.isError()) return transformResult;
   if (transformResult.value === item) return ok(item);
@@ -135,24 +140,31 @@ function transformContentFields<
   kind: 'entity' | 'value',
   fields: Record<string, unknown>,
   transformer: ContentTransformer<TSchema, TError>,
-  options: TransformEntityFieldsOptions | undefined,
+  options: ContentTransformerEntityFieldsOptions | ContentTransformerOptions | undefined,
 ): Result<
   Record<string, unknown>,
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const unsupportedFieldNames = new Set(Object.keys(fields));
+  const extraFieldNames = new Set(Object.keys(fields));
   if (kind === 'value') {
-    unsupportedFieldNames.delete('type');
+    extraFieldNames.delete('type');
   }
+
+  const excludeOmittedEntityFields = !!(
+    options &&
+    'excludeOmittedEntityFields' in options &&
+    options.excludeOmittedEntityFields
+  );
+  const keepExtraFields = !!options?.keepExtraFields;
 
   let changedFields = false;
   const newFields: Record<string, unknown> = {};
   for (const fieldSpec of typeSpec.fields) {
     const fieldPath = [...path, fieldSpec.name];
     const originalValue = fields[fieldSpec.name] as Readonly<unknown>;
-    unsupportedFieldNames.delete(fieldSpec.name);
+    extraFieldNames.delete(fieldSpec.name);
 
-    if (kind === 'entity' && options?.excludeOmittedEntityFields && !(fieldSpec.name in fields)) {
+    if (kind === 'entity' && excludeOmittedEntityFields && !(fieldSpec.name in fields)) {
       continue;
     }
 
@@ -162,6 +174,7 @@ function transformContentFields<
       fieldSpec,
       originalValue,
       transformer,
+      options,
     );
     if (transformResult.isError()) return transformResult;
     let transformedValue = transformResult.value;
@@ -175,12 +188,18 @@ function transformContentFields<
     newFields[fieldSpec.name] = transformedValue;
   }
 
-  if (unsupportedFieldNames.size > 0) {
-    return notOk.BadRequest(
-      `${contentValuePathToString(path)}: ${typeSpec.name} does not include the fields: ${[
-        ...unsupportedFieldNames,
-      ].join(', ')}`,
-    );
+  if (extraFieldNames.size > 0) {
+    if (keepExtraFields) {
+      if (changedFields) {
+        // Copy extra fields as is when we want to keep them
+        for (const fieldName of extraFieldNames) {
+          newFields[fieldName] = fields[fieldName];
+        }
+      }
+    } else {
+      // So that we only return the fields that we know about
+      changedFields = true;
+    }
   }
 
   if (!changedFields) {
@@ -199,6 +218,7 @@ export function transformContentField<
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   originalValue: unknown,
   transformer: ContentTransformer<TSchema, TError>,
+  options?: ContentTransformerOptions,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const traversableError = checkFieldTraversable(fieldSpec, originalValue);
   if (traversableError) {
@@ -230,6 +250,7 @@ export function transformContentField<
         fieldSpec,
         fieldItem,
         transformer,
+        options,
       );
       if (transformFieldValueResult.isError()) return transformFieldValueResult;
       const newFieldItem = transformFieldValueResult.value;
@@ -254,6 +275,7 @@ export function transformContentField<
       fieldSpec,
       value,
       transformer,
+      options,
     );
     if (transformFieldValueResult.isError()) return transformFieldValueResult;
     value = transformFieldValueResult.value;
@@ -271,6 +293,7 @@ function transformContentFieldValue<
   fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
   transformer: ContentTransformer<TSchema, TError>,
+  options: ContentTransformerOptions | undefined,
 ): Result<unknown, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const traversableError = checkFieldItemTraversable(fieldSpec, originalValue);
   if (traversableError) {
@@ -286,7 +309,7 @@ function transformContentFieldValue<
   const value = transformFieldItemResult.value;
 
   if (isValueItemItemField(fieldSpec, value) && value) {
-    return transformValueItem(schema, path, value, transformer);
+    return transformValueItem(schema, path, value, transformer, options);
   } else if (isRichTextItemField(fieldSpec, value) && value) {
     return transformRichText(path, value, (path, node) => {
       const nodeResult = transformer.transformRichTextNode(path, fieldSpec, node);
@@ -296,7 +319,7 @@ function transformContentFieldValue<
       if (transformedNode && isRichTextValueItemNode(transformedNode)) {
         const valueItem = transformedNode.data;
 
-        const valueItemResult = transformValueItem(schema, path, valueItem, transformer);
+        const valueItemResult = transformValueItem(schema, path, valueItem, transformer, options);
         if (valueItemResult.isError()) return valueItemResult;
         const transformedValueItem = valueItemResult.value;
 

@@ -2,7 +2,10 @@ import { describe, expect, test } from 'vitest';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from '../Types.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
-import { normalizeEntityFields } from './ContentNormalizer.js';
+import {
+  normalizeEntityFields,
+  type ContentNormalizerEntityFieldsOptions,
+} from './ContentNormalizer.js';
 import { ContentTraverseNodeErrorType, traverseEntity } from './ContentTraverser.js';
 import { copyEntity } from './ContentUtils.js';
 import {
@@ -127,10 +130,10 @@ const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
   fields: {},
 };
 
-function validateEntity(entity: EntityLike) {
+function validateEntity(entity: EntityLike, options?: ContentNormalizerEntityFieldsOptions) {
   const normalizedEntity = {
     ...entity,
-    fields: normalizeEntityFields(adminSchema, ['entity'], entity).valueOrThrow(),
+    fields: normalizeEntityFields(adminSchema, ['entity'], entity, options).valueOrThrow(),
   };
 
   const errors: (SaveValidationIssue | PublishValidationIssue)[] = [];
@@ -387,6 +390,17 @@ describe('Validate entity shared', () => {
       validateEntity(copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { fields: { required: null } })),
     ).toMatchSnapshot();
   });
+
+  test('Fail: extra entity fields', () => {
+    expect(
+      validateEntity(
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, {
+          fields: { extra: 'extra', normal: 'normal' },
+        }),
+        { keepExtraFields: true },
+      ),
+    ).toMatchSnapshot();
+  });
 });
 
 describe('Validate entity entity', () => {
@@ -544,6 +558,19 @@ describe('Validate entity valueItem', () => {
             stringsValueItem: { type: 'NumbersValueItem', integer: 1 },
           },
         }),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  test('Fail: extra fields', () => {
+    expect(
+      validateEntity(
+        copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
+          fields: {
+            any: { type: 'NumbersValueItem', integer: 1, extra: 1.234 },
+          },
+        }),
+        { keepExtraFields: true },
       ),
     ).toMatchSnapshot();
   });

@@ -103,6 +103,31 @@ describe('transformEntity', () => {
     expect(transformed).toMatchSnapshot();
   });
 
+  test('normalize entity fields: extra', () => {
+    const transformed = transformEntityFields(
+      ADMIN_SCHEMA,
+      ['entity'],
+      copyEntity(STRINGS_ENTITY_1, {
+        fields: { extra: 'hello' } as unknown as typeof STRINGS_ENTITY_1.fields,
+      }),
+      IDENTITY_TRANSFORMER,
+    ).valueOrThrow();
+    expect(transformed).toEqual({ string: '1', stringList: ['1', '2'] });
+  });
+
+  test('normalize entity fields: extra with keepExtraFields', () => {
+    const transformed = transformEntityFields(
+      ADMIN_SCHEMA,
+      ['entity'],
+      copyEntity(STRINGS_ENTITY_1, {
+        fields: { extra: 'hello' } as unknown as typeof STRINGS_ENTITY_1.fields,
+      }),
+      IDENTITY_TRANSFORMER,
+      { keepExtraFields: true },
+    ).valueOrThrow();
+    expect(transformed).toEqual({ extra: 'hello', string: '1', stringList: ['1', '2'] });
+  });
+
   test('normalize list: empty', () => {
     const transformed = transformEntityFields(
       ADMIN_SCHEMA,
@@ -123,6 +148,48 @@ describe('transformEntity', () => {
     expect(transformed.string).toBe(null);
   });
 
+  test('normalize value item: extra fields', () => {
+    const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
+      fields: {
+        valueItem: {
+          type: 'NestedValueItem',
+          unsupported: 'hello',
+        } as unknown as typeof VALUE_ITEMS_ENTITY_1.fields.valueItem,
+      },
+    });
+    const transformed = transformEntityFields(
+      ADMIN_SCHEMA,
+      ['entity'],
+      copy,
+      IDENTITY_TRANSFORMER,
+    ).valueOrThrow();
+    expect(transformed.valueItem).toEqual({ type: 'NestedValueItem', child: null, string: null });
+  });
+
+  test('normalize value item: extra fields with keepExtraFields', () => {
+    const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
+      fields: {
+        valueItem: {
+          type: 'NestedValueItem',
+          unsupported: 'hello',
+        } as unknown as typeof VALUE_ITEMS_ENTITY_1.fields.valueItem,
+      },
+    });
+    const transformed = transformEntityFields(
+      ADMIN_SCHEMA,
+      ['entity'],
+      copy,
+      IDENTITY_TRANSFORMER,
+      { keepExtraFields: true },
+    ).valueOrThrow();
+    expect(transformed.valueItem).toEqual({
+      type: 'NestedValueItem',
+      child: null,
+      string: null,
+      unsupported: 'hello',
+    });
+  });
+
   test('error: invalid entity type name', () => {
     const result = transformEntityFields(
       ADMIN_SCHEMA,
@@ -137,22 +204,6 @@ describe('transformEntity', () => {
     );
   });
 
-  test('error: use unsupported field name in entity', () => {
-    const result = transformEntityFields(
-      ADMIN_SCHEMA,
-      ['entity'],
-      copyEntity(VALUE_ITEMS_ENTITY_1, {
-        fields: { unsupported: 'hello' } as Partial<typeof VALUE_ITEMS_ENTITY_1.fields>,
-      }),
-      IDENTITY_TRANSFORMER,
-    );
-    expectErrorResult(
-      result,
-      ErrorType.BadRequest,
-      'entity: ValueItemsEntity does not include the fields: unsupported',
-    );
-  });
-
   test('error: missing type in value item', () => {
     const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
       fields: {
@@ -164,23 +215,6 @@ describe('transformEntity', () => {
       result,
       ErrorType.BadRequest,
       'entity.valueItem.type: Missing a ValueItem type',
-    );
-  });
-
-  test('error: use unsupported field name in value item', () => {
-    const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
-      fields: {
-        valueItem: {
-          type: 'NestedValueItem',
-          unsupported: 'hello',
-        } as unknown as typeof VALUE_ITEMS_ENTITY_1.fields.valueItem,
-      },
-    });
-    const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
-    expectErrorResult(
-      result,
-      ErrorType.BadRequest,
-      'entity.valueItem: NestedValueItem does not include the fields: unsupported',
     );
   });
 
@@ -200,6 +234,32 @@ describe('transformEntity', () => {
 });
 
 describe('transformValueItem', () => {
+  test('normalize value item: extra field', () => {
+    const transformed = transformValueItem(
+      ADMIN_SCHEMA,
+      ['valueItem'],
+      { type: 'NestedValueItem', child: null, string: null, extra: 'hello' },
+      IDENTITY_TRANSFORMER,
+    ).valueOrThrow();
+    expect(transformed).toEqual({ type: 'NestedValueItem', child: null, string: null });
+  });
+
+  test('normalize value item: extra field with keepExtraFields', () => {
+    const transformed = transformValueItem(
+      ADMIN_SCHEMA,
+      ['valueItem'],
+      { type: 'NestedValueItem', child: null, string: null, extra: 'hello' },
+      IDENTITY_TRANSFORMER,
+      { keepExtraFields: true },
+    ).valueOrThrow();
+    expect(transformed).toEqual({
+      type: 'NestedValueItem',
+      child: null,
+      string: null,
+      extra: 'hello',
+    });
+  });
+
   test('error: invalid type name', () => {
     const transformed = transformValueItem(
       ADMIN_SCHEMA,

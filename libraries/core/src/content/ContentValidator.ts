@@ -179,9 +179,30 @@ function validateName(path: ContentValuePath, name: string): SaveValidationIssue
 export function validateTraverseNodeForSave<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   node: ContentTraverseNode<TSchema>,
+  options?: { ignoreExtraContentFields: boolean },
 ): SaveValidationIssue | null {
+  const ignoreExtraContentFields = !!options?.ignoreExtraContentFields;
+
   const nodeType = node.type;
   switch (nodeType) {
+    case ContentTraverseNodeType.entity: {
+      // Check if there are any extra fields
+      if (!ignoreExtraContentFields) {
+        const invalidFields = new Set(Object.keys(node.entity.fields));
+        node.entitySpec.fields.forEach((it) => invalidFields.delete(it.name));
+
+        if (invalidFields.size > 0) {
+          return {
+            type: 'save',
+            path: [...node.path, 'fields'],
+            message: `Invalid fields for entity of type ${node.entitySpec.name}: ${[
+              ...invalidFields,
+            ].join(', ')}`,
+          };
+        }
+      }
+      break;
+    }
     case ContentTraverseNodeType.field:
       break;
     case ContentTraverseNodeType.fieldItem:
@@ -290,7 +311,22 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
       break;
     }
     case ContentTraverseNodeType.valueItem:
-      // Is checked in fieldItem above
+      // Check if there are any extra fields
+      if (!ignoreExtraContentFields) {
+        const invalidFields = new Set(Object.keys(node.valueItem));
+        invalidFields.delete('type');
+        node.valueSpec.fields.forEach((it) => invalidFields.delete(it.name));
+
+        if (invalidFields.size > 0) {
+          return {
+            type: 'save',
+            path: node.path,
+            message: `Invalid fields for value item of type ${node.valueItem.type}: ${[
+              ...invalidFields,
+            ].join(', ')}`,
+          };
+        }
+      }
       break;
     default:
       assertExhaustive(nodeType);

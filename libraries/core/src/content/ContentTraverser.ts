@@ -21,6 +21,7 @@ import {
 } from './ContentUtils.js';
 
 export const ContentTraverseNodeType = {
+  entity: 'entity',
   error: 'error',
   field: 'field',
   fieldItem: 'fieldItem',
@@ -38,12 +39,20 @@ export type ContentTraverseNodeErrorType =
   (typeof ContentTraverseNodeErrorType)[keyof typeof ContentTraverseNodeErrorType];
 
 export type ContentTraverseNode<TSchema extends AdminSchema | PublishedSchema> =
+  | ContentTraverseNodeEntity<TSchema>
   | ContentTraverseNodeErrorGeneric
   | ContentTraverseNodeErrorMissingTypeSpec
   | ContentTraverseNodeField<TSchema>
   | ContentTraverseNodeFieldItem<TSchema>
   | ContentTraverseNodeValueItem<TSchema>
   | ContentTraverseNodeRichTextNode<TSchema>;
+
+interface ContentTraverseNodeEntity<TSchema extends AdminSchema | PublishedSchema> {
+  path: ContentValuePath;
+  type: 'entity';
+  entitySpec: TSchema['spec']['entityTypes'][number];
+  entity: EntityLike;
+}
 
 interface ContentTraverseNodeErrorGeneric {
   path: ContentValuePath;
@@ -92,22 +101,31 @@ interface ContentTraverseNodeRichTextNode<TSchema extends AdminSchema | Publishe
 export function* traverseEntity<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
-  item: EntityLike,
+  entity: EntityLike,
 ): Generator<ContentTraverseNode<TSchema>> {
-  const entitySpec = schema.getEntityTypeSpecification(item.info.type);
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     const errorNode: ContentTraverseNodeErrorMissingTypeSpec = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.missingTypeSpec,
-      message: `Couldn’t find spec for entity type ${item.info.type}`,
-      typeName: item.info.type,
+      message: `Couldn’t find spec for entity type ${entity.info.type}`,
+      typeName: entity.info.type,
       kind: 'entity',
     };
     yield errorNode;
     return;
   }
-  yield* traverseItem(schema, [...path, 'fields'], entitySpec, item.fields);
+
+  const entityNode: ContentTraverseNodeEntity<TSchema> = {
+    type: ContentTraverseNodeType.entity,
+    path,
+    entitySpec,
+    entity,
+  };
+  yield entityNode;
+
+  yield* traverseContentFields(schema, [...path, 'fields'], entitySpec, entity.fields);
 }
 
 export function* traverseValueItem<TSchema extends AdminSchema | PublishedSchema>(
@@ -147,10 +165,10 @@ export function* traverseValueItem<TSchema extends AdminSchema | PublishedSchema
   };
   yield valueItemNode;
 
-  yield* traverseItem(schema, path, valueSpec, item);
+  yield* traverseContentFields(schema, path, valueSpec, item);
 }
 
-function* traverseItem<TSchema extends AdminSchema | PublishedSchema>(
+function* traverseContentFields<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   typeSpec:
