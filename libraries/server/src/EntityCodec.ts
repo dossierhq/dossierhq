@@ -58,6 +58,7 @@ export function decodePublishedEntity(
   const decodeResult = migrateAndDecodePublishedEntityFields(
     adminSchema,
     entitySpec,
+    ['entity', 'fields'],
     values.entityFields,
   );
   if (decodeResult.isError()) return decodeResult;
@@ -89,6 +90,7 @@ export function decodeAdminEntity(
   const decodedResult = migrateAndDecodeAdminEntityFields(
     adminSchema,
     entitySpec,
+    ['entity', 'fields'],
     values.entityFields,
   );
   if (decodedResult.isError()) return decodedResult;
@@ -182,6 +184,7 @@ export function resolveUpdateEntity(
   const decodeResult = migrateAndDecodeAdminEntityFields(
     adminSchema,
     entitySpec,
+    ['entity', 'fields'],
     entityInfo.entityFields,
   );
   if (decodeResult.isError()) return decodeResult;

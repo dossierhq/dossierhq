@@ -256,6 +256,8 @@ async function validateAndCollectInfoFromPublishedEntity(
   type: string,
   entityFields: DatabaseEntityFieldsPayload,
 ): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
+  const path = ['entity'];
+
   const publishedSchema = adminSchema.toPublishedSchema();
   const entitySpec = adminSchema.getEntityTypeSpecification(type);
   if (!entitySpec) {
@@ -277,7 +279,12 @@ async function validateAndCollectInfoFromPublishedEntity(
   }
 
   // In order to validate the published entity we need the admin entity fields
-  const decodeResult = migrateAndDecodeAdminEntityFields(adminSchema, entitySpec, entityFields);
+  const decodeResult = migrateAndDecodeAdminEntityFields(
+    adminSchema,
+    entitySpec,
+    [...path, 'fields'],
+    entityFields,
+  );
   if (decodeResult.isError()) {
     return convertErrorResultForValidation(
       context,
@@ -291,7 +298,7 @@ async function validateAndCollectInfoFromPublishedEntity(
   const validateFields = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,
     publishedSchema,
-    ['entity'],
+    path,
     type,
     decodedEntityFields,
   );

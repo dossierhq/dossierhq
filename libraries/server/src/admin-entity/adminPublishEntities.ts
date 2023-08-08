@@ -23,9 +23,9 @@ import {
   validatePublishedFieldValuesAndCollectInfo,
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
+import { migrateAndDecodeAdminEntityFields } from '../shared-entity/migrateAndDecodeEntityFields.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
-import { migrateAndDecodeAdminEntityFields } from '../shared-entity/migrateAndDecodeEntityFields.js';
 
 interface VersionInfoToBePublished {
   effect: 'published';
@@ -257,10 +257,12 @@ async function collectVersionsInfo(
         validPublished: validPublished ?? true,
       });
     } else {
+      const path = [`entity(${reference.id})`];
       // In order to validate the published entity we need the admin entity fields
       const entityFieldsResult = migrateAndDecodeAdminEntityFields(
         adminSchema,
         entitySpec,
+        [...path, 'fields'],
         entityFields,
       );
       if (entityFieldsResult.isError()) return entityFieldsResult;
@@ -268,7 +270,7 @@ async function collectVersionsInfo(
       const validateFields = validatePublishedFieldValuesAndCollectInfo(
         adminSchema,
         publishedSchema,
-        [`entity(${reference.id})`],
+        path,
         type,
         entityFieldsResult.value,
       );

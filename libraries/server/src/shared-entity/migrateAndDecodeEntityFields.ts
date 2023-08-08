@@ -8,6 +8,7 @@ import {
   type AdminEntityTypeSpecification,
   type AdminSchemaWithMigrations,
   type ContentTransformer,
+  type ContentValuePath,
   type ErrorType,
   type PublishedEntityTypeSpecification,
   type PublishedSchema,
@@ -20,24 +21,26 @@ import { legacyDecodeEntityFields } from './legacyDecodeEntityFields.js';
 export const ENCODE_VERSION_LEGACY = 0;
 export const ENCODE_VERSION_AS_IS = 1;
 
-//TODO add path
 export function migrateAndDecodeAdminEntityFields(
   adminSchema: AdminSchemaWithMigrations,
   entitySpec: AdminEntityTypeSpecification,
+  path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return migrateAndDecodeEntityFields(adminSchema, adminSchema, entitySpec, entityFields);
+  return migrateAndDecodeEntityFields(adminSchema, adminSchema, entitySpec, path, entityFields);
 }
 
 export function migrateAndDecodePublishedEntityFields(
   adminSchema: AdminSchemaWithMigrations,
   entitySpec: PublishedEntityTypeSpecification,
+  path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return migrateAndDecodeEntityFields(
     adminSchema,
     adminSchema.toPublishedSchema(),
     entitySpec,
+    path,
     entityFields,
   );
 }
@@ -46,6 +49,7 @@ function migrateAndDecodeEntityFields<TSchema extends AdminSchemaWithMigrations 
   adminSchema: AdminSchemaWithMigrations,
   decodeSchema: TSchema,
   entitySpec: TSchema['spec']['entityTypes'][number],
+  path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const migratedFieldValuesResult = applySchemaMigrationsToFields(
@@ -62,11 +66,8 @@ function migrateAndDecodeEntityFields<TSchema extends AdminSchemaWithMigrations 
     case ENCODE_VERSION_AS_IS: {
       const normalizeResult = transformEntityFields(
         decodeSchema,
-        ['entity', 'fields'],
-        {
-          info: { type: entitySpec.name },
-          fields: migratedFieldValues,
-        },
+        path,
+        { info: { type: entitySpec.name }, fields: migratedFieldValues },
         DECODE_TRANSFORMER,
       );
       if (normalizeResult.isError()) return normalizeResult;
