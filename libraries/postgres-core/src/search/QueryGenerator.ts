@@ -35,12 +35,12 @@ export type SearchAdminEntitiesItem = Pick<
   | 'status'
   | 'invalid'
 > &
-  Pick<EntityVersionsTable, 'version' | 'schema_version' | 'data'>;
+  Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'data'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
   'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'
 > &
-  Pick<EntityVersionsTable, 'schema_version' | 'data'>;
+  Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'data'>;
 
 type CursorName = 'name' | 'updated' | 'id';
 
@@ -383,9 +383,9 @@ function addEntityQuerySelectColumn(
   }
   // TODO could skip some columns depending on sample/search and sort order
   if (published) {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.data FROM entities e, entity_versions ev`;
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data FROM entities e, entity_versions ev`;
   } else {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.data
+    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
   FROM entities e, entity_versions ev`;
   }
   if (query?.linksTo) {

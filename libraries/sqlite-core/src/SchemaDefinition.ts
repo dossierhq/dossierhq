@@ -264,6 +264,10 @@ const VERSION_16: SchemaVersionDefinition[] = [
    END`,
 ];
 
+const VERSION_17: SchemaVersionDefinition[] = [
+  'ALTER TABLE entity_versions ADD COLUMN encode_version INTEGER NOT NULL DEFAULT 0',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -282,6 +286,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_14,
   VERSION_15,
   VERSION_16,
+  VERSION_17,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

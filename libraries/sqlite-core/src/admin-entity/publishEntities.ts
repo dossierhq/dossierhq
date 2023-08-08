@@ -30,7 +30,10 @@ export async function adminEntityPublishGetVersionInfo(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<
-    Pick<EntityVersionsTable, 'id' | 'entities_id' | 'schema_version' | 'fields'> &
+    Pick<
+      EntityVersionsTable,
+      'id' | 'entities_id' | 'schema_version' | 'encode_version' | 'fields'
+    > &
       Pick<
         EntitiesTable,
         | 'type'
@@ -43,7 +46,7 @@ export async function adminEntityPublishGetVersionInfo(
         | 'invalid'
       >
   >(database, context, {
-    text: `SELECT ev.id, ev.entities_id, ev.schema_version, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id, e.invalid
+    text: `SELECT ev.id, ev.entities_id, ev.schema_version, ev.encode_version, ev.fields, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.published_entity_versions_id, e.latest_entity_versions_id, e.invalid
          FROM entity_versions ev, entities e
          WHERE e.uuid = ?1 AND e.id = ev.entities_id AND ev.version = ?2`,
     values: [reference.id, reference.version],

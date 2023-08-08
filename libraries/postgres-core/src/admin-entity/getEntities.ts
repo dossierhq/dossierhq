@@ -27,9 +27,9 @@ export async function adminEntityGetMultiple(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'data'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
     FROM entities e, entity_versions ev
     WHERE e.uuid = ANY($1)
     AND e.latest_draft_entity_versions_id = ev.id`,

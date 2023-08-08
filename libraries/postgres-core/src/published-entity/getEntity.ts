@@ -24,7 +24,7 @@ export async function publishedEntityGetOne(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.data`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data`;
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
@@ -37,7 +37,7 @@ export async function publishedEntityGetOne(
       EntitiesTable,
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'schema_version' | 'data'>
+      Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'data'>
   >(databaseAdapter, context, query);
   if (result.isError()) return result;
   if (!result.value) {

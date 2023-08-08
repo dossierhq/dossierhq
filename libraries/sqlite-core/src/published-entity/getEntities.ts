@@ -16,7 +16,7 @@ export async function publishedEntityGetEntities(
   references: EntityReference[],
 ): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
   const { addValueList, query, sql } = createSqliteSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.fields`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.fields`;
   sql`FROM entities e, entity_versions ev WHERE e.uuid IN ${addValueList(
     references.map((it) => it.id),
   )}`;
@@ -27,7 +27,7 @@ export async function publishedEntityGetEntities(
       EntitiesTable,
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'schema_version' | 'fields'>
+      Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'fields'>
   >(database, context, query);
   if (result.isError()) return result;
 

@@ -33,6 +33,7 @@ describe('Admin adminGetEntity', () => {
           updatedAt: now,
           entityFields: {
             schemaVersion: 1,
+            encodeVersion: 0,
             fields: { title: 'Title' },
           },
         }),

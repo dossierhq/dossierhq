@@ -31,7 +31,7 @@ export async function managementDirtyGetNextEntity(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.invalid, ev.version, ev.schema_version, ev.data`;
+  sql`SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.dirty, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data`;
   sql`FROM entities e, entity_versions ev WHERE e.dirty != 0`;
   if (filter) {
     sql`AND e.uuid = ${filter.id}`;
@@ -53,7 +53,7 @@ export async function managementDirtyGetNextEntity(
       | 'dirty'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'data'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'data'>
   >(databaseAdapter, context, query);
   if (result.isError()) return result;
   if (!result.value) {

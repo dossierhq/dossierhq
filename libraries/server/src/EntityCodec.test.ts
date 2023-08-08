@@ -61,6 +61,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -119,6 +120,7 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -159,6 +161,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -195,6 +198,7 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -239,6 +243,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -284,6 +289,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
       },
@@ -315,6 +321,7 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -350,6 +357,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -372,6 +380,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
       },
@@ -386,6 +395,7 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -417,6 +427,7 @@ describe('applySchemaMigrationsToFieldValues combos', () => {
 
     const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
       schemaVersion: 1,
+      encodeVersion: 0,
       fields: {
         valueItem: {
           type: 'ValueItem',

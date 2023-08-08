@@ -36,7 +36,7 @@ describe('Admin adminUpdateEntity', () => {
           version: 0,
           createdAt,
           updatedAt: createdAt,
-          entityFields: { schemaVersion: 1, fields: { title: 'Old title' } },
+          entityFields: { schemaVersion: 1, encodeVersion: 0, fields: { title: 'Old title' } },
         }),
       ),
     );
@@ -111,7 +111,7 @@ describe('Admin adminUpdateEntity', () => {
           version: 0,
           createdAt,
           updatedAt: createdAt,
-          entityFields: { schemaVersion: 1, fields: { title: 'Old title' } },
+          entityFields: { schemaVersion: 1, encodeVersion: 0, fields: { title: 'Old title' } },
         }),
       ),
     );

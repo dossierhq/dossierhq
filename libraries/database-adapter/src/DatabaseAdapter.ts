@@ -78,6 +78,7 @@ export interface DatabaseAdminEntityPayload {
 
 export interface DatabaseEntityFieldsPayload {
   schemaVersion: number;
+  encodeVersion: number;
   fields: Record<string, unknown>;
 }
 

@@ -60,7 +60,7 @@ CREATE TABLE entity_versions (
     version INTEGER NOT NULL,
     created_at TEXT NOT NULL,
     created_by INTEGER NOT NULL,
-    fields TEXT NOT NULL, schema_version INTEGER NOT NULL DEFAULT 0,
+    fields TEXT NOT NULL, schema_version INTEGER NOT NULL DEFAULT 0, encode_version INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES subjects(id)
   ) STRICT;

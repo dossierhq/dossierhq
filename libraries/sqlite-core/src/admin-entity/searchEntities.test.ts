@@ -23,6 +23,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     invalid: 0,
     version: 0,
     schema_version: 1,
+    encode_version: 0,
     fields: JSON.stringify({ title: 'Title' }),
   };
 }
@@ -46,7 +47,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
-      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           26,
         ],
@@ -76,6 +77,7 @@ describe('adminEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
+                "encodeVersion": 0,
                 "fields": {
                   "title": "Title",
                 },
@@ -99,7 +101,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
-      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           26,
         ],
@@ -129,6 +131,7 @@ describe('adminEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
+                "encodeVersion": 0,
                 "fields": {
                   "title": "Title",
                 },
@@ -152,7 +155,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
-      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           1,
           11,
@@ -184,6 +187,7 @@ describe('adminEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
+                "encodeVersion": 0,
                 "fields": {
                   "title": "Title",
                 },
@@ -207,7 +211,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
-      SELECT e.*, ev.version, ev.schema_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
+      SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
           "none",
           1,
           11,

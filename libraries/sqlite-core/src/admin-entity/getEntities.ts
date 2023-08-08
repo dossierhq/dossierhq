@@ -17,7 +17,7 @@ export async function adminEntityGetMultiple(
 ): PromiseResult<DatabaseAdminEntityGetOnePayload[], typeof ErrorType.Generic> {
   const { addValueList, query, sql } = createSqliteSqlQuery();
   const uuids = addValueList(references.map((it) => it.id));
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.fields`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields`;
   sql`FROM entities e, entity_versions ev WHERE e.uuid IN ${uuids} AND e.latest_entity_versions_id = ev.id`;
 
   const result = await queryMany<
@@ -33,7 +33,7 @@ export async function adminEntityGetMultiple(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'fields'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>
   >(database, context, query);
 
   if (result.isError()) return result;

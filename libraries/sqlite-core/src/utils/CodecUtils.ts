@@ -64,12 +64,15 @@ export function resolveEntityValidity(
   };
 }
 
-export function resolveEntityFields(row: Pick<EntityVersionsTable, 'schema_version' | 'fields'>): {
+export function resolveEntityFields(
+  row: Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'fields'>,
+): {
   entityFields: DatabaseEntityFieldsPayload;
 } {
   return {
     entityFields: {
       schemaVersion: row.schema_version,
+      encodeVersion: row.encode_version,
       fields: JSON.parse(row.fields) as Record<string, unknown>,
     },
   };

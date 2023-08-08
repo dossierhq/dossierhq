@@ -48,7 +48,7 @@ async function getEntityWithLatestVersion(
   reference: EntityReference | UniqueIndexReference,
 ) {
   const { sql, query } = createSqliteSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.fields`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields`;
   if ('id' in reference) {
     sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
   } else {
@@ -69,7 +69,7 @@ async function getEntityWithLatestVersion(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'fields'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>
   >(database, context, query);
   if (result.isError()) return result;
   if (!result.value) {
@@ -96,9 +96,9 @@ async function getEntityWithVersion(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'fields'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.fields
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields
     FROM entities e, entity_versions ev
     WHERE e.uuid = ?1
     AND e.id = ev.entities_id

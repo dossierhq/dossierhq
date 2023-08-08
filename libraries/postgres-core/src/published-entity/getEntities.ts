@@ -19,9 +19,9 @@ export async function publishedEntityGetEntities(
       EntitiesTable,
       'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'schema_version' | 'data'>
+      Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.data
+    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.published_entity_versions_id = ev.id`,

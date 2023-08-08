@@ -64,8 +64,16 @@ export function resolveEntityValidity(
   };
 }
 
-export function resolveEntityFields(row: Pick<EntityVersionsTable, 'schema_version' | 'data'>): {
+export function resolveEntityFields(
+  row: Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'data'>,
+): {
   entityFields: DatabaseEntityFieldsPayload;
 } {
-  return { entityFields: { fields: row.data, schemaVersion: row.schema_version } };
+  return {
+    entityFields: {
+      fields: row.data,
+      schemaVersion: row.schema_version,
+      encodeVersion: row.encode_version,
+    },
+  };
 }
