@@ -59,14 +59,17 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItem: {
-        type: 'ValueItem',
-        string: '1',
-        child: {
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItem: {
           type: 'ValueItem',
-          string: '1.1',
-          child: { type: 'ValueItem', string: '1.1.1', child: null },
+          string: '1',
+          child: {
+            type: 'ValueItem',
+            string: '1.1',
+            child: { type: 'ValueItem', string: '1.1.1', child: null },
+          },
         },
       },
     }).valueOrThrow();
@@ -114,15 +117,18 @@ describe('applySchemaMigrationsToFieldValues renameField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichText([
-        createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-        createRichTextValueItemNode({
-          type: 'ValueItem',
-          string: '1',
-          child: { type: 'ValueItem', string: '1.1', child: null },
-        }),
-      ]),
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        richText: createRichText([
+          createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
+          createRichTextValueItemNode({
+            type: 'ValueItem',
+            string: '1',
+            child: { type: 'ValueItem', string: '1.1', child: null },
+          }),
+        ]),
+      },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
     expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
@@ -151,15 +157,18 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichText([
-        createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-        createRichTextValueItemNode({
-          type: 'ValueItem',
-          string: '1',
-          child: { type: 'ValueItem', string: '1.1', child: null },
-        }),
-      ]),
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        richText: createRichText([
+          createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
+          createRichTextValueItemNode({
+            type: 'ValueItem',
+            string: '1',
+            child: { type: 'ValueItem', string: '1.1', child: null },
+          }),
+        ]),
+      },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
     expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
@@ -184,14 +193,17 @@ describe('applySchemaMigrationsToFieldValues deleteField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItem: {
-        type: 'ValueItem',
-        string: '1',
-        child: {
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItem: {
           type: 'ValueItem',
-          string: '1.1',
-          child: { type: 'ValueItem', string: '1.1.1', child: null },
+          string: '1',
+          child: {
+            type: 'ValueItem',
+            string: '1.1',
+            child: { type: 'ValueItem', string: '1.1.1', child: null },
+          },
         },
       },
     }).valueOrThrow();
@@ -225,14 +237,17 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItem: {
-        type: 'ValueItem',
-        string: '1',
-        child: {
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItem: {
           type: 'ValueItem',
-          string: '1.1',
-          child: { type: 'ValueItem', string: '1.1.1', child: null },
+          string: '1',
+          child: {
+            type: 'ValueItem',
+            string: '1.1',
+            child: { type: 'ValueItem', string: '1.1.1', child: null },
+          },
         },
       },
     }).valueOrThrow();
@@ -267,8 +282,11 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+      },
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
@@ -295,15 +313,18 @@ describe('applySchemaMigrationsToFieldValues renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichText([
-        createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-        createRichTextValueItemNode({
-          type: 'ValueItem',
-          string: '1',
-          child: { type: 'ValueItem', string: '1.1', child: null },
-        }),
-      ]),
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        richText: createRichText([
+          createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
+          createRichTextValueItemNode({
+            type: 'ValueItem',
+            string: '1',
+            child: { type: 'ValueItem', string: '1.1', child: null },
+          }),
+        ]),
+      },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
     expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
@@ -327,14 +348,17 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
       migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItem: {
-        type: 'ValueItem',
-        string: '1',
-        child: {
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItem: {
           type: 'ValueItem',
-          string: '1.1',
-          child: { type: 'ValueItem', string: '1.1.1', child: null },
+          string: '1',
+          child: {
+            type: 'ValueItem',
+            string: '1.1',
+            child: { type: 'ValueItem', string: '1.1.1', child: null },
+          },
         },
       },
     }).valueOrThrow();
@@ -346,8 +370,11 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
       migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+      },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
   });
@@ -357,15 +384,18 @@ describe('applySchemaMigrationsToFieldValues deleteType', () => {
       migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      richText: createRichText([
-        createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-        createRichTextValueItemNode({
-          type: 'ValueItem',
-          string: '1',
-          child: { type: 'ValueItem', string: '1.1', child: null },
-        }),
-      ]),
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        richText: createRichText([
+          createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
+          createRichTextValueItemNode({
+            type: 'ValueItem',
+            string: '1',
+            child: { type: 'ValueItem', string: '1.1', child: null },
+          }),
+        ]),
+      },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
   });
@@ -385,14 +415,17 @@ describe('applySchemaMigrationsToFieldValues combos', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', 1, {
-      valueItem: {
-        type: 'ValueItem',
-        string: '1',
-        child: {
+    const fieldValues = applySchemaMigrationsToFieldValues(adminSchema, 'Entity', {
+      schemaVersion: 1,
+      fields: {
+        valueItem: {
           type: 'ValueItem',
-          string: '1.1',
-          child: { type: 'ValueItem', string: '1.1.1', child: null },
+          string: '1',
+          child: {
+            type: 'ValueItem',
+            string: '1.1',
+            child: { type: 'ValueItem', string: '1.1.1', child: null },
+          },
         },
       },
     }).valueOrThrow();

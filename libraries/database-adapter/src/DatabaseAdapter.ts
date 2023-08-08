@@ -73,8 +73,12 @@ export interface DatabaseAdminEntityPayload {
   validPublished: boolean | null;
   createdAt: Date;
   updatedAt: Date;
+  entityFields: DatabaseEntityFieldsPayload;
+}
+
+export interface DatabaseEntityFieldsPayload {
   schemaVersion: number;
-  fieldValues: Record<string, unknown>;
+  fields: Record<string, unknown>;
 }
 
 export interface DatabaseAdminEntityGetOnePayload extends DatabaseAdminEntityPayload {
@@ -115,8 +119,7 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   status: AdminEntityStatus;
   updatedAt: Date;
   validPublished: boolean | null;
-  schemaVersion: number;
-  fieldValues: Record<string, unknown>;
+  entityFields: DatabaseEntityFieldsPayload;
 }
 
 export interface DatabaseAdminEntityPublishUpdateEntityArg
@@ -191,8 +194,7 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   version: number;
   createdAt: Date;
   updatedAt: Date;
-  schemaVersion: number;
-  fieldValues: Record<string, unknown>;
+  entityFields: DatabaseEntityFieldsPayload;
 }
 
 export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityReference {
@@ -267,8 +269,7 @@ export interface DatabasePublishedEntityPayload {
   authKey: string;
   createdAt: Date;
   validPublished: boolean;
-  schemaVersion: number;
-  fieldValues: Record<string, unknown>;
+  entityFields: DatabaseEntityFieldsPayload;
 }
 
 export interface DatabasePublishedEntityGetOnePayload extends DatabasePublishedEntityPayload {

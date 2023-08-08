@@ -70,12 +70,14 @@ describe('publishedEntitySearchEntities', () => {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
-              "fieldValues": {
-                "title": "Title",
+              "entityFields": {
+                "fields": {
+                  "title": "Title",
+                },
+                "schemaVersion": 1,
               },
               "id": "uuid-1",
               "name": "Title#1",
-              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -117,12 +119,14 @@ describe('publishedEntitySearchEntities', () => {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
-              "fieldValues": {
-                "title": "Title",
+              "entityFields": {
+                "fields": {
+                  "title": "Title",
+                },
+                "schemaVersion": 1,
               },
               "id": "uuid-2",
               "name": "Title#2",
-              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },
@@ -165,12 +169,14 @@ describe('publishedEntitySearchEntities', () => {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
-              "fieldValues": {
-                "title": "Title",
+              "entityFields": {
+                "fields": {
+                  "title": "Title",
+                },
+                "schemaVersion": 1,
               },
               "id": "uuid-2",
               "name": "Title#2",
-              "schemaVersion": 1,
               "type": "TitleOnly",
               "validPublished": true,
             },

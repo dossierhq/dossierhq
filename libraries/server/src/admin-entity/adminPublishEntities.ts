@@ -1,20 +1,18 @@
-import type {
-  AdminEntityPublishPayload,
-  AdminSchemaWithMigrations,
-  EntityReference,
-  EntityVersionReference,
-  Location,
-  PromiseResult,
-  PublishedSchema,
-} from '@dossierhq/core';
 import {
   AdminEntityStatus,
   ErrorType,
   assertIsDefined,
+  contentValuePathToString,
   createErrorResult,
   notOk,
   ok,
-  contentValuePathToString,
+  type AdminEntityPublishPayload,
+  type AdminSchemaWithMigrations,
+  type EntityReference,
+  type EntityVersionReference,
+  type Location,
+  type PromiseResult,
+  type PublishedSchema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
@@ -234,8 +232,7 @@ async function collectVersionsInfo(
       status,
       validPublished,
       updatedAt,
-      schemaVersion,
-      fieldValues,
+      entityFields,
     } = versionInfoResult.value;
 
     const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
@@ -260,12 +257,7 @@ async function collectVersionsInfo(
         validPublished: validPublished ?? true,
       });
     } else {
-      const entityFieldsResult = decodeAdminEntityFields(
-        adminSchema,
-        entitySpec,
-        schemaVersion,
-        fieldValues,
-      );
+      const entityFieldsResult = decodeAdminEntityFields(adminSchema, entitySpec, entityFields);
       if (entityFieldsResult.isError()) return entityFieldsResult;
 
       const validateFields = validatePublishedFieldValuesAndCollectInfo(

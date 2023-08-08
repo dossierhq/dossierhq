@@ -37,6 +37,7 @@ import {
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
+  DatabaseEntityFieldsPayload,
   DatabaseEntityIndexesArg,
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabasePublishedEntityPayload,
@@ -89,8 +90,7 @@ export function decodePublishedEntity(
   const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
     adminSchema,
     values.type,
-    values.schemaVersion,
-    values.fieldValues,
+    values.entityFields,
   );
   if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
   const migratedFieldValues = migratedFieldValuesResult.value;
@@ -112,13 +112,12 @@ export function decodePublishedEntity(
 function applySchemaMigrationsToFieldValues(
   adminSchema: AdminSchemaWithMigrations,
   targetEntityType: string,
-  schemaVersion: number,
-  fieldValues: Record<string, unknown>,
+  entityFields: DatabaseEntityFieldsPayload,
 ): Result<Record<string, unknown>, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const actions = adminSchema.collectMigrationActionsSinceVersion(schemaVersion);
+  const actions = adminSchema.collectMigrationActionsSinceVersion(entityFields.schemaVersion);
 
   if (actions.length === 0) {
-    return ok(fieldValues);
+    return ok(entityFields.fields);
   }
 
   const entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[] = [];
@@ -135,7 +134,7 @@ function applySchemaMigrationsToFieldValues(
 
   const migratedFieldValues = migrateEntityFields(
     startingEntityType,
-    fieldValues,
+    entityFields.fields,
     entityTypeActions,
   );
 
@@ -355,12 +354,7 @@ export function decodeAdminEntity(
     return notOk.BadRequest(`No entity spec for type ${values.type}`);
   }
 
-  const decodedResult = decodeAdminEntityFields(
-    schema,
-    entitySpec,
-    values.schemaVersion,
-    values.fieldValues,
-  );
+  const decodedResult = decodeAdminEntityFields(schema, entitySpec, values.entityFields);
   if (decodedResult.isError()) return decodedResult;
   const fields = decodedResult.value;
 
@@ -386,14 +380,12 @@ export function decodeAdminEntity(
 export function decodeAdminEntityFields(
   schema: AdminSchemaWithMigrations,
   entitySpec: AdminEntityTypeSpecification,
-  schemaVersion: number,
-  fieldValues: Record<string, unknown>,
+  entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
     schema,
     entitySpec.name,
-    schemaVersion,
-    fieldValues,
+    entityFields,
   );
   if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
   const migratedFieldValues = migratedFieldValuesResult.value;
@@ -476,8 +468,7 @@ export function resolveUpdateEntity(
   const migratedExistingFieldsResult = applySchemaMigrationsToFieldValues(
     schema,
     entitySpec.name,
-    entityInfo.schemaVersion,
-    entityInfo.fieldValues,
+    entityInfo.entityFields,
   );
   if (migratedExistingFieldsResult.isError()) return migratedExistingFieldsResult;
   const migratedExistingFields = migratedExistingFieldsResult.value;

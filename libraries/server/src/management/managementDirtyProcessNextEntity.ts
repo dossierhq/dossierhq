@@ -16,6 +16,7 @@ import {
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityPayload,
+  DatabaseEntityFieldsPayload,
   DatabaseEntityIndexesArg,
   DatabaseResolvedEntityReference,
   TransactionContext,
@@ -119,8 +120,7 @@ export async function managementDirtyProcessNextEntity(
     // Validate / index published
     if ((dirtyValidatePublished || dirtyIndexPublished) && entityIsPublished) {
       // Fetch the correct version of the entity since when modified we got the wrong version
-      let schemaVersion = entityResult.value.schemaVersion;
-      let fieldValues = entityResult.value.fieldValues;
+      let entityFields = entityResult.value.entityFields;
       if (status === AdminEntityStatus.modified) {
         const getPublishedEntityResult = await databaseAdapter.publishedEntityGetOne(
           context,
@@ -129,8 +129,7 @@ export async function managementDirtyProcessNextEntity(
         if (getPublishedEntityResult.isError()) {
           return notOk.Generic(getPublishedEntityResult.message); // convert NotFound to Generic
         }
-        schemaVersion = getPublishedEntityResult.value.schemaVersion;
-        fieldValues = getPublishedEntityResult.value.fieldValues;
+        entityFields = getPublishedEntityResult.value.entityFields;
       }
 
       // Validate published
@@ -140,8 +139,7 @@ export async function managementDirtyProcessNextEntity(
         context,
         reference,
         entityResult.value.type,
-        schemaVersion,
-        fieldValues,
+        entityFields,
       );
       if (validationPublishedResult.isError()) return validationPublishedResult;
       entityValidity.validPublished = validationPublishedResult.value.valid;
@@ -255,8 +253,7 @@ async function validateAndCollectInfoFromPublishedEntity(
   context: TransactionContext,
   reference: EntityReference,
   type: string,
-  schemaVersion: number,
-  fieldValues: Record<string, unknown>,
+  entityFields: DatabaseEntityFieldsPayload,
 ): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
   const entitySpec = adminSchema.getEntityTypeSpecification(type);
   if (!entitySpec) {
@@ -277,7 +274,7 @@ async function validateAndCollectInfoFromPublishedEntity(
     );
   }
 
-  const decodeResult = decodeAdminEntityFields(adminSchema, entitySpec, schemaVersion, fieldValues);
+  const decodeResult = decodeAdminEntityFields(adminSchema, entitySpec, entityFields);
   if (decodeResult.isError()) {
     return convertErrorResultForValidation(
       context,
@@ -286,14 +283,14 @@ async function validateAndCollectInfoFromPublishedEntity(
       decodeResult,
     );
   }
-  const entityFields = decodeResult.value;
+  const decodedEntityFields = decodeResult.value;
 
   const validateFields = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,
     adminSchema.toPublishedSchema(),
     ['entity'],
     type,
-    entityFields,
+    decodedEntityFields,
   );
 
   const validateReferencedEntitiesResult =

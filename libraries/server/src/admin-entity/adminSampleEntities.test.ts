@@ -60,8 +60,7 @@ describe('Admin adminSampleEntities', () => {
           validPublished: true,
           createdAt: now,
           updatedAt: now,
-          schemaVersion: 1,
-          fieldValues: {},
+          entityFields: { schemaVersion: 1, fields: {} },
         },
       ]),
     );

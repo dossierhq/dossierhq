@@ -34,8 +34,10 @@ describe('Admin adminPublishEntities', () => {
           status: AdminEntityStatus.draft,
           validPublished: null,
           updatedAt: new Date('2021-08-17T07:51:25.56Z'),
-          schemaVersion: 1,
-          fieldValues: { title: 'Title' },
+          entityFields: {
+            schemaVersion: 1,
+            fields: { title: 'Title' },
+          },
         }),
       ),
     );

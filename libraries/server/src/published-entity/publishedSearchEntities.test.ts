@@ -326,7 +326,6 @@ function createDatabaseEntity(id = 1): DatabasePublishedEntitySearchPayloadEntit
     authKey: 'none',
     validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),
-    schemaVersion: 1,
-    fieldValues: { title: 'Title' },
+    entityFields: { schemaVersion: 1, fields: { title: 'Title' } },
   };
 }

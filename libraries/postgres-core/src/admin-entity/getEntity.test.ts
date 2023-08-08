@@ -50,8 +50,10 @@ describe('adminGetEntity', () => {
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
       updatedAt: now,
-      schemaVersion: 1,
-      fieldValues: { title: 'Title' },
+      entityFields: {
+        schemaVersion: 1,
+        fields: { title: 'Title' },
+      },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
@@ -108,8 +110,10 @@ describe('adminGetEntity', () => {
       resolvedAuthKey: 'resolvedAuthKey-123',
       createdAt: now,
       updatedAt: now,
-      schemaVersion: 1,
-      fieldValues: { title: 'Title' },
+      entityFields: {
+        schemaVersion: 1,
+        fields: { title: 'Title' },
+      },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
