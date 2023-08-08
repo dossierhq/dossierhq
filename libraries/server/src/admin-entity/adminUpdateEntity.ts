@@ -110,7 +110,7 @@ export async function adminUpdateEntity(
         `${contentValuePathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
       );
     }
-    const { data, name } = encodeResult.value;
+    const { fields, name, encodeVersion } = encodeResult.value;
 
     const updateResult = await databaseAdapter.adminEntityUpdateEntity(
       context,
@@ -123,8 +123,8 @@ export async function adminUpdateEntity(
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,
         schemaVersion: adminSchema.spec.version,
-        encodeVersion: 0, //TODO support multiple encode versions
-        fields: data,
+        encodeVersion,
+        fields,
       },
     );
     if (updateResult.isError()) return updateResult;

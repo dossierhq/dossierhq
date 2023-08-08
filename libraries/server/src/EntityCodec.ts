@@ -1,36 +1,24 @@
 import {
   AdminEntityStatus,
-  FieldType,
   assertExhaustive,
-  assertIsDefined,
   isFieldValueEqual,
-  isRichTextField,
-  isRichTextItemField,
   isRichTextValueItemNode,
-  isValueItemField,
   isValueItemItemField,
   normalizeEntityFields,
   notOk,
   ok,
   transformEntityFields,
-  transformRichText,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
-  type AdminFieldSpecification,
   type AdminSchema,
   type AdminSchemaMigrationAction,
   type AdminSchemaWithMigrations,
-  type ContentValuePath,
   type ErrorType,
   type PromiseResult,
   type PublishedEntity,
-  type PublishedFieldSpecification,
-  type PublishedSchema,
   type Result,
-  type RichText,
-  type RichTextValueItemNode,
   type SaveValidationIssue,
   type ValueItem,
 } from '@dossierhq/core';
@@ -44,27 +32,22 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import { type UniqueIndexValueCollection } from './EntityCollectors.js';
-import * as EntityFieldTypeAdapters from './EntityFieldTypeAdapters.js';
 import {
   validateAdminFieldValuesAndCollectInfo,
   validateReferencedEntitiesForSaveAndCollectInfo,
 } from './EntityValidator.js';
+import { legacyDecodeEntityFields } from './shared-entity/legacyDecodeEntityFields.js';
+import { legacyEncodeEntityFields } from './shared-entity/legacyEncodeEntityFields.js';
 
-export interface EncodeAdminEntityResult {
+export interface EncodeAdminEntityPayload {
   validationIssues: SaveValidationIssue[];
   type: string;
   name: string;
-  data: Record<string, unknown>;
+  fields: Record<string, unknown>;
+  encodeVersion: number;
   entityIndexes: DatabaseEntityIndexesArg;
   uniqueIndexValues: UniqueIndexValueCollection;
 }
-
-/** `optimized` is the original way of encoding/decoding values, using type adapters and saving less
- * data than the json. Used by entity fields, and value items in entities.
- * For Rich Text, `json` is used, which means values are saved as is. Value items within rich text
- * are encoded as `json`.
- */
-export type CodecMode = 'optimized' | 'json';
 
 export function decodePublishedEntity(
   adminSchema: AdminSchemaWithMigrations,
@@ -75,6 +58,17 @@ export function decodePublishedEntity(
   if (!entitySpec) {
     return notOk.BadRequest(`No entity spec for type ${values.type} (id: ${values.id})`);
   }
+
+  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
+    adminSchema,
+    values.type,
+    values.entityFields,
+  );
+  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
+  const migratedFields = migratedFieldValuesResult.value;
+
+  const decodedFields = legacyDecodeEntityFields(publishedSchema, entitySpec, migratedFields);
+
   const entity: PublishedEntity = {
     id: values.id,
     info: {
@@ -84,27 +78,8 @@ export function decodePublishedEntity(
       createdAt: values.createdAt,
       valid: values.validPublished,
     },
-    fields: {},
+    fields: decodedFields,
   };
-
-  const migratedFieldValuesResult = applySchemaMigrationsToFieldValues(
-    adminSchema,
-    values.type,
-    values.entityFields,
-  );
-  if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
-  const migratedFieldValues = migratedFieldValuesResult.value;
-
-  for (const fieldSpec of entitySpec.fields) {
-    const { name: fieldName } = fieldSpec;
-    const fieldValue = migratedFieldValues[fieldName];
-    entity.fields[fieldName] = decodeFieldItemOrList(
-      publishedSchema,
-      fieldSpec,
-      'optimized',
-      fieldValue,
-    );
-  }
 
   return ok(entity);
 }
@@ -261,90 +236,6 @@ function migrateValueItem(
   return valueItem;
 }
 
-function decodeFieldItemOrList(
-  schema: AdminSchema | PublishedSchema,
-  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
-  codecMode: CodecMode,
-  fieldValue: unknown,
-) {
-  if (fieldValue === null || fieldValue === undefined) {
-    return null;
-  }
-  const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-  if (fieldSpec.list) {
-    if (!Array.isArray(fieldValue)) {
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
-      throw new Error(`Expected list but got ${fieldValue} (${fieldSpec.name})`);
-    }
-    const decodedItems: unknown[] = [];
-    for (const encodedItem of fieldValue) {
-      if (fieldSpec.type === FieldType.ValueItem) {
-        const decodedItem = decodeValueItemField(schema, codecMode, encodedItem as ValueItem);
-        if (decodedItem) {
-          decodedItems.push(decodedItem);
-        }
-      } else if (fieldSpec.type === FieldType.RichText) {
-        decodedItems.push(decodeRichTextField(schema, encodedItem as RichText));
-      } else {
-        decodedItems.push(
-          codecMode === 'optimized'
-            ? fieldAdapter.decodeData(encodedItem)
-            : fieldAdapter.decodeJson(encodedItem),
-        );
-      }
-    }
-    return decodedItems.length > 0 ? decodedItems : null;
-  }
-  if (fieldSpec.type === FieldType.ValueItem) {
-    return decodeValueItemField(schema, codecMode, fieldValue as ValueItem);
-  }
-  if (fieldSpec.type === FieldType.RichText) {
-    return decodeRichTextField(schema, fieldValue as RichText);
-  }
-  return codecMode === 'optimized'
-    ? fieldAdapter.decodeData(fieldValue)
-    : fieldAdapter.decodeJson(fieldValue);
-}
-
-function decodeValueItemField(
-  schema: AdminSchema | PublishedSchema,
-  codecMode: CodecMode,
-  encodedValue: ValueItem,
-): ValueItem | null {
-  const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
-  if (!valueSpec) {
-    // Could be that the value type was deleted or made adminOnly (when decoding published entities)
-    return null;
-  }
-  const decodedValue: ValueItem = { type: encodedValue.type };
-  for (const fieldFieldSpec of valueSpec.fields) {
-    const fieldName = fieldFieldSpec.name;
-    const fieldValue = encodedValue[fieldName];
-    decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldFieldSpec, codecMode, fieldValue);
-  }
-
-  return decodedValue;
-}
-
-function decodeRichTextField(
-  schema: AdminSchema | PublishedSchema,
-  encodedValue: RichText,
-): RichText | null {
-  //TODO add paths to decoding
-  const path: ContentValuePath = [];
-  return transformRichText(path, encodedValue, (_path, node) => {
-    if (isRichTextValueItemNode(node)) {
-      const data = decodeValueItemField(schema, 'json', node.data);
-      if (!data) {
-        return ok(null);
-      }
-      const newNode: RichTextValueItemNode = { ...node, data };
-      return ok(newNode);
-    }
-    return ok(node);
-  }).valueOrThrow();
-}
-
 export function decodeAdminEntity(
   schema: AdminSchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
@@ -390,12 +281,7 @@ export function decodeAdminEntityFields(
   if (migratedFieldValuesResult.isError()) return migratedFieldValuesResult;
   const migratedFieldValues = migratedFieldValuesResult.value;
 
-  const fields: AdminEntity['fields'] = {};
-  for (const fieldSpec of entitySpec.fields) {
-    const { name: fieldName } = fieldSpec;
-    const fieldValue = migratedFieldValues[fieldName];
-    fields[fieldName] = decodeFieldItemOrList(schema, fieldSpec, 'optimized', fieldValue);
-  }
+  const fields = legacyDecodeEntityFields(schema, entitySpec, migratedFieldValues);
   return ok(fields);
 }
 
@@ -473,6 +359,12 @@ export function resolveUpdateEntity(
   if (migratedExistingFieldsResult.isError()) return migratedExistingFieldsResult;
   const migratedExistingFields = migratedExistingFieldsResult.value;
 
+  const decodedExistingFields = legacyDecodeEntityFields(
+    schema,
+    entitySpec,
+    migratedExistingFields,
+  );
+
   // Keep extra fields so we can fail on validation
   const normalizedUpdateFieldsResult = normalizeEntityFields(
     schema,
@@ -491,12 +383,7 @@ export function resolveUpdateEntity(
   }
   for (const fieldSpec of entitySpec.fields) {
     const fieldName = fieldSpec.name;
-    const previousFieldValue = decodeFieldItemOrList(
-      schema,
-      fieldSpec,
-      'optimized',
-      migratedExistingFields[fieldName] ?? null,
-    );
+    const previousFieldValue = decodedExistingFields[fieldName] ?? null;
 
     extraUpdateFieldNames.delete(fieldName);
     if (fieldName in normalizedUpdateFields) {
@@ -537,18 +424,19 @@ export async function encodeAdminEntity(
   context: TransactionContext,
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | AdminEntityCreate,
-): PromiseResult<EncodeAdminEntityResult, typeof ErrorType.Generic> {
+): PromiseResult<EncodeAdminEntityPayload, typeof ErrorType.Generic> {
   // Collect values and validate entity fields
   const path = ['entity'];
   const validation = validateAdminFieldValuesAndCollectInfo(schema, path, entity);
 
   // TODO consider not encoding data and use it as is
 
-  const result: EncodeAdminEntityResult = {
+  const payload: EncodeAdminEntityPayload = {
     validationIssues: validation.validationIssues,
     type: entity.info.type,
     name: entity.info.name,
-    data: {},
+    fields: legacyEncodeEntityFields(schema, entitySpec, path, entity.fields),
+    encodeVersion: 0,
     entityIndexes: {
       referenceIds: [],
       locations: validation.locations,
@@ -557,17 +445,6 @@ export async function encodeAdminEntity(
     },
     uniqueIndexValues: validation.uniqueIndexValues,
   };
-  for (const fieldSpec of entitySpec.fields) {
-    if (entity.fields && fieldSpec.name in entity.fields) {
-      const data = entity.fields[fieldSpec.name];
-      if (data === null || data === undefined) {
-        continue;
-      }
-      const fieldPath = [...path, 'fields', fieldSpec.name];
-      const encodedValue = encodeFieldItemOrList(schema, fieldSpec, fieldPath, data);
-      result.data[fieldSpec.name] = encodedValue;
-    }
-  }
 
   // Validate and resolve references
   const referencesResult = await validateReferencedEntitiesForSaveAndCollectInfo(
@@ -576,77 +453,10 @@ export async function encodeAdminEntity(
     validation.references,
   );
   if (referencesResult.isError()) return referencesResult;
-  result.validationIssues.push(...referencesResult.value.validationIssues);
-  result.entityIndexes.referenceIds.push(...referencesResult.value.references);
+  payload.validationIssues.push(...referencesResult.value.validationIssues);
+  payload.entityIndexes.referenceIds.push(...referencesResult.value.references);
 
-  return ok(result);
-}
-
-function encodeFieldItemOrList(
-  schema: AdminSchema,
-  fieldSpec: AdminFieldSpecification,
-  path: ContentValuePath,
-  data: unknown,
-) {
-  const fieldAdapter = EntityFieldTypeAdapters.getAdapter(fieldSpec);
-  if (fieldSpec.list) {
-    const encodedItems: unknown[] = [];
-    for (let i = 0; i < (data as []).length; i++) {
-      const decodedItem = (data as unknown[])[i];
-      const itemPath = [...path, i];
-
-      let encodedItem: unknown;
-      if (isValueItemItemField(fieldSpec, decodedItem)) {
-        encodedItem = encodeValueItemField(schema, itemPath, decodedItem);
-      } else if (isRichTextItemField(fieldSpec, decodedItem)) {
-        encodedItem = encodeRichTextField(decodedItem);
-      } else {
-        encodedItem = fieldAdapter.encodeData(decodedItem);
-      }
-      if (encodedItem !== null) {
-        encodedItems.push(encodedItem);
-      }
-    }
-    return encodedItems.length > 0 ? encodedItems : null;
-  }
-
-  if (isValueItemField(fieldSpec, data)) {
-    return encodeValueItemField(schema, path, data);
-  } else if (isRichTextField(fieldSpec, data)) {
-    return encodeRichTextField(data);
-  }
-  return fieldAdapter.encodeData(data);
-}
-
-function encodeValueItemField(
-  schema: AdminSchema,
-  path: ContentValuePath,
-  data: ValueItem | null,
-): ValueItem | null {
-  if (!data) return null;
-
-  const value = data;
-  const valueType = value.type;
-  const valueSpec = schema.getValueTypeSpecification(valueType);
-  assertIsDefined(valueSpec);
-
-  const encodedValue: ValueItem = { type: valueType };
-
-  for (const fieldSpec of valueSpec.fields) {
-    const fieldValue = value[fieldSpec.name];
-    if (fieldValue === null || fieldValue === undefined) {
-      continue; // Skip empty fields
-    }
-    const fieldPath = [...path, fieldSpec.name];
-    const encodedFieldValue = encodeFieldItemOrList(schema, fieldSpec, fieldPath, fieldValue);
-    encodedValue[fieldSpec.name] = encodedFieldValue;
-  }
-
-  return encodedValue;
-}
-
-function encodeRichTextField(data: RichText | null) {
-  return data;
+  return ok(payload);
 }
 
 export const forTest = {

@@ -67,24 +67,25 @@ export async function adminCreateEntity(
     createEntity,
   );
   if (encodeResult.isError()) return encodeResult;
-  if (encodeResult.value.validationIssues.length > 0) {
-    const firstValidationIssue = encodeResult.value.validationIssues[0];
+  const encodeEntityPayload = encodeResult.value;
+
+  if (encodeEntityPayload.validationIssues.length > 0) {
+    const firstValidationIssue = encodeEntityPayload.validationIssues[0];
     return notOk.BadRequest(
       `${contentValuePathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
     );
   }
-  const encodeEntityResult = encodeResult.value;
 
   return await context.withTransaction(async (context) => {
     const createResult = await databaseAdapter.adminEntityCreate(context, randomNameGenerator, {
       id: entity.id ?? null,
-      type: encodeEntityResult.type,
-      name: encodeEntityResult.name,
+      type: encodeEntityPayload.type,
+      name: encodeEntityPayload.name,
       creator: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
       schemaVersion: adminSchema.spec.version,
-      encodeVersion: 0, //TODO support multiple encode versions
-      fields: encodeEntityResult.data,
+      encodeVersion: encodeEntityPayload.encodeVersion,
+      fields: encodeEntityPayload.fields,
     });
     if (createResult.isError()) return createResult;
     const { id, name, createdAt, updatedAt } = createResult.value;
@@ -92,7 +93,7 @@ export async function adminCreateEntity(
     const updateEntityIndexesResult = await databaseAdapter.adminEntityIndexesUpdateLatest(
       context,
       { entityInternalId: createResult.value.entityInternalId },
-      encodeEntityResult.entityIndexes,
+      encodeEntityPayload.entityIndexes,
       true,
     );
     if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
@@ -118,7 +119,7 @@ export async function adminCreateEntity(
       context,
       createResult.value,
       true,
-      encodeEntityResult.uniqueIndexValues,
+      encodeEntityPayload.uniqueIndexValues,
       null, // TODO publishEntityAfterMutation is updating the values
     );
     if (uniqueIndexResult.isError()) return uniqueIndexResult;
