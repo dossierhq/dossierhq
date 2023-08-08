@@ -31,9 +31,9 @@ import {
 } from './EntityValidator.js';
 import { encodeEntityFields } from './shared-entity/encodeEntityFields.js';
 import {
-  migrateAndDecodeAdminEntityFields,
-  migrateAndDecodePublishedEntityFields,
-} from './shared-entity/migrateAndDecodeEntityFields.js';
+  migrateDecodeAndNormalizeAdminEntityFields,
+  migratDecodeAndNormalizePublishedEntityFields,
+} from './shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 export interface EncodeAdminEntityPayload {
   validationIssues: SaveValidationIssue[];
@@ -55,7 +55,7 @@ export function decodePublishedEntity(
     return notOk.BadRequest(`No entity spec for type ${values.type} (id: ${values.id})`);
   }
 
-  const decodeResult = migrateAndDecodePublishedEntityFields(
+  const decodeResult = migratDecodeAndNormalizePublishedEntityFields(
     adminSchema,
     entitySpec,
     ['entity', 'fields'],
@@ -87,7 +87,7 @@ export function decodeAdminEntity(
     return notOk.BadRequest(`No entity spec for type ${values.type}`);
   }
 
-  const decodedResult = migrateAndDecodeAdminEntityFields(
+  const decodedResult = migrateDecodeAndNormalizeAdminEntityFields(
     adminSchema,
     entitySpec,
     ['entity', 'fields'],
@@ -181,7 +181,7 @@ export function resolveUpdateEntity(
     return notOk.BadRequest(`Entity type ${entity.info.type} doesn’t exist`);
   }
 
-  const decodeResult = migrateAndDecodeAdminEntityFields(
+  const decodeResult = migrateDecodeAndNormalizeAdminEntityFields(
     adminSchema,
     entitySpec,
     ['entity', 'fields'],

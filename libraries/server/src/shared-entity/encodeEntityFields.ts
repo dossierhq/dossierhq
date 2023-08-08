@@ -1,5 +1,5 @@
 import type { AdminEntityTypeSpecification, AdminSchema, ContentValuePath } from '@dossierhq/core';
-import { ENCODE_VERSION_AS_IS } from './migrateAndDecodeEntityFields.js';
+import { ENCODE_VERSION_AS_IS } from './migrateDecodeAndNormalizeEntityFields.js';
 
 //TODO remove unused parameters and delete legacy encode
 export function encodeEntityFields(

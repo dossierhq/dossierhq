@@ -21,22 +21,28 @@ import { legacyDecodeEntityFields } from './legacyDecodeEntityFields.js';
 export const ENCODE_VERSION_LEGACY = 0;
 export const ENCODE_VERSION_AS_IS = 1;
 
-export function migrateAndDecodeAdminEntityFields(
+export function migrateDecodeAndNormalizeAdminEntityFields(
   adminSchema: AdminSchemaWithMigrations,
   entitySpec: AdminEntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return migrateAndDecodeEntityFields(adminSchema, adminSchema, entitySpec, path, entityFields);
+  return migrateDecodeAndNormalizeEntityFields(
+    adminSchema,
+    adminSchema,
+    entitySpec,
+    path,
+    entityFields,
+  );
 }
 
-export function migrateAndDecodePublishedEntityFields(
+export function migratDecodeAndNormalizePublishedEntityFields(
   adminSchema: AdminSchemaWithMigrations,
   entitySpec: PublishedEntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return migrateAndDecodeEntityFields(
+  return migrateDecodeAndNormalizeEntityFields(
     adminSchema,
     adminSchema.toPublishedSchema(),
     entitySpec,
@@ -45,7 +51,9 @@ export function migrateAndDecodePublishedEntityFields(
   );
 }
 
-function migrateAndDecodeEntityFields<TSchema extends AdminSchemaWithMigrations | PublishedSchema>(
+function migrateDecodeAndNormalizeEntityFields<
+  TSchema extends AdminSchemaWithMigrations | PublishedSchema,
+>(
   adminSchema: AdminSchemaWithMigrations,
   decodeSchema: TSchema,
   entitySpec: TSchema['spec']['entityTypes'][number],

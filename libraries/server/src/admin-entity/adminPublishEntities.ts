@@ -23,7 +23,7 @@ import {
   validatePublishedFieldValuesAndCollectInfo,
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
-import { migrateAndDecodeAdminEntityFields } from '../shared-entity/migrateAndDecodeEntityFields.js';
+import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
@@ -259,7 +259,7 @@ async function collectVersionsInfo(
     } else {
       const path = [`entity(${reference.id})`];
       // In order to validate the published entity we need the admin entity fields
-      const entityFieldsResult = migrateAndDecodeAdminEntityFields(
+      const entityFieldsResult = migrateDecodeAndNormalizeAdminEntityFields(
         adminSchema,
         entitySpec,
         [...path, 'fields'],

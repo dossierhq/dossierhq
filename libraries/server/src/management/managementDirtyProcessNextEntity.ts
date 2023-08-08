@@ -28,7 +28,7 @@ import {
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
 import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
-import { migrateAndDecodeAdminEntityFields } from '../shared-entity/migrateAndDecodeEntityFields.js';
+import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 export interface ProcessDirtyEntityPayload {
   id: string;
@@ -279,7 +279,7 @@ async function validateAndCollectInfoFromPublishedEntity(
   }
 
   // In order to validate the published entity we need the admin entity fields
-  const decodeResult = migrateAndDecodeAdminEntityFields(
+  const decodeResult = migrateDecodeAndNormalizeAdminEntityFields(
     adminSchema,
     entitySpec,
     [...path, 'fields'],
