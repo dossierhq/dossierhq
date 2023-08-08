@@ -30,7 +30,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.58.2",
-    "bun-types": "~0.7.1",
+    "bun-types": "~0.7.3",
     "eslint": "~8.46.0",
     "prettier": "3.0.1",
     "typescript": "~5.1.6"

@@ -108,7 +108,6 @@ function decodeRichTextField(
   schema: AdminSchema | PublishedSchema,
   encodedValue: RichText,
 ): RichText | null {
-  //TODO add paths to decoding
   const path: ContentValuePath = [];
   return transformRichText(path, encodedValue, (_path, node) => {
     if (isRichTextValueItemNode(node)) {

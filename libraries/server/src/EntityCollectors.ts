@@ -97,7 +97,7 @@ export function createRequestedReferencesCollector<
             const entityItemFieldSpec = node.fieldSpec as EntityFieldSpecification;
             requestedReferences.push({
               path: node.path,
-              uuids: [node.value.id], //TODO handle list field (optimization, one requested reference instead of one for each item in the list)
+              uuids: [node.value.id],
               entityTypes: entityItemFieldSpec.entityTypes,
               linkEntityTypes: undefined,
               isRichTextLink: false,
