@@ -79,13 +79,6 @@ export async function initializeIntegrationTestServer(): PromiseResult<
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
-  let done = false;
-  while (!done) {
-    const processResult = await server.processNextDirtyEntity();
-    if (processResult.isError()) return processResult;
-    done = processResult.value === null;
-  }
-
   const client = server.createAdminClient(() =>
     server.createSession({
       provider: 'test',
@@ -95,6 +88,8 @@ export async function initializeIntegrationTestServer(): PromiseResult<
       databasePerformance: null,
     }),
   );
+
+  //TODO move this to integration-test and add advisory lock for update
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
 

@@ -30,13 +30,6 @@ export async function initializeSqlite3Server(
   if (createServerResult.isError()) return createServerResult;
   const server = createServerResult.value;
 
-  let done = false;
-  while (!done) {
-    const processResult = await server.processNextDirtyEntity();
-    if (processResult.isError()) return processResult;
-    done = processResult.value === null;
-  }
-
   const sessionResult = server.createSession({
     provider: 'test',
     identifier: 'schema-loader',
