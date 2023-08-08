@@ -12,7 +12,10 @@ import {
 import { checkFieldItemTraversable, checkFieldTraversable } from './ContentUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
 
-export const IDENTITY_TRANSFORMER: ContentTransformer<AdminSchema, typeof ErrorType.BadRequest> = {
+export const IDENTITY_TRANSFORMER: ContentTransformer<
+  AdminSchema | PublishedSchema,
+  typeof ErrorType.BadRequest
+> = {
   transformField(_path, _fieldSpec, value) {
     return ok(value);
   },

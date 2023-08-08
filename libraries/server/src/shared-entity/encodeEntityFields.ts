@@ -1,13 +1,12 @@
 import type { AdminEntityTypeSpecification, AdminSchema, ContentValuePath } from '@dossierhq/core';
-import { legacyEncodeEntityFields } from './legacyEncodeEntityFields.js';
+import { ENCODE_VERSION_AS_IS } from './migrateAndDecodeEntityFields.js';
 
+//TODO remove unused parameters and delete legacy encode
 export function encodeEntityFields(
-  adminSchema: AdminSchema,
-  entitySpec: AdminEntityTypeSpecification,
-  path: ContentValuePath,
+  _adminSchema: AdminSchema,
+  _entitySpec: AdminEntityTypeSpecification,
+  _path: ContentValuePath,
   fields: Record<string, unknown>,
 ): { encodeVersion: number; fields: Record<string, unknown> } {
-  const encodeVersion = 0;
-  const encodedFields = legacyEncodeEntityFields(adminSchema, entitySpec, path, fields);
-  return { encodeVersion, fields: encodedFields };
+  return { encodeVersion: ENCODE_VERSION_AS_IS, fields };
 }
