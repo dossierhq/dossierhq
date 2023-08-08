@@ -83,7 +83,8 @@ export async function adminCreateEntity(
       creator: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
       schemaVersion: adminSchema.spec.version,
-      fieldsData: encodeEntityResult.data,
+      encodeVersion: 0, //TODO support multiple encode versions
+      fields: encodeEntityResult.data,
     });
     if (createResult.isError()) return createResult;
     const { id, name, createdAt, updatedAt } = createResult.value;

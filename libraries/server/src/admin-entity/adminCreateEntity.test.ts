@@ -79,7 +79,8 @@ describe('Admin adminCreateEntity', () => {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
               },
-              "fieldsData": {
+              "encodeVersion": 0,
+              "fields": {
                 "title": "Title",
               },
               "id": null,

@@ -49,10 +49,11 @@ export interface DatabaseAdminEntityCreateEntityArg {
   id: string | null;
   type: string;
   name: string;
-  schemaVersion: number;
   creator: Session;
   resolvedAuthKey: ResolvedAuthKey;
-  fieldsData: Record<string, unknown>;
+  schemaVersion: number;
+  encodeVersion: number;
+  fields: Record<string, unknown>;
 }
 
 export interface DatabaseAdminEntityCreatePayload extends DatabaseResolvedEntityReference {
@@ -205,7 +206,8 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   status: AdminEntityStatus;
   session: Session;
   schemaVersion: number;
-  fieldValues: Record<string, unknown>;
+  encodeVersion: number;
+  fields: Record<string, unknown>;
 }
 
 export interface DatabaseEntityUpdateEntityPayload {

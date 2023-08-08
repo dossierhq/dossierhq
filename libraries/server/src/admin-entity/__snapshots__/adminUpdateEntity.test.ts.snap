@@ -42,8 +42,9 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
     [Function],
     {
       "changeName": true,
+      "encodeVersion": 0,
       "entityInternalId": "internal-123",
-      "fieldValues": {
+      "fields": {
         "title": "Updated title",
       },
       "name": "Updated name",

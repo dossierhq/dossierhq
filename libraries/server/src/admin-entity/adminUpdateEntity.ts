@@ -123,7 +123,8 @@ export async function adminUpdateEntity(
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,
         schemaVersion: adminSchema.spec.version,
-        fieldValues: data,
+        encodeVersion: 0, //TODO support multiple encode versions
+        fields: data,
       },
     );
     if (updateResult.isError()) return updateResult;
