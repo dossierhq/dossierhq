@@ -2,8 +2,6 @@ import {
   AdminEntityStatus,
   ErrorType,
   assertIsDefined,
-  copyEntity,
-  normalizeEntityFields,
   notOk,
   ok,
   validateEntityInfo,
@@ -21,11 +19,13 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import { decodeAdminEntity, encodeAdminEntity } from '../EntityCodec.js';
+import { decodeAdminEntity } from '../EntityCodec.js';
 import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
 import {
+  validateAdminFieldValuesAndCollectInfo,
   validatePublishedFieldValuesAndCollectInfo,
   validateReferencedEntitiesArePublishedAndCollectInfo,
+  validateReferencedEntitiesForSaveAndCollectInfo,
 } from '../EntityValidator.js';
 import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
 import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
@@ -193,6 +193,9 @@ async function validateAndCollectInfoFromAdminEntity(
   context: TransactionContext,
   entityData: DatabaseAdminEntityPayload,
 ): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
+  const path = ['entity'];
+
+  // Decode
   const decodeResult = decodeAdminEntity(adminSchema, entityData);
   if (decodeResult.isError()) {
     return convertErrorResultForValidation(
@@ -204,46 +207,32 @@ async function validateAndCollectInfoFromAdminEntity(
   }
   const entity = decodeResult.value;
 
-  const validationIssue = validateEntityInfo(adminSchema, [], entity);
-  const validEntityInfo = !validationIssue;
+  // Validate entity info
+  const validEntityInfo = !validateEntityInfo(adminSchema, path, entity);
 
-  const entitySpec = adminSchema.getEntityTypeSpecification(entity.info.type);
-  if (!entitySpec) {
-    return convertErrorResultForValidation(
-      context,
-      entity,
-      'Failed fetching entity spec',
-      notOk.BadRequest(`No entity spec for type ${entity.info.type}`),
-    );
-  }
+  // Validate fields
+  const fieldValidation = validateAdminFieldValuesAndCollectInfo(adminSchema, path, entity);
 
-  const normalizedResult = normalizeEntityFields(adminSchema, ['entity'], entity);
-  if (normalizedResult.isError()) {
-    return convertErrorResultForValidation(
-      context,
-      entity,
-      'Failed normalizing entity',
-      normalizedResult,
-    );
-  }
-  const normalizedEntity = copyEntity(entity, { fields: normalizedResult.value });
-
-  // TODO a bit unnecessary to encode when not updating indexes since we don't use the result, but it is running all validations
-  // could refactor it when all validations are moved to validateAdminFieldValuesAndCollectInfo()
-  const encodeResult = await encodeAdminEntity(
-    adminSchema,
+  // Validate references
+  const referencesResult = await validateReferencedEntitiesForSaveAndCollectInfo(
     databaseAdapter,
     context,
-    normalizedEntity,
+    fieldValidation.references,
   );
-  if (encodeResult.isError()) {
-    return convertErrorResultForValidation(context, entity, 'Failed encoding entity', encodeResult);
-  }
+  if (referencesResult.isError()) return referencesResult;
 
   return ok({
-    valid: validEntityInfo && encodeResult.value.validationIssues.length === 0,
-    entityIndexes: encodeResult.value.entityIndexes,
-    uniqueIndexValues: encodeResult.value.uniqueIndexValues,
+    valid:
+      validEntityInfo &&
+      fieldValidation.validationIssues.length === 0 &&
+      referencesResult.value.validationIssues.length === 0,
+    entityIndexes: {
+      referenceIds: referencesResult.value.references,
+      locations: fieldValidation.locations,
+      valueTypes: fieldValidation.valueTypes,
+      fullTextSearchText: fieldValidation.fullTextSearchText,
+    },
+    uniqueIndexValues: fieldValidation.uniqueIndexValues,
   });
 }
 
