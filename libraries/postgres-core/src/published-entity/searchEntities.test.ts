@@ -20,7 +20,7 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     auth_key: 'none',
     created_at: new Date('2021-08-17T07:51:25.56Z'),
     schema_version: 1,
-    encode_version: 0,
+    encode_version: 1,
     data: { title: 'Title' },
   };
 }
@@ -75,7 +75,7 @@ describe('publishedEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
-                "encodeVersion": 0,
+                "encodeVersion": 1,
                 "fields": {
                   "title": "Title",
                 },
@@ -125,7 +125,7 @@ describe('publishedEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
-                "encodeVersion": 0,
+                "encodeVersion": 1,
                 "fields": {
                   "title": "Title",
                 },
@@ -176,7 +176,7 @@ describe('publishedEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
-                "encodeVersion": 0,
+                "encodeVersion": 1,
                 "fields": {
                   "title": "Title",
                 },

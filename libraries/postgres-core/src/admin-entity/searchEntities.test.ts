@@ -24,7 +24,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     invalid: 0,
     version: 0,
     schema_version: 1,
-    encode_version: 0,
+    encode_version: 1,
     data: { title: 'Title' },
   };
 }
@@ -82,7 +82,7 @@ describe('adminEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
-                "encodeVersion": 0,
+                "encodeVersion": 1,
                 "fields": {
                   "title": "Title",
                 },
@@ -137,7 +137,7 @@ describe('adminEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
-                "encodeVersion": 0,
+                "encodeVersion": 1,
                 "fields": {
                   "title": "Title",
                 },
@@ -193,7 +193,7 @@ describe('adminEntitySearchEntities', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
-                "encodeVersion": 0,
+                "encodeVersion": 1,
                 "fields": {
                   "title": "Title",
                 },

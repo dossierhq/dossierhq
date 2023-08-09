@@ -36,7 +36,7 @@ describe('Admin adminPublishEntities', () => {
           updatedAt: new Date('2021-08-17T07:51:25.56Z'),
           entityFields: {
             schemaVersion: 1,
-            encodeVersion: 0,
+            encodeVersion: 1,
             fields: { title: 'Title' },
           },
         }),

@@ -29,7 +29,7 @@ describe('adminGetEntity', () => {
             valid: true,
             version: 2,
             schema_version: 1,
-            encode_version: 0,
+            encode_version: 1,
             fields: '{ "title": "Title" }',
           },
         ];
@@ -52,7 +52,7 @@ describe('adminGetEntity', () => {
       updatedAt: now,
       entityFields: {
         schemaVersion: 1,
-        encodeVersion: 0,
+        encodeVersion: 1,
         fields: { title: 'Title' },
       },
     });
@@ -87,7 +87,7 @@ describe('adminGetEntity', () => {
             valid: 1,
             version: 5,
             schema_version: 1,
-            encode_version: 0,
+            encode_version: 1,
             fields: '{ "title": "Title" }',
           },
         ];
@@ -110,7 +110,7 @@ describe('adminGetEntity', () => {
       updatedAt: now,
       entityFields: {
         schemaVersion: 1,
-        encodeVersion: 0,
+        encodeVersion: 1,
         fields: { title: 'Title' },
       },
     });
