@@ -11,9 +11,7 @@ export function getPagingInfo(
   paging: Paging | undefined,
 ): Result<PagingInfo, typeof ErrorType.BadRequest> {
   const result = validatePaging(paging);
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   const first = paging?.first;
   const last = paging?.last;
