@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "Support encode version",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

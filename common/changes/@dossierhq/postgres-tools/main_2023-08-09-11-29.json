@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-tools",
+      "comment": "Add encode_version to entity_versions",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-tools"
+}
