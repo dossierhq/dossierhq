@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`publishedGetEntity > Legacy codec 1`] = `
+{
+  "fields": {
+    "list": [
+      {
+        "list": [
+          {
+            "lat": 3,
+            "lng": 4,
+          },
+          {
+            "lat": 5,
+            "lng": 6,
+          },
+        ],
+        "normal": {
+          "lat": 1,
+          "lng": 2,
+        },
+        "type": "LocationsValueItem",
+      },
+    ],
+    "normal": {
+      "list": [
+        {
+          "id": "23456",
+        },
+        {
+          "id": "34567",
+        },
+      ],
+      "normal": {
+        "id": "12345",
+      },
+      "type": "EntitiesValueItem",
+    },
+  },
+  "id": "123",
+  "info": {
+    "authKey": "none",
+    "createdAt": 2023-08-09T08:22:35.810Z,
+    "name": "Name",
+    "type": "ValueItemsEntity",
+    "valid": true,
+  },
+}
+`;
+
+exports[`publishedGetEntity > Minimal 1`] = `
+{
+  "fields": {
+    "title": "Title",
+  },
+  "id": "123",
+  "info": {
+    "authKey": "none",
+    "createdAt": 2023-08-09T08:22:35.810Z,
+    "name": "Name",
+    "type": "TitleOnly",
+    "valid": true,
+  },
+}
+`;
+
+exports[`publishedGetEntity > Minimal 2`] = `
+[
+  [
+    "publishedEntityGetOne",
+    {
+      "id": "123",
+    },
+  ],
+]
+`;

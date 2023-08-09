@@ -19,9 +19,6 @@ describe('Admin adminUpdateEntity', () => {
     const createdAt = new Date('2020-01-01T00:00:00.000Z');
     const now = new Date();
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntityUpdateGetEntityInfo.mockReturnValueOnce(
       Promise.resolve(
         ok({
@@ -94,9 +91,6 @@ describe('Admin adminUpdateEntity', () => {
     const id = '123';
     const createdAt = new Date('2020-01-01T00:00:00.000Z');
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntityUpdateGetEntityInfo.mockReturnValueOnce(
       Promise.resolve(
         ok({

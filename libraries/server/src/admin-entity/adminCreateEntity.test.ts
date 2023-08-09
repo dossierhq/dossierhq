@@ -17,9 +17,6 @@ describe('Admin adminCreateEntity', () => {
     const context = createMockSessionContext({ databaseAdapter });
     const now = new Date();
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntityCreate.mockReturnValueOnce(
       Promise.resolve(
         ok({
@@ -171,10 +168,6 @@ describe('Admin adminCreateEntity', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
-
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
 
     const result = await adminCreateEntity(
       adminTestSchema,

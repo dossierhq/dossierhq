@@ -17,9 +17,6 @@ describe('publishedSearchEntities', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
       Promise.resolve(ok({ hasMore: true, entities: [] })),
     );
@@ -84,9 +81,6 @@ describe('publishedSearchEntities', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
       Promise.resolve(
         ok({
@@ -185,9 +179,6 @@ describe('publishedSearchEntities', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
       Promise.resolve(ok({ hasMore: false, entities: [createDatabaseEntity(2)] })),
     );

@@ -16,9 +16,6 @@ describe('Published publishedSampleEntities', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.publishedEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
     databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(ok([]));
 
@@ -74,9 +71,6 @@ describe('Published publishedSampleEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
     const now = new Date();
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.publishedEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(1)));
     databaseAdapter.publishedEntitySampleEntities.mockResolvedValueOnce(
       ok([

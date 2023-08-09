@@ -17,9 +17,6 @@ describe('Admin adminPublishEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
     const now = new Date();
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntityPublishGetVersionInfo.mockReturnValueOnce(
       Promise.resolve(
         ok({

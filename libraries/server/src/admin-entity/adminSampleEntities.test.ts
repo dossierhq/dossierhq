@@ -16,9 +16,6 @@ describe('Admin adminSampleEntities', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(ok([]));
 
@@ -43,9 +40,6 @@ describe('Admin adminSampleEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
     const now = new Date();
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(1)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(
       ok([
@@ -105,9 +99,6 @@ describe('Admin adminSampleEntities', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    authorizationAdapter.resolveAuthorizationKeys.mockReturnValueOnce(
-      Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
-    );
     databaseAdapter.adminEntitySearchTotalCount.mockReturnValueOnce(Promise.resolve(ok(0)));
     databaseAdapter.adminEntitySampleEntities.mockResolvedValueOnce(ok([]));
 

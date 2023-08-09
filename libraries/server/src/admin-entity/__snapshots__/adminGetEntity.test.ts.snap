@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`adminGetEntity > Legacy codec 1`] = `
+{
+  "fields": {
+    "list": [
+      {
+        "list": [
+          {
+            "lat": 3,
+            "lng": 4,
+          },
+          {
+            "lat": 5,
+            "lng": 6,
+          },
+        ],
+        "normal": {
+          "lat": 1,
+          "lng": 2,
+        },
+        "type": "LocationsValueItem",
+      },
+    ],
+    "normal": {
+      "list": [
+        {
+          "id": "23456",
+        },
+        {
+          "id": "34567",
+        },
+      ],
+      "normal": {
+        "id": "12345",
+      },
+      "type": "EntitiesValueItem",
+    },
+  },
+  "id": "123",
+  "info": {
+    "authKey": "none",
+    "createdAt": 2023-08-09T08:22:35.810Z,
+    "name": "Name",
+    "status": "draft",
+    "type": "ValueItemsEntity",
+    "updatedAt": 2023-08-09T08:22:35.810Z,
+    "valid": true,
+    "validPublished": true,
+    "version": 1,
+  },
+}
+`;
+
+exports[`adminGetEntity > Minimal 1`] = `
+{
+  "fields": {
+    "title": "Title",
+  },
+  "id": "123",
+  "info": {
+    "authKey": "none",
+    "createdAt": 2023-08-09T08:22:35.810Z,
+    "name": "Name",
+    "status": "draft",
+    "type": "TitleOnly",
+    "updatedAt": 2023-08-09T08:22:35.810Z,
+    "valid": true,
+    "validPublished": true,
+    "version": 3,
+  },
+}
+`;
+
+exports[`adminGetEntity > Minimal 2`] = `
+[
+  [
+    "adminEntityGetOne",
+    {
+      "id": "123",
+      "version": 3,
+    },
+  ],
+]
+`;

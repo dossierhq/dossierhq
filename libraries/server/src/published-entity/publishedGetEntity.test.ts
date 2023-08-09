@@ -1,4 +1,4 @@
-import { AdminEntityStatus, ok } from '@dossierhq/core';
+import { ok } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import {
   createMockAuthorizationAdapter,
@@ -8,20 +8,19 @@ import {
   type MockDatabaseAdapter,
 } from '../test/AdditionalTestUtils.js';
 import { adminTestSchema } from '../test/TestSchema.js';
-import { adminGetEntity } from './adminGetEntity.js';
+import { publishedGetEntity } from './publishedGetEntity.js';
 
-function mockAdminEntityGetOneCall(
+function mockPublishedEntityGetOneCall(
   databaseAdapter: MockDatabaseAdapter,
   {
     type,
-    version,
     encodeVersion,
     fields,
-  }: { type: string; version?: number; encodeVersion?: number; fields: Record<string, unknown> },
+  }: { type: string; encodeVersion?: number; fields: Record<string, unknown> },
 ) {
   const date = new Date('2023-08-09T08:22:35.810Z');
 
-  databaseAdapter.adminEntityGetOne.mockReturnValueOnce(
+  databaseAdapter.publishedEntityGetOne.mockReturnValueOnce(
     Promise.resolve(
       ok({
         id: '123',
@@ -29,12 +28,8 @@ function mockAdminEntityGetOneCall(
         type,
         authKey: 'none',
         resolvedAuthKey: 'none',
-        version: version ?? 1,
-        status: AdminEntityStatus.draft,
-        valid: true,
-        validPublished: true,
         createdAt: date,
-        updatedAt: date,
+        validPublished: true,
         entityFields: {
           schemaVersion: 1,
           encodeVersion: encodeVersion ?? 1,
@@ -45,24 +40,23 @@ function mockAdminEntityGetOneCall(
   );
 }
 
-describe('adminGetEntity', () => {
+describe('publishedGetEntity', () => {
   test('Minimal', async () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    mockAdminEntityGetOneCall(databaseAdapter, {
+    mockPublishedEntityGetOneCall(databaseAdapter, {
       type: 'TitleOnly',
-      version: 3,
       fields: { title: 'Title' },
     });
 
-    const result = await adminGetEntity(
+    const result = await publishedGetEntity(
       adminTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
-      { id: '123', version: 3 },
+      { id: '123' },
     );
 
     expect(result.valueOrThrow()).toMatchSnapshot();
@@ -76,7 +70,7 @@ describe('adminGetEntity', () => {
     const authorizationAdapter = createMockAuthorizationAdapter();
     const context = createMockSessionContext({ databaseAdapter });
 
-    mockAdminEntityGetOneCall(databaseAdapter, {
+    mockPublishedEntityGetOneCall(databaseAdapter, {
       type: 'ValueItemsEntity',
       encodeVersion: 0,
       fields: {
@@ -96,12 +90,12 @@ describe('adminGetEntity', () => {
       },
     });
 
-    const result = await adminGetEntity(
+    const result = await publishedGetEntity(
       adminTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
-      { id: '123', version: 1 },
+      { id: '123' },
     );
 
     expect(result.valueOrThrow()).toMatchSnapshot();

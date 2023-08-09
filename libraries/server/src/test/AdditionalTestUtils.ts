@@ -1,5 +1,5 @@
 import type { Logger } from '@dossierhq/core';
-import { NoOpLogger } from '@dossierhq/core';
+import { NoOpLogger, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, TransactionContext, Session } from '@dossierhq/database-adapter';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
@@ -14,7 +14,7 @@ type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
 > &
   TFn;
 
-interface MockDatabaseAdapter extends DatabaseAdapter {
+export interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityCreate: MockedFunction<DatabaseAdapter['adminEntityCreate']>;
   adminEntityGetOne: MockedFunction<DatabaseAdapter['adminEntityGetOne']>;
   adminEntityGetReferenceEntitiesInfo: MockedFunction<
@@ -47,6 +47,7 @@ interface MockDatabaseAdapter extends DatabaseAdapter {
   advisoryLockRelease: MockedFunction<DatabaseAdapter['advisoryLockRelease']>;
   advisoryLockRenew: MockedFunction<DatabaseAdapter['advisoryLockRenew']>;
   authCreateSession: MockedFunction<DatabaseAdapter['authCreateSession']>;
+  publishedEntityGetOne: MockedFunction<DatabaseAdapter['publishedEntityGetOne']>;
   publishedEntitySampleEntities: MockedFunction<DatabaseAdapter['publishedEntitySampleEntities']>;
   publishedEntitySearchEntities: MockedFunction<DatabaseAdapter['publishedEntitySearchEntities']>;
   publishedEntitySearchTotalCount: MockedFunction<
@@ -169,6 +170,9 @@ export function createMockAuthorizationAdapter(): MockAuthorizationAdapter {
   const adapter: MockAuthorizationAdapter = {
     resolveAuthorizationKeys: vi.fn(),
   };
+  adapter.resolveAuthorizationKeys.mockReturnValueOnce(
+    Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
+  );
   return adapter;
 }
 
