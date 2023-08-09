@@ -19,7 +19,7 @@ import { applySchemaMigrationsToFields } from './applySchemaMigrationsToFields.j
 import { legacyDecodeEntityFields } from './legacyDecodeEntityFields.js';
 
 export const ENCODE_VERSION_LEGACY = 0;
-export const ENCODE_VERSION_AS_IS = 1;
+export const ENCODE_VERSION_AS_IS = 1; // version 0.4.2+: Used to encoding all content, old content is still encoded with version 0
 
 export function migrateDecodeAndNormalizeAdminEntityFields(
   adminSchema: AdminSchemaWithMigrations,

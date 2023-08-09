@@ -1,6 +1,7 @@
 import { AdminEntityStatus, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
@@ -54,7 +55,7 @@ describe('Admin adminSampleEntities', () => {
           validPublished: true,
           createdAt: now,
           updatedAt: now,
-          entityFields: { schemaVersion: 1, encodeVersion: 1, fields: {} },
+          entityFields: { schemaVersion: 1, encodeVersion: ENCODE_VERSION_AS_IS, fields: {} },
         },
       ]),
     );

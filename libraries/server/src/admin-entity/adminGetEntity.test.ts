@@ -1,6 +1,10 @@
 import { AdminEntityStatus, ok } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import {
+  ENCODE_VERSION_AS_IS,
+  ENCODE_VERSION_LEGACY,
+} from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
+import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
@@ -37,7 +41,7 @@ function mockAdminEntityGetOneCall(
         updatedAt: date,
         entityFields: {
           schemaVersion: 1,
-          encodeVersion: encodeVersion ?? 1,
+          encodeVersion: encodeVersion ?? ENCODE_VERSION_AS_IS,
           fields,
         },
       }),
@@ -78,7 +82,7 @@ describe('adminGetEntity', () => {
 
     mockAdminEntityGetOneCall(databaseAdapter, {
       type: 'ValueItemsEntity',
-      encodeVersion: 0,
+      encodeVersion: ENCODE_VERSION_LEGACY,
       fields: {
         // References were stored as just the id
         normal: { type: 'EntitiesValueItem', normal: '12345', list: ['23456', '34567'] },

@@ -10,6 +10,7 @@ import {
 } from '../test/AdditionalTestUtils.js';
 import { adminTestSchema } from '../test/TestSchema.js';
 import { adminSearchEntities } from './adminSearchEntities.js';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 describe('Admin adminSearchEntities', () => {
   test('Minimal (no results)', async () => {
@@ -325,6 +326,10 @@ function createDatabaseEntity(id = 1): DatabaseAdminEntitySearchPayloadEntity {
     validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),
     updatedAt: new Date('2022-03-16T08:51:25.56Z'),
-    entityFields: { schemaVersion: 1, encodeVersion: 1, fields: { title: 'Title' } },
+    entityFields: {
+      schemaVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
+      fields: { title: 'Title' },
+    },
   };
 }

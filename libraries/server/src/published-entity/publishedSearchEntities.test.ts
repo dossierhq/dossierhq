@@ -2,6 +2,7 @@ import { ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabasePublishedEntitySearchPayloadEntity } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
@@ -317,6 +318,10 @@ function createDatabaseEntity(id = 1): DatabasePublishedEntitySearchPayloadEntit
     authKey: 'none',
     validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),
-    entityFields: { schemaVersion: 1, encodeVersion: 1, fields: { title: 'Title' } },
+    entityFields: {
+      schemaVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
+      fields: { title: 'Title' },
+    },
   };
 }

@@ -9,6 +9,7 @@ import {
 } from '../test/AdditionalTestUtils.js';
 import { adminTestSchema, publishedTestSchema } from '../test/TestSchema.js';
 import { adminPublishEntities } from './adminPublishEntities.js';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 describe('Admin adminPublishEntities', () => {
   test('Minimal', async () => {
@@ -33,7 +34,7 @@ describe('Admin adminPublishEntities', () => {
           updatedAt: new Date('2021-08-17T07:51:25.56Z'),
           entityFields: {
             schemaVersion: 1,
-            encodeVersion: 1,
+            encodeVersion: ENCODE_VERSION_AS_IS,
             fields: { title: 'Title' },
           },
         }),

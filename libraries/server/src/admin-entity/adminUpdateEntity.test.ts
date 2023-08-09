@@ -1,6 +1,7 @@
 import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
 import { expectErrorResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
@@ -33,7 +34,11 @@ describe('Admin adminUpdateEntity', () => {
           version: 0,
           createdAt,
           updatedAt: createdAt,
-          entityFields: { schemaVersion: 1, encodeVersion: 1, fields: { title: 'Old title' } },
+          entityFields: {
+            schemaVersion: 1,
+            encodeVersion: ENCODE_VERSION_AS_IS,
+            fields: { title: 'Old title' },
+          },
         }),
       ),
     );
@@ -105,7 +110,11 @@ describe('Admin adminUpdateEntity', () => {
           version: 0,
           createdAt,
           updatedAt: createdAt,
-          entityFields: { schemaVersion: 1, encodeVersion: 1, fields: { title: 'Old title' } },
+          entityFields: {
+            schemaVersion: 1,
+            encodeVersion: ENCODE_VERSION_AS_IS,
+            fields: { title: 'Old title' },
+          },
         }),
       ),
     );

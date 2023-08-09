@@ -10,6 +10,7 @@ import {
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { applySchemaMigrationsToFields } from './applySchemaMigrationsToFields.js';
+import { ENCODE_VERSION_AS_IS } from './migrateDecodeAndNormalizeEntityFields.js';
 
 const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
   entityTypes: [
@@ -59,7 +60,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -118,7 +119,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -159,7 +160,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -196,7 +197,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -241,7 +242,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -287,7 +288,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
       },
@@ -319,7 +320,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -355,7 +356,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItem: {
           type: 'ValueItem',
@@ -378,7 +379,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
       },
@@ -393,7 +394,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
@@ -425,7 +426,7 @@ describe('applySchemaMigrationsToFields combos', () => {
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
-      encodeVersion: 1,
+      encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
         valueItem: {
           type: 'ValueItem',
