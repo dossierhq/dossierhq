@@ -179,26 +179,26 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
 }
 
 export function createValueTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
-  const result = new Set<string>();
+  const payload = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
         case ContentTraverseNodeType.fieldItem:
           if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
-            result.add(node.value.type);
+            payload.add(node.value.type);
           }
           break;
         case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
           if (isRichTextValueItemNode(richTextNode)) {
-            result.add(richTextNode.data.type);
+            payload.add(richTextNode.data.type);
           }
           break;
         }
       }
     },
     get result(): string[] {
-      return [...result];
+      return [...payload];
     },
   };
 }

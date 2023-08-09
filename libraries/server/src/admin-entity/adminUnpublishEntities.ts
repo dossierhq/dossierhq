@@ -161,21 +161,21 @@ async function unpublishEntitiesAndCollectResult(
   }
   const unpublishRows = unpublishResult.value;
 
-  const result: AdminEntityUnpublishPayload[] = [];
+  const payload: AdminEntityUnpublishPayload[] = [];
   for (const entityInfo of entitiesInfo) {
     if (entityInfo.effect === 'unpublished') {
       const updatedAt = unpublishRows.find(
         (it) => it.entityInternalId === entityInfo.entityInternalId,
       )?.updatedAt;
       assertIsDefined(updatedAt);
-      result.push({
+      payload.push({
         id: entityInfo.id,
         status: AdminEntityStatus.withdrawn,
         effect: entityInfo.effect,
         updatedAt,
       });
     } else {
-      result.push({
+      payload.push({
         id: entityInfo.id,
         status: entityInfo.status,
         effect: entityInfo.effect,
@@ -183,7 +183,7 @@ async function unpublishEntitiesAndCollectResult(
       });
     }
   }
-  return ok(result);
+  return ok(payload);
 }
 
 async function ensureReferencedEntitiesAreNotPublished(

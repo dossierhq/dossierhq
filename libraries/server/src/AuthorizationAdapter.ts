@@ -21,7 +21,7 @@ export const NoneAndSubjectAuthorizationAdapter: AuthorizationAdapter = {
     ResolvedAuthKey[],
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
-    const result: ResolvedAuthKey[] = [];
+    const payload: ResolvedAuthKey[] = [];
     for (const authKey of authKeys) {
       let resolvedAuthKey: string;
       if (authKey === 'subject') {
@@ -31,8 +31,8 @@ export const NoneAndSubjectAuthorizationAdapter: AuthorizationAdapter = {
       } else {
         return Promise.resolve(notOk.BadRequest(`The authKey ${authKey} doesn't exist`));
       }
-      result.push({ authKey, resolvedAuthKey });
+      payload.push({ authKey, resolvedAuthKey });
     }
-    return Promise.resolve(ok(result));
+    return Promise.resolve(ok(payload));
   },
 };

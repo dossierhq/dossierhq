@@ -311,7 +311,7 @@ async function publishEntitiesAndCollectResult(
   context: SessionContext,
   versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
 ): PromiseResult<AdminEntityPublishPayload[], typeof ErrorType.Generic> {
-  const result: AdminEntityPublishPayload[] = [];
+  const payload: AdminEntityPublishPayload[] = [];
   for (const versionInfo of versionsInfo) {
     const { status } = versionInfo;
     let updatedAt: Date;
@@ -328,9 +328,9 @@ async function publishEntitiesAndCollectResult(
 
       updatedAt = updateResult.value.updatedAt;
     }
-    result.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
+    payload.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
   }
-  return ok(result);
+  return ok(payload);
 }
 
 async function createPublishEvents(

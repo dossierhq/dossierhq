@@ -70,7 +70,7 @@ export async function adminUpdateEntity(
 
     const resolvedResult = resolveUpdateEntity(adminSchema, entity, entityInfoResult.value);
     if (resolvedResult.isError()) return resolvedResult;
-    const { changed, entity: updatedEntity, entitySpec } = resolvedResult.value;
+    const { changed, entity: updatedEntity } = resolvedResult.value;
 
     if (!changed) {
       const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
@@ -100,7 +100,6 @@ export async function adminUpdateEntity(
       adminSchema,
       databaseAdapter,
       context,
-      entitySpec,
       updatedEntity,
     );
     if (encodeResult.isError()) return encodeResult;

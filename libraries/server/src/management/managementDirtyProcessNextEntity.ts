@@ -234,7 +234,6 @@ async function validateAndCollectInfoFromAdminEntity(
     adminSchema,
     databaseAdapter,
     context,
-    entitySpec,
     normalizedEntity,
   );
   if (encodeResult.isError()) {

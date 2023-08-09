@@ -47,7 +47,7 @@ export async function publishedGetEntities(
   const entitiesInfoResult = await databaseAdapter.publishedEntityGetEntities(context, references);
   if (entitiesInfoResult.isError()) return entitiesInfoResult;
 
-  const result: Result<
+  const payload: Result<
     PublishedEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
@@ -56,10 +56,10 @@ export async function publishedGetEntities(
   >[] = [];
   for (const reference of references) {
     const entityMain = entitiesInfoResult.value.find((it) => it.id === reference.id);
-    result.push(await mapItem(adminSchema, authorizationAdapter, context, reference, entityMain));
+    payload.push(await mapItem(adminSchema, authorizationAdapter, context, reference, entityMain));
   }
 
-  return ok(result);
+  return ok(payload);
 }
 
 async function mapItem(

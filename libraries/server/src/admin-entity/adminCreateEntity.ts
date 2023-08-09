@@ -48,7 +48,7 @@ export async function adminCreateEntity(
   // entity
   const resolvedResult = resolveCreateEntity(adminSchema, entity);
   if (resolvedResult.isError()) return resolvedResult;
-  const { createEntity, entitySpec } = resolvedResult.value;
+  const { createEntity } = resolvedResult.value;
 
   // auth key
   const resolvedAuthKeyResult = await authResolveAuthorizationKey(
@@ -59,13 +59,7 @@ export async function adminCreateEntity(
   if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
 
   // encode fields
-  const encodeResult = await encodeAdminEntity(
-    adminSchema,
-    databaseAdapter,
-    context,
-    entitySpec,
-    createEntity,
-  );
+  const encodeResult = await encodeAdminEntity(adminSchema, databaseAdapter, context, createEntity);
   if (encodeResult.isError()) return encodeResult;
   const encodeEntityPayload = encodeResult.value;
 
@@ -99,7 +93,7 @@ export async function adminCreateEntity(
     if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
     let effect: AdminEntityCreatePayload['effect'] = 'created';
-    const result: AdminEntity = {
+    const payload: AdminEntity = {
       id,
       info: {
         ...createEntity.info,
@@ -141,16 +135,16 @@ export async function adminCreateEntity(
         authorizationAdapter,
         databaseAdapter,
         context,
-        { id, version: result.info.version },
+        { id, version: payload.info.version },
       );
       if (publishResult.isError()) return publishResult;
 
       effect = 'createdAndPublished';
-      result.info.status = publishResult.value.status;
-      result.info.updatedAt = publishResult.value.updatedAt;
-      result.info.validPublished = true;
+      payload.info.status = publishResult.value.status;
+      payload.info.updatedAt = publishResult.value.updatedAt;
+      payload.info.validPublished = true;
     }
 
-    return ok({ effect, entity: result });
+    return ok({ effect, entity: payload });
   });
 }

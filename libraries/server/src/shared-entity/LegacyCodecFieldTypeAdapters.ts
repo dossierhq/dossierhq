@@ -7,19 +7,16 @@ import {
 } from '@dossierhq/core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
-  encodeData(decodedData: TDecoded): TEncoded;
   decodeData(encodedData: TEncoded): TDecoded;
   decodeJson(json: unknown): TDecoded;
 }
 
 const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean], boolean> = {
-  encodeData: (data) => data,
   decodeData: (it) => it,
   decodeJson: (json) => json as boolean,
 };
 
 const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entity], string> = {
-  encodeData: (data) => data.id,
   decodeData: (it) => ({ id: it }),
   decodeJson: (json) => json as EntityReference,
 };
@@ -28,27 +25,21 @@ const locationCodec: FieldTypeAdapter<
   FieldValueTypeMap[typeof FieldType.Location],
   [number, number]
 > = {
-  encodeData: (data) => [data.lat, data.lng],
   decodeData: ([lat, lng]) => ({ lat, lng }),
   decodeJson: (json) => json as Location,
 };
 
 const numberCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Number], number> = {
-  encodeData: (data) => data,
   decodeData: (it) => it,
   decodeJson: (json) => json as number,
 };
 
 const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], string> = {
-  encodeData: (data) => data,
   decodeData: (it) => it,
   decodeJson: (json) => json as string,
 };
 
 const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueItem], unknown> = {
-  encodeData: (_data) => {
-    throw new Error('Should not be used');
-  },
   decodeData: (_data) => {
     throw new Error('Should not be used');
   },
@@ -74,9 +65,9 @@ export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
 export function getAdapterForType(
   fieldType: (typeof FieldType)[keyof typeof FieldType],
 ): FieldTypeAdapter {
-  const result = adapters[fieldType];
-  if (!result) {
+  const payload = adapters[fieldType];
+  if (!payload) {
     throw new Error(`Can't find field type (${fieldType})`);
   }
-  return result;
+  return payload;
 }

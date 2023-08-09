@@ -6,7 +6,6 @@ import {
   ok,
   type AdminEntity,
   type AdminEntityCreate,
-  type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminSchema,
   type AdminSchemaWithMigrations,
@@ -31,8 +30,8 @@ import {
 } from './EntityValidator.js';
 import { encodeEntityFields } from './shared-entity/encodeEntityFields.js';
 import {
+  migrateDecodeAndNormalizePublishedEntityFields,
   migrateDecodeAndNormalizeAdminEntityFields,
-  migratDecodeAndNormalizePublishedEntityFields,
 } from './shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 export interface EncodeAdminEntityPayload {
@@ -55,7 +54,7 @@ export function decodePublishedEntity(
     return notOk.BadRequest(`No entity spec for type ${values.type} (id: ${values.id})`);
   }
 
-  const decodeResult = migratDecodeAndNormalizePublishedEntityFields(
+  const decodeResult = migrateDecodeAndNormalizePublishedEntityFields(
     adminSchema,
     entitySpec,
     ['entity', 'fields'],
@@ -119,10 +118,10 @@ export function resolveCreateEntity(
   schema: AdminSchema,
   entity: AdminEntityCreate,
 ): Result<
-  { createEntity: AdminEntityCreate; entitySpec: AdminEntityTypeSpecification },
+  { createEntity: AdminEntityCreate },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const result: AdminEntityCreate = {
+  const payload: AdminEntityCreate = {
     info: {
       name: entity.info.name,
       type: entity.info.type,
@@ -132,19 +131,14 @@ export function resolveCreateEntity(
     fields: {},
   };
 
-  const entitySpec = schema.getEntityTypeSpecification(result.info.type);
-  if (!entitySpec) {
-    return notOk.BadRequest(`Entity type ${result.info.type} doesn’t exist`);
-  }
-
   // Keep extra fields so we can fail on validation
   const normalizedResult = normalizeEntityFields(schema, ['entity'], entity, {
     keepExtraFields: true,
   });
   if (normalizedResult.isError()) return normalizedResult;
-  result.fields = normalizedResult.value;
+  payload.fields = normalizedResult.value;
 
-  return ok({ createEntity: result, entitySpec });
+  return ok({ createEntity: payload });
 }
 
 export function resolveUpdateEntity(
@@ -152,7 +146,7 @@ export function resolveUpdateEntity(
   entityUpdate: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
-  { changed: boolean; entity: AdminEntity; entitySpec: AdminEntityTypeSpecification },
+  { changed: boolean; entity: AdminEntity },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const status =
@@ -240,21 +234,20 @@ export function resolveUpdateEntity(
     }
   }
 
-  return ok({ changed, entity: entity, entitySpec });
+  return ok({ changed, entity });
 }
 
 export async function encodeAdminEntity(
   schema: AdminSchema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | AdminEntityCreate,
 ): PromiseResult<EncodeAdminEntityPayload, typeof ErrorType.Generic> {
   // Collect values and validate entity fields
   const path = ['entity'];
   const validation = validateAdminFieldValuesAndCollectInfo(schema, path, entity);
 
-  const encodedPayload = encodeEntityFields(schema, entitySpec, path, entity.fields);
+  const encodedPayload = encodeEntityFields(entity.fields);
 
   const payload: EncodeAdminEntityPayload = {
     ...encodedPayload,

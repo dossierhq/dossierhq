@@ -42,7 +42,7 @@ export async function adminGetEntityHistory(
     return versionsResult;
   }
 
-  const result: EntityHistory = {
+  const payload: EntityHistory = {
     id: reference.id,
     versions: versionsResult.value.map((v) => ({
       version: v.version,
@@ -51,5 +51,5 @@ export async function adminGetEntityHistory(
       createdAt: v.createdAt,
     })),
   };
-  return ok(result);
+  return ok(payload);
 }

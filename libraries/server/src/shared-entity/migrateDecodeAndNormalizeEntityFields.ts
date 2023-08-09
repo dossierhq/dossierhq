@@ -36,7 +36,7 @@ export function migrateDecodeAndNormalizeAdminEntityFields(
   );
 }
 
-export function migratDecodeAndNormalizePublishedEntityFields(
+export function migrateDecodeAndNormalizePublishedEntityFields(
   adminSchema: AdminSchemaWithMigrations,
   entitySpec: PublishedEntityTypeSpecification,
   path: ContentValuePath,
