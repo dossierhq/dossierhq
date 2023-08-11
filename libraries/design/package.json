@@ -68,7 +68,7 @@
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.0.1",
     "react-stately": "~3.24.0",
-    "sass": "~1.64.2",
+    "sass": "~1.65.1",
     "sass-loader": "~13.3.2",
     "storybook": "~7.2.1",
     "svgo": "~3.0.2",
