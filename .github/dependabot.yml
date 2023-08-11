@@ -19,6 +19,10 @@ updates:
         patterns:
           - "@typescript-eslint/*"
           - "eslint"
+      lexical:
+        patterns:
+          - "lexical"
+          - "@lexical/*"
       next:
         patterns:
           - "eslint-config-next"
