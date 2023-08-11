@@ -12,8 +12,12 @@ jobs:
         with:
           fetch-depth: 0
       - uses: asdf-vm/actions/install@v2
+      - name: Fetch Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1
       - name: Make dependencies consistent
         run: |
+          echo "Dependencies: '${{ steps.dependabot-metadata.outputs.dependency-names }}'"
           which node
           ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
       - name: Git status
