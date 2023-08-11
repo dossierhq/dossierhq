@@ -17,9 +17,7 @@ jobs:
         uses: dependabot/fetch-metadata@v1
       - name: Make dependencies consistent
         run: |
-          echo "Dependencies: '${{ steps.dependabot-metadata.outputs.dependency-names }}'"
-          which node
-          ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ github.event.pull_request.title }}"
+          ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ steps.dependabot-metadata.outputs.dependency-names }}"
       - name: Git status
         run: |
           git status
