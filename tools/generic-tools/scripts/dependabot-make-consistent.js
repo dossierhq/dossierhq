@@ -65,7 +65,15 @@ async function makeDependencyConsistent(
 
 if (require.main === module) {
   const argv = process.argv.slice(2);
-  main(argv).catch((error) => {
+  if (argv.length !== 1) {
+    console.warn(
+      `Expected one comma separated list of dependencies as arguments, got arguments`,
+      argv
+    );
+    process.exit(1);
+  }
+  const dependencies = argv[0].split(", ");
+  main(dependencies).catch((error) => {
     console.warn(error);
     process.exitCode = 1;
   });
