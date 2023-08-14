@@ -19,7 +19,7 @@ describe('publishedSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: true, entities: [] })),
+      Promise.resolve(ok({ hasMore: true, edges: [] })),
     );
 
     const result = await publishedSearchEntities(
@@ -86,7 +86,7 @@ describe('publishedSearchEntities', () => {
       Promise.resolve(
         ok({
           hasMore: false,
-          entities: [createDatabaseEntity()],
+          edges: [createDatabaseEntity()],
         }),
       ),
     );
@@ -181,11 +181,11 @@ describe('publishedSearchEntities', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: false, entities: [createDatabaseEntity(2)] })),
+      Promise.resolve(ok({ hasMore: false, edges: [createDatabaseEntity(2)] })),
     );
     // check if hasPreviousPage
     databaseAdapter.publishedEntitySearchEntities.mockReturnValueOnce(
-      Promise.resolve(ok({ hasMore: true, entities: [] })),
+      Promise.resolve(ok({ hasMore: true, edges: [] })),
     );
 
     const result = await publishedSearchEntities(

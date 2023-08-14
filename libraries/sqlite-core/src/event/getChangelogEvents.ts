@@ -15,5 +15,5 @@ export async function eventGetChangelogEvents(
   DatabaseEventGetChangelogEventsPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  return Promise.resolve(ok({ entities: [], hasMore: false }));
+  return Promise.resolve(ok({ edges: [], hasMore: false }));
 }

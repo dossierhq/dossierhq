@@ -16,5 +16,5 @@ export async function eventGetChangelogEvents(
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   //TODO implement
-  return Promise.resolve(ok({ entities: [], hasMore: false }));
+  return Promise.resolve(ok({ edges: [], hasMore: false }));
 }

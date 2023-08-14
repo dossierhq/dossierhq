@@ -44,7 +44,7 @@ describe('adminEntitySearchEntities', () => {
       resolvePaging(undefined),
       [{ authKey: 'none', resolvedAuthKey: 'none' }],
     );
-    expectResultValue(result, { entities: [], hasMore: false });
+    expectResultValue(result, { edges: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
@@ -76,7 +76,7 @@ describe('adminEntitySearchEntities', () => {
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "entities": [
+          "edges": [
             {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
@@ -131,7 +131,7 @@ describe('adminEntitySearchEntities', () => {
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "entities": [
+          "edges": [
             {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
@@ -187,7 +187,7 @@ describe('adminEntitySearchEntities', () => {
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "entities": [
+          "edges": [
             {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,

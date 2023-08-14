@@ -23,6 +23,7 @@ export type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseAdminEntityWithResolvedReferencePayload,
   DatabaseAuthCreateSessionPayload,
+  DatabaseConnectionPayload,
   DatabaseEntityFieldsPayload,
   DatabaseEntityIndexesArg,
   DatabaseEntityUpdateEntityArg,

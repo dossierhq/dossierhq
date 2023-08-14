@@ -29,6 +29,11 @@ export interface DatabasePagingInfo extends PagingInfo {
   count: number;
 }
 
+export interface DatabaseConnectionPayload<T extends { cursor: string }> {
+  hasMore: boolean;
+  edges: T[];
+}
+
 export interface DatabaseResolvedEntityReference {
   entityInternalId: unknown;
 }
@@ -156,10 +161,8 @@ export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
   resolvedAuthKey: string;
 }
 
-export interface DatabaseAdminEntitySearchPayload {
-  hasMore: boolean;
-  entities: DatabaseAdminEntitySearchPayloadEntity[];
-}
+export type DatabaseAdminEntitySearchPayload =
+  DatabaseConnectionPayload<DatabaseAdminEntitySearchPayloadEntity>;
 
 export interface DatabaseAdminEntitySearchPayloadEntity extends DatabaseAdminEntityPayload {
   cursor: string;
@@ -281,19 +284,15 @@ export interface DatabasePublishedEntityGetOnePayload extends DatabasePublishedE
   resolvedAuthKey: string;
 }
 
-export interface DatabasePublishedEntitySearchPayload {
-  hasMore: boolean;
-  entities: DatabasePublishedEntitySearchPayloadEntity[];
-}
+export type DatabasePublishedEntitySearchPayload =
+  DatabaseConnectionPayload<DatabasePublishedEntitySearchPayloadEntity>;
 
 export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePublishedEntityPayload {
   cursor: string;
 }
 
-export interface DatabaseEventGetChangelogEventsPayload {
-  hasMore: boolean;
-  entities: DatabaseEventChangelogEventPayload[]; //TODO rename to edges
-}
+export type DatabaseEventGetChangelogEventsPayload =
+  DatabaseConnectionPayload<DatabaseEventChangelogEventPayload>;
 
 export interface DatabaseEventChangelogEventPayload extends ChangelogEvent {
   cursor: string;

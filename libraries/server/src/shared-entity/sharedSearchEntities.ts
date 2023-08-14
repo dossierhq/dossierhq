@@ -8,12 +8,7 @@ import {
   type PagingInfo,
   type Result,
 } from '@dossierhq/core';
-import type {
-  DatabaseAdminEntitySearchPayload,
-  DatabaseEventGetChangelogEventsPayload,
-  DatabasePagingInfo,
-  DatabasePublishedEntitySearchPayload,
-} from '@dossierhq/database-adapter';
+import type { DatabaseConnectionPayload, DatabasePagingInfo } from '@dossierhq/database-adapter';
 
 //TODO move to constants or make configurable?
 const defaultPagingCount = 25;
@@ -34,13 +29,11 @@ export function resolvePagingInfo(
   });
 }
 
-export function getOppositeDirectionPaging<
-  TSearchResult extends
-    | DatabaseAdminEntitySearchPayload
-    | DatabasePublishedEntitySearchPayload
-    | DatabaseEventGetChangelogEventsPayload,
->(pagingInfo: DatabasePagingInfo, result: TSearchResult): DatabasePagingInfo | null {
-  if (result.entities.length === 0) {
+export function getOppositeDirectionPaging(
+  pagingInfo: DatabasePagingInfo,
+  payload: DatabaseConnectionPayload<{ cursor: string }>,
+): DatabasePagingInfo | null {
+  if (payload.edges.length === 0) {
     // If we don't get any entities in the normal direction we won't return any PageInfo, only null
     return null;
   }
@@ -69,30 +62,30 @@ export function getOppositeDirectionPaging<
 }
 
 export function resolveConnectionPayload<
-  TEncodedNode extends { cursor: string },
+  TEncodedEdge extends { cursor: string },
   TDecodedNode,
   TError extends ErrorType,
 >(
   paging: PagingInfo,
-  payload: { hasMore: boolean; entities: TEncodedNode[] },
+  payload: DatabaseConnectionPayload<TEncodedEdge>,
   hasMoreOppositeDirection: boolean,
-  decoder: (node: TEncodedNode) => Result<TDecodedNode, TError>,
+  decoder: (edge: TEncodedEdge) => Result<TDecodedNode, TError>,
 ): Result<Connection<Edge<TDecodedNode, TError>> | null, typeof ErrorType.Generic> {
-  if (payload.entities.length === 0) {
+  if (payload.edges.length === 0) {
     return ok(null);
   }
 
-  const nodes = payload.entities.map((it) => decoder(it));
+  const nodes = payload.edges.map((it) => decoder(it));
 
   return ok({
     pageInfo: {
       hasNextPage: paging.forwards ? payload.hasMore : hasMoreOppositeDirection,
       hasPreviousPage: paging.forwards ? hasMoreOppositeDirection : payload.hasMore,
-      startCursor: payload.entities[0].cursor,
-      endCursor: payload.entities[payload.entities.length - 1].cursor,
+      startCursor: payload.edges[0].cursor,
+      endCursor: payload.edges[payload.edges.length - 1].cursor,
     },
     edges: nodes.map((node, index) => ({
-      cursor: payload.entities[index].cursor,
+      cursor: payload.edges[index].cursor,
       node,
     })),
   });
@@ -100,7 +93,7 @@ export function resolveConnectionPayload<
 
 export function sharedSearchEntities<
   TSchema,
-  TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
+  TSearchResult extends DatabaseConnectionPayload<{ cursor: string }>,
   TEntity,
 >(
   schema: TSchema,
@@ -109,11 +102,11 @@ export function sharedSearchEntities<
   hasMoreOppositeDirection: boolean,
   decoder: (
     schema: TSchema,
-    values: TSearchResult['entities'][number],
+    values: TSearchResult['edges'][number],
   ) => Result<TEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
 ): Result<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.Generic> {
   return resolveConnectionPayload<
-    TSearchResult['entities'][number],
+    TSearchResult['edges'][number],
     TEntity,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >(paging, searchResult, hasMoreOppositeDirection, (it) => decoder(schema, it));

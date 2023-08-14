@@ -53,7 +53,7 @@ export async function publishedEntitySearchEntities(
 
   return ok({
     hasMore,
-    entities: entitiesValues.map((it) => ({
+    edges: entitiesValues.map((it) => ({
       ...resolvePublishedEntityInfo(it),
       ...resolveEntityFields(it),
       id: it.uuid,
