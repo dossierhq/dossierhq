@@ -1,18 +1,16 @@
-import type {
-  AdminClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  AdminEntityCreate,
-  AdminEntityUpdate,
-  AdminEntityUpsert,
-  AdminSchemaSpecificationWithMigrations,
-  ContextProvider,
-} from '@dossierhq/core';
 import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
   ok,
+  type AdminClient,
+  type AdminClientMiddleware,
+  type AdminClientOperation,
+  type AdminEntityCreate,
+  type AdminEntityUpdate,
+  type AdminEntityUpsert,
+  type AdminSchemaSpecificationWithMigrations,
+  type ContextProvider,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
@@ -35,6 +33,7 @@ import { adminUpsertEntity } from './admin-entity/adminUpsertEntity.js';
 import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock.js';
 import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
 import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
+import { eventsGetChangelogEvents } from './events/eventsGetChangelogEvents.js';
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 
 export function createServerAdminClient({
@@ -87,6 +86,22 @@ export function createServerAdminClient({
             context,
             entity as AdminEntityCreate,
             options,
+          ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getChangelogEvents: {
+        const {
+          args: [query, paging],
+          resolve,
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getChangelogEvents>;
+        resolve(
+          await eventsGetChangelogEvents(
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            paging,
           ),
         );
         break;

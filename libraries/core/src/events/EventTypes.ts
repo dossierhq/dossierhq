@@ -9,3 +9,17 @@ export const EventType = {
   // unarchiveEntity: 'unarchiveEntity',
   updateSchema: 'updateSchema',
 } as const;
+
+interface Event<TEventType extends string> {
+  type: TEventType;
+  createdAt: Date;
+  createdBy: string;
+}
+
+export type ChangelogQuery = { reverse?: boolean } & { schema: true };
+
+export type ChangelogEvent = SchemaChangelogEvent;
+
+export interface SchemaChangelogEvent extends Event<typeof EventType.updateSchema> {
+  version: number;
+}

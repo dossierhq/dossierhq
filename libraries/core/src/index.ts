@@ -223,7 +223,12 @@ export {
   createRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from './content/RichTextUtils.js';
-export { EventType } from './events/EventTypes.js';
+export {
+  EventType,
+  type ChangelogEvent,
+  type ChangelogQuery,
+  type SchemaChangelogEvent,
+} from './events/EventTypes.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
 export { FieldType, REQUIRED_RICH_TEXT_NODES } from './schema/SchemaSpecification.js';

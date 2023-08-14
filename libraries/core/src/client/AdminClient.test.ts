@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { ok } from '../ErrorResult.js';
+import { assertOkResult, ok, type ErrorType } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type {
   AdminEntity,
@@ -12,6 +12,7 @@ import type {
 } from '../Types.js';
 import { AdminEntityStatus, PublishingEventKind } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
+import { EventType, type SchemaChangelogEvent } from '../events/EventTypes.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { assertIsDefined } from '../utils/Asserts.js';
 import type {
@@ -358,6 +359,92 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": true,
             "name": "createEntity",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getChangelogEvents', async () => {
+    const event1: SchemaChangelogEvent = {
+      type: EventType.updateSchema,
+      createdBy: 'user',
+      createdAt: new Date('2023-08-14T08:51:25.56Z'),
+      version: 1,
+    };
+
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getChangelogEvents,
+      (_context, operation) => {
+        const [_query, _paging] = operation.args;
+        operation.resolve(
+          ok({
+            pageInfo: {
+              hasPreviousPage: false,
+              hasNextPage: true,
+              startCursor: 'start-cursor',
+              endCursor: 'end-cursor',
+            },
+            edges: [
+              {
+                cursor: 'event-1',
+                node: ok(event1),
+              },
+            ],
+          }),
+        );
+        return Promise.resolve();
+      },
+    );
+
+    const result = await adminClient.getChangelogEvents(
+      { schema: true, reverse: true },
+      { first: 10, after: 'cursor' },
+    );
+    assertOkResult(result);
+    expectResultValue(result, {
+      pageInfo: {
+        hasPreviousPage: false,
+        hasNextPage: true,
+        startCursor: 'start-cursor',
+        endCursor: 'end-cursor',
+      },
+      edges: [
+        {
+          cursor: 'event-1',
+          node: ok<SchemaChangelogEvent, typeof ErrorType.Generic>(event1),
+        },
+      ],
+    });
+    expect(result.value?.edges[0].node.valueOrThrow().createdAt).toBeInstanceOf(Date);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          {
+            "logger": {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          {
+            "args": [
+              {
+                "reverse": true,
+                "schema": true,
+              },
+              {
+                "after": "cursor",
+                "first": 10,
+              },
+            ],
+            "modifies": false,
+            "name": "getChangelogEvents",
             "next": [Function],
             "resolve": [Function],
           },
