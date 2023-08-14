@@ -15,7 +15,7 @@ import type { SessionContext } from '../Context.js';
 import { Randomizer } from '../utils/Randomizer.js';
 
 const MAX_SEED = 2147483647;
-const SAMPLING_DEFAULT_COUNT = 25;
+const SAMPLING_DEFAULT_COUNT = 25; //TODO move to constants or make configurable?
 
 export async function sharedSampleEntities<TQuery extends AdminQuery | PublishedQuery, TEntity>(
   authorizationAdapter: AuthorizationAdapter,

@@ -15,11 +15,7 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import {
-  getOppositeDirectionPaging,
-  resolveConnectionPayload,
-  resolvePagingInfo,
-} from '../utils/ConnectionUtils.js';
+import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
 
 export async function eventGetChangelogEvents(
   _authorizationAdapter: AuthorizationAdapter,
@@ -31,29 +27,9 @@ export async function eventGetChangelogEvents(
   Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const pagingResult = resolvePagingInfo(paging);
-  if (pagingResult.isError()) return pagingResult;
-  const pagingInfo = pagingResult.value;
-
-  const searchResult = await databaseAdapter.eventGetChangelogEvents(context, query, pagingInfo);
-  if (searchResult.isError()) return searchResult;
-
-  let hasMoreOppositeDirection = false;
-  const oppositePagingInfo = getOppositeDirectionPaging(pagingInfo, searchResult.value);
-  if (oppositePagingInfo) {
-    const oppositeResult = await databaseAdapter.eventGetChangelogEvents(
-      context,
-      query,
-      oppositePagingInfo,
-    );
-    if (oppositeResult.isError()) return oppositeResult;
-    hasMoreOppositeDirection = oppositeResult.value.hasMore;
-  }
-
-  return resolveConnectionPayload(
-    pagingInfo,
-    searchResult.value,
-    hasMoreOppositeDirection,
+  return fetchAndDecodeConnection(
+    paging,
+    (pagingInfo) => databaseAdapter.eventGetChangelogEvents(context, query, pagingInfo),
     decodeChangelogEvent,
   );
 }
