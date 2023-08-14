@@ -157,3 +157,5 @@ CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
     DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
     DELETE FROM entities_published_fts WHERE rowid = OLD.id;
    END;
+CREATE TABLE events (id INTEGER PRIMARY KEY, type TEXT NOT NULL, created_by INTEGER NOT NULL, created_at TEXT NOT NULL, schema_versions_id INTEGER, FOREIGN KEY (created_by) REFERENCES subjects(id), FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id)) STRICT;
+CREATE TABLE event_entity_versions (id INTEGER PRIMARY KEY, events_id INTEGER NOT NULL, entity_versions_id INTEGER NOT NULL, entity_type TEXT NOT NULL, FOREIGN KEY (events_id) REFERENCES events(id), FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id)) STRICT;

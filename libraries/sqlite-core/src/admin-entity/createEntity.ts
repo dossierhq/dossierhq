@@ -39,7 +39,7 @@ export async function adminCreateEntity(
       values: [
         entityId,
         createdAt.toISOString(),
-        getSessionSubjectInternalId(entity.creator),
+        getSessionSubjectInternalId(entity.session),
         entity.schemaVersion,
         entity.encodeVersion,
         JSON.stringify(entity.fields),

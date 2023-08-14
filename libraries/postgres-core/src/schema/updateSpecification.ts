@@ -4,7 +4,7 @@ import {
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
-import type { TransactionContext } from '@dossierhq/database-adapter';
+import type { Session, TransactionContext } from '@dossierhq/database-adapter';
 import { UniqueConstraints } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
@@ -12,6 +12,7 @@ import { queryNone } from '../QueryFunctions.js';
 export async function schemaUpdateSpecification(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
+  session: Session,
   schemaSpec: AdminSchemaSpecification,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;

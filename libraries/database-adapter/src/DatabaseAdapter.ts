@@ -49,7 +49,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   id: string | null;
   type: string;
   name: string;
-  creator: Session;
+  session: Session;
   resolvedAuthKey: ResolvedAuthKey;
   schemaVersion: number;
   encodeVersion: number;
@@ -614,6 +614,7 @@ export interface DatabaseAdapter<
 
   schemaUpdateSpecification(
     context: TransactionContext,
+    session: Session,
     schemaSpec: AdminSchemaSpecificationWithMigrations,
   ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 }

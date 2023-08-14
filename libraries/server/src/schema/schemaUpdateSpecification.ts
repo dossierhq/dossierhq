@@ -8,13 +8,14 @@ import {
   type PromiseResult,
   type SchemaSpecificationUpdatePayload,
 } from '@dossierhq/core';
-import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { SessionContext } from '../Context.js';
 import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 import { schemaGetSpecification } from './schemaGetSpecification.js';
 
 export async function schemaUpdateSpecification(
   databaseAdapter: DatabaseAdapter,
-  context: TransactionContext,
+  context: SessionContext,
   update: AdminSchemaSpecificationUpdate,
 ): PromiseResult<
   SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
@@ -80,7 +81,11 @@ export async function schemaUpdateSpecification(
     }
 
     // Update the schema spec
-    const updateResult = await databaseAdapter.schemaUpdateSpecification(context, newSchema.spec);
+    const updateResult = await databaseAdapter.schemaUpdateSpecification(
+      context,
+      context.session,
+      newSchema.spec,
+    );
     if (updateResult.isError()) {
       if (updateResult.isErrorType(ErrorType.Conflict)) {
         if (typeof update.version === 'number') {

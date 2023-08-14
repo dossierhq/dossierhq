@@ -268,6 +268,11 @@ const VERSION_17: SchemaVersionDefinition[] = [
   'ALTER TABLE entity_versions ADD COLUMN encode_version INTEGER NOT NULL DEFAULT 0',
 ];
 
+const VERSION_18: SchemaVersionDefinition[] = [
+  'CREATE TABLE events (id INTEGER PRIMARY KEY, type TEXT NOT NULL, created_by INTEGER NOT NULL, created_at TEXT NOT NULL, schema_versions_id INTEGER, FOREIGN KEY (created_by) REFERENCES subjects(id), FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id)) STRICT',
+  'CREATE TABLE event_entity_versions (id INTEGER PRIMARY KEY, events_id INTEGER NOT NULL, entity_versions_id INTEGER NOT NULL, entity_type TEXT NOT NULL, FOREIGN KEY (events_id) REFERENCES events(id), FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id)) STRICT',
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -287,6 +292,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_15,
   VERSION_16,
   VERSION_17,
+  VERSION_18,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
