@@ -13,11 +13,8 @@ import { authResolveAuthorizationKeys } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
-import {
-  getOppositeDirectionPaging,
-  resolvePagingInfo,
-  sharedSearchEntities,
-} from '../shared-entity/sharedSearchEntities.js';
+import { sharedSearchEntities } from '../shared-entity/sharedSearchEntities.js';
+import { getOppositeDirectionPaging, resolvePagingInfo } from '../utils/ConnectionUtils.js';
 
 export async function adminSearchEntities(
   schema: AdminSchemaWithMigrations,

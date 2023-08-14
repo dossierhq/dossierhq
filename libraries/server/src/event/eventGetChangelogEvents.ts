@@ -19,7 +19,7 @@ import {
   getOppositeDirectionPaging,
   resolveConnectionPayload,
   resolvePagingInfo,
-} from '../shared-entity/sharedSearchEntities.js';
+} from '../utils/ConnectionUtils.js';
 
 export async function eventGetChangelogEvents(
   _authorizationAdapter: AuthorizationAdapter,
