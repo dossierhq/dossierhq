@@ -16,7 +16,10 @@ interface Event<TEventType extends string> {
   createdBy: string;
 }
 
-export type ChangelogQuery = { reverse?: boolean } & { schema: true };
+export type ChangelogQuery = {
+  reverse?: boolean;
+  createdBy?: string;
+} & ({ schema: true } | object);
 
 export type ChangelogEvent = SchemaChangelogEvent;
 

@@ -109,7 +109,7 @@ function sharedSearchEntitiesQuery<
       cursorName,
       operator,
       paging.afterInclusive,
-      resolvedCursors.after as string,
+      resolvedCursors.after,
     );
   }
   if (resolvedCursors.before !== null) {
@@ -120,7 +120,7 @@ function sharedSearchEntitiesQuery<
       cursorName,
       operator,
       paging.beforeInclusive,
-      resolvedCursors.before as string,
+      resolvedCursors.before,
     );
   }
 
@@ -235,7 +235,7 @@ function addCursorNameOperatorAndValue(
   cursorName: CursorName,
   operator: '>' | '<',
   orEqual: boolean,
-  value: string,
+  value: ColumnValue,
 ) {
   const { sql } = queryBuilder;
 

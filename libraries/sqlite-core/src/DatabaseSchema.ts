@@ -1,3 +1,5 @@
+import type { EventType } from '@dossierhq/core';
+
 export interface AdvisoryLocksTable {
   id: number;
   name: string;
@@ -72,6 +74,12 @@ export interface EntityVersionsTable {
   schema_version: number;
   encode_version: number;
   fields: string;
+}
+
+export interface EventsTable {
+  id: number;
+  type: keyof typeof EventType;
+  created_at: string;
 }
 
 export interface SequencesTable {

@@ -29,7 +29,7 @@ export async function eventGetChangelogEvents(
 > {
   return fetchAndDecodeConnection(
     paging,
-    (pagingInfo) => databaseAdapter.eventGetChangelogEvents(context, query, pagingInfo),
+    (pagingInfo) => databaseAdapter.eventGetChangelogEvents(context, query ?? {}, pagingInfo),
     decodeChangelogEvent,
   );
 }

@@ -530,7 +530,7 @@ export interface DatabaseAdapter<
 
   eventGetChangelogEvents(
     context: TransactionContext,
-    query: ChangelogQuery | undefined,
+    query: ChangelogQuery,
     pagingInfo: DatabasePagingInfo,
   ): PromiseResult<
     DatabaseEventGetChangelogEventsPayload,
