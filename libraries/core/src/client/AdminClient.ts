@@ -200,7 +200,7 @@ export interface AdminClient<
     paging?: Paging,
   ): PromiseResult<
     Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null,
-    typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   getEntityHistory(

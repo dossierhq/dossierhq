@@ -135,6 +135,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     advisoryLockRelease: vi.fn(),
     advisoryLockRenew: vi.fn(),
     authCreateSession: vi.fn(),
+    eventGetChangelogEvents: vi.fn(),
     disconnect: vi.fn(),
     managementDirtyGetNextEntity: vi.fn(),
     managementDirtyMarkEntities: vi.fn(),

@@ -10,6 +10,7 @@ import {
 } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
+  DatabaseEventGetChangelogEventsPayload,
   DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,
 } from '@dossierhq/database-adapter';
@@ -34,7 +35,10 @@ export function resolvePagingInfo(
 }
 
 export function getOppositeDirectionPaging<
-  TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
+  TSearchResult extends
+    | DatabaseAdminEntitySearchPayload
+    | DatabasePublishedEntitySearchPayload
+    | DatabaseEventGetChangelogEventsPayload,
 >(pagingInfo: DatabasePagingInfo, result: TSearchResult): DatabasePagingInfo | null {
   if (result.entities.length === 0) {
     // If we don't get any entities in the normal direction we won't return any PageInfo, only null
@@ -64,6 +68,36 @@ export function getOppositeDirectionPaging<
   return null;
 }
 
+export function resolveConnectionPayload<
+  TEncodedNode extends { cursor: string },
+  TDecodedNode,
+  TError extends ErrorType,
+>(
+  paging: PagingInfo,
+  payload: { hasMore: boolean; entities: TEncodedNode[] },
+  hasMoreOppositeDirection: boolean,
+  decoder: (node: TEncodedNode) => Result<TDecodedNode, TError>,
+): Result<Connection<Edge<TDecodedNode, TError>> | null, typeof ErrorType.Generic> {
+  if (payload.entities.length === 0) {
+    return ok(null);
+  }
+
+  const nodes = payload.entities.map((it) => decoder(it));
+
+  return ok({
+    pageInfo: {
+      hasNextPage: paging.forwards ? payload.hasMore : hasMoreOppositeDirection,
+      hasPreviousPage: paging.forwards ? hasMoreOppositeDirection : payload.hasMore,
+      startCursor: payload.entities[0].cursor,
+      endCursor: payload.entities[payload.entities.length - 1].cursor,
+    },
+    edges: nodes.map((node, index) => ({
+      cursor: payload.entities[index].cursor,
+      node,
+    })),
+  });
+}
+
 export function sharedSearchEntities<
   TSchema,
   TSearchResult extends DatabaseAdminEntitySearchPayload | DatabasePublishedEntitySearchPayload,
@@ -77,22 +111,10 @@ export function sharedSearchEntities<
     schema: TSchema,
     values: TSearchResult['entities'][number],
   ) => Result<TEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
-): Result<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.BadRequest> {
-  const entities = searchResult.entities.map((it) => decoder(schema, it));
-  if (entities.length === 0) {
-    return ok(null);
-  }
-
-  return ok({
-    pageInfo: {
-      hasNextPage: paging.forwards ? searchResult.hasMore : hasMoreOppositeDirection,
-      hasPreviousPage: paging.forwards ? hasMoreOppositeDirection : searchResult.hasMore,
-      startCursor: searchResult.entities[0].cursor,
-      endCursor: searchResult.entities[searchResult.entities.length - 1].cursor,
-    },
-    edges: entities.map((entity, index) => ({
-      cursor: searchResult.entities[index].cursor,
-      node: entity,
-    })),
-  });
+): Result<Connection<Edge<TEntity, ErrorType>> | null, typeof ErrorType.Generic> {
+  return resolveConnectionPayload<
+    TSearchResult['entities'][number],
+    TEntity,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >(paging, searchResult, hasMoreOppositeDirection, (it) => decoder(schema, it));
 }

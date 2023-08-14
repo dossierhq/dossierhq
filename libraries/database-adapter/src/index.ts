@@ -28,6 +28,8 @@ export type {
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
   DatabaseEntityUpdateGetEntityInfoPayload,
+  DatabaseEventChangelogEventPayload,
+  DatabaseEventGetChangelogEventsPayload,
   DatabaseManagementGetNextDirtyEntityPayload,
   DatabaseManagementMarkEntitiesDirtyPayload,
   DatabaseManagementMarkEntitiesDirtySelectorArg,

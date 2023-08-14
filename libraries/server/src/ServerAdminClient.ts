@@ -33,7 +33,7 @@ import { adminUpsertEntity } from './admin-entity/adminUpsertEntity.js';
 import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock.js';
 import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
 import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
-import { eventsGetChangelogEvents } from './events/eventsGetChangelogEvents.js';
+import { eventGetChangelogEvents } from './event/eventGetChangelogEvents.js';
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 
 export function createServerAdminClient({
@@ -96,7 +96,7 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.getChangelogEvents>;
         resolve(
-          await eventsGetChangelogEvents(
+          await eventGetChangelogEvents(
             authorizationAdapter,
             databaseAdapter,
             context,

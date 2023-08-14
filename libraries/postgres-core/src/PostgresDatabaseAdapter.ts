@@ -42,6 +42,7 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
+import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
@@ -135,6 +136,7 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: () => databaseAdapter.disconnect(),
+    eventGetChangelogEvents: (...args) => eventGetChangelogEvents(databaseAdapter, ...args),
     managementDirtyGetNextEntity: (...args) =>
       managementDirtyGetNextEntity(databaseAdapter, ...args),
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(databaseAdapter, ...args),

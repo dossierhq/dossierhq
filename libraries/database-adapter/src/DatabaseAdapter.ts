@@ -4,6 +4,8 @@ import type {
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
   AdminSearchQuery,
+  ChangelogEvent,
+  ChangelogQuery,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -288,6 +290,15 @@ export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePubl
   cursor: string;
 }
 
+export interface DatabaseEventGetChangelogEventsPayload {
+  hasMore: boolean;
+  entities: DatabaseEventChangelogEventPayload[]; //TODO rename to edges
+}
+
+export interface DatabaseEventChangelogEventPayload extends ChangelogEvent {
+  cursor: string;
+}
+
 export interface DatabaseOptimizationOptions {
   all?: boolean;
 }
@@ -517,6 +528,15 @@ export interface DatabaseAdapter<
     provider: string,
     identifier: string,
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
+
+  eventGetChangelogEvents(
+    context: TransactionContext,
+    query: ChangelogQuery | undefined,
+    pagingInfo: DatabasePagingInfo,
+  ): PromiseResult<
+    DatabaseEventGetChangelogEventsPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   managementDirtyGetNextEntity(
     context: TransactionContext,
