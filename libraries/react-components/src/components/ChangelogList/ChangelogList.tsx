@@ -1,4 +1,4 @@
-import { EventType, type ChangelogEvent, type EntityReference } from '@dossierhq/core';
+import { EventType, type ChangelogEvent } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import {
@@ -10,10 +10,9 @@ import {
 interface Props {
   changelogState: ChangelogState;
   dispatchChangelogState: Dispatch<ChangelogStateAction>;
-  onItemClick: (item: EntityReference) => void;
 }
 
-export function ChangelogList({ changelogState, dispatchChangelogState, onItemClick }: Props) {
+export function ChangelogList({ changelogState, dispatchChangelogState }: Props) {
   const {
     edges,
     query: { reverse },
@@ -55,7 +54,7 @@ export function ChangelogList({ changelogState, dispatchChangelogState, onItemCl
           edges?.map((edge) => {
             if (edge.node.isOk()) {
               const event = edge.node.value;
-              return <ChangelogListRow key={edge.cursor} {...{ event, onItemClick }} />;
+              return <ChangelogListRow key={edge.cursor} {...{ event }} />;
             }
           })
         )}
@@ -64,13 +63,7 @@ export function ChangelogList({ changelogState, dispatchChangelogState, onItemCl
   );
 }
 
-function ChangelogListRow({
-  event,
-  onItemClick,
-}: {
-  event: ChangelogEvent;
-  onItemClick: (item: EntityReference) => void;
-}) {
+function ChangelogListRow({ event }: { event: ChangelogEvent }) {
   let details;
   switch (event.type) {
     case EventType.updateSchema:

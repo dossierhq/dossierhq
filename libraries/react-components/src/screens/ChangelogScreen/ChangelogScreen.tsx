@@ -14,7 +14,6 @@ export interface ChangelogScreenProps {
   footer?: ReactNode;
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
-  onOpenEntity: (entity: EntityReference) => void;
 }
 
 export function ChangelogScreen({
@@ -22,7 +21,6 @@ export function ChangelogScreen({
   footer,
   urlSearchParams,
   onUrlSearchParamsChange,
-  onOpenEntity,
 }: ChangelogScreenProps): JSX.Element | null {
   const [changelogState, dispatchChangelogState] = useReducer(
     reduceChangelogState,
@@ -56,7 +54,6 @@ export function ChangelogScreen({
               changelogState,
               dispatchChangelogState,
             }}
-            onItemClick={onOpenEntity}
           />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
