@@ -1,5 +1,5 @@
-import type { ChangelogEvent, EntityReference } from '@dossierhq/core';
-import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
+import { EventType, type ChangelogEvent, type EntityReference } from '@dossierhq/core';
+import { DateDisplay, EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import {
   ChangelogStateActions,
@@ -29,14 +29,15 @@ export function ChangelogList({ changelogState, dispatchChangelogState, onItemCl
     >
       <Table.Head>
         <Table.Row sticky>
-          <Table.Header>Event</Table.Header>
-          <Table.Header>Created by</Table.Header>
+          <Table.Header narrow>Event</Table.Header>
           <Table.Header
+            narrow
             order={direction}
             onClick={() => handleHeaderClick(dispatchChangelogState, reverse)}
           >
             Created at
           </Table.Header>
+          <Table.Header>Details</Table.Header>
         </Table.Row>
       </Table.Head>
       <Table.Body>
@@ -70,11 +71,22 @@ function ChangelogListRow({
   event: ChangelogEvent;
   onItemClick: (item: EntityReference) => void;
 }) {
+  let details;
+  switch (event.type) {
+    case EventType.updateSchema:
+      details = `Version ${event.version}`;
+      break;
+    default:
+      event.type satisfies never;
+  }
+
   return (
     <Table.Row>
       <Table.Cell>{event.type}</Table.Cell>
-      <Table.Cell>{event.createdBy}</Table.Cell>
-      <Table.Cell>{event.createdAt.toISOString()}</Table.Cell>
+      <Table.Cell>
+        <DateDisplay date={event.createdAt} />
+      </Table.Cell>
+      <Table.Cell>{details}</Table.Cell>
     </Table.Row>
   );
 }
