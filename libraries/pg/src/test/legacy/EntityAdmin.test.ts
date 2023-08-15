@@ -3149,7 +3149,7 @@ describe('archiveEntity()', () => {
                 kind: PublishingEventKind.archive,
                 publishedAt,
                 publishedBy: context.session.subjectId,
-                version: null,
+                version: 0,
               },
             ],
           });
@@ -3290,13 +3290,13 @@ describe('unarchiveEntity()', () => {
                 kind: PublishingEventKind.archive,
                 publishedAt: publishedAt0,
                 publishedBy: context.session.subjectId,
-                version: null,
+                version: 0,
               },
               {
                 kind: PublishingEventKind.unarchive,
                 publishedAt: publishedAt1,
                 publishedBy: context.session.subjectId,
-                version: null,
+                version: 0,
               },
             ],
           });
@@ -3472,7 +3472,7 @@ describe('getPublishingHistory()', () => {
               kind: PublishingEventKind.unpublish,
               publishedAt: publishedAt1,
               publishedBy: context.session.subjectId,
-              version: null,
+              version: 0,
             },
           ],
         });

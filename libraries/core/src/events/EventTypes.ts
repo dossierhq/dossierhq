@@ -1,14 +1,12 @@
-//TODO support all types
-
 export const EventType = {
   createEntity: 'createEntity',
   createAndPublishEntity: 'createAndPublishEntity',
   updateEntity: 'updateEntity',
   updateAndPublishEntity: 'updateAndPublishEntity',
-  // publishEntities: 'publishEntities',
-  // unpublishEntities: 'unpublishEntities',
-  // archiveEntity: 'archiveEntity',
-  // unarchiveEntity: 'unarchiveEntity',
+  publishEntities: 'publishEntities',
+  unpublishEntities: 'unpublishEntities',
+  archiveEntity: 'archiveEntity',
+  unarchiveEntity: 'unarchiveEntity',
   updateSchema: 'updateSchema',
 } as const;
 
@@ -42,3 +40,4 @@ export interface EntityChangelogEvent<TEventType extends EntityEventTypes = Enti
 }
 
 //TODO what to do if user aren't authorized to see the entity?
+//TODO how to handle deleted entities? include id and add a deleted flag?

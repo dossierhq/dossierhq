@@ -27,10 +27,20 @@ export async function adminEntityUnpublishGetEntitiesInfo(
 > {
   const { addValueList, query, sql } = createSqliteSqlQuery();
   const uuids = addValueList(references.map(({ id }) => id));
-  sql`SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
+  sql`SELECT e.id, e.uuid, e.type, e.latest_entity_versions_id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
 
   const result = await queryMany<
-    Pick<EntitiesTable, 'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at'>
+    Pick<
+      EntitiesTable,
+      | 'id'
+      | 'uuid'
+      | 'type'
+      | 'latest_entity_versions_id'
+      | 'auth_key'
+      | 'resolved_auth_key'
+      | 'status'
+      | 'updated_at'
+    >
   >(database, context, query);
   if (result.isError()) return result;
   const entitiesInfo = result.value;
@@ -49,6 +59,8 @@ export async function adminEntityUnpublishGetEntitiesInfo(
       return {
         id: entityInfo.uuid,
         entityInternalId: entityInfo.id,
+        entityVersionInternalId: entityInfo.latest_entity_versions_id,
+        type: entityInfo.type,
         authKey: entityInfo.auth_key,
         resolvedAuthKey: entityInfo.resolved_auth_key,
         status: resolveEntityStatus(entityInfo.status),

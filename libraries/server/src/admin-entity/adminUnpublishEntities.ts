@@ -15,7 +15,9 @@ import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js'
 interface EntityInfoToBeUnpublished {
   effect: 'unpublished';
   id: string;
+  type: string;
   entityInternalId: unknown;
+  entityVersionInternalId: unknown;
   authKey: string;
   resolvedAuthKey: string;
 }
@@ -119,9 +121,7 @@ async function collectEntityInfo(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await databaseAdapter.adminEntityUnpublishGetEntitiesInfo(context, references);
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   return result.map((entities) =>
     entities.map((it) => {
@@ -133,7 +133,12 @@ async function collectEntityInfo(
       };
 
       if (it.status === AdminEntityStatus.modified || it.status === AdminEntityStatus.published) {
-        return { effect: 'unpublished', ...shared };
+        return {
+          effect: 'unpublished',
+          entityVersionInternalId: it.entityVersionInternalId,
+          type: it.type,
+          ...shared,
+        };
       }
       return {
         effect: 'none',
@@ -226,6 +231,11 @@ async function createUnpublishEvents(
   return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
     session: context.session,
     kind: 'unpublish',
-    references: unpublishEntityInfo.map(({ entityInternalId }) => ({ entityInternalId })),
+    references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId, type }) => ({
+      entityInternalId,
+      entityVersionInternalId,
+      entityType: type,
+    })),
+    onlyLegacyEvents: false,
   });
 }

@@ -2404,7 +2404,7 @@ describe('unpublishEntities()', () => {
               kind: PublishingEventKind.unpublish,
               publishedAt: publishedAt1,
               publishedBy: server.subjectId,
-              version: null,
+              version: 0,
             },
           ],
         });
@@ -2524,7 +2524,7 @@ describe('archiveEntity()', () => {
             kind: PublishingEventKind.archive,
             publishedAt: publishedAt0,
             publishedBy: server.subjectId,
-            version: null,
+            version: 0,
           },
         ],
       });
@@ -2623,13 +2623,13 @@ describe('unarchiveEntity()', () => {
               kind: PublishingEventKind.archive,
               publishedAt: publishedAt0,
               publishedBy: server.subjectId,
-              version: null,
+              version: 0,
             },
             {
               kind: PublishingEventKind.unarchive,
               publishedAt: publishedAt1,
               publishedBy: server.subjectId,
-              version: null,
+              version: 0,
             },
           ],
         });

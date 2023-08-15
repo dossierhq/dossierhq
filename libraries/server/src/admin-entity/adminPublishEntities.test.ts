@@ -101,9 +101,11 @@ describe('Admin adminPublishEntities', () => {
             "adminEntityPublishingCreateEvents",
             {
               "kind": "publish",
+              "onlyLegacyEvents": false,
               "references": [
                 {
                   "entityInternalId": 999,
+                  "entityType": "TitleOnly",
                   "entityVersionInternalId": 888,
                 },
               ],

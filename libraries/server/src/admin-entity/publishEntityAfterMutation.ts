@@ -31,6 +31,7 @@ export async function publishEntityAfterMutation(
     databaseAdapter,
     context,
     [reference],
+    false,
   );
   if (publishResult.isError()) {
     if (

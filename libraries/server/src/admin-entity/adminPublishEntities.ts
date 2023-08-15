@@ -30,6 +30,7 @@ import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js'
 interface VersionInfoToBePublished {
   effect: 'published';
   uuid: string;
+  entityType: string;
   entityInternalId: unknown;
   entityVersionInternalId: unknown;
   status: AdminEntityStatus;
@@ -55,6 +56,7 @@ export async function adminPublishEntities(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   references: EntityVersionReference[],
+  createEvents = true,
 ): PromiseResult<
   AdminEntityPublishPayload[],
   | typeof ErrorType.BadRequest
@@ -137,6 +139,7 @@ export async function adminPublishEntities(
       databaseAdapter,
       context,
       publishVersionsInfo,
+      !createEvents, // TODO skip calling createPublishEvents if createEvents is false when legacy events are removed
     );
     if (publishEventResult.isError()) return publishEventResult;
 
@@ -288,6 +291,7 @@ async function collectVersionsInfo(
         uuid: reference.id,
         entityInternalId,
         entityVersionInternalId,
+        entityType: type,
         fullTextSearchText,
         references,
         locations,
@@ -337,6 +341,7 @@ async function createPublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   publishVersionsInfo: VersionInfoToBePublished[],
+  onlyLegacyEvents: boolean,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (publishVersionsInfo.length === 0) {
     return ok(undefined);
@@ -344,9 +349,13 @@ async function createPublishEvents(
   return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
     session: context.session,
     kind: 'publish',
-    references: publishVersionsInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
-      entityInternalId,
-      entityVersionInternalId,
-    })),
+    onlyLegacyEvents,
+    references: publishVersionsInfo.map(
+      ({ entityInternalId, entityVersionInternalId, entityType }) => ({
+        entityInternalId,
+        entityVersionInternalId,
+        entityType,
+      }),
+    ),
   });
 }

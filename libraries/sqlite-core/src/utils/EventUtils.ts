@@ -37,10 +37,11 @@ export async function createEntityEvent(
   const entitiesResult = await queryRun(
     database,
     context,
-    buildSqliteSqlQuery(({ sql }) => {
+    buildSqliteSqlQuery(({ sql, addValue }) => {
       sql`INSERT INTO event_entity_versions (events_id, entity_versions_id, entity_type) VALUES`;
+      const eventsValue = addValue(eventsId);
       for (const { entityVersionsId, entityType } of entityVersions) {
-        sql`(${eventsId}, ${entityVersionsId}, ${entityType})`;
+        sql`(${eventsValue}, ${entityVersionsId}, ${entityType})`;
       }
     }),
   );
