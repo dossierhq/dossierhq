@@ -14,7 +14,7 @@ import {
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface Props {
   showMap: boolean;

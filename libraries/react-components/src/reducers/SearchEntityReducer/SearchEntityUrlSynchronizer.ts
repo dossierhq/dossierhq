@@ -1,12 +1,17 @@
-import type { AdminSearchQuery, EntitySamplingOptions, Paging } from '@dossierhq/core';
-import { decodeURLSearchParamsParam, encodeObjectToURLSearchParams } from '@dossierhq/core';
-import type { Dispatch } from 'react';
-import { useEffect } from 'react';
-import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';
 import {
+  decodeURLSearchParamsParam,
+  encodeObjectToURLSearchParams,
+  type AdminSearchQuery,
+  type EntitySamplingOptions,
+  type Paging,
+} from '@dossierhq/core';
+import { useEffect, type Dispatch } from 'react';
+import {
+  SearchEntityStateActions,
   getQueryWithoutDefaults,
   initializeSearchEntityState,
-  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from './SearchEntityReducer.js';
 
 interface Params {

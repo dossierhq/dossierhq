@@ -9,9 +9,9 @@ import { AdminQueryOrder, ok } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';
 import {
+  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-  SearchEntityStateActions,
 } from './SearchEntityReducer.js';
 
 function createPublishedEntity(id: string): PublishedEntity {

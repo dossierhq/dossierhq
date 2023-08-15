@@ -5,8 +5,8 @@ import { useMemo, useState } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface Props {
   searchEntityState: SearchEntityState;

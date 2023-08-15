@@ -12,8 +12,8 @@ import { useContext, useEffect } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedSampleEntities } from './usePublishedSampleEntities.js';
 import { usePublishedSearchEntities } from './usePublishedSearchEntities.js';

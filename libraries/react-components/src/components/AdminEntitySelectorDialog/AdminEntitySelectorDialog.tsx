@@ -12,7 +12,7 @@ import {
   SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminEntityList } from '../AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';

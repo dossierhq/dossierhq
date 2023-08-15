@@ -8,8 +8,8 @@ import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
