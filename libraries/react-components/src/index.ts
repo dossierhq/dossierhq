@@ -13,6 +13,7 @@ export type {
 } from './contexts/PublishedDossierContext.js';
 export { PublishedDossierProvider } from './published/components/PublishedDossierProvider/PublishedDossierProvider.js';
 export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen.js';
+export { ChangelogScreen } from './screens/ChangelogScreen/ChangelogScreen.js';
 export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen.js';
 export { PublishedEntityDisplayScreen } from './screens/PublishedEntityDisplayScreen/PublishedEntityDisplayScreen.js';
 export { PublishedEntityListScreen } from './screens/PublishedEntityListScreen/PublishedEntityListScreen.js';
