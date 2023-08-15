@@ -77,6 +77,7 @@ export async function adminCreateEntity(
       name: encodeEntityPayload.name,
       session: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
+      publish: !!options?.publish,
       schemaVersion: adminSchema.spec.version,
       encodeVersion: encodeEntityPayload.encodeVersion,
       fields: encodeEntityPayload.fields,

@@ -1,4 +1,4 @@
-import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { EventType, notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityCreateEntityArg,
   DatabaseAdminEntityCreatePayload,
@@ -6,8 +6,8 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { EntitiesUniqueNameConstraint, EntitiesUniqueUuidConstraint } from '../DatabaseSchema.js';
-import type { Database } from '../QueryFunctions.js';
-import { queryOne, queryRun } from '../QueryFunctions.js';
+import { queryOne, queryRun, type Database } from '../QueryFunctions.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
@@ -54,6 +54,16 @@ export async function adminCreateEntity(
     values: [versionsId, entityId],
   });
   if (updateLatestDraftIdResult.isError()) return updateLatestDraftIdResult;
+
+  const createEventResult = await createEntityEvent(
+    database,
+    context,
+    entity.session,
+    createdAt.toISOString(),
+    entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
+    [{ entityVersionsId: versionsId, entityType: entity.type }],
+  );
+  if (createEventResult.isError()) return createEventResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
 }

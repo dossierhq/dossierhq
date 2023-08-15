@@ -58,6 +58,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   name: string;
   session: Session;
   resolvedAuthKey: ResolvedAuthKey;
+  publish: boolean;
   schemaVersion: number;
   encodeVersion: number;
   fields: Record<string, unknown>;
@@ -294,9 +295,9 @@ export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePubl
 export type DatabaseEventGetChangelogEventsPayload =
   DatabaseConnectionPayload<DatabaseEventChangelogEventPayload>;
 
-export interface DatabaseEventChangelogEventPayload extends ChangelogEvent {
+export type DatabaseEventChangelogEventPayload = ChangelogEvent & {
   cursor: string;
-}
+};
 
 export interface DatabaseOptimizationOptions {
   all?: boolean;

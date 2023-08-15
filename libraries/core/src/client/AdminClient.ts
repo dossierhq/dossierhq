@@ -37,7 +37,7 @@ import type {
   UniqueIndexReference,
   ValueItem,
 } from '../Types.js';
-import type { ChangelogEvent, ChangelogQuery, SchemaChangelogEvent } from '../events/EventTypes.js';
+import type { ChangelogEvent, ChangelogQuery } from '../events/EventTypes.js';
 import type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
@@ -948,7 +948,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   async getChangelogEvents(
     query?: ChangelogQuery,
     paging?: Paging,
-  ): Promise<Connection<Edge<SchemaChangelogEvent, typeof ErrorType.Generic>> | null> {
+  ): Promise<Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null> {
     return (await this.client.getChangelogEvents(query, paging)).valueOrThrow();
   }
 

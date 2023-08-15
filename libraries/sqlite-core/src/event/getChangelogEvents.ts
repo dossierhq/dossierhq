@@ -154,7 +154,13 @@ function convertEdge(database: Database, row: EventsRow): DatabaseEventChangelog
         version: row.version!,
       };
     default:
-      assertExhaustive(row.type);
+      return {
+        cursor,
+        type: row.type,
+        createdAt,
+        createdBy,
+        entities: [], //TODO include entities
+      };
   }
 }
 

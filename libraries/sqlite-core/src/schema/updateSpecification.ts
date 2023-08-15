@@ -1,6 +1,5 @@
 import {
   ok,
-  EventType,
   type AdminSchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
@@ -11,8 +10,8 @@ import {
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';
-import { queryOne, queryRun, type Database } from '../QueryFunctions.js';
-import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
+import { queryOne, type Database } from '../QueryFunctions.js';
+import { createUpdateSchemaEvent } from '../utils/EventUtils.js';
 
 export async function schemaUpdateSpecification(
   database: Database,
@@ -35,15 +34,12 @@ export async function schemaUpdateSpecification(
   if (createVersionResult.isError()) return createVersionResult;
   const { id: schemaVersionId } = createVersionResult.value;
 
-  const createEventResult = await queryRun(
+  const createEventResult = await createUpdateSchemaEvent(
     database,
     context,
-    buildSqliteSqlQuery(({ sql }) => {
-      sql`INSERT INTO events (type, created_by, created_at, schema_versions_id)`;
-      sql`VALUES (${EventType.updateSchema}, ${getSessionSubjectInternalId(
-        session,
-      )}, ${now}, ${schemaVersionId})`;
-    }),
+    session,
+    now,
+    schemaVersionId,
   );
   if (createEventResult.isError()) return createEventResult;
 

@@ -70,7 +70,8 @@ function ChangelogListRow({ event }: { event: ChangelogEvent }) {
       details = `Version ${event.version}`;
       break;
     default:
-      event.type satisfies never;
+      details = event.entities.map((entity) => entity.name).join(', ');
+      break;
   }
 
   return (

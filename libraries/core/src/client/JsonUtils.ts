@@ -67,9 +67,12 @@ export interface JsonPublishingResult<TEffect>
   updatedAt: string;
 }
 
-export interface JsonChangelogEvent extends Omit<ChangelogEvent, 'createdAt'> {
+export type JsonChangelogEvent<TEvent extends ChangelogEvent = ChangelogEvent> = Omit<
+  TEvent,
+  'createdAt'
+> & {
   createdAt: string;
-}
+};
 
 export interface JsonEntityHistory extends Omit<EntityHistory, 'versions'> {
   versions: JsonEntityVersionInfo[];
@@ -148,10 +151,14 @@ export function convertJsonPublishingResult<TEffect>(
   };
 }
 
-export function convertJsonChangelogEventEdge<TError extends ErrorType>(
-  edge: JsonEdge<JsonChangelogEvent, TError>,
-): Edge<ChangelogEvent, TError> {
-  return convertJsonEdge(edge, (node) => ({ ...node, createdAt: new Date(node.createdAt) }));
+export function convertJsonChangelogEventEdge<
+  TEvent extends ChangelogEvent,
+  TError extends ErrorType,
+>(edge: JsonEdge<JsonChangelogEvent<TEvent>, TError>): Edge<ChangelogEvent, TError> {
+  return convertJsonEdge(
+    edge,
+    (node) => ({ ...node, createdAt: new Date(node.createdAt) }) as TEvent,
+  );
 }
 
 export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): EntityHistory {
