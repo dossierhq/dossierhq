@@ -68,7 +68,7 @@ function generateGetChangelogEventsQuery(
   const queryBuilder = createSqliteSqlQuery();
   const { sql } = queryBuilder;
 
-  sql`SELECT e.id, e.type, s.uuid, sv.version FROM events e`;
+  sql`SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e`;
   sql`JOIN subjects s ON e.created_by = s.id`;
   sql`LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id`; // only available on schema events
   sql`WHERE`;
