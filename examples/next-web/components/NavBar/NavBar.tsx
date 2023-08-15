@@ -5,7 +5,14 @@ import { ENABLE_WEB_INTERFACE } from '../../config/WebInterfaceConfig';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 
 interface Props {
-  current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'graphiql' | 'voyager';
+  current:
+    | 'home'
+    | 'admin-entities'
+    | 'published-entities'
+    | 'schema'
+    | 'changelog'
+    | 'graphiql'
+    | 'voyager';
 }
 
 export function NavBar({ current }: Props) {
@@ -29,6 +36,9 @@ export function NavBar({ current }: Props) {
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'schema'}>
               {NavItemRender('Schema', BrowserUrls.schemaEditor)}
+            </DesignNavbar.Item>
+            <DesignNavbar.Item active={current === 'changelog'}>
+              {NavItemRender('Changelog', BrowserUrls.changelog)}
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'graphiql'}>
               {NavItemRender('GraphiQL', BrowserUrls.graphiql)}
