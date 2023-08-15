@@ -1,4 +1,10 @@
-import { EventType, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  EventType,
+  ok,
+  type ErrorType,
+  type EntityChangelogEvent,
+  type PromiseResult,
+} from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type Session,
@@ -13,7 +19,7 @@ export async function createEntityEvent(
   context: TransactionContext,
   session: Session,
   now: string,
-  eventType: keyof Omit<typeof EventType, 'updateSchema'>,
+  eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number; entityType: string }[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);

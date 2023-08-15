@@ -209,6 +209,8 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   name: string;
   changeName: boolean;
   version: number;
+  type: string;
+  publish: boolean;
   status: AdminEntityStatus;
   session: Session;
   schemaVersion: number;

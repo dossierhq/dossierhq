@@ -118,6 +118,8 @@ export async function adminUpdateEntity(
         entityInternalId,
         name: updatedEntity.info.name,
         changeName: name !== previousName,
+        type: updatedEntity.info.type,
+        publish: !!options?.publish,
         session: context.session,
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,

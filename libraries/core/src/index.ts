@@ -227,6 +227,7 @@ export {
   EventType,
   type ChangelogEvent,
   type ChangelogQuery,
+  type EntityChangelogEvent,
   type SchemaChangelogEvent,
 } from './events/EventTypes.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';

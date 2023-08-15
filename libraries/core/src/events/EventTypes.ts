@@ -3,14 +3,16 @@
 export const EventType = {
   createEntity: 'createEntity',
   createAndPublishEntity: 'createAndPublishEntity',
-  // updateEntity: 'updateEntity',
-  // updateAndPublishEntity: 'updateAndPublishEntity',
+  updateEntity: 'updateEntity',
+  updateAndPublishEntity: 'updateAndPublishEntity',
   // publishEntities: 'publishEntities',
   // unpublishEntities: 'unpublishEntities',
   // archiveEntity: 'archiveEntity',
   // unarchiveEntity: 'unarchiveEntity',
   updateSchema: 'updateSchema',
 } as const;
+
+type EntityEventTypes = keyof Omit<typeof EventType, 'updateSchema'>;
 
 interface Event<TEventType extends string> {
   type: TEventType;
@@ -29,11 +31,8 @@ export interface SchemaChangelogEvent extends Event<typeof EventType.updateSchem
   version: number;
 }
 
-export interface EntityChangelogEvent<
-  TEventType extends typeof EventType.createEntity | typeof EventType.createAndPublishEntity =
-    | typeof EventType.createEntity
-    | typeof EventType.createAndPublishEntity,
-> extends Event<TEventType> {
+export interface EntityChangelogEvent<TEventType extends EntityEventTypes = EntityEventTypes>
+  extends Event<TEventType> {
   entities: {
     id: string;
     version: number;

@@ -1,5 +1,11 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import {
+  EventType,
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import type {
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
@@ -15,6 +21,7 @@ import {
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
@@ -109,9 +116,7 @@ export async function adminEntityUpdateEntity(
             return notOk.GenericUnexpectedException(context, error);
           },
         );
-        if (updateNameResult.isError()) {
-          return updateNameResult;
-        }
+        if (updateNameResult.isError()) return updateNameResult;
 
         return ok(name);
       },
@@ -144,6 +149,16 @@ export async function adminEntityUpdateEntity(
     ],
   });
   if (updateEntityResult.isError()) return updateEntityResult;
+
+  const createEventResult = await createEntityEvent(
+    database,
+    context,
+    entity.session,
+    now.toISOString(),
+    entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
+    [{ entityVersionsId: versionsId, entityType: entity.type }],
+  );
+  if (createEventResult.isError()) return createEventResult;
 
   return ok({ name: newName, updatedAt: now });
 }
