@@ -119,6 +119,8 @@ class SetQueryAction implements ChangelogStateAction {
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
+    if (query.reverse === undefined) query.reverse = DEFAULT_VALUES.reverse;
+
     if (isEqual(query, state.query)) {
       return state;
     }

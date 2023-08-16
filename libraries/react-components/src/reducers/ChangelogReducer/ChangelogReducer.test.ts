@@ -52,7 +52,9 @@ describe('initializeChangelogState', () => {
         "edges": null,
         "loadingState": "",
         "paging": {},
-        "query": {},
+        "query": {
+          "reverse": true,
+        },
         "requestedCount": 25,
         "scrollToTopSignal": 0,
         "totalCount": null,
@@ -68,11 +70,11 @@ describe('ChangelogStateActions.SetQuery', () => {
         actions: [new ChangelogStateActions.SetPaging({ after: 'cursor', first: 10 }, 'next-page')],
       }),
       new ChangelogStateActions.SetQuery(
-        { reverse: true },
+        { reverse: false },
         { partial: true, resetPagingIfModifying: true },
       ),
     );
-    expect(state.query).toEqual({ reverse: true });
+    expect(state.query).toEqual({ reverse: false });
     expect(state.paging).toEqual({});
   });
 });

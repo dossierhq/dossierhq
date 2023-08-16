@@ -41,7 +41,9 @@ exports[`ChangelogStateActions scenarios > Next page -> loading -> loaded > 1 - 
   "paging": {
     "first": 1,
   },
-  "query": {},
+  "query": {
+    "reverse": true,
+  },
   "requestedCount": 1,
   "scrollToTopSignal": 0,
   "totalCount": 2,
@@ -69,7 +71,9 @@ exports[`ChangelogStateActions scenarios > Next page -> loading -> loaded > 2 - 
   "paging": {
     "after": "cursor-1",
   },
-  "query": {},
+  "query": {
+    "reverse": true,
+  },
   "requestedCount": 1,
   "scrollToTopSignal": 0,
   "totalCount": 2,
@@ -117,7 +121,9 @@ exports[`ChangelogStateActions scenarios > Next page -> loading -> loaded > 3 - 
   "paging": {
     "after": "cursor-1",
   },
-  "query": {},
+  "query": {
+    "reverse": true,
+  },
   "requestedCount": 1,
   "scrollToTopSignal": 1,
   "totalCount": 2,
@@ -165,7 +171,9 @@ exports[`ChangelogStateActions scenarios > Refresh > 1 - initial 1`] = `
   "paging": {
     "first": 1,
   },
-  "query": {},
+  "query": {
+    "reverse": true,
+  },
   "requestedCount": 1,
   "scrollToTopSignal": 0,
   "totalCount": 2,
@@ -213,7 +221,9 @@ exports[`ChangelogStateActions scenarios > Refresh > 2 - loaded 1`] = `
   "paging": {
     "first": 1,
   },
-  "query": {},
+  "query": {
+    "reverse": true,
+  },
   "requestedCount": 1,
   "scrollToTopSignal": 0,
   "totalCount": 2,
