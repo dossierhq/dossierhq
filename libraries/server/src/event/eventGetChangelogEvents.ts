@@ -1,12 +1,13 @@
 import {
+  ErrorType,
   EventType,
+  notOk,
   ok,
   type ChangelogEvent,
   type ChangelogQuery,
   type Connection,
   type Edge,
   type EntityChangelogEvent,
-  type ErrorType,
   type Paging,
   type PromiseResult,
   type Result,
@@ -14,9 +15,10 @@ import {
 import type {
   DatabaseAdapter,
   DatabaseEventChangelogEventPayload,
+  DatabaseResolvedEntityReference,
   ResolvedAuthKey,
 } from '@dossierhq/database-adapter';
-import { authResolveAuthorizationKeys } from '../Auth.js';
+import { authResolveAuthorizationKeys, authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
@@ -36,6 +38,14 @@ export async function eventGetChangelogEvents(
   const decodeEdge = (changelogEvent: DatabaseEventChangelogEventPayload) =>
     decodeChangelogEvent(resolvedAuthKeys, changelogEvent);
 
+  const entityResult = await getEntityInfoAndAuthorize(
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    query,
+  );
+  if (entityResult.isError()) return entityResult;
+
   return fetchAndDecodeConnection(
     paging,
     async (pagingInfo) => {
@@ -43,6 +53,7 @@ export async function eventGetChangelogEvents(
         context,
         query ?? {},
         pagingInfo,
+        entityResult.value,
       );
       if (result.isOk()) {
         resolvedAuthKeys.push(
@@ -57,6 +68,47 @@ export async function eventGetChangelogEvents(
     },
     decodeEdge,
   );
+}
+
+export async function getEntityInfoAndAuthorize(
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  query: ChangelogQuery | undefined,
+): PromiseResult<
+  DatabaseResolvedEntityReference | null,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
+  let entity: DatabaseResolvedEntityReference | null = null;
+  if (query?.entity) {
+    const entityResult = await databaseAdapter.eventGetChangelogEventsEntityInfo(
+      context,
+      query.entity,
+    );
+    if (entityResult.isError()) {
+      if (entityResult.isErrorType(ErrorType.NotFound)) {
+        return notOk.BadRequest(`entity: Entity ${query.entity.id} is not found`);
+      }
+      return notOk.Generic(entityResult.message); // cast generic->generic
+    }
+    entity = { entityInternalId: entityResult.value.entityInternalId };
+
+    const authResult = await authVerifyAuthorizationKey(
+      authorizationAdapter,
+      context,
+      entityResult.value,
+    );
+    if (authResult.isError()) {
+      if (authResult.isErrorType(ErrorType.BadRequest)) {
+        return authResult;
+      }
+      if (authResult.isErrorType(ErrorType.NotAuthorized)) {
+        return notOk.BadRequest(`entity: Wrong authKey provided`);
+      }
+      return notOk.Generic(authResult.message); // cast generic->generic
+    }
+  }
+  return ok(entity);
 }
 
 async function resolveAuthKeysForEntityChangelogEvents(

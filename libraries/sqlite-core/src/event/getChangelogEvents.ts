@@ -11,6 +11,7 @@ import {
   type DatabaseEventChangelogEventPayload,
   type DatabaseEventGetChangelogEventsPayload,
   type DatabasePagingInfo,
+  type DatabaseResolvedEntityReference,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type {
@@ -27,11 +28,12 @@ export async function eventGetChangelogEvents(
   context: TransactionContext,
   query: ChangelogQuery,
   paging: DatabasePagingInfo,
+  entity: DatabaseResolvedEntityReference | null,
 ): PromiseResult<
   DatabaseEventGetChangelogEventsPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const sqlQueryResult = generateGetChangelogEventsQuery(database, query, paging);
+  const sqlQueryResult = generateGetChangelogEventsQuery(database, query, paging, entity);
   if (sqlQueryResult.isError()) return sqlQueryResult;
 
   const searchResult = await queryMany<EventsRow>(database, context, sqlQueryResult.value);
@@ -76,6 +78,9 @@ async function getEntityInfoForEvents(
     startId = endId;
     endId = temp;
   }
+
+  //TODO get name from ev table
+  //TODO move entity type from eev to ev table
 
   const { sql, query } = createSqliteSqlQuery();
   sql`SELECT eev.events_id, eev.entity_type, e.uuid, e.name, e.auth_key, e.resolved_auth_key, ev.version FROM event_entity_versions eev`;

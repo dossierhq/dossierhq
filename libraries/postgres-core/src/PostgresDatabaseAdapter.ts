@@ -44,6 +44,7 @@ import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
 import {
   eventGetChangelogEvents,
+  eventGetChangelogEventsEntityInfo,
   eventGetChangelogEventsTotalCount,
 } from './event/getChangelogEvents.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
@@ -140,6 +141,8 @@ export function createPostgresDatabaseAdapterAdapter(
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     disconnect: () => databaseAdapter.disconnect(),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(databaseAdapter, ...args),
+    eventGetChangelogEventsEntityInfo: (...args) =>
+      eventGetChangelogEventsEntityInfo(databaseAdapter, ...args),
     eventGetChangelogEventsTotalCount: (...args) =>
       eventGetChangelogEventsTotalCount(databaseAdapter, ...args),
     managementDirtyGetNextEntity: (...args) =>

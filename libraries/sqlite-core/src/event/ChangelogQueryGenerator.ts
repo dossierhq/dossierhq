@@ -6,6 +6,7 @@ import {
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
+import type { DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import {
   createSqliteSqlQuery,
   type DatabasePagingInfo,
@@ -24,6 +25,7 @@ export function generateGetChangelogEventsQuery(
   database: Database,
   query: ChangelogQuery,
   paging: DatabasePagingInfo,
+  entity: DatabaseResolvedEntityReference | null,
 ): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
   const cursorsResult = resolvePagingCursors(database, 'int', paging);
   if (cursorsResult.isError()) return cursorsResult;
@@ -35,9 +37,13 @@ export function generateGetChangelogEventsQuery(
   sql`SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e`;
   sql`JOIN subjects s ON e.created_by = s.id`;
   sql`LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id`; // only available on schema events
+  if (entity) {
+    sql`JOIN event_entity_versions eev ON eev.events_id = e.id`;
+    sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
+  }
   sql`WHERE`;
 
-  addQueryFilters(queryBuilder, query);
+  addQueryFilters(queryBuilder, query, entity);
 
   //TODO extract paging/ordering to connection function
   // Paging 1/2
@@ -84,13 +90,19 @@ export interface TotalCountRow {
 
 export function generateGetChangelogTotalCountQuery(
   query: ChangelogQuery,
+  entity: DatabaseResolvedEntityReference | null,
 ): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
   const queryBuilder = createSqliteSqlQuery();
   const { sql } = queryBuilder;
 
-  sql`SELECT COUNT(*) AS count FROM events e WHERE`;
+  sql`SELECT COUNT(*) AS count FROM events e`;
+  if (entity) {
+    sql`JOIN event_entity_versions eev ON eev.events_id = e.id`;
+    sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
+  }
+  sql`WHERE`;
 
-  addQueryFilters(queryBuilder, query);
+  addQueryFilters(queryBuilder, query, entity);
 
   if (queryBuilder.query.text.endsWith('WHERE')) {
     //TODO add support to sql query builder
@@ -100,9 +112,17 @@ export function generateGetChangelogTotalCountQuery(
   return ok(queryBuilder.query);
 }
 
-function addQueryFilters({ sql }: SqliteQueryBuilder, query: ChangelogQuery) {
+function addQueryFilters(
+  { sql }: SqliteQueryBuilder,
+  query: ChangelogQuery,
+  entity: DatabaseResolvedEntityReference | null,
+) {
   if (query.createdBy) {
     sql`AND e.created_by = (SELECT id FROM subjects WHERE uuid = ${query.createdBy})`;
+  }
+
+  if (entity) {
+    sql`AND ev.entities_id = ${entity.entityInternalId as number}`;
   }
 
   if ('schema' in query && query.schema) {

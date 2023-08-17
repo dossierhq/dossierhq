@@ -1,4 +1,5 @@
 import type { ChangelogQuery, Paging } from '@dossierhq/core';
+import type { DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
 import { createMockDatabase, resolvePaging } from '../test/TestUtils.js';
 import {
@@ -6,9 +7,18 @@ import {
   generateGetChangelogTotalCountQuery,
 } from './ChangelogQueryGenerator.js';
 
-function getChangelogEventsQuery(query?: ChangelogQuery, paging?: Paging) {
+function getChangelogEventsQuery(
+  query?: ChangelogQuery,
+  paging?: Paging,
+  entity?: DatabaseResolvedEntityReference,
+) {
   const database = createMockDatabase();
-  return generateGetChangelogEventsQuery(database, query ?? {}, resolvePaging(paging));
+  return generateGetChangelogEventsQuery(
+    database,
+    query ?? {},
+    resolvePaging(paging),
+    entity ?? null,
+  );
 }
 
 describe('generateGetChangelogEventsQuery', () => {
@@ -46,6 +56,22 @@ describe('generateGetChangelogEventsQuery', () => {
     `);
   });
 
+  test('entity', () => {
+    expect(
+      getChangelogEventsQuery({ entity: { id: '1-2-3' } }, undefined, {
+        entityInternalId: 123,
+      }).valueOrThrow(),
+    ).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id JOIN event_entity_versions eev ON eev.events_id = e.id JOIN entity_versions ev ON eev.entity_versions_id = ev.id WHERE ev.entities_id = ?1 ORDER BY e.id LIMIT ?2",
+        "values": [
+          123,
+          26,
+        ],
+      }
+    `);
+  });
+
   test('schema only', () => {
     expect(getChangelogEventsQuery({ schema: true }).valueOrThrow()).toMatchInlineSnapshot(`
       {
@@ -75,7 +101,7 @@ describe('generateGetChangelogEventsQuery', () => {
 
 describe('generateGetChangelogTotalCountQuery', () => {
   test('default', () => {
-    expect(generateGetChangelogTotalCountQuery({}).valueOrThrow()).toMatchInlineSnapshot(`
+    expect(generateGetChangelogTotalCountQuery({}, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "text": "SELECT COUNT(*) AS count FROM events e WHERE 1=1",
         "values": [],
@@ -84,7 +110,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
   });
 
   test('reverse', () => {
-    expect(generateGetChangelogTotalCountQuery({ reverse: true }).valueOrThrow())
+    expect(generateGetChangelogTotalCountQuery({ reverse: true }, null).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
           "text": "SELECT COUNT(*) AS count FROM events e WHERE 1=1",
@@ -94,7 +120,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
   });
 
   test('createdBy', () => {
-    expect(generateGetChangelogTotalCountQuery({ createdBy: '1-2-3' }).valueOrThrow())
+    expect(generateGetChangelogTotalCountQuery({ createdBy: '1-2-3' }, null).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
           "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1)",
@@ -105,8 +131,24 @@ describe('generateGetChangelogTotalCountQuery', () => {
       `);
   });
 
+  test('entity', () => {
+    expect(
+      generateGetChangelogTotalCountQuery(
+        { entity: { id: '1-2-3' } },
+        { entityInternalId: 123 },
+      ).valueOrThrow(),
+    ).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT COUNT(*) AS count FROM events e JOIN event_entity_versions eev ON eev.events_id = e.id JOIN entity_versions ev ON eev.entity_versions_id = ev.id WHERE ev.entities_id = ?1",
+        "values": [
+          123,
+        ],
+      }
+    `);
+  });
+
   test('schema only', () => {
-    expect(generateGetChangelogTotalCountQuery({ schema: true }).valueOrThrow())
+    expect(generateGetChangelogTotalCountQuery({ schema: true }, null).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
           "text": "SELECT COUNT(*) AS count FROM events e WHERE e.type = ?1",
@@ -118,8 +160,12 @@ describe('generateGetChangelogTotalCountQuery', () => {
   });
 
   test('schema only - createdBy', () => {
-    expect(generateGetChangelogTotalCountQuery({ schema: true, createdBy: '1-2-3' }).valueOrThrow())
-      .toMatchInlineSnapshot(`
+    expect(
+      generateGetChangelogTotalCountQuery(
+        { schema: true, createdBy: '1-2-3' },
+        null,
+      ).valueOrThrow(),
+    ).toMatchInlineSnapshot(`
         {
           "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type = ?2",
           "values": [

@@ -285,6 +285,12 @@ export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePubl
   cursor: string;
 }
 
+export interface DatabaseEventGetChangelogEventsEntityInfoPayload
+  extends DatabaseResolvedEntityReference {
+  authKey: string;
+  resolvedAuthKey: string;
+}
+
 export type DatabaseEventGetChangelogEventsPayload =
   DatabaseConnectionPayload<DatabaseEventChangelogEventPayload>;
 
@@ -541,14 +547,24 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     query: ChangelogQuery,
     pagingInfo: DatabasePagingInfo,
+    entity: DatabaseResolvedEntityReference | null,
   ): PromiseResult<
     DatabaseEventGetChangelogEventsPayload,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
+  eventGetChangelogEventsEntityInfo(
+    context: TransactionContext,
+    reference: EntityReference,
+  ): PromiseResult<
+    DatabaseEventGetChangelogEventsEntityInfoPayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
+
   eventGetChangelogEventsTotalCount(
     context: TransactionContext,
     query: ChangelogQuery,
+    entity: DatabaseResolvedEntityReference | null,
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   managementDirtyGetNextEntity(

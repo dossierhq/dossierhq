@@ -55,6 +55,7 @@ import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
 import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
+import { eventGetChangelogEventsEntityInfo } from './event/getChangelogEventsEntityInfo.js';
 import { eventGetChangelogEventsTotalCount } from './event/getChangelogEventsTotalCount.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
@@ -220,6 +221,8 @@ function createOuterAdapter(
     advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
     authCreateSession: (...args) => authCreateSession(database, ...args),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(database, ...args),
+    eventGetChangelogEventsEntityInfo: (...args) =>
+      eventGetChangelogEventsEntityInfo(database, ...args),
     eventGetChangelogEventsTotalCount: (...args) =>
       eventGetChangelogEventsTotalCount(database, ...args),
     disconnect: () => database.adapter.disconnect(),

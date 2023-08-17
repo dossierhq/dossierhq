@@ -1,6 +1,6 @@
 import type { Logger } from '@dossierhq/core';
 import { NoOpLogger, ok } from '@dossierhq/core';
-import type { DatabaseAdapter, TransactionContext, Session } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter, Session, TransactionContext } from '@dossierhq/database-adapter';
 import type { SpyInstance } from 'vitest';
 import { vi } from 'vitest';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -139,6 +139,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     advisoryLockRenew: vi.fn(),
     authCreateSession: vi.fn(),
     eventGetChangelogEvents: vi.fn(),
+    eventGetChangelogEventsEntityInfo: vi.fn(),
     eventGetChangelogEventsTotalCount: vi.fn(),
     disconnect: vi.fn(),
     managementDirtyGetNextEntity: vi.fn(),

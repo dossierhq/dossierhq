@@ -31,6 +31,7 @@ export type {
   DatabaseEntityUpdateGetEntityInfoPayload,
   DatabaseEventChangelogEntityEventPayload,
   DatabaseEventChangelogEventPayload,
+  DatabaseEventGetChangelogEventsEntityInfoPayload,
   DatabaseEventGetChangelogEventsPayload,
   DatabaseManagementGetNextDirtyEntityPayload,
   DatabaseManagementMarkEntitiesDirtyPayload,

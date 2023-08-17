@@ -1,3 +1,5 @@
+import type { EntityReference } from '../Types.js';
+
 export const EventType = {
   createEntity: 'createEntity',
   createAndPublishEntity: 'createAndPublishEntity',
@@ -21,6 +23,7 @@ interface Event<TEventType extends string> {
 export type ChangelogQuery = {
   reverse?: boolean;
   createdBy?: string;
+  entity?: EntityReference;
 } & ({ schema: true } | object);
 
 export type ChangelogEvent = SchemaChangelogEvent | EntityChangelogEvent;
