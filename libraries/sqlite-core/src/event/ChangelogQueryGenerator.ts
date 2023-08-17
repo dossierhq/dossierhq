@@ -102,7 +102,7 @@ export function generateGetChangelogTotalCountQuery(
 
 function addQueryFilters({ sql }: SqliteQueryBuilder, query: ChangelogQuery) {
   if (query.createdBy) {
-    sql`AND s.uuid = ${query.createdBy}`; //TODO faster with e.created_by = (SELECT id FROM subjects WHERE uuid = ${query.createdBy})?
+    sql`AND e.created_by = (SELECT id FROM subjects WHERE uuid = ${query.createdBy})`;
   }
 
   if ('schema' in query && query.schema) {

@@ -37,7 +37,7 @@ describe('generateGetChangelogEventsQuery', () => {
   test('createdBy', () => {
     expect(getChangelogEventsQuery({ createdBy: '1-2-3' }).valueOrThrow()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE s.uuid = ?1 ORDER BY e.id LIMIT ?2",
+        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) ORDER BY e.id LIMIT ?2",
         "values": [
           "1-2-3",
           26,
@@ -61,15 +61,15 @@ describe('generateGetChangelogEventsQuery', () => {
   test('schema only - createdBy', () => {
     expect(getChangelogEventsQuery({ schema: true, createdBy: '1-2-3' }).valueOrThrow())
       .toMatchInlineSnapshot(`
-      {
-        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE s.uuid = ?1 AND e.type = ?2 ORDER BY e.id LIMIT ?3",
-        "values": [
-          "1-2-3",
-          "updateSchema",
-          26,
-        ],
-      }
-    `);
+        {
+          "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type = ?2 ORDER BY e.id LIMIT ?3",
+          "values": [
+            "1-2-3",
+            "updateSchema",
+            26,
+          ],
+        }
+      `);
   });
 });
 
@@ -97,7 +97,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
     expect(generateGetChangelogTotalCountQuery({ createdBy: '1-2-3' }).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
-          "text": "SELECT COUNT(*) AS count FROM events e WHERE s.uuid = ?1",
+          "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1)",
           "values": [
             "1-2-3",
           ],
@@ -121,7 +121,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
     expect(generateGetChangelogTotalCountQuery({ schema: true, createdBy: '1-2-3' }).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
-          "text": "SELECT COUNT(*) AS count FROM events e WHERE s.uuid = ?1 AND e.type = ?2",
+          "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type = ?2",
           "values": [
             "1-2-3",
             "updateSchema",
