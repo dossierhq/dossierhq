@@ -3,6 +3,7 @@ import {
   assertExhaustive,
   ok,
   type ChangelogQuery,
+  type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
   type Result,
@@ -15,7 +16,14 @@ import {
   type SqliteQueryBuilder,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EventsTable, SchemaVersionsTable, SubjectsTable } from '../DatabaseSchema.js';
+import type {
+  EntitiesTable,
+  EntityVersionsTable,
+  EventEntityVersionsTable,
+  EventsTable,
+  SchemaVersionsTable,
+  SubjectsTable,
+} from '../DatabaseSchema.js';
 import { queryMany, type Database, type QueryOrQueryAndValues } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
 import { toOpaqueCursor } from '../search/OpaqueCursor.js';
@@ -46,9 +54,12 @@ export async function eventGetChangelogEvents(
     rows.reverse();
   }
 
+  const entitiesInfoResult = await getEntityInfoForEvents(database, context, rows);
+  if (entitiesInfoResult.isError()) return entitiesInfoResult;
+
   return ok({
     hasMore,
-    edges: rows.map((it) => convertEdge(database, it)),
+    edges: rows.map((it) => convertEdge(database, entitiesInfoResult.value, it)),
   });
 }
 
@@ -140,7 +151,37 @@ function addCursorNameOperatorAndValue(
   sql`${value}`;
 }
 
-function convertEdge(database: Database, row: EventsRow): DatabaseEventChangelogEventPayload {
+type EntityInfoRow = Pick<EventEntityVersionsTable, 'events_id' | 'entity_type'> &
+  Pick<EntitiesTable, 'uuid' | 'name'> &
+  Pick<EntityVersionsTable, 'version'>;
+
+async function getEntityInfoForEvents(
+  database: Database,
+  context: TransactionContext,
+  events: EventsRow[],
+): PromiseResult<EntityInfoRow[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  let startId = events[0].id;
+  let endId = events[events.length - 1].id;
+  if (endId < startId) {
+    const temp = startId;
+    startId = endId;
+    endId = temp;
+  }
+
+  const { sql, query } = createSqliteSqlQuery();
+  sql`SELECT eev.events_id, eev.entity_type, e.uuid, e.name, ev.version FROM event_entity_versions eev`;
+  sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
+  sql`JOIN entities e ON ev.entities_id = e.id`;
+  sql`WHERE eev.events_id >= ${startId} AND eev.events_id <= ${endId} ORDER BY eev.events_id`;
+
+  return queryMany<EntityInfoRow>(database, context, query);
+}
+
+function convertEdge(
+  database: Database,
+  entityRows: EntityInfoRow[],
+  row: EventsRow,
+): DatabaseEventChangelogEventPayload {
   const cursor = toOpaqueCursor(database, 'int', row.id);
   const createdBy = row.uuid;
   const createdAt = new Date(row.created_at);
@@ -153,14 +194,21 @@ function convertEdge(database: Database, row: EventsRow): DatabaseEventChangelog
         createdBy,
         version: row.version!,
       };
-    default:
-      return {
-        cursor,
-        type: row.type,
-        createdAt,
-        createdBy,
-        entities: [], //TODO include entities
-      };
+    default: {
+      const entities: EntityChangelogEvent['entities'] = [];
+      for (const entityRow of entityRows) {
+        if (entityRow.events_id === row.id) {
+          entities.push({
+            id: entityRow.uuid,
+            name: entityRow.name,
+            version: entityRow.version,
+            type: entityRow.entity_type,
+          });
+        }
+      }
+
+      return { cursor, type: row.type, createdAt, createdBy, entities };
+    }
   }
 }
 

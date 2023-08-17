@@ -82,6 +82,13 @@ export interface EventsTable {
   created_at: string;
 }
 
+export interface EventEntityVersionsTable {
+  id: number;
+  events_id: number;
+  entity_versions_id: number;
+  entity_type: string;
+}
+
 export interface SequencesTable {
   name: string;
   value: number;
