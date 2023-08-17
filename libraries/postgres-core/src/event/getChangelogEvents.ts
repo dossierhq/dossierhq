@@ -19,7 +19,7 @@ export async function eventGetChangelogEvents(
   return Promise.resolve(ok({ edges: [], hasMore: false }));
 }
 
-export async function eventGetChangelogTotalCount(
+export async function eventGetChangelogEventsTotalCount(
   _databaseAdapter: PostgresDatabaseAdapter,
   _context: TransactionContext,
   _query: ChangelogQuery,

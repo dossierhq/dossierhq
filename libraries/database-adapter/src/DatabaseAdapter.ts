@@ -530,7 +530,7 @@ export interface DatabaseAdapter<
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
-  eventGetChangelogTotalCount(
+  eventGetChangelogEventsTotalCount(
     context: TransactionContext,
     query: ChangelogQuery,
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;

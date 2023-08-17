@@ -453,10 +453,10 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('getChangelogTotalCount', async () => {
+  test('getChangelogEventsTotalCount', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.getChangelogTotalCount,
+      AdminClientOperationName.getChangelogEventsTotalCount,
       (_context, operation) => {
         const [_query] = operation.args;
         operation.resolve(ok(10));
@@ -464,7 +464,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getChangelogTotalCount({ schema: true, reverse: true });
+    const result = await adminClient.getChangelogEventsTotalCount({ schema: true, reverse: true });
     assertOkResult(result);
     expectResultValue(result, 10);
 
@@ -487,7 +487,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "getChangelogTotalCount",
+            "name": "getChangelogEventsTotalCount",
             "next": [Function],
             "resolve": [Function],
           },

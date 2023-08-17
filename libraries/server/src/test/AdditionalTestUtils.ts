@@ -90,7 +90,10 @@ export function createMockSessionContext({
   defaultAuthKeys?: string[];
   logger?: Logger;
 }): SessionContext {
-  const resolvedSession = session ?? { subjectId: 'subject-id', subjectInternalId: 123 };
+  const resolvedSession = session ?? {
+    subjectId: 'subject-id',
+    subjectInternalId: 123,
+  };
   const resolvedDefaultAuthKeys = defaultAuthKeys ?? ['none'];
   const resolvedLogger = logger ?? NoOpLogger;
   return new SessionContextImpl(
@@ -136,7 +139,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     advisoryLockRenew: vi.fn(),
     authCreateSession: vi.fn(),
     eventGetChangelogEvents: vi.fn(),
-    eventGetChangelogTotalCount: vi.fn(),
+    eventGetChangelogEventsTotalCount: vi.fn(),
     disconnect: vi.fn(),
     managementDirtyGetNextEntity: vi.fn(),
     managementDirtyMarkEntities: vi.fn(),

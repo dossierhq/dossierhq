@@ -39,7 +39,7 @@ async function fetchChangelogTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
-  const result = await adminClient.getChangelogTotalCount(query);
+  const result = await adminClient.getChangelogEventsTotalCount(query);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

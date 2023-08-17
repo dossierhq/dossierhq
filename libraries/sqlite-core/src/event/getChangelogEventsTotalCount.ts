@@ -6,7 +6,7 @@ import {
   type TotalCountRow,
 } from './ChangelogQueryGenerator.js';
 
-export async function eventGetChangelogTotalCount(
+export async function eventGetChangelogEventsTotalCount(
   database: Database,
   context: TransactionContext,
   query: ChangelogQuery,

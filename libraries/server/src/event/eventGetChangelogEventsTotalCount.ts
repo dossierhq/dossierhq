@@ -3,7 +3,7 @@ import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 
-export async function eventGetChangelogTotalCount(
+export async function eventGetChangelogEventsTotalCount(
   _authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -12,5 +12,5 @@ export async function eventGetChangelogTotalCount(
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  return databaseAdapter.eventGetChangelogTotalCount(context, query ?? {});
+  return databaseAdapter.eventGetChangelogEventsTotalCount(context, query ?? {});
 }

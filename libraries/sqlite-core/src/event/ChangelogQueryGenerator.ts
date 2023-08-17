@@ -39,6 +39,7 @@ export function generateGetChangelogEventsQuery(
 
   addQueryFilters(queryBuilder, query);
 
+  //TODO extract paging/ordering to connection function
   // Paging 1/2
   if (resolvedCursors.after !== null) {
     const operator = query?.reverse ? '<' : '>';

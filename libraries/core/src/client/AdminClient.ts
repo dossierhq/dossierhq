@@ -203,7 +203,7 @@ export interface AdminClient<
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  getChangelogTotalCount(
+  getChangelogEventsTotalCount(
     query?: ChangelogQuery,
   ): PromiseResult<
     number,
@@ -379,7 +379,7 @@ export interface AdminExceptionClient<
     paging?: Paging,
   ): Promise<Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null>;
 
-  getChangelogTotalCount(query?: ChangelogQuery): Promise<number>;
+  getChangelogEventsTotalCount(query?: ChangelogQuery): Promise<number>;
 
   getEntityHistory(reference: EntityReference): Promise<EntityHistory>;
 
@@ -405,7 +405,7 @@ export const AdminClientOperationName = {
   archiveEntity: 'archiveEntity',
   createEntity: 'createEntity',
   getChangelogEvents: 'getChangelogEvents',
-  getChangelogTotalCount: 'getChangelogTotalCount',
+  getChangelogEventsTotalCount: 'getChangelogEventsTotalCount',
   getEntities: 'getEntities',
   getEntity: 'getEntity',
   getEntityHistory: 'getEntityHistory',
@@ -453,7 +453,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
   [AdminClientOperationName.getChangelogEvents]: MethodParameters<'getChangelogEvents'>;
-  [AdminClientOperationName.getChangelogTotalCount]: MethodParameters<'getChangelogTotalCount'>;
+  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodParameters<'getChangelogEventsTotalCount'>;
   [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
@@ -477,7 +477,7 @@ interface AdminClientOperationReturnOk {
   [AdminClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
   [AdminClientOperationName.getChangelogEvents]: MethodReturnTypeOk<'getChangelogEvents'>;
-  [AdminClientOperationName.getChangelogTotalCount]: MethodReturnTypeOk<'getChangelogTotalCount'>;
+  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeOk<'getChangelogEventsTotalCount'>;
   [AdminClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodReturnTypeOk<'getEntityHistory'>;
@@ -501,7 +501,7 @@ interface AdminClientOperationReturnError {
   [AdminClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
   [AdminClientOperationName.getChangelogEvents]: MethodReturnTypeError<'getChangelogEvents'>;
-  [AdminClientOperationName.getChangelogTotalCount]: MethodReturnTypeError<'getChangelogTotalCount'>;
+  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeError<'getChangelogEventsTotalCount'>;
   [AdminClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
   [AdminClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
   [AdminClientOperationName.getEntityHistory]: MethodReturnTypeError<'getEntityHistory'>;
@@ -730,11 +730,11 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  getChangelogTotalCount(
+  getChangelogEventsTotalCount(
     query?: ChangelogQuery,
-  ): MethodReturnType<typeof AdminClientOperationName.getChangelogTotalCount> {
+  ): MethodReturnType<typeof AdminClientOperationName.getChangelogEventsTotalCount> {
     return this.executeOperation({
-      name: AdminClientOperationName.getChangelogTotalCount,
+      name: AdminClientOperationName.getChangelogEventsTotalCount,
       args: [query],
       modifies: false,
     });
@@ -975,8 +975,8 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.getChangelogEvents(query, paging)).valueOrThrow();
   }
 
-  async getChangelogTotalCount(query?: ChangelogQuery): Promise<number> {
-    return (await this.client.getChangelogTotalCount(query)).valueOrThrow();
+  async getChangelogEventsTotalCount(query?: ChangelogQuery): Promise<number> {
+    return (await this.client.getChangelogEventsTotalCount(query)).valueOrThrow();
   }
 
   async getEntityHistory(reference: EntityReference): Promise<EntityHistory> {
@@ -1058,10 +1058,10 @@ export async function executeAdminClientOperationFromJson(
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogEvents];
       return await adminClient.getChangelogEvents(query, paging);
     }
-    case AdminClientOperationName.getChangelogTotalCount: {
+    case AdminClientOperationName.getChangelogEventsTotalCount: {
       const [query] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogTotalCount];
-      return await adminClient.getChangelogTotalCount(query);
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogEventsTotalCount];
+      return await adminClient.getChangelogEventsTotalCount(query);
     }
     case AdminClientOperationName.getEntities: {
       const [references] =
@@ -1198,7 +1198,7 @@ export function convertJsonAdminClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getChangelogTotalCount: {
+    case AdminClientOperationName.getChangelogEventsTotalCount: {
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntities: {
