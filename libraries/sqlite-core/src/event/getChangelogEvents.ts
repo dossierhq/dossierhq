@@ -113,6 +113,7 @@ function generateGetChangelogEventsQuery(
   }
 
   if (queryBuilder.query.text.endsWith('WHERE')) {
+    //TODO add support to sql query builder
     sql`1=1`; // no-op
   }
 
@@ -160,6 +161,10 @@ async function getEntityInfoForEvents(
   context: TransactionContext,
   events: EventsRow[],
 ): PromiseResult<EntityInfoRow[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  if (events.length === 0) {
+    return ok([]);
+  }
+
   let startId = events[0].id;
   let endId = events[events.length - 1].id;
   if (endId < startId) {
