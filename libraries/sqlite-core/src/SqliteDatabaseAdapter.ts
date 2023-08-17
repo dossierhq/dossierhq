@@ -54,10 +54,8 @@ import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExp
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession } from './auth/createSession.js';
-import {
-  eventGetChangelogEvents,
-  eventGetChangelogTotalCount,
-} from './event/getChangelogEvents.js';
+import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
+import { eventGetChangelogTotalCount } from './event/getChangelogTotalCount.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
