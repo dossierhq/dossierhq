@@ -71,22 +71,16 @@ async function getEntityInfoForEvents(
     return ok([]);
   }
 
-  let startId = events[0].id;
-  let endId = events[events.length - 1].id;
-  if (endId < startId) {
-    const temp = startId;
-    startId = endId;
-    endId = temp;
-  }
+  const eventIds = events.map((it) => it.id);
 
   //TODO get name from ev table
   //TODO move entity type from eev to ev table
 
-  const { sql, query } = createSqliteSqlQuery();
+  const { sql, query, addValueList } = createSqliteSqlQuery();
   sql`SELECT eev.events_id, eev.entity_type, e.uuid, e.name, e.auth_key, e.resolved_auth_key, ev.version FROM event_entity_versions eev`;
   sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
   sql`JOIN entities e ON ev.entities_id = e.id`;
-  sql`WHERE eev.events_id >= ${startId} AND eev.events_id <= ${endId} ORDER BY eev.events_id`;
+  sql`WHERE eev.events_id IN ${addValueList(eventIds)} ORDER BY eev.events_id`;
 
   return queryMany<EntityInfoRow>(database, context, query);
 }
