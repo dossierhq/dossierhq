@@ -4,8 +4,8 @@ import type {
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
   AdminSearchQuery,
-  ChangelogEvent,
   ChangelogQuery,
+  EntityChangelogEvent,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -16,6 +16,7 @@ import type {
   PublishedSchema,
   PublishedSearchQuery,
   PublishingEvent,
+  SchemaChangelogEvent,
   UniqueIndexReference,
 } from '@dossierhq/core';
 import type { ResolvedAuthKey, Session } from './Session.js';
@@ -287,9 +288,24 @@ export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePubl
 export type DatabaseEventGetChangelogEventsPayload =
   DatabaseConnectionPayload<DatabaseEventChangelogEventPayload>;
 
-export type DatabaseEventChangelogEventPayload = ChangelogEvent & {
+export type DatabaseEventChangelogEntityEventPayload = Omit<
+  EntityChangelogEvent,
+  'entities' | 'unauthorizedEntityCount'
+> & {
+  entities: {
+    id: string;
+    name: string;
+    version: number;
+    type: string;
+    authKey: string;
+    resolvedAuthKey: string;
+  }[];
   cursor: string;
 };
+
+export type DatabaseEventChangelogEventPayload =
+  | (SchemaChangelogEvent & { cursor: string })
+  | DatabaseEventChangelogEntityEventPayload;
 
 export interface DatabaseOptimizationOptions {
   all?: boolean;

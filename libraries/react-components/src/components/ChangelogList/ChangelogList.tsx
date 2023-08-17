@@ -69,11 +69,19 @@ function ChangelogListRow({ event }: { event: ChangelogEvent }) {
     case EventType.updateSchema:
       details = `Version ${event.version}`;
       break;
-    default:
-      details = event.entities
-        .map((entity) => `${entity.name} (${entity.type}) version ${entity.version}`)
-        .join(', ');
+    default: {
+      details = (
+        <>
+          {event.entities
+            .map((entity) => `${entity.name} (${entity.type}) version ${entity.version}`)
+            .join(', ')}
+          {event.unauthorizedEntityCount > 0 ? (
+            <i>{event.unauthorizedEntityCount} other entities</i>
+          ) : null}
+        </>
+      );
       break;
+    }
   }
 
   return (

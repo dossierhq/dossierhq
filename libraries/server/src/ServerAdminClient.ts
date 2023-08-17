@@ -114,14 +114,7 @@ export function createServerAdminClient({
         } = operation as AdminClientOperation<
           typeof AdminClientOperationName.getChangelogEventsTotalCount
         >;
-        resolve(
-          await eventGetChangelogEventsTotalCount(
-            authorizationAdapter,
-            databaseAdapter,
-            context,
-            query,
-          ),
-        );
+        resolve(await eventGetChangelogEventsTotalCount(databaseAdapter, context, query));
         break;
       }
       case AdminClientOperationName.getEntities: {

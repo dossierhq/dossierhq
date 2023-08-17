@@ -2,12 +2,12 @@ import {
   EventType,
   ok,
   type ChangelogQuery,
-  type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
 import {
   createSqliteSqlQuery,
+  type DatabaseEventChangelogEntityEventPayload,
   type DatabaseEventChangelogEventPayload,
   type DatabaseEventGetChangelogEventsPayload,
   type DatabasePagingInfo,
@@ -57,7 +57,7 @@ export async function eventGetChangelogEvents(
 }
 
 type EntityInfoRow = Pick<EventEntityVersionsTable, 'events_id' | 'entity_type'> &
-  Pick<EntitiesTable, 'uuid' | 'name'> &
+  Pick<EntitiesTable, 'uuid' | 'name' | 'auth_key' | 'resolved_auth_key'> &
   Pick<EntityVersionsTable, 'version'>;
 
 async function getEntityInfoForEvents(
@@ -78,7 +78,7 @@ async function getEntityInfoForEvents(
   }
 
   const { sql, query } = createSqliteSqlQuery();
-  sql`SELECT eev.events_id, eev.entity_type, e.uuid, e.name, ev.version FROM event_entity_versions eev`;
+  sql`SELECT eev.events_id, eev.entity_type, e.uuid, e.name, e.auth_key, e.resolved_auth_key, ev.version FROM event_entity_versions eev`;
   sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
   sql`JOIN entities e ON ev.entities_id = e.id`;
   sql`WHERE eev.events_id >= ${startId} AND eev.events_id <= ${endId} ORDER BY eev.events_id`;
@@ -104,7 +104,7 @@ function convertEdge(
         version: row.version!,
       };
     default: {
-      const entities: EntityChangelogEvent['entities'] = [];
+      const entities: DatabaseEventChangelogEntityEventPayload['entities'] = [];
       for (const entityRow of entityRows) {
         if (entityRow.events_id === row.id) {
           entities.push({
@@ -112,6 +112,8 @@ function convertEdge(
             name: entityRow.name,
             version: entityRow.version,
             type: entityRow.entity_type,
+            authKey: entityRow.auth_key,
+            resolvedAuthKey: entityRow.resolved_auth_key,
           });
         }
       }
