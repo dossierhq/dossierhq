@@ -453,6 +453,49 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
+  test('getChangelogTotalCount', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getChangelogTotalCount,
+      (_context, operation) => {
+        const [_query] = operation.args;
+        operation.resolve(ok(10));
+        return Promise.resolve();
+      },
+    );
+
+    const result = await adminClient.getChangelogTotalCount({ schema: true, reverse: true });
+    assertOkResult(result);
+    expectResultValue(result, 10);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          {
+            "logger": {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          {
+            "args": [
+              {
+                "reverse": true,
+                "schema": true,
+              },
+            ],
+            "modifies": false,
+            "name": "getChangelogTotalCount",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
   test('getEntities', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },

@@ -34,6 +34,7 @@ import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock.js';
 import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
 import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
 import { eventGetChangelogEvents } from './event/eventGetChangelogEvents.js';
+import { eventGetChangelogTotalCount } from './event/eventGetChangelogTotalCount.js';
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 
 export function createServerAdminClient({
@@ -103,6 +104,18 @@ export function createServerAdminClient({
             query,
             paging,
           ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getChangelogTotalCount: {
+        const {
+          args: [query],
+          resolve,
+        } = operation as AdminClientOperation<
+          typeof AdminClientOperationName.getChangelogTotalCount
+        >;
+        resolve(
+          await eventGetChangelogTotalCount(authorizationAdapter, databaseAdapter, context, query),
         );
         break;
       }

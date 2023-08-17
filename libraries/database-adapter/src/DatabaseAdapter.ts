@@ -530,6 +530,11 @@ export interface DatabaseAdapter<
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
+  eventGetChangelogTotalCount(
+    context: TransactionContext,
+    query: ChangelogQuery,
+  ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
   managementDirtyGetNextEntity(
     context: TransactionContext,
     filter: EntityReference | undefined,

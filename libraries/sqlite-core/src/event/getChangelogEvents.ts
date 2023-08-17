@@ -24,7 +24,12 @@ import type {
   SchemaVersionsTable,
   SubjectsTable,
 } from '../DatabaseSchema.js';
-import { queryMany, type Database, type QueryOrQueryAndValues } from '../QueryFunctions.js';
+import {
+  queryMany,
+  type Database,
+  type QueryOrQueryAndValues,
+  queryOne,
+} from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
 import { toOpaqueCursor } from '../search/OpaqueCursor.js';
 import { resolvePagingCursors } from '../search/Paging.js';
@@ -63,6 +68,20 @@ export async function eventGetChangelogEvents(
   });
 }
 
+export async function eventGetChangelogTotalCount(
+  database: Database,
+  context: TransactionContext,
+  query: ChangelogQuery,
+): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const sqlQueryResult = generateGetChangelogTotalCountQuery(query);
+  if (sqlQueryResult.isError()) return sqlQueryResult;
+
+  const totalResult = await queryOne<TotalCountRow>(database, context, sqlQueryResult.value);
+  if (totalResult.isError()) return totalResult;
+
+  return ok(totalResult.value.count);
+}
+
 type EventsRow = Pick<EventsTable, 'id' | 'type' | 'created_at'> &
   Pick<SubjectsTable, 'uuid'> &
   Partial<Pick<SchemaVersionsTable, 'version'>>;
@@ -84,13 +103,7 @@ function generateGetChangelogEventsQuery(
   sql`LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id`; // only available on schema events
   sql`WHERE`;
 
-  if (query.createdBy) {
-    sql`AND s.uuid = ${query.createdBy}`; //TODO faster with e.created_by = (SELECT id FROM subjects WHERE uuid = ${query.createdBy})?
-  }
-
-  if ('schema' in query && query.schema) {
-    sql`AND e.type = ${EventType.updateSchema}`;
-  }
+  addQueryFilters(queryBuilder, query);
 
   // Paging 1/2
   if (resolvedCursors.after !== null) {
@@ -128,6 +141,38 @@ function generateGetChangelogEventsQuery(
   sql`LIMIT ${countToRequest}`;
 
   return ok(queryBuilder.query);
+}
+
+interface TotalCountRow {
+  count: number;
+}
+
+function generateGetChangelogTotalCountQuery(
+  query: ChangelogQuery,
+): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
+  const queryBuilder = createSqliteSqlQuery();
+  const { sql } = queryBuilder;
+
+  sql`SELECT COUNT(*) AS count FROM events e WHERE`;
+
+  addQueryFilters(queryBuilder, query);
+
+  if (queryBuilder.query.text.endsWith('WHERE')) {
+    //TODO add support to sql query builder
+    sql`1=1`; // no-op
+  }
+
+  return ok(queryBuilder.query);
+}
+
+function addQueryFilters({ sql }: SqliteQueryBuilder, query: ChangelogQuery) {
+  if (query.createdBy) {
+    sql`AND s.uuid = ${query.createdBy}`; //TODO faster with e.created_by = (SELECT id FROM subjects WHERE uuid = ${query.createdBy})?
+  }
+
+  if ('schema' in query && query.schema) {
+    sql`AND e.type = ${EventType.updateSchema}`;
+  }
 }
 
 function addCursorNameOperatorAndValue(

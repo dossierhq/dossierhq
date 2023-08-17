@@ -41,3 +41,5 @@ export interface EntityChangelogEvent<TEventType extends EntityEventTypes = Enti
 
 //TODO what to do if user aren't authorized to see the entity?
 //TODO how to handle deleted entities? include id and add a deleted flag?
+//TODO need to include the entity type in all events, or only in createEntity?
+//TODO move original entity type from the event (in db) to the entity_versions table?

@@ -9,7 +9,7 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 export async function eventGetChangelogEvents(
   _databaseAdapter: PostgresDatabaseAdapter,
   _context: TransactionContext,
-  _query: ChangelogQuery | undefined,
+  _query: ChangelogQuery,
   _pagingInfo: DatabasePagingInfo,
 ): PromiseResult<
   DatabaseEventGetChangelogEventsPayload,
@@ -17,4 +17,13 @@ export async function eventGetChangelogEvents(
 > {
   //TODO implement
   return Promise.resolve(ok({ edges: [], hasMore: false }));
+}
+
+export async function eventGetChangelogTotalCount(
+  _databaseAdapter: PostgresDatabaseAdapter,
+  _context: TransactionContext,
+  _query: ChangelogQuery,
+): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  //TODO implement
+  return Promise.resolve(ok(0));
 }
