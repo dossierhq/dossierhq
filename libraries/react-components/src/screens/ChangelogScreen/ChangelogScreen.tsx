@@ -1,6 +1,6 @@
-import type { EntityReference } from '@dossierhq/core';
 import { FullscreenContainer } from '@dossierhq/design';
 import { useReducer, type ReactNode } from 'react';
+import { ChangelogConnectionButtons } from '../../components/ChangelogConnectionButtons/ChangelogConnectionButtons.js';
 import { ChangelogList } from '../../components/ChangelogList/ChangelogList.js';
 import { useAdminLoadChangelog } from '../../hooks/useAdminLoadChangelog.js';
 import { reduceChangelogState } from '../../reducers/ChangelogReducer/ChangelogReducer.js';
@@ -57,14 +57,9 @@ export function ChangelogScreen({
           />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
-      {/* <FullscreenContainer.Row padding={2} columnGap={2} flexDirection="row" alignItems="center">
-        <SearchOrSampleEntitiesButtons
-          {...{
-            searchEntityState: changelogState,
-            dispatchSearchEntityState: dispatchChangelogState,
-          }}
-        />
-      </FullscreenContainer.Row> */}
+      <FullscreenContainer.Row padding={2} columnGap={2} flexDirection="row" alignItems="center">
+        <ChangelogConnectionButtons {...{ changelogState, dispatchChangelogState }} />
+      </FullscreenContainer.Row>
       {footer ? <FullscreenContainer.Row fullWidth>{footer}</FullscreenContainer.Row> : null}
     </FullscreenContainer>
   );
