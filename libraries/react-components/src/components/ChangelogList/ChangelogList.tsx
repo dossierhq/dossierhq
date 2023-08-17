@@ -29,6 +29,7 @@ export function ChangelogList({ changelogState, dispatchChangelogState }: Props)
       <Table.Head>
         <Table.Row sticky>
           <Table.Header narrow>Event</Table.Header>
+          <Table.Header>Details</Table.Header>
           <Table.Header
             narrow
             order={direction}
@@ -36,7 +37,6 @@ export function ChangelogList({ changelogState, dispatchChangelogState }: Props)
           >
             Created at
           </Table.Header>
-          <Table.Header>Details</Table.Header>
         </Table.Row>
       </Table.Head>
       <Table.Body>
@@ -70,17 +70,19 @@ function ChangelogListRow({ event }: { event: ChangelogEvent }) {
       details = `Version ${event.version}`;
       break;
     default:
-      details = event.entities.map((entity) => entity.name).join(', ');
+      details = event.entities
+        .map((entity) => `${entity.name} (${entity.type}) version ${entity.version}`)
+        .join(', ');
       break;
   }
 
   return (
     <Table.Row>
       <Table.Cell>{event.type}</Table.Cell>
+      <Table.Cell>{details}</Table.Cell>
       <Table.Cell>
         <DateDisplay date={event.createdAt} />
       </Table.Cell>
-      <Table.Cell>{details}</Table.Cell>
     </Table.Row>
   );
 }
