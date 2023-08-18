@@ -52,7 +52,7 @@
     "@storybook/addon-essentials": "~7.2.1",
     "@storybook/addon-links": "~7.2.1",
     "@storybook/preset-scss": "~1.0.3",
-    "@storybook/react": "~7.2.1",
+    "@storybook/react": "~7.3.1",
     "@storybook/react-vite": "~7.2.1",
     "@types/lodash": "~4.14.196",
     "@types/react": "~18.2.19",
