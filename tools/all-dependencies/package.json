@@ -68,7 +68,7 @@
     "@rushstack/heft-lint-plugin": "~0.1.22",
     "@rushstack/heft-typescript-plugin": "~0.1.21",
     "@storybook/addon-actions": "~7.2.1",
-    "@storybook/addon-docs": "~7.2.1",
+    "@storybook/addon-docs": "~7.3.1",
     "@storybook/addon-essentials": "~7.2.1",
     "@storybook/addon-links": "~7.2.1",
     "@storybook/preset-scss": "~1.0.3",
