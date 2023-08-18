@@ -65,11 +65,6 @@ export function generateGetChangelogEventsQuery(
     );
   }
 
-  if (queryBuilder.query.text.endsWith('WHERE')) {
-    //TODO add support to sql query builder
-    sql`1=1`; // no-op
-  }
-
   // Ordering
   sql`ORDER BY e.id`;
   let ascending = !query?.reverse;
@@ -92,7 +87,7 @@ export function generateGetChangelogTotalCountQuery(
   entity: DatabaseResolvedEntityReference | null,
 ): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
   const queryBuilder = createSqliteSqlQuery();
-  const { sql } = queryBuilder;
+  const { sql, removeTrailingWhere } = queryBuilder;
 
   sql`SELECT COUNT(*) AS count FROM events e`;
   if (entity) {
@@ -103,10 +98,7 @@ export function generateGetChangelogTotalCountQuery(
 
   addQueryFilters(queryBuilder, query, entity);
 
-  if (queryBuilder.query.text.endsWith('WHERE')) {
-    //TODO add support to sql query builder
-    sql`1=1`; // no-op
-  }
+  removeTrailingWhere();
 
   return ok(queryBuilder.query);
 }

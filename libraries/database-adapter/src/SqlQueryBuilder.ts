@@ -30,6 +30,7 @@ interface SqlQueryBuilder<TValue> {
   sql: SqlTemplateTag<TValue>;
   query: Query<TValue>;
   addValue: (value: TValue) => ValueReference;
+  removeTrailingWhere: () => void;
 }
 
 type SqlQueryBuilderCallback<TValue> = (builder: Omit<SqlQueryBuilder<TValue>, 'query'>) => void;
@@ -51,7 +52,13 @@ function createSqlQuery<TValue>(config: DialectConfig): SqlQueryBuilder<TValue> 
 
   const addValue = (value: TValue) => addValueReference(query, value);
 
-  return { sql, query, addValue };
+  const removeTrailingWhere = () => {
+    if (query.text.endsWith('WHERE')) {
+      query.text = query.text.slice(0, query.text.length - 'WHERE'.length).trimEnd();
+    }
+  };
+
+  return { sql, query, addValue, removeTrailingWhere };
 }
 
 function createRawSql(sql: string): RawSql {
@@ -91,21 +98,25 @@ function addValueToQuery<TValue>(
 }
 
 function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boolean) {
+  let existingText = query.text;
+
   let textToAdd = text;
   if (query.text.endsWith('WHERE') && textToAdd.startsWith('AND')) {
     textToAdd = textToAdd.slice('AND'.length).trimStart();
+  } else if (query.text.endsWith('WHERE') && textToAdd.startsWith('ORDER')) {
+    existingText = existingText.slice(0, existingText.length - 'WHERE'.length).trimEnd();
   }
 
   let separator = '';
-  if (query.text && addSeparator) {
+  if (existingText && addSeparator) {
     //TODO simplify this
-    const currentEndsWithBracket = endsWithBracket(query.text);
+    const currentEndsWithBracket = endsWithBracket(existingText);
     const newStartsWithBracket = startsWithBracket(textToAdd);
-    const currentEndsWithPeriod = endsWithPeriod(query.text);
+    const currentEndsWithPeriod = endsWithPeriod(existingText);
     const newStartsWithPeriod = startsWithPeriod(textToAdd);
-    const currentEndsWithKeyword = endsWithKeyword(query.text);
+    const currentEndsWithKeyword = endsWithKeyword(existingText);
     const newStartsWithKeyword = startsWithKeyword(textToAdd);
-    const currentEndsWithOperator = endsWithOperator(query.text);
+    const currentEndsWithOperator = endsWithOperator(existingText);
     const newStartsWithOperator = startsWithOperator(textToAdd);
 
     if (
@@ -128,7 +139,7 @@ function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boole
     }
   }
 
-  query.text += separator + textToAdd;
+  query.text = existingText + separator + textToAdd;
 }
 
 function startsWithBracket(query: string) {

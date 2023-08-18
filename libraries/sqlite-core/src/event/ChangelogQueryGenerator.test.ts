@@ -25,7 +25,7 @@ describe('generateGetChangelogEventsQuery', () => {
   test('default', () => {
     expect(getChangelogEventsQuery().valueOrThrow()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE 1=1 ORDER BY e.id LIMIT ?1",
+        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id ORDER BY e.id LIMIT ?1",
         "values": [
           26,
         ],
@@ -36,7 +36,7 @@ describe('generateGetChangelogEventsQuery', () => {
   test('reverse', () => {
     expect(getChangelogEventsQuery({ reverse: true }).valueOrThrow()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE 1=1 ORDER BY e.id DESC LIMIT ?1",
+        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id ORDER BY e.id DESC LIMIT ?1",
         "values": [
           26,
         ],
@@ -108,7 +108,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
   test('default', () => {
     expect(generateGetChangelogTotalCountQuery({}, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT COUNT(*) AS count FROM events e WHERE 1=1",
+        "text": "SELECT COUNT(*) AS count FROM events e",
         "values": [],
       }
     `);
@@ -118,7 +118,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
     expect(generateGetChangelogTotalCountQuery({ reverse: true }, null).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
-          "text": "SELECT COUNT(*) AS count FROM events e WHERE 1=1",
+          "text": "SELECT COUNT(*) AS count FROM events e",
           "values": [],
         }
       `);
