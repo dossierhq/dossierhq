@@ -12,7 +12,12 @@ import type {
 } from '../Types.js';
 import { AdminEntityStatus, PublishingEventKind } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
-import { EventType, type SchemaChangelogEvent } from '../events/EventTypes.js';
+import {
+  EventType,
+  type EntityChangelogEvent,
+  type SchemaChangelogEvent,
+  type ChangelogEvent,
+} from '../events/EventTypes.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { assertIsDefined } from '../utils/Asserts.js';
 import type {
@@ -374,6 +379,13 @@ describe('AdminClient forward operation over JSON', () => {
       createdAt: new Date('2023-08-14T08:51:25.56Z'),
       version: 1,
     };
+    const event2: EntityChangelogEvent = {
+      type: EventType.createEntity,
+      createdBy: 'user',
+      createdAt: new Date('2023-08-14T08:51:25.56Z'),
+      entities: [{ id: '123', type: 'Foo', name: 'Hello', version: 0 }],
+      unauthorizedEntityCount: 1,
+    };
 
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
@@ -389,10 +401,8 @@ describe('AdminClient forward operation over JSON', () => {
               endCursor: 'end-cursor',
             },
             edges: [
-              {
-                cursor: 'event-1',
-                node: ok(event1),
-              },
+              { cursor: 'event-1', node: ok(event1) },
+              { cursor: 'event-2', node: ok(event2) },
             ],
           }),
         );
@@ -401,7 +411,7 @@ describe('AdminClient forward operation over JSON', () => {
     );
 
     const result = await adminClient.getChangelogEvents(
-      { schema: true, reverse: true },
+      { types: [EventType.updateSchema, EventType.createEntity], reverse: true },
       { first: 10, after: 'cursor' },
     );
     assertOkResult(result);
@@ -415,7 +425,11 @@ describe('AdminClient forward operation over JSON', () => {
       edges: [
         {
           cursor: 'event-1',
-          node: ok<SchemaChangelogEvent, typeof ErrorType.Generic>(event1),
+          node: ok<ChangelogEvent, typeof ErrorType.Generic>(event1),
+        },
+        {
+          cursor: 'event-2',
+          node: ok<ChangelogEvent, typeof ErrorType.Generic>(event2),
         },
       ],
     });
@@ -436,7 +450,10 @@ describe('AdminClient forward operation over JSON', () => {
             "args": [
               {
                 "reverse": true,
-                "schema": true,
+                "types": [
+                  "updateSchema",
+                  "createEntity",
+                ],
               },
               {
                 "after": "cursor",
@@ -464,7 +481,10 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getChangelogEventsTotalCount({ schema: true, reverse: true });
+    const result = await adminClient.getChangelogEventsTotalCount({
+      types: [EventType.archiveEntity],
+      reverse: true,
+    });
     assertOkResult(result);
     expectResultValue(result, 10);
 
@@ -483,7 +503,9 @@ describe('AdminClient forward operation over JSON', () => {
             "args": [
               {
                 "reverse": true,
-                "schema": true,
+                "types": [
+                  "archiveEntity",
+                ],
               },
             ],
             "modifies": false,

@@ -1,4 +1,4 @@
-import type { ChangelogQuery, Paging } from '@dossierhq/core';
+import { EventType, type ChangelogQuery, type Paging } from '@dossierhq/core';
 import type { DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
 import { createMockDatabase, resolvePaging } from '../test/TestUtils.js';
@@ -72,30 +72,35 @@ describe('generateGetChangelogEventsQuery', () => {
     `);
   });
 
-  test('schema only', () => {
-    expect(getChangelogEventsQuery({ schema: true }).valueOrThrow()).toMatchInlineSnapshot(`
-      {
-        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE e.type = ?1 ORDER BY e.id LIMIT ?2",
-        "values": [
-          "updateSchema",
-          26,
-        ],
-      }
-    `);
-  });
-
-  test('schema only - createdBy', () => {
-    expect(getChangelogEventsQuery({ schema: true, createdBy: '1-2-3' }).valueOrThrow())
+  test('types', () => {
+    expect(getChangelogEventsQuery({ types: [EventType.updateSchema] }).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
-          "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type = ?2 ORDER BY e.id LIMIT ?3",
+          "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE e.type IN (?1) ORDER BY e.id LIMIT ?2",
           "values": [
-            "1-2-3",
             "updateSchema",
             26,
           ],
         }
       `);
+  });
+
+  test('types and createdBy', () => {
+    expect(
+      getChangelogEventsQuery({
+        types: [EventType.updateSchema],
+        createdBy: '1-2-3',
+      }).valueOrThrow(),
+    ).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e JOIN subjects s ON e.created_by = s.id LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type IN (?2) ORDER BY e.id LIMIT ?3",
+        "values": [
+          "1-2-3",
+          "updateSchema",
+          26,
+        ],
+      }
+    `);
   });
 });
 
@@ -147,32 +152,33 @@ describe('generateGetChangelogTotalCountQuery', () => {
     `);
   });
 
-  test('schema only', () => {
-    expect(generateGetChangelogTotalCountQuery({ schema: true }, null).valueOrThrow())
-      .toMatchInlineSnapshot(`
-        {
-          "text": "SELECT COUNT(*) AS count FROM events e WHERE e.type = ?1",
-          "values": [
-            "updateSchema",
-          ],
-        }
-      `);
+  test('types', () => {
+    expect(
+      generateGetChangelogTotalCountQuery({ types: [EventType.updateSchema] }, null).valueOrThrow(),
+    ).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT COUNT(*) AS count FROM events e WHERE e.type IN (?1)",
+        "values": [
+          "updateSchema",
+        ],
+      }
+    `);
   });
 
-  test('schema only - createdBy', () => {
+  test('types and createdBy', () => {
     expect(
       generateGetChangelogTotalCountQuery(
-        { schema: true, createdBy: '1-2-3' },
+        { types: [EventType.updateSchema], createdBy: '1-2-3' },
         null,
       ).valueOrThrow(),
     ).toMatchInlineSnapshot(`
-        {
-          "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type = ?2",
-          "values": [
-            "1-2-3",
-            "updateSchema",
-          ],
-        }
-      `);
+      {
+        "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = ?1) AND e.type IN (?2)",
+        "values": [
+          "1-2-3",
+          "updateSchema",
+        ],
+      }
+    `);
   });
 });

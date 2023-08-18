@@ -1,5 +1,4 @@
 import {
-  EventType,
   assertExhaustive,
   ok,
   type ChangelogQuery,
@@ -113,7 +112,7 @@ export function generateGetChangelogTotalCountQuery(
 }
 
 function addQueryFilters(
-  { sql }: SqliteQueryBuilder,
+  { sql, addValueList }: SqliteQueryBuilder,
   query: ChangelogQuery,
   entity: DatabaseResolvedEntityReference | null,
 ) {
@@ -125,8 +124,8 @@ function addQueryFilters(
     sql`AND ev.entities_id = ${entity.entityInternalId as number}`;
   }
 
-  if ('schema' in query && query.schema) {
-    sql`AND e.type = ${EventType.updateSchema}`;
+  if (query.types && query.types.length > 0) {
+    sql`AND e.type IN ${addValueList(query.types)}`;
   }
 }
 

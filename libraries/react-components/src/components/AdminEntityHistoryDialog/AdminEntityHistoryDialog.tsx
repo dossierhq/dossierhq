@@ -4,6 +4,7 @@ import {
   type AdminEntityTypeSpecification,
   type ChangelogQuery,
   type EntityReference,
+  EventType,
 } from '@dossierhq/core';
 import {
   Card2,
@@ -60,9 +61,18 @@ function Content({ reference }: { reference: EntityReference }) {
     dispatchVersionSelectionState(new VersionSelectionAction.ChangeRightVersion(version));
   }, []);
 
-  // TODO filter to only show create/update events. deal with paging?
+  // TODO deal with paging of changelog events?
   const query = useMemo<ChangelogQuery>(() => {
-    return { entity: { id: reference.id }, reverse: true };
+    return {
+      entity: { id: reference.id },
+      types: [
+        EventType.createEntity,
+        EventType.createAndPublishEntity,
+        EventType.updateEntity,
+        EventType.updateAndPublishEntity,
+      ],
+      reverse: true,
+    };
   }, [reference.id]);
 
   const { connection, connectionError: _ } = useAdminChangelogEvents(adminClient, query, undefined);

@@ -20,11 +20,12 @@ interface Event<TEventType extends string> {
   createdBy: string;
 }
 
-export type ChangelogQuery = {
+export interface ChangelogQuery {
   reverse?: boolean;
   createdBy?: string;
   entity?: EntityReference;
-} & ({ schema: true } | object);
+  types?: (keyof typeof EventType)[];
+}
 
 export type ChangelogEvent = SchemaChangelogEvent | EntityChangelogEvent;
 

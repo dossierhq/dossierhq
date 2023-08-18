@@ -117,6 +117,7 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
+  // TODO rename to getEntities()->getEntitySet() or getEntityGroup(), searchEntities()->getEntities(), getTotalCount()->getEntitiesTotalCount(), sampleEntities()->getEntitiesSample(),
   getEntities(
     references: EntityReference[],
   ): PromiseResult<
