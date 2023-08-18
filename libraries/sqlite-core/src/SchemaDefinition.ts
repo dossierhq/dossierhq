@@ -290,6 +290,8 @@ const VERSION_18: SchemaVersionDefinition[] = [
   'CREATE INDEX event_entity_versions_entity_versions_id ON event_entity_versions(entity_versions_id);',
 ];
 
+const VERSION_19: SchemaVersionDefinition[] = ['UPDATE entity_versions SET version = version + 1'];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -310,6 +312,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_16,
   VERSION_17,
   VERSION_18,
+  VERSION_19,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
