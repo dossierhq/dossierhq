@@ -13,7 +13,7 @@ import {
   type PublishedQuery,
   type PublishedSearchQuery,
 } from '@dossierhq/core';
-import type { Cache, useSWRConfig } from 'swr';
+import type { Arguments, Cache, useSWRConfig } from 'swr';
 
 export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 
@@ -26,9 +26,6 @@ export const CACHE_KEYS = {
   },
   adminEntity(reference: EntityReference | EntityVersionReference) {
     return ['dossierhq/useAdminEntity', reference] as const;
-  },
-  adminEntityHistory(reference: EntityReference) {
-    return ['dossierhq/useAdminEntityHistory', reference] as const;
   },
   adminSampleEntities(query: AdminQuery | undefined, options: EntitySamplingOptions | undefined) {
     return ['dossierhq/useAdminSampleEntities', query, options] as const;
@@ -58,18 +55,20 @@ export const CACHE_KEYS = {
   publishedSchema: 'dossierhq/usePublishedSchema',
 };
 
-export function clearCacheDueToSchemaMigrations(cache: Cache, mutate: ScopedMutator) {
-  mutate((key) => {
-    let firstStringKey;
-    if (typeof key === 'string') {
-      firstStringKey = key;
-    } else if (Array.isArray(key) && typeof key[0] === 'string') {
-      firstStringKey = key[0];
-    } else {
-      return false;
-    }
+function geInitialCacheKey(key: Arguments): string | null {
+  if (typeof key === 'string') {
+    return key;
+  }
+  if (Array.isArray(key) && typeof key[0] === 'string') {
+    return key[0];
+  }
+  return null;
+}
 
-    const shouldMutate = firstStringKey.startsWith('dossierhq');
+export function clearCacheDueToSchemaMigrations(mutate: ScopedMutator) {
+  mutate((key) => {
+    const initialKey = geInitialCacheKey(key);
+    const shouldMutate = initialKey && initialKey.startsWith('dossierhq');
     return shouldMutate;
   });
 }
@@ -111,12 +110,12 @@ export function updateCacheEntityInfo<TEffect>(
   });
 }
 
-export function invalidateEntityHistory(mutate: ScopedMutator, entityId: string) {
-  const key = CACHE_KEYS.adminEntityHistory({ id: entityId });
-  mutate(key);
-}
+export function invalidateChangelogEvents(mutate: ScopedMutator) {
+  const keyString = CACHE_KEYS.adminChangelogEvents(undefined, undefined)[0];
 
-export function invalidatePublishingHistory(mutate: ScopedMutator, entityId: string) {
-  const key = CACHE_KEYS.adminPublishingHistory({ id: entityId });
-  mutate(key);
+  mutate((key) => {
+    const initialKey = geInitialCacheKey(key);
+    const shouldMutate = initialKey === keyString;
+    return shouldMutate;
+  });
 }

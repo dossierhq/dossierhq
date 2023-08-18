@@ -39,9 +39,15 @@ export function EntityChangelogList({ entity }: Props) {
         const event = edge.node.value;
         const entityInfo =
           'entities' in event ? event.entities.find((it) => it.id === entity.id) : null;
+
+        let shortType: string = event.type;
+        if (shortType.endsWith('Entity')) shortType = shortType.slice(0, -6);
+        if (shortType.endsWith('Entities')) shortType = shortType.slice(0, -8);
+        shortType = shortType.replace('And', ' & ');
+
         return (
           <Row key={edge.cursor} gap={2}>
-            <Tag>{event.type}</Tag>
+            <Tag>{shortType}</Tag>
             <Tag>{entityInfo ? String(entityInfo.version) : '–'}</Tag>
             <Row.Item flexGrow={1}>
               <DateDisplay date={event.createdAt} />

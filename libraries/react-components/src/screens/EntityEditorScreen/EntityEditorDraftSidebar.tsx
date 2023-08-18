@@ -48,7 +48,7 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
               <AdminEntityHistoryDialog reference={{ id: entity.id }} />
             </Dialog2.Trigger>
           ) : null}
-          <Text textStyle="headline6">Changelog</Text>
+          <Text textStyle="subtitle2">Changelog</Text>
           <EntityChangelogList entity={{ id: activeEntityId }} />
         </>
       ) : null}

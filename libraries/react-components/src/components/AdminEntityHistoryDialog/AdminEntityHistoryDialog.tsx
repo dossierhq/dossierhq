@@ -1,5 +1,10 @@
-import type { AdminEntity, AdminEntityTypeSpecification, EntityReference } from '@dossierhq/core';
-import { isFieldValueEqual } from '@dossierhq/core';
+import {
+  isFieldValueEqual,
+  type AdminEntity,
+  type AdminEntityTypeSpecification,
+  type ChangelogQuery,
+  type EntityReference,
+} from '@dossierhq/core';
 import {
   Card2,
   Dialog2,
@@ -8,10 +13,10 @@ import {
   SelectDisplay,
   Text,
 } from '@dossierhq/design';
-import { useCallback, useContext, useEffect, useReducer } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { useAdminChangelogEvents } from '../../hooks/useAdminChangelogEvents.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
-import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
 import {
   VersionSelectionAction,
   initializeVersionSelectionState,
@@ -46,7 +51,7 @@ function Content({ reference }: { reference: EntityReference }) {
   const [
     { leftVersion, leftVersionItems, rightVersion, rightVersionItems },
     dispatchVersionSelectionState,
-  ] = useReducer(reduceVersionSelectionState, undefined, initializeVersionSelectionState);
+  ] = useReducer(reduceVersionSelectionState, reference, initializeVersionSelectionState);
 
   const handleLeftVersionChange = useCallback((version: number) => {
     dispatchVersionSelectionState(new VersionSelectionAction.ChangeLeftVersion(version));
@@ -55,7 +60,13 @@ function Content({ reference }: { reference: EntityReference }) {
     dispatchVersionSelectionState(new VersionSelectionAction.ChangeRightVersion(version));
   }, []);
 
-  const { entityHistory } = useAdminEntityHistory(adminClient, reference ?? undefined);
+  // TODO filter to only show create/update events. deal with paging?
+  const query = useMemo<ChangelogQuery>(() => {
+    return { entity: { id: reference.id }, reverse: true };
+  }, [reference.id]);
+
+  const { connection, connectionError: _ } = useAdminChangelogEvents(adminClient, query, undefined);
+
   const { entity: leftEntity } = useAdminEntity(
     adminClient,
     leftVersion !== null ? { id: reference.id, version: leftVersion } : undefined,
@@ -69,9 +80,9 @@ function Content({ reference }: { reference: EntityReference }) {
     schema && leftEntity ? schema.getEntityTypeSpecification(leftEntity.info.type) : null;
 
   useEffect(() => {
-    if (entityHistory)
-      dispatchVersionSelectionState(new VersionSelectionAction.UpdateVersionHistory(entityHistory));
-  }, [entityHistory]);
+    if (connection)
+      dispatchVersionSelectionState(new VersionSelectionAction.UpdateVersionHistory(connection));
+  }, [connection]);
 
   return (
     <>
