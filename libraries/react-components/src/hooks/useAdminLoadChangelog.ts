@@ -7,7 +7,7 @@ import {
   type ChangelogStateAction,
 } from '../reducers/ChangelogReducer/ChangelogReducer.js';
 import { useAdminChangelogEvents } from './useAdminChangelogEvents.js';
-import { useAdminChangelogTotalCount } from './useAdminChangelogTotalCount.js';
+import { useAdminChangelogEventsTotalCount } from './useAdminChangelogEventsTotalCount.js';
 
 export function useAdminLoadChangelog(
   changelogState: ChangelogState,
@@ -21,7 +21,7 @@ export function useAdminLoadChangelog(
     changelogState.query,
     changelogState.paging,
   );
-  const { totalCount } = useAdminChangelogTotalCount(adminClient, changelogState.query);
+  const { totalCount } = useAdminChangelogEventsTotalCount(adminClient, changelogState.query);
 
   useEffect(() => {
     dispatchChangelogState(

@@ -21,8 +21,8 @@ export const CACHE_KEYS = {
   adminChangelogEvents(query: ChangelogQuery | undefined, paging: Paging | undefined) {
     return ['dossierhq/useAdminChangelogEvents', query, paging] as const;
   },
-  adminChangelogTotalCount(query: ChangelogQuery | undefined) {
-    return ['dossierhq/useAdminChangelogTotalCount', query] as const;
+  adminChangelogEventsTotalCount(query: ChangelogQuery | undefined) {
+    return ['dossierhq/useAdminChangelogEventsTotalCount', query] as const;
   },
   adminEntity(reference: EntityReference | EntityVersionReference) {
     return ['dossierhq/useAdminEntity', reference] as const;

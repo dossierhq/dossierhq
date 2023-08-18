@@ -14,7 +14,7 @@ type FetcherKey = Readonly<[string, ChangelogQuery | undefined]>;
 type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
-export function useAdminChangelogTotalCount(
+export function useAdminChangelogEventsTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   query: ChangelogQuery | undefined,
 ): {
@@ -22,20 +22,20 @@ export function useAdminChangelogTotalCount(
   totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query]: FetcherKey) => fetchChangelogTotalCount(adminClient, query),
+    ([_action, query]: FetcherKey) => fetchChangelogEventsTotalCount(adminClient, query),
     [adminClient],
   );
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
-    query ? CACHE_KEYS.adminChangelogTotalCount(query) : null,
+    query ? CACHE_KEYS.adminChangelogEventsTotalCount(query) : null,
     fetcher,
   );
 
-  // useDebugLogChangedValues('useAdminChangelogTotalCount changed values', { data, error });
+  // useDebugLogChangedValues('useAdminChangelogEventsTotalCount changed values', { data, error });
 
   return { totalCount: data, totalCountError: error };
 }
 
-async function fetchChangelogTotalCount(
+async function fetchChangelogEventsTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
