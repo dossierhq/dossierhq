@@ -30,9 +30,6 @@ export const CACHE_KEYS = {
   adminEntityHistory(reference: EntityReference) {
     return ['dossierhq/useAdminEntityHistory', reference] as const;
   },
-  adminPublishingHistory(reference: EntityReference) {
-    return ['dossierhq/useAdminPublishingHistory', reference] as const;
-  },
   adminSampleEntities(query: AdminQuery | undefined, options: EntitySamplingOptions | undefined) {
     return ['dossierhq/useAdminSampleEntities', query, options] as const;
   },
