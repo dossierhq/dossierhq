@@ -29,6 +29,18 @@ CREATE TYPE public.entity_status AS ENUM (
     'archived'
 );
 
+CREATE TYPE public.event_type AS ENUM (
+    'createEntity',
+    'createAndPublishEntity',
+    'updateEntity',
+    'updateAndPublishEntity',
+    'publishEntities',
+    'unpublishEntities',
+    'archiveEntity',
+    'unarchiveEntity',
+    'updateSchema'
+);
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -231,6 +243,41 @@ CREATE SEQUENCE public.entity_versions_id_seq
 
 ALTER SEQUENCE public.entity_versions_id_seq OWNED BY public.entity_versions.id;
 
+CREATE TABLE public.event_entity_versions (
+    id integer NOT NULL,
+    events_id integer NOT NULL,
+    entity_versions_id integer NOT NULL,
+    entity_type character varying(255) NOT NULL
+);
+
+CREATE SEQUENCE public.event_entity_versions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.event_entity_versions_id_seq OWNED BY public.event_entity_versions.id;
+
+CREATE TABLE public.events (
+    id integer NOT NULL,
+    type public.event_type NOT NULL,
+    created_by integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    schema_versions_id integer
+);
+
+CREATE SEQUENCE public.events_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
+
 CREATE TABLE public.principals (
     id integer NOT NULL,
     provider character varying(255) NOT NULL,
@@ -329,6 +376,10 @@ ALTER TABLE ONLY public.entity_publishing_events ALTER COLUMN id SET DEFAULT nex
 
 ALTER TABLE ONLY public.entity_versions ALTER COLUMN id SET DEFAULT nextval('public.entity_versions_id_seq'::regclass);
 
+ALTER TABLE ONLY public.event_entity_versions ALTER COLUMN id SET DEFAULT nextval('public.event_entity_versions_id_seq'::regclass);
+
+ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
+
 ALTER TABLE ONLY public.principals ALTER COLUMN id SET DEFAULT nextval('public.principals_id_seq'::regclass);
 
 ALTER TABLE ONLY public.schema_versions ALTER COLUMN id SET DEFAULT nextval('public.schema_versions_id_seq'::regclass);
@@ -379,6 +430,12 @@ ALTER TABLE ONLY public.entity_published_value_types
 ALTER TABLE ONLY public.entity_versions
     ADD CONSTRAINT entity_versions_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY public.event_entity_versions
+    ADD CONSTRAINT event_entity_versions_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
 ALTER TABLE ONLY public.principals
     ADD CONSTRAINT principals_pkey PRIMARY KEY (id);
 
@@ -411,6 +468,10 @@ CREATE INDEX entities_dirty ON public.entities USING btree (dirty);
 CREATE INDEX entities_latest_fts_index ON public.entities USING gin (latest_fts);
 
 CREATE INDEX entities_published_fts_index ON public.entities USING gin (published_fts);
+
+CREATE INDEX event_entity_versions_entity_versions_id ON public.event_entity_versions USING btree (entity_versions_id);
+
+CREATE INDEX event_entity_versions_events_id ON public.event_entity_versions USING btree (events_id);
 
 CREATE INDEX unique_index_values_entities_id ON public.unique_index_values USING btree (entities_id);
 
@@ -458,6 +519,18 @@ ALTER TABLE ONLY public.entity_versions
 
 ALTER TABLE ONLY public.entity_versions
     ADD CONSTRAINT entity_versions_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.event_entity_versions
+    ADD CONSTRAINT event_entity_versions_entity_versions_id_fkey FOREIGN KEY (entity_versions_id) REFERENCES public.entity_versions(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.event_entity_versions
+    ADD CONSTRAINT event_entity_versions_events_id_fkey FOREIGN KEY (events_id) REFERENCES public.events(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.subjects(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_schema_versions_id_fkey FOREIGN KEY (schema_versions_id) REFERENCES public.schema_versions(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.principals
     ADD CONSTRAINT principals_subjects_id_fkey FOREIGN KEY (subjects_id) REFERENCES public.subjects(id) ON DELETE CASCADE;

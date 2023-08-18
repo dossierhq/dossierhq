@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationWithMigrations } from '@dossierhq/core';
+import type { AdminSchemaSpecificationWithMigrations, EventType } from '@dossierhq/core';
 
 export const UniqueConstraints = {
   advisory_locks_name_key: 'advisory_locks_name_key',
@@ -97,6 +97,19 @@ export interface EntityPublishingEventsTable {
   kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
   published_by: number;
   published_at: Date;
+}
+
+export interface EventsTable {
+  id: number;
+  type: keyof typeof EventType;
+  created_at: Date;
+}
+
+export interface EventEntityVersionsTable {
+  id: number;
+  events_id: number;
+  entity_versions_id: number;
+  entity_type: string;
 }
 
 export interface UniqueIndexValuesTable {

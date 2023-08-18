@@ -16,7 +16,7 @@ const VERSION_1: SchemaVersionDefinition[] = [
     uuid TEXT NOT NULL,
     created_at TEXT NOT NULL,
     CONSTRAINT subjects_uuid UNIQUE (uuid)
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE principals (
     id INTEGER PRIMARY KEY,
     provider TEXT NOT NULL,
@@ -24,15 +24,15 @@ const VERSION_1: SchemaVersionDefinition[] = [
     subjects_id INTEGER NOT NULL,
     CONSTRAINT principals_pkey UNIQUE (provider, identifier),
     FOREIGN KEY (subjects_id) REFERENCES subjects(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE schema_versions (
     id INTEGER PRIMARY KEY,
     specification TEXT NOT NULL
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE sequences (
     name TEXT NOT NULL UNIQUE,
     value INTEGER DEFAULT 0
-  ) STRICT`,
+) STRICT`,
   `INSERT INTO sequences (name) VALUES ('entities_updated')`,
   `CREATE TABLE entities (
     id INTEGER PRIMARY KEY,
@@ -53,7 +53,7 @@ const VERSION_1: SchemaVersionDefinition[] = [
     CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
     FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
     FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
-  ) STRICT`,
+) STRICT`,
   (options) => `CREATE VIRTUAL TABLE entities_latest_fts USING ${options.fts.version} (
     content${options.fts.tokenizer ? `, tokenize=${options.fts.tokenizer}` : ''}
   )`,
@@ -69,21 +69,21 @@ const VERSION_1: SchemaVersionDefinition[] = [
     fields TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES subjects(id)
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE entity_version_locations (
     id INTEGER PRIMARY KEY,
     entity_versions_id INTEGER NOT NULL,
     lat REAL NOT NULL,
     lng REAL NOT NULL,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE entity_version_references (
     id INTEGER PRIMARY KEY,
     entity_versions_id INTEGER NOT NULL,
     entities_id INTEGER NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE entity_publishing_events (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -94,7 +94,7 @@ const VERSION_1: SchemaVersionDefinition[] = [
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE,
     FOREIGN KEY (published_by) REFERENCES subjects(id)
-  ) STRICT`,
+) STRICT`,
 ];
 
 const VERSION_2: SchemaVersionDefinition[] = [
@@ -107,7 +107,7 @@ const VERSION_2: SchemaVersionDefinition[] = [
     expires_at INTEGER NOT NULL,
     lease_duration INTEGER NOT NULL,
     CONSTRAINT advisory_locks_name UNIQUE (name)
-  ) STRICT`,
+) STRICT`,
 ];
 
 const VERSION_3: SchemaVersionDefinition[] = [
@@ -117,7 +117,7 @@ const VERSION_3: SchemaVersionDefinition[] = [
     to_entities_id INTEGER NOT NULL,
     FOREIGN KEY (from_entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (to_entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `INSERT INTO entity_published_references(from_entities_id, to_entities_id)
     SELECT e.id AS from_entities_id, evr.entities_id AS to_entities_id
       FROM entities e, entity_version_references evr
@@ -131,7 +131,7 @@ const VERSION_4: SchemaVersionDefinition[] = [
     to_entities_id INTEGER NOT NULL,
     FOREIGN KEY (from_entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (to_entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `INSERT INTO entity_latest_references(from_entities_id, to_entities_id)
     SELECT e.id AS from_entities_id, evr.entities_id AS to_entities_id
       FROM entities e, entity_version_references evr
@@ -146,14 +146,14 @@ const VERSION_5: SchemaVersionDefinition[] = [
     lat REAL NOT NULL,
     lng REAL NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `CREATE TABLE entity_latest_locations (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     lat REAL NOT NULL,
     lng REAL NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT`,
+) STRICT`,
   `INSERT INTO entity_published_locations(entities_id, lat, lng)
     SELECT e.id AS entities_id, evl.lat, evl.lng
       FROM entities e, entity_version_locations evl
@@ -175,7 +175,7 @@ const VERSION_6: SchemaVersionDefinition[] = [
     published INTEGER NOT NULL DEFAULT FALSE,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     CONSTRAINT unique_index_values_index_value UNIQUE (index_name, value)
-  ) STRICT`,
+) STRICT`,
   `CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id)`,
 ];
 
@@ -217,13 +217,13 @@ const VERSION_12: SchemaVersionDefinition[] = [
     entities_id INTEGER NOT NULL,
     value_type TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  )`,
+)`,
   `CREATE TABLE entity_published_value_types (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     value_type TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  )`,
+)`,
 ];
 
 const VERSION_13: SchemaVersionDefinition[] = [
@@ -242,7 +242,7 @@ const VERSION_14: SchemaVersionDefinition[] = [
     version INTEGER NOT NULL UNIQUE,
     updated_at TEXT NOT NULL,
     specification TEXT NOT NULL
-  ) STRICT`,
+) STRICT`,
   () => ({
     text: `INSERT INTO schema_versions(version, updated_at, specification)
             SELECT id AS version, ?1 AS updated_at, specification FROM old_schema_versions`,
@@ -261,7 +261,7 @@ const VERSION_16: SchemaVersionDefinition[] = [
   `CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
     DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
     DELETE FROM entities_published_fts WHERE rowid = OLD.id;
-   END`,
+END`,
 ];
 
 const VERSION_17: SchemaVersionDefinition[] = [
@@ -269,8 +269,23 @@ const VERSION_17: SchemaVersionDefinition[] = [
 ];
 
 const VERSION_18: SchemaVersionDefinition[] = [
-  'CREATE TABLE events (id INTEGER PRIMARY KEY, type TEXT NOT NULL, created_by INTEGER NOT NULL, created_at TEXT NOT NULL, schema_versions_id INTEGER, FOREIGN KEY (created_by) REFERENCES subjects(id), FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id)) STRICT',
-  'CREATE TABLE event_entity_versions (id INTEGER PRIMARY KEY, events_id INTEGER NOT NULL, entity_versions_id INTEGER NOT NULL, entity_type TEXT NOT NULL, FOREIGN KEY (events_id) REFERENCES events(id), FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id)) STRICT',
+  `CREATE TABLE events (
+    id INTEGER PRIMARY KEY,
+    type TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    schema_versions_id INTEGER,
+    FOREIGN KEY (created_by) REFERENCES subjects(id) ON DELETE CASCADE,
+    FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id) ON DELETE CASCADE
+) STRICT`,
+  `CREATE TABLE event_entity_versions (
+    id INTEGER PRIMARY KEY,
+    events_id INTEGER NOT NULL,
+    entity_versions_id INTEGER NOT NULL,
+    entity_type TEXT NOT NULL,
+    FOREIGN KEY (events_id) REFERENCES events(id) ON DELETE CASCADE,
+    FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
+) STRICT`,
   'CREATE INDEX event_entity_versions_events_id ON event_entity_versions(events_id)',
   'CREATE INDEX event_entity_versions_entity_versions_id ON event_entity_versions(entity_versions_id);',
 ];

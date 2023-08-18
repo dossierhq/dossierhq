@@ -1,4 +1,4 @@
-import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { EventType, notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   DEFAULT,
   buildPostgresSqlQuery,
@@ -14,6 +14,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
@@ -53,6 +54,15 @@ export async function adminCreateEntity(
     values: [versionsId, entityId],
   });
   if (updateLatestDraftIdResult.isError()) return updateLatestDraftIdResult;
+
+  const createEventResult = await createEntityEvent(
+    databaseAdapter,
+    context,
+    entity.session,
+    entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
+    [{ entityVersionsId: versionsId, entityType: entity.type }],
+  );
+  if (createEventResult.isError()) return createEventResult;
 
   return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
 }

@@ -3,7 +3,7 @@ CREATE TABLE subjects (
     uuid TEXT NOT NULL,
     created_at TEXT NOT NULL,
     CONSTRAINT subjects_uuid UNIQUE (uuid)
-  ) STRICT;
+) STRICT;
 CREATE TABLE principals (
     id INTEGER PRIMARY KEY,
     provider TEXT NOT NULL,
@@ -11,11 +11,11 @@ CREATE TABLE principals (
     subjects_id INTEGER NOT NULL,
     CONSTRAINT principals_pkey UNIQUE (provider, identifier),
     FOREIGN KEY (subjects_id) REFERENCES subjects(id) ON DELETE CASCADE
-  ) STRICT;
+) STRICT;
 CREATE TABLE sequences (
     name TEXT NOT NULL UNIQUE,
     value INTEGER DEFAULT 0
-  ) STRICT;
+) STRICT;
 CREATE TABLE entities (
     id INTEGER PRIMARY KEY,
     uuid TEXT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE entities (
     CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
     FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
     FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
-  ) STRICT;
+) STRICT;
 CREATE VIRTUAL TABLE entities_latest_fts USING fts5 (
     content
   )
@@ -63,7 +63,7 @@ CREATE TABLE entity_versions (
     fields TEXT NOT NULL, schema_version INTEGER NOT NULL DEFAULT 0, encode_version INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES subjects(id)
-  ) STRICT;
+) STRICT;
 CREATE TABLE entity_publishing_events (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE entity_publishing_events (
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE,
     FOREIGN KEY (published_by) REFERENCES subjects(id)
-  ) STRICT;
+) STRICT;
 CREATE TABLE advisory_locks (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
@@ -84,35 +84,35 @@ CREATE TABLE advisory_locks (
     expires_at INTEGER NOT NULL,
     lease_duration INTEGER NOT NULL,
     CONSTRAINT advisory_locks_name UNIQUE (name)
-  ) STRICT;
+) STRICT;
 CREATE TABLE entity_published_references (
     id INTEGER PRIMARY KEY,
     from_entities_id INTEGER NOT NULL,
     to_entities_id INTEGER NOT NULL,
     FOREIGN KEY (from_entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (to_entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT;
+) STRICT;
 CREATE TABLE entity_latest_references (
     id INTEGER PRIMARY KEY,
     from_entities_id INTEGER NOT NULL,
     to_entities_id INTEGER NOT NULL,
     FOREIGN KEY (from_entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (to_entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT;
+) STRICT;
 CREATE TABLE entity_published_locations (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     lat REAL NOT NULL,
     lng REAL NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT;
+) STRICT;
 CREATE TABLE entity_latest_locations (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     lat REAL NOT NULL,
     lng REAL NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  ) STRICT;
+) STRICT;
 CREATE TABLE unique_index_values (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE unique_index_values (
     published INTEGER NOT NULL DEFAULT FALSE,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     CONSTRAINT unique_index_values_index_value UNIQUE (index_name, value)
-  ) STRICT;
+) STRICT;
 CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id);
 CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id);
 CREATE INDEX entity_published_references_from_entities_id ON entity_published_references(from_entities_id);
@@ -140,22 +140,39 @@ CREATE TABLE entity_latest_value_types (
     entities_id INTEGER NOT NULL,
     value_type TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  );
+);
 CREATE TABLE entity_published_value_types (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
     value_type TEXT NOT NULL,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE
-  );
+);
 CREATE TABLE schema_versions (
     id INTEGER PRIMARY KEY,
     version INTEGER NOT NULL UNIQUE,
     updated_at TEXT NOT NULL,
     specification TEXT NOT NULL
-  ) STRICT;
+) STRICT;
 CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
     DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
     DELETE FROM entities_published_fts WHERE rowid = OLD.id;
-   END;
-CREATE TABLE events (id INTEGER PRIMARY KEY, type TEXT NOT NULL, created_by INTEGER NOT NULL, created_at TEXT NOT NULL, schema_versions_id INTEGER, FOREIGN KEY (created_by) REFERENCES subjects(id), FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id)) STRICT;
-CREATE TABLE event_entity_versions (id INTEGER PRIMARY KEY, events_id INTEGER NOT NULL, entity_versions_id INTEGER NOT NULL, entity_type TEXT NOT NULL, FOREIGN KEY (events_id) REFERENCES events(id), FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id)) STRICT;
+END;
+CREATE TABLE events (
+    id INTEGER PRIMARY KEY,
+    type TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    schema_versions_id INTEGER,
+    FOREIGN KEY (created_by) REFERENCES subjects(id) ON DELETE CASCADE,
+    FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id) ON DELETE CASCADE
+) STRICT;
+CREATE TABLE event_entity_versions (
+    id INTEGER PRIMARY KEY,
+    events_id INTEGER NOT NULL,
+    entity_versions_id INTEGER NOT NULL,
+    entity_type TEXT NOT NULL,
+    FOREIGN KEY (events_id) REFERENCES events(id) ON DELETE CASCADE,
+    FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
+) STRICT;
+CREATE INDEX event_entity_versions_events_id ON event_entity_versions(events_id);
+CREATE INDEX event_entity_versions_entity_versions_id ON event_entity_versions(entity_versions_id);

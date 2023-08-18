@@ -1,5 +1,5 @@
 import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { EventType, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseEntityUpdateEntityArg,
   DatabaseEntityUpdateEntityPayload,
@@ -17,6 +17,7 @@ import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -145,6 +146,15 @@ export async function adminEntityUpdateEntity(
   );
   if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;
+
+  const createEventResult = await createEntityEvent(
+    databaseAdapter,
+    context,
+    entity.session,
+    entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
+    [{ entityVersionsId: versionsId, entityType: entity.type }],
+  );
+  if (createEventResult.isError()) return createEventResult;
 
   return ok({ name: newName, updatedAt });
 }
