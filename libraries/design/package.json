@@ -48,7 +48,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.58.2",
     "@storybook/addon-actions": "~7.2.1",
-    "@storybook/addon-docs": "~7.2.1",
+    "@storybook/addon-docs": "~7.3.1",
     "@storybook/addon-essentials": "~7.2.1",
     "@storybook/addon-links": "~7.2.1",
     "@storybook/preset-scss": "~1.0.3",
