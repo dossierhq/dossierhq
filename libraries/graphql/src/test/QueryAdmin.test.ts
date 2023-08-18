@@ -278,7 +278,7 @@ describe('adminEntity()', () => {
           __typename: 'AdminQueryAdminFoo',
           id,
           info: {
-            version: 0,
+            version: 1,
             type: 'QueryAdminFoo',
             name,
             authKey: 'none',
@@ -334,7 +334,7 @@ describe('adminEntity()', () => {
             __typename: 'AdminQueryAdminFoo',
             id,
             info: {
-              version: 0,
+              version: 1,
               type: 'QueryAdminFoo',
               name,
               authKey: 'none',
@@ -389,7 +389,7 @@ describe('adminEntity()', () => {
             info: {
               type: 'QueryAdminFoo',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.draft,
               valid: true,
@@ -481,12 +481,12 @@ describe('adminEntity()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { id, version1: 0, version2: 1, version3: 100, version4: null },
+        variableValues: { id, version1: 1, version2: 2, version3: 100, version4: null },
       });
       expect(result.data).toEqual({
         first: {
           id,
-          info: { version: 0 },
+          info: { version: 1 },
           fields: {
             title: 'First title',
             summary: 'First summary',
@@ -494,7 +494,7 @@ describe('adminEntity()', () => {
         },
         second: {
           id,
-          info: { version: 1 },
+          info: { version: 2 },
           fields: {
             title: 'Second title',
             summary: 'Second summary',
@@ -504,7 +504,7 @@ describe('adminEntity()', () => {
         fourth: {
           //default to max
           id,
-          info: { version: 1 },
+          info: { version: 2 },
           fields: {
             title: 'Second title',
             summary: 'Second summary',
@@ -572,7 +572,7 @@ describe('adminEntity()', () => {
         adminEntity: {
           id,
           info: {
-            version: 0,
+            version: 1,
             name,
             authKey: 'none',
             status: AdminEntityStatus.published,
@@ -643,7 +643,7 @@ describe('adminEntity()', () => {
             info: {
               type: 'QueryAdminFoo',
               name: fooName,
-              version: 0,
+              version: 1,
             },
             fields: {
               body: { ...body, entities: [] },
@@ -739,7 +739,7 @@ describe('adminEntity()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
               },
               fields: {
                 body: {
@@ -825,7 +825,7 @@ describe('adminEntity()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
               },
               fields: {
                 title: 'Foo title',
@@ -1029,7 +1029,7 @@ describe('adminEntity()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
               },
               fields: {
                 title: 'Foo title',
@@ -1730,8 +1730,8 @@ describe('entityHistory()', () => {
         entityHistory: {
           id,
           versions: [
-            { createdBy: server.subjectId, published: false, version: 0 },
-            { createdBy: server.subjectId, published: true, version: 1 },
+            { createdBy: server.subjectId, published: false, version: 1 },
+            { createdBy: server.subjectId, published: true, version: 2 },
           ],
         },
       });
@@ -1849,7 +1849,7 @@ describe('publishingHistory()', () => {
       expect(result.data).toEqual({
         publishingHistory: {
           id,
-          events: [{ publishedBy: server.subjectId, publishedAt, version: 0 }],
+          events: [{ publishedBy: server.subjectId, publishedAt, version: 1 }],
         },
       });
     }

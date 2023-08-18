@@ -129,7 +129,7 @@ describe('node()', () => {
         },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
 
       const result = await graphql({
         schema,
@@ -194,7 +194,7 @@ describe('node()', () => {
         },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
 
       const result = await graphql({
         schema,
@@ -271,7 +271,7 @@ describe('node()', () => {
         },
       } = createFooResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
       const result = await graphql({
         schema,
@@ -435,7 +435,7 @@ describe('node()', () => {
         },
       } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
@@ -449,7 +449,7 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
@@ -534,8 +534,8 @@ describe('node()', () => {
 
       expectOkResult(
         await adminClient.publishEntities([
-          { id: bar1Id, version: 0 },
-          { id: bar2Id, version: 0 },
+          { id: bar1Id, version: 1 },
+          { id: bar2Id, version: 1 },
         ]),
       );
 
@@ -551,7 +551,7 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
@@ -630,7 +630,7 @@ describe('node()', () => {
         },
       } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
@@ -647,7 +647,7 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
@@ -798,8 +798,8 @@ describe('nodes()', () => {
 
       expectOkResult(
         await adminClient.publishEntities([
-          { id: foo1Id, version: 0 },
-          { id: foo2Id, version: 0 },
+          { id: foo1Id, version: 1 },
+          { id: foo2Id, version: 1 },
         ]),
       );
 

@@ -42,7 +42,7 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
             <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
           </Row>
           <AdminEntityLinks entityReference={{ id: entity.id }} />
-          {entity.info.version > 0 ? (
+          {entity.info.version > 1 ? (
             <Dialog2.Trigger isOpen={historyIsOpen} onOpenChange={setHistoryIsOpen}>
               <Button onClick={() => setHistoryIsOpen(true)}>Entity history</Button>
               <AdminEntityHistoryDialog reference={{ id: entity.id }} />

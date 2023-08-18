@@ -122,7 +122,7 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
   const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Updated title' } });
   assertOkResult(updateResult);
 
-  const publishResult = await adminClient.publishEntities([{ id, version: 0 }]);
+  const publishResult = await adminClient.publishEntities([{ id, version: 1 }]);
   assertOkResult(publishResult);
   const [{ updatedAt }] = publishResult.value;
   assertResultValue(publishResult, [

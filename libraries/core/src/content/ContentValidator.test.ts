@@ -110,7 +110,7 @@ const STRINGS_ENTITY_DEFAULT: AdminEntity = {
     type: 'StringsEntity',
     name: 'StringsEntity',
     authKey: 'none',
-    version: 0,
+    version: 1,
     status: 'draft',
     valid: true,
     validPublished: null,
@@ -285,7 +285,7 @@ describe('validateEntityInfoForCreate', () => {
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { version: 1 as 0 } }),
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { version: 0 as 1 } }),
       ),
     ).toMatchSnapshot();
   });

@@ -113,11 +113,11 @@ async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext)
     entity: { id },
   } = createResult.value;
 
-  const resultMinusOne = await client.getEntity({ id, version: -1 });
+  const resultMinusOne = await client.getEntity({ id, version: 0 });
   assertErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
 
-  const resultOne = await client.getEntity({ id, version: 1 });
-  assertErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
+  const resultPlusOne = await client.getEntity({ id, version: 2 });
+  assertErrorResult(resultPlusOne, ErrorType.NotFound, 'No such entity or version');
 }
 
 async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTestContext) {

@@ -135,7 +135,7 @@ describe('AddDraftAction', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-05-01T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           foo: null,
@@ -374,7 +374,7 @@ describe('UpdateEntityAction', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           title: 'Foo title',
@@ -417,7 +417,7 @@ describe('UpdateEntityAction', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           title: 'Foo title',
@@ -483,7 +483,7 @@ describe('EntityEditorReducer scenarios', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           title: "Foo's title",
@@ -542,7 +542,7 @@ describe('EntityEditorReducer scenarios', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           title: null,
@@ -605,7 +605,7 @@ describe('EntityEditorReducer scenarios', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           title: 'Foo title',
@@ -642,7 +642,7 @@ describe('EntityEditorReducer scenarios', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           title: 'Foo title',
@@ -703,7 +703,7 @@ describe('EntityEditorReducer scenarios', () => {
         validPublished: null,
         createdAt: new Date('2022-04-30T07:51:25.56Z'),
         updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-        version: 0,
+        version: 1,
       },
       fields: {
         title: 'Existing title',
@@ -773,7 +773,7 @@ describe('EntityEditorReducer scenarios', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-04-30T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           foo: { id: secondId },
@@ -802,7 +802,7 @@ describe('EntityEditorReducer scenarios', () => {
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
           updatedAt: new Date('2022-05-01T07:51:25.56Z'),
-          version: 0,
+          version: 1,
         },
         fields: {
           foo: null,
@@ -882,7 +882,7 @@ describe('EntityEditorReducer scenarios', () => {
         validPublished: null,
         createdAt: new Date('2022-04-30T07:51:25.56Z'),
         updatedAt: new Date('2022-05-01T07:51:25.56Z'),
-        version: 0,
+        version: 1,
       },
       fields: {
         oldName: 'value',

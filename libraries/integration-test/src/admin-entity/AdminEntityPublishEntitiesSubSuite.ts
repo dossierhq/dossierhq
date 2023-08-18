@@ -121,7 +121,7 @@ async function publishEntities_oldVersion({ server }: AdminEntityTestContext) {
   const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
   assertOkResult(updateResult);
 
-  const publishResult = await client.publishEntities([{ id, version: 0 }]);
+  const publishResult = await client.publishEntities([{ id, version: 1 }]);
   assertOkResult(publishResult);
   const [{ updatedAt }] = publishResult.value;
   assertResultValue(publishResult, [
@@ -164,8 +164,8 @@ async function publishEntities_twoEntitiesReferencingEachOther({ server }: Admin
   assertOkResult(update1Result);
 
   const publishResult = await client.publishEntities([
-    { id: id1, version: 1 },
-    { id: id2, version: 0 },
+    { id: id1, version: 2 },
+    { id: id2, version: 1 },
   ]);
   assertOkResult(publishResult);
   const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
@@ -297,7 +297,7 @@ async function publishEntities_fixInvalidEntityByPublishing({ server }: AdminEnt
 
 async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {
   const publishResult = await adminClientForMainPrincipal(server).publishEntities([
-    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
   ]);
   assertErrorResult(
     publishResult,
@@ -308,7 +308,7 @@ async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext
 
 async function publishEntities_errorDuplicateIds({ server }: AdminEntityTestContext) {
   const publishResult = await adminClientForMainPrincipal(server).publishEntities([
-    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
   ]);
   assertErrorResult(
@@ -435,7 +435,7 @@ async function publishEntities_errorPublishInvalidEntity({ server }: AdminEntity
   assertSame(updatedEntity.info.valid, true);
   assertSame(updatedEntity.info.validPublished, null);
 
-  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 0 }]);
+  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 1 }]);
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
@@ -451,7 +451,7 @@ async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
     await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
 
-  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 0 }]);
+  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 1 }]);
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,

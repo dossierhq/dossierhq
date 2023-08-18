@@ -207,7 +207,7 @@ export interface AdminEntityCreate<T extends AdminEntity<string, object> = Admin
      * The name needs to be unique, so if it clashes with an existing entity a random suffix will be
      * appended to the name. */
     name: string;
-    version?: 0;
+    version?: 1;
     authKey: T['info']['authKey'];
   };
   fields: Partial<T['fields']>;

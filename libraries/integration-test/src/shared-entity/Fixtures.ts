@@ -46,7 +46,7 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
   info: {
     type: 'Locations',
     name: 'Locations name',
-    version: 0,
+    version: 1,
     authKey: 'none',
     status: AdminEntityStatus.draft,
     valid: true,
@@ -76,7 +76,7 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
   info: {
     type: 'References',
     name: 'References name',
-    version: 0,
+    version: 1,
     authKey: 'none',
     status: AdminEntityStatus.draft,
     valid: true,
@@ -101,7 +101,7 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
   info: {
     type: 'RichTexts',
     name: 'RichTexts name',
-    version: 0,
+    version: 1,
     authKey: 'none',
     status: AdminEntityStatus.draft,
     valid: true,
@@ -131,7 +131,7 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
   info: {
     type: 'Strings',
     name: 'Strings name',
-    version: 0,
+    version: 1,
     authKey: 'none',
     status: AdminEntityStatus.draft,
     valid: true,
@@ -171,7 +171,7 @@ export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
   info: {
     type: 'SubjectOnly',
     name: 'SubjectOnly name',
-    version: 0,
+    version: 1,
     authKey: 'subject',
     status: AdminEntityStatus.draft,
     valid: true,
@@ -201,7 +201,7 @@ export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {
   info: {
     type: 'TitleOnly',
     name: 'TitleOnly name',
-    version: 0,
+    version: 1,
     authKey: 'none',
     status: AdminEntityStatus.draft,
     valid: true,

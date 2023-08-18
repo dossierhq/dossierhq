@@ -43,7 +43,7 @@ export async function adminCreateEntity(
     buildPostgresSqlQuery(({ sql }) => {
       const createdBy = getSessionSubjectInternalId(entity.session);
       sql`INSERT INTO entity_versions (entities_id, version, schema_version, encode_version, created_by, data)`;
-      sql`VALUES (${entityId}, 0, ${entity.schemaVersion}, ${entity.encodeVersion}, ${createdBy}, ${entity.fields}) RETURNING id`;
+      sql`VALUES (${entityId}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${createdBy}, ${entity.fields}) RETURNING id`;
     }),
   );
   if (createEntityVersionResult.isError()) return createEntityVersionResult;

@@ -76,7 +76,7 @@ async function upsertEntity_minimalUpdate({ server }: AdminEntityTestContext) {
   } = upsertResult.value;
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { version: 1, updatedAt },
+    info: { version: 2, updatedAt },
     fields: { title: 'Updated title' },
   });
 
@@ -133,7 +133,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: Admin
   } = upsertResult.value;
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { version: 1, updatedAt, status: AdminEntityStatus.published, validPublished: true },
+    info: { version: 2, updatedAt, status: AdminEntityStatus.published, validPublished: true },
     fields: { title: 'Updated title' },
   });
 

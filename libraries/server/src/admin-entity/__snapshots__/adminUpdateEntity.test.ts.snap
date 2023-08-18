@@ -56,7 +56,7 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
       },
       "status": "draft",
       "type": "TitleOnly",
-      "version": 1,
+      "version": 2,
     },
   ],
   [

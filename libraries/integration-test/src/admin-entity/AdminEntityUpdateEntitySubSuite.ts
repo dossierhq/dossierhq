@@ -71,7 +71,7 @@ async function updateEntity_minimal({ server }: AdminEntityTestContext) {
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
     },
     fields: {
       title: 'Updated title',
@@ -128,7 +128,7 @@ async function updateEntity_minimalWithSubjectAuthKey({ server }: AdminEntityTes
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
     },
     fields: {
       title: 'Updated title',
@@ -169,7 +169,7 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
     },
     fields: {
       title: 'Updated title',
@@ -206,7 +206,7 @@ async function updateEntity_updateAndPublishEntity({ server }: AdminEntityTestCo
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
       status: AdminEntityStatus.published,
       validPublished: true,
     },
@@ -249,7 +249,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
       status: AdminEntityStatus.published,
       validPublished: true,
     },
@@ -374,7 +374,7 @@ async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext)
   const expectedEntity = copyEntity(entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
       valid: true,
     },
     fields: {
@@ -408,7 +408,7 @@ async function updateEntity_fixInvalidValueItem({ server }: AdminEntityTestConte
   } = updateResult.valueOrThrow();
 
   const expectedEntity = copyEntity(entity, {
-    info: { updatedAt, version: 1, valid: true },
+    info: { updatedAt, version: 2, valid: true },
     fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'foo' } },
   });
 
@@ -440,7 +440,7 @@ async function updateEntity_withMultilineField({ server }: AdminEntityTestContex
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      version: 1,
+      version: 2,
     },
     fields: {
       multiline: 'one\ntwo\nthree!',
@@ -496,7 +496,7 @@ async function updateEntity_withTwoReferences({ server }: AdminEntityTestContext
       name,
       createdAt,
       updatedAt,
-      version: 1,
+      version: 2,
     },
     fields: {
       any: { id: idTitleOnly1 },
@@ -542,7 +542,7 @@ async function updateEntity_withMultipleLocations({ server }: AdminEntityTestCon
   } = updateResult.value;
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { updatedAt, version: 1 },
+    info: { updatedAt, version: 2 },
     fields: {
       location: { lat: 1, lng: 2 },
       locationList: [

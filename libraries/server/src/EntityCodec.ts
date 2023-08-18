@@ -125,7 +125,7 @@ export function resolveCreateEntity(
     info: {
       name: entity.info.name,
       type: entity.info.type,
-      version: 0,
+      version: 1,
       authKey: entity.info.authKey,
     },
     fields: {},

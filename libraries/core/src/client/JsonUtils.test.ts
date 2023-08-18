@@ -106,7 +106,7 @@ describe('convertJsonEntityVersion()', () => {
   test('History with one version', () => {
     const expected: EntityHistory = {
       id: '123',
-      versions: [{ createdAt: new Date(), createdBy: '4321', published: true, version: 0 }],
+      versions: [{ createdAt: new Date(), createdBy: '4321', published: true, version: 1 }],
     };
     const asJson = JSON.parse(JSON.stringify(expected)) as JsonEntityHistory;
     const converted = convertJsonEntityHistory(asJson);
@@ -125,7 +125,7 @@ describe('convertJsonPublishingHistory()', () => {
           kind: PublishingEventKind.publish,
           publishedAt: new Date(),
           publishedBy: '4321',
-          version: 0,
+          version: 1,
         },
       ],
     };

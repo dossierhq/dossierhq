@@ -8,7 +8,7 @@ test('copyEntity()', () => {
     info: {
       type: 'Foo',
       name: 'Hello',
-      version: 0,
+      version: 1,
       authKey: 'none',
       status: AdminEntityStatus.draft,
       valid: true,

@@ -101,7 +101,7 @@ function createDummyEntity(changes: {
       info: {
         name: 'Foo name',
         type: 'FooType',
-        version: 0,
+        version: 1,
         authKey: 'none',
         status: AdminEntityStatus.draft,
         valid: true,
@@ -329,7 +329,7 @@ describe('AdminClient forward operation over JSON', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           },
         }
@@ -383,7 +383,7 @@ describe('AdminClient forward operation over JSON', () => {
       type: EventType.createEntity,
       createdBy: 'user',
       createdAt: new Date('2023-08-14T08:51:25.56Z'),
-      entities: [{ id: '123', type: 'Foo', name: 'Hello', version: 0 }],
+      entities: [{ id: '123', type: 'Foo', name: 'Hello', version: 1 }],
       unauthorizedEntityCount: 1,
     };
 
@@ -558,7 +558,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "updatedAt": 2021-08-17T07:51:25.560Z,
                 "valid": true,
                 "validPublished": null,
-                "version": 0,
+                "version": 1,
               },
             },
           },
@@ -577,7 +577,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "updatedAt": 2021-08-17T07:51:25.560Z,
                 "valid": true,
                 "validPublished": null,
-                "version": 0,
+                "version": 1,
               },
             },
           },
@@ -654,7 +654,7 @@ describe('AdminClient forward operation over JSON', () => {
             "updatedAt": 2021-08-17T07:51:25.560Z,
             "valid": true,
             "validPublished": null,
-            "version": 0,
+            "version": 1,
           },
         }
       `);
@@ -700,7 +700,7 @@ describe('AdminClient forward operation over JSON', () => {
               {
                 createdAt: new Date('2021-08-17T07:51:25.56Z'),
                 createdBy: '123-456',
-                version: 0,
+                version: 1,
                 published: true,
               },
             ],
@@ -722,7 +722,7 @@ describe('AdminClient forward operation over JSON', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "createdBy": "123-456",
               "published": true,
-              "version": 0,
+              "version": 1,
             },
           ],
         }
@@ -770,7 +770,7 @@ describe('AdminClient forward operation over JSON', () => {
                 kind: PublishingEventKind.publish,
                 publishedAt: new Date('2021-08-17T07:51:25.56Z'),
                 publishedBy: '123-456',
-                version: 0,
+                version: 1,
               },
             ],
           }),
@@ -790,7 +790,7 @@ describe('AdminClient forward operation over JSON', () => {
               "kind": "publish",
               "publishedAt": 2021-08-17T07:51:25.560Z,
               "publishedBy": "123-456",
-              "version": 0,
+              "version": 1,
             },
           ],
           "id": "1234",
@@ -1012,7 +1012,7 @@ describe('AdminClient forward operation over JSON', () => {
     );
 
     const result = await adminClient.publishEntities([
-      { id: '1234', version: 0 },
+      { id: '1234', version: 1 },
       { id: '4321', version: 1 },
     ]);
     expectResultValue(result, [
@@ -1048,7 +1048,7 @@ describe('AdminClient forward operation over JSON', () => {
               [
                 {
                   "id": "1234",
-                  "version": 0,
+                  "version": 1,
                 },
                 {
                   "id": "4321",
@@ -1539,7 +1539,7 @@ describe('AdminClient forward operation over JSON', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           },
         }
@@ -1768,7 +1768,7 @@ describe('AdminClient forward operation over JSON', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           },
         }

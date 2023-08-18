@@ -214,7 +214,7 @@ describe('create*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.draft,
               createdAt,
@@ -241,7 +241,7 @@ describe('create*Entity()', () => {
       info: {
         type: 'MutationFoo',
         name,
-        version: 0,
+        version: 1,
         authKey: 'none',
         status: AdminEntityStatus.draft,
         valid: true,
@@ -263,11 +263,11 @@ describe('create*Entity()', () => {
     });
   });
 
-  test('Create with ID and version=0', async () => {
+  test('Create with ID and version=1', async () => {
     const id = insecureTestUuidv4();
     const entity: AdminEntityCreate = {
       id,
-      info: { type: 'MutationFoo', name: 'Foo name', version: 0, authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo name', version: 1, authKey: 'none' },
       fields: {
         title: 'Foo title',
         summary: 'Foo summary',
@@ -297,7 +297,7 @@ describe('create*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.draft,
               createdAt,
@@ -351,7 +351,7 @@ describe('create*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.published,
               createdAt,
@@ -443,7 +443,7 @@ describe('create*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
                 createdAt,
@@ -465,7 +465,7 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: fooName,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -566,7 +566,7 @@ describe('create*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
                 createdAt,
@@ -588,7 +588,7 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: fooName,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -694,7 +694,7 @@ describe('create*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
                 createdAt,
                 updatedAt,
               },
@@ -717,7 +717,7 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: fooName,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -824,7 +824,7 @@ describe('create*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
                 createdAt,
                 updatedAt,
               },
@@ -856,7 +856,7 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: fooName,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -966,7 +966,7 @@ describe('create*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name: fooName,
-                version: 0,
+                version: 1,
                 createdAt,
                 updatedAt,
               },
@@ -993,7 +993,7 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: fooName,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -1097,7 +1097,7 @@ describe('create*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name: fooName,
-              version: 0,
+              version: 1,
               createdAt,
               updatedAt,
             },
@@ -1125,7 +1125,7 @@ describe('create*Entity()', () => {
       info: {
         type: 'MutationFoo',
         name: fooName,
-        version: 0,
+        version: 1,
         authKey: 'none',
         status: AdminEntityStatus.draft,
         valid: true,
@@ -1202,7 +1202,7 @@ describe('create*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name,
-              version: 0,
+              version: 1,
             },
             fields: {
               title: 'Foo title',
@@ -1256,7 +1256,7 @@ describe('create*Entity()', () => {
           info: {
             type: 'MutationFoo',
             name: 'Foo name',
-            version: 1,
+            version: 0,
             authKey: 'none',
           },
           fields: {
@@ -1273,7 +1273,7 @@ describe('create*Entity()', () => {
           "createMutationFooEntity": null,
         },
         "errors": [
-          [GraphQLError: BadRequest: entity.info.version: Version must be 0 when creating a new entity],
+          [GraphQLError: BadRequest: entity.info.version: Version must be 1 when creating a new entity],
         ],
       }
     `);
@@ -1343,7 +1343,7 @@ describe('update*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name,
-                version: 1,
+                version: 2,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
                 createdAt: createdAt.toISOString(),
@@ -1365,7 +1365,7 @@ describe('update*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name,
-          version: 1,
+          version: 2,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -1425,7 +1425,7 @@ describe('update*Entity()', () => {
         variableValues: {
           entity: {
             id,
-            info: { type: 'MutationFoo', version: 1 },
+            info: { type: 'MutationFoo', version: 2 },
             fields: { title: 'Updated title' },
           },
         },
@@ -1441,7 +1441,7 @@ describe('update*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name,
-                version: 1,
+                version: 2,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
               },
@@ -1613,7 +1613,7 @@ describe('update*Entity()', () => {
                 info: {
                   type: 'MutationFoo',
                   name: name,
-                  version: 1,
+                  version: 2,
                   createdAt,
                   updatedAt,
                 },
@@ -1678,7 +1678,7 @@ describe('update*Entity()', () => {
           info: {
             type: 'MutationFoo',
             name: name,
-            version: 1,
+            version: 2,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -1778,7 +1778,7 @@ describe('update*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name,
-                version: 1,
+                version: 2,
                 authKey: 'none',
                 status: AdminEntityStatus.published,
                 createdAt: createdAt.toISOString(),
@@ -1800,7 +1800,7 @@ describe('update*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name,
-          version: 1,
+          version: 2,
           authKey: 'none',
           status: AdminEntityStatus.published,
           valid: true,
@@ -1949,7 +1949,7 @@ describe('upsert*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.draft,
               createdAt,
@@ -1971,7 +1971,7 @@ describe('upsert*Entity()', () => {
       info: {
         type: 'MutationFoo',
         name,
-        version: 0,
+        version: 1,
         authKey: 'none',
         status: AdminEntityStatus.draft,
         valid: true,
@@ -2024,7 +2024,7 @@ describe('upsert*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name,
-                version: 1,
+                version: 2,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
                 createdAt,
@@ -2046,7 +2046,7 @@ describe('upsert*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name,
-          version: 1,
+          version: 2,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -2100,7 +2100,7 @@ describe('upsert*Entity()', () => {
               info: {
                 type: 'MutationFoo',
                 name,
-                version: 0,
+                version: 1,
                 authKey: 'none',
                 status: AdminEntityStatus.draft,
                 createdAt,
@@ -2148,7 +2148,7 @@ describe('upsert*Entity()', () => {
             info: {
               type: 'MutationFoo',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.published,
               createdAt,
@@ -2170,7 +2170,7 @@ describe('upsert*Entity()', () => {
       info: {
         type: 'MutationFoo',
         name,
-        version: 0,
+        version: 1,
         authKey: 'none',
         status: AdminEntityStatus.published,
         valid: true,
@@ -2247,7 +2247,7 @@ describe('publishEntities()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { references: [{ id, version: 0 }] },
+        variableValues: { references: [{ id, version: 1 }] },
       })) as ExecutionResult<{ publishEntities: { updatedAt: string }[] }>;
       const updatedAt = result.data!.publishEntities[0].updatedAt;
       expect(result).toEqual({
@@ -2274,7 +2274,7 @@ describe('publishEntities()', () => {
             kind: PublishingEventKind.publish,
             publishedAt: publishedAt0,
             publishedBy: server.subjectId,
-            version: 0,
+            version: 1,
           },
         ],
       });
@@ -2295,7 +2295,7 @@ describe('publishEntities()', () => {
         }
       `,
       contextValue: createContext(),
-      variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 0 }] },
+      variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3', version: 1 }] },
     });
     expect(result).toMatchInlineSnapshot(`
       {
@@ -2330,7 +2330,7 @@ describe('publishEntities()', () => {
           }
         `,
         contextValue: createContext(),
-        variableValues: { references: [{ id, version: 0 }] },
+        variableValues: { references: [{ id, version: 1 }] },
       });
       expect(result).toEqual({
         data: {
@@ -2354,7 +2354,7 @@ describe('unpublishEntities()', () => {
         entity: { id },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
 
       const result = (await graphql({
         schema,
@@ -2398,13 +2398,13 @@ describe('unpublishEntities()', () => {
               kind: PublishingEventKind.publish,
               publishedAt: publishedAt0,
               publishedBy: server.subjectId,
-              version: 0,
+              version: 1,
             },
             {
               kind: PublishingEventKind.unpublish,
               publishedAt: publishedAt1,
               publishedBy: server.subjectId,
-              version: 0,
+              version: 1,
             },
           ],
         });
@@ -2524,7 +2524,7 @@ describe('archiveEntity()', () => {
             kind: PublishingEventKind.archive,
             publishedAt: publishedAt0,
             publishedBy: server.subjectId,
-            version: 0,
+            version: 1,
           },
         ],
       });
@@ -2623,13 +2623,13 @@ describe('unarchiveEntity()', () => {
               kind: PublishingEventKind.archive,
               publishedAt: publishedAt0,
               publishedBy: server.subjectId,
-              version: 0,
+              version: 1,
             },
             {
               kind: PublishingEventKind.unarchive,
               publishedAt: publishedAt1,
               publishedBy: server.subjectId,
-              version: 0,
+              version: 1,
             },
           ],
         });
@@ -2744,7 +2744,7 @@ describe('Multiple', () => {
               title: 'Updated title',
             },
           },
-          references: { id, version: 1 },
+          references: { id, version: 2 },
         },
       });
       expect(result).toEqual({

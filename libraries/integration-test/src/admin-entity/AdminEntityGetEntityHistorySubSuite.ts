@@ -39,7 +39,7 @@ async function getEntityHistory_minimal({ server }: AdminEntityTestContext) {
         createdAt,
         createdBy: context.session.subjectId,
         published: false,
-        version: 0,
+        version: 1,
       },
     ],
   });
@@ -78,13 +78,13 @@ async function getEntityHistory_updateAndPublish({ server }: AdminEntityTestCont
         createdAt,
         createdBy: context.session.subjectId,
         published: false,
-        version: 0,
+        version: 1,
       },
       {
         createdAt: updatedAt,
         createdBy: context.session.subjectId,
         published: true,
-        version: 1,
+        version: 2,
       },
     ],
   });

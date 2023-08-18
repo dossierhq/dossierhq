@@ -53,7 +53,7 @@ describe('Admin adminCreateEntity', () => {
           type: 'TitleOnly',
           name: 'TitleOnly name',
           authKey: 'none',
-          version: 0,
+          version: 1,
           createdAt: now,
           updatedAt: now,
           status: AdminEntityStatus.draft,
@@ -89,6 +89,7 @@ describe('Admin adminCreateEntity', () => {
                 "subjectInternalId": 123,
               },
               "type": "TitleOnly",
+              "version": 1,
             },
           ],
           [

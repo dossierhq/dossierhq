@@ -58,6 +58,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   id: string | null;
   type: string;
   name: string;
+  version: number;
   session: Session;
   resolvedAuthKey: ResolvedAuthKey;
   publish: boolean;
