@@ -60,7 +60,7 @@ CREATE TABLE entity_versions (
     version INTEGER NOT NULL,
     created_at TEXT NOT NULL,
     created_by INTEGER NOT NULL,
-    fields TEXT NOT NULL, schema_version INTEGER NOT NULL DEFAULT 0, encode_version INTEGER NOT NULL DEFAULT 0,
+    fields TEXT NOT NULL, schema_version INTEGER NOT NULL DEFAULT 0, encode_version INTEGER NOT NULL DEFAULT 0, type TEXT, name TEXT,
     FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
     FOREIGN KEY (created_by) REFERENCES subjects(id)
 ) STRICT;
@@ -170,7 +170,6 @@ CREATE TABLE event_entity_versions (
     id INTEGER PRIMARY KEY,
     events_id INTEGER NOT NULL,
     entity_versions_id INTEGER NOT NULL,
-    entity_type TEXT NOT NULL,
     FOREIGN KEY (events_id) REFERENCES events(id) ON DELETE CASCADE,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
 ) STRICT;

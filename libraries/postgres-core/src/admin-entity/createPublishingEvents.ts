@@ -39,9 +39,8 @@ export async function adminEntityPublishingCreateEvents(
       context,
       event.session,
       eventType,
-      event.references.map(({ entityVersionInternalId, entityType }) => ({
+      event.references.map(({ entityVersionInternalId }) => ({
         entityVersionsId: entityVersionInternalId as number,
-        entityType,
       })),
     );
     if (eventResult.isError()) return eventResult;

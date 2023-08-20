@@ -1,5 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
 import { getCurrentSchemaVersion, migrate } from './SchemaMigrator.js';
@@ -292,6 +291,15 @@ const VERSION_18: SchemaVersionDefinition[] = [
 
 const VERSION_19: SchemaVersionDefinition[] = ['UPDATE entity_versions SET version = version + 1'];
 
+const VERSION_20: SchemaVersionDefinition[] = [
+  'ALTER TABLE entity_versions ADD COLUMN type TEXT',
+  'ALTER TABLE entity_versions ADD COLUMN name TEXT',
+  `UPDATE entity_versions SET
+      type = (SELECT type FROM entities WHERE entities.id = entity_versions.entities_id),
+      name = (SELECT name FROM entities WHERE entities.id = entity_versions.entities_id)`,
+  `ALTER TABLE event_entity_versions DROP COLUMN entity_type`,
+];
+
 const VERSIONS: SchemaVersionDefinition[][] = [
   [], // nothing for version 0
   VERSION_1,
@@ -313,6 +321,7 @@ const VERSIONS: SchemaVersionDefinition[][] = [
   VERSION_17,
   VERSION_18,
   VERSION_19,
+  VERSION_20,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

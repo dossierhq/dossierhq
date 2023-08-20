@@ -1,8 +1,8 @@
 import {
   EventType,
   ok,
-  type ErrorType,
   type EntityChangelogEvent,
+  type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
 import {
@@ -20,7 +20,7 @@ export async function createEntityEvent(
   session: Session,
   now: string,
   eventType: EntityChangelogEvent['type'],
-  entityVersions: { entityVersionsId: number; entityType: string }[],
+  entityVersions: { entityVersionsId: number }[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
@@ -38,10 +38,10 @@ export async function createEntityEvent(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValue }) => {
-      sql`INSERT INTO event_entity_versions (events_id, entity_versions_id, entity_type) VALUES`;
+      sql`INSERT INTO event_entity_versions (events_id, entity_versions_id) VALUES`;
       const eventsValue = addValue(eventsId);
-      for (const { entityVersionsId, entityType } of entityVersions) {
-        sql`(${eventsValue}, ${entityVersionsId}, ${entityType})`;
+      for (const { entityVersionsId } of entityVersions) {
+        sql`(${eventsValue}, ${entityVersionsId})`;
       }
     }),
   );

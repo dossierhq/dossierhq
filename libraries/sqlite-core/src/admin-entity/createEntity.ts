@@ -35,9 +35,11 @@ export async function adminCreateEntity(
     database,
     context,
     {
-      text: 'INSERT INTO entity_versions (entities_id, version, created_at, created_by, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7) RETURNING id',
+      text: 'INSERT INTO entity_versions (entities_id, type, name, version, created_at, created_by, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING id',
       values: [
         entityId,
+        entity.type,
+        actualName,
         entity.version,
         createdAt.toISOString(),
         getSessionSubjectInternalId(entity.session),
@@ -62,7 +64,7 @@ export async function adminCreateEntity(
     entity.session,
     createdAt.toISOString(),
     entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
-    [{ entityVersionsId: versionsId, entityType: entity.type }],
+    [{ entityVersionsId: versionsId }],
   );
   if (createEventResult.isError()) return createEventResult;
 

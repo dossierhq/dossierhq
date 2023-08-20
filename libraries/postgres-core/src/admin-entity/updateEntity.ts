@@ -1,10 +1,11 @@
 import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
 import { EventType, notOk, ok } from '@dossierhq/core';
-import type {
-  DatabaseEntityUpdateEntityArg,
-  DatabaseEntityUpdateEntityPayload,
-  DatabaseEntityUpdateGetEntityInfoPayload,
-  TransactionContext,
+import {
+  buildPostgresSqlQuery,
+  type DatabaseEntityUpdateEntityArg,
+  type DatabaseEntityUpdateEntityPayload,
+  type DatabaseEntityUpdateGetEntityInfoPayload,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
@@ -15,9 +16,9 @@ import {
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
-import { createEntityEvent } from '../utils/EventUtils.js';
 
 export async function adminEntityUpdateGetEntityInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -72,17 +73,11 @@ export async function adminEntityUpdateEntity(
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
     context,
-    {
-      text: 'INSERT INTO entity_versions (entities_id, created_by, version, schema_version, encode_version, data) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
-      values: [
-        entity.entityInternalId,
-        getSessionSubjectInternalId(entity.session),
-        entity.version,
-        entity.schemaVersion,
-        entity.encodeVersion,
-        entity.fields,
-      ],
-    },
+    buildPostgresSqlQuery(({ sql }) => {
+      const createdBy = getSessionSubjectInternalId(entity.session);
+      sql`INSERT INTO entity_versions (entities_id, created_by, type, name, version, schema_version, encode_version, data)`;
+      sql`VALUES (${entity.entityInternalId}, ${createdBy}, ${entity.type}, ${entity.name}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${entity.fields}) RETURNING id`;
+    }),
   );
   if (createVersionResult.isError()) return createVersionResult;
   const { id: versionsId } = createVersionResult.value;
@@ -121,6 +116,15 @@ export async function adminEntityUpdateEntity(
 
     if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
+
+    const updateNameResult = await queryNone(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`UPDATE entity_versions SET name = ${newName} WHERE id = ${versionsId}`;
+      }),
+    );
+    if (updateNameResult.isError()) return updateNameResult;
   }
 
   const updateEntityResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(
@@ -152,7 +156,7 @@ export async function adminEntityUpdateEntity(
     context,
     entity.session,
     entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
-    [{ entityVersionsId: versionsId, entityType: entity.type }],
+    [{ entityVersionsId: versionsId }],
   );
   if (createEventResult.isError()) return createEventResult;
 

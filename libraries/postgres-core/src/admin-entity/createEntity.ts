@@ -42,8 +42,8 @@ export async function adminCreateEntity(
     context,
     buildPostgresSqlQuery(({ sql }) => {
       const createdBy = getSessionSubjectInternalId(entity.session);
-      sql`INSERT INTO entity_versions (entities_id, version, schema_version, encode_version, created_by, data)`;
-      sql`VALUES (${entityId}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${createdBy}, ${entity.fields}) RETURNING id`;
+      sql`INSERT INTO entity_versions (entities_id, type, name, version, schema_version, encode_version, created_by, data)`;
+      sql`VALUES (${entityId}, ${entity.type}, ${actualName}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${createdBy}, ${entity.fields}) RETURNING id`;
     }),
   );
   if (createEntityVersionResult.isError()) return createEntityVersionResult;
@@ -60,7 +60,7 @@ export async function adminCreateEntity(
     context,
     entity.session,
     entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
-    [{ entityVersionsId: versionsId, entityType: entity.type }],
+    [{ entityVersionsId: versionsId }],
   );
   if (createEventResult.isError()) return createEventResult;
 

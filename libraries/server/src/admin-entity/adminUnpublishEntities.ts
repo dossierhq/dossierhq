@@ -15,7 +15,6 @@ import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js'
 interface EntityInfoToBeUnpublished {
   effect: 'unpublished';
   id: string;
-  type: string;
   entityInternalId: unknown;
   entityVersionInternalId: unknown;
   authKey: string;
@@ -136,7 +135,6 @@ async function collectEntityInfo(
         return {
           effect: 'unpublished',
           entityVersionInternalId: it.entityVersionInternalId,
-          type: it.type,
           ...shared,
         };
       }
@@ -231,10 +229,9 @@ async function createUnpublishEvents(
   return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
     session: context.session,
     kind: 'unpublish',
-    references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId, type }) => ({
+    references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
       entityInternalId,
       entityVersionInternalId,
-      entityType: type,
     })),
     onlyLegacyEvents: false,
   });

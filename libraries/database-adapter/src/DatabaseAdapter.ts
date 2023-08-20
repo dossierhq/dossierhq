@@ -46,7 +46,6 @@ export interface DatabaseResolvedEntityVersionReference {
 
 export interface DatabaseAdminEntityArchivingEntityInfoPayload
   extends DatabaseResolvedEntityVersionReference {
-  type: string;
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
@@ -143,7 +142,7 @@ export interface DatabaseAdminEntityPublishUpdateEntityArg
 export interface DatabaseAdminEntityPublishingCreateEventArg {
   session: Session;
   kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
-  references: (DatabaseResolvedEntityVersionReference & { entityType: string })[];
+  references: DatabaseResolvedEntityVersionReference[];
   onlyLegacyEvents: boolean; //TODO remove when removing legacy publishing events and instead skip calling function in server
 }
 
@@ -221,7 +220,6 @@ export interface DatabaseAdminEntityUpdateStatusPayload {
 export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
   extends DatabaseResolvedEntityVersionReference {
   id: string;
-  type: string;
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;

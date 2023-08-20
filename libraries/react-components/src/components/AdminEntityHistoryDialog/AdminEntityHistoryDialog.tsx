@@ -1,10 +1,10 @@
 import {
+  EventType,
   isFieldValueEqual,
   type AdminEntity,
   type AdminEntityTypeSpecification,
   type ChangelogQuery,
   type EntityReference,
-  EventType,
 } from '@dossierhq/core';
 import {
   Card2,
@@ -182,6 +182,16 @@ function DiffEntities({
 
   return (
     <>
+      {leftEntity.info.name !== rightEntity.info.name ? (
+        <Card2>
+          <Card2.Header>Entity name</Card2.Header>
+          <Card2.Content>
+            {leftEntity.info.name}
+            <hr />
+            {rightEntity.info.name}
+          </Card2.Content>
+        </Card2>
+      ) : null}
       {equalFields.length > 0 ? `These fields were equal: ${equalFields.join(', ')}` : null}
       {diffFields}
     </>

@@ -6,11 +6,12 @@ import {
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
-import type {
-  DatabaseEntityUpdateEntityArg,
-  DatabaseEntityUpdateEntityPayload,
-  DatabaseEntityUpdateGetEntityInfoPayload,
-  TransactionContext,
+import {
+  buildSqliteSqlQuery,
+  type DatabaseEntityUpdateEntityArg,
+  type DatabaseEntityUpdateEntityPayload,
+  type DatabaseEntityUpdateGetEntityInfoPayload,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
@@ -79,11 +80,13 @@ export async function adminEntityUpdateEntity(
   const now = new Date();
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
-    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7) RETURNING id',
+    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, type, name, version, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING id',
     values: [
       entity.entityInternalId as number,
       now.toISOString(),
       getSessionSubjectInternalId(entity.session),
+      entity.type,
+      entity.name,
       entity.version,
       entity.schemaVersion,
       entity.encodeVersion,
@@ -124,6 +127,15 @@ export async function adminEntityUpdateEntity(
 
     if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
+
+    const updateNameResult = await queryRun(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql }) => {
+        sql`UPDATE entity_versions SET name = ${newName} WHERE id = ${versionsId}`;
+      }),
+    );
+    if (updateNameResult.isError()) return updateNameResult;
   }
 
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
@@ -156,7 +168,7 @@ export async function adminEntityUpdateEntity(
     entity.session,
     now.toISOString(),
     entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
-    [{ entityVersionsId: versionsId, entityType: entity.type }],
+    [{ entityVersionsId: versionsId }],
   );
   if (createEventResult.isError()) return createEventResult;
 

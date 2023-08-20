@@ -68,6 +68,8 @@ export interface EntityPublishingEventsTable {
 export interface EntityVersionsTable {
   id: number;
   entities_id: number;
+  type: string;
+  name: string;
   version: number;
   created_at: string;
   created_by: number;
@@ -86,7 +88,6 @@ export interface EventEntityVersionsTable {
   id: number;
   events_id: number;
   entity_versions_id: number;
-  entity_type: string;
 }
 
 export interface SequencesTable {

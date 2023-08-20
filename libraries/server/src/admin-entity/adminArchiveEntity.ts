@@ -30,7 +30,7 @@ export async function adminArchiveEntity(
     );
     if (entityInfoResult.isError()) return entityInfoResult;
 
-    const { entityInternalId, entityVersionInternalId, type, authKey, resolvedAuthKey, status } =
+    const { entityInternalId, entityVersionInternalId, authKey, resolvedAuthKey, status } =
       entityInfoResult.value;
 
     // Step 2: Verify authKey
@@ -67,7 +67,7 @@ export async function adminArchiveEntity(
     const publishingEventResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
       session: context.session,
       kind: 'archive',
-      references: [{ entityInternalId, entityVersionInternalId, entityType: type }],
+      references: [{ entityInternalId, entityVersionInternalId }],
       onlyLegacyEvents: false,
     });
     if (publishingEventResult.isError()) return publishingEventResult;

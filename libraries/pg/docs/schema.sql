@@ -230,7 +230,9 @@ CREATE TABLE public.entity_versions (
     created_by integer NOT NULL,
     data jsonb NOT NULL,
     schema_version integer NOT NULL,
-    encode_version integer DEFAULT 0 NOT NULL
+    encode_version integer DEFAULT 0 NOT NULL,
+    name character varying(255) NOT NULL,
+    type character varying(255) NOT NULL
 );
 
 CREATE SEQUENCE public.entity_versions_id_seq
@@ -246,8 +248,7 @@ ALTER SEQUENCE public.entity_versions_id_seq OWNED BY public.entity_versions.id;
 CREATE TABLE public.event_entity_versions (
     id integer NOT NULL,
     events_id integer NOT NULL,
-    entity_versions_id integer NOT NULL,
-    entity_type character varying(255) NOT NULL
+    entity_versions_id integer NOT NULL
 );
 
 CREATE SEQUENCE public.event_entity_versions_id_seq

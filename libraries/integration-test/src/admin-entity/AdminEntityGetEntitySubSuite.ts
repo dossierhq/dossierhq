@@ -1,4 +1,4 @@
-import { copyEntity, ErrorType } from '@dossierhq/core';
+import { copyEntity, ErrorType, isEntityNameAsRequested } from '@dossierhq/core';
 import {
   assertEquals,
   assertErrorResult,
@@ -21,6 +21,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
   getEntity_withSubjectAuthKey,
   getEntity_getLatestVersion,
   getEntity_usingUniqueIndex,
+  getEntity_getOldVersion,
   getEntity_invalidEntity,
   getEntity_invalidPublishedEntity,
   getEntity_errorInvalidId,
@@ -72,6 +73,29 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
   const result = await adminClient.getEntity({ index: 'stringsUnique', value: unique });
   assertOkResult(result);
   assertResultValue(result, createResult.value.entity);
+}
+
+async function getEntity_getOldVersion({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
+  );
+  const { entity: originalEntity } = createResult.valueOrThrow();
+
+  const updateResult = await adminClient.updateEntity({
+    id: originalEntity.id,
+    info: { name: 'Updated name' },
+    fields: { title: 'Updated title' },
+  });
+  assertOkResult(updateResult);
+
+  const result = await adminClient.getEntity({
+    id: originalEntity.id,
+    version: originalEntity.info.version,
+  });
+  assertOkResult(result);
+  assertResultValue(result, originalEntity);
+  assertSame(isEntityNameAsRequested(result.value.info.name, 'Original name'), true);
 }
 
 async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {

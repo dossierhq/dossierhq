@@ -32,7 +32,6 @@ export async function adminUnarchiveEntity(
     const {
       entityInternalId,
       entityVersionInternalId,
-      type,
       authKey,
       resolvedAuthKey,
       status,
@@ -70,7 +69,7 @@ export async function adminUnarchiveEntity(
       const createEventResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
         session: context.session,
         kind: 'unarchive',
-        references: [{ entityInternalId, entityVersionInternalId, entityType: type }],
+        references: [{ entityInternalId, entityVersionInternalId }],
         onlyLegacyEvents: false,
       });
       if (createEventResult.isError()) return createEventResult;

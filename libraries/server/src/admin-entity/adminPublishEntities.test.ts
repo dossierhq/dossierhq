@@ -105,7 +105,6 @@ describe('Admin adminPublishEntities', () => {
               "references": [
                 {
                   "entityInternalId": 999,
-                  "entityType": "TitleOnly",
                   "entityVersionInternalId": 888,
                 },
               ],

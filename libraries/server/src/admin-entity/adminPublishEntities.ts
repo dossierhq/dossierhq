@@ -30,7 +30,6 @@ import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js'
 interface VersionInfoToBePublished {
   effect: 'published';
   uuid: string;
-  entityType: string;
   entityInternalId: unknown;
   entityVersionInternalId: unknown;
   status: AdminEntityStatus;
@@ -291,7 +290,6 @@ async function collectVersionsInfo(
         uuid: reference.id,
         entityInternalId,
         entityVersionInternalId,
-        entityType: type,
         fullTextSearchText,
         references,
         locations,
@@ -350,12 +348,9 @@ async function createPublishEvents(
     session: context.session,
     kind: 'publish',
     onlyLegacyEvents,
-    references: publishVersionsInfo.map(
-      ({ entityInternalId, entityVersionInternalId, entityType }) => ({
-        entityInternalId,
-        entityVersionInternalId,
-        entityType,
-      }),
-    ),
+    references: publishVersionsInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
+      entityInternalId,
+      entityVersionInternalId,
+    })),
   });
 }

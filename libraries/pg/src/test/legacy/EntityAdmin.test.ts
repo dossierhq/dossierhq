@@ -1689,7 +1689,7 @@ describe('updateEntity()', () => {
       const {
         entity: {
           id,
-          info: { createdAt },
+          info: { createdAt, name: originalName },
         },
       } = createResult.value;
 
@@ -1697,7 +1697,7 @@ describe('updateEntity()', () => {
         id,
         info: {
           type: 'EntityAdminFoo',
-          name: createResult.value.entity.info.name,
+          name: originalName,
           version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
@@ -1765,7 +1765,10 @@ describe('updateEntity()', () => {
         const version1Result = await client.getEntity({ id, version: 1 });
         expectResultValue(
           version1Result,
-          copyEntity(expectedEntity, { info: { version: 1 }, fields: { title: 'Original' } }),
+          copyEntity(expectedEntity, {
+            info: { version: 1, name: originalName },
+            fields: { title: 'Original' },
+          }),
         );
 
         const version2Result = await client.getEntity({ id, version: 2 });
@@ -1796,7 +1799,7 @@ describe('updateEntity()', () => {
       const {
         entity: {
           id,
-          info: { createdAt },
+          info: { createdAt, name: firstName },
         },
       } = createResult.value;
 
@@ -1804,7 +1807,7 @@ describe('updateEntity()', () => {
         id,
         info: {
           type: 'EntityAdminFoo',
-          name: createResult.value.entity.info.name,
+          name: firstName,
           version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
@@ -1872,7 +1875,10 @@ describe('updateEntity()', () => {
         const version1Result = await client.getEntity({ id, version: 1 });
         expectResultValue(
           version1Result,
-          copyEntity(expectedEntity, { info: { version: 1 }, fields: { title: 'First' } }),
+          copyEntity(expectedEntity, {
+            info: { name: firstName, version: 1 },
+            fields: { title: 'First' },
+          }),
         );
 
         const version2Result = await client.getEntity({ id, version: 2 });
