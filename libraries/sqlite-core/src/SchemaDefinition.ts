@@ -9,6 +9,7 @@ import {
 import type { SqliteDatabaseMigrationOptions } from './SqliteDatabaseAdapter.js';
 
 interface SchemaVersionDefinition {
+  temporarilyDisableForeignKeys?: boolean;
   queries: (
     | QueryOrQueryAndValues
     | ((options: SqliteDatabaseMigrationOptions) => QueryOrQueryAndValues)
@@ -341,6 +342,32 @@ const VERSION_20: SchemaVersionDefinition = {
   ],
 };
 
+// Change NOT NULL/defaults of schema_version/encode_version/type/name columns, following https://www.sqlite.org/lang_altertable.html#making_other_kinds_of_table_schema_changes
+const VERSION_21: SchemaVersionDefinition = {
+  temporarilyDisableForeignKeys: true,
+  queries: [
+    `CREATE TABLE new_entity_versions (
+    id INTEGER PRIMARY KEY,
+    type TEXT NOT NULL,
+    name TEXT NOT NULL,
+    entities_id INTEGER NOT NULL,
+    version INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    schema_version INTEGER NOT NULL,
+    encode_version INTEGER NOT NULL,
+    fields TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES subjects(id)
+) STRICT`,
+    `INSERT INTO new_entity_versions (id, type, name, entities_id, version, created_at, created_by, schema_version, encode_version, fields)
+      SELECT id, type, name, entities_id, version, created_at, created_by, schema_version, encode_version, fields FROM entity_versions`,
+    'DROP TABLE entity_versions',
+    'ALTER TABLE new_entity_versions RENAME TO entity_versions',
+    'CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id)',
+  ],
+};
+
 const VERSIONS: SchemaVersionDefinition[] = [
   { queries: [] }, // nothing for version 0
   VERSION_1,
@@ -363,6 +390,7 @@ const VERSIONS: SchemaVersionDefinition[] = [
   VERSION_18,
   VERSION_19,
   VERSION_20,
+  VERSION_21,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
@@ -386,6 +414,7 @@ export async function migrateDatabaseIfNecessary(
       }
     }
     const plan: SchemaVersionMigrationPlan = {
+      temporarilyDisableForeignKeys: versionDefinition.temporarilyDisableForeignKeys ?? false,
       queries,
     };
     return plan;

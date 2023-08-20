@@ -3,6 +3,7 @@ import type { TransactionContext } from '@dossierhq/database-adapter';
 import { queryOne, queryRun, type Database, type QueryOrQueryAndValues } from './QueryFunctions.js';
 
 export interface SchemaVersionMigrationPlan {
+  temporarilyDisableForeignKeys: boolean;
   queries: QueryOrQueryAndValues[];
 }
 
@@ -49,22 +50,51 @@ async function migrateVersion(
   version: number,
   plan: SchemaVersionMigrationPlan,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
-  return context.withTransaction(async (context) => {
-    const { logger } = context;
-    logger.info(`Starting migration of database schema to version=${version}...`);
-    for (const query of plan.queries) {
-      const statementResult = await queryRun(database, context, query);
-      if (statementResult.isError()) return statementResult;
-    }
+  const { logger } = context;
+  logger.info(`Starting migration of database schema to version=${version}...`);
 
-    // PRAGMA can't use values, so create query manually. No SQL injection since we know it's a number
-    if (typeof version !== 'number') {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      return notOk.Generic(`version is for some reason NaN (${version})`);
-    }
-    const updateVersionResult = await queryRun(database, context, 'PRAGMA user_version=' + version);
-    if (updateVersionResult.isError()) return updateVersionResult;
-    logger.info(`Migrated database schema to version=${version}`);
-    return ok(undefined);
-  });
+  if (plan.temporarilyDisableForeignKeys) {
+    const disableForeignKeysResult = await queryRun(database, context, 'PRAGMA foreign_keys=OFF');
+    if (disableForeignKeysResult.isError()) return disableForeignKeysResult;
+  }
+
+  const transactionResult = await context.withTransaction<void, typeof ErrorType.Generic>(
+    async (context) => {
+      for (const query of plan.queries) {
+        const queryResult = await queryRun(database, context, query);
+        if (queryResult.isError()) return queryResult;
+      }
+
+      if (plan.temporarilyDisableForeignKeys) {
+        const checkForeignKeysResult = await queryRun(
+          database,
+          context,
+          'PRAGMA foreign_key_check',
+        );
+        if (checkForeignKeysResult.isError()) return checkForeignKeysResult;
+      }
+
+      // PRAGMA can't use values, so create query manually. No SQL injection since we know it's a number
+      if (typeof version !== 'number') {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        return notOk.Generic(`version is for some reason NaN (${version})`);
+      }
+      const updateVersionResult = await queryRun(
+        database,
+        context,
+        'PRAGMA user_version=' + version,
+      );
+      if (updateVersionResult.isError()) return updateVersionResult;
+      logger.info(`Migrated database schema to version=${version}`);
+      return ok(undefined);
+    },
+  );
+  if (transactionResult.isError()) return transactionResult;
+
+  if (plan.temporarilyDisableForeignKeys) {
+    const enableForeignKeysResult = await queryRun(database, context, 'PRAGMA foreign_keys=ON');
+    if (enableForeignKeysResult.isError()) return enableForeignKeysResult;
+  }
+
+  return ok(undefined);
 }

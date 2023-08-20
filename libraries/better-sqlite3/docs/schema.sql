@@ -54,16 +54,6 @@ CREATE TABLE IF NOT EXISTS 'entities_published_fts_idx'(segid, term, pgno, PRIMA
 CREATE TABLE IF NOT EXISTS 'entities_published_fts_content'(id INTEGER PRIMARY KEY, c0);
 CREATE TABLE IF NOT EXISTS 'entities_published_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB);
 CREATE TABLE IF NOT EXISTS 'entities_published_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID;
-CREATE TABLE entity_versions (
-    id INTEGER PRIMARY KEY,
-    entities_id INTEGER NOT NULL,
-    version INTEGER NOT NULL,
-    created_at TEXT NOT NULL,
-    created_by INTEGER NOT NULL,
-    fields TEXT NOT NULL, schema_version INTEGER NOT NULL DEFAULT 0, encode_version INTEGER NOT NULL DEFAULT 0, type TEXT, name TEXT,
-    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
-    FOREIGN KEY (created_by) REFERENCES subjects(id)
-) STRICT;
 CREATE TABLE entity_publishing_events (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -124,7 +114,6 @@ CREATE TABLE unique_index_values (
     CONSTRAINT unique_index_values_index_value UNIQUE (index_name, value)
 ) STRICT;
 CREATE INDEX unique_index_values_entities_id ON unique_index_values(entities_id);
-CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id);
 CREATE INDEX entity_published_references_from_entities_id ON entity_published_references(from_entities_id);
 CREATE INDEX entity_published_locations_entities_id ON entity_published_locations(entities_id);
 CREATE INDEX entity_latest_references_from_entities_id ON entity_latest_references(from_entities_id);
@@ -175,3 +164,18 @@ CREATE TABLE event_entity_versions (
 ) STRICT;
 CREATE INDEX event_entity_versions_events_id ON event_entity_versions(events_id);
 CREATE INDEX event_entity_versions_entity_versions_id ON event_entity_versions(entity_versions_id);
+CREATE TABLE IF NOT EXISTS "entity_versions" (
+    id INTEGER PRIMARY KEY,
+    type TEXT NOT NULL,
+    name TEXT NOT NULL,
+    entities_id INTEGER NOT NULL,
+    version INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    schema_version INTEGER NOT NULL,
+    encode_version INTEGER NOT NULL,
+    fields TEXT NOT NULL,
+    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES subjects(id)
+) STRICT;
+CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id);
