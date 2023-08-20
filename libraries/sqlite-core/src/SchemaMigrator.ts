@@ -2,6 +2,10 @@ import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
 import { queryOne, queryRun, type Database, type QueryOrQueryAndValues } from './QueryFunctions.js';
 
+export interface SchemaVersionMigrationPlan {
+  queries: QueryOrQueryAndValues[];
+}
+
 export async function getCurrentSchemaVersion(
   database: Database,
   context: TransactionContext,
@@ -20,7 +24,7 @@ export async function getCurrentSchemaVersion(
 export async function migrate(
   database: Database,
   context: TransactionContext,
-  schemaVersionGenerator: (version: number) => QueryOrQueryAndValues[] | null,
+  schemaVersionGenerator: (version: number) => SchemaVersionMigrationPlan | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const initialVersionResult = await getCurrentSchemaVersion(database, context);
   if (initialVersionResult.isError()) return initialVersionResult;
@@ -28,11 +32,11 @@ export async function migrate(
   let version = initialVersionResult.value + 1;
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const statements = schemaVersionGenerator(version);
-    if (!statements) {
+    const plan = schemaVersionGenerator(version);
+    if (!plan) {
       return ok(undefined);
     }
-    const migrateVersionResult = await migrateVersion(database, context, version, statements);
+    const migrateVersionResult = await migrateVersion(database, context, version, plan);
     if (migrateVersionResult.isError()) return migrateVersionResult;
 
     version += 1;
@@ -43,13 +47,13 @@ async function migrateVersion(
   database: Database,
   context: TransactionContext,
   version: number,
-  statements: QueryOrQueryAndValues[],
+  plan: SchemaVersionMigrationPlan,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
     const { logger } = context;
     logger.info(`Starting migration of database schema to version=${version}...`);
-    for (const statement of statements) {
-      const statementResult = await queryRun(database, context, statement);
+    for (const query of plan.queries) {
+      const statementResult = await queryRun(database, context, query);
       if (statementResult.isError()) return statementResult;
     }
 
