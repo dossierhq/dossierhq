@@ -160,5 +160,12 @@ function decodeChangelogEvent(
     }
   }
 
+  entities.sort((a, b) => {
+    const typeCompare = a.type.localeCompare(b.type);
+    if (typeCompare !== 0) return typeCompare;
+
+    return a.name.localeCompare(b.name);
+  });
+
   return ok({ ...event, entities, unauthorizedEntityCount });
 }

@@ -50,7 +50,10 @@ async function unpublishEntities_minimal({ server }: AdminEntityTestContext) {
 async function unpublishEntities_unpublishEntitiesEvent({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const createResult1 = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const createResult1 = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 1' } }),
+    { publish: true },
+  );
   const {
     entity: {
       id: id1,
@@ -58,7 +61,10 @@ async function unpublishEntities_unpublishEntitiesEvent({ server }: AdminEntityT
     },
   } = createResult1.valueOrThrow();
 
-  const createResult2 = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const createResult2 = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 2' } }),
+    { publish: true },
+  );
   const {
     entity: {
       id: id2,

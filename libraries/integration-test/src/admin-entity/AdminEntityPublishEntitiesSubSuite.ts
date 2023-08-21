@@ -279,7 +279,9 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
 async function publishEntities_publishEntitiesEvent({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
 
-  const createResult1 = await client.createEntity(TITLE_ONLY_CREATE);
+  const createResult1 = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 1' } }),
+  );
   const {
     entity: {
       id: id1,
@@ -287,7 +289,9 @@ async function publishEntities_publishEntitiesEvent({ server }: AdminEntityTestC
     },
   } = createResult1.valueOrThrow();
 
-  const createResult2 = await client.createEntity(TITLE_ONLY_CREATE);
+  const createResult2 = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 2' } }),
+  );
   const {
     entity: {
       id: id2,
