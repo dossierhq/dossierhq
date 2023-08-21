@@ -65,8 +65,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_publishWithUniqueIndexValue,
-  createEntity_event,
-  createEntity_publishEvent,
+  createEntity_createEntityEvent,
+  createEntity_createAndPublishEntityEvent,
   createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
   createEntity_withMatchingPattern,
@@ -279,7 +279,7 @@ async function createEntity_publishWithUniqueIndexValue({
   assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
 }
 
-async function createEntity_event({ server }: AdminEntityTestContext) {
+async function createEntity_createEntityEvent({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   const {
@@ -303,7 +303,7 @@ async function createEntity_event({ server }: AdminEntityTestContext) {
   ]);
 }
 
-async function createEntity_publishEvent({ server }: AdminEntityTestContext) {
+async function createEntity_createAndPublishEntityEvent({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,

@@ -1,4 +1,10 @@
-import { AdminEntityStatus, copyEntity, ErrorType, type AdminEntityUpdate } from '@dossierhq/core';
+import {
+  AdminEntityStatus,
+  ErrorType,
+  EventType,
+  copyEntity,
+  type AdminEntityUpdate,
+} from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
@@ -10,13 +16,14 @@ import {
   type AdminTitleOnly,
   type AdminValueItems,
 } from '../SchemaTypes.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
-  adminToPublishedEntity,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
+  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import {
   createEntityWithInvalidValueItem,
@@ -38,6 +45,8 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateAndPublishEntityWithUniqueIndexValue,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
+  updateEntity_updateEntityEvent,
+  updateEntity_updateAndPublishEntityEvent,
   updateEntity_fixInvalidEntity,
   updateEntity_fixInvalidValueItem,
   updateEntity_withMultilineField,
@@ -60,13 +69,13 @@ async function updateEntity_minimal({ server }: AdminEntityTestContext) {
   const {
     entity: { id },
   } = createResult.value;
+
   const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
-  assertOkResult(updateResult);
   const {
     entity: {
       info: { updatedAt },
     },
-  } = updateResult.value;
+  } = updateResult.valueOrThrow();
 
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
@@ -352,6 +361,91 @@ async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminE
     effect: 'none',
     entity: createResult.value.entity,
   });
+}
+
+async function updateEntity_updateEntityEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name: originalName, createdAt },
+    },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity({
+    id,
+    info: { name: 'Updated name' },
+    fields: { title: 'Updated title' },
+  });
+  const {
+    entity: {
+      info: { updatedAt, name: updatedName },
+    },
+  } = updateResult.valueOrThrow();
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name: originalName, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.updateEntity,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name: updatedName, version: 2, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function updateEntity_updateAndPublishEntityEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { name: originalName, createdAt },
+    },
+  } = createResult.value;
+
+  const updateResult = await client.updateEntity(
+    {
+      id,
+      info: { name: 'Updated name' },
+      fields: { title: 'Updated title' },
+    },
+    { publish: true },
+  );
+  const {
+    entity: {
+      info: { updatedAt, name: updatedName },
+    },
+  } = updateResult.valueOrThrow();
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name: originalName, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.updateAndPublishEntity,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name: updatedName, version: 2, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext) {
