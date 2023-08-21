@@ -11,8 +11,8 @@ import {
 } from '@dossierhq/database-adapter';
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';
 import { queryOne, type Database } from '../QueryFunctions.js';
-import { createUpdateSchemaEvent } from '../utils/EventUtils.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
+import { createUpdateSchemaEvent } from '../utils/EventUtils.js';
 
 export async function schemaUpdateSpecification(
   database: Database,
@@ -39,7 +39,6 @@ export async function schemaUpdateSpecification(
     database,
     context,
     session,
-    now,
     schemaVersionId,
   );
   if (createEventResult.isError()) return createEventResult;

@@ -63,7 +63,6 @@ export async function adminCreateEntity(
     database,
     context,
     entity.session,
-    createdAt.toISOString(),
     entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
     [{ entityVersionsId: versionsId }],
   );

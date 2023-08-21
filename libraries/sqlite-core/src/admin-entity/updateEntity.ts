@@ -167,7 +167,6 @@ export async function adminEntityUpdateEntity(
     database,
     context,
     entity.session,
-    now.toISOString(),
     entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
     [{ entityVersionsId: versionsId }],
   );

@@ -12,16 +12,17 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EventsTable } from '../DatabaseSchema.js';
 import { queryOne, queryRun, type Database } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { getSessionSubjectInternalId } from './SessionUtils.js';
 
 export async function createEntityEvent(
   database: Database,
   context: TransactionContext,
   session: Session,
-  now: string,
   eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number }[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
+  const now = getTransactionTimestamp(context.transaction).toISOString();
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
     database,
@@ -54,9 +55,9 @@ export async function createUpdateSchemaEvent(
   database: Database,
   context: TransactionContext,
   session: Session,
-  now: string,
   schemaVersionId: number,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
+  const now = getTransactionTimestamp(context.transaction).toISOString();
   const createdBy = getSessionSubjectInternalId(session);
   const result = await queryRun(
     database,
