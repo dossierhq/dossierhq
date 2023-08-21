@@ -14,13 +14,13 @@ import {
 } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import {
   resolveEntityFields,
   resolveEntityStatus,
   resolveEntityValidity,
 } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
-import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
 export async function adminEntityPublishGetVersionInfo(
   database: Database,

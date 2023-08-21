@@ -159,9 +159,7 @@ async function unpublishEntitiesAndCollectResult(
     AdminEntityStatus.withdrawn,
     unpublishEntitiesInfo.map((it) => ({ entityInternalId: it.entityInternalId })),
   );
-  if (unpublishResult.isError()) {
-    return unpublishResult;
-  }
+  if (unpublishResult.isError()) return unpublishResult;
   const unpublishRows = unpublishResult.value;
 
   const payload: AdminEntityUnpublishPayload[] = [];

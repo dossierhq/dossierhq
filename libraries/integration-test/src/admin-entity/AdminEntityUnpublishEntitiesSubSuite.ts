@@ -1,16 +1,18 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
   publishedClientForMainPrincipal,
 } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unpublishEntities_minimal,
+  unpublishEntities_unpublishEntitiesEvent,
   unpublishEntities_errorInvalidId,
   unpublishEntities_errorDuplicateIds,
   unpublishEntities_errorWrongAuthKey,
@@ -43,6 +45,65 @@ async function unpublishEntities_minimal({ server }: AdminEntityTestContext) {
 
   const getResult = await adminClient.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function unpublishEntities_unpublishEntitiesEvent({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  const createResult1 = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const {
+    entity: {
+      id: id1,
+      info: { name: name1, createdAt: createdAt1 },
+    },
+  } = createResult1.valueOrThrow();
+
+  const createResult2 = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const {
+    entity: {
+      id: id2,
+      info: { name: name2 },
+    },
+  } = createResult2.valueOrThrow();
+
+  const unpublishResult = await adminClient.unpublishEntities([{ id: id1 }, { id: id2 }]);
+  const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = unpublishResult.valueOrThrow();
+
+  assertResultValue(unpublishResult, [
+    {
+      id: id1,
+      effect: 'unpublished',
+      status: AdminEntityStatus.withdrawn,
+      updatedAt: updatedAt1,
+    },
+    {
+      id: id2,
+      effect: 'unpublished',
+      status: AdminEntityStatus.withdrawn,
+      updatedAt: updatedAt2,
+    },
+  ]);
+
+  const connectionResult = await adminClient.getChangelogEvents({ entity: { id: id1 } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createAndPublishEntity,
+      createdAt: createdAt1,
+      createdBy: '',
+      entities: [{ id: id1, name: name1, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.unpublishEntities,
+      createdAt: updatedAt1,
+      createdBy: '',
+      entities: [
+        { id: id1, name: name1, version: 1, type: 'TitleOnly' },
+        { id: id2, name: name2, version: 1, type: 'TitleOnly' },
+      ],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function unpublishEntities_errorInvalidId({ server }: AdminEntityTestContext) {

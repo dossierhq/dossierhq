@@ -77,23 +77,25 @@ export async function adminEntityUnpublishEntities(
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[],
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
-  const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
-  if (updatedSeqResult.isError()) return updatedSeqResult;
-
-  const ids = references.map(({ entityInternalId }) => entityInternalId as number);
   const now = getTransactionTimestamp(context.transaction);
-  const result = await queryMany<Pick<EntitiesTable, 'id'>>(
-    database,
-    context,
-    buildSqliteSqlQuery(({ sql, addValueList }) => {
-      const dirty = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
-      sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${now.toISOString()}, updated_seq = ${
-        updatedSeqResult.value
-      }, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
-      sql`WHERE id IN ${addValueList(ids)} RETURNING id`;
-    }),
-  );
-  if (result.isError()) return result;
+  const nowString = now.toISOString();
+  const ids = references.map(({ entityInternalId }) => entityInternalId as number);
+
+  for (const reference of references) {
+    const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
+    if (updatedSeqResult.isError()) return updatedSeqResult;
+
+    const updateEntityResult = await queryRun(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql }) => {
+        const dirty = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
+        sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${nowString}, updated_seq = ${updatedSeqResult.value}, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
+        sql`WHERE id = ${reference.entityInternalId as number}`;
+      }),
+    );
+    if (updateEntityResult.isError()) return updateEntityResult;
+  }
 
   const removeReferencesIndexResult = await queryRun(
     database,
@@ -133,9 +135,7 @@ export async function adminEntityUnpublishEntities(
 
   return ok(
     references.map((reference) => {
-      const row = result.value.find((it) => it.id === reference.entityInternalId);
-      assertIsDefined(row);
-      return { entityInternalId: row.id, updatedAt: now };
+      return { entityInternalId: reference.entityInternalId, updatedAt: now };
     }),
   );
 }
