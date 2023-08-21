@@ -26,6 +26,7 @@ import {
   type AppAdminValueItem,
   type AppPublishedValueItem,
 } from '../SchemaTypes.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
   CHANGE_VALIDATIONS_CREATE,
   MIGRATIONS_ENTITY_CREATE,
@@ -1724,19 +1725,50 @@ async function updateSchemaSpecification_renameTypeOnEntity({ server }: SchemaTe
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
   assertEquals(publishedEntity.info.type, newTypeName);
 
-  // Check that we can create new entities with the name
-  const updateResult = await adminClient.createEntity(
-    {
-      info: {
-        type: newTypeName as AppAdminEntity['info']['type'],
-        name: `${newTypeName}`,
-        authKey: 'none',
-      },
-      fields: { field: 'value' },
+  // Check that we can update the entity
+  const {
+    entity: {
+      info: { updatedAt },
     },
-    { publish: true },
+  } = (
+    await adminClient.updateEntity({ ...reference, fields: { field: 'value2' } })
+  ).valueOrThrow();
+
+  // Check that we can create new entities with the name
+  assertOkResult(
+    await adminClient.createEntity(
+      {
+        info: {
+          type: newTypeName as AppAdminEntity['info']['type'],
+          name: `${newTypeName}`,
+          authKey: 'none',
+        },
+        fields: { field: 'value' },
+      },
+      { publish: true },
+    ),
   );
-  assertOkResult(updateResult);
+
+  // Check the changelog events for the first entity
+  const connectionResult = await adminClient.getChangelogEvents({ entity: reference });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createAndPublishEntity,
+      createdAt: adminEntity.info.createdAt,
+      createdBy: '',
+      // The event before the type rename has the old type name
+      entities: [{ id: reference.id, type: oldTypeName, name: adminEntity.info.name, version: 1 }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.updateEntity,
+      createdAt: updatedAt,
+      createdBy: '',
+      // The event after the type rename has the new type name
+      entities: [{ id: reference.id, type: newTypeName, name: adminEntity.info.name, version: 2 }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType({
