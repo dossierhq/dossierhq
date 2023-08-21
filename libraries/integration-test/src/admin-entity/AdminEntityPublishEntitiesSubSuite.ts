@@ -1,6 +1,7 @@
 import {
   AdminEntityStatus,
   ErrorType,
+  EventType,
   copyEntity,
   createRichText,
   createRichTextEntityLinkNode,
@@ -14,6 +15,7 @@ import {
   type AdminReferences,
   type AdminTitleOnly,
 } from '../SchemaTypes.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
   REFERENCES_CREATE,
   RICH_TEXTS_CREATE,
@@ -35,6 +37,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_publishAlreadyPublishedEntity,
   publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity,
   publishEntities_adminOnlyFieldWithAdminOnlyValueItem,
+  publishEntities_publishEntitiesEvent,
   publishEntities_fixInvalidEntityByPublishing,
   publishEntities_errorInvalidId,
   publishEntities_errorDuplicateIds,
@@ -271,6 +274,67 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
 
   const publishResult = await client.publishEntities([{ id, version }]);
   assertOkResult(publishResult);
+}
+
+async function publishEntities_publishEntitiesEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+
+  const createResult1 = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id: id1,
+      info: { version: version1, name: name1, createdAt: createdAt1 },
+    },
+  } = createResult1.valueOrThrow();
+
+  const createResult2 = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id: id2,
+      info: { version: version2, name: name2 },
+    },
+  } = createResult2.valueOrThrow();
+
+  const publishResult = await client.publishEntities([
+    { id: id1, version: version1 },
+    { id: id2, version: version2 },
+  ]);
+  const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.valueOrThrow();
+  assertResultValue(publishResult, [
+    {
+      id: id1,
+      effect: 'published',
+      status: AdminEntityStatus.published,
+      updatedAt: updatedAt1,
+    },
+    {
+      id: id2,
+      effect: 'published',
+      status: AdminEntityStatus.published,
+      updatedAt: updatedAt2,
+    },
+  ]);
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id: id1 } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt: createdAt1,
+      createdBy: '',
+      entities: [{ id: id1, name: name1, version: version1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.publishEntities,
+      createdAt: updatedAt1,
+      createdBy: '',
+      entities: [
+        { id: id1, name: name1, version: version1, type: 'TitleOnly' },
+        { id: id2, name: name2, version: version2, type: 'TitleOnly' },
+      ],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function publishEntities_fixInvalidEntityByPublishing({ server }: AdminEntityTestContext) {
