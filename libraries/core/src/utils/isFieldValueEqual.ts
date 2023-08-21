@@ -21,6 +21,12 @@ export function isFieldValueEqual(a: unknown, b: unknown): boolean {
 
   if (typeof a === 'object') {
     if (typeof b !== 'object' || a === null || b === null) return false;
+
+    if (a instanceof Date || b instanceof Date) {
+      if (!(a instanceof Date && b instanceof Date)) return false;
+      return a.getTime() === b.getTime();
+    }
+
     const aKeys = Object.keys(a);
     const bKeys = Object.keys(b);
     if (aKeys.length !== bKeys.length) return false;

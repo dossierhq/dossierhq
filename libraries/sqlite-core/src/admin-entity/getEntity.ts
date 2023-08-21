@@ -86,18 +86,14 @@ async function getEntityWithVersion(
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,
-      | 'uuid'
-      | 'type'
-      | 'auth_key'
-      | 'resolved_auth_key'
-      | 'created_at'
-      | 'updated_at'
-      | 'status'
-      | 'invalid'
+      'uuid' | 'type' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'status' | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'name' | 'version' | 'schema_version' | 'encode_version' | 'fields'>
+      Pick<
+        EntityVersionsTable,
+        'name' | 'version' | 'schema_version' | 'encode_version' | 'fields'
+      > & { updated_at: EntityVersionsTable['created_at'] }
   >(database, context, {
-    text: `SELECT e.uuid, e.type, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.name, ev.version, ev.schema_version, ev.encode_version, ev.fields
+    text: `SELECT e.uuid, e.type, e.auth_key, e.resolved_auth_key, e.created_at, e.status, e.invalid, ev.name, ev.version, ev.schema_version, ev.encode_version, ev.fields, ev.created_at AS updated_at
     FROM entities e, entity_versions ev
     WHERE e.uuid = ?1
     AND e.id = ev.entities_id
