@@ -60,7 +60,7 @@ export async function eventGetChangelogEvents(
 }
 
 type EntityInfoRow = Pick<EventEntityVersionsTable, 'events_id'> &
-  Pick<EntitiesTable, 'uuid' | 'name' | 'auth_key' | 'resolved_auth_key'> &
+  Pick<EntitiesTable, 'uuid' | 'auth_key' | 'resolved_auth_key'> &
   Pick<EntityVersionsTable, 'type' | 'name' | 'version'>;
 
 async function getEntityInfoForEvents(
@@ -74,7 +74,7 @@ async function getEntityInfoForEvents(
 
   const eventIds = events.map((it) => it.id);
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT eev.events_id, e.uuid, e.name, e.auth_key, e.resolved_auth_key, ev.type, ev.name, ev.version FROM event_entity_versions eev`;
+  sql`SELECT eev.events_id, e.uuid, e.auth_key, e.resolved_auth_key, ev.type, ev.name, ev.version FROM event_entity_versions eev`;
   sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
   sql`JOIN entities e ON ev.entities_id = e.id`;
   sql`WHERE eev.events_id = ANY(${eventIds}) ORDER BY eev.events_id`;
