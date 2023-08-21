@@ -1,5 +1,6 @@
 import {
   ErrorType,
+  EventType,
   FieldType,
   copyEntity,
   ok,
@@ -13,6 +14,7 @@ import {
   assertOkResult,
   assertResultValue,
   assertSame,
+  assertTruthy,
 } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import {
@@ -45,6 +47,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_removeAllFieldsFromMigrationValueItem,
   updateSchemaSpecification_removeAllTemporaryValueTypes,
   //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes, add when we can delete entities
+  updateSchemaSpecification_updateSchemaEvent,
   updateSchemaSpecification_concurrentUpdates,
   updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
   updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
@@ -173,6 +176,34 @@ async function updateSchemaSpecification_removeAllTemporaryValueTypes({
   assertOkResult(result);
 }
 
+async function updateSchemaSpecification_updateSchemaEvent({ server }: SchemaTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const fieldName = `field${new Date().getTime()}`;
+
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    return await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
+      ],
+    });
+  });
+  const { version } = result.valueOrThrow().schemaSpecification;
+
+  const connectionResult = await adminClient.getChangelogEvents({
+    types: [EventType.updateSchema],
+    reverse: true,
+  });
+  assertOkResult(connectionResult);
+  assertTruthy(connectionResult.value);
+  const eventsWithVersion = connectionResult.value.edges.filter(
+    (it) =>
+      it.node.isOk() &&
+      it.node.value.type === EventType.updateSchema &&
+      it.node.value.version === version,
+  );
+  assertEquals(eventsWithVersion.length, 1);
+}
+
 async function updateSchemaSpecification_concurrentUpdates({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const fieldName1 = `field${new Date().getTime()}`;
@@ -187,11 +218,15 @@ async function updateSchemaSpecification_concurrentUpdates({ server }: SchemaTes
 
     const updateOnePromise = adminClient.updateSchemaSpecification({
       version: newVersion,
-      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName1, type: 'Boolean' }] }],
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: fieldName1, type: FieldType.Boolean }] },
+      ],
     });
     const updateTwoPromise = adminClient.updateSchemaSpecification({
       version: newVersion,
-      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName2, type: 'String' }] }],
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: fieldName2, type: FieldType.String }] },
+      ],
     });
 
     const [updateOneResult, updateTwoResult] = await Promise.all([
@@ -430,7 +465,9 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     // First add new field
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+        entityTypes: [
+          { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
+        ],
       }),
     );
 
@@ -447,7 +484,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
         entityTypes: [
           {
             name: 'MigrationEntity',
-            fields: [{ name: fieldName, type: 'String', required: true }],
+            fields: [{ name: fieldName, type: FieldType.String, required: true }],
           },
         ],
       }),
@@ -474,7 +511,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
         entityTypes: [
           {
             name: 'MigrationEntity',
-            fields: [{ name: fieldName, type: 'String', adminOnly: true }],
+            fields: [{ name: fieldName, type: FieldType.String, adminOnly: true }],
           },
         ],
       }),
@@ -518,7 +555,9 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
     // First add new field
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+        entityTypes: [
+          { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
+        ],
       }),
     );
 
@@ -544,7 +583,7 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
         entityTypes: [
           {
             name: 'MigrationEntity',
-            fields: [{ name: fieldName, type: 'String', adminOnly: true }],
+            fields: [{ name: fieldName, type: FieldType.String, adminOnly: true }],
           },
         ],
       }),
@@ -581,7 +620,9 @@ async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaT
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -712,7 +753,9 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
+      ],
     });
     assertOkResult(firstUpdateResult);
 
@@ -731,7 +774,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
       entityTypes: [
         {
           name: 'MigrationEntity',
-          fields: [{ name: fieldName, type: 'String', values: [{ value: 'valid' }] }],
+          fields: [{ name: fieldName, type: FieldType.String, values: [{ value: 'valid' }] }],
         },
       ],
     });
@@ -790,7 +833,9 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String' }] }],
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -862,8 +907,8 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
         {
           name: 'MigrationEntity',
           fields: [
-            { name: fieldToDeleteName, type: 'String' },
-            { name: fieldToBecomeInvalidName, type: 'String' },
+            { name: fieldToDeleteName, type: FieldType.String },
+            { name: fieldToBecomeInvalidName, type: FieldType.String },
           ],
         },
       ],
@@ -891,7 +936,11 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
         {
           name: 'MigrationEntity',
           fields: [
-            { name: fieldToBecomeInvalidName, type: 'String', values: [{ value: 'valid' }] },
+            {
+              name: fieldToBecomeInvalidName,
+              type: FieldType.String,
+              values: [{ value: 'valid' }],
+            },
           ],
         },
       ],
@@ -937,7 +986,9 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: 'MigrationValueItem', fields: [{ name: fieldName, type: 'String' }] }],
+      valueTypes: [
+        { name: 'MigrationValueItem', fields: [{ name: fieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1013,7 +1064,9 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: 'MigrationValueItem', fields: [{ name: fieldName, type: 'String' }] }],
+      valueTypes: [
+        { name: 'MigrationValueItem', fields: [{ name: fieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1075,7 +1128,9 @@ async function updateSchemaSpecification_renameFieldOnEntity({ server }: SchemaT
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: 'MigrationEntity', fields: [{ name: oldFieldName, type: 'String' }] }],
+      entityTypes: [
+        { name: 'MigrationEntity', fields: [{ name: oldFieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1237,7 +1292,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       valueTypes: [
-        { name: 'MigrationValueItem', fields: [{ name: oldFieldName, type: 'String' }] },
+        { name: 'MigrationValueItem', fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
@@ -1325,7 +1380,7 @@ async function updateSchemaSpecification_deleteTypeOnEntityType({ server }: Sche
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+      entityTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1355,7 +1410,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1485,7 +1540,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     assertOkResult(firstUpdateResult);
 
@@ -1507,7 +1562,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
       valueTypes: [
         {
           name: typeName,
-          fields: [{ name: 'field', type: 'String', values: [{ value: 'valid' }] }],
+          fields: [{ name: 'field', type: FieldType.String, values: [{ value: 'valid' }] }],
         },
       ],
     });
@@ -1566,7 +1621,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1628,7 +1683,7 @@ async function updateSchemaSpecification_renameTypeOnEntity({ server }: SchemaTe
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: 'String' }] }],
+      entityTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1780,7 +1835,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: 'String' }] }],
+      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1933,7 +1988,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: 'String' }] }],
+      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2010,7 +2065,9 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: 'String' }] }],
+      entityTypes: [
+        { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2080,7 +2137,9 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: 'String' }] }],
+      entityTypes: [
+        { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2150,7 +2209,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: 'String' }] }],
+      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2227,7 +2286,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: 'String' }] }],
+      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2301,7 +2360,10 @@ async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTe
     assertOkResult(
       await adminClient.updateSchemaSpecification({
         entityTypes: [
-          { name: 'MigrationEntity', fields: [{ name: fieldName, type: 'String', list: true }] },
+          {
+            name: 'MigrationEntity',
+            fields: [{ name: fieldName, type: FieldType.String, list: true }],
+          },
         ],
       }),
     );
@@ -2381,7 +2443,7 @@ async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
         entityTypes: [
           {
             name: 'MigrationEntity',
-            fields: [{ name: fieldName, type: 'String', index: indexName }],
+            fields: [{ name: fieldName, type: FieldType.String, index: indexName }],
           },
         ],
         indexes: [{ name: indexName, type: 'unique' }],
@@ -2431,7 +2493,7 @@ async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
         entityTypes: [
           {
             name: 'MigrationEntity',
-            fields: [{ name: fieldName, type: 'String', index: oldIndexName }],
+            fields: [{ name: fieldName, type: FieldType.String, index: oldIndexName }],
           },
         ],
         indexes: [{ name: oldIndexName, type: 'unique' }],
@@ -2488,7 +2550,7 @@ async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExisting
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      entityTypes: [{ name: typeName, fields: [{ name: 'field', type: 'String' }] }],
+      entityTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
