@@ -21,6 +21,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
@@ -77,7 +78,7 @@ export async function adminEntityUpdateEntity(
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg,
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
     text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, type, name, version, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING id',

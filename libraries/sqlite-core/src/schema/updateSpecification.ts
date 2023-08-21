@@ -12,6 +12,7 @@ import {
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';
 import { queryOne, type Database } from '../QueryFunctions.js';
 import { createUpdateSchemaEvent } from '../utils/EventUtils.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
 export async function schemaUpdateSpecification(
   database: Database,
@@ -21,7 +22,7 @@ export async function schemaUpdateSpecification(
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;
 
-  const now = new Date().toISOString();
+  const now = getTransactionTimestamp(context.transaction).toISOString();
 
   const createVersionResult = await queryOne<Pick<SchemaVersionsTable, 'id'>>(
     database,

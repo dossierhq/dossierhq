@@ -6,6 +6,7 @@ import type {
 import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 
@@ -14,7 +15,7 @@ export async function adminEntityPublishingCreateEvents(
   context: TransactionContext,
   event: DatabaseAdminEntityPublishingCreateEventArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const { addValue, query, sql } = createSqliteSqlQuery();
   sql`INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, published_at, kind) VALUES`;

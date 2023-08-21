@@ -11,6 +11,7 @@ import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
 export async function adminCreateEntity(
   database: Database,
@@ -78,7 +79,7 @@ async function createEntityRow(
   entity: DatabaseAdminEntityCreateEntityArg,
 ) {
   const uuid = entity.id ?? database.adapter.randomUUID();
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const updatedSecResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSecResult.isError()) return updatedSecResult;

@@ -8,6 +8,7 @@ import type { SubjectsTable } from '../DatabaseSchema.js';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { createSession } from '../utils/SessionUtils.js';
 
 export async function authCreateSession(
@@ -17,9 +18,8 @@ export async function authCreateSession(
   identifier: string,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
   const firstGetResult = await getSubject(database, context, provider, identifier);
-  if (firstGetResult.isError()) {
-    return firstGetResult;
-  }
+  if (firstGetResult.isError()) return firstGetResult;
+
   if (firstGetResult.value) {
     return ok(firstGetResult.value);
   }
@@ -31,9 +31,8 @@ export async function authCreateSession(
   if (createResult.isErrorType(ErrorType.Conflict)) {
     // this should only happen if the principal is created by another request after our first check
     const secondGetResult = await getSubject(database, context, provider, identifier);
-    if (secondGetResult.isError()) {
-      return secondGetResult;
-    }
+    if (secondGetResult.isError()) return secondGetResult;
+
     if (secondGetResult.value) {
       return ok(secondGetResult.value);
     }
@@ -65,9 +64,8 @@ async function getSubject(
     WHERE p.provider = ?1 AND p.identifier = ?2 AND p.subjects_id = s.id`,
     values: [provider, identifier],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   if (result.value) {
     return createPayload('none', result.value);
   }
@@ -85,15 +83,14 @@ async function createSubject(
 > {
   return await context.withTransaction(async (context) => {
     const uuid = database.adapter.randomUUID();
-    const now = new Date();
+    const now = getTransactionTimestamp(context.transaction);
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(database, context, {
       text: 'INSERT INTO subjects (uuid, created_at) VALUES (?1, ?2) RETURNING id',
       values: [uuid, now.toISOString()],
     });
-    if (subjectsResult.isError()) {
-      return subjectsResult;
-    }
+    if (subjectsResult.isError()) return subjectsResult;
     const { id } = subjectsResult.value;
+
     const principalsResult = await queryRun(
       database,
       context,
@@ -113,9 +110,7 @@ async function createSubject(
         return notOk.GenericUnexpectedException(context, error);
       },
     );
-    if (principalsResult.isError()) {
-      return principalsResult;
-    }
+    if (principalsResult.isError()) return principalsResult;
 
     return createPayload('created', { id, uuid });
   });

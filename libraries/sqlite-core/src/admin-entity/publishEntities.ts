@@ -20,6 +20,7 @@ import {
   resolveEntityValidity,
 } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
 export async function adminEntityPublishGetVersionInfo(
   database: Database,
@@ -95,7 +96,7 @@ export async function adminEntityPublishUpdateEntity(
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const updateResult = await queryRun(database, context, {
     text: `UPDATE entities

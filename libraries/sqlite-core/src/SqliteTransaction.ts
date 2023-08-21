@@ -1,13 +1,20 @@
-import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
-import { notOk } from '@dossierhq/core';
+import { notOk, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
 import type { Transaction, TransactionContext } from '@dossierhq/database-adapter';
-import type { Database } from './QueryFunctions.js';
-import { queryRun } from './QueryFunctions.js';
+import { queryRun, type Database } from './QueryFunctions.js';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
 export interface SqliteTransaction extends Transaction {
   [sqliteTransactionSymbol]: true;
   savePointCount: number;
+  /** The start of the root transaction */
+  transactionTimestamp: Date;
+}
+
+export function getTransactionTimestamp(transaction: Transaction | null): Date {
+  if (transaction && sqliteTransactionSymbol in transaction) {
+    return (transaction as SqliteTransaction).transactionTimestamp;
+  }
+  return new Date();
 }
 
 export async function withRootTransaction<
@@ -24,10 +31,13 @@ export async function withRootTransaction<
     return notOk.Generic('Trying to create a root transaction with current transaction');
   }
 
+  const now = new Date();
+
   const transaction: SqliteTransaction = {
     _type: 'Transaction',
     [sqliteTransactionSymbol]: true,
     savePointCount: 0,
+    transactionTimestamp: now,
   };
   const childContext = childContextFactory(transaction);
   return await database.mutex.withLock<TOk, TError | typeof ErrorType.Generic>(

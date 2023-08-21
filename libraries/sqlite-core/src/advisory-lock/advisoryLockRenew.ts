@@ -5,6 +5,7 @@ import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
 export async function advisoryLockRenew(
   database: Database,
@@ -15,7 +16,7 @@ export async function advisoryLockRenew(
   { acquiredAt: Date; renewedAt: Date },
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const query = buildSqliteSqlQuery(({ sql }) => {
     sql`UPDATE advisory_locks SET renewed_at = ${now.toISOString()}, expires_at = ${now.getTime()} + lease_duration WHERE name = ${name} AND handle = ${handle} RETURNING acquired_at`;

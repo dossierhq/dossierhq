@@ -14,6 +14,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
@@ -80,7 +81,7 @@ export async function adminEntityUnpublishEntities(
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
   const ids = references.map(({ entityInternalId }) => entityInternalId as number);
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
   const result = await queryMany<Pick<EntitiesTable, 'id'>>(
     database,
     context,
