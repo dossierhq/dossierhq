@@ -1,6 +1,7 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
@@ -10,6 +11,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unarchiveEntity_minimal,
+  unarchiveEntity_unarchiveEntityEvent,
   unarchiveEntity_errorInvalidId,
   unarchiveEntity_errorWrongAuthKey,
 ];
@@ -41,6 +43,55 @@ async function unarchiveEntity_minimal({ server }: AdminEntityTestContext) {
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function unarchiveEntity_unarchiveEntityEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id,
+      info: { createdAt, name, version },
+    },
+  } = createResult.valueOrThrow();
+
+  const archiveResult = await client.archiveEntity({ id });
+  const { updatedAt: archiveUpdatedAt } = archiveResult.valueOrThrow();
+
+  const unarchiveResult = await client.unarchiveEntity({ id });
+  assertOkResult(unarchiveResult);
+  const { updatedAt: unarchiveUpdatedAt } = unarchiveResult.valueOrThrow();
+  assertResultValue(unarchiveResult, {
+    id,
+    effect: 'unarchived',
+    status: AdminEntityStatus.draft,
+    updatedAt: unarchiveUpdatedAt,
+  });
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.archiveEntity,
+      createdAt: archiveUpdatedAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.unarchiveEntity,
+      createdAt: unarchiveUpdatedAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function unarchiveEntity_errorInvalidId({ server }: AdminEntityTestContext) {
