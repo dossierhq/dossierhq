@@ -151,6 +151,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -373,6 +431,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -765,6 +824,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -987,6 +1104,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -1157,6 +1275,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -1322,6 +1498,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -1697,6 +1874,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -1862,6 +2097,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -2069,6 +2305,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -2268,6 +2562,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -2651,6 +2946,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -2847,6 +3200,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -3011,6 +3365,64 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
+}
+
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -3253,6 +3665,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -3655,6 +4068,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -3906,6 +4377,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -4073,6 +4545,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -4212,6 +4742,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -4553,6 +5084,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -4692,6 +5281,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -4857,6 +5447,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -5008,6 +5656,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -5371,6 +6020,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -5522,6 +6229,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -5687,6 +6395,64 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
+}
+
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -5859,6 +6625,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -6250,6 +7017,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -6420,6 +7245,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -6581,6 +7407,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -6732,6 +7616,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -7083,6 +7968,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -7234,6 +8177,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -7394,6 +8338,64 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
+}
+
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -7603,6 +8605,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -7992,6 +8995,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -8196,6 +9257,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -8367,6 +9429,64 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
+}
+
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -8620,6 +9740,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }
@@ -9080,6 +10201,64 @@ input AdminSearchQueryInput {
   reverse: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  entity: EntityReferenceInput
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
 input EntityVersionReferenceInput {
   id: ID!
   version: Int!
@@ -9333,6 +10512,7 @@ type Query {
   adminEntities(ids: [ID!]!): [AdminEntity]
   adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
 }

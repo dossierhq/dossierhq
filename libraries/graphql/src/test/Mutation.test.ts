@@ -23,6 +23,8 @@ import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { insecureTestUuidv4, setUpServerWithSession } from './TestUtils.js';
 
+const gql = String.raw;
+
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
@@ -86,33 +88,33 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
   ],
 };
 
-const createMutationFooGqlQuery = `
-mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean) {
-  createMutationFooEntity(entity: $entity, publish: $publish) {
-    __typename
-    effect
-    entity {
+const createMutationFooGqlQuery = gql`
+  mutation CreateFooEntity($entity: AdminMutationFooCreateInput!, $publish: Boolean) {
+    createMutationFooEntity(entity: $entity, publish: $publish) {
       __typename
-      id
-      info {
-        type
-        name
-        version
-        authKey
-        status
-        createdAt
-        updatedAt
-      }
-      fields {
-        title
-        summary
-        tags
-        location
-        locations
+      effect
+      entity {
+        __typename
+        id
+        info {
+          type
+          name
+          version
+          authKey
+          status
+          createdAt
+          updatedAt
+        }
+        fields {
+          title
+          summary
+          tags
+          location
+          locations
+        }
       }
     }
   }
-}
 `;
 
 type CreateMutationFooGqlQueryResult = ExecutionResult<{
@@ -121,30 +123,30 @@ type CreateMutationFooGqlQueryResult = ExecutionResult<{
   };
 }>;
 
-const upsertMutationFooGqlQuery = `
-mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!, $publish: Boolean) {
-  upsertMutationFooEntity(entity: $entity, publish: $publish) {
-    effect
-    entity {
-      __typename
-      id
-      info {
-        type
-        name
-        version
-        authKey
-        status
-        createdAt
-        updatedAt
-      }
-      fields {
-        title
-        summary
-        tags
+const upsertMutationFooGqlQuery = gql`
+  mutation UpsertFooEntity($entity: AdminMutationFooUpsertInput!, $publish: Boolean) {
+    upsertMutationFooEntity(entity: $entity, publish: $publish) {
+      effect
+      entity {
+        __typename
+        id
+        info {
+          type
+          name
+          version
+          authKey
+          status
+          createdAt
+          updatedAt
+        }
+        fields {
+          title
+          summary
+          tags
+        }
       }
     }
   }
-}
 `;
 
 type UpsertMutationFooGqlQueryResult = ExecutionResult<{
@@ -396,7 +398,7 @@ describe('create*Entity()', () => {
 
       const gqlResult = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -515,7 +517,7 @@ describe('create*Entity()', () => {
 
       const gqlResult = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -645,7 +647,7 @@ describe('create*Entity()', () => {
 
       const gqlResult = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -768,7 +770,7 @@ describe('create*Entity()', () => {
 
       const gqlResult = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -914,7 +916,7 @@ describe('create*Entity()', () => {
 
       const createFooResult = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
             createMutationFooEntity(entity: $entity) {
               entity {
@@ -1038,7 +1040,7 @@ describe('create*Entity()', () => {
 
     const createResult = (await graphql({
       schema,
-      source: `
+      source: gql`
         mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
           createMutationFooEntity(entity: $entity) {
             entity {
@@ -1158,7 +1160,7 @@ describe('create*Entity()', () => {
 
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         mutation CreateFooEntity($entity: AdminMutationFooCreateInput!) {
           createMutationFooEntity(entity: $entity) {
             entity {
@@ -1296,7 +1298,7 @@ describe('update*Entity()', () => {
       } = createResult.value;
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               effect
@@ -1398,7 +1400,7 @@ describe('update*Entity()', () => {
       } = createResult.value;
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               effect
@@ -1495,7 +1497,7 @@ describe('update*Entity()', () => {
         } = createFooResult.value;
         const result = (await graphql({
           schema,
-          source: `
+          source: gql`
             mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
               updateMutationFooEntity(entity: $entity) {
                 __typename
@@ -1731,7 +1733,7 @@ describe('update*Entity()', () => {
       } = createResult.value;
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity, publish: true) {
               effect
@@ -1830,7 +1832,7 @@ describe('update*Entity()', () => {
       } = createResult.value;
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               entity {
@@ -1880,7 +1882,7 @@ describe('update*Entity()', () => {
       } = createResult.value;
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UpdateFooEntity($entity: AdminMutationFooUpdateInput!) {
             updateMutationFooEntity(entity: $entity) {
               entity {
@@ -2235,7 +2237,7 @@ describe('publishEntities()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
             publishEntities(references: $references) {
               __typename
@@ -2285,7 +2287,7 @@ describe('publishEntities()', () => {
   test('Error: not found', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
           publishEntities(references: $references) {
             __typename
@@ -2322,7 +2324,7 @@ describe('publishEntities()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation PublishEntities($references: [EntityVersionReferenceInput!]!) {
             publishEntities(references: $references) {
               id
@@ -2358,7 +2360,7 @@ describe('unpublishEntities()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
             unpublishEntities(references: $references) {
               __typename
@@ -2416,7 +2418,7 @@ describe('unpublishEntities()', () => {
   test('Error: not found', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
           unpublishEntities(references: $references) {
             __typename
@@ -2453,7 +2455,7 @@ describe('unpublishEntities()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UnpublishEntities($references: [EntityReferenceInput!]!) {
             unpublishEntities(references: $references) {
               id
@@ -2487,7 +2489,7 @@ describe('archiveEntity()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation ArchiveEntity($id: ID!) {
             archiveEntity(id: $id) {
               __typename
@@ -2545,7 +2547,7 @@ describe('archiveEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation ArchiveEntity($id: ID!) {
             archiveEntity(id: $id) {
               id
@@ -2585,7 +2587,7 @@ describe('unarchiveEntity()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UnarchiveEntity($id: ID!) {
             unarchiveEntity(id: $id) {
               __typename
@@ -2642,7 +2644,7 @@ describe('unarchiveEntity()', () => {
   test('Error: not found', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         mutation UnarchiveEntity($id: ID!) {
           unarchiveEntity(id: $id) {
             __typename
@@ -2678,7 +2680,7 @@ describe('unarchiveEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UnarchiveEntity($id: ID!) {
             unarchiveEntity(id: $id) {
               id
@@ -2716,7 +2718,7 @@ describe('Multiple', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           mutation UpdateAndPublishFooEntity(
             $entity: AdminMutationFooUpdateInput!
             $references: [EntityVersionReferenceInput!]!

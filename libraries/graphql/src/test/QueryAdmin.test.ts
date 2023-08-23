@@ -3,14 +3,17 @@ import type {
   AdminEntity,
   AdminSchemaSpecificationUpdate,
   BoundingBox,
+  ChangelogEventQuery,
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
+  EventType,
   FieldType,
+  assertIsDefined,
   assertOkResult,
+  createRichText,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
   getAllPagesForConnection,
@@ -26,6 +29,8 @@ import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { setUpServerWithSession } from './TestUtils.js';
+
+const gql = String.raw;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
@@ -77,39 +82,43 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
   ],
 };
 
-const ADMIN_FOO_QUERY = `
-query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
-  adminEntity(id: $id, version: $version, index: $index, value: $value) {
-    __typename
-    id
-    info {
-      type
-      name
-      version
-      authKey
-      status
-      valid
-      validPublished
-    }
-    ... on AdminQueryAdminFoo {
-      fields {
-        title
-        slug
-        summary
-        tags
-        active
-        activeList
-        bar { id }
-        bars { id }
-        location
-        locations
-        stringedBar {
-          type
+const ADMIN_FOO_QUERY = gql`
+  query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+    adminEntity(id: $id, version: $version, index: $index, value: $value) {
+      __typename
+      id
+      info {
+        type
+        name
+        version
+        authKey
+        status
+        valid
+        validPublished
+      }
+      ... on AdminQueryAdminFoo {
+        fields {
+          title
+          slug
+          summary
+          tags
+          active
+          activeList
+          bar {
+            id
+          }
+          bars {
+            id
+          }
+          location
+          locations
+          stringedBar {
+            type
+          }
         }
       }
     }
   }
-}
 `;
 
 const ADMIN_FOO_EMPTY_FIELDS = {
@@ -124,6 +133,73 @@ const ADMIN_FOO_EMPTY_FIELDS = {
   location: null,
   locations: null,
   stringedBar: null,
+};
+
+const CHANGELOG_EVENTS_QUERY = gql`
+  query ChangelogEvents($query: ChangelogEventQueryInput) {
+    changelogEvents(query: $query) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
+      edges {
+        cursor
+        node {
+          type
+          createdBy
+          createdAt
+          ... on SchemaChangelogEvent {
+            version
+          }
+          ... on EntityChangelogEvent {
+            entities {
+              id
+              version
+              type
+              name
+            }
+            unauthorizedEntityCount
+          }
+        }
+      }
+    }
+  }
+`;
+
+interface ChangelogEventsQueryVariables {
+  query?: ChangelogEventQuery | null;
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type ChangelogEventsQueryPayload = {
+  changelogEvents: {
+    pageInfo: {
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor: string | null;
+      endCursor: string | null;
+    };
+    totalCount: number;
+    edges: {
+      cursor: string;
+      node: {
+        type: keyof typeof EventType;
+        createdBy: string;
+        createdAt: string;
+        version?: number;
+        entities?: {
+          id: string;
+          version: number;
+          type: string;
+          name: string;
+        }[];
+        unauthorizedEntityCount?: number;
+      };
+    }[];
+  };
 };
 
 beforeAll(async () => {
@@ -422,7 +498,7 @@ describe('adminEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query FourVersionsOfAdminEntity(
             $id: ID!
             $version1: Int!
@@ -544,7 +620,7 @@ describe('adminEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query AdminEntity($id: ID!) {
             adminEntity(id: $id) {
               id
@@ -607,7 +683,7 @@ describe('adminEntity()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query Entity($id: ID!) {
             adminEntity(id: $id) {
               __typename
@@ -702,7 +778,7 @@ describe('adminEntity()', () => {
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -785,7 +861,7 @@ describe('adminEntity()', () => {
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -886,7 +962,7 @@ describe('adminEntity()', () => {
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -982,7 +1058,7 @@ describe('adminEntity()', () => {
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               adminEntity(id: $id) {
                 __typename
@@ -1058,7 +1134,7 @@ describe('adminEntity()', () => {
   test('Error: Query invalid id', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query AdminEntity($id: ID!) {
           adminEntity(id: $id) {
             id
@@ -1086,7 +1162,7 @@ GraphQL request:3:11
   test('Error: No session', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query AdminEntity($id: ID!) {
           adminEntity(id: $id) {
             id
@@ -1124,13 +1200,13 @@ GraphQL request:3:11
 
       const result = await graphql({
         schema,
-        source: `
-        query AdminEntity($id: ID!) {
-          adminEntity(id: $id) {
-            id
+        source: gql`
+          query AdminEntity($id: ID!) {
+            adminEntity(id: $id) {
+              id
+            }
           }
-        }
-      `,
+        `,
         contextValue: createContext(),
         variableValues: { id },
       });
@@ -1138,15 +1214,17 @@ GraphQL request:3:11
         adminEntity: null,
       });
       const errorStrings = result.errors?.map((it) => it.toString());
-      expect(errorStrings).toEqual([
-        `NotAuthorized: Wrong authKey provided
+      expect(errorStrings).toMatchInlineSnapshot(`
+        [
+          "NotAuthorized: Wrong authKey provided
 
-GraphQL request:3:11
-2 |         query AdminEntity($id: ID!) {
-3 |           adminEntity(id: $id) {
-  |           ^
-4 |             id`,
-      ]);
+        GraphQL request:3:13
+        2 |           query AdminEntity($id: ID!) {
+        3 |             adminEntity(id: $id) {
+          |             ^
+        4 |               id",
+        ]
+      `);
     }
   });
 
@@ -1163,11 +1241,11 @@ GraphQL request:3:11
       [
         "Either (id), (id and version) or (index and value) must be specified
 
-      GraphQL request:3:3
-      2 | query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
-      3 |   adminEntity(id: $id, version: $version, index: $index, value: $value) {
-        |   ^
-      4 |     __typename",
+      GraphQL request:3:5
+      2 |   query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      3 |     adminEntity(id: $id, version: $version, index: $index, value: $value) {
+        |     ^
+      4 |       __typename",
       ]
     `);
   });
@@ -1185,11 +1263,11 @@ GraphQL request:3:11
       [
         "Either (id), (id and version) or (index and value) must be specified
 
-      GraphQL request:3:3
-      2 | query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
-      3 |   adminEntity(id: $id, version: $version, index: $index, value: $value) {
-        |   ^
-      4 |     __typename",
+      GraphQL request:3:5
+      2 |   query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      3 |     adminEntity(id: $id, version: $version, index: $index, value: $value) {
+        |     ^
+      4 |       __typename",
       ]
     `);
   });
@@ -1222,7 +1300,7 @@ describe('adminEntities()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query Entities($ids: [ID!]!) {
             adminEntities(ids: $ids) {
               __typename
@@ -1271,7 +1349,7 @@ describe('adminEntities()', () => {
   test('Error: Query invalid id', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query Entities($ids: [ID!]!) {
           adminEntities(ids: $ids) {
             id
@@ -1281,10 +1359,24 @@ describe('adminEntities()', () => {
       contextValue: createContext(),
       variableValues: { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] },
     });
-    expect(result.data).toEqual({
-      adminEntities: [null],
-    });
-    expect(result.errors).toBeFalsy();
+    expect(result.data).toEqual({ adminEntities: [null] });
+    expect(result.errors?.map((it) => it.toJSON())).toMatchInlineSnapshot(`
+      [
+        {
+          "locations": [
+            {
+              "column": 11,
+              "line": 3,
+            },
+          ],
+          "message": "NotFound: No such entity",
+          "path": [
+            "adminEntities",
+            0,
+          ],
+        },
+      ]
+    `);
   });
 });
 
@@ -1292,9 +1384,13 @@ describe('adminSampleEntities()', () => {
   test('20 entities', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
-          adminSampleEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, seed: 123, count: 20) {
+          adminSampleEntities(
+            query: { entityTypes: [QueryAdminOnlyEditBefore] }
+            seed: 123
+            count: 20
+          ) {
             seed
             totalCount
             items {
@@ -1320,7 +1416,7 @@ describe('searchAdminEntities()', () => {
   test('Default => 25', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
           adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }) {
             totalCount
@@ -1347,7 +1443,7 @@ describe('searchAdminEntities()', () => {
   test('Default => 25, filter type as argument', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         query Search($entityTypes: [AdminEntityType!]) {
           adminSearchEntities(query: { entityTypes: $entityTypes }) {
             edges {
@@ -1371,7 +1467,7 @@ describe('searchAdminEntities()', () => {
   test('first 10', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
           adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, first: 10) {
             edges {
@@ -1392,9 +1488,12 @@ describe('searchAdminEntities()', () => {
   test('first 10 reversed', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
-          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore], reverse: true }, first: 10) {
+          adminSearchEntities(
+            query: { entityTypes: [QueryAdminOnlyEditBefore], reverse: true }
+            first: 10
+          ) {
             edges {
               node {
                 id
@@ -1416,7 +1515,7 @@ describe('searchAdminEntities()', () => {
   test('last 10', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
           adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, last: 10) {
             edges {
@@ -1437,7 +1536,7 @@ describe('searchAdminEntities()', () => {
   test('last 10, ordered by name', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
           adminSearchEntities(
             query: { entityTypes: [QueryAdminOnlyEditBefore], order: name }
@@ -1465,9 +1564,11 @@ describe('searchAdminEntities()', () => {
   test('Filter based on authKey (subject)', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         {
-          adminSearchEntities(query: { authKeys: ["subject"] entityTypes: [QueryAdminOnlyEditBefore] }) {
+          adminSearchEntities(
+            query: { authKeys: ["subject"], entityTypes: [QueryAdminOnlyEditBefore] }
+          ) {
             totalCount
             edges {
               node {
@@ -1540,9 +1641,9 @@ describe('searchAdminEntities()', () => {
 
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query QueryReferencing($id: ID!) {
-          adminSearchEntities(query: { linksTo: {id: $id } }) {
+          adminSearchEntities(query: { linksTo: { id: $id } }) {
             edges {
               node {
                 id
@@ -1572,7 +1673,7 @@ describe('searchAdminEntities()', () => {
 
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query QueryReferencing($id: ID!) {
           adminSearchEntities(query: { linksFrom: { id: $id } }) {
             edges {
@@ -1616,7 +1717,7 @@ describe('searchAdminEntities()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           query QueryBoundingBox($boundingBox: BoundingBoxInput!) {
             adminSearchEntities(query: { boundingBox: $boundingBox }) {
               edges {
@@ -1649,7 +1750,7 @@ describe('searchAdminEntities()', () => {
   test('Filter based on text', async () => {
     const result = (await graphql({
       schema,
-      source: `
+      source: gql`
         query QueryBoundingBox($text: String!) {
           adminSearchEntities(query: { text: $text }) {
             edges {
@@ -1669,6 +1770,33 @@ describe('searchAdminEntities()', () => {
 
     expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(50);
     expect(result?.data?.adminSearchEntities.edges.length).toBe(25);
+  });
+});
+
+describe('changelogEvents()', () => {
+  test('Filter schemaUpdate events', async () => {
+    const result = (await graphql({
+      schema,
+      source: CHANGELOG_EVENTS_QUERY,
+      contextValue: createContext(),
+      variableValues: {
+        query: { types: [EventType.updateSchema] },
+      } satisfies ChangelogEventsQueryVariables,
+    })) as ExecutionResult<ChangelogEventsQueryPayload>;
+    expect(result.errors).toBeUndefined();
+
+    expect(result.data?.changelogEvents.totalCount).toBeGreaterThanOrEqual(1);
+
+    expect(result.data?.changelogEvents.edges.length).toBeGreaterThanOrEqual(1);
+    const firstEdge = result.data?.changelogEvents.edges[0];
+    assertIsDefined(firstEdge);
+    const firstEvent = firstEdge.node;
+    assertIsDefined(firstEvent);
+    expect(firstEvent.type).toBe(EventType.updateSchema);
+    expect(firstEvent.version).toBeGreaterThanOrEqual(1);
+
+    expect(result.data?.changelogEvents.pageInfo.hasPreviousPage).toBeFalsy();
+    expect(result.data?.changelogEvents.pageInfo.startCursor).toEqual(firstEdge.cursor);
   });
 });
 
@@ -1698,7 +1826,7 @@ describe('entityHistory()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           query EntityHistory($id: ID!) {
             entityHistory(id: $id) {
               id
@@ -1741,7 +1869,7 @@ describe('entityHistory()', () => {
   test('Error: invalid id', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query EntityHistory($id: ID!) {
           entityHistory(id: $id) {
             id
@@ -1754,15 +1882,22 @@ describe('entityHistory()', () => {
       contextValue: createContext(),
       variableValues: { id: '6698130c-b56d-48cd-81f5-1f74bedc552e' },
     });
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "entityHistory": null,
+    expect(result.data?.entityHistory).toBeNull();
+    expect(result.errors?.map((it) => it.toJSON())).toMatchInlineSnapshot(`
+      [
+        {
+          "locations": [
+            {
+              "column": 11,
+              "line": 3,
+            },
+          ],
+          "message": "NotFound: No such entity",
+          "path": [
+            "entityHistory",
+          ],
         },
-        "errors": [
-          [GraphQLError: NotFound: No such entity],
-        ],
-      }
+      ]
     `);
   });
 
@@ -1779,7 +1914,7 @@ describe('entityHistory()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query EntityHistory($id: ID!) {
             entityHistory(id: $id) {
               id
@@ -1822,7 +1957,7 @@ describe('publishingHistory()', () => {
 
       const result = (await graphql({
         schema,
-        source: `
+        source: gql`
           query PublishingHistory($id: ID!) {
             publishingHistory(id: $id) {
               id
@@ -1858,7 +1993,7 @@ describe('publishingHistory()', () => {
   test('Error: invalid id', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query PublishingHistory($id: ID!) {
           publishingHistory(id: $id) {
             id
@@ -1896,7 +2031,7 @@ describe('publishingHistory()', () => {
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query PublishingHistory($id: ID!) {
             publishingHistory(id: $id) {
               id

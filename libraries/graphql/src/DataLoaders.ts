@@ -7,6 +7,8 @@ import type {
   AdminSchema,
   AdminSearchQuery,
   AdminValueTypeSpecification,
+  ChangelogEvent,
+  ChangelogEventQuery,
   ContentTraverseNode,
   Connection as CoreConnection,
   Edge as CoreEdge,
@@ -15,6 +17,7 @@ import type {
   EntitySamplingOptions,
   EntitySamplingPayload,
   EntityVersionReference,
+  ErrorResult,
   ErrorType,
   PageInfo,
   Paging,
@@ -48,7 +51,7 @@ import {
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 
-interface Connection<T extends Edge<unknown>> {
+interface Connection<TContext, T extends Edge<TContext, unknown>> {
   pageInfo: PageInfo;
   edges: T[];
 }
@@ -58,12 +61,13 @@ type FieldValueOrResolver<TContext, TResult> =
   | Promise<TResult>
   | ((args: unknown, context: TContext, info: GraphQLResolveInfo) => TResult | Promise<TResult>);
 
-interface ConnectionWithTotalCount<T extends Edge<unknown>, TContext> extends Connection<T> {
+interface ConnectionWithTotalCount<T extends Edge<TContext, unknown>, TContext>
+  extends Connection<TContext, T> {
   totalCount: FieldValueOrResolver<TContext, number>;
 }
 
-interface Edge<T> {
-  node: T | null;
+interface Edge<TContext, T> {
+  node: FieldValueOrResolver<TContext, T | null>;
   cursor: string;
 }
 
@@ -81,19 +85,20 @@ export async function loadPublishedEntities<TContext extends SessionGraphQLConte
   schema: PublishedSchema,
   context: TContext,
   ids: string[],
-): Promise<(PublishedEntity | null)[]> {
+): Promise<FieldValueOrResolver<TContext, PublishedEntity | null>[]> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
-  if (results.isError()) {
-    throw results.toError();
-  }
-  return results.value.map((result) => {
-    if (result.isOk()) {
-      return buildResolversForPublishedEntity(schema, result.value);
-    }
-    // TODO handle errors
-    return null;
-  });
+  return results
+    .valueOrThrow()
+    .map((result) =>
+      result.isOk()
+        ? buildResolversForPublishedEntity(schema, result.value)
+        : buildErrorResolver(result),
+    );
+}
+
+function buildErrorResolver(result: ErrorResult<unknown, ErrorType>) {
+  return Promise.reject(result.toError());
 }
 
 export async function loadPublishedSampleEntities<TContext extends SessionGraphQLContext>(
@@ -119,7 +124,7 @@ export async function loadPublishedSearchEntities<TContext extends SessionGraphQ
   context: TContext,
   query: PublishedSearchQuery | undefined,
   paging: Paging,
-): Promise<ConnectionWithTotalCount<Edge<PublishedEntity>, TContext> | null> {
+): Promise<ConnectionWithTotalCount<Edge<TContext, PublishedEntity>, TContext> | null> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const result = await publishedClient.searchEntities(query, paging);
   return buildResolversForConnection<TContext, PublishedEntity>(
@@ -156,7 +161,7 @@ function buildResolversForConnection<TContext extends SessionGraphQLContext, TNo
   connectionResult: Result<CoreConnection<CoreEdge<TNode, ErrorType>> | null, ErrorType>,
   totalCount: FieldValueOrResolver<TContext, number>,
   nodeResolver: (node: TNode) => TNode,
-): ConnectionWithTotalCount<Edge<TNode>, TContext> | null {
+): ConnectionWithTotalCount<Edge<TContext, TNode>, TContext> | null {
   const connection = connectionResult.valueOrThrow();
   if (connection === null) {
     // No results
@@ -164,12 +169,10 @@ function buildResolversForConnection<TContext extends SessionGraphQLContext, TNo
   }
   return {
     pageInfo: connection.pageInfo,
-    edges: connection.edges.map((edge) => {
-      return {
-        cursor: edge.cursor,
-        node: edge.node.isOk() ? nodeResolver(edge.node.value) : null, //TODO throw error if accessed?
-      };
-    }),
+    edges: connection.edges.map((edge) => ({
+      cursor: edge.cursor,
+      node: edge.node.isOk() ? nodeResolver(edge.node.value) : buildErrorResolver(edge.node),
+    })),
     totalCount,
   };
 }
@@ -188,16 +191,16 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   ids: string[],
-): Promise<(AdminEntity | null)[]> {
+): Promise<FieldValueOrResolver<TContext, AdminEntity | null>[]> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const results = await adminClient.getEntities(ids.map((id) => ({ id })));
-  return results.valueOrThrow().map((result) => {
-    if (result.isOk()) {
-      return buildResolversForAdminEntity(schema, result.value);
-    }
-    // TODO handle errors
-    return null;
-  });
+  return results
+    .valueOrThrow()
+    .map((result) =>
+      result.isOk()
+        ? buildResolversForAdminEntity(schema, result.value)
+        : buildErrorResolver(result),
+    );
 }
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
@@ -236,7 +239,7 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
   context: TContext,
   query: AdminSearchQuery | undefined,
   paging: Paging,
-): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
+): Promise<ConnectionWithTotalCount<Edge<TContext, AdminEntity>, TContext> | null> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.searchEntities(query, paging);
   return buildResolversForConnection<TContext, AdminEntity>(
@@ -350,6 +353,30 @@ function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
   return async (_args, context, _info) => {
     const adminClient = context.adminClient.valueOrThrow();
     const result = await adminClient.getTotalCount(query);
+    return result.valueOrThrow();
+  };
+}
+
+export async function loadChangelogEvents<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  query: ChangelogEventQuery | undefined,
+  paging: Paging,
+): Promise<Connection<TContext, Edge<TContext, ChangelogEvent>> | null> {
+  const adminClient = context.adminClient.valueOrThrow();
+  const result = await adminClient.getChangelogEvents(query, paging);
+  return buildResolversForConnection<TContext, ChangelogEvent>(
+    result,
+    buildChangelogEventsTotalCount(query),
+    (it) => it,
+  );
+}
+
+function buildChangelogEventsTotalCount<TContext extends SessionGraphQLContext>(
+  query: ChangelogEventQuery | undefined,
+): FieldValueOrResolver<TContext, number> {
+  return async (_args, context, _info) => {
+    const adminClient = context.adminClient.valueOrThrow();
+    const result = await adminClient.getChangelogEventsTotalCount(query);
     return result.valueOrThrow();
   };
 }

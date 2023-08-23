@@ -8,6 +8,8 @@ import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { setUpServerWithSession } from './TestUtils.js';
 
+const gql = String.raw;
+
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
@@ -32,36 +34,39 @@ function createContext(): SessionGraphQLContext {
   };
 }
 
-const acquireAdvisoryLockQuery = `
-mutation AcquireAdvisoryLock($name: String!, $leaseDuration: Int!) {
-  acquireAdvisoryLock(name: $name, leaseDuration: $leaseDuration) {
-    name
-    handle
+const acquireAdvisoryLockQuery = gql`
+  mutation AcquireAdvisoryLock($name: String!, $leaseDuration: Int!) {
+    acquireAdvisoryLock(name: $name, leaseDuration: $leaseDuration) {
+      name
+      handle
+    }
   }
-}`;
+`;
 
 type AcquireAdvisoryLockResult = ExecutionResult<{
   acquireAdvisoryLock: { name: string; handle: number };
 }>;
 
-const renewAdvisoryLockQuery = `
-mutation RenewAdvisoryLock($name: String!, $handle: Int!) {
-  renewAdvisoryLock(name: $name, handle: $handle) {
-    name
-    handle
+const renewAdvisoryLockQuery = gql`
+  mutation RenewAdvisoryLock($name: String!, $handle: Int!) {
+    renewAdvisoryLock(name: $name, handle: $handle) {
+      name
+      handle
+    }
   }
-}`;
+`;
 
 type RenewAdvisoryLockResult = ExecutionResult<{
   renewAdvisoryLock: { name: string; handle: number };
 }>;
 
-const releaseAdvisoryLockQuery = `
-mutation ReleaseAdvisoryLock($name: String!, $handle: Int!) {
-  releaseAdvisoryLock(name: $name, handle: $handle) {
-    name
+const releaseAdvisoryLockQuery = gql`
+  mutation ReleaseAdvisoryLock($name: String!, $handle: Int!) {
+    releaseAdvisoryLock(name: $name, handle: $handle) {
+      name
+    }
   }
-}`;
+`;
 
 type ReleaseAdvisoryLockResult = ExecutionResult<{
   releaseAdvisoryLock: { name: string };
@@ -182,7 +187,7 @@ describe('releaseAdvisoryLock()', () => {
       schema,
       source: releaseAdvisoryLockQuery,
       contextValue: createContext(),
-      variableValues: { name: 'Invalid loch name', handle: 123 },
+      variableValues: { name: 'Invalid lock name', handle: 123 },
     });
 
     expect(result).toMatchInlineSnapshot(`
