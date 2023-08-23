@@ -7,12 +7,15 @@ import type {
   AdminSchema,
   AdminSearchQuery,
   AdminValueTypeSpecification,
+  ContentTraverseNode,
+  Connection as CoreConnection,
+  Edge as CoreEdge,
   EntityHistory,
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
   EntityVersionReference,
-  ContentTraverseNode,
+  ErrorType,
   PageInfo,
   Paging,
   PublishedClient,
@@ -24,11 +27,13 @@ import type {
   PublishedSearchQuery,
   PublishedValueTypeSpecification,
   PublishingHistory,
+  Result,
   RichText,
   UniqueIndexReference,
   ValueItem,
 } from '@dossierhq/core';
 import {
+  ContentTraverseNodeType,
   isEntityField,
   isEntityItemField,
   isEntityListField,
@@ -38,7 +43,6 @@ import {
   isRichTextField,
   isValueItemField,
   isValueItemListField,
-  ContentTraverseNodeType,
   traverseContentField,
 } from '@dossierhq/core';
 import type { GraphQLResolveInfo } from 'graphql';
@@ -118,25 +122,11 @@ export async function loadPublishedSearchEntities<TContext extends SessionGraphQ
 ): Promise<ConnectionWithTotalCount<Edge<PublishedEntity>, TContext> | null> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const result = await publishedClient.searchEntities(query, paging);
-  if (result.isError()) {
-    throw result.toError();
-  }
-
-  if (result.value === null) {
-    // No results
-    return null;
-  }
-
-  return {
-    pageInfo: result.value.pageInfo,
-    edges: result.value.edges.map((edge) => {
-      return {
-        cursor: edge.cursor,
-        node: edge.node.isOk() ? buildResolversForPublishedEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
-      };
-    }),
-    totalCount: buildTotalCount(query),
-  };
+  return buildResolversForConnection<TContext, PublishedEntity>(
+    result,
+    buildTotalCount(query),
+    (it) => buildResolversForPublishedEntity(schema, it),
+  );
 }
 
 function buildTotalCount<TContext extends SessionGraphQLContext>(
@@ -160,6 +150,28 @@ function buildResolversForPublishedEntity<TContext extends SessionGraphQLContext
   const result = { ...entity };
   resolveFields<TContext>(schema, entitySpec, result, false);
   return result;
+}
+
+function buildResolversForConnection<TContext extends SessionGraphQLContext, TNode>(
+  connectionResult: Result<CoreConnection<CoreEdge<TNode, ErrorType>> | null, ErrorType>,
+  totalCount: FieldValueOrResolver<TContext, number>,
+  nodeResolver: (node: TNode) => TNode,
+): ConnectionWithTotalCount<Edge<TNode>, TContext> | null {
+  const connection = connectionResult.valueOrThrow();
+  if (connection === null) {
+    // No results
+    return null;
+  }
+  return {
+    pageInfo: connection.pageInfo,
+    edges: connection.edges.map((edge) => {
+      return {
+        cursor: edge.cursor,
+        node: edge.node.isOk() ? nodeResolver(edge.node.value) : null, //TODO throw error if accessed?
+      };
+    }),
+    totalCount,
+  };
 }
 
 export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
@@ -227,23 +239,11 @@ export async function loadAdminSearchEntities<TContext extends SessionGraphQLCon
 ): Promise<ConnectionWithTotalCount<Edge<AdminEntity>, TContext> | null> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.searchEntities(query, paging);
-  const connection = result.valueOrThrow();
-
-  if (connection === null) {
-    // No results
-    return null;
-  }
-
-  return {
-    pageInfo: connection.pageInfo,
-    edges: connection.edges.map((edge) => {
-      return {
-        cursor: edge.cursor,
-        node: edge.node.isOk() ? buildResolversForAdminEntity(schema, edge.node.value) : null, //TODO throw error if accessed?
-      };
-    }),
-    totalCount: buildAdminTotalCount(query),
-  };
+  return buildResolversForConnection<TContext, AdminEntity>(
+    result,
+    buildAdminTotalCount(query),
+    (it) => buildResolversForAdminEntity(schema, it),
+  );
 }
 
 function resolveFields<TContext extends SessionGraphQLContext>(
@@ -287,7 +287,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     } else if (isValueItemField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
     } else if (isValueItemListField(fieldSpec, value) && value && value.length > 0) {
-      fields[fieldSpec.name] = value.map((x) => buildResolversForValue(schema, x, isAdmin));
+      fields[fieldSpec.name] = value.map((it) => buildResolversForValue(schema, it, isAdmin));
     }
   }
 }
