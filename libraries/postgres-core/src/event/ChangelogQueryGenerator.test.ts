@@ -1,4 +1,4 @@
-import { EventType, type ChangelogQuery, type Paging } from '@dossierhq/core';
+import { EventType, type ChangelogEventQuery, type Paging } from '@dossierhq/core';
 import type { DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
 import { createMockAdapter, resolvePaging } from '../test/TestUtils.js';
@@ -8,7 +8,7 @@ import {
 } from './ChangelogQueryGenerator.js';
 
 function getChangelogEventsQuery(
-  query?: ChangelogQuery,
+  query?: ChangelogEventQuery,
   paging?: Paging,
   entity?: DatabaseResolvedEntityReference,
 ) {

@@ -1,4 +1,4 @@
-import { type ChangelogQuery, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { type ChangelogEventQuery, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
 import { getEntityInfoAndAuthorize } from './eventGetChangelogEvents.js';
@@ -8,7 +8,7 @@ export async function eventGetChangelogEventsTotalCount(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: ChangelogQuery | undefined,
+  query: ChangelogEventQuery | undefined,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

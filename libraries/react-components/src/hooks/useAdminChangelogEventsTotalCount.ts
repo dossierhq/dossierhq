@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  ChangelogQuery,
+  ChangelogEventQuery,
   ErrorResult,
   ErrorType,
   ValueItem,
@@ -10,13 +10,13 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, ChangelogQuery | undefined]>;
+type FetcherKey = Readonly<[string, ChangelogEventQuery | undefined]>;
 type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 export function useAdminChangelogEventsTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  query: ChangelogQuery | undefined,
+  query: ChangelogEventQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;

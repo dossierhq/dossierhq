@@ -37,7 +37,7 @@ import type {
   UniqueIndexReference,
   ValueItem,
 } from '../Types.js';
-import type { ChangelogEvent, ChangelogQuery } from '../events/EventTypes.js';
+import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
 import type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
@@ -197,7 +197,7 @@ export interface AdminClient<
   >;
 
   getChangelogEvents(
-    query?: ChangelogQuery,
+    query?: ChangelogEventQuery,
     paging?: Paging,
   ): PromiseResult<
     Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null,
@@ -205,7 +205,7 @@ export interface AdminClient<
   >;
 
   getChangelogEventsTotalCount(
-    query?: ChangelogQuery,
+    query?: ChangelogEventQuery,
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -376,11 +376,11 @@ export interface AdminExceptionClient<
   ): Promise<AdminEntityUpsertPayload<T>>;
 
   getChangelogEvents(
-    query?: ChangelogQuery,
+    query?: ChangelogEventQuery,
     paging?: Paging,
   ): Promise<Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null>;
 
-  getChangelogEventsTotalCount(query?: ChangelogQuery): Promise<number>;
+  getChangelogEventsTotalCount(query?: ChangelogEventQuery): Promise<number>;
 
   getEntityHistory(reference: EntityReference): Promise<EntityHistory>;
 
@@ -721,7 +721,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getChangelogEvents(
-    query?: ChangelogQuery,
+    query?: ChangelogEventQuery,
     paging?: Paging,
   ): MethodReturnType<typeof AdminClientOperationName.getChangelogEvents> {
     return this.executeOperation({
@@ -732,7 +732,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getChangelogEventsTotalCount(
-    query?: ChangelogQuery,
+    query?: ChangelogEventQuery,
   ): MethodReturnType<typeof AdminClientOperationName.getChangelogEventsTotalCount> {
     return this.executeOperation({
       name: AdminClientOperationName.getChangelogEventsTotalCount,
@@ -970,13 +970,13 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async getChangelogEvents(
-    query?: ChangelogQuery,
+    query?: ChangelogEventQuery,
     paging?: Paging,
   ): Promise<Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null> {
     return (await this.client.getChangelogEvents(query, paging)).valueOrThrow();
   }
 
-  async getChangelogEventsTotalCount(query?: ChangelogQuery): Promise<number> {
+  async getChangelogEventsTotalCount(query?: ChangelogEventQuery): Promise<number> {
     return (await this.client.getChangelogEventsTotalCount(query)).valueOrThrow();
   }
 

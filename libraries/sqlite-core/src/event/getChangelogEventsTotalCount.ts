@@ -1,4 +1,4 @@
-import { ok, type ChangelogQuery, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { ok, type ChangelogEventQuery, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   type DatabaseResolvedEntityReference,
   type TransactionContext,
@@ -12,7 +12,7 @@ import {
 export async function eventGetChangelogEventsTotalCount(
   database: Database,
   context: TransactionContext,
-  query: ChangelogQuery,
+  query: ChangelogEventQuery,
   entity: DatabaseResolvedEntityReference | null,
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQueryResult = generateGetChangelogTotalCountQuery(query, entity);

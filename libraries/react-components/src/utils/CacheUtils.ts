@@ -5,7 +5,7 @@ import {
   type AdminQuery,
   type AdminSchemaWithMigrations,
   type AdminSearchQuery,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type EntityReference,
   type EntitySamplingOptions,
   type EntityVersionReference,
@@ -18,10 +18,10 @@ import type { Arguments, Cache, useSWRConfig } from 'swr';
 export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 
 export const CACHE_KEYS = {
-  adminChangelogEvents(query: ChangelogQuery | undefined, paging: Paging | undefined) {
+  adminChangelogEvents(query: ChangelogEventQuery | undefined, paging: Paging | undefined) {
     return ['dossierhq/useAdminChangelogEvents', query, paging] as const;
   },
-  adminChangelogEventsTotalCount(query: ChangelogQuery | undefined) {
+  adminChangelogEventsTotalCount(query: ChangelogEventQuery | undefined) {
     return ['dossierhq/useAdminChangelogEventsTotalCount', query] as const;
   },
   adminEntity(reference: EntityReference | EntityVersionReference) {

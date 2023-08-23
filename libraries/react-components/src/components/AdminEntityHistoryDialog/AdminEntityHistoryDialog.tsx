@@ -3,7 +3,7 @@ import {
   isFieldValueEqual,
   type AdminEntity,
   type AdminEntityTypeSpecification,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type EntityReference,
 } from '@dossierhq/core';
 import {
@@ -62,7 +62,7 @@ function Content({ reference }: { reference: EntityReference }) {
   }, []);
 
   // TODO deal with paging of changelog events?
-  const query = useMemo<ChangelogQuery>(() => {
+  const query = useMemo<ChangelogEventQuery>(() => {
     return {
       entity: { id: reference.id },
       types: [

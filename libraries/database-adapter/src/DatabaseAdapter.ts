@@ -4,7 +4,7 @@ import type {
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
   AdminSearchQuery,
-  ChangelogQuery,
+  ChangelogEventQuery,
   EntityChangelogEvent,
   EntityReference,
   EntityVersionReference,
@@ -544,7 +544,7 @@ export interface DatabaseAdapter<
 
   eventGetChangelogEvents(
     context: TransactionContext,
-    query: ChangelogQuery,
+    query: ChangelogEventQuery,
     pagingInfo: DatabasePagingInfo,
     entity: DatabaseResolvedEntityReference | null,
   ): PromiseResult<
@@ -562,7 +562,7 @@ export interface DatabaseAdapter<
 
   eventGetChangelogEventsTotalCount(
     context: TransactionContext,
-    query: ChangelogQuery,
+    query: ChangelogEventQuery,
     entity: DatabaseResolvedEntityReference | null,
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 

@@ -20,7 +20,7 @@ interface Event<TEventType extends string> {
   createdBy: string;
 }
 
-export interface ChangelogQuery {
+export interface ChangelogEventQuery {
   reverse?: boolean;
   createdBy?: string;
   entity?: EntityReference;

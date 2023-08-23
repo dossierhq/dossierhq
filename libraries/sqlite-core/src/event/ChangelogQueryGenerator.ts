@@ -1,7 +1,7 @@
 import {
   assertExhaustive,
   ok,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
@@ -22,7 +22,7 @@ export type EventsRow = Pick<EventsTable, 'id' | 'type' | 'created_at'> &
 
 export function generateGetChangelogEventsQuery(
   database: Database,
-  query: ChangelogQuery,
+  query: ChangelogEventQuery,
   paging: DatabasePagingInfo,
   entity: DatabaseResolvedEntityReference | null,
 ): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
@@ -83,7 +83,7 @@ export interface TotalCountRow {
 }
 
 export function generateGetChangelogTotalCountQuery(
-  query: ChangelogQuery,
+  query: ChangelogEventQuery,
   entity: DatabaseResolvedEntityReference | null,
 ): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
   const queryBuilder = createSqliteSqlQuery();
@@ -105,7 +105,7 @@ export function generateGetChangelogTotalCountQuery(
 
 function addQueryFilters(
   { sql, addValueList }: SqliteQueryBuilder,
-  query: ChangelogQuery,
+  query: ChangelogEventQuery,
   entity: DatabaseResolvedEntityReference | null,
 ) {
   if (query.createdBy) {

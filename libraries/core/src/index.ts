@@ -226,7 +226,7 @@ export {
 export {
   EventType,
   type ChangelogEvent,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type EntityChangelogEvent,
   type SchemaChangelogEvent,
 } from './events/EventTypes.js';

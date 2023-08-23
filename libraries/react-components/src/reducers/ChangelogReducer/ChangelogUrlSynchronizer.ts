@@ -1,7 +1,7 @@
 import {
   decodeURLSearchParamsParam,
   encodeObjectToURLSearchParams,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type Paging,
 } from '@dossierhq/core';
 import { useEffect, type Dispatch } from 'react';
@@ -14,7 +14,7 @@ import {
 } from './ChangelogReducer.js';
 
 interface Params {
-  query: ChangelogQuery;
+  query: ChangelogEventQuery;
   paging: Paging | undefined;
 }
 

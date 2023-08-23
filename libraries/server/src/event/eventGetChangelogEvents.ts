@@ -4,7 +4,7 @@ import {
   notOk,
   ok,
   type ChangelogEvent,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type Connection,
   type Edge,
   type EntityChangelogEvent,
@@ -27,7 +27,7 @@ export async function eventGetChangelogEvents(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: ChangelogQuery | undefined,
+  query: ChangelogEventQuery | undefined,
   paging: Paging | undefined,
 ): PromiseResult<
   Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null,
@@ -74,7 +74,7 @@ export async function getEntityInfoAndAuthorize(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: ChangelogQuery | undefined,
+  query: ChangelogEventQuery | undefined,
 ): PromiseResult<
   DatabaseResolvedEntityReference | null,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic

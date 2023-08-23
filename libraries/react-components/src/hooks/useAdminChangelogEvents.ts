@@ -2,7 +2,7 @@ import type {
   AdminClient,
   AdminEntity,
   ChangelogEvent,
-  ChangelogQuery,
+  ChangelogEventQuery,
   Connection,
   Edge,
   ErrorResult,
@@ -14,13 +14,13 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, ChangelogQuery | undefined, Paging | undefined]>;
+type FetcherKey = Readonly<[string, ChangelogEventQuery | undefined, Paging | undefined]>;
 type FetcherData = Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminChangelogEvents(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  query: ChangelogQuery | undefined,
+  query: ChangelogEventQuery | undefined,
   paging: Paging | undefined,
 ): {
   connection: FetcherData | undefined;

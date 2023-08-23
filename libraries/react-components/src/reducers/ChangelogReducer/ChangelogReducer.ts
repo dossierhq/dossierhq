@@ -1,7 +1,7 @@
 import {
   getPagingInfo,
   type ChangelogEvent,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type Connection,
   type Edge,
   type ErrorResult,
@@ -16,7 +16,7 @@ const DEFAULT_VALUES = {
 } as const;
 
 export interface ChangelogState {
-  query: ChangelogQuery;
+  query: ChangelogEventQuery;
   paging: Paging | undefined;
   requestedCount: number;
 
@@ -101,12 +101,12 @@ class SetPagingAction implements ChangelogStateAction {
 }
 
 class SetQueryAction implements ChangelogStateAction {
-  readonly value: ChangelogQuery;
+  readonly value: ChangelogEventQuery;
   readonly partial: boolean;
   readonly resetPagingIfModifying: boolean;
 
   constructor(
-    value: ChangelogQuery,
+    value: ChangelogEventQuery,
     { partial, resetPagingIfModifying }: { partial: boolean; resetPagingIfModifying: boolean },
   ) {
     this.value = value;
@@ -115,7 +115,7 @@ class SetQueryAction implements ChangelogStateAction {
   }
 
   reduce(state: Readonly<ChangelogState>): Readonly<ChangelogState> {
-    const query: ChangelogQuery = this.partial
+    const query: ChangelogEventQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
@@ -195,7 +195,7 @@ export const ChangelogStateActions = {
   UpdateTotalCount: UpdateTotalCountAction,
 };
 
-export function getQueryWithoutDefaults(query: ChangelogQuery): ChangelogQuery {
+export function getQueryWithoutDefaults(query: ChangelogEventQuery): ChangelogEventQuery {
   let changed = false;
   const newQuery = { ...query };
   if (query.reverse === DEFAULT_VALUES.reverse) {

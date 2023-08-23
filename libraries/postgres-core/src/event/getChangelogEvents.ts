@@ -1,7 +1,7 @@
 import {
   EventType,
   ok,
-  type ChangelogQuery,
+  type ChangelogEventQuery,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -27,7 +27,7 @@ import { generateGetChangelogEventsQuery, type EventsRow } from './ChangelogQuer
 export async function eventGetChangelogEvents(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
-  query: ChangelogQuery,
+  query: ChangelogEventQuery,
   paging: DatabasePagingInfo,
   entity: DatabaseResolvedEntityReference | null,
 ): PromiseResult<
