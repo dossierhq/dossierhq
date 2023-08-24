@@ -29,6 +29,7 @@ import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { setUpServerWithSession } from './TestUtils.js';
 import { adminEntityChangelogEvents } from './queries/adminEntityChangelogEvents.js';
+import { adminEntityFoo } from './queries/adminEntityFoo.js';
 import { globalChangelogEvents } from './queries/globalChangelogEvents.js';
 
 const gql = String.raw;
@@ -82,45 +83,6 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
     },
   ],
 };
-
-const ADMIN_FOO_QUERY = gql`
-  query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
-    adminEntity(id: $id, version: $version, index: $index, value: $value) {
-      __typename
-      id
-      info {
-        type
-        name
-        version
-        authKey
-        status
-        valid
-        validPublished
-      }
-      ... on AdminQueryAdminFoo {
-        fields {
-          title
-          slug
-          summary
-          tags
-          active
-          activeList
-          bar {
-            id
-          }
-          bars {
-            id
-          }
-          location
-          locations
-          stringedBar {
-            type
-          }
-        }
-      }
-    }
-  }
-`;
 
 const ADMIN_FOO_EMPTY_FIELDS = {
   title: null,
@@ -276,11 +238,9 @@ describe('adminEntity()', () => {
       },
     } = createResult.value;
 
-    const result = await graphql({
-      schema,
-      source: ADMIN_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'queryAdminSlug', value: slug },
+    const result = await adminEntityFoo(schema, createContext(), {
+      index: 'queryAdminSlug',
+      value: slug,
     });
     expect(result).toEqual({
       data: {
@@ -332,12 +292,7 @@ describe('adminEntity()', () => {
         },
       } = createResult.value;
 
-      const result = await graphql({
-        schema,
-        source: ADMIN_FOO_QUERY,
-        contextValue: createContext(),
-        variableValues: { id },
-      });
+      const result = await adminEntityFoo(schema, createContext(), { id });
       expect(result).toEqual({
         data: {
           adminEntity: {
@@ -385,12 +340,7 @@ describe('adminEntity()', () => {
         },
       } = createResult.value;
 
-      const result = await graphql({
-        schema,
-        source: ADMIN_FOO_QUERY,
-        contextValue: createContext(),
-        variableValues: { id },
-      });
+      const result = await adminEntityFoo(schema, createContext(), { id });
       expect(result).toEqual({
         data: {
           adminEntity: {
@@ -1163,12 +1113,7 @@ GraphQL request:3:11
   });
 
   test('Error: No args', async () => {
-    const result = await graphql({
-      schema,
-      source: ADMIN_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: {},
-    });
+    const result = await adminEntityFoo(schema, createContext(), {});
     expect(result.data).toEqual({ adminEntity: null });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
@@ -1185,12 +1130,7 @@ GraphQL request:3:11
   });
 
   test('Error: Index, no value', async () => {
-    const result = await graphql({
-      schema,
-      source: ADMIN_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'queryAdminSlug' },
-    });
+    const result = await adminEntityFoo(schema, createContext(), { index: 'queryAdminSlug' });
     expect(result.data).toEqual({ adminEntity: null });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`

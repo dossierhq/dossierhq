@@ -1,14 +1,14 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import {
+  FieldType,
   assertOkResult,
+  createRichText,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
-  FieldType,
   notOk,
   ok,
+  type AdminSchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult } from '@dossierhq/core-vitest';
 import type { GraphQLSchema } from 'graphql';
@@ -18,6 +18,7 @@ import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { setUpServerWithSession } from './TestUtils.js';
+import { publishedEntityFoo } from './queries/publishedEntityFoo.js';
 
 const gql = String.raw;
 
@@ -55,31 +56,6 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
   ],
   indexes: [{ name: 'queryPublishedSlug', type: 'unique' }],
 };
-
-const PUBLISHED_FOO_QUERY = gql`
-  query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
-    publishedEntity(id: $id, index: $index, value: $value) {
-      __typename
-      id
-      ... on PublishedQueryFoo {
-        info {
-          name
-          authKey
-          createdAt
-          valid
-        }
-        fields {
-          title
-          slug
-          summary
-          tags
-          location
-          locations
-        }
-      }
-    }
-  }
-`;
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification, 'data/query.sqlite');
@@ -903,11 +879,9 @@ describe('publishedEntity()', () => {
       },
     } = createResult.value;
 
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'queryPublishedSlug', value: slug },
+    const result = await publishedEntityFoo(schema, createContext(), {
+      index: 'queryPublishedSlug',
+      value: slug,
     });
     expect(result).toEqual({
       data: {
@@ -954,12 +928,7 @@ describe('publishedEntity()', () => {
       },
     } = createResult.value;
 
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { id },
-    });
+    const result = await publishedEntityFoo(schema, createContext(), { id });
     expect(result).toEqual({
       data: {
         publishedEntity: {
@@ -983,12 +952,7 @@ describe('publishedEntity()', () => {
   });
 
   test('Error: no args', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: {},
-    });
+    const result = await publishedEntityFoo(schema, createContext(), {});
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
@@ -1004,11 +968,8 @@ describe('publishedEntity()', () => {
   });
 
   test('Error: index, no value', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'queryPublishedSlug' },
+    const result = await publishedEntityFoo(schema, createContext(), {
+      index: 'queryPublishedSlug',
     });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
@@ -1025,12 +986,7 @@ describe('publishedEntity()', () => {
   });
 
   test('Error: value, no index', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { value: '123' },
-    });
+    const result = await publishedEntityFoo(schema, createContext(), { value: '123' });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
@@ -1046,11 +1002,9 @@ describe('publishedEntity()', () => {
   });
 
   test('Error: invalid index name', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'unknownIndex', value: '123' },
+    const result = await publishedEntityFoo(schema, createContext(), {
+      index: 'unknownIndex',
+      value: '123',
     });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
