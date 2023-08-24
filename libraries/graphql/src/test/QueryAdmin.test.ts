@@ -3,7 +3,6 @@ import type {
   AdminEntity,
   AdminSchemaSpecificationUpdate,
   BoundingBox,
-  ChangelogEventQuery,
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
@@ -29,6 +28,8 @@ import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { setUpServerWithSession } from './TestUtils.js';
+import { adminEntityChangelogEvents } from './queries/adminEntityChangelogEvents.js';
+import { globalChangelogEvents } from './queries/globalChangelogEvents.js';
 
 const gql = String.raw;
 
@@ -133,73 +134,6 @@ const ADMIN_FOO_EMPTY_FIELDS = {
   location: null,
   locations: null,
   stringedBar: null,
-};
-
-const CHANGELOG_EVENTS_QUERY = gql`
-  query ChangelogEvents($query: ChangelogEventQueryInput) {
-    changelogEvents(query: $query) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      totalCount
-      edges {
-        cursor
-        node {
-          type
-          createdBy
-          createdAt
-          ... on SchemaChangelogEvent {
-            version
-          }
-          ... on EntityChangelogEvent {
-            entities {
-              id
-              version
-              type
-              name
-            }
-            unauthorizedEntityCount
-          }
-        }
-      }
-    }
-  }
-`;
-
-interface ChangelogEventsQueryVariables {
-  query?: ChangelogEventQuery | null;
-}
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type ChangelogEventsQueryPayload = {
-  changelogEvents: {
-    pageInfo: {
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor: string | null;
-      endCursor: string | null;
-    };
-    totalCount: number;
-    edges: {
-      cursor: string;
-      node: {
-        type: keyof typeof EventType;
-        createdBy: string;
-        createdAt: string;
-        version?: number;
-        entities?: {
-          id: string;
-          version: number;
-          type: string;
-          name: string;
-        }[];
-        unauthorizedEntityCount?: number;
-      };
-    }[];
-  };
 };
 
 beforeAll(async () => {
@@ -1273,6 +1207,26 @@ GraphQL request:3:11
   });
 });
 
+describe('adminEntity.changelogEvents()', () => {
+  test('Get events for existing entity', async () => {
+    const entity = entitiesOfTypeQueryAdminOnlyEditBeforeNone[0];
+    const result = await adminEntityChangelogEvents(schema, createContext(), { id: entity.id });
+    expect(result.errors).toBeUndefined();
+
+    expect(result.data?.adminEntity.changelogEvents.totalCount).toEqual(1);
+
+    expect(result.data?.adminEntity.changelogEvents.edges.length).toEqual(1);
+    const firstEdge = result.data?.adminEntity.changelogEvents.edges[0];
+    assertIsDefined(firstEdge);
+    const firstEvent = firstEdge.node;
+    assertIsDefined(firstEvent);
+    expect(firstEvent.type).toBe(EventType.createEntity);
+
+    expect(result.data?.adminEntity.changelogEvents.pageInfo.hasPreviousPage).toBeFalsy();
+    expect(result.data?.adminEntity.changelogEvents.pageInfo.startCursor).toEqual(firstEdge.cursor);
+  });
+});
+
 describe('adminEntities()', () => {
   test('Query 2 entities', async () => {
     const { adminClient } = server;
@@ -1775,14 +1729,9 @@ describe('searchAdminEntities()', () => {
 
 describe('changelogEvents()', () => {
   test('Filter schemaUpdate events', async () => {
-    const result = (await graphql({
-      schema,
-      source: CHANGELOG_EVENTS_QUERY,
-      contextValue: createContext(),
-      variableValues: {
-        query: { types: [EventType.updateSchema] },
-      } satisfies ChangelogEventsQueryVariables,
-    })) as ExecutionResult<ChangelogEventsQueryPayload>;
+    const result = await globalChangelogEvents(schema, createContext(), {
+      query: { types: [EventType.updateSchema] },
+    });
     expect(result.errors).toBeUndefined();
 
     expect(result.data?.changelogEvents.totalCount).toBeGreaterThanOrEqual(1);

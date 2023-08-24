@@ -23,6 +23,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -52,8 +122,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -100,6 +168,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -149,64 +218,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -319,6 +330,7 @@ type AdminBarFields {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
 
@@ -366,6 +378,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -698,6 +711,74 @@ type PublishedValueTwo implements PublishedValue {
   body: String
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -773,6 +854,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -822,64 +904,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -987,6 +1011,7 @@ type AdminBarFields {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
 
@@ -1034,6 +1059,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -1149,6 +1175,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -1176,8 +1272,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -1224,6 +1318,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -1273,64 +1368,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -1443,6 +1480,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -1750,6 +1788,74 @@ type PublishedValueOne implements PublishedValue {
   type: PublishedValueType!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -1823,6 +1929,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -1872,64 +1979,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -2037,6 +2086,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -2184,6 +2234,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -2208,8 +2328,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -2256,6 +2374,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -2303,64 +2422,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -2465,6 +2526,7 @@ type AdvisoryLockReleasePayload {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBarCreateInput {
@@ -2512,6 +2574,7 @@ scalar Location
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -2827,6 +2890,74 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -2897,6 +3028,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -2944,64 +3076,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -3101,6 +3175,7 @@ type AdvisoryLockReleasePayload {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBarCreateInput {
@@ -3145,6 +3220,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -3245,6 +3321,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Baz
@@ -3270,8 +3416,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -3318,6 +3462,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -3365,64 +3510,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -3527,6 +3614,7 @@ type AdvisoryLockReleasePayload {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBarCreateInput {
@@ -3562,6 +3650,7 @@ type AdminBarUpsertPayload {
 type AdminBaz implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBazCreateInput {
@@ -3605,6 +3694,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -3948,6 +4038,74 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Baz
@@ -4019,6 +4177,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -4066,64 +4225,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -4223,6 +4324,7 @@ type AdvisoryLockReleasePayload {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBarCreateInput {
@@ -4258,6 +4360,7 @@ type AdminBarUpsertPayload {
 type AdminBaz implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBazCreateInput {
@@ -4301,6 +4404,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -4425,6 +4529,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -4448,8 +4622,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -4496,6 +4668,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -4543,64 +4716,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -4705,6 +4820,7 @@ type AdvisoryLockReleasePayload {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminFooCreateInput {
@@ -4966,6 +5082,74 @@ type PublishedFoo implements Node & PublishedEntity {
   info: PublishedEntityInfo!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -5035,6 +5219,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -5082,64 +5267,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -5239,6 +5366,7 @@ type AdvisoryLockReleasePayload {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminFooCreateInput {
@@ -5323,6 +5451,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -5346,8 +5544,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -5394,6 +5590,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 enum AdminUniqueIndex {
@@ -5445,64 +5642,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -5611,6 +5750,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -5898,6 +6038,74 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -5967,6 +6175,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 enum AdminUniqueIndex {
@@ -6018,64 +6227,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -6179,6 +6330,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -6271,6 +6423,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -6298,8 +6520,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -6346,6 +6566,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -6395,64 +6616,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -6567,6 +6730,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -6893,6 +7057,74 @@ type PublishedValueOne implements PublishedValue {
   body: String!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -6966,6 +7198,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -7015,64 +7248,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -7182,6 +7357,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -7287,6 +7463,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -7310,8 +7556,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -7358,6 +7602,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -7405,64 +7650,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -7571,6 +7758,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -7850,6 +8038,74 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Foo
 }
@@ -7919,6 +8175,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -7966,64 +8223,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -8127,6 +8326,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -8219,6 +8419,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -8243,8 +8513,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -8291,6 +8559,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -8338,64 +8607,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -8510,6 +8721,7 @@ scalar Location
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
 
@@ -8560,6 +8772,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -8876,6 +9089,74 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -8946,6 +9227,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -8993,64 +9275,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -9157,6 +9381,7 @@ type AdminBarFields {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
 
@@ -9207,6 +9432,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -9302,6 +9528,76 @@ input BoundingBoxInput {
   maxLng: Float!
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -9332,8 +9628,6 @@ type AdminEntityInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
-
-scalar DateTime
 
 input AdminEntityCreateInfo {
   type: AdminEntityType
@@ -9380,6 +9674,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -9429,64 +9724,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -9595,6 +9832,7 @@ type AdvisoryLockReleasePayload {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBarCreateInput {
@@ -9637,6 +9875,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 
@@ -10074,6 +10313,74 @@ type PublishedValueOne implements PublishedValue {
   four: Boolean
 }
 
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
 enum AdminEntityType {
   Bar
   Foo
@@ -10150,6 +10457,7 @@ enum AdminEntityUpsertEffect {
 interface AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
@@ -10199,64 +10507,6 @@ input AdminSearchQueryInput {
   text: String
   order: AdminQueryOrder
   reverse: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  entity: EntityReferenceInput
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
 }
 
 input EntityVersionReferenceInput {
@@ -10360,6 +10610,7 @@ type AdvisoryLockReleasePayload {
 type AdminBar implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 input AdminBarCreateInput {
@@ -10402,6 +10653,7 @@ type AdminFooFields {
 type AdminFoo implements AdminEntity {
   id: ID!
   info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
 

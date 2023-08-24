@@ -56,10 +56,10 @@ interface Connection<TContext, T extends Edge<TContext, unknown>> {
   edges: T[];
 }
 
-type FieldValueOrResolver<TContext, TResult> =
-  | TResult
-  | Promise<TResult>
-  | ((args: unknown, context: TContext, info: GraphQLResolveInfo) => TResult | Promise<TResult>);
+type FieldValueOrResolver<TContext, TPayload, TArgs = unknown> =
+  | TPayload
+  | Promise<TPayload>
+  | ((args: TArgs, context: TContext, info: GraphQLResolveInfo) => TPayload | Promise<TPayload>);
 
 interface ConnectionWithTotalCount<T extends Edge<TContext, unknown>, TContext>
   extends Connection<TContext, T> {
@@ -70,6 +70,20 @@ interface Edge<TContext, T> {
   node: FieldValueOrResolver<TContext, T | null>;
   cursor: string;
 }
+
+type AdminEntityPayload<TContext> = AdminEntity & {
+  changelogEvents: FieldValueOrResolver<
+    TContext,
+    Connection<TContext, Edge<TContext, ChangelogEvent>> | null,
+    {
+      query?: ChangelogEventQuery;
+      first?: number;
+      after?: string;
+      last?: number;
+      before?: string;
+    }
+  >;
+};
 
 export async function loadPublishedEntity<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
@@ -125,6 +139,7 @@ export async function loadPublishedSearchEntities<TContext extends SessionGraphQ
   query: PublishedSearchQuery | undefined,
   paging: Paging,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, PublishedEntity>, TContext> | null> {
+  // TODO should we skip searchEntities if pageInfo, and edges are not requested?
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   const result = await publishedClient.searchEntities(query, paging);
   return buildResolversForConnection<TContext, PublishedEntity>(
@@ -206,16 +221,24 @@ export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   entity: AdminEntity,
-): AdminEntity {
+): AdminEntityPayload<TContext> {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     throw new Error(`Couldn't find entity spec for type: ${entity.info.type}`);
   }
-  const result = { ...entity };
 
-  resolveFields<TContext>(schema, entitySpec, result, true);
+  const payload: AdminEntityPayload<TContext> = {
+    ...entity,
+    changelogEvents: (args, context, _info) => {
+      const { query, first, after, last, before } = args;
+      const paging = { first, after, last, before };
+      return loadChangelogEvents(context, { ...query, entity: { id: entity.id } }, paging);
+    },
+  };
 
-  return result;
+  resolveFields<TContext>(schema, entitySpec, payload, true);
+
+  return payload;
 }
 
 export async function loadAdminSampleEntities<TContext extends SessionGraphQLContext>(
@@ -282,7 +305,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
           : loadPublishedEntity(schema as PublishedSchema, context, value);
     } else if (isEntityListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
-        const ids = value.map((x) => x.id);
+        const ids = value.map((it) => it.id);
         return isAdmin
           ? loadAdminEntities(schema as AdminSchema, context, ids)
           : loadPublishedEntities(schema as PublishedSchema, context, ids);
