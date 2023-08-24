@@ -518,10 +518,10 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('getEntities', async () => {
+  test('getEntityList', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.getEntities,
+      AdminClientOperationName.getEntityList,
       (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
@@ -531,7 +531,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntities([{ id: '1234' }, { id: '5678' }]);
+    const result = await adminClient.getEntityList([{ id: '1234' }, { id: '5678' }]);
     if (expectOkResult(result)) {
       expect(result.value[0].isOk()).toBeTruthy();
       expect(result.value[1].isOk()).toBeTruthy();
@@ -608,7 +608,7 @@ describe('AdminClient forward operation over JSON', () => {
               ],
             ],
             "modifies": false,
-            "name": "getEntities",
+            "name": "getEntityList",
             "next": [Function],
             "resolve": [Function],
           },

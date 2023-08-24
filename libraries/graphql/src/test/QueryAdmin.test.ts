@@ -1167,7 +1167,7 @@ describe('adminEntity.changelogEvents()', () => {
   });
 });
 
-describe('adminEntities()', () => {
+describe('adminEntityList()', () => {
   test('Query 2 entities', async () => {
     const { adminClient } = server;
     const createFoo1Result = await adminClient.createEntity({
@@ -1196,7 +1196,7 @@ describe('adminEntities()', () => {
         schema,
         source: gql`
           query Entities($ids: [ID!]!) {
-            adminEntities(ids: $ids) {
+            adminEntityList(ids: $ids) {
               __typename
               id
               info {
@@ -1213,7 +1213,7 @@ describe('adminEntities()', () => {
       });
       expect(result).toEqual({
         data: {
-          adminEntities: [
+          adminEntityList: [
             {
               __typename: 'AdminQueryAdminFoo',
               id: foo1Id,
@@ -1245,7 +1245,7 @@ describe('adminEntities()', () => {
       schema,
       source: gql`
         query Entities($ids: [ID!]!) {
-          adminEntities(ids: $ids) {
+          adminEntityList(ids: $ids) {
             id
           }
         }
@@ -1253,7 +1253,7 @@ describe('adminEntities()', () => {
       contextValue: createContext(),
       variableValues: { ids: ['6043cb20-50dc-43d9-8d55-fc9b892b30af'] },
     });
-    expect(result.data).toEqual({ adminEntities: [null] });
+    expect(result.data).toEqual({ adminEntityList: [null] });
     expect(result.errors?.map((it) => it.toJSON())).toMatchInlineSnapshot(`
       [
         {
@@ -1265,7 +1265,7 @@ describe('adminEntities()', () => {
           ],
           "message": "NotFound: No such entity",
           "path": [
-            "adminEntities",
+            "adminEntityList",
             0,
           ],
         },

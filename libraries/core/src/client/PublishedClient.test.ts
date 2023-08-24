@@ -83,11 +83,11 @@ function createDummyEntity({ id }: { id: string }): PublishedEntity {
 }
 
 describe('PublishedClient forward operation over JSON', () => {
-  test('getEntities', async () => {
+  test('getEntityList', async () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntities,
+        PublishedClientOperationName.getEntityList,
         (_context, operation) => {
           const [references] = operation.args;
           operation.resolve(ok(references.map(({ id }) => ok(createDummyEntity({ id })))));
@@ -95,7 +95,7 @@ describe('PublishedClient forward operation over JSON', () => {
         },
       );
 
-    const result = await publishedClient.getEntities([{ id: '1234' }, { id: '5678' }]);
+    const result = await publishedClient.getEntityList([{ id: '1234' }, { id: '5678' }]);
     if (expectOkResult(result)) {
       if (expectOkResult(result.value[0])) {
         expect(result.value[0].value.info.createdAt).toBeInstanceOf(Date);
@@ -159,7 +159,7 @@ describe('PublishedClient forward operation over JSON', () => {
               ],
             ],
             "modifies": false,
-            "name": "getEntities",
+            "name": "getEntityList",
             "next": [Function],
             "resolve": [Function],
           },

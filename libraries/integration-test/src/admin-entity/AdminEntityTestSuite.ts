@@ -5,8 +5,8 @@ import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository.js';
 import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite.js';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite.js';
-import { GetEntitiesSubSuite } from './AdminEntityGetEntitiesSubSuite.js';
 import { GetEntityHistorySubSuite } from './AdminEntityGetEntityHistorySubSuite.js';
+import { GetEntityListSubSuite } from './AdminEntityGetEntityListSubSuite.js';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite.js';
 import { GetPublishingHistorySubSuite } from './AdminEntityGetPublishingHistorySubSuite.js';
 import { GetTotalCountSubSuite } from './AdminEntityGetTotalCountSubSuite.js';
@@ -31,8 +31,8 @@ export function createAdminEntityTestSuite<TCleanup>(
     initializer,
     ...ArchiveEntitySubSuite,
     ...CreateEntitySubSuite,
-    ...GetEntitiesSubSuite,
     ...GetEntityHistorySubSuite,
+    ...GetEntityListSubSuite,
     ...GetEntitySubSuite,
     ...GetPublishingHistorySubSuite,
     ...GetTotalCountSubSuite,

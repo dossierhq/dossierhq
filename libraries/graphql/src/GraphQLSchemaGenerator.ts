@@ -51,12 +51,12 @@ import {
   type GraphQLSchemaConfig,
 } from 'graphql';
 import {
-  loadAdminEntities,
+  loadAdminEntityList,
   loadAdminEntity,
   loadAdminSampleEntities,
   loadAdminSearchEntities,
   loadChangelogEvents,
-  loadPublishedEntities,
+  loadPublishedEntityList,
   loadPublishedEntity,
   loadPublishedSampleEntities,
   loadPublishedSearchEntities,
@@ -1350,7 +1350,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadPublishedEntities(publishedSchema, context, args.ids);
+        return await loadPublishedEntityList(publishedSchema, context, args.ids);
       },
     });
   }
@@ -1446,7 +1446,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldAdminEntities<TSource>(
+  buildQueryFieldAdminEntityList<TSource>(
     adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
@@ -1455,7 +1455,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntities(adminSchema, context, args.ids);
+        return await loadAdminEntityList(adminSchema, context, args.ids);
       },
     });
   }
@@ -1646,7 +1646,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         ...(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(this.adminSchema),
-              adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
+              adminEntityList: this.buildQueryFieldAdminEntityList(this.adminSchema),
               adminSampleEntities: this.buildQueryFieldAdminSampleEntities(this.adminSchema),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(this.adminSchema),
               changelogEvents: this.buildQueryFieldChangelogEvents(),

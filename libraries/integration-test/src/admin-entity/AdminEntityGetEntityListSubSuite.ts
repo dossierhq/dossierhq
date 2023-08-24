@@ -10,15 +10,15 @@ import {
 } from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
-export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
-  getEntities_minimal,
-  getEntities_none,
-  getEntities_getLatestVersion,
-  getEntities_authKeySubjectOneCorrectOneWrong,
-  getEntities_oneMissingOneExisting,
+export const GetEntityListSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
+  getEntityList_minimal,
+  getEntityList_none,
+  getEntityList_getLatestVersion,
+  getEntityList_authKeySubjectOneCorrectOneWrong,
+  getEntityList_oneMissingOneExisting,
 ];
 
-async function getEntities_minimal({ server }: AdminEntityTestContext) {
+async function getEntityList_minimal({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const create1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const create2Result = await client.createEntity(TITLE_ONLY_CREATE);
@@ -31,19 +31,19 @@ async function getEntities_minimal({ server }: AdminEntityTestContext) {
     entity: { id: id2 },
   } = create2Result.value;
 
-  const getResult = await client.getEntities([{ id: id1 }, { id: id2 }]);
+  const getResult = await client.getEntityList([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
     ok<AppAdminEntity, typeof ErrorType.Generic>(create1Result.value.entity),
     ok<AppAdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
 }
 
-async function getEntities_none({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntities([]);
+async function getEntityList_none({ server }: AdminEntityTestContext) {
+  const result = await adminClientForMainPrincipal(server).getEntityList([]);
   assertResultValue(result, []);
 }
 
-async function getEntities_getLatestVersion({ server }: AdminEntityTestContext) {
+async function getEntityList_getLatestVersion({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
@@ -54,14 +54,14 @@ async function getEntities_getLatestVersion({ server }: AdminEntityTestContext) 
   const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Updated title' } });
   assertOkResult(updateResult);
 
-  const result = await adminClient.getEntities([{ id }]);
+  const result = await adminClient.getEntityList([{ id }]);
   assertOkResult(result);
   assertResultValue(result, [
     ok<AppAdminEntity, typeof ErrorType.Generic>(updateResult.value.entity),
   ]);
 }
 
-async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEntityTestContext) {
+async function getEntityList_authKeySubjectOneCorrectOneWrong({ server }: AdminEntityTestContext) {
   const adminClientMain = adminClientForMainPrincipal(server);
   const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
@@ -78,14 +78,14 @@ async function getEntities_authKeySubjectOneCorrectOneWrong({ server }: AdminEnt
     entity: { id: id2 },
   } = create2Result.value;
 
-  const getResult = await adminClientMain.getEntities([{ id: id1 }, { id: id2 }]);
+  const getResult = await adminClientMain.getEntityList([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<AppAdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
 }
 
-async function getEntities_oneMissingOneExisting({ server }: AdminEntityTestContext) {
+async function getEntityList_oneMissingOneExisting({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
@@ -93,7 +93,7 @@ async function getEntities_oneMissingOneExisting({ server }: AdminEntityTestCont
     entity: { id },
   } = createResult.value;
 
-  const getResult = await adminClient.getEntities([
+  const getResult = await adminClient.getEntityList([
     { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
     { id },
   ]);

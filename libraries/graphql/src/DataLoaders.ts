@@ -95,13 +95,13 @@ export async function loadPublishedEntity<TContext extends SessionGraphQLContext
   return buildResolversForPublishedEntity(schema, result.valueOrThrow());
 }
 
-export async function loadPublishedEntities<TContext extends SessionGraphQLContext>(
+export async function loadPublishedEntityList<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
   ids: string[],
 ): Promise<FieldValueOrResolver<TContext, PublishedEntity | null>[]> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
-  const results = await publishedClient.getEntities(ids.map((id) => ({ id })));
+  const results = await publishedClient.getEntityList(ids.map((id) => ({ id })));
   return results
     .valueOrThrow()
     .map((result) =>
@@ -202,13 +202,13 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   return buildResolversForAdminEntity(schema, result.valueOrThrow());
 }
 
-export async function loadAdminEntities<TContext extends SessionGraphQLContext>(
+export async function loadAdminEntityList<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   ids: string[],
 ): Promise<FieldValueOrResolver<TContext, AdminEntity | null>[]> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
-  const results = await adminClient.getEntities(ids.map((id) => ({ id })));
+  const results = await adminClient.getEntityList(ids.map((id) => ({ id })));
   return results
     .valueOrThrow()
     .map((result) =>
@@ -294,8 +294,8 @@ function resolveFields<TContext extends SessionGraphQLContext>(
             ? []
             : (_args: undefined, context: TContext, _info: unknown) => {
                 return isAdmin
-                  ? loadAdminEntities(schema as AdminSchema, context, ids)
-                  : loadPublishedEntities(schema as PublishedSchema, context, ids);
+                  ? loadAdminEntityList(schema as AdminSchema, context, ids)
+                  : loadPublishedEntityList(schema as PublishedSchema, context, ids);
               },
       };
     } else if (isEntityField(fieldSpec, value) && value) {
@@ -307,8 +307,8 @@ function resolveFields<TContext extends SessionGraphQLContext>(
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((it) => it.id);
         return isAdmin
-          ? loadAdminEntities(schema as AdminSchema, context, ids)
-          : loadPublishedEntities(schema as PublishedSchema, context, ids);
+          ? loadAdminEntityList(schema as AdminSchema, context, ids)
+          : loadPublishedEntityList(schema as PublishedSchema, context, ids);
       };
     } else if (isValueItemField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);

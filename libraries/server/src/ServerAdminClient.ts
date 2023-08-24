@@ -18,9 +18,9 @@ import type { SessionContext } from './Context.js';
 import type { ServerImpl } from './Server.js';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
-import { adminGetEntities } from './admin-entity/adminGetEntities.js';
 import { adminGetEntity } from './admin-entity/adminGetEntity.js';
 import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory.js';
+import { adminGetEntityList } from './admin-entity/adminGetEntityList.js';
 import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory.js';
 import { adminGetTotalCount } from './admin-entity/adminGetTotalCount.js';
 import { adminPublishEntities } from './admin-entity/adminPublishEntities.js';
@@ -124,22 +124,6 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntities: {
-        const {
-          args: [references],
-          resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
-        resolve(
-          await adminGetEntities(
-            serverImpl.getAdminSchema(),
-            authorizationAdapter,
-            databaseAdapter,
-            context,
-            references,
-          ),
-        );
-        break;
-      }
       case AdminClientOperationName.getEntity: {
         const {
           args: [reference],
@@ -152,6 +136,22 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             reference,
+          ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getEntityList: {
+        const {
+          args: [references],
+          resolve,
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntityList>;
+        resolve(
+          await adminGetEntityList(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            references,
           ),
         );
         break;
