@@ -51,13 +51,13 @@ import {
   type GraphQLSchemaConfig,
 } from 'graphql';
 import {
-  loadAdminEntityList,
   loadAdminEntity,
+  loadAdminEntityList,
   loadAdminSampleEntities,
   loadAdminSearchEntities,
   loadChangelogEvents,
-  loadPublishedEntityList,
   loadPublishedEntity,
+  loadPublishedEntityList,
   loadPublishedSampleEntities,
   loadPublishedSearchEntities,
   loadPublishingHistory,

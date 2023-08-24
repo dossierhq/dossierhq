@@ -58,6 +58,7 @@ interface Connection<TContext, T extends Edge<TContext, unknown>> {
 
 type FieldValueOrResolver<TContext, TPayload, TArgs = unknown> =
   | TPayload
+  | Error
   | Promise<TPayload>
   | ((args: TArgs, context: TContext, info: GraphQLResolveInfo) => TPayload | Promise<TPayload>);
 
@@ -112,7 +113,7 @@ export async function loadPublishedEntityList<TContext extends SessionGraphQLCon
 }
 
 function buildErrorResolver(result: ErrorResult<unknown, ErrorType>) {
-  return Promise.reject(result.toError());
+  return result.toError();
 }
 
 export async function loadPublishedSampleEntities<TContext extends SessionGraphQLContext>(
@@ -299,7 +300,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
               },
       };
     } else if (isEntityField(fieldSpec, value) && value) {
-      fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) =>
+      fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: GraphQLResolveInfo) =>
         isAdmin
           ? loadAdminEntity(schema as AdminSchema, context, value)
           : loadPublishedEntity(schema as PublishedSchema, context, value);
