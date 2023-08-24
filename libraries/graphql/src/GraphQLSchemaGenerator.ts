@@ -1508,10 +1508,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (_source, args, context, _info) => {
+      resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminSearchEntities(adminSchema, context, query, paging);
+        return await loadAdminSearchEntities(adminSchema, context, query, paging, info);
       },
     });
   }
@@ -1564,10 +1564,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (_source, args, context, _info) => {
+      resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadPublishedSearchEntities(publishedSchema, context, query, paging);
+        return await loadPublishedSearchEntities(publishedSchema, context, query, paging, info);
       },
     });
   }
@@ -1592,10 +1592,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (_source, args, context, _info) => {
+      resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadChangelogEvents(context, query, paging);
+        return await loadChangelogEvents(context, query, paging, info);
       },
     });
   }

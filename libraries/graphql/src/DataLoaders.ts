@@ -21,6 +21,7 @@ import type {
   ErrorType,
   PageInfo,
   Paging,
+  PromiseResult,
   PublishedClient,
   PublishedEntity,
   PublishedEntityTypeSpecification,
@@ -30,7 +31,6 @@ import type {
   PublishedSearchQuery,
   PublishedValueTypeSpecification,
   PublishingHistory,
-  Result,
   RichText,
   UniqueIndexReference,
   ValueItem,
@@ -50,10 +50,11 @@ import {
 } from '@dossierhq/core';
 import type { GraphQLResolveInfo } from 'graphql';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
+import { getRequestedChildFields } from './utils/getRequestedChildFields.js';
 
 interface Connection<TContext, T extends Edge<TContext, unknown>> {
-  pageInfo: PageInfo;
-  edges: T[];
+  pageInfo?: PageInfo;
+  edges?: T[];
 }
 
 type FieldValueOrResolver<TContext, TPayload, TArgs = unknown> =
@@ -64,7 +65,7 @@ type FieldValueOrResolver<TContext, TPayload, TArgs = unknown> =
 
 interface ConnectionWithTotalCount<T extends Edge<TContext, unknown>, TContext>
   extends Connection<TContext, T> {
-  totalCount: FieldValueOrResolver<TContext, number>;
+  totalCount?: FieldValueOrResolver<TContext, number> | null;
 }
 
 interface Edge<TContext, T> {
@@ -139,25 +140,15 @@ export async function loadPublishedSearchEntities<TContext extends SessionGraphQ
   context: TContext,
   query: PublishedSearchQuery | undefined,
   paging: Paging,
+  info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, PublishedEntity>, TContext> | null> {
-  // TODO should we skip searchEntities if pageInfo, and edges are not requested?
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
-  const result = await publishedClient.searchEntities(query, paging);
   return buildResolversForConnection<TContext, PublishedEntity>(
-    result,
-    buildTotalCount(query),
+    () => publishedClient.searchEntities(query, paging),
+    () => publishedClient.getTotalCount(query),
     (it) => buildResolversForPublishedEntity(schema, it),
+    info,
   );
-}
-
-function buildTotalCount<TContext extends SessionGraphQLContext>(
-  query: PublishedQuery | undefined,
-): FieldValueOrResolver<TContext, number> {
-  return async (_args, context, _info) => {
-    const publishedClient = context.publishedClient.valueOrThrow();
-    const result = await publishedClient.getTotalCount(query);
-    return result.valueOrThrow();
-  };
 }
 
 function buildResolversForPublishedEntity<TContext extends SessionGraphQLContext>(
@@ -173,19 +164,33 @@ function buildResolversForPublishedEntity<TContext extends SessionGraphQLContext
   return result;
 }
 
-function buildResolversForConnection<TContext extends SessionGraphQLContext, TNode>(
-  connectionResult: Result<CoreConnection<CoreEdge<TNode, ErrorType>> | null, ErrorType>,
-  totalCount: FieldValueOrResolver<TContext, number>,
+async function buildResolversForConnection<TContext extends SessionGraphQLContext, TNode>(
+  connectionLoader: () => PromiseResult<
+    CoreConnection<CoreEdge<TNode, ErrorType>> | null,
+    ErrorType
+  >,
+  totalCountLoader: () => PromiseResult<number, ErrorType>,
   nodeResolver: (node: TNode) => TNode,
-): ConnectionWithTotalCount<Edge<TContext, TNode>, TContext> | null {
-  const connection = connectionResult.valueOrThrow();
-  if (connection === null) {
+  info: GraphQLResolveInfo,
+): Promise<ConnectionWithTotalCount<Edge<TContext, TNode>, TContext> | null> {
+  const requestedFields = getRequestedChildFields(info);
+
+  const loadConnection = requestedFields.has('edges') || requestedFields.has('pageInfo');
+  const loadTotalCount = requestedFields.has('totalCount');
+
+  // Load in parallel, only load what's needed
+  const [connection, totalCount] = await Promise.all([
+    loadConnection ? connectionLoader().then((it) => it.valueOrThrow()) : null,
+    loadTotalCount ? totalCountLoader().then((it) => it.valueOrThrow()) : null,
+  ]);
+
+  if (loadConnection && connection === null) {
     // No results
     return null;
   }
   return {
-    pageInfo: connection.pageInfo,
-    edges: connection.edges.map((edge) => ({
+    pageInfo: connection?.pageInfo,
+    edges: connection?.edges.map((edge) => ({
       cursor: edge.cursor,
       node: edge.node.isOk() ? nodeResolver(edge.node.value) : buildErrorResolver(edge.node),
     })),
@@ -230,10 +235,10 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 
   const payload: AdminEntityPayload<TContext> = {
     ...entity,
-    changelogEvents: (args, context, _info) => {
+    changelogEvents: (args, context, info) => {
       const { query, first, after, last, before } = args;
       const paging = { first, after, last, before };
-      return loadChangelogEvents(context, { ...query, entity: { id: entity.id } }, paging);
+      return loadChangelogEvents(context, { ...query, entity: { id: entity.id } }, paging, info);
     },
   };
 
@@ -258,18 +263,19 @@ export async function loadAdminSampleEntities<TContext extends SessionGraphQLCon
   };
 }
 
-export async function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
+export function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   query: AdminSearchQuery | undefined,
   paging: Paging,
+  info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, AdminEntity>, TContext> | null> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
-  const result = await adminClient.searchEntities(query, paging);
   return buildResolversForConnection<TContext, AdminEntity>(
-    result,
-    buildAdminTotalCount(query),
+    () => adminClient.searchEntities(query, paging),
+    () => adminClient.getTotalCount(query),
     (it) => buildResolversForAdminEntity(schema, it),
+    info,
   );
 }
 
@@ -371,38 +377,19 @@ export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   return result;
 }
 
-function buildAdminTotalCount<TContext extends SessionGraphQLContext>(
-  query: AdminQuery | undefined,
-): FieldValueOrResolver<TContext, number> {
-  return async (_args, context, _info) => {
-    const adminClient = context.adminClient.valueOrThrow();
-    const result = await adminClient.getTotalCount(query);
-    return result.valueOrThrow();
-  };
-}
-
 export async function loadChangelogEvents<TContext extends SessionGraphQLContext>(
   context: TContext,
   query: ChangelogEventQuery | undefined,
   paging: Paging,
+  info: GraphQLResolveInfo,
 ): Promise<Connection<TContext, Edge<TContext, ChangelogEvent>> | null> {
   const adminClient = context.adminClient.valueOrThrow();
-  const result = await adminClient.getChangelogEvents(query, paging);
   return buildResolversForConnection<TContext, ChangelogEvent>(
-    result,
-    buildChangelogEventsTotalCount(query),
+    () => adminClient.getChangelogEvents(query, paging),
+    () => adminClient.getChangelogEventsTotalCount(query),
     (it) => it,
+    info,
   );
-}
-
-function buildChangelogEventsTotalCount<TContext extends SessionGraphQLContext>(
-  query: ChangelogEventQuery | undefined,
-): FieldValueOrResolver<TContext, number> {
-  return async (_args, context, _info) => {
-    const adminClient = context.adminClient.valueOrThrow();
-    const result = await adminClient.getChangelogEventsTotalCount(query);
-    return result.valueOrThrow();
-  };
 }
 
 export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
