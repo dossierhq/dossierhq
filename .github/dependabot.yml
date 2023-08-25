@@ -27,3 +27,8 @@ updates:
         patterns:
           - "eslint-config-next"
           - "next"
+      storybook:
+        patterns:
+          - "@storybook/*"
+          - "eslint-plugin-storybook"
+          - "storybook"
