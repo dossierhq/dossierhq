@@ -44,7 +44,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.58.2",
     "eslint": "~8.47.0",
-    "prettier": "3.0.1",
+    "prettier": "3.0.2",
     "typescript": "~5.2.2",
     "vitest": "~0.34.1"
   },

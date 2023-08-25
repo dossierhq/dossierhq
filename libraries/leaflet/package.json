@@ -49,7 +49,7 @@
     "@types/react": "~18.2.19",
     "eslint": "~8.47.0",
     "mini-svg-data-uri": "~1.4.4",
-    "prettier": "3.0.1",
+    "prettier": "3.0.2",
     "svgo": "~3.0.2",
     "typescript": "~5.2.2"
   }
