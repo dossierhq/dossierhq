@@ -13,16 +13,20 @@ import type { Mutable } from '../utils/TypeUtils.js';
 import type { ContentValuePath } from './ContentPath.js';
 import { isRichTextRootNode } from './ContentTypeUtils.js';
 
+export function getEntityNameBase(name: string): string {
+  const hashIndex = name.lastIndexOf('#');
+  if (hashIndex < 0) {
+    return name;
+  }
+  return name.slice(0, hashIndex);
+}
+
 export function isEntityNameAsRequested(currentName: string, requestedName: string): boolean {
   if (requestedName === currentName) {
     return true;
   }
-  const hashIndex = currentName.lastIndexOf('#');
-  if (hashIndex < 0) {
-    return false;
-  }
-  const currentWithoutUniqueNumber = currentName.slice(0, hashIndex);
-  return requestedName === currentWithoutUniqueNumber;
+  const currentNameBase = getEntityNameBase(currentName);
+  return requestedName === currentNameBase;
 }
 
 export function copyEntity<

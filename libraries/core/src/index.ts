@@ -196,7 +196,7 @@ export {
   isValueItemItemField,
   isValueItemListField,
 } from './content/ContentTypeUtils.js';
-export { copyEntity, isEntityNameAsRequested } from './content/ContentUtils.js';
+export { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './content/ContentUtils.js';
 export {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,
