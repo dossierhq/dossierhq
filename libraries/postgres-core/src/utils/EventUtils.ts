@@ -20,7 +20,7 @@ export async function createEntityEvent(
   context: TransactionContext,
   session: Session,
   eventType: EntityChangelogEvent['type'],
-  entityVersions: { entityVersionsId: number }[],
+  entityVersions: { entityVersionsId: number; publishedName?: string }[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
@@ -38,10 +38,10 @@ export async function createEntityEvent(
     database,
     context,
     buildPostgresSqlQuery(({ sql, addValue }) => {
-      sql`INSERT INTO event_entity_versions (events_id, entity_versions_id) VALUES`;
+      sql`INSERT INTO event_entity_versions (events_id, entity_versions_id, published_name) VALUES`;
       const eventsValue = addValue(eventsId);
-      for (const { entityVersionsId } of entityVersions) {
-        sql`(${eventsValue}, ${entityVersionsId})`;
+      for (const { entityVersionsId, publishedName } of entityVersions) {
+        sql`(${eventsValue}, ${entityVersionsId}, ${publishedName ?? null})`;
       }
     }),
   );

@@ -84,6 +84,7 @@ export async function adminEntityUnpublishEntities(
       SET
         published_entity_versions_id = NULL,
         published_fts = NULL,
+        published_name = NULL,
         updated_at = NOW(),
         updated = nextval('entities_updated_seq'),
         status = $1,

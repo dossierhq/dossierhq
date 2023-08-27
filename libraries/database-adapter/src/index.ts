@@ -10,6 +10,7 @@ export type {
   DatabaseAdminEntityPayload,
   DatabaseAdminEntityPublishGetVersionInfoPayload,
   DatabaseAdminEntityPublishUpdateEntityArg,
+  DatabaseAdminEntityPublishUpdateEntityPayload,
   DatabaseAdminEntityPublishingCreateEventArg,
   DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
   DatabaseAdminEntitySearchPayload,

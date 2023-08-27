@@ -10,6 +10,7 @@ import {
   createRichTextParagraphNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
+  isEntityNameAsRequested,
 } from '@dossierhq/core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';
@@ -1896,9 +1897,17 @@ describe('updateEntity()', () => {
         expectResultValue(version2Result, expectedEntity);
 
         const publishedResult = await publishedClient.getEntity({ id });
+        const publishedName = publishedResult.valueOrThrow().info.name;
+        expect(isEntityNameAsRequested(publishedName, 'First')).toBeTruthy();
         expectResultValue(publishedResult, {
           id,
-          info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt, valid: true },
+          info: {
+            type: 'EntityAdminFoo',
+            name: publishedName,
+            authKey: 'none',
+            createdAt,
+            valid: true,
+          },
           fields: {
             ...emptyFooFields,
             title: 'First',

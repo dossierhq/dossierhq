@@ -39,7 +39,7 @@ export type SearchAdminEntitiesItem = Pick<
   Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>;
 export type SearchPublishedEntitiesItem = Pick<
   EntitiesTable,
-  'id' | 'uuid' | 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'
+  'id' | 'uuid' | 'type' | 'published_name' | 'auth_key' | 'created_at' | 'invalid'
 > &
   Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'fields'>;
 
@@ -105,6 +105,7 @@ function sharedSearchEntitiesQuery<
     const operator = query?.reverse ? '<' : '>';
     sql`AND e.`;
     addCursorNameOperatorAndValue(
+      published,
       queryBuilder,
       cursorName,
       operator,
@@ -116,6 +117,7 @@ function sharedSearchEntitiesQuery<
     const operator = query?.reverse ? '>' : '<';
     sql`AND e.`;
     addCursorNameOperatorAndValue(
+      published,
       queryBuilder,
       cursorName,
       operator,
@@ -126,7 +128,7 @@ function sharedSearchEntitiesQuery<
 
   // Ordering
   sql`ORDER BY e.`;
-  addCursorName(queryBuilder, cursorName);
+  addCursorName(published, queryBuilder, cursorName);
   let ascending = !query?.reverse;
 
   // Paging 2/2
@@ -166,7 +168,12 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
         return {
           cursorType,
           cursorName,
-          cursorExtractor: (item: TItem) => toOpaqueCursor(database, cursorType, item[cursorName]),
+          cursorExtractor: (item: TItem) =>
+            toOpaqueCursor(
+              database,
+              cursorType,
+              (item as SearchPublishedEntitiesItem).published_name,
+            ),
         };
       }
       case PublishedQueryOrder.createdAt:
@@ -188,7 +195,8 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
       return {
         cursorType,
         cursorName,
-        cursorExtractor: (item: TItem) => toOpaqueCursor(database, cursorType, item[cursorName]),
+        cursorExtractor: (item: TItem) =>
+          toOpaqueCursor(database, cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
       };
     }
     case AdminQueryOrder.updatedAt: {
@@ -214,13 +222,17 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
   }
 }
 
-function addCursorName({ sql }: SqliteQueryBuilder, cursorName: CursorName) {
+function addCursorName(published: boolean, { sql }: SqliteQueryBuilder, cursorName: CursorName) {
   switch (cursorName) {
     case 'id':
       sql`id`;
       break;
     case 'name':
-      sql`name`;
+      if (published) {
+        sql`published_name`;
+      } else {
+        sql`name`;
+      }
       break;
     case 'updated_seq':
       sql`updated_seq`;
@@ -231,6 +243,7 @@ function addCursorName({ sql }: SqliteQueryBuilder, cursorName: CursorName) {
 }
 
 function addCursorNameOperatorAndValue(
+  published: boolean,
   queryBuilder: SqliteQueryBuilder,
   cursorName: CursorName,
   operator: '>' | '<',
@@ -239,7 +252,7 @@ function addCursorNameOperatorAndValue(
 ) {
   const { sql } = queryBuilder;
 
-  addCursorName(queryBuilder, cursorName);
+  addCursorName(published, queryBuilder, cursorName);
   switch (operator) {
     case '>':
       if (orEqual) sql`>=`;
@@ -404,7 +417,7 @@ function addEntityQuerySelectColumn(
     sql`DISTINCT`;
   }
   if (published) {
-    sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e`;
+    sql`e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e`;
   } else {
     sql`e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e`;
   }

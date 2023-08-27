@@ -368,6 +368,57 @@ const VERSION_21: SchemaVersionDefinition = {
   ],
 };
 
+// Add UNIQUE published_name column, following https://www.sqlite.org/lang_altertable.html#making_other_kinds_of_table_schema_changes
+const VERSION_22: SchemaVersionDefinition = {
+  temporarilyDisableForeignKeys: true,
+  queries: [
+    `CREATE TABLE new_entities (
+      id INTEGER PRIMARY KEY,
+      uuid TEXT NOT NULL,
+      name TEXT NOT NULL,
+      published_name TEXT,
+      type TEXT NOT NULL,
+      auth_key TEXT NOT NULL,
+      resolved_auth_key TEXT NOT NULL,
+      status TEXT NOT NULL,
+      never_published INTEGER NOT NULL DEFAULT TRUE,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      updated_seq INTEGER NOT NULL,
+      latest_entity_versions_id INTEGER,
+      published_entity_versions_id INTEGER,
+      dirty INTEGER NOT NULL DEFAULT 0,
+      invalid INTEGER NOT NULL DEFAULT 0,
+      CONSTRAINT entities_uuid UNIQUE (uuid),
+      CONSTRAINT entities_name UNIQUE (name),
+      CONSTRAINT entities_published_name UNIQUE (published_name),
+      CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
+      FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
+      FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
+  ) STRICT`,
+    `INSERT INTO new_entities (id, uuid, name, type, auth_key, resolved_auth_key, status, never_published, created_at, updated_at, updated_seq, latest_entity_versions_id, published_entity_versions_id, dirty, invalid)
+      SELECT id, uuid, name, type, auth_key, resolved_auth_key, status, never_published, created_at, updated_at, updated_seq, latest_entity_versions_id, published_entity_versions_id, dirty, invalid FROM entities`,
+    'DROP TABLE entities',
+    'ALTER TABLE new_entities RENAME TO entities',
+    'CREATE INDEX entities_resolved_auth_key ON entities(resolved_auth_key)',
+    'CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name)',
+    'CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq)',
+    'CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid)',
+    'CREATE INDEX entities_dirty ON entities(dirty)',
+    `CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
+    DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
+    DELETE FROM entities_published_fts WHERE rowid = OLD.id;
+END`,
+  ],
+};
+
+const VERSION_23: SchemaVersionDefinition = {
+  queries: [
+    `UPDATE entities SET published_name = name WHERE status = 'published' OR status = 'modified'`,
+    'ALTER TABLE event_entity_versions ADD COLUMN published_name TEXT',
+  ],
+};
+
 const VERSIONS: SchemaVersionDefinition[] = [
   { queries: [] }, // nothing for version 0
   VERSION_1,
@@ -391,6 +442,8 @@ const VERSIONS: SchemaVersionDefinition[] = [
   VERSION_19,
   VERSION_20,
   VERSION_21,
+  VERSION_22,
+  VERSION_23,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

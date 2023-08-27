@@ -16,26 +16,6 @@ CREATE TABLE sequences (
     name TEXT NOT NULL UNIQUE,
     value INTEGER DEFAULT 0
 ) STRICT;
-CREATE TABLE entities (
-    id INTEGER PRIMARY KEY,
-    uuid TEXT NOT NULL,
-    name TEXT NOT NULL,
-    type TEXT NOT NULL,
-    auth_key TEXT NOT NULL,
-    resolved_auth_key TEXT NOT NULL,
-    status TEXT NOT NULL,
-    never_published INTEGER NOT NULL DEFAULT TRUE,
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL,
-    updated_seq INTEGER NOT NULL,
-    latest_entity_versions_id INTEGER,
-    published_entity_versions_id INTEGER, dirty INTEGER NOT NULL DEFAULT 0, invalid INTEGER NOT NULL DEFAULT 0,
-    CONSTRAINT entities_uuid UNIQUE (uuid),
-    CONSTRAINT entities_name UNIQUE (name),
-    CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
-    FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
-    FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
-) STRICT;
 CREATE VIRTUAL TABLE entities_latest_fts USING fts5 (
     content
   )
@@ -118,12 +98,7 @@ CREATE INDEX entity_published_references_from_entities_id ON entity_published_re
 CREATE INDEX entity_published_locations_entities_id ON entity_published_locations(entities_id);
 CREATE INDEX entity_latest_references_from_entities_id ON entity_latest_references(from_entities_id);
 CREATE INDEX entity_latest_locations_entities_id ON entity_latest_locations(entities_id);
-CREATE INDEX entities_resolved_auth_key ON entities(resolved_auth_key);
 CREATE INDEX entity_publishing_events_entities_id ON entity_publishing_events(entities_id);
-CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name);
-CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq);
-CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid);
-CREATE INDEX entities_dirty ON entities(dirty);
 CREATE TABLE entity_latest_value_types (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,
@@ -142,10 +117,6 @@ CREATE TABLE schema_versions (
     updated_at TEXT NOT NULL,
     specification TEXT NOT NULL
 ) STRICT;
-CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
-    DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
-    DELETE FROM entities_published_fts WHERE rowid = OLD.id;
-END;
 CREATE TABLE events (
     id INTEGER PRIMARY KEY,
     type TEXT NOT NULL,
@@ -158,7 +129,7 @@ CREATE TABLE events (
 CREATE TABLE event_entity_versions (
     id INTEGER PRIMARY KEY,
     events_id INTEGER NOT NULL,
-    entity_versions_id INTEGER NOT NULL,
+    entity_versions_id INTEGER NOT NULL, published_name TEXT,
     FOREIGN KEY (events_id) REFERENCES events(id) ON DELETE CASCADE,
     FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE
 ) STRICT;
@@ -179,3 +150,36 @@ CREATE TABLE IF NOT EXISTS "entity_versions" (
     FOREIGN KEY (created_by) REFERENCES subjects(id)
 ) STRICT;
 CREATE INDEX entity_versions_entities_id ON entity_versions(entities_id);
+CREATE TABLE IF NOT EXISTS "entities" (
+      id INTEGER PRIMARY KEY,
+      uuid TEXT NOT NULL,
+      name TEXT NOT NULL,
+      published_name TEXT,
+      type TEXT NOT NULL,
+      auth_key TEXT NOT NULL,
+      resolved_auth_key TEXT NOT NULL,
+      status TEXT NOT NULL,
+      never_published INTEGER NOT NULL DEFAULT TRUE,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      updated_seq INTEGER NOT NULL,
+      latest_entity_versions_id INTEGER,
+      published_entity_versions_id INTEGER,
+      dirty INTEGER NOT NULL DEFAULT 0,
+      invalid INTEGER NOT NULL DEFAULT 0,
+      CONSTRAINT entities_uuid UNIQUE (uuid),
+      CONSTRAINT entities_name UNIQUE (name),
+      CONSTRAINT entities_published_name UNIQUE (published_name),
+      CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
+      FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
+      FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
+  ) STRICT;
+CREATE INDEX entities_resolved_auth_key ON entities(resolved_auth_key);
+CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name);
+CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq);
+CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid);
+CREATE INDEX entities_dirty ON entities(dirty);
+CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
+    DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
+    DELETE FROM entities_published_fts WHERE rowid = OLD.id;
+END;

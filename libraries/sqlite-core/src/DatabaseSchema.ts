@@ -18,6 +18,7 @@ export interface EntitiesTable {
   id: number;
   uuid: string;
   name: string;
+  published_name: string | null;
   type: string;
   auth_key: string;
   resolved_auth_key: string;
@@ -88,6 +89,7 @@ export interface EventEntityVersionsTable {
   id: number;
   events_id: number;
   entity_versions_id: number;
+  published_name: string | null;
 }
 
 export interface SequencesTable {
@@ -142,6 +144,11 @@ export const AdvisoryLocksUniqueNameConstraint: UniqueConstraint = {
 export const EntitiesUniqueNameConstraint: UniqueConstraint = {
   table: EntitiesTable,
   columns: ['name'],
+};
+
+export const EntitiesUniquePublishedNameConstraint: UniqueConstraint = {
+  table: EntitiesTable,
+  columns: ['published_name'],
 };
 
 export const EntitiesUniqueUuidConstraint: UniqueConstraint = {

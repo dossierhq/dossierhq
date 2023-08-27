@@ -128,6 +128,8 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   type: string;
   authKey: string;
   resolvedAuthKey: string;
+  name: string;
+  publishedName: string | null;
   status: AdminEntityStatus;
   updatedAt: Date;
   validPublished: boolean | null;
@@ -137,12 +139,19 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
 export interface DatabaseAdminEntityPublishUpdateEntityArg
   extends DatabaseResolvedEntityVersionReference {
   status: AdminEntityStatus;
+  publishedName: string;
+  changePublishedName: boolean;
+}
+
+export interface DatabaseAdminEntityPublishUpdateEntityPayload
+  extends DatabaseAdminEntityUpdateStatusPayload {
+  publishedName: string;
 }
 
 export interface DatabaseAdminEntityPublishingCreateEventArg {
   session: Session;
   kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
-  references: DatabaseResolvedEntityVersionReference[];
+  references: (DatabaseResolvedEntityVersionReference & { publishedName?: string })[];
   onlyLegacyEvents: boolean; //TODO remove when removing legacy publishing events and instead skip calling function in server
 }
 
@@ -184,6 +193,7 @@ export interface DatabaseAdminEntityUniqueIndexPayload {
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
   type: string;
   name: string;
+  publishedName: string | null;
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
@@ -409,8 +419,9 @@ export interface DatabaseAdapter<
 
   adminEntityPublishUpdateEntity(
     context: TransactionContext,
+    randomNameGenerator: (name: string) => string,
     values: DatabaseAdminEntityPublishUpdateEntityArg,
-  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntityPublishingCreateEvents(
     context: TransactionContext,

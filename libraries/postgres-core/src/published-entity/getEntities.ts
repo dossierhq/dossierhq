@@ -9,19 +9,19 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
+type Row = Pick<
+  EntitiesTable,
+  'uuid' | 'type' | 'published_name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
+> &
+  Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'data'>;
+
 export async function publishedEntityGetEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   references: EntityReference[],
 ): PromiseResult<DatabasePublishedEntityGetOnePayload[], typeof ErrorType.Generic> {
-  const result = await queryMany<
-    Pick<
-      EntitiesTable,
-      'uuid' | 'type' | 'name' | 'auth_key' | 'resolved_auth_key' | 'created_at' | 'invalid'
-    > &
-      Pick<EntityVersionsTable, 'schema_version' | 'encode_version' | 'data'>
-  >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data
+  const result = await queryMany<Row>(databaseAdapter, context, {
+    text: `SELECT e.uuid, e.type, e.published_name, e.auth_key, e.resolved_auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data
       FROM entities e, entity_versions ev
       WHERE e.uuid = ANY($1)
       AND e.published_entity_versions_id = ev.id`,

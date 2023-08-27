@@ -90,7 +90,7 @@ export async function adminEntityUnpublishEntities(
       context,
       buildSqliteSqlQuery(({ sql }) => {
         const dirty = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
-        sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${nowString}, updated_seq = ${updatedSeqResult.value}, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
+        sql`UPDATE entities SET published_entity_versions_id = NULL, published_name = NULL, updated_at = ${nowString}, updated_seq = ${updatedSeqResult.value}, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
         sql`WHERE id = ${reference.entityInternalId as number}`;
       }),
     );

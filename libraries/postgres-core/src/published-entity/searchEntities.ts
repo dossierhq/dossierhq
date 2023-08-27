@@ -1,10 +1,10 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedSchema,
-  PublishedSearchQuery,
+import {
+  ok,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedSchema,
+  type PublishedSearchQuery,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,

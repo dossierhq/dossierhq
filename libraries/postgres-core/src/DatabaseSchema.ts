@@ -3,6 +3,7 @@ import type { AdminSchemaSpecificationWithMigrations, EventType } from '@dossier
 export const UniqueConstraints = {
   advisory_locks_name_key: 'advisory_locks_name_key',
   entities_name_key: 'entities_name_key',
+  entities_published_name_key: 'entities_published_name_key',
   entities_uuid_key: 'entities_uuid_key',
   principals_provider_identifier_key: 'principals_provider_identifier_key',
   schema_versions_version_key: 'schema_versions_version_key',
@@ -40,6 +41,7 @@ export interface EntitiesTable {
   id: number;
   uuid: string;
   name: string;
+  published_name: string | null;
   type: string;
   created_at: Date;
   updated_at: Date;
@@ -111,6 +113,7 @@ export interface EventEntityVersionsTable {
   id: number;
   events_id: number;
   entity_versions_id: number;
+  published_name: string | null;
 }
 
 export interface UniqueIndexValuesTable {

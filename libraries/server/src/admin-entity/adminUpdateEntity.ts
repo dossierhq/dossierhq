@@ -45,6 +45,7 @@ export async function adminUpdateEntity(
     const {
       entityInternalId,
       name: previousName,
+      publishedName,
       authKey,
       resolvedAuthKey,
     } = entityInfoResult.value;
@@ -111,15 +112,16 @@ export async function adminUpdateEntity(
     }
     const { fields, name, encodeVersion } = encodeResult.value;
 
+    const publish = !!options?.publish;
     const updateResult = await databaseAdapter.adminEntityUpdateEntity(
       context,
       randomNameGenerator,
       {
         entityInternalId,
         name: updatedEntity.info.name,
-        changeName: name !== previousName,
+        changeName: name !== previousName || (publish && name !== publishedName),
         type: updatedEntity.info.type,
-        publish: !!options?.publish,
+        publish,
         session: context.session,
         version: updatedEntity.info.version,
         status: updatedEntity.info.status,

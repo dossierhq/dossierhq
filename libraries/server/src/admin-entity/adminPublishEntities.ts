@@ -4,6 +4,7 @@ import {
   assertIsDefined,
   contentValuePathToString,
   createErrorResult,
+  getEntityNameBase,
   notOk,
   ok,
   type AdminEntityPublishPayload,
@@ -14,7 +15,11 @@ import {
   type PromiseResult,
   type PublishedSchema,
 } from '@dossierhq/core';
-import type { DatabaseAdapter, DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
+import type {
+  DatabaseAdapter,
+  DatabaseAdminEntityPublishingCreateEventArg,
+  DatabaseResolvedEntityReference,
+} from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
@@ -24,7 +29,7 @@ import {
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
 import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
-import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
+import { checkUUIDsAreUnique, randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 interface VersionInfoToBePublished {
@@ -32,6 +37,8 @@ interface VersionInfoToBePublished {
   uuid: string;
   entityInternalId: unknown;
   entityVersionInternalId: unknown;
+  name: string;
+  publishedName: string | null;
   status: AdminEntityStatus;
   fullTextSearchText: string;
   references: EntityReference[];
@@ -101,6 +108,7 @@ export async function adminPublishEntities(
       versionsInfo,
     );
     if (publishEntityResult.isError()) return publishEntityResult;
+    const { payload, eventReferences } = publishEntityResult.value;
 
     // Step 4: Check if references are ok
     const validateReferencedEntitiesResult =
@@ -137,7 +145,7 @@ export async function adminPublishEntities(
     const publishEventResult = await createPublishEvents(
       databaseAdapter,
       context,
-      publishVersionsInfo,
+      eventReferences,
       !createEvents, // TODO skip calling createPublishEvents if createEvents is false when legacy events are removed
     );
     if (publishEventResult.isError()) return publishEventResult;
@@ -187,7 +195,7 @@ export async function adminPublishEntities(
     }
 
     //
-    return publishEntityResult;
+    return ok(payload);
   });
 }
 
@@ -228,6 +236,8 @@ async function collectVersionsInfo(
       entityVersionInternalId,
       versionIsPublished,
       versionIsLatest,
+      name,
+      publishedName,
       authKey,
       resolvedAuthKey,
       type,
@@ -290,6 +300,8 @@ async function collectVersionsInfo(
         uuid: reference.id,
         entityInternalId,
         entityVersionInternalId,
+        name,
+        publishedName,
         fullTextSearchText,
         references,
         locations,
@@ -312,45 +324,74 @@ async function publishEntitiesAndCollectResult(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
-): PromiseResult<AdminEntityPublishPayload[], typeof ErrorType.Generic> {
+): PromiseResult<
+  {
+    payload: AdminEntityPublishPayload[];
+    eventReferences: DatabaseAdminEntityPublishingCreateEventArg['references'];
+  },
+  typeof ErrorType.Generic
+> {
   const payload: AdminEntityPublishPayload[] = [];
+  const eventReferences: DatabaseAdminEntityPublishingCreateEventArg['references'] = [];
   for (const versionInfo of versionsInfo) {
     const { status } = versionInfo;
     let updatedAt: Date;
     if (versionInfo.effect === 'none') {
       updatedAt = versionInfo.updatedAt;
     } else {
-      const { entityVersionInternalId, entityInternalId } = versionInfo;
-      const updateResult = await databaseAdapter.adminEntityPublishUpdateEntity(context, {
+      const {
         entityVersionInternalId,
-        status,
         entityInternalId,
-      });
+        name,
+        publishedName: existingPublishedName,
+      } = versionInfo;
+
+      const publishedName =
+        existingPublishedName &&
+        getEntityNameBase(existingPublishedName) === getEntityNameBase(name)
+          ? existingPublishedName
+          : name;
+      const changePublishedName = publishedName !== existingPublishedName;
+
+      const updateResult = await databaseAdapter.adminEntityPublishUpdateEntity(
+        context,
+        randomNameGenerator,
+        {
+          entityVersionInternalId,
+          status,
+          entityInternalId,
+          publishedName,
+          changePublishedName,
+        },
+      );
       if (updateResult.isError()) return updateResult;
+
+      eventReferences.push({
+        entityInternalId,
+        entityVersionInternalId,
+        publishedName: updateResult.value.publishedName,
+      });
 
       updatedAt = updateResult.value.updatedAt;
     }
     payload.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
   }
-  return ok(payload);
+  return ok({ payload, eventReferences });
 }
 
 async function createPublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  publishVersionsInfo: VersionInfoToBePublished[],
+  references: DatabaseAdminEntityPublishingCreateEventArg['references'],
   onlyLegacyEvents: boolean,
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  if (publishVersionsInfo.length === 0) {
+  if (references.length === 0) {
     return ok(undefined);
   }
   return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
     session: context.session,
     kind: 'publish',
     onlyLegacyEvents,
-    references: publishVersionsInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
-      entityInternalId,
-      entityVersionInternalId,
-    })),
+    references,
   });
 }

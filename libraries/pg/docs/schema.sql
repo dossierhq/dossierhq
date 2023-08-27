@@ -82,7 +82,8 @@ CREATE TABLE public.entities (
     auth_key character varying(255) NOT NULL,
     resolved_auth_key character varying(255) NOT NULL,
     dirty smallint DEFAULT 0 NOT NULL,
-    invalid smallint DEFAULT 0 NOT NULL
+    invalid smallint DEFAULT 0 NOT NULL,
+    published_name character varying(255)
 );
 
 CREATE SEQUENCE public.entities_id_seq
@@ -248,7 +249,8 @@ ALTER SEQUENCE public.entity_versions_id_seq OWNED BY public.entity_versions.id;
 CREATE TABLE public.event_entity_versions (
     id integer NOT NULL,
     events_id integer NOT NULL,
-    entity_versions_id integer NOT NULL
+    entity_versions_id integer NOT NULL,
+    published_name character varying(255)
 );
 
 CREATE SEQUENCE public.event_entity_versions_id_seq
@@ -400,6 +402,9 @@ ALTER TABLE ONLY public.entities
 
 ALTER TABLE ONLY public.entities
     ADD CONSTRAINT entities_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.entities
+    ADD CONSTRAINT entities_published_name_key UNIQUE (published_name);
 
 ALTER TABLE ONLY public.entities
     ADD CONSTRAINT entities_updated_key UNIQUE (updated);

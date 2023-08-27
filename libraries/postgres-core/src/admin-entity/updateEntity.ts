@@ -1,5 +1,11 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { EventType, notOk, ok } from '@dossierhq/core';
+import {
+  EventType,
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
   type DatabaseEntityUpdateEntityArg,
@@ -7,11 +13,12 @@ import {
   type DatabaseEntityUpdateGetEntityInfoPayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
   ENTITY_DIRTY_FLAG_INDEX_LATEST,
   ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
   UniqueConstraints,
+  type EntitiesTable,
+  type EntityVersionsTable,
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
@@ -34,6 +41,7 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'id'
       | 'type'
       | 'name'
+      | 'published_name'
       | 'auth_key'
       | 'resolved_auth_key'
       | 'created_at'
@@ -43,7 +51,7 @@ export async function adminEntityUpdateGetEntityInfo(
     > &
       Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
+    text: `SELECT e.id, e.type, e.name, e.published_name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -54,12 +62,17 @@ export async function adminEntityUpdateGetEntityInfo(
     return notOk.NotFound('No such entity');
   }
 
-  const { id: entityInternalId, resolved_auth_key: resolvedAuthKey } = result.value;
+  const {
+    id: entityInternalId,
+    published_name: publishedName,
+    resolved_auth_key: resolvedAuthKey,
+  } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),
     entityInternalId,
+    publishedName,
     resolvedAuthKey,
   });
 }
@@ -92,15 +105,22 @@ export async function adminEntityUpdateEntity(
         const updateNameResult = await queryNone(
           databaseAdapter,
           context,
-          {
-            text: 'UPDATE entities SET name = $1 WHERE id = $2',
-            values: [name, entity.entityInternalId],
-          },
+          buildPostgresSqlQuery(({ sql }) => {
+            sql`UPDATE entities SET name = ${name}`;
+            if (entity.publish) {
+              sql`published_name = ${name}`;
+            }
+            sql`WHERE id = ${entity.entityInternalId}`;
+          }),
           (error) => {
             if (
               databaseAdapter.isUniqueViolationOfConstraint(
                 error,
                 UniqueConstraints.entities_name_key,
+              ) ||
+              databaseAdapter.isUniqueViolationOfConstraint(
+                error,
+                UniqueConstraints.entities_published_name_key,
               )
             ) {
               return notOk.Conflict(nameConflictErrorMessage);

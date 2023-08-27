@@ -25,6 +25,8 @@ describe('Admin adminPublishEntities', () => {
           entityVersionInternalId: 888,
           id: '123',
           type: 'TitleOnly',
+          name: 'Version name',
+          publishedName: 'Published name',
           versionIsPublished: false,
           versionIsLatest: true,
           authKey: 'none',
@@ -40,7 +42,9 @@ describe('Admin adminPublishEntities', () => {
         }),
       ),
     );
-    databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(ok({ updatedAt: now }));
+    databaseAdapter.adminEntityPublishUpdateEntity.mockResolvedValueOnce(
+      ok({ updatedAt: now, publishedName: 'Version name#123456' }),
+    );
     databaseAdapter.adminEntityGetReferenceEntitiesInfo.mockResolvedValueOnce(ok([]));
     databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(ok(undefined));
     databaseAdapter.adminEntityIndexesUpdatePublished.mockResolvedValueOnce(ok(undefined));
@@ -91,9 +95,12 @@ describe('Admin adminPublishEntities', () => {
           ],
           [
             "adminEntityPublishUpdateEntity",
+            [Function],
             {
+              "changePublishedName": true,
               "entityInternalId": 999,
               "entityVersionInternalId": 888,
+              "publishedName": "Version name",
               "status": "published",
             },
           ],
@@ -106,6 +113,7 @@ describe('Admin adminPublishEntities', () => {
                 {
                   "entityInternalId": 999,
                   "entityVersionInternalId": 888,
+                  "publishedName": "Version name#123456",
                 },
               ],
               "session": {

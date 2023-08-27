@@ -18,6 +18,7 @@ import {
   ENTITY_DIRTY_FLAG_INDEX_LATEST,
   ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
   EntitiesUniqueNameConstraint,
+  EntitiesUniquePublishedNameConstraint,
 } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
@@ -42,6 +43,7 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'id'
       | 'type'
       | 'name'
+      | 'published_name'
       | 'auth_key'
       | 'resolved_auth_key'
       | 'created_at'
@@ -51,7 +53,7 @@ export async function adminEntityUpdateGetEntityInfo(
     > &
       Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields
+    text: `SELECT e.id, e.type, e.name, e.published_name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -62,12 +64,17 @@ export async function adminEntityUpdateGetEntityInfo(
     return notOk.NotFound('No such entity');
   }
 
-  const { id: entityInternalId, resolved_auth_key: resolvedAuthKey } = result.value;
+  const {
+    id: entityInternalId,
+    published_name: publishedName,
+    resolved_auth_key: resolvedAuthKey,
+  } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),
     entityInternalId,
+    publishedName,
     resolvedAuthKey,
   });
 }
@@ -107,13 +114,20 @@ export async function adminEntityUpdateEntity(
         const updateNameResult = await queryRun(
           database,
           context,
-          {
-            text: 'UPDATE entities SET name = ?1 WHERE id = ?2',
-            values: [name, entity.entityInternalId as number],
-          },
+          buildSqliteSqlQuery(({ sql }) => {
+            sql`UPDATE entities SET name = ${name}`;
+            if (entity.publish) {
+              sql`published_name = ${name}`;
+            }
+            sql`WHERE id = ${entity.entityInternalId as number}`;
+          }),
           (error) => {
             if (
-              database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint)
+              database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint) ||
+              database.adapter.isUniqueViolationOfConstraint(
+                error,
+                EntitiesUniquePublishedNameConstraint,
+              )
             ) {
               return notOk.Conflict(nameConflictErrorMessage);
             }
