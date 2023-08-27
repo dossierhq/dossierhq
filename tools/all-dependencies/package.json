@@ -104,7 +104,7 @@
     "prettier": "3.0.2",
     "react-stately": "~3.24.0",
     "rollup-plugin-visualizer": "~5.9.2",
-    "sass": "~1.65.1",
+    "sass": "~1.66.1",
     "sass-loader": "~13.3.2",
     "schema-dts": "~1.1.2",
     "storybook": "~7.3.2",
