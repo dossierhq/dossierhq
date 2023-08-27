@@ -17,6 +17,7 @@ import {
   assertNotSame,
   assertOkResult,
   assertResultValue,
+  assertSame,
   assertTruthy,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
@@ -65,6 +66,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_publishWithUniqueIndexValue,
+  createEntity_publishConflictingPublishedName,
   createEntity_createEntityEvent,
   createEntity_createAndPublishEntityEvent,
   createEntity_withAuthKeyMatchingPattern,
@@ -194,13 +196,12 @@ async function createEntity_publishMinimal({ server }: AdminEntityTestContext) {
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,
   });
-  assertOkResult(createResult);
   const {
     entity: {
       id,
       info: { name, createdAt, updatedAt },
     },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
     id,
@@ -277,6 +278,45 @@ async function createEntity_publishWithUniqueIndexValue({
   const getResult = await publishedClient.getEntity({ index: 'stringsUnique', value: unique });
   assertOkResult(getResult);
   assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
+}
+
+async function createEntity_publishConflictingPublishedName({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  // Create/published first entity
+  const {
+    entity: {
+      id: firstId,
+      info: { name: firstName },
+    },
+  } = (await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })).valueOrThrow();
+
+  // Update name (without publishing), that way we only conflict on the published name
+  assertOkResult(
+    await adminClient.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
+  );
+
+  // Create second entity with same name (should generate new name due to conflict)
+  const {
+    entity: {
+      id: secondId,
+      info: { name: secondName },
+    },
+  } = (
+    await adminClient.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: firstName } }), {
+      publish: true,
+    })
+  ).valueOrThrow();
+
+  assertNotSame(firstName, secondName);
+
+  // Get second published entity
+
+  const {
+    info: { name: secondPublishedName },
+  } = (await publishedClient.getEntity({ id: secondId })).valueOrThrow();
+  assertSame(secondPublishedName, secondName);
 }
 
 async function createEntity_createEntityEvent({ server }: AdminEntityTestContext) {
