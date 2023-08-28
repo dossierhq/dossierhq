@@ -56,12 +56,10 @@ import {
   loadAdminEntity,
   loadAdminEntityList,
   loadChangelogEvents,
+  loadPublishedEntities,
   loadPublishedEntitiesSample,
   loadPublishedEntity,
   loadPublishedEntityList,
-  loadPublishedEntities,
-  loadPublishingHistory,
-  loadVersionHistory,
 } from './DataLoaders.js';
 import * as Mutations from './Mutations.js';
 import {
@@ -730,44 +728,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           published: { type: new GraphQLNonNull(GraphQLBoolean) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
-        },
-      }),
-    );
-
-    // EntityHistory
-    this.addType(
-      new GraphQLObjectType({
-        name: 'EntityHistory',
-        fields: {
-          id: { type: new GraphQLNonNull(GraphQLID) },
-          versions: {
-            type: new GraphQLNonNull(new GraphQLList(this.getOutputType('EntityVersionInfo'))),
-          },
-        },
-      }),
-    );
-
-    // PublishingEvent
-    this.addType(
-      new GraphQLObjectType({
-        name: 'PublishingEvent',
-        fields: {
-          version: { type: GraphQLInt },
-          publishedBy: { type: new GraphQLNonNull(GraphQLID) },
-          publishedAt: { type: new GraphQLNonNull(DateTimeScalar) },
-        },
-      }),
-    );
-
-    // PublishingHistory
-    this.addType(
-      new GraphQLObjectType({
-        name: 'PublishingHistory',
-        fields: {
-          id: { type: new GraphQLNonNull(GraphQLID) },
-          events: {
-            type: new GraphQLNonNull(new GraphQLList(this.getOutputType('PublishingEvent'))),
-          },
         },
       }),
     );
@@ -1600,32 +1560,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldEntityHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('EntityHistory'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-      },
-      resolve: async (_source, args, context, _info) => {
-        const { id } = args;
-        return await loadVersionHistory(context, { id });
-      },
-    });
-  }
-
-  buildQueryFieldPublishingHistory<TSource>(): GraphQLFieldConfig<TSource, TContext> {
-    return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('PublishingHistory'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-      },
-      resolve: async (_source, args, context, _info) => {
-        const { id } = args;
-        return await loadPublishingHistory(context, { id });
-      },
-    });
-  }
-
   buildQueryType<TSource>(): GraphQLObjectType {
     return new GraphQLObjectType<TSource, TContext>({
       name: 'Query',
@@ -1648,8 +1582,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
               adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
               adminEntitiesSample: this.buildQueryFieldAdminEntitiesSample(this.adminSchema),
               changelogEvents: this.buildQueryFieldChangelogEvents(),
-              entityHistory: this.buildQueryFieldEntityHistory(),
-              publishingHistory: this.buildQueryFieldPublishingHistory(),
             }
           : {}),
       },

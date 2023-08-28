@@ -526,7 +526,7 @@ export function convertJsonPublishedClientResult<
     case PublishedClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     default: {
-      const _never: never = operationName; // ensure exhaustiveness
+      operationName satisfies never;
       return notOk.Generic(`Unknown operation ${operationName}`) as MethodReturnTypeWithoutPromise<
         TName,
         TClient

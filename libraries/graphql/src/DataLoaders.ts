@@ -12,7 +12,6 @@ import type {
   ContentTraverseNode,
   Connection as CoreConnection,
   Edge as CoreEdge,
-  EntityHistory,
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
@@ -30,7 +29,6 @@ import type {
   PublishedFieldSpecification,
   PublishedSchema,
   PublishedValueTypeSpecification,
-  PublishingHistory,
   RichText,
   UniqueIndexReference,
   ValueItem,
@@ -390,22 +388,4 @@ export async function loadChangelogEvents<TContext extends SessionGraphQLContext
     (it) => it,
     info,
   );
-}
-
-export async function loadVersionHistory<TContext extends SessionGraphQLContext>(
-  context: TContext,
-  reference: EntityReference,
-): Promise<EntityHistory> {
-  const adminClient = context.adminClient.valueOrThrow();
-  const result = await adminClient.getEntityHistory(reference);
-  return result.valueOrThrow();
-}
-
-export async function loadPublishingHistory<TContext extends SessionGraphQLContext>(
-  context: TContext,
-  reference: EntityReference,
-): Promise<PublishingHistory> {
-  const adminClient = context.adminClient.valueOrThrow();
-  const result = await adminClient.getPublishingHistory(reference);
-  return result.valueOrThrow();
 }

@@ -15,7 +15,6 @@ import type {
   PublishedEntitiesQuery,
   PublishedEntitiesSharedQuery,
   PublishedSchema,
-  PublishingEvent,
   SchemaChangelogEvent,
   UniqueIndexReference,
 } from '@dossierhq/core';
@@ -108,19 +107,6 @@ export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
   status: AdminEntityStatus;
 }
 
-export interface DatabaseAdminEntityHistoryGetEntityInfoPayload
-  extends DatabaseResolvedEntityVersionReference {
-  authKey: string;
-  resolvedAuthKey: string;
-}
-
-export interface DatabaseAdminEntityHistoryGetVersionInfoPayload
-  extends DatabaseResolvedEntityVersionReference {
-  version: number;
-  createdAt: Date;
-  createdBy: string;
-}
-
 export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   extends DatabaseResolvedEntityVersionReference {
   versionIsPublished: boolean;
@@ -153,12 +139,6 @@ export interface DatabaseAdminEntityPublishingCreateEventArg {
   kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
   references: (DatabaseResolvedEntityVersionReference & { publishedName?: string })[];
   onlyLegacyEvents: boolean; //TODO remove when removing legacy publishing events and instead skip calling function in server
-}
-
-export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
-  extends DatabaseResolvedEntityReference {
-  authKey: string;
-  resolvedAuthKey: string;
 }
 
 export type DatabaseAdminEntitySearchPayload =
@@ -383,19 +363,6 @@ export interface DatabaseAdapter<
     references: EntityReference[],
   ): PromiseResult<DatabaseAdminEntityGetReferenceEntityInfoPayload[], typeof ErrorType.Generic>;
 
-  adminEntityHistoryGetEntityInfo(
-    context: TransactionContext,
-    reference: EntityReference,
-  ): PromiseResult<
-    DatabaseAdminEntityHistoryGetEntityInfoPayload,
-    typeof ErrorType.NotFound | typeof ErrorType.Generic
-  >;
-
-  adminEntityHistoryGetVersionsInfo(
-    context: TransactionContext,
-    reference: DatabaseResolvedEntityReference,
-  ): PromiseResult<DatabaseAdminEntityHistoryGetVersionInfoPayload[], typeof ErrorType.Generic>;
-
   adminEntityIndexesUpdateLatest(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
@@ -427,19 +394,6 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     event: DatabaseAdminEntityPublishingCreateEventArg,
   ): PromiseResult<void, typeof ErrorType.Generic>;
-
-  adminEntityPublishingHistoryGetEntityInfo(
-    context: TransactionContext,
-    reference: EntityReference,
-  ): PromiseResult<
-    DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload,
-    typeof ErrorType.NotFound | typeof ErrorType.Generic
-  >;
-
-  adminEntityPublishingHistoryGetEvents(
-    context: TransactionContext,
-    reference: DatabaseResolvedEntityReference,
-  ): PromiseResult<PublishingEvent[], typeof ErrorType.Generic>;
 
   adminEntitySampleEntities(
     schema: AdminSchema,

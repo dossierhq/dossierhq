@@ -2,7 +2,6 @@ import type {
   AdminEntity,
   Connection,
   Edge,
-  EntityHistory,
   ErrorType,
   PromiseResult,
   PublishedEntity,
@@ -96,18 +95,6 @@ export async function initializeIntegrationTestServer(): PromiseResult<
   const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
   return ok({ server, adminSchema });
-}
-
-export function expectEntityHistoryVersions(
-  actual: EntityHistory,
-  expectedVersions: Omit<EntityHistory['versions'][0], 'createdAt'>[],
-): void {
-  // Skip createdAt since dates are unpredictable
-  const actualVersions = actual.versions.map((x) => {
-    const { createdAt: _createdAt, ...version } = x;
-    return version;
-  });
-  expect(actualVersions).toEqual(expectedVersions);
 }
 
 export function expectSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(

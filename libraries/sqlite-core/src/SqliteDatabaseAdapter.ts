@@ -18,15 +18,7 @@ import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
 import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
 import { adminGetEntity } from './admin-entity/getEntity.js';
-import {
-  adminEntityHistoryGetEntityInfo,
-  adminEntityHistoryGetVersionsInfo,
-} from './admin-entity/getEntityHistory.js';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
-import {
-  adminEntityPublishingHistoryGetEntityInfo,
-  adminEntityPublishingHistoryGetEvents,
-} from './admin-entity/getPublishingHistory.js';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import { adminEntityIndexesUpdateLatest } from './admin-entity/indexesUpdateLatest.js';
@@ -184,10 +176,6 @@ function createOuterAdapter(
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(database, ...args),
     adminEntityGetReferenceEntitiesInfo: (...args) =>
       adminEntityGetReferenceEntitiesInfo(database, ...args),
-    adminEntityHistoryGetEntityInfo: (...args) =>
-      adminEntityHistoryGetEntityInfo(database, ...args),
-    adminEntityHistoryGetVersionsInfo: (...args) =>
-      adminEntityHistoryGetVersionsInfo(database, ...args),
     adminEntityIndexesUpdateLatest: (...args) => adminEntityIndexesUpdateLatest(database, ...args),
     adminEntityIndexesUpdatePublished: (...args) =>
       adminEntityIndexesUpdatePublished(database, ...args),
@@ -195,10 +183,6 @@ function createOuterAdapter(
       adminEntityPublishGetVersionInfo(database, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
       adminEntityPublishingCreateEvents(database, ...args),
-    adminEntityPublishingHistoryGetEntityInfo: (...args) =>
-      adminEntityPublishingHistoryGetEntityInfo(database, ...args),
-    adminEntityPublishingHistoryGetEvents: (...args) =>
-      adminEntityPublishingHistoryGetEvents(database, ...args),
     adminEntityPublishUpdateEntity: (...args) => adminEntityPublishUpdateEntity(database, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(database, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(database, ...args),

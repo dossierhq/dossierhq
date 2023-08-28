@@ -9,13 +9,9 @@ import type {
   AdminEntityUpsertPayload,
   Connection,
   Edge,
-  EntityHistory,
-  EntityVersionInfo,
   PageInfo,
   PublishedEntity,
   PublishedEntityInfo,
-  PublishingEvent,
-  PublishingHistory,
 } from '../Types.js';
 import type { ChangelogEvent } from '../events/EventTypes.js';
 
@@ -73,22 +69,6 @@ export type JsonChangelogEvent<TEvent extends ChangelogEvent = ChangelogEvent> =
 > & {
   createdAt: string;
 };
-
-export interface JsonEntityHistory extends Omit<EntityHistory, 'versions'> {
-  versions: JsonEntityVersionInfo[];
-}
-
-export interface JsonEntityVersionInfo extends Omit<EntityVersionInfo, 'createdAt'> {
-  createdAt: string;
-}
-
-export interface JsonPublishingHistory extends Omit<PublishingHistory, 'events'> {
-  events: JsonPublishingEvent[];
-}
-
-export interface JsonPublishingEvent extends Omit<PublishingEvent, 'publishedAt'> {
-  publishedAt: string;
-}
 
 export function convertJsonConnection<
   TIn extends JsonEdge<unknown, ErrorType>,
@@ -159,26 +139,4 @@ export function convertJsonChangelogEventEdge<
     edge,
     (node) => ({ ...node, createdAt: new Date(node.createdAt) }) as TEvent,
   );
-}
-
-export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): EntityHistory {
-  return {
-    ...entityHistory,
-    versions: entityHistory.versions.map((version) => ({
-      ...version,
-      createdAt: new Date(version.createdAt),
-    })),
-  };
-}
-
-export function convertJsonPublishingHistory(
-  publishingHistory: JsonPublishingHistory,
-): PublishingHistory {
-  return {
-    ...publishingHistory,
-    events: publishingHistory.events.map((version) => ({
-      ...version,
-      publishedAt: new Date(version.publishedAt),
-    })),
-  };
 }

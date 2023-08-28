@@ -6,11 +6,9 @@ import type {
 import {
   AdminEntityStatus,
   FieldType,
-  PublishingEventKind,
-  assertOkResult,
+  createRichText,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
   ok,
 } from '@dossierhq/core';
@@ -2265,22 +2263,6 @@ describe('publishEntities()', () => {
           ],
         },
       });
-
-      const historyResult = await adminClient.getPublishingHistory({ id });
-      assertOkResult(historyResult);
-      const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-      expectResultValue(historyResult, {
-        id,
-        events: [
-          {
-            kind: PublishingEventKind.publish,
-            publishedAt: publishedAt0,
-            publishedBy: server.subjectId,
-            version: 1,
-          },
-        ],
-      });
-      expect(Math.abs(publishedAt0.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
     }
   });
 
@@ -2388,30 +2370,6 @@ describe('unpublishEntities()', () => {
           ],
         },
       });
-
-      const historyResult = await adminClient.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.publish,
-              publishedAt: publishedAt0,
-              publishedBy: server.subjectId,
-              version: 1,
-            },
-            {
-              kind: PublishingEventKind.unpublish,
-              publishedAt: publishedAt1,
-              publishedBy: server.subjectId,
-              version: 1,
-            },
-          ],
-        });
-        expect(Math.abs(publishedAt1.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
-      }
     }
   });
 
@@ -2515,22 +2473,6 @@ describe('archiveEntity()', () => {
           },
         },
       });
-
-      const historyResult = await adminClient.getPublishingHistory({ id });
-      assertOkResult(historyResult);
-      const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-      expectResultValue(historyResult, {
-        id,
-        events: [
-          {
-            kind: PublishingEventKind.archive,
-            publishedAt: publishedAt0,
-            publishedBy: server.subjectId,
-            version: 1,
-          },
-        ],
-      });
-      expect(Math.abs(publishedAt0.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
     }
   });
 
@@ -2613,31 +2555,6 @@ describe('unarchiveEntity()', () => {
           },
         },
       });
-
-      const historyResult = await adminClient.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.archive,
-              publishedAt: publishedAt0,
-              publishedBy: server.subjectId,
-              version: 1,
-            },
-            {
-              kind: PublishingEventKind.unarchive,
-              publishedAt: publishedAt1,
-              publishedBy: server.subjectId,
-              version: 1,
-            },
-          ],
-        });
-
-        expect(Math.abs(publishedAt1.getTime() - new Date(updatedAt).getTime())).toBeLessThan(20);
-      }
     }
   });
 
@@ -2758,12 +2675,6 @@ describe('Multiple', () => {
           publishEntities: [{ id, status: AdminEntityStatus.published }],
         },
       });
-
-      const historyResult = await adminClient.getEntityHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expect(historyResult.value.versions).toHaveLength(2);
-        expect(historyResult.value.versions[1].published).toBeTruthy();
-      }
     }
   });
 });

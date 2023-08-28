@@ -269,38 +269,6 @@ export interface AdminEntityUpsertPayload<T extends AdminEntity<string, object> 
   entity: T;
 }
 
-export interface EntityHistory {
-  id: string;
-  versions: EntityVersionInfo[];
-}
-
-export interface EntityVersionInfo {
-  version: number;
-  published: boolean;
-  createdBy: string;
-  createdAt: Date;
-}
-
-export interface PublishingHistory {
-  id: string;
-  events: PublishingEvent[];
-}
-
-export const PublishingEventKind = {
-  publish: 'publish',
-  unpublish: 'unpublish',
-  archive: 'archive',
-  unarchive: 'unarchive',
-} as const;
-export type PublishingEventKind = (typeof PublishingEventKind)[keyof typeof PublishingEventKind];
-
-export interface PublishingEvent {
-  kind: PublishingEventKind;
-  version: number | null;
-  publishedAt: Date;
-  publishedBy: string;
-}
-
 export interface AdminEntityPublishingPayload<TEffect> {
   id: string;
   status: AdminEntityStatus;

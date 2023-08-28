@@ -10,13 +10,13 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
 } from '../Types.js';
-import { AdminEntityStatus, PublishingEventKind } from '../Types.js';
+import { AdminEntityStatus } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
 import {
   EventType,
+  type ChangelogEvent,
   type EntityChangelogEvent,
   type SchemaChangelogEvent,
-  type ChangelogEvent,
 } from '../events/EventTypes.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { assertIsDefined } from '../utils/Asserts.js';
@@ -679,144 +679,6 @@ describe('AdminClient forward operation over JSON', () => {
             ],
             "modifies": false,
             "name": "getEntity",
-            "next": [Function],
-            "resolve": [Function],
-          },
-        ],
-      ]
-    `);
-  });
-
-  test('getEntityHistory', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: NoOpLogger },
-      AdminClientOperationName.getEntityHistory,
-      (_context, operation) => {
-        const [reference] = operation.args;
-        operation.resolve(
-          ok({
-            id: reference.id,
-            versions: [
-              {
-                createdAt: new Date('2021-08-17T07:51:25.56Z'),
-                createdBy: '123-456',
-                version: 1,
-                published: true,
-              },
-            ],
-          }),
-        );
-        return Promise.resolve();
-      },
-    );
-
-    const result = await adminClient.getEntityHistory({ id: '1234' });
-    if (expectOkResult(result)) {
-      expect(result.value.versions[0].createdAt).toBeInstanceOf(Date);
-
-      expect(result.value).toMatchInlineSnapshot(`
-        {
-          "id": "1234",
-          "versions": [
-            {
-              "createdAt": 2021-08-17T07:51:25.560Z,
-              "createdBy": "123-456",
-              "published": true,
-              "version": 1,
-            },
-          ],
-        }
-      `);
-    }
-
-    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
-          {
-            "logger": {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-          },
-          {
-            "args": [
-              {
-                "id": "1234",
-              },
-            ],
-            "modifies": false,
-            "name": "getEntityHistory",
-            "next": [Function],
-            "resolve": [Function],
-          },
-        ],
-      ]
-    `);
-  });
-
-  test('getPublishingHistory', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
-      { logger: NoOpLogger },
-      AdminClientOperationName.getPublishingHistory,
-      (_context, operation) => {
-        const [reference] = operation.args;
-        operation.resolve(
-          ok({
-            id: reference.id,
-            events: [
-              {
-                kind: PublishingEventKind.publish,
-                publishedAt: new Date('2021-08-17T07:51:25.56Z'),
-                publishedBy: '123-456',
-                version: 1,
-              },
-            ],
-          }),
-        );
-        return Promise.resolve();
-      },
-    );
-
-    const result = await adminClient.getPublishingHistory({ id: '1234' });
-    if (expectOkResult(result)) {
-      expect(result.value.events[0].publishedAt).toBeInstanceOf(Date);
-
-      expect(result.value).toMatchInlineSnapshot(`
-        {
-          "events": [
-            {
-              "kind": "publish",
-              "publishedAt": 2021-08-17T07:51:25.560Z,
-              "publishedBy": "123-456",
-              "version": 1,
-            },
-          ],
-          "id": "1234",
-        }
-      `);
-    }
-
-    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
-          {
-            "logger": {
-              "debug": [Function],
-              "error": [Function],
-              "info": [Function],
-              "warn": [Function],
-            },
-          },
-          {
-            "args": [
-              {
-                "id": "1234",
-              },
-            ],
-            "modifies": false,
-            "name": "getPublishingHistory",
             "next": [Function],
             "resolve": [Function],
           },

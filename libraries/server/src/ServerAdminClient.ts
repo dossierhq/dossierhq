@@ -19,9 +19,7 @@ import type { ServerImpl } from './Server.js';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
 import { adminGetEntity } from './admin-entity/adminGetEntity.js';
-import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory.js';
 import { adminGetEntityList } from './admin-entity/adminGetEntityList.js';
-import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory.js';
 import { adminGetTotalCount } from './admin-entity/adminGetTotalCount.js';
 import { adminPublishEntities } from './admin-entity/adminPublishEntities.js';
 import { adminSampleEntities } from './admin-entity/adminSampleEntities.js';
@@ -152,31 +150,6 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             references,
-          ),
-        );
-        break;
-      }
-      case AdminClientOperationName.getEntityHistory: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntityHistory>;
-        resolve(
-          await adminGetEntityHistory(databaseAdapter, authorizationAdapter, context, reference),
-        );
-        break;
-      }
-      case AdminClientOperationName.getPublishingHistory: {
-        const {
-          args: [reference],
-          resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getPublishingHistory>;
-        resolve(
-          await adminGetPublishingHistory(
-            databaseAdapter,
-            authorizationAdapter,
-            context,
-            reference,
           ),
         );
         break;

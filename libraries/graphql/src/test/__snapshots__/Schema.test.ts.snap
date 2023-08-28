@@ -250,22 +250,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -445,8 +429,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -931,22 +913,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -1131,8 +1097,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -1400,22 +1364,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -1537,8 +1485,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -2006,22 +1952,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -2148,8 +2078,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -2450,22 +2378,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -2626,8 +2538,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -3099,22 +3009,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -3277,8 +3171,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -3538,22 +3430,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -3756,8 +3632,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -4248,22 +4122,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -4482,8 +4340,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -4744,22 +4600,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -4859,8 +4699,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -5290,22 +5128,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -5410,8 +5232,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -5670,22 +5490,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -5797,8 +5601,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -6250,22 +6052,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -6382,8 +6168,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -6648,22 +6432,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -6790,8 +6558,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -7275,22 +7041,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -7422,8 +7172,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -7678,22 +7426,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -7805,8 +7537,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -8246,22 +7976,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -8378,8 +8092,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -8635,22 +8347,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -8819,8 +8515,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -9298,22 +8992,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -9484,8 +9162,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -9756,22 +9432,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -9980,8 +9640,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {
@@ -10534,22 +10192,6 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-type EntityHistory {
-  id: ID!
-  versions: [EntityVersionInfo]!
-}
-
-type PublishingEvent {
-  version: Int
-  publishedBy: ID!
-  publishedAt: DateTime!
-}
-
-type PublishingHistory {
-  id: ID!
-  events: [PublishingEvent]!
-}
-
 enum AdminEntityPublishEffect {
   published
   none
@@ -10765,8 +10407,6 @@ type Query {
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-  entityHistory(id: ID!): EntityHistory
-  publishingHistory(id: ID!): PublishingHistory
 }
 
 type Mutation {

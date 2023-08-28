@@ -3,7 +3,6 @@ import {
   AdminEntityStatus,
   ErrorType,
   FieldType,
-  PublishingEventKind,
   assertOkResult,
   copyEntity,
   createRichText,
@@ -18,7 +17,6 @@ import { validate as validateUuid } from 'uuid';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import {
   createPostgresTestServerAndClient,
-  expectEntityHistoryVersions,
   expectSearchResultEntities,
   insecureTestUuidv4,
 } from '../TestUtils.js';
@@ -359,17 +357,6 @@ describe('createEntity()', () => {
         expectedEntity.info.validPublished = true;
       }
 
-      const historyResult = await client.getEntityHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 1,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
-
       const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(
         version1Result,
@@ -417,17 +404,6 @@ describe('createEntity()', () => {
           fields: { ...emptyFooFields, title: 'Draft' },
         },
       });
-
-      const historyResult = await client.getEntityHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 1,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
 
       const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(version1Result, {
@@ -1754,22 +1730,6 @@ describe('updateEntity()', () => {
         expectedEntity.info.validPublished = true;
       }
 
-      const historyResult = await client.getEntityHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 1,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 2,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-        ]);
-      }
-
       const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(
         version1Result,
@@ -1868,22 +1828,6 @@ describe('updateEntity()', () => {
 
         expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
 
-        const historyResult = await client.getEntityHistory({ id });
-        if (expectOkResult(historyResult)) {
-          expectEntityHistoryVersions(historyResult.value, [
-            {
-              version: 1,
-              published: true,
-              createdBy: context.session.subjectId,
-            },
-            {
-              version: 2,
-              published: false,
-              createdBy: context.session.subjectId,
-            },
-          ]);
-        }
-
         const version1Result = await client.getEntity({ id, version: 1 });
         expectResultValue(
           version1Result,
@@ -1964,22 +1908,6 @@ describe('updateEntity()', () => {
         expectedEntity.info.status = AdminEntityStatus.published;
         expectedEntity.info.updatedAt = updatedAt;
         expectedEntity.info.validPublished = true;
-      }
-
-      const historyResult = await client.getEntityHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 1,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 2,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-        ]);
       }
 
       const version1Result = await client.getEntity({ id, version: 1 });
@@ -2069,22 +1997,6 @@ describe('updateEntity()', () => {
         expectedEntity.info.status = AdminEntityStatus.published;
         expectedEntity.info.updatedAt = updatedAt;
         expectedEntity.info.validPublished = true;
-      }
-
-      const historyResult = await client.getEntityHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expectEntityHistoryVersions(historyResult.value, [
-          {
-            version: 1,
-            published: false,
-            createdBy: context.session.subjectId,
-          },
-          {
-            version: 2,
-            published: true,
-            createdBy: context.session.subjectId,
-          },
-        ]);
       }
 
       const version1Result = await client.getEntity({ id, version: 1 });
@@ -3191,22 +3103,6 @@ describe('archiveEntity()', () => {
           updatedAt,
         });
 
-        const historyResult = await client.getPublishingHistory({ id });
-        if (expectOkResult(historyResult)) {
-          const { publishedAt } = historyResult.value.events[0];
-          expectResultValue(historyResult, {
-            id,
-            events: [
-              {
-                kind: PublishingEventKind.archive,
-                publishedAt,
-                publishedBy: context.session.subjectId,
-                version: 1,
-              },
-            ],
-          });
-        }
-
         const getResult = await client.getEntity({ id });
         if (expectOkResult(getResult)) {
           expectResultValue(getResult, {
@@ -3259,11 +3155,6 @@ describe('archiveEntity()', () => {
           });
         }
       }
-
-      const historyResult = await client.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        expect(historyResult.value.events).toHaveLength(1); // no event created by second archive
-      }
     }
   });
 });
@@ -3291,9 +3182,6 @@ describe('unarchiveEntity()', () => {
           updatedAt,
         });
       }
-
-      const historyResult = await client.getPublishingHistory({ id });
-      expectResultValue(historyResult, { id, events: [] });
     }
   });
 
@@ -3330,29 +3218,6 @@ describe('unarchiveEntity()', () => {
           effect: 'unarchived',
           updatedAt,
         });
-
-        const historyResult = await client.getPublishingHistory({ id });
-        if (expectOkResult(historyResult)) {
-          const { publishedAt: publishedAt0 } = historyResult.value.events[0];
-          const { publishedAt: publishedAt1 } = historyResult.value.events[1];
-          expectResultValue(historyResult, {
-            id,
-            events: [
-              {
-                kind: PublishingEventKind.archive,
-                publishedAt: publishedAt0,
-                publishedBy: context.session.subjectId,
-                version: 1,
-              },
-              {
-                kind: PublishingEventKind.unarchive,
-                publishedAt: publishedAt1,
-                publishedBy: context.session.subjectId,
-                version: 1,
-              },
-            ],
-          });
-        }
 
         const getResult = await client.getEntity({ id });
         if (expectOkResult(getResult)) {
@@ -3424,109 +3289,6 @@ describe('unarchiveEntity()', () => {
           status: AdminEntityStatus.withdrawn,
           effect: 'unarchived',
           updatedAt,
-        });
-      }
-    }
-  });
-});
-
-describe('getPublishingHistory()', () => {
-  test('New unpublished entity', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Unpublished', authKey: 'none' },
-      fields: {},
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-      const historyResult = await client.getPublishingHistory({ id });
-      expectResultValue(historyResult, { id, events: [] });
-    }
-  });
-
-  test('One published version', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Published', authKey: 'none' },
-      fields: {},
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const publishResult = await client.publishEntities([{ id, version: 1 }]);
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
-        ]);
-      }
-
-      const historyResult = await client.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const { publishedAt } = historyResult.value.events[0];
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.publish,
-              publishedAt,
-              publishedBy: context.session.subjectId,
-              version: 1,
-            },
-          ],
-        });
-      }
-    }
-  });
-
-  test('One unpublished version', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminBar', name: 'Published/Unpublished', authKey: 'none' },
-      fields: {},
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const publishResult = await client.publishEntities([{ id, version: 1 }]);
-      if (expectOkResult(publishResult)) {
-        const [{ updatedAt }] = publishResult.value;
-        expectResultValue(publishResult, [
-          { id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
-        ]);
-      }
-
-      const unpublishResult = await client.unpublishEntities([{ id }]);
-      if (expectOkResult(unpublishResult)) {
-        const [{ updatedAt }] = unpublishResult.value;
-        expectResultValue(unpublishResult, [
-          { id, status: AdminEntityStatus.withdrawn, effect: 'unpublished', updatedAt },
-        ]);
-      }
-
-      const historyResult = await client.getPublishingHistory({ id });
-      if (expectOkResult(historyResult)) {
-        const publishedAt0 = historyResult.value.events[0]?.publishedAt;
-        const publishedAt1 = historyResult.value.events[1]?.publishedAt;
-        expectResultValue(historyResult, {
-          id,
-          events: [
-            {
-              kind: PublishingEventKind.publish,
-              publishedAt: publishedAt0,
-              publishedBy: context.session.subjectId,
-              version: 1,
-            },
-            {
-              kind: PublishingEventKind.unpublish,
-              publishedAt: publishedAt1,
-              publishedBy: context.session.subjectId,
-              version: 1,
-            },
-          ],
         });
       }
     }

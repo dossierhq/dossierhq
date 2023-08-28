@@ -19,7 +19,6 @@ export {
   AdminEntitiesQueryOrder,
   AdminEntityStatus,
   PublishedEntitiesQueryOrder,
-  PublishingEventKind,
   RichTextNodeType,
 } from './Types.js';
 export type {
@@ -45,12 +44,10 @@ export type {
   BoundingBox,
   Connection,
   Edge,
-  EntityHistory,
   EntityLike,
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
-  EntityVersionInfo,
   EntityVersionReference,
   Location,
   PageInfo,
@@ -59,8 +56,6 @@ export type {
   PublishedEntitiesSharedQuery,
   PublishedEntity,
   PublishedEntityInfo,
-  PublishingEvent,
-  PublishingHistory,
   RichText,
   RichTextCodeHighlightNode,
   RichTextCodeNode,
@@ -97,14 +92,9 @@ export { withAdvisoryLock } from './client/AdvisoryLockUtils.js';
 export {
   convertJsonConnection,
   convertJsonEdge,
-  convertJsonEntityHistory,
-  convertJsonPublishingHistory,
   convertJsonResult,
   type JsonConnection,
   type JsonEdge,
-  type JsonEntityHistory,
-  type JsonEntityVersionInfo,
-  type JsonPublishingHistory,
   type JsonResult,
 } from './client/JsonUtils.js';
 export {

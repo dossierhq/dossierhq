@@ -1,22 +1,9 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult, expectOkResult } from '../test/CoreTestUtils.js';
 import { ErrorType, notOk, ok } from '../ErrorResult.js';
-import type { Connection, Edge, EntityHistory, PublishingHistory } from '../Types.js';
-import { PublishingEventKind } from '../Types.js';
-import type {
-  JsonConnection,
-  JsonEdge,
-  JsonEntityHistory,
-  JsonPublishingHistory,
-  JsonResult,
-} from './JsonUtils.js';
-import {
-  convertJsonConnection,
-  convertJsonEdge,
-  convertJsonEntityHistory,
-  convertJsonPublishingHistory,
-  convertJsonResult,
-} from './JsonUtils.js';
+import type { Connection, Edge } from '../Types.js';
+import { expectErrorResult, expectOkResult } from '../test/CoreTestUtils.js';
+import type { JsonConnection, JsonEdge, JsonResult } from './JsonUtils.js';
+import { convertJsonConnection, convertJsonEdge, convertJsonResult } from './JsonUtils.js';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
   edgeProperty: string;
@@ -99,40 +86,5 @@ describe('convertJsonResult()', () => {
     const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<{ foo: number }, ErrorType>;
     const converted = convertJsonResult(asJson);
     expectErrorResult(converted, ErrorType.NotAuthenticated, 'Error message');
-  });
-});
-
-describe('convertJsonEntityVersion()', () => {
-  test('History with one version', () => {
-    const expected: EntityHistory = {
-      id: '123',
-      versions: [{ createdAt: new Date(), createdBy: '4321', published: true, version: 1 }],
-    };
-    const asJson = JSON.parse(JSON.stringify(expected)) as JsonEntityHistory;
-    const converted = convertJsonEntityHistory(asJson);
-    expect(converted).toEqual(expected);
-
-    expect(converted.versions[0].createdAt).toBeInstanceOf(Date);
-  });
-});
-
-describe('convertJsonPublishingHistory()', () => {
-  test('History with one version', () => {
-    const expected: PublishingHistory = {
-      id: '123',
-      events: [
-        {
-          kind: PublishingEventKind.publish,
-          publishedAt: new Date(),
-          publishedBy: '4321',
-          version: 1,
-        },
-      ],
-    };
-    const asJson = JSON.parse(JSON.stringify(expected)) as JsonPublishingHistory;
-    const converted = convertJsonPublishingHistory(asJson);
-    expect(converted).toEqual(expected);
-
-    expect(converted.events[0].publishedAt).toBeInstanceOf(Date);
   });
 });

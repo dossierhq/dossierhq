@@ -8,10 +8,8 @@ import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite.js';
 import { GetEntitiesSampleSubSuite } from './AdminEntityGetEntitiesSampleSubSuite.js';
 import { GetEntitiesSubSuite } from './AdminEntityGetEntitiesSubSuite.js';
 import { GetEntitiesTotalCountSubSuite } from './AdminEntityGetEntitiesTotalCountSubSuite.js';
-import { GetEntityHistorySubSuite } from './AdminEntityGetEntityHistorySubSuite.js';
 import { GetEntityListSubSuite } from './AdminEntityGetEntityListSubSuite.js';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite.js';
-import { GetPublishingHistorySubSuite } from './AdminEntityGetPublishingHistorySubSuite.js';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite.js';
 import { UnarchiveEntitySubSuite } from './AdminEntityUnarchiveEntitySubSuite.js';
 import { UnpublishEntitiesSubSuite } from './AdminEntityUnpublishEntitiesSubSuite.js';
@@ -31,14 +29,12 @@ export function createAdminEntityTestSuite<TCleanup>(
     initializer,
     ...ArchiveEntitySubSuite,
     ...CreateEntitySubSuite,
-    ...GetEntityHistorySubSuite,
-    ...GetEntityListSubSuite,
-    ...GetEntitySubSuite,
-    ...GetPublishingHistorySubSuite,
-    ...GetEntitiesTotalCountSubSuite,
-    ...PublishEntitiesSubSuite,
     ...GetEntitiesSampleSubSuite,
     ...GetEntitiesSubSuite,
+    ...GetEntitiesTotalCountSubSuite,
+    ...GetEntityListSubSuite,
+    ...GetEntitySubSuite,
+    ...PublishEntitiesSubSuite,
     ...UnarchiveEntitySubSuite,
     ...UnpublishEntitiesSubSuite,
     ...UpdateEntitySubSuite,

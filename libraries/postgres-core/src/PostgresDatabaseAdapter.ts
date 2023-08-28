@@ -6,15 +6,7 @@ import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
 import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
 import { adminGetEntity } from './admin-entity/getEntity.js';
-import {
-  adminEntityHistoryGetEntityInfo,
-  adminEntityHistoryGetVersionsInfo,
-} from './admin-entity/getEntityHistory.js';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
-import {
-  adminEntityPublishingHistoryGetEntityInfo,
-  adminEntityPublishingHistoryGetEvents,
-} from './admin-entity/getPublishingHistory.js';
 import { adminEntityGetReferenceEntitiesInfo } from './admin-entity/getReferenceEntitiesInfo.js';
 import { adminEntitySearchTotalCount } from './admin-entity/getTotalCount.js';
 import { adminEntityIndexesUpdateLatest } from './admin-entity/indexesUpdateLatest.js';
@@ -97,10 +89,6 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),
     adminEntityGetReferenceEntitiesInfo: (...args) =>
       adminEntityGetReferenceEntitiesInfo(databaseAdapter, ...args),
-    adminEntityHistoryGetEntityInfo: (...args) =>
-      adminEntityHistoryGetEntityInfo(databaseAdapter, ...args),
-    adminEntityHistoryGetVersionsInfo: (...args) =>
-      adminEntityHistoryGetVersionsInfo(databaseAdapter, ...args),
     adminEntityIndexesUpdateLatest: (...args) =>
       adminEntityIndexesUpdateLatest(databaseAdapter, ...args),
     adminEntityIndexesUpdatePublished: (...args) =>
@@ -109,10 +97,6 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
     adminEntityPublishingCreateEvents: (...args) =>
       adminEntityPublishingCreateEvents(databaseAdapter, ...args),
-    adminEntityPublishingHistoryGetEntityInfo: (...args) =>
-      adminEntityPublishingHistoryGetEntityInfo(databaseAdapter, ...args),
-    adminEntityPublishingHistoryGetEvents: (...args) =>
-      adminEntityPublishingHistoryGetEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),

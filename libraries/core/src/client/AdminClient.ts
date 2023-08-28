@@ -27,13 +27,11 @@ import type {
   AdvisoryLockReleasePayload,
   Connection,
   Edge,
-  EntityHistory,
   EntityReference,
   EntitySamplingOptions,
   EntitySamplingPayload,
   EntityVersionReference,
   Paging,
-  PublishingHistory,
   UniqueIndexReference,
   ValueItem,
 } from '../Types.js';
@@ -50,8 +48,6 @@ import {
   convertJsonChangelogEventEdge,
   convertJsonConnection,
   convertJsonEdge,
-  convertJsonEntityHistory,
-  convertJsonPublishingHistory,
   convertJsonPublishingResult,
   convertJsonResult,
   type JsonAdminEntity,
@@ -61,8 +57,6 @@ import {
   type JsonChangelogEvent,
   type JsonConnection,
   type JsonEdge,
-  type JsonEntityHistory,
-  type JsonPublishingHistory,
   type JsonPublishingResult,
   type JsonResult,
 } from './JsonUtils.js';
@@ -210,16 +204,6 @@ export interface AdminClient<
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  getEntityHistory(
-    reference: EntityReference,
-  ): PromiseResult<
-    EntityHistory,
-    | typeof ErrorType.BadRequest
-    | typeof ErrorType.NotFound
-    | typeof ErrorType.NotAuthorized
-    | typeof ErrorType.Generic
-  >;
-
   publishEntities(
     references: EntityVersionReference[],
   ): PromiseResult<
@@ -254,16 +238,6 @@ export interface AdminClient<
     reference: EntityReference,
   ): PromiseResult<
     AdminEntityUnarchivePayload,
-    | typeof ErrorType.BadRequest
-    | typeof ErrorType.NotFound
-    | typeof ErrorType.NotAuthorized
-    | typeof ErrorType.Generic
-  >;
-
-  getPublishingHistory(
-    reference: EntityReference,
-  ): PromiseResult<
-    PublishingHistory,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -381,8 +355,6 @@ export interface AdminExceptionClient<
 
   getChangelogEventsTotalCount(query?: ChangelogEventQuery): Promise<number>;
 
-  getEntityHistory(reference: EntityReference): Promise<EntityHistory>;
-
   publishEntities(references: EntityVersionReference[]): Promise<AdminEntityPublishPayload[]>;
 
   unpublishEntities(references: EntityReference[]): Promise<AdminEntityUnpublishPayload[]>;
@@ -390,8 +362,6 @@ export interface AdminExceptionClient<
   archiveEntity(reference: EntityReference): Promise<AdminEntityArchivePayload>;
 
   unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload>;
-
-  getPublishingHistory(reference: EntityReference): Promise<PublishingHistory>;
 
   acquireAdvisoryLock(name: string, options: AdvisoryLockOptions): Promise<AdvisoryLockPayload>;
 
@@ -410,9 +380,7 @@ export const AdminClientOperationName = {
   getEntitiesSample: 'getEntitiesSample',
   getEntitiesTotalCount: 'getEntitiesTotalCount',
   getEntity: 'getEntity',
-  getEntityHistory: 'getEntityHistory',
   getEntityList: 'getEntityList',
-  getPublishingHistory: 'getPublishingHistory',
   getSchemaSpecification: 'getSchemaSpecification',
   publishEntities: 'publishEntities',
   releaseAdvisoryLock: 'releaseAdvisoryLock',
@@ -458,9 +426,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.getEntitiesSample]: MethodParameters<'getEntitiesSample'>;
   [AdminClientOperationName.getEntitiesTotalCount]: MethodParameters<'getEntitiesTotalCount'>;
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
-  [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
   [AdminClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
-  [AdminClientOperationName.getPublishingHistory]: MethodParameters<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodParameters<'releaseAdvisoryLock'>;
@@ -482,9 +448,7 @@ interface AdminClientOperationReturnOk {
   [AdminClientOperationName.getEntitiesSample]: MethodReturnTypeOk<'getEntitiesSample'>;
   [AdminClientOperationName.getEntitiesTotalCount]: MethodReturnTypeOk<'getEntitiesTotalCount'>;
   [AdminClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
-  [AdminClientOperationName.getEntityHistory]: MethodReturnTypeOk<'getEntityHistory'>;
   [AdminClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
-  [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeOk<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeOk<'releaseAdvisoryLock'>;
@@ -506,9 +470,7 @@ interface AdminClientOperationReturnError {
   [AdminClientOperationName.getEntitiesSample]: MethodReturnTypeError<'getEntitiesSample'>;
   [AdminClientOperationName.getEntitiesTotalCount]: MethodReturnTypeError<'getEntitiesTotalCount'>;
   [AdminClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
-  [AdminClientOperationName.getEntityHistory]: MethodReturnTypeError<'getEntityHistory'>;
   [AdminClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
-  [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeError<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeError<'releaseAdvisoryLock'>;
@@ -740,16 +702,6 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  getEntityHistory(
-    reference: EntityReference,
-  ): MethodReturnType<typeof AdminClientOperationName.getEntityHistory> {
-    return this.executeOperation({
-      name: AdminClientOperationName.getEntityHistory,
-      args: [reference],
-      modifies: false,
-    });
-  }
-
   publishEntities(
     references: EntityVersionReference[],
   ): MethodReturnType<typeof AdminClientOperationName.publishEntities> {
@@ -787,16 +739,6 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
       name: AdminClientOperationName.unarchiveEntity,
       args: [reference],
       modifies: true,
-    });
-  }
-
-  getPublishingHistory(
-    reference: EntityReference,
-  ): MethodReturnType<typeof AdminClientOperationName.getPublishingHistory> {
-    return this.executeOperation({
-      name: AdminClientOperationName.getPublishingHistory,
-      args: [reference],
-      modifies: false,
     });
   }
 
@@ -981,10 +923,6 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.getChangelogEventsTotalCount(query)).valueOrThrow();
   }
 
-  async getEntityHistory(reference: EntityReference): Promise<EntityHistory> {
-    return (await this.client.getEntityHistory(reference)).valueOrThrow();
-  }
-
   async publishEntities(
     references: EntityVersionReference[],
   ): Promise<AdminEntityPublishPayload[]> {
@@ -1001,10 +939,6 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
   async unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload> {
     return (await this.client.unarchiveEntity(reference)).valueOrThrow();
-  }
-
-  async getPublishingHistory(reference: EntityReference): Promise<PublishingHistory> {
-    return (await this.client.getPublishingHistory(reference)).valueOrThrow();
   }
 
   async acquireAdvisoryLock(
@@ -1089,16 +1023,6 @@ export async function executeAdminClientOperationFromJson(
       const [references] =
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntityList];
       return await adminClient.getEntityList(references);
-    }
-    case AdminClientOperationName.getEntityHistory: {
-      const [reference] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntityHistory];
-      return await adminClient.getEntityHistory(reference);
-    }
-    case AdminClientOperationName.getPublishingHistory: {
-      const [reference] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getPublishingHistory];
-      return await adminClient.getPublishingHistory(reference);
     }
     case AdminClientOperationName.getSchemaSpecification: {
       const [options] =
@@ -1244,18 +1168,6 @@ export function convertJsonAdminClientResult<
         );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getEntityHistory: {
-      const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.getEntityHistory
-      > = ok(convertJsonEntityHistory(value as JsonEntityHistory));
-      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
-    }
-    case AdminClientOperationName.getPublishingHistory: {
-      const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.getPublishingHistory
-      > = ok(convertJsonPublishingHistory(value as JsonPublishingHistory));
-      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
-    }
     case AdminClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case AdminClientOperationName.publishEntities: {
@@ -1321,7 +1233,7 @@ export function convertJsonAdminClientResult<
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     default: {
-      const _never: never = operationName; // ensure exhaustiveness
+      operationName satisfies never;
       return notOk.Generic(`Unknown operation ${operationName}`) as MethodReturnTypeWithoutPromise<
         TName,
         TClient
