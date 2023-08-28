@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Add tests for changelog events and published name following the version's name.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

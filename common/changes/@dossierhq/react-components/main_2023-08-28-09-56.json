@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Add changelog screen. Use changelog events for entity history.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

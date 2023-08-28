@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/database-adapter",
+      "comment": "Support changelog events. Make published name follow the version's name.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/database-adapter"
+}

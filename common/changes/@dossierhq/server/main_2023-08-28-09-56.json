@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Add changelog events. Use the version's name for published name.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

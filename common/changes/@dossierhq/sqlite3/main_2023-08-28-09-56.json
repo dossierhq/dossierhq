@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite3",
+      "comment": "Support changelog events. Add published name.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite3"
+}

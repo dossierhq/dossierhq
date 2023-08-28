@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-core",
+      "comment": "Support changelog events. Add published name.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-core"
+}
