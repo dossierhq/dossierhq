@@ -1274,13 +1274,13 @@ describe('adminEntityList()', () => {
   });
 });
 
-describe('adminSampleEntities()', () => {
+describe('adminEntitiesSample()', () => {
   test('20 entities', async () => {
     const result = (await graphql({
       schema,
       source: gql`
         {
-          adminSampleEntities(
+          adminEntitiesSample(
             query: { entityTypes: [QueryAdminOnlyEditBefore] }
             seed: 123
             count: 20
@@ -1295,11 +1295,11 @@ describe('adminSampleEntities()', () => {
       `,
       contextValue: createContext(),
     })) as ExecutionResult<{
-      adminSampleEntities: { seed: number; totalCount: number; items: { id: string }[] };
+      adminEntitiesSample: { seed: number; totalCount: number; items: { id: string }[] };
     }>;
     expect(result.errors).toBeUndefined();
     expectSampledEntitiesArePartOfExpected(
-      result.data?.adminSampleEntities,
+      result.data?.adminEntitiesSample,
       123,
       entitiesOfTypeQueryAdminOnlyEditBeforeNone,
     );
@@ -1312,7 +1312,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         {
-          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }) {
+          adminEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }) {
             totalCount
             edges {
               node {
@@ -1324,12 +1324,12 @@ describe('searchAdminEntities()', () => {
       `,
       contextValue: createContext(),
     })) as ExecutionResult<{
-      adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+      adminEntities: { totalCount: number; edges: { node: { id: string } }[] };
     }>;
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    expect(result.data?.adminEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } })),
     );
-    expect(result.data?.adminSearchEntities.totalCount).toEqual(
+    expect(result.data?.adminEntities.totalCount).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.length,
     );
   });
@@ -1339,7 +1339,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         query Search($entityTypes: [AdminEntityType!]) {
-          adminSearchEntities(query: { entityTypes: $entityTypes }) {
+          adminEntities(query: { entityTypes: $entityTypes }) {
             edges {
               node {
                 id
@@ -1351,9 +1351,9 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
       variableValues: { entityTypes: ['QueryAdminOnlyEditBefore'] },
     })) as ExecutionResult<{
-      adminSearchEntities: { edges: { node: { id: string } }[] };
+      adminEntities: { edges: { node: { id: string } }[] };
     }>;
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    expect(result.data?.adminEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 25).map((x) => ({ node: { id: x.id } })),
     );
   });
@@ -1363,7 +1363,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         {
-          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, first: 10) {
+          adminEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, first: 10) {
             edges {
               node {
                 id
@@ -1373,8 +1373,8 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    })) as ExecutionResult<{ adminEntities: { edges: { node: { id: string } }[] } }>;
+    expect(result.data?.adminEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(0, 10).map((x) => ({ node: { id: x.id } })),
     );
   });
@@ -1384,7 +1384,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         {
-          adminSearchEntities(
+          adminEntities(
             query: { entityTypes: [QueryAdminOnlyEditBefore], reverse: true }
             first: 10
           ) {
@@ -1397,8 +1397,8 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    })) as ExecutionResult<{ adminEntities: { edges: { node: { id: string } }[] } }>;
+    expect(result.data?.adminEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .reverse()
         .slice(0, 10)
@@ -1411,7 +1411,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         {
-          adminSearchEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, last: 10) {
+          adminEntities(query: { entityTypes: [QueryAdminOnlyEditBefore] }, last: 10) {
             edges {
               node {
                 id
@@ -1421,8 +1421,8 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    })) as ExecutionResult<{ adminEntities: { edges: { node: { id: string } }[] } }>;
+    expect(result.data?.adminEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeNone.slice(-10).map((x) => ({ node: { id: x.id } })),
     );
   });
@@ -1432,10 +1432,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         {
-          adminSearchEntities(
-            query: { entityTypes: [QueryAdminOnlyEditBefore], order: name }
-            last: 10
-          ) {
+          adminEntities(query: { entityTypes: [QueryAdminOnlyEditBefore], order: name }, last: 10) {
             edges {
               node {
                 id
@@ -1445,9 +1442,9 @@ describe('searchAdminEntities()', () => {
         }
       `,
       contextValue: createContext(),
-    })) as ExecutionResult<{ adminSearchEntities: { edges: { node: { id: string } }[] } }>;
+    })) as ExecutionResult<{ adminEntities: { edges: { node: { id: string } }[] } }>;
     expect(result.errors).toBeUndefined();
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    expect(result.data?.adminEntities.edges).toEqual(
       [...entitiesOfTypeQueryAdminOnlyEditBeforeNone]
         .sort((a, b) => (a.info.name < b.info.name ? -1 : 1))
         .slice(-10)
@@ -1460,9 +1457,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         {
-          adminSearchEntities(
-            query: { authKeys: ["subject"], entityTypes: [QueryAdminOnlyEditBefore] }
-          ) {
+          adminEntities(query: { authKeys: ["subject"], entityTypes: [QueryAdminOnlyEditBefore] }) {
             totalCount
             edges {
               node {
@@ -1477,14 +1472,14 @@ describe('searchAdminEntities()', () => {
       `,
       contextValue: createContext(),
     })) as ExecutionResult<{
-      adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+      adminEntities: { totalCount: number; edges: { node: { id: string } }[] };
     }>;
-    expect(result.data?.adminSearchEntities.edges).toEqual(
+    expect(result.data?.adminEntities.edges).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeSubject
         .slice(0, 25)
         .map((it) => ({ node: { id: it.id, info: { authKey: 'subject' } } })),
     );
-    expect(result.data?.adminSearchEntities.totalCount).toEqual(
+    expect(result.data?.adminEntities.totalCount).toEqual(
       entitiesOfTypeQueryAdminOnlyEditBeforeSubject.length,
     );
   });
@@ -1494,7 +1489,7 @@ describe('searchAdminEntities()', () => {
     const [fooEntity] = fooEntities;
 
     const source = `query QueryWithValueTypesAndLinksTo($id: ID!) {
-      adminSearchEntities(query: { linksTo: {id: $id }, valueTypes: [QueryAdminStringedBar] }) {
+      adminEntities(query: { linksTo: {id: $id }, valueTypes: [QueryAdminStringedBar] }) {
         edges {
           node {
             id
@@ -1510,7 +1505,7 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
       variableValues: { id: barId },
     });
-    expect(resultBefore).toEqual({ data: { adminSearchEntities: null } });
+    expect(resultBefore).toEqual({ data: { adminEntities: null } });
 
     const updateResult = await server.adminClient.updateEntity({
       id: fooEntity.id,
@@ -1525,7 +1520,7 @@ describe('searchAdminEntities()', () => {
       variableValues: { id: barId },
     });
     expect(resultAfterUpdate).toEqual({
-      data: { adminSearchEntities: { edges: [{ node: { id: fooEntity.id } }], totalCount: 1 } },
+      data: { adminEntities: { edges: [{ node: { id: fooEntity.id } }], totalCount: 1 } },
     });
   });
 
@@ -1537,7 +1532,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         query QueryReferencing($id: ID!) {
-          adminSearchEntities(query: { linksTo: { id: $id } }) {
+          adminEntities(query: { linksTo: { id: $id } }) {
             edges {
               node {
                 id
@@ -1553,7 +1548,7 @@ describe('searchAdminEntities()', () => {
 
     expect(result).toEqual({
       data: {
-        adminSearchEntities: {
+        adminEntities: {
           totalCount: 1,
           edges: [{ node: { id: fooEntity.id } }],
         },
@@ -1569,7 +1564,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         query QueryReferencing($id: ID!) {
-          adminSearchEntities(query: { linksFrom: { id: $id } }) {
+          adminEntities(query: { linksFrom: { id: $id } }) {
             edges {
               node {
                 id
@@ -1585,7 +1580,7 @@ describe('searchAdminEntities()', () => {
 
     expect(result).toEqual({
       data: {
-        adminSearchEntities: {
+        adminEntities: {
           totalCount: 1,
           edges: [{ node: { id: barId } }],
         },
@@ -1613,7 +1608,7 @@ describe('searchAdminEntities()', () => {
         schema,
         source: gql`
           query QueryBoundingBox($boundingBox: BoundingBoxInput!) {
-            adminSearchEntities(query: { boundingBox: $boundingBox }) {
+            adminEntities(query: { boundingBox: $boundingBox }) {
               edges {
                 node {
                   id
@@ -1626,13 +1621,13 @@ describe('searchAdminEntities()', () => {
         contextValue: createContext(),
         variableValues: { boundingBox },
       })) as ExecutionResult<{
-        adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+        adminEntities: { totalCount: number; edges: { node: { id: string } }[] };
       }>;
 
-      expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(1);
+      expect(result?.data?.adminEntities.totalCount).toBeGreaterThanOrEqual(1);
 
       let fooIdCount = 0;
-      for (const edge of result.data!.adminSearchEntities.edges) {
+      for (const edge of result.data!.adminEntities.edges) {
         if (edge.node.id === fooId) {
           fooIdCount += 1;
         }
@@ -1646,7 +1641,7 @@ describe('searchAdminEntities()', () => {
       schema,
       source: gql`
         query QueryBoundingBox($text: String!) {
-          adminSearchEntities(query: { text: $text }) {
+          adminEntities(query: { text: $text }) {
             edges {
               node {
                 id
@@ -1659,11 +1654,11 @@ describe('searchAdminEntities()', () => {
       contextValue: createContext(),
       variableValues: { text: 'Hey' }, // There are at least 50 QueryAdminOnlyEditBefore entities
     })) as ExecutionResult<{
-      adminSearchEntities: { totalCount: number; edges: { node: { id: string } }[] };
+      adminEntities: { totalCount: number; edges: { node: { id: string } }[] };
     }>;
 
-    expect(result?.data?.adminSearchEntities.totalCount).toBeGreaterThanOrEqual(50);
-    expect(result?.data?.adminSearchEntities.edges.length).toBe(25);
+    expect(result?.data?.adminEntities.totalCount).toBeGreaterThanOrEqual(50);
+    expect(result?.data?.adminEntities.edges.length).toBe(25);
   });
 });
 

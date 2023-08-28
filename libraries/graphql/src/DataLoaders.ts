@@ -135,7 +135,7 @@ export async function loadPublishedEntitiesSample<TContext extends SessionGraphQ
   };
 }
 
-export async function loadPublishedSearchEntities<TContext extends SessionGraphQLContext>(
+export async function loadPublishedEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
   query: PublishedEntitiesQuery | undefined,
@@ -263,7 +263,7 @@ export async function loadAdminEntitiesSample<TContext extends SessionGraphQLCon
   };
 }
 
-export function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
+export function loadAdminEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
   query: AdminEntitiesQuery | undefined,

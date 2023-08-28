@@ -188,13 +188,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -206,7 +206,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -216,7 +216,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -442,8 +442,8 @@ input AdminValueTwoInput {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -542,7 +542,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -557,7 +557,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -565,7 +565,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -588,8 +588,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -669,7 +669,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -684,7 +684,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -692,7 +692,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -874,13 +874,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -892,7 +892,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -902,7 +902,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -1124,12 +1124,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -1338,13 +1338,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -1356,7 +1356,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -1366,7 +1366,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -1534,8 +1534,8 @@ input AdminValueOneInput {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -1631,7 +1631,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -1646,7 +1646,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -1654,7 +1654,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -1671,8 +1671,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -1752,7 +1752,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -1767,7 +1767,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -1775,7 +1775,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -1949,13 +1949,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -1967,7 +1967,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -1977,7 +1977,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -2141,12 +2141,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -2394,13 +2394,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -2411,7 +2411,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -2420,7 +2420,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -2623,8 +2623,8 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -2716,7 +2716,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -2730,14 +2730,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -2768,8 +2768,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -2842,7 +2842,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -2856,14 +2856,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -3048,13 +3048,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -3065,7 +3065,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -3074,7 +3074,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -3270,12 +3270,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -3482,13 +3482,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -3499,7 +3499,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -3508,7 +3508,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -3753,8 +3753,8 @@ enum _AdminBarOrBazOrFoo {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -3850,7 +3850,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -3864,14 +3864,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -3914,8 +3914,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -3989,7 +3989,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -4003,14 +4003,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -4197,13 +4197,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -4214,7 +4214,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -4223,7 +4223,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -4475,12 +4475,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -4688,13 +4688,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -4705,7 +4705,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -4714,7 +4714,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -4856,8 +4856,8 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -4945,7 +4945,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -4959,14 +4959,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -4979,8 +4979,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -5052,7 +5052,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -5066,14 +5066,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -5239,13 +5239,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -5256,7 +5256,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -5265,7 +5265,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -5403,12 +5403,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -5614,13 +5614,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -5631,7 +5631,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -5640,7 +5640,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -5794,8 +5794,8 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -5887,7 +5887,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -5901,14 +5901,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -5926,8 +5926,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -6003,7 +6003,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -6017,14 +6017,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -6199,13 +6199,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -6216,7 +6216,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -6225,7 +6225,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -6375,12 +6375,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -6586,13 +6586,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -6604,7 +6604,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -6614,7 +6614,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -6787,8 +6787,8 @@ input AdminValueOneInput {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -6884,7 +6884,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -6899,7 +6899,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -6907,7 +6907,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -6932,8 +6932,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -7013,7 +7013,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -7028,7 +7028,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -7036,7 +7036,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -7218,13 +7218,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -7236,7 +7236,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -7246,7 +7246,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -7415,12 +7415,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -7622,13 +7622,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -7639,7 +7639,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -7648,7 +7648,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -7802,8 +7802,8 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -7891,7 +7891,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -7905,14 +7905,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -7930,8 +7930,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -8003,7 +8003,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -8017,14 +8017,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -8195,13 +8195,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -8212,7 +8212,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -8221,7 +8221,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -8371,12 +8371,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -8579,13 +8579,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -8596,7 +8596,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -8605,7 +8605,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -8816,8 +8816,8 @@ type AdminFooUpsertPayload {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -8909,7 +8909,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -8923,14 +8923,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -8964,8 +8964,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -9038,7 +9038,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -9052,14 +9052,14 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -9247,13 +9247,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -9264,7 +9264,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   status: [AdminEntityStatus!]
@@ -9273,7 +9273,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -9477,12 +9477,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -9694,13 +9694,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -9712,7 +9712,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -9722,7 +9722,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -9977,8 +9977,8 @@ enum _AdminValueListOrValueOne {
 type Query {
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory
@@ -10080,7 +10080,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -10095,7 +10095,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -10103,7 +10103,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -10159,8 +10159,8 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
 }"
 `;
 
@@ -10243,7 +10243,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedQueryOrder {
+enum PublishedEntitiesQueryOrder {
   createdAt
   name
 }
@@ -10258,7 +10258,7 @@ input PublishedQueryInput {
   text: String
 }
 
-input PublishedSearchQueryInput {
+input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
   valueTypes: [PublishedValueType!]
@@ -10266,7 +10266,7 @@ input PublishedSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedQueryOrder
+  order: PublishedEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -10477,13 +10477,13 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminQueryOrder {
+enum AdminEntitiesQueryOrder {
   createdAt
   updatedAt
   name
 }
 
-input AdminQueryInput {
+input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -10495,7 +10495,7 @@ input AdminQueryInput {
   text: String
 }
 
-input AdminSearchQueryInput {
+input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   valueTypes: [AdminValueType!]
@@ -10505,7 +10505,7 @@ input AdminSearchQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminQueryOrder
+  order: AdminEntitiesQueryOrder
   reverse: Boolean
 }
 
@@ -10758,12 +10758,12 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]
   publishedEntity(id: ID!): PublishedEntity
-  publishedSampleEntities(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  publishedSearchEntities(query: PublishedSearchQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): AdminEntity
   adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminSampleEntities(query: AdminQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  adminSearchEntities(query: AdminSearchQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
   entityHistory(id: ID!): EntityHistory
   publishingHistory(id: ID!): PublishingHistory

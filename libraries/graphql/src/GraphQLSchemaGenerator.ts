@@ -51,15 +51,15 @@ import {
   type GraphQLSchemaConfig,
 } from 'graphql';
 import {
+  loadAdminEntities,
   loadAdminEntitiesSample,
   loadAdminEntity,
   loadAdminEntityList,
-  loadAdminSearchEntities,
   loadChangelogEvents,
   loadPublishedEntitiesSample,
   loadPublishedEntity,
   loadPublishedEntityList,
-  loadPublishedSearchEntities,
+  loadPublishedEntities,
   loadPublishingHistory,
   loadVersionHistory,
 } from './DataLoaders.js';
@@ -300,10 +300,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // PublishedQueryOrder
+    // PublishedEntitiesQueryOrder
     this.addType(
       new GraphQLEnumType({
-        name: 'PublishedQueryOrder',
+        name: 'PublishedEntitiesQueryOrder',
         values: { createdAt: {}, name: {} },
       }),
     );
@@ -334,13 +334,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // PublishedSearchQueryInput
+    // PublishedEntitiesQueryInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'PublishedSearchQueryInput',
+        name: 'PublishedEntitiesQueryInput',
         fields: {
           ...sharedQueryInputFields,
-          order: { type: this.getEnumType('PublishedQueryOrder') },
+          order: { type: this.getEnumType('PublishedEntitiesQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
       }),
@@ -629,15 +629,15 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminQueryOrder
+    // AdminEntitiesQueryOrder
     this.addType(
       new GraphQLEnumType({
-        name: 'AdminQueryOrder',
+        name: 'AdminEntitiesQueryOrder',
         values: { createdAt: {}, updatedAt: {}, name: {} },
       }),
     );
 
-    // AdminQueryInput
+    // AdminEntitiesSharedQueryInput
     const sharedQueryInputFields = {
       authKeys: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
       entityTypes: {
@@ -660,18 +660,18 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
     this.addType(
       new GraphQLInputObjectType({
-        name: 'AdminQueryInput',
+        name: 'AdminEntitiesSharedQueryInput',
         fields: sharedQueryInputFields,
       }),
     );
 
-    // AdminSearchQueryInput
+    // AdminEntitiesQueryInput
     this.addType(
       new GraphQLInputObjectType({
-        name: 'AdminSearchQueryInput',
+        name: 'AdminEntitiesQueryInput',
         fields: {
           ...sharedQueryInputFields,
-          order: { type: this.getEnumType('AdminQueryOrder') },
+          order: { type: this.getEnumType('AdminEntitiesQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
       }),
@@ -1460,7 +1460,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldAdminSampleEntities<TSource>(
+  buildQueryFieldAdminEntitiesSample<TSource>(
     adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1474,7 +1474,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     >({
       type: this.getOutputType('AdminEntitySamplingPayload'),
       args: {
-        query: { type: this.getInputType('AdminQueryInput') },
+        query: { type: this.getInputType('AdminEntitiesSharedQueryInput') },
         seed: { type: GraphQLInt },
         count: { type: GraphQLInt },
       },
@@ -1486,7 +1486,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldAdminSearchEntities<TSource>(
+  buildQueryFieldAdminEntities<TSource>(
     adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1502,7 +1502,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     >({
       type: this.getOutputType('AdminEntityConnection'),
       args: {
-        query: { type: this.getInputType('AdminSearchQueryInput') },
+        query: { type: this.getInputType('AdminEntitiesQueryInput') },
         first: { type: GraphQLInt },
         after: { type: GraphQLString },
         last: { type: GraphQLInt },
@@ -1511,7 +1511,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminSearchEntities(adminSchema, context, query, paging, info);
+        return await loadAdminEntities(adminSchema, context, query, paging, info);
       },
     });
   }
@@ -1542,7 +1542,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldPublishedSearchEntities<TSource>(
+  buildQueryFieldPublishedEntities<TSource>(
     publishedSchema: PublishedSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1558,7 +1558,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     >({
       type: this.getOutputType('PublishedEntityConnection'),
       args: {
-        query: { type: this.getInputType('PublishedSearchQueryInput') },
+        query: { type: this.getInputType('PublishedEntitiesQueryInput') },
         first: { type: GraphQLInt },
         after: { type: GraphQLString },
         last: { type: GraphQLInt },
@@ -1567,7 +1567,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadPublishedSearchEntities(publishedSchema, context, query, paging, info);
+        return await loadPublishedEntities(publishedSchema, context, query, paging, info);
       },
     });
   }
@@ -1635,10 +1635,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
               node: this.buildQueryFieldNode(this.publishedSchema),
               nodes: this.buildQueryFieldNodes(this.publishedSchema),
               publishedEntity: this.buildQueryFieldPublishedEntity(this.publishedSchema),
-              publishedSampleEntities: this.buildQueryFieldPublishedSampleEntities(
-                this.publishedSchema,
-              ),
-              publishedSearchEntities: this.buildQueryFieldPublishedSearchEntities(
+              publishedEntities: this.buildQueryFieldPublishedEntities(this.publishedSchema),
+              publishedEntitiesSample: this.buildQueryFieldPublishedSampleEntities(
                 this.publishedSchema,
               ),
             }
@@ -1647,8 +1645,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(this.adminSchema),
               adminEntityList: this.buildQueryFieldAdminEntityList(this.adminSchema),
-              adminSampleEntities: this.buildQueryFieldAdminSampleEntities(this.adminSchema),
-              adminSearchEntities: this.buildQueryFieldAdminSearchEntities(this.adminSchema),
+              adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
+              adminEntitiesSample: this.buildQueryFieldAdminEntitiesSample(this.adminSchema),
               changelogEvents: this.buildQueryFieldChangelogEvents(),
               entityHistory: this.buildQueryFieldEntityHistory(),
               publishingHistory: this.buildQueryFieldPublishingHistory(),
