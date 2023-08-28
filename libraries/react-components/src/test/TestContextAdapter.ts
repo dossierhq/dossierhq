@@ -171,7 +171,7 @@ export async function ensureManyBarEntities(
   adminClient: AdminClient,
   entityCount: number,
 ): PromiseResult<void, ErrorType> {
-  const totalCountResult = await adminClient.getTotalCount({ entityTypes: ['Bar'] });
+  const totalCountResult = await adminClient.getEntitiesTotalCount({ entityTypes: ['Bar'] });
   if (totalCountResult.isError()) return totalCountResult;
 
   for (let i = totalCountResult.value; i <= entityCount; i += 1) {

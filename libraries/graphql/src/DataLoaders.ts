@@ -1,11 +1,11 @@
 import type {
   AdminClient,
+  AdminEntitiesQuery,
+  AdminEntitiesSharedQuery,
   AdminEntity,
   AdminEntityTypeSpecification,
   AdminFieldSpecification,
-  AdminQuery,
   AdminSchema,
-  AdminSearchQuery,
   AdminValueTypeSpecification,
   ChangelogEvent,
   ChangelogEventQuery,
@@ -23,12 +23,12 @@ import type {
   Paging,
   PromiseResult,
   PublishedClient,
+  PublishedEntitiesQuery,
+  PublishedEntitiesSharedQuery,
   PublishedEntity,
   PublishedEntityTypeSpecification,
   PublishedFieldSpecification,
-  PublishedQuery,
   PublishedSchema,
-  PublishedSearchQuery,
   PublishedValueTypeSpecification,
   PublishingHistory,
   RichText,
@@ -117,14 +117,14 @@ function buildErrorResolver(result: ErrorResult<unknown, ErrorType>) {
   return result.toError();
 }
 
-export async function loadPublishedSampleEntities<TContext extends SessionGraphQLContext>(
+export async function loadPublishedEntitiesSample<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  query: PublishedQuery | undefined,
+  query: PublishedEntitiesSharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<PublishedEntity>> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
-  const result = await publishedClient.sampleEntities(query, options);
+  const result = await publishedClient.getEntitiesSample(query, options);
   if (result.isError()) {
     throw result.toError();
   }
@@ -138,14 +138,14 @@ export async function loadPublishedSampleEntities<TContext extends SessionGraphQ
 export async function loadPublishedSearchEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  query: PublishedSearchQuery | undefined,
+  query: PublishedEntitiesQuery | undefined,
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, PublishedEntity>, TContext> | null> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
   return buildResolversForConnection<TContext, PublishedEntity>(
-    () => publishedClient.searchEntities(query, paging),
-    () => publishedClient.getTotalCount(query),
+    () => publishedClient.getEntities(query, paging),
+    () => publishedClient.getEntitiesTotalCount(query),
     (it) => buildResolversForPublishedEntity(schema, it),
     info,
   );
@@ -247,14 +247,14 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
   return payload;
 }
 
-export async function loadAdminSampleEntities<TContext extends SessionGraphQLContext>(
+export async function loadAdminEntitiesSample<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  query: AdminQuery | undefined,
+  query: AdminEntitiesSharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<AdminEntity>> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
-  const result = await adminClient.sampleEntities(query, options);
+  const result = await adminClient.getEntitiesSample(query, options);
   const payload = result.valueOrThrow();
 
   return {
@@ -266,14 +266,14 @@ export async function loadAdminSampleEntities<TContext extends SessionGraphQLCon
 export function loadAdminSearchEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  query: AdminSearchQuery | undefined,
+  query: AdminEntitiesQuery | undefined,
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, AdminEntity>, TContext> | null> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   return buildResolversForConnection<TContext, AdminEntity>(
-    () => adminClient.searchEntities(query, paging),
-    () => adminClient.getTotalCount(query),
+    () => adminClient.getEntities(query, paging),
+    () => adminClient.getEntitiesTotalCount(query),
     (it) => buildResolversForAdminEntity(schema, it),
     info,
   );

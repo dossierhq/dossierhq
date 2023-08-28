@@ -2,8 +2,8 @@ import {
   ok,
   type ErrorType,
   type PromiseResult,
+  type PublishedEntitiesQuery,
   type PublishedSchema,
-  type PublishedSearchQuery,
 } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
@@ -21,7 +21,7 @@ export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   context: TransactionContext,
-  query: PublishedSearchQuery | undefined,
+  query: PublishedEntitiesQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<

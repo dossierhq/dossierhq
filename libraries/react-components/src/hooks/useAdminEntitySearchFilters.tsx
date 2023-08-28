@@ -1,4 +1,4 @@
-import type { AdminSearchQuery } from '@dossierhq/core';
+import type { AdminEntitiesQuery } from '@dossierhq/core';
 import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
 import { initializeMultipleSelectorState } from '@dossierhq/design';
 import isEqual from 'lodash/isEqual.js';
@@ -16,16 +16,16 @@ import {
   reduceStatusSelectorState,
 } from '../components/StatusSelector/StatusSelector.js';
 import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
-import {
-  initializeAuthKeySelectorState,
-  reduceAuthKeySelectorState,
-} from '../shared/components/AuthKeySelector/AuthKeySelector.js';
-import type { TypeItem } from '../shared/components/TypeSelector/TypeSelector.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import {
+  initializeAuthKeySelectorState,
+  reduceAuthKeySelectorState,
+} from '../shared/components/AuthKeySelector/AuthKeySelector.js';
+import type { TypeItem } from '../shared/components/TypeSelector/TypeSelector.js';
 
 export function useAdminEntitySearchFilters(
   searchEntityState: SearchEntityState,
@@ -40,7 +40,7 @@ export function useAdminEntitySearchFilters(
 
   const [statusFilterState, dispatchStatusFilterState] = useReducer(
     reduceStatusSelectorState,
-    { selectedIds: (searchEntityState.query as AdminSearchQuery).status },
+    { selectedIds: (searchEntityState.query as AdminEntitiesQuery).status },
     initializeStatusSelectorState,
   );
 

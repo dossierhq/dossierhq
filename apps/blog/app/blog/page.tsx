@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const publishedClient = (await getPublishedClientForServerComponent()).toExceptionClient();
-  const connection = await publishedClient.searchEntities({ entityTypes: ['BlogPost'] });
+  const connection = await publishedClient.getEntities({ entityTypes: ['BlogPost'] });
 
   const blogPosts =
     connection?.edges.map((edge) => {

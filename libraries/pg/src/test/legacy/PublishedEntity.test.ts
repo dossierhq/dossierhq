@@ -160,15 +160,15 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
   return { barId, fooEntities };
 }
 
-describe('searchEntities() paging', () => {
+describe('getEntities() paging', () => {
   test('Reversed: First after', async () => {
     const query = {
       entityTypes: ['PublishedEntityOnlyEditBefore'],
       reverse: true,
     };
-    const firstResult = await publishedClient.searchEntities(query, { first: 10 });
+    const firstResult = await publishedClient.getEntities(query, { first: 10 });
     if (expectOkResult(firstResult)) {
-      const secondResult = await publishedClient.searchEntities(query, {
+      const secondResult = await publishedClient.getEntities(query, {
         first: 20,
         after: firstResult.value?.pageInfo.endCursor,
       });
@@ -184,26 +184,26 @@ describe('searchEntities() paging', () => {
   });
 });
 
-describe('searchEntities() linksTo', () => {
+describe('getEntities() linksTo', () => {
   test('One reference', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
-    const searchResult = await publishedClient.searchEntities({ linksTo: { id: barId } });
+    const searchResult = await publishedClient.getEntities({ linksTo: { id: barId } });
     expectSearchResultEntities(searchResult, [fooEntity]);
   });
 
   test('No references', async () => {
     const { barId } = await createBarWithFooReferences(0);
 
-    const searchResult = await publishedClient.searchEntities({ linksTo: { id: barId } });
+    const searchResult = await publishedClient.getEntities({ linksTo: { id: barId } });
     expectResultValue(searchResult, null);
   });
 
   test('Two references from one entity', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1, 2);
 
-    const searchResult = await publishedClient.searchEntities({ linksTo: { id: barId } });
+    const searchResult = await publishedClient.getEntities({ linksTo: { id: barId } });
     expectSearchResultEntities(searchResult, fooEntities);
   });
 
@@ -218,7 +218,7 @@ describe('searchEntities() linksTo', () => {
       { publish: true },
     );
     if (expectOkResult(anotherBarCreateResult)) {
-      const searchResult = await publishedClient.searchEntities({
+      const searchResult = await publishedClient.getEntities({
         entityTypes: ['PublishedEntityFoo'],
         linksTo: { id: barId },
       });
@@ -232,14 +232,14 @@ describe('searchEntities() linksTo', () => {
     const unpublishResult = await adminClient.unpublishEntities([{ id: fooEntities[0].id }]);
     expectOkResult(unpublishResult);
 
-    const searchResult = await publishedClient.searchEntities({
+    const searchResult = await publishedClient.getEntities({
       linksTo: { id: barId },
     });
     expectSearchResultEntities(searchResult, []);
   });
 });
 
-describe('searchEntities() boundingBox', () => {
+describe('getEntities() boundingBox', () => {
   test('Query based on bounding box', async () => {
     const boundingBox = randomBoundingBox();
     const center = {
@@ -348,7 +348,7 @@ describe('searchEntities() boundingBox', () => {
   });
 });
 
-describe('searchEntities() text', () => {
+describe('getEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
     const createResult = await adminClient.createEntity(
       {
@@ -375,18 +375,18 @@ describe('searchEntities() text', () => {
   });
 });
 
-describe('getTotalCount', () => {
+describe('getEntitiesTotalCount', () => {
   test('Query based on linksTo, one reference', async () => {
     const { barId } = await createBarWithFooReferences(1);
 
-    const result = await publishedClient.getTotalCount({ linksTo: { id: barId } });
+    const result = await publishedClient.getEntitiesTotalCount({ linksTo: { id: barId } });
     expectResultValue(result, 1);
   });
 
   test('Query based on linksTo, no references', async () => {
     const { barId } = await createBarWithFooReferences(0);
 
-    const result = await publishedClient.getTotalCount({ linksTo: { id: barId } });
+    const result = await publishedClient.getEntitiesTotalCount({ linksTo: { id: barId } });
     expectResultValue(result, 0);
   });
 
@@ -401,7 +401,7 @@ describe('getTotalCount', () => {
       { publish: true },
     );
     if (expectOkResult(anotherBarCreateResult)) {
-      const result = await publishedClient.getTotalCount({
+      const result = await publishedClient.getEntitiesTotalCount({
         entityTypes: ['PublishedEntityFoo'],
         linksTo: { id: barId },
       });
@@ -412,7 +412,7 @@ describe('getTotalCount', () => {
   test('Query based on linksTo, two references from one entity', async () => {
     const { barId } = await createBarWithFooReferences(1, 2);
 
-    const result = await publishedClient.getTotalCount({ linksTo: { id: barId } });
+    const result = await publishedClient.getEntitiesTotalCount({ linksTo: { id: barId } });
     expectResultValue(result, 1);
   });
 
@@ -436,9 +436,9 @@ describe('getTotalCount', () => {
     );
 
     if (expectOkResult(createResult)) {
-      const searchResult = await publishedClient.searchEntities({ boundingBox });
+      const searchResult = await publishedClient.getEntities({ boundingBox });
 
-      const totalResult = await publishedClient.getTotalCount({ boundingBox });
+      const totalResult = await publishedClient.getEntitiesTotalCount({ boundingBox });
       if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
         // Hopefully there aren't too many entities in the bounding box
         expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
@@ -449,7 +449,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on text', async () => {
-    const resultBefore = await publishedClient.getTotalCount({ text: 'sensational clown' });
+    const resultBefore = await publishedClient.getEntitiesTotalCount({ text: 'sensational clown' });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
         await adminClient.createEntity(
@@ -461,7 +461,9 @@ describe('getTotalCount', () => {
         ),
       );
 
-      const resultAfter = await publishedClient.getTotalCount({ text: 'sensational clown' });
+      const resultAfter = await publishedClient.getEntitiesTotalCount({
+        text: 'sensational clown',
+      });
       expectResultValue(resultAfter, resultBefore.value + 1);
     }
   });

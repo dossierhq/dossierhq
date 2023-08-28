@@ -96,7 +96,7 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
   const blogPosts: PublishedBlogPost[] = [];
 
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.client.searchEntities({ entityTypes: ['BlogPost'] }, paging),
+    publishedClient.client.getEntities({ entityTypes: ['BlogPost'] }, paging),
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {
@@ -139,7 +139,7 @@ async function generateBlogEntry(
 ) {
   const referencedEntities: Record<string, AppPublishedEntity> = {};
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
-    publishedClient.client.searchEntities({ linksFrom: { id: blogPost.id } }, paging),
+    publishedClient.client.getEntities({ linksFrom: { id: blogPost.id } }, paging),
   )) {
     if (page.isOk()) {
       for (const edge of page.value.edges) {

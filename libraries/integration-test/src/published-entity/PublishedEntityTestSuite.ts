@@ -3,11 +3,11 @@ import type { Server } from '@dossierhq/server';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository.js';
+import { GetEntitiesSampleSubSuite } from './PublishedEntityGetEntitiesSampleSubSuite.js';
+import { GetEntitiesSubSuite } from './PublishedEntityGetEntitiesSubSuite.js';
+import { GetEntitiesTotalCountSubSuite } from './PublishedEntityGetEntitiesTotalCountSubSuite.js';
 import { GetEntityListSubSuite } from './PublishedEntityGetEntityListSubSuite.js';
 import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite.js';
-import { GetTotalCountSubSuite } from './PublishedEntityGetTotalCountSubSuite.js';
-import { SampleEntitiesSubSuite } from './PublishedEntitySampleEntitiesSubSuite.js';
-import { SearchEntitiesSubSuite } from './PublishedEntitySearchEntitiesSubSuite.js';
 
 export interface PublishedEntityTestContext {
   server: Server;
@@ -22,8 +22,8 @@ export function createPublishedEntityTestSuite<TCleanup>(
     initializer,
     ...GetEntitySubSuite,
     ...GetEntityListSubSuite,
-    ...GetTotalCountSubSuite,
-    ...SampleEntitiesSubSuite,
-    ...SearchEntitiesSubSuite,
+    ...GetEntitiesTotalCountSubSuite,
+    ...GetEntitiesSampleSubSuite,
+    ...GetEntitiesSubSuite,
   );
 }

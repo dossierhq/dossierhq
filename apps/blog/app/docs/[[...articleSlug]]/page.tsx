@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { articleSlug: string }
 export async function generateStaticParams() {
   const publishedClient = await getPublishedClientForServerComponent();
   const connection = (
-    await publishedClient.searchEntities({ entityTypes: ['Article'], order: 'name' })
+    await publishedClient.getEntities({ entityTypes: ['Article'], order: 'name' })
   ).valueOrThrow();
 
   if (connection?.pageInfo.hasNextPage) {

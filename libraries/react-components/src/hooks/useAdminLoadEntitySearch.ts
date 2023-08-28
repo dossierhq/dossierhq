@@ -1,7 +1,7 @@
 import type {
+  AdminEntitiesQuery,
+  AdminEntitiesSharedQuery,
   AdminEntity,
-  AdminQuery,
-  AdminSearchQuery,
   Connection,
   Edge,
   EntitySamplingPayload,
@@ -15,9 +15,9 @@ import type {
   SearchEntityStateAction,
 } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { useAdminSampleEntities } from './useAdminSampleEntities.js';
-import { useAdminSearchEntities } from './useAdminSearchEntities.js';
-import { useAdminTotalCount } from './useAdminTotalCount.js';
+import { useAdminEntities } from './useAdminEntities.js';
+import { useAdminEntitiesSample } from './useAdminEntitiesSample.js';
+import { useAdminEntitiesTotalCount } from './useAdminTotalCount.js';
 
 export function useAdminLoadEntitySearch(
   searchEntityState: SearchEntityState,
@@ -27,18 +27,20 @@ export function useAdminLoadEntitySearch(
 
   // search
   const searchQuery = searchEntityState.paging
-    ? (searchEntityState.query as AdminSearchQuery)
+    ? (searchEntityState.query as AdminEntitiesQuery)
     : undefined;
-  const { connection, connectionError } = useAdminSearchEntities(
+  const { connection, connectionError } = useAdminEntities(
     adminClient,
     searchQuery,
     searchEntityState.paging,
   );
-  const { totalCount } = useAdminTotalCount(adminClient, searchQuery);
+  const { totalCount } = useAdminEntitiesTotalCount(adminClient, searchQuery);
 
   // sample
-  const sampleQuery = !searchQuery ? (searchEntityState.query as AdminQuery) : undefined;
-  const { entitySamples, entitySamplesError } = useAdminSampleEntities(
+  const sampleQuery = !searchQuery
+    ? (searchEntityState.query as AdminEntitiesSharedQuery)
+    : undefined;
+  const { entitiesSample, entitiesSampleError } = useAdminEntitiesSample(
     adminClient,
     sampleQuery,
     searchEntityState.sampling,
@@ -60,9 +62,9 @@ export function useAdminLoadEntitySearch(
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSampleResult(
-        entitySamples as EntitySamplingPayload<AdminEntity>,
-        entitySamplesError,
+        entitiesSample as EntitySamplingPayload<AdminEntity>,
+        entitiesSampleError,
       ),
     );
-  }, [entitySamples, entitySamplesError, dispatchSearchEntityState]);
+  }, [entitiesSample, entitiesSampleError, dispatchSearchEntityState]);
 }

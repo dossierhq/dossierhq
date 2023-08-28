@@ -10,48 +10,51 @@ import { randomBoundingBox } from '../shared-entity/LocationTestUtils.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
-export const GetTotalCountSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
-  getTotalCount_minimal,
-  getTotalCount_authKeySubject,
-  getTotalCount_authKeyNoneAndSubject,
-  getTotalCount_statusDraft,
-  getTotalCount_statusPublished,
-  getTotalCount_statusModified,
-  getTotalCount_statusWithdrawn,
-  getTotalCount_statusArchived,
-  getTotalCount_statusDraftArchived,
-  getTotalCount_statusModifiedPublished,
-  getTotalCount_statusAll,
-  getTotalCount_linksToOneReference,
-  getTotalCount_linksToNoReferences,
-  getTotalCount_linksToTwoReferencesFromOneEntity,
-  getTotalCount_linksFromOneReference,
-  getTotalCount_linksFromNoReferences,
-  getTotalCount_linksFromTwoReferencesFromOneEntity,
-  getTotalCount_boundingBoxOneInside,
+export const GetEntitiesTotalCountSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
+  getEntitiesTotalCount_minimal,
+  getEntitiesTotalCount_authKeySubject,
+  getEntitiesTotalCount_authKeyNoneAndSubject,
+  getEntitiesTotalCount_statusDraft,
+  getEntitiesTotalCount_statusPublished,
+  getEntitiesTotalCount_statusModified,
+  getEntitiesTotalCount_statusWithdrawn,
+  getEntitiesTotalCount_statusArchived,
+  getEntitiesTotalCount_statusDraftArchived,
+  getEntitiesTotalCount_statusModifiedPublished,
+  getEntitiesTotalCount_statusAll,
+  getEntitiesTotalCount_linksToOneReference,
+  getEntitiesTotalCount_linksToNoReferences,
+  getEntitiesTotalCount_linksToTwoReferencesFromOneEntity,
+  getEntitiesTotalCount_linksFromOneReference,
+  getEntitiesTotalCount_linksFromNoReferences,
+  getEntitiesTotalCount_linksFromTwoReferencesFromOneEntity,
+  getEntitiesTotalCount_boundingBoxOneInside,
 ];
 
-async function getTotalCount_minimal({ server, readOnlyEntityRepository }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_minimal({
+  server,
+  readOnlyEntityRepository,
+}: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_authKeySubject({
+async function getEntitiesTotalCount_authKeySubject({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_authKeyNoneAndSubject({
+async function getEntitiesTotalCount_authKeyNoneAndSubject({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
@@ -59,84 +62,84 @@ async function getTotalCount_authKeyNoneAndSubject({
     'none',
     'subject',
   ]);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusDraft({
+async function getEntitiesTotalCount_statusDraft({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === AdminEntityStatus.draft);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.draft],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusPublished({
+async function getEntitiesTotalCount_statusPublished({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === AdminEntityStatus.published);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.published],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusModified({
+async function getEntitiesTotalCount_statusModified({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === AdminEntityStatus.modified);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.modified],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusWithdrawn({
+async function getEntitiesTotalCount_statusWithdrawn({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === AdminEntityStatus.withdrawn);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.withdrawn],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusArchived({
+async function getEntitiesTotalCount_statusArchived({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === AdminEntityStatus.archived);
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.archived],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusDraftArchived({
+async function getEntitiesTotalCount_statusDraftArchived({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
@@ -146,14 +149,14 @@ async function getTotalCount_statusDraftArchived({
       (it) =>
         it.info.status === AdminEntityStatus.draft || it.info.status === AdminEntityStatus.archived,
     );
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusModifiedPublished({
+async function getEntitiesTotalCount_statusModifiedPublished({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
@@ -164,19 +167,19 @@ async function getTotalCount_statusModifiedPublished({
         it.info.status === AdminEntityStatus.modified ||
         it.info.status === AdminEntityStatus.published,
     );
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.modified, AdminEntityStatus.published],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_statusAll({
+async function getEntitiesTotalCount_statusAll({
   server,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await adminClientForMainPrincipal(server).getTotalCount({
+  const result = await adminClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [
       AdminEntityStatus.draft,
@@ -189,7 +192,7 @@ async function getTotalCount_statusAll({
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_linksToOneReference({ server }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_linksToOneReference({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -202,11 +205,11 @@ async function getTotalCount_linksToOneReference({ server }: AdminEntityTestCont
   );
   assertOkResult(referenceResult);
 
-  const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
+  const totalResult = await adminClient.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 1);
 }
 
-async function getTotalCount_linksToNoReferences({ server }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_linksToNoReferences({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -214,11 +217,13 @@ async function getTotalCount_linksToNoReferences({ server }: AdminEntityTestCont
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
+  const totalResult = await adminClient.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 0);
 }
 
-async function getTotalCount_linksToTwoReferencesFromOneEntity({ server }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_linksToTwoReferencesFromOneEntity({
+  server,
+}: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -233,11 +238,11 @@ async function getTotalCount_linksToTwoReferencesFromOneEntity({ server }: Admin
   );
   assertOkResult(referenceResult);
 
-  const totalResult = await adminClient.getTotalCount({ linksTo: { id: titleOnlyId } });
+  const totalResult = await adminClient.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 1);
 }
 
-async function getTotalCount_linksFromOneReference({ server }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_linksFromOneReference({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
@@ -253,11 +258,11 @@ async function getTotalCount_linksFromOneReference({ server }: AdminEntityTestCo
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const totalResult = await adminClient.getTotalCount({ linksFrom: { id: referenceId } });
+  const totalResult = await adminClient.getEntitiesTotalCount({ linksFrom: { id: referenceId } });
   assertResultValue(totalResult, 1);
 }
 
-async function getTotalCount_linksFromNoReferences({ server }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_linksFromNoReferences({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
   assertOkResult(referenceResult);
@@ -265,11 +270,11 @@ async function getTotalCount_linksFromNoReferences({ server }: AdminEntityTestCo
     entity: { id },
   } = referenceResult.value;
 
-  const totalResult = await adminClient.getTotalCount({ linksFrom: { id } });
+  const totalResult = await adminClient.getEntitiesTotalCount({ linksFrom: { id } });
   assertResultValue(totalResult, 0);
 }
 
-async function getTotalCount_linksFromTwoReferencesFromOneEntity({
+async function getEntitiesTotalCount_linksFromTwoReferencesFromOneEntity({
   server,
 }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -289,11 +294,11 @@ async function getTotalCount_linksFromTwoReferencesFromOneEntity({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const totalResult = await adminClient.getTotalCount({ linksFrom: { id: referenceId } });
+  const totalResult = await adminClient.getEntitiesTotalCount({ linksFrom: { id: referenceId } });
   assertResultValue(totalResult, 1);
 }
 
-async function getTotalCount_boundingBoxOneInside({ server }: AdminEntityTestContext) {
+async function getEntitiesTotalCount_boundingBoxOneInside({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const boundingBox = randomBoundingBox();
   const center = {
@@ -305,11 +310,11 @@ async function getTotalCount_boundingBoxOneInside({ server }: AdminEntityTestCon
   );
   assertOkResult(createResult);
 
-  const searchResult = await adminClient.searchEntities({ boundingBox }, { first: 100 });
+  const searchResult = await adminClient.getEntities({ boundingBox }, { first: 100 });
   assertOkResult(searchResult);
   const searchCount = searchResult.value?.edges.length;
   assertTruthy(searchCount);
 
-  const totalResult = await adminClient.getTotalCount({ boundingBox });
+  const totalResult = await adminClient.getEntitiesTotalCount({ boundingBox });
   assertResultValue(totalResult, searchCount);
 }

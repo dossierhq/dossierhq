@@ -1,15 +1,15 @@
-import type { AdminEntity, PublishedQueryOrder } from '@dossierhq/core';
-import { AdminQueryOrder } from '@dossierhq/core';
+import type { AdminEntity, PublishedEntitiesQueryOrder } from '@dossierhq/core';
+import { AdminEntitiesQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, Tag, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
@@ -41,9 +41,14 @@ export function AdminEntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === AdminQueryOrder.name ? direction : ''}
+            order={order === AdminEntitiesQueryOrder.name ? direction : ''}
             onClick={() =>
-              handleHeaderClick(dispatchSearchEntityState, order, reverse, AdminQueryOrder.name)
+              handleHeaderClick(
+                dispatchSearchEntityState,
+                order,
+                reverse,
+                AdminEntitiesQueryOrder.name,
+              )
             }
           >
             Name
@@ -53,13 +58,13 @@ export function AdminEntityList({
           <Table.Header narrow>Auth key</Table.Header>
           <Table.Header
             narrow
-            order={order === AdminQueryOrder.createdAt ? direction : ''}
+            order={order === AdminEntitiesQueryOrder.createdAt ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminQueryOrder.createdAt,
+                AdminEntitiesQueryOrder.createdAt,
               )
             }
           >
@@ -67,13 +72,13 @@ export function AdminEntityList({
           </Table.Header>
           <Table.Header
             narrow
-            order={order === AdminQueryOrder.updatedAt ? direction : ''}
+            order={order === AdminEntitiesQueryOrder.updatedAt ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminQueryOrder.updatedAt,
+                AdminEntitiesQueryOrder.updatedAt,
               )
             }
           >
@@ -102,7 +107,7 @@ export function AdminEntityList({
                   {...{
                     entity,
                     authKeys,
-                    order: order as AdminQueryOrder | undefined,
+                    order: order as AdminEntitiesQueryOrder | undefined,
                     onItemClick,
                   }}
                 />
@@ -122,7 +127,7 @@ function EntityListRow({
   onItemClick,
 }: {
   entity: AdminEntity;
-  order: AdminQueryOrder | undefined;
+  order: AdminEntitiesQueryOrder | undefined;
   authKeys: DisplayAuthKey[];
   onItemClick: (item: AdminEntity) => void;
 }) {
@@ -146,7 +151,7 @@ function EntityListRow({
         <DateDisplay date={entity.info.createdAt} />
       </Table.Cell>
       <Table.Cell narrow>
-        {order === AdminQueryOrder.updatedAt ||
+        {order === AdminEntitiesQueryOrder.updatedAt ||
         entity.info.updatedAt.getTime() !== entity.info.createdAt.getTime() ? (
           <DateDisplay date={entity.info.updatedAt} />
         ) : null}
@@ -157,16 +162,16 @@ function EntityListRow({
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminQueryOrder | PublishedQueryOrder | undefined,
+  order: AdminEntitiesQueryOrder | PublishedEntitiesQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: AdminQueryOrder | PublishedQueryOrder,
+  headerOrder: AdminEntitiesQueryOrder | PublishedEntitiesQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {
     newReverse = !reverse;
   } else if (
-    headerOrder === AdminQueryOrder.updatedAt ||
-    headerOrder === AdminQueryOrder.createdAt
+    headerOrder === AdminEntitiesQueryOrder.updatedAt ||
+    headerOrder === AdminEntitiesQueryOrder.createdAt
   ) {
     // Default to descending order for dates
     newReverse = true;

@@ -78,12 +78,12 @@ export function createServerPublishedClient({
         resolve(ok(schema.spec));
         break;
       }
-      case PublishedClientOperationName.getTotalCount: {
+      case PublishedClientOperationName.getEntitiesTotalCount: {
         const {
           args: [query],
           resolve,
         } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.getTotalCount
+          typeof PublishedClientOperationName.getEntitiesTotalCount
         >;
         resolve(
           await publishedGetTotalCount(
@@ -96,12 +96,12 @@ export function createServerPublishedClient({
         );
         break;
       }
-      case PublishedClientOperationName.sampleEntities: {
+      case PublishedClientOperationName.getEntitiesSample: {
         const {
           args: [query, options],
           resolve,
         } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.sampleEntities
+          typeof PublishedClientOperationName.getEntitiesSample
         >;
         resolve(
           await publishedSampleEntities(
@@ -116,13 +116,11 @@ export function createServerPublishedClient({
         );
         break;
       }
-      case PublishedClientOperationName.searchEntities: {
+      case PublishedClientOperationName.getEntities: {
         const {
           args: [query, paging],
           resolve,
-        } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.searchEntities
-        >;
+        } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntities>;
         resolve(
           await publishedSearchEntities(
             serverImpl.getAdminSchema(),

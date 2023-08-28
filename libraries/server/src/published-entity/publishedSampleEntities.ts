@@ -5,8 +5,8 @@ import {
   type EntitySamplingPayload,
   type ErrorType,
   type PromiseResult,
+  type PublishedEntitiesSharedQuery,
   type PublishedEntity,
-  type PublishedQuery,
   type PublishedSchema,
   type Result,
 } from '@dossierhq/core';
@@ -22,7 +22,7 @@ export async function publishedSampleEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: PublishedQuery | undefined,
+  query: PublishedEntitiesSharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): PromiseResult<
   EntitySamplingPayload<PublishedEntity>,

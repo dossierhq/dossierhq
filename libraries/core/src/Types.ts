@@ -313,14 +313,14 @@ export type AdminEntityUnarchivePayload = AdminEntityPublishingPayload<'unarchiv
 export type AdminEntityPublishPayload = AdminEntityPublishingPayload<'published' | 'none'>;
 export type AdminEntityUnpublishPayload = AdminEntityPublishingPayload<'unpublished' | 'none'>;
 
-export const AdminQueryOrder = {
+export const AdminEntitiesQueryOrder = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   name: 'name',
 } as const;
-export type AdminQueryOrder = keyof typeof AdminQueryOrder;
+export type AdminEntitiesQueryOrder = keyof typeof AdminEntitiesQueryOrder;
 
-export interface AdminQuery<
+export interface AdminEntitiesSharedQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
@@ -336,22 +336,23 @@ export interface AdminQuery<
   text?: string;
 }
 
-export interface AdminSearchQuery<
+export interface AdminEntitiesQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
-> extends AdminQuery<TEntityType, TValueType, TAuthKey> {
-  order?: AdminQueryOrder;
+> extends AdminEntitiesSharedQuery<TEntityType, TValueType, TAuthKey> {
+  order?: AdminEntitiesQueryOrder;
   reverse?: boolean;
 }
 
-export const PublishedQueryOrder = {
+export const PublishedEntitiesQueryOrder = {
   createdAt: 'createdAt',
   name: 'name',
 } as const;
-export type PublishedQueryOrder = (typeof PublishedQueryOrder)[keyof typeof PublishedQueryOrder];
+export type PublishedEntitiesQueryOrder =
+  (typeof PublishedEntitiesQueryOrder)[keyof typeof PublishedEntitiesQueryOrder];
 
-export interface PublishedQuery<
+export interface PublishedEntitiesSharedQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
@@ -365,12 +366,12 @@ export interface PublishedQuery<
   text?: string;
 }
 
-export interface PublishedSearchQuery<
+export interface PublishedEntitiesQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
-> extends PublishedQuery<TEntityType, TValueType, TAuthKey> {
-  order?: PublishedQueryOrder;
+> extends PublishedEntitiesSharedQuery<TEntityType, TValueType, TAuthKey> {
+  order?: PublishedEntitiesQueryOrder;
   reverse?: boolean;
 }
 

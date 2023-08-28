@@ -6,14 +6,14 @@ import {
   isValueItemField,
   notOk,
   type AdminClient,
+  type AdminEntitiesQuery,
+  type AdminEntitiesSharedQuery,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminEntityUpsert,
-  type AdminQuery,
   type AdminSchema,
-  type AdminSearchQuery,
   type AdminValueTypeSpecification,
   type AdvisoryLockOptions,
   type ChangelogEvent,
@@ -22,11 +22,11 @@ import {
   type EntityVersionReference,
   type ErrorType,
   type PublishedClient,
+  type PublishedEntitiesQuery,
+  type PublishedEntitiesSharedQuery,
   type PublishedEntity,
   type PublishedEntityTypeSpecification,
-  type PublishedQuery,
   type PublishedSchema,
-  type PublishedSearchQuery,
   type PublishedValueTypeSpecification,
   type Result,
   type ValueItem,
@@ -51,14 +51,14 @@ import {
   type GraphQLSchemaConfig,
 } from 'graphql';
 import {
+  loadAdminEntitiesSample,
   loadAdminEntity,
   loadAdminEntityList,
-  loadAdminSampleEntities,
   loadAdminSearchEntities,
   loadChangelogEvents,
+  loadPublishedEntitiesSample,
   loadPublishedEntity,
   loadPublishedEntityList,
-  loadPublishedSampleEntities,
   loadPublishedSearchEntities,
   loadPublishingHistory,
   loadVersionHistory,
@@ -1467,7 +1467,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: AdminQuery;
+        query?: AdminEntitiesSharedQuery;
         seed?: number;
         count?: number;
       }
@@ -1481,7 +1481,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, _info) => {
         const { query, seed, count } = args;
         const options = { seed, count };
-        return await loadAdminSampleEntities(adminSchema, context, query, options);
+        return await loadAdminEntitiesSample(adminSchema, context, query, options);
       },
     });
   }
@@ -1493,7 +1493,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: AdminSearchQuery;
+        query?: AdminEntitiesQuery;
         first?: number;
         after?: string;
         last?: number;
@@ -1523,7 +1523,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: PublishedQuery;
+        query?: PublishedEntitiesSharedQuery;
         seed?: number;
         count?: number;
       }
@@ -1537,7 +1537,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, _info) => {
         const { query, count, seed } = args;
         const options = { count, seed };
-        return await loadPublishedSampleEntities(publishedSchema, context, query, options);
+        return await loadPublishedEntitiesSample(publishedSchema, context, query, options);
       },
     });
   }
@@ -1549,7 +1549,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: PublishedSearchQuery;
+        query?: PublishedEntitiesQuery;
         first?: number;
         after?: string;
         last?: number;

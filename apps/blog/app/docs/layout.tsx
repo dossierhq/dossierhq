@@ -21,7 +21,7 @@ interface Props {
 
 export default async function Layout({ children }: Props) {
   const publishedClient = (await getPublishedClientForServerComponent()).toExceptionClient();
-  const connection = await publishedClient.searchEntities({ entityTypes: ['Chapter'] });
+  const connection = await publishedClient.getEntities({ entityTypes: ['Chapter'] });
 
   //TODO for now we only support one chapter
   const chapter = connection?.edges[0].node.valueOrThrow() ?? null;

@@ -1,7 +1,7 @@
 import type {
+  AdminEntitiesQuery,
   AdminEntity,
   AdminSchemaWithMigrations,
-  AdminSearchQuery,
   Connection,
   Edge,
   ErrorType,
@@ -20,7 +20,7 @@ export async function adminSearchEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminSearchQuery | undefined,
+  query: AdminEntitiesQuery | undefined,
   paging: Paging | undefined,
 ): PromiseResult<
   Connection<Edge<AdminEntity, ErrorType>> | null,

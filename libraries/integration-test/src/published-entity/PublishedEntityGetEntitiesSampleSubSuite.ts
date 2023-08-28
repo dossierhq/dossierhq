@@ -16,42 +16,42 @@ import {
 } from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
-export const SampleEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
-  sampleEntities_minimal,
-  sampleEntities_authKeySubject,
-  sampleEntities_authKeyNoneAndSubject,
-  sampleEntities_linksToOneReference,
-  sampleEntities_linksToNoReferences,
-  sampleEntities_linksToTwoReferencesFromOneEntity,
-  sampleEntities_linksFromOneReference,
-  sampleEntities_linksFromNoReferences,
-  sampleEntities_linksFromTwoReferencesFromOneEntity,
+export const GetEntitiesSampleSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
+  getEntitiesSample_minimal,
+  getEntitiesSample_authKeySubject,
+  getEntitiesSample_authKeyNoneAndSubject,
+  getEntitiesSample_linksToOneReference,
+  getEntitiesSample_linksToNoReferences,
+  getEntitiesSample_linksToTwoReferencesFromOneEntity,
+  getEntitiesSample_linksFromOneReference,
+  getEntitiesSample_linksFromNoReferences,
+  getEntitiesSample_linksFromTwoReferencesFromOneEntity,
 ];
 
-async function sampleEntities_minimal({
+async function getEntitiesSample_minimal({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).sampleEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntitiesSample({
     entityTypes: ['ReadOnly'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
-async function sampleEntities_authKeySubject({
+async function getEntitiesSample_authKeySubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).sampleEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
-async function sampleEntities_authKeyNoneAndSubject({
+async function getEntitiesSample_authKeyNoneAndSubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
@@ -59,14 +59,14 @@ async function sampleEntities_authKeyNoneAndSubject({
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).sampleEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
-async function sampleEntities_linksToOneReference({
+async function getEntitiesSample_linksToOneReference({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -86,14 +86,14 @@ async function sampleEntities_linksToOneReference({
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
 
-  const sampleResult = await publishedClient.sampleEntities(
+  const sampleResult = await publishedClient.getEntitiesSample(
     { linksTo: { id: titleOnlyId } },
     { seed: 505 },
   );
   assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
 
-async function sampleEntities_linksToNoReferences({ server }: PublishedEntityTestContext) {
+async function getEntitiesSample_linksToNoReferences({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -103,11 +103,11 @@ async function sampleEntities_linksToNoReferences({ server }: PublishedEntityTes
     entity: { id },
   } = titleOnlyResult.value;
 
-  const sampleResult = await publishedClient.sampleEntities({ linksTo: { id } }, { seed: 987 });
+  const sampleResult = await publishedClient.getEntitiesSample({ linksTo: { id } }, { seed: 987 });
   assertSampledEntities(sampleResult, 987, []);
 }
 
-async function sampleEntities_linksToTwoReferencesFromOneEntity({
+async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -129,14 +129,14 @@ async function sampleEntities_linksToTwoReferencesFromOneEntity({
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
 
-  const sampleResult = await publishedClient.sampleEntities(
+  const sampleResult = await publishedClient.getEntitiesSample(
     { linksTo: { id: titleOnlyId } },
     { seed: 765 },
   );
   assertSampledEntities(sampleResult, 765, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
 
-async function sampleEntities_linksFromOneReference({
+async function getEntitiesSample_linksFromOneReference({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -156,14 +156,14 @@ async function sampleEntities_linksFromOneReference({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await publishedClient.sampleEntities(
+  const sampleResult = await publishedClient.getEntitiesSample(
     { linksFrom: { id: referenceId } },
     { seed: 432 },
   );
   assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
 }
 
-async function sampleEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
+async function getEntitiesSample_linksFromNoReferences({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -173,11 +173,14 @@ async function sampleEntities_linksFromNoReferences({ server }: PublishedEntityT
     entity: { id },
   } = referenceResult.value;
 
-  const sampleResult = await publishedClient.sampleEntities({ linksFrom: { id } }, { seed: 100 });
+  const sampleResult = await publishedClient.getEntitiesSample(
+    { linksFrom: { id } },
+    { seed: 100 },
+  );
   assertSampledEntities(sampleResult, 100, []);
 }
 
-async function sampleEntities_linksFromTwoReferencesFromOneEntity({
+async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -199,7 +202,7 @@ async function sampleEntities_linksFromTwoReferencesFromOneEntity({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await publishedClient.sampleEntities(
+  const sampleResult = await publishedClient.getEntitiesSample(
     { linksFrom: { id: referenceId } },
     { seed: 555 },
   );

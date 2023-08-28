@@ -3,21 +3,21 @@ import type {
   Edge,
   EntitySamplingPayload,
   ErrorType,
+  PublishedEntitiesQuery,
+  PublishedEntitiesSharedQuery,
   PublishedEntity,
-  PublishedQuery,
-  PublishedSearchQuery,
 } from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { usePublishedSampleEntities } from './usePublishedSampleEntities.js';
-import { usePublishedSearchEntities } from './usePublishedSearchEntities.js';
-import { usePublishedTotalCount } from './usePublishedTotalCount.js';
+import { usePublishedEntities } from './usePublishedEntities.js';
+import { usePublishedEntitiesSample } from './usePublishedEntitiesSample.js';
+import { usePublishedEntitiesTotalCount } from './usePublishedEntitiesTotalCount.js';
 
 export function usePublishedLoadEntitySearch(
   searchEntityState: SearchEntityState,
@@ -27,18 +27,20 @@ export function usePublishedLoadEntitySearch(
 
   // search
   const searchQuery = searchEntityState.paging
-    ? (searchEntityState.query as PublishedSearchQuery)
+    ? (searchEntityState.query as PublishedEntitiesQuery)
     : undefined;
-  const { connection, connectionError } = usePublishedSearchEntities(
+  const { connection, connectionError } = usePublishedEntities(
     publishedClient,
     searchQuery,
     searchEntityState.paging,
   );
-  const { totalCount } = usePublishedTotalCount(publishedClient, searchQuery);
+  const { totalCount } = usePublishedEntitiesTotalCount(publishedClient, searchQuery);
 
   // sample
-  const sampleQuery = !searchQuery ? (searchEntityState.query as PublishedQuery) : undefined;
-  const { entitySamples, entitySamplesError } = usePublishedSampleEntities(
+  const sampleQuery = !searchQuery
+    ? (searchEntityState.query as PublishedEntitiesSharedQuery)
+    : undefined;
+  const { entitiesSample, entitiesSampleError } = usePublishedEntitiesSample(
     publishedClient,
     sampleQuery,
     searchEntityState.sampling,
@@ -60,9 +62,9 @@ export function usePublishedLoadEntitySearch(
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSampleResult(
-        entitySamples as EntitySamplingPayload<PublishedEntity>,
-        entitySamplesError,
+        entitiesSample as EntitySamplingPayload<PublishedEntity>,
+        entitiesSampleError,
       ),
     );
-  }, [entitySamples, entitySamplesError, dispatchSearchEntityState]);
+  }, [entitiesSample, entitiesSampleError, dispatchSearchEntityState]);
 }

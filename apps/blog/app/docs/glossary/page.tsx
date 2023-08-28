@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const publishedClient = await getPublishedClientForServerComponent();
   const connection = (
-    await publishedClient.searchEntities({ entityTypes: ['GlossaryTerm'], order: 'name' })
+    await publishedClient.getEntities({ entityTypes: ['GlossaryTerm'], order: 'name' })
   ).valueOrThrow();
 
   return (

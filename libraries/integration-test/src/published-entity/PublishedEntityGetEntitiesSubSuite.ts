@@ -1,4 +1,4 @@
-import { copyEntity, PublishedQueryOrder } from '@dossierhq/core';
+import { copyEntity, PublishedEntitiesQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminValueItems } from '../SchemaTypes.js';
@@ -23,46 +23,46 @@ import {
 } from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
-export const SearchEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
-  searchEntities_minimal,
-  searchEntities_pagingFirst,
-  searchEntities_pagingFirst0,
-  searchEntities_pagingLast,
-  searchEntities_pagingLast0,
-  searchEntities_pagingFirstAfter,
-  searchEntities_pagingFirstAfterFirstEntity,
-  searchEntities_pagingFirstAfterNameWithUnicode,
-  searchEntities_pagingLastBefore,
-  searchEntities_pagingFirstBetween,
-  searchEntities_pagingLastBetween,
-  searchEntities_orderCreatedAt,
-  searchEntities_orderCreatedAtReversed,
-  searchEntities_orderName,
-  searchEntities_orderNameReversed,
-  searchEntities_authKeySubject,
-  searchEntities_authKeyNoneAndSubject,
-  searchEntities_valueTypes,
-  searchEntities_linksToOneReference,
-  searchEntities_linksToNoReferences,
-  searchEntities_linksToTwoReferencesFromOneEntity,
-  searchEntities_linksToExcludedAfterUnpublish,
-  searchEntities_linksToExcludedAfterUpdateWithNoReference,
-  searchEntities_linksToExcludedForAdminOnlyField,
-  searchEntities_linksFromOneReference,
-  searchEntities_linksFromNoReferences,
-  searchEntities_linksFromTwoReferencesFromOneEntity,
-  searchEntities_boundingBox,
-  searchEntities_boundingBoxExcludedWithInAdminOnlyField,
-  searchEntities_textIncluded,
-  searchEntities_textExcludedInAdminOnlyField,
+export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
+  getEntities_minimal,
+  getEntities_pagingFirst,
+  getEntities_pagingFirst0,
+  getEntities_pagingLast,
+  getEntities_pagingLast0,
+  getEntities_pagingFirstAfter,
+  getEntities_pagingFirstAfterFirstEntity,
+  getEntities_pagingFirstAfterNameWithUnicode,
+  getEntities_pagingLastBefore,
+  getEntities_pagingFirstBetween,
+  getEntities_pagingLastBetween,
+  getEntities_orderCreatedAt,
+  getEntities_orderCreatedAtReversed,
+  getEntities_orderName,
+  getEntities_orderNameReversed,
+  getEntities_authKeySubject,
+  getEntities_authKeyNoneAndSubject,
+  getEntities_valueTypes,
+  getEntities_linksToOneReference,
+  getEntities_linksToNoReferences,
+  getEntities_linksToTwoReferencesFromOneEntity,
+  getEntities_linksToExcludedAfterUnpublish,
+  getEntities_linksToExcludedAfterUpdateWithNoReference,
+  getEntities_linksToExcludedForAdminOnlyField,
+  getEntities_linksFromOneReference,
+  getEntities_linksFromNoReferences,
+  getEntities_linksFromTwoReferencesFromOneEntity,
+  getEntities_boundingBox,
+  getEntities_boundingBoxExcludedWithInAdminOnlyField,
+  getEntities_textIncluded,
+  getEntities_textExcludedInAdminOnlyField,
 ];
 
-async function searchEntities_minimal({
+async function getEntities_minimal({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
@@ -72,12 +72,12 @@ async function searchEntities_minimal({
   });
 }
 
-async function searchEntities_pagingFirst({
+async function getEntities_pagingFirst({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
+  const result = await publishedClientForMainPrincipal(server).getEntities(
     { entityTypes: ['ReadOnly'] },
     { first: 10 },
   );
@@ -88,20 +88,20 @@ async function searchEntities_pagingFirst({
   });
 }
 
-async function searchEntities_pagingFirst0({ server }: PublishedEntityTestContext) {
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
+async function getEntities_pagingFirst0({ server }: PublishedEntityTestContext) {
+  const result = await publishedClientForMainPrincipal(server).getEntities(
     { entityTypes: ['ReadOnly'] },
     { first: 0 },
   );
   assertResultValue(result, null);
 }
 
-async function searchEntities_pagingLast({
+async function getEntities_pagingLast({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
+  const result = await publishedClientForMainPrincipal(server).getEntities(
     { entityTypes: ['ReadOnly'] },
     { last: 10 },
   );
@@ -109,23 +109,23 @@ async function searchEntities_pagingLast({
   assertPageInfoEquals(result, { hasPreviousPage: true, hasNextPage: false });
 }
 
-async function searchEntities_pagingLast0({ server }: PublishedEntityTestContext) {
-  const result = await publishedClientForMainPrincipal(server).searchEntities(
+async function getEntities_pagingLast0({ server }: PublishedEntityTestContext) {
+  const result = await publishedClientForMainPrincipal(server).getEntities(
     { entityTypes: ['ReadOnly'] },
     { last: 0 },
   );
   assertResultValue(result, null);
 }
 
-async function searchEntities_pagingFirstAfter({
+async function getEntities_pagingFirstAfter({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const client = publishedClientForMainPrincipal(server);
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const firstResult = await client.searchEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
+  const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertOkResult(firstResult);
-  const secondResult = await client.searchEntities(
+  const secondResult = await client.getEntities(
     { entityTypes: ['ReadOnly'] },
     { first: 20, after: firstResult.value?.pageInfo.endCursor },
   );
@@ -136,15 +136,15 @@ async function searchEntities_pagingFirstAfter({
   });
 }
 
-async function searchEntities_pagingFirstAfterFirstEntity({
+async function getEntities_pagingFirstAfterFirstEntity({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const client = publishedClientForMainPrincipal(server);
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const firstResult = await client.searchEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
+  const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertOkResult(firstResult);
-  const secondResult = await client.searchEntities(
+  const secondResult = await client.getEntities(
     { entityTypes: ['ReadOnly'] },
     { first: 10, after: firstResult.value?.edges[0].cursor },
   );
@@ -155,7 +155,7 @@ async function searchEntities_pagingFirstAfterFirstEntity({
   });
 }
 
-async function searchEntities_pagingFirstAfterNameWithUnicode({
+async function getEntities_pagingFirstAfterNameWithUnicode({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -193,8 +193,8 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
   } = linkEntityResult.valueOrThrow();
 
   // Search to get the cursor
-  const firstSearchResult = await publishedClient.searchEntities(
-    { linksFrom: { id: linkId }, order: PublishedQueryOrder.name },
+  const firstSearchResult = await publishedClient.getEntities(
+    { linksFrom: { id: linkId }, order: PublishedEntitiesQueryOrder.name },
     { first: 10 },
   );
   assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
@@ -205,23 +205,23 @@ async function searchEntities_pagingFirstAfterNameWithUnicode({
   } = firstSearchResult.value;
 
   // Search again using the cursor
-  const secondSearchResult = await publishedClient.searchEntities(
-    { linksFrom: { id: linkId }, order: PublishedQueryOrder.name },
+  const secondSearchResult = await publishedClient.getEntities(
+    { linksFrom: { id: linkId }, order: PublishedEntitiesQueryOrder.name },
     { first: 10, after: startCursor },
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
   assertPageInfoEquals(secondSearchResult, { hasPreviousPage: true, hasNextPage: false });
 }
 
-async function searchEntities_pagingLastBefore({
+async function getEntities_pagingLastBefore({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const client = publishedClientForMainPrincipal(server);
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const firstResult = await client.searchEntities({ entityTypes: ['ReadOnly'] }, { last: 10 });
+  const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { last: 10 });
   assertOkResult(firstResult);
-  const secondResult = await client.searchEntities(
+  const secondResult = await client.getEntities(
     { entityTypes: ['ReadOnly'] },
     { last: 20, before: firstResult.value?.pageInfo.startCursor },
   );
@@ -229,15 +229,15 @@ async function searchEntities_pagingLastBefore({
   assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
 }
 
-async function searchEntities_pagingFirstBetween({
+async function getEntities_pagingFirstBetween({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const client = publishedClientForMainPrincipal(server);
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const firstResult = await client.searchEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
+  const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
   assertOkResult(firstResult);
-  const secondResult = await client.searchEntities(
+  const secondResult = await client.getEntities(
     { entityTypes: ['ReadOnly'] },
     {
       first: 20,
@@ -255,15 +255,15 @@ async function searchEntities_pagingFirstBetween({
   assertPageInfoEquals(secondResult, { hasPreviousPage: true, hasNextPage: false });
 }
 
-async function searchEntities_pagingLastBetween({
+async function getEntities_pagingLastBetween({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const client = publishedClientForMainPrincipal(server);
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const firstResult = await client.searchEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
+  const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
   assertOkResult(firstResult);
-  const secondResult = await client.searchEntities(
+  const secondResult = await client.getEntities(
     { entityTypes: ['ReadOnly'] },
     {
       last: 20,
@@ -281,21 +281,21 @@ async function searchEntities_pagingLastBetween({
   assertPageInfoEquals(secondResult, { hasPreviousPage: false, hasNextPage: true });
 }
 
-async function searchEntities_orderCreatedAt({
+async function getEntities_orderCreatedAt({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedQueryOrder.createdAt,
+    order: PublishedEntitiesQueryOrder.createdAt,
   });
   assertPublishedEntityConnectionToMatchSlice(
     expectedEntities,
     result,
     0,
     25,
-    PublishedQueryOrder.createdAt,
+    PublishedEntitiesQueryOrder.createdAt,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -303,14 +303,14 @@ async function searchEntities_orderCreatedAt({
   });
 }
 
-async function searchEntities_orderCreatedAtReversed({
+async function getEntities_orderCreatedAtReversed({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedQueryOrder.createdAt,
+    order: PublishedEntitiesQueryOrder.createdAt,
     reverse: true,
   });
   assertPublishedEntityConnectionToMatchSlice(
@@ -318,7 +318,7 @@ async function searchEntities_orderCreatedAtReversed({
     result,
     0,
     25,
-    PublishedQueryOrder.createdAt,
+    PublishedEntitiesQueryOrder.createdAt,
     true,
   );
   assertPageInfoEquals(result, {
@@ -327,21 +327,21 @@ async function searchEntities_orderCreatedAtReversed({
   });
 }
 
-async function searchEntities_orderName({
+async function getEntities_orderName({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedQueryOrder.name,
+    order: PublishedEntitiesQueryOrder.name,
   });
   assertPublishedEntityConnectionToMatchSlice(
     expectedEntities,
     result,
     0,
     25,
-    PublishedQueryOrder.name,
+    PublishedEntitiesQueryOrder.name,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -349,14 +349,14 @@ async function searchEntities_orderName({
   });
 }
 
-async function searchEntities_orderNameReversed({
+async function getEntities_orderNameReversed({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedQueryOrder.name,
+    order: PublishedEntitiesQueryOrder.name,
     reverse: true,
   });
   assertPublishedEntityConnectionToMatchSlice(
@@ -364,7 +364,7 @@ async function searchEntities_orderNameReversed({
     result,
     0,
     25,
-    PublishedQueryOrder.name,
+    PublishedEntitiesQueryOrder.name,
     true,
   );
   assertPageInfoEquals(result, {
@@ -373,12 +373,12 @@ async function searchEntities_orderNameReversed({
   });
 }
 
-async function searchEntities_authKeySubject({
+async function getEntities_authKeySubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -389,7 +389,7 @@ async function searchEntities_authKeySubject({
   });
 }
 
-async function searchEntities_authKeyNoneAndSubject({
+async function getEntities_authKeyNoneAndSubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
@@ -397,7 +397,7 @@ async function searchEntities_authKeyNoneAndSubject({
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).searchEntities({
+  const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });
@@ -405,7 +405,7 @@ async function searchEntities_authKeyNoneAndSubject({
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
 
-async function searchEntities_valueTypes({ server }: PublishedEntityTestContext) {
+async function getEntities_valueTypes({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const { entity } = (
@@ -437,7 +437,7 @@ async function searchEntities_valueTypes({ server }: PublishedEntityTestContext)
   assertResultValue(matchesAfterValueItem, 1);
 }
 
-async function searchEntities_linksToOneReference({
+async function getEntities_linksToOneReference({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -457,12 +457,12 @@ async function searchEntities_linksToOneReference({
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
 
-  const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await publishedClient.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, referenceEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function searchEntities_linksToNoReferences({ server }: PublishedEntityTestContext) {
+async function getEntities_linksToNoReferences({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -472,11 +472,11 @@ async function searchEntities_linksToNoReferences({ server }: PublishedEntityTes
     entity: { id },
   } = titleOnlyResult.value;
 
-  const searchResult = await publishedClient.searchEntities({ linksTo: { id } });
+  const searchResult = await publishedClient.getEntities({ linksTo: { id } });
   assertSearchResultEntities(searchResult, []);
 }
 
-async function searchEntities_linksToTwoReferencesFromOneEntity({
+async function getEntities_linksToTwoReferencesFromOneEntity({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -498,12 +498,12 @@ async function searchEntities_linksToTwoReferencesFromOneEntity({
   assertOkResult(referenceResult);
   const { entity: referenceEntity } = referenceResult.value;
 
-  const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await publishedClient.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, referenceEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function searchEntities_linksToExcludedAfterUnpublish({
+async function getEntities_linksToExcludedAfterUnpublish({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -522,7 +522,7 @@ async function searchEntities_linksToExcludedAfterUnpublish({
   );
   const { entity: referenceEntity } = referenceResult.valueOrThrow();
 
-  const searchBeforeUnpublishResult = await publishedClient.searchEntities({
+  const searchBeforeUnpublishResult = await publishedClient.getEntities({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchBeforeUnpublishResult, [
@@ -531,13 +531,13 @@ async function searchEntities_linksToExcludedAfterUnpublish({
 
   assertOkResult(await adminClient.unpublishEntities([{ id: referenceEntity.id }]));
 
-  const searchAfterUnpublishResult = await publishedClient.searchEntities({
+  const searchAfterUnpublishResult = await publishedClient.getEntities({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchAfterUnpublishResult, []);
 }
 
-async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
+async function getEntities_linksToExcludedAfterUpdateWithNoReference({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -556,7 +556,7 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
   );
   const { entity: referenceEntity } = referenceCreateResult.valueOrThrow();
 
-  const searchBeforeUpdateResult = await publishedClient.searchEntities({
+  const searchBeforeUpdateResult = await publishedClient.getEntities({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchBeforeUpdateResult, [
@@ -570,13 +570,13 @@ async function searchEntities_linksToExcludedAfterUpdateWithNoReference({
     ),
   );
 
-  const searchAfterUpdateResult = await publishedClient.searchEntities({
+  const searchAfterUpdateResult = await publishedClient.getEntities({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchAfterUpdateResult, []);
 }
 
-async function searchEntities_linksToExcludedForAdminOnlyField({
+async function getEntities_linksToExcludedForAdminOnlyField({
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -592,11 +592,11 @@ async function searchEntities_linksToExcludedForAdminOnlyField({
   );
   assertOkResult(referenceCreateResult);
 
-  const searchResult = await publishedClient.searchEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await publishedClient.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, []);
 }
 
-async function searchEntities_linksFromOneReference({
+async function getEntities_linksFromOneReference({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -616,12 +616,12 @@ async function searchEntities_linksFromOneReference({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
+  const searchResult = await publishedClient.getEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function searchEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
+async function getEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -631,11 +631,11 @@ async function searchEntities_linksFromNoReferences({ server }: PublishedEntityT
     entity: { id },
   } = referenceResult.value;
 
-  const searchResult = await publishedClient.searchEntities({ linksFrom: { id } });
+  const searchResult = await publishedClient.getEntities({ linksFrom: { id } });
   assertSearchResultEntities(searchResult, []);
 }
 
-async function searchEntities_linksFromTwoReferencesFromOneEntity({
+async function getEntities_linksFromTwoReferencesFromOneEntity({
   adminSchema,
   server,
 }: PublishedEntityTestContext) {
@@ -657,12 +657,12 @@ async function searchEntities_linksFromTwoReferencesFromOneEntity({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const searchResult = await publishedClient.searchEntities({ linksFrom: { id: referenceId } });
+  const searchResult = await publishedClient.getEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function searchEntities_boundingBox({ server }: PublishedEntityTestContext) {
+async function getEntities_boundingBox({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -681,7 +681,7 @@ async function searchEntities_boundingBox({ server }: PublishedEntityTestContext
   assertResultValue(matches, 1);
 }
 
-async function searchEntities_boundingBoxExcludedWithInAdminOnlyField({
+async function getEntities_boundingBoxExcludedWithInAdminOnlyField({
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -702,7 +702,7 @@ async function searchEntities_boundingBoxExcludedWithInAdminOnlyField({
   assertResultValue(matches, 0);
 }
 
-async function searchEntities_textIncluded({ server }: PublishedEntityTestContext) {
+async function getEntities_textIncluded({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -721,7 +721,7 @@ async function searchEntities_textIncluded({ server }: PublishedEntityTestContex
   assertResultValue(matches, 1);
 }
 
-async function searchEntities_textExcludedInAdminOnlyField({ server }: PublishedEntityTestContext) {
+async function getEntities_textExcludedInAdminOnlyField({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 

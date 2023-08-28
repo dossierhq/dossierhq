@@ -1,4 +1,9 @@
-import type { ErrorType, PromiseResult, PublishedQuery, PublishedSchema } from '@dossierhq/core';
+import type {
+  ErrorType,
+  PromiseResult,
+  PublishedEntitiesSharedQuery,
+  PublishedSchema,
+} from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabasePublishedEntityPayload,
@@ -15,7 +20,7 @@ export async function publishedEntitySampleEntities(
   database: Database,
   schema: PublishedSchema,
   context: TransactionContext,
-  query: PublishedQuery | undefined,
+  query: PublishedEntitiesSharedQuery | undefined,
   offset: number,
   limit: number,
   resolvedAuthKeys: ResolvedAuthKey[],

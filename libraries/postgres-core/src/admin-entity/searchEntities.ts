@@ -1,4 +1,4 @@
-import type { AdminSchema, AdminSearchQuery, ErrorType, PromiseResult } from '@dossierhq/core';
+import type { AdminEntitiesQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
@@ -16,7 +16,7 @@ export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
   context: TransactionContext,
-  query: AdminSearchQuery | undefined,
+  query: AdminEntitiesQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<

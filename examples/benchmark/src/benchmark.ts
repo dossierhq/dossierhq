@@ -1,9 +1,9 @@
 import type {
   AdminClient,
+  AdminEntitiesSharedQuery,
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
-  AdminQuery,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -72,7 +72,7 @@ function randomNullUndefined<T>(
 
 async function randomReference(
   adminClient: AdminClient,
-  query?: AdminQuery,
+  query?: AdminEntitiesSharedQuery,
 ): PromiseResult<
   EntityReference,
   | typeof ErrorType.NotFound
@@ -87,7 +87,7 @@ async function randomReference(
 
 async function randomAdminEntity(
   adminClient: AdminClient,
-  query?: AdminQuery,
+  query?: AdminEntitiesSharedQuery,
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.NotFound
@@ -95,7 +95,7 @@ async function randomAdminEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  const result = await adminClient.sampleEntities(query, { count: 1 });
+  const result = await adminClient.getEntitiesSample(query, { count: 1 });
   if (result.isError()) return result;
   if (result.value.items.length === 0) {
     return notOk.NotFound('No such entity');
@@ -335,7 +335,7 @@ async function testSearchAdminEntitiesAnyFirst50(
   return await runTest(async (clock) => {
     clock.start();
 
-    const result = await adminClient.searchEntities({}, { first: 50 });
+    const result = await adminClient.getEntities({}, { first: 50 });
 
     clock.stop();
 

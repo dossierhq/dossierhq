@@ -20,8 +20,8 @@ import type {
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
-  AdminQuery,
-  AdminSearchQuery,
+  AdminEntitiesSharedQuery,
+  AdminEntitiesQuery,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
   AdvisoryLockReleasePayload,
@@ -117,7 +117,6 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
-  // TODO rename searchEntities()->getEntityList(), getTotalCount()->getEntitiesTotalCount(), sampleEntities()->getEntitiesSample(),
   getEntityList(
     references: EntityReference[],
   ): PromiseResult<
@@ -131,8 +130,8 @@ export interface AdminClient<
     typeof ErrorType.Generic
   >;
 
-  sampleEntities(
-    query?: AdminQuery<
+  getEntitiesSample(
+    query?: AdminEntitiesSharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -143,8 +142,8 @@ export interface AdminClient<
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  searchEntities(
-    query?: AdminSearchQuery<
+  getEntities(
+    query?: AdminEntitiesQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -155,8 +154,8 @@ export interface AdminClient<
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  getTotalCount(
-    query?: AdminQuery<
+  getEntitiesTotalCount(
+    query?: AdminEntitiesSharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -334,8 +333,8 @@ export interface AdminExceptionClient<
     >[]
   >;
 
-  sampleEntities(
-    query?: AdminQuery<
+  getEntitiesSample(
+    query?: AdminEntitiesSharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -343,8 +342,8 @@ export interface AdminExceptionClient<
     options?: EntitySamplingOptions,
   ): Promise<EntitySamplingPayload<TAdminEntity>>;
 
-  searchEntities(
-    query?: AdminSearchQuery<
+  getEntities(
+    query?: AdminEntitiesQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -352,8 +351,8 @@ export interface AdminExceptionClient<
     paging?: Paging,
   ): Promise<Connection<Edge<TAdminEntity, ErrorType>> | null>;
 
-  getTotalCount(
-    query?: AdminQuery<
+  getEntitiesTotalCount(
+    query?: AdminEntitiesSharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -412,12 +411,12 @@ export const AdminClientOperationName = {
   getEntityHistory: 'getEntityHistory',
   getPublishingHistory: 'getPublishingHistory',
   getSchemaSpecification: 'getSchemaSpecification',
-  getTotalCount: 'getTotalCount',
+  getEntitiesTotalCount: 'getEntitiesTotalCount',
   publishEntities: 'publishEntities',
   releaseAdvisoryLock: 'releaseAdvisoryLock',
   renewAdvisoryLock: 'renewAdvisoryLock',
-  sampleEntities: 'sampleEntities',
-  searchEntities: 'searchEntities',
+  getEntitiesSample: 'getEntitiesSample',
+  getEntities: 'getEntities',
   unarchiveEntity: 'unarchiveEntity',
   unpublishEntities: 'unpublishEntities',
   updateEntity: 'updateEntity',
@@ -460,12 +459,12 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodParameters<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
-  [AdminClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
+  [AdminClientOperationName.getEntitiesTotalCount]: MethodParameters<'getEntitiesTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodParameters<'releaseAdvisoryLock'>;
   [AdminClientOperationName.renewAdvisoryLock]: MethodParameters<'renewAdvisoryLock'>;
-  [AdminClientOperationName.sampleEntities]: MethodParameters<'sampleEntities'>;
-  [AdminClientOperationName.searchEntities]: MethodParameters<'searchEntities'>;
+  [AdminClientOperationName.getEntitiesSample]: MethodParameters<'getEntitiesSample'>;
+  [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [AdminClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
@@ -484,12 +483,12 @@ interface AdminClientOperationReturnOk {
   [AdminClientOperationName.getEntityHistory]: MethodReturnTypeOk<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeOk<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
-  [AdminClientOperationName.getTotalCount]: MethodReturnTypeOk<'getTotalCount'>;
+  [AdminClientOperationName.getEntitiesTotalCount]: MethodReturnTypeOk<'getEntitiesTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeOk<'releaseAdvisoryLock'>;
   [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeOk<'renewAdvisoryLock'>;
-  [AdminClientOperationName.sampleEntities]: MethodReturnTypeOk<'sampleEntities'>;
-  [AdminClientOperationName.searchEntities]: MethodReturnTypeOk<'searchEntities'>;
+  [AdminClientOperationName.getEntitiesSample]: MethodReturnTypeOk<'getEntitiesSample'>;
+  [AdminClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
   [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeOk<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodReturnTypeOk<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodReturnTypeOk<'updateEntity'>;
@@ -508,12 +507,12 @@ interface AdminClientOperationReturnError {
   [AdminClientOperationName.getEntityHistory]: MethodReturnTypeError<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeError<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
-  [AdminClientOperationName.getTotalCount]: MethodReturnTypeError<'getTotalCount'>;
+  [AdminClientOperationName.getEntitiesTotalCount]: MethodReturnTypeError<'getEntitiesTotalCount'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeError<'releaseAdvisoryLock'>;
   [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeError<'renewAdvisoryLock'>;
-  [AdminClientOperationName.sampleEntities]: MethodReturnTypeError<'sampleEntities'>;
-  [AdminClientOperationName.searchEntities]: MethodReturnTypeError<'searchEntities'>;
+  [AdminClientOperationName.getEntitiesSample]: MethodReturnTypeError<'getEntitiesSample'>;
+  [AdminClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
   [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeError<'unarchiveEntity'>;
   [AdminClientOperationName.unpublishEntities]: MethodReturnTypeError<'unpublishEntities'>;
   [AdminClientOperationName.updateEntity]: MethodReturnTypeError<'updateEntity'>;
@@ -622,36 +621,36 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  sampleEntities(
-    query?: AdminQuery,
+  getEntitiesSample(
+    query?: AdminEntitiesSharedQuery,
     options?: EntitySamplingOptions,
   ): PromiseResult<
     EntitySamplingPayload<AdminEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.sampleEntities,
+      name: AdminClientOperationName.getEntitiesSample,
       args: [query, options],
       modifies: false,
     });
   }
 
-  searchEntities(
-    query?: AdminSearchQuery,
+  getEntities(
+    query?: AdminEntitiesQuery,
     paging?: Paging,
-  ): MethodReturnType<typeof AdminClientOperationName.searchEntities> {
+  ): MethodReturnType<typeof AdminClientOperationName.getEntities> {
     return this.executeOperation({
-      name: AdminClientOperationName.searchEntities,
+      name: AdminClientOperationName.getEntities,
       args: [query, paging],
       modifies: false,
     });
   }
 
-  getTotalCount(
-    query?: AdminQuery,
-  ): MethodReturnType<typeof AdminClientOperationName.getTotalCount> {
+  getEntitiesTotalCount(
+    query?: AdminEntitiesSharedQuery,
+  ): MethodReturnType<typeof AdminClientOperationName.getEntitiesTotalCount> {
     return this.executeOperation({
-      name: AdminClientOperationName.getTotalCount,
+      name: AdminClientOperationName.getEntitiesTotalCount,
       args: [query],
       modifies: false,
     });
@@ -910,24 +909,26 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.getEntityList(references)).valueOrThrow();
   }
 
-  async sampleEntities(
-    query?: AdminQuery<string, string> | undefined,
+  async getEntitiesSample(
+    query?: AdminEntitiesSharedQuery<string, string> | undefined,
     options?: EntitySamplingOptions | undefined,
   ): Promise<EntitySamplingPayload<AdminEntity<string, Record<string, unknown>, string>>> {
-    return (await this.client.sampleEntities(query, options)).valueOrThrow();
+    return (await this.client.getEntitiesSample(query, options)).valueOrThrow();
   }
 
-  async searchEntities(
-    query?: AdminSearchQuery<string, string> | undefined,
+  async getEntities(
+    query?: AdminEntitiesQuery<string, string> | undefined,
     paging?: Paging | undefined,
   ): Promise<Connection<
     Edge<AdminEntity<string, Record<string, unknown>, string>, ErrorType>
   > | null> {
-    return (await this.client.searchEntities(query, paging)).valueOrThrow();
+    return (await this.client.getEntities(query, paging)).valueOrThrow();
   }
 
-  async getTotalCount(query?: AdminQuery<string, string> | undefined): Promise<number> {
-    return (await this.client.getTotalCount(query)).valueOrThrow();
+  async getEntitiesTotalCount(
+    query?: AdminEntitiesSharedQuery<string, string> | undefined,
+  ): Promise<number> {
+    return (await this.client.getEntitiesTotalCount(query)).valueOrThrow();
   }
 
   async createEntity<
@@ -1089,10 +1090,10 @@ export async function executeAdminClientOperationFromJson(
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getSchemaSpecification];
       return await adminClient.getSchemaSpecification(options);
     }
-    case AdminClientOperationName.getTotalCount: {
+    case AdminClientOperationName.getEntitiesTotalCount: {
       const [query] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getTotalCount];
-      return await adminClient.getTotalCount(query);
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntitiesTotalCount];
+      return await adminClient.getEntitiesTotalCount(query);
     }
     case AdminClientOperationName.publishEntities: {
       const [references] =
@@ -1109,15 +1110,15 @@ export async function executeAdminClientOperationFromJson(
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.renewAdvisoryLock];
       return await adminClient.renewAdvisoryLock(name, handle);
     }
-    case AdminClientOperationName.sampleEntities: {
+    case AdminClientOperationName.getEntitiesSample: {
       const [query, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.sampleEntities];
-      return await adminClient.sampleEntities(query, options);
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntitiesSample];
+      return await adminClient.getEntitiesSample(query, options);
     }
-    case AdminClientOperationName.searchEntities: {
+    case AdminClientOperationName.getEntities: {
       const [query, paging] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.searchEntities];
-      return await adminClient.searchEntities(query, paging);
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntities];
+      return await adminClient.getEntities(query, paging);
     }
     case AdminClientOperationName.unarchiveEntity: {
       const [reference] =
@@ -1244,7 +1245,7 @@ export function convertJsonAdminClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getTotalCount:
+    case AdminClientOperationName.getEntitiesTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case AdminClientOperationName.releaseAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<
@@ -1258,17 +1259,18 @@ export function convertJsonAdminClientResult<
       > = ok(value as AdvisoryLockPayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.sampleEntities: {
+    case AdminClientOperationName.getEntitiesSample: {
       const payload = value as EntitySamplingPayload<JsonAdminEntity>;
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.sampleEntities> =
-        ok({
-          ...payload,
-          items: payload.items.map((it) => convertJsonAdminEntity(it)),
-        });
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.getEntitiesSample
+      > = ok({
+        ...payload,
+        items: payload.items.map((it) => convertJsonAdminEntity(it)),
+      });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.searchEntities: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.searchEntities> =
+    case AdminClientOperationName.getEntities: {
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntities> =
         ok(
           convertJsonConnection(
             value as JsonConnection<JsonEdge<JsonAdminEntity, ErrorType>> | null,

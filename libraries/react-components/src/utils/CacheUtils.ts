@@ -1,17 +1,17 @@
 import {
   copyEntity,
+  type AdminEntitiesQuery,
+  type AdminEntitiesSharedQuery,
   type AdminEntity,
   type AdminEntityPublishingPayload,
-  type AdminQuery,
   type AdminSchemaWithMigrations,
-  type AdminSearchQuery,
   type ChangelogEventQuery,
   type EntityReference,
   type EntitySamplingOptions,
   type EntityVersionReference,
   type Paging,
-  type PublishedQuery,
-  type PublishedSearchQuery,
+  type PublishedEntitiesQuery,
+  type PublishedEntitiesSharedQuery,
 } from '@dossierhq/core';
 import type { Arguments, Cache, useSWRConfig } from 'swr';
 
@@ -27,30 +27,33 @@ export const CACHE_KEYS = {
   adminEntity(reference: EntityReference | EntityVersionReference) {
     return ['dossierhq/useAdminEntity', reference] as const;
   },
-  adminSampleEntities(query: AdminQuery | undefined, options: EntitySamplingOptions | undefined) {
-    return ['dossierhq/useAdminSampleEntities', query, options] as const;
+  adminEntitiesSample(
+    query: AdminEntitiesSharedQuery | undefined,
+    options: EntitySamplingOptions | undefined,
+  ) {
+    return ['dossierhq/useAdminEntitiesSample', query, options] as const;
   },
-  adminSearchEntities(query: AdminSearchQuery | undefined, paging: Paging | undefined) {
-    return ['dossierhq/useAdminSearchEntities', query, paging] as const;
+  adminEntities(query: AdminEntitiesQuery | undefined, paging: Paging | undefined) {
+    return ['dossierhq/useAdminEntities', query, paging] as const;
   },
-  adminTotalCount(query: AdminQuery | undefined) {
-    return ['dossierhq/useAdminTotalCount', query] as const;
+  adminEntitiesTotalCount(query: AdminEntitiesSharedQuery | undefined) {
+    return ['dossierhq/useAdminEntitiesTotalCount', query] as const;
   },
   adminSchema: 'dossierhq/useAdminSchema',
   publishedEntity(reference: EntityReference) {
     return ['dossierhq/usePublishedEntity', reference] as const;
   },
-  publishedSampleEntities(
-    query: PublishedQuery | undefined,
+  publishedEntitiesSample(
+    query: PublishedEntitiesSharedQuery | undefined,
     options: EntitySamplingOptions | undefined,
   ) {
-    return ['dossierhq/usePublishedSampleEntities', query, options] as const;
+    return ['dossierhq/usePublishedEntitiesSample', query, options] as const;
   },
-  publishedSearchEntities(query: PublishedSearchQuery | undefined, paging: Paging | undefined) {
-    return ['dossierhq/usePublishedSearchEntities', query, paging] as const;
+  publishedEntities(query: PublishedEntitiesQuery | undefined, paging: Paging | undefined) {
+    return ['dossierhq/usePublishedEntities', query, paging] as const;
   },
-  publishedTotalCount(query: PublishedQuery | undefined) {
-    return ['dossierhq/usePublishedTotalCount', query] as const;
+  publishedEntitiesTotalCount(query: PublishedEntitiesSharedQuery | undefined) {
+    return ['dossierhq/usePublishedEntitiesTotalCount', query] as const;
   },
   publishedSchema: 'dossierhq/usePublishedSchema',
 };

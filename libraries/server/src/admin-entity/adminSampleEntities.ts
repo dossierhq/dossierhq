@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminQuery,
+  AdminEntitiesSharedQuery,
   AdminSchemaWithMigrations,
   EntitySamplingOptions,
   EntitySamplingPayload,
@@ -20,7 +20,7 @@ export async function adminSampleEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminQuery | undefined,
+  query: AdminEntitiesSharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): PromiseResult<
   EntitySamplingPayload<AdminEntity>,

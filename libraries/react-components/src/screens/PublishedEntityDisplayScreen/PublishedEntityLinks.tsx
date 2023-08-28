@@ -3,7 +3,7 @@ import { Button, Dialog2, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { usePublishedTotalCount } from '../../published/hooks/usePublishedTotalCount.js';
+import { usePublishedEntitiesTotalCount } from '../../published/hooks/usePublishedEntitiesTotalCount.js';
 
 interface Props {
   entityReference: EntityReference;
@@ -26,10 +26,10 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
     [onItemClick],
   );
 
-  const { totalCount: linksToTotal } = usePublishedTotalCount(publishedClient, {
+  const { totalCount: linksToTotal } = usePublishedEntitiesTotalCount(publishedClient, {
     linksTo: entityReference,
   });
-  const { totalCount: linksFromTotal } = usePublishedTotalCount(publishedClient, {
+  const { totalCount: linksFromTotal } = usePublishedEntitiesTotalCount(publishedClient, {
     linksFrom: entityReference,
   });
 

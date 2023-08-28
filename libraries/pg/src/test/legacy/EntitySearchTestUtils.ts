@@ -1,7 +1,7 @@
 import type {
   AdminClient,
+  AdminEntitiesQuery,
   AdminEntity,
-  AdminSearchQuery,
   BoundingBox,
   Connection,
   Edge,
@@ -27,7 +27,7 @@ export async function ensureEntityCount(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  const countResult = await client.getTotalCount({
+  const countResult = await client.getEntitiesTotalCount({
     authKeys: [authKey],
     entityTypes: [entityType],
   });
@@ -63,7 +63,7 @@ export async function ensureEntityWithStatus(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  const countResult = await client.getTotalCount({
+  const countResult = await client.getEntitiesTotalCount({
     entityTypes: [entityType],
     status: [status],
   });
@@ -123,14 +123,14 @@ export async function ensureEntityWithStatus(
 
 export async function getAllEntities(
   client: AdminClient,
-  query: AdminSearchQuery,
+  query: AdminEntitiesQuery,
 ): PromiseResult<
   AdminEntity[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const entities: AdminEntity[] = [];
   for await (const pageResult of getAllPagesForConnection({ first: 100 }, (currentPaging) =>
-    client.searchEntities(query, currentPaging),
+    client.getEntities(query, currentPaging),
   )) {
     if (pageResult.isError()) {
       return pageResult;
@@ -182,7 +182,7 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
 
 export async function countSearchResultWithEntity<TClient extends AdminClient | PublishedClient>(
   client: TClient,
-  query: Parameters<TClient['searchEntities']>[0],
+  query: Parameters<TClient['getEntities']>[0],
   entityId: string,
 ): PromiseResult<
   number,
@@ -192,7 +192,7 @@ export async function countSearchResultWithEntity<TClient extends AdminClient | 
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-    client.searchEntities(query as any, currentPaging),
+    client.getEntities(query as any, currentPaging),
   )) {
     if (pageResult.isError()) {
       return pageResult;

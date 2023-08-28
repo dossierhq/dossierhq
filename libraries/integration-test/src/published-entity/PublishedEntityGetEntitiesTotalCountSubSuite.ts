@@ -3,36 +3,36 @@ import type { UnboundTestFunction } from '../Builder.js';
 import { publishedClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
-export const GetTotalCountSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
-  getTotalCount_minimal,
-  getTotalCount_authKeySubject,
-  getTotalCount_authKeyNoneAndSubject,
+export const GetEntitiesTotalCountSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
+  getEntitiesTotalCount_minimal,
+  getEntitiesTotalCount_authKeySubject,
+  getEntitiesTotalCount_authKeyNoneAndSubject,
 ];
 
-async function getTotalCount_minimal({
+async function getEntitiesTotalCount_minimal({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getTotalCount({
+  const result = await publishedClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_authKeySubject({
+async function getEntitiesTotalCount_authKeySubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).getTotalCount({
+  const result = await publishedClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
-async function getTotalCount_authKeyNoneAndSubject({
+async function getEntitiesTotalCount_authKeyNoneAndSubject({
   server,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
@@ -40,7 +40,7 @@ async function getTotalCount_authKeyNoneAndSubject({
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).getTotalCount({
+  const result = await publishedClientForMainPrincipal(server).getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });

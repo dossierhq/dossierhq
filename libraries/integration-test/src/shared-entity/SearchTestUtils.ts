@@ -1,7 +1,7 @@
 import {
+  AdminEntitiesQueryOrder,
   AdminEntityStatus,
-  AdminQueryOrder,
-  PublishedQueryOrder,
+  PublishedEntitiesQueryOrder,
   assertIsDefined,
   getAllPagesForConnection,
   ok,
@@ -26,26 +26,30 @@ import type {
   AppPublishedEntity,
 } from '../SchemaTypes.js';
 
-const adminOrderCompare: Record<AdminQueryOrder, (a: AppAdminEntity, b: AppAdminEntity) => number> =
-  {
-    [AdminQueryOrder.createdAt]: (a, b) => a.info.createdAt.getTime() - b.info.createdAt.getTime(),
-    [AdminQueryOrder.updatedAt]: (a, b) => a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
-    [AdminQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
-  };
+const adminOrderCompare: Record<
+  AdminEntitiesQueryOrder,
+  (a: AppAdminEntity, b: AppAdminEntity) => number
+> = {
+  [AdminEntitiesQueryOrder.createdAt]: (a, b) =>
+    a.info.createdAt.getTime() - b.info.createdAt.getTime(),
+  [AdminEntitiesQueryOrder.updatedAt]: (a, b) =>
+    a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
+  [AdminEntitiesQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
+};
 
-const adminOrderExtract: Record<AdminQueryOrder, (it: AppAdminEntity) => unknown> = {
-  [AdminQueryOrder.createdAt]: (it) => it.info.createdAt,
-  [AdminQueryOrder.updatedAt]: (it) => it.info.updatedAt,
-  [AdminQueryOrder.name]: (it) => it.info.name,
+const adminOrderExtract: Record<AdminEntitiesQueryOrder, (it: AppAdminEntity) => unknown> = {
+  [AdminEntitiesQueryOrder.createdAt]: (it) => it.info.createdAt,
+  [AdminEntitiesQueryOrder.updatedAt]: (it) => it.info.updatedAt,
+  [AdminEntitiesQueryOrder.name]: (it) => it.info.name,
 };
 
 const publishedOrderCompare: Record<
-  PublishedQueryOrder,
+  PublishedEntitiesQueryOrder,
   (a: AppPublishedEntity, b: AppPublishedEntity) => number
 > = {
-  [PublishedQueryOrder.createdAt]: (a, b) =>
+  [PublishedEntitiesQueryOrder.createdAt]: (a, b) =>
     a.info.createdAt.getTime() - b.info.createdAt.getTime(),
-  [PublishedQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
+  [PublishedEntitiesQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
 export function assertAdminEntityConnectionToMatchSlice(
@@ -53,10 +57,10 @@ export function assertAdminEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AppAdminEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: AdminQueryOrder,
+  order?: AdminEntitiesQueryOrder,
   reverse?: boolean,
 ): void {
-  const resolvedOrder = order ?? AdminQueryOrder.createdAt;
+  const resolvedOrder = order ?? AdminEntitiesQueryOrder.createdAt;
   const orderExtractor = adminOrderExtract[resolvedOrder];
 
   assertOkResult(connectionResult);
@@ -79,7 +83,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AppPublishedEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: PublishedQueryOrder,
+  order?: PublishedEntitiesQueryOrder,
   reverse?: boolean,
 ): void {
   assertOkResult(connectionResult);
@@ -89,7 +93,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   }));
 
   const allEntitiesOrdered = [...allEntities].sort(
-    publishedOrderCompare[order ?? PublishedQueryOrder.createdAt],
+    publishedOrderCompare[order ?? PublishedEntitiesQueryOrder.createdAt],
   );
   if (reverse) allEntitiesOrdered.reverse();
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);
@@ -140,7 +144,7 @@ export async function countSearchResultWithEntity<
   TClient extends AppAdminClient | AppPublishedClient,
 >(
   client: TClient,
-  query: Parameters<TClient['searchEntities']>[0],
+  query: Parameters<TClient['getEntities']>[0],
   entityId: string,
 ): PromiseResult<
   number,
@@ -159,7 +163,7 @@ export async function collectMatchingSearchResultNodes<
   TClient extends AppAdminClient | AppPublishedClient,
 >(
   client: TClient,
-  query: Parameters<TClient['searchEntities']>[0],
+  query: Parameters<TClient['getEntities']>[0],
   matcher: (node: Awaited<ReturnType<TClient['getEntity']>>) => boolean,
 ): PromiseResult<
   Awaited<ReturnType<TClient['getEntity']>>[],
@@ -171,7 +175,7 @@ export async function collectMatchingSearchResultNodes<
     Edge<AppAdminEntity | AppPublishedEntity, ErrorType>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-  >({ first: 50 }, (currentPaging) => client.searchEntities(query as any, currentPaging))) {
+  >({ first: 50 }, (currentPaging) => client.getEntities(query as any, currentPaging))) {
     if (pageResult.isError()) return pageResult;
     for (const edge of pageResult.value.edges) {
       const node = edge.node as Awaited<ReturnType<TClient['getEntity']>>;
@@ -186,7 +190,7 @@ export async function collectMatchingSearchResultNodes<
 
 export async function countSearchResultStatuses(
   client: AppAdminClient,
-  query: Parameters<AppAdminClient['searchEntities']>[0],
+  query: Parameters<AppAdminClient['getEntities']>[0],
 ): PromiseResult<
   Record<AdminEntityStatus | 'valid' | 'invalid', number>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -202,7 +206,7 @@ export async function countSearchResultStatuses(
   };
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
-    client.searchEntities(query, currentPaging),
+    client.getEntities(query, currentPaging),
   )) {
     if (pageResult.isError()) {
       return pageResult;

@@ -4,14 +4,16 @@ import type {
   ErrorResult,
   ErrorType,
   PublishedClient,
+  PublishedEntitiesSharedQuery,
   PublishedEntity,
-  PublishedQuery,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, PublishedQuery | undefined, EntitySamplingOptions | undefined]>;
+type FetcherKey = Readonly<
+  [string, PublishedEntitiesSharedQuery | undefined, EntitySamplingOptions | undefined]
+>;
 type FetcherData<T> = EntitySamplingPayload<T>;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -20,35 +22,35 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param query If `undefined`, no data is fetched
  * @param options
  */
-export function usePublishedSampleEntities<
+export function usePublishedEntitiesSample<
   TPublishedEntity extends PublishedEntity<string, object>,
 >(
   publishedClient: PublishedClient<TPublishedEntity>,
-  query: PublishedQuery | undefined,
+  query: PublishedEntitiesSharedQuery | undefined,
   options?: EntitySamplingOptions,
 ): {
-  entitySamples: FetcherData<TPublishedEntity> | undefined;
-  entitySamplesError: FetcherError | undefined;
+  entitiesSample: FetcherData<TPublishedEntity> | undefined;
+  entitiesSampleError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query, options]: FetcherKey) => fetchSampleEntities(publishedClient, query, options),
+    ([_action, query, options]: FetcherKey) => fetchEntitiesSample(publishedClient, query, options),
     [publishedClient],
   );
   const { data, error } = useSWR<FetcherData<TPublishedEntity>, FetcherError, FetcherKey | null>(
-    query ? CACHE_KEYS.publishedSampleEntities(query, options) : null,
+    query ? CACHE_KEYS.publishedEntitiesSample(query, options) : null,
     fetcher,
   );
 
-  // useDebugLogChangedValues('usePublishedSampleEntities updated values', { publishedClient, query, options, data, error, });
-  return { entitySamples: data, entitySamplesError: error };
+  // useDebugLogChangedValues('usePublishedEntitiesSample updated values', { publishedClient, query, options, data, error, });
+  return { entitiesSample: data, entitiesSampleError: error };
 }
 
-async function fetchSampleEntities<TPublishedEntity extends PublishedEntity<string, object>>(
+async function fetchEntitiesSample<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
   query: FetcherKey[1],
   options: FetcherKey[2],
 ): Promise<FetcherData<TPublishedEntity>> {
-  const result = await publishedClient.sampleEntities(query, options);
+  const result = await publishedClient.getEntitiesSample(query, options);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

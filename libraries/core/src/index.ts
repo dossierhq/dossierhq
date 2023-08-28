@@ -16,13 +16,15 @@ export {
 } from './ErrorResult.js';
 export { NoOpLogger, createConsoleLogger, type Logger } from './Logger.js';
 export {
+  AdminEntitiesQueryOrder,
   AdminEntityStatus,
-  AdminQueryOrder,
-  PublishedQueryOrder,
+  PublishedEntitiesQueryOrder,
   PublishingEventKind,
   RichTextNodeType,
 } from './Types.js';
 export type {
+  AdminEntitiesQuery,
+  AdminEntitiesSharedQuery,
   AdminEntity,
   AdminEntityArchivePayload,
   AdminEntityCreate,
@@ -37,8 +39,6 @@ export type {
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
-  AdminQuery,
-  AdminSearchQuery,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
   AdvisoryLockReleasePayload,
@@ -55,10 +55,10 @@ export type {
   Location,
   PageInfo,
   Paging,
+  PublishedEntitiesQuery,
+  PublishedEntitiesSharedQuery,
   PublishedEntity,
   PublishedEntityInfo,
-  PublishedQuery,
-  PublishedSearchQuery,
   PublishingEvent,
   PublishingHistory,
   RichText,
@@ -138,10 +138,7 @@ export {
   normalizeEntityFields,
   normalizeValueItem,
 } from './content/ContentNormalizer.js';
-export {
-  contentValuePathToString as contentValuePathToString,
-  type ContentValuePath,
-} from './content/ContentPath.js';
+export { contentValuePathToString, type ContentValuePath } from './content/ContentPath.js';
 export {
   transformEntityFields,
   transformValueItem,

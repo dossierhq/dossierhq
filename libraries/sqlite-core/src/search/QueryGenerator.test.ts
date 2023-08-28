@@ -1,9 +1,9 @@
 import {
+  AdminEntitiesQueryOrder,
   AdminEntityStatus,
-  AdminQueryOrder,
   AdminSchema,
   ErrorType,
-  PublishedQueryOrder,
+  PublishedEntitiesQueryOrder,
 } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
@@ -305,7 +305,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminQueryOrder.createdAt, reverse: true },
+        { order: AdminEntitiesQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1036,7 +1036,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminQueryOrder.createdAt },
+        { order: AdminEntitiesQueryOrder.createdAt },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1063,7 +1063,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminQueryOrder.updatedAt },
+        { order: AdminEntitiesQueryOrder.updatedAt },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1090,7 +1090,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminQueryOrder.name },
+        { order: AdminEntitiesQueryOrder.name },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1410,7 +1410,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         publishedSchema,
-        { order: PublishedQueryOrder.createdAt, reverse: true },
+        { order: PublishedEntitiesQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1822,7 +1822,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         publishedSchema,
-        { order: PublishedQueryOrder.createdAt },
+        { order: PublishedEntitiesQueryOrder.createdAt },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1849,7 +1849,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         publishedSchema,
-        { order: PublishedQueryOrder.name },
+        { order: PublishedEntitiesQueryOrder.name },
         resolvePaging(undefined),
         authKeysNone,
       ),

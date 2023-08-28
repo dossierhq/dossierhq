@@ -1,4 +1,9 @@
-import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
+import type {
+  AdminEntitiesSharedQuery,
+  AdminSchema,
+  ErrorType,
+  PromiseResult,
+} from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { ResolvedAuthKey, TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
@@ -9,7 +14,7 @@ export async function adminEntitySearchTotalCount(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
   context: TransactionContext,
-  query: AdminQuery | undefined,
+  query: AdminEntitiesSharedQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);

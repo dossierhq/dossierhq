@@ -1,10 +1,10 @@
 import type {
-  AdminQuery,
+  AdminEntitiesSharedQuery,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorType,
   PromiseResult,
-  PublishedQuery,
+  PublishedEntitiesSharedQuery,
   Result,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
@@ -17,7 +17,10 @@ import { Randomizer } from '../utils/Randomizer.js';
 const MAX_SEED = 2147483647;
 const SAMPLING_DEFAULT_COUNT = 25; //TODO move to constants or make configurable?
 
-export async function sharedSampleEntities<TQuery extends AdminQuery | PublishedQuery, TEntity>(
+export async function sharedSampleEntities<
+  TQuery extends AdminEntitiesSharedQuery | PublishedEntitiesSharedQuery,
+  TEntity,
+>(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   query: TQuery | undefined,

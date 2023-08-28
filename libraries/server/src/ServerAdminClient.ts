@@ -198,11 +198,13 @@ export function createServerAdminClient({
         }
         break;
       }
-      case AdminClientOperationName.getTotalCount: {
+      case AdminClientOperationName.getEntitiesTotalCount: {
         const {
           args: [query],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getTotalCount>;
+        } = operation as AdminClientOperation<
+          typeof AdminClientOperationName.getEntitiesTotalCount
+        >;
         resolve(
           await adminGetTotalCount(
             serverImpl.getAdminSchema(),
@@ -247,11 +249,11 @@ export function createServerAdminClient({
         resolve(await renewAdvisoryLock(databaseAdapter, context, name, handle));
         break;
       }
-      case AdminClientOperationName.sampleEntities: {
+      case AdminClientOperationName.getEntitiesSample: {
         const {
           args: [query, options],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.sampleEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntitiesSample>;
         resolve(
           await adminSampleEntities(
             serverImpl.getAdminSchema(),
@@ -264,11 +266,11 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.searchEntities: {
+      case AdminClientOperationName.getEntities: {
         const {
           args: [query, paging],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.searchEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
         resolve(
           await adminSearchEntities(
             serverImpl.getAdminSchema(),

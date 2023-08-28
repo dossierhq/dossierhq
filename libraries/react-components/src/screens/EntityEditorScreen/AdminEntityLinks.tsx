@@ -4,7 +4,7 @@ import { useCallback, useContext, useState } from 'react';
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
-import { useAdminTotalCount } from '../../hooks/useAdminTotalCount.js';
+import { useAdminEntitiesTotalCount } from '../../hooks/useAdminTotalCount.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 interface Props {
@@ -20,10 +20,10 @@ export function AdminEntityLinks({ entityReference }: Props) {
     if (!isOpen) setShowDialog('');
   }, []);
 
-  const { totalCount: linksToTotal } = useAdminTotalCount(adminClient, {
+  const { totalCount: linksToTotal } = useAdminEntitiesTotalCount(adminClient, {
     linksTo: entityReference,
   });
-  const { totalCount: linksFromTotal } = useAdminTotalCount(adminClient, {
+  const { totalCount: linksFromTotal } = useAdminEntitiesTotalCount(adminClient, {
     linksFrom: entityReference,
   });
 

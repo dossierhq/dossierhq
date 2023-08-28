@@ -5,7 +5,7 @@ import type {
   ErrorType,
   PublishedEntity,
 } from '@dossierhq/core';
-import { AdminQueryOrder, ok } from '@dossierhq/core';
+import { AdminEntitiesQueryOrder, ok } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';
 import {
@@ -152,11 +152,11 @@ describe('SearchEntityStateActions.SetQuery', () => {
         actions: [new SearchEntityStateActions.SetSampling({}, true)],
       }),
       new SearchEntityStateActions.SetQuery(
-        { order: AdminQueryOrder.updatedAt },
+        { order: AdminEntitiesQueryOrder.updatedAt },
         { partial: true, resetPagingIfModifying: true },
       ),
     );
-    expect(state.query).toEqual({ order: AdminQueryOrder.updatedAt });
+    expect(state.query).toEqual({ order: AdminEntitiesQueryOrder.updatedAt });
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
   });
@@ -170,11 +170,11 @@ describe('SearchEntityStateActions.SetQuery', () => {
         ],
       }),
       new SearchEntityStateActions.SetQuery(
-        { order: AdminQueryOrder.name, reverse: false },
+        { order: AdminEntitiesQueryOrder.name, reverse: false },
         { partial: true, resetPagingIfModifying: true },
       ),
     );
-    expect(state.query).toEqual({ order: AdminQueryOrder.name, reverse: false });
+    expect(state.query).toEqual({ order: AdminEntitiesQueryOrder.name, reverse: false });
     expect(state.paging).toEqual({});
     expect(state.sampling).toBeUndefined();
   });
@@ -249,7 +249,7 @@ describe('SearchEntityStateActions.SetSampling', () => {
         mode: 'admin',
         actions: [
           new SearchEntityStateActions.SetQuery(
-            { order: AdminQueryOrder.updatedAt },
+            { order: AdminEntitiesQueryOrder.updatedAt },
             { partial: true, resetPagingIfModifying: true },
           ),
         ],

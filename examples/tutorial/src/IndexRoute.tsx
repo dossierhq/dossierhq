@@ -41,7 +41,7 @@ export function IndexRoute() {
 
   useEffect(() => {
     if (adminClient) {
-      adminClient.sampleEntities({}, { seed: adminSampleSeed, count: 5 }).then((result) => {
+      adminClient.getEntitiesSample({}, { seed: adminSampleSeed, count: 5 }).then((result) => {
         if (result.isOk()) setAdminSample(result.value);
       });
     }

@@ -140,7 +140,7 @@ function createNotAuthenticatedContext(): SessionGraphQLContext {
 
 async function ensureTestEntitiesExist(adminClient: AdminClient, authKey: string) {
   const requestedCount = 50;
-  const entitiesOfTypeCount = await adminClient.getTotalCount({
+  const entitiesOfTypeCount = await adminClient.getEntitiesTotalCount({
     authKeys: [authKey],
     entityTypes: ['QueryAdminOnlyEditBefore'],
   });
@@ -161,7 +161,7 @@ async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient, authK
   const query = { authKeys: [authKey], entityTypes: ['QueryAdminOnlyEditBefore'] };
   const entities: AdminEntity[] = [];
   for await (const pageResult of getAllPagesForConnection({}, (currentPaging) =>
-    adminClient.searchEntities(query, currentPaging),
+    adminClient.getEntities(query, currentPaging),
   )) {
     if (pageResult.isError()) {
       throw pageResult.toError();

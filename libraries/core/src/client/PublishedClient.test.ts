@@ -287,11 +287,11 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
-  test('getTotalCount', async () => {
+  test('getEntitiesTotalCount', async () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getTotalCount,
+        PublishedClientOperationName.getEntitiesTotalCount,
         (_context, operation) => {
           const [_query] = operation.args;
           operation.resolve(ok(123));
@@ -299,7 +299,7 @@ describe('PublishedClient forward operation over JSON', () => {
         },
       );
 
-    const result = await publishedClient.getTotalCount({
+    const result = await publishedClient.getEntitiesTotalCount({
       boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
     });
     expectResultValue(result, 123);
@@ -327,7 +327,7 @@ describe('PublishedClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "getTotalCount",
+            "name": "getEntitiesTotalCount",
             "next": [Function],
             "resolve": [Function],
           },
@@ -336,7 +336,7 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
-  test('sampleEntities', async () => {
+  test('getEntitiesSample', async () => {
     const entity1: PublishedEntity = {
       id: 'id',
       info: {
@@ -352,7 +352,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.sampleEntities,
+        PublishedClientOperationName.getEntitiesSample,
         (_context, operation) => {
           const [_query, _options] = operation.args;
           operation.resolve(ok({ seed: 123, totalCount: 1, items: [entity1] }));
@@ -360,7 +360,7 @@ describe('PublishedClient forward operation over JSON', () => {
         },
       );
 
-    const result = await publishedClient.sampleEntities(
+    const result = await publishedClient.getEntitiesSample(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { count: 10 },
     );
@@ -394,7 +394,7 @@ describe('PublishedClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "sampleEntities",
+            "name": "getEntitiesSample",
             "next": [Function],
             "resolve": [Function],
           },
@@ -403,7 +403,7 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
-  test('searchEntities', async () => {
+  test('getEntities', async () => {
     const entity1: PublishedEntity = {
       id: 'id',
       info: {
@@ -419,7 +419,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.searchEntities,
+        PublishedClientOperationName.getEntities,
         (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(
@@ -442,7 +442,7 @@ describe('PublishedClient forward operation over JSON', () => {
         },
       );
 
-    const result = await publishedClient.searchEntities(
+    const result = await publishedClient.getEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { first: 100, after: 'cursor' },
     );
@@ -493,7 +493,7 @@ describe('PublishedClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "searchEntities",
+            "name": "getEntities",
             "next": [Function],
             "resolve": [Function],
           },
@@ -502,11 +502,11 @@ describe('PublishedClient forward operation over JSON', () => {
     `);
   });
 
-  test('searchEntities (null)', async () => {
+  test('getEntities (null)', async () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.searchEntities,
+        PublishedClientOperationName.getEntities,
         (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(ok(null));
@@ -514,7 +514,7 @@ describe('PublishedClient forward operation over JSON', () => {
         },
       );
 
-    const result = await publishedClient.searchEntities();
+    const result = await publishedClient.getEntities();
     expectResultValue(result, null);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -534,7 +534,7 @@ describe('PublishedClient forward operation over JSON', () => {
               null,
             ],
             "modifies": false,
-            "name": "searchEntities",
+            "name": "getEntities",
             "next": [Function],
             "resolve": [Function],
           },

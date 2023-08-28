@@ -262,7 +262,7 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const query: Parameters<(typeof publishedClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
     text: 'splendid presentation',
   };
 
@@ -391,7 +391,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const query: Parameters<(typeof publishedClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
     entityTypes: ['ValueItems'],
     text: 'baz',
   };
@@ -546,7 +546,7 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
   const publishedClient = publishedClientForMainPrincipal(server);
   const fieldName = `field${new Date().getTime()}`;
 
-  const query: Parameters<(typeof publishedClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
     entityTypes: ['MigrationEntity'],
     text: 'Scrumptious',
   };
@@ -825,7 +825,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
   const adminClient = adminClientForMainPrincipal(server);
   const fieldName = `field${new Date().getTime()}`;
 
-  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
     entityTypes: ['MigrationEntity'],
     text: 'Supercalifragilisticexpialidocious',
   };
@@ -895,7 +895,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
   const fieldToDeleteName = `field${new Date().getTime()}Delete`;
   const fieldToBecomeInvalidName = `field${new Date().getTime()}Invalid`;
 
-  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
     entityTypes: ['MigrationEntity'],
     text: 'Kaboom',
   };
@@ -1056,7 +1056,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
   const adminClient = adminClientForMainPrincipal(server);
   const fieldName = `field${new Date().getTime()}`;
 
-  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
     entityTypes: ['ValueItems'],
     text: 'Copyrightable',
   };
@@ -1613,7 +1613,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
   const adminClient = adminClientForMainPrincipal(server);
   const typeName = `MigrationValueItem${new Date().getTime()}`;
 
-  const query: Parameters<(typeof adminClient)['searchEntities']>[0] = {
+  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
     entityTypes: ['ValueItems'],
     text: 'wingspan hero',
   };

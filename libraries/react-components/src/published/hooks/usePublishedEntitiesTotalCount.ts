@@ -2,15 +2,15 @@ import type {
   ErrorResult,
   ErrorType,
   PublishedClient,
+  PublishedEntitiesSharedQuery,
   PublishedEntity,
-  PublishedQuery,
   ValueItem,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, PublishedQuery | undefined]>;
+type FetcherKey = Readonly<[string, PublishedEntitiesSharedQuery | undefined]>;
 type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -19,33 +19,33 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param query If `undefined`, no data is fetched
  * @returns If no result, `connection` is `undefined`.
  */
-export function usePublishedTotalCount(
+export function usePublishedEntitiesTotalCount(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
-  query: PublishedQuery | undefined,
+  query: PublishedEntitiesSharedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query]: FetcherKey) => fetchTotalCount(publishedClient, query),
+    ([_action, query]: FetcherKey) => fetchEntitiesTotalCount(publishedClient, query),
     [publishedClient],
   );
   const { data: totalCount, error: totalCountError } = useSWR<
     FetcherData,
     FetcherError,
     FetcherKey | null
-  >(query ? CACHE_KEYS.publishedTotalCount(query) : null, fetcher);
+  >(query ? CACHE_KEYS.publishedEntitiesTotalCount(query) : null, fetcher);
 
-  // useDebugLogChangedValues('usePublishedTotalCount updated values', { publishedClient, query, totalCount, totalCountError, });
+  // useDebugLogChangedValues('usePublishedEntitiesTotalCount updated values', { publishedClient, query, totalCount, totalCountError, });
 
   return { totalCount, totalCountError };
 }
 
-async function fetchTotalCount(
+async function fetchEntitiesTotalCount(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
-  const result = await publishedClient.getTotalCount(query);
+  const result = await publishedClient.getEntitiesTotalCount(query);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

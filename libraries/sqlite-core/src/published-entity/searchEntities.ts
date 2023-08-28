@@ -1,8 +1,8 @@
 import type {
   ErrorType,
   PromiseResult,
+  PublishedEntitiesQuery,
   PublishedSchema,
-  PublishedSearchQuery,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
@@ -21,7 +21,7 @@ export async function publishedEntitySearchEntities(
   database: Database,
   schema: PublishedSchema,
   context: TransactionContext,
-  query: PublishedSearchQuery | undefined,
+  query: PublishedEntitiesQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<

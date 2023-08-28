@@ -1,4 +1,9 @@
-import type { AdminQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
+import type {
+  AdminEntitiesSharedQuery,
+  AdminSchema,
+  ErrorType,
+  PromiseResult,
+} from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPayload,
@@ -15,7 +20,7 @@ export async function adminEntitySampleEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
   context: TransactionContext,
-  query: AdminQuery | undefined,
+  query: AdminEntitiesSharedQuery | undefined,
   offset: number,
   limit: number,
   resolvedAuthKeys: ResolvedAuthKey[],

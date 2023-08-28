@@ -5,14 +5,14 @@ import type {
   ErrorType,
   Paging,
   PublishedClient,
+  PublishedEntitiesQuery,
   PublishedEntity,
-  PublishedSearchQuery,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, PublishedSearchQuery | undefined, Paging | undefined]>;
+type FetcherKey = Readonly<[string, PublishedEntitiesQuery | undefined, Paging | undefined]>;
 type FetcherData<T> = Connection<Edge<T, ErrorType>> | null;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -22,35 +22,33 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param paging
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
-export function usePublishedSearchEntities<
-  TPublishedEntity extends PublishedEntity<string, object>,
->(
+export function usePublishedEntities<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
-  query: PublishedSearchQuery | undefined,
+  query: PublishedEntitiesQuery | undefined,
   paging?: Paging,
 ): {
   connection: FetcherData<TPublishedEntity> | undefined;
   connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query, paging]: FetcherKey) => fetchSearchEntities(publishedClient, query, paging),
+    ([_action, query, paging]: FetcherKey) => fetchEntities(publishedClient, query, paging),
     [publishedClient],
   );
   const { data, error } = useSWR<FetcherData<TPublishedEntity>, FetcherError, FetcherKey | null>(
-    query ? CACHE_KEYS.publishedSearchEntities(query, paging) : null,
+    query ? CACHE_KEYS.publishedEntities(query, paging) : null,
     fetcher,
   );
 
-  // useDebugLogChangedValues('usePublishedSearchEntities updated values', { publishedClient, query, paging, data, error, });
+  // useDebugLogChangedValues('usePublishedEntities updated values', { publishedClient, query, paging, data, error, });
   return { connection: data, connectionError: error };
 }
 
-async function fetchSearchEntities<TPublishedEntity extends PublishedEntity<string, object>>(
+async function fetchEntities<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
   query: FetcherKey[1],
   paging: FetcherKey[2],
 ): Promise<FetcherData<TPublishedEntity>> {
-  const result = await publishedClient.searchEntities(query, paging);
+  const result = await publishedClient.getEntities(query, paging);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

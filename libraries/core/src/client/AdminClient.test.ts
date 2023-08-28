@@ -943,10 +943,10 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('getTotalCount', async () => {
+  test('getEntitiesTotalCount', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.getTotalCount,
+      AdminClientOperationName.getEntitiesTotalCount,
       (_context, operation) => {
         const [_query] = operation.args;
         operation.resolve(ok(123));
@@ -954,7 +954,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getTotalCount({
+    const result = await adminClient.getEntitiesTotalCount({
       boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
     });
     expectResultValue(result, 123);
@@ -982,7 +982,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "getTotalCount",
+            "name": "getEntitiesTotalCount",
             "next": [Function],
             "resolve": [Function],
           },
@@ -1146,7 +1146,7 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('sampleEntities', async () => {
+  test('getEntitiesSample', async () => {
     const entity1: AdminEntity = {
       id: 'id',
       info: {
@@ -1165,7 +1165,7 @@ describe('AdminClient forward operation over JSON', () => {
 
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.sampleEntities,
+      AdminClientOperationName.getEntitiesSample,
       (_context, operation) => {
         const [_query, options] = operation.args;
         operation.resolve(ok({ seed: options?.seed ?? 1, totalCount: 1, items: [entity1] }));
@@ -1173,7 +1173,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.sampleEntities(
+    const result = await adminClient.getEntitiesSample(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { seed: 1234, count: 10 },
     );
@@ -1211,7 +1211,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "sampleEntities",
+            "name": "getEntitiesSample",
             "next": [Function],
             "resolve": [Function],
           },
@@ -1220,7 +1220,7 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('searchEntities', async () => {
+  test('getEntities', async () => {
     const entity1: AdminEntity = {
       id: 'id',
       info: {
@@ -1239,7 +1239,7 @@ describe('AdminClient forward operation over JSON', () => {
 
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.searchEntities,
+      AdminClientOperationName.getEntities,
       (_context, operation) => {
         const [_query, _paging] = operation.args;
         operation.resolve(
@@ -1262,7 +1262,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.searchEntities(
+    const result = await adminClient.getEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { first: 100, after: 'cursor' },
     );
@@ -1317,7 +1317,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
             ],
             "modifies": false,
-            "name": "searchEntities",
+            "name": "getEntities",
             "next": [Function],
             "resolve": [Function],
           },
@@ -1326,10 +1326,10 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('searchEntities (null)', async () => {
+  test('getEntities (null)', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.searchEntities,
+      AdminClientOperationName.getEntities,
       (_context, operation) => {
         const [_query, _paging] = operation.args;
         operation.resolve(ok(null));
@@ -1337,7 +1337,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.searchEntities();
+    const result = await adminClient.getEntities();
     expectResultValue(result, null);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -1357,7 +1357,7 @@ describe('AdminClient forward operation over JSON', () => {
               null,
             ],
             "modifies": false,
-            "name": "searchEntities",
+            "name": "getEntities",
             "next": [Function],
             "resolve": [Function],
           },

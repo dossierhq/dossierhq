@@ -5,9 +5,9 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
+  PublishedEntitiesQuery,
   PublishedEntity,
   PublishedSchema,
-  PublishedSearchQuery,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
@@ -22,7 +22,7 @@ export async function publishedSearchEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: PublishedSearchQuery | undefined,
+  query: PublishedEntitiesQuery | undefined,
   paging: Paging | undefined,
 ): PromiseResult<
   Connection<Edge<PublishedEntity, ErrorType>> | null,

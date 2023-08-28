@@ -1,16 +1,16 @@
-import type { AdminQueryOrder, PublishedEntity } from '@dossierhq/core';
-import { PublishedQueryOrder } from '@dossierhq/core';
+import type { AdminEntitiesQueryOrder, PublishedEntity } from '@dossierhq/core';
+import { PublishedEntitiesQueryOrder } from '@dossierhq/core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
-import { AuthKeyTag } from '../../../shared/components/AuthKeyTag/AuthKeyTag.js';
+import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { AuthKeyTag } from '../../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
-import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
@@ -40,9 +40,14 @@ export function PublishedEntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === PublishedQueryOrder.name ? direction : ''}
+            order={order === PublishedEntitiesQueryOrder.name ? direction : ''}
             onClick={() =>
-              handleHeaderClick(dispatchSearchEntityState, order, reverse, PublishedQueryOrder.name)
+              handleHeaderClick(
+                dispatchSearchEntityState,
+                order,
+                reverse,
+                PublishedEntitiesQueryOrder.name,
+              )
             }
           >
             Name
@@ -72,7 +77,7 @@ export function PublishedEntityList({
                   {...{
                     entity,
                     authKeys,
-                    order: order as PublishedQueryOrder | undefined,
+                    order: order as PublishedEntitiesQueryOrder | undefined,
                     onItemClick,
                   }}
                 />
@@ -107,9 +112,9 @@ function EntityListRow({
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminQueryOrder | PublishedQueryOrder | undefined,
+  order: AdminEntitiesQueryOrder | PublishedEntitiesQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: PublishedQueryOrder,
+  headerOrder: PublishedEntitiesQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {

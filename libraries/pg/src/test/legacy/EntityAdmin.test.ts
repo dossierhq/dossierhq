@@ -818,10 +818,10 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id });
         expectResultValue(getResult, expectedEntity);
 
-        const referencesTo1 = await client.searchEntities({ linksTo: { id: bar1Id } });
+        const referencesTo1 = await client.getEntities({ linksTo: { id: bar1Id } });
         expectSearchResultEntities(referencesTo1, [baz]);
 
-        const referencesTo2 = await client.searchEntities({ linksTo: { id: bar2Id } });
+        const referencesTo2 = await client.getEntities({ linksTo: { id: bar2Id } });
         expectSearchResultEntities(referencesTo2, [baz]);
       }
     }
@@ -1011,7 +1011,7 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, expectedEntity);
 
-        const barReferences = await client.searchEntities({ linksTo: { id: barId } });
+        const barReferences = await client.getEntities({ linksTo: { id: barId } });
         expectSearchResultEntities(barReferences, [baz]);
       }
     }
@@ -1104,14 +1104,14 @@ describe('createEntity()', () => {
         const getResult = await client.getEntity({ id: bazId });
         expectResultValue(getResult, expectedEntity);
 
-        const bar1References = await client.searchEntities({ linksTo: { id: bar1Id } });
+        const bar1References = await client.getEntities({ linksTo: { id: bar1Id } });
 
         expect(
           bar1References.isOk() &&
             bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null)),
         ).toEqual([bazId]);
 
-        const bar2References = await client.searchEntities({ linksTo: { id: bar2Id } });
+        const bar2References = await client.getEntities({ linksTo: { id: bar2Id } });
 
         expect(
           bar2References.isOk() &&
@@ -1583,12 +1583,12 @@ describe('createEntity()', () => {
   });
 });
 
-describe('searchEntities() linksTo', () => {
+describe('getEntities() linksTo', () => {
   test('Query based on linksTo and entityTypes, one reference', async () => {
     const { barId, bazEntities } = await createBarWithFooBazReferences(1, 1);
     const [bazEntity] = bazEntities;
 
-    const searchResult = await client.searchEntities({
+    const searchResult = await client.getEntities({
       entityTypes: ['EntityAdminBaz'],
       linksTo: { id: barId },
     });
@@ -1596,7 +1596,7 @@ describe('searchEntities() linksTo', () => {
   });
 });
 
-describe('searchEntities() boundingBox', () => {
+describe('getEntities() boundingBox', () => {
   test('Query based on bounding box for rich text', async () => {
     const boundingBox = randomBoundingBox();
     const center = {
@@ -1627,11 +1627,11 @@ describe('searchEntities() boundingBox', () => {
   });
 });
 
-describe('getTotalCount', () => {
+describe('getEntitiesTotalCount', () => {
   test('Query based on linksTo and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooBazReferences(1, 1);
 
-    const result = await client.getTotalCount({
+    const result = await client.getEntitiesTotalCount({
       entityTypes: ['EntityAdminBaz'],
       linksTo: { id: barId },
     });
@@ -1657,9 +1657,9 @@ describe('getTotalCount', () => {
     });
 
     if (expectOkResult(createResult)) {
-      const searchResult = await client.searchEntities({ boundingBox });
+      const searchResult = await client.getEntities({ boundingBox });
 
-      const totalResult = await client.getTotalCount({ boundingBox });
+      const totalResult = await client.getEntitiesTotalCount({ boundingBox });
       if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
         // Hopefully there aren't too many entities in the bounding box
         expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
@@ -1670,7 +1670,7 @@ describe('getTotalCount', () => {
   });
 
   test('Query based on text', async () => {
-    const resultBefore = await client.getTotalCount({ text: 'sensational clown' });
+    const resultBefore = await client.getEntitiesTotalCount({ text: 'sensational clown' });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
         await client.createEntity({
@@ -1679,7 +1679,7 @@ describe('getTotalCount', () => {
         }),
       );
 
-      const resultAfter = await client.getTotalCount({ text: 'sensational clown' });
+      const resultAfter = await client.getEntitiesTotalCount({ text: 'sensational clown' });
       if (expectOkResult(resultAfter)) {
         expect(resultAfter.value).toBe(resultBefore.value + 1);
       }

@@ -91,7 +91,7 @@ async function updateSchema(adminClient: AppAdminClient) {
 }
 
 async function createMessages(logger: Logger, adminClient: AppAdminClient) {
-  const totalMessageCountResult = await adminClient.getTotalCount({
+  const totalMessageCountResult = await adminClient.getEntitiesTotalCount({
     entityTypes: ['Message'],
     authKeys: ['none'],
   });

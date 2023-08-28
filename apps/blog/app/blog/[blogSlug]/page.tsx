@@ -93,7 +93,7 @@ export default async function Page({ params }: { params: { blogSlug: string } })
 export async function generateStaticParams() {
   const publishedClient = await getPublishedClientForServerComponent();
   const connection = (
-    await publishedClient.searchEntities({ entityTypes: ['BlogPost'] })
+    await publishedClient.getEntities({ entityTypes: ['BlogPost'] })
   ).valueOrThrow();
 
   if (connection?.pageInfo.hasNextPage) {
