@@ -6,7 +6,7 @@ import { ScreenChangesContext } from './ScreenChangesContext.js';
 import { useBeforeUnload } from './useBeforeUnload.js';
 
 interface Props {
-  current: 'home' | 'admin-entities' | 'published-entities' | 'schema';
+  current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'changelog';
 }
 
 export function Navbar({ current }: Props) {
@@ -42,6 +42,9 @@ export function Navbar({ current }: Props) {
           </DesignNavbar.Item>
           <DesignNavbar.Item active={current === 'schema'}>
             {NavItemRender('Schema', '/schema', handleLinkClick)}
+          </DesignNavbar.Item>
+          <DesignNavbar.Item active={current === 'changelog'}>
+            {NavItemRender('Changelog', '/changelog', handleLinkClick)}
           </DesignNavbar.Item>
         </DesignNavbar.Start>
         <DesignNavbar.End>

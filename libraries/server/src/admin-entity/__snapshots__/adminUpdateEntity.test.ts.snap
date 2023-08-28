@@ -48,13 +48,15 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
         "title": "Updated title",
       },
       "name": "Updated name",
+      "publish": false,
       "schemaVersion": 1,
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
       },
       "status": "draft",
-      "version": 1,
+      "type": "TitleOnly",
+      "version": 2,
     },
   ],
   [

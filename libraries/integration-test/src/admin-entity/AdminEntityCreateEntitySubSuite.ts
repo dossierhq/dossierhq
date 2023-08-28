@@ -1,13 +1,14 @@
 import {
   AdminEntityStatus,
+  ErrorType,
+  EventType,
   copyEntity,
+  createRichText,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
   createRichTextValueItemNode,
-  ErrorType,
 } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -16,18 +17,10 @@ import {
   assertNotSame,
   assertOkResult,
   assertResultValue,
+  assertSame,
   assertTruthy,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type {
-  AdminLocations,
-  AdminReferences,
-  AdminReferencesValue,
-  AdminRichTexts,
-  AdminStrings,
-  AdminSubjectOnly,
-  AdminTitleOnly,
-} from '../SchemaTypes.js';
 import {
   assertIsAdminLocations,
   assertIsAdminReferences,
@@ -35,9 +28,16 @@ import {
   assertIsAdminStrings,
   assertIsAdminSubjectOnly,
   assertIsAdminTitleOnly,
+  type AdminLocations,
+  type AdminReferences,
+  type AdminReferencesValue,
+  type AdminRichTexts,
+  type AdminStrings,
+  type AdminSubjectOnly,
+  type AdminTitleOnly,
 } from '../SchemaTypes.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
-  adminToPublishedEntity,
   LOCATIONS_ADMIN_ENTITY,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
@@ -50,6 +50,7 @@ import {
   SUBJECT_ONLY_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
+  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
@@ -61,10 +62,14 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_minimal,
   createEntity_withId,
   createEntity_duplicateName,
+  createEntity_canUsePublishedNameOfOtherEntity,
   createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_publishWithUniqueIndexValue,
+  createEntity_publishConflictingPublishedName,
+  createEntity_createEntityEvent,
+  createEntity_createAndPublishEntityEvent,
   createEntity_withAuthKeyMatchingPattern,
   createEntity_withMultilineField,
   createEntity_withMatchingPattern,
@@ -92,13 +97,12 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 async function createEntity_minimal({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
-  assertOkResult(createResult);
   const {
     entity: {
       id,
       info: { name, createdAt, updatedAt },
     },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
     id,
@@ -157,25 +161,51 @@ async function createEntity_duplicateName({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const firstResult = await client.createEntity(TITLE_ONLY_CREATE);
   const secondResult = await client.createEntity(TITLE_ONLY_CREATE);
-  assertOkResult(firstResult);
-  assertOkResult(secondResult);
 
   const {
     entity: {
       id: firstId,
       info: { name: firstName },
     },
-  } = firstResult.value;
+  } = firstResult.valueOrThrow();
   const {
     entity: {
       id: secondId,
       info: { name: secondName },
     },
-  } = secondResult.value;
+  } = secondResult.valueOrThrow();
   assertNotSame(firstId, secondId);
   assertNotSame(firstName, secondName);
 
   assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
+}
+
+async function createEntity_canUsePublishedNameOfOtherEntity({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  // Create/published first entity
+  const {
+    entity: {
+      id: firstId,
+      info: { name: firstName },
+    },
+  } = (await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })).valueOrThrow();
+
+  // Update name (without publishing), that way we only conflict on the published name
+  assertOkResult(
+    await adminClient.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
+  );
+
+  // Create second entity with same name - should work since we're not publishing
+  const {
+    entity: {
+      info: { name: secondName },
+    },
+  } = (
+    await adminClient.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: firstName } }))
+  ).valueOrThrow();
+
+  assertSame(firstName, secondName);
 }
 
 async function createEntity_fiveInParallelWithSameName({ server }: AdminEntityTestContext) {
@@ -195,13 +225,12 @@ async function createEntity_publishMinimal({ server }: AdminEntityTestContext) {
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,
   });
-  assertOkResult(createResult);
   const {
     entity: {
       id,
       info: { name, createdAt, updatedAt },
     },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
     id,
@@ -278,6 +307,95 @@ async function createEntity_publishWithUniqueIndexValue({
   const getResult = await publishedClient.getEntity({ index: 'stringsUnique', value: unique });
   assertOkResult(getResult);
   assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
+}
+
+async function createEntity_publishConflictingPublishedName({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  // Create/published first entity
+  const {
+    entity: {
+      id: firstId,
+      info: { name: firstName },
+    },
+  } = (await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })).valueOrThrow();
+
+  // Update name (without publishing), that way we only conflict on the published name
+  assertOkResult(
+    await adminClient.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
+  );
+
+  // Create second entity with same name (should generate new name due to conflict)
+  const {
+    entity: {
+      id: secondId,
+      info: { name: secondName },
+    },
+  } = (
+    await adminClient.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: firstName } }), {
+      publish: true,
+    })
+  ).valueOrThrow();
+
+  assertNotSame(firstName, secondName);
+
+  // Get second published entity
+
+  const {
+    info: { name: secondPublishedName },
+  } = (await publishedClient.getEntity({ id: secondId })).valueOrThrow();
+  assertSame(secondPublishedName, secondName);
+}
+
+async function createEntity_createEntityEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt, version },
+    },
+  } = createResult.valueOrThrow();
+
+  assertEquals(createdAt, updatedAt);
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function createEntity_createAndPublishEntityEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
+    publish: true,
+  });
+  const {
+    entity: {
+      id,
+      info: { name, createdAt, updatedAt, version },
+    },
+  } = createResult.valueOrThrow();
+
+  assertEquals(createdAt, updatedAt);
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createAndPublishEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function createEntity_withAuthKeyMatchingPattern({ server }: AdminEntityTestContext) {

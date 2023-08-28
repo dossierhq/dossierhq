@@ -2,10 +2,11 @@ import type { ErrorType, Result } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { DatabasePagingInfo } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
+import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
 import type { CursorNativeType } from './OpaqueCursor.js';
 import { fromOpaqueCursor } from './OpaqueCursor.js';
 
-export interface ResolvedPagingCursors<TCursor> {
+export interface ResolvedPagingCursors<TCursor extends ColumnValue> {
   before: TCursor | null;
   after: TCursor | null;
 }
@@ -23,7 +24,7 @@ function getCursor(
   return ok(null);
 }
 
-export function resolvePagingCursors<TCursor>(
+export function resolvePagingCursors<TCursor extends ColumnValue>(
   database: Database,
   cursorType: CursorNativeType,
   paging: DatabasePagingInfo,

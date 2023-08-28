@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import type { AdminEntity, AdminEntityCreate, RichText, ValueItem } from '../Types.js';
-import { copyEntity, isEntityNameAsRequested } from './ContentUtils.js';
+import { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './ContentUtils.js';
 
 type AdminFoo = AdminEntity<'Foo', AdminFooFields, 'none'>;
 
@@ -31,6 +31,16 @@ describe('copyEntity', () => {
       info: { authKey: 'none', name: 'Name', type: 'Foo' },
       fields: { string: 'hello', stringList: ['world'] },
     });
+  });
+});
+
+describe('getEntityNameBase', () => {
+  test('name', () => {
+    expect(getEntityNameBase('name')).toBe('name');
+  });
+
+  test('name#123', () => {
+    expect(getEntityNameBase('name#123')).toBe('name');
   });
 });
 

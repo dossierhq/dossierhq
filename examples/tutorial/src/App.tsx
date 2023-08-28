@@ -1,6 +1,7 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { NotificationContainer } from '@dossierhq/design';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AdminChangelogRoute } from './AdminChangelogRoute.js';
 import { AdminEntityEditorRoute } from './AdminEntityEditorRoute.js';
 import { AdminEntityListRoute } from './AdminEntityListRoute.js';
 import { AdminSchemaEditorRoute } from './AdminSchemaEditorRoute.js';
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
   { path: '/published-entities', element: <PublishedEntityListRoute /> },
   { path: '/published-entities/display', element: <PublishedEntityDisplayRoute /> },
   { path: '/schema', element: <AdminSchemaEditorRoute /> },
+  { path: '/changelog', element: <AdminChangelogRoute /> },
 ]);
 
 export default function App() {

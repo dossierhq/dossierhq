@@ -1,9 +1,9 @@
 import {
   ok,
   withAdvisoryLock,
+  type EntityReference,
   type ErrorType,
   type PromiseResult,
-  type EntityReference,
 } from '@dossierhq/core';
 import type { ProcessDirtyEntityPayload, Server } from '@dossierhq/server';
 import type { AppAdminClient } from '../SchemaTypes.js';
@@ -15,7 +15,7 @@ export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
   return await withAdvisoryLock(
     adminClient,
     'schema-update',
-    { acquireInterval: 50, leaseDuration: 300, renewInterval: 200 },
+    { acquireInterval: 50, leaseDuration: 500, renewInterval: 200 },
     callback,
   );
 }

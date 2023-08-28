@@ -1,0 +1,231 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChangelogStateActions scenarios > Next page -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": {
+            "createdAt": 2022-03-19T07:51:25.560Z,
+            "createdBy": "123",
+            "type": "updateSchema",
+            "version": 1,
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "edges": [
+    {
+      "cursor": "cursor-1",
+      "node": OkResult {
+        "value": {
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "createdBy": "123",
+          "type": "updateSchema",
+          "version": 1,
+        },
+      },
+    },
+  ],
+  "loadingState": "",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "scrollToTopSignal": 0,
+  "totalCount": 2,
+}
+`;
+
+exports[`ChangelogStateActions scenarios > Next page -> loading -> loaded > 2 - loading 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "edges": [
+    {
+      "cursor": "cursor-1",
+      "node": OkResult {
+        "value": {
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "createdBy": "123",
+          "type": "updateSchema",
+          "version": 1,
+        },
+      },
+    },
+  ],
+  "loadingState": "next-page",
+  "paging": {
+    "after": "cursor-1",
+  },
+  "query": {
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "scrollToTopSignal": 0,
+  "totalCount": 2,
+}
+`;
+
+exports[`ChangelogStateActions scenarios > Next page -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": {
+            "createdAt": 2022-03-19T07:51:25.560Z,
+            "createdBy": "123",
+            "type": "updateSchema",
+            "version": 1,
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-2",
+      "hasNextPage": false,
+      "hasPreviousPage": true,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "edges": [
+    {
+      "cursor": "cursor-2",
+      "node": OkResult {
+        "value": {
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "createdBy": "123",
+          "type": "updateSchema",
+          "version": 1,
+        },
+      },
+    },
+  ],
+  "loadingState": "",
+  "paging": {
+    "after": "cursor-1",
+  },
+  "query": {
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "scrollToTopSignal": 1,
+  "totalCount": 2,
+}
+`;
+
+exports[`ChangelogStateActions scenarios > Refresh > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": {
+            "createdAt": 2022-03-19T07:51:25.560Z,
+            "createdBy": "123",
+            "type": "updateSchema",
+            "version": 1,
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "edges": [
+    {
+      "cursor": "cursor-1",
+      "node": OkResult {
+        "value": {
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "createdBy": "123",
+          "type": "updateSchema",
+          "version": 1,
+        },
+      },
+    },
+  ],
+  "loadingState": "",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "scrollToTopSignal": 0,
+  "totalCount": 2,
+}
+`;
+
+exports[`ChangelogStateActions scenarios > Refresh > 2 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": {
+            "createdAt": 2022-03-19T07:51:25.560Z,
+            "createdBy": "123",
+            "type": "updateSchema",
+            "version": 1,
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-2",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "edges": [
+    {
+      "cursor": "cursor-2",
+      "node": OkResult {
+        "value": {
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "createdBy": "123",
+          "type": "updateSchema",
+          "version": 1,
+        },
+      },
+    },
+  ],
+  "loadingState": "",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "scrollToTopSignal": 0,
+  "totalCount": 2,
+}
+`;

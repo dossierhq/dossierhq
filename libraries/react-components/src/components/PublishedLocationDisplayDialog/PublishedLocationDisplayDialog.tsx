@@ -16,7 +16,7 @@ import {
   SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface PublishedLocationDisplayDialogProps {
   title: string;

@@ -92,13 +92,15 @@ async function getEntityWithVersion(
       | 'auth_key'
       | 'resolved_auth_key'
       | 'created_at'
-      | 'updated_at'
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'data'>
+      Pick<
+        EntityVersionsTable,
+        'name' | 'version' | 'schema_version' | 'encode_version' | 'data'
+      > & { updated_at: EntityVersionsTable['created_at'] }
   >(databaseAdapter, context, {
-    text: `SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
+    text: `SELECT e.uuid, e.type, e.auth_key, e.resolved_auth_key, e.created_at, e.status, e.invalid, ev.name, ev.version, ev.schema_version, ev.encode_version, ev.data, ev.created_at AS updated_at
     FROM entities e, entity_versions ev
     WHERE e.uuid = $1
     AND e.id = ev.entities_id

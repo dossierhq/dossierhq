@@ -1,4 +1,4 @@
-import { copyEntity, ErrorType } from '@dossierhq/core';
+import { copyEntity, ErrorType, isEntityNameAsRequested } from '@dossierhq/core';
 import {
   assertEquals,
   assertErrorResult,
@@ -21,6 +21,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
   getEntity_withSubjectAuthKey,
   getEntity_getLatestVersion,
   getEntity_usingUniqueIndex,
+  getEntity_getOldVersion,
   getEntity_invalidEntity,
   getEntity_invalidPublishedEntity,
   getEntity_errorInvalidId,
@@ -74,6 +75,29 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
   assertResultValue(result, createResult.value.entity);
 }
 
+async function getEntity_getOldVersion({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const createResult = await adminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
+  );
+  const { entity: originalEntity } = createResult.valueOrThrow();
+
+  const updateResult = await adminClient.updateEntity({
+    id: originalEntity.id,
+    info: { name: 'Updated name' },
+    fields: { title: 'Updated title' },
+  });
+  assertOkResult(updateResult);
+
+  const result = await adminClient.getEntity({
+    id: originalEntity.id,
+    version: originalEntity.info.version,
+  });
+  assertOkResult(result);
+  assertResultValue(result, originalEntity);
+  assertSame(isEntityNameAsRequested(result.value.info.name, 'Original name'), true);
+}
+
 async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const { entity } = (
@@ -113,11 +137,11 @@ async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext)
     entity: { id },
   } = createResult.value;
 
-  const resultMinusOne = await client.getEntity({ id, version: -1 });
+  const resultMinusOne = await client.getEntity({ id, version: 0 });
   assertErrorResult(resultMinusOne, ErrorType.NotFound, 'No such entity or version');
 
-  const resultOne = await client.getEntity({ id, version: 1 });
-  assertErrorResult(resultOne, ErrorType.NotFound, 'No such entity or version');
+  const resultPlusOne = await client.getEntity({ id, version: 2 });
+  assertErrorResult(resultPlusOne, ErrorType.NotFound, 'No such entity or version');
 }
 
 async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTestContext) {

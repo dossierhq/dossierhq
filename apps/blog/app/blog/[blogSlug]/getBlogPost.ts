@@ -10,7 +10,7 @@ export async function getBlogPost(publishedClient: AppPublishedClient, slug: str
   let authors: PublishedAuthor[] = [];
   if (blogPost.fields.authors && blogPost.fields.authors.length > 0) {
     const authorsResult = (
-      await publishedClient.getEntities(blogPost.fields.authors)
+      await publishedClient.getEntityList(blogPost.fields.authors)
     ).valueOrThrow();
     authors = authorsResult.map((authorResult) => {
       const author = authorResult.valueOrThrow();

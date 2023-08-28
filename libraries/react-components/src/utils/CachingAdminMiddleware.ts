@@ -15,8 +15,7 @@ import { useSWRConfig } from 'swr';
 import type { ScopedMutator } from './CacheUtils.js';
 import {
   clearCacheDueToSchemaMigrations,
-  invalidateEntityHistory,
-  invalidatePublishingHistory,
+  invalidateChangelogEvents,
   updateCacheEntity,
   updateCacheEntityInfo,
   updateCacheSchemas,
@@ -38,7 +37,6 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
 
   function handleUpdatedAdminSchema(
     context: TContext,
-    cache: Cache,
     mutate: ScopedMutator,
     adminSchema: AdminSchemaSpecificationWithMigrations,
   ) {
@@ -56,7 +54,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
         adminSchema.version,
         migrationsToApply,
       );
-      clearCacheDueToSchemaMigrations(cache, mutate);
+      clearCacheDueToSchemaMigrations(mutate);
     }
 
     lastSchemaVersion = adminSchema.version;
@@ -71,13 +69,13 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
         case AdminClientOperationName.archiveEntity: {
           const payload = result.value as OkFromResult<ReturnType<AdminClient['archiveEntity']>>;
           updateCacheEntityInfo(mutate, payload);
-          invalidatePublishingHistory(mutate, payload.id);
+          invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.createEntity: {
           const payload = result.value as OkFromResult<ReturnType<AdminClient['createEntity']>>;
           updateCacheEntity(mutate, payload.entity);
-          invalidateEntityHistory(mutate, payload.entity.id);
+          invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.getSchemaSpecification: {
@@ -88,7 +86,6 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           if (args[0]?.includeMigrations) {
             handleUpdatedAdminSchema(
               context,
-              cache,
               mutate,
               payload as AdminSchemaSpecificationWithMigrations,
             );
@@ -99,14 +96,14 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           const payload = result.value as OkFromResult<ReturnType<AdminClient['publishEntities']>>;
           payload.forEach((it) => {
             updateCacheEntityInfo(mutate, it);
-            invalidatePublishingHistory(mutate, it.id);
+            invalidateChangelogEvents(mutate);
           });
           break;
         }
         case AdminClientOperationName.unarchiveEntity: {
           const payload = result.value as OkFromResult<ReturnType<AdminClient['unarchiveEntity']>>;
           updateCacheEntityInfo(mutate, payload);
-          invalidatePublishingHistory(mutate, payload.id);
+          invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.unpublishEntities: {
@@ -115,20 +112,20 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           >;
           payload.forEach((it) => {
             updateCacheEntityInfo(mutate, it);
-            invalidatePublishingHistory(mutate, it.id);
+            invalidateChangelogEvents(mutate);
           });
           break;
         }
         case AdminClientOperationName.updateEntity: {
           const payload = result.value as OkFromResult<ReturnType<AdminClient['updateEntity']>>;
           updateCacheEntity(mutate, payload.entity);
-          invalidateEntityHistory(mutate, payload.entity.id);
+          invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.upsertEntity: {
           const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
           updateCacheEntity(mutate, payload.entity);
-          invalidateEntityHistory(mutate, payload.entity.id);
+          invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.updateSchemaSpecification: {
@@ -143,6 +140,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
             );
           }
           updateCacheSchemas(cache, mutate, adminSchema);
+          invalidateChangelogEvents(mutate);
           break;
         }
       }

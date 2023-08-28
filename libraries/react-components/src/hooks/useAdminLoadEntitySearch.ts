@@ -13,8 +13,8 @@ import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { useAdminSampleEntities } from './useAdminSampleEntities.js';
 import { useAdminSearchEntities } from './useAdminSearchEntities.js';
 import { useAdminTotalCount } from './useAdminTotalCount.js';

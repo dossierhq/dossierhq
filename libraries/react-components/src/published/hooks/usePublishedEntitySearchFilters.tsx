@@ -21,8 +21,8 @@ import type { TypeItem } from '../../shared/components/TypeSelector/TypeSelector
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 
 export function usePublishedEntitySearchFilters(

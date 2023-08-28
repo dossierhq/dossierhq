@@ -49,7 +49,7 @@ export async function adminEntitySearchEntities(
 
   return ok({
     hasMore,
-    entities: entitiesValues.map((it) => ({
+    edges: entitiesValues.map((it) => ({
       ...resolveAdminEntityInfo(it),
       ...resolveEntityFields(it),
       id: it.uuid,

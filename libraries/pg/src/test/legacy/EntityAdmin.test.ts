@@ -4,11 +4,13 @@ import {
   ErrorType,
   FieldType,
   PublishingEventKind,
+  assertOkResult,
   copyEntity,
-  createRichTextParagraphNode,
   createRichText,
+  createRichTextParagraphNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
+  isEntityNameAsRequested,
 } from '@dossierhq/core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';
@@ -332,7 +334,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminFoo',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -345,7 +347,7 @@ describe('createEntity()', () => {
 
       expectResultValue(createResult, { effect: 'created', entity: expectedEntity });
 
-      const publishResult = await client.publishEntities([{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -361,15 +363,18 @@ describe('createEntity()', () => {
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
-            version: 0,
+            version: 1,
             published: true,
             createdBy: context.session.subjectId,
           },
         ]);
       }
 
-      const version0Result = await client.getEntity({ id, version: 0 });
-      expectResultValue(version0Result, expectedEntity);
+      const version1Result = await client.getEntity({ id, version: 1 });
+      expectResultValue(
+        version1Result,
+        copyEntity(expectedEntity, { info: { updatedAt: createdAt } }),
+      );
 
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
@@ -401,7 +406,7 @@ describe('createEntity()', () => {
           info: {
             type: 'EntityAdminFoo',
             name,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -417,20 +422,20 @@ describe('createEntity()', () => {
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
-            version: 0,
+            version: 1,
             published: false,
             createdBy: context.session.subjectId,
           },
         ]);
       }
 
-      const version0Result = await client.getEntity({ id, version: 0 });
-      expectResultValue(version0Result, {
+      const version1Result = await client.getEntity({ id, version: 1 });
+      expectResultValue(version1Result, {
         id,
         info: {
           type: 'EntityAdminFoo',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -466,7 +471,7 @@ describe('createEntity()', () => {
           info: {
             type: 'EntityAdminFoo',
             name,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -512,7 +517,7 @@ describe('createEntity()', () => {
         id,
         info: {
           type: 'EntityAdminBaz',
-          version: 0,
+          version: 1,
           name,
           authKey: 'none',
           status: AdminEntityStatus.draft,
@@ -560,7 +565,7 @@ describe('createEntity()', () => {
           info: {
             type: 'EntityAdminFoo',
             name,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -581,8 +586,8 @@ describe('createEntity()', () => {
         });
 
         const publishResult = await client.publishEntities([
-          { id: fooId, version: 0 },
-          { id: barId, version: 0 },
+          { id: fooId, version: 1 },
+          { id: barId, version: 1 },
         ]);
         if (expectOkResult(publishResult)) {
           const [{ updatedAt: fooUpdatedAt }, { updatedAt: barUpdatedAt }] = publishResult.value;
@@ -606,8 +611,11 @@ describe('createEntity()', () => {
           expectedFooEntity.info.validPublished = true;
         }
 
-        const fooVersion0Result = await client.getEntity({ id: fooId, version: 0 });
-        expectResultValue(fooVersion0Result, expectedFooEntity);
+        const fooVersion1Result = await client.getEntity({ id: fooId, version: 1 });
+        expectResultValue(
+          fooVersion1Result,
+          copyEntity(expectedFooEntity, { info: { updatedAt: createdAt } }),
+        );
 
         const publishedFooResult = await publishedClient.getEntity({ id: fooId });
         expectResultValue(publishedFooResult, {
@@ -647,7 +655,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -688,7 +696,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -733,7 +741,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -794,7 +802,7 @@ describe('createEntity()', () => {
           info: {
             type: 'EntityAdminBaz',
             name: name,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -837,7 +845,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -881,7 +889,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -925,7 +933,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -980,7 +988,7 @@ describe('createEntity()', () => {
           info: {
             type: 'EntityAdminBaz',
             name: bazName,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -1061,7 +1069,7 @@ describe('createEntity()', () => {
           info: {
             type: 'EntityAdminBaz',
             name: bazName,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -1144,7 +1152,7 @@ describe('createEntity()', () => {
         info: {
           type: 'EntityAdminBaz',
           name: bazName,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -1220,7 +1228,7 @@ describe('createEntity()', () => {
         type: 'EntityAdminFoo',
         name: 'Foo',
         authKey: 'none',
-        version: 1 as 0,
+        version: 0 as 1,
       },
       fields: {},
     });
@@ -1228,7 +1236,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.info.version: Version must be 0 when creating a new entity',
+      'entity.info.version: Version must be 1 when creating a new entity',
     );
   });
 
@@ -1689,7 +1697,7 @@ describe('updateEntity()', () => {
       const {
         entity: {
           id,
-          info: { createdAt },
+          info: { createdAt, name: originalName },
         },
       } = createResult.value;
 
@@ -1697,8 +1705,8 @@ describe('updateEntity()', () => {
         id,
         info: {
           type: 'EntityAdminFoo',
-          name: createResult.value.entity.info.name,
-          version: 0,
+          name: originalName,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -1719,71 +1727,78 @@ describe('updateEntity()', () => {
         info: { type: 'EntityAdminFoo', name: 'Updated name' },
         fields: { title: 'Updated title' },
       });
-      if (expectOkResult(updateResult)) {
-        const {
-          entity: {
-            info: { name },
-          },
-        } = updateResult.value;
-        expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
+      assertOkResult(updateResult);
+      const {
+        entity: {
+          info: { name },
+        },
+      } = updateResult.value;
+      expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
-        expectedEntity.info.name = name;
-        expectedEntity.info.version = 1;
-        expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
-        expectedEntity.fields.title = 'Updated title';
+      expectedEntity.info.name = name;
+      expectedEntity.info.version = 2;
+      expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
+      expectedEntity.fields.title = 'Updated title';
 
-        expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
+      expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
 
-        const publishResult = await client.publishEntities([{ id, version: 1 }]);
-        if (expectOkResult(publishResult)) {
-          const [{ updatedAt }] = publishResult.value;
-          expectResultValue(publishResult, [
-            { id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
-          ]);
+      const publishResult = await client.publishEntities([{ id, version: 2 }]);
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt }] = publishResult.value;
+        expectResultValue(publishResult, [
+          { id, status: AdminEntityStatus.published, effect: 'published', updatedAt },
+        ]);
 
-          expectedEntity.info.status = AdminEntityStatus.published;
-          expectedEntity.info.updatedAt = updatedAt;
-          expectedEntity.info.validPublished = true;
-        }
-
-        const historyResult = await client.getEntityHistory({ id });
-        if (expectOkResult(historyResult)) {
-          expectEntityHistoryVersions(historyResult.value, [
-            {
-              version: 0,
-              published: false,
-              createdBy: context.session.subjectId,
-            },
-            {
-              version: 1,
-              published: true,
-              createdBy: context.session.subjectId,
-            },
-          ]);
-        }
-
-        const version0Result = await client.getEntity({ id, version: 0 });
-        expectResultValue(
-          version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'Original' } }),
-        );
-
-        const version1Result = await client.getEntity({ id, version: 1 });
-        expectResultValue(version1Result, expectedEntity);
-
-        const publishedResult = await publishedClient.getEntity({ id });
-        expectResultValue(publishedResult, {
-          id,
-          info: {
-            type: 'EntityAdminFoo',
-            name: expectedEntity.info.name,
-            authKey: 'none',
-            createdAt,
-            valid: true,
-          },
-          fields: { ...emptyFooFields, title: 'Updated title' },
-        });
+        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.updatedAt = updatedAt;
+        expectedEntity.info.validPublished = true;
       }
+
+      const historyResult = await client.getEntityHistory({ id });
+      if (expectOkResult(historyResult)) {
+        expectEntityHistoryVersions(historyResult.value, [
+          {
+            version: 1,
+            published: false,
+            createdBy: context.session.subjectId,
+          },
+          {
+            version: 2,
+            published: true,
+            createdBy: context.session.subjectId,
+          },
+        ]);
+      }
+
+      const version1Result = await client.getEntity({ id, version: 1 });
+      expectResultValue(
+        version1Result,
+        copyEntity(expectedEntity, {
+          info: { version: 1, name: originalName, updatedAt: createdAt },
+          fields: { title: 'Original' },
+        }),
+      );
+
+      const version2Result = await client.getEntity({ id, version: 2 });
+      expectResultValue(
+        version2Result,
+        copyEntity(expectedEntity, {
+          info: { updatedAt: updateResult.value.entity.info.updatedAt },
+        }),
+      );
+
+      const publishedResult = await publishedClient.getEntity({ id });
+      expectResultValue(publishedResult, {
+        id,
+        info: {
+          type: 'EntityAdminFoo',
+          name: expectedEntity.info.name,
+          authKey: 'none',
+          createdAt,
+          valid: true,
+        },
+        fields: { ...emptyFooFields, title: 'Updated title' },
+      });
     }
   });
 
@@ -1796,7 +1811,7 @@ describe('updateEntity()', () => {
       const {
         entity: {
           id,
-          info: { createdAt },
+          info: { createdAt, name: firstName },
         },
       } = createResult.value;
 
@@ -1804,8 +1819,8 @@ describe('updateEntity()', () => {
         id,
         info: {
           type: 'EntityAdminFoo',
-          name: createResult.value.entity.info.name,
-          version: 0,
+          name: firstName,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -1821,7 +1836,7 @@ describe('updateEntity()', () => {
 
       expectResultValue(createResult, { effect: 'created', entity: expectedEntity });
 
-      const publishResult = await client.publishEntities([{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -1847,7 +1862,7 @@ describe('updateEntity()', () => {
         expectedEntity.info.name = name;
         expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
         expectedEntity.info.status = AdminEntityStatus.modified;
-        expectedEntity.info.version = 1;
+        expectedEntity.info.version = 2;
         expectedEntity.info.validPublished = true;
         expectedEntity.fields.title = 'Updated title';
 
@@ -1857,31 +1872,42 @@ describe('updateEntity()', () => {
         if (expectOkResult(historyResult)) {
           expectEntityHistoryVersions(historyResult.value, [
             {
-              version: 0,
+              version: 1,
               published: true,
               createdBy: context.session.subjectId,
             },
             {
-              version: 1,
+              version: 2,
               published: false,
               createdBy: context.session.subjectId,
             },
           ]);
         }
 
-        const version0Result = await client.getEntity({ id, version: 0 });
+        const version1Result = await client.getEntity({ id, version: 1 });
         expectResultValue(
-          version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'First' } }),
+          version1Result,
+          copyEntity(expectedEntity, {
+            info: { name: firstName, version: 1, updatedAt: createdAt },
+            fields: { title: 'First' },
+          }),
         );
 
-        const version1Result = await client.getEntity({ id, version: 1 });
-        expectResultValue(version1Result, expectedEntity);
+        const version2Result = await client.getEntity({ id, version: 2 });
+        expectResultValue(version2Result, expectedEntity);
 
         const publishedResult = await publishedClient.getEntity({ id });
+        const publishedName = publishedResult.valueOrThrow().info.name;
+        expect(isEntityNameAsRequested(publishedName, 'First')).toBeTruthy();
         expectResultValue(publishedResult, {
           id,
-          info: { type: 'EntityAdminFoo', name, authKey: 'none', createdAt, valid: true },
+          info: {
+            type: 'EntityAdminFoo',
+            name: publishedName,
+            authKey: 'none',
+            createdAt,
+            valid: true,
+          },
           fields: {
             ...emptyFooFields,
             title: 'First',
@@ -1909,7 +1935,7 @@ describe('updateEntity()', () => {
         info: {
           type: 'EntityAdminFoo',
           name: createResult.value.entity.info.name,
-          version: 1,
+          version: 2,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -1924,13 +1950,11 @@ describe('updateEntity()', () => {
       };
 
       const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
-      if (expectOkResult(updateResult)) {
-        expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
+      assertOkResult(updateResult);
+      expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
+      expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
 
-        expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
-      }
-
-      const publishResult = await client.publishEntities([{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 2 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -1946,26 +1970,34 @@ describe('updateEntity()', () => {
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
-            version: 0,
+            version: 1,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
-            version: 1,
+            version: 2,
             published: true,
             createdBy: context.session.subjectId,
           },
         ]);
       }
 
-      const version0Result = await client.getEntity({ id, version: 0 });
+      const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(
-        version0Result,
-        copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'Original' } }),
+        version1Result,
+        copyEntity(expectedEntity, {
+          info: { version: 1, updatedAt: createdAt },
+          fields: { title: 'Original' },
+        }),
       );
 
-      const version1Result = await client.getEntity({ id, version: 1 });
-      expectResultValue(version1Result, expectedEntity);
+      const version2Result = await client.getEntity({ id, version: 2 });
+      expectResultValue(
+        version2Result,
+        copyEntity(expectedEntity, {
+          info: { updatedAt: updateResult.value.entity.info.updatedAt },
+        }),
+      );
 
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
@@ -2000,7 +2032,7 @@ describe('updateEntity()', () => {
         info: {
           type: 'EntityAdminFoo',
           name: createResult.value.entity.info.name,
-          version: 0,
+          version: 1,
           authKey: 'none',
           status: AdminEntityStatus.draft,
           valid: true,
@@ -2021,14 +2053,13 @@ describe('updateEntity()', () => {
         id,
         fields: { summary: 'Updated summary' },
       });
-      if (expectOkResult(updateResult)) {
-        expectedEntity.info.version = 1;
-        expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
-        expectedEntity.fields.summary = 'Updated summary';
-        expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
-      }
+      assertOkResult(updateResult);
+      expectedEntity.info.version = 2;
+      expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
+      expectedEntity.fields.summary = 'Updated summary';
+      expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
 
-      const publishResult = await client.publishEntities([{ id, version: 1 }]);
+      const publishResult = await client.publishEntities([{ id, version: 2 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -2044,26 +2075,34 @@ describe('updateEntity()', () => {
       if (expectOkResult(historyResult)) {
         expectEntityHistoryVersions(historyResult.value, [
           {
-            version: 0,
+            version: 1,
             published: false,
             createdBy: context.session.subjectId,
           },
           {
-            version: 1,
+            version: 2,
             published: true,
             createdBy: context.session.subjectId,
           },
         ]);
       }
 
-      const version0Result = await client.getEntity({ id, version: 0 });
+      const version1Result = await client.getEntity({ id, version: 1 });
       expectResultValue(
-        version0Result,
-        copyEntity(expectedEntity, { info: { version: 0 }, fields: { summary: 'First summary' } }),
+        version1Result,
+        copyEntity(expectedEntity, {
+          info: { version: 1, updatedAt: createdAt },
+          fields: { summary: 'First summary' },
+        }),
       );
 
-      const version1Result = await client.getEntity({ id, version: 1 });
-      expectResultValue(version1Result, expectedEntity);
+      const version2Result = await client.getEntity({ id, version: 2 });
+      expectResultValue(
+        version2Result,
+        copyEntity(expectedEntity, {
+          info: { updatedAt: updateResult.value.entity.info.updatedAt },
+        }),
+      );
 
       const publishedResult = await publishedClient.getEntity({ id });
       expectResultValue(publishedResult, {
@@ -2100,7 +2139,7 @@ describe('updateEntity()', () => {
       const updateResult = await client.updateEntity({ id, info: { name }, fields: {} });
       expectResultValue(updateResult, { effect: 'none', entity: createResult.value.entity });
 
-      const publishResult = await client.publishEntities([{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -2154,7 +2193,7 @@ describe('updateEntity()', () => {
         id,
         info: {
           type: 'EntityAdminBaz',
-          version: 0,
+          version: 1,
           name: createResult.value.entity.info.name,
           authKey: 'none',
           status: AdminEntityStatus.draft,
@@ -2173,7 +2212,7 @@ describe('updateEntity()', () => {
         fields: { twoStrings: { type: 'EntityAdminTwoStrings' } },
       });
       if (expectOkResult(updateResult)) {
-        expectedEntity.info.version = 1;
+        expectedEntity.info.version = 2;
         expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
         expectedEntity.fields.twoStrings = { type: 'EntityAdminTwoStrings', one: null, two: null };
       }
@@ -2189,101 +2228,107 @@ describe('updateEntity()', () => {
       info: { type: 'EntityAdminFoo', name: 'First name', authKey: 'none' },
       fields: { title: 'First title', summary: 'First summary' },
     });
-    if (expectOkResult(createFooResult)) {
-      const {
-        entity: {
-          id: fooId,
-          info: { createdAt },
-        },
-      } = createFooResult.value;
+    assertOkResult(createFooResult);
 
-      const expectedEntity: AdminEntity = {
+    const {
+      entity: {
+        id: fooId,
+        info: { createdAt },
+      },
+    } = createFooResult.value;
+
+    const expectedEntity: AdminEntity = {
+      id: fooId,
+      info: {
+        type: 'EntityAdminFoo',
+        name: createFooResult.value.entity.info.name,
+        version: 1,
+        authKey: 'none',
+        status: AdminEntityStatus.draft,
+        valid: true,
+        validPublished: null,
+        createdAt,
+        updatedAt: createFooResult.value.entity.info.updatedAt,
+      },
+      fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
+    };
+
+    expectResultValue(createFooResult, { effect: 'created', entity: expectedEntity });
+
+    const createBarResult = await client.createEntity({
+      info: { type: 'EntityAdminBar', name: 'Bar entity', authKey: 'none' },
+      fields: { title: 'Bar entity' },
+    });
+    if (expectOkResult(createBarResult)) {
+      const {
+        entity: { id: barId },
+      } = createBarResult.value;
+
+      const updateResult = await client.updateEntity({
+        id: fooId,
+        fields: { bar: { id: barId } },
+      });
+      assertOkResult(updateResult);
+      expectedEntity.info.version = 2;
+      expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
+      expectedEntity.fields.bar = { id: barId };
+
+      expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
+
+      const publishResult = await client.publishEntities([
+        { id: fooId, version: 2 },
+        { id: barId, version: 1 },
+      ]);
+      if (expectOkResult(publishResult)) {
+        const [{ updatedAt: fooUpdatedAt }, { updatedAt: barUpdatedAt }] = publishResult.value;
+        expectResultValue(publishResult, [
+          {
+            id: fooId,
+            status: AdminEntityStatus.published,
+            effect: 'published',
+            updatedAt: fooUpdatedAt,
+          },
+          {
+            id: barId,
+            status: AdminEntityStatus.published,
+            effect: 'published',
+            updatedAt: barUpdatedAt,
+          },
+        ]);
+        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.updatedAt = fooUpdatedAt;
+        expectedEntity.info.validPublished = true;
+      }
+
+      const version1Result = await client.getEntity({ id: fooId, version: 1 });
+      expectResultValue(
+        version1Result,
+        copyEntity(expectedEntity, {
+          info: { version: 1, updatedAt: createFooResult.value.entity.info.createdAt },
+          fields: { bar: null },
+        }),
+      );
+
+      const version2Result = await client.getEntity({ id: fooId, version: 2 });
+      expectResultValue(
+        version2Result,
+        copyEntity(expectedEntity, {
+          info: { updatedAt: updateResult.value.entity.info.updatedAt },
+        }),
+      );
+
+      const publishedResult = await publishedClient.getEntity({ id: fooId });
+      expectResultValue(publishedResult, {
         id: fooId,
         info: {
           type: 'EntityAdminFoo',
-          name: createFooResult.value.entity.info.name,
-          version: 0,
+          name: expectedEntity.info.name,
           authKey: 'none',
-          status: AdminEntityStatus.draft,
-          valid: true,
-          validPublished: null,
           createdAt,
-          updatedAt: createFooResult.value.entity.info.updatedAt,
+          valid: true,
         },
-        fields: { ...emptyFooFields, title: 'First title', summary: 'First summary' },
-      };
-
-      expectResultValue(createFooResult, { effect: 'created', entity: expectedEntity });
-
-      const createBarResult = await client.createEntity({
-        info: { type: 'EntityAdminBar', name: 'Bar entity', authKey: 'none' },
-        fields: { title: 'Bar entity' },
+        fields: { title: 'First title', summary: 'First summary', bar: { id: barId } },
       });
-      if (expectOkResult(createBarResult)) {
-        const {
-          entity: { id: barId },
-        } = createBarResult.value;
-
-        const updateResult = await client.updateEntity({
-          id: fooId,
-          fields: { bar: { id: barId } },
-        });
-
-        if (expectOkResult(updateResult)) {
-          expectedEntity.info.version = 1;
-          expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
-          expectedEntity.fields.bar = { id: barId };
-        }
-
-        expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
-
-        const publishResult = await client.publishEntities([
-          { id: fooId, version: 1 },
-          { id: barId, version: 0 },
-        ]);
-        if (expectOkResult(publishResult)) {
-          const [{ updatedAt: fooUpdatedAt }, { updatedAt: barUpdatedAt }] = publishResult.value;
-          expectResultValue(publishResult, [
-            {
-              id: fooId,
-              status: AdminEntityStatus.published,
-              effect: 'published',
-              updatedAt: fooUpdatedAt,
-            },
-            {
-              id: barId,
-              status: AdminEntityStatus.published,
-              effect: 'published',
-              updatedAt: barUpdatedAt,
-            },
-          ]);
-          expectedEntity.info.status = AdminEntityStatus.published;
-          expectedEntity.info.updatedAt = fooUpdatedAt;
-          expectedEntity.info.validPublished = true;
-        }
-
-        const version0Result = await client.getEntity({ id: fooId, version: 0 });
-        expectResultValue(
-          version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { bar: null } }),
-        );
-
-        const version1Result = await client.getEntity({ id: fooId, version: 1 });
-        expectResultValue(version1Result, expectedEntity);
-
-        const publishedResult = await publishedClient.getEntity({ id: fooId });
-        expectResultValue(publishedResult, {
-          id: fooId,
-          info: {
-            type: 'EntityAdminFoo',
-            name: expectedEntity.info.name,
-            authKey: 'none',
-            createdAt,
-            valid: true,
-          },
-          fields: { title: 'First title', summary: 'First summary', bar: { id: barId } },
-        });
-      }
     }
   });
 
@@ -2305,8 +2350,8 @@ describe('updateEntity()', () => {
       } = createBar2Result.value;
 
       const publishResult = await client.publishEntities([
-        { id: bar1Id, version: 0 },
-        { id: bar2Id, version: 0 },
+        { id: bar1Id, version: 1 },
+        { id: bar2Id, version: 1 },
       ]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
@@ -2347,7 +2392,7 @@ describe('updateEntity()', () => {
           info: {
             type: 'EntityAdminBaz',
             name: createBazResult.value.entity.info.name,
-            version: 0,
+            version: 1,
             authKey: 'none',
             status: AdminEntityStatus.draft,
             valid: true,
@@ -2369,15 +2414,14 @@ describe('updateEntity()', () => {
           id: bazId,
           fields: { title: 'Updated title' },
         });
-        if (expectOkResult(updateResult)) {
-          expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
-          expectedEntity.info.version = 1;
-          expectedEntity.fields.title = 'Updated title';
-        }
+        assertOkResult(updateResult);
+        expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
+        expectedEntity.info.version = 2;
+        expectedEntity.fields.title = 'Updated title';
 
         expectResultValue(updateResult, { effect: 'updated', entity: expectedEntity });
 
-        const publishResult = await client.publishEntities([{ id: bazId, version: 1 }]);
+        const publishResult = await client.publishEntities([{ id: bazId, version: 2 }]);
         if (expectOkResult(publishResult)) {
           const [{ updatedAt }] = publishResult.value;
           expectResultValue(publishResult, [
@@ -2388,14 +2432,22 @@ describe('updateEntity()', () => {
           expectedEntity.info.validPublished = true;
         }
 
-        const version0Result = await client.getEntity({ id: bazId, version: 0 });
+        const version1Result = await client.getEntity({ id: bazId, version: 1 });
         expectResultValue(
-          version0Result,
-          copyEntity(expectedEntity, { info: { version: 0 }, fields: { title: 'First title' } }),
+          version1Result,
+          copyEntity(expectedEntity, {
+            info: { version: 1, updatedAt: bazCreatedAt },
+            fields: { title: 'First title' },
+          }),
         );
 
-        const version1Result = await client.getEntity({ id: bazId, version: 1 });
-        expectResultValue(version1Result, expectedEntity);
+        const version2Result = await client.getEntity({ id: bazId, version: 2 });
+        expectResultValue(
+          version2Result,
+          copyEntity(expectedEntity, {
+            info: { updatedAt: updateResult.value.entity.info.updatedAt },
+          }),
+        );
 
         const publishedResult = await publishedClient.getEntity({ id: bazId });
         expectResultValue(publishedResult, {
@@ -2457,7 +2509,7 @@ describe('updateEntity()', () => {
             info: {
               type: 'EntityAdminFoo',
               name,
-              version: 1,
+              version: 2,
               authKey: 'none',
               status: AdminEntityStatus.archived,
               valid: true,
@@ -2483,7 +2535,7 @@ describe('updateEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      expectOkResult(await client.publishEntities([{ id, version: 0 }]));
+      expectOkResult(await client.publishEntities([{ id, version: 1 }]));
 
       const updateResult = await client.updateEntity({ id, fields: { title: 'Foo title' } });
       if (expectOkResult(updateResult)) {
@@ -2681,7 +2733,7 @@ describe('publishEntities()', () => {
             info: {
               type: 'EntityAdminBaz',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.published,
               valid: true,
@@ -2706,7 +2758,7 @@ describe('publishEntities()', () => {
         entity: { id: bazId },
       } = createBazResult.value;
 
-      const firstPublishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+      const firstPublishResult = await client.publishEntities([{ id: bazId, version: 1 }]);
       if (expectOkResult(firstPublishResult)) {
         const [{ updatedAt: firstPublishUpdatedAt }] = firstPublishResult.value;
         expectResultValue(firstPublishResult, [
@@ -2718,7 +2770,7 @@ describe('publishEntities()', () => {
           },
         ]);
 
-        const secondPublishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+        const secondPublishResult = await client.publishEntities([{ id: bazId, version: 1 }]);
         expectResultValue(secondPublishResult, [
           {
             id: bazId,
@@ -2755,7 +2807,7 @@ describe('publishEntities()', () => {
           entity: { id: fooId },
         } = createFooResult.value;
 
-        const publishResult = await client.publishEntities([{ id: fooId, version: 0 }]);
+        const publishResult = await client.publishEntities([{ id: fooId, version: 1 }]);
         expectErrorResult(
           publishResult,
           ErrorType.BadRequest,
@@ -2777,7 +2829,7 @@ describe('publishEntities()', () => {
         entity: { id: quxId },
       } = createQuxResult.value;
 
-      const publishResult = await client.publishEntities([{ id: quxId, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id: quxId, version: 1 }]);
       expectErrorResult(publishResult, ErrorType.BadRequest, `Entity type is adminOnly: ${quxId}`);
     }
   });
@@ -2794,7 +2846,7 @@ describe('publishEntities()', () => {
         entity: { id: bazId },
       } = createBazResult.value;
 
-      const publishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id: bazId, version: 1 }]);
       expectErrorResult(
         publishResult,
         ErrorType.BadRequest,
@@ -2817,7 +2869,7 @@ describe('publishEntities()', () => {
         entity: { id: bazId },
       } = createBazResult.value;
 
-      const publishResult = await client.publishEntities([{ id: bazId, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id: bazId, version: 1 }]);
       expectErrorResult(
         publishResult,
         ErrorType.BadRequest,
@@ -2828,7 +2880,7 @@ describe('publishEntities()', () => {
 
   test('Error: Published unknown entity', async () => {
     const publishResult = await client.publishEntities([
-      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 0 },
+      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
     ]);
     expectErrorResult(
       publishResult,
@@ -2888,7 +2940,7 @@ describe('unpublishEntities()', () => {
             info: {
               type: 'EntityAdminBaz',
               name,
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.withdrawn,
               valid: true,
@@ -2925,8 +2977,8 @@ describe('unpublishEntities()', () => {
         expectOkResult(await client.updateEntity({ id: baz1Id, fields: { baz: { id: baz2Id } } }));
 
         const publishResult = await client.publishEntities([
-          { id: baz1Id, version: 1 },
-          { id: baz2Id, version: 0 },
+          { id: baz1Id, version: 2 },
+          { id: baz2Id, version: 1 },
         ]);
         if (expectOkResult(publishResult)) {
           const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = publishResult.value;
@@ -2988,7 +3040,7 @@ describe('unpublishEntities()', () => {
         },
       });
       if (expectOkResult(createBaz2Result)) {
-        const publishResult = await client.publishEntities([{ id: baz1Id, version: 0 }]);
+        const publishResult = await client.publishEntities([{ id: baz1Id, version: 1 }]);
         if (expectOkResult(publishResult)) {
           const [{ updatedAt }] = publishResult.value;
           expectResultValue(publishResult, [
@@ -3083,8 +3135,8 @@ describe('unpublishEntities()', () => {
         } = createFooResult.value;
 
         const publishResult = await client.publishEntities([
-          { id: fooId, version: 0 },
-          { id: barId, version: 0 },
+          { id: fooId, version: 1 },
+          { id: barId, version: 1 },
         ]);
         if (expectOkResult(publishResult)) {
           const [{ updatedAt: fooUpdatedAt }, { updatedAt: barUpdatedAt }] = publishResult.value;
@@ -3149,7 +3201,7 @@ describe('archiveEntity()', () => {
                 kind: PublishingEventKind.archive,
                 publishedAt,
                 publishedBy: context.session.subjectId,
-                version: null,
+                version: 1,
               },
             ],
           });
@@ -3162,7 +3214,7 @@ describe('archiveEntity()', () => {
             info: {
               name,
               type: 'EntityAdminBar',
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.archived,
               valid: true,
@@ -3290,13 +3342,13 @@ describe('unarchiveEntity()', () => {
                 kind: PublishingEventKind.archive,
                 publishedAt: publishedAt0,
                 publishedBy: context.session.subjectId,
-                version: null,
+                version: 1,
               },
               {
                 kind: PublishingEventKind.unarchive,
                 publishedAt: publishedAt1,
                 publishedBy: context.session.subjectId,
-                version: null,
+                version: 1,
               },
             ],
           });
@@ -3309,7 +3361,7 @@ describe('unarchiveEntity()', () => {
             info: {
               name,
               type: 'EntityAdminBar',
-              version: 0,
+              version: 1,
               authKey: 'none',
               status: AdminEntityStatus.draft,
               valid: true,
@@ -3403,7 +3455,7 @@ describe('getPublishingHistory()', () => {
         entity: { id },
       } = createResult.value;
 
-      const publishResult = await client.publishEntities([{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -3421,7 +3473,7 @@ describe('getPublishingHistory()', () => {
               kind: PublishingEventKind.publish,
               publishedAt,
               publishedBy: context.session.subjectId,
-              version: 0,
+              version: 1,
             },
           ],
         });
@@ -3439,7 +3491,7 @@ describe('getPublishingHistory()', () => {
         entity: { id },
       } = createResult.value;
 
-      const publishResult = await client.publishEntities([{ id, version: 0 }]);
+      const publishResult = await client.publishEntities([{ id, version: 1 }]);
       if (expectOkResult(publishResult)) {
         const [{ updatedAt }] = publishResult.value;
         expectResultValue(publishResult, [
@@ -3466,13 +3518,13 @@ describe('getPublishingHistory()', () => {
               kind: PublishingEventKind.publish,
               publishedAt: publishedAt0,
               publishedBy: context.session.subjectId,
-              version: 0,
+              version: 1,
             },
             {
               kind: PublishingEventKind.unpublish,
               publishedAt: publishedAt1,
               publishedBy: context.session.subjectId,
-              version: null,
+              version: 1,
             },
           ],
         });

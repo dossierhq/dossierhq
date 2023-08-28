@@ -1,3 +1,5 @@
+import type { EventType } from '@dossierhq/core';
+
 export interface AdvisoryLocksTable {
   id: number;
   name: string;
@@ -16,6 +18,7 @@ export interface EntitiesTable {
   id: number;
   uuid: string;
   name: string;
+  published_name: string | null;
   type: string;
   auth_key: string;
   resolved_auth_key: string;
@@ -66,12 +69,27 @@ export interface EntityPublishingEventsTable {
 export interface EntityVersionsTable {
   id: number;
   entities_id: number;
+  type: string;
+  name: string;
   version: number;
   created_at: string;
   created_by: number;
   schema_version: number;
   encode_version: number;
   fields: string;
+}
+
+export interface EventsTable {
+  id: number;
+  type: keyof typeof EventType;
+  created_at: string;
+}
+
+export interface EventEntityVersionsTable {
+  id: number;
+  events_id: number;
+  entity_versions_id: number;
+  published_name: string | null;
 }
 
 export interface SequencesTable {
@@ -126,6 +144,11 @@ export const AdvisoryLocksUniqueNameConstraint: UniqueConstraint = {
 export const EntitiesUniqueNameConstraint: UniqueConstraint = {
   table: EntitiesTable,
   columns: ['name'],
+};
+
+export const EntitiesUniquePublishedNameConstraint: UniqueConstraint = {
+  table: EntitiesTable,
+  columns: ['published_name'],
 };
 
 export const EntitiesUniqueUuidConstraint: UniqueConstraint = {

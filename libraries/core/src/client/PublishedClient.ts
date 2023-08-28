@@ -53,7 +53,7 @@ export interface PublishedClient<
     | typeof ErrorType.Generic
   >;
 
-  getEntities(
+  getEntityList(
     references: EntityReference[],
   ): PromiseResult<
     Result<
@@ -117,7 +117,7 @@ export interface PublishedExceptionClient<
     reference: EntityReference | UniqueIndexReference<TUniqueIndex>,
   ): Promise<TPublishedEntity>;
 
-  getEntities(
+  getEntityList(
     references: EntityReference[],
   ): Promise<
     Result<
@@ -157,8 +157,8 @@ export interface PublishedExceptionClient<
 }
 
 export const PublishedClientOperationName = {
-  getEntities: 'getEntities',
   getEntity: 'getEntity',
+  getEntityList: 'getEntityList',
   getSchemaSpecification: 'getSchemaSpecification',
   getTotalCount: 'getTotalCount',
   sampleEntities: 'sampleEntities',
@@ -199,8 +199,8 @@ type MethodReturnTypeError<
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface PublishedClientOperationArguments {
-  [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [PublishedClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
   [PublishedClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodParameters<'getTotalCount'>;
   [PublishedClientOperationName.sampleEntities]: MethodParameters<'sampleEntities'>;
@@ -208,8 +208,8 @@ interface PublishedClientOperationArguments {
 }
 
 interface PublishedClientOperationReturn {
-  [PublishedClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [PublishedClientOperationName.getEntityList]: MethodReturnType<'getEntityList'>;
   [PublishedClientOperationName.getSchemaSpecification]: MethodReturnType<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodReturnType<'getTotalCount'>;
   [PublishedClientOperationName.sampleEntities]: MethodReturnType<'sampleEntities'>;
@@ -217,8 +217,8 @@ interface PublishedClientOperationReturn {
 }
 
 interface PublishedClientOperationReturnOk {
-  [PublishedClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [PublishedClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
   [PublishedClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodReturnTypeOk<'getTotalCount'>;
   [PublishedClientOperationName.sampleEntities]: MethodReturnTypeOk<'sampleEntities'>;
@@ -226,8 +226,8 @@ interface PublishedClientOperationReturnOk {
 }
 
 interface PublishedClientOperationReturnError {
-  [PublishedClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
   [PublishedClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [PublishedClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
   [PublishedClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
   [PublishedClientOperationName.getTotalCount]: MethodReturnTypeError<'getTotalCount'>;
   [PublishedClientOperationName.sampleEntities]: MethodReturnTypeError<'sampleEntities'>;
@@ -278,11 +278,11 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     });
   }
 
-  getEntities(
+  getEntityList(
     references: EntityReference[],
-  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntities]> {
+  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntityList]> {
     return this.executeOperation({
-      name: PublishedClientOperationName.getEntities,
+      name: PublishedClientOperationName.getEntityList,
       args: [references],
       modifies: false,
     });
@@ -379,7 +379,7 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
     return (await this.client.getEntity(reference)).valueOrThrow();
   }
 
-  async getEntities(
+  async getEntityList(
     references: EntityReference[],
   ): Promise<
     Result<
@@ -387,7 +387,7 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
       'BadRequest' | 'NotAuthorized' | 'NotFound' | 'Generic'
     >[]
   > {
-    return (await this.client.getEntities(references)).valueOrThrow();
+    return (await this.client.getEntityList(references)).valueOrThrow();
   }
 
   async sampleEntities(
@@ -431,15 +431,15 @@ export async function executePublishedClientOperationFromJson(
 ): PromiseResult<unknown, ErrorType> {
   const name = operationName as PublishedClientOperationName;
   switch (name) {
-    case PublishedClientOperationName.getEntities: {
-      const [references] =
-        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntities];
-      return await publishedClient.getEntities(references);
-    }
     case PublishedClientOperationName.getEntity: {
       const [reference] =
         operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntity];
       return await publishedClient.getEntity(reference);
+    }
+    case PublishedClientOperationName.getEntityList: {
+      const [references] =
+        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntityList];
+      return await publishedClient.getEntityList(references);
     }
     case PublishedClientOperationName.getSchemaSpecification: {
       return await publishedClient.getSchemaSpecification();
@@ -482,8 +482,14 @@ export function convertJsonPublishedClientResult<
   }
   const { value } = jsonResult;
   switch (operationName) {
-    case PublishedClientOperationName.getEntities: {
-      const result: MethodReturnTypeWithoutPromise<'getEntities'> = ok(
+    case PublishedClientOperationName.getEntity: {
+      const result: MethodReturnTypeWithoutPromise<'getEntity'> = ok(
+        convertJsonPublishedEntity(value as JsonPublishedEntity),
+      );
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
+    case PublishedClientOperationName.getEntityList: {
+      const result: MethodReturnTypeWithoutPromise<'getEntityList'> = ok(
         (value as JsonResult<JsonPublishedEntity, typeof ErrorType.NotFound>[]).map(
           (jsonItemResult) => {
             const itemResult = convertJsonResult(jsonItemResult);
@@ -493,12 +499,7 @@ export function convertJsonPublishedClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case PublishedClientOperationName.getEntity: {
-      const result: MethodReturnTypeWithoutPromise<'getEntity'> = ok(
-        convertJsonPublishedEntity(value as JsonPublishedEntity),
-      );
-      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
-    }
+
     case PublishedClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case PublishedClientOperationName.getTotalCount:

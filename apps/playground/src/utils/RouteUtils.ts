@@ -9,6 +9,10 @@ export const ROUTE = {
     route: 'admin-entities',
     url: (serverName: string) => `/${serverName}/admin-entities`,
   },
+  changelog: {
+    route: 'changelog',
+    url: (serverName: string) => `/${serverName}/changelog`,
+  },
   graphiql: {
     route: 'graphiql',
     url: (serverName: string) => `/${serverName}/graphiql`,

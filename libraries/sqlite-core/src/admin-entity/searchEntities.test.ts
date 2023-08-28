@@ -21,7 +21,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     updated_seq: id,
     status: 'draft',
     invalid: 0,
-    version: 0,
+    version: 1,
     schema_version: 1,
     encode_version: 1,
     fields: JSON.stringify({ title: 'Title' }),
@@ -42,7 +42,7 @@ describe('adminEntitySearchEntities', () => {
       resolvePaging(undefined),
       [{ authKey: 'none', resolvedAuthKey: 'none' }],
     );
-    expectResultValue(result, { entities: [], hasMore: false });
+    expectResultValue(result, { edges: [], hasMore: false });
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
@@ -71,7 +71,7 @@ describe('adminEntitySearchEntities', () => {
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "entities": [
+          "edges": [
             {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
@@ -90,7 +90,7 @@ describe('adminEntitySearchEntities', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           ],
           "hasMore": false,
@@ -125,7 +125,7 @@ describe('adminEntitySearchEntities', () => {
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "entities": [
+          "edges": [
             {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
@@ -144,7 +144,7 @@ describe('adminEntitySearchEntities', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           ],
           "hasMore": false,
@@ -181,7 +181,7 @@ describe('adminEntitySearchEntities', () => {
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "entities": [
+          "edges": [
             {
               "authKey": "none",
               "createdAt": 2021-08-17T07:51:25.560Z,
@@ -200,7 +200,7 @@ describe('adminEntitySearchEntities', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           ],
           "hasMore": false,

@@ -37,6 +37,7 @@ import type {
   UniqueIndexReference,
   ValueItem,
 } from '../Types.js';
+import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
 import type {
   AdminSchemaSpecification,
   AdminSchemaSpecificationUpdate,
@@ -46,6 +47,7 @@ import type {
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import {
   convertJsonAdminEntity,
+  convertJsonChangelogEventEdge,
   convertJsonConnection,
   convertJsonEdge,
   convertJsonEntityHistory,
@@ -56,6 +58,7 @@ import {
   type JsonAdminEntityCreatePayload,
   type JsonAdminEntityUpdatePayload,
   type JsonAdminEntityUpsertPayload,
+  type JsonChangelogEvent,
   type JsonConnection,
   type JsonEdge,
   type JsonEntityHistory,
@@ -114,7 +117,8 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
-  getEntities(
+  // TODO rename searchEntities()->getEntityList(), getTotalCount()->getEntitiesTotalCount(), sampleEntities()->getEntitiesSample(),
+  getEntityList(
     references: EntityReference[],
   ): PromiseResult<
     Result<
@@ -189,6 +193,21 @@ export interface AdminClient<
     options?: AdminEntityMutationOptions,
   ): PromiseResult<
     AdminEntityUpsertPayload<T>,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+  >;
+
+  getChangelogEvents(
+    query?: ChangelogEventQuery,
+    paging?: Paging,
+  ): PromiseResult<
+    Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+  >;
+
+  getChangelogEventsTotalCount(
+    query?: ChangelogEventQuery,
+  ): PromiseResult<
+    number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
@@ -303,7 +322,7 @@ export interface AdminExceptionClient<
     reference: EntityReference | EntityVersionReference | UniqueIndexReference<TUniqueIndex>,
   ): Promise<TAdminEntity>;
 
-  getEntities(
+  getEntityList(
     references: EntityReference[],
   ): Promise<
     Result<
@@ -356,6 +375,13 @@ export interface AdminExceptionClient<
     options?: AdminEntityMutationOptions,
   ): Promise<AdminEntityUpsertPayload<T>>;
 
+  getChangelogEvents(
+    query?: ChangelogEventQuery,
+    paging?: Paging,
+  ): Promise<Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null>;
+
+  getChangelogEventsTotalCount(query?: ChangelogEventQuery): Promise<number>;
+
   getEntityHistory(reference: EntityReference): Promise<EntityHistory>;
 
   publishEntities(references: EntityVersionReference[]): Promise<AdminEntityPublishPayload[]>;
@@ -379,8 +405,10 @@ export const AdminClientOperationName = {
   acquireAdvisoryLock: 'acquireAdvisoryLock',
   archiveEntity: 'archiveEntity',
   createEntity: 'createEntity',
-  getEntities: 'getEntities',
+  getChangelogEvents: 'getChangelogEvents',
+  getChangelogEventsTotalCount: 'getChangelogEventsTotalCount',
   getEntity: 'getEntity',
+  getEntityList: 'getEntityList',
   getEntityHistory: 'getEntityHistory',
   getPublishingHistory: 'getPublishingHistory',
   getSchemaSpecification: 'getSchemaSpecification',
@@ -425,8 +453,10 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
   [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
-  [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
+  [AdminClientOperationName.getChangelogEvents]: MethodParameters<'getChangelogEvents'>;
+  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodParameters<'getChangelogEventsTotalCount'>;
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [AdminClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
   [AdminClientOperationName.getEntityHistory]: MethodParameters<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodParameters<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
@@ -447,8 +477,10 @@ interface AdminClientOperationReturnOk {
   [AdminClientOperationName.acquireAdvisoryLock]: MethodReturnTypeOk<'acquireAdvisoryLock'>;
   [AdminClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
-  [AdminClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
+  [AdminClientOperationName.getChangelogEvents]: MethodReturnTypeOk<'getChangelogEvents'>;
+  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeOk<'getChangelogEventsTotalCount'>;
   [AdminClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [AdminClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
   [AdminClientOperationName.getEntityHistory]: MethodReturnTypeOk<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeOk<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
@@ -469,8 +501,10 @@ interface AdminClientOperationReturnError {
   [AdminClientOperationName.acquireAdvisoryLock]: MethodReturnTypeError<'acquireAdvisoryLock'>;
   [AdminClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
   [AdminClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
-  [AdminClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
+  [AdminClientOperationName.getChangelogEvents]: MethodReturnTypeError<'getChangelogEvents'>;
+  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeError<'getChangelogEventsTotalCount'>;
   [AdminClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [AdminClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
   [AdminClientOperationName.getEntityHistory]: MethodReturnTypeError<'getEntityHistory'>;
   [AdminClientOperationName.getPublishingHistory]: MethodReturnTypeError<'getPublishingHistory'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
@@ -578,11 +612,11 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  getEntities(
+  getEntityList(
     references: EntityReference[],
-  ): MethodReturnType<typeof AdminClientOperationName.getEntities> {
+  ): MethodReturnType<typeof AdminClientOperationName.getEntityList> {
     return this.executeOperation({
-      name: AdminClientOperationName.getEntities,
+      name: AdminClientOperationName.getEntityList,
       args: [references],
       modifies: false,
     });
@@ -684,6 +718,27 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
       AdminEntityUpsertPayload<T>,
       typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
     >;
+  }
+
+  getChangelogEvents(
+    query?: ChangelogEventQuery,
+    paging?: Paging,
+  ): MethodReturnType<typeof AdminClientOperationName.getChangelogEvents> {
+    return this.executeOperation({
+      name: AdminClientOperationName.getChangelogEvents,
+      args: [query, paging],
+      modifies: false,
+    });
+  }
+
+  getChangelogEventsTotalCount(
+    query?: ChangelogEventQuery,
+  ): MethodReturnType<typeof AdminClientOperationName.getChangelogEventsTotalCount> {
+    return this.executeOperation({
+      name: AdminClientOperationName.getChangelogEventsTotalCount,
+      args: [query],
+      modifies: false,
+    });
   }
 
   getEntityHistory(
@@ -844,7 +899,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.getEntity(reference)).valueOrThrow();
   }
 
-  async getEntities(
+  async getEntityList(
     references: EntityReference[],
   ): Promise<
     Result<
@@ -852,7 +907,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
       'BadRequest' | 'NotAuthorized' | 'NotFound' | 'Generic'
     >[]
   > {
-    return (await this.client.getEntities(references)).valueOrThrow();
+    return (await this.client.getEntityList(references)).valueOrThrow();
   }
 
   async sampleEntities(
@@ -912,6 +967,17 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     options?: AdminEntityMutationOptions | undefined,
   ): Promise<AdminEntityUpsertPayload<T>> {
     return (await this.client.upsertEntity(entity, options)).valueOrThrow();
+  }
+
+  async getChangelogEvents(
+    query?: ChangelogEventQuery,
+    paging?: Paging,
+  ): Promise<Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | null> {
+    return (await this.client.getChangelogEvents(query, paging)).valueOrThrow();
+  }
+
+  async getChangelogEventsTotalCount(query?: ChangelogEventQuery): Promise<number> {
+    return (await this.client.getChangelogEventsTotalCount(query)).valueOrThrow();
   }
 
   async getEntityHistory(reference: EntityReference): Promise<EntityHistory> {
@@ -988,15 +1054,25 @@ export async function executeAdminClientOperationFromJson(
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.createEntity];
       return await adminClient.createEntity(entity, options);
     }
-    case AdminClientOperationName.getEntities: {
-      const [references] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntities];
-      return await adminClient.getEntities(references);
+    case AdminClientOperationName.getChangelogEvents: {
+      const [query, paging] =
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogEvents];
+      return await adminClient.getChangelogEvents(query, paging);
+    }
+    case AdminClientOperationName.getChangelogEventsTotalCount: {
+      const [query] =
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogEventsTotalCount];
+      return await adminClient.getChangelogEventsTotalCount(query);
     }
     case AdminClientOperationName.getEntity: {
       const [reference] =
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntity];
       return await adminClient.getEntity(reference);
+    }
+    case AdminClientOperationName.getEntityList: {
+      const [references] =
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntityList];
+      return await adminClient.getEntityList(references);
     }
     case AdminClientOperationName.getEntityHistory: {
       const [reference] =
@@ -1112,8 +1188,28 @@ export function convertJsonAdminClientResult<
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getEntities: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntities> =
+    case AdminClientOperationName.getChangelogEvents: {
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.getChangelogEvents
+      > = ok(
+        convertJsonConnection(
+          value as JsonConnection<JsonEdge<JsonChangelogEvent, typeof ErrorType.Generic>> | null,
+          convertJsonChangelogEventEdge,
+        ),
+      );
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
+    case AdminClientOperationName.getChangelogEventsTotalCount: {
+      return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
+    case AdminClientOperationName.getEntity: {
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
+        convertJsonAdminEntity(value as JsonAdminEntity),
+      );
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
+    case AdminClientOperationName.getEntityList: {
+      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntityList> =
         ok(
           (value as JsonResult<JsonAdminEntity, typeof ErrorType.NotFound>[]).map(
             (jsonItemResult) => {
@@ -1122,12 +1218,6 @@ export function convertJsonAdminClientResult<
             },
           ),
         );
-      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
-    }
-    case AdminClientOperationName.getEntity: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
-        convertJsonAdminEntity(value as JsonAdminEntity),
-      );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntityHistory: {

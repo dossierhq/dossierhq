@@ -3,7 +3,7 @@ import type { Server } from '@dossierhq/server';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository.js';
-import { GetEntitiesSubSuite } from './PublishedEntityGetEntitiesSubSuite.js';
+import { GetEntityListSubSuite } from './PublishedEntityGetEntityListSubSuite.js';
 import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite.js';
 import { GetTotalCountSubSuite } from './PublishedEntityGetTotalCountSubSuite.js';
 import { SampleEntitiesSubSuite } from './PublishedEntitySampleEntitiesSubSuite.js';
@@ -21,7 +21,7 @@ export function createPublishedEntityTestSuite<TCleanup>(
   return buildSuite(
     initializer,
     ...GetEntitySubSuite,
-    ...GetEntitiesSubSuite,
+    ...GetEntityListSubSuite,
     ...GetTotalCountSubSuite,
     ...SampleEntitiesSubSuite,
     ...SearchEntitiesSubSuite,

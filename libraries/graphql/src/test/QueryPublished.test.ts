@@ -1,14 +1,14 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import {
+  FieldType,
   assertOkResult,
+  createRichText,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
-  createRichText,
   createRichTextTextNode,
-  FieldType,
   notOk,
   ok,
+  type AdminSchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult } from '@dossierhq/core-vitest';
 import type { GraphQLSchema } from 'graphql';
@@ -18,6 +18,9 @@ import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import type { TestServerWithSession } from './TestUtils.js';
 import { setUpServerWithSession } from './TestUtils.js';
+import { publishedEntityFoo } from './queries/publishedEntityFoo.js';
+
+const gql = String.raw;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
@@ -53,31 +56,6 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
   ],
   indexes: [{ name: 'queryPublishedSlug', type: 'unique' }],
 };
-
-const PUBLISHED_FOO_QUERY = `
-query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
-  publishedEntity(id: $id, index: $index, value: $value) {
-    __typename
-    id
-    ... on PublishedQueryFoo {
-      info {
-        name
-        authKey
-        createdAt
-        valid
-      }
-      fields {
-        title
-        slug
-        summary
-        tags
-        location
-        locations
-      }
-    }
-  }
-}
-`;
 
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification, 'data/query.sqlite');
@@ -129,11 +107,11 @@ describe('node()', () => {
         },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query Entity($id: ID!) {
             node(id: $id) {
               __typename
@@ -194,11 +172,11 @@ describe('node()', () => {
         },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query Entity($id: ID!) {
             node(id: $id) {
               __typename
@@ -271,11 +249,11 @@ describe('node()', () => {
         },
       } = createFooResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query Entity($id: ID!) {
             node(id: $id) {
               __typename
@@ -373,31 +351,31 @@ describe('node()', () => {
 
     const result = await graphql({
       schema,
-      source: `
-            query Entity($id: ID!) {
-              node(id: $id) {
-                __typename
-                id
-                ... on PublishedQueryFoo {
-                  info {
-                    name
-                    authKey
-                  }
-                  fields {
-                    body {
-                      root
-                      entities {
-                        id
-                        info {
-                          name
-                        }
-                      }
+      source: gql`
+        query Entity($id: ID!) {
+          node(id: $id) {
+            __typename
+            id
+            ... on PublishedQueryFoo {
+              info {
+                name
+                authKey
+              }
+              fields {
+                body {
+                  root
+                  entities {
+                    id
+                    info {
+                      name
                     }
                   }
                 }
               }
             }
-          `,
+          }
+        }
+      `,
       contextValue: createContext(),
       variableValues: { id: fooId },
     });
@@ -435,7 +413,7 @@ describe('node()', () => {
         },
       } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
@@ -449,11 +427,11 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -534,8 +512,8 @@ describe('node()', () => {
 
       expectOkResult(
         await adminClient.publishEntities([
-          { id: bar1Id, version: 0 },
-          { id: bar2Id, version: 0 },
+          { id: bar1Id, version: 1 },
+          { id: bar2Id, version: 1 },
         ]),
       );
 
@@ -551,11 +529,11 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -630,7 +608,7 @@ describe('node()', () => {
         },
       } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 0 }]));
+      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
 
       const createFooResult = await adminClient.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
@@ -647,11 +625,11 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 0 }]));
+        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
-          source: `
+          source: gql`
             query Entity($id: ID!) {
               node(id: $id) {
                 __typename
@@ -717,7 +695,7 @@ describe('node()', () => {
   test('Error: Query invalid id', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query Entity($id: ID!) {
           node(id: $id) {
             id
@@ -745,7 +723,7 @@ GraphQL request:3:11
   test('Error: No session', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query Entity($id: ID!) {
           node(id: $id) {
             id
@@ -798,14 +776,14 @@ describe('nodes()', () => {
 
       expectOkResult(
         await adminClient.publishEntities([
-          { id: foo1Id, version: 0 },
-          { id: foo2Id, version: 0 },
+          { id: foo1Id, version: 1 },
+          { id: foo2Id, version: 1 },
         ]),
       );
 
       const result = await graphql({
         schema,
-        source: `
+        source: gql`
           query Entities($ids: [ID!]!) {
             nodes(ids: $ids) {
               __typename
@@ -845,7 +823,7 @@ describe('nodes()', () => {
   test('Error: Query invalid id', async () => {
     const result = await graphql({
       schema,
-      source: `
+      source: gql`
         query Entities($ids: [ID!]!) {
           nodes(ids: $ids) {
             id
@@ -858,7 +836,23 @@ describe('nodes()', () => {
     expect(result.data).toEqual({
       nodes: [null],
     });
-    expect(result.errors).toBeFalsy();
+    expect(result.errors?.map((it) => it.toJSON())).toMatchInlineSnapshot(`
+      [
+        {
+          "locations": [
+            {
+              "column": 11,
+              "line": 3,
+            },
+          ],
+          "message": "NotFound: No such entity",
+          "path": [
+            "nodes",
+            0,
+          ],
+        },
+      ]
+    `);
   });
 });
 
@@ -885,11 +879,9 @@ describe('publishedEntity()', () => {
       },
     } = createResult.value;
 
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'queryPublishedSlug', value: slug },
+    const result = await publishedEntityFoo(schema, createContext(), {
+      index: 'queryPublishedSlug',
+      value: slug,
     });
     expect(result).toEqual({
       data: {
@@ -936,12 +928,7 @@ describe('publishedEntity()', () => {
       },
     } = createResult.value;
 
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { id },
-    });
+    const result = await publishedEntityFoo(schema, createContext(), { id });
     expect(result).toEqual({
       data: {
         publishedEntity: {
@@ -965,85 +952,70 @@ describe('publishedEntity()', () => {
   });
 
   test('Error: no args', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: {},
-    });
+    const result = await publishedEntityFoo(schema, createContext(), {});
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
         "Either id or index and value must be specified
 
-      GraphQL request:3:3
-      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
-      3 |   publishedEntity(id: $id, index: $index, value: $value) {
-        |   ^
-      4 |     __typename",
+      GraphQL request:3:5
+      2 |   query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
+      3 |     publishedEntity(id: $id, index: $index, value: $value) {
+        |     ^
+      4 |       __typename",
       ]
     `);
   });
 
   test('Error: index, no value', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'queryPublishedSlug' },
+    const result = await publishedEntityFoo(schema, createContext(), {
+      index: 'queryPublishedSlug',
     });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
         "Either id or index and value must be specified
 
-      GraphQL request:3:3
-      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
-      3 |   publishedEntity(id: $id, index: $index, value: $value) {
-        |   ^
-      4 |     __typename",
+      GraphQL request:3:5
+      2 |   query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
+      3 |     publishedEntity(id: $id, index: $index, value: $value) {
+        |     ^
+      4 |       __typename",
       ]
     `);
   });
 
   test('Error: value, no index', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { value: '123' },
-    });
+    const result = await publishedEntityFoo(schema, createContext(), { value: '123' });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
         "Either id or index and value must be specified
 
-      GraphQL request:3:3
-      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
-      3 |   publishedEntity(id: $id, index: $index, value: $value) {
-        |   ^
-      4 |     __typename",
+      GraphQL request:3:5
+      2 |   query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
+      3 |     publishedEntity(id: $id, index: $index, value: $value) {
+        |     ^
+      4 |       __typename",
       ]
     `);
   });
 
   test('Error: invalid index name', async () => {
-    const result = await graphql({
-      schema,
-      source: PUBLISHED_FOO_QUERY,
-      contextValue: createContext(),
-      variableValues: { index: 'unknownIndex', value: '123' },
+    const result = await publishedEntityFoo(schema, createContext(), {
+      index: 'unknownIndex',
+      value: '123',
     });
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
         "Variable \\"$index\\" got invalid value \\"unknownIndex\\"; Value \\"unknownIndex\\" does not exist in \\"PublishedUniqueIndex\\" enum.
 
-      GraphQL request:2:35
+      GraphQL request:2:37
       1 |
-      2 | query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
-        |                                   ^
-      3 |   publishedEntity(id: $id, index: $index, value: $value) {",
+      2 |   query PublishedFooEntity($id: ID, $index: PublishedUniqueIndex, $value: String) {
+        |                                     ^
+      3 |     publishedEntity(id: $id, index: $index, value: $value) {",
       ]
     `);
   });

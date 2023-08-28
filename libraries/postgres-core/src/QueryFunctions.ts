@@ -7,7 +7,7 @@ type ErrorConverter<TRow, TError extends ErrorType> = (
   error: unknown,
 ) => Result<PostgresQueryResult<TRow>, TError | typeof ErrorType.Generic>;
 
-type QueryOrQueryAndValues = string | { text: string; values?: unknown[] };
+export type QueryOrQueryAndValues = string | { text: string; values?: unknown[] };
 
 async function queryCommon<TRow, TError extends ErrorType>(
   adapter: PostgresDatabaseAdapter,

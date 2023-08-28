@@ -1,20 +1,29 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
-import type {
-  DatabaseEntityUpdateEntityArg,
-  DatabaseEntityUpdateEntityPayload,
-  DatabaseEntityUpdateGetEntityInfoPayload,
-  TransactionContext,
+import {
+  EventType,
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
+import {
+  buildPostgresSqlQuery,
+  type DatabaseEntityUpdateEntityArg,
+  type DatabaseEntityUpdateEntityPayload,
+  type DatabaseEntityUpdateGetEntityInfoPayload,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
   ENTITY_DIRTY_FLAG_INDEX_LATEST,
   ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
   UniqueConstraints,
+  type EntitiesTable,
+  type EntityVersionsTable,
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
@@ -32,6 +41,7 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'id'
       | 'type'
       | 'name'
+      | 'published_name'
       | 'auth_key'
       | 'resolved_auth_key'
       | 'created_at'
@@ -41,7 +51,7 @@ export async function adminEntityUpdateGetEntityInfo(
     > &
       Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'data'>
   >(databaseAdapter, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
+    text: `SELECT e.id, e.type, e.name, e.published_name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
         FROM entities e, entity_versions ev
         WHERE e.uuid = $1 AND e.latest_draft_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -52,12 +62,17 @@ export async function adminEntityUpdateGetEntityInfo(
     return notOk.NotFound('No such entity');
   }
 
-  const { id: entityInternalId, resolved_auth_key: resolvedAuthKey } = result.value;
+  const {
+    id: entityInternalId,
+    published_name: publishedName,
+    resolved_auth_key: resolvedAuthKey,
+  } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),
     entityInternalId,
+    publishedName,
     resolvedAuthKey,
   });
 }
@@ -71,17 +86,11 @@ export async function adminEntityUpdateEntity(
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
     context,
-    {
-      text: 'INSERT INTO entity_versions (entities_id, created_by, version, schema_version, encode_version, data) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
-      values: [
-        entity.entityInternalId,
-        getSessionSubjectInternalId(entity.session),
-        entity.version,
-        entity.schemaVersion,
-        entity.encodeVersion,
-        entity.fields,
-      ],
-    },
+    buildPostgresSqlQuery(({ sql }) => {
+      const createdBy = getSessionSubjectInternalId(entity.session);
+      sql`INSERT INTO entity_versions (entities_id, created_by, type, name, version, schema_version, encode_version, data)`;
+      sql`VALUES (${entity.entityInternalId}, ${createdBy}, ${entity.type}, ${entity.name}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${entity.fields}) RETURNING id`;
+    }),
   );
   if (createVersionResult.isError()) return createVersionResult;
   const { id: versionsId } = createVersionResult.value;
@@ -96,15 +105,22 @@ export async function adminEntityUpdateEntity(
         const updateNameResult = await queryNone(
           databaseAdapter,
           context,
-          {
-            text: 'UPDATE entities SET name = $1 WHERE id = $2',
-            values: [name, entity.entityInternalId],
-          },
+          buildPostgresSqlQuery(({ sql }) => {
+            sql`UPDATE entities SET name = ${name}`;
+            if (entity.publish) {
+              sql`published_name = ${name}`;
+            }
+            sql`WHERE id = ${entity.entityInternalId}`;
+          }),
           (error) => {
             if (
               databaseAdapter.isUniqueViolationOfConstraint(
                 error,
                 UniqueConstraints.entities_name_key,
+              ) ||
+              databaseAdapter.isUniqueViolationOfConstraint(
+                error,
+                UniqueConstraints.entities_published_name_key,
               )
             ) {
               return notOk.Conflict(nameConflictErrorMessage);
@@ -120,6 +136,15 @@ export async function adminEntityUpdateEntity(
 
     if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
+
+    const updateNameResult = await queryNone(
+      databaseAdapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`UPDATE entity_versions SET name = ${newName} WHERE id = ${versionsId}`;
+      }),
+    );
+    if (updateNameResult.isError()) return updateNameResult;
   }
 
   const updateEntityResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(
@@ -145,6 +170,15 @@ export async function adminEntityUpdateEntity(
   );
   if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;
+
+  const createEventResult = await createEntityEvent(
+    databaseAdapter,
+    context,
+    entity.session,
+    entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
+    [{ entityVersionsId: versionsId }],
+  );
+  if (createEventResult.isError()) return createEventResult;
 
   return ok({ name: newName, updatedAt });
 }

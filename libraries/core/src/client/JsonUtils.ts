@@ -17,6 +17,7 @@ import type {
   PublishingEvent,
   PublishingHistory,
 } from '../Types.js';
+import type { ChangelogEvent } from '../events/EventTypes.js';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
   pageInfo: PageInfo;
@@ -65,6 +66,13 @@ export interface JsonPublishingResult<TEffect>
   extends Omit<AdminEntityPublishingPayload<TEffect>, 'updatedAt'> {
   updatedAt: string;
 }
+
+export type JsonChangelogEvent<TEvent extends ChangelogEvent = ChangelogEvent> = Omit<
+  TEvent,
+  'createdAt'
+> & {
+  createdAt: string;
+};
 
 export interface JsonEntityHistory extends Omit<EntityHistory, 'versions'> {
   versions: JsonEntityVersionInfo[];
@@ -141,6 +149,16 @@ export function convertJsonPublishingResult<TEffect>(
     ...publishingResult,
     updatedAt: new Date(publishingResult.updatedAt),
   };
+}
+
+export function convertJsonChangelogEventEdge<
+  TEvent extends ChangelogEvent,
+  TError extends ErrorType,
+>(edge: JsonEdge<JsonChangelogEvent<TEvent>, TError>): Edge<ChangelogEvent, TError> {
+  return convertJsonEdge(
+    edge,
+    (node) => ({ ...node, createdAt: new Date(node.createdAt) }) as TEvent,
+  );
 }
 
 export function convertJsonEntityHistory(entityHistory: JsonEntityHistory): EntityHistory {

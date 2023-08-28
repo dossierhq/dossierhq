@@ -7,6 +7,7 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
 export async function adminEntityUpdateStatus(
@@ -15,7 +16,7 @@ export async function adminEntityUpdateStatus(
   status: AdminEntityStatus,
   reference: DatabaseResolvedEntityReference,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedReqResult.isError()) return updatedReqResult;
 
@@ -32,10 +33,7 @@ export async function adminEntityUpdateStatus(
       reference.entityInternalId as number,
     ],
   });
-
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   return ok({ updatedAt: now });
 }

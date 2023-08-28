@@ -20,22 +20,29 @@ export async function adminEntityArchivingGetEntityInfo(
   const result = await queryNoneOrOne<
     Pick<
       EntitiesTable,
-      'id' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at' | 'never_published'
+      | 'id'
+      | 'type'
+      | 'auth_key'
+      | 'resolved_auth_key'
+      | 'status'
+      | 'updated_at'
+      | 'never_published'
+      | 'latest_entity_versions_id'
     >
   >(database, context, {
-    text: 'SELECT e.id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.never_published FROM entities e WHERE e.uuid = ?1',
+    text: 'SELECT e.id, e.type, e.auth_key, e.resolved_auth_key, e.status, e.updated_at, e.never_published, e.latest_entity_versions_id FROM entities e WHERE e.uuid = ?1',
     values: [reference.id],
   });
+  if (result.isError()) return result;
 
-  if (result.isError()) {
-    return result;
-  }
   if (!result.value) {
     return notOk.NotFound('No such entity');
   }
 
   const {
     id: entityInternalId,
+    latest_entity_versions_id: versionId,
+    type,
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     status,
@@ -45,6 +52,8 @@ export async function adminEntityArchivingGetEntityInfo(
 
   return ok({
     entityInternalId,
+    entityVersionInternalId: versionId,
+    type,
     authKey,
     resolvedAuthKey,
     status: resolveEntityStatus(status),

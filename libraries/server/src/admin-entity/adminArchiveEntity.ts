@@ -28,19 +28,17 @@ export async function adminArchiveEntity(
       context,
       reference,
     );
-    if (entityInfoResult.isError()) {
-      return entityInfoResult;
-    }
-    const { entityInternalId, authKey, resolvedAuthKey, status } = entityInfoResult.value;
+    if (entityInfoResult.isError()) return entityInfoResult;
+
+    const { entityInternalId, entityVersionInternalId, authKey, resolvedAuthKey, status } =
+      entityInfoResult.value;
 
     // Step 2: Verify authKey
     const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
       authKey,
       resolvedAuthKey,
     });
-    if (authResult.isError()) {
-      return authResult;
-    }
+    if (authResult.isError()) return authResult;
 
     // Step 3: Check status
     if (status === AdminEntityStatus.modified || status === AdminEntityStatus.published) {
@@ -61,23 +59,18 @@ export async function adminArchiveEntity(
     const archiveResult = await databaseAdapter.adminEntityUpdateStatus(
       context,
       AdminEntityStatus.archived,
-      {
-        entityInternalId,
-      },
+      { entityInternalId },
     );
-    if (archiveResult.isError()) {
-      return archiveResult;
-    }
+    if (archiveResult.isError()) return archiveResult;
 
     // Step 5: Create publishing event
     const publishingEventResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
       session: context.session,
       kind: 'archive',
-      references: [{ entityInternalId }],
+      references: [{ entityInternalId, entityVersionInternalId }],
+      onlyLegacyEvents: false,
     });
-    if (publishingEventResult.isError()) {
-      return publishingEventResult;
-    }
+    if (publishingEventResult.isError()) return publishingEventResult;
 
     // Done
     const value: AdminEntityArchivePayload = {

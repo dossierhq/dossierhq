@@ -14,6 +14,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryMany, queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 
@@ -27,10 +28,20 @@ export async function adminEntityUnpublishGetEntitiesInfo(
 > {
   const { addValueList, query, sql } = createSqliteSqlQuery();
   const uuids = addValueList(references.map(({ id }) => id));
-  sql`SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
+  sql`SELECT e.id, e.uuid, e.type, e.latest_entity_versions_id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
 
   const result = await queryMany<
-    Pick<EntitiesTable, 'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'updated_at'>
+    Pick<
+      EntitiesTable,
+      | 'id'
+      | 'uuid'
+      | 'type'
+      | 'latest_entity_versions_id'
+      | 'auth_key'
+      | 'resolved_auth_key'
+      | 'status'
+      | 'updated_at'
+    >
   >(database, context, query);
   if (result.isError()) return result;
   const entitiesInfo = result.value;
@@ -49,6 +60,8 @@ export async function adminEntityUnpublishGetEntitiesInfo(
       return {
         id: entityInfo.uuid,
         entityInternalId: entityInfo.id,
+        entityVersionInternalId: entityInfo.latest_entity_versions_id,
+        type: entityInfo.type,
         authKey: entityInfo.auth_key,
         resolvedAuthKey: entityInfo.resolved_auth_key,
         status: resolveEntityStatus(entityInfo.status),
@@ -64,23 +77,25 @@ export async function adminEntityUnpublishEntities(
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[],
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
-  const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
-  if (updatedSeqResult.isError()) return updatedSeqResult;
-
+  const now = getTransactionTimestamp(context.transaction);
+  const nowString = now.toISOString();
   const ids = references.map(({ entityInternalId }) => entityInternalId as number);
-  const now = new Date();
-  const result = await queryMany<Pick<EntitiesTable, 'id'>>(
-    database,
-    context,
-    buildSqliteSqlQuery(({ sql, addValueList }) => {
-      const dirty = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
-      sql`UPDATE entities SET published_entity_versions_id = NULL, updated_at = ${now.toISOString()}, updated_seq = ${
-        updatedSeqResult.value
-      }, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
-      sql`WHERE id IN ${addValueList(ids)} RETURNING id`;
-    }),
-  );
-  if (result.isError()) return result;
+
+  for (const reference of references) {
+    const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
+    if (updatedSeqResult.isError()) return updatedSeqResult;
+
+    const updateEntityResult = await queryRun(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql }) => {
+        const dirty = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
+        sql`UPDATE entities SET published_entity_versions_id = NULL, published_name = NULL, updated_at = ${nowString}, updated_seq = ${updatedSeqResult.value}, status = ${status}, invalid = invalid & ~2, dirty = dirty & ${dirty}`;
+        sql`WHERE id = ${reference.entityInternalId as number}`;
+      }),
+    );
+    if (updateEntityResult.isError()) return updateEntityResult;
+  }
 
   const removeReferencesIndexResult = await queryRun(
     database,
@@ -120,9 +135,7 @@ export async function adminEntityUnpublishEntities(
 
   return ok(
     references.map((reference) => {
-      const row = result.value.find((it) => it.id === reference.entityInternalId);
-      assertIsDefined(row);
-      return { entityInternalId: row.id, updatedAt: now };
+      return { entityInternalId: reference.entityInternalId, updatedAt: now };
     }),
   );
 }

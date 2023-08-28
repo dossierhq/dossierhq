@@ -14,11 +14,7 @@ import { authResolveAuthorizationKeys } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { decodePublishedEntity } from '../EntityCodec.js';
-import {
-  getOppositeDirectionPaging,
-  resolvePagingInfo,
-  sharedSearchEntities,
-} from '../shared-entity/sharedSearchEntities.js';
+import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
 
 export async function publishedSearchEntities(
   adminSchema: AdminSchemaWithMigrations,
@@ -32,10 +28,6 @@ export async function publishedSearchEntities(
   Connection<Edge<PublishedEntity, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const pagingResult = resolvePagingInfo(paging);
-  if (pagingResult.isError()) return pagingResult;
-  const pagingInfo = pagingResult.value;
-
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
@@ -43,34 +35,16 @@ export async function publishedSearchEntities(
   );
   if (authKeysResult.isError()) return authKeysResult;
 
-  const searchResult = await databaseAdapter.publishedEntitySearchEntities(
-    publishedSchema,
-    context,
-    query,
-    pagingInfo,
-    authKeysResult.value,
-  );
-  if (searchResult.isError()) return searchResult;
-
-  let hasMoreOppositeDirection = false;
-  const oppositePagingInfo = getOppositeDirectionPaging(pagingInfo, searchResult.value);
-  if (oppositePagingInfo) {
-    const oppositeResult = await databaseAdapter.publishedEntitySearchEntities(
-      publishedSchema,
-      context,
-      query,
-      oppositePagingInfo,
-      authKeysResult.value,
-    );
-    if (oppositeResult.isError()) return oppositeResult;
-    hasMoreOppositeDirection = oppositeResult.value.hasMore;
-  }
-
-  return sharedSearchEntities(
-    adminSchema,
-    pagingInfo,
-    searchResult.value,
-    hasMoreOppositeDirection,
-    decodePublishedEntity,
+  return fetchAndDecodeConnection(
+    paging,
+    (pagingInfo) =>
+      databaseAdapter.publishedEntitySearchEntities(
+        publishedSchema,
+        context,
+        query,
+        pagingInfo,
+        authKeysResult.value,
+      ),
+    (edge) => decodePublishedEntity(adminSchema, edge),
   );
 }

@@ -1,5 +1,10 @@
-import type { ErrorType, PromiseResult, PublishedQuery, PublishedSchema } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import {
+  ok,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedQuery,
+  type PublishedSchema,
+} from '@dossierhq/core';
 import type {
   DatabasePublishedEntityPayload,
   ResolvedAuthKey,

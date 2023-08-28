@@ -1,18 +1,10 @@
-import {
-  assertIsDefined,
-  type AdminClient,
-  type AdminEntity,
-  type EntityReference,
-  type PublishingEvent,
-  type ValueItem,
-} from '@dossierhq/core';
-import { Button, DateDisplay, Dialog2, Row, TabContainer, Tag, Text } from '@dossierhq/design';
+import { assertIsDefined } from '@dossierhq/core';
+import { Button, Dialog2, Row, Tag, Text } from '@dossierhq/design';
 import { useContext, useState } from 'react';
 import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';
+import { EntityChangelogList } from '../../components/EntityChangelogList/EntityChangelogList.js';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { useAdminEntityHistory } from '../../hooks/useAdminEntityHistory.js';
-import { useAdminPublishingHistory } from '../../hooks/useAdminPublishingHistory.js';
 import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import { AdminEntityLinks } from './AdminEntityLinks.js';
@@ -21,24 +13,10 @@ interface Props {
   entityEditorState: EntityEditorState;
 }
 
-interface ActivityListEvent {
-  date: Date;
-  version: number | null;
-  kind: PublishingEvent['kind'] | 'create';
-}
-
-const ActivityFilter = {
-  All: 'All',
-  Versions: 'Versions',
-  Publishing: 'Publishing',
-} as const;
-type ActivityFilter = (typeof ActivityFilter)[keyof typeof ActivityFilter];
-
 export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
-  const { adminClient, authKeys } = useContext(AdminDossierContext);
+  const { authKeys } = useContext(AdminDossierContext);
   const { activeEntityId } = entityEditorState;
 
-  const [activityFilter, setActivityFilter] = useState<ActivityFilter>(ActivityFilter.All);
   const [historyIsOpen, setHistoryIsOpen] = useState(false);
 
   if (!activeEntityId) return null;
@@ -64,94 +42,16 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
             <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
           </Row>
           <AdminEntityLinks entityReference={{ id: entity.id }} />
-          {entity.info.version > 0 ? (
+          {entity.info.version > 1 ? (
             <Dialog2.Trigger isOpen={historyIsOpen} onOpenChange={setHistoryIsOpen}>
               <Button onClick={() => setHistoryIsOpen(true)}>Entity history</Button>
               <AdminEntityHistoryDialog reference={{ id: entity.id }} />
             </Dialog2.Trigger>
           ) : null}
-          <TabContainer small>
-            {Object.keys(ActivityFilter).map((filter) => (
-              <TabContainer.Item
-                key={filter}
-                active={filter === activityFilter}
-                onClick={() => setActivityFilter(filter as ActivityFilter)}
-              >
-                {filter}
-              </TabContainer.Item>
-            ))}
-          </TabContainer>
-          <ActivityList
-            adminClient={adminClient}
-            activityFilter={activityFilter}
-            reference={{ id: activeEntityId }}
-          />
+          <Text textStyle="subtitle2">Changelog</Text>
+          <EntityChangelogList entity={{ id: activeEntityId }} />
         </>
       ) : null}
-    </>
-  );
-}
-
-function ActivityList({
-  adminClient,
-  activityFilter,
-  reference,
-}: {
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>;
-  activityFilter: ActivityFilter;
-  reference: EntityReference;
-}) {
-  const { entityHistory, entityHistoryError: _1 } = useAdminEntityHistory(
-    adminClient,
-    activityFilter === ActivityFilter.All || activityFilter === ActivityFilter.Versions
-      ? reference
-      : undefined,
-  );
-  const { publishingHistory, publishingHistoryError: _2 } = useAdminPublishingHistory(
-    adminClient,
-    activityFilter === ActivityFilter.All || activityFilter === ActivityFilter.Publishing
-      ? reference
-      : undefined,
-  );
-
-  if (!entityHistory && !publishingHistory) return null;
-
-  const events: ActivityListEvent[] = [];
-
-  if (entityHistory) {
-    events.push(
-      ...entityHistory.versions.map<ActivityListEvent>((it) => ({
-        date: it.createdAt,
-        version: it.version,
-        kind: 'create',
-      })),
-    );
-  }
-  if (publishingHistory) {
-    events.push(
-      ...publishingHistory.events.map<ActivityListEvent>((it) => ({
-        date: it.publishedAt,
-        version: it.version,
-        kind: it.kind,
-      })),
-    );
-  }
-
-  events.sort((a, b) => {
-    return b.date.getTime() - a.date.getTime(); // descending
-  });
-
-  return (
-    <>
-      {events.map((event, index) => (
-        <Row key={index} gap={2}>
-          <Tag>{event.version === null ? '–' : '' + event.version}</Tag>
-          <Tag>{event.kind}</Tag>
-          <Row.Item flexGrow={1}>
-            <DateDisplay date={event.date} />
-          </Row.Item>
-        </Row>
-      ))}
     </>
   );
 }

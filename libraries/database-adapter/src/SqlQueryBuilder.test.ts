@@ -90,6 +90,48 @@ describe('createPostgresSqlQuery', () => {
     `);
   });
 
+  test('WHERE is removed when coming before ORDER', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE`;
+    if (String(false) === 'true') {
+      sql`AND bar IS NULL`;
+    }
+    sql`ORDER BY id`;
+
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo ORDER BY id",
+        "values": [],
+      }
+    `);
+  });
+
+  test('removeTrailingSeparator() with trailing WHERE', () => {
+    const { sql, query, removeTrailingWhere } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE`;
+    removeTrailingWhere();
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo",
+        "values": [],
+      }
+    `);
+  });
+
+  test('removeTrailingSeparator() without trailing WHERE', () => {
+    const { sql, query, removeTrailingWhere } = createPostgresSqlQuery();
+    sql`SELECT * FROM foo WHERE id = ${1}`;
+    removeTrailingWhere();
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "SELECT * FROM foo WHERE id = $1",
+        "values": [
+          1,
+        ],
+      }
+    `);
+  });
+
   test('no separator is added before/after .', () => {
     const { sql, query } = createPostgresSqlQuery();
     sql`SELECT * FROM foo f WHERE f.`;

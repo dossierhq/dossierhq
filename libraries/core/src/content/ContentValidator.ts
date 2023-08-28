@@ -65,11 +65,11 @@ export function validateEntityInfoForCreate(
 
   // info.version
   const version = entity.info.version;
-  if (version !== undefined && version !== 0) {
+  if (version !== undefined && version !== 1) {
     return {
       type: 'save',
       path: [...path, 'info', 'version'],
-      message: `Version must be 0 when creating a new entity`,
+      message: `Version must be 1 when creating a new entity`,
     };
   }
 

@@ -1,24 +1,27 @@
 import type { EntityVersionReference, ErrorType, PromiseResult } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
-import type {
-  DatabaseAdminEntityPublishGetVersionInfoPayload,
-  DatabaseAdminEntityPublishUpdateEntityArg,
-  DatabaseAdminEntityUpdateStatusPayload,
-  TransactionContext,
+import {
+  buildPostgresSqlQuery,
+  type DatabaseAdminEntityPublishGetVersionInfoPayload,
+  type DatabaseAdminEntityPublishUpdateEntityArg,
+  type DatabaseAdminEntityPublishUpdateEntityPayload,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
   ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
   ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
+  UniqueConstraints,
   type EntitiesTable,
   type EntityVersionsTable,
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
-import { queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import {
   resolveEntityFields,
   resolveEntityStatus,
   resolveEntityValidity,
 } from '../utils/CodecUtils.js';
+import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 
 export async function adminEntityPublishGetVersionInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -29,7 +32,10 @@ export async function adminEntityPublishGetVersionInfo(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const result = await queryNoneOrOne<
-    Pick<EntityVersionsTable, 'id' | 'entities_id' | 'schema_version' | 'encode_version' | 'data'> &
+    Pick<
+      EntityVersionsTable,
+      'id' | 'entities_id' | 'name' | 'schema_version' | 'encode_version' | 'data'
+    > &
       Pick<
         EntitiesTable,
         | 'type'
@@ -40,9 +46,10 @@ export async function adminEntityPublishGetVersionInfo(
         | 'updated_at'
         | 'published_entity_versions_id'
         | 'latest_draft_entity_versions_id'
+        | 'published_name'
       >
   >(databaseAdapter, context, {
-    text: `SELECT ev.id, ev.entities_id, ev.schema_version, ev.encode_version, ev.data, e.type, e.auth_key, e.resolved_auth_key, e.status, e.invalid, e.updated_at, e.published_entity_versions_id, e.latest_draft_entity_versions_id
+    text: `SELECT ev.id, ev.entities_id, ev.name, ev.schema_version, ev.encode_version, ev.data, e.type, e.auth_key, e.resolved_auth_key, e.status, e.invalid, e.updated_at, e.published_entity_versions_id, e.latest_draft_entity_versions_id, e.published_name
          FROM entity_versions ev, entities e
          WHERE e.uuid = $1 AND e.id = ev.entities_id AND ev.version = $2`,
     values: [reference.id, reference.version],
@@ -60,6 +67,8 @@ export async function adminEntityPublishGetVersionInfo(
     auth_key: authKey,
     resolved_auth_key: resolvedAuthKey,
     updated_at: updatedAt,
+    name,
+    published_name: publishedName,
   } = result.value;
 
   const status = resolveEntityStatus(result.value.status);
@@ -73,6 +82,8 @@ export async function adminEntityPublishGetVersionInfo(
     versionIsLatest: entityVersionInternalId === result.value.latest_draft_entity_versions_id,
     authKey,
     resolvedAuthKey,
+    name,
+    publishedName,
     type,
     status,
     validPublished: validity.validPublished,
@@ -83,8 +94,9 @@ export async function adminEntityPublishGetVersionInfo(
 export async function adminEntityPublishUpdateEntity(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
+  randomNameGenerator: (name: string) => string,
   values: DatabaseAdminEntityPublishUpdateEntityArg,
-): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
+): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
   const updateResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
@@ -109,6 +121,40 @@ export async function adminEntityPublishUpdateEntity(
   });
   if (updateResult.isError()) return updateResult;
 
+  let newPublishedName = values.publishedName;
+  if (values.changePublishedName) {
+    const nameResult = await withUniqueNameAttempt(
+      context,
+      newPublishedName,
+      randomNameGenerator,
+      async (context, name, nameConflictErrorMessage) => {
+        const updateNameResult = await queryNone(
+          databaseAdapter,
+          context,
+          buildPostgresSqlQuery(({ sql }) => {
+            sql`UPDATE entities SET published_name = ${name} WHERE id = ${entityInternalId}`;
+          }),
+          (error) => {
+            if (
+              databaseAdapter.isUniqueViolationOfConstraint(
+                error,
+                UniqueConstraints.entities_published_name_key,
+              )
+            ) {
+              return notOk.Conflict(nameConflictErrorMessage);
+            }
+            return notOk.GenericUnexpectedException(context, error);
+          },
+        );
+        if (updateNameResult.isError()) return updateNameResult;
+
+        return ok(name);
+      },
+    );
+    if (nameResult.isError()) return nameResult;
+    newPublishedName = nameResult.value;
+  }
+
   const { updated_at: updatedAt } = updateResult.value;
-  return ok({ updatedAt });
+  return ok({ updatedAt, publishedName: newPublishedName });
 }

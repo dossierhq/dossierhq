@@ -11,6 +11,7 @@ import {
   createRichTextValueItemNode,
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
+  type EntityReference,
   type ErrorType,
   type PromiseResult,
   type RichText,
@@ -35,6 +36,7 @@ import type {
   AdminStringsValueItem,
   AdminValueItemsEntity,
   AppAdminClient,
+  AppAdminEntity,
 } from './schema-types.js';
 import { SCHEMA, SCHEMA_WITHOUT_VALIDATIONS } from './schema.js';
 
@@ -293,7 +295,7 @@ async function createEntitiesEntities(
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
-    fields: { required: stringsEntities.find((it) => it.info.status === 'published') },
+    fields: { required: entityRef(stringsEntities.find((it) => it.info.status === 'published')) },
   });
 
   const results = [
@@ -312,12 +314,15 @@ async function createEntitiesEntities(
         id: id('entities-filled'),
         info: { name: 'Entities filled' },
         fields: {
-          normal: booleansEntities.at(-1),
-          list: numbersEntities.slice(0, 2),
-          stringsEntity: stringsEntities.at(-1),
-          stringsEntityList: stringsEntities.slice(0, 2),
-          stringsAndLocationsEntity: locationsEntities.at(-1),
-          stringsAndLocationsEntityList: [locationsEntities[0], ...stringsEntities.slice(0, 2)],
+          normal: entityRef(booleansEntities.at(-1)),
+          list: entityRefs(numbersEntities.slice(0, 2)),
+          stringsEntity: entityRef(stringsEntities.at(-1)),
+          stringsEntityList: entityRefs(stringsEntities.slice(0, 2)),
+          stringsAndLocationsEntity: entityRef(locationsEntities.at(-1)),
+          stringsAndLocationsEntityList: entityRefs([
+            locationsEntities[0],
+            ...stringsEntities.slice(0, 2),
+          ]),
         },
       }),
     ),
@@ -327,10 +332,10 @@ async function createEntitiesEntities(
         id: id('entities-invalid'),
         info: { name: 'Entities invalid' },
         fields: {
-          stringsEntity: booleansEntities.at(-1),
-          stringsEntityList: booleansEntities.slice(0, 2),
-          stringsAndLocationsEntity: numbersEntities.at(-1),
-          stringsAndLocationsEntityList: numbersEntities.slice(0, 2),
+          stringsEntity: entityRef(booleansEntities.at(-1)),
+          stringsEntityList: entityRefs(booleansEntities.slice(0, 2)),
+          stringsAndLocationsEntity: entityRef(numbersEntities.at(-1)),
+          stringsAndLocationsEntityList: entityRefs(numbersEntities.slice(0, 2)),
         },
       }),
     ),
@@ -345,6 +350,14 @@ async function createEntitiesEntities(
   ];
 
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
+}
+
+function entityRef(entity: AppAdminEntity | undefined): EntityReference | null {
+  return entity ? { id: entity.id } : null;
+}
+
+function entityRefs(entities: AppAdminEntity[]): EntityReference[] {
+  return entities.map(entityRef).filter((it) => it !== null) as EntityReference[];
 }
 
 async function createLocationsEntities(adminClient: AppAdminClient) {

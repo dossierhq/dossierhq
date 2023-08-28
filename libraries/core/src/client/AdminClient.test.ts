@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { ok } from '../ErrorResult.js';
+import { assertOkResult, ok, type ErrorType } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type {
   AdminEntity,
@@ -12,6 +12,12 @@ import type {
 } from '../Types.js';
 import { AdminEntityStatus, PublishingEventKind } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
+import {
+  EventType,
+  type EntityChangelogEvent,
+  type SchemaChangelogEvent,
+  type ChangelogEvent,
+} from '../events/EventTypes.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { assertIsDefined } from '../utils/Asserts.js';
 import type {
@@ -95,7 +101,7 @@ function createDummyEntity(changes: {
       info: {
         name: 'Foo name',
         type: 'FooType',
-        version: 0,
+        version: 1,
         authKey: 'none',
         status: AdminEntityStatus.draft,
         valid: true,
@@ -323,7 +329,7 @@ describe('AdminClient forward operation over JSON', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           },
         }
@@ -366,10 +372,156 @@ describe('AdminClient forward operation over JSON', () => {
     `);
   });
 
-  test('getEntities', async () => {
+  test('getChangelogEvents', async () => {
+    const event1: SchemaChangelogEvent = {
+      type: EventType.updateSchema,
+      createdBy: 'user',
+      createdAt: new Date('2023-08-14T08:51:25.56Z'),
+      version: 1,
+    };
+    const event2: EntityChangelogEvent = {
+      type: EventType.createEntity,
+      createdBy: 'user',
+      createdAt: new Date('2023-08-14T08:51:25.56Z'),
+      entities: [{ id: '123', type: 'Foo', name: 'Hello', version: 1 }],
+      unauthorizedEntityCount: 1,
+    };
+
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },
-      AdminClientOperationName.getEntities,
+      AdminClientOperationName.getChangelogEvents,
+      (_context, operation) => {
+        const [_query, _paging] = operation.args;
+        operation.resolve(
+          ok({
+            pageInfo: {
+              hasPreviousPage: false,
+              hasNextPage: true,
+              startCursor: 'start-cursor',
+              endCursor: 'end-cursor',
+            },
+            edges: [
+              { cursor: 'event-1', node: ok(event1) },
+              { cursor: 'event-2', node: ok(event2) },
+            ],
+          }),
+        );
+        return Promise.resolve();
+      },
+    );
+
+    const result = await adminClient.getChangelogEvents(
+      { types: [EventType.updateSchema, EventType.createEntity], reverse: true },
+      { first: 10, after: 'cursor' },
+    );
+    assertOkResult(result);
+    expectResultValue(result, {
+      pageInfo: {
+        hasPreviousPage: false,
+        hasNextPage: true,
+        startCursor: 'start-cursor',
+        endCursor: 'end-cursor',
+      },
+      edges: [
+        {
+          cursor: 'event-1',
+          node: ok<ChangelogEvent, typeof ErrorType.Generic>(event1),
+        },
+        {
+          cursor: 'event-2',
+          node: ok<ChangelogEvent, typeof ErrorType.Generic>(event2),
+        },
+      ],
+    });
+    expect(result.value?.edges[0].node.valueOrThrow().createdAt).toBeInstanceOf(Date);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          {
+            "logger": {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          {
+            "args": [
+              {
+                "reverse": true,
+                "types": [
+                  "updateSchema",
+                  "createEntity",
+                ],
+              },
+              {
+                "after": "cursor",
+                "first": 10,
+              },
+            ],
+            "modifies": false,
+            "name": "getChangelogEvents",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getChangelogEventsTotalCount', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getChangelogEventsTotalCount,
+      (_context, operation) => {
+        const [_query] = operation.args;
+        operation.resolve(ok(10));
+        return Promise.resolve();
+      },
+    );
+
+    const result = await adminClient.getChangelogEventsTotalCount({
+      types: [EventType.archiveEntity],
+      reverse: true,
+    });
+    assertOkResult(result);
+    expectResultValue(result, 10);
+
+    expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          {
+            "logger": {
+              "debug": [Function],
+              "error": [Function],
+              "info": [Function],
+              "warn": [Function],
+            },
+          },
+          {
+            "args": [
+              {
+                "reverse": true,
+                "types": [
+                  "archiveEntity",
+                ],
+              },
+            ],
+            "modifies": false,
+            "name": "getChangelogEventsTotalCount",
+            "next": [Function],
+            "resolve": [Function],
+          },
+        ],
+      ]
+    `);
+  });
+
+  test('getEntityList', async () => {
+    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+      { logger: NoOpLogger },
+      AdminClientOperationName.getEntityList,
       (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
@@ -379,7 +531,7 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntities([{ id: '1234' }, { id: '5678' }]);
+    const result = await adminClient.getEntityList([{ id: '1234' }, { id: '5678' }]);
     if (expectOkResult(result)) {
       expect(result.value[0].isOk()).toBeTruthy();
       expect(result.value[1].isOk()).toBeTruthy();
@@ -406,7 +558,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "updatedAt": 2021-08-17T07:51:25.560Z,
                 "valid": true,
                 "validPublished": null,
-                "version": 0,
+                "version": 1,
               },
             },
           },
@@ -425,7 +577,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "updatedAt": 2021-08-17T07:51:25.560Z,
                 "valid": true,
                 "validPublished": null,
-                "version": 0,
+                "version": 1,
               },
             },
           },
@@ -456,7 +608,7 @@ describe('AdminClient forward operation over JSON', () => {
               ],
             ],
             "modifies": false,
-            "name": "getEntities",
+            "name": "getEntityList",
             "next": [Function],
             "resolve": [Function],
           },
@@ -502,7 +654,7 @@ describe('AdminClient forward operation over JSON', () => {
             "updatedAt": 2021-08-17T07:51:25.560Z,
             "valid": true,
             "validPublished": null,
-            "version": 0,
+            "version": 1,
           },
         }
       `);
@@ -548,7 +700,7 @@ describe('AdminClient forward operation over JSON', () => {
               {
                 createdAt: new Date('2021-08-17T07:51:25.56Z'),
                 createdBy: '123-456',
-                version: 0,
+                version: 1,
                 published: true,
               },
             ],
@@ -570,7 +722,7 @@ describe('AdminClient forward operation over JSON', () => {
               "createdAt": 2021-08-17T07:51:25.560Z,
               "createdBy": "123-456",
               "published": true,
-              "version": 0,
+              "version": 1,
             },
           ],
         }
@@ -618,7 +770,7 @@ describe('AdminClient forward operation over JSON', () => {
                 kind: PublishingEventKind.publish,
                 publishedAt: new Date('2021-08-17T07:51:25.56Z'),
                 publishedBy: '123-456',
-                version: 0,
+                version: 1,
               },
             ],
           }),
@@ -638,7 +790,7 @@ describe('AdminClient forward operation over JSON', () => {
               "kind": "publish",
               "publishedAt": 2021-08-17T07:51:25.560Z,
               "publishedBy": "123-456",
-              "version": 0,
+              "version": 1,
             },
           ],
           "id": "1234",
@@ -860,7 +1012,7 @@ describe('AdminClient forward operation over JSON', () => {
     );
 
     const result = await adminClient.publishEntities([
-      { id: '1234', version: 0 },
+      { id: '1234', version: 1 },
       { id: '4321', version: 1 },
     ]);
     expectResultValue(result, [
@@ -896,7 +1048,7 @@ describe('AdminClient forward operation over JSON', () => {
               [
                 {
                   "id": "1234",
-                  "version": 0,
+                  "version": 1,
                 },
                 {
                   "id": "4321",
@@ -1387,7 +1539,7 @@ describe('AdminClient forward operation over JSON', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           },
         }
@@ -1616,7 +1768,7 @@ describe('AdminClient forward operation over JSON', () => {
               "updatedAt": 2021-08-17T07:51:25.560Z,
               "valid": true,
               "validPublished": null,
-              "version": 0,
+              "version": 1,
             },
           },
         }

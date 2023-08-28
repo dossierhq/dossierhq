@@ -28,20 +28,22 @@ export async function adminUnarchiveEntity(
       context,
       reference,
     );
-    if (entityInfoResult.isError()) {
-      return entityInfoResult;
-    }
-    const { entityInternalId, authKey, resolvedAuthKey, status, neverPublished } =
-      entityInfoResult.value;
+    if (entityInfoResult.isError()) return entityInfoResult;
+    const {
+      entityInternalId,
+      entityVersionInternalId,
+      authKey,
+      resolvedAuthKey,
+      status,
+      neverPublished,
+    } = entityInfoResult.value;
 
     // Step 2: Verify authKey
     const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
       authKey,
       resolvedAuthKey,
     });
-    if (authResult.isError()) {
-      return authResult;
-    }
+    if (authResult.isError()) return authResult;
 
     const result: AdminEntityUnarchivePayload = {
       id: reference.id,
@@ -58,24 +60,19 @@ export async function adminUnarchiveEntity(
       const unarchiveResult = await databaseAdapter.adminEntityUpdateStatus(
         context,
         result.status,
-        {
-          entityInternalId,
-        },
+        { entityInternalId },
       );
-      if (unarchiveResult.isError()) {
-        return unarchiveResult;
-      }
+      if (unarchiveResult.isError()) return unarchiveResult;
       result.updatedAt = unarchiveResult.value.updatedAt;
 
       // Step 4: Create publishing event
       const createEventResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
         session: context.session,
         kind: 'unarchive',
-        references: [{ entityInternalId }],
+        references: [{ entityInternalId, entityVersionInternalId }],
+        onlyLegacyEvents: false,
       });
-      if (createEventResult.isError()) {
-        return createEventResult;
-      }
+      if (createEventResult.isError()) return createEventResult;
     }
 
     //

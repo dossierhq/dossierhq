@@ -1,15 +1,17 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import {
   adminClientForMainPrincipal,
   adminClientForSecondaryPrincipal,
 } from '../shared-entity/TestClients.js';
+import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   archiveEntity_minimal,
+  archiveEntity_archiveEntityEvent,
   archiveEntity_errorInvalidError,
   archiveEntity_errorWrongAuthKey,
   archiveEntity_errorPublishedEntity,
@@ -24,8 +26,7 @@ async function archiveEntity_minimal({ server }: AdminEntityTestContext) {
   } = createResult.value;
 
   const archiveResult = await client.archiveEntity({ id });
-  assertOkResult(archiveResult);
-  const { updatedAt } = archiveResult.value;
+  const { updatedAt } = archiveResult.valueOrThrow();
   assertResultValue(archiveResult, {
     id,
     effect: 'archived',
@@ -39,6 +40,45 @@ async function archiveEntity_minimal({ server }: AdminEntityTestContext) {
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function archiveEntity_archiveEntityEvent({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: {
+      id,
+      info: { createdAt, name },
+    },
+  } = createResult.value;
+
+  const archiveResult = await client.archiveEntity({ id });
+  const { updatedAt } = archiveResult.valueOrThrow();
+  assertResultValue(archiveResult, {
+    id,
+    effect: 'archived',
+    status: AdminEntityStatus.archived,
+    updatedAt,
+  });
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.archiveEntity,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function archiveEntity_errorInvalidError({ server }: AdminEntityTestContext) {

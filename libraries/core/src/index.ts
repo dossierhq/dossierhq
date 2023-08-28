@@ -196,7 +196,7 @@ export {
   isValueItemItemField,
   isValueItemListField,
 } from './content/ContentTypeUtils.js';
-export { copyEntity, isEntityNameAsRequested } from './content/ContentUtils.js';
+export { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './content/ContentUtils.js';
 export {
   groupValidationIssuesByTopLevelPath,
   validateEntityInfo,
@@ -223,6 +223,13 @@ export {
   createRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from './content/RichTextUtils.js';
+export {
+  EventType,
+  type ChangelogEvent,
+  type ChangelogEventQuery,
+  type EntityChangelogEvent,
+  type SchemaChangelogEvent,
+} from './events/EventTypes.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
 export { FieldType, REQUIRED_RICH_TEXT_NODES } from './schema/SchemaSpecification.js';

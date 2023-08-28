@@ -70,13 +70,17 @@ export async function adminCreateEntity(
     );
   }
 
+  const version = 1;
+
   return await context.withTransaction(async (context) => {
     const createResult = await databaseAdapter.adminEntityCreate(context, randomNameGenerator, {
       id: entity.id ?? null,
       type: encodeEntityPayload.type,
       name: encodeEntityPayload.name,
-      creator: context.session,
+      version,
+      session: context.session,
       resolvedAuthKey: resolvedAuthKeyResult.value,
+      publish: !!options?.publish,
       schemaVersion: adminSchema.spec.version,
       encodeVersion: encodeEntityPayload.encodeVersion,
       fields: encodeEntityPayload.fields,
@@ -101,7 +105,7 @@ export async function adminCreateEntity(
         status: AdminEntityStatus.draft,
         valid: true,
         validPublished: null,
-        version: 0,
+        version,
         createdAt,
         updatedAt,
       },

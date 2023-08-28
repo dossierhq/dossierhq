@@ -1,6 +1,7 @@
-import type { EntityHistory } from '@dossierhq/core';
+import type { ChangelogEvent, Connection, Edge, EntityReference, ErrorType } from '@dossierhq/core';
 
 export interface VersionSelectionState {
+  entity: EntityReference;
   leftVersion: number | null;
   rightVersion: number | null;
   leftVersionItems: VersionItem[];
@@ -16,8 +17,9 @@ interface VersionSelectionStateAction {
   reduce(state: Readonly<VersionSelectionState>): Readonly<VersionSelectionState>;
 }
 
-export function initializeVersionSelectionState(): VersionSelectionState {
+export function initializeVersionSelectionState(entity: EntityReference): VersionSelectionState {
   return {
+    entity,
     leftVersion: null,
     rightVersion: null,
     leftVersionItems: [],
@@ -37,37 +39,49 @@ export function reduceVersionSelectionState(
 // ACTIONS
 
 class UpdateVersionHistoryAction implements VersionSelectionStateAction {
-  value: EntityHistory;
-  constructor(value: EntityHistory) {
+  value: Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>>;
+  constructor(value: Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>>) {
     this.value = value;
   }
 
   reduce(state: Readonly<VersionSelectionState>): Readonly<VersionSelectionState> {
+    const versions = new Set<number>();
+    for (const edge of this.value.edges) {
+      if (edge.node.isError()) continue;
+      const event = edge.node.value;
+
+      const entityInfo =
+        'entities' in event ? event.entities.find((it) => it.id === state.entity.id) : null;
+      if (!entityInfo) continue;
+      versions.add(entityInfo.version);
+    }
+
+    const sortedVersions = Array.from(versions).sort((a, b) => b - a); // descending
+
     let { leftVersion, rightVersion } = state;
     if (leftVersion === null) {
-      leftVersion = this.value.versions.at(-1)?.version ?? null;
+      leftVersion = sortedVersions[0] ?? null;
     }
     if (rightVersion === null) {
-      const leftIndex = this.value.versions.findIndex((it) => it.version === leftVersion);
-      rightVersion = leftIndex >= 0 ? this.value.versions[leftIndex - 1]?.version ?? null : null;
+      rightVersion = sortedVersions[1] ?? null;
     }
+
+    const versionItems = this.createItems(sortedVersions);
 
     return {
       ...state,
       leftVersion,
       rightVersion,
-      leftVersionItems: this.createItems(),
-      rightVersionItems: this.createItems(),
+      leftVersionItems: versionItems,
+      rightVersionItems: versionItems,
     };
   }
 
-  createItems(): VersionItem[] {
-    return this.value.versions
-      .map((it) => ({
-        version: it.version,
-        enabled: true, // TODO might not need separate items
-      }))
-      .reverse();
+  createItems(versions: number[]): VersionItem[] {
+    return versions.map((it) => ({
+      version: it,
+      enabled: true,
+    }));
   }
 }
 

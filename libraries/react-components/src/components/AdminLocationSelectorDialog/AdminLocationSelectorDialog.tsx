@@ -34,7 +34,7 @@ import {
   SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { EntityDraftMapMarker } from './EntityDraftMapMarker.js';
 import { initializeLocationState, reduceLocation } from './LocationReducer.js';

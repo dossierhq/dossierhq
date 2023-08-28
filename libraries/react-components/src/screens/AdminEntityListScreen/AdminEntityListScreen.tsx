@@ -15,11 +15,11 @@ import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTag
 import {
   SearchEntityStateActions,
   reduceSearchEntityState,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import {
   initializeSearchEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndSearchEntityState,
-} from '../../shared/reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
 
 export interface AdminEntityListScreenProps {
   header?: ReactNode;

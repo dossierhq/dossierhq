@@ -187,8 +187,19 @@ export interface AdminEntityInfo<TType extends string = string, TAuthKey extends
    * It is not connected to the requested version so if you get an old version of the entity, the
    * validation state refers to the latest version. */
   valid: boolean;
+  /**
+   * The current validation state of the published entity.
+   *
+   * It is not connected to the requested version so if you get an old version of the entity.
+   */
   validPublished: boolean | null;
   createdAt: Date;
+  /**
+   * The date when the entity was last updated. Could be due to creating or updating the entity, and
+   * also when changing the status of the entity, by e.g. publishing it.
+   *
+   * When requesting a specific version of the entity, this date will be when the version was created.
+   */
   updatedAt: Date;
 }
 
@@ -207,7 +218,7 @@ export interface AdminEntityCreate<T extends AdminEntity<string, object> = Admin
      * The name needs to be unique, so if it clashes with an existing entity a random suffix will be
      * appended to the name. */
     name: string;
-    version?: 0;
+    version?: 1;
     authKey: T['info']['authKey'];
   };
   fields: Partial<T['fields']>;

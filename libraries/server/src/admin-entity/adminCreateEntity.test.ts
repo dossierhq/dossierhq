@@ -53,7 +53,7 @@ describe('Admin adminCreateEntity', () => {
           type: 'TitleOnly',
           name: 'TitleOnly name',
           authKey: 'none',
-          version: 0,
+          version: 1,
           createdAt: now,
           updatedAt: now,
           status: AdminEntityStatus.draft,
@@ -72,22 +72,24 @@ describe('Admin adminCreateEntity', () => {
             "adminEntityCreate",
             [Function],
             {
-              "creator": {
-                "subjectId": "subject-id",
-                "subjectInternalId": 123,
-              },
               "encodeVersion": 1,
               "fields": {
                 "title": "Title",
               },
               "id": null,
               "name": "TitleOnly name",
+              "publish": false,
               "resolvedAuthKey": {
                 "authKey": "none",
                 "resolvedAuthKey": "none",
               },
               "schemaVersion": 1,
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
               "type": "TitleOnly",
+              "version": 1,
             },
           ],
           [

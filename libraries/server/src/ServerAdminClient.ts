@@ -1,18 +1,16 @@
-import type {
-  AdminClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  AdminEntityCreate,
-  AdminEntityUpdate,
-  AdminEntityUpsert,
-  AdminSchemaSpecificationWithMigrations,
-  ContextProvider,
-} from '@dossierhq/core';
 import {
   AdminClientOperationName,
   assertExhaustive,
   createBaseAdminClient,
   ok,
+  type AdminClient,
+  type AdminClientMiddleware,
+  type AdminClientOperation,
+  type AdminEntityCreate,
+  type AdminEntityUpdate,
+  type AdminEntityUpsert,
+  type AdminSchemaSpecificationWithMigrations,
+  type ContextProvider,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
@@ -20,9 +18,9 @@ import type { SessionContext } from './Context.js';
 import type { ServerImpl } from './Server.js';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
-import { adminGetEntities } from './admin-entity/adminGetEntities.js';
 import { adminGetEntity } from './admin-entity/adminGetEntity.js';
 import { adminGetEntityHistory } from './admin-entity/adminGetEntityHistory.js';
+import { adminGetEntityList } from './admin-entity/adminGetEntityList.js';
 import { adminGetPublishingHistory } from './admin-entity/adminGetPublishingHistory.js';
 import { adminGetTotalCount } from './admin-entity/adminGetTotalCount.js';
 import { adminPublishEntities } from './admin-entity/adminPublishEntities.js';
@@ -35,6 +33,8 @@ import { adminUpsertEntity } from './admin-entity/adminUpsertEntity.js';
 import { acquireAdvisoryLock } from './advisory-lock/acquireAdvisoryLock.js';
 import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
 import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
+import { eventGetChangelogEvents } from './event/eventGetChangelogEvents.js';
+import { eventGetChangelogEventsTotalCount } from './event/eventGetChangelogEventsTotalCount.js';
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 
 export function createServerAdminClient({
@@ -91,18 +91,35 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntities: {
+      case AdminClientOperationName.getChangelogEvents: {
         const {
-          args: [references],
+          args: [query, paging],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getChangelogEvents>;
         resolve(
-          await adminGetEntities(
-            serverImpl.getAdminSchema(),
+          await eventGetChangelogEvents(
             authorizationAdapter,
             databaseAdapter,
             context,
-            references,
+            query,
+            paging,
+          ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getChangelogEventsTotalCount: {
+        const {
+          args: [query],
+          resolve,
+        } = operation as AdminClientOperation<
+          typeof AdminClientOperationName.getChangelogEventsTotalCount
+        >;
+        resolve(
+          await eventGetChangelogEventsTotalCount(
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
           ),
         );
         break;
@@ -119,6 +136,22 @@ export function createServerAdminClient({
             databaseAdapter,
             context,
             reference,
+          ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getEntityList: {
+        const {
+          args: [references],
+          resolve,
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntityList>;
+        resolve(
+          await adminGetEntityList(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            references,
           ),
         );
         break;

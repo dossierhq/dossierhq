@@ -13,11 +13,7 @@ import { authResolveAuthorizationKeys } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
-import {
-  getOppositeDirectionPaging,
-  resolvePagingInfo,
-  sharedSearchEntities,
-} from '../shared-entity/sharedSearchEntities.js';
+import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
 
 export async function adminSearchEntities(
   schema: AdminSchemaWithMigrations,
@@ -30,10 +26,6 @@ export async function adminSearchEntities(
   Connection<Edge<AdminEntity, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const pagingResult = resolvePagingInfo(paging);
-  if (pagingResult.isError()) return pagingResult;
-  const pagingInfo = pagingResult.value;
-
   const authKeysResult = await authResolveAuthorizationKeys(
     authorizationAdapter,
     context,
@@ -41,34 +33,16 @@ export async function adminSearchEntities(
   );
   if (authKeysResult.isError()) return authKeysResult;
 
-  const searchResult = await databaseAdapter.adminEntitySearchEntities(
-    schema,
-    context,
-    query,
-    pagingInfo,
-    authKeysResult.value,
-  );
-  if (searchResult.isError()) return searchResult;
-
-  let hasMoreOppositeDirection = false;
-  const oppositePagingInfo = getOppositeDirectionPaging(pagingInfo, searchResult.value);
-  if (oppositePagingInfo) {
-    const oppositeResult = await databaseAdapter.adminEntitySearchEntities(
-      schema,
-      context,
-      query,
-      oppositePagingInfo,
-      authKeysResult.value,
-    );
-    if (oppositeResult.isError()) return oppositeResult;
-    hasMoreOppositeDirection = oppositeResult.value.hasMore;
-  }
-
-  return sharedSearchEntities(
-    schema,
-    pagingInfo,
-    searchResult.value,
-    hasMoreOppositeDirection,
-    decodeAdminEntity,
+  return fetchAndDecodeConnection(
+    paging,
+    (pagingInfo) =>
+      databaseAdapter.adminEntitySearchEntities(
+        schema,
+        context,
+        query,
+        pagingInfo,
+        authKeysResult.value,
+      ),
+    (edge) => decodeAdminEntity(schema, edge),
   );
 }

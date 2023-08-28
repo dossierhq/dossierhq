@@ -5,6 +5,7 @@ import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import { AdvisoryLocksUniqueNameConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
 export async function advisoryLockAcquire(
   database: Database,
@@ -13,7 +14,7 @@ export async function advisoryLockAcquire(
   handle: number,
   leaseDuration: number,
 ): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
   const expires_at = now.getTime() + leaseDuration;
 
   const query = buildSqliteSqlQuery(({ sql, addValue }) => {

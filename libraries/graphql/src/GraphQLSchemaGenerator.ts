@@ -1,42 +1,36 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  AdminEntityCreate,
-  AdminEntityTypeSpecification,
-  AdminEntityUpdate,
-  AdminEntityUpsert,
-  AdminQuery,
-  AdminSchema,
-  AdminSearchQuery,
-  AdminValueTypeSpecification,
-  AdvisoryLockOptions,
-  EntityReference,
-  EntityVersionReference,
-  ErrorType,
-  PublishedClient,
-  PublishedEntity,
-  PublishedEntityTypeSpecification,
-  PublishedQuery,
-  PublishedSchema,
-  PublishedSearchQuery,
-  PublishedValueTypeSpecification,
-  Result,
-  ValueItem,
-} from '@dossierhq/core';
 import {
+  EventType,
   FieldType,
   assertExhaustive,
   isItemValueItem,
   isValueItemField,
   notOk,
+  type AdminClient,
+  type AdminEntity,
+  type AdminEntityCreate,
+  type AdminEntityTypeSpecification,
+  type AdminEntityUpdate,
+  type AdminEntityUpsert,
+  type AdminQuery,
+  type AdminSchema,
+  type AdminSearchQuery,
+  type AdminValueTypeSpecification,
+  type AdvisoryLockOptions,
+  type ChangelogEvent,
+  type ChangelogEventQuery,
+  type EntityReference,
+  type EntityVersionReference,
+  type ErrorType,
+  type PublishedClient,
+  type PublishedEntity,
+  type PublishedEntityTypeSpecification,
+  type PublishedQuery,
+  type PublishedSchema,
+  type PublishedSearchQuery,
+  type PublishedValueTypeSpecification,
+  type Result,
+  type ValueItem,
 } from '@dossierhq/core';
-import type {
-  GraphQLEnumValueConfigMap,
-  GraphQLFieldConfig,
-  GraphQLFieldConfigMap,
-  GraphQLInputFieldConfigMap,
-  GraphQLSchemaConfig,
-} from 'graphql';
 import {
   GraphQLBoolean,
   GraphQLEnumType,
@@ -50,14 +44,20 @@ import {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
+  type GraphQLEnumValueConfigMap,
+  type GraphQLFieldConfig,
+  type GraphQLFieldConfigMap,
+  type GraphQLInputFieldConfigMap,
+  type GraphQLSchemaConfig,
 } from 'graphql';
 import {
-  loadAdminEntities,
   loadAdminEntity,
+  loadAdminEntityList,
   loadAdminSampleEntities,
   loadAdminSearchEntities,
-  loadPublishedEntities,
+  loadChangelogEvents,
   loadPublishedEntity,
+  loadPublishedEntityList,
   loadPublishedSampleEntities,
   loadPublishedSearchEntities,
   loadPublishingHistory,
@@ -418,6 +418,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       return;
     }
 
+    this.addChangelogSupportingTypes();
+
     // AdminEntityType
     const entityTypeEnumValues: GraphQLEnumValueConfigMap = {};
     for (const entitySpec of adminSchema.spec.entityTypes) {
@@ -561,6 +563,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
+          changelogEvents: {
+            type: this.getOutputType('EntityChangelogEventConnection'),
+            args: {
+              query: { type: this.getInputType('ChangelogEventQueryInput') },
+              first: { type: GraphQLInt },
+              after: { type: GraphQLString },
+              last: { type: GraphQLInt },
+              before: { type: GraphQLString },
+            },
+          },
         },
       }),
     );
@@ -878,6 +890,146 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
+  addChangelogSupportingTypes(): void {
+    // EventType
+    this.addType(
+      new GraphQLEnumType({
+        name: 'EventType',
+        values: {
+          createEntity: {},
+          createAndPublishEntity: {},
+          updateEntity: {},
+          updateAndPublishEntity: {},
+          publishEntities: {},
+          unpublishEntities: {},
+          archiveEntity: {},
+          unarchiveEntity: {},
+          updateSchema: {},
+        },
+      }),
+    );
+
+    // ChangelogEventQueryInput
+    this.addType(
+      new GraphQLInputObjectType({
+        name: 'ChangelogEventQueryInput',
+        fields: {
+          reverse: { type: GraphQLBoolean },
+          createdBy: { type: GraphQLID },
+          types: { type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EventType'))) },
+        },
+      }),
+    );
+
+    // ChangelogEvent
+    this.addType(
+      new GraphQLInterfaceType({
+        name: 'ChangelogEvent',
+        fields: {
+          type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
+          createdBy: { type: new GraphQLNonNull(GraphQLID) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
+        },
+      }),
+    );
+
+    // SchemaChangelogEvent
+    this.addType(
+      new GraphQLObjectType<ChangelogEvent, TContext>({
+        name: 'SchemaChangelogEvent',
+        interfaces: this.getInterfaces('ChangelogEvent'),
+        isTypeOf: (source, _context, _info) => source.type === EventType.updateSchema,
+        fields: {
+          type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
+          createdBy: { type: new GraphQLNonNull(GraphQLID) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
+          version: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      }),
+    );
+
+    // EntityChangelogEventEntityInfo
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityChangelogEventEntityInfo',
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          version: { type: new GraphQLNonNull(GraphQLInt) },
+          type: { type: new GraphQLNonNull(GraphQLString) },
+          name: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      }),
+    );
+
+    // EntityChangelogEvent
+    this.addType(
+      new GraphQLObjectType<ChangelogEvent, TContext>({
+        name: 'EntityChangelogEvent',
+        interfaces: this.getInterfaces('ChangelogEvent'),
+        isTypeOf: (source, _context, _info) => source.type !== EventType.updateSchema,
+        fields: {
+          type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
+          createdBy: { type: new GraphQLNonNull(GraphQLID) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
+          entities: {
+            type: new GraphQLNonNull(
+              new GraphQLList(
+                new GraphQLNonNull(this.getOutputType('EntityChangelogEventEntityInfo')),
+              ),
+            ),
+          },
+          unauthorizedEntityCount: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      }),
+    );
+
+    // ChangelogEventEdge
+    this.addType(
+      new GraphQLObjectType({
+        name: 'ChangelogEventEdge',
+        fields: {
+          node: { type: this.getOutputType('ChangelogEvent') },
+          cursor: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      }),
+    );
+
+    // ChangelogEventConnection
+    this.addType(
+      new GraphQLObjectType({
+        name: 'ChangelogEventConnection',
+        fields: {
+          pageInfo: { type: new GraphQLNonNull(this.getOutputType('PageInfo')) },
+          edges: { type: new GraphQLList(this.getOutputType('ChangelogEventEdge')) },
+          totalCount: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      }),
+    );
+
+    // EntityChangelogEventEdge
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityChangelogEventEdge',
+        fields: {
+          node: { type: this.getOutputType('EntityChangelogEvent') },
+          cursor: { type: new GraphQLNonNull(GraphQLString) },
+        },
+      }),
+    );
+
+    // EntityChangelogEventConnection
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityChangelogEventConnection',
+        fields: {
+          pageInfo: { type: new GraphQLNonNull(this.getOutputType('PageInfo')) },
+          edges: { type: new GraphQLList(this.getOutputType('EntityChangelogEventEdge')) },
+          totalCount: { type: new GraphQLNonNull(GraphQLInt) },
+        },
+      }),
+    );
+  }
+
   addAdminEntityTypes(adminSchema: AdminSchema): void {
     for (const entitySpec of adminSchema.spec.entityTypes) {
       this.addAdminEntityType(entitySpec);
@@ -911,6 +1063,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
             info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
+            changelogEvents: {
+              type: this.getOutputType('EntityChangelogEventConnection'),
+              args: {
+                query: { type: this.getInputType('ChangelogEventQueryInput') },
+                first: { type: GraphQLInt },
+                after: { type: GraphQLString },
+                last: { type: GraphQLInt },
+                before: { type: GraphQLString },
+              },
+            },
           };
           if (fieldsName) {
             fields.fields = { type: new GraphQLNonNull(this.getOutputType(fieldsName)) };
@@ -1188,7 +1350,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadPublishedEntities(publishedSchema, context, args.ids);
+        return await loadPublishedEntityList(publishedSchema, context, args.ids);
       },
     });
   }
@@ -1284,7 +1446,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldAdminEntities<TSource>(
+  buildQueryFieldAdminEntityList<TSource>(
     adminSchema: AdminSchema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
@@ -1293,7 +1455,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntities(adminSchema, context, args.ids);
+        return await loadAdminEntityList(adminSchema, context, args.ids);
       },
     });
   }
@@ -1346,10 +1508,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (_source, args, context, _info) => {
+      resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminSearchEntities(adminSchema, context, query, paging);
+        return await loadAdminSearchEntities(adminSchema, context, query, paging, info);
       },
     });
   }
@@ -1402,10 +1564,38 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         last: { type: GraphQLInt },
         before: { type: GraphQLString },
       },
-      resolve: async (_source, args, context, _info) => {
+      resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadPublishedSearchEntities(publishedSchema, context, query, paging);
+        return await loadPublishedSearchEntities(publishedSchema, context, query, paging, info);
+      },
+    });
+  }
+
+  buildQueryFieldChangelogEvents<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<
+      TSource,
+      TContext,
+      {
+        query?: ChangelogEventQuery;
+        first?: number;
+        after?: string;
+        last?: number;
+        before?: string;
+      }
+    >({
+      type: this.getOutputType('ChangelogEventConnection'),
+      args: {
+        query: { type: this.getInputType('ChangelogEventQueryInput') },
+        first: { type: GraphQLInt },
+        after: { type: GraphQLString },
+        last: { type: GraphQLInt },
+        before: { type: GraphQLString },
+      },
+      resolve: async (_source, args, context, info) => {
+        const { query, first, after, last, before } = args;
+        const paging = { first, after, last, before };
+        return await loadChangelogEvents(context, query, paging, info);
       },
     });
   }
@@ -1456,9 +1646,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         ...(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0
           ? {
               adminEntity: this.buildQueryFieldAdminEntity(this.adminSchema),
-              adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
+              adminEntityList: this.buildQueryFieldAdminEntityList(this.adminSchema),
               adminSampleEntities: this.buildQueryFieldAdminSampleEntities(this.adminSchema),
               adminSearchEntities: this.buildQueryFieldAdminSearchEntities(this.adminSchema),
+              changelogEvents: this.buildQueryFieldChangelogEvents(),
               entityHistory: this.buildQueryFieldEntityHistory(),
               publishingHistory: this.buildQueryFieldPublishingHistory(),
             }

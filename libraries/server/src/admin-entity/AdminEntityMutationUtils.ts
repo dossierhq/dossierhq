@@ -1,8 +1,15 @@
-import type { EntityReference, ErrorType, Result } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import {
+  getEntityNameBase,
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type Result,
+} from '@dossierhq/core';
 
 export function randomNameGenerator(name: string) {
-  return `${name}#${Math.random().toFixed(8).slice(2)}`;
+  const nameBase = getEntityNameBase(name);
+  return `${nameBase}#${Math.random().toFixed(8).slice(2)}`;
 }
 
 export function checkUUIDsAreUnique(

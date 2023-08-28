@@ -26,7 +26,7 @@ export default async function Page() {
 
   const authorIds = new Set<string>();
   blogPosts.forEach((post) => post.fields.authors?.forEach((author) => authorIds.add(author.id)));
-  const authorResults = await publishedClient.getEntities([...authorIds].map((id) => ({ id })));
+  const authorResults = await publishedClient.getEntityList([...authorIds].map((id) => ({ id })));
 
   const authors: Record<string, PublishedAuthor> = {};
   authorResults.forEach((result) => {

@@ -4,6 +4,8 @@ import type {
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
   AdminSearchQuery,
+  ChangelogEventQuery,
+  EntityChangelogEvent,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -14,6 +16,7 @@ import type {
   PublishedSchema,
   PublishedSearchQuery,
   PublishingEvent,
+  SchemaChangelogEvent,
   UniqueIndexReference,
 } from '@dossierhq/core';
 import type { ResolvedAuthKey, Session } from './Session.js';
@@ -27,6 +30,11 @@ export interface DatabasePagingInfo extends PagingInfo {
   count: number;
 }
 
+export interface DatabaseConnectionPayload<T extends { cursor: string }> {
+  hasMore: boolean;
+  edges: T[];
+}
+
 export interface DatabaseResolvedEntityReference {
   entityInternalId: unknown;
 }
@@ -37,7 +45,7 @@ export interface DatabaseResolvedEntityVersionReference {
 }
 
 export interface DatabaseAdminEntityArchivingEntityInfoPayload
-  extends DatabaseResolvedEntityReference {
+  extends DatabaseResolvedEntityVersionReference {
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
@@ -49,8 +57,10 @@ export interface DatabaseAdminEntityCreateEntityArg {
   id: string | null;
   type: string;
   name: string;
-  creator: Session;
+  version: number;
+  session: Session;
   resolvedAuthKey: ResolvedAuthKey;
+  publish: boolean;
   schemaVersion: number;
   encodeVersion: number;
   fields: Record<string, unknown>;
@@ -118,6 +128,8 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   type: string;
   authKey: string;
   resolvedAuthKey: string;
+  name: string;
+  publishedName: string | null;
   status: AdminEntityStatus;
   updatedAt: Date;
   validPublished: boolean | null;
@@ -127,26 +139,21 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
 export interface DatabaseAdminEntityPublishUpdateEntityArg
   extends DatabaseResolvedEntityVersionReference {
   status: AdminEntityStatus;
+  publishedName: string;
+  changePublishedName: boolean;
 }
 
-export type DatabaseAdminEntityPublishingCreateEventArg = { session: Session } & (
-  | {
-      kind: 'publish';
-      references: DatabaseResolvedEntityVersionReference[];
-    }
-  | {
-      kind: 'unpublish';
-      references: DatabaseResolvedEntityReference[];
-    }
-  | {
-      kind: 'archive';
-      references: DatabaseResolvedEntityReference[];
-    }
-  | {
-      kind: 'unarchive';
-      references: DatabaseResolvedEntityReference[];
-    }
-);
+export interface DatabaseAdminEntityPublishUpdateEntityPayload
+  extends DatabaseAdminEntityUpdateStatusPayload {
+  publishedName: string;
+}
+
+export interface DatabaseAdminEntityPublishingCreateEventArg {
+  session: Session;
+  kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
+  references: (DatabaseResolvedEntityVersionReference & { publishedName?: string })[];
+  onlyLegacyEvents: boolean; //TODO remove when removing legacy publishing events and instead skip calling function in server
+}
 
 export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
   extends DatabaseResolvedEntityReference {
@@ -154,10 +161,8 @@ export interface DatabaseAdminEntityPublishingHistoryGetEntityInfoPayload
   resolvedAuthKey: string;
 }
 
-export interface DatabaseAdminEntitySearchPayload {
-  hasMore: boolean;
-  entities: DatabaseAdminEntitySearchPayloadEntity[];
-}
+export type DatabaseAdminEntitySearchPayload =
+  DatabaseConnectionPayload<DatabaseAdminEntitySearchPayloadEntity>;
 
 export interface DatabaseAdminEntitySearchPayloadEntity extends DatabaseAdminEntityPayload {
   cursor: string;
@@ -188,6 +193,7 @@ export interface DatabaseAdminEntityUniqueIndexPayload {
 export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolvedEntityReference {
   type: string;
   name: string;
+  publishedName: string | null;
   authKey: string;
   resolvedAuthKey: string;
   status: AdminEntityStatus;
@@ -203,6 +209,8 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   name: string;
   changeName: boolean;
   version: number;
+  type: string;
+  publish: boolean;
   status: AdminEntityStatus;
   session: Session;
   schemaVersion: number;
@@ -220,7 +228,7 @@ export interface DatabaseAdminEntityUpdateStatusPayload {
 }
 
 export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
-  extends DatabaseResolvedEntityReference {
+  extends DatabaseResolvedEntityVersionReference {
   id: string;
   authKey: string;
   resolvedAuthKey: string;
@@ -279,14 +287,40 @@ export interface DatabasePublishedEntityGetOnePayload extends DatabasePublishedE
   resolvedAuthKey: string;
 }
 
-export interface DatabasePublishedEntitySearchPayload {
-  hasMore: boolean;
-  entities: DatabasePublishedEntitySearchPayloadEntity[];
-}
+export type DatabasePublishedEntitySearchPayload =
+  DatabaseConnectionPayload<DatabasePublishedEntitySearchPayloadEntity>;
 
 export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePublishedEntityPayload {
   cursor: string;
 }
+
+export interface DatabaseEventGetChangelogEventsEntityInfoPayload
+  extends DatabaseResolvedEntityReference {
+  authKey: string;
+  resolvedAuthKey: string;
+}
+
+export type DatabaseEventGetChangelogEventsPayload =
+  DatabaseConnectionPayload<DatabaseEventChangelogEventPayload>;
+
+export type DatabaseEventChangelogEntityEventPayload = Omit<
+  EntityChangelogEvent,
+  'entities' | 'unauthorizedEntityCount'
+> & {
+  entities: {
+    id: string;
+    name: string;
+    version: number;
+    type: string;
+    authKey: string;
+    resolvedAuthKey: string;
+  }[];
+  cursor: string;
+};
+
+export type DatabaseEventChangelogEventPayload =
+  | (SchemaChangelogEvent & { cursor: string })
+  | DatabaseEventChangelogEntityEventPayload;
 
 export interface DatabaseOptimizationOptions {
   all?: boolean;
@@ -385,8 +419,9 @@ export interface DatabaseAdapter<
 
   adminEntityPublishUpdateEntity(
     context: TransactionContext,
+    randomNameGenerator: (name: string) => string,
     values: DatabaseAdminEntityPublishUpdateEntityArg,
-  ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
+  ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntityPublishingCreateEvents(
     context: TransactionContext,
@@ -518,6 +553,30 @@ export interface DatabaseAdapter<
     identifier: string,
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
 
+  eventGetChangelogEvents(
+    context: TransactionContext,
+    query: ChangelogEventQuery,
+    pagingInfo: DatabasePagingInfo,
+    entity: DatabaseResolvedEntityReference | null,
+  ): PromiseResult<
+    DatabaseEventGetChangelogEventsPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
+
+  eventGetChangelogEventsEntityInfo(
+    context: TransactionContext,
+    reference: EntityReference,
+  ): PromiseResult<
+    DatabaseEventGetChangelogEventsEntityInfoPayload,
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
+
+  eventGetChangelogEventsTotalCount(
+    context: TransactionContext,
+    query: ChangelogEventQuery,
+    entity: DatabaseResolvedEntityReference | null,
+  ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
   managementDirtyGetNextEntity(
     context: TransactionContext,
     filter: EntityReference | undefined,
@@ -614,6 +673,7 @@ export interface DatabaseAdapter<
 
   schemaUpdateSpecification(
     context: TransactionContext,
+    session: Session,
     schemaSpec: AdminSchemaSpecificationWithMigrations,
   ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 }

@@ -1,10 +1,10 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedSchema,
-  PublishedSearchQuery,
+import {
+  ok,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedSchema,
+  type PublishedSearchQuery,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   DatabasePublishedEntitySearchPayload,
@@ -58,7 +58,7 @@ export async function publishedEntitySearchEntities(
 
   return ok({
     hasMore,
-    entities: entitiesValues.map((it) => ({
+    edges: entitiesValues.map((it) => ({
       ...resolvePublishedEntityInfo(it),
       ...resolveEntityFields(it),
       id: it.uuid,

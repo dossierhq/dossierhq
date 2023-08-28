@@ -15,7 +15,7 @@ import { ROUTE } from '../utils/RouteUtils.js';
 import logo from './logo.svg';
 
 interface Props {
-  current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'graphiql';
+  current: 'home' | 'admin-entities' | 'published-entities' | 'schema' | 'changelog' | 'graphiql';
 }
 
 export function NavBar({ current }: Props) {
@@ -68,6 +68,9 @@ export function NavBar({ current }: Props) {
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'schema'}>
                 {NavItemRender('Schema', ROUTE.schema.url(serverName), handleLinkClick)}
+              </DesignNavbar.Item>
+              <DesignNavbar.Item active={current === 'changelog'}>
+                {NavItemRender('Changelog', ROUTE.changelog.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'graphiql'}>
                 {NavItemRender('GraphiQL', ROUTE.graphiql.url(serverName), handleLinkClick)}

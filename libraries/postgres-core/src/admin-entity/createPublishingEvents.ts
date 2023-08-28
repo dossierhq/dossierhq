@@ -1,4 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import { EventType, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishingCreateEventArg,
   TransactionContext,
@@ -6,6 +6,7 @@ import type {
 import { createPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone } from '../QueryFunctions.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 
 export async function adminEntityPublishingCreateEvents(
@@ -22,5 +23,29 @@ export async function adminEntityPublishingCreateEvents(
       'entityVersionInternalId' in reference ? reference.entityVersionInternalId : null
     }, ${subjectValue}, ${kindValue})`;
   }
-  return await queryNone(databaseAdapter, context, query);
+  const result = await queryNone(databaseAdapter, context, query);
+  if (result.isError()) return result;
+
+  if (!event.onlyLegacyEvents) {
+    const eventType = {
+      archive: EventType.archiveEntity,
+      unarchive: EventType.unarchiveEntity,
+      publish: EventType.publishEntities,
+      unpublish: EventType.unpublishEntities,
+    }[event.kind];
+
+    const eventResult = await createEntityEvent(
+      databaseAdapter,
+      context,
+      event.session,
+      eventType,
+      event.references.map(({ entityVersionInternalId, publishedName }) => ({
+        entityVersionsId: entityVersionInternalId as number,
+        publishedName,
+      })),
+    );
+    if (eventResult.isError()) return eventResult;
+  }
+
+  return ok(undefined);
 }

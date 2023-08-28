@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute.js';
+import { ChangelogRoute } from './routes/ChangelogRoute.js';
 import { EditEntitiesRoute } from './routes/EditEntitiesRoute.js';
 import { EditSchemaRoute } from './routes/EditSchemaRoute.js';
 import { GraphiQLRoute } from './routes/GraphiQLRoute.js';
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
           { path: ROUTE.publishedEntities.route, element: <PublishedEntitiesRoute /> },
           { path: ROUTE.publishedEntityDisplay.route, element: <PublishedEntityDisplayRoute /> },
           { path: ROUTE.schema.route, element: <EditSchemaRoute /> },
+          { path: ROUTE.changelog.route, element: <ChangelogRoute /> },
           { path: ROUTE.graphiql.route, element: <GraphiQLRoute /> },
         ],
       },

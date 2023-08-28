@@ -61,7 +61,7 @@ async function getPublishingHistory_updateAndPublish({ server }: AdminEntityTest
         kind: PublishingEventKind.publish,
         publishedAt: updatedAt,
         publishedBy: context.session.subjectId,
-        version: 1,
+        version: 2,
       },
     ],
   });

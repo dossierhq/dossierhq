@@ -1,30 +1,39 @@
 import type {
-  AdminEntity,
   AdminSchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
+  PublishedEntity,
   Result,
 } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
-  DatabaseAdminEntityGetOnePayload,
+  DatabasePublishedEntityGetOnePayload,
 } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import { decodeAdminEntity } from '../EntityCodec.js';
+import { decodePublishedEntity } from '../EntityCodec.js';
 
-export async function adminGetEntities(
-  schema: AdminSchemaWithMigrations,
+/**
+ * Fetches published entities. The entities are returned in the same order as in `ids`.
+ *
+ * If any of the entities are missing that item is returned as an error but the others are returned
+ * as normal.
+ * @param context The session context
+ * @param ids The ids of the entities
+ */
+
+export async function publishedGetEntityList(
+  adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   references: EntityReference[],
 ): PromiseResult<
   Result<
-    AdminEntity,
+    PublishedEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -35,33 +44,32 @@ export async function adminGetEntities(
   if (references.length === 0) {
     return ok([]);
   }
+  const entitiesInfoResult = await databaseAdapter.publishedEntityGetEntities(context, references);
+  if (entitiesInfoResult.isError()) return entitiesInfoResult;
 
-  const entityInfoResult = await databaseAdapter.adminEntityGetMultiple(context, references);
-  if (entityInfoResult.isError()) return entityInfoResult;
-
-  const result: Result<
-    AdminEntity,
+  const payload: Result<
+    PublishedEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
     | typeof ErrorType.Generic
   >[] = [];
   for (const reference of references) {
-    const entityMain = entityInfoResult.value.find((it) => it.id === reference.id);
-    result.push(await mapItem(schema, authorizationAdapter, context, reference, entityMain));
+    const entityMain = entitiesInfoResult.value.find((it) => it.id === reference.id);
+    payload.push(await mapItem(adminSchema, authorizationAdapter, context, reference, entityMain));
   }
 
-  return ok(result);
+  return ok(payload);
 }
 
 async function mapItem(
-  schema: AdminSchemaWithMigrations,
+  adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
-  values: DatabaseAdminEntityGetOnePayload | undefined,
+  values: DatabasePublishedEntityGetOnePayload | undefined,
 ): PromiseResult<
-  AdminEntity,
+  PublishedEntity,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -77,5 +85,5 @@ async function mapItem(
   });
   if (authResult.isError()) return authResult;
 
-  return decodeAdminEntity(schema, values);
+  return decodePublishedEntity(adminSchema, values);
 }

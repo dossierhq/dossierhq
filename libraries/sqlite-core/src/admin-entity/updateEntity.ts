@@ -1,20 +1,30 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
-import type {
-  DatabaseEntityUpdateEntityArg,
-  DatabaseEntityUpdateEntityPayload,
-  DatabaseEntityUpdateGetEntityInfoPayload,
-  TransactionContext,
+import {
+  EventType,
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
+import {
+  buildSqliteSqlQuery,
+  type DatabaseEntityUpdateEntityArg,
+  type DatabaseEntityUpdateEntityPayload,
+  type DatabaseEntityUpdateGetEntityInfoPayload,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
   ENTITY_DIRTY_FLAG_INDEX_LATEST,
   ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
   EntitiesUniqueNameConstraint,
+  EntitiesUniquePublishedNameConstraint,
 } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
@@ -33,6 +43,7 @@ export async function adminEntityUpdateGetEntityInfo(
       | 'id'
       | 'type'
       | 'name'
+      | 'published_name'
       | 'auth_key'
       | 'resolved_auth_key'
       | 'created_at'
@@ -42,7 +53,7 @@ export async function adminEntityUpdateGetEntityInfo(
     > &
       Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>
   >(database, context, {
-    text: `SELECT e.id, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields
+    text: `SELECT e.id, e.type, e.name, e.published_name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields
         FROM entities e, entity_versions ev
         WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id`,
     values: [reference.id],
@@ -53,12 +64,17 @@ export async function adminEntityUpdateGetEntityInfo(
     return notOk.NotFound('No such entity');
   }
 
-  const { id: entityInternalId, resolved_auth_key: resolvedAuthKey } = result.value;
+  const {
+    id: entityInternalId,
+    published_name: publishedName,
+    resolved_auth_key: resolvedAuthKey,
+  } = result.value;
 
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),
     entityInternalId,
+    publishedName,
     resolvedAuthKey,
   });
 }
@@ -69,14 +85,16 @@ export async function adminEntityUpdateEntity(
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg,
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
-    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, version, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7) RETURNING id',
+    text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, type, name, version, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING id',
     values: [
       entity.entityInternalId as number,
       now.toISOString(),
       getSessionSubjectInternalId(entity.session),
+      entity.type,
+      entity.name,
       entity.version,
       entity.schemaVersion,
       entity.encodeVersion,
@@ -96,22 +114,27 @@ export async function adminEntityUpdateEntity(
         const updateNameResult = await queryRun(
           database,
           context,
-          {
-            text: 'UPDATE entities SET name = ?1 WHERE id = ?2',
-            values: [name, entity.entityInternalId as number],
-          },
+          buildSqliteSqlQuery(({ sql }) => {
+            sql`UPDATE entities SET name = ${name}`;
+            if (entity.publish) {
+              sql`published_name = ${name}`;
+            }
+            sql`WHERE id = ${entity.entityInternalId as number}`;
+          }),
           (error) => {
             if (
-              database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint)
+              database.adapter.isUniqueViolationOfConstraint(error, EntitiesUniqueNameConstraint) ||
+              database.adapter.isUniqueViolationOfConstraint(
+                error,
+                EntitiesUniquePublishedNameConstraint,
+              )
             ) {
               return notOk.Conflict(nameConflictErrorMessage);
             }
             return notOk.GenericUnexpectedException(context, error);
           },
         );
-        if (updateNameResult.isError()) {
-          return updateNameResult;
-        }
+        if (updateNameResult.isError()) return updateNameResult;
 
         return ok(name);
       },
@@ -119,6 +142,15 @@ export async function adminEntityUpdateEntity(
 
     if (nameResult.isError()) return nameResult;
     newName = nameResult.value;
+
+    const updateNameResult = await queryRun(
+      database,
+      context,
+      buildSqliteSqlQuery(({ sql }) => {
+        sql`UPDATE entity_versions SET name = ${newName} WHERE id = ${versionsId}`;
+      }),
+    );
+    if (updateNameResult.isError()) return updateNameResult;
   }
 
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
@@ -144,6 +176,15 @@ export async function adminEntityUpdateEntity(
     ],
   });
   if (updateEntityResult.isError()) return updateEntityResult;
+
+  const createEventResult = await createEntityEvent(
+    database,
+    context,
+    entity.session,
+    entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
+    [{ entityVersionsId: versionsId }],
+  );
+  if (createEventResult.isError()) return createEventResult;
 
   return ok({ name: newName, updatedAt: now });
 }

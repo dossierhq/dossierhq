@@ -13,8 +13,8 @@ import { useCallback } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 //TODO make configurable through a context. also max bounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;

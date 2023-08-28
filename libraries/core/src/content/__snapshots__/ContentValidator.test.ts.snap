@@ -295,7 +295,7 @@ exports[`validateEntityInfoForCreate > invalid type 1`] = `
 
 exports[`validateEntityInfoForCreate > invalid version 1`] = `
 {
-  "message": "Version must be 0 when creating a new entity",
+  "message": "Version must be 1 when creating a new entity",
   "path": [
     "entity",
     "info",

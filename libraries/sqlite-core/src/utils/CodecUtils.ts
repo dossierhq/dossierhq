@@ -40,11 +40,15 @@ export function resolveAdminEntityInfo(
 }
 
 export function resolvePublishedEntityInfo(
-  row: Pick<EntitiesTable, 'type' | 'name' | 'auth_key' | 'created_at' | 'invalid'>,
+  row: Pick<EntitiesTable, 'type' | 'published_name' | 'auth_key' | 'created_at' | 'invalid'>,
 ) {
+  const name = row.published_name;
+  if (name === null) {
+    throw new Error('Unexpected null published name');
+  }
   return {
     type: row.type,
-    name: row.name,
+    name,
     authKey: row.auth_key,
     createdAt: new Date(row.created_at),
     validPublished: (row.invalid & 2) === 0,

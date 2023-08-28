@@ -1,4 +1,4 @@
-import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { EventType, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPublishingCreateEventArg,
   TransactionContext,
@@ -6,6 +6,8 @@ import type {
 import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import { queryRun } from '../QueryFunctions.js';
+import { getTransactionTimestamp } from '../SqliteTransaction.js';
+import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 
 export async function adminEntityPublishingCreateEvents(
@@ -13,7 +15,7 @@ export async function adminEntityPublishingCreateEvents(
   context: TransactionContext,
   event: DatabaseAdminEntityPublishingCreateEventArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  const now = new Date();
+  const now = getTransactionTimestamp(context.transaction);
 
   const { addValue, query, sql } = createSqliteSqlQuery();
   sql`INSERT INTO entity_publishing_events (entities_id, entity_versions_id, published_by, published_at, kind) VALUES`;
@@ -29,5 +31,28 @@ export async function adminEntityPublishingCreateEvents(
     sql`(${entitiesId}, ${entityVersionId}, ${subjectValue}, ${publishedAtValue}, ${kindValue})`;
   }
   const result = await queryRun(database, context, query);
-  return result.isOk() ? ok(undefined) : result;
+  if (result.isError()) return result;
+
+  if (!event.onlyLegacyEvents) {
+    const eventType = {
+      archive: EventType.archiveEntity,
+      unarchive: EventType.unarchiveEntity,
+      publish: EventType.publishEntities,
+      unpublish: EventType.unpublishEntities,
+    }[event.kind];
+
+    const eventResult = await createEntityEvent(
+      database,
+      context,
+      event.session,
+      eventType,
+      event.references.map(({ entityVersionInternalId, publishedName }) => ({
+        entityVersionsId: entityVersionInternalId as number,
+        publishedName,
+      })),
+    );
+    if (eventResult.isError()) return eventResult;
+  }
+
+  return ok(undefined);
 }

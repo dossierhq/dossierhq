@@ -106,9 +106,7 @@ export async function authVerifyAuthorizationKey(
   const resolveResult = await authResolveAuthorizationKeys(authorizationAdapter, context, [
     actualAuthKey.authKey,
   ]);
-  if (resolveResult.isError()) {
-    return resolveResult;
-  }
+  if (resolveResult.isError()) return resolveResult;
 
   for (const expectedAuthKey of resolveResult.value) {
     if (expectedAuthKey.resolvedAuthKey === actualAuthKey.resolvedAuthKey) {

@@ -12,8 +12,8 @@ import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';
 import type { ServerImpl } from './Server.js';
-import { publishedGetEntities } from './published-entity/publishedGetEntities.js';
 import { publishedGetEntity } from './published-entity/publishedGetEntity.js';
+import { publishedGetEntityList } from './published-entity/publishedGetEntityList.js';
 import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount.js';
 import { publishedSampleEntities } from './published-entity/publishedSampleEntities.js';
 import { publishedSearchEntities } from './published-entity/publishedSearchEntities.js';
@@ -36,22 +36,6 @@ export function createServerPublishedClient({
     operation: PublishedClientOperation,
   ): Promise<void> {
     switch (operation.name) {
-      case PublishedClientOperationName.getEntities: {
-        const {
-          args: [references],
-          resolve,
-        } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntities>;
-        resolve(
-          await publishedGetEntities(
-            serverImpl.getAdminSchema(),
-            authorizationAdapter,
-            databaseAdapter,
-            context,
-            references,
-          ),
-        );
-        break;
-      }
       case PublishedClientOperationName.getEntity: {
         const {
           args: [reference],
@@ -64,6 +48,24 @@ export function createServerPublishedClient({
             databaseAdapter,
             context,
             reference,
+          ),
+        );
+        break;
+      }
+      case PublishedClientOperationName.getEntityList: {
+        const {
+          args: [references],
+          resolve,
+        } = operation as PublishedClientOperation<
+          typeof PublishedClientOperationName.getEntityList
+        >;
+        resolve(
+          await publishedGetEntityList(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            references,
           ),
         );
         break;
