@@ -4,7 +4,9 @@
     "name": "Tutorial – Managing entities programmatically",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Tutorial – Managing entities programmatically",
@@ -66,7 +68,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "getTotalCount()",
+                "text": "getEntitiesTotalCount()",
                 "type": "text",
                 "version": 1
               },
@@ -399,7 +401,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "getTotalCount",
+                "text": "getEntitiesTotalCount",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -1108,7 +1110,8 @@
                 "style": "",
                 "text": "i",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -3428,7 +3431,8 @@
                 "style": "",
                 "text": "AppAdminClient",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -5605,7 +5609,8 @@
                 "style": "",
                 "text": "AppPublishedClient",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -7030,7 +7035,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "sampleEntities",
+                "text": "getEntitiesSample",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"

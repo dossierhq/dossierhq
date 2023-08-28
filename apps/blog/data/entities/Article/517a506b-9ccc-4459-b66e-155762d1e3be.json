@@ -4,7 +4,9 @@
     "name": "Tutorial – Admin REST API",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Tutorial – Admin REST API",
@@ -138,7 +140,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "searchEntities",
+                "text": "getEntities",
                 "type": "text",
                 "version": 1
               },
@@ -390,7 +392,8 @@
                 "style": "",
                 "text": " Server",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "parameter"
               },
               {
                 "detail": 0,
@@ -409,7 +412,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "parameter"
               },
               {
                 "detail": 0,
@@ -438,7 +442,8 @@
                 "style": "",
                 "text": " Request",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "parameter"
               },
               {
                 "detail": 0,
@@ -2599,7 +2604,8 @@
                 "style": "",
                 "text": "AdminClientJsonOperationArgs",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -5956,7 +5962,8 @@
                 "style": "",
                 "text": "ClientContext",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -5975,7 +5982,8 @@
                 "style": "",
                 "text": " AppAdminClient",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -6871,7 +6879,8 @@
                 "style": "",
                 "text": "operation",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -6890,7 +6899,8 @@
                 "style": "",
                 "text": "name",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7457,7 +7467,8 @@
                 "style": "",
                 "text": "operation",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7476,7 +7487,8 @@
                 "style": "",
                 "text": "name",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7539,7 +7551,8 @@
                 "style": "",
                 "text": "          ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7558,7 +7571,8 @@
                 "style": "",
                 "text": " args",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7577,7 +7591,8 @@
                 "style": "",
                 "text": " operation",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7596,7 +7611,8 @@
                 "style": "",
                 "text": "args ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7629,7 +7645,8 @@
                 "style": "",
                 "text": "          ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7648,7 +7665,8 @@
                 "style": "",
                 "text": " keepEmptyObjects",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7667,7 +7685,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7686,7 +7705,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7709,7 +7729,8 @@
                 "style": "",
                 "text": "        ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -10151,7 +10172,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -10170,7 +10192,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -10701,7 +10724,8 @@
                 "style": "",
                 "text": "EntitySamplingPayload",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -10720,7 +10744,8 @@
                 "style": "",
                 "text": "AppAdminEntity",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -10739,7 +10764,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -10758,7 +10784,8 @@
                 "style": "",
                 "text": " ",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,
@@ -11296,7 +11323,8 @@
                 "style": "",
                 "text": "res",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -11315,7 +11343,8 @@
                 "style": "",
                 "text": "status",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -11354,7 +11383,8 @@
                 "style": "",
                 "text": "res",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -11373,7 +11403,8 @@
                 "style": "",
                 "text": "statusText",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -12808,7 +12839,8 @@
                 "style": "",
                 "text": "result",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -12827,7 +12859,8 @@
                 "style": "",
                 "text": "error",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -12866,7 +12899,8 @@
                 "style": "",
                 "text": "result",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -12885,7 +12919,8 @@
                 "style": "",
                 "text": "message",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -13263,7 +13298,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "sampleEntities",
+                "text": "getEntitiesSample",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"

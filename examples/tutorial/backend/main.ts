@@ -62,7 +62,7 @@ app.get(
   asyncHandler(async (req, res) => {
     const publishedClient = getPublishedClientForRequest(server, req);
     const samples = (
-      await publishedClient.sampleEntities({ entityTypes: ['Message'] }, { count: 1 })
+      await publishedClient.getEntitiesSample({ entityTypes: ['Message'] }, { count: 1 })
     ).valueOrThrow();
     const message = samples.items[0];
     res.send({ message: message.fields.message });
