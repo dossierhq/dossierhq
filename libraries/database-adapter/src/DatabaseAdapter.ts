@@ -134,11 +134,10 @@ export interface DatabaseAdminEntityPublishUpdateEntityPayload
   publishedName: string;
 }
 
-export interface DatabaseAdminEntityPublishingCreateEventArg {
+export interface DatabaseAdminEntityCreateEntityEventArg {
   session: Session;
-  kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
-  references: (DatabaseResolvedEntityVersionReference & { publishedName?: string })[];
-  onlyLegacyEvents: boolean; //TODO remove when removing legacy publishing events and instead skip calling function in server
+  type: EntityChangelogEvent['type'];
+  references: { entityVersionInternalId: unknown; publishedName?: string }[];
 }
 
 export type DatabaseAdminEntitySearchPayload =
@@ -340,6 +339,11 @@ export interface DatabaseAdapter<
     typeof ErrorType.Conflict | typeof ErrorType.Generic
   >;
 
+  adminEntityCreateEntityEvent(
+    context: TransactionContext,
+    event: DatabaseAdminEntityCreateEntityEventArg,
+  ): PromiseResult<void, typeof ErrorType.Generic>;
+
   adminEntityGetEntityName(
     context: TransactionContext,
     reference: EntityReference,
@@ -389,11 +393,6 @@ export interface DatabaseAdapter<
     randomNameGenerator: (name: string) => string,
     values: DatabaseAdminEntityPublishUpdateEntityArg,
   ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic>;
-
-  adminEntityPublishingCreateEvents(
-    context: TransactionContext,
-    event: DatabaseAdminEntityPublishingCreateEventArg,
-  ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntitySampleEntities(
     schema: AdminSchema,

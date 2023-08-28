@@ -1,6 +1,7 @@
 import {
   AdminEntityStatus,
   ErrorType,
+  EventType,
   assertIsDefined,
   contentValuePathToString,
   createErrorResult,
@@ -17,7 +18,7 @@ import {
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
-  DatabaseAdminEntityPublishingCreateEventArg,
+  DatabaseAdminEntityCreateEntityEventArg,
   DatabaseResolvedEntityReference,
 } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
@@ -142,13 +143,14 @@ export async function adminPublishEntities(
     }
 
     // Step 5: Create publish event
-    const publishEventResult = await createPublishEvents(
-      databaseAdapter,
-      context,
-      eventReferences,
-      !createEvents, // TODO skip calling createPublishEvents if createEvents is false when legacy events are removed
-    );
-    if (publishEventResult.isError()) return publishEventResult;
+    if (createEvents && eventReferences.length > 0) {
+      const publishEventResult = await databaseAdapter.adminEntityCreateEntityEvent(context, {
+        session: context.session,
+        type: EventType.publishEntities,
+        references: eventReferences,
+      });
+      if (publishEventResult.isError()) return publishEventResult;
+    }
 
     // Step 6: Update entity indexes
     for (const versionInfo of publishVersionsInfo) {
@@ -327,12 +329,12 @@ async function publishEntitiesAndCollectResult(
 ): PromiseResult<
   {
     payload: AdminEntityPublishPayload[];
-    eventReferences: DatabaseAdminEntityPublishingCreateEventArg['references'];
+    eventReferences: DatabaseAdminEntityCreateEntityEventArg['references'];
   },
   typeof ErrorType.Generic
 > {
   const payload: AdminEntityPublishPayload[] = [];
-  const eventReferences: DatabaseAdminEntityPublishingCreateEventArg['references'] = [];
+  const eventReferences: DatabaseAdminEntityCreateEntityEventArg['references'] = [];
   for (const versionInfo of versionsInfo) {
     const { status } = versionInfo;
     let updatedAt: Date;
@@ -367,7 +369,6 @@ async function publishEntitiesAndCollectResult(
       if (updateResult.isError()) return updateResult;
 
       eventReferences.push({
-        entityInternalId,
         entityVersionInternalId,
         publishedName: updateResult.value.publishedName,
       });
@@ -377,21 +378,4 @@ async function publishEntitiesAndCollectResult(
     payload.push({ id: versionInfo.uuid, status, effect: versionInfo.effect, updatedAt });
   }
   return ok({ payload, eventReferences });
-}
-
-async function createPublishEvents(
-  databaseAdapter: DatabaseAdapter,
-  context: SessionContext,
-  references: DatabaseAdminEntityPublishingCreateEventArg['references'],
-  onlyLegacyEvents: boolean,
-): PromiseResult<void, typeof ErrorType.Generic> {
-  if (references.length === 0) {
-    return ok(undefined);
-  }
-  return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
-    session: context.session,
-    kind: 'publish',
-    onlyLegacyEvents,
-    references,
-  });
 }

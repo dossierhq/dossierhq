@@ -34,17 +34,6 @@ CREATE TABLE IF NOT EXISTS 'entities_published_fts_idx'(segid, term, pgno, PRIMA
 CREATE TABLE IF NOT EXISTS 'entities_published_fts_content'(id INTEGER PRIMARY KEY, c0);
 CREATE TABLE IF NOT EXISTS 'entities_published_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB);
 CREATE TABLE IF NOT EXISTS 'entities_published_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID;
-CREATE TABLE entity_publishing_events (
-    id INTEGER PRIMARY KEY,
-    entities_id INTEGER NOT NULL,
-    entity_versions_id INTEGER,
-    published_by INTEGER NOT NULL,
-    published_at TEXT NOT NULL,
-    kind TEXT NOT NULL,
-    FOREIGN KEY (entities_id) REFERENCES entities(id) ON DELETE CASCADE,
-    FOREIGN KEY (entity_versions_id) REFERENCES entity_versions(id) ON DELETE CASCADE,
-    FOREIGN KEY (published_by) REFERENCES subjects(id)
-) STRICT;
 CREATE TABLE advisory_locks (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
@@ -98,7 +87,6 @@ CREATE INDEX entity_published_references_from_entities_id ON entity_published_re
 CREATE INDEX entity_published_locations_entities_id ON entity_published_locations(entities_id);
 CREATE INDEX entity_latest_references_from_entities_id ON entity_latest_references(from_entities_id);
 CREATE INDEX entity_latest_locations_entities_id ON entity_latest_locations(entities_id);
-CREATE INDEX entity_publishing_events_entities_id ON entity_publishing_events(entities_id);
 CREATE TABLE entity_latest_value_types (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,

@@ -15,7 +15,7 @@ import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
 import { withNestedTransaction, withRootTransaction } from './SqliteTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
-import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
+import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
 import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
 import { adminGetEntity } from './admin-entity/getEntity.js';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
@@ -171,6 +171,7 @@ function createOuterAdapter(
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(database, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(database, ...args),
+    adminEntityCreateEntityEvent: (...args) => adminEntityCreateEntityEvent(database, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(database, ...args),
     adminEntityGetMultiple: (...args) => adminEntityGetMultiple(database, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(database, ...args),
@@ -181,8 +182,6 @@ function createOuterAdapter(
       adminEntityIndexesUpdatePublished(database, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(database, ...args),
-    adminEntityPublishingCreateEvents: (...args) =>
-      adminEntityPublishingCreateEvents(database, ...args),
     adminEntityPublishUpdateEntity: (...args) => adminEntityPublishUpdateEntity(database, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(database, ...args),
     adminEntitySearchEntities: (...args) => adminEntitySearchEntities(database, ...args),

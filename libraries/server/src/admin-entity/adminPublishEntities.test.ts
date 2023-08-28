@@ -46,7 +46,7 @@ describe('Admin adminPublishEntities', () => {
       ok({ updatedAt: now, publishedName: 'Version name#123456' }),
     );
     databaseAdapter.adminEntityGetReferenceEntitiesInfo.mockResolvedValueOnce(ok([]));
-    databaseAdapter.adminEntityPublishingCreateEvents.mockResolvedValueOnce(ok(undefined));
+    databaseAdapter.adminEntityCreateEntityEvent.mockResolvedValueOnce(ok(undefined));
     databaseAdapter.adminEntityIndexesUpdatePublished.mockResolvedValueOnce(ok(undefined));
     databaseAdapter.adminEntityUniqueIndexGetValues.mockResolvedValueOnce(ok([]));
 
@@ -70,6 +70,22 @@ describe('Admin adminPublishEntities', () => {
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
         [
+          [
+            "adminEntityCreateEntityEvent",
+            {
+              "references": [
+                {
+                  "entityVersionInternalId": 888,
+                  "publishedName": "Version name#123456",
+                },
+              ],
+              "session": {
+                "subjectId": "subject-id",
+                "subjectInternalId": 123,
+              },
+              "type": "publishEntities",
+            },
+          ],
           [
             "adminEntityGetReferenceEntitiesInfo",
             [],
@@ -102,24 +118,6 @@ describe('Admin adminPublishEntities', () => {
               "entityVersionInternalId": 888,
               "publishedName": "Version name",
               "status": "published",
-            },
-          ],
-          [
-            "adminEntityPublishingCreateEvents",
-            {
-              "kind": "publish",
-              "onlyLegacyEvents": false,
-              "references": [
-                {
-                  "entityInternalId": 999,
-                  "entityVersionInternalId": 888,
-                  "publishedName": "Version name#123456",
-                },
-              ],
-              "session": {
-                "subjectId": "subject-id",
-                "subjectInternalId": 123,
-              },
             },
           ],
           [

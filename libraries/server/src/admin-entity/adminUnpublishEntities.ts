@@ -4,7 +4,14 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@dossierhq/core';
-import { AdminEntityStatus, assertIsDefined, createErrorResult, notOk, ok } from '@dossierhq/core';
+import {
+  AdminEntityStatus,
+  EventType,
+  assertIsDefined,
+  createErrorResult,
+  notOk,
+  ok,
+} from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -224,13 +231,12 @@ async function createUnpublishEvents(
   if (unpublishEntityInfo.length === 0) {
     return ok(undefined);
   }
-  return await databaseAdapter.adminEntityPublishingCreateEvents(context, {
+  return await databaseAdapter.adminEntityCreateEntityEvent(context, {
     session: context.session,
-    kind: 'unpublish',
+    type: EventType.unpublishEntities,
     references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
       entityInternalId,
       entityVersionInternalId,
     })),
-    onlyLegacyEvents: false,
   });
 }

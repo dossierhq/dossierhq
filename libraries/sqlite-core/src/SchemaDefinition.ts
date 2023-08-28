@@ -419,6 +419,8 @@ const VERSION_23: SchemaVersionDefinition = {
   ],
 };
 
+const VERSION_24: SchemaVersionDefinition = { queries: ['DROP TABLE entity_publishing_events'] };
+
 const VERSIONS: SchemaVersionDefinition[] = [
   { queries: [] }, // nothing for version 0
   VERSION_1,
@@ -444,6 +446,7 @@ const VERSIONS: SchemaVersionDefinition[] = [
   VERSION_21,
   VERSION_22,
   VERSION_23,
+  VERSION_24,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;

@@ -94,15 +94,6 @@ export interface EntityVersionReferencesTable {
   entities_id: number;
 }
 
-export interface EntityPublishingEventsTable {
-  id: number;
-  entities_id: number;
-  entity_versions_id: number | null;
-  kind: 'publish' | 'unpublish' | 'archive' | 'unarchive';
-  published_by: number;
-  published_at: Date;
-}
-
 export interface EventsTable {
   id: number;
   type: keyof typeof EventType;

@@ -4,7 +4,7 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@dossierhq/core';
-import { AdminEntityStatus, notOk, ok } from '@dossierhq/core';
+import { AdminEntityStatus, EventType, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -64,11 +64,10 @@ export async function adminArchiveEntity(
     if (archiveResult.isError()) return archiveResult;
 
     // Step 5: Create publishing event
-    const publishingEventResult = await databaseAdapter.adminEntityPublishingCreateEvents(context, {
+    const publishingEventResult = await databaseAdapter.adminEntityCreateEntityEvent(context, {
       session: context.session,
-      kind: 'archive',
-      references: [{ entityInternalId, entityVersionInternalId }],
-      onlyLegacyEvents: false,
+      type: EventType.archiveEntity,
+      references: [{ entityVersionInternalId }],
     });
     if (publishingEventResult.isError()) return publishingEventResult;
 

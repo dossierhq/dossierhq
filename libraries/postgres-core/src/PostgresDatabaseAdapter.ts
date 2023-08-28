@@ -3,7 +3,7 @@ import type { PostgresTransaction } from './PostgresTransaction.js';
 import { withNestedTransaction, withRootTransaction } from './PostgresTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
-import { adminEntityPublishingCreateEvents } from './admin-entity/createPublishingEvents.js';
+import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
 import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
 import { adminGetEntity } from './admin-entity/getEntity.js';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
@@ -84,6 +84,8 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityArchivingGetEntityInfo: (...args) =>
       adminEntityArchivingGetEntityInfo(databaseAdapter, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
+    adminEntityCreateEntityEvent: (...args) =>
+      adminEntityCreateEntityEvent(databaseAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
     adminEntityGetMultiple: (...args) => adminEntityGetMultiple(databaseAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),
@@ -95,8 +97,6 @@ export function createPostgresDatabaseAdapterAdapter(
       adminEntityIndexesUpdatePublished(databaseAdapter, ...args),
     adminEntityPublishGetVersionInfo: (...args) =>
       adminEntityPublishGetVersionInfo(databaseAdapter, ...args),
-    adminEntityPublishingCreateEvents: (...args) =>
-      adminEntityPublishingCreateEvents(databaseAdapter, ...args),
     adminEntityPublishUpdateEntity: (...args) =>
       adminEntityPublishUpdateEntity(databaseAdapter, ...args),
     adminEntitySampleEntities: (...args) => adminEntitySampleEntities(databaseAdapter, ...args),

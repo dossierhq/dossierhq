@@ -27,9 +27,7 @@ export interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityPublishGetVersionInfo: MockedFunction<
     DatabaseAdapter['adminEntityPublishGetVersionInfo']
   >;
-  adminEntityPublishingCreateEvents: MockedFunction<
-    DatabaseAdapter['adminEntityPublishingCreateEvents']
-  >;
+  adminEntityCreateEntityEvent: MockedFunction<DatabaseAdapter['adminEntityCreateEntityEvent']>;
   adminEntityPublishUpdateEntity: MockedFunction<DatabaseAdapter['adminEntityPublishUpdateEntity']>;
   adminEntitySampleEntities: MockedFunction<DatabaseAdapter['adminEntitySampleEntities']>;
   adminEntitySearchEntities: MockedFunction<DatabaseAdapter['adminEntitySearchEntities']>;
@@ -116,7 +114,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     adminEntityIndexesUpdateLatest: vi.fn(),
     adminEntityIndexesUpdatePublished: vi.fn(),
     adminEntityPublishGetVersionInfo: vi.fn(),
-    adminEntityPublishingCreateEvents: vi.fn(),
+    adminEntityCreateEntityEvent: vi.fn(),
     adminEntityPublishUpdateEntity: vi.fn(),
     adminEntitySampleEntities: vi.fn(),
     adminEntitySearchEntities: vi.fn(),

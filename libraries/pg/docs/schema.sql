@@ -155,25 +155,6 @@ CREATE SEQUENCE public.entity_latest_value_types_id_seq
 
 ALTER SEQUENCE public.entity_latest_value_types_id_seq OWNED BY public.entity_latest_value_types.id;
 
-CREATE TABLE public.entity_publishing_events (
-    id integer NOT NULL,
-    entity_versions_id integer,
-    published_by integer NOT NULL,
-    published_at timestamp with time zone DEFAULT now() NOT NULL,
-    entities_id integer NOT NULL,
-    kind public.entity_publish_event_kind NOT NULL
-);
-
-CREATE SEQUENCE public.entity_publish_events_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-ALTER SEQUENCE public.entity_publish_events_id_seq OWNED BY public.entity_publishing_events.id;
-
 CREATE TABLE public.entity_published_locations (
     id integer NOT NULL,
     entities_id integer NOT NULL,
@@ -375,8 +356,6 @@ ALTER TABLE ONLY public.entity_published_references ALTER COLUMN id SET DEFAULT 
 
 ALTER TABLE ONLY public.entity_published_value_types ALTER COLUMN id SET DEFAULT nextval('public.entity_published_value_types_id_seq'::regclass);
 
-ALTER TABLE ONLY public.entity_publishing_events ALTER COLUMN id SET DEFAULT nextval('public.entity_publish_events_id_seq'::regclass);
-
 ALTER TABLE ONLY public.entity_versions ALTER COLUMN id SET DEFAULT nextval('public.entity_versions_id_seq'::regclass);
 
 ALTER TABLE ONLY public.event_entity_versions ALTER COLUMN id SET DEFAULT nextval('public.event_entity_versions_id_seq'::regclass);
@@ -420,9 +399,6 @@ ALTER TABLE ONLY public.entity_latest_references
 
 ALTER TABLE ONLY public.entity_latest_value_types
     ADD CONSTRAINT entity_latest_value_types_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY public.entity_publishing_events
-    ADD CONSTRAINT entity_publish_events_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY public.entity_published_locations
     ADD CONSTRAINT entity_published_locations_pkey PRIMARY KEY (id);
@@ -498,15 +474,6 @@ ALTER TABLE ONLY public.entity_latest_references
 
 ALTER TABLE ONLY public.entity_latest_value_types
     ADD CONSTRAINT entity_latest_value_types_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
-
-ALTER TABLE ONLY public.entity_publishing_events
-    ADD CONSTRAINT entity_publish_events_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
-
-ALTER TABLE ONLY public.entity_publishing_events
-    ADD CONSTRAINT entity_publish_events_entity_versions_id_fkey FOREIGN KEY (entity_versions_id) REFERENCES public.entity_versions(id) ON DELETE CASCADE;
-
-ALTER TABLE ONLY public.entity_publishing_events
-    ADD CONSTRAINT entity_publish_events_published_by_fkey FOREIGN KEY (published_by) REFERENCES public.subjects(id);
 
 ALTER TABLE ONLY public.entity_published_locations
     ADD CONSTRAINT entity_published_locations_entities_id_fkey FOREIGN KEY (entities_id) REFERENCES public.entities(id) ON DELETE CASCADE;
