@@ -62,6 +62,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_minimal,
   createEntity_withId,
   createEntity_duplicateName,
+  createEntity_canUsePublishedNameOfOtherEntity,
   createEntity_fiveInParallelWithSameName,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
@@ -177,6 +178,34 @@ async function createEntity_duplicateName({ server }: AdminEntityTestContext) {
   assertNotSame(firstName, secondName);
 
   assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
+}
+
+async function createEntity_canUsePublishedNameOfOtherEntity({ server }: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+
+  // Create/published first entity
+  const {
+    entity: {
+      id: firstId,
+      info: { name: firstName },
+    },
+  } = (await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })).valueOrThrow();
+
+  // Update name (without publishing), that way we only conflict on the published name
+  assertOkResult(
+    await adminClient.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
+  );
+
+  // Create second entity with same name - should work since we're not publishing
+  const {
+    entity: {
+      info: { name: secondName },
+    },
+  } = (
+    await adminClient.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: firstName } }))
+  ).valueOrThrow();
+
+  assertSame(firstName, secondName);
 }
 
 async function createEntity_fiveInParallelWithSameName({ server }: AdminEntityTestContext) {

@@ -51,14 +51,12 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
 
 async function publishEntities_minimal({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  assertOkResult(createResult);
+
+  const { entity } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
   const {
-    entity: {
-      id,
-      info: { version },
-    },
-  } = createResult.value;
+    id,
+    info: { version },
+  } = entity;
 
   const publishResult = await client.publishEntities([{ id, version }]);
   assertOkResult(publishResult);
@@ -72,7 +70,7 @@ async function publishEntities_minimal({ server }: AdminEntityTestContext) {
     },
   ]);
 
-  const expectedEntity = copyEntity(createResult.value.entity, {
+  const expectedEntity = copyEntity(entity, {
     info: { status: AdminEntityStatus.published, updatedAt, validPublished: true },
   });
 

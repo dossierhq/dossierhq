@@ -1,13 +1,14 @@
-import type { RichTextValueItemNode } from '@dossierhq/core';
 import {
   AdminEntityStatus,
+  ErrorType,
   assertIsDefined,
   copyEntity,
-  createRichTextHeadingNode,
   createRichText,
+  createRichTextHeadingNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
-  ErrorType,
+  isEntityNameAsRequested,
+  type RichTextValueItemNode,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -15,14 +16,9 @@ import {
   assertOkResult,
   assertResultValue,
   assertSame,
+  assertTruthy,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type {
-  AdminLocationsValue,
-  AdminStringsFields,
-  AdminTitleOnly,
-  AppPublishedUniqueIndexes,
-} from '../SchemaTypes.js';
 import {
   assertIsPublishedChangeValidations,
   assertIsPublishedLocationsValue,
@@ -30,14 +26,18 @@ import {
   assertIsPublishedStrings,
   assertIsPublishedTitleOnly,
   assertIsPublishedValueItems,
+  type AdminLocationsValue,
+  type AdminStringsFields,
+  type AdminTitleOnly,
+  type AppPublishedUniqueIndexes,
 } from '../SchemaTypes.js';
 import {
-  adminToPublishedEntity,
   RICH_TEXTS_CREATE,
   STRINGS_CREATE,
   TITLE_ONLY_CREATE,
   TITLE_ONLY_PUBLISHED_ENTITY,
   VALUE_ITEMS_CREATE,
+  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import {
@@ -110,16 +110,22 @@ async function getEntity_archivedThenPublished({ server }: PublishedEntityTestCo
 
 async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const createResult = await adminClient.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
-  assertOkResult(createResult);
+  const createResult = await adminClient.createEntity<AdminTitleOnly>(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
+  );
   const {
     entity: {
       id,
-      info: { name, createdAt },
+      info: { createdAt },
+      fields: { title },
     },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Updated title' } });
+  const updateResult = await adminClient.updateEntity({
+    id,
+    info: { name: 'Updated name' },
+    fields: { title: 'Updated title' },
+  });
   assertOkResult(updateResult);
 
   const publishResult = await adminClient.publishEntities([{ id, version: 1 }]);
@@ -134,15 +140,17 @@ async function getEntity_oldVersion({ server }: PublishedEntityTestContext) {
     },
   ]);
 
-  const getResult = await publishedClientForMainPrincipal(server).getEntity({ id });
-  assertOkResult(getResult);
-  assertIsPublishedTitleOnly(getResult.value);
+  const publishedEntity = (
+    await publishedClientForMainPrincipal(server).getEntity({ id })
+  ).valueOrThrow();
+  const publishedName = publishedEntity.info.name;
+  assertTruthy(isEntityNameAsRequested(publishedName, 'Original name'));
   assertEquals(
-    getResult.value,
+    publishedEntity,
     copyEntity(TITLE_ONLY_PUBLISHED_ENTITY, {
       id,
-      info: { name, createdAt },
-      fields: { title: createResult.value.entity.fields.title ?? '--no title--' },
+      info: { name: publishedName, createdAt },
+      fields: { title: title ?? '--no title--' },
     }),
   );
 }

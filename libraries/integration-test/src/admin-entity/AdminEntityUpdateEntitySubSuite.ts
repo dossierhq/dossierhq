@@ -3,9 +3,18 @@ import {
   ErrorType,
   EventType,
   copyEntity,
+  isEntityNameAsRequested,
   type AdminEntityUpdate,
 } from '@dossierhq/core';
-import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import {
+  assertEquals,
+  assertErrorResult,
+  assertNotSame,
+  assertOkResult,
+  assertResultValue,
+  assertSame,
+  assertTruthy,
+} from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
   assertIsAdminChangeValidations,
@@ -43,6 +52,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateAndPublishEntity,
   updateEntity_updateAndPublishEntityWithSubjectAuthKey,
   updateEntity_updateAndPublishEntityWithUniqueIndexValue,
+  updateEntity_updateAndPublishEntityWithConflictingPublishedName,
   updateEntity_noChangeAndPublishDraftEntity,
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_updateEntityEvent,
@@ -195,27 +205,30 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
 }
 
 async function updateEntity_updateAndPublishEntity({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  assertOkResult(createResult);
-  const {
-    entity: { id },
-  } = createResult.value;
-  const updateResult = await client.updateEntity(
-    { id, fields: { title: 'Updated title' } },
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const { entity: originalEntity } = (
+    await adminClient.createEntity(
+      copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
+    )
+  ).valueOrThrow();
+
+  const updateResult = await adminClient.updateEntity(
+    { id: originalEntity.id, info: { name: 'Updated name' }, fields: { title: 'Updated title' } },
     { publish: true },
   );
-  assertOkResult(updateResult);
   const {
     entity: {
-      info: { updatedAt },
+      info: { name: updatedName, updatedAt },
     },
-  } = updateResult.value;
+  } = updateResult.valueOrThrow();
 
-  const expectedEntity = copyEntity(createResult.value.entity, {
+  const expectedEntity = copyEntity(originalEntity, {
     info: {
       updatedAt,
       version: 2,
+      name: updatedName,
       status: AdminEntityStatus.published,
       validPublished: true,
     },
@@ -229,8 +242,14 @@ async function updateEntity_updateAndPublishEntity({ server }: AdminEntityTestCo
     entity: expectedEntity,
   });
 
-  const getResult = await client.getEntity({ id });
-  assertResultValue(getResult, expectedEntity);
+  const getAdminResult = await adminClient.getEntity({ id: originalEntity.id });
+  assertResultValue(getAdminResult, expectedEntity);
+
+  const publishedEntity = (
+    await publishedClient.getEntity({ id: originalEntity.id })
+  ).valueOrThrow();
+  assertTruthy(isEntityNameAsRequested(publishedEntity.info.name, 'Updated name'));
+  assertSame(publishedEntity.info.name, updatedName);
 }
 
 async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
@@ -308,9 +327,71 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
   );
 }
 
+async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  // Create/publish first entity
+  const {
+    entity: {
+      id: firstId,
+      info: { name: firstOriginalName },
+    },
+  } = (
+    await adminClient.createEntity(
+      copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  // Update name (without publishing), that way we only conflict on the published name
+  assertOkResult(
+    await adminClient.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
+  );
+
+  // Create second entity with same name (should be ok since we don't publish)
+  const {
+    entity: {
+      id: secondId,
+      info: { name: secondOriginalName },
+    },
+  } = (
+    await adminClient.createEntity(
+      copyEntity(TITLE_ONLY_CREATE, { info: { name: firstOriginalName } }),
+    )
+  ).valueOrThrow();
+
+  assertSame(firstOriginalName, secondOriginalName);
+
+  // Update and publish second entity
+  const {
+    entity: {
+      info: { name: secondUpdatedName },
+    },
+  } = (
+    await adminClient.updateEntity(
+      { id: secondId, fields: { title: 'Updated title' } },
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  assertNotSame(secondUpdatedName, secondOriginalName); // Changes since due to conflicting published name
+
+  // Get second published entity
+
+  const {
+    info: { name: secondPublishedName },
+  } = (await publishedClient.getEntity({ id: secondId })).valueOrThrow();
+  assertSame(secondPublishedName, secondUpdatedName);
+}
+
 async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
-  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
+  const adminClient = adminClientForMainPrincipal(server);
+  const publishedClient = publishedClientForMainPrincipal(server);
+
+  const createResult = await adminClient.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -318,7 +399,8 @@ async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntit
       fields: { title },
     },
   } = createResult.value;
-  const updateResult = await client.updateEntity({ id, fields: { title } }, { publish: true });
+
+  const updateResult = await adminClient.updateEntity({ id, fields: { title } }, { publish: true });
   assertOkResult(updateResult);
   const {
     entity: {
@@ -339,8 +421,11 @@ async function updateEntity_noChangeAndPublishDraftEntity({ server }: AdminEntit
     entity: expectedEntity,
   });
 
-  const getResult = await client.getEntity({ id });
-  assertResultValue(getResult, expectedEntity);
+  const getAdminResult = await adminClient.getEntity({ id });
+  assertResultValue(getAdminResult, expectedEntity);
+
+  const publishedEntity = (await publishedClient.getEntity({ id })).valueOrThrow();
+  assertSame(publishedEntity.info.name, expectedEntity.info.name);
 }
 
 async function updateEntity_noChangeAndPublishPublishedEntity({ server }: AdminEntityTestContext) {
