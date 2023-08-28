@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/database-adapter
 
-This log was last generated on Wed, 09 Aug 2023 12:07:34 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Aug 2023 10:06:22 GMT and should not be manually modified.
+
+## 0.4.3
+Mon, 28 Aug 2023 10:06:22 GMT
+
+### Updates
+
+- Support changelog events. Make published name follow the version's name.
 
 ## 0.4.2
 Wed, 09 Aug 2023 12:07:34 GMT

@@ -2,6 +2,18 @@
   "name": "@dossierhq/server",
   "entries": [
     {
+      "version": "0.4.3",
+      "tag": "@dossierhq/server_v0.4.3",
+      "date": "Mon, 28 Aug 2023 10:06:22 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add changelog events. Use the version's name for published name."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.2",
       "tag": "@dossierhq/server_v0.4.2",
       "date": "Wed, 09 Aug 2023 12:07:34 GMT",

@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/graphql
 
-This log was last generated on Wed, 09 Aug 2023 12:07:34 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Aug 2023 10:06:22 GMT and should not be manually modified.
+
+## 0.4.3
+Mon, 28 Aug 2023 10:06:22 GMT
+
+### Updates
+
+- Break: Rename adminEntities to adminEntityList. Add changelogEvents Query field and AdminEntity. Optimize loaders and return errors in more places.
 
 ## 0.4.2
 Wed, 09 Aug 2023 12:07:34 GMT

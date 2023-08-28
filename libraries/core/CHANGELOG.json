@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.4.3",
+      "tag": "@dossierhq/core_v0.4.3",
+      "date": "Mon, 28 Aug 2023 10:06:22 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Rename getEntities()->getEntityList(). Break: Change first entity version from 0 to 1. Add AdminClient.getChangelogEvents(), getChangelogEventsTotalCount(). Add getEntityNameBase()."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.2",
       "tag": "@dossierhq/core_v0.4.2",
       "date": "Wed, 09 Aug 2023 12:07:34 GMT",
