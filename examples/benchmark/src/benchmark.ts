@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntitiesSharedQuery,
+  AdminEntitySharedQuery,
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
@@ -72,7 +72,7 @@ function randomNullUndefined<T>(
 
 async function randomReference(
   adminClient: AdminClient,
-  query?: AdminEntitiesSharedQuery,
+  query?: AdminEntitySharedQuery,
 ): PromiseResult<
   EntityReference,
   | typeof ErrorType.NotFound
@@ -87,7 +87,7 @@ async function randomReference(
 
 async function randomAdminEntity(
   adminClient: AdminClient,
-  query?: AdminEntitiesSharedQuery,
+  query?: AdminEntitySharedQuery,
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.NotFound

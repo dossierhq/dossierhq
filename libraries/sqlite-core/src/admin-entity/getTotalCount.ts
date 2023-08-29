@@ -1,5 +1,5 @@
 import type {
-  AdminEntitiesSharedQuery,
+  AdminEntitySharedQuery,
   AdminSchema,
   ErrorType,
   PromiseResult,
@@ -14,7 +14,7 @@ export async function adminEntitySearchTotalCount(
   database: Database,
   schema: AdminSchema,
   context: TransactionContext,
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);

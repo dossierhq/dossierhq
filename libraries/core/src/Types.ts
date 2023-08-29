@@ -281,14 +281,14 @@ export type AdminEntityUnarchivePayload = AdminEntityPublishingPayload<'unarchiv
 export type AdminEntityPublishPayload = AdminEntityPublishingPayload<'published' | 'none'>;
 export type AdminEntityUnpublishPayload = AdminEntityPublishingPayload<'unpublished' | 'none'>;
 
-export const AdminEntitiesQueryOrder = {
+export const AdminEntityQueryOrder = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   name: 'name',
 } as const;
-export type AdminEntitiesQueryOrder = keyof typeof AdminEntitiesQueryOrder;
+export type AdminEntityQueryOrder = keyof typeof AdminEntityQueryOrder;
 
-export interface AdminEntitiesSharedQuery<
+export interface AdminEntitySharedQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
@@ -304,23 +304,23 @@ export interface AdminEntitiesSharedQuery<
   text?: string;
 }
 
-export interface AdminEntitiesQuery<
+export interface AdminEntityQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
-> extends AdminEntitiesSharedQuery<TEntityType, TValueType, TAuthKey> {
-  order?: AdminEntitiesQueryOrder;
+> extends AdminEntitySharedQuery<TEntityType, TValueType, TAuthKey> {
+  order?: AdminEntityQueryOrder;
   reverse?: boolean;
 }
 
-export const PublishedEntitiesQueryOrder = {
+export const PublishedEntityQueryOrder = {
   createdAt: 'createdAt',
   name: 'name',
 } as const;
-export type PublishedEntitiesQueryOrder =
-  (typeof PublishedEntitiesQueryOrder)[keyof typeof PublishedEntitiesQueryOrder];
+export type PublishedEntityQueryOrder =
+  (typeof PublishedEntityQueryOrder)[keyof typeof PublishedEntityQueryOrder];
 
-export interface PublishedEntitiesSharedQuery<
+export interface PublishedEntitySharedQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
@@ -334,12 +334,12 @@ export interface PublishedEntitiesSharedQuery<
   text?: string;
 }
 
-export interface PublishedEntitiesQuery<
+export interface PublishedEntityQuery<
   TEntityType extends string = string,
   TValueType extends string = string,
   TAuthKey extends string = string,
-> extends PublishedEntitiesSharedQuery<TEntityType, TValueType, TAuthKey> {
-  order?: PublishedEntitiesQueryOrder;
+> extends PublishedEntitySharedQuery<TEntityType, TValueType, TAuthKey> {
+  order?: PublishedEntityQueryOrder;
   reverse?: boolean;
 }
 

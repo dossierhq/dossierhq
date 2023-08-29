@@ -5,14 +5,14 @@ import type {
   ErrorType,
   Paging,
   PublishedClient,
-  PublishedEntitiesQuery,
+  PublishedEntityQuery,
   PublishedEntity,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, PublishedEntitiesQuery | undefined, Paging | undefined]>;
+type FetcherKey = Readonly<[string, PublishedEntityQuery | undefined, Paging | undefined]>;
 type FetcherData<T> = Connection<Edge<T, ErrorType>> | null;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -24,7 +24,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function usePublishedEntities<TPublishedEntity extends PublishedEntity<string, object>>(
   publishedClient: PublishedClient<TPublishedEntity>,
-  query: PublishedEntitiesQuery | undefined,
+  query: PublishedEntityQuery | undefined,
   paging?: Paging,
 ): {
   connection: FetcherData<TPublishedEntity> | undefined;

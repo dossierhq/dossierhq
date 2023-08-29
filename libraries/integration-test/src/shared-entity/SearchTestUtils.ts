@@ -1,7 +1,7 @@
 import {
-  AdminEntitiesQueryOrder,
+  AdminEntityQueryOrder,
   AdminEntityStatus,
-  PublishedEntitiesQueryOrder,
+  PublishedEntityQueryOrder,
   assertIsDefined,
   getAllPagesForConnection,
   ok,
@@ -27,29 +27,29 @@ import type {
 } from '../SchemaTypes.js';
 
 const adminOrderCompare: Record<
-  AdminEntitiesQueryOrder,
+  AdminEntityQueryOrder,
   (a: AppAdminEntity, b: AppAdminEntity) => number
 > = {
-  [AdminEntitiesQueryOrder.createdAt]: (a, b) =>
+  [AdminEntityQueryOrder.createdAt]: (a, b) =>
     a.info.createdAt.getTime() - b.info.createdAt.getTime(),
-  [AdminEntitiesQueryOrder.updatedAt]: (a, b) =>
+  [AdminEntityQueryOrder.updatedAt]: (a, b) =>
     a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
-  [AdminEntitiesQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
+  [AdminEntityQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
-const adminOrderExtract: Record<AdminEntitiesQueryOrder, (it: AppAdminEntity) => unknown> = {
-  [AdminEntitiesQueryOrder.createdAt]: (it) => it.info.createdAt,
-  [AdminEntitiesQueryOrder.updatedAt]: (it) => it.info.updatedAt,
-  [AdminEntitiesQueryOrder.name]: (it) => it.info.name,
+const adminOrderExtract: Record<AdminEntityQueryOrder, (it: AppAdminEntity) => unknown> = {
+  [AdminEntityQueryOrder.createdAt]: (it) => it.info.createdAt,
+  [AdminEntityQueryOrder.updatedAt]: (it) => it.info.updatedAt,
+  [AdminEntityQueryOrder.name]: (it) => it.info.name,
 };
 
 const publishedOrderCompare: Record<
-  PublishedEntitiesQueryOrder,
+  PublishedEntityQueryOrder,
   (a: AppPublishedEntity, b: AppPublishedEntity) => number
 > = {
-  [PublishedEntitiesQueryOrder.createdAt]: (a, b) =>
+  [PublishedEntityQueryOrder.createdAt]: (a, b) =>
     a.info.createdAt.getTime() - b.info.createdAt.getTime(),
-  [PublishedEntitiesQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
+  [PublishedEntityQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
 export function assertAdminEntityConnectionToMatchSlice(
@@ -57,10 +57,10 @@ export function assertAdminEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AppAdminEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: AdminEntitiesQueryOrder,
+  order?: AdminEntityQueryOrder,
   reverse?: boolean,
 ): void {
-  const resolvedOrder = order ?? AdminEntitiesQueryOrder.createdAt;
+  const resolvedOrder = order ?? AdminEntityQueryOrder.createdAt;
   const orderExtractor = adminOrderExtract[resolvedOrder];
 
   assertOkResult(connectionResult);
@@ -83,7 +83,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AppPublishedEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: PublishedEntitiesQueryOrder,
+  order?: PublishedEntityQueryOrder,
   reverse?: boolean,
 ): void {
   assertOkResult(connectionResult);
@@ -93,7 +93,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   }));
 
   const allEntitiesOrdered = [...allEntities].sort(
-    publishedOrderCompare[order ?? PublishedEntitiesQueryOrder.createdAt],
+    publishedOrderCompare[order ?? PublishedEntityQueryOrder.createdAt],
   );
   if (reverse) allEntitiesOrdered.reverse();
   const expectedEntities = allEntitiesOrdered.slice(sliceStart, sliceEnd);

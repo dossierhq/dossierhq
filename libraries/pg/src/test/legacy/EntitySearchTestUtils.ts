@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntitiesQuery,
+  AdminEntityQuery,
   AdminEntity,
   BoundingBox,
   Connection,
@@ -123,7 +123,7 @@ export async function ensureEntityWithStatus(
 
 export async function getAllEntities(
   client: AdminClient,
-  query: AdminEntitiesQuery,
+  query: AdminEntityQuery,
 ): PromiseResult<
   AdminEntity[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

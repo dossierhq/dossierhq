@@ -1,7 +1,7 @@
 import type {
   ErrorType,
   PromiseResult,
-  PublishedEntitiesSharedQuery,
+  PublishedEntitySharedQuery,
   PublishedSchema,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
@@ -14,7 +14,7 @@ export async function publishedEntitySearchTotalCount(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   context: TransactionContext,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalPublishedEntitiesQuery(schema, resolvedAuthKeys, query);

@@ -1,7 +1,7 @@
 import type {
   AdminClient,
-  AdminEntitiesQuery,
-  AdminEntitiesSharedQuery,
+  AdminEntityQuery,
+  AdminEntitySharedQuery,
   AdminEntity,
   AdminEntityTypeSpecification,
   AdminFieldSpecification,
@@ -22,8 +22,8 @@ import type {
   Paging,
   PromiseResult,
   PublishedClient,
-  PublishedEntitiesQuery,
-  PublishedEntitiesSharedQuery,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
   PublishedEntity,
   PublishedEntityTypeSpecification,
   PublishedFieldSpecification,
@@ -118,7 +118,7 @@ function buildErrorResolver(result: ErrorResult<unknown, ErrorType>) {
 export async function loadPublishedEntitiesSample<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<PublishedEntity>> {
   const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
@@ -136,7 +136,7 @@ export async function loadPublishedEntitiesSample<TContext extends SessionGraphQ
 export async function loadPublishedEntities<TContext extends SessionGraphQLContext>(
   schema: PublishedSchema,
   context: TContext,
-  query: PublishedEntitiesQuery | undefined,
+  query: PublishedEntityQuery | undefined,
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, PublishedEntity>, TContext> | null> {
@@ -248,7 +248,7 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 export async function loadAdminEntitiesSample<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<AdminEntity>> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
@@ -264,7 +264,7 @@ export async function loadAdminEntitiesSample<TContext extends SessionGraphQLCon
 export function loadAdminEntities<TContext extends SessionGraphQLContext>(
   schema: AdminSchema,
   context: TContext,
-  query: AdminEntitiesQuery | undefined,
+  query: AdminEntityQuery | undefined,
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, AdminEntity>, TContext> | null> {

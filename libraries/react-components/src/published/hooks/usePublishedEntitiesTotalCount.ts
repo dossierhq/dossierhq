@@ -2,7 +2,7 @@ import type {
   ErrorResult,
   ErrorType,
   PublishedClient,
-  PublishedEntitiesSharedQuery,
+  PublishedEntitySharedQuery,
   PublishedEntity,
   ValueItem,
 } from '@dossierhq/core';
@@ -10,7 +10,7 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, PublishedEntitiesSharedQuery | undefined]>;
+type FetcherKey = Readonly<[string, PublishedEntitySharedQuery | undefined]>;
 type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -21,7 +21,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function usePublishedEntitiesTotalCount(
   publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;

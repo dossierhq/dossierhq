@@ -1,10 +1,10 @@
 import type {
-  AdminEntitiesSharedQuery,
+  AdminEntitySharedQuery,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorType,
   PromiseResult,
-  PublishedEntitiesSharedQuery,
+  PublishedEntitySharedQuery,
   Result,
 } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
@@ -18,7 +18,7 @@ const MAX_SEED = 2147483647;
 const SAMPLING_DEFAULT_COUNT = 25; //TODO move to constants or make configurable?
 
 export async function sharedSampleEntities<
-  TQuery extends AdminEntitiesSharedQuery | PublishedEntitiesSharedQuery,
+  TQuery extends AdminEntitySharedQuery | PublishedEntitySharedQuery,
   TEntity,
 >(
   authorizationAdapter: AuthorizationAdapter,

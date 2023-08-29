@@ -1,7 +1,7 @@
 import type {
   ErrorType,
   PromiseResult,
-  PublishedEntitiesSharedQuery,
+  PublishedEntitySharedQuery,
   PublishedSchema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -14,7 +14,7 @@ export async function publishedGetTotalCount(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

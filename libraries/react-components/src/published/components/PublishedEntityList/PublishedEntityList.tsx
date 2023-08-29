@@ -1,5 +1,5 @@
-import type { AdminEntitiesQueryOrder, PublishedEntity } from '@dossierhq/core';
-import { PublishedEntitiesQueryOrder } from '@dossierhq/core';
+import type { AdminEntityQueryOrder, PublishedEntity } from '@dossierhq/core';
+import { PublishedEntityQueryOrder } from '@dossierhq/core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
@@ -40,13 +40,13 @@ export function PublishedEntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === PublishedEntitiesQueryOrder.name ? direction : ''}
+            order={order === PublishedEntityQueryOrder.name ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                PublishedEntitiesQueryOrder.name,
+                PublishedEntityQueryOrder.name,
               )
             }
           >
@@ -77,7 +77,7 @@ export function PublishedEntityList({
                   {...{
                     entity,
                     authKeys,
-                    order: order as PublishedEntitiesQueryOrder | undefined,
+                    order: order as PublishedEntityQueryOrder | undefined,
                     onItemClick,
                   }}
                 />
@@ -112,9 +112,9 @@ function EntityListRow({
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminEntitiesQueryOrder | PublishedEntitiesQueryOrder | undefined,
+  order: AdminEntityQueryOrder | PublishedEntityQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: PublishedEntitiesQueryOrder,
+  headerOrder: PublishedEntityQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {

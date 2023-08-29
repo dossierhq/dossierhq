@@ -1,16 +1,16 @@
 import type {
-  AdminEntitiesQuery,
-  AdminEntitiesSharedQuery,
+  AdminEntityQuery,
+  AdminEntitySharedQuery,
   AdminSchema,
   ErrorType,
-  PublishedEntitiesQuery,
-  PublishedEntitiesSharedQuery,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
   PublishedSchema,
   Result,
 } from '@dossierhq/core';
 import {
-  AdminEntitiesQueryOrder,
-  PublishedEntitiesQueryOrder,
+  AdminEntityQueryOrder,
+  PublishedEntityQueryOrder,
   assertExhaustive,
   notOk,
   ok,
@@ -58,7 +58,7 @@ export interface SharedEntitiesQuery<TItem> {
 export function searchPublishedEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
-  query: PublishedEntitiesQuery | undefined,
+  query: PublishedEntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
 ): Result<SharedEntitiesQuery<SearchPublishedEntitiesItem>, typeof ErrorType.BadRequest> {
@@ -68,7 +68,7 @@ export function searchPublishedEntitiesQuery(
 export function searchAdminEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema,
-  query: AdminEntitiesQuery | undefined,
+  query: AdminEntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, typeof ErrorType.BadRequest> {
@@ -80,7 +80,7 @@ function sharedSearchEntitiesQuery<
 >(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: AdminSchema | PublishedSchema,
-  query: PublishedEntitiesQuery | AdminEntitiesQuery | undefined,
+  query: PublishedEntityQuery | AdminEntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
   published: boolean,
@@ -151,7 +151,7 @@ function sharedSearchEntitiesQuery<
 
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
   databaseAdapter: PostgresDatabaseAdapter,
-  order: PublishedEntitiesQueryOrder | AdminEntitiesQueryOrder | undefined,
+  order: PublishedEntityQueryOrder | AdminEntityQueryOrder | undefined,
   published: boolean,
 ): {
   cursorName: CursorName;
@@ -160,7 +160,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
 } {
   if (published) {
     switch (order) {
-      case PublishedEntitiesQueryOrder.name: {
+      case PublishedEntityQueryOrder.name: {
         const cursorType = 'string';
         const cursorName = 'name';
         return {
@@ -174,7 +174,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
             ),
         };
       }
-      case PublishedEntitiesQueryOrder.createdAt:
+      case PublishedEntityQueryOrder.createdAt:
       default: {
         const cursorType = 'int';
         const cursorName = 'id';
@@ -188,7 +188,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
     }
   }
   switch (order) {
-    case AdminEntitiesQueryOrder.name: {
+    case AdminEntityQueryOrder.name: {
       const cursorType = 'string';
       const cursorName = 'name';
       return {
@@ -202,7 +202,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           ),
       };
     }
-    case AdminEntitiesQueryOrder.updatedAt: {
+    case AdminEntityQueryOrder.updatedAt: {
       const cursorType = 'int';
       const cursorName = 'updated';
       return {
@@ -216,7 +216,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           ),
       };
     }
-    case AdminEntitiesQueryOrder.createdAt:
+    case AdminEntityQueryOrder.createdAt:
     default: {
       const cursorType = 'int';
       const cursorName = 'id';
@@ -276,7 +276,7 @@ function addCursorNameOperatorAndValue(
   sql`${value}`;
 }
 
-function addFilterStatusSqlSegment(query: AdminEntitiesSharedQuery, { sql }: PostgresQueryBuilder) {
+function addFilterStatusSqlSegment(query: AdminEntitySharedQuery, { sql }: PostgresQueryBuilder) {
   if (!query.status || query.status.length === 0) {
     return;
   }
@@ -289,7 +289,7 @@ function addFilterStatusSqlSegment(query: AdminEntitiesSharedQuery, { sql }: Pos
 
 export function sampleAdminEntitiesQuery(
   schema: AdminSchema,
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -299,7 +299,7 @@ export function sampleAdminEntitiesQuery(
 
 export function samplePublishedEntitiesQuery(
   schema: PublishedSchema,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -309,7 +309,7 @@ export function samplePublishedEntitiesQuery(
 
 function sampleEntitiesQuery(
   schema: AdminSchema | PublishedSchema,
-  query: AdminEntitiesSharedQuery | PublishedEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -335,7 +335,7 @@ function sampleEntitiesQuery(
 export function totalAdminEntitiesQuery(
   schema: AdminSchema,
   authKeys: ResolvedAuthKey[],
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, false);
 }
@@ -343,7 +343,7 @@ export function totalAdminEntitiesQuery(
 export function totalPublishedEntitiesQuery(
   schema: PublishedSchema,
   authKeys: ResolvedAuthKey[],
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, true);
 }
@@ -351,7 +351,7 @@ export function totalPublishedEntitiesQuery(
 function totalCountQuery(
   schema: AdminSchema | PublishedSchema,
   authKeys: ResolvedAuthKey[],
-  query: AdminEntitiesSharedQuery | PublishedEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
   published: boolean,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   const queryBuilder = createPostgresSqlQuery();
@@ -396,7 +396,7 @@ function totalCountQuery(
 
 function addEntityQuerySelectColumn(
   { sql }: PostgresQueryBuilder,
-  query: PublishedEntitiesSharedQuery | AdminEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
   published: boolean,
 ) {
   if (query?.boundingBox) {
@@ -430,7 +430,7 @@ function addEntityQuerySelectColumn(
 function addQueryFilters(
   queryBuilder: PostgresQueryBuilder,
   schema: AdminSchema | PublishedSchema,
-  query: PublishedEntitiesSharedQuery | AdminEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean,
   linkToEntityVersion: boolean,
@@ -515,7 +515,7 @@ function addQueryFilters(
 
 function getFilterEntityTypes(
   schema: PublishedSchema | AdminSchema,
-  query: PublishedEntitiesSharedQuery | AdminEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
@@ -530,7 +530,7 @@ function getFilterEntityTypes(
 
 function getFilterValueTypes(
   schema: PublishedSchema | AdminSchema,
-  query: PublishedEntitiesSharedQuery | AdminEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.valueTypes || query.valueTypes.length === 0) {
     return ok([]);

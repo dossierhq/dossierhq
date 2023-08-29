@@ -1,5 +1,5 @@
-import type { AdminEntity, PublishedEntitiesQueryOrder } from '@dossierhq/core';
-import { AdminEntitiesQueryOrder } from '@dossierhq/core';
+import type { AdminEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
+import { AdminEntityQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, Tag, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
@@ -41,13 +41,13 @@ export function AdminEntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === AdminEntitiesQueryOrder.name ? direction : ''}
+            order={order === AdminEntityQueryOrder.name ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminEntitiesQueryOrder.name,
+                AdminEntityQueryOrder.name,
               )
             }
           >
@@ -58,13 +58,13 @@ export function AdminEntityList({
           <Table.Header narrow>Auth key</Table.Header>
           <Table.Header
             narrow
-            order={order === AdminEntitiesQueryOrder.createdAt ? direction : ''}
+            order={order === AdminEntityQueryOrder.createdAt ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminEntitiesQueryOrder.createdAt,
+                AdminEntityQueryOrder.createdAt,
               )
             }
           >
@@ -72,13 +72,13 @@ export function AdminEntityList({
           </Table.Header>
           <Table.Header
             narrow
-            order={order === AdminEntitiesQueryOrder.updatedAt ? direction : ''}
+            order={order === AdminEntityQueryOrder.updatedAt ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminEntitiesQueryOrder.updatedAt,
+                AdminEntityQueryOrder.updatedAt,
               )
             }
           >
@@ -107,7 +107,7 @@ export function AdminEntityList({
                   {...{
                     entity,
                     authKeys,
-                    order: order as AdminEntitiesQueryOrder | undefined,
+                    order: order as AdminEntityQueryOrder | undefined,
                     onItemClick,
                   }}
                 />
@@ -127,7 +127,7 @@ function EntityListRow({
   onItemClick,
 }: {
   entity: AdminEntity;
-  order: AdminEntitiesQueryOrder | undefined;
+  order: AdminEntityQueryOrder | undefined;
   authKeys: DisplayAuthKey[];
   onItemClick: (item: AdminEntity) => void;
 }) {
@@ -151,7 +151,7 @@ function EntityListRow({
         <DateDisplay date={entity.info.createdAt} />
       </Table.Cell>
       <Table.Cell narrow>
-        {order === AdminEntitiesQueryOrder.updatedAt ||
+        {order === AdminEntityQueryOrder.updatedAt ||
         entity.info.updatedAt.getTime() !== entity.info.createdAt.getTime() ? (
           <DateDisplay date={entity.info.updatedAt} />
         ) : null}
@@ -162,16 +162,16 @@ function EntityListRow({
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminEntitiesQueryOrder | PublishedEntitiesQueryOrder | undefined,
+  order: AdminEntityQueryOrder | PublishedEntityQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: AdminEntitiesQueryOrder | PublishedEntitiesQueryOrder,
+  headerOrder: AdminEntityQueryOrder | PublishedEntityQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {
     newReverse = !reverse;
   } else if (
-    headerOrder === AdminEntitiesQueryOrder.updatedAt ||
-    headerOrder === AdminEntitiesQueryOrder.createdAt
+    headerOrder === AdminEntityQueryOrder.updatedAt ||
+    headerOrder === AdminEntityQueryOrder.createdAt
   ) {
     // Default to descending order for dates
     newReverse = true;

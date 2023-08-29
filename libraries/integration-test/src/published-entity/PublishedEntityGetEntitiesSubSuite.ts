@@ -1,4 +1,4 @@
-import { copyEntity, PublishedEntitiesQueryOrder } from '@dossierhq/core';
+import { copyEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminValueItems } from '../SchemaTypes.js';
@@ -194,7 +194,7 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
 
   // Search to get the cursor
   const firstSearchResult = await publishedClient.getEntities(
-    { linksFrom: { id: linkId }, order: PublishedEntitiesQueryOrder.name },
+    { linksFrom: { id: linkId }, order: PublishedEntityQueryOrder.name },
     { first: 10 },
   );
   assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
@@ -206,7 +206,7 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
 
   // Search again using the cursor
   const secondSearchResult = await publishedClient.getEntities(
-    { linksFrom: { id: linkId }, order: PublishedEntitiesQueryOrder.name },
+    { linksFrom: { id: linkId }, order: PublishedEntityQueryOrder.name },
     { first: 10, after: startCursor },
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
@@ -288,14 +288,14 @@ async function getEntities_orderCreatedAt({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedEntitiesQueryOrder.createdAt,
+    order: PublishedEntityQueryOrder.createdAt,
   });
   assertPublishedEntityConnectionToMatchSlice(
     expectedEntities,
     result,
     0,
     25,
-    PublishedEntitiesQueryOrder.createdAt,
+    PublishedEntityQueryOrder.createdAt,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -310,7 +310,7 @@ async function getEntities_orderCreatedAtReversed({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedEntitiesQueryOrder.createdAt,
+    order: PublishedEntityQueryOrder.createdAt,
     reverse: true,
   });
   assertPublishedEntityConnectionToMatchSlice(
@@ -318,7 +318,7 @@ async function getEntities_orderCreatedAtReversed({
     result,
     0,
     25,
-    PublishedEntitiesQueryOrder.createdAt,
+    PublishedEntityQueryOrder.createdAt,
     true,
   );
   assertPageInfoEquals(result, {
@@ -334,14 +334,14 @@ async function getEntities_orderName({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedEntitiesQueryOrder.name,
+    order: PublishedEntityQueryOrder.name,
   });
   assertPublishedEntityConnectionToMatchSlice(
     expectedEntities,
     result,
     0,
     25,
-    PublishedEntitiesQueryOrder.name,
+    PublishedEntityQueryOrder.name,
   );
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -356,7 +356,7 @@ async function getEntities_orderNameReversed({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const result = await publishedClientForMainPrincipal(server).getEntities({
     entityTypes: ['ReadOnly'],
-    order: PublishedEntitiesQueryOrder.name,
+    order: PublishedEntityQueryOrder.name,
     reverse: true,
   });
   assertPublishedEntityConnectionToMatchSlice(
@@ -364,7 +364,7 @@ async function getEntities_orderNameReversed({
     result,
     0,
     25,
-    PublishedEntitiesQueryOrder.name,
+    PublishedEntityQueryOrder.name,
     true,
   );
   assertPageInfoEquals(result, {

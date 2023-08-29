@@ -1,5 +1,5 @@
 import type {
-  AdminEntitiesSharedQuery,
+  AdminEntitySharedQuery,
   AdminSchema,
   ErrorType,
   PromiseResult,
@@ -14,7 +14,7 @@ export async function adminGetTotalCount(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
 ): PromiseResult<
   number,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

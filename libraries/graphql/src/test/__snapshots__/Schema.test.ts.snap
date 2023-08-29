@@ -188,7 +188,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -216,7 +216,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -524,7 +524,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -547,7 +547,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -651,7 +651,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -674,7 +674,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -856,7 +856,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -884,7 +884,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -1302,7 +1302,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -1330,7 +1330,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -1577,7 +1577,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -1600,7 +1600,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -1698,7 +1698,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -1721,7 +1721,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -1895,7 +1895,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -1923,7 +1923,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -2322,7 +2322,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -2348,7 +2348,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -2626,7 +2626,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -2647,7 +2647,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -2752,7 +2752,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -2773,7 +2773,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -2958,7 +2958,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -2984,7 +2984,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -3374,7 +3374,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -3400,7 +3400,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -3724,7 +3724,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -3745,7 +3745,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -3863,7 +3863,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -3884,7 +3884,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -4071,7 +4071,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -4097,7 +4097,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -4544,7 +4544,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -4570,7 +4570,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -4783,7 +4783,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -4804,7 +4804,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -4890,7 +4890,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -4911,7 +4911,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -5077,7 +5077,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -5103,7 +5103,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -5434,7 +5434,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -5460,7 +5460,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -5689,7 +5689,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -5710,7 +5710,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -5805,7 +5805,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -5826,7 +5826,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -6001,7 +6001,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -6027,7 +6027,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -6370,7 +6370,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -6398,7 +6398,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -6650,7 +6650,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -6673,7 +6673,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -6779,7 +6779,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -6802,7 +6802,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -6984,7 +6984,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -7012,7 +7012,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -7370,7 +7370,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -7396,7 +7396,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -7621,7 +7621,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -7642,7 +7642,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -7733,7 +7733,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -7754,7 +7754,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -7925,7 +7925,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -7951,7 +7951,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -8291,7 +8291,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -8317,7 +8317,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -8603,7 +8603,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -8624,7 +8624,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -8732,7 +8732,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -8753,7 +8753,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -8941,7 +8941,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -8967,7 +8967,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -9370,7 +9370,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -9398,7 +9398,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 
@@ -9738,7 +9738,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -9761,7 +9761,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -9901,7 +9901,7 @@ type PublishedEntitySamplingPayload {
   items: [PublishedEntity]
 }
 
-enum PublishedEntitiesQueryOrder {
+enum PublishedEntityQueryOrder {
   createdAt
   name
 }
@@ -9924,7 +9924,7 @@ input PublishedEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: PublishedEntitiesQueryOrder
+  order: PublishedEntityQueryOrder
   reverse: Boolean
 }
 
@@ -10135,7 +10135,7 @@ type AdminEntitySamplingPayload {
   items: [AdminEntity]
 }
 
-enum AdminEntitiesQueryOrder {
+enum AdminEntityQueryOrder {
   createdAt
   updatedAt
   name
@@ -10163,7 +10163,7 @@ input AdminEntitiesQueryInput {
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
   text: String
-  order: AdminEntitiesQueryOrder
+  order: AdminEntityQueryOrder
   reverse: Boolean
 }
 

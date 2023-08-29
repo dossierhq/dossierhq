@@ -6,8 +6,8 @@ import {
   isValueItemField,
   notOk,
   type AdminClient,
-  type AdminEntitiesQuery,
-  type AdminEntitiesSharedQuery,
+  type AdminEntityQuery,
+  type AdminEntitySharedQuery,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityTypeSpecification,
@@ -22,8 +22,8 @@ import {
   type EntityVersionReference,
   type ErrorType,
   type PublishedClient,
-  type PublishedEntitiesQuery,
-  type PublishedEntitiesSharedQuery,
+  type PublishedEntityQuery,
+  type PublishedEntitySharedQuery,
   type PublishedEntity,
   type PublishedEntityTypeSpecification,
   type PublishedSchema,
@@ -298,10 +298,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // PublishedEntitiesQueryOrder
+    // PublishedEntityQueryOrder
     this.addType(
       new GraphQLEnumType({
-        name: 'PublishedEntitiesQueryOrder',
+        name: 'PublishedEntityQueryOrder',
         values: { createdAt: {}, name: {} },
       }),
     );
@@ -338,7 +338,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'PublishedEntitiesQueryInput',
         fields: {
           ...sharedQueryInputFields,
-          order: { type: this.getEnumType('PublishedEntitiesQueryOrder') },
+          order: { type: this.getEnumType('PublishedEntityQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
       }),
@@ -627,10 +627,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntitiesQueryOrder
+    // AdminEntityQueryOrder
     this.addType(
       new GraphQLEnumType({
-        name: 'AdminEntitiesQueryOrder',
+        name: 'AdminEntityQueryOrder',
         values: { createdAt: {}, updatedAt: {}, name: {} },
       }),
     );
@@ -669,7 +669,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminEntitiesQueryInput',
         fields: {
           ...sharedQueryInputFields,
-          order: { type: this.getEnumType('AdminEntitiesQueryOrder') },
+          order: { type: this.getEnumType('AdminEntityQueryOrder') },
           reverse: { type: GraphQLBoolean },
         },
       }),
@@ -1427,7 +1427,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: AdminEntitiesSharedQuery;
+        query?: AdminEntitySharedQuery;
         seed?: number;
         count?: number;
       }
@@ -1453,7 +1453,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: AdminEntitiesQuery;
+        query?: AdminEntityQuery;
         first?: number;
         after?: string;
         last?: number;
@@ -1483,7 +1483,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: PublishedEntitiesSharedQuery;
+        query?: PublishedEntitySharedQuery;
         seed?: number;
         count?: number;
       }
@@ -1509,7 +1509,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: PublishedEntitiesQuery;
+        query?: PublishedEntityQuery;
         first?: number;
         after?: string;
         last?: number;

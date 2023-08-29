@@ -1,17 +1,17 @@
 import {
   copyEntity,
-  type AdminEntitiesQuery,
-  type AdminEntitiesSharedQuery,
   type AdminEntity,
   type AdminEntityPublishingPayload,
+  type AdminEntityQuery,
+  type AdminEntitySharedQuery,
   type AdminSchemaWithMigrations,
   type ChangelogEventQuery,
   type EntityReference,
   type EntitySamplingOptions,
   type EntityVersionReference,
   type Paging,
-  type PublishedEntitiesQuery,
-  type PublishedEntitiesSharedQuery,
+  type PublishedEntityQuery,
+  type PublishedEntitySharedQuery,
 } from '@dossierhq/core';
 import type { Arguments, Cache, useSWRConfig } from 'swr';
 
@@ -28,15 +28,15 @@ export const CACHE_KEYS = {
     return ['dossierhq/useAdminEntity', reference] as const;
   },
   adminEntitiesSample(
-    query: AdminEntitiesSharedQuery | undefined,
+    query: AdminEntitySharedQuery | undefined,
     options: EntitySamplingOptions | undefined,
   ) {
     return ['dossierhq/useAdminEntitiesSample', query, options] as const;
   },
-  adminEntities(query: AdminEntitiesQuery | undefined, paging: Paging | undefined) {
+  adminEntities(query: AdminEntityQuery | undefined, paging: Paging | undefined) {
     return ['dossierhq/useAdminEntities', query, paging] as const;
   },
-  adminEntitiesTotalCount(query: AdminEntitiesSharedQuery | undefined) {
+  adminEntitiesTotalCount(query: AdminEntitySharedQuery | undefined) {
     return ['dossierhq/useAdminEntitiesTotalCount', query] as const;
   },
   adminSchema: 'dossierhq/useAdminSchema',
@@ -44,15 +44,15 @@ export const CACHE_KEYS = {
     return ['dossierhq/usePublishedEntity', reference] as const;
   },
   publishedEntitiesSample(
-    query: PublishedEntitiesSharedQuery | undefined,
+    query: PublishedEntitySharedQuery | undefined,
     options: EntitySamplingOptions | undefined,
   ) {
     return ['dossierhq/usePublishedEntitiesSample', query, options] as const;
   },
-  publishedEntities(query: PublishedEntitiesQuery | undefined, paging: Paging | undefined) {
+  publishedEntities(query: PublishedEntityQuery | undefined, paging: Paging | undefined) {
     return ['dossierhq/usePublishedEntities', query, paging] as const;
   },
-  publishedEntitiesTotalCount(query: PublishedEntitiesSharedQuery | undefined) {
+  publishedEntitiesTotalCount(query: PublishedEntitySharedQuery | undefined) {
     return ['dossierhq/usePublishedEntitiesTotalCount', query] as const;
   },
   publishedSchema: 'dossierhq/usePublishedSchema',

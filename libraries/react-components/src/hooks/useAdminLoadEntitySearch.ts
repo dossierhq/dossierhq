@@ -1,6 +1,6 @@
 import type {
-  AdminEntitiesQuery,
-  AdminEntitiesSharedQuery,
+  AdminEntityQuery,
+  AdminEntitySharedQuery,
   AdminEntity,
   Connection,
   Edge,
@@ -17,7 +17,7 @@ import type {
 import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { useAdminEntities } from './useAdminEntities.js';
 import { useAdminEntitiesSample } from './useAdminEntitiesSample.js';
-import { useAdminEntitiesTotalCount } from './useAdminTotalCount.js';
+import { useAdminEntitiesTotalCount } from './useAdminEntitiesTotalCount.js';
 
 export function useAdminLoadEntitySearch(
   searchEntityState: SearchEntityState,
@@ -27,7 +27,7 @@ export function useAdminLoadEntitySearch(
 
   // search
   const searchQuery = searchEntityState.paging
-    ? (searchEntityState.query as AdminEntitiesQuery)
+    ? (searchEntityState.query as AdminEntityQuery)
     : undefined;
   const { connection, connectionError } = useAdminEntities(
     adminClient,
@@ -38,7 +38,7 @@ export function useAdminLoadEntitySearch(
 
   // sample
   const sampleQuery = !searchQuery
-    ? (searchEntityState.query as AdminEntitiesSharedQuery)
+    ? (searchEntityState.query as AdminEntitySharedQuery)
     : undefined;
   const { entitiesSample, entitiesSampleError } = useAdminEntitiesSample(
     adminClient,

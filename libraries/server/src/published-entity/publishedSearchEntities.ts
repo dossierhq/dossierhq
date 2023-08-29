@@ -5,7 +5,7 @@ import type {
   ErrorType,
   Paging,
   PromiseResult,
-  PublishedEntitiesQuery,
+  PublishedEntityQuery,
   PublishedEntity,
   PublishedSchema,
 } from '@dossierhq/core';
@@ -22,7 +22,7 @@ export async function publishedSearchEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: PublishedEntitiesQuery | undefined,
+  query: PublishedEntityQuery | undefined,
   paging: Paging | undefined,
 ): PromiseResult<
   Connection<Edge<PublishedEntity, ErrorType>> | null,

@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntitiesSharedQuery,
+  AdminEntitySharedQuery,
   AdminEntity,
   ErrorResult,
   ErrorType,
@@ -10,7 +10,7 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, AdminEntitiesSharedQuery | undefined]>;
+type FetcherKey = Readonly<[string, AdminEntitySharedQuery | undefined]>;
 type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -21,7 +21,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function useAdminEntitiesTotalCount(
   adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;

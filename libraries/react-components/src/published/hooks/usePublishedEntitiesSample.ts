@@ -4,7 +4,7 @@ import type {
   ErrorResult,
   ErrorType,
   PublishedClient,
-  PublishedEntitiesSharedQuery,
+  PublishedEntitySharedQuery,
   PublishedEntity,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
@@ -12,7 +12,7 @@ import useSWR from 'swr';
 import { CACHE_KEYS } from '../../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<
-  [string, PublishedEntitiesSharedQuery | undefined, EntitySamplingOptions | undefined]
+  [string, PublishedEntitySharedQuery | undefined, EntitySamplingOptions | undefined]
 >;
 type FetcherData<T> = EntitySamplingPayload<T>;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
@@ -26,7 +26,7 @@ export function usePublishedEntitiesSample<
   TPublishedEntity extends PublishedEntity<string, object>,
 >(
   publishedClient: PublishedClient<TPublishedEntity>,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
   options?: EntitySamplingOptions,
 ): {
   entitiesSample: FetcherData<TPublishedEntity> | undefined;

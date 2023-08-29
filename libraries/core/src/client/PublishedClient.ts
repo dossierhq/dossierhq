@@ -7,9 +7,9 @@ import type {
   EntitySamplingOptions,
   EntitySamplingPayload,
   Paging,
-  PublishedEntitiesQuery,
-  PublishedEntitiesSharedQuery,
   PublishedEntity,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
   UniqueIndexReference,
   ValueItem,
 } from '../Types.js';
@@ -67,7 +67,7 @@ export interface PublishedClient<
   >;
 
   getEntities(
-    query?: PublishedEntitiesQuery<
+    query?: PublishedEntityQuery<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
@@ -79,7 +79,7 @@ export interface PublishedClient<
   >;
 
   getEntitiesTotalCount(
-    query?: PublishedEntitiesSharedQuery<
+    query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
@@ -90,7 +90,7 @@ export interface PublishedClient<
   >;
 
   getEntitiesSample(
-    query?: PublishedEntitiesSharedQuery<
+    query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
@@ -130,7 +130,7 @@ export interface PublishedExceptionClient<
   >;
 
   getEntities(
-    query?: PublishedEntitiesQuery<
+    query?: PublishedEntityQuery<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
@@ -139,7 +139,7 @@ export interface PublishedExceptionClient<
   ): Promise<Connection<Edge<TPublishedEntity, ErrorType>> | null>;
 
   getEntitiesTotalCount(
-    query?: PublishedEntitiesSharedQuery<
+    query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
@@ -147,7 +147,7 @@ export interface PublishedExceptionClient<
   ): Promise<number>;
 
   getEntitiesSample(
-    query?: PublishedEntitiesSharedQuery<
+    query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
       TPublishedValueItem['type'],
       TPublishedEntity['info']['authKey']
@@ -299,7 +299,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getEntities(
-    query?: PublishedEntitiesQuery,
+    query?: PublishedEntityQuery,
     paging?: Paging,
   ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntities]> {
     return this.executeOperation({
@@ -310,7 +310,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getEntitiesTotalCount(
-    query?: PublishedEntitiesSharedQuery,
+    query?: PublishedEntitySharedQuery,
   ): Promise<
     PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntitiesTotalCount]
   > {
@@ -322,7 +322,7 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 
   getEntitiesSample(
-    query?: PublishedEntitiesSharedQuery,
+    query?: PublishedEntitySharedQuery,
     options?: EntitySamplingOptions,
   ): PromiseResult<
     EntitySamplingPayload<PublishedEntity>,
@@ -393,7 +393,7 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
   }
 
   async getEntities(
-    query?: PublishedEntitiesQuery<string> | undefined,
+    query?: PublishedEntityQuery<string> | undefined,
     paging?: Paging | undefined,
   ): Promise<Connection<
     Edge<PublishedEntity<string, Record<string, unknown>, string>, ErrorType>
@@ -402,13 +402,13 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
   }
 
   async getEntitiesTotalCount(
-    query?: PublishedEntitiesSharedQuery<string, string> | undefined,
+    query?: PublishedEntitySharedQuery<string, string> | undefined,
   ): Promise<number> {
     return (await this.client.getEntitiesTotalCount(query)).valueOrThrow();
   }
 
   async getEntitiesSample(
-    query?: PublishedEntitiesSharedQuery<string, string> | undefined,
+    query?: PublishedEntitySharedQuery<string, string> | undefined,
     options?: EntitySamplingOptions | undefined,
   ): Promise<EntitySamplingPayload<PublishedEntity<string, Record<string, unknown>, string>>> {
     return (await this.client.getEntitiesSample(query, options)).valueOrThrow();

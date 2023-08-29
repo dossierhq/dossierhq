@@ -3,8 +3,8 @@ import type {
   Edge,
   EntitySamplingPayload,
   ErrorType,
-  PublishedEntitiesQuery,
-  PublishedEntitiesSharedQuery,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
   PublishedEntity,
 } from '@dossierhq/core';
 import type { Dispatch } from 'react';
@@ -27,7 +27,7 @@ export function usePublishedLoadEntitySearch(
 
   // search
   const searchQuery = searchEntityState.paging
-    ? (searchEntityState.query as PublishedEntitiesQuery)
+    ? (searchEntityState.query as PublishedEntityQuery)
     : undefined;
   const { connection, connectionError } = usePublishedEntities(
     publishedClient,
@@ -38,7 +38,7 @@ export function usePublishedLoadEntitySearch(
 
   // sample
   const sampleQuery = !searchQuery
-    ? (searchEntityState.query as PublishedEntitiesSharedQuery)
+    ? (searchEntityState.query as PublishedEntitySharedQuery)
     : undefined;
   const { entitiesSample, entitiesSampleError } = usePublishedEntitiesSample(
     publishedClient,

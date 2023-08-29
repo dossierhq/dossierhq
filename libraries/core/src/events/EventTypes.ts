@@ -14,7 +14,7 @@ export const EventType = {
 
 type EntityEventTypes = keyof Omit<typeof EventType, 'updateSchema'>;
 
-interface Event<TEventType extends string> {
+interface Event<TEventType extends keyof typeof EventType> {
   type: TEventType;
   createdAt: Date;
   createdBy: string;

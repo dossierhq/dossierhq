@@ -1,4 +1,4 @@
-import type { AdminEntitiesQuery } from '@dossierhq/core';
+import type { AdminEntityQuery } from '@dossierhq/core';
 import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
 import { initializeMultipleSelectorState } from '@dossierhq/design';
 import isEqual from 'lodash/isEqual.js';
@@ -40,7 +40,7 @@ export function useAdminEntitySearchFilters(
 
   const [statusFilterState, dispatchStatusFilterState] = useReducer(
     reduceStatusSelectorState,
-    { selectedIds: (searchEntityState.query as AdminEntitiesQuery).status },
+    { selectedIds: (searchEntityState.query as AdminEntityQuery).status },
     initializeStatusSelectorState,
   );
 

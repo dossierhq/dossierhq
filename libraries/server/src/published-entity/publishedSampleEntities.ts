@@ -5,7 +5,7 @@ import {
   type EntitySamplingPayload,
   type ErrorType,
   type PromiseResult,
-  type PublishedEntitiesSharedQuery,
+  type PublishedEntitySharedQuery,
   type PublishedEntity,
   type PublishedSchema,
   type Result,
@@ -22,7 +22,7 @@ export async function publishedSampleEntities(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  query: PublishedEntitiesSharedQuery | undefined,
+  query: PublishedEntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): PromiseResult<
   EntitySamplingPayload<PublishedEntity>,

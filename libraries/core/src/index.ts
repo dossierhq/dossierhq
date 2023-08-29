@@ -16,14 +16,12 @@ export {
 } from './ErrorResult.js';
 export { NoOpLogger, createConsoleLogger, type Logger } from './Logger.js';
 export {
-  AdminEntitiesQueryOrder,
+  AdminEntityQueryOrder,
   AdminEntityStatus,
-  PublishedEntitiesQueryOrder,
+  PublishedEntityQueryOrder,
   RichTextNodeType,
 } from './Types.js';
 export type {
-  AdminEntitiesQuery,
-  AdminEntitiesSharedQuery,
   AdminEntity,
   AdminEntityArchivePayload,
   AdminEntityCreate,
@@ -32,6 +30,8 @@ export type {
   AdminEntityMutationOptions,
   AdminEntityPublishPayload,
   AdminEntityPublishingPayload,
+  AdminEntityQuery,
+  AdminEntitySharedQuery,
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
   AdminEntityUpdate,
@@ -52,10 +52,10 @@ export type {
   Location,
   PageInfo,
   Paging,
-  PublishedEntitiesQuery,
-  PublishedEntitiesSharedQuery,
   PublishedEntity,
   PublishedEntityInfo,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
   RichText,
   RichTextCodeHighlightNode,
   RichTextCodeNode,

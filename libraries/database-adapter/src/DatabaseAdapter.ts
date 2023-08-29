@@ -1,6 +1,6 @@
 import type {
-  AdminEntitiesQuery,
-  AdminEntitiesSharedQuery,
+  AdminEntityQuery,
+  AdminEntitySharedQuery,
   AdminEntityStatus,
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
@@ -12,8 +12,8 @@ import type {
   Location,
   PagingInfo,
   PromiseResult,
-  PublishedEntitiesQuery,
-  PublishedEntitiesSharedQuery,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
   PublishedSchema,
   SchemaChangelogEvent,
   UniqueIndexReference,
@@ -397,7 +397,7 @@ export interface DatabaseAdapter<
   adminEntitySampleEntities(
     schema: AdminSchema,
     context: TransactionContext,
-    query: AdminEntitiesSharedQuery | undefined,
+    query: AdminEntitySharedQuery | undefined,
     offset: number,
     limit: number,
     resolvedAuthKeys: ResolvedAuthKey[],
@@ -409,7 +409,7 @@ export interface DatabaseAdapter<
   adminEntitySearchEntities(
     schema: AdminSchema,
     context: TransactionContext,
-    query: AdminEntitiesQuery | undefined,
+    query: AdminEntityQuery | undefined,
     paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[],
   ): PromiseResult<
@@ -420,7 +420,7 @@ export interface DatabaseAdapter<
   adminEntitySearchTotalCount(
     schema: AdminSchema,
     context: TransactionContext,
-    query: AdminEntitiesSharedQuery | undefined,
+    query: AdminEntitySharedQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[],
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -571,7 +571,7 @@ export interface DatabaseAdapter<
   publishedEntitySampleEntities(
     schema: PublishedSchema,
     context: TransactionContext,
-    query: PublishedEntitiesSharedQuery | undefined,
+    query: PublishedEntitySharedQuery | undefined,
     offset: number,
     limit: number,
     resolvedAuthKeys: ResolvedAuthKey[],
@@ -583,7 +583,7 @@ export interface DatabaseAdapter<
   publishedEntitySearchEntities(
     schema: PublishedSchema,
     context: TransactionContext,
-    query: PublishedEntitiesQuery | undefined,
+    query: PublishedEntityQuery | undefined,
     paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[],
   ): PromiseResult<
@@ -594,7 +594,7 @@ export interface DatabaseAdapter<
   publishedEntitySearchTotalCount(
     schema: PublishedSchema,
     context: TransactionContext,
-    query: PublishedEntitiesSharedQuery | undefined,
+    query: PublishedEntitySharedQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[],
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 

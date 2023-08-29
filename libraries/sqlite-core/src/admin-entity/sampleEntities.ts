@@ -1,5 +1,5 @@
 import type {
-  AdminEntitiesSharedQuery,
+  AdminEntitySharedQuery,
   AdminSchema,
   ErrorType,
   PromiseResult,
@@ -20,7 +20,7 @@ export async function adminEntitySampleEntities(
   database: Database,
   schema: AdminSchema,
   context: TransactionContext,
-  query: AdminEntitiesSharedQuery | undefined,
+  query: AdminEntitySharedQuery | undefined,
   offset: number,
   limit: number,
   resolvedAuthKeys: ResolvedAuthKey[],

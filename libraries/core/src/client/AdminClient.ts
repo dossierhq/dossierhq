@@ -8,14 +8,14 @@ import {
   type Result,
 } from '../ErrorResult.js';
 import type {
-  AdminEntitiesQuery,
-  AdminEntitiesSharedQuery,
   AdminEntity,
   AdminEntityArchivePayload,
   AdminEntityCreate,
   AdminEntityCreatePayload,
   AdminEntityMutationOptions,
   AdminEntityPublishPayload,
+  AdminEntityQuery,
+  AdminEntitySharedQuery,
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
   AdminEntityUpdate,
@@ -125,7 +125,7 @@ export interface AdminClient<
   >;
 
   getEntities(
-    query?: AdminEntitiesQuery<
+    query?: AdminEntityQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -137,7 +137,7 @@ export interface AdminClient<
   >;
 
   getEntitiesTotalCount(
-    query?: AdminEntitiesSharedQuery<
+    query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -148,7 +148,7 @@ export interface AdminClient<
   >;
 
   getEntitiesSample(
-    query?: AdminEntitiesSharedQuery<
+    query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -308,7 +308,7 @@ export interface AdminExceptionClient<
   >;
 
   getEntities(
-    query?: AdminEntitiesQuery<
+    query?: AdminEntityQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -317,7 +317,7 @@ export interface AdminExceptionClient<
   ): Promise<Connection<Edge<TAdminEntity, ErrorType>> | null>;
 
   getEntitiesTotalCount(
-    query?: AdminEntitiesSharedQuery<
+    query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -325,7 +325,7 @@ export interface AdminExceptionClient<
   ): Promise<number>;
 
   getEntitiesSample(
-    query?: AdminEntitiesSharedQuery<
+    query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminValueItem['type'],
       TAdminEntity['info']['authKey']
@@ -584,7 +584,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getEntities(
-    query?: AdminEntitiesQuery,
+    query?: AdminEntityQuery,
     paging?: Paging,
   ): MethodReturnType<typeof AdminClientOperationName.getEntities> {
     return this.executeOperation({
@@ -595,7 +595,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getEntitiesTotalCount(
-    query?: AdminEntitiesSharedQuery,
+    query?: AdminEntitySharedQuery,
   ): MethodReturnType<typeof AdminClientOperationName.getEntitiesTotalCount> {
     return this.executeOperation({
       name: AdminClientOperationName.getEntitiesTotalCount,
@@ -605,7 +605,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getEntitiesSample(
-    query?: AdminEntitiesSharedQuery,
+    query?: AdminEntitySharedQuery,
     options?: EntitySamplingOptions,
   ): PromiseResult<
     EntitySamplingPayload<AdminEntity>,
@@ -852,7 +852,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async getEntities(
-    query?: AdminEntitiesQuery<string, string> | undefined,
+    query?: AdminEntityQuery<string, string> | undefined,
     paging?: Paging | undefined,
   ): Promise<Connection<
     Edge<AdminEntity<string, Record<string, unknown>, string>, ErrorType>
@@ -861,13 +861,13 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async getEntitiesTotalCount(
-    query?: AdminEntitiesSharedQuery<string, string> | undefined,
+    query?: AdminEntitySharedQuery<string, string> | undefined,
   ): Promise<number> {
     return (await this.client.getEntitiesTotalCount(query)).valueOrThrow();
   }
 
   async getEntitiesSample(
-    query?: AdminEntitiesSharedQuery<string, string> | undefined,
+    query?: AdminEntitySharedQuery<string, string> | undefined,
     options?: EntitySamplingOptions | undefined,
   ): Promise<EntitySamplingPayload<AdminEntity<string, Record<string, unknown>, string>>> {
     return (await this.client.getEntitiesSample(query, options)).valueOrThrow();

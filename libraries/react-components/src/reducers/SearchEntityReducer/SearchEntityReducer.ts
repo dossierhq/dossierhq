@@ -1,9 +1,9 @@
 import {
-  AdminEntitiesQueryOrder,
-  PublishedEntitiesQueryOrder,
+  AdminEntityQueryOrder,
+  PublishedEntityQueryOrder,
   getPagingInfo,
   ok,
-  type AdminEntitiesQuery,
+  type AdminEntityQuery,
   type AdminEntity,
   type Connection,
   type Edge,
@@ -13,7 +13,7 @@ import {
   type ErrorResult,
   type ErrorType,
   type Paging,
-  type PublishedEntitiesQuery,
+  type PublishedEntityQuery,
   type PublishedEntity,
   type Result,
 } from '@dossierhq/core';
@@ -21,12 +21,12 @@ import isEqual from 'lodash/isEqual.js';
 
 const DEFAULT_VALUES = {
   admin: {
-    order: AdminEntitiesQueryOrder.updatedAt,
+    order: AdminEntityQueryOrder.updatedAt,
     reverse: true,
     requestedCount: 25,
   },
   published: {
-    order: PublishedEntitiesQueryOrder.name,
+    order: PublishedEntityQueryOrder.name,
     reverse: false,
     requestedCount: 25,
   },
@@ -39,7 +39,7 @@ export interface SearchEntityState {
   restrictLinksFrom: EntityReference | null;
   restrictLinksTo: EntityReference | null;
 
-  query: AdminEntitiesQuery | PublishedEntitiesQuery;
+  query: AdminEntityQuery | PublishedEntityQuery;
   paging: Paging | undefined;
   sampling: EntitySamplingOptions | undefined;
   requestedCount: number;
@@ -187,12 +187,12 @@ class SetSamplingAction implements SearchEntityStateAction {
 }
 
 class SetQueryAction implements SearchEntityStateAction {
-  readonly value: AdminEntitiesQuery | PublishedEntitiesQuery;
+  readonly value: AdminEntityQuery | PublishedEntityQuery;
   readonly partial: boolean;
   readonly resetPagingIfModifying: boolean;
 
   constructor(
-    value: AdminEntitiesQuery | PublishedEntitiesQuery,
+    value: AdminEntityQuery | PublishedEntityQuery,
     { partial, resetPagingIfModifying }: { partial: boolean; resetPagingIfModifying: boolean },
   ) {
     this.value = value;
@@ -201,7 +201,7 @@ class SetQueryAction implements SearchEntityStateAction {
   }
 
   reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
-    const query: AdminEntitiesQuery | PublishedEntitiesQuery = this.partial
+    const query: AdminEntityQuery | PublishedEntityQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
@@ -378,8 +378,8 @@ export const SearchEntityStateActions = {
 
 export function getQueryWithoutDefaults(
   mode: 'admin' | 'published',
-  query: AdminEntitiesQuery | PublishedEntitiesQuery,
-): AdminEntitiesQuery | PublishedEntitiesQuery {
+  query: AdminEntityQuery | PublishedEntityQuery,
+): AdminEntityQuery | PublishedEntityQuery {
   let changed = false;
   const newQuery = { ...query };
   const defaultValues = DEFAULT_VALUES[mode];

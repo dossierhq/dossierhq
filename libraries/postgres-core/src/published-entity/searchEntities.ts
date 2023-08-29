@@ -2,7 +2,7 @@ import {
   ok,
   type ErrorType,
   type PromiseResult,
-  type PublishedEntitiesQuery,
+  type PublishedEntityQuery,
   type PublishedSchema,
 } from '@dossierhq/core';
 import type {
@@ -21,7 +21,7 @@ export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: PublishedSchema,
   context: TransactionContext,
-  query: PublishedEntitiesQuery | undefined,
+  query: PublishedEntityQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<
