@@ -212,10 +212,18 @@ export {
 } from './content/RichTextUtils.js';
 export {
   EventType,
+  type ArchiveEntitySyncEvent,
   type ChangelogEvent,
   type ChangelogEventQuery,
+  type CreateEntitySyncEvent,
   type EntityChangelogEvent,
+  type PublishEntitiesSyncEvent,
   type SchemaChangelogEvent,
+  type SyncEvent,
+  type UnarchiveEntitySyncEvent,
+  type UnpublishEntitiesSyncEvent,
+  type UpdateEntitySyncEvent,
+  type UpdateSchemaSyncEvent,
 } from './events/EventTypes.js';
 export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
