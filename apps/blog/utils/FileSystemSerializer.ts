@@ -11,21 +11,25 @@ import type {
   OkFromResult,
   PromiseResult,
   RichTextElementNode,
+  SyncEvent,
 } from '@dossierhq/core';
 import {
   AdminClientOperationName,
   AdminEntityStatus,
   AdminSchema,
+  EventType,
+  assertExhaustive,
   isRichTextElementNode,
   notOk,
   ok,
   traverseEntity,
 } from '@dossierhq/core';
-import type { SessionContext } from '@dossierhq/server';
+import type { Server, SessionContext } from '@dossierhq/server';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
 export function createFilesystemAdminMiddleware(
+  server: Server,
   backChannelAdminClient: AdminClient,
 ): AdminClientMiddleware<SessionContext> {
   return async (context: SessionContext, operation: AdminClientOperation) => {
@@ -54,6 +58,12 @@ export function createFilesystemAdminMiddleware(
             const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
             await updateEntityFile(backChannelAdminClient, payload.entity);
             break;
+          }
+        }
+        if (operation.modifies) {
+          const result = await updateSyncEvents(server);
+          if (result.isError()) {
+            console.warn('Failed to update sync events', result);
           }
         }
       } catch (error) {
@@ -196,4 +206,92 @@ async function loadEntity(adminClient: AdminClient, logger: Logger, entityPath: 
     logger.info('  Effect: %s', createResult.value.effect);
   }
   return createResult;
+}
+
+export async function updateSyncEvents(server: Server) {
+  const existingSyncEvents = await getCurrentSyncEventFiles();
+
+  let after: string | null = null;
+  let nextIndex = 1;
+  if (existingSyncEvents.length > 0) {
+    const lastEventFile = existingSyncEvents[existingSyncEvents.length - 1];
+    const lastEvent = JSON.parse(
+      await fs.readFile(lastEventFile.path, { encoding: 'utf-8' }),
+    ) as SyncEvent;
+    after = lastEvent.id;
+    nextIndex = lastEventFile.index + 1;
+  }
+
+  while (true) {
+    const eventsResult = await server.getSyncEvents(
+      after ? { after, limit: 10 } : { initial: true, limit: 10 },
+    );
+    if (eventsResult.isError()) return eventsResult;
+
+    for (const event of eventsResult.value.events) {
+      await storeEvent(nextIndex++, event);
+    }
+    after = eventsResult.value.events[eventsResult.value.events.length - 1].id;
+    if (!eventsResult.value.hasMore) {
+      break;
+    }
+  }
+
+  return ok(undefined);
+}
+
+async function getCurrentSyncEventFiles() {
+  const syncEventsDir = path.join('data', 'events');
+  const filenames = await fs.readdir(syncEventsDir, { encoding: 'utf8' });
+  const files = filenames.map((filename) => {
+    const [indexString, ..._rest] = filename.split('-');
+    const index = Number(indexString);
+    if (Number.isNaN(index)) {
+      throw new Error(`Failed to parse index from filename: ${filename}`);
+    }
+    return { path: path.join(syncEventsDir, filename), index };
+  });
+  files.sort((a, b) => {
+    if (a.index === b.index) {
+      throw new Error(`Duplicate index: ${a.index} (${a.path}, ${b.path})`);
+    }
+    return a.index - b.index;
+  });
+  return files;
+}
+
+async function storeEvent(index: number, event: SyncEvent) {
+  const { type } = event;
+
+  let shortName = '';
+  switch (type) {
+    case EventType.archiveEntity:
+    case EventType.createEntity:
+    case EventType.createAndPublishEntity:
+    case EventType.updateEntity:
+    case EventType.updateAndPublishEntity:
+    case EventType.unarchiveEntity:
+      shortName = event.entity.id;
+      break;
+    case EventType.publishEntities:
+    case EventType.unpublishEntities:
+      shortName =
+        event.entities[0].id +
+        (event.entities.length > 1 ? `-and-${event.entities.length - 1}-more` : '');
+      break;
+    case EventType.updateSchema:
+      shortName = '';
+      break;
+    default:
+      assertExhaustive(type);
+  }
+
+  const paddedIndex = index.toString().padStart(4, '0');
+  const filename = path.join(
+    'data',
+    'events',
+    `${paddedIndex}-${type}${shortName ? '-' + shortName : ''}.json`,
+  );
+  const json = JSON.stringify(event, null, 2) + '\n';
+  await fs.writeFile(filename, json, { encoding: 'utf8' });
 }
