@@ -9,6 +9,7 @@ import {
   type AdminEntity,
   type AdminSchemaSpecificationWithMigrations,
   type ContextProvider,
+  type EntityReference,
   type ErrorType,
   type Logger,
   type PromiseResult,
@@ -18,7 +19,6 @@ import {
   type PublishedSchema,
   type Result,
   type ValueItem,
-  type EntityReference,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -40,6 +40,11 @@ import {
   managementDirtyProcessNextEntity,
   type ProcessDirtyEntityPayload,
 } from './management/managementDirtyProcessNextEntity.js';
+import {
+  managementGetSyncEvents,
+  type SyncEventQuery,
+  type SyncEventsPayload,
+} from './management/managementGetSyncEvents.js';
 import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
 
 export interface CreateSessionPayload {
@@ -61,6 +66,10 @@ export interface Server<
   processNextDirtyEntity(
     filter?: EntityReference,
   ): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic>;
+
+  getSyncEvents(
+    query: SyncEventQuery,
+  ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   createSession(params: {
     provider: string;
@@ -245,6 +254,13 @@ export async function createServer<
         managementContext,
         filter,
       );
+    },
+
+    getSyncEvents(
+      query: SyncEventQuery,
+    ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+      const managementContext = serverImpl.createInternalContext(null);
+      return managementGetSyncEvents(databaseAdapter, managementContext, query);
     },
 
     createSession: async ({

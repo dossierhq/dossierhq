@@ -41,6 +41,7 @@ import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
 import { managementOptimize } from './management/optimize.js';
+import { managementSyncGetEvents } from './management/syncGetEvents.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -132,6 +133,7 @@ export function createPostgresDatabaseAdapterAdapter(
     managementDirtyMarkEntities: (...args) => managementDirtyMarkEntities(databaseAdapter, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(databaseAdapter, ...args),
     managementOptimize: (...args) => managementOptimize(databaseAdapter, ...args),
+    managementSyncGetEvents: (...args) => managementSyncGetEvents(databaseAdapter, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(databaseAdapter, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(databaseAdapter, ...args),
     publishedEntitySampleEntities: (...args) =>

@@ -34,6 +34,8 @@ export type {
   DatabaseManagementGetNextDirtyEntityPayload,
   DatabaseManagementMarkEntitiesDirtyPayload,
   DatabaseManagementMarkEntitiesDirtySelectorArg,
+  DatabaseManagementSyncGetEventsPayload,
+  DatabaseManagementSyncGetEventsQuery,
   DatabaseOptimizationOptions,
   DatabasePagingInfo,
   DatabasePublishedEntityGetOnePayload,

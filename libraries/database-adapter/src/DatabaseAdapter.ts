@@ -16,6 +16,7 @@ import type {
   PublishedEntitySharedQuery,
   PublishedSchema,
   SchemaChangelogEvent,
+  SyncEvent,
   UniqueIndexReference,
 } from '@dossierhq/core';
 import type { ResolvedAuthKey, Session } from './Session.js';
@@ -243,6 +244,16 @@ export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
 export interface DatabaseManagementMarkEntitiesDirtyPayload {
   validationCount: number;
   indexCount: number;
+}
+
+export interface DatabaseManagementSyncGetEventsQuery {
+  after: string | null;
+  limit: number;
+}
+
+export interface DatabaseManagementSyncGetEventsPayload {
+  events: SyncEvent[];
+  hasMore: boolean;
 }
 
 export interface DatabaseEntityIndexesArg {
@@ -554,6 +565,14 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     options: TOptimizationOptions,
   ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  managementSyncGetEvents(
+    context: TransactionContext,
+    query: DatabaseManagementSyncGetEventsQuery,
+  ): PromiseResult<
+    DatabaseManagementSyncGetEventsPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   publishedEntityGetOne(
     context: TransactionContext,
