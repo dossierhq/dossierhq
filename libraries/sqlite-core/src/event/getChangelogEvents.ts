@@ -67,16 +67,19 @@ async function getEntityInfoForEvents(
   context: TransactionContext,
   events: EventsRow[],
 ): PromiseResult<EntityInfoRow[], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  if (events.length === 0) {
+  const entityEventIds = events
+    .filter((it) => it.type !== EventType.updateSchema)
+    .map((it) => it.id);
+
+  if (entityEventIds.length === 0) {
     return ok([]);
   }
 
-  const eventIds = events.map((it) => it.id);
   const { sql, query, addValueList } = createSqliteSqlQuery();
   sql`SELECT eev.events_id, e.uuid, e.auth_key, e.resolved_auth_key, ev.type, ev.name, ev.version FROM event_entity_versions eev`;
   sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
   sql`JOIN entities e ON ev.entities_id = e.id`;
-  sql`WHERE eev.events_id IN ${addValueList(eventIds)} ORDER BY eev.events_id`;
+  sql`WHERE eev.events_id IN ${addValueList(entityEventIds)}`;
 
   return queryMany<EntityInfoRow>(database, context, query);
 }
