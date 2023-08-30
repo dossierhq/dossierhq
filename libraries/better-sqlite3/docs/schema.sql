@@ -105,15 +105,6 @@ CREATE TABLE schema_versions (
     updated_at TEXT NOT NULL,
     specification TEXT NOT NULL
 ) STRICT;
-CREATE TABLE events (
-    id INTEGER PRIMARY KEY,
-    type TEXT NOT NULL,
-    created_by INTEGER NOT NULL,
-    created_at TEXT NOT NULL,
-    schema_versions_id INTEGER,
-    FOREIGN KEY (created_by) REFERENCES subjects(id) ON DELETE CASCADE,
-    FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id) ON DELETE CASCADE
-) STRICT;
 CREATE TABLE event_entity_versions (
     id INTEGER PRIMARY KEY,
     events_id INTEGER NOT NULL,
@@ -171,3 +162,15 @@ CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
     DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
     DELETE FROM entities_published_fts WHERE rowid = OLD.id;
 END;
+CREATE TABLE IF NOT EXISTS "events" (
+    id INTEGER PRIMARY KEY,
+    uuid TEXT NOT NULL,
+    type TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    schema_versions_id INTEGER,
+    CONSTRAINT events_uuid UNIQUE (uuid)
+    FOREIGN KEY (created_by) REFERENCES subjects(id) ON DELETE CASCADE,
+    FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id) ON DELETE CASCADE
+) STRICT;
+CREATE INDEX events_uuid ON events(uuid);

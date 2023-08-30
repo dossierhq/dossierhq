@@ -4,8 +4,13 @@ import { queryOne, queryRun, type Database, type QueryOrQueryAndValues } from '.
 
 export interface SchemaVersionMigrationPlan {
   temporarilyDisableForeignKeys: boolean;
-  queries: QueryOrQueryAndValues[];
+  queries: (QueryOrQueryAndValues | InteractiveMigrationQuery)[];
 }
+
+export type InteractiveMigrationQuery = (
+  database: Database,
+  context: TransactionContext,
+) => PromiseResult<void, typeof ErrorType.Generic>;
 
 export async function getCurrentSchemaVersion(
   database: Database,
@@ -61,8 +66,13 @@ async function migrateVersion(
   const transactionResult = await context.withTransaction<void, typeof ErrorType.Generic>(
     async (context) => {
       for (const query of plan.queries) {
-        const queryResult = await queryRun(database, context, query);
-        if (queryResult.isError()) return queryResult;
+        if (typeof query === 'function') {
+          const queryResult = await query(database, context);
+          if (queryResult.isError()) return queryResult;
+        } else {
+          const queryResult = await queryRun(database, context, query);
+          if (queryResult.isError()) return queryResult;
+        }
       }
 
       if (plan.temporarilyDisableForeignKeys) {

@@ -23,13 +23,14 @@ export async function createEntityEvent(
   entityVersions: { entityVersionsId: number; publishedName?: string }[],
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const now = getTransactionTimestamp(context.transaction).toISOString();
+  const uuid = database.adapter.randomUUID();
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
     database,
     context,
     buildSqliteSqlQuery(({ sql }) => {
-      sql`INSERT INTO events (type, created_by, created_at)`;
-      sql`VALUES (${eventType}, ${createdBy}, ${now}) RETURNING id`;
+      sql`INSERT INTO events (uuid, type, created_by, created_at)`;
+      sql`VALUES (${uuid}, ${eventType}, ${createdBy}, ${now}) RETURNING id`;
     }),
   );
   if (eventResult.isError()) return eventResult;
@@ -58,13 +59,14 @@ export async function createUpdateSchemaEvent(
   schemaVersionId: number,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
   const now = getTransactionTimestamp(context.transaction).toISOString();
+  const uuid = database.adapter.randomUUID();
   const createdBy = getSessionSubjectInternalId(session);
   const result = await queryRun(
     database,
     context,
     buildSqliteSqlQuery(({ sql }) => {
-      sql`INSERT INTO events (type, created_by, created_at, schema_versions_id)`;
-      sql`VALUES (${EventType.updateSchema}, ${createdBy}, ${now}, ${schemaVersionId})`;
+      sql`INSERT INTO events (uuid, type, created_by, created_at, schema_versions_id)`;
+      sql`VALUES (${uuid}, ${EventType.updateSchema}, ${createdBy}, ${now}, ${schemaVersionId})`;
     }),
   );
   if (result.isError()) return result;

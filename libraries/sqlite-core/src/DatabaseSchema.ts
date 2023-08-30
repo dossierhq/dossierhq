@@ -72,6 +72,7 @@ export interface EntityVersionsTable {
 
 export interface EventsTable {
   id: number;
+  uuid: string;
   type: keyof typeof EventType;
   created_at: string;
 }

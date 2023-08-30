@@ -1,9 +1,15 @@
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import type { TransactionContext } from '@dossierhq/database-adapter';
-import type { Database, QueryOrQueryAndValues } from './QueryFunctions.js';
+import { buildSqliteSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
+import {
+  queryMany,
+  queryRun,
+  type Database,
+  type QueryOrQueryAndValues,
+} from './QueryFunctions.js';
 import {
   getCurrentSchemaVersion,
   migrate,
+  type InteractiveMigrationQuery,
   type SchemaVersionMigrationPlan,
 } from './SchemaMigrator.js';
 import type { SqliteDatabaseMigrationOptions } from './SqliteDatabaseAdapter.js';
@@ -12,7 +18,9 @@ interface SchemaVersionDefinition {
   temporarilyDisableForeignKeys?: boolean;
   queries: (
     | QueryOrQueryAndValues
-    | ((options: SqliteDatabaseMigrationOptions) => QueryOrQueryAndValues)
+    | ((
+        options: SqliteDatabaseMigrationOptions,
+      ) => QueryOrQueryAndValues | InteractiveMigrationQuery)
   )[];
 }
 
@@ -421,6 +429,56 @@ const VERSION_23: SchemaVersionDefinition = {
 
 const VERSION_24: SchemaVersionDefinition = { queries: ['DROP TABLE entity_publishing_events'] };
 
+// Add uuid column to events
+const VERSION_25: SchemaVersionDefinition = {
+  temporarilyDisableForeignKeys: true,
+  queries: [
+    'ALTER TABLE events ADD COLUMN uuid TEXT',
+    // Add uuid to existing events
+    () => async (database: Database, context: TransactionContext) => {
+      let processMore = true;
+      while (processMore) {
+        const getResult = await queryMany<{ id: number }>(
+          database,
+          context,
+          'SELECT id FROM events WHERE uuid IS NULL LIMIT 100',
+        );
+        if (getResult.isError()) return getResult;
+        processMore = getResult.value.length > 0;
+
+        for (const { id } of getResult.value) {
+          const updateResult = await queryRun(
+            database,
+            context,
+            buildSqliteSqlQuery(({ sql }) => {
+              sql`UPDATE events SET uuid = ${database.adapter.randomUUID()} WHERE id = ${id}`;
+            }),
+          );
+          if (updateResult.isError()) return updateResult;
+        }
+      }
+      return ok(undefined);
+    },
+    // From here following https://www.sqlite.org/lang_altertable.html#making_other_kinds_of_table_schema_changes
+    `CREATE TABLE new_events (
+    id INTEGER PRIMARY KEY,
+    uuid TEXT NOT NULL,
+    type TEXT NOT NULL,
+    created_by INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    schema_versions_id INTEGER,
+    CONSTRAINT events_uuid UNIQUE (uuid)
+    FOREIGN KEY (created_by) REFERENCES subjects(id) ON DELETE CASCADE,
+    FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id) ON DELETE CASCADE
+) STRICT`,
+    `INSERT INTO new_events (id, uuid, type, created_by, created_at, schema_versions_id)
+    SELECT id, uuid, type, created_by, created_at, schema_versions_id FROM events`,
+    'DROP TABLE events',
+    'ALTER TABLE new_events RENAME TO events',
+    'CREATE INDEX events_uuid ON events(uuid)',
+  ],
+};
+
 const VERSIONS: SchemaVersionDefinition[] = [
   { queries: [] }, // nothing for version 0
   VERSION_1,
@@ -447,6 +505,7 @@ const VERSIONS: SchemaVersionDefinition[] = [
   VERSION_22,
   VERSION_23,
   VERSION_24,
+  VERSION_25,
 ];
 
 export const REQUIRED_SCHEMA_VERSION = VERSIONS.length - 1;
@@ -461,7 +520,7 @@ export async function migrateDatabaseIfNecessary(
     if (!versionDefinition) {
       return null;
     }
-    const queries: QueryOrQueryAndValues[] = [];
+    const queries: (QueryOrQueryAndValues | InteractiveMigrationQuery)[] = [];
     for (const queryDefinition of versionDefinition.queries) {
       if (typeof queryDefinition === 'function') {
         queries.push(queryDefinition(options));
