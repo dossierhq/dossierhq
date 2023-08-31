@@ -18,6 +18,7 @@ import {
   type PublishedEntity,
   type PublishedSchema,
   type Result,
+  type SyncEvent,
   type ValueItem,
 } from '@dossierhq/core';
 import type {
@@ -36,6 +37,7 @@ import {
 } from './Context.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
+import { managementApplySyncEvents } from './management/managementApplySyncEvents.js';
 import {
   managementDirtyProcessNextEntity,
   type ProcessDirtyEntityPayload,
@@ -70,6 +72,11 @@ export interface Server<
   getSyncEvents(
     query: SyncEventQuery,
   ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
+  applySyncEvents(
+    expectedHeadId: string | null,
+    events: SyncEvent[],
+  ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   createSession(params: {
     provider: string;
@@ -261,6 +268,14 @@ export async function createServer<
     ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
       const managementContext = serverImpl.createInternalContext(null);
       return managementGetSyncEvents(databaseAdapter, managementContext, query);
+    },
+
+    applySyncEvents(
+      expectedHeadId: string | null,
+      events: SyncEvent[],
+    ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+      const managementContext = serverImpl.createInternalContext(null);
+      return managementApplySyncEvents(databaseAdapter, managementContext, expectedHeadId, events);
     },
 
     createSession: async ({
