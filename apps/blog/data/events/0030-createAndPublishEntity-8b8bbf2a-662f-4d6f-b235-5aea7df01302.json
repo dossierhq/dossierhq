@@ -1,0 +1,49 @@
+{
+  "id": "b336807e-271b-42e2-9d31-398583494af3",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.516Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "8b8bbf2a-662f-4d6f-b235-5aea7df01302",
+    "info": {
+      "type": "GlossaryTerm",
+      "name": "Pattern",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Pattern",
+      "slug": "pattern",
+      "description": {
+        "root": {
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1,
+          "children": [
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "A named regular expression used to restrict string values.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,975 @@
+{
+  "id": "f317af47-09eb-4c06-8136-924b98b6b5d1",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.527Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "6384629e-72aa-482c-b070-bc26d90e0fc6",
+    "info": {
+      "type": "Article",
+      "name": "Content – entities and value items",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Content – entities and value items",
+      "slug": "content",
+      "description": "Learn about entities (the main content type in Dossier) and value items.",
+      "body": {
+        "root": {
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1,
+          "children": [
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1",
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Entity",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The main content you manage with Dossier is ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "681bc398-d743-44f4-8c43-ff3329575ba3"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "entities",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ". An entity has a unique id, so it can be referenced from other entities, and a unique name, which makes it easier to distinguish from other entities. An entity has one or more fields containing data. Changes to an entity creates a new version so you can always go back in time to look at when changes were made and what changed.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "An example of an entity is this article, it has the following properties:",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "list",
+              "version": 1,
+              "listType": "bullet",
+              "start": 1,
+              "tag": "ul",
+              "children": [
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 1,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "an id (",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "6384629e-72aa-482c-b070-bc26d90e0fc6",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": ")",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 2,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "a name (\"Content – entities and value items\")",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 3,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "a title field with \"Content – entities and value items\"",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 4,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "a slug field with \"content\" (the slug is used to create the URL for this page)",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 5,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "a body field with the text you're reading now",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Each entity has an ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "15e396c5-7498-4ba1-9f3e-0c3ce5759968"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "entity type",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " that defines the structure of the entity and its fields. That means that all entities of the same type will have the same fields. This article has the entity type \"Article\".",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "You can ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "url": "https://playground.dossierhq.dev/dossier-docs/edit-entities?id=6384629e-72aa-482c-b070-bc26d90e0fc6",
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "check out this article in the Playground",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": null,
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": []
+            },
+            {
+              "type": "valueItem",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/fnsysembz9tqtstwfcz6",
+                "width": 2720,
+                "height": 1356,
+                "alt": "This article in the playground"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "direction": null,
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": []
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1",
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Authorization key",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Another property of an entity is the ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "f30378c9-98eb-4573-8941-85c5a32bf6e8"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "authorization key",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ", which defines who can read or write to the entity. We'll get back to authorization keys later, but for now it's enough to know that this article has the key \"none\", which means that anyone can read it.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1",
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Publishing and entity status",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "In addition to creating and changing the content of entities, you can also perform a number of publishing actions on an entity. Each action modifies the ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "9b64e342-fb75-49ee-969a-672ba782d947"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "status",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " of the entity. These are the actions that are available:",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "list",
+              "version": 1,
+              "listType": "bullet",
+              "start": 1,
+              "tag": "ul",
+              "children": [
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 1,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "A newly created entity has the status ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "draft",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 2,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Publish a version of an entity to make it available. The status will be ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "published",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": ", or ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "modified",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " if there are newer versions of the entity that haven't been published",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 3,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Unpublish to withdraw a published entity. The status will be ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "withdrawn",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 4,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Archive to show that the entity is no longer relevant. The status will be ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "archived",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 5,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Unarchive to start using the entity again. The status will be ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "draft",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": ", or ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "withdrawn",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " if it has been previously published",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "As of now you can't delete an entity which means you will never lose content since old versions are stored forever. The closest to deleting is archiving, so you can ensure you don't accidentally publish it in future.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1",
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Value item",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Similarly to entities, you can also use ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "8f71d5d7-041b-4c6f-a088-33e978f27c48"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "value items",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " for structured data. Value items have fields just as entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of another value item, which enables combining value items to create more complex data.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "An example of where a value item is used is in the menu to the left on this page. The menu is stored in an entity with the entity type \"Chapter\". In its \"items\" field there is a value item representing this article. The value item has the following fields:",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "list",
+              "version": 1,
+              "listType": "bullet",
+              "start": 1,
+              "tag": "ul",
+              "children": [
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 1,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "a title field with \"Content\" (which is shorter than the article entity's title \"Content – entities and value items\")",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 2,
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "an article field with a reference to the article entity",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Each value item has a ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "value type",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " that defines the structure of the value item and its fields. The value item representing this article in the menu, has the value type \"ArticleTocItem\".",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "You can ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "url": "https://playground.dossierhq.dev/dossier-docs/edit-entities?id=47288236-2a96-41ef-8061-9846cb2a50d7",
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "check out the \"Main chapter\" entity in the Playground",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "type": "valueItem",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/ujsqyla4mqzxzetykpib",
+                "width": 2720,
+                "height": 1882,
+                "alt": "The main chapter in the Playground"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "direction": null,
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": []
+            }
+          ]
+        }
+      }
+    }
+  }
+}

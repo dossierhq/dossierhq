@@ -1,0 +1,79 @@
+{
+  "id": "56a96a3a-cdc0-4b09-84fd-79e4632777ce",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.513Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "681bc398-d743-44f4-8c43-ff3329575ba3",
+    "info": {
+      "type": "GlossaryTerm",
+      "name": "Entity",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Entity",
+      "slug": "entity",
+      "description": {
+        "root": {
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1,
+          "children": [
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "A piece of content of a certain ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "15e396c5-7498-4ba1-9f3e-0c3ce5759968"
+                  },
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "entity type",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ". An entity has a unique id and one or more fields. There are two views of an entity, an admin entity contains all fields and metadata of the entity. A published entity only exist if the entity is published, and doesn't contain admin only fields (as specified by the entity type).",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

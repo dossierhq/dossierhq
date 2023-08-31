@@ -1,0 +1,49 @@
+{
+  "id": "8485e949-8854-4682-a3c2-555d0bd2eec4",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.514Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e",
+    "info": {
+      "type": "GlossaryTerm",
+      "name": "Value type",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Value type",
+      "slug": "value-type",
+      "description": {
+        "root": {
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1,
+          "children": [
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The description of the shape of value items.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

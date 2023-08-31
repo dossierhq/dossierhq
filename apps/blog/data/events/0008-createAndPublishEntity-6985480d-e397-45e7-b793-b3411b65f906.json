@@ -1,0 +1,408 @@
+{
+  "id": "c347c734-56e3-4a27-a75a-848bed2fda3e",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.397Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "6985480d-e397-45e7-b793-b3411b65f906",
+    "info": {
+      "type": "Article",
+      "name": "Tutorial introduction",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Tutorial introduction",
+      "slug": "tutorial",
+      "description": "Let's get started with a project where we will get familiar with Dossier.",
+      "body": {
+        "root": {
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1,
+          "children": [
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Let's get started with a project where we will get familiar with Dossier. There are many possible ways to use Dossier, but here we will use these technologies:",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "list",
+              "version": 1,
+              "listType": "bullet",
+              "start": 1,
+              "tag": "ul",
+              "children": [
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 1,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://nodejs.org/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "Node",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " as the runtime",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 2,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://www.typescriptlang.org/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "TypeScript",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " for the code",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 3,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://vitejs.dev/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "Vite",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " as the frontend tool, using React",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 4,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://expressjs.com/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "Express",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " for the backend, using REST for the communication",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 5,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://sqlite.org/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "SQLite",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " as the database",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 6,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://auth0.com/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "Auth0",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " as the auth platform",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 7,
+                  "children": [
+                    {
+                      "direction": "ltr",
+                      "format": "",
+                      "indent": 0,
+                      "type": "link",
+                      "version": 1,
+                      "rel": "noopener",
+                      "target": null,
+                      "url": "https://cloudinary.com/",
+                      "children": [
+                        {
+                          "detail": 0,
+                          "format": 0,
+                          "mode": "normal",
+                          "style": "",
+                          "text": "Cloudinary",
+                          "type": "text",
+                          "version": 1
+                        }
+                      ]
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " for images",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The source code for ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "url": "https://github.com/dossierhq/dossierhq/tree/main/examples/tutorial",
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "the tutorial is up on GitHub",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ]
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " in the ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 16,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "examples/tutorial",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " directory.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

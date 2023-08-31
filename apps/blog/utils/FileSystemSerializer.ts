@@ -61,10 +61,7 @@ export function createFilesystemAdminMiddleware(
           }
         }
         if (operation.modifies) {
-          const result = await updateSyncEvents(server);
-          if (result.isError()) {
-            console.warn('Failed to update sync events', result);
-          }
+          await updateSyncEventsOnDisk(server);
         }
       } catch (error) {
         operation.resolve(notOk.GenericUnexpectedException(context, error));
@@ -208,7 +205,7 @@ async function loadEntity(adminClient: AdminClient, logger: Logger, entityPath: 
   return createResult;
 }
 
-export async function updateSyncEvents(server: Server) {
+export async function updateSyncEventsOnDisk(server: Server): Promise<void> {
   const existingSyncEvents = await getCurrentSyncEventFiles();
 
   let after: string | null = null;
@@ -226,18 +223,16 @@ export async function updateSyncEvents(server: Server) {
     const eventsResult = await server.getSyncEvents(
       after ? { after, limit: 10 } : { initial: true, limit: 10 },
     );
-    if (eventsResult.isError()) return eventsResult;
+    const { events, hasMore } = eventsResult.valueOrThrow();
 
-    for (const event of eventsResult.value.events) {
+    for (const event of events) {
       await storeEvent(nextIndex++, event);
     }
-    after = eventsResult.value.events[eventsResult.value.events.length - 1].id;
-    if (!eventsResult.value.hasMore) {
+    if (!hasMore) {
       break;
     }
+    after = events[events.length - 1].id;
   }
-
-  return ok(undefined);
 }
 
 async function getCurrentSyncEventFiles() {

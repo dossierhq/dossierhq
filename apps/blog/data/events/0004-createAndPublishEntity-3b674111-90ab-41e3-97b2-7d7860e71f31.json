@@ -1,0 +1,122 @@
+{
+  "id": "75507c0c-d139-4343-8d10-40caf45c5737",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.366Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "3b674111-90ab-41e3-97b2-7d7860e71f31",
+    "info": {
+      "type": "Article",
+      "name": "Key concept – admin and published views",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Key concept – admin and published views",
+      "slug": "admin-published",
+      "description": "Learn the difference between the admin and published views of content in Dossier.",
+      "body": {
+        "root": {
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1,
+          "children": [
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "There are two views of the content in Dossier. The admin view includes everything about an entity, and the published view only contains published content.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "In the admin view you can see all versions of an entity as well as all fields.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "If an entity is not published it's not visible in the published view. When it's published, you can only see the published version. Moreover, if there is a field that's marked as \"admin only\" in the schema, it will be hidden from the published view. This applies to fields in value items as well.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The web interface contains two different pages for interacting with the entities. In the entities page you use the admin view to search for and create entities. The published entities page uses the published view and is read-only so you can't make any changes.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            },
+            {
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "There are also two views of the schema. The admin schema contains all the information, whereas the published schema only contains the information applicable for published entities.",
+                  "type": "text",
+                  "version": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

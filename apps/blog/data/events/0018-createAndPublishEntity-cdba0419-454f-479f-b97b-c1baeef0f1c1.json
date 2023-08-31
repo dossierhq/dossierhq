@@ -1,0 +1,19 @@
+{
+  "id": "683c95cc-9f95-4f25-9456-54e386bd27ed",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-08-31T08:17:31.476Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1",
+    "info": {
+      "type": "Author",
+      "name": "Jonas Bengtsson",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "name": "Jonas Bengtsson"
+    }
+  }
+}
