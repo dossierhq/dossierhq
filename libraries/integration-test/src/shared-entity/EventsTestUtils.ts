@@ -4,18 +4,22 @@ import {
   type ChangelogEvent,
   type Connection,
   type Edge,
+  type EntityChangelogEvent,
   type ErrorType,
   type OkResult,
   type Result,
+  type SchemaChangelogEvent,
 } from '@dossierhq/core';
-import { assertEquals, assertResultValue, assertSame } from '../Asserts.js';
+import { assertEquals, assertSame } from '../Asserts.js';
+
+type ChangelogEventWithoutId = Omit<SchemaChangelogEvent, 'id'> | Omit<EntityChangelogEvent, 'id'>;
 
 export function assertChangelogEventsConnection(
   actualResult: Result<
     Connection<Edge<ChangelogEvent, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >,
-  expectedNodes: ChangelogEvent[],
+  expectedNodes: ChangelogEventWithoutId[],
 ): asserts actualResult is OkResult<
   Connection<Edge<ChangelogEvent, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -29,11 +33,15 @@ export function assertChangelogEventsConnection(
     for (const [index, expectedNode] of expectedNodes.entries()) {
       const actualNodeResult: Result<ChangelogEvent, ErrorType> =
         actualResult.value.edges[index].node;
-      const createdBy: string = actualNodeResult.valueOrThrow().createdBy;
+      // Skip id since it's random
+      const { id, ...actualEvent } = actualNodeResult.valueOrThrow();
+
+      const createdBy: string = actualEvent.createdBy;
       //TODO currently we can't predict the createdBy value, so we just set it to the expected value, probably need a way to get the current subject from AdminClient
       const expectedEvent =
         expectedNode.createdBy === '' ? { ...expectedNode, createdBy } : expectedNode;
-      assertResultValue(actualNodeResult, expectedEvent);
+
+      assertEquals(actualEvent, expectedEvent);
     }
   }
 }

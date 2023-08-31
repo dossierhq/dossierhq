@@ -249,7 +249,8 @@ CREATE TABLE public.events (
     type public.event_type NOT NULL,
     created_by integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    schema_versions_id integer
+    schema_versions_id integer,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
 
 CREATE SEQUENCE public.events_id_seq
@@ -417,6 +418,9 @@ ALTER TABLE ONLY public.event_entity_versions
 
 ALTER TABLE ONLY public.events
     ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_uuid_key UNIQUE (uuid);
 
 ALTER TABLE ONLY public.principals
     ADD CONSTRAINT principals_pkey PRIMARY KEY (id);

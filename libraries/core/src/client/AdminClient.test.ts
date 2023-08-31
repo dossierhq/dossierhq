@@ -374,12 +374,14 @@ describe('AdminClient forward operation over JSON', () => {
 
   test('getChangelogEvents', async () => {
     const event1: SchemaChangelogEvent = {
+      id: '1-2-3',
       type: EventType.updateSchema,
       createdBy: 'user',
       createdAt: new Date('2023-08-14T08:51:25.56Z'),
       version: 1,
     };
     const event2: EntityChangelogEvent = {
+      id: '2-3-4',
       type: EventType.createEntity,
       createdBy: 'user',
       createdAt: new Date('2023-08-14T08:51:25.56Z'),

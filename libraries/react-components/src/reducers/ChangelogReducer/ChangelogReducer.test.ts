@@ -11,6 +11,7 @@ import {
 function createNode(): ChangelogEvent {
   return {
     type: EventType.updateSchema,
+    id: '1-2-3',
     createdBy: '123',
     createdAt: new Date('2022-03-19T07:51:25.56Z'),
     version: 1,

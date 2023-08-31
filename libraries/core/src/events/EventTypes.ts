@@ -15,7 +15,8 @@ export const EventType = {
 
 type EntityEventTypes = keyof Omit<typeof EventType, 'updateSchema'>;
 
-interface ChangelogEventShared<TEventType extends keyof typeof EventType> {
+interface EventShared<TEventType extends keyof typeof EventType> {
+  id: string;
   type: TEventType;
   createdAt: Date;
   createdBy: string;
@@ -30,12 +31,12 @@ export interface ChangelogEventQuery {
 
 export type ChangelogEvent = SchemaChangelogEvent | EntityChangelogEvent;
 
-export interface SchemaChangelogEvent extends ChangelogEventShared<typeof EventType.updateSchema> {
+export interface SchemaChangelogEvent extends EventShared<typeof EventType.updateSchema> {
   version: number;
 }
 
 export interface EntityChangelogEvent<TEventType extends EntityEventTypes = EntityEventTypes>
-  extends ChangelogEventShared<TEventType> {
+  extends EventShared<TEventType> {
   entities: {
     id: string;
     version: number;
@@ -56,14 +57,7 @@ export type SyncEvent =
   | ArchiveEntitySyncEvent
   | UnarchiveEntitySyncEvent;
 
-interface SyncEventShared<TEventType extends keyof typeof EventType> {
-  id: string;
-  type: TEventType;
-  createdAt: Date;
-  createdBy: string;
-}
-
-export interface UpdateSchemaSyncEvent extends SyncEventShared<typeof EventType.updateSchema> {
+export interface UpdateSchemaSyncEvent extends EventShared<typeof EventType.updateSchema> {
   schemaSpecification: AdminSchemaSpecificationWithMigrations;
 }
 
@@ -71,7 +65,7 @@ export interface CreateEntitySyncEvent<
   TEventType extends typeof EventType.createEntity | typeof EventType.createAndPublishEntity =
     | typeof EventType.createEntity
     | typeof EventType.createAndPublishEntity,
-> extends SyncEventShared<TEventType> {
+> extends EventShared<TEventType> {
   entity: {
     id: string;
     info: {
@@ -89,7 +83,7 @@ export interface UpdateEntitySyncEvent<
   TEventType extends typeof EventType.updateEntity | typeof EventType.updateAndPublishEntity =
     | typeof EventType.updateEntity
     | typeof EventType.updateAndPublishEntity,
-> extends SyncEventShared<TEventType> {
+> extends EventShared<TEventType> {
   entity: {
     id: string;
     info: { name: string; version: number; schemaVersion: number };
@@ -97,8 +91,7 @@ export interface UpdateEntitySyncEvent<
   };
 }
 
-export interface PublishEntitiesSyncEvent
-  extends SyncEventShared<typeof EventType.publishEntities> {
+export interface PublishEntitiesSyncEvent extends EventShared<typeof EventType.publishEntities> {
   entities: {
     id: string;
     version: number;
@@ -107,15 +100,14 @@ export interface PublishEntitiesSyncEvent
 }
 
 export interface UnpublishEntitiesSyncEvent
-  extends SyncEventShared<typeof EventType.unpublishEntities> {
+  extends EventShared<typeof EventType.unpublishEntities> {
   entities: EntityVersionReference[];
 }
 
-export interface ArchiveEntitySyncEvent extends SyncEventShared<typeof EventType.archiveEntity> {
+export interface ArchiveEntitySyncEvent extends EventShared<typeof EventType.archiveEntity> {
   entity: EntityVersionReference;
 }
 
-export interface UnarchiveEntitySyncEvent
-  extends SyncEventShared<typeof EventType.unarchiveEntity> {
+export interface UnarchiveEntitySyncEvent extends EventShared<typeof EventType.unarchiveEntity> {
   entity: EntityVersionReference;
 }

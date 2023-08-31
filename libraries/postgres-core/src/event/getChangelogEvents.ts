@@ -91,12 +91,14 @@ function convertEdge(
   row: EventsRow,
 ): DatabaseEventChangelogEventPayload {
   const cursor = toOpaqueCursor(database, 'int', row.id);
-  const createdBy = row.uuid;
+  const id = row.uuid;
+  const createdBy = row.created_by;
   const createdAt = new Date(row.created_at);
   switch (row.type) {
     case EventType.updateSchema:
       return {
         cursor,
+        id,
         type: EventType.updateSchema,
         createdAt,
         createdBy,
@@ -117,7 +119,7 @@ function convertEdge(
         }
       }
 
-      return { cursor, type: row.type, createdAt, createdBy, entities };
+      return { cursor, id, type: row.type, createdAt, createdBy, entities };
     }
   }
 }

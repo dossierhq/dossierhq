@@ -16,9 +16,9 @@ import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { type QueryOrQueryAndValues } from '../QueryFunctions.js';
 import { resolvePagingCursors } from '../search/Paging.js';
 
-export type EventsRow = Pick<EventsTable, 'id' | 'type' | 'created_at'> &
-  Pick<SubjectsTable, 'uuid'> &
-  Partial<Pick<SchemaVersionsTable, 'version'>>;
+export type EventsRow = Pick<EventsTable, 'id' | 'uuid' | 'type' | 'created_at'> & {
+  created_by: SubjectsTable['uuid'];
+} & Partial<Pick<SchemaVersionsTable, 'version'>>;
 
 export function generateGetChangelogEventsQuery(
   database: PostgresDatabaseAdapter,
@@ -33,7 +33,7 @@ export function generateGetChangelogEventsQuery(
   const queryBuilder = createPostgresSqlQuery();
   const { sql } = queryBuilder;
 
-  sql`SELECT e.id, e.type, e.created_at, s.uuid, sv.version FROM events e`;
+  sql`SELECT e.id, e.uuid, e.type, e.created_at, s.uuid AS created_by, sv.version FROM events e`;
   sql`JOIN subjects s ON e.created_by = s.id`;
   sql`LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id`; // only available on schema events
   if (entity) {
