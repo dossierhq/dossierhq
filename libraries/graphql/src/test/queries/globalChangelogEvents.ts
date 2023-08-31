@@ -22,6 +22,7 @@ type Payload = {
     edges: {
       cursor: string;
       node: {
+        id: string;
         type: keyof typeof EventType;
         createdBy: string;
         createdAt: string;
@@ -51,6 +52,7 @@ const QUERY = gql`
       edges {
         cursor
         node {
+          id
           type
           createdBy
           createdAt

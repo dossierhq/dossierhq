@@ -886,6 +886,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLInterfaceType({
         name: 'ChangelogEvent',
         fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
           type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
@@ -900,6 +901,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         interfaces: this.getInterfaces('ChangelogEvent'),
         isTypeOf: (source, _context, _info) => source.type === EventType.updateSchema,
         fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
           type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
@@ -928,6 +930,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         interfaces: this.getInterfaces('ChangelogEvent'),
         isTypeOf: (source, _context, _info) => source.type !== EventType.updateSchema,
         fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
           type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
           createdBy: { type: new GraphQLNonNull(GraphQLID) },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
