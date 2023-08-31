@@ -54,6 +54,7 @@ import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
 import { managementOptimize } from './management/optimize.js';
 import { managementSyncGetEvents } from './management/syncGetEvents.js';
+import { managementSyncGetHeadEventId } from './management/syncGetHeadEventId.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
@@ -215,6 +216,7 @@ function createOuterAdapter(
     managementDirtyGetNextEntity: (...args) => managementDirtyGetNextEntity(database, ...args),
     managementDirtyUpdateEntity: (...args) => managementDirtyUpdateEntity(database, ...args),
     managementSyncGetEvents: (...args) => managementSyncGetEvents(database, ...args),
+    managementSyncGetHeadEventId: (...args) => managementSyncGetHeadEventId(database, ...args),
     publishedEntityGetOne: (...args) => publishedEntityGetOne(database, ...args),
     publishedEntityGetEntities: (...args) => publishedEntityGetEntities(database, ...args),
     publishedEntitySampleEntities: (...args) => publishedEntitySampleEntities(database, ...args),

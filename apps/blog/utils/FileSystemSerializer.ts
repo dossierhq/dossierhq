@@ -241,7 +241,7 @@ export async function getCurrentSyncEventFiles() {
   const files = filenames
     .filter((it) => it.endsWith('.json'))
     .map((filename) => {
-      const [indexString, _type, id, ..._rest] = filename.split('_');
+      const [indexString, _type, id, ..._rest] = filename.replace('.json', '').split('_');
       const index = Number(indexString);
       if (Number.isNaN(index) || !id) {
         throw new Error(`Failed to parse index and id from filename: ${filename}`);

@@ -37,7 +37,7 @@ import {
 } from './Context.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
-import { managementApplySyncEvents } from './management/managementApplySyncEvents.js';
+import { managementApplySyncEvent } from './management/managementApplySyncEvent.js';
 import {
   managementDirtyProcessNextEntity,
   type ProcessDirtyEntityPayload,
@@ -73,9 +73,9 @@ export interface Server<
     query: SyncEventQuery,
   ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
-  applySyncEvents(
+  applySyncEvent(
     expectedHeadId: string | null,
-    events: SyncEvent[],
+    event: SyncEvent,
   ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   createSession(params: {
@@ -270,12 +270,12 @@ export async function createServer<
       return managementGetSyncEvents(databaseAdapter, managementContext, query);
     },
 
-    applySyncEvents(
+    applySyncEvent(
       expectedHeadId: string | null,
-      events: SyncEvent[],
+      event: SyncEvent,
     ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
       const managementContext = serverImpl.createInternalContext(null);
-      return managementApplySyncEvents(databaseAdapter, managementContext, expectedHeadId, events);
+      return managementApplySyncEvent(databaseAdapter, managementContext, expectedHeadId, event);
     },
 
     createSession: async ({

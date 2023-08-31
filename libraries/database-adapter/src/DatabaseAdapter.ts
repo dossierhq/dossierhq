@@ -574,6 +574,10 @@ export interface DatabaseAdapter<
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
+  managementSyncGetHeadEventId(
+    context: TransactionContext,
+  ): PromiseResult<string | null, typeof ErrorType.Generic>;
+
   publishedEntityGetOne(
     context: TransactionContext,
     reference: EntityReference | UniqueIndexReference,

@@ -124,7 +124,7 @@ export function schemaUpdate(
     }
   }
 
-  // Check with patterns and indexes are used
+  // Check which patterns and indexes are used
   const usedPatterns = new Set(
     schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[],
   );
