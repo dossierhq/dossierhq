@@ -4,6 +4,7 @@ import {
   type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
+  type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
@@ -57,9 +58,12 @@ export async function createUpdateSchemaEvent(
   context: TransactionContext,
   session: Session,
   schemaVersionId: number,
+  syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
-  const now = getTransactionTimestamp(context.transaction).toISOString();
-  const uuid = database.adapter.randomUUID();
+  const now = (
+    syncEvent ? syncEvent.createdAt : getTransactionTimestamp(context.transaction)
+  ).toISOString();
+  const uuid = syncEvent ? syncEvent.id : database.adapter.randomUUID();
   const createdBy = getSessionSubjectInternalId(session);
   const result = await queryRun(
     database,

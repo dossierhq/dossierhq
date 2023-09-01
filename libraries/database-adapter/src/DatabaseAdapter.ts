@@ -18,6 +18,7 @@ import type {
   SchemaChangelogEvent,
   SyncEvent,
   UniqueIndexReference,
+  UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import type { ResolvedAuthKey, Session } from './Session.js';
 import type { Transaction, TransactionContext } from './TransactionContext.js';
@@ -517,6 +518,11 @@ export interface DatabaseAdapter<
     identifier: string,
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
 
+  authCreateSyncSessionForSubject(
+    context: TransactionContext,
+    arg: { subjectId: string },
+  ): PromiseResult<Session, typeof ErrorType.Generic>;
+
   eventGetChangelogEvents(
     context: TransactionContext,
     query: ChangelogEventQuery,
@@ -651,5 +657,6 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     session: Session,
     schemaSpec: AdminSchemaSpecificationWithMigrations,
+    syncEvent: UpdateSchemaSyncEvent | null,
   ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 }

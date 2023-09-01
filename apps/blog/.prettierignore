@@ -1,4 +1,5 @@
 /.next/
+/.rush/
 /data/
 /coverage/
 /public/voyager.worker.js

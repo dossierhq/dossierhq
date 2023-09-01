@@ -1,28 +1,25 @@
-import type {
-  AdminClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  AdminEntity,
-  AdminEntityInfo,
-  AdminSchemaSpecification,
-  EntityReference,
-  ErrorType,
-  Logger,
-  OkFromResult,
-  PromiseResult,
-  RichTextElementNode,
-  SyncEvent,
-} from '@dossierhq/core';
 import {
   AdminClientOperationName,
   AdminEntityStatus,
   AdminSchema,
-  EventType,
-  assertExhaustive,
   isRichTextElementNode,
   notOk,
   ok,
   traverseEntity,
+  type AdminClient,
+  type AdminClientMiddleware,
+  type AdminClientOperation,
+  type AdminEntity,
+  type AdminEntityInfo,
+  type AdminSchemaSpecification,
+  type EntityReference,
+  type ErrorType,
+  type JsonSyncEvent,
+  type Logger,
+  type OkFromResult,
+  type PromiseResult,
+  type RichTextElementNode,
+  type SyncEvent,
 } from '@dossierhq/core';
 import type { Server, SessionContext } from '@dossierhq/server';
 import fs from 'node:fs/promises';
@@ -214,7 +211,7 @@ export async function updateSyncEventsOnDisk(server: Server): Promise<void> {
     const lastEventFile = existingSyncEvents[existingSyncEvents.length - 1];
     const lastEvent = JSON.parse(
       await fs.readFile(lastEventFile.path, { encoding: 'utf-8' }),
-    ) as SyncEvent;
+    ) as JsonSyncEvent;
     after = lastEvent.id;
     nextIndex = lastEventFile.index + 1;
   }

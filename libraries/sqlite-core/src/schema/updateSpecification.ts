@@ -3,6 +3,7 @@ import {
   type AdminSchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
+  type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
@@ -19,10 +20,13 @@ export async function schemaUpdateSpecification(
   context: TransactionContext,
   session: Session,
   schemaSpec: AdminSchemaSpecificationWithMigrations,
+  syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;
 
-  const now = getTransactionTimestamp(context.transaction).toISOString();
+  const now = (
+    syncEvent ? syncEvent.createdAt : getTransactionTimestamp(context.transaction)
+  ).toISOString();
 
   const createVersionResult = await queryOne<Pick<SchemaVersionsTable, 'id'>>(
     database,
@@ -40,6 +44,7 @@ export async function schemaUpdateSpecification(
     context,
     session,
     schemaVersionId,
+    syncEvent,
   );
   if (createEventResult.isError()) return createEventResult;
 

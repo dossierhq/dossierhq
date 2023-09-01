@@ -27,7 +27,11 @@ import type {
   DatabasePerformanceCallbacks,
   Session,
 } from '@dossierhq/database-adapter';
-import { authCreateSession, verifyAuthKeysFormat } from './Auth.js';
+import {
+  authCreateSession,
+  authCreateSyncSessionForSubject,
+  verifyAuthKeysFormat,
+} from './Auth.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import {
   InternalContextImpl,
@@ -270,12 +274,25 @@ export async function createServer<
       return managementGetSyncEvents(databaseAdapter, managementContext, query);
     },
 
-    applySyncEvent(
+    async applySyncEvent(
       expectedHeadId: string | null,
       event: SyncEvent,
     ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-      const managementContext = serverImpl.createInternalContext(null);
-      return managementApplySyncEvent(databaseAdapter, managementContext, expectedHeadId, event);
+      const authContext = serverImpl.createInternalContext(null);
+
+      const sessionResult = await authCreateSyncSessionForSubject(databaseAdapter, authContext, {
+        subjectId: event.createdBy,
+      });
+      if (sessionResult.isError()) return sessionResult;
+      const contextResult = serverImpl.createSessionContext(
+        sessionResult.value,
+        [],
+        serverLogger ?? null,
+        null,
+      );
+      if (contextResult.isError()) return contextResult;
+
+      return managementApplySyncEvent(databaseAdapter, contextResult.value, expectedHeadId, event);
     },
 
     createSession: async ({

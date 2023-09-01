@@ -2,8 +2,10 @@ import type { OkResult, PromiseResult } from '@dossierhq/core';
 import { ErrorType, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAuthCreateSessionPayload,
+  Session,
   TransactionContext,
 } from '@dossierhq/database-adapter';
+import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { SubjectsTable } from '../DatabaseSchema.js';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
@@ -43,6 +45,27 @@ export async function authCreateSession(
     return createResult;
   }
   return notOk.GenericUnexpectedError(createResult);
+}
+
+export async function authCreateSyncSessionForSubject(
+  database: Database,
+  context: TransactionContext,
+  { subjectId }: { subjectId: string },
+): PromiseResult<Session, typeof ErrorType.Generic> {
+  //TODO validate subjectID uuid format
+  const now = getTransactionTimestamp(context.transaction).toISOString();
+  const result = await queryOne<Pick<SubjectsTable, 'id'>>(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql }) => {
+      sql`INSERT INTO subjects (uuid, created_at) VALUES (${subjectId}, ${now})`;
+      // The created_at=created_at is a no-op, but it's needed for sqlite to return a row when there's a conflict (DO NOTHING returns nothing)
+      sql`ON CONFLICT(uuid) DO UPDATE SET created_at = created_at RETURNING id`;
+    }),
+  );
+  if (result.isError()) return result;
+
+  return ok(createSession({ subjectInternalId: result.value.id, subjectId }));
 }
 
 function createPayload<TError extends ErrorType>(

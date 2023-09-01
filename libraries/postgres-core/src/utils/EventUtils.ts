@@ -4,9 +4,11 @@ import {
   type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
+  type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
+  DEFAULT,
   type Session,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
@@ -55,14 +57,17 @@ export async function createUpdateSchemaEvent(
   context: TransactionContext,
   session: Session,
   schemaVersionId: number,
+  syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const result = await queryRun(
     database,
     context,
     buildPostgresSqlQuery(({ sql }) => {
-      sql`INSERT INTO events (type, created_by, schema_versions_id)`;
-      sql`VALUES (${EventType.updateSchema}, ${createdBy}, ${schemaVersionId})`;
+      const uuid = syncEvent?.id ?? DEFAULT;
+      const createdAt = syncEvent?.createdAt ?? DEFAULT;
+      sql`INSERT INTO events (uuid, type, created_by, created_at, schema_versions_id)`;
+      sql`VALUES (${uuid}, ${EventType.updateSchema}, ${createdBy}, ${createdAt}, ${schemaVersionId})`;
     }),
   );
   if (result.isError()) return result;

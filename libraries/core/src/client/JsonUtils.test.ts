@@ -2,8 +2,14 @@ import { describe, expect, test } from 'vitest';
 import { ErrorType, notOk, ok } from '../ErrorResult.js';
 import type { Connection, Edge } from '../Types.js';
 import { expectErrorResult, expectOkResult } from '../test/CoreTestUtils.js';
-import type { JsonConnection, JsonEdge, JsonResult } from './JsonUtils.js';
-import { convertJsonConnection, convertJsonEdge, convertJsonResult } from './JsonUtils.js';
+import type { JsonConnection, JsonEdge, JsonResult, JsonSyncEvent } from './JsonUtils.js';
+import {
+  convertJsonConnection,
+  convertJsonEdge,
+  convertJsonResult,
+  convertJsonSyncEvent,
+} from './JsonUtils.js';
+import { AdminSchemaWithMigrations, EventType, type UpdateSchemaSyncEvent } from '../index.js';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
   edgeProperty: string;
@@ -86,5 +92,21 @@ describe('convertJsonResult()', () => {
     const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<{ foo: number }, ErrorType>;
     const converted = convertJsonResult(asJson);
     expectErrorResult(converted, ErrorType.NotAuthenticated, 'Error message');
+  });
+});
+
+describe('convertJsonSyncEvent()', () => {
+  test('updateSchema', () => {
+    const schema = AdminSchemaWithMigrations.createAndValidate({}).valueOrThrow();
+
+    const event: UpdateSchemaSyncEvent = {
+      id: '4-5-6-7',
+      type: EventType.updateSchema,
+      createdAt: new Date(),
+      createdBy: '1-2-3-4',
+      schemaSpecification: schema.spec,
+    };
+    const jsonEvent = JSON.parse(JSON.stringify(event)) as JsonSyncEvent;
+    expect(convertJsonSyncEvent(jsonEvent)).toEqual(event);
   });
 });

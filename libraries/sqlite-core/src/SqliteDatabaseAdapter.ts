@@ -45,7 +45,7 @@ import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire.js';
 import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired.js';
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
-import { authCreateSession } from './auth/createSession.js';
+import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
 import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
 import { eventGetChangelogEventsEntityInfo } from './event/getChangelogEventsEntityInfo.js';
 import { eventGetChangelogEventsTotalCount } from './event/getChangelogEventsTotalCount.js';
@@ -205,6 +205,8 @@ function createOuterAdapter(
     advisoryLockRelease: (...args) => advisoryLockRelease(database, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
     authCreateSession: (...args) => authCreateSession(database, ...args),
+    authCreateSyncSessionForSubject: (...args) =>
+      authCreateSyncSessionForSubject(database, ...args),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(database, ...args),
     eventGetChangelogEventsEntityInfo: (...args) =>
       eventGetChangelogEventsEntityInfo(database, ...args),

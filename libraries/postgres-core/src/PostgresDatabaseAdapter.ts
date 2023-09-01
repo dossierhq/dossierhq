@@ -33,7 +33,7 @@ import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire.js';
 import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired.js';
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
-import { authCreateSession } from './auth/createSession.js';
+import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
 import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
 import { eventGetChangelogEventsEntityInfo } from './event/getChangelogEventsEntityInfo.js';
 import { eventGetChangelogEventsTotalCount } from './event/getChangelogEventsTotalCount.js';
@@ -123,6 +123,8 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockRelease: (...args) => advisoryLockRelease(databaseAdapter, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
+    authCreateSyncSessionForSubject: (...args) =>
+      authCreateSyncSessionForSubject(databaseAdapter, ...args),
     disconnect: () => databaseAdapter.disconnect(),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(databaseAdapter, ...args),
     eventGetChangelogEventsEntityInfo: (...args) =>

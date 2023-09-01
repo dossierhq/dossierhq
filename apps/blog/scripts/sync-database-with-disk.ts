@@ -1,6 +1,11 @@
 #!/usr/bin/env -S npx ts-node -T --esm
-import type { Logger, SyncEvent } from '@dossierhq/core';
-import { createConsoleLogger, getAllNodesForConnection, ok } from '@dossierhq/core';
+import {
+  convertJsonSyncEvent,
+  createConsoleLogger,
+  getAllNodesForConnection,
+  type JsonSyncEvent,
+  type Logger,
+} from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import { config } from 'dotenv';
@@ -34,7 +39,7 @@ async function initializeServer(logger: Logger, filename: string) {
   return await createBlogServer(databaseAdapterResult.value);
 }
 
-async function getUnappliedEvents(server: Server, adminClient: AppAdminClient) {
+async function getUnappliedEvents(adminClient: AppAdminClient) {
   // Get file events
   const files = await getCurrentSyncEventFiles();
   const diskEventIds = files.map((it) => it.id);
@@ -70,8 +75,8 @@ async function applyDiskEvents(
 ) {
   let previousEventId = headId;
   for (const { path } of unappliedDiskFiles) {
-    const event: SyncEvent = JSON.parse(await readFile(path, { encoding: 'utf8' }));
-    const result = await server.applySyncEvent(previousEventId, event);
+    const event: JsonSyncEvent = JSON.parse(await readFile(path, { encoding: 'utf8' }));
+    const result = await server.applySyncEvent(previousEventId, convertJsonSyncEvent(event));
     result.throwIfError();
     previousEventId = event.id;
   }
@@ -88,10 +93,8 @@ async function main(filename: string) {
     });
     const adminClient = server.createAdminClient<AppAdminClient>(async () => authResult);
 
-    const { headId, unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(
-      server,
-      adminClient,
-    );
+    const { headId, unappliedDiskFiles, unappliedDatabaseEvents } =
+      await getUnappliedEvents(adminClient);
 
     if (unappliedDatabaseEvents.length > 0) {
       console.log(`Write ${unappliedDatabaseEvents.length} missing events to disk`);

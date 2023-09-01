@@ -5,6 +5,7 @@ import type {
   DatabaseAuthCreateSessionPayload,
   TransactionContext,
   ResolvedAuthKey,
+  Session,
 } from '@dossierhq/database-adapter';
 import { ensureRequired } from './Assertions.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
@@ -25,6 +26,23 @@ export async function authCreateSession(
   return await databaseAdapter.authCreateSession(context, provider, identifier);
 }
 
+/** N.B. don't use this function normally, instead use {@link authCreateSession}.
+ *
+ * This function is used to create a session for a sync event where we only have the subject id,
+ * not provider and identifier which we normally use.
+ */
+export async function authCreateSyncSessionForSubject(
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
+  arg: { subjectId: string },
+): PromiseResult<Session, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  if (!arg.subjectId) {
+    return notOk.BadRequest('No subject provided');
+  }
+  return await databaseAdapter.authCreateSyncSessionForSubject(context, arg);
+}
+
+//TODO harmonize with core
 function verifyAuthKeyFormat(authKey: string): Result<void, typeof ErrorType.BadRequest> {
   if (!authKey) {
     return notOk.BadRequest('No authKey provided');

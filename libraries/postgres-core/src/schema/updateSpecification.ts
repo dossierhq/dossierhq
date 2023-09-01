@@ -4,8 +4,14 @@ import {
   type AdminSchemaSpecification,
   type ErrorType,
   type PromiseResult,
+  type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
-import type { Session, TransactionContext } from '@dossierhq/database-adapter';
+import {
+  DEFAULT,
+  buildPostgresSqlQuery,
+  type Session,
+  type TransactionContext,
+} from '@dossierhq/database-adapter';
 import { UniqueConstraints, type SchemaVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';
@@ -16,6 +22,7 @@ export async function schemaUpdateSpecification(
   context: TransactionContext,
   session: Session,
   schemaSpec: AdminSchemaSpecification,
+  syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;
   const createVersionResult = await queryOne<
@@ -24,10 +31,11 @@ export async function schemaUpdateSpecification(
   >(
     adapter,
     context,
-    {
-      text: 'INSERT INTO schema_versions (version, specification) VALUES ($1, $2) RETURNING id',
-      values: [version, schemaSpecWithoutVersion],
-    },
+    buildPostgresSqlQuery(({ sql }) => {
+      const updatedAt = syncEvent?.createdAt ?? DEFAULT;
+      sql`INSERT INTO schema_versions (version, specification, updated_at)`;
+      sql`VALUES (${version}, ${schemaSpecWithoutVersion}, ${updatedAt}) RETURNING id`;
+    }),
     (error) => {
       if (
         adapter.isUniqueViolationOfConstraint(error, UniqueConstraints.schema_versions_version_key)
@@ -45,6 +53,7 @@ export async function schemaUpdateSpecification(
     context,
     session,
     schemaVersionId,
+    syncEvent,
   );
   if (createEventResult.isError()) return createEventResult;
 

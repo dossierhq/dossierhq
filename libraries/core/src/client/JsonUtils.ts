@@ -13,7 +13,17 @@ import type {
   PublishedEntity,
   PublishedEntityInfo,
 } from '../Types.js';
-import type { ChangelogEvent } from '../events/EventTypes.js';
+import type {
+  ArchiveEntitySyncEvent,
+  ChangelogEvent,
+  CreateEntitySyncEvent,
+  PublishEntitiesSyncEvent,
+  SyncEvent,
+  UnarchiveEntitySyncEvent,
+  UnpublishEntitiesSyncEvent,
+  UpdateEntitySyncEvent,
+  UpdateSchemaSyncEvent,
+} from '../events/EventTypes.js';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
   pageInfo: PageInfo;
@@ -63,12 +73,19 @@ export interface JsonPublishingResult<TEffect>
   updatedAt: string;
 }
 
-export type JsonChangelogEvent<TEvent extends ChangelogEvent = ChangelogEvent> = Omit<
-  TEvent,
-  'createdAt'
-> & {
-  createdAt: string;
-};
+type WithCreatedAt<T extends { createdAt: Date }> = Omit<T, 'createdAt'> & { createdAt: string };
+
+export type JsonChangelogEvent<TEvent extends ChangelogEvent = ChangelogEvent> =
+  WithCreatedAt<TEvent>;
+
+export type JsonSyncEvent =
+  | WithCreatedAt<UpdateSchemaSyncEvent>
+  | WithCreatedAt<CreateEntitySyncEvent>
+  | WithCreatedAt<UpdateEntitySyncEvent>
+  | WithCreatedAt<PublishEntitiesSyncEvent>
+  | WithCreatedAt<UnpublishEntitiesSyncEvent>
+  | WithCreatedAt<ArchiveEntitySyncEvent>
+  | WithCreatedAt<UnarchiveEntitySyncEvent>;
 
 export function convertJsonConnection<
   TIn extends JsonEdge<unknown, ErrorType>,
@@ -139,4 +156,8 @@ export function convertJsonChangelogEventEdge<
     edge,
     (node) => ({ ...node, createdAt: new Date(node.createdAt) }) as TEvent,
   );
+}
+
+export function convertJsonSyncEvent(syncEvent: JsonSyncEvent): SyncEvent {
+  return { ...syncEvent, createdAt: new Date(syncEvent.createdAt) };
 }

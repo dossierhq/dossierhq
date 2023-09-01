@@ -1,12 +1,14 @@
 import type { OkResult, PromiseResult } from '@dossierhq/core';
 import { ErrorType, notOk, ok } from '@dossierhq/core';
-import type {
-  DatabaseAuthCreateSessionPayload,
-  TransactionContext,
+import {
+  buildPostgresSqlQuery,
+  type DatabaseAuthCreateSessionPayload,
+  type Session,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { SubjectsTable } from '../DatabaseSchema.js';
 import { UniqueConstraints } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { createSession } from '../utils/SessionUtils.js';
 
@@ -17,9 +19,8 @@ export async function authCreateSession(
   identifier: string,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
   const firstGetResult = await getSubject(adapter, context, provider, identifier);
-  if (firstGetResult.isError()) {
-    return firstGetResult;
-  }
+  if (firstGetResult.isError()) return firstGetResult;
+
   if (firstGetResult.value) {
     return ok(firstGetResult.value);
   }
@@ -46,6 +47,36 @@ export async function authCreateSession(
   return notOk.GenericUnexpectedError(createResult);
 }
 
+export async function authCreateSyncSessionForSubject(
+  adapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  { subjectId }: { subjectId: string },
+): PromiseResult<Session, typeof ErrorType.Generic> {
+  const getResult = await queryNoneOrOne<Pick<SubjectsTable, 'id'>>(
+    adapter,
+    context,
+    buildPostgresSqlQuery(({ sql }) => {
+      sql`SELECT id FROM subjects WHERE uuid = ${subjectId}`;
+    }),
+  );
+  if (getResult.isError()) return getResult;
+  let subjectInternalId = getResult.value?.id ?? null;
+
+  if (subjectInternalId === null) {
+    const insertResult = await queryOne<Pick<SubjectsTable, 'id'>>(
+      adapter,
+      context,
+      buildPostgresSqlQuery(({ sql }) => {
+        sql`INSERT INTO subjects (uuid) VALUES (${subjectId})`;
+      }),
+    );
+    if (insertResult.isError()) return insertResult;
+    subjectInternalId = insertResult.value.id;
+  }
+
+  return ok(createSession({ subjectInternalId, subjectId }));
+}
+
 function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
   { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>,
@@ -65,9 +96,8 @@ async function getSubject(
     WHERE p.provider = $1 AND p.identifier = $2 AND p.subjects_id = s.id`,
     values: [provider, identifier],
   });
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   if (result.value) {
     return createPayload('none', result.value);
   }
@@ -112,9 +142,7 @@ async function createSubject(
         return notOk.GenericUnexpectedException(context, error);
       },
     );
-    if (principalsResult.isError()) {
-      return principalsResult;
-    }
+    if (principalsResult.isError()) return principalsResult;
 
     return createPayload('created', subjectsResult.value);
   });

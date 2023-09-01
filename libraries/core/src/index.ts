@@ -93,9 +93,11 @@ export {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonResult,
+  convertJsonSyncEvent,
   type JsonConnection,
   type JsonEdge,
   type JsonResult,
+  type JsonSyncEvent,
 } from './client/JsonUtils.js';
 export {
   getAllNodesForConnection,
