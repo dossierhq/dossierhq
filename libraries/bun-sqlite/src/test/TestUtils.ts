@@ -53,3 +53,21 @@ export async function initializeIntegrationTestServer(
 
   return ok({ server, adminSchema });
 }
+
+export async function initializeEmptyIntegrationTestServer(
+  filename: string,
+): PromiseResult<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const database = Database.open(filename);
+  return await createServer({
+    databaseAdapter: (
+      await createBunSqliteAdapter({ logger: NoOpLogger }, database, {
+        migrate: true,
+        fts: { version: 'fts5' },
+        journalMode: 'wal',
+      })
+    ).valueOrThrow(),
+    authorizationAdapter: createTestAuthorizationAdapter(),
+  });
+
+  //TODO clear db if filename is not :memory:
+}

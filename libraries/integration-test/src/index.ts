@@ -9,6 +9,7 @@ export {
   createReadOnlyEntityRepository,
   type ReadOnlyEntityRepository,
 } from './shared-entity/ReadOnlyEntityRepository.js';
+export { createSyncTestSuite } from './sync/SyncTestSuite.js';
 
 export interface TestFunctionInitializer<TContext, TCleanup> {
   before: () => Promise<[TContext, TCleanup]>;

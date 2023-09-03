@@ -45,6 +45,25 @@ export async function initializeSqlite3Server(
   return ok({ server, adminSchema });
 }
 
+export async function initializeEmptySqlite3Server(
+  filename: LooseAutocomplete<':memory:'>,
+  options?: Database.Options,
+): PromiseResult<Server, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
+  const databaseAdapterResult = await createSqlite3TestAdapter(filename, options);
+  if (databaseAdapterResult.isError()) return databaseAdapterResult;
+
+  const createServerResult = await createServer({
+    databaseAdapter: databaseAdapterResult.value,
+    authorizationAdapter: createTestAuthorizationAdapter(),
+  });
+  if (createServerResult.isError()) return createServerResult;
+  const server = createServerResult.value;
+
+  //TODO clear db if filename is not :memory:
+
+  return ok(server);
+}
+
 async function createSqlite3TestAdapter(
   filename: LooseAutocomplete<':memory:'>,
   options?: Database.Options,

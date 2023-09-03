@@ -4,8 +4,12 @@ import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import { assertErrorResult, assertOkResult, assertSame } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';
 
+interface AuthTestContext {
+  server: Server;
+}
+
 export function createAuthTestSuite<TCleanup>(
-  initializer: TestFunctionInitializer<{ server: Server }, TCleanup>,
+  initializer: TestFunctionInitializer<AuthTestContext, TCleanup>,
 ): TestSuite {
   return buildSuite(
     initializer,
@@ -34,14 +38,14 @@ async function createSession(
   });
 }
 
-async function createSession_create_new_identifier({ server }: { server: Server }) {
+async function createSession_create_new_identifier({ server }: AuthTestContext) {
   const result = await createSession(server);
   assertOkResult(result);
   const { principalEffect } = result.value;
   assertSame(principalEffect, 'created');
 }
 
-async function createSession_create_existing_identifier({ server }: { server: Server }) {
+async function createSession_create_existing_identifier({ server }: AuthTestContext) {
   const identifier = randomIdentifier();
 
   const firstResult = await createSession(server, { identifier });
@@ -55,17 +59,17 @@ async function createSession_create_existing_identifier({ server }: { server: Se
   assertSame(principalEffect2, 'none');
 }
 
-async function createSession_error_missing_provider({ server }: { server: Server }) {
+async function createSession_error_missing_provider({ server }: AuthTestContext) {
   const result = await createSession(server, { provider: '' });
   assertErrorResult(result, ErrorType.BadRequest, 'Missing provider');
 }
 
-async function createSession_error_create_missing_identifier({ server }: { server: Server }) {
+async function createSession_error_create_missing_identifier({ server }: AuthTestContext) {
   const result = await createSession(server, { identifier: '' });
   assertErrorResult(result, ErrorType.BadRequest, 'Missing identifier');
 }
 
-async function createSession_error_invalid_default_auth_key({ server }: { server: Server }) {
+async function createSession_error_invalid_default_auth_key({ server }: AuthTestContext) {
   const result = await createSession(server, { defaultAuthKeys: ['none', ' starting whitespace'] });
   assertErrorResult(
     result,
