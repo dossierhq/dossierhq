@@ -1,6 +1,5 @@
 import {
   AdminEntityStatus,
-  ErrorType,
   EventType,
   contentValuePathToString,
   notOk,
@@ -10,6 +9,7 @@ import {
   type AdminEntityUpdate,
   type AdminEntityUpdatePayload,
   type AdminSchemaWithMigrations,
+  type ErrorType,
   type PromiseResult,
   type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
@@ -39,14 +39,14 @@ export async function adminUpdateEntity(
   return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, entity, options, null);
 }
 
-export async function adminUpdateEntitySyncEvent(
+export function adminUpdateEntitySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: UpdateEntitySyncEvent,
-): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const result = await doIt(
+) {
+  return doIt(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
@@ -55,13 +55,6 @@ export async function adminUpdateEntitySyncEvent(
     { publish: syncEvent.type === EventType.updateAndPublishEntity },
     syncEvent,
   );
-  if (result.isOk()) {
-    return ok(undefined);
-  }
-  if (result.isErrorType(ErrorType.BadRequest) || result.isErrorType(ErrorType.Generic)) {
-    return result;
-  }
-  return notOk.BadRequest(`${result.error}: ${result.message}`);
 }
 
 async function doIt(

@@ -14,6 +14,7 @@ import {
   type EntityVersionReference,
   type Location,
   type PromiseResult,
+  type PublishEntitiesSyncEvent,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -69,6 +70,50 @@ export async function adminPublishEntities(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  return doIt(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    references,
+    createEvents,
+    null,
+  );
+}
+
+export function adminPublishEntitiesSyncEvent(
+  adminSchema: AdminSchemaWithMigrations,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  syncEvent: PublishEntitiesSyncEvent,
+) {
+  return doIt(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    syncEvent.entities,
+    true,
+    syncEvent,
+  );
+}
+
+async function doIt(
+  adminSchema: AdminSchemaWithMigrations,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  references: EntityVersionReference[],
+  createEvents: boolean,
+  syncEvent: PublishEntitiesSyncEvent | null,
+): PromiseResult<
+  AdminEntityPublishPayload[],
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
   const uniqueIdCheck = checkUUIDsAreUnique(references);
   if (uniqueIdCheck.isError()) return uniqueIdCheck;
 
@@ -104,6 +149,7 @@ export async function adminPublishEntities(
       databaseAdapter,
       context,
       versionsInfo,
+      syncEvent,
     );
     if (publishEntityResult.isError()) return publishEntityResult;
     const { payload, eventReferences } = publishEntityResult.value;
@@ -148,7 +194,7 @@ export async function adminPublishEntities(
           type: EventType.publishEntities,
           references: eventReferences,
         },
-        null, //TODO support syncEvent
+        syncEvent,
       );
       if (publishEventResult.isError()) return publishEventResult;
     }
@@ -325,6 +371,7 @@ async function publishEntitiesAndCollectResult(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
+  syncEvent: PublishEntitiesSyncEvent | null,
 ): PromiseResult<
   {
     payload: AdminEntityPublishPayload[];
@@ -364,6 +411,7 @@ async function publishEntitiesAndCollectResult(
           publishedName,
           changePublishedName,
         },
+        syncEvent,
       );
       if (updateResult.isError()) return updateResult;
 

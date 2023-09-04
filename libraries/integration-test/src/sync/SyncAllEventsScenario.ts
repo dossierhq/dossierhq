@@ -12,7 +12,7 @@ import {
   type UpdateEntitySyncEvent,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
-import { assertEquals, assertOkResult } from '../Asserts.js';
+import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SyncTestContext } from './SyncTestSuite.js';
 
@@ -234,7 +234,7 @@ async function sync_allEventsScenario_5_updateAndPublishedEntity(context: Scenar
   ).valueOrThrow();
   assertEquals(effect, 'updatedAndPublished');
 
-  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
   assertSyncEventsEqual(events, [
     {
       type: EventType.updateAndPublishEntity,
@@ -248,6 +248,27 @@ async function sync_allEventsScenario_5_updateAndPublishedEntity(context: Scenar
         },
         fields: { title: 'Updated published title' },
       },
+    },
+  ]);
+
+  await sync_allEventsScenario_6_publishEntities(nextContext);
+}
+
+async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext) {
+  const { sourceAdminClient, createdBy } = context;
+
+  const id = TITLE_ONLY_ENTITY_ID_1;
+
+  const publishedResult = await sourceAdminClient.publishEntities([{ id, version: 1 }]);
+  const [{ updatedAt }] = publishedResult.valueOrThrow();
+  assertResultValue(publishedResult, [{ id, effect: 'published', status: 'modified', updatedAt }]);
+
+  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.publishEntities,
+      createdBy,
+      entities: [{ id, version: 1, publishedName: 'TitleOnly entity' }],
     },
   ]);
 }

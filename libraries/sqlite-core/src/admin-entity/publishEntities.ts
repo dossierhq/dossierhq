@@ -1,4 +1,9 @@
-import type { EntityVersionReference, ErrorType, PromiseResult } from '@dossierhq/core';
+import type {
+  EntityVersionReference,
+  ErrorType,
+  PromiseResult,
+  PublishEntitiesSyncEvent,
+} from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
@@ -99,13 +104,14 @@ export async function adminEntityPublishUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   values: DatabaseAdminEntityPublishUpdateEntityArg,
+  syncEvent: PublishEntitiesSyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
   const updatedSeqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSeqResult.isError()) return updatedSeqResult;
 
-  const now = getTransactionTimestamp(context.transaction);
+  const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
 
   const updateResult = await queryRun(database, context, {
     text: `UPDATE entities

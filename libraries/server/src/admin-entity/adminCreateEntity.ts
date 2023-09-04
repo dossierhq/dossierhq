@@ -1,6 +1,5 @@
 import {
   AdminEntityStatus,
-  ErrorType,
   EventType,
   contentValuePathToString,
   notOk,
@@ -12,6 +11,7 @@ import {
   type AdminEntityMutationOptions,
   type AdminSchemaWithMigrations,
   type CreateEntitySyncEvent,
+  type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -40,14 +40,14 @@ export async function adminCreateEntity(
   return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, entity, options, null);
 }
 
-export async function adminCreateEntitySyncEvent(
+export function adminCreateEntitySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: CreateEntitySyncEvent,
-): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const result = await doIt(
+) {
+  return doIt(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
@@ -56,13 +56,6 @@ export async function adminCreateEntitySyncEvent(
     { publish: syncEvent.type === EventType.createAndPublishEntity },
     syncEvent,
   );
-  if (result.isOk()) {
-    return ok(undefined);
-  }
-  if (result.isErrorType(ErrorType.BadRequest) || result.isErrorType(ErrorType.Generic)) {
-    return result;
-  }
-  return notOk.BadRequest(`${result.error}: ${result.message}`);
 }
 
 async function doIt(

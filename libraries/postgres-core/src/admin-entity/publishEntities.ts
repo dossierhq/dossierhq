@@ -1,4 +1,9 @@
-import type { EntityVersionReference, ErrorType, PromiseResult } from '@dossierhq/core';
+import type {
+  EntityVersionReference,
+  ErrorType,
+  PromiseResult,
+  PublishEntitiesSyncEvent,
+} from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
@@ -96,6 +101,7 @@ export async function adminEntityPublishUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   values: DatabaseAdminEntityPublishUpdateEntityArg,
+  _syncEvent: PublishEntitiesSyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 

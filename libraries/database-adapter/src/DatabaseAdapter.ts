@@ -13,6 +13,7 @@ import type {
   Location,
   PagingInfo,
   PromiseResult,
+  PublishEntitiesSyncEvent,
   PublishedEntityQuery,
   PublishedEntitySharedQuery,
   PublishedSchema,
@@ -408,6 +409,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     randomNameGenerator: (name: string) => string,
     values: DatabaseAdminEntityPublishUpdateEntityArg,
+    syncEvent: PublishEntitiesSyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntitySampleEntities(

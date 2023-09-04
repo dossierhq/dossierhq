@@ -119,6 +119,7 @@ describe('Admin adminPublishEntities', () => {
               "publishedName": "Version name",
               "status": "published",
             },
+            null,
           ],
           [
             "adminEntityUniqueIndexGetValues",
