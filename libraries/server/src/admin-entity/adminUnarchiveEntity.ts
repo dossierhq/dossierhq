@@ -3,6 +3,7 @@ import type {
   EntityReference,
   ErrorType,
   PromiseResult,
+  UnarchiveEntitySyncEvent,
 } from '@dossierhq/core';
 import { AdminEntityStatus, EventType, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -10,11 +11,36 @@ import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 
-export async function adminUnarchiveEntity(
+export function adminUnarchiveEntity(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
+): PromiseResult<
+  AdminEntityUnarchivePayload,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.Generic
+> {
+  return doIt(databaseAdapter, authorizationAdapter, context, reference, null);
+}
+
+export function adminUnarchiveEntitySyncEvent(
+  databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  syncEvent: UnarchiveEntitySyncEvent,
+) {
+  return doIt(databaseAdapter, authorizationAdapter, context, syncEvent.entity, syncEvent);
+}
+
+async function doIt(
+  databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  reference: EntityReference,
+  syncEvent: UnarchiveEntitySyncEvent | null,
 ): PromiseResult<
   AdminEntityUnarchivePayload,
   | typeof ErrorType.BadRequest
@@ -61,7 +87,7 @@ export async function adminUnarchiveEntity(
         context,
         result.status,
         { entityInternalId },
-        null, //TODO syncEvent
+        syncEvent,
       );
       if (unarchiveResult.isError()) return unarchiveResult;
       result.updatedAt = unarchiveResult.value.updatedAt;
@@ -74,7 +100,7 @@ export async function adminUnarchiveEntity(
           type: EventType.unarchiveEntity,
           references: [{ entityVersionInternalId }],
         },
-        null, //TODO support syncEvent
+        syncEvent,
       );
       if (createEventResult.isError()) return createEventResult;
     }

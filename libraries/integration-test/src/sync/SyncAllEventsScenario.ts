@@ -313,10 +313,36 @@ async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) 
     updatedAt,
   });
 
-  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
   assertSyncEventsEqual(events, [
     {
       type: EventType.archiveEntity,
+      createdBy,
+      entity: { id, version: 2 },
+    },
+  ]);
+
+  await sync_allEventsScenario_9_unarchiveEntity(nextContext);
+}
+
+async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext) {
+  const { sourceAdminClient, createdBy } = context;
+
+  const id = TITLE_ONLY_ENTITY_ID_1;
+
+  const result = await sourceAdminClient.unarchiveEntity({ id });
+  const { updatedAt } = result.valueOrThrow();
+  assertResultValue(result, {
+    id,
+    effect: 'unarchived',
+    status: AdminEntityStatus.draft,
+    updatedAt,
+  });
+
+  const { events } = await applyEventsOnTargetAndResolveNextContext(context);
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.unarchiveEntity,
       createdBy,
       entity: { id, version: 2 },
     },

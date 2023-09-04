@@ -20,6 +20,7 @@ import type {
   PublishedSchema,
   SchemaChangelogEvent,
   SyncEvent,
+  UnarchiveEntitySyncEvent,
   UniqueIndexReference,
   UnpublishEntitiesSyncEvent,
   UpdateEntitySyncEvent,
@@ -474,7 +475,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     status: AdminEntityStatus,
     reference: DatabaseResolvedEntityReference,
-    syncEvent: ArchiveEntitySyncEvent | null,
+    syncEvent: ArchiveEntitySyncEvent | UnarchiveEntitySyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
 
   adminEntityUnpublishGetEntitiesInfo(

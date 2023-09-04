@@ -1,6 +1,7 @@
 import {
   ErrorType,
   EventType,
+  assertExhaustive,
   notOk,
   ok,
   type AdminSchemaWithMigrations,
@@ -10,12 +11,13 @@ import {
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
+import { adminArchiveEntitySyncEvent } from '../admin-entity/adminArchiveEntity.js';
 import { adminCreateEntitySyncEvent } from '../admin-entity/adminCreateEntity.js';
 import { adminPublishEntitiesSyncEvent } from '../admin-entity/adminPublishEntities.js';
+import { adminUnarchiveEntitySyncEvent } from '../admin-entity/adminUnarchiveEntity.js';
 import { adminUnpublishEntitiesSyncEvent } from '../admin-entity/adminUnpublishEntities.js';
 import { adminUpdateEntitySyncEvent } from '../admin-entity/adminUpdateEntity.js';
 import { schemaUpdateSpecificationSyncAction } from '../schema/schemaUpdateSpecification.js';
-import { adminArchiveEntitySyncEvent } from '../admin-entity/adminArchiveEntity.js';
 
 export async function managementApplySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
@@ -99,11 +101,13 @@ function applyEvent(
         context,
         event,
       );
+    case EventType.unarchiveEntity:
+      return adminUnarchiveEntitySyncEvent(databaseAdapter, authorizationAdapter, context, event);
     case EventType.unpublishEntities:
       return adminUnpublishEntitiesSyncEvent(databaseAdapter, authorizationAdapter, context, event);
     case EventType.updateSchema:
       return schemaUpdateSpecificationSyncAction(databaseAdapter, context, event);
     default:
-      return Promise.resolve(notOk.BadRequest(`Unsupported event type: ${type}`));
+      assertExhaustive(type);
   }
 }
