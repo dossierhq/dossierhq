@@ -58,6 +58,7 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
       "type": "TitleOnly",
       "version": 2,
     },
+    null,
   ],
   [
     "adminEntityUpdateGetEntityInfo",

@@ -5,6 +5,7 @@ import {
   type EntityReference,
   type ErrorType,
   type PromiseResult,
+  type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
@@ -84,8 +85,9 @@ export async function adminEntityUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg,
+  syncEvent: UpdateEntitySyncEvent | null,
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
-  const now = getTransactionTimestamp(context.transaction);
+  const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
 
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(database, context, {
     text: 'INSERT INTO entity_versions (entities_id, created_at, created_by, type, name, version, schema_version, encode_version, fields) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9) RETURNING id',
@@ -183,7 +185,7 @@ export async function adminEntityUpdateEntity(
     entity.session,
     entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
     [{ entityVersionsId: versionsId }],
-    null, //TODO support syncEvent
+    syncEvent,
   );
   if (createEventResult.isError()) return createEventResult;
 

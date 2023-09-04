@@ -40,21 +40,21 @@ export async function adminCreateEntity(
   return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, entity, options, null);
 }
 
-export async function adminCreateEntitySyncAction(
+export async function adminCreateEntitySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  event: CreateEntitySyncEvent,
+  syncEvent: CreateEntitySyncEvent,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const result = await doIt(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
-    event.entity,
-    { publish: event.type === EventType.createAndPublishEntity },
-    event,
+    syncEvent.entity,
+    { publish: syncEvent.type === EventType.createAndPublishEntity },
+    syncEvent,
   );
   if (result.isOk()) {
     return ok(undefined);

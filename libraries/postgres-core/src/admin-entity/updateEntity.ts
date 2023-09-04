@@ -5,6 +5,7 @@ import {
   type EntityReference,
   type ErrorType,
   type PromiseResult,
+  type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
@@ -82,6 +83,7 @@ export async function adminEntityUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseEntityUpdateEntityArg,
+  syncEvent: UpdateEntitySyncEvent | null,
 ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic> {
   const createVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,
@@ -177,7 +179,7 @@ export async function adminEntityUpdateEntity(
     entity.session,
     entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
     [{ entityVersionsId: versionsId }],
-    null, //TODO support syncEvent
+    syncEvent,
   );
   if (createEventResult.isError()) return createEventResult;
 

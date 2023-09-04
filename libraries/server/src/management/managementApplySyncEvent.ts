@@ -9,7 +9,8 @@ import {
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import { adminCreateEntitySyncAction } from '../admin-entity/adminCreateEntity.js';
+import { adminCreateEntitySyncEvent } from '../admin-entity/adminCreateEntity.js';
+import { adminUpdateEntitySyncEvent } from '../admin-entity/adminUpdateEntity.js';
 import { schemaUpdateSpecificationSyncAction } from '../schema/schemaUpdateSpecification.js';
 
 export async function managementApplySyncEvent(
@@ -45,7 +46,16 @@ export async function managementApplySyncEvent(
     switch (type) {
       case EventType.createEntity:
       case EventType.createAndPublishEntity:
-        return await adminCreateEntitySyncAction(
+        return await adminCreateEntitySyncEvent(
+          adminSchema,
+          authorizationAdapter,
+          databaseAdapter,
+          context,
+          event,
+        );
+      case EventType.updateEntity:
+      case EventType.updateAndPublishEntity:
+        return adminUpdateEntitySyncEvent(
           adminSchema,
           authorizationAdapter,
           databaseAdapter,

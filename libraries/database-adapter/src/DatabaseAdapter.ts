@@ -19,6 +19,7 @@ import type {
   SchemaChangelogEvent,
   SyncEvent,
   UniqueIndexReference,
+  UpdateEntitySyncEvent,
   UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import type { ResolvedAuthKey, Session } from './Session.js';
@@ -462,6 +463,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     randomNameGenerator: (name: string) => string,
     entity: DatabaseEntityUpdateEntityArg,
+    syncEvent: UpdateEntitySyncEvent | null,
   ): PromiseResult<DatabaseEntityUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntityUpdateStatus(
