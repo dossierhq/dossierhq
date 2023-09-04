@@ -6,7 +6,6 @@ import type {
   AdminSchemaWithMigrations,
   ErrorResult,
   PromiseResult,
-  PublishedSchema,
 } from '@dossierhq/core';
 import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -17,7 +16,6 @@ import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 export async function adminUpsertEntity(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -32,7 +30,6 @@ export async function adminUpsertEntity(
   if (nameResult.isError() && nameResult.isErrorType(ErrorType.NotFound)) {
     return await createNewEntity(
       adminSchema,
-      publishedSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -51,7 +48,6 @@ export async function adminUpsertEntity(
 
   const updateResult = await adminUpdateEntity(
     adminSchema,
-    publishedSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -72,7 +68,6 @@ export async function adminUpsertEntity(
 
 async function createNewEntity(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -84,7 +79,6 @@ async function createNewEntity(
 > {
   const createResult = await adminCreateEntity(
     adminSchema,
-    publishedSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -96,7 +90,6 @@ async function createNewEntity(
   } else if (createResult.isErrorType(ErrorType.Conflict)) {
     return adminUpsertEntity(
       adminSchema,
-      publishedSchema,
       authorizationAdapter,
       databaseAdapter,
       context,

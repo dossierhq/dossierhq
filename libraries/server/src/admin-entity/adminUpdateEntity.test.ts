@@ -8,7 +8,7 @@ import {
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
-import { adminTestSchema, publishedTestSchema } from '../test/TestSchema.js';
+import { adminTestSchema } from '../test/TestSchema.js';
 import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 describe('Admin adminUpdateEntity', () => {
@@ -53,7 +53,6 @@ describe('Admin adminUpdateEntity', () => {
 
     const result = await adminUpdateEntity(
       adminTestSchema,
-      publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -123,7 +122,6 @@ describe('Admin adminUpdateEntity', () => {
 
     const result = await adminUpdateEntity(
       adminTestSchema,
-      publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,

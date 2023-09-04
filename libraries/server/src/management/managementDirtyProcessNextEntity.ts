@@ -246,7 +246,6 @@ async function validateAndCollectInfoFromPublishedEntity(
 ): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
   const path = ['entity'];
 
-  const publishedSchema = adminSchema.toPublishedSchema();
   const entitySpec = adminSchema.getEntityTypeSpecification(type);
   if (!entitySpec) {
     return convertErrorResultForValidation(
@@ -285,7 +284,6 @@ async function validateAndCollectInfoFromPublishedEntity(
 
   const validateFields = validatePublishedFieldValuesAndCollectInfo(
     adminSchema,
-    publishedSchema,
     path,
     type,
     decodedEntityFields,

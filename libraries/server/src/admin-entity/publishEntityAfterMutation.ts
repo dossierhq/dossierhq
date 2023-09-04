@@ -3,7 +3,6 @@ import type {
   AdminSchemaWithMigrations,
   EntityVersionReference,
   PromiseResult,
-  PublishedSchema,
 } from '@dossierhq/core';
 import { ErrorType, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -15,7 +14,6 @@ import { adminPublishEntities } from './adminPublishEntities.js';
 
 export async function publishEntityAfterMutation(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -26,7 +24,6 @@ export async function publishEntityAfterMutation(
 > {
   const publishResult = await adminPublishEntities(
     adminSchema,
-    publishedSchema,
     authorizationAdapter,
     databaseAdapter,
     context,

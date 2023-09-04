@@ -1,9 +1,9 @@
 import {
   AdminEntityStatus,
+  contentValuePathToString,
   notOk,
   ok,
   validateEntityInfoForCreate,
-  contentValuePathToString,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
@@ -11,7 +11,6 @@ import {
   type AdminSchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
-  type PublishedSchema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKey } from '../Auth.js';
@@ -24,7 +23,6 @@ import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js'
 
 export async function adminCreateEntity(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -135,7 +133,6 @@ export async function adminCreateEntity(
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(
         adminSchema,
-        publishedSchema,
         authorizationAdapter,
         databaseAdapter,
         context,

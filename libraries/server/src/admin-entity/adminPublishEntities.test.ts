@@ -1,15 +1,15 @@
 import { AdminEntityStatus, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
   createMockSessionContext,
   getDatabaseAdapterMockedCallsWithoutContextAndUnordered,
 } from '../test/AdditionalTestUtils.js';
-import { adminTestSchema, publishedTestSchema } from '../test/TestSchema.js';
+import { adminTestSchema } from '../test/TestSchema.js';
 import { adminPublishEntities } from './adminPublishEntities.js';
-import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 describe('Admin adminPublishEntities', () => {
   test('Minimal', async () => {
@@ -52,7 +52,6 @@ describe('Admin adminPublishEntities', () => {
 
     const result = await adminPublishEntities(
       adminTestSchema,
-      publishedTestSchema,
       authorizationAdapter,
       databaseAdapter,
       context,

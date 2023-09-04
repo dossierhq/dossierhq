@@ -79,7 +79,6 @@ export function createServerAdminClient({
         resolve(
           await adminCreateEntity(
             serverImpl.getAdminSchema(),
-            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -197,7 +196,6 @@ export function createServerAdminClient({
         resolve(
           await adminPublishEntities(
             serverImpl.getAdminSchema(),
-            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -284,7 +282,6 @@ export function createServerAdminClient({
         resolve(
           await adminUpdateEntity(
             serverImpl.getAdminSchema(),
-            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -322,7 +319,6 @@ export function createServerAdminClient({
         resolve(
           await adminUpsertEntity(
             serverImpl.getAdminSchema(),
-            serverImpl.getPublishedSchema(),
             authorizationAdapter,
             databaseAdapter,
             context,

@@ -14,7 +14,6 @@ import {
   type EntityVersionReference,
   type Location,
   type PromiseResult,
-  type PublishedSchema,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -58,7 +57,6 @@ interface VersionInfoAlreadyPublished {
 
 export async function adminPublishEntities(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -78,7 +76,6 @@ export async function adminPublishEntities(
     // Step 1: Get version info for each entity
     const versionsInfoResult = await collectVersionsInfo(
       adminSchema,
-      publishedSchema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -203,7 +200,6 @@ export async function adminPublishEntities(
 
 async function collectVersionsInfo(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -283,7 +279,6 @@ async function collectVersionsInfo(
 
       const validateFields = validatePublishedFieldValuesAndCollectInfo(
         adminSchema,
-        publishedSchema,
         path,
         type,
         entityFieldsResult.value,

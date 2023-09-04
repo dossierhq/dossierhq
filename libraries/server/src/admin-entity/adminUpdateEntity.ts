@@ -1,16 +1,15 @@
 import {
   AdminEntityStatus,
+  contentValuePathToString,
   notOk,
   ok,
   validateEntityInfoForUpdate,
-  contentValuePathToString,
   type AdminEntityMutationOptions,
   type AdminEntityUpdate,
   type AdminEntityUpdatePayload,
   type AdminSchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
-  type PublishedSchema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
@@ -23,7 +22,6 @@ import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js'
 
 export async function adminUpdateEntity(
   adminSchema: AdminSchemaWithMigrations,
-  publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -78,7 +76,6 @@ export async function adminUpdateEntity(
       if (options?.publish && updatedEntity.info.status !== AdminEntityStatus.published) {
         const publishResult = await publishEntityAfterMutation(
           adminSchema,
-          publishedSchema,
           authorizationAdapter,
           databaseAdapter,
           context,
@@ -167,7 +164,6 @@ export async function adminUpdateEntity(
     if (options?.publish) {
       const publishResult = await publishEntityAfterMutation(
         adminSchema,
-        publishedSchema,
         authorizationAdapter,
         databaseAdapter,
         context,

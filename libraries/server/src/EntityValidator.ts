@@ -7,14 +7,13 @@ import {
   type AdminEntity,
   type AdminEntityCreate,
   type AdminSchema,
+  type ContentValuePath,
   type EntityLike,
   type EntityReference,
   type ErrorType,
-  type ContentValuePath,
   type Location,
   type PromiseResult,
   type PublishValidationIssue,
-  type PublishedSchema,
   type SaveValidationIssue,
 } from '@dossierhq/core';
 import type {
@@ -138,7 +137,6 @@ export async function validateReferencedEntitiesForSaveAndCollectInfo(
 
 export function validatePublishedFieldValuesAndCollectInfo(
   adminSchema: AdminSchema,
-  publishedSchema: PublishedSchema,
   path: ContentValuePath,
   type: string,
   entityFields: Record<string, unknown>,
@@ -150,6 +148,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
   valueTypes: string[];
   uniqueIndexValues: UniqueIndexValueCollection;
 } {
+  const publishedSchema = adminSchema.toPublishedSchema();
   const entity: EntityLike = {
     info: { type },
     fields: entityFields,
