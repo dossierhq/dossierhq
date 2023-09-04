@@ -84,6 +84,7 @@ describe('Admin adminPublishEntities', () => {
               },
               "type": "publishEntities",
             },
+            null,
           ],
           [
             "adminEntityGetReferenceEntitiesInfo",

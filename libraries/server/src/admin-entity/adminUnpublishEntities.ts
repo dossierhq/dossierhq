@@ -231,12 +231,16 @@ async function createUnpublishEvents(
   if (unpublishEntityInfo.length === 0) {
     return ok(undefined);
   }
-  return await databaseAdapter.adminEntityCreateEntityEvent(context, {
-    session: context.session,
-    type: EventType.unpublishEntities,
-    references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
-      entityInternalId,
-      entityVersionInternalId,
-    })),
-  });
+  return await databaseAdapter.adminEntityCreateEntityEvent(
+    context,
+    {
+      session: context.session,
+      type: EventType.unpublishEntities,
+      references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
+        entityInternalId,
+        entityVersionInternalId,
+      })),
+    },
+    null, //TODO support syncEvent
+  );
 }

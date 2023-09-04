@@ -4,6 +4,7 @@ import {
   type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
+  type SyncEvent,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
@@ -22,9 +23,12 @@ export async function createEntityEvent(
   session: Session,
   eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number; publishedName?: string }[],
+  syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
-  const now = getTransactionTimestamp(context.transaction).toISOString();
-  const uuid = database.adapter.randomUUID();
+  const now = (
+    syncEvent ? syncEvent.createdAt : getTransactionTimestamp(context.transaction)
+  ).toISOString();
+  const uuid = syncEvent ? syncEvent.id : database.adapter.randomUUID();
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
     database,

@@ -141,11 +141,15 @@ export async function adminPublishEntities(
 
     // Step 5: Create publish event
     if (createEvents && eventReferences.length > 0) {
-      const publishEventResult = await databaseAdapter.adminEntityCreateEntityEvent(context, {
-        session: context.session,
-        type: EventType.publishEntities,
-        references: eventReferences,
-      });
+      const publishEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
+        context,
+        {
+          session: context.session,
+          type: EventType.publishEntities,
+          references: eventReferences,
+        },
+        null, //TODO support syncEvent
+      );
       if (publishEventResult.isError()) return publishEventResult;
     }
 

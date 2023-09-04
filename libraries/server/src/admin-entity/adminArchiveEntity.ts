@@ -64,11 +64,15 @@ export async function adminArchiveEntity(
     if (archiveResult.isError()) return archiveResult;
 
     // Step 5: Create publishing event
-    const publishingEventResult = await databaseAdapter.adminEntityCreateEntityEvent(context, {
-      session: context.session,
-      type: EventType.archiveEntity,
-      references: [{ entityVersionInternalId }],
-    });
+    const publishingEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
+      context,
+      {
+        session: context.session,
+        type: EventType.archiveEntity,
+        references: [{ entityVersionInternalId }],
+      },
+      null, //TODO support syncEvent
+    );
     if (publishingEventResult.isError()) return publishingEventResult;
 
     // Done

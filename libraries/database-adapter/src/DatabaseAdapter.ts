@@ -5,6 +5,7 @@ import type {
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
   ChangelogEventQuery,
+  CreateEntitySyncEvent,
   EntityChangelogEvent,
   EntityReference,
   EntityVersionReference,
@@ -346,6 +347,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     randomNameGenerator: (name: string) => string,
     entity: DatabaseAdminEntityCreateEntityArg,
+    syncEvent: CreateEntitySyncEvent | null,
   ): PromiseResult<
     DatabaseAdminEntityCreatePayload,
     typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -354,6 +356,7 @@ export interface DatabaseAdapter<
   adminEntityCreateEntityEvent(
     context: TransactionContext,
     event: DatabaseAdminEntityCreateEntityEventArg,
+    syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityGetEntityName(

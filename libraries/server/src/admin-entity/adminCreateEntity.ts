@@ -1,5 +1,7 @@
 import {
   AdminEntityStatus,
+  ErrorType,
+  EventType,
   contentValuePathToString,
   notOk,
   ok,
@@ -9,7 +11,7 @@ import {
   type AdminEntityCreatePayload,
   type AdminEntityMutationOptions,
   type AdminSchemaWithMigrations,
-  type ErrorType,
+  type CreateEntitySyncEvent,
   type PromiseResult,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -28,6 +30,49 @@ export async function adminCreateEntity(
   context: SessionContext,
   entity: AdminEntityCreate,
   options: AdminEntityMutationOptions | undefined,
+): PromiseResult<
+  AdminEntityCreatePayload,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
+  return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, entity, options, null);
+}
+
+export async function adminCreateEntitySyncAction(
+  adminSchema: AdminSchemaWithMigrations,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  event: CreateEntitySyncEvent,
+): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const result = await doIt(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    event.entity,
+    { publish: event.type === EventType.createAndPublishEntity },
+    event,
+  );
+  if (result.isOk()) {
+    return ok(undefined);
+  }
+  if (result.isErrorType(ErrorType.BadRequest) || result.isErrorType(ErrorType.Generic)) {
+    return result;
+  }
+  return notOk.BadRequest(`${result.error}: ${result.message}`);
+}
+
+async function doIt(
+  adminSchema: AdminSchemaWithMigrations,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  entity: AdminEntityCreate,
+  options: AdminEntityMutationOptions | undefined,
+  syncEvent: CreateEntitySyncEvent | null,
 ): PromiseResult<
   AdminEntityCreatePayload,
   | typeof ErrorType.BadRequest
@@ -71,18 +116,23 @@ export async function adminCreateEntity(
   const version = 1;
 
   return await context.withTransaction(async (context) => {
-    const createResult = await databaseAdapter.adminEntityCreate(context, randomNameGenerator, {
-      id: entity.id ?? null,
-      type: encodeEntityPayload.type,
-      name: encodeEntityPayload.name,
-      version,
-      session: context.session,
-      resolvedAuthKey: resolvedAuthKeyResult.value,
-      publish: !!options?.publish,
-      schemaVersion: adminSchema.spec.version,
-      encodeVersion: encodeEntityPayload.encodeVersion,
-      fields: encodeEntityPayload.fields,
-    });
+    const createResult = await databaseAdapter.adminEntityCreate(
+      context,
+      randomNameGenerator,
+      {
+        id: entity.id ?? null,
+        type: encodeEntityPayload.type,
+        name: encodeEntityPayload.name,
+        version,
+        session: context.session,
+        resolvedAuthKey: resolvedAuthKeyResult.value,
+        publish: !!options?.publish,
+        schemaVersion: adminSchema.spec.version,
+        encodeVersion: encodeEntityPayload.encodeVersion,
+        fields: encodeEntityPayload.fields,
+      },
+      syncEvent,
+    );
     if (createResult.isError()) return createResult;
     const { id, name, createdAt, updatedAt } = createResult.value;
 

@@ -183,6 +183,7 @@ export async function adminEntityUpdateEntity(
     entity.session,
     entity.publish ? EventType.updateAndPublishEntity : EventType.updateEntity,
     [{ entityVersionsId: versionsId }],
+    null, //TODO support syncEvent
   );
   if (createEventResult.isError()) return createEventResult;
 

@@ -90,6 +90,7 @@ describe('Admin adminCreateEntity', () => {
               "type": "TitleOnly",
               "version": 1,
             },
+            null,
           ],
           [
             "adminEntityIndexesUpdateLatest",

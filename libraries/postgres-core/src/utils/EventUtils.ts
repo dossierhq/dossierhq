@@ -4,11 +4,12 @@ import {
   type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
+  type SyncEvent,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
-  buildPostgresSqlQuery,
   DEFAULT,
+  buildPostgresSqlQuery,
   type Session,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
@@ -23,6 +24,7 @@ export async function createEntityEvent(
   session: Session,
   eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number; publishedName?: string }[],
+  _syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(

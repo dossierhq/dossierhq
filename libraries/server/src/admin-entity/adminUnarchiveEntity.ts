@@ -66,11 +66,15 @@ export async function adminUnarchiveEntity(
       result.updatedAt = unarchiveResult.value.updatedAt;
 
       // Step 4: Create publishing event
-      const createEventResult = await databaseAdapter.adminEntityCreateEntityEvent(context, {
-        session: context.session,
-        type: EventType.unarchiveEntity,
-        references: [{ entityVersionInternalId }],
-      });
+      const createEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
+        context,
+        {
+          session: context.session,
+          type: EventType.unarchiveEntity,
+          references: [{ entityVersionInternalId }],
+        },
+        null, //TODO support syncEvent
+      );
       if (createEventResult.isError()) return createEventResult;
     }
 

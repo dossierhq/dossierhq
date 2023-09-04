@@ -1,4 +1,11 @@
-import { EventType, notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  EventType,
+  notOk,
+  ok,
+  type CreateEntitySyncEvent,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type DatabaseAdminEntityCreateEntityArg,
@@ -23,19 +30,22 @@ export async function adminCreateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg,
+  syncEvent: CreateEntitySyncEvent | null,
 ): PromiseResult<
   DatabaseAdminEntityCreatePayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
 > {
+  const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
+
   const createEntityRowResult = await createEntityRow(
     database,
     context,
     randomNameGenerator,
     entity,
+    now,
   );
   if (createEntityRowResult.isError()) return createEntityRowResult;
-
-  const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
+  const { uuid, actualName, entityId } = createEntityRowResult.value;
 
   const createEntityVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     database,
@@ -45,7 +55,7 @@ export async function adminCreateEntity(
       sql`INSERT INTO entity_versions (entities_id, type, name, version, created_at, created_by, schema_version, encode_version, fields)`;
       sql`VALUES (${entityId}, ${entity.type}, ${actualName}, ${
         entity.version
-      }, ${createdAt.toISOString()}, ${createdBy}, ${entity.schemaVersion}, ${
+      }, ${now.toISOString()}, ${createdBy}, ${entity.schemaVersion}, ${
         entity.encodeVersion
       }, ${JSON.stringify(entity.fields)}) RETURNING id`;
     }),
@@ -65,10 +75,17 @@ export async function adminCreateEntity(
     entity.session,
     entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
     [{ entityVersionsId: versionsId }],
+    syncEvent,
   );
   if (createEventResult.isError()) return createEventResult;
 
-  return ok({ id: uuid, entityInternalId: entityId, name: actualName, createdAt, updatedAt });
+  return ok({
+    id: uuid,
+    entityInternalId: entityId,
+    name: actualName,
+    createdAt: now,
+    updatedAt: now,
+  });
 }
 
 async function createEntityRow(
@@ -76,9 +93,9 @@ async function createEntityRow(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg,
+  now: Date,
 ) {
   const uuid = entity.id ?? database.adapter.randomUUID();
-  const now = getTransactionTimestamp(context.transaction);
 
   const updatedSecResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedSecResult.isError()) return updatedSecResult;
@@ -118,7 +135,7 @@ async function createEntityRow(
       if (createResult.isError()) return createResult;
       const { id: entityId } = createResult.value;
 
-      return ok({ uuid, actualName: name, entityId, createdAt: now, updatedAt: now });
+      return ok({ uuid, actualName: name, entityId });
     },
   );
 }

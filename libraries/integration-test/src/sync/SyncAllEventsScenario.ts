@@ -111,8 +111,79 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
   await sync_allEventsScenario_2_createEntity({ ...nextContext, createdBy });
 }
 
-async function sync_allEventsScenario_2_createEntity(_context: ScenarioContext) {
-  //TODO implement
+async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
+  const { sourceAdminClient, createdBy } = context;
+
+  const id = 'b1793e40-285c-423f-b4f8-e71fa74677b8';
+
+  const { effect, entity: _ } = (
+    await sourceAdminClient.createEntity({
+      id,
+      info: { type: 'TitleOnly', name: 'TitleOnly entity', authKey: 'none' },
+      fields: { title: 'Hello' },
+    })
+  ).valueOrThrow();
+  assertEquals(effect, 'created');
+
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
+
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.createEntity,
+      createdBy,
+      entity: {
+        id,
+        info: {
+          type: 'TitleOnly',
+          name: 'TitleOnly entity',
+          authKey: 'none',
+          resolvedAuthKey: 'none',
+          schemaVersion: 1,
+        },
+        fields: { title: 'Hello' },
+      },
+    },
+  ]);
+
+  await sync_allEventsScenario_3_createAndPublishEntity(nextContext);
+}
+
+async function sync_allEventsScenario_3_createAndPublishEntity(context: ScenarioContext) {
+  const { sourceAdminClient, createdBy } = context;
+
+  const id = 'd56b4262-0d00-4507-b909-7a1eb19bb82f';
+
+  const { effect, entity: _ } = (
+    await sourceAdminClient.createEntity(
+      {
+        id,
+        info: { type: 'TitleOnly', name: 'TitleOnly published entity', authKey: 'none' },
+        fields: { title: 'Published' },
+      },
+      { publish: true },
+    )
+  ).valueOrThrow();
+  assertEquals(effect, 'createdAndPublished');
+
+  const { events, nextContext: _unused } = await applyEventsOnTargetAndResolveNextContext(context);
+
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.createAndPublishEntity,
+      createdBy,
+      entity: {
+        id,
+        info: {
+          type: 'TitleOnly',
+          name: 'TitleOnly published entity',
+          authKey: 'none',
+          resolvedAuthKey: 'none',
+          schemaVersion: 1,
+        },
+        fields: { title: 'Published' },
+      },
+    },
+  ]);
 }
 
 async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext) {

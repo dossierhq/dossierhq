@@ -1,5 +1,6 @@
 import {
   AdminSchemaWithMigrations,
+  EventType,
   NoOpLogger,
   assertIsDefined,
   notOk,
@@ -292,7 +293,21 @@ export async function createServer<
       );
       if (contextResult.isError()) return contextResult;
 
-      return managementApplySyncEvent(databaseAdapter, contextResult.value, expectedHeadId, event);
+      const applyResult = await managementApplySyncEvent(
+        serverImpl.getAdminSchema(),
+        authorizationAdapter,
+        databaseAdapter,
+        contextResult.value,
+        expectedHeadId,
+        event,
+      );
+      if (applyResult.isError()) return applyResult;
+
+      if (event.type === EventType.updateSchema) {
+        const updatedSchema = applyResult.value as AdminSchemaWithMigrations;
+        serverImpl.setAdminSchema(updatedSchema.spec);
+      }
+      return ok(undefined);
     },
 
     createSession: async ({

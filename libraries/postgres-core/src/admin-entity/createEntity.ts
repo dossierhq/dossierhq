@@ -1,4 +1,11 @@
-import { EventType, notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  EventType,
+  notOk,
+  ok,
+  type CreateEntitySyncEvent,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import {
   DEFAULT,
   buildPostgresSqlQuery,
@@ -23,6 +30,7 @@ export async function adminCreateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg,
+  syncEvent: CreateEntitySyncEvent | null,
 ): PromiseResult<
   DatabaseAdminEntityCreatePayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -61,6 +69,7 @@ export async function adminCreateEntity(
     entity.session,
     entity.publish ? EventType.createAndPublishEntity : EventType.createEntity,
     [{ entityVersionsId: versionsId }],
+    syncEvent,
   );
   if (createEventResult.isError()) return createEventResult;
 

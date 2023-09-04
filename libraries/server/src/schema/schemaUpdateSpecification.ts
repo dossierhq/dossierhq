@@ -74,7 +74,10 @@ export async function schemaUpdateSpecificationSyncAction(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   event: UpdateSchemaSyncEvent,
-): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<
+  AdminSchemaWithMigrations,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const previousSpecificationResult = await schemaGetSpecification(databaseAdapter, context, false);
   if (previousSpecificationResult.isError()) return previousSpecificationResult;
   const previousSchemaSpec = previousSpecificationResult.value;
@@ -101,15 +104,18 @@ export async function schemaUpdateSpecificationSyncAction(
   }
 
   // Calculate impact of schema change and update schema spec
-  return await calculateAndUpdateSchemaSpec(
+  const updateResult = await calculateAndUpdateSchemaSpec(
     databaseAdapter,
     context,
     oldSchema,
     newSchema,
     event.schemaSpecification.version,
-    null, //TODO add transient migrations to sync events
+    null, // no transient migrations in sync events
     event,
   );
+  if (updateResult.isError()) return updateResult;
+
+  return ok(newSchema);
 }
 
 async function calculateAndUpdateSchemaSpec(
