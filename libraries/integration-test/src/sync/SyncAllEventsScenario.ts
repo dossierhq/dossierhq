@@ -263,12 +263,35 @@ async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext
   const [{ updatedAt }] = publishedResult.valueOrThrow();
   assertResultValue(publishedResult, [{ id, effect: 'published', status: 'modified', updatedAt }]);
 
-  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
   assertSyncEventsEqual(events, [
     {
       type: EventType.publishEntities,
       createdBy,
       entities: [{ id, version: 1, publishedName: 'TitleOnly entity' }],
+    },
+  ]);
+
+  await sync_allEventsScenario_7_unpublishEntities(nextContext);
+}
+
+async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioContext) {
+  const { sourceAdminClient, createdBy } = context;
+
+  const id = TITLE_ONLY_ENTITY_ID_1;
+
+  const unpublishResult = await sourceAdminClient.unpublishEntities([{ id }]);
+  const [{ updatedAt }] = unpublishResult.valueOrThrow();
+  assertResultValue(unpublishResult, [
+    { id, effect: 'unpublished', status: 'withdrawn', updatedAt },
+  ]);
+
+  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.unpublishEntities,
+      createdBy,
+      entities: [{ id, version: 2 }], //TODO is this correct? version 1 was published
     },
   ]);
 }

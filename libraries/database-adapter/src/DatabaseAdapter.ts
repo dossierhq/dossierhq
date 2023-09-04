@@ -20,6 +20,7 @@ import type {
   SchemaChangelogEvent,
   SyncEvent,
   UniqueIndexReference,
+  UnpublishEntitiesSyncEvent,
   UpdateEntitySyncEvent,
   UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
@@ -486,6 +487,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     status: AdminEntityStatus,
     references: DatabaseResolvedEntityReference[],
+    syncEvent: UnpublishEntitiesSyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic>;
 
   adminEntityUnpublishGetPublishedReferencedEntities(

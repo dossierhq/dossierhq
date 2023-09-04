@@ -12,6 +12,7 @@ import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { adminCreateEntitySyncEvent } from '../admin-entity/adminCreateEntity.js';
 import { adminPublishEntitiesSyncEvent } from '../admin-entity/adminPublishEntities.js';
+import { adminUnpublishEntitiesSyncEvent } from '../admin-entity/adminUnpublishEntities.js';
 import { adminUpdateEntitySyncEvent } from '../admin-entity/adminUpdateEntity.js';
 import { schemaUpdateSpecificationSyncAction } from '../schema/schemaUpdateSpecification.js';
 
@@ -92,6 +93,13 @@ async function applyEvent(
         adminSchema,
         authorizationAdapter,
         databaseAdapter,
+        context,
+        event,
+      );
+    case EventType.unpublishEntities:
+      return await adminUnpublishEntitiesSyncEvent(
+        databaseAdapter,
+        authorizationAdapter,
         context,
         event,
       );

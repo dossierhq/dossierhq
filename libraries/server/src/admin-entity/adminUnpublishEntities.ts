@@ -3,6 +3,7 @@ import type {
   EntityReference,
   ErrorType,
   PromiseResult,
+  UnpublishEntitiesSyncEvent,
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
@@ -37,11 +38,36 @@ interface EntityInfoAlreadyUnpublished {
   updatedAt: Date;
 }
 
-export async function adminUnpublishEntities(
+export function adminUnpublishEntities(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   references: EntityReference[],
+): PromiseResult<
+  AdminEntityUnpublishPayload[],
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
+  return doIt(databaseAdapter, authorizationAdapter, context, references, null);
+}
+
+export function adminUnpublishEntitiesSyncEvent(
+  databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  syncEvent: UnpublishEntitiesSyncEvent,
+) {
+  return doIt(databaseAdapter, authorizationAdapter, context, syncEvent.entities, syncEvent);
+}
+
+async function doIt(
+  databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  references: EntityReference[],
+  syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<
   AdminEntityUnpublishPayload[],
   | typeof ErrorType.BadRequest
@@ -81,6 +107,7 @@ export async function adminUnpublishEntities(
       context,
       entitiesInfo,
       unpublishEntitiesInfo,
+      syncEvent,
     );
     if (unpublishResult.isError()) return unpublishResult;
 
@@ -97,6 +124,7 @@ export async function adminUnpublishEntities(
       databaseAdapter,
       context,
       unpublishEntitiesInfo,
+      syncEvent,
     );
     if (unpublishEventsResult.isError()) return unpublishEventsResult;
 
@@ -160,11 +188,13 @@ async function unpublishEntitiesAndCollectResult(
   context: SessionContext,
   entitiesInfo: (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
   unpublishEntitiesInfo: EntityInfoToBeUnpublished[],
+  syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<AdminEntityUnpublishPayload[], typeof ErrorType.Generic> {
   const unpublishResult = await databaseAdapter.adminEntityUnpublishEntities(
     context,
     AdminEntityStatus.withdrawn,
     unpublishEntitiesInfo.map((it) => ({ entityInternalId: it.entityInternalId })),
+    syncEvent,
   );
   if (unpublishResult.isError()) return unpublishResult;
   const unpublishRows = unpublishResult.value;
@@ -227,6 +257,7 @@ async function createUnpublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   unpublishEntityInfo: EntityInfoToBeUnpublished[],
+  syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   if (unpublishEntityInfo.length === 0) {
     return ok(undefined);
@@ -241,6 +272,6 @@ async function createUnpublishEvents(
         entityVersionInternalId,
       })),
     },
-    null, //TODO support syncEvent
+    syncEvent,
   );
 }

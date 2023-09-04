@@ -1,4 +1,10 @@
-import type { AdminEntityStatus, EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
+import type {
+  AdminEntityStatus,
+  EntityReference,
+  ErrorType,
+  PromiseResult,
+  UnpublishEntitiesSyncEvent,
+} from '@dossierhq/core';
 import { assertIsDefined, notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUnpublishGetEntityInfoPayload,
@@ -76,8 +82,9 @@ export async function adminEntityUnpublishEntities(
   context: TransactionContext,
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[],
+  syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
-  const now = getTransactionTimestamp(context.transaction);
+  const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
   const nowString = now.toISOString();
   const ids = references.map(({ entityInternalId }) => entityInternalId as number);
 
