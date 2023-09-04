@@ -15,6 +15,7 @@ import { adminPublishEntitiesSyncEvent } from '../admin-entity/adminPublishEntit
 import { adminUnpublishEntitiesSyncEvent } from '../admin-entity/adminUnpublishEntities.js';
 import { adminUpdateEntitySyncEvent } from '../admin-entity/adminUpdateEntity.js';
 import { schemaUpdateSpecificationSyncAction } from '../schema/schemaUpdateSpecification.js';
+import { adminArchiveEntitySyncEvent } from '../admin-entity/adminArchiveEntity.js';
 
 export async function managementApplySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
@@ -61,7 +62,7 @@ export async function managementApplySyncEvent(
   });
 }
 
-async function applyEvent(
+function applyEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -70,9 +71,11 @@ async function applyEvent(
 ): PromiseResult<unknown, ErrorType> {
   const { type } = event;
   switch (type) {
+    case EventType.archiveEntity:
+      return adminArchiveEntitySyncEvent(databaseAdapter, authorizationAdapter, context, event);
     case EventType.createEntity:
     case EventType.createAndPublishEntity:
-      return await adminCreateEntitySyncEvent(
+      return adminCreateEntitySyncEvent(
         adminSchema,
         authorizationAdapter,
         databaseAdapter,
@@ -80,7 +83,7 @@ async function applyEvent(
         event,
       );
     case EventType.publishEntities:
-      return await adminPublishEntitiesSyncEvent(
+      return adminPublishEntitiesSyncEvent(
         adminSchema,
         authorizationAdapter,
         databaseAdapter,
@@ -97,15 +100,10 @@ async function applyEvent(
         event,
       );
     case EventType.unpublishEntities:
-      return await adminUnpublishEntitiesSyncEvent(
-        databaseAdapter,
-        authorizationAdapter,
-        context,
-        event,
-      );
+      return adminUnpublishEntitiesSyncEvent(databaseAdapter, authorizationAdapter, context, event);
     case EventType.updateSchema:
-      return await schemaUpdateSpecificationSyncAction(databaseAdapter, context, event);
+      return schemaUpdateSpecificationSyncAction(databaseAdapter, context, event);
     default:
-      return notOk.BadRequest(`Unsupported event type: ${type}`);
+      return Promise.resolve(notOk.BadRequest(`Unsupported event type: ${type}`));
   }
 }

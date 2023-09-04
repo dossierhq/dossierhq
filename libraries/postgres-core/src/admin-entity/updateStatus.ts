@@ -1,12 +1,12 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import type { ArchiveEntitySyncEvent, ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminEntityStatus, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';
 
 export async function adminEntityUpdateStatus(
@@ -14,6 +14,7 @@ export async function adminEntityUpdateStatus(
   context: TransactionContext,
   status: AdminEntityStatus,
   reference: DatabaseResolvedEntityReference,
+  _syncEvent: ArchiveEntitySyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
   const result = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
     text: `UPDATE entities SET
@@ -25,10 +26,7 @@ export async function adminEntityUpdateStatus(
       RETURNING updated_at`,
     values: [status === AdminEntityStatus.archived, status, reference.entityInternalId],
   });
-
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
 
   return ok({ updatedAt: result.value.updated_at });
 }

@@ -1,4 +1,5 @@
 import {
+  AdminEntityStatus,
   EventType,
   FieldType,
   type AdminClient,
@@ -286,12 +287,38 @@ async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioConte
     { id, effect: 'unpublished', status: 'withdrawn', updatedAt },
   ]);
 
-  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
   assertSyncEventsEqual(events, [
     {
       type: EventType.unpublishEntities,
       createdBy,
       entities: [{ id, version: 2 }], //TODO is this correct? version 1 was published
+    },
+  ]);
+
+  await sync_allEventsScenario_8_archiveEntity(nextContext);
+}
+
+async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) {
+  const { sourceAdminClient, createdBy } = context;
+
+  const id = TITLE_ONLY_ENTITY_ID_1;
+
+  const result = await sourceAdminClient.archiveEntity({ id });
+  const { updatedAt } = result.valueOrThrow();
+  assertResultValue(result, {
+    id,
+    effect: 'archived',
+    status: AdminEntityStatus.archived,
+    updatedAt,
+  });
+
+  const { events, nextContext: _1 } = await applyEventsOnTargetAndResolveNextContext(context);
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.archiveEntity,
+      createdBy,
+      entity: { id, version: 2 },
     },
   ]);
 }

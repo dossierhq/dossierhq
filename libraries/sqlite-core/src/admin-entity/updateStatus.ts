@@ -1,4 +1,9 @@
-import type { AdminEntityStatus, ErrorType, PromiseResult } from '@dossierhq/core';
+import type {
+  AdminEntityStatus,
+  ArchiveEntitySyncEvent,
+  ErrorType,
+  PromiseResult,
+} from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUpdateStatusPayload,
@@ -15,8 +20,9 @@ export async function adminEntityUpdateStatus(
   context: TransactionContext,
   status: AdminEntityStatus,
   reference: DatabaseResolvedEntityReference,
+  syncEvent: ArchiveEntitySyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
-  const now = getTransactionTimestamp(context.transaction);
+  const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
   const updatedReqResult = await getEntitiesUpdatedSeq(database, context);
   if (updatedReqResult.isError()) return updatedReqResult;
 

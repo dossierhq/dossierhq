@@ -1,5 +1,6 @@
 import type {
   AdminEntityArchivePayload,
+  ArchiveEntitySyncEvent,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -10,11 +11,36 @@ import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 
-export async function adminArchiveEntity(
+export function adminArchiveEntity(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
+): PromiseResult<
+  AdminEntityArchivePayload,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
+  return doIt(databaseAdapter, authorizationAdapter, context, reference, null);
+}
+
+export function adminArchiveEntitySyncEvent(
+  databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  syncEvent: ArchiveEntitySyncEvent,
+) {
+  return doIt(databaseAdapter, authorizationAdapter, context, syncEvent.entity, syncEvent);
+}
+
+async function doIt(
+  databaseAdapter: DatabaseAdapter,
+  authorizationAdapter: AuthorizationAdapter,
+  context: SessionContext,
+  reference: EntityReference,
+  syncEvent: ArchiveEntitySyncEvent | null,
 ): PromiseResult<
   AdminEntityArchivePayload,
   | typeof ErrorType.BadRequest
@@ -60,6 +86,7 @@ export async function adminArchiveEntity(
       context,
       AdminEntityStatus.archived,
       { entityInternalId },
+      syncEvent,
     );
     if (archiveResult.isError()) return archiveResult;
 
@@ -71,7 +98,7 @@ export async function adminArchiveEntity(
         type: EventType.archiveEntity,
         references: [{ entityVersionInternalId }],
       },
-      null, //TODO support syncEvent
+      syncEvent,
     );
     if (publishingEventResult.isError()) return publishingEventResult;
 

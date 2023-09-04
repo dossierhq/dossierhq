@@ -61,6 +61,7 @@ export async function adminUnarchiveEntity(
         context,
         result.status,
         { entityInternalId },
+        null, //TODO syncEvent
       );
       if (unarchiveResult.isError()) return unarchiveResult;
       result.updatedAt = unarchiveResult.value.updatedAt;

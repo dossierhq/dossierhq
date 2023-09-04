@@ -4,6 +4,7 @@ import type {
   AdminEntityStatus,
   AdminSchema,
   AdminSchemaSpecificationWithMigrations,
+  ArchiveEntitySyncEvent,
   ChangelogEventQuery,
   CreateEntitySyncEvent,
   EntityChangelogEvent,
@@ -473,6 +474,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     status: AdminEntityStatus,
     reference: DatabaseResolvedEntityReference,
+    syncEvent: ArchiveEntitySyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
 
   adminEntityUnpublishGetEntitiesInfo(
