@@ -1,35 +1,24 @@
 #!/bin/bash
 
 # Update environment variables
-if ! grep -q "BUN_INSTALL" ~/.zshenv; then
-    echo 'export BUN_INSTALL="$HOME/.bun"' >> ~/.zshenv
-    echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> ~/.zshenv
-fi
-if ! grep -q "BUN_INSTALL" ~/.bashrc; then
-    echo 'export BUN_INSTALL="$HOME/.bun"' >> ~/.bashrc
-    echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> ~/.bashrc
-fi
 export HOST_ROOT_DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
-if ! grep -q "HOST_ROOT_DATABASE_URL" ~/.zshenv; then
+if [ -f ~/.zshenv ] && ! grep -q "HOST_ROOT_DATABASE_URL" ~/.zshenv; then
     echo "export HOST_ROOT_DATABASE_URL=$HOST_ROOT_DATABASE_URL" >> ~/.zshenv
 fi
-if ! grep -q "HOST_ROOT_DATABASE_URL" ~/.bashrc; then
+if [ -f ~/.bashrc ] && ! grep -q "HOST_ROOT_DATABASE_URL" ~/.bashrc; then
     echo "export HOST_ROOT_DATABASE_URL=$HOST_ROOT_DATABASE_URL" >> ~/.bashrc
 fi
 
 # tools
+asdf plugin add nodejs
+asdf plugin add bun
+asdf plugin add deno
+asdf install
+
 pip install -q litecli pgcli
 
-# bun
-if [ ! -f "$HOME/.bun/bin/bun" ]; then
-    curl https://bun.sh/install | bash
-fi
-
-
 # nvm/node
-source /usr/local/share/nvm/nvm.sh
-nvm install
-nvm use
+
 npm install -g @microsoft/rush
 
 # git user is not yet set, so need to bypass policy
