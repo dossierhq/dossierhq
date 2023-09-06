@@ -40,6 +40,7 @@ export async function adminCreateEntity(
     context,
     randomNameGenerator,
     entity,
+    syncEvent,
   );
   if (createEntityRowResult.isError()) return createEntityRowResult;
 
@@ -50,8 +51,8 @@ export async function adminCreateEntity(
     context,
     buildPostgresSqlQuery(({ sql }) => {
       const createdBy = getSessionSubjectInternalId(entity.session);
-      sql`INSERT INTO entity_versions (entities_id, type, name, version, schema_version, encode_version, created_by, data)`;
-      sql`VALUES (${entityId}, ${entity.type}, ${actualName}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${createdBy}, ${entity.fields}) RETURNING id`;
+      sql`INSERT INTO entity_versions (entities_id, type, name, version, created_at, schema_version, encode_version, created_by, data)`;
+      sql`VALUES (${entityId}, ${entity.type}, ${actualName}, ${entity.version}, ${createdAt}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${createdBy}, ${entity.fields}) RETURNING id`;
     }),
   );
   if (createEntityVersionResult.isError()) return createEntityVersionResult;
@@ -81,6 +82,7 @@ async function createEntityRow(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   entity: DatabaseAdminEntityCreateEntityArg,
+  syncEvent: CreateEntitySyncEvent | null,
 ) {
   return await withUniqueNameAttempt(
     context,
@@ -88,10 +90,11 @@ async function createEntityRow(
     randomNameGenerator,
     async (context, name, nameConflictErrorMessage) => {
       const { sql, query } = createPostgresSqlQuery();
+      const now = syncEvent?.createdAt ?? DEFAULT;
       const { authKey, resolvedAuthKey } = entity.resolvedAuthKey;
       const publishedName = entity.publish ? name : null;
-      sql`INSERT INTO entities (uuid, name, published_name, type, auth_key, resolved_auth_key, latest_fts, status)`;
-      sql`VALUES (${entity.id ?? DEFAULT}, ${name}, ${publishedName}, ${
+      sql`INSERT INTO entities (uuid, name, created_at, updated_at, published_name, type, auth_key, resolved_auth_key, latest_fts, status)`;
+      sql`VALUES (${entity.id ?? DEFAULT}, ${name}, ${now}, ${now}, ${publishedName}, ${
         entity.type
       }, ${authKey}, ${resolvedAuthKey}, to_tsvector(''), 'draft')`;
       sql`RETURNING id, uuid, created_at, updated_at`;
@@ -117,9 +120,7 @@ async function createEntityRow(
         }
         return notOk.GenericUnexpectedException(context, error);
       });
-      if (createResult.isError()) {
-        return createResult;
-      }
+      if (createResult.isError()) return createResult;
       const {
         id: entityId,
         uuid,

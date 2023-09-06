@@ -101,30 +101,27 @@ export async function adminEntityPublishUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   values: DatabaseAdminEntityPublishUpdateEntityArg,
-  _syncEvent: PublishEntitiesSyncEvent | null,
+  syncEvent: PublishEntitiesSyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 
-  const updateResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(databaseAdapter, context, {
-    text: `UPDATE entities
-          SET
-            never_published = FALSE,
-            archived = FALSE,
-            published_entity_versions_id = $1,
-            updated_at = NOW(),
-            updated = nextval('entities_updated_seq'),
-            status = $2,
-            invalid = invalid & ~2,
-            dirty = dirty & $3
-          WHERE id = $4
-          RETURNING updated_at`,
-    values: [
-      entityVersionInternalId,
-      status,
-      ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED),
-      entityInternalId,
-    ],
-  });
+  const updateResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(
+    databaseAdapter,
+    context,
+    buildPostgresSqlQuery(({ sql }) => {
+      const dirtyMask = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
+      sql`UPDATE entities SET never_published = FALSE, archived = FALSE`;
+      sql`, published_entity_versions_id = ${entityVersionInternalId}`;
+      if (syncEvent) {
+        sql`, updated_at = ${syncEvent.createdAt}`;
+      } else {
+        sql`, updated_at = NOW()`;
+      }
+      sql`, updated = nextval('entities_updated_seq'), status = ${status}, invalid = invalid & ~2`;
+      sql`, dirty = dirty & ${dirtyMask}`;
+      sql`WHERE id = ${entityInternalId} RETURNING updated_at`;
+    }),
+  );
   if (updateResult.isError()) return updateResult;
 
   let newPublishedName = values.publishedName;

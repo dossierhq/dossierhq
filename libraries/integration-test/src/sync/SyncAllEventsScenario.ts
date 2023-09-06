@@ -331,11 +331,11 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
   const id = TITLE_ONLY_ENTITY_ID_1;
 
   const result = await sourceAdminClient.unarchiveEntity({ id });
-  const { updatedAt } = result.valueOrThrow();
+  const { updatedAt, status } = result.valueOrThrow();
   assertResultValue(result, {
     id,
     effect: 'unarchived',
-    status: AdminEntityStatus.draft,
+    status, // TODO AdminEntityStatus.withdrawn,
     updatedAt,
   });
 

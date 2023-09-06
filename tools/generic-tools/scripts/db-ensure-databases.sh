@@ -50,4 +50,6 @@ function ensure_database {
   ensure_database "dossier-deno" "dossierdenouser" "dossierdenopass"
   ensure_database "dossier-example-deno" "dossierexampledenouser" "dossierexampledenopass"
   ensure_database "dossier-pg" "dossierpguser" "dossierpgpass"
+  ensure_database "dossier-pg-a" "dossierpgauser" "dossierpgapass"
+  ensure_database "dossier-pg-b" "dossierpgbuser" "dossierpgbpass"
 )

@@ -17,6 +17,7 @@ import {
 } from '@dossierhq/integration-test';
 import type { Server, SessionContext } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
+import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import { describe, expect, test } from 'vitest';
 import { createPostgresAdapter } from '../PgDatabaseAdapter.js';
@@ -30,9 +31,21 @@ export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): 
   });
 }
 
-export function createPostgresTestAdapter(): DatabaseAdapter {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return createPostgresAdapter({ connectionString: process.env.DATABASE_URL! });
+function getConnectionString(selector?: 'default' | 'a' | 'b') {
+  let value;
+  if (selector === 'a') {
+    value = process.env.DATABASE_A_URL;
+  } else if (selector === 'b') {
+    value = process.env.DATABASE_B_URL;
+  } else {
+    value = process.env.DATABASE_URL;
+  }
+  assertIsDefined(value);
+  return value;
+}
+
+export function createPostgresTestAdapter(connectionString: string): DatabaseAdapter {
+  return createPostgresAdapter({ connectionString });
 }
 
 export async function createPostgresTestServerAndClient(): PromiseResult<
@@ -40,7 +53,7 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const serverResult = await createServer({
-    databaseAdapter: createPostgresTestAdapter(),
+    databaseAdapter: createPostgresTestAdapter(getConnectionString()),
     authorizationAdapter: createTestAuthorizationAdapter(),
     logger: createMockLogger(),
   });
@@ -66,12 +79,22 @@ export interface IntegrationTestServerInit {
   adminSchema: AdminSchema;
 }
 
-export async function initializeIntegrationTestServer(): PromiseResult<
+export async function initializeIntegrationTestServer({
+  selector,
+  clear,
+  skipSchema,
+}: { selector?: 'default' | 'a' | 'b'; clear?: boolean; skipSchema?: boolean } = {}): PromiseResult<
   IntegrationTestServerInit,
   typeof ErrorType.Generic | typeof ErrorType.BadRequest
 > {
+  const connectionString = getConnectionString(selector);
+
+  if (clear) {
+    await clearDatabase(connectionString);
+  }
+
   const serverResult = await createServer({
-    databaseAdapter: createPostgresTestAdapter(),
+    databaseAdapter: createPostgresTestAdapter(connectionString),
     authorizationAdapter: createTestAuthorizationAdapter(),
     logger: createMockLogger(),
   });
@@ -88,13 +111,30 @@ export async function initializeIntegrationTestServer(): PromiseResult<
     }),
   );
 
-  //TODO move this to integration-test and add advisory lock for update
-  const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
-  if (schemaResult.isError()) return schemaResult;
+  let adminSchema;
+  if (skipSchema) {
+    const spec = (await client.getSchemaSpecification()).valueOrThrow();
+    adminSchema = new AdminSchema(spec);
+  } else {
+    //TODO move this to integration-test and add advisory lock for update
+    const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
+    if (schemaResult.isError()) return schemaResult;
 
-  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
+    adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
+  }
 
   return ok({ server, adminSchema });
+}
+
+async function clearDatabase(connectionString: string) {
+  const pool = new Pool({ connectionString });
+  try {
+    await pool.query('DELETE FROM events');
+    await pool.query('DELETE FROM entities');
+    await pool.query('DELETE FROM schema_versions');
+  } finally {
+    await pool.end();
+  }
 }
 
 export function expectSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(

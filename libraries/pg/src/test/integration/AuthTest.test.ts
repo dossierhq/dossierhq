@@ -1,24 +1,15 @@
 import { assertIsDefined } from '@dossierhq/core';
-import { createMockLogger } from '@dossierhq/core-vitest';
-import { createAuthTestSuite, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
+import { createAuthTestSuite } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
-import { createServer } from '@dossierhq/server';
 import { afterAll, beforeAll } from 'vitest';
-import { createPostgresTestAdapter, registerTestSuite } from '../TestUtils.js';
+import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
 let server: Server | null = null;
 
 beforeAll(async () => {
-  const result = await createServer({
-    databaseAdapter: createPostgresTestAdapter(),
-    authorizationAdapter: createTestAuthorizationAdapter(),
-    logger: createMockLogger(),
-  });
-  if (result.isError()) {
-    throw result.toError();
-  }
-  server = result.value;
-}, 100000);
+  const serverInit = (await initializeIntegrationTestServer()).valueOrThrow();
+  server = serverInit.server;
+});
 afterAll(async () => {
   if (server) {
     (await server.shutdown()).throwIfError();

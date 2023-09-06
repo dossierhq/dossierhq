@@ -24,15 +24,17 @@ export async function createEntityEvent(
   session: Session,
   eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number; publishedName?: string }[],
-  _syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
+  syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
     database,
     context,
     buildPostgresSqlQuery(({ sql }) => {
-      sql`INSERT INTO events (type, created_by)`;
-      sql`VALUES (${eventType}, ${createdBy}) RETURNING id`;
+      const uuid = syncEvent?.id ?? DEFAULT;
+      const createdAt = syncEvent?.createdAt ?? DEFAULT;
+      sql`INSERT INTO events (uuid, type, created_by, created_at)`;
+      sql`VALUES (${uuid}, ${eventType}, ${createdBy}, ${createdAt}) RETURNING id`;
     }),
   );
   if (eventResult.isError()) return eventResult;

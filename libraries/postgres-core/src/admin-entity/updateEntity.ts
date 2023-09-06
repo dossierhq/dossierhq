@@ -8,6 +8,7 @@ import {
   type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import {
+  DEFAULT,
   buildPostgresSqlQuery,
   type DatabaseEntityUpdateEntityArg,
   type DatabaseEntityUpdateEntityPayload,
@@ -90,8 +91,9 @@ export async function adminEntityUpdateEntity(
     context,
     buildPostgresSqlQuery(({ sql }) => {
       const createdBy = getSessionSubjectInternalId(entity.session);
-      sql`INSERT INTO entity_versions (entities_id, created_by, type, name, version, schema_version, encode_version, data)`;
-      sql`VALUES (${entity.entityInternalId}, ${createdBy}, ${entity.type}, ${entity.name}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${entity.fields}) RETURNING id`;
+      const createdAt = syncEvent?.createdAt ?? DEFAULT;
+      sql`INSERT INTO entity_versions (entities_id, created_by, created_at, type, name, version, schema_version, encode_version, data)`;
+      sql`VALUES (${entity.entityInternalId}, ${createdBy}, ${createdAt}, ${entity.type}, ${entity.name}, ${entity.version}, ${entity.schemaVersion}, ${entity.encodeVersion}, ${entity.fields}) RETURNING id`;
     }),
   );
   if (createVersionResult.isError()) return createVersionResult;
@@ -152,23 +154,18 @@ export async function adminEntityUpdateEntity(
   const updateEntityResult = await queryOne<Pick<EntitiesTable, 'updated_at'>>(
     databaseAdapter,
     context,
-    {
-      text: `UPDATE entities SET
-      latest_draft_entity_versions_id = $1,
-      updated_at = NOW(),
-      updated = nextval('entities_updated_seq'),
-      status = $2,
-      invalid = invalid & ~1,
-      dirty = dirty & $3
-    WHERE id = $4
-    RETURNING updated_at`,
-      values: [
-        versionsId,
-        entity.status,
-        ~(ENTITY_DIRTY_FLAG_VALIDATE_LATEST | ENTITY_DIRTY_FLAG_INDEX_LATEST),
-        entity.entityInternalId,
-      ],
-    },
+    buildPostgresSqlQuery(({ sql }) => {
+      const dirtyMask = ~(ENTITY_DIRTY_FLAG_VALIDATE_LATEST | ENTITY_DIRTY_FLAG_INDEX_LATEST);
+      sql`UPDATE entities SET latest_draft_entity_versions_id = ${versionsId}`;
+      if (syncEvent) {
+        sql`, updated_at = ${syncEvent.createdAt}`;
+      } else {
+        sql`, updated_at = NOW()`;
+      }
+      sql`, updated = nextval('entities_updated_seq'), status = ${entity.status}`;
+      sql`, invalid = invalid & ~1, dirty = dirty & ${dirtyMask}`;
+      sql`WHERE id = ${entity.entityInternalId} RETURNING updated_at`;
+    }),
   );
   if (updateEntityResult.isError()) return updateEntityResult;
   const { updated_at: updatedAt } = updateEntityResult.value;

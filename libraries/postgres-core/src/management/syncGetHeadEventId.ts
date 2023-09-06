@@ -1,10 +1,18 @@
-import { notOk, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
+import type { EventsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { queryNoneOrOne } from '../QueryFunctions.js';
 
-export function managementSyncGetHeadEventId(
-  _databaseAdapter: PostgresDatabaseAdapter,
-  _context: TransactionContext,
+export async function managementSyncGetHeadEventId(
+  database: PostgresDatabaseAdapter,
+  context: TransactionContext,
 ): PromiseResult<string | null, typeof ErrorType.Generic> {
-  return Promise.resolve(notOk.Generic('Not implemented'));
+  const result = await queryNoneOrOne<Pick<EventsTable, 'uuid'>>(
+    database,
+    context,
+    'SELECT uuid FROM events ORDER BY id DESC LIMIT 1',
+  );
+  if (result.isError()) return result;
+  return ok(result.value?.uuid ?? null);
 }

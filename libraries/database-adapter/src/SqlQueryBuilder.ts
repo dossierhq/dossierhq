@@ -139,6 +139,10 @@ function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boole
     }
   }
 
+  if (textToAdd.startsWith(',') && separator === ', ') {
+    separator = '';
+  }
+
   query.text = existingText + separator + textToAdd;
 }
 

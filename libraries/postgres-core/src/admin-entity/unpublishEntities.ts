@@ -79,32 +79,31 @@ export async function adminEntityUnpublishEntities(
   context: TransactionContext,
   status: AdminEntityStatus,
   references: DatabaseResolvedEntityReference[],
-  _syncEvent: UnpublishEntitiesSyncEvent | null,
+  syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {
   const ids = references.map((it) => it.entityInternalId);
 
   const result = await queryMany<Pick<EntitiesTable, 'id' | 'updated_at'>>(
     databaseAdapter,
     context,
-    {
-      text: `UPDATE entities
-      SET
+    buildPostgresSqlQuery(({ sql }) => {
+      const dirtyMask = ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED);
+      sql`UPDATE entities SET
         published_entity_versions_id = NULL,
         published_fts = NULL,
-        published_name = NULL,
-        updated_at = NOW(),
-        updated = nextval('entities_updated_seq'),
-        status = $1,
+        published_name = NULL`;
+      if (syncEvent) {
+        sql`, updated_at = ${syncEvent.createdAt}`;
+      } else {
+        sql`, updated_at = NOW()`;
+      }
+      sql`, updated = nextval('entities_updated_seq'),
+        status = ${status},
         invalid = invalid & ~2,
-        dirty = dirty & $2
-      WHERE id = ANY($3)
-      RETURNING id, updated_at`,
-      values: [
-        status,
-        ~(ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED | ENTITY_DIRTY_FLAG_INDEX_PUBLISHED),
-        ids,
-      ],
-    },
+        dirty = dirty & ${dirtyMask}
+      WHERE id = ANY(${ids})
+      RETURNING id, updated_at`;
+    }),
   );
   if (result.isError()) return result;
 

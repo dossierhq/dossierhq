@@ -75,6 +75,26 @@ describe('createPostgresSqlQuery', () => {
     `);
   });
 
+  test('UPDATE split into multiple calls prefixed with ,', () => {
+    const { sql, query } = createPostgresSqlQuery();
+    sql`UPDATE hello SET a = ${1}`;
+    if (String(true) === 'true') {
+      sql`, b = ${2}`;
+    }
+    sql`WHERE id = ${3}`;
+
+    expect(query).toMatchInlineSnapshot(`
+      {
+        "text": "UPDATE hello SET a = $1, b = $2 WHERE id = $3",
+        "values": [
+          1,
+          2,
+          3,
+        ],
+      }
+    `);
+  });
+
   test('AND is removed when coming after WHERE', () => {
     const { sql, query } = createPostgresSqlQuery();
     sql`SELECT * FROM foo WHERE`;
