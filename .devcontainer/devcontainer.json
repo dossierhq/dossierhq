@@ -7,7 +7,10 @@
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   // https://containers.dev/features
   "features": {
-    "ghcr.io/devcontainers-contrib/features/deno:1": {}
+    // Add an asdf plugin here to install asdf. The rest are setup by post-create.sh/.tool-versions
+    "ghcr.io/devcontainers-contrib/features/asdf-package:1": {
+      "plugin": "sqlite"
+    }
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
