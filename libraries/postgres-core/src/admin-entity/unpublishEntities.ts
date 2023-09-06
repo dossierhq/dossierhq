@@ -36,14 +36,14 @@ export async function adminEntityUnpublishGetEntitiesInfo(
       | 'id'
       | 'uuid'
       | 'type'
-      | 'latest_draft_entity_versions_id'
+      | 'published_entity_versions_id'
       | 'auth_key'
       | 'resolved_auth_key'
       | 'status'
       | 'updated_at'
     >
   >(databaseAdapter, context, {
-    text: 'SELECT e.id, e.uuid, e.type, e.latest_draft_entity_versions_id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid = ANY($1)',
+    text: 'SELECT e.id, e.uuid, e.type, e.published_entity_versions_id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid = ANY($1)',
     values: [references.map((it) => it.id)],
   });
   if (result.isError()) return result;
@@ -64,7 +64,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
         id: entityInfo.uuid,
         entityInternalId: entityInfo.id,
         type: entityInfo.type,
-        entityVersionInternalId: entityInfo.latest_draft_entity_versions_id,
+        entityVersionInternalId: entityInfo.published_entity_versions_id,
         authKey: entityInfo.auth_key,
         resolvedAuthKey: entityInfo.resolved_auth_key,
         status: resolveEntityStatus(entityInfo.status),

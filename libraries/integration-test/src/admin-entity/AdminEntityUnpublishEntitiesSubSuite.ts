@@ -49,6 +49,8 @@ async function unpublishEntities_minimal({ server }: AdminEntityTestContext) {
 async function unpublishEntities_unpublishEntitiesEvent({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
+  // Create two published entities
+
   const createResult1 = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 1' } }),
     { publish: true },
@@ -71,24 +73,34 @@ async function unpublishEntities_unpublishEntitiesEvent({ server }: AdminEntityT
     },
   } = createResult2.valueOrThrow();
 
+  // Update one of the entities (so that we can check that it's the right version we get the in the event)
+  const {
+    entity: {
+      info: { updatedAt: updatedAt1 },
+    },
+  } = (await adminClient.updateEntity({ id: id1, fields: { title: 'Updated' } })).valueOrThrow();
+
+  // Unpublish
   const unpublishResult = await adminClient.unpublishEntities([{ id: id1 }, { id: id2 }]);
-  const [{ updatedAt: updatedAt1 }, { updatedAt: updatedAt2 }] = unpublishResult.valueOrThrow();
+  const [{ updatedAt: unpublishedAt1 }, { updatedAt: unpublishedAt2 }] =
+    unpublishResult.valueOrThrow();
 
   assertResultValue(unpublishResult, [
     {
       id: id1,
       effect: 'unpublished',
       status: AdminEntityStatus.withdrawn,
-      updatedAt: updatedAt1,
+      updatedAt: unpublishedAt1,
     },
     {
       id: id2,
       effect: 'unpublished',
       status: AdminEntityStatus.withdrawn,
-      updatedAt: updatedAt2,
+      updatedAt: unpublishedAt2,
     },
   ]);
 
+  // Check events
   const connectionResult = await adminClient.getChangelogEvents({ entity: { id: id1 } });
   assertChangelogEventsConnection(connectionResult, [
     {
@@ -99,8 +111,15 @@ async function unpublishEntities_unpublishEntitiesEvent({ server }: AdminEntityT
       unauthorizedEntityCount: 0,
     },
     {
-      type: EventType.unpublishEntities,
+      type: EventType.updateEntity,
       createdAt: updatedAt1,
+      createdBy: '',
+      entities: [{ id: id1, name: name1, version: 2, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.unpublishEntities,
+      createdAt: unpublishedAt1,
       createdBy: '',
       entities: [
         { id: id1, name: name1, version: 1, type: 'TitleOnly' },

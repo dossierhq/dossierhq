@@ -34,7 +34,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
 > {
   const { addValueList, query, sql } = createSqliteSqlQuery();
   const uuids = addValueList(references.map(({ id }) => id));
-  sql`SELECT e.id, e.uuid, e.type, e.latest_entity_versions_id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
+  sql`SELECT e.id, e.uuid, e.type, e.published_entity_versions_id, e.auth_key, e.resolved_auth_key, e.status, e.updated_at FROM entities e WHERE e.uuid IN ${uuids}`;
 
   const result = await queryMany<
     Pick<
@@ -42,7 +42,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
       | 'id'
       | 'uuid'
       | 'type'
-      | 'latest_entity_versions_id'
+      | 'published_entity_versions_id'
       | 'auth_key'
       | 'resolved_auth_key'
       | 'status'
@@ -66,7 +66,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
       return {
         id: entityInfo.uuid,
         entityInternalId: entityInfo.id,
-        entityVersionInternalId: entityInfo.latest_entity_versions_id,
+        entityVersionInternalId: entityInfo.published_entity_versions_id,
         type: entityInfo.type,
         authKey: entityInfo.auth_key,
         resolvedAuthKey: entityInfo.resolved_auth_key,

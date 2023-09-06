@@ -292,7 +292,7 @@ async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioConte
     {
       type: EventType.unpublishEntities,
       createdBy,
-      entities: [{ id, version: 2 }], //TODO is this correct? version 1 was published
+      entities: [{ id, version: 1 }],
     },
   ]);
 
