@@ -8,5 +8,7 @@ THIS_DIR="$(pushd "$(dirname "$0")" > /dev/null; pwd; popd > /dev/null)"
   set -a
   source "$THIS_DIR/../.env"
   set +a
-  time psql -s "$DATABASE_URL" -c 'DELETE FROM events; DELETE FROM entities; DELETE FROM schema_versions;'
+  time yes | psql -s "$DATABASE_URL" -c 'DELETE FROM events; DELETE FROM entities; DELETE FROM schema_versions; DELETE FROM subjects;'
+  time yes | psql -s "$DATABASE_A_URL" -c 'DELETE FROM events; DELETE FROM entities; DELETE FROM schema_versions; DELETE FROM subjects;'
+  time yes | psql -s "$DATABASE_B_URL" -c 'DELETE FROM events; DELETE FROM entities; DELETE FROM schema_versions; DELETE FROM subjects;'
 )
