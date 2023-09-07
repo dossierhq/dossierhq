@@ -116,7 +116,7 @@ export async function adminEntityPublishUpdateEntity(
   const updateResult = await queryRun(database, context, {
     text: `UPDATE entities
            SET
-             never_published = TRUE,
+             never_published = FALSE,
              published_entity_versions_id = ?1,
              updated_at = ?2,
              updated_seq = ?3,

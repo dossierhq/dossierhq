@@ -12,6 +12,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unarchiveEntity_minimal,
   unarchiveEntity_unarchiveEntityEvent,
+  unarchiveEntity_previouslyPublished,
   unarchiveEntity_errorInvalidId,
   unarchiveEntity_errorWrongAuthKey,
 ];
@@ -19,29 +20,26 @@ export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext
 async function unarchiveEntity_minimal({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
-  assertOkResult(createResult);
-  const {
-    entity: { id },
-  } = createResult.value;
+  const { entity } = createResult.valueOrThrow();
+  const reference = { id: entity.id };
 
-  const archiveResult = await client.archiveEntity({ id });
+  const archiveResult = await client.archiveEntity(reference);
   assertOkResult(archiveResult);
 
-  const unarchiveResult = await client.unarchiveEntity({ id });
-  assertOkResult(unarchiveResult);
-  const { updatedAt } = unarchiveResult.value;
+  const unarchiveResult = await client.unarchiveEntity(reference);
+  const { updatedAt } = unarchiveResult.valueOrThrow();
   assertResultValue(unarchiveResult, {
-    id,
+    id: reference.id,
     effect: 'unarchived',
     status: AdminEntityStatus.draft,
     updatedAt,
   });
 
-  const expectedEntity = copyEntity(createResult.value.entity, {
+  const expectedEntity = copyEntity(entity, {
     info: { status: AdminEntityStatus.draft, updatedAt },
   });
 
-  const getResult = await client.getEntity({ id });
+  const getResult = await client.getEntity(reference);
   assertResultValue(getResult, expectedEntity);
 }
 
@@ -92,6 +90,28 @@ async function unarchiveEntity_unarchiveEntityEvent({ server }: AdminEntityTestC
       unauthorizedEntityCount: 0,
     },
   ]);
+}
+
+async function unarchiveEntity_previouslyPublished({ server }: AdminEntityTestContext) {
+  const client = adminClientForMainPrincipal(server);
+  const { entity } = (
+    await client.createEntity(TITLE_ONLY_CREATE, { publish: true })
+  ).valueOrThrow();
+  const reference = { id: entity.id };
+
+  // Need to unpublish entity so we can archive it
+  assertOkResult(await client.unpublishEntities([reference]));
+
+  assertOkResult(await client.archiveEntity(reference));
+
+  const unarchiveResult = await client.unarchiveEntity(reference);
+  const { updatedAt } = unarchiveResult.valueOrThrow();
+  assertResultValue(unarchiveResult, {
+    id: reference.id,
+    effect: 'unarchived',
+    status: AdminEntityStatus.withdrawn, // since it's been published before
+    updatedAt,
+  });
 }
 
 async function unarchiveEntity_errorInvalidId({ server }: AdminEntityTestContext) {
