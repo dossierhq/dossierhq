@@ -67,7 +67,7 @@ export async function authCreateSyncSessionForSubject(
       adapter,
       context,
       buildPostgresSqlQuery(({ sql }) => {
-        sql`INSERT INTO subjects (uuid) VALUES (${subjectId})`;
+        sql`INSERT INTO subjects (uuid) VALUES (${subjectId}) RETURNING id`;
       }),
     );
     if (insertResult.isError()) return insertResult;
