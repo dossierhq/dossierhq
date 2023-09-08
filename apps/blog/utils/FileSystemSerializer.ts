@@ -217,9 +217,7 @@ export async function updateSyncEventsOnDisk(server: Server): Promise<void> {
   }
 
   while (true) {
-    const eventsResult = await server.getSyncEvents(
-      after ? { after, limit: 10 } : { initial: true, limit: 10 },
-    );
+    const eventsResult = await server.getSyncEvents({ after, limit: 10 });
     const { events, hasMore } = eventsResult.valueOrThrow();
 
     for (const event of events) {

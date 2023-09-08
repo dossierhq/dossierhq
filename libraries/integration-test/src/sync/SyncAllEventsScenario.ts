@@ -36,12 +36,12 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
 
   // Ensure the servers are empty
   const initialSyncEvents = (
-    await sourceServer.getSyncEvents({ initial: true, limit: 10 })
+    await sourceServer.getSyncEvents({ after: null, limit: 10 })
   ).valueOrThrow();
   assertEquals(initialSyncEvents.events.length, 0);
 
   const initialTargetSyncEvents = (
-    await targetServer.getSyncEvents({ initial: true, limit: 10 })
+    await targetServer.getSyncEvents({ after: null, limit: 10 })
   ).valueOrThrow();
   assertEquals(initialTargetSyncEvents.events.length, 0);
 
@@ -363,9 +363,7 @@ async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext
 
   // Apply source events on target server
 
-  const sourceSyncEvents = (
-    await sourceServer.getSyncEvents(after ? { after, limit: 10 } : { initial: true, limit: 10 })
-  ).valueOrThrow();
+  const sourceSyncEvents = (await sourceServer.getSyncEvents({ after, limit: 10 })).valueOrThrow();
 
   let expectedHead = after;
   for (const syncEvent of sourceSyncEvents.events) {
@@ -373,9 +371,7 @@ async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext
     expectedHead = syncEvent.id;
   }
 
-  const targetSyncEvents = (
-    await targetServer.getSyncEvents(after ? { after, limit: 10 } : { initial: true, limit: 10 })
-  ).valueOrThrow();
+  const targetSyncEvents = (await targetServer.getSyncEvents({ after, limit: 10 })).valueOrThrow();
 
   assertEquals(targetSyncEvents.events, sourceSyncEvents.events);
 

@@ -8,7 +8,10 @@ import {
 import type { DatabaseAdapter, TransactionContext } from '@dossierhq/database-adapter';
 import { SYNC_EVENTS_LIMIT_MAX } from '../config/Limits.js';
 
-export type SyncEventQuery = ({ initial: true } | { after: string }) & { limit: number };
+export interface SyncEventQuery {
+  after: string | null;
+  limit: number;
+}
 
 export interface SyncEventsPayload {
   events: SyncEvent[];
@@ -20,14 +23,10 @@ export async function managementGetSyncEvents(
   context: TransactionContext,
   query: SyncEventQuery,
 ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const after = 'after' in query && query.after ? query.after : null;
-  if (after && 'initial' in query) {
-    return notOk.BadRequest('Cannot specify both "initial" and "after" in query');
+  const { after, limit } = query;
+  if (after !== null && typeof after !== 'string') {
+    return notOk.BadRequest('Must specify "after" in query');
   }
-  if (!after && (!('initial' in query) || !query.initial)) {
-    return notOk.BadRequest('Must specify "initial: true" on the initial query');
-  }
-  const limit = query.limit;
   if (typeof limit !== 'number') {
     return notOk.BadRequest('Must specify "limit" in query');
   }
@@ -35,7 +34,7 @@ export async function managementGetSyncEvents(
     return notOk.BadRequest(`"limit" must be between 1 and ${SYNC_EVENTS_LIMIT_MAX}`);
   }
 
-  const result = await databaseAdapter.managementSyncGetEvents(context, { after, limit });
+  const result = await databaseAdapter.managementSyncGetEvents(context, query);
   if (result.isError()) return result;
 
   // Normalize events
