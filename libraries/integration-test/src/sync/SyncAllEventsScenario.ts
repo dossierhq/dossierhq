@@ -4,16 +4,9 @@ import {
   FieldType,
   type AdminClient,
   type AdminSchemaSpecificationWithMigrations,
-  type ArchiveEntitySyncEvent,
-  type CreateEntitySyncEvent,
-  type PublishEntitiesSyncEvent,
-  type SyncEvent,
-  type UnarchiveEntitySyncEvent,
-  type UnpublishEntitiesSyncEvent,
-  type UpdateEntitySyncEvent,
-  type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SyncTestContext } from './SyncTestSuite.js';
 
@@ -22,6 +15,18 @@ interface ScenarioContext extends SyncTestContext {
   after: string | null;
   createdBy: string;
 }
+
+const STEPS: ((context: ScenarioContext) => Promise<ScenarioContext>)[] = [
+  sync_allEventsScenario_1_updateSchema,
+  sync_allEventsScenario_2_createEntity,
+  sync_allEventsScenario_3_createAndPublishEntity,
+  sync_allEventsScenario_4_updateEntity,
+  sync_allEventsScenario_5_updateAndPublishedEntity,
+  sync_allEventsScenario_6_publishEntities,
+  sync_allEventsScenario_7_unpublishEntities,
+  sync_allEventsScenario_8_archiveEntity,
+  sync_allEventsScenario_9_unarchiveEntity,
+];
 
 const TITLE_ONLY_ENTITY_ID_1 = 'b1793e40-285c-423f-b4f8-e71fa74677b8';
 const TITLE_ONLY_ENTITY_ID_2 = 'd56b4262-0d00-4507-b909-7a1eb19bb82f';
@@ -44,14 +49,16 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
 
   const sourceAdminClient = adminClientForMainPrincipal(sourceServer) as AdminClient;
 
-  const scenarioContext: ScenarioContext = {
+  let scenarioContext: ScenarioContext = {
     ...context,
     sourceAdminClient,
     after: null,
     createdBy: 'placeholder',
   };
 
-  await sync_allEventsScenario_1_updateSchema(scenarioContext);
+  for (const step of STEPS) {
+    scenarioContext = await step(scenarioContext);
+  }
 }
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
@@ -112,7 +119,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
     { type: EventType.updateSchema, schemaSpecification: expectedSchemaSpecification, createdBy },
   ]);
 
-  await sync_allEventsScenario_2_createEntity({ ...nextContext, createdBy });
+  return { ...nextContext, createdBy };
 }
 
 async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
@@ -149,7 +156,7 @@ async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
     },
   ]);
 
-  await sync_allEventsScenario_3_createAndPublishEntity(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_3_createAndPublishEntity(context: ScenarioContext) {
@@ -189,7 +196,7 @@ async function sync_allEventsScenario_3_createAndPublishEntity(context: Scenario
     },
   ]);
 
-  await sync_allEventsScenario_4_updateEntity(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
@@ -219,7 +226,7 @@ async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
     },
   ]);
 
-  await sync_allEventsScenario_5_updateAndPublishedEntity(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_5_updateAndPublishedEntity(context: ScenarioContext) {
@@ -252,7 +259,7 @@ async function sync_allEventsScenario_5_updateAndPublishedEntity(context: Scenar
     },
   ]);
 
-  await sync_allEventsScenario_6_publishEntities(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext) {
@@ -273,7 +280,7 @@ async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext
     },
   ]);
 
-  await sync_allEventsScenario_7_unpublishEntities(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioContext) {
@@ -296,7 +303,7 @@ async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioConte
     },
   ]);
 
-  await sync_allEventsScenario_8_archiveEntity(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) {
@@ -322,7 +329,7 @@ async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) 
     },
   ]);
 
-  await sync_allEventsScenario_9_unarchiveEntity(nextContext);
+  return nextContext;
 }
 
 async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext) {
@@ -339,7 +346,7 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
     updatedAt,
   });
 
-  const { events } = await applyEventsOnTargetAndResolveNextContext(context);
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
   assertSyncEventsEqual(events, [
     {
       type: EventType.unarchiveEntity,
@@ -347,10 +354,14 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
       entity: { id, version: 2 },
     },
   ]);
+
+  return nextContext;
 }
 
 async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext) {
   const { sourceServer, targetServer, after } = context;
+
+  // Apply source events on target server
 
   const sourceSyncEvents = (
     await sourceServer.getSyncEvents(after ? { after, limit: 10 } : { initial: true, limit: 10 })
@@ -368,29 +379,18 @@ async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext
 
   assertEquals(targetSyncEvents.events, sourceSyncEvents.events);
 
+  // Process all dirty entities
+  for (const server of [sourceServer, targetServer]) {
+    let processOneMore = true;
+    while (processOneMore) {
+      const info = (await server.processNextDirtyEntity()).valueOrThrow();
+      processOneMore = !!info;
+    }
+  }
+
+  // Construct nextContext
+
   const nextContext = { ...context, after: expectedHead };
 
   return { nextContext, events: sourceSyncEvents.events };
-}
-
-type WithCreatedAt<T extends SyncEvent> = Omit<T, 'id' | 'createdAt'>;
-
-type SyncEventWithoutIdAndCreatedAt =
-  | WithCreatedAt<UpdateSchemaSyncEvent>
-  | WithCreatedAt<CreateEntitySyncEvent>
-  | WithCreatedAt<UpdateEntitySyncEvent>
-  | WithCreatedAt<PublishEntitiesSyncEvent>
-  | WithCreatedAt<UnpublishEntitiesSyncEvent>
-  | WithCreatedAt<ArchiveEntitySyncEvent>
-  | WithCreatedAt<UnarchiveEntitySyncEvent>;
-
-function assertSyncEventsEqual(
-  actualEvents: SyncEvent[],
-  expectedEvents: SyncEventWithoutIdAndCreatedAt[],
-) {
-  assertEquals(actualEvents.length, expectedEvents.length);
-  for (let i = 0; i < actualEvents.length; i++) {
-    const { id, createdAt, ...actualEvent } = actualEvents[i];
-    assertEquals(actualEvent, expectedEvents[i]);
-  }
 }
