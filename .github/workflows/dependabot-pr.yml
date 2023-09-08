@@ -5,7 +5,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 16
     if: ${{ startsWith(github.head_ref, 'dependabot/npm_and_yarn') }}
     steps:
       - uses: actions/checkout@v4
