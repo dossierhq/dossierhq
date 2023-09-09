@@ -31,7 +31,7 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "dependencies": {
-    "tslib": "~2.6.1"
+    "tslib": "~2.6.2"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
@@ -40,6 +40,6 @@
     "eslint": "~8.48.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2",
-    "vitest": "~0.34.1"
+    "vitest": "~0.34.4"
   }
 }

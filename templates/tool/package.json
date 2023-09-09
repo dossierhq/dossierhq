@@ -15,7 +15,7 @@
     "start": "node lib/main.js"
   },
   "dependencies": {
-    "tslib": "~2.6.1"
+    "tslib": "~2.6.2"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",

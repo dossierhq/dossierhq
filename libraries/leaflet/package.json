@@ -38,15 +38,15 @@
     "leaflet.locatecontrol": "~0.79.0",
     "react": "~18.2.0",
     "react-leaflet": "~4.2.1",
-    "tslib": "~2.6.1"
+    "tslib": "~2.6.2"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.58.2",
-    "@types/leaflet": "~1.9.3",
-    "@types/leaflet.locatecontrol": "~0.74.1",
-    "@types/react": "~18.2.19",
+    "@types/leaflet": "~1.9.4",
+    "@types/leaflet.locatecontrol": "~0.74.2",
+    "@types/react": "~18.2.21",
     "eslint": "~8.48.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.0.3",

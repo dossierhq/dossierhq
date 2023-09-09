@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.6.1"
+    "tslib": "~2.6.2"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -54,6 +54,6 @@
     "prettier": "3.0.3",
     "sqlite3": "5.1.4",
     "typescript": "~5.2.2",
-    "vitest": "~0.34.1"
+    "vitest": "~0.34.4"
   }
 }

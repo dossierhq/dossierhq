@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.6.1"
+    "tslib": "~2.6.2"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -43,7 +43,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@playwright/test": "~1.37.0",
+    "@playwright/test": "~1.37.1",
     "@rushstack/heft": "0.58.2",
     "@types/base-64": "~1.0.0",
     "@types/sql.js": "~1.4.4",
@@ -52,6 +52,6 @@
     "prettier": "3.0.3",
     "sql.js": "~1.8.0",
     "typescript": "~5.2.2",
-    "vitest": "~0.34.1"
+    "vitest": "~0.34.4"
   }
 }

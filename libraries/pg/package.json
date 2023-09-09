@@ -46,8 +46,8 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
-    "pg": "~8.11.2",
-    "tslib": "~2.6.1"
+    "pg": "~8.11.3",
+    "tslib": "~2.6.2"
   },
   "devDependencies": {
     "@dossierhq/core-vitest": "workspace:*",
@@ -58,12 +58,12 @@
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.58.2",
     "@types/pg": "~8.10.2",
-    "@types/uuid": "~9.0.2",
+    "@types/uuid": "~9.0.3",
     "dotenv": "~16.3.1",
     "eslint": "~8.48.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2",
     "uuid": "~9.0.0",
-    "vitest": "~0.34.1"
+    "vitest": "~0.34.4"
   }
 }

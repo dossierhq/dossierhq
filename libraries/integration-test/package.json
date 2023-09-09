@@ -38,7 +38,7 @@
   "dependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "tslib": "~2.6.1",
+    "tslib": "~2.6.2",
     "uuid": "~9.0.0"
   },
   "devDependencies": {
@@ -46,8 +46,8 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@rushstack/heft": "0.58.2",
-    "@types/node": "~20.5.6",
-    "@types/uuid": "~9.0.2",
+    "@types/node": "~20.5.9",
+    "@types/uuid": "~9.0.3",
     "eslint": "~8.48.0",
     "prettier": "3.0.3",
     "ts-node": "~10.9.1",
