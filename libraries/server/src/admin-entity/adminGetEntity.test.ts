@@ -1,4 +1,5 @@
-import { AdminEntityStatus, ok } from '@dossierhq/core';
+import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
+import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
   ENCODE_VERSION_AS_IS,
@@ -109,5 +110,25 @@ describe('adminGetEntity', () => {
     );
 
     expect(result.valueOrThrow()).toMatchSnapshot();
+  });
+
+  test('Error: string list as unique index value', async () => {
+    const databaseAdapter = createMockDatabaseAdapter();
+    const authorizationAdapter = createMockAuthorizationAdapter();
+    const context = createMockSessionContext({ databaseAdapter });
+
+    const result = await adminGetEntity(
+      adminTestSchema,
+      authorizationAdapter,
+      databaseAdapter,
+      context,
+      { index: 'indexName', value: ['123'] as unknown as string },
+    );
+
+    expectErrorResult(
+      result,
+      ErrorType.BadRequest,
+      'reference: Invalid value (got: object, must be string)',
+    );
   });
 });

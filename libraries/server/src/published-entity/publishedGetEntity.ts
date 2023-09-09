@@ -11,6 +11,7 @@ import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { decodePublishedEntity } from '../EntityCodec.js';
+import { validateEntityReference } from '../utils/ValidationUtils.js';
 
 export async function publishedGetEntity(
   adminSchema: AdminSchemaWithMigrations,
@@ -25,6 +26,9 @@ export async function publishedGetEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  const validationResult = validateEntityReference(reference);
+  if (validationResult.isError()) return validationResult;
+
   const result = await databaseAdapter.publishedEntityGetOne(context, reference);
   if (result.isError()) return result;
 
