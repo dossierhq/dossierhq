@@ -4,7 +4,6 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
 import {
   assertIsDefined,
-  createConsoleLogger,
   getAllPagesForConnection,
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
@@ -21,13 +20,10 @@ import {
   isRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import { config } from 'dotenv';
-import assert from 'node:assert';
 import { writeFile } from 'node:fs/promises';
 import type { Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import { getResponsiveImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
@@ -46,34 +42,13 @@ import {
   isPublishedCloudinaryImage,
   isPublishedGlossaryTerm,
 } from '../utils/SchemaTypes.js';
-import { createBlogServer } from '../utils/SharedServerUtils.js';
+import { initializeServer } from '../utils/SharedServerUtils.js';
 
 // prefer .env.local file if exists, over .env file
 config({ path: '.env.local' });
 config({ path: '.env' });
 
-const { Database: SqliteDatabase } = Sqlite;
-
 export {};
-
-//TODO align usages of server/databases in scripts and backend
-async function initializeServer() {
-  assert.ok(process.env.DATABASE_SQLITE_FILE);
-  const context = { logger: createConsoleLogger(console) };
-  const databaseResult = await createDatabase(context, SqliteDatabase, {
-    filename: process.env.DATABASE_SQLITE_FILE,
-  });
-  if (databaseResult.isError()) return databaseResult;
-
-  const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
-    migrate: true,
-    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with create-database-from-disk.ts
-    journalMode: 'wal',
-  });
-  if (databaseAdapterResult.isError()) return databaseAdapterResult;
-
-  return await createBlogServer(databaseAdapterResult.value);
-}
 
 async function generateAtomFeed(publishedClient: AppPublishedExceptionClient) {
   const hostname = 'https://www.dossierhq.dev';

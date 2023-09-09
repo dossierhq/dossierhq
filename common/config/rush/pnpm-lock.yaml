@@ -8,6 +8,7 @@ importers:
   ../../apps/blog:
     specifiers:
       '@cloudinary/url-gen': ~1.11.2
+      '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/cloudinary': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
@@ -15,12 +16,12 @@ importers:
       '@dossierhq/leaflet': workspace:*
       '@dossierhq/react-components': workspace:*
       '@dossierhq/server': workspace:*
-      '@dossierhq/sqlite3': workspace:*
       '@dossierhq/typescript-generator': workspace:*
+      '@types/better-sqlite3': ~7.6.4
       '@types/react': ~18.2.21
       '@types/react-dom': ~18.2.7
-      '@types/sqlite3': ~3.1.8
       '@typescript-eslint/eslint-plugin': ~6.6.0
+      better-sqlite3: ~8.6.0
       dotenv: ~16.3.1
       eslint: ~8.48.0
       eslint-config-next: ~13.4.19
@@ -31,13 +32,13 @@ importers:
       react: ~18.2.0
       react-dom: ~18.2.0
       schema-dts: ~1.1.2
-      sqlite3: 5.1.4
       ts-node: ~10.9.1
       tslib: ~2.6.2
       typescript: ~5.2.2
       vitest: ~0.34.4
     dependencies:
       '@cloudinary/url-gen': 1.11.2
+      '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/cloudinary': link:../../libraries/cloudinary
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/design': link:../../libraries/design
@@ -45,19 +46,18 @@ importers:
       '@dossierhq/leaflet': link:../../libraries/leaflet
       '@dossierhq/react-components': link:../../libraries/react-components
       '@dossierhq/server': link:../../libraries/server
-      '@dossierhq/sqlite3': link:../../libraries/sqlite3
+      better-sqlite3: 8.6.0
       leaflet: 1.9.4
       lexical: 0.11.3
       next: 13.4.19_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      sqlite3: 5.1.4
       tslib: 2.6.2
     devDependencies:
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
+      '@types/better-sqlite3': 7.6.4
       '@types/react': 18.2.21
       '@types/react-dom': 18.2.7
-      '@types/sqlite3': 3.1.8
       '@typescript-eslint/eslint-plugin': 6.6.0_w2g2uv42be7wag4oipwkfv43p4
       dotenv: 16.3.1
       eslint: 8.48.0

@@ -1,13 +1,10 @@
 import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
-import { NoOpLogger, notOk, ok } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type { DatabasePerformanceCallbacks, Server } from '@dossierhq/server';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import type { NextApiRequest } from 'next';
-import assert from 'node:assert';
-import { Database } from 'sqlite3';
 import { DEFAULT_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { createFilesystemAdminMiddleware } from './FileSystemSerializer';
-import { createBlogServer } from './SharedServerUtils';
+import { initializeServer } from './SharedServerUtils';
 
 let serverConnectionPromise: Promise<{ server: Server }> | null = null;
 
@@ -43,25 +40,9 @@ export async function getSessionContextForRequest(
 export async function getServerConnection(): Promise<{ server: Server }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
-      const databaseAdapter = (await createDatabaseAdapter()).valueOrThrow();
-      return (await createBlogServer(databaseAdapter)).valueOrThrow();
+      return (await initializeServer()).valueOrThrow();
     })();
   }
 
   return serverConnectionPromise;
-}
-
-async function createDatabaseAdapter() {
-  assert.ok(process.env.DATABASE_SQLITE_FILE);
-  const context = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(context, Database, {
-    filename: process.env.DATABASE_SQLITE_FILE,
-  });
-  if (databaseResult.isError()) return databaseResult;
-  const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
-    migrate: true,
-    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with create-database-from-disk.ts
-    journalMode: 'wal',
-  });
-  return databaseAdapterResult;
 }

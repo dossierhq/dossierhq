@@ -9,11 +9,11 @@ import { getPublishedClientForServerComponent } from '../../../utils/ServerCompo
 import { ServerRichTextRenderer } from '../../ServerRichTextRenderer';
 import { getArticle } from './getArticle';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { articleSlug: string };
-}): Promise<Metadata> {
+interface Params {
+  articleSlug: string[] | undefined;
+}
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const publishedClient = await getPublishedClientForServerComponent();
   const article = await getArticle(publishedClient, params.articleSlug);
 
@@ -31,7 +31,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { articleSlug: string } }) {
+export default async function Page({ params }: { params: Params }) {
   const publishedClient = await getPublishedClientForServerComponent();
   const article = await getArticle(publishedClient, params.articleSlug);
   return (

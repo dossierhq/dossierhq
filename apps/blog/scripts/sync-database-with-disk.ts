@@ -1,43 +1,20 @@
 #!/usr/bin/env -S npx ts-node -T --esm
 import {
   convertJsonSyncEvent,
-  createConsoleLogger,
   getAllNodesForConnection,
   type JsonSyncEvent,
-  type Logger,
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import { config } from 'dotenv';
 import { readFile } from 'fs/promises';
-import Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { getCurrentSyncEventFiles, updateSyncEventsOnDisk } from '../utils/FileSystemSerializer.js';
 import type { AppAdminClient } from '../utils/SchemaTypes';
-import { createBlogServer } from '../utils/SharedServerUtils.js';
+import { initializeServer } from '../utils/SharedServerUtils.js';
 
 // prefer .env.local file if exists, over .env file
 config({ path: '.env.local' });
 config({ path: '.env' });
-
-const { Database: SqliteDatabase } = Sqlite;
-
-async function initializeServer(logger: Logger, filename: string) {
-  const context = { logger };
-  const databaseResult = await createDatabase(context, SqliteDatabase, {
-    filename,
-  });
-  if (databaseResult.isError()) return databaseResult;
-
-  const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
-    migrate: true,
-    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with create-database-from-disk.ts
-    journalMode: 'wal',
-  });
-  if (databaseAdapterResult.isError()) return databaseAdapterResult;
-
-  return await createBlogServer(databaseAdapterResult.value);
-}
 
 async function getUnappliedEvents(adminClient: AppAdminClient) {
   // Get file events
@@ -83,8 +60,7 @@ async function applyDiskEvents(
 }
 
 async function main(filename: string) {
-  const logger = createConsoleLogger(console);
-  const { server } = (await initializeServer(logger, filename)).valueOrThrow();
+  const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     const authResult = await server.createSession({
       ...SYSTEM_USERS.serverRenderer,

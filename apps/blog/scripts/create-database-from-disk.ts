@@ -1,34 +1,13 @@
 #!/usr/bin/env -S npx ts-node -T --esm
-import type { AdminSchemaSpecificationUpdate, Logger } from '@dossierhq/core';
+import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { createConsoleLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
 import fs from 'node:fs';
-import Sqlite from 'sqlite3';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { loadAllEntities } from '../utils/FileSystemSerializer.js';
-import { createBlogServer } from '../utils/SharedServerUtils.js';
-
-const { Database: SqliteDatabase } = Sqlite;
+import { initializeServer } from '../utils/SharedServerUtils.js';
 
 const DATA_DIR = new URL('../data', import.meta.url).pathname;
-
-async function initializeServer(logger: Logger, filename: string) {
-  const context = { logger };
-  const databaseResult = await createDatabase(context, SqliteDatabase, {
-    filename,
-  });
-  if (databaseResult.isError()) return databaseResult;
-
-  const databaseAdapterResult = await createSqlite3Adapter(context, databaseResult.value, {
-    migrate: true,
-    fts: { version: 'fts4' }, // TODO use fts5 when github actions supports it ("SQL logic error"), match with create-database-from-disk.ts
-    journalMode: 'wal',
-  });
-  if (databaseAdapterResult.isError()) return databaseAdapterResult;
-
-  return await createBlogServer(databaseAdapterResult.value);
-}
 
 async function updateSchemaSpecification(server: Server, filename: string) {
   const schemaSpecification = JSON.parse(
@@ -49,7 +28,7 @@ async function updateSchemaSpecification(server: Server, filename: string) {
 
 async function main(filename: string) {
   const logger = createConsoleLogger(console);
-  const { server } = (await initializeServer(logger, filename)).valueOrThrow();
+  const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     (await updateSchemaSpecification(server, `${DATA_DIR}/schema.json`)).throwIfError();
 
