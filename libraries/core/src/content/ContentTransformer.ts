@@ -31,12 +31,6 @@ export interface ContentTransformer<
   TSchema extends AdminSchema | PublishedSchema,
   TError extends ErrorType,
 > {
-  /**
-   * @param path
-   * @param fieldSpec
-   * @param value
-   * @returns `ok(null)` -> no value, `ok(undefined)` -> delete field, `ok(value)` -> new value
-   */
   transformField: (
     schema: TSchema,
     path: ContentValuePath,

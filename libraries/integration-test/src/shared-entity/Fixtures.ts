@@ -1,12 +1,12 @@
-import type {
-  AdminEntityCreate,
-  AdminEntityUpsert,
-  AdminFieldSpecification,
-  AdminSchema,
-  EntityLike,
-  PublishedEntity,
+import {
+  AdminEntityStatus,
+  normalizeEntityFields,
+  type AdminEntity,
+  type AdminEntityCreate,
+  type AdminEntityUpsert,
+  type AdminSchema,
+  type PublishedEntity,
 } from '@dossierhq/core';
-import { AdminEntityStatus, assertIsDefined } from '@dossierhq/core';
 import { assertEquals } from '../Asserts.js';
 import type {
   AdminChangeValidations,
@@ -234,16 +234,18 @@ export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = 
 };
 
 export function adminToPublishedEntity<T extends AppAdminEntity>(
-  schema: AdminSchema,
+  adminSchema: AdminSchema,
   entity: T,
 ): AppPublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);
+
+  const result = normalizeEntityFields(adminSchema.toPublishedSchema(), [], entity as AdminEntity);
+
   const {
     id,
     info: { name, type, authKey, validPublished, createdAt },
-    fields,
   } = entity;
-  let publishedEntity: PublishedEntity = {
+  const publishedEntity: PublishedEntity = {
     id,
     info: {
       type,
@@ -252,52 +254,8 @@ export function adminToPublishedEntity<T extends AppAdminEntity>(
       valid: validPublished ?? false,
       createdAt,
     },
-    fields: fields as unknown as Record<string, unknown>,
+    fields: result.valueOrThrow() as unknown as PublishedEntity['fields'],
   };
-  publishedEntity = deepMapEntity(schema, publishedEntity, {
-    mapField: (fieldSpec, value) => {
-      if (fieldSpec.adminOnly) return undefined;
-      return value;
-    },
-  });
-  return publishedEntity as unknown as AppPublishedEntity;
-}
 
-interface DeepMapMapper {
-  mapField: (
-    fieldSpec: AdminFieldSpecification,
-    value: Readonly<unknown> | null,
-  ) => Readonly<unknown> | null | undefined;
-}
-
-//TODO prototype for a generic deep map function
-//TODO remove adminOnly fields from value items
-function deepMapEntity<T extends EntityLike>(
-  schema: AdminSchema,
-  entity: T,
-  mapper: DeepMapMapper,
-): T {
-  const entityTypeSpec = schema.getEntityTypeSpecification(entity.info.type);
-  assertIsDefined(entityTypeSpec);
-
-  let changedFields = false;
-  const newFields: Record<string, unknown> = {};
-  for (const fieldSpec of entityTypeSpec.fields) {
-    const value = entity.fields[fieldSpec.name] as Readonly<unknown>;
-    const mappedValue = mapper.mapField(fieldSpec, value);
-    if (mappedValue !== value) {
-      changedFields = true;
-    }
-
-    // If undefined, delete the field.
-    if (mappedValue !== undefined) {
-      newFields[fieldSpec.name] = mappedValue;
-    }
-  }
-
-  if (!changedFields) {
-    return entity;
-  }
-
-  return { ...entity, fields: newFields };
+  return publishedEntity as AppPublishedEntity;
 }
