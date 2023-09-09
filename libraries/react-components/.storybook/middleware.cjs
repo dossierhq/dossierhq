@@ -9,8 +9,8 @@ const {
   notOk,
 } = require('@dossierhq/core');
 const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@dossierhq/server');
-const { createDatabase, createSqlite3Adapter } = require('@dossierhq/sqlite3');
-const { Database } = require('sqlite3');
+const { createBetterSqlite3Adapter } = require('@dossierhq/better-sqlite3');
+const Database = require('better-sqlite3');
 const bodyParser = require('body-parser');
 const { copyFileSync } = require('node:fs');
 
@@ -27,12 +27,9 @@ async function getServer() {
         `Resetting database by copying ${SOURCE_DATABASE_PATH} to ${SQLITE_DATABASE_PATH}`,
       );
       copyFileSync(SOURCE_DATABASE_PATH, SQLITE_DATABASE_PATH);
-      const databaseResult = await createDatabase({ logger }, Database, {
-        filename: SQLITE_DATABASE_PATH,
-      });
-      if (databaseResult.isError()) return databaseResult;
+      const database = new Database(SQLITE_DATABASE_PATH);
 
-      const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value, {
+      const adapterResult = await createBetterSqlite3Adapter({ logger }, database, {
         migrate: true,
         fts: { version: 'fts4' },
         journalMode: 'wal',

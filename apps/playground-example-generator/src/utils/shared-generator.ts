@@ -1,3 +1,7 @@
+import {
+  createBetterSqlite3Adapter,
+  type SqliteDatabaseOptimizationOptions,
+} from '@dossierhq/better-sqlite3';
 import type {
   AdminClient,
   AdminClientMiddleware,
@@ -6,18 +10,13 @@ import type {
   ClientContext,
   ValueItem,
 } from '@dossierhq/core';
-import { LoggingClientMiddleware, NoOpLogger, createConsoleLogger } from '@dossierhq/core';
+import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
-import {
-  createDatabase,
-  createSqlite3Adapter,
-  type SqliteDatabaseOptimizationOptions,
-} from '@dossierhq/sqlite3';
+import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
+import BetterSqlite3, { type Database } from 'better-sqlite3';
 import { unlink } from 'fs/promises';
-import Sqlite from 'sqlite3';
 
-export async function createNewDatabase(databasePath: string) {
+export async function createNewDatabase(databasePath: string): Promise<Database> {
   try {
     // delete existing database
     await unlink(databasePath);
@@ -25,17 +24,13 @@ export async function createNewDatabase(databasePath: string) {
     // ignore
   }
 
-  const context = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(context, Sqlite.Database, {
-    filename: databasePath,
-  });
-  return databaseResult.valueOrThrow();
+  return new BetterSqlite3(databasePath);
 }
 
 export async function createAdapterAndServer<
   TAdminClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
 >(
-  database: Sqlite.Database,
+  database: Database,
   schema: AdminSchemaSpecificationUpdate,
 ): Promise<{
   adminClient: TAdminClient;
@@ -43,7 +38,7 @@ export async function createAdapterAndServer<
   server: Server<SqliteDatabaseOptimizationOptions>;
 }> {
   const databaseAdapter = (
-    await createSqlite3Adapter({ logger: NoOpLogger }, database, {
+    await createBetterSqlite3Adapter({ logger: NoOpLogger }, database, {
       migrate: true,
       fts: {
         version: 'fts4', // fts5 is not supported by sql.js used in the browser

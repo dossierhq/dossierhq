@@ -137,33 +137,32 @@ importers:
 
   ../../apps/playground-example-generator:
     specifiers:
+      '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/server': workspace:*
-      '@dossierhq/sqlite3': workspace:*
       '@dossierhq/typescript-generator': workspace:*
       '@faker-js/faker': ~8.0.2
       '@rushstack/heft': 0.58.2
-      '@types/sqlite3': ~3.1.8
+      '@types/better-sqlite3': ~7.6.4
       '@types/uuid': ~9.0.3
+      better-sqlite3: ~8.6.0
       cloudinary: ~1.40.0
       dotenv: ~16.3.1
       eslint: ~8.48.0
       prettier: 3.0.3
-      sqlite3: 5.1.4
       ts-node: ~10.9.1
       tslib: ~2.6.2
       typescript: ~5.2.2
       uuid: ~9.0.0
     dependencies:
+      '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/server': link:../../libraries/server
-      '@dossierhq/sqlite3': link:../../libraries/sqlite3
       '@faker-js/faker': 8.0.2
       cloudinary: 1.40.0
       dotenv: 16.3.1
-      sqlite3: 5.1.4
       tslib: 2.6.2
       uuid: 9.0.0
     devDependencies:
@@ -171,8 +170,9 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/typescript-generator': link:../../libraries/typescript-generator
       '@rushstack/heft': 0.58.2
-      '@types/sqlite3': 3.1.8
+      '@types/better-sqlite3': 7.6.4
       '@types/uuid': 9.0.3
+      better-sqlite3: 8.6.0
       eslint: 8.48.0
       prettier: 3.0.3
       ts-node: 10.9.1_typescript@5.2.2
@@ -276,37 +276,37 @@ importers:
 
   ../../examples/foo:
     specifiers:
+      '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/graphql': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/server': workspace:*
-      '@dossierhq/sqlite3': workspace:*
       '@rushstack/heft': 0.58.2
+      '@types/better-sqlite3': ~7.6.4
       '@types/express': ~4.17.17
-      '@types/sqlite3': ~3.1.8
+      better-sqlite3: ~8.6.0
       eslint: ~8.48.0
       express: ~4.18.2
       graphql-http: ~1.22.0
       prettier: 3.0.3
-      sqlite3: 5.1.4
       tslib: ~2.6.2
       typescript: ~5.2.2
     dependencies:
+      '@dossierhq/better-sqlite3': link:../../libraries/better-sqlite3
       '@dossierhq/core': link:../../libraries/core
       '@dossierhq/graphql': link:../../libraries/graphql
       '@dossierhq/server': link:../../libraries/server
-      '@dossierhq/sqlite3': link:../../libraries/sqlite3
+      better-sqlite3: 8.6.0
       express: 4.18.2
       graphql-http: 1.22.0
-      sqlite3: 5.1.4
       tslib: 2.6.2
     devDependencies:
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@rushstack/heft': 0.58.2
+      '@types/better-sqlite3': 7.6.4
       '@types/express': 4.17.17
-      '@types/sqlite3': 3.1.8
       eslint: 8.48.0
       prettier: 3.0.3
       typescript: 5.2.2
@@ -732,19 +732,19 @@ importers:
 
   ../../libraries/graphql:
     specifiers:
+      '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/core-vitest': workspace:*
       '@dossierhq/eslint-config-generic': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/server': workspace:*
-      '@dossierhq/sqlite3': workspace:*
       '@rushstack/heft': 0.58.2
-      '@types/sqlite3': ~3.1.8
+      '@types/better-sqlite3': ~7.6.4
       '@types/uuid': ~9.0.3
+      better-sqlite3: ~8.6.0
       eslint: ~8.48.0
       graphql: ~16.8.0
       prettier: 3.0.3
-      sqlite3: 5.1.4
       tslib: ~2.6.2
       typescript: ~5.2.2
       uuid: ~9.0.0
@@ -754,17 +754,17 @@ importers:
       graphql: 16.8.0
       tslib: 2.6.2
     devDependencies:
+      '@dossierhq/better-sqlite3': link:../better-sqlite3
       '@dossierhq/core-vitest': link:../core-vitest
       '@dossierhq/eslint-config-generic': link:../../stack/eslint-config-generic
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/server': link:../server
-      '@dossierhq/sqlite3': link:../sqlite3
       '@rushstack/heft': 0.58.2
-      '@types/sqlite3': 3.1.8
+      '@types/better-sqlite3': 7.6.4
       '@types/uuid': 9.0.3
+      better-sqlite3: 8.6.0
       eslint: 8.48.0
       prettier: 3.0.3
-      sqlite3: 5.1.4
       typescript: 5.2.2
       uuid: 9.0.0
       vitest: 0.34.4
@@ -921,12 +921,12 @@ importers:
 
   ../../libraries/react-components:
     specifiers:
+      '@dossierhq/better-sqlite3': workspace:*
       '@dossierhq/core': workspace:*
       '@dossierhq/design': workspace:*
       '@dossierhq/heft-node-rig': workspace:*
       '@dossierhq/leaflet': workspace:*
       '@dossierhq/server': workspace:*
-      '@dossierhq/sqlite3': workspace:*
       '@lexical/code': 0.11.3
       '@lexical/link': 0.11.3
       '@lexical/list': 0.11.3
@@ -986,9 +986,9 @@ importers:
       swr: 2.2.2_react@18.2.0
       tslib: 2.6.2
     devDependencies:
+      '@dossierhq/better-sqlite3': link:../better-sqlite3
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/server': link:../server
-      '@dossierhq/sqlite3': link:../sqlite3
       '@rushstack/heft': 0.58.2
       '@storybook/addon-actions': 7.4.0_zkisbtryv3xtasf42ecsrjh3ky
       '@storybook/addon-essentials': 7.4.0_zkisbtryv3xtasf42ecsrjh3ky

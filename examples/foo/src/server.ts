@@ -2,21 +2,16 @@ import type { Logger } from '@dossierhq/core';
 import { AdminSchema } from '@dossierhq/core';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
 import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
-import Sqlite from 'sqlite3';
+import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
+import Database from 'better-sqlite3';
 import { schemaSpecification } from './schema.js';
-
-const { Database } = Sqlite;
 
 const SQLITE3_DATABASE = 'data/foo.sqlite';
 
 export async function initializeServer(logger: Logger) {
-  const databaseResult = await createDatabase({ logger }, Database, {
-    filename: SQLITE3_DATABASE,
-  });
-  if (databaseResult.isError()) return databaseResult;
+  const database = new Database(SQLITE3_DATABASE);
 
-  const adapterResult = await createSqlite3Adapter({ logger }, databaseResult.value, {
+  const adapterResult = await createBetterSqlite3Adapter({ logger }, database, {
     migrate: true,
     fts: { version: 'fts5' },
     journalMode: 'wal',

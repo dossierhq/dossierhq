@@ -1,3 +1,4 @@
+import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import type {
   AdminClient,
   AdminSchemaSpecificationUpdate,
@@ -8,11 +9,8 @@ import type {
 import { AdminSchema, NoOpLogger, assertOkResult } from '@dossierhq/core';
 import type { AuthorizationAdapter } from '@dossierhq/server';
 import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
-import { createDatabase, createSqlite3Adapter } from '@dossierhq/sqlite3';
-import Sqlite from 'sqlite3';
+import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
-
-const { Database } = Sqlite;
 
 export interface TestServerWithSession {
   schema: AdminSchema;
@@ -35,9 +33,8 @@ async function setUpRealServerWithSession(
   databasePath: string,
 ): Promise<TestServerWithSession> {
   const serverContext = { logger: NoOpLogger };
-  const databaseResult = await createDatabase(serverContext, Database, { filename: databasePath });
-  assertOkResult(databaseResult);
-  const adapterResult = await createSqlite3Adapter(serverContext, databaseResult.value, {
+  const database = new Database(databasePath);
+  const adapterResult = await createBetterSqlite3Adapter(serverContext, database, {
     migrate: true,
     fts: { version: 'fts5' },
     journalMode: 'wal',
