@@ -20,8 +20,14 @@ import type {
   NamedTypeNode,
   SelectionNode,
 } from 'graphql';
-import { GraphQLObjectType, GraphQLUnionType, Kind, getNamedType, isCompositeType } from 'graphql';
-import { getArgumentValues } from 'graphql/execution/values';
+import {
+  GraphQLObjectType,
+  GraphQLUnionType,
+  Kind,
+  getArgumentValues,
+  getNamedType,
+  isCompositeType,
+} from 'graphql';
 
 // From https://github.com/graphile/graphile-engine/blob/v4/packages/graphql-parse-resolve-info/src/index.ts
 // Modified to not use 'assert' and 'debug' packages for browser compatibility
