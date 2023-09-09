@@ -1,4 +1,11 @@
-import { notOk, ok, type EntityReference, type UniqueIndexReference } from '@dossierhq/core';
+import {
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type Result,
+  type UniqueIndexReference,
+} from '@dossierhq/core';
 
 export function validateEntityReference(reference: UniqueIndexReference | EntityReference) {
   if ('index' in reference) {
@@ -14,4 +21,19 @@ export function validateEntityReference(reference: UniqueIndexReference | Entity
     }
   }
   return ok(undefined);
+}
+
+export function ensureRequired(
+  parameters: Record<string, unknown>,
+): Result<true, typeof ErrorType.BadRequest> {
+  const missing: string[] = [];
+  for (const [parameter, value] of Object.entries(parameters)) {
+    if (!value) {
+      missing.push(parameter);
+    }
+  }
+  if (missing.length === 0) {
+    return ok(true);
+  }
+  return notOk.BadRequest(`Missing ${missing.join(', ')}`);
 }

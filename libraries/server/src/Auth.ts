@@ -7,7 +7,7 @@ import type {
   ResolvedAuthKey,
   Session,
 } from '@dossierhq/database-adapter';
-import { ensureRequired } from './Assertions.js';
+import { ensureRequired } from './utils/ValidationUtils.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';
 
