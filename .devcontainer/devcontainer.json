@@ -9,7 +9,7 @@
   "features": {
     // Add an asdf plugin here to install asdf. The rest are setup by post-create.sh/.tool-versions
     "ghcr.io/devcontainers-contrib/features/asdf-package:1": {
-      "plugin": "sqlite"
+      "plugin": "bun"
     }
   },
 

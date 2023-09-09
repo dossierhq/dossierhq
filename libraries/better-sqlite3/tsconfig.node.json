@@ -2,5 +2,5 @@
   "compilerOptions": {
     "strictNullChecks": true
   },
-  "include": [".eslintrc.cjs", "vitest.config.js"]
+  "include": [".eslintrc.cjs", "vitest.config.js", "scripts/*"]
 }
