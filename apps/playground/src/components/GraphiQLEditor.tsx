@@ -33,7 +33,7 @@ const DEFAULT_QUERY = `# Welcome to GraphiQL
 #
 
 {
-  adminSampleEntities(count: 10) {
+  adminEntitiesSample(count: 10) {
     totalCount
     items {
       __typename
