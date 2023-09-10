@@ -37,34 +37,53 @@ export async function adminCreateEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, entity, options, null);
+  return doCreateEntity(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    entity,
+    !!options?.publish,
+    null,
+  );
 }
 
-export function adminCreateEntitySyncEvent(
+export async function adminCreateEntitySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: CreateEntitySyncEvent,
-) {
-  return doIt(
+): PromiseResult<
+  AdminEntityCreatePayload,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
+  if (adminSchema.spec.version !== syncEvent.entity.info.schemaVersion) {
+    return notOk.BadRequest(
+      `Schema version mismatch: expected ${adminSchema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,
+    );
+  }
+  return doCreateEntity(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
     context,
     syncEvent.entity,
-    { publish: syncEvent.type === EventType.createAndPublishEntity },
+    syncEvent.type === EventType.createAndPublishEntity,
     syncEvent,
   );
 }
 
-async function doIt(
+async function doCreateEntity(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   entity: AdminEntityCreate,
-  options: AdminEntityMutationOptions | undefined,
+  publish: boolean,
   syncEvent: CreateEntitySyncEvent | null,
 ): PromiseResult<
   AdminEntityCreatePayload,
@@ -93,6 +112,13 @@ async function doIt(
     createEntity.info.authKey,
   );
   if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
+  const resolvedAuthKey = resolvedAuthKeyResult.value;
+
+  if (syncEvent && syncEvent.entity.info.resolvedAuthKey !== resolvedAuthKey.resolvedAuthKey) {
+    return notOk.BadRequest(
+      `Resolved auth key mismatch for ${resolvedAuthKey.authKey}: expected ${syncEvent.entity.info.resolvedAuthKey}, got ${resolvedAuthKey.resolvedAuthKey}`,
+    );
+  }
 
   // encode fields
   const encodeResult = await encodeAdminEntity(adminSchema, databaseAdapter, context, createEntity);
@@ -118,8 +144,8 @@ async function doIt(
         name: encodeEntityPayload.name,
         version,
         session: context.session,
-        resolvedAuthKey: resolvedAuthKeyResult.value,
-        publish: !!options?.publish,
+        resolvedAuthKey,
+        publish,
         schemaVersion: adminSchema.spec.version,
         encodeVersion: encodeEntityPayload.encodeVersion,
         fields: encodeEntityPayload.fields,
@@ -173,7 +199,7 @@ async function doIt(
       );
     }
 
-    if (options?.publish) {
+    if (publish) {
       const publishResult = await adminPublishEntityAfterMutation(
         adminSchema,
         authorizationAdapter,

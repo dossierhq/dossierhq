@@ -50,7 +50,7 @@ export function adminUnpublishEntities(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return doIt(databaseAdapter, authorizationAdapter, context, references, null);
+  return doUnpublishEntities(databaseAdapter, authorizationAdapter, context, references, null);
 }
 
 export function adminUnpublishEntitiesSyncEvent(
@@ -59,10 +59,16 @@ export function adminUnpublishEntitiesSyncEvent(
   context: SessionContext,
   syncEvent: UnpublishEntitiesSyncEvent,
 ) {
-  return doIt(databaseAdapter, authorizationAdapter, context, syncEvent.entities, syncEvent);
+  return doUnpublishEntities(
+    databaseAdapter,
+    authorizationAdapter,
+    context,
+    syncEvent.entities,
+    syncEvent,
+  );
 }
 
-async function doIt(
+async function doUnpublishEntities(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,

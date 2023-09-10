@@ -36,17 +36,31 @@ export async function adminUpdateEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, entity, options, null);
+  return doUpdateEntity(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    entity,
+    options,
+    null,
+  );
 }
 
-export function adminUpdateEntitySyncEvent(
+export async function adminUpdateEntitySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: UpdateEntitySyncEvent,
 ) {
-  return doIt(
+  if (adminSchema.spec.version !== syncEvent.entity.info.schemaVersion) {
+    return notOk.BadRequest(
+      `Schema version mismatch: expected ${adminSchema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,
+    );
+  }
+
+  return doUpdateEntity(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
@@ -57,7 +71,7 @@ export function adminUpdateEntitySyncEvent(
   );
 }
 
-async function doIt(
+async function doUpdateEntity(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

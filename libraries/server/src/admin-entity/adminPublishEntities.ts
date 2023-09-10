@@ -71,7 +71,15 @@ export async function adminPublishEntities(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, references, true, null);
+  return doPublishEntities(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    references,
+    true,
+    null,
+  );
 }
 
 export function adminPublishEntitiesSyncEvent(
@@ -81,7 +89,7 @@ export function adminPublishEntitiesSyncEvent(
   context: SessionContext,
   syncEvent: PublishEntitiesSyncEvent,
 ) {
-  return doIt(
+  return doPublishEntities(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
@@ -103,7 +111,7 @@ export async function adminPublishEntityAfterMutation(
   AdminEntityPublishPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const publishResult = await doIt(
+  const publishResult = await doPublishEntities(
     adminSchema,
     authorizationAdapter,
     databaseAdapter,
@@ -126,7 +134,7 @@ export async function adminPublishEntityAfterMutation(
   return ok(publishResult.value[0]);
 }
 
-async function doIt(
+async function doPublishEntities(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

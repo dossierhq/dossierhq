@@ -23,7 +23,7 @@ export function adminArchiveEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return doIt(databaseAdapter, authorizationAdapter, context, reference, null);
+  return doArchiveEntity(databaseAdapter, authorizationAdapter, context, reference, null);
 }
 
 export function adminArchiveEntitySyncEvent(
@@ -32,10 +32,16 @@ export function adminArchiveEntitySyncEvent(
   context: SessionContext,
   syncEvent: ArchiveEntitySyncEvent,
 ) {
-  return doIt(databaseAdapter, authorizationAdapter, context, syncEvent.entity, syncEvent);
+  return doArchiveEntity(
+    databaseAdapter,
+    authorizationAdapter,
+    context,
+    syncEvent.entity,
+    syncEvent,
+  );
 }
 
-async function doIt(
+async function doArchiveEntity(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,

@@ -1,11 +1,13 @@
-import type {
-  AdminEntityUnarchivePayload,
-  EntityReference,
-  ErrorType,
-  PromiseResult,
-  UnarchiveEntitySyncEvent,
+import {
+  AdminEntityStatus,
+  EventType,
+  ok,
+  type AdminEntityUnarchivePayload,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+  type UnarchiveEntitySyncEvent,
 } from '@dossierhq/core';
-import { AdminEntityStatus, EventType, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -23,7 +25,7 @@ export function adminUnarchiveEntity(
   | typeof ErrorType.NotFound
   | typeof ErrorType.Generic
 > {
-  return doIt(databaseAdapter, authorizationAdapter, context, reference, null);
+  return doUnarchiveEntity(databaseAdapter, authorizationAdapter, context, reference, null);
 }
 
 export function adminUnarchiveEntitySyncEvent(
@@ -32,10 +34,16 @@ export function adminUnarchiveEntitySyncEvent(
   context: SessionContext,
   syncEvent: UnarchiveEntitySyncEvent,
 ) {
-  return doIt(databaseAdapter, authorizationAdapter, context, syncEvent.entity, syncEvent);
+  return doUnarchiveEntity(
+    databaseAdapter,
+    authorizationAdapter,
+    context,
+    syncEvent.entity,
+    syncEvent,
+  );
 }
 
-async function doIt(
+async function doUnarchiveEntity(
   databaseAdapter: DatabaseAdapter,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
