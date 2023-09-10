@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "vite --force --port 3002",
-    "build": "./scripts/create-dossier-docs-database-if-missing.sh && tsc && npm run eslint:check && (vite build 2>&1)",
+    "build": "./scripts/sync-dossier-docs-database.sh && tsc && npm run eslint:check && (vite build 2>&1)",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "preview": "vite --port 3002 preview"
