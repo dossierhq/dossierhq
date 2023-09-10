@@ -3,6 +3,7 @@ import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
 import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
+import { unlink } from 'node:fs/promises';
 import Sqlite from 'sqlite3';
 import type { Sqlite3DatabaseAdapter } from '../../Sqlite3Adapter.js';
 import { createSqlite3Adapter } from '../../Sqlite3Adapter.js';
@@ -50,6 +51,10 @@ export async function initializeEmptySqlite3Server(
   filename: LooseAutocomplete<':memory:'>,
   mode?: number,
 ): PromiseResult<Server, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
+  if (filename !== ':memory:') {
+    await unlink(filename);
+  }
+
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, mode);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
@@ -57,8 +62,6 @@ export async function initializeEmptySqlite3Server(
     databaseAdapter: databaseAdapterResult.value,
     authorizationAdapter: createTestAuthorizationAdapter(),
   });
-
-  //TODO clear database if filename is not :memory:
 }
 
 async function createSqlite3TestAdapter(

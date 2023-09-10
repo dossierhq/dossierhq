@@ -4,6 +4,7 @@ import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierh
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
+import { unlink } from 'node:fs/promises';
 import type { BetterSqlite3DatabaseAdapter } from '../../BetterSqlite3Adapter.js';
 import { createBetterSqlite3Adapter } from '../../BetterSqlite3Adapter.js';
 
@@ -49,6 +50,10 @@ export async function initializeEmptySqlite3Server(
   filename: LooseAutocomplete<':memory:'>,
   options?: Database.Options,
 ): PromiseResult<Server, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
+  if (filename !== ':memory:') {
+    await unlink(filename);
+  }
+
   const databaseAdapterResult = await createSqlite3TestAdapter(filename, options);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
@@ -58,8 +63,6 @@ export async function initializeEmptySqlite3Server(
   });
   if (createServerResult.isError()) return createServerResult;
   const server = createServerResult.value;
-
-  //TODO clear db if filename is not :memory:
 
   return ok(server);
 }

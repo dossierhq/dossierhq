@@ -1,11 +1,12 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
 import type { TestSuite } from '@dossierhq/integration-test';
-import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
+import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { Database } from 'bun:sqlite';
 import { describe, it } from 'bun:test';
+import { unlink } from 'fs/promises';
 import { createBunSqliteAdapter } from '../BunSqliteAdapter.js';
 
 export interface ServerInit {
@@ -57,6 +58,10 @@ export async function initializeIntegrationTestServer(
 export async function initializeEmptyIntegrationTestServer(
   filename: string,
 ): PromiseResult<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  if (filename !== ':memory:') {
+    await unlink(filename);
+  }
+
   const database = Database.open(filename);
   return await createServer({
     databaseAdapter: (
@@ -68,6 +73,4 @@ export async function initializeEmptyIntegrationTestServer(
     ).valueOrThrow(),
     authorizationAdapter: createTestAuthorizationAdapter(),
   });
-
-  //TODO clear db if filename is not :memory:
 }
