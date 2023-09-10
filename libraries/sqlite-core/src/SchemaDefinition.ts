@@ -72,10 +72,10 @@ const VERSION_1: SchemaVersionDefinition = {
 ) STRICT`,
     (options) => `CREATE VIRTUAL TABLE entities_latest_fts USING ${options.fts.version} (
     content${options.fts.tokenizer ? `, tokenize=${options.fts.tokenizer}` : ''}
-  )`,
+)`,
     (options) => `CREATE VIRTUAL TABLE entities_published_fts USING ${options.fts.version} (
     content${options.fts.tokenizer ? `, tokenize=${options.fts.tokenizer}` : ''}
-  )`,
+)`,
     `CREATE TABLE entity_versions (
     id INTEGER PRIMARY KEY,
     entities_id INTEGER NOT NULL,

@@ -48,17 +48,11 @@ async function getUnappliedEvents(adminClient: AppAdminClient) {
   return { headId, unappliedDiskFiles, unappliedDatabaseEvents };
 }
 
-async function applyDiskEvents(
-  server: Server,
-  headId: string | null,
-  unappliedDiskFiles: { path: string }[],
-) {
-  let previousEventId = headId;
+async function applyDiskEvents(server: Server, unappliedDiskFiles: { path: string }[]) {
   for (const { path } of unappliedDiskFiles) {
     const event: JsonSyncEvent = JSON.parse(await readFile(path, { encoding: 'utf8' }));
-    const result = await server.applySyncEvent(previousEventId, convertJsonSyncEvent(event));
+    const result = await server.applySyncEvent(convertJsonSyncEvent(event));
     result.throwIfError();
-    previousEventId = event.id;
   }
 
   let processNextDirtyEntity = true;
@@ -82,8 +76,7 @@ async function main(filename: string, args: typeof parsedArgs) {
     });
     const adminClient = server.createAdminClient<AppAdminClient>(async () => authResult);
 
-    const { headId, unappliedDiskFiles, unappliedDatabaseEvents } =
-      await getUnappliedEvents(adminClient);
+    const { unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(adminClient);
 
     if (!args.values['skip-updating-events-on-disk']) {
       if (unappliedDatabaseEvents.length > 0) {
@@ -94,7 +87,7 @@ async function main(filename: string, args: typeof parsedArgs) {
 
     if (unappliedDiskFiles.length > 0) {
       console.log(`Applying ${unappliedDiskFiles.length} disk events`);
-      await applyDiskEvents(server, headId, unappliedDiskFiles);
+      await applyDiskEvents(server, unappliedDiskFiles);
     }
   } finally {
     (await server.shutdown()).throwIfError();

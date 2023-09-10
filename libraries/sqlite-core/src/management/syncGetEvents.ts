@@ -53,7 +53,7 @@ export async function managementSyncGetEvents(
   const entitiesInfoResult = await getEntityInfoForEvents(database, context, eventRows);
   if (entitiesInfoResult.isError()) return entitiesInfoResult;
 
-  const convertResult = convertEventRowsToPayload(eventRows, entitiesInfoResult.value);
+  const convertResult = convertEventRowsToPayload(query.after, eventRows, entitiesInfoResult.value);
   if (convertResult.isError()) return convertResult;
 
   return ok({ events: convertResult.value, hasMore });
@@ -211,12 +211,16 @@ async function getEntityInfoForEvents(
 }
 
 function convertEventRowsToPayload(
+  previousId: string | null,
   eventRows: EventRow[],
   entityInfo: EventEntityInfoPayload,
 ): Result<SyncEvent[], typeof ErrorType.Generic> {
   const events: SyncEvent[] = [];
   for (const eventRow of eventRows) {
     const { type } = eventRow;
+
+    const parentId = previousId;
+    previousId = eventRow.uuid;
 
     if (type === EventType.updateSchema) {
       const schemaSpecification: AdminSchemaSpecificationWithMigrations = {
@@ -226,7 +230,9 @@ function convertEventRowsToPayload(
           'version'
         >),
       };
-      events.push(makeEvent<UpdateSchemaSyncEvent>(type, eventRow, { schemaSpecification }));
+      events.push(
+        makeEvent<UpdateSchemaSyncEvent>(type, parentId, eventRow, { schemaSpecification }),
+      );
       continue;
     }
 
@@ -238,7 +244,7 @@ function convertEventRowsToPayload(
       case EventType.archiveEntity: {
         const entityInfo = eventEntityInfo[0];
         events.push(
-          makeEvent<ArchiveEntitySyncEvent>(type, eventRow, {
+          makeEvent<ArchiveEntitySyncEvent>(type, parentId, eventRow, {
             entity: { id: entityInfo.uuid, version: entityInfo.version },
           }),
         );
@@ -251,7 +257,7 @@ function convertEventRowsToPayload(
           return notOk.Generic('Cannot find extended info about entity');
         }
         events.push(
-          makeEvent<CreateEntitySyncEvent>(type, eventRow, {
+          makeEvent<CreateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
               id: entityInfo.uuid,
               info: {
@@ -269,7 +275,7 @@ function convertEventRowsToPayload(
       }
       case EventType.publishEntities: {
         events.push(
-          makeEvent<PublishEntitiesSyncEvent>(type, eventRow, {
+          makeEvent<PublishEntitiesSyncEvent>(type, parentId, eventRow, {
             entities: eventEntityInfo.map((it) => ({
               id: it.uuid,
               version: it.version,
@@ -282,7 +288,7 @@ function convertEventRowsToPayload(
       case EventType.unarchiveEntity: {
         const entityInfo = eventEntityInfo[0];
         events.push(
-          makeEvent<UnarchiveEntitySyncEvent>(type, eventRow, {
+          makeEvent<UnarchiveEntitySyncEvent>(type, parentId, eventRow, {
             entity: { id: entityInfo.uuid, version: entityInfo.version },
           }),
         );
@@ -290,7 +296,7 @@ function convertEventRowsToPayload(
       }
       case EventType.unpublishEntities: {
         events.push(
-          makeEvent<UnpublishEntitiesSyncEvent>(type, eventRow, {
+          makeEvent<UnpublishEntitiesSyncEvent>(type, parentId, eventRow, {
             entities: eventEntityInfo.map((it) => ({
               id: it.uuid,
               version: it.version,
@@ -306,7 +312,7 @@ function convertEventRowsToPayload(
           return notOk.Generic('Cannot find extended info about entity');
         }
         events.push(
-          makeEvent<UpdateEntitySyncEvent>(type, eventRow, {
+          makeEvent<UpdateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
               id: entityInfo.uuid,
               info: {
@@ -329,11 +335,13 @@ function convertEventRowsToPayload(
 
 function makeEvent<TEvent extends SyncEvent>(
   type: TEvent['type'],
+  parentId: string | null,
   eventRow: EventRow,
-  specific: Omit<TEvent, 'type' | 'id' | 'createdAt' | 'createdBy'>,
+  specific: Omit<TEvent, 'type' | 'id' | 'parentId' | 'createdAt' | 'createdBy'>,
 ) {
   return {
     id: eventRow.uuid,
+    parentId,
     type,
     createdAt: new Date(eventRow.created_at),
     createdBy: eventRow.created_by,

@@ -101,6 +101,7 @@ describe('convertJsonSyncEvent()', () => {
 
     const event: UpdateSchemaSyncEvent = {
       id: '4-5-6-7',
+      parentId: '1-2-3-4',
       type: EventType.updateSchema,
       createdAt: new Date(),
       createdBy: '1-2-3-4',

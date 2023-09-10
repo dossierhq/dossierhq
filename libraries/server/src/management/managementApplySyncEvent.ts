@@ -24,7 +24,6 @@ export async function managementApplySyncEvent(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  expectedHeadId: string | null,
   event: SyncEvent,
 ): PromiseResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   if (!(event.createdAt instanceof Date)) {
@@ -38,9 +37,9 @@ export async function managementApplySyncEvent(
     const headResult = await databaseAdapter.managementSyncGetHeadEventId(context);
     if (headResult.isError()) return headResult;
 
-    if (expectedHeadId !== headResult.value) {
+    if (event.parentId !== headResult.value) {
       return notOk.BadRequest(
-        `Expected head event ID to be ${expectedHeadId}, but was ${headResult.value}`,
+        `Expected head event ID to be ${event.parentId}, but was ${headResult.value}`,
       );
     }
 

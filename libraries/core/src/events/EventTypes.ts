@@ -57,7 +57,12 @@ export type SyncEvent =
   | ArchiveEntitySyncEvent
   | UnarchiveEntitySyncEvent;
 
-export interface UpdateSchemaSyncEvent extends EventShared<typeof EventType.updateSchema> {
+interface SyncEventShared<TEventType extends keyof typeof EventType>
+  extends EventShared<TEventType> {
+  parentId: string | null;
+}
+
+export interface UpdateSchemaSyncEvent extends SyncEventShared<typeof EventType.updateSchema> {
   schemaSpecification: AdminSchemaSpecificationWithMigrations;
 }
 
@@ -65,7 +70,7 @@ export interface CreateEntitySyncEvent<
   TEventType extends typeof EventType.createEntity | typeof EventType.createAndPublishEntity =
     | typeof EventType.createEntity
     | typeof EventType.createAndPublishEntity,
-> extends EventShared<TEventType> {
+> extends SyncEventShared<TEventType> {
   entity: {
     id: string;
     info: {
@@ -83,7 +88,7 @@ export interface UpdateEntitySyncEvent<
   TEventType extends typeof EventType.updateEntity | typeof EventType.updateAndPublishEntity =
     | typeof EventType.updateEntity
     | typeof EventType.updateAndPublishEntity,
-> extends EventShared<TEventType> {
+> extends SyncEventShared<TEventType> {
   entity: {
     id: string;
     info: { name: string; version: number; schemaVersion: number };
@@ -91,7 +96,8 @@ export interface UpdateEntitySyncEvent<
   };
 }
 
-export interface PublishEntitiesSyncEvent extends EventShared<typeof EventType.publishEntities> {
+export interface PublishEntitiesSyncEvent
+  extends SyncEventShared<typeof EventType.publishEntities> {
   entities: {
     id: string;
     version: number;
@@ -100,14 +106,15 @@ export interface PublishEntitiesSyncEvent extends EventShared<typeof EventType.p
 }
 
 export interface UnpublishEntitiesSyncEvent
-  extends EventShared<typeof EventType.unpublishEntities> {
+  extends SyncEventShared<typeof EventType.unpublishEntities> {
   entities: EntityVersionReference[];
 }
 
-export interface ArchiveEntitySyncEvent extends EventShared<typeof EventType.archiveEntity> {
+export interface ArchiveEntitySyncEvent extends SyncEventShared<typeof EventType.archiveEntity> {
   entity: EntityVersionReference;
 }
 
-export interface UnarchiveEntitySyncEvent extends EventShared<typeof EventType.unarchiveEntity> {
+export interface UnarchiveEntitySyncEvent
+  extends SyncEventShared<typeof EventType.unarchiveEntity> {
   entity: EntityVersionReference;
 }

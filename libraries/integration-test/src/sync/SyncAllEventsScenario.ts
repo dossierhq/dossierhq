@@ -64,7 +64,7 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
 }
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient } = context;
+  const { sourceAdminClient, targetAdminClient, after } = context;
 
   const expectedSchemaSpecification: AdminSchemaSpecificationWithMigrations = {
     entityTypes: [
@@ -120,7 +120,12 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
   const createdBy = events[0].createdBy;
 
   assertSyncEventsEqual(events, [
-    { type: EventType.updateSchema, schemaSpecification: expectedSchemaSpecification, createdBy },
+    {
+      type: EventType.updateSchema,
+      parentId: after,
+      schemaSpecification: expectedSchemaSpecification,
+      createdBy,
+    },
   ]);
 
   // Check that the target schema is identical
@@ -134,7 +139,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
 }
 
 async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -154,6 +159,7 @@ async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
   assertSyncEventsEqual(events, [
     {
       type: EventType.createEntity,
+      parentId: after,
       createdBy,
       entity: {
         id,
@@ -177,7 +183,7 @@ async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
 }
 
 async function sync_allEventsScenario_3_createAndPublishEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_2;
 
@@ -200,6 +206,7 @@ async function sync_allEventsScenario_3_createAndPublishEntity(context: Scenario
   assertSyncEventsEqual(events, [
     {
       type: EventType.createAndPublishEntity,
+      parentId: after,
       createdBy,
       entity: {
         id,
@@ -223,7 +230,7 @@ async function sync_allEventsScenario_3_createAndPublishEntity(context: Scenario
 }
 
 async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -238,6 +245,7 @@ async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
   assertSyncEventsEqual(events, [
     {
       type: EventType.updateEntity,
+      parentId: after,
       createdBy,
       entity: {
         id,
@@ -259,7 +267,7 @@ async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
 }
 
 async function sync_allEventsScenario_5_updateAndPublishedEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_2;
 
@@ -277,6 +285,7 @@ async function sync_allEventsScenario_5_updateAndPublishedEntity(context: Scenar
   assertSyncEventsEqual(events, [
     {
       type: EventType.updateAndPublishEntity,
+      parentId: after,
       createdBy,
       entity: {
         id,
@@ -298,7 +307,7 @@ async function sync_allEventsScenario_5_updateAndPublishedEntity(context: Scenar
 }
 
 async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -312,6 +321,7 @@ async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext
   assertSyncEventsEqual(events, [
     {
       type: EventType.publishEntities,
+      parentId: after,
       createdBy,
       entities: [{ id, version: 1, publishedName: 'TitleOnly entity' }],
     },
@@ -326,7 +336,7 @@ async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext
 }
 
 async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -342,6 +352,7 @@ async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioConte
   assertSyncEventsEqual(events, [
     {
       type: EventType.unpublishEntities,
+      parentId: after,
       createdBy,
       entities: [{ id, version: 1 }],
     },
@@ -356,7 +367,7 @@ async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioConte
 }
 
 async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -375,6 +386,7 @@ async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) 
   assertSyncEventsEqual(events, [
     {
       type: EventType.archiveEntity,
+      parentId: after,
       createdBy,
       entity: { id, version: 2 },
     },
@@ -389,7 +401,7 @@ async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) 
 }
 
 async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy } = context;
+  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -408,6 +420,7 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
   assertSyncEventsEqual(events, [
     {
       type: EventType.unarchiveEntity,
+      parentId: after,
       createdBy,
       entity: { id, version: 2 },
     },
@@ -428,10 +441,10 @@ async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext
 
   const sourceSyncEvents = (await sourceServer.getSyncEvents({ after, limit: 10 })).valueOrThrow();
 
-  let expectedHead = after;
+  let nextAfter = after;
   for (const syncEvent of sourceSyncEvents.events) {
-    assertOkResult(await targetServer.applySyncEvent(expectedHead, syncEvent));
-    expectedHead = syncEvent.id;
+    assertOkResult(await targetServer.applySyncEvent(syncEvent));
+    nextAfter = syncEvent.id;
   }
 
   const targetSyncEvents = (await targetServer.getSyncEvents({ after, limit: 10 })).valueOrThrow();
@@ -449,7 +462,7 @@ async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext
 
   // Construct nextContext
 
-  const nextContext = { ...context, after: expectedHead };
+  const nextContext = { ...context, after: nextAfter };
 
   return { nextContext, events: sourceSyncEvents.events };
 }

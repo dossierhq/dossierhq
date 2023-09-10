@@ -79,7 +79,6 @@ export interface Server<
   ): PromiseResult<SyncEventsPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
   applySyncEvent(
-    expectedHeadId: string | null,
     event: SyncEvent,
   ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -276,7 +275,6 @@ export async function createServer<
     },
 
     async applySyncEvent(
-      expectedHeadId: string | null,
       event: SyncEvent,
     ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
       const authContext = serverImpl.createInternalContext(null);
@@ -298,7 +296,6 @@ export async function createServer<
         authorizationAdapter,
         databaseAdapter,
         contextResult.value,
-        expectedHeadId,
         event,
       );
       if (applyResult.isError()) return applyResult;
