@@ -7,10 +7,13 @@ import {
 import type { Server } from '@dossierhq/server';
 import { config } from 'dotenv';
 import { readFile } from 'fs/promises';
+import { parseArgs } from 'node:util';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { getCurrentSyncEventFiles, updateSyncEventsOnDisk } from '../utils/FileSystemSerializer.js';
 import type { AppAdminClient } from '../utils/SchemaTypes';
 import { initializeServer } from '../utils/SharedServerUtils.js';
+
+const DATA_DIR = new URL('../data', import.meta.url).pathname;
 
 // prefer .env.local file if exists, over .env file
 config({ path: '.env.local' });
@@ -18,7 +21,7 @@ config({ path: '.env' });
 
 async function getUnappliedEvents(adminClient: AppAdminClient) {
   // Get file events
-  const files = await getCurrentSyncEventFiles();
+  const files = await getCurrentSyncEventFiles(DATA_DIR);
   const diskEventIds = files.map((it) => it.id);
 
   const databaseEventIds: string[] = [];
@@ -57,9 +60,19 @@ async function applyDiskEvents(
     result.throwIfError();
     previousEventId = event.id;
   }
+
+  let processNextDirtyEntity = true;
+  while (processNextDirtyEntity) {
+    const processed = (await server.processNextDirtyEntity()).valueOrThrow();
+    if (!processed) {
+      processNextDirtyEntity = false;
+    }
+  }
+
+  (await server.optimizeDatabase({ all: true })).throwIfError();
 }
 
-async function main(filename: string) {
+async function main(filename: string, args: typeof parsedArgs) {
   const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     const authResult = await server.createSession({
@@ -72,9 +85,11 @@ async function main(filename: string) {
     const { headId, unappliedDiskFiles, unappliedDatabaseEvents } =
       await getUnappliedEvents(adminClient);
 
-    if (unappliedDatabaseEvents.length > 0) {
-      console.log(`Write ${unappliedDatabaseEvents.length} missing events to disk`);
-      await updateSyncEventsOnDisk(server);
+    if (!args.values['skip-updating-events-on-disk']) {
+      if (unappliedDatabaseEvents.length > 0) {
+        console.log(`Write ${unappliedDatabaseEvents.length} missing events to disk`);
+        await updateSyncEventsOnDisk(server, DATA_DIR);
+      }
     }
 
     if (unappliedDiskFiles.length > 0) {
@@ -86,4 +101,7 @@ async function main(filename: string) {
   }
 }
 
-await main(process.env.DATABASE_SQLITE_FILE!);
+const parsedArgs = parseArgs({
+  options: { ['skip-updating-events-on-disk']: { type: 'boolean' } },
+});
+await main(process.env.DATABASE_SQLITE_FILE!, parsedArgs);

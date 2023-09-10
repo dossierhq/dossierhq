@@ -1,6 +1,6 @@
 import { assertIsDefined } from '@dossierhq/core';
 import { ChangelogScreen } from '@dossierhq/react-components';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';
 
 export function ChangelogRoute() {

@@ -31,7 +31,7 @@ export async function getSessionContextForRequest(
   }
   const { context } = sessionResult.value;
   const adminClient = server.createAdminClient(context, [
-    createFilesystemAdminMiddleware(server, server.createAdminClient(context)),
+    createFilesystemAdminMiddleware(server, server.createAdminClient(context), 'data'),
   ]);
   const publishedClient = server.createPublishedClient(context);
   return ok({ adminClient, publishedClient });

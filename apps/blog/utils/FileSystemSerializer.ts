@@ -28,6 +28,7 @@ import path from 'node:path';
 export function createFilesystemAdminMiddleware(
   server: Server,
   backChannelAdminClient: AdminClient,
+  dataDir: string,
 ): AdminClientMiddleware<SessionContext> {
   return async (context: SessionContext, operation: AdminClientOperation) => {
     const result = await operation.next();
@@ -36,29 +37,29 @@ export function createFilesystemAdminMiddleware(
         switch (operation.name) {
           case AdminClientOperationName.createEntity: {
             const payload = result.value as OkFromResult<ReturnType<AdminClient['createEntity']>>;
-            await updateEntityFile(backChannelAdminClient, payload.entity);
+            await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
             break;
           }
           case AdminClientOperationName.updateEntity: {
             const payload = result.value as OkFromResult<ReturnType<AdminClient['updateEntity']>>;
-            await updateEntityFile(backChannelAdminClient, payload.entity);
+            await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
             break;
           }
           case AdminClientOperationName.updateSchemaSpecification: {
             const payload = result.value as OkFromResult<
               ReturnType<AdminClient['updateSchemaSpecification']>
             >;
-            await updateSchemaSpecification(payload.schemaSpecification);
+            await updateSchemaSpecification(payload.schemaSpecification, dataDir);
             break;
           }
           case AdminClientOperationName.upsertEntity: {
             const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
-            await updateEntityFile(backChannelAdminClient, payload.entity);
+            await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
             break;
           }
         }
         if (operation.modifies) {
-          await updateSyncEventsOnDisk(server);
+          await updateSyncEventsOnDisk(server, dataDir);
         }
       } catch (error) {
         operation.resolve(notOk.GenericUnexpectedException(context, error));
@@ -69,10 +70,13 @@ export function createFilesystemAdminMiddleware(
   };
 }
 
-async function updateSchemaSpecification(schemaSpecification: AdminSchemaSpecification) {
+async function updateSchemaSpecification(
+  schemaSpecification: AdminSchemaSpecification,
+  dataDir: string,
+) {
   const { version, ...schemaSpecificationWithoutVersion } = schemaSpecification;
 
-  const schemaSpecificationPath = path.join('data', 'schema.json');
+  const schemaSpecificationPath = path.join(dataDir, 'schema.json');
   const schemaSpecificationJson = JSON.stringify(schemaSpecificationWithoutVersion, null, 2) + '\n';
   await fs.writeFile(schemaSpecificationPath, schemaSpecificationJson);
 }
@@ -80,6 +84,7 @@ async function updateSchemaSpecification(schemaSpecification: AdminSchemaSpecifi
 async function updateEntityFile(
   backChannelAdminClient: AdminClient,
   entity: AdminEntity<string, object>,
+  dataDir: string,
 ) {
   const adminSchema = new AdminSchema(
     (await backChannelAdminClient.getSchemaSpecification()).valueOrThrow(),
@@ -87,7 +92,7 @@ async function updateEntityFile(
 
   const save = createCleanedUpEntity(adminSchema, entity);
 
-  const directory = path.join('data', 'entities', entity.info.type);
+  const directory = path.join(dataDir, 'entities', entity.info.type);
   const jsonFilePath = path.join(directory, `${entity.id}.json`);
   await fs.mkdir(directory, { recursive: true });
   await fs.writeFile(jsonFilePath, JSON.stringify(save, null, 2) + '\n');
@@ -202,8 +207,8 @@ async function loadEntity(adminClient: AdminClient, logger: Logger, entityPath: 
   return createResult;
 }
 
-export async function updateSyncEventsOnDisk(server: Server): Promise<void> {
-  const existingSyncEvents = await getCurrentSyncEventFiles();
+export async function updateSyncEventsOnDisk(server: Server, dataDir: string): Promise<void> {
+  const existingSyncEvents = await getCurrentSyncEventFiles(dataDir);
 
   let after: string | null = null;
   let nextIndex = 1;
@@ -221,7 +226,7 @@ export async function updateSyncEventsOnDisk(server: Server): Promise<void> {
     const { events, hasMore } = eventsResult.valueOrThrow();
 
     for (const event of events) {
-      await storeEvent(nextIndex++, event);
+      await storeEvent(nextIndex++, event, dataDir);
     }
     if (!hasMore) {
       break;
@@ -230,8 +235,8 @@ export async function updateSyncEventsOnDisk(server: Server): Promise<void> {
   }
 }
 
-export async function getCurrentSyncEventFiles() {
-  const syncEventsDir = path.join('data', 'events');
+export async function getCurrentSyncEventFiles(dataDir: string) {
+  const syncEventsDir = path.join(dataDir, 'events');
   const filenames = await fs.readdir(syncEventsDir, { encoding: 'utf8' });
   const files = filenames
     .filter((it) => it.endsWith('.json'))
@@ -252,11 +257,11 @@ export async function getCurrentSyncEventFiles() {
   return files;
 }
 
-async function storeEvent(index: number, event: SyncEvent) {
+async function storeEvent(index: number, event: SyncEvent, dataDir: string) {
   const { type } = event;
 
   const paddedIndex = index.toString().padStart(4, '0');
-  const filename = path.join('data', 'events', `${paddedIndex}_${type}_${event.id}.json`);
+  const filename = path.join(dataDir, 'events', `${paddedIndex}_${type}_${event.id}.json`);
   const json = JSON.stringify(event, null, 2) + '\n';
   await fs.writeFile(filename, json, { encoding: 'utf8' });
 }
