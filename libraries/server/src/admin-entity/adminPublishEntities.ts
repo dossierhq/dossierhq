@@ -10,11 +10,13 @@ import {
   ok,
   type AdminEntityPublishPayload,
   type AdminSchemaWithMigrations,
+  type CreateEntitySyncEvent,
   type EntityReference,
   type EntityVersionReference,
   type Location,
   type PromiseResult,
   type PublishEntitiesSyncEvent,
+  type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -62,7 +64,6 @@ export async function adminPublishEntities(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   references: EntityVersionReference[],
-  createEvents = true,
 ): PromiseResult<
   AdminEntityPublishPayload[],
   | typeof ErrorType.BadRequest
@@ -70,15 +71,7 @@ export async function adminPublishEntities(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  return doIt(
-    adminSchema,
-    authorizationAdapter,
-    databaseAdapter,
-    context,
-    references,
-    createEvents,
-    null,
-  );
+  return doIt(adminSchema, authorizationAdapter, databaseAdapter, context, references, true, null);
 }
 
 export function adminPublishEntitiesSyncEvent(
@@ -99,6 +92,40 @@ export function adminPublishEntitiesSyncEvent(
   );
 }
 
+export async function adminPublishEntityAfterMutation(
+  adminSchema: AdminSchemaWithMigrations,
+  authorizationAdapter: AuthorizationAdapter,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  reference: EntityVersionReference,
+  syncEvent: CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
+): PromiseResult<
+  AdminEntityPublishPayload,
+  typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
+> {
+  const publishResult = await doIt(
+    adminSchema,
+    authorizationAdapter,
+    databaseAdapter,
+    context,
+    [reference],
+    false,
+    syncEvent,
+  );
+  if (publishResult.isError()) {
+    if (
+      publishResult.isErrorType(ErrorType.BadRequest) ||
+      publishResult.isErrorType(ErrorType.NotAuthorized) ||
+      publishResult.isErrorType(ErrorType.Generic)
+    ) {
+      return publishResult;
+    }
+    // NotFound
+    return notOk.GenericUnexpectedError(publishResult);
+  }
+  return ok(publishResult.value[0]);
+}
+
 async function doIt(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
@@ -106,7 +133,7 @@ async function doIt(
   context: SessionContext,
   references: EntityVersionReference[],
   createEvents: boolean,
-  syncEvent: PublishEntitiesSyncEvent | null,
+  syncEvent: PublishEntitiesSyncEvent | CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<
   AdminEntityPublishPayload[],
   | typeof ErrorType.BadRequest
@@ -371,7 +398,7 @@ async function publishEntitiesAndCollectResult(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   versionsInfo: (VersionInfoToBePublished | VersionInfoAlreadyPublished)[],
-  syncEvent: PublishEntitiesSyncEvent | null,
+  syncEvent: PublishEntitiesSyncEvent | CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<
   {
     payload: AdminEntityPublishPayload[];

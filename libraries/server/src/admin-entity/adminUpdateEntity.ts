@@ -19,7 +19,7 @@ import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 import { encodeAdminEntity, resolveUpdateEntity } from '../EntityCodec.js';
 import { randomNameGenerator } from './AdminEntityMutationUtils.js';
-import { publishEntityAfterMutation } from './publishEntityAfterMutation.js';
+import { adminPublishEntityAfterMutation } from './adminPublishEntities.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminUpdateEntity(
@@ -113,15 +113,13 @@ async function doIt(
       if (!changed) {
         const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
         if (options?.publish && updatedEntity.info.status !== AdminEntityStatus.published) {
-          const publishResult = await publishEntityAfterMutation(
+          const publishResult = await adminPublishEntityAfterMutation(
             adminSchema,
             authorizationAdapter,
             databaseAdapter,
             context,
-            {
-              id: updatedEntity.id,
-              version: updatedEntity.info.version,
-            },
+            { id: updatedEntity.id, version: updatedEntity.info.version },
+            syncEvent,
           );
           if (publishResult.isError()) return publishResult;
           payload.effect = 'published';
@@ -202,15 +200,13 @@ async function doIt(
       }
 
       if (options?.publish) {
-        const publishResult = await publishEntityAfterMutation(
+        const publishResult = await adminPublishEntityAfterMutation(
           adminSchema,
           authorizationAdapter,
           databaseAdapter,
           context,
-          {
-            id: updatedEntity.id,
-            version: updatedEntity.info.version,
-          },
+          { id: updatedEntity.id, version: updatedEntity.info.version },
+          syncEvent,
         );
         if (publishResult.isError()) return publishResult;
 

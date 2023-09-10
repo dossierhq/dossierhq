@@ -1,8 +1,10 @@
 import type {
+  CreateEntitySyncEvent,
   EntityVersionReference,
   ErrorType,
   PromiseResult,
   PublishEntitiesSyncEvent,
+  UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 import {
@@ -101,7 +103,7 @@ export async function adminEntityPublishUpdateEntity(
   context: TransactionContext,
   randomNameGenerator: (name: string) => string,
   values: DatabaseAdminEntityPublishUpdateEntityArg,
-  syncEvent: PublishEntitiesSyncEvent | null,
+  syncEvent: PublishEntitiesSyncEvent | CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic> {
   const { entityVersionInternalId, status, entityInternalId } = values;
 

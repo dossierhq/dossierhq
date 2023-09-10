@@ -412,7 +412,7 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     randomNameGenerator: (name: string) => string,
     values: DatabaseAdminEntityPublishUpdateEntityArg,
-    syncEvent: PublishEntitiesSyncEvent | null,
+    syncEvent: PublishEntitiesSyncEvent | CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntitySampleEntities(
