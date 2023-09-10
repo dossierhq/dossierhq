@@ -327,7 +327,7 @@ importers:
       eslint: ~8.48.0
       eslint-config-next: ~13.4.19
       graphql: ~16.8.0
-      graphql-voyager: ~1.3.0
+      graphql-voyager: ~2.0.0
       leaflet: ~1.9.4
       next: ~13.4.19
       prettier: 3.0.3
@@ -344,7 +344,7 @@ importers:
       '@dossierhq/server': link:../../libraries/server
       better-sqlite3: 8.6.0
       graphql: 16.8.0
-      graphql-voyager: 1.3.0_x3wbseaqntvepz2jbz64ory42e
+      graphql-voyager: 2.0.0_x3wbseaqntvepz2jbz64ory42e
       leaflet: 1.9.4
       next: 13.4.19_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -1330,7 +1330,7 @@ importers:
       graphql: ~16.8.0
       graphql-config: ~5.0.2
       graphql-http: ~1.22.0
-      graphql-voyager: ~1.3.0
+      graphql-voyager: ~2.0.0
       graphql-ws: ~5.14.0
       history: ~5.3.0
       jwks-rsa: ~3.0.1
@@ -1395,7 +1395,7 @@ importers:
       graphiql: 3.0.5_72hkx3hxvkg6dhmk2uxfoo5kk4
       graphql: 16.8.0
       graphql-http: 1.22.0_graphql@16.8.0
-      graphql-voyager: 1.3.0_x3wbseaqntvepz2jbz64ory42e
+      graphql-voyager: 2.0.0_x3wbseaqntvepz2jbz64ory42e
       history: 5.3.0
       jwks-rsa: 3.0.1
       leaflet: 1.9.4
@@ -11988,12 +11988,11 @@ packages:
       vscode-languageserver-types: 3.17.1
     dev: false
 
-  /graphql-voyager/1.3.0_x3wbseaqntvepz2jbz64ory42e:
-    resolution: {integrity: sha512-vHKZi7JWf595H7BShck5zQ0ONb1O1oED4dBqKhIx6ErMbfKmE/G6dAD2+oBdxuPQS8NoJuwTkXUTSUqV+GPIuQ==}
+  /graphql-voyager/2.0.0_x3wbseaqntvepz2jbz64ory42e:
+    resolution: {integrity: sha512-mlLUChRP1k6chHCfOMBBfnvuDnMrEQho0EYzuBhBV7oIZJPh97FqTAaly4jpUAMOFxSR5SBDpNLy0cLesHG9sg==}
     peerDependencies:
       graphql: '>=16.5.0'
       react: '>=18.0.0'
-      react-dom: '>=18.0.0'
     dependencies:
       '@emotion/react': 11.10.5_gq4reeurwxuj4hvyerswzzqthy
       '@emotion/styled': 11.10.5_qytmkyyw6ldo5iihrmwrczzyfq
@@ -12002,13 +12001,12 @@ packages:
       '@mui/material': 5.11.2_o5tzncjkaykv5ref25dm6lrxyq
       commonmark: 0.30.0
       graphql: 16.8.0
-      lodash: 4.17.21
       react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
       svg-pan-zoom: 3.6.1
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/react'
+      - react-dom
     dev: false
 
   /graphql-ws/5.13.1_graphql@16.8.0:
