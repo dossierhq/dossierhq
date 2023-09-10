@@ -1,10 +1,8 @@
 import {
   AdminClientOperationName,
-  AdminEntityStatus,
   AdminSchema,
   isRichTextElementNode,
   notOk,
-  ok,
   traverseEntity,
   type AdminClient,
   type AdminClientMiddleware,
@@ -12,12 +10,8 @@ import {
   type AdminEntity,
   type AdminEntityInfo,
   type AdminSchemaSpecification,
-  type EntityReference,
-  type ErrorType,
   type JsonSyncEvent,
-  type Logger,
   type OkFromResult,
-  type PromiseResult,
   type RichTextElementNode,
   type SyncEvent,
 } from '@dossierhq/core';
@@ -122,89 +116,6 @@ function createCleanedUpEntity(adminSchema: AdminSchema, entity: AdminEntity<str
   }
 
   return copy;
-}
-
-export async function loadAllEntities(
-  adminClient: AdminClient,
-  logger: Logger,
-  dataDir: string,
-): PromiseResult<EntityReference[], ErrorType> {
-  const loadedEntries: EntityReference[] = [];
-
-  const directoriesToLoad = [path.join(dataDir, 'entities')];
-  const entitiesToRetry: { entryPath: string }[] = [];
-
-  // Step 1: Traverse directories and attempt to load all entities (can fail on references)
-  while (directoriesToLoad.length > 0) {
-    const directory = directoriesToLoad.shift()!;
-    const entries = await fs.readdir(directory, { withFileTypes: true });
-    for (const entry of entries) {
-      const entryPath = path.join(directory, entry.name);
-      if (entry.isDirectory()) {
-        directoriesToLoad.push(entryPath);
-      } else if (entry.isFile() && entry.name.endsWith('.json')) {
-        const createResult = await loadEntity(adminClient, logger, entryPath);
-        if (createResult.isError()) {
-          entitiesToRetry.push({ entryPath });
-        } else {
-          loadedEntries.push({ id: createResult.value.entity.id });
-        }
-      }
-    }
-  }
-
-  // Step 2: Retry loading entities that failed in step 1
-  let retryOneMoreRound = true;
-  while (retryOneMoreRound) {
-    retryOneMoreRound = false;
-    const entitiesToRetryThisRound = entitiesToRetry.splice(0);
-
-    logger.info(`Retrying loading ${entitiesToRetryThisRound.length} entities`);
-    for (const { entryPath } of entitiesToRetryThisRound) {
-      const createResult = await loadEntity(adminClient, logger, entryPath);
-      if (createResult.isError()) {
-        entitiesToRetry.push({ entryPath });
-      } else {
-        loadedEntries.push({ id: createResult.value.entity.id });
-        retryOneMoreRound = true;
-      }
-    }
-  }
-
-  // Step 3: Show the errors for entities that failed to load
-  if (entitiesToRetry.length > 0) {
-    const entitiesToRetryThisRound = entitiesToRetry.splice(0);
-    logger.info(`Retrying loading ${entitiesToRetryThisRound.length} entities to show errors`);
-
-    for (const { entryPath } of entitiesToRetryThisRound) {
-      const createResult = await loadEntity(adminClient, logger, entryPath);
-      if (createResult.isError()) {
-        logger.error('Error loading entity: %s: %s', createResult.error, createResult.message);
-        entitiesToRetry.push({ entryPath });
-      }
-    }
-
-    return notOk.Generic(`Failed to load ${entitiesToRetry.length} entities`);
-  }
-
-  return ok(loadedEntries);
-}
-
-async function loadEntity(adminClient: AdminClient, logger: Logger, entityPath: string) {
-  logger.info('Upsert entity: %s', entityPath);
-  const data = await fs.readFile(entityPath, { encoding: 'utf-8' });
-  const entity = JSON.parse(data);
-  if (![AdminEntityStatus.draft, AdminEntityStatus.published].includes(entity.info.status)) {
-    throw new Error(
-      `Entity ${entity.id} has unsupported status ${entity.info.status}, need to add support for this`,
-    );
-  }
-  const publish = entity.info.status === 'published';
-  const createResult = await adminClient.upsertEntity(entity, { publish });
-  if (createResult.isOk()) {
-    logger.info('  Effect: %s', createResult.value.effect);
-  }
-  return createResult;
 }
 
 export async function updateSyncEventsOnDisk(server: Server, dataDir: string): Promise<void> {
