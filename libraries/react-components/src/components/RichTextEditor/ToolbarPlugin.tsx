@@ -38,6 +38,7 @@ import {
   $isRangeSelection,
   $isRootOrShadowRoot,
   COMMAND_PRIORITY_CRITICAL,
+  DEPRECATED_$isGridSelection,
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
@@ -307,9 +308,10 @@ function BlockFormatDropDown({
     (item: (typeof items)[number]) => {
       switch (item.id) {
         case 'paragraph':
+          // Corresponds to formatParagraph() in Playground
           editor.update(() => {
             const selection = $getSelection();
-            if ($isRangeSelection(selection)) {
+            if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
               $setBlocksType(selection, () => $createParagraphNode());
             }
           });
@@ -320,11 +322,12 @@ function BlockFormatDropDown({
         case 'h4':
         case 'h5':
         case 'h6': {
+          // Corresponds to formatHeading() in Playground
           const headingLevel: HeadingTagType = item.id;
           if (blockType !== headingLevel) {
             editor.update(() => {
               const selection = $getSelection();
-              if ($isRangeSelection(selection)) {
+              if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
                 $setBlocksType(selection, () => $createHeadingNode(headingLevel));
               }
             });
