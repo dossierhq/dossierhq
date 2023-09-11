@@ -953,11 +953,11 @@ exports[`traverseEntity > Generated schema type 1`] = `
       "id": "123",
       "info": {
         "authKey": "none",
-        "createdAt": 2023-09-11T21:54:06.474Z,
+        "createdAt": 2023-09-11T22:10:56.334Z,
         "name": "Name",
         "status": "draft",
         "type": "StringsEntity",
-        "updatedAt": 2023-09-11T21:54:06.474Z,
+        "updatedAt": 2023-09-11T22:10:56.334Z,
         "valid": true,
         "validPublished": true,
         "version": 1,
