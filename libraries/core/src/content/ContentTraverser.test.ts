@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import type { ValueItem } from '../Types.js';
+import { AdminEntityStatus, type AdminEntity, type ValueItem } from '../Types.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
@@ -126,6 +126,34 @@ describe('traverseEntity', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], { info: { type: 'Foo' }, fields: {} }),
     );
+    expect(nodes).toMatchSnapshot();
+  });
+
+  test('Generated schema type', () => {
+    type AdminStringsEntity = AdminEntity<'StringsEntity', AdminStringsEntityFields>;
+
+    interface AdminStringsEntityFields {
+      string: string | null;
+      stringList: string[] | null;
+    }
+
+    const entity: AdminStringsEntity = {
+      id: '123',
+      info: {
+        type: 'StringsEntity',
+        name: 'Name',
+        version: 1,
+        status: AdminEntityStatus.draft,
+        valid: true,
+        validPublished: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        authKey: 'none',
+      },
+      fields: { string: 'hello', stringList: ['1', '2'] },
+    };
+
+    const nodes = collectTraverseNodes(traverseEntity(adminSchema, ['entity'], entity));
     expect(nodes).toMatchSnapshot();
   });
 

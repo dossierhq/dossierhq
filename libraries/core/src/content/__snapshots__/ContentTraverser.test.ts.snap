@@ -939,6 +939,111 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
 ]
 `;
 
+exports[`traverseEntity > Generated schema type 1`] = `
+[
+  {
+    "entity": {
+      "fields": {
+        "string": "hello",
+        "stringList": [
+          "1",
+          "2",
+        ],
+      },
+      "id": "123",
+      "info": {
+        "authKey": "none",
+        "createdAt": 2023-09-11T21:54:06.474Z,
+        "name": "Name",
+        "status": "draft",
+        "type": "StringsEntity",
+        "updatedAt": 2023-09-11T21:54:06.474Z,
+        "valid": true,
+        "validPublished": true,
+        "version": 1,
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
+    "path": "entity.fields.string",
+    "type": "field",
+    "value": "hello",
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
+      "name": "string",
+      "required": false,
+      "type": "String",
+      "values": [],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "string",
+    ],
+    "type": "fieldItem",
+    "value": "hello",
+  },
+  {
+    "path": "entity.fields.stringList",
+    "type": "field",
+    "value": [
+      "1",
+      "2",
+    ],
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "list": true,
+      "matchPattern": null,
+      "multiline": false,
+      "name": "stringList",
+      "required": false,
+      "type": "String",
+      "values": [],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "stringList",
+      0,
+    ],
+    "type": "fieldItem",
+    "value": "1",
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "list": true,
+      "matchPattern": null,
+      "multiline": false,
+      "name": "stringList",
+      "required": false,
+      "type": "String",
+      "values": [],
+    },
+    "path": [
+      "entity",
+      "fields",
+      "stringList",
+      1,
+    ],
+    "type": "fieldItem",
+    "value": "2",
+  },
+]
+`;
+
 exports[`traverseEntity > traversable: expect boolean, get boolean[] 1`] = `
 [
   {
