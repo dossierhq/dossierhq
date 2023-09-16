@@ -1182,23 +1182,23 @@ importers:
 
   ../../stack/eslint-config-generic:
     specifiers:
-      '@rushstack/eslint-patch': ~1.3.3
+      '@rushstack/eslint-patch': ~1.4.0
       '@typescript-eslint/eslint-plugin': ~6.7.0
       '@typescript-eslint/parser': ~6.7.0
     dependencies:
-      '@rushstack/eslint-patch': 1.3.3
+      '@rushstack/eslint-patch': 1.4.0
       '@typescript-eslint/eslint-plugin': 6.7.0_dzqtrdlbuijrhaomri76quur2e
       '@typescript-eslint/parser': 6.7.0
 
   ../../stack/eslint-config-react:
     specifiers:
       '@dossierhq/eslint-config-generic': workspace:*
-      '@rushstack/eslint-patch': ~1.3.3
+      '@rushstack/eslint-patch': ~1.4.0
       eslint-plugin-react: ~7.33.2
       eslint-plugin-react-hooks: ~4.6.0
     dependencies:
       '@dossierhq/eslint-config-generic': link:../eslint-config-generic
-      '@rushstack/eslint-patch': 1.3.3
+      '@rushstack/eslint-patch': 1.4.0
       eslint-plugin-react: 7.33.2
       eslint-plugin-react-hooks: 4.6.0
 
@@ -1281,7 +1281,7 @@ importers:
       '@microsoft/rush-lib': ~5.106.0
       '@playwright/test': ~1.38.0
       '@react-aria/overlays': ~3.17.0
-      '@rushstack/eslint-patch': ~1.3.3
+      '@rushstack/eslint-patch': ~1.4.0
       '@rushstack/heft': 0.59.0
       '@rushstack/heft-lint-plugin': ~0.2.0
       '@rushstack/heft-typescript-plugin': ~0.1.21
@@ -1380,7 +1380,7 @@ importers:
       '@lexical/utils': 0.12.2_lexical@0.12.2
       '@microsoft/rush-lib': 5.106.0_@types+node@20.6.0
       '@react-aria/overlays': 3.17.0_biqbaboplfbrettd7655fr4n2y
-      '@rushstack/eslint-patch': 1.3.3
+      '@rushstack/eslint-patch': 1.4.0
       '@typescript-eslint/eslint-plugin': 6.7.0_upusunw4marwma72j5kmgdi4ee
       '@typescript-eslint/parser': 6.7.0_rngtr6f3b25lvetpihwplgecf4
       better-sqlite3: 8.6.0
@@ -6835,8 +6835,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rushstack/eslint-patch/1.3.3:
-    resolution: {integrity: sha512-0xd7qez0AQ+MbHatZTlI1gu5vkG8r7MYRUJAHPAHJBmGLs16zpkrpAVLvjQKQOqaXPDUBwOiJzNc00znHSCVBw==}
+  /@rushstack/eslint-patch/1.4.0:
+    resolution: {integrity: sha512-cEjvTPU32OM9lUFegJagO0mRnIn+rbqrG89vV8/xLnLFX0DoR0r1oy5IlTga71Q7uT3Qus7qm7wgeiMT/+Irlg==}
 
   /@rushstack/heft-config-file/0.13.3:
     resolution: {integrity: sha512-r9tmesrmnjw6hdXfBGQ0Dc58eLu7kJcgY2JWJmO9s6kpx1b/fhvHpXj1x+pSLp5f+R5ZB3ELezYfrQK0SOCEvg==}
@@ -10931,7 +10931,7 @@ packages:
         optional: true
     dependencies:
       '@next/eslint-plugin-next': 13.4.19
-      '@rushstack/eslint-patch': 1.3.3
+      '@rushstack/eslint-patch': 1.4.0
       '@typescript-eslint/parser': 6.7.0_rngtr6f3b25lvetpihwplgecf4
       eslint: 8.49.0
       eslint-import-resolver-node: 0.3.7
