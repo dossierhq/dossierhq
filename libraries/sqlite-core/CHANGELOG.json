@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.4.4",
+      "tag": "@dossierhq/sqlite-core_v0.4.4",
+      "date": "Sat, 16 Sep 2023 09:58:58 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support sync events. Fix: Set withdrawn status correctly when unarchiving entity. Fix: Use the published version in unpublishEntities event."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.3",
       "tag": "@dossierhq/sqlite-core_v0.4.3",
       "date": "Mon, 28 Aug 2023 10:06:22 GMT",

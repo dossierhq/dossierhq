@@ -2,6 +2,18 @@
   "name": "@dossierhq/graphql",
   "entries": [
     {
+      "version": "0.4.4",
+      "tag": "@dossierhq/graphql_v0.4.4",
+      "date": "Sat, 16 Sep 2023 09:58:58 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Rename adminSearchEntities->adminEntities, adminSampleEntities->adminEntitiesSample, publishedSearchEntities->publishedEntities, publishedSampleEntities->publishedEntitiesSample. Break: Remove apis for fetching entity history and publishing history. Break: Rename Admin/PublishedEntitiesQuery/Order to Admin/PublishedEntityQuery/Order. Feat: Add id to changelog event. Fix: Import path"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.3",
       "tag": "@dossierhq/graphql_v0.4.3",
       "date": "Mon, 28 Aug 2023 10:06:22 GMT",

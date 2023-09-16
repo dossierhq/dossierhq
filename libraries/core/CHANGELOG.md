@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Mon, 28 Aug 2023 10:06:22 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Sep 2023 09:58:58 GMT and should not be manually modified.
+
+## 0.4.4
+Sat, 16 Sep 2023 09:58:58 GMT
+
+### Updates
+
+- Break: Rename searchEntities=>getEntities, sampleEntities=>getEntitiesSample, getTotalCount->getEntitiesTotalCount. Break: Remove apis for fetching entity history and publishing history. Break: Rename Admin/PublishedEntitiesQuery/Order to Admin/PublishedEntityQuery/Order. Feat: Add SyncEvent. Add id to ChangelogEvent. Fix: Support generated schema types in traverseEntity()
 
 ## 0.4.3
 Mon, 28 Aug 2023 10:06:22 GMT

@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Mon, 28 Aug 2023 10:06:22 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Sep 2023 09:58:58 GMT and should not be manually modified.
+
+## 0.4.4
+Sat, 16 Sep 2023 09:58:58 GMT
+
+_Version update only_
 
 ## 0.4.3
 Mon, 28 Aug 2023 10:06:22 GMT
