@@ -7,10 +7,10 @@
     "@dossierhq/integration-test": "../node_modules/@dossierhq/integration-test/lib/esm/index.js",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
     "@dossierhq/template-library": "../node_modules/@dossierhq/template-library/lib/esm/index.js",
-    "lexical": "npm:lexical@0.11.1",
+    "lexical": "npm:lexical@0.12.2",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
-    "std/": "https://deno.land/std@0.192.0/",
-    "tslib": "npm:tslib@~2.6.0",
-    "uuid": "npm:uuid@~9.0.0"
+    "std/": "https://deno.land/std@0.201.0/",
+    "tslib": "npm:tslib@~2.6.2",
+    "uuid": "npm:uuid@~9.0.1"
   }
 }

@@ -8,7 +8,7 @@
     "@faker-js/faker": "npm:@faker-js/faker@~8.0.2",
     "benchpress": "../node_modules/benchpress/lib/esm/index.js",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
-    "std/": "https://deno.land/std@0.192.0/",
-    "tslib": "npm:tslib@~2.6.0"
+    "std/": "https://deno.land/std@0.201.0/",
+    "tslib": "npm:tslib@~2.6.2"
   }
 }
