@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite3",
+      "comment": "Support sync events. Fix: Set withdrawn status correctly when unarchiving entity. Fix: Use the published version in unpublishEntities event.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite3"
+}

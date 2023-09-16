@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "Remove legacy publishing events. Add id to events.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

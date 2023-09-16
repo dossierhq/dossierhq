@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support getSyncEvents() and applySyncEvent()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

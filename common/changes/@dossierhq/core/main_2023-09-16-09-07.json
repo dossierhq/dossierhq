@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Break: Rename searchEntities=>getEntities, sampleEntities=>getEntitiesSample, getTotalCount->getEntitiesTotalCount. Break: Remove apis for fetching entity history and publishing history. Break: Rename Admin/PublishedEntitiesQuery/Order to Admin/PublishedEntityQuery/Order. Feat: Add SyncEvent. Add id to ChangelogEvent. Fix: Support generated schema types in traverseEntity()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}

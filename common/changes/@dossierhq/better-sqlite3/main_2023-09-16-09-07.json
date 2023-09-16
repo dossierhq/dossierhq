@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/better-sqlite3",
+      "comment": "Remove legacy publishing events. Add id to events.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/better-sqlite3"
+}
