@@ -12,7 +12,7 @@
   {
     "definitionName": "lockStepVersion",
     "policyName": "DossierFramework",
-    "version": "0.4.3",
+    "version": "0.4.4",
     "nextBump": "patch"
   },
   {

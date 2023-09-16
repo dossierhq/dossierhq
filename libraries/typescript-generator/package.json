@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/typescript-generator",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Library for generating TypeScript types for a Dossier schema.",
   "keywords": [
     "dossier",
