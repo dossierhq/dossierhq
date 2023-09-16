@@ -1051,7 +1051,7 @@ importers:
       '@dossierhq/integration-test': workspace:*
       '@dossierhq/server': workspace:*
       '@dossierhq/sqlite-core': workspace:*
-      '@playwright/test': ~1.37.1
+      '@playwright/test': ~1.38.0
       '@rushstack/heft': 0.59.0
       '@types/base-64': ~1.0.0
       '@types/sql.js': ~1.4.4
@@ -1071,7 +1071,7 @@ importers:
       '@dossierhq/heft-node-rig': link:../../rigs/heft-node-rig
       '@dossierhq/integration-test': link:../integration-test
       '@dossierhq/server': link:../server
-      '@playwright/test': 1.37.1
+      '@playwright/test': 1.38.0
       '@rushstack/heft': 0.59.0
       '@types/base-64': 1.0.0
       '@types/sql.js': 1.4.4
@@ -1279,7 +1279,7 @@ importers:
       '@lexical/selection': 0.12.2
       '@lexical/utils': 0.12.2
       '@microsoft/rush-lib': ~5.106.0
-      '@playwright/test': ~1.37.1
+      '@playwright/test': ~1.38.0
       '@react-aria/overlays': ~3.17.0
       '@rushstack/eslint-patch': ~1.3.3
       '@rushstack/heft': 0.59.0
@@ -1418,7 +1418,7 @@ importers:
       uuid: 9.0.0
     devDependencies:
       '@graphiql/toolkit': 0.9.1_nmhawluphxdp46vg6wews67i7e
-      '@playwright/test': 1.37.1
+      '@playwright/test': 1.38.0
       '@rushstack/heft': 0.59.0_@types+node@20.6.0
       '@rushstack/heft-lint-plugin': 0.2.0_46k6ky6kumwpzsubol7cri5am4
       '@rushstack/heft-typescript-plugin': 0.1.21_46k6ky6kumwpzsubol7cri5am4
@@ -4781,15 +4781,12 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@playwright/test/1.37.1:
-    resolution: {integrity: sha512-bq9zTli3vWJo8S3LwB91U0qDNQDpEXnw7knhxLM0nwDvexQAwx9tO8iKDZSqqneVq+URd/WIoz+BALMqUTgdSg==}
+  /@playwright/test/1.38.0:
+    resolution: {integrity: sha512-xis/RXXsLxwThKnlIXouxmIvvT3zvQj1JE39GsNieMUrMpb3/GySHDh2j8itCG22qKVD4MYLBp7xB73cUW/UUw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@types/node': 20.6.0
-      playwright-core: 1.37.1
-    optionalDependencies:
-      fsevents: 2.3.2
+      playwright: 1.38.0
     dev: true
 
   /@pnpm/crypto.base32-hash/1.0.1:
@@ -14502,10 +14499,20 @@ packages:
       pathe: 1.1.1
     dev: true
 
-  /playwright-core/1.37.1:
-    resolution: {integrity: sha512-17EuQxlSIYCmEMwzMqusJ2ztDgJePjrbttaefgdsiqeLWidjYz9BxXaTaZWxH1J95SHGk6tjE+dwgWILJoUZfA==}
+  /playwright-core/1.38.0:
+    resolution: {integrity: sha512-f8z1y8J9zvmHoEhKgspmCvOExF2XdcxMW8jNRuX4vkQFrzV4MlZ55iwb5QeyiFQgOFCUolXiRHgpjSEnqvO48g==}
     engines: {node: '>=16'}
     hasBin: true
+    dev: true
+
+  /playwright/1.38.0:
+    resolution: {integrity: sha512-fJGw+HO0YY+fU/F1N57DMO+TmXHTrmr905J05zwAQE9xkuwP/QLDk63rVhmyxh03dYnEhnRbsdbH9B0UVVRB3A==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.38.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /please-upgrade-node/3.2.0:
