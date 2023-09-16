@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@types/better-sqlite3": "~7.6.4",
+    "@types/better-sqlite3": "~7.6.5",
     "@types/react": "~18.2.21",
     "@types/react-dom": "~18.2.7",
     "@typescript-eslint/eslint-plugin": "~6.7.0",

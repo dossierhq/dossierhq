@@ -50,13 +50,13 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.59.0",
-    "@types/better-sqlite3": "~7.6.4",
-    "@types/uuid": "~9.0.3",
+    "@types/better-sqlite3": "~7.6.5",
+    "@types/uuid": "~9.0.4",
     "better-sqlite3": "~8.6.0",
     "eslint": "~8.49.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2",
-    "uuid": "~9.0.0",
+    "uuid": "~9.0.1",
     "vitest": "~0.34.4"
   }
 }

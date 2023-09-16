@@ -39,15 +39,15 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "tslib": "~2.6.2",
-    "uuid": "~9.0.0"
+    "uuid": "~9.0.1"
   },
   "devDependencies": {
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@rushstack/heft": "0.59.0",
-    "@types/node": "~20.6.0",
-    "@types/uuid": "~9.0.3",
+    "@types/node": "~20.6.2",
+    "@types/uuid": "~9.0.4",
     "eslint": "~8.49.0",
     "prettier": "3.0.3",
     "ts-node": "~10.9.1",
