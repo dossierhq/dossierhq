@@ -1,5 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rig-package/rig.schema.json",
 
-  "rigPackageName": "@dossierhq/heft-node-rig"
+  "rigPackageName": "@dossierhq/heft-node-rig",
+  "rigProfile": "library-esm"
 }

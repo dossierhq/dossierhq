@@ -13,17 +13,13 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./lib/esm/index.js",
-      "require": {
-        "types": "./lib/esm/index.d.ts",
-        "default": "./lib/cjs/index.js"
-      }
+      "import": "./lib/index.js"
     }
   },
-  "types": "./lib/esm/index.d.ts",
+  "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno cjs-package-json",
+    "build": "npm run prettier:check && heft build --clean && npm run test && post-process-build deno-esm-only",
     "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",

@@ -1,10 +1,10 @@
 {
   "imports": {
-    "@dossierhq/core": "../node_modules/@dossierhq/core/lib/esm/index.js",
-    "@dossierhq/database-adapter": "../node_modules/@dossierhq/database-adapter/lib/esm/index.js",
-    "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/esm/index.js",
-    "@dossierhq/integration-test": "../node_modules/@dossierhq/integration-test/lib/esm/index.js",
-    "@dossierhq/server": "../node_modules/@dossierhq/server/lib/esm/index.js",
+    "@dossierhq/core": "../node_modules/@dossierhq/core/lib/index.js",
+    "@dossierhq/database-adapter": "../node_modules/@dossierhq/database-adapter/lib/index.js",
+    "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/index.js",
+    "@dossierhq/integration-test": "../node_modules/@dossierhq/integration-test/lib/index.js",
+    "@dossierhq/server": "../node_modules/@dossierhq/server/lib/index.js",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
     "std/": "https://deno.land/std@0.201.0/",
     "tslib": "npm:tslib@~2.6.2",
