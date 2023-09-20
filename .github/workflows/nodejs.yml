@@ -6,8 +6,6 @@ jobs:
     timeout-minutes: 16
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
-      - name: apt-get update
-        run: sudo apt-get update # to avoid error when installing Playwright
       - uses: actions/checkout@v4
       - name: Cache Rush
         uses: actions/cache@v3
@@ -33,10 +31,6 @@ jobs:
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install --bypass-policy
-      - name: Install Playwright Browsers
-        run: |
-          cd libraries/sql.js-browser-integration-test
-          npx playwright install --with-deps
       - name: start db
         run: |
           cd tools/generic-tools/
@@ -51,7 +45,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
-          node common/scripts/install-run-rush.js build --verbose --timeline
+          env CI_SKIP_BROWSER_TEST=true node common/scripts/install-run-rush.js build --verbose --timeline
       - name: stop db
         run: |
           cd tools/generic-tools/

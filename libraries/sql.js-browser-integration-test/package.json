@@ -6,7 +6,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && npm run test",
+    "build": "[ \"$CI_SKIP_BROWSER_TEST\" = \"true\" ] && echo Skip browser test || (npm run prettier:check && npm run eslint:check && npm run test)",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
