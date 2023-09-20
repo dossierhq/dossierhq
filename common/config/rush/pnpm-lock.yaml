@@ -208,8 +208,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@faker-js/faker':
-        specifier: ~8.0.2
-        version: 8.0.2
+        specifier: ~8.1.0
+        version: 8.1.0
       cloudinary:
         specifier: ~1.40.0
         version: 1.40.0
@@ -284,8 +284,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@faker-js/faker':
-        specifier: ~8.0.2
-        version: 8.0.2
+        specifier: ~8.1.0
+        version: 8.1.0
       benchpress:
         specifier: workspace:*
         version: link:../../libraries/benchpress
@@ -1722,8 +1722,8 @@ importers:
         specifier: ~1.0.1
         version: 1.0.1
       '@faker-js/faker':
-        specifier: ~8.0.2
-        version: 8.0.2
+        specifier: ~8.1.0
+        version: 8.1.0
       '@fortawesome/free-solid-svg-icons':
         specifier: ~6.4.2
         version: 6.4.2
@@ -3971,8 +3971,8 @@ packages:
     resolution: {integrity: sha512-1S8uAY/MTJqVx0SC4epBq+N2yhuwtNwLbJYNZyhL2pO1ZVKn5HFXav5T41Ryzy9K9V7ZId2JB2oy/W4aCd9/2w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  /@faker-js/faker@8.0.2:
-    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
+  /@faker-js/faker@8.1.0:
+    resolution: {integrity: sha512-38DT60rumHfBYynif3lmtxMqMqmsOQIxQgEuPZxCk2yUYN0eqWpTACgxi0VpidvsJB8CRxCpvP7B3anK85FjtQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: false
 
