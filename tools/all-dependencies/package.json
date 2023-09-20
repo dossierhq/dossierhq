@@ -63,7 +63,7 @@
   "devDependencies": {
     "@graphiql/toolkit": "~0.9.1",
     "@playwright/test": "~1.38.0",
-    "@rushstack/heft": "0.59.0",
+    "@rushstack/heft": "0.60.0",
     "@rushstack/heft-lint-plugin": "~0.2.0",
     "@rushstack/heft-typescript-plugin": "~0.2.0",
     "@storybook/addon-actions": "~7.4.2",
