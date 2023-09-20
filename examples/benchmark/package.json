@@ -16,12 +16,11 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "start": "node lib/run-node-pg.js && node lib/run-node-better-sqlite3.js && node lib/run-node-sqlite3.js && bun run lib/run-bun-sqlite.js && deno run --allow-all deno/run-deno-postgres.ts",
+    "start": "node lib/run-node-pg.js && node lib/run-node-better-sqlite3.js && bun run lib/run-bun-sqlite.js && deno run --allow-all deno/run-deno-postgres.ts",
     "start:bun-sqlite": "bun run lib/run-bun-sqlite.js",
     "start:deno-postgres": "deno run --allow-all deno/run-deno-postgres.ts",
     "start:node-better-sqlite3": "node lib/run-node-better-sqlite3.js",
     "start:node-pg": "node lib/run-node-pg.js",
-    "start:node-sqlite3": "node lib/run-node-sqlite3.js",
     "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci"
   },
   "dependencies": {
@@ -33,13 +32,11 @@
     "@dossierhq/deno-postgres": "workspace:*",
     "@dossierhq/pg": "workspace:*",
     "@dossierhq/bun-sqlite": "workspace:*",
-    "@dossierhq/sqlite3": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
     "better-sqlite3": "~8.6.0",
     "dotenv": "~16.3.1",
     "pg": "~8.11.3",
-    "sqlite3": "5.1.4",
     "tslib": "~2.6.2"
   },
   "devDependencies": {
@@ -49,7 +46,6 @@
     "@rushstack/heft": "0.59.0",
     "@types/better-sqlite3": "~7.6.5",
     "@types/pg": "~8.10.2",
-    "@types/sqlite3": "~3.1.8",
     "eslint": "~8.49.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2"

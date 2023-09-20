@@ -419,11 +419,6 @@
       "versionPolicyName": "DossierFramework"
     },
     {
-      "packageName": "@dossierhq/sqlite3",
-      "projectFolder": "libraries/sqlite3",
-      "versionPolicyName": "DossierFramework"
-    },
-    {
       "packageName": "@dossierhq/sql.js",
       "projectFolder": "libraries/sql.js"
     },
