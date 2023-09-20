@@ -1,0 +1,3 @@
+/.heft/
+/playwright-report/
+*.sqlite

@@ -2,5 +2,5 @@
   "compilerOptions": {
     "strictNullChecks": true
   },
-  "include": [".eslintrc.cjs", "vitest.config.js", "playwright.config.ts", "browser/**/*.ts"]
+  "include": [".eslintrc.cjs", "vitest.config.js"]
 }

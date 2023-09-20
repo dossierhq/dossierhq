@@ -1484,9 +1484,6 @@ importers:
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../server
-      '@playwright/test':
-        specifier: ~1.38.0
-        version: 1.38.0
       '@rushstack/heft':
         specifier: 0.60.0
         version: 0.60.0(@types/node@20.6.2)
@@ -1514,6 +1511,49 @@ importers:
       vitest:
         specifier: ~0.34.4
         version: 0.34.4(sass@1.67.0)
+
+  ../../libraries/sql.js-browser-integration-test:
+    dependencies:
+      '@dossierhq/sql.js':
+        specifier: workspace:*
+        version: link:../sql.js
+      tslib:
+        specifier: ~2.6.2
+        version: 2.6.2
+    devDependencies:
+      '@dossierhq/core':
+        specifier: workspace:*
+        version: link:../core
+      '@dossierhq/eslint-config-generic':
+        specifier: workspace:*
+        version: link:../../stack/eslint-config-generic
+      '@dossierhq/integration-test':
+        specifier: workspace:*
+        version: link:../integration-test
+      '@dossierhq/server':
+        specifier: workspace:*
+        version: link:../server
+      '@playwright/test':
+        specifier: ~1.38.0
+        version: 1.38.0
+      '@types/base-64':
+        specifier: ~1.0.0
+        version: 1.0.0
+      '@types/sql.js':
+        specifier: ~1.4.4
+        version: 1.4.4
+      eslint:
+        specifier: ~8.49.0
+        version: 8.49.0
+      prettier:
+        specifier: 3.0.3
+        version: 3.0.3
+      sql.js:
+        specifier: ~1.8.0
+        version: 1.8.0
+      typescript:
+        specifier: ~5.2.2
+        version: 5.2.2
 
   ../../libraries/sqlite-core:
     dependencies:

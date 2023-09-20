@@ -1,4 +1,3 @@
 /.heft/
 /lib/
-/playwright-report/
 *.sqlite

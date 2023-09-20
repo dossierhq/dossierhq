@@ -1,11 +1,11 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
 import type { TestSuite } from '@dossierhq/integration-test';
+import type { SqlJsDatabaseAdapter } from '@dossierhq/sql.js';
+import { createSqlJsAdapter } from '@dossierhq/sql.js';
 import { test } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import * as SqlJs from 'sql.js';
-import type { SqlJsDatabaseAdapter } from '../src/SqlJsAdapter.js';
-import { createSqlJsAdapter } from '../src/SqlJsAdapter.js';
 
 export async function createSqlJsTestAdapter(): PromiseResult<
   SqlJsDatabaseAdapter,
