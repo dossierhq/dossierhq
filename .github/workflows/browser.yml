@@ -1,4 +1,4 @@
-name: Node CI
+name: Browser Integration Tests
 on: [push]
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
           node common/scripts/install-run-rush.js install --bypass-policy
       - name: Install Playwright Browsers
         run: |
-          cd libraries/sql.js
+          cd libraries/sql.js-browser-integration-test
           npx playwright install --with-deps
       - name: rush build --to @dossierhq/sql.js-browser-integration-test
         run: |
