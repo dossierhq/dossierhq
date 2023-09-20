@@ -503,10 +503,6 @@
       "projectFolder": "stack/eslint-config-react"
     },
     {
-      "packageName": "@dossierhq/template-library",
-      "projectFolder": "templates/library"
-    },
-    {
       "packageName": "@dossierhq/template-library-esm-only",
       "projectFolder": "templates/library-esm-only"
     },

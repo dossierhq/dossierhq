@@ -1629,34 +1629,6 @@ importers:
         specifier: ~4.6.0
         version: 4.6.0(eslint@8.49.0)
 
-  ../../templates/library:
-    dependencies:
-      tslib:
-        specifier: ~2.6.2
-        version: 2.6.2
-    devDependencies:
-      '@dossierhq/eslint-config-generic':
-        specifier: workspace:*
-        version: link:../../stack/eslint-config-generic
-      '@dossierhq/heft-node-rig':
-        specifier: workspace:*
-        version: link:../../rigs/heft-node-rig
-      '@rushstack/heft':
-        specifier: 0.60.0
-        version: 0.60.0(@types/node@20.6.2)
-      eslint:
-        specifier: ~8.49.0
-        version: 8.49.0
-      prettier:
-        specifier: 3.0.3
-        version: 3.0.3
-      typescript:
-        specifier: ~5.2.2
-        version: 5.2.2
-      vitest:
-        specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
-
   ../../templates/library-esm-only:
     dependencies:
       tslib:
