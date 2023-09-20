@@ -18,7 +18,6 @@
     "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/deno-postgres": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
-    "@dossierhq/server": "workspace:*",
-    "@dossierhq/template-library": "workspace:*"
+    "@dossierhq/server": "workspace:*"
   }
 }
