@@ -3,7 +3,6 @@ const config = {
   reactStrictMode: true,
   swcMinify: true,
   productionBrowserSourceMaps: true,
-  experimental: { appDir: true },
   images: {
     domains: ['res.cloudinary.com'],
   },
