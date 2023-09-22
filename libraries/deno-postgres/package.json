@@ -9,7 +9,7 @@
     "db:clear": "./scripts/db-clear.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
-    "postinstall": "deno cache external-dependencies.ts",
+    "postinstall": "[ -x \"$(command -v deno)\" ] && deno cache external-dependencies.ts",
     "test": "deno test --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
   },
   "devDependencies": {

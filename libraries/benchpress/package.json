@@ -20,7 +20,7 @@
     "examples:timer-benchmark:bun": "bun run ./src/examples/timer-benchmark.ts",
     "examples:timer-benchmark:deno": "deno run --allow-env --allow-hrtime --allow-run=gnuplot --allow-read --allow-write=output ./lib/examples/timer-benchmark.js",
     "examples:timer-benchmark:node": "node ./lib/examples/timer-benchmark.js",
-    "postinstall": "deno cache deno-external-dependencies.ts",
+    "postinstall": "[ -x \"$(command -v deno)\" ] && deno cache deno-external-dependencies.ts",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "npm run examples:timer-benchmark:bun && npm run examples:timer-benchmark:deno && npm run examples:timer-benchmark:node"
