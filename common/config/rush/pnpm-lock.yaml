@@ -48,7 +48,7 @@ importers:
         version: 0.12.2
       next:
         specifier: ~13.5.2
-        version: 13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.67.0)
+        version: 13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
       react:
         specifier: ~18.2.0
         version: 18.2.0
@@ -97,7 +97,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../apps/playground:
     dependencies:
@@ -194,7 +194,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ~4.4.9
-        version: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+        version: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
 
   ../../apps/playground-example-generator:
     dependencies:
@@ -468,7 +468,7 @@ importers:
         version: 1.9.4
       next:
         specifier: ~13.5.2
-        version: 13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.67.0)
+        version: 13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
       react:
         specifier: ~18.2.0
         version: 18.2.0
@@ -590,7 +590,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ~4.4.9
-        version: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+        version: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
 
   ../../libraries/benchpress:
     dependencies:
@@ -664,7 +664,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/bun-sqlite:
     dependencies:
@@ -772,7 +772,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/core-vitest:
     dependencies:
@@ -803,7 +803,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/database-adapter:
     dependencies:
@@ -834,7 +834,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/deno-postgres:
     devDependencies:
@@ -954,11 +954,11 @@ importers:
         specifier: ~3.26.0
         version: 3.26.0(react@18.2.0)
       sass:
-        specifier: ~1.67.0
-        version: 1.67.0
+        specifier: ~1.68.0
+        version: 1.68.0
       sass-loader:
         specifier: ~13.3.2
-        version: 13.3.2(sass@1.67.0)(webpack@5.88.2)
+        version: 13.3.2(sass@1.68.0)(webpack@5.88.2)
       storybook:
         specifier: ~7.4.2
         version: 7.4.2
@@ -970,7 +970,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ~4.4.9
-        version: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+        version: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
 
   ../../libraries/design-ssr:
     dependencies:
@@ -1071,7 +1071,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/integration-test:
     dependencies:
@@ -1233,7 +1233,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/postgres-core:
     dependencies:
@@ -1270,7 +1270,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/postgres-tools:
     dependencies:
@@ -1418,10 +1418,10 @@ importers:
         version: 9.0.1
       vite:
         specifier: ~4.4.9
-        version: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+        version: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/server:
     dependencies:
@@ -1458,7 +1458,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/sql.js:
     dependencies:
@@ -1510,7 +1510,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/sql.js-browser-integration-test:
     dependencies:
@@ -1590,7 +1590,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../libraries/typescript-generator:
     dependencies:
@@ -1621,7 +1621,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../rigs/heft-node-rig:
     dependencies:
@@ -1695,7 +1695,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../templates/tool:
     dependencies:
@@ -1834,7 +1834,7 @@ importers:
         version: 4.17.21
       next:
         specifier: ~13.5.2
-        version: 13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.67.0)
+        version: 13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
       pg:
         specifier: ~8.11.3
         version: 8.11.3
@@ -1996,11 +1996,11 @@ importers:
         specifier: ~5.9.2
         version: 5.9.2
       sass:
-        specifier: ~1.67.0
-        version: 1.67.0
+        specifier: ~1.68.0
+        version: 1.68.0
       sass-loader:
         specifier: ~13.3.2
-        version: 13.3.2(sass@1.67.0)(webpack@5.88.2)
+        version: 13.3.2(sass@1.68.0)(webpack@5.88.2)
       schema-dts:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.2.2)
@@ -2015,10 +2015,10 @@ importers:
         version: 10.9.1(@types/node@20.6.2)(typescript@5.2.2)
       vite:
         specifier: ~4.4.9
-        version: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+        version: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
       vitest:
         specifier: ~0.34.4
-        version: 0.34.4(sass@1.67.0)
+        version: 0.34.4(sass@1.68.0)
 
   ../../tools/generic-tools:
     dependencies:
@@ -4470,7 +4470,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.2.2)
       typescript: 5.2.2
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.2:
@@ -7860,7 +7860,7 @@ packages:
       remark-slug: 6.1.0
       rollup: 3.27.2
       typescript: 5.2.2
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8183,7 +8183,7 @@ packages:
       style-loader: '*'
     dependencies:
       css-loader: 6.8.1(webpack@5.88.2)
-      sass-loader: 13.3.2(sass@1.67.0)(webpack@5.88.2)
+      sass-loader: 13.3.2(sass@1.68.0)(webpack@5.88.2)
       style-loader: 3.3.3(webpack@5.88.2)
     dev: true
 
@@ -8238,7 +8238,7 @@ packages:
       react: 18.2.0
       react-docgen: 6.0.0-alpha.3
       react-dom: 18.2.0(react@18.2.0)
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - encoding
@@ -9063,7 +9063,7 @@ packages:
       vite: ^4
     dependencies:
       '@swc/core': 1.3.62
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -9079,7 +9079,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.9)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -9094,7 +9094,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.9)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.9)
       react-refresh: 0.14.0
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10725,7 +10725,7 @@ packages:
       readdirp: 3.6.0
       require-package-name: 2.0.1
       resolve: 1.22.3
-      sass: 1.67.0
+      sass: 1.68.0
       scss-parser: 1.0.6
       semver: 7.5.4
       yargs: 16.2.0
@@ -13776,7 +13776,7 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next@13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.67.0):
+  /next@13.5.2(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0):
     resolution: {integrity: sha512-vog4UhUaMYAzeqfiAAmgB/QWLW7p01/sg+2vn6bqc/CxHFYizMzLv6gjxKzl31EVFkfl/F+GbxlKizlkTE9RdA==}
     engines: {node: '>=16.14.0'}
     hasBin: true
@@ -13798,7 +13798,7 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sass: 1.67.0
+      sass: 1.68.0
       styled-jsx: 5.1.1(@babel/core@7.22.9)(react@18.2.0)
       watchpack: 2.4.0
       zod: 3.21.4
@@ -15527,7 +15527,7 @@ packages:
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader@13.3.2(sass@1.67.0)(webpack@5.88.2):
+  /sass-loader@13.3.2(sass@1.68.0)(webpack@5.88.2):
     resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -15547,12 +15547,12 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.67.0
+      sass: 1.68.0
       webpack: 5.88.2(esbuild@0.18.11)
     dev: true
 
-  /sass@1.67.0:
-    resolution: {integrity: sha512-SVrO9ZeX/QQyEGtuZYCVxoeAL5vGlYjJ9p4i4HFuekWl8y/LtJ7tJc10Z+ck1c8xOuoBm2MYzcLfTAffD0pl/A==}
+  /sass@1.68.0:
+    resolution: {integrity: sha512-Lmj9lM/fef0nQswm1J2HJcEsBUba4wgNx2fea6yJHODREoMFnwRpZydBnX/RjyXw2REIwdkbqE4hrTo4qfDBUA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -16789,7 +16789,7 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  /vite-node@0.34.4(@types/node@20.6.2)(sass@1.67.0):
+  /vite-node@0.34.4(@types/node@20.6.2)(sass@1.68.0):
     resolution: {integrity: sha512-ho8HtiLc+nsmbwZMw8SlghESEE3KxJNp04F/jPUCLVvaURwt0d+r9LxEqCX5hvrrOQ0GSyxbYr5ZfRYhQ0yVKQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -16799,7 +16799,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -16811,7 +16811,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.9(@types/node@20.6.2)(sass@1.67.0):
+  /vite@4.4.9(@types/node@20.6.2)(sass@1.68.0):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -16843,12 +16843,12 @@ packages:
       esbuild: 0.18.11
       postcss: 8.4.27
       rollup: 3.27.2
-      sass: 1.67.0
+      sass: 1.68.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
 
-  /vitest@0.34.4(sass@1.67.0):
+  /vitest@0.34.4(sass@1.68.0):
     resolution: {integrity: sha512-SE/laOsB6995QlbSE6BtkpXDeVNLJc1u2LHRG/OpnN4RsRzM3GQm4nm3PQCK5OBtrsUqnhzLdnT7se3aeNGdlw==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -16900,8 +16900,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.7.0
-      vite: 4.4.9(@types/node@20.6.2)(sass@1.67.0)
-      vite-node: 0.34.4(@types/node@20.6.2)(sass@1.67.0)
+      vite: 4.4.9(@types/node@20.6.2)(sass@1.68.0)
+      vite-node: 0.34.4(@types/node@20.6.2)(sass@1.68.0)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
