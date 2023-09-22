@@ -8,7 +8,7 @@
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
-    "postinstall": "if [[ -x \"$(command -v deno)\" ]]; then deno cache external-dependencies.ts; else echo Deno is not installed; fi",
+    "postinstall": "if [ -x \"$(command -v deno)\" ]; then deno cache external-dependencies.ts; else echo Deno is not installed; fi",
     "test": "deno test --parallel --allow-net=localhost:5432 --allow-read=.env,.env.defaults --allow-env=GITHUB_ACTIONS",
     "test:watch": "deno test --watch"
   },
