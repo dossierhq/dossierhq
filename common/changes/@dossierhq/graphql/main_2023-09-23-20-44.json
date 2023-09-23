@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Only publish ESM",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

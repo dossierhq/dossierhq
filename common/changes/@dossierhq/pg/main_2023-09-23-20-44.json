@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "Only publish ESM",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

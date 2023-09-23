@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Only publish ESM",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

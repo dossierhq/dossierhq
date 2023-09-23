@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Only publish ESM",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
