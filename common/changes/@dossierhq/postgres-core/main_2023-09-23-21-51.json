@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-core",
+      "comment": "v",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-core"
+}

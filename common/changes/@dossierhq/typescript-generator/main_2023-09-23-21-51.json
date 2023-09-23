@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/typescript-generator",
+      "comment": "Fix exports config for CJS projects",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/typescript-generator"
+}
