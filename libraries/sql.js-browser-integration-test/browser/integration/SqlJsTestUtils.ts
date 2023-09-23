@@ -10,14 +10,12 @@ export interface ServerInit {
   adminSchema: AdminSchema;
 }
 
-export async function initializeSqlJsServer(): PromiseResult<
-  ServerInit,
+export async function initializeEmptySqlJsServer(): PromiseResult<
+  Server,
   typeof ErrorType.Generic | typeof ErrorType.BadRequest
 > {
   const databaseAdapterResult = await createSqlJsTestAdapter();
-  if (databaseAdapterResult.isError()) {
-    return databaseAdapterResult;
-  }
+  if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const createServerResult = await createServer({
     databaseAdapter: databaseAdapterResult.value,
@@ -26,10 +24,23 @@ export async function initializeSqlJsServer(): PromiseResult<
   if (createServerResult.isError()) return createServerResult;
   const server = createServerResult.value;
 
+  return ok(server);
+}
+
+export async function initializeSqlJsServer(): PromiseResult<
+  ServerInit,
+  typeof ErrorType.Generic | typeof ErrorType.BadRequest
+> {
+  const serverResult = await initializeEmptySqlJsServer();
+  if (serverResult.isError()) return serverResult;
+  const server = serverResult.value;
+
   const sessionResult = server.createSession({
     provider: 'test',
     identifier: 'schema-loader',
     defaultAuthKeys: [],
+    logger: null,
+    databasePerformance: null,
   });
   const client = server.createAdminClient(() => sessionResult);
 
