@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.4.5",
+      "tag": "@dossierhq/sqlite-core_v0.4.5",
+      "date": "Sat, 23 Sep 2023 20:55:11 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Only publish ESM"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.4",
       "tag": "@dossierhq/sqlite-core_v0.4.4",
       "date": "Sat, 16 Sep 2023 09:58:58 GMT",
