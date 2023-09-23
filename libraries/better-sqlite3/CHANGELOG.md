@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/better-sqlite3
 
-This log was last generated on Sat, 23 Sep 2023 20:55:11 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Sep 2023 22:00:31 GMT and should not be manually modified.
+
+## 0.4.6
+Sat, 23 Sep 2023 22:00:31 GMT
+
+### Updates
+
+- Fix exports config for CJS projects
 
 ## 0.4.5
 Sat, 23 Sep 2023 20:55:11 GMT

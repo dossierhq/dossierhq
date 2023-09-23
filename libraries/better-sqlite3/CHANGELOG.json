@@ -2,6 +2,18 @@
   "name": "@dossierhq/better-sqlite3",
   "entries": [
     {
+      "version": "0.4.6",
+      "tag": "@dossierhq/better-sqlite3_v0.4.6",
+      "date": "Sat, 23 Sep 2023 22:00:31 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix exports config for CJS projects"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.5",
       "tag": "@dossierhq/better-sqlite3_v0.4.5",
       "date": "Sat, 23 Sep 2023 20:55:11 GMT",
