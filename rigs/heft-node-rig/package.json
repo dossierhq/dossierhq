@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "typescript": "~5.2.2",
-    "eslint": "~8.49.0"
+    "eslint": "~8.50.0"
   },
   "devDependencies": {
     "@rushstack/heft": "0.61.0",
-    "@rushstack/heft-lint-plugin": "~0.2.0",
-    "@rushstack/heft-typescript-plugin": "~0.2.0"
+    "@rushstack/heft-lint-plugin": "~0.2.2",
+    "@rushstack/heft-typescript-plugin": "~0.2.2"
   }
 }

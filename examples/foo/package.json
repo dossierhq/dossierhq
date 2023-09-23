@@ -30,8 +30,8 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.61.0",
     "@types/better-sqlite3": "~7.6.5",
-    "@types/express": "~4.17.17",
-    "eslint": "~8.49.0",
+    "@types/express": "~4.17.18",
+    "eslint": "~8.50.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2"
   }
