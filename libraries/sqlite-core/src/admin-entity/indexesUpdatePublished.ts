@@ -90,7 +90,7 @@ export async function adminEntityIndexesUpdatePublished(
         sql`INSERT INTO entity_published_references (from_entities_id, to_entities_id) VALUES`;
         const fromEntitiesId = addValue(entityId);
         for (const referenceId of referenceIds) {
-          sql`(${fromEntitiesId}, ${referenceId.entityInternalId as number})`;
+          sql`, (${fromEntitiesId}, ${referenceId.entityInternalId as number})`;
         }
       }),
     );
@@ -105,7 +105,7 @@ export async function adminEntityIndexesUpdatePublished(
         sql`INSERT INTO entity_published_locations (entities_id, lat, lng) VALUES`;
         const entitiesId = addValue(entityId);
         for (const location of locations) {
-          sql`(${entitiesId}, ${location.lat}, ${location.lng})`;
+          sql`, (${entitiesId}, ${location.lat}, ${location.lng})`;
         }
       }),
     );
@@ -120,7 +120,7 @@ export async function adminEntityIndexesUpdatePublished(
         sql`INSERT INTO entity_published_value_types (entities_id, value_type) VALUES`;
         const entitiesId = addValue(entityId);
         for (const valueType of valueTypes) {
-          sql`(${entitiesId}, ${valueType})`;
+          sql`, (${entitiesId}, ${valueType})`;
         }
       }),
     );

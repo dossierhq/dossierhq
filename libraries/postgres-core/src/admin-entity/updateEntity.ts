@@ -112,7 +112,7 @@ export async function adminEntityUpdateEntity(
           buildPostgresSqlQuery(({ sql }) => {
             sql`UPDATE entities SET name = ${name}`;
             if (entity.publish) {
-              sql`published_name = ${name}`;
+              sql`, published_name = ${name}`;
             }
             sql`WHERE id = ${entity.entityInternalId}`;
           }),

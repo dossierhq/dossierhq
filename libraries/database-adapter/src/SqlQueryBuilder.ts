@@ -101,37 +101,32 @@ function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boole
   let existingText = query.text;
 
   let textToAdd = text;
-  if (query.text.endsWith('WHERE') && textToAdd.startsWith('AND')) {
+  if (existingText.endsWith('WHERE') && textToAdd.startsWith('AND')) {
     textToAdd = textToAdd.slice('AND'.length).trimStart();
-  } else if (query.text.endsWith('WHERE') && textToAdd.startsWith('ORDER')) {
+  } else if (existingText.endsWith('WHERE') && textToAdd.startsWith('ORDER')) {
     existingText = existingText.slice(0, existingText.length - 'WHERE'.length).trimEnd();
+  } else if (existingText.endsWith('VALUES') && textToAdd.startsWith(',')) {
+    textToAdd = textToAdd.slice(','.length);
   }
 
   let separator = '';
   if (existingText && addSeparator) {
     //TODO simplify this
-    const currentEndsWithBracket = endsWithBracket(existingText);
-    const newStartsWithBracket = startsWithBracket(textToAdd);
-    const currentEndsWithPeriod = endsWithPeriod(existingText);
-    const newStartsWithPeriod = startsWithPeriod(textToAdd);
+    const currentEndsWithPunctuation = endsWithPunctuation(existingText);
+    const newStartsWithBracket = startsWithPunctuation(textToAdd);
     const currentEndsWithKeyword = endsWithKeyword(existingText);
     const newStartsWithKeyword = startsWithKeyword(textToAdd);
     const currentEndsWithOperator = endsWithOperator(existingText);
     const newStartsWithOperator = startsWithOperator(textToAdd);
 
-    if (
-      currentEndsWithBracket ||
-      newStartsWithBracket ||
-      currentEndsWithPeriod ||
-      newStartsWithPeriod
-    ) {
+    if (currentEndsWithPunctuation || newStartsWithBracket) {
       separator = '';
     } else if (currentEndsWithOperator || newStartsWithOperator) {
       separator = ' ';
     } else if (currentEndsWithKeyword && !newStartsWithKeyword) {
       separator = ' ';
     } else if (!currentEndsWithKeyword && !newStartsWithKeyword) {
-      separator = ', ';
+      separator = ' ';
     } else if (!currentEndsWithKeyword && newStartsWithKeyword) {
       separator = ' ';
     } else if (currentEndsWithKeyword && newStartsWithKeyword) {
@@ -139,27 +134,17 @@ function addTextToQuery(query: Query<unknown>, text: string, addSeparator: boole
     }
   }
 
-  if (textToAdd.startsWith(',') && separator === ', ') {
-    separator = '';
-  }
-
   query.text = existingText + separator + textToAdd;
 }
 
-function startsWithBracket(query: string) {
-  return query.startsWith(')');
+function startsWithPunctuation(query: string) {
+  const firstChar = query[0];
+  return firstChar === ')' || firstChar === ',' || firstChar === '.' || firstChar === ' ';
 }
 
-function endsWithBracket(query: string) {
-  return query.endsWith('(');
-}
-
-function startsWithPeriod(query: string) {
-  return query.startsWith('.');
-}
-
-function endsWithPeriod(query: string) {
-  return query.endsWith('.');
+function endsWithPunctuation(query: string) {
+  const lastChar = query[query.length - 1];
+  return lastChar === '(' || lastChar === ',' || lastChar === '.' || lastChar === ' ';
 }
 
 function startsWithKeyword(query: string) {
@@ -182,6 +167,8 @@ function endsWithOperator(query: string) {
 
 export type PostgresQueryBuilder = SqlQueryBuilder<unknown>;
 
+export type PostgresSqlTemplateTag = SqlTemplateTag<unknown>;
+
 export function createPostgresSqlQuery(): PostgresQueryBuilder {
   return createSqlQuery<unknown>({ indexPrefix: '$' });
 }
@@ -195,6 +182,8 @@ export function buildPostgresSqlQuery(callback: SqlQueryBuilderCallback<unknown>
 // SQLITE
 
 type SqliteColumnValue = number | string | Uint8Array | null;
+
+export type SqliteSqlTemplateTag = SqlTemplateTag<SqliteColumnValue>;
 
 export interface SqliteQueryBuilder extends SqlQueryBuilder<SqliteColumnValue> {
   addValueList: (values: SqliteColumnValue[]) => RawSql;

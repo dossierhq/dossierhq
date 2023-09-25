@@ -58,7 +58,7 @@ async function addValues(
         const falseValue = addValue(0);
 
         for (const { index, value, latest, published } of valuesToAdd) {
-          sql`(${entityId}, ${index}, ${value}, ${latest ? trueValue : falseValue}, ${
+          sql`, (${entityId}, ${index}, ${value}, ${latest ? trueValue : falseValue}, ${
             published ? trueValue : falseValue
           })`;
         }

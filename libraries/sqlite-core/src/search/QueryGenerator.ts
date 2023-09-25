@@ -375,37 +375,37 @@ function totalCountQuery(
 
   if (query?.linksTo) {
     if (published) {
-      sql`entity_published_references er_to, entities e_to`;
+      sql`, entity_published_references er_to, entities e_to`;
     } else {
-      sql`entity_latest_references er_to, entities e_to`;
+      sql`, entity_latest_references er_to, entities e_to`;
     }
   }
   if (query?.linksFrom) {
     if (published) {
-      sql`entity_published_references er_from, entities e_from`;
+      sql`, entity_published_references er_from, entities e_from`;
     } else {
-      sql`entity_latest_references er_from, entities e_from`;
+      sql`, entity_latest_references er_from, entities e_from`;
     }
   }
   if (query?.valueTypes && query.valueTypes.length > 0) {
     if (published) {
-      sql`entity_published_value_types evt`;
+      sql`, entity_published_value_types evt`;
     } else {
-      sql`entity_latest_value_types evt`;
+      sql`, entity_latest_value_types evt`;
     }
   }
   if (query?.boundingBox) {
     if (published) {
-      sql`entity_published_locations el`;
+      sql`, entity_published_locations el`;
     } else {
-      sql`entity_latest_locations el`;
+      sql`, entity_latest_locations el`;
     }
   }
   if (query?.text) {
     if (published) {
-      sql`entities_published_fts fts`;
+      sql`, entities_published_fts fts`;
     } else {
-      sql`entities_latest_fts fts`;
+      sql`, entities_latest_fts fts`;
     }
   }
 
@@ -432,37 +432,37 @@ function addEntityQuerySelectColumn(
   }
   if (query?.linksTo) {
     if (published) {
-      sql`entity_published_references er_to, entities e_to`;
+      sql`, entity_published_references er_to, entities e_to`;
     } else {
-      sql`entity_latest_references er_to, entities e_to`;
+      sql`, entity_latest_references er_to, entities e_to`;
     }
   }
   if (query?.linksFrom) {
     if (published) {
-      sql`entities e_from, entity_published_references er_from`;
+      sql`, entities e_from, entity_published_references er_from`;
     } else {
-      sql`entities e_from, entity_latest_references er_from`;
+      sql`, entities e_from, entity_latest_references er_from`;
     }
   }
   if (query?.valueTypes && query.valueTypes.length > 0) {
     if (published) {
-      sql`entity_published_value_types evt`;
+      sql`, entity_published_value_types evt`;
     } else {
-      sql`entity_latest_value_types evt`;
+      sql`, entity_latest_value_types evt`;
     }
   }
   if (query?.boundingBox) {
     if (published) {
-      sql`entity_published_locations el`;
+      sql`, entity_published_locations el`;
     } else {
-      sql`entity_latest_locations el`;
+      sql`, entity_latest_locations el`;
     }
   }
   if (query?.text) {
     if (published) {
-      sql`entities_published_fts fts`;
+      sql`, entities_published_fts fts`;
     } else {
-      sql`entities_latest_fts fts`;
+      sql`, entities_latest_fts fts`;
     }
   }
 }

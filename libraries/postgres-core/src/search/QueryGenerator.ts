@@ -367,23 +367,23 @@ function totalCountQuery(
   sql`AS count FROM entities e`;
 
   if (query?.linksTo) {
-    if (published) sql`entity_published_references er_to, entities e_to`;
-    else sql`entity_latest_references er_to, entities e_to`;
+    if (published) sql`, entity_published_references er_to, entities e_to`;
+    else sql`, entity_latest_references er_to, entities e_to`;
   }
   if (query?.linksFrom) {
-    if (published) sql`entity_published_references er_from, entities e_from`;
-    else sql`entity_latest_references er_from, entities e_from`;
+    if (published) sql`, entity_published_references er_from, entities e_from`;
+    else sql`, entity_latest_references er_from, entities e_from`;
   }
   if (query?.valueTypes && query.valueTypes.length > 0) {
     if (published) {
-      sql`entity_published_value_types evt`;
+      sql`, entity_published_value_types evt`;
     } else {
-      sql`entity_latest_value_types evt`;
+      sql`, entity_latest_value_types evt`;
     }
   }
   if (query?.boundingBox) {
-    if (published) sql`entity_published_locations el`;
-    else sql`entity_latest_locations el`;
+    if (published) sql`, entity_published_locations el`;
+    else sql`, entity_latest_locations el`;
   }
 
   sql`WHERE`;
@@ -410,20 +410,20 @@ function addEntityQuerySelectColumn(
   FROM entities e, entity_versions ev`;
   }
   if (query?.linksTo) {
-    if (published) sql`entity_published_references er_to, entities e_to`;
-    else sql`entity_latest_references er_to, entities e_to`;
+    if (published) sql`, entity_published_references er_to, entities e_to`;
+    else sql`, entity_latest_references er_to, entities e_to`;
   }
   if (query?.linksFrom) {
-    if (published) sql`entities e_from, entity_published_references er_from`;
-    else sql`entities e_from, entity_latest_references er_from`;
+    if (published) sql`, entities e_from, entity_published_references er_from`;
+    else sql`, entities e_from, entity_latest_references er_from`;
   }
   if (query?.valueTypes && query.valueTypes.length > 0) {
-    if (published) sql`entity_published_value_types evt`;
-    else sql`entity_latest_value_types evt`;
+    if (published) sql`, entity_published_value_types evt`;
+    else sql`, entity_latest_value_types evt`;
   }
   if (query?.boundingBox) {
-    if (published) sql`entity_published_locations el`;
-    else sql`entity_latest_locations el`;
+    if (published) sql`, entity_published_locations el`;
+    else sql`, entity_latest_locations el`;
   }
 }
 

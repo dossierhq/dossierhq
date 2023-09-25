@@ -48,7 +48,7 @@ export async function createEntityEvent(
       sql`INSERT INTO event_entity_versions (events_id, entity_versions_id, published_name) VALUES`;
       const eventsValue = addValue(eventsId);
       for (const { entityVersionsId, publishedName } of entityVersions) {
-        sql`(${eventsValue}, ${entityVersionsId}, ${publishedName ?? null} )`;
+        sql`, (${eventsValue}, ${entityVersionsId}, ${publishedName ?? null} )`;
       }
     }),
   );

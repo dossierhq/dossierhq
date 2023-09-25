@@ -53,7 +53,9 @@ export {
   createPostgresSqlQuery,
   createSqliteSqlQuery,
   type PostgresQueryBuilder,
+  type PostgresSqlTemplateTag,
   type SqliteQueryBuilder,
+  type SqliteSqlTemplateTag,
 } from './SqlQueryBuilder.js';
 export { TransactionContextImpl } from './TransactionContext.js';
 export type {
