@@ -87,7 +87,7 @@
     "@types/sql.js": "~1.4.4",
     "@types/uuid": "~9.0.4",
     "@vitejs/plugin-react": "~4.1.0",
-    "@vitejs/plugin-react-swc": "~3.3.2",
+    "@vitejs/plugin-react-swc": "~3.4.0",
     "base-64": "~1.0.0",
     "bulma": "~0.9.4",
     "bun-types": "~1.0.3",
