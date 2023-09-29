@@ -50,7 +50,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.61.0",
+    "@rushstack/heft": "0.62.1",
     "@types/pg": "~8.10.2",
     "@types/uuid": "~9.0.4",
     "dotenv": "~16.3.1",
