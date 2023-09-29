@@ -24,7 +24,7 @@
     "@lexical/utils": "0.12.2",
     "@microsoft/rush-lib": "~5.107.3",
     "@react-aria/overlays": "~3.17.0",
-    "@rushstack/eslint-patch": "~1.4.0",
+    "@rushstack/eslint-patch": "~1.5.0",
     "@typescript-eslint/eslint-plugin": "~6.7.2",
     "@typescript-eslint/parser": "~6.7.2",
     "better-sqlite3": "~8.6.0",
