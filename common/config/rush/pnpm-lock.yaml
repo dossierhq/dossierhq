@@ -1645,8 +1645,8 @@ importers:
   ../../stack/eslint-config-generic:
     dependencies:
       '@rushstack/eslint-patch':
-        specifier: ~1.4.0
-        version: 1.4.0
+        specifier: ~1.5.0
+        version: 1.5.0
       '@typescript-eslint/eslint-plugin':
         specifier: ~6.7.2
         version: 6.7.2(@typescript-eslint/parser@6.7.2)(eslint@8.50.0)(typescript@5.2.2)
@@ -1660,8 +1660,8 @@ importers:
         specifier: workspace:*
         version: link:../eslint-config-generic
       '@rushstack/eslint-patch':
-        specifier: ~1.4.0
-        version: 1.4.0
+        specifier: ~1.5.0
+        version: 1.5.0
       eslint-plugin-react:
         specifier: ~7.33.2
         version: 7.33.2(eslint@8.50.0)
@@ -1767,8 +1767,8 @@ importers:
         specifier: ~3.17.0
         version: 3.17.0(react-dom@18.2.0)(react@18.2.0)
       '@rushstack/eslint-patch':
-        specifier: ~1.4.0
-        version: 1.4.0
+        specifier: ~1.5.0
+        version: 1.5.0
       '@typescript-eslint/eslint-plugin':
         specifier: ~6.7.2
         version: 6.7.2(@typescript-eslint/parser@6.7.2)(eslint@8.50.0)(typescript@5.2.2)
@@ -7262,8 +7262,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rushstack/eslint-patch@1.4.0:
-    resolution: {integrity: sha512-cEjvTPU32OM9lUFegJagO0mRnIn+rbqrG89vV8/xLnLFX0DoR0r1oy5IlTga71Q7uT3Qus7qm7wgeiMT/+Irlg==}
+  /@rushstack/eslint-patch@1.5.0:
+    resolution: {integrity: sha512-EF3948ckf3f5uPgYbQ6GhyA56Dmv8yg0+ir+BroRjwdxyZJsekhZzawOecC2rOTPCz173t7ZcR1HHZu0dZgOCw==}
 
   /@rushstack/heft-config-file@0.14.0(@types/node@20.6.3):
     resolution: {integrity: sha512-KpOY7vFUQZ4RhnPOed6Lhnm1vpLqjv8wv06ZC3yUtHB749iHLuxUKWjMco7qCDW3Uy7D1E2meuDpr8xvAj9zfQ==}
@@ -11168,7 +11168,7 @@ packages:
         optional: true
     dependencies:
       '@next/eslint-plugin-next': 13.5.2
-      '@rushstack/eslint-patch': 1.4.0
+      '@rushstack/eslint-patch': 1.5.0
       '@typescript-eslint/parser': 6.7.2(eslint@8.50.0)(typescript@5.2.2)
       eslint: 8.50.0
       eslint-import-resolver-node: 0.3.7
