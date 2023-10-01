@@ -2,7 +2,7 @@ import type { AdminClient, ErrorType, PromiseResult, PublishedClient } from '@do
 import { notOk, ok } from '@dossierhq/core';
 import type { DatabasePerformanceCallbacks, Server } from '@dossierhq/server';
 import type { NextApiRequest } from 'next';
-import { DEFAULT_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { SYSTEM_USERS } from '../config/SystemUsers';
 import { createFilesystemAdminMiddleware } from './FileSystemSerializer';
 import { initializeServer } from './SharedServerUtils';
 
@@ -18,9 +18,7 @@ export async function getSessionContextForRequest(
 > {
   //TODO actually authenticate
   const sessionResult = await server.createSession({
-    provider: 'test',
-    identifier: 'john-smith',
-    defaultAuthKeys: DEFAULT_AUTH_KEYS,
+    ...SYSTEM_USERS.editor,
     logger: null,
     databasePerformance,
   });
