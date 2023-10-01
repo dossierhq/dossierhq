@@ -16,6 +16,7 @@ import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
+import { convertConnectionPayload } from '../utils/ConnectionUtils.js';
 
 export async function publishedEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -38,31 +39,21 @@ export async function publishedEntitySearchEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
-  const searchResult = await queryMany<SearchPublishedEntitiesItem>(
+  const connectionResult = await queryMany<SearchPublishedEntitiesItem>(
     databaseAdapter,
     context,
     sqlQuery,
   );
-  if (searchResult.isError()) return searchResult;
+  if (connectionResult.isError()) return connectionResult;
 
-  const entitiesValues = searchResult.value;
+  const rows = connectionResult.value;
 
-  const hasMore = entitiesValues.length > paging.count;
-  if (hasMore) {
-    entitiesValues.splice(paging.count, 1);
-  }
-  if (!paging.forwards) {
-    // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
-    entitiesValues.reverse();
-  }
-
-  return ok({
-    hasMore,
-    edges: entitiesValues.map((it) => ({
-      ...resolvePublishedEntityInfo(it),
-      ...resolveEntityFields(it),
-      id: it.uuid,
-      cursor: cursorExtractor(it),
+  return ok(
+    convertConnectionPayload(databaseAdapter, paging, rows, (_database, row) => ({
+      ...resolvePublishedEntityInfo(row),
+      ...resolveEntityFields(row),
+      id: row.uuid,
+      cursor: cursorExtractor(row),
     })),
-  });
+  );
 }
