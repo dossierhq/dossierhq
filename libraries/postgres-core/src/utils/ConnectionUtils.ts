@@ -91,10 +91,9 @@ export function convertConnectionPayload<
     cursor: string;
   },
 >(
-  database: PostgresDatabaseAdapter,
   paging: DatabasePagingInfo,
   rows: TRow[],
-  convertEdge: (database: PostgresDatabaseAdapter, row: TRow) => TEdge,
+  convertEdge: (row: TRow) => TEdge,
 ): DatabaseConnectionPayload<TEdge> {
   const hasMore = rows.length > paging.count;
   if (hasMore) {
@@ -107,6 +106,6 @@ export function convertConnectionPayload<
 
   return {
     hasMore,
-    edges: rows.map((row) => convertEdge(database, row)),
+    edges: rows.map((row) => convertEdge(row)),
   };
 }

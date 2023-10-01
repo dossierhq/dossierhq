@@ -29,7 +29,9 @@ export async function authGetPrincipals(
   const connectionResult = await queryMany<PrincipalsRow>(database, context, queryResult.value);
   if (connectionResult.isError()) return connectionResult;
 
-  return ok(convertConnectionPayload(database, paging, connectionResult.value, convertEdge));
+  return ok(
+    convertConnectionPayload(paging, connectionResult.value, (row) => convertEdge(database, row)),
+  );
 }
 
 function convertEdge(

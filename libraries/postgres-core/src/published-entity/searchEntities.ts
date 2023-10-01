@@ -49,7 +49,7 @@ export async function publishedEntitySearchEntities(
   const rows = connectionResult.value;
 
   return ok(
-    convertConnectionPayload(databaseAdapter, paging, rows, (_database, row) => ({
+    convertConnectionPayload(paging, rows, (row) => ({
       ...resolvePublishedEntityInfo(row),
       ...resolveEntityFields(row),
       id: row.uuid,

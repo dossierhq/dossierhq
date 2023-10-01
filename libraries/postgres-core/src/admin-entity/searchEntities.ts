@@ -43,7 +43,7 @@ export async function adminEntitySearchEntities(
   const rows = connectionResult.value;
 
   return ok(
-    convertConnectionPayload(databaseAdapter, paging, rows, (_database, row) => ({
+    convertConnectionPayload(paging, rows, (row) => ({
       ...resolveAdminEntityInfo(row),
       ...resolveEntityFields(row),
       id: row.uuid,

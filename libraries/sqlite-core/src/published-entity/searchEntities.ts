@@ -44,7 +44,7 @@ export async function publishedEntitySearchEntities(
   const rows = searchResult.value;
 
   return ok(
-    convertConnectionPayload(database, paging, rows, (_database, row) => ({
+    convertConnectionPayload(paging, rows, (row) => ({
       ...resolvePublishedEntityInfo(row),
       ...resolveEntityFields(row),
       id: row.uuid,

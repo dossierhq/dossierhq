@@ -92,10 +92,9 @@ export function convertConnectionPayload<
     cursor: string;
   },
 >(
-  database: Database,
   paging: DatabasePagingInfo,
   rows: TRow[],
-  convertEdge: (database: Database, row: TRow) => TEdge,
+  convertEdge: (row: TRow) => TEdge,
 ): DatabaseConnectionPayload<TEdge> {
   const hasMore = rows.length > paging.count;
   if (hasMore) {
@@ -108,6 +107,6 @@ export function convertConnectionPayload<
 
   return {
     hasMore,
-    edges: rows.map((row) => convertEdge(database, row)),
+    edges: rows.map((row) => convertEdge(row)),
   };
 }
