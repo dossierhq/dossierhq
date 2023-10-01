@@ -21,7 +21,7 @@
     "start:deno-postgres": "deno run --allow-all deno/run-deno-postgres.ts",
     "start:node-better-sqlite3": "node lib/run-node-better-sqlite3.js",
     "start:node-pg": "node lib/run-node-pg.js",
-    "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci"
+    "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-better-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci"
   },
   "dependencies": {
     "@faker-js/faker": "~8.1.0",
