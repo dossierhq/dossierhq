@@ -7,14 +7,14 @@ import {
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import type { PrincipalsTable, SubjectsTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany, type QueryOrQueryAndValues } from '../QueryFunctions.js';
 import { toOpaqueCursor } from '../search/OpaqueCursor.js';
 import {
   addConnectionOrderByAndLimit,
   addConnectionPagingFilter,
-  convertConnectionPayload,
+  resolveConnectionPagingAndOrdering,
 } from '../utils/ConnectionUtils.js';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 
 export async function authGetPrincipals(
   database: PostgresDatabaseAdapter,
@@ -30,9 +30,9 @@ export async function authGetPrincipals(
   const connectionResult = await queryMany<PrincipalsRow>(database, context, queryResult.value);
   if (connectionResult.isError()) return connectionResult;
 
-  return ok(
-    convertConnectionPayload(paging, connectionResult.value, (row) => convertEdge(database, row)),
-  );
+  const { hasMore, edges } = resolveConnectionPagingAndOrdering(paging, connectionResult.value);
+
+  return ok({ hasMore, edges: edges.map((edge) => convertEdge(database, edge)) });
 }
 
 function convertEdge(

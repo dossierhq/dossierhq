@@ -16,7 +16,7 @@ import { queryMany } from '../QueryFunctions.js';
 import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
 import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
-import { convertConnectionPayload } from '../utils/ConnectionUtils.js';
+import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 
 export async function publishedEntitySearchEntities(
   database: Database,
@@ -39,16 +39,22 @@ export async function publishedEntitySearchEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
-  const searchResult = await queryMany<SearchPublishedEntitiesItem>(database, context, sqlQuery);
-  if (searchResult.isError()) return searchResult;
-  const rows = searchResult.value;
-
-  return ok(
-    convertConnectionPayload(paging, rows, (row) => ({
-      ...resolvePublishedEntityInfo(row),
-      ...resolveEntityFields(row),
-      id: row.uuid,
-      cursor: cursorExtractor(row),
-    })),
+  const connectionResult = await queryMany<SearchPublishedEntitiesItem>(
+    database,
+    context,
+    sqlQuery,
   );
+  if (connectionResult.isError()) return connectionResult;
+
+  const { hasMore, edges } = resolveConnectionPagingAndOrdering(paging, connectionResult.value);
+
+  return ok({
+    hasMore,
+    edges: edges.map((edge) => ({
+      ...resolvePublishedEntityInfo(edge),
+      ...resolveEntityFields(edge),
+      id: edge.uuid,
+      cursor: cursorExtractor(edge),
+    })),
+  });
 }

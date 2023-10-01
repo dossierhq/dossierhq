@@ -1,9 +1,5 @@
 import { assertExhaustive, ok, type ErrorType, type Result } from '@dossierhq/core';
-import type {
-  DatabaseConnectionPayload,
-  DatabasePagingInfo,
-  PostgresSqlTemplateTag,
-} from '@dossierhq/database-adapter';
+import type { DatabasePagingInfo, PostgresSqlTemplateTag } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { CursorNativeType } from '../search/OpaqueCursor.js';
 import { resolvePagingCursors } from '../search/Paging.js';
@@ -85,27 +81,18 @@ export function addConnectionOrderByAndLimit(
   sql`LIMIT ${countToRequest}`;
 }
 
-export function convertConnectionPayload<
-  TRow,
-  TEdge extends {
-    cursor: string;
-  },
->(
+export function resolveConnectionPagingAndOrdering<TRow>(
   paging: DatabasePagingInfo,
   rows: TRow[],
-  convertEdge: (row: TRow) => TEdge,
-): DatabaseConnectionPayload<TEdge> {
+): { hasMore: boolean; edges: TRow[] } {
   const hasMore = rows.length > paging.count;
+  const edges = [...rows];
   if (hasMore) {
-    rows.splice(paging.count, 1);
+    edges.splice(paging.count, 1);
   }
   if (!paging.forwards) {
     // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
-    rows.reverse();
+    edges.reverse();
   }
-
-  return {
-    hasMore,
-    edges: rows.map((row) => convertEdge(row)),
-  };
+  return { hasMore, edges };
 }

@@ -1,5 +1,10 @@
-import type { AdminEntityQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import {
+  ok,
+  type AdminEntityQuery,
+  type AdminSchema,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
   DatabasePagingInfo,
@@ -11,7 +16,7 @@ import { queryMany } from '../QueryFunctions.js';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import { searchAdminEntitiesQuery } from '../search/QueryGenerator.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
-import { convertConnectionPayload } from '../utils/ConnectionUtils.js';
+import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 
 export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -40,14 +45,16 @@ export async function adminEntitySearchEntities(
     sqlQuery,
   );
   if (connectionResult.isError()) return connectionResult;
-  const rows = connectionResult.value;
 
-  return ok(
-    convertConnectionPayload(paging, rows, (row) => ({
-      ...resolveAdminEntityInfo(row),
-      ...resolveEntityFields(row),
-      id: row.uuid,
-      cursor: cursorExtractor(row),
+  const { hasMore, edges } = resolveConnectionPagingAndOrdering(paging, connectionResult.value);
+
+  return ok({
+    hasMore,
+    edges: edges.map((edge) => ({
+      ...resolveAdminEntityInfo(edge),
+      ...resolveEntityFields(edge),
+      id: edge.uuid,
+      cursor: cursorExtractor(edge),
     })),
-  );
+  });
 }

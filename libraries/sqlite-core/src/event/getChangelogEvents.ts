@@ -21,6 +21,7 @@ import type {
 } from '../DatabaseSchema.js';
 import { queryMany, type Database } from '../QueryFunctions.js';
 import { toOpaqueCursor } from '../search/OpaqueCursor.js';
+import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 import { generateGetChangelogEventsQuery, type EventsRow } from './ChangelogQueryGenerator.js';
 
 export async function eventGetChangelogEvents(
@@ -36,25 +37,17 @@ export async function eventGetChangelogEvents(
   const sqlQueryResult = generateGetChangelogEventsQuery(database, query, paging, entity);
   if (sqlQueryResult.isError()) return sqlQueryResult;
 
-  const searchResult = await queryMany<EventsRow>(database, context, sqlQueryResult.value);
-  if (searchResult.isError()) return searchResult;
-  const rows = searchResult.value;
+  const connectionResult = await queryMany<EventsRow>(database, context, sqlQueryResult.value);
+  if (connectionResult.isError()) return connectionResult;
 
-  const hasMore = rows.length > paging.count;
-  if (hasMore) {
-    rows.splice(paging.count, 1);
-  }
-  if (!paging.forwards) {
-    // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
-    rows.reverse();
-  }
+  const { hasMore, edges } = resolveConnectionPagingAndOrdering(paging, connectionResult.value);
 
-  const entitiesInfoResult = await getEntityInfoForEvents(database, context, rows);
+  const entitiesInfoResult = await getEntityInfoForEvents(database, context, edges);
   if (entitiesInfoResult.isError()) return entitiesInfoResult;
 
   return ok({
     hasMore,
-    edges: rows.map((it) => convertEdge(database, entitiesInfoResult.value, it)),
+    edges: edges.map((edge) => convertEdge(database, entitiesInfoResult.value, edge)),
   });
 }
 
