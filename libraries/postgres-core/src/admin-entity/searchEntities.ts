@@ -11,6 +11,7 @@ import { queryMany } from '../QueryFunctions.js';
 import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
 import { searchAdminEntitiesQuery } from '../search/QueryGenerator.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
+import { convertConnectionPayload } from '../utils/ConnectionUtils.js';
 
 export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -33,27 +34,20 @@ export async function adminEntitySearchEntities(
   if (sqlQueryResult.isError()) return sqlQueryResult;
   const { cursorExtractor, sqlQuery } = sqlQueryResult.value;
 
-  const searchResult = await queryMany<SearchAdminEntitiesItem>(databaseAdapter, context, sqlQuery);
-  if (searchResult.isError()) return searchResult;
+  const connectionResult = await queryMany<SearchAdminEntitiesItem>(
+    databaseAdapter,
+    context,
+    sqlQuery,
+  );
+  if (connectionResult.isError()) return connectionResult;
+  const rows = connectionResult.value;
 
-  const entitiesValues = searchResult.value;
-
-  const hasMore = entitiesValues.length > paging.count;
-  if (hasMore) {
-    entitiesValues.splice(paging.count, 1);
-  }
-  if (!paging.forwards) {
-    // Reverse since DESC order returns the rows in the wrong order, we want them in the same order as for forwards pagination
-    entitiesValues.reverse();
-  }
-
-  return ok({
-    hasMore,
-    edges: entitiesValues.map((it) => ({
-      ...resolveAdminEntityInfo(it),
-      ...resolveEntityFields(it),
-      id: it.uuid,
-      cursor: cursorExtractor(it),
+  return ok(
+    convertConnectionPayload(databaseAdapter, paging, rows, (_database, row) => ({
+      ...resolveAdminEntityInfo(row),
+      ...resolveEntityFields(row),
+      id: row.uuid,
+      cursor: cursorExtractor(row),
     })),
-  });
+  );
 }

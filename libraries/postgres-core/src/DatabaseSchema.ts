@@ -32,6 +32,13 @@ export interface SubjectsTable {
   created_at: Date;
 }
 
+export interface PrincipalsTable {
+  id: number;
+  provider: string;
+  identifier: string;
+  subjects_id: number;
+}
+
 export const ENTITY_DIRTY_FLAG_VALIDATE_LATEST = 0x1;
 export const ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED = 0x2;
 export const ENTITY_DIRTY_FLAG_INDEX_LATEST = 0x4;

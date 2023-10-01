@@ -9,10 +9,13 @@ import {
   type AdminClientMiddleware,
   type AdminEntity,
   type AdminSchemaSpecificationWithMigrations,
+  type Connection,
   type ContextProvider,
+  type Edge,
   type EntityReference,
   type ErrorType,
   type Logger,
+  type Paging,
   type PromiseResult,
   type PublishedClient,
   type PublishedClientMiddleware,
@@ -42,6 +45,8 @@ import {
 } from './Context.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
+import { authCreatePrincipal } from './auth/authCreatePrincipal.js';
+import { autGetPrincipals } from './auth/authGetPrincipals.js';
 import { managementApplySyncEvent } from './management/managementApplySyncEvent.js';
 import {
   managementDirtyProcessNextEntity,
@@ -57,6 +62,12 @@ import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';
   context: SessionContext;
+}
+
+export interface SyncPrincipal {
+  provider: string;
+  identifier: string;
+  subjectId: string;
 }
 
 export interface Server<
@@ -81,6 +92,20 @@ export interface Server<
   applySyncEvent(
     event: SyncEvent,
   ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+
+  getPrincipals(
+    paging?: Paging,
+  ): PromiseResult<
+    Connection<Edge<SyncPrincipal, typeof ErrorType.Generic>> | null,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
+
+  createPrincipal(
+    principal: SyncPrincipal,
+  ): PromiseResult<
+    { effect: 'created' | 'none' },
+    typeof ErrorType.Conflict | typeof ErrorType.Generic
+  >;
 
   createSession(params: {
     provider: string;
@@ -305,6 +330,26 @@ export async function createServer<
         serverImpl.setAdminSchema(updatedSchema.spec);
       }
       return ok(undefined);
+    },
+
+    getPrincipals(
+      paging?: Paging,
+    ): PromiseResult<
+      Connection<Edge<SyncPrincipal, typeof ErrorType.Generic>> | null,
+      typeof ErrorType.BadRequest | typeof ErrorType.Generic
+    > {
+      const managementContext = serverImpl.createInternalContext(null);
+      return autGetPrincipals(databaseAdapter, managementContext, paging);
+    },
+
+    createPrincipal(
+      principal: SyncPrincipal,
+    ): PromiseResult<
+      { effect: 'created' | 'none' },
+      typeof ErrorType.Conflict | typeof ErrorType.Generic
+    > {
+      const managementContext = serverImpl.createInternalContext(null);
+      return authCreatePrincipal(databaseAdapter, managementContext, principal);
     },
 
     createSession: async ({

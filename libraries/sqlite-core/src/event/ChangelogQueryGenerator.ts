@@ -1,10 +1,4 @@
-import {
-  assertExhaustive,
-  ok,
-  type ChangelogEventQuery,
-  type ErrorType,
-  type Result,
-} from '@dossierhq/core';
+import { ok, type ChangelogEventQuery, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import {
   createSqliteSqlQuery,
@@ -13,8 +7,10 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EventsTable, SchemaVersionsTable, SubjectsTable } from '../DatabaseSchema.js';
 import { type Database, type QueryOrQueryAndValues } from '../QueryFunctions.js';
-import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
-import { resolvePagingCursors } from '../search/Paging.js';
+import {
+  addConnectionOrderByAndLimit,
+  addConnectionPagingFilter,
+} from '../utils/ConnectionUtils.js';
 
 export type EventsRow = Pick<EventsTable, 'id' | 'uuid' | 'type' | 'created_at'> & {
   created_by: SubjectsTable['uuid'];
@@ -26,12 +22,10 @@ export function generateGetChangelogEventsQuery(
   paging: DatabasePagingInfo,
   entity: DatabaseResolvedEntityReference | null,
 ): Result<QueryOrQueryAndValues, typeof ErrorType.BadRequest> {
-  const cursorsResult = resolvePagingCursors(database, 'int', paging);
-  if (cursorsResult.isError()) return cursorsResult;
-  const resolvedCursors = cursorsResult.value;
-
   const queryBuilder = createSqliteSqlQuery();
   const { sql } = queryBuilder;
+
+  const reverse = !!query.reverse;
 
   sql`SELECT e.id, e.uuid, e.type, e.created_at, s.uuid AS created_by, sv.version FROM events e`;
   sql`JOIN subjects s ON e.created_by = s.id`;
@@ -44,36 +38,17 @@ export function generateGetChangelogEventsQuery(
 
   addQueryFilters(queryBuilder, query, entity);
 
-  //TODO extract paging/ordering to connection function
-  // Paging 1/2
-  if (resolvedCursors.after !== null) {
-    const operator = query?.reverse ? '<' : '>';
-    addCursorNameOperatorAndValue(
-      queryBuilder,
-      operator,
-      paging.afterInclusive,
-      resolvedCursors.after,
-    );
-  }
-  if (resolvedCursors.before !== null) {
-    const operator = query?.reverse ? '>' : '<';
-    addCursorNameOperatorAndValue(
-      queryBuilder,
-      operator,
-      paging.beforeInclusive,
-      resolvedCursors.before,
-    );
-  }
+  const pagingFilterResult = addConnectionPagingFilter(
+    database,
+    sql,
+    paging,
+    'int',
+    reverse,
+    (sql) => sql`e.id`,
+  );
+  if (pagingFilterResult.isError()) return pagingFilterResult;
 
-  // Ordering
-  sql`ORDER BY e.id`;
-  let ascending = !query?.reverse;
-
-  // Paging 2/2
-  if (!paging.forwards) ascending = !ascending;
-  const countToRequest = paging.count + 1; // request one more to calculate hasMore
-  if (!ascending) sql`DESC`;
-  sql`LIMIT ${countToRequest}`;
+  addConnectionOrderByAndLimit(sql, paging, reverse, (sql) => sql`e.id`);
 
   return ok(queryBuilder.query);
 }
@@ -119,26 +94,4 @@ function addQueryFilters(
   if (query.types && query.types.length > 0) {
     sql`AND e.type IN ${addValueList(query.types)}`;
   }
-}
-
-function addCursorNameOperatorAndValue(
-  queryBuilder: SqliteQueryBuilder,
-  operator: '>' | '<',
-  orEqual: boolean,
-  value: ColumnValue,
-) {
-  const { sql } = queryBuilder;
-  switch (operator) {
-    case '>':
-      if (orEqual) sql`AND e.id >=`;
-      else sql`AND e.id >`;
-      break;
-    case '<':
-      if (orEqual) sql`AND e.id <=`;
-      else sql`AND e.id <`;
-      break;
-    default:
-      assertExhaustive(operator);
-  }
-  sql`${value}`;
 }

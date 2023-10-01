@@ -50,11 +50,23 @@ export async function authCreateSession(
 export async function authCreateSyncSessionForSubject(
   database: Database,
   context: TransactionContext,
-  { subjectId }: { subjectId: string },
+  subject: { subjectId: string },
 ): PromiseResult<Session, typeof ErrorType.Generic> {
+  const result = await getOrCreateSubject(database, context, subject);
+  if (result.isError()) return result;
+
+  return ok(createSession({ subjectInternalId: result.value.id, subjectId: subject.subjectId }));
+}
+
+export async function getOrCreateSubject(
+  database: Database,
+  context: TransactionContext,
+  { subjectId }: { subjectId: string },
+) {
   //TODO validate subjectID uuid format
   const now = getTransactionTimestamp(context.transaction).toISOString();
-  const result = await queryOne<Pick<SubjectsTable, 'id'>>(
+
+  return await queryOne<Pick<SubjectsTable, 'id'>>(
     database,
     context,
     buildSqliteSqlQuery(({ sql }) => {
@@ -63,9 +75,6 @@ export async function authCreateSyncSessionForSubject(
       sql`ON CONFLICT(uuid) DO UPDATE SET created_at = created_at RETURNING id`;
     }),
   );
-  if (result.isError()) return result;
-
-  return ok(createSession({ subjectInternalId: result.value.id, subjectId }));
 }
 
 function createPayload<TError extends ErrorType>(
@@ -114,27 +123,37 @@ async function createSubject(
     if (subjectsResult.isError()) return subjectsResult;
     const { id } = subjectsResult.value;
 
-    const principalsResult = await queryRun(
-      database,
-      context,
-      {
-        text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
-        values: [provider, identifier, id],
-      },
-      (error) => {
-        if (
-          database.adapter.isUniqueViolationOfConstraint(
-            error,
-            PrincipalsUniqueProviderIdentifierConstraint,
-          )
-        ) {
-          return notOk.Conflict('Principal already exist');
-        }
-        return notOk.GenericUnexpectedException(context, error);
-      },
-    );
-    if (principalsResult.isError()) return principalsResult;
+    const createResult = await createPrincipal(database, context, provider, identifier, id);
+    if (createResult.isError()) return createResult;
 
     return createPayload('created', { id, uuid });
   });
+}
+
+export function createPrincipal(
+  database: Database,
+  context: TransactionContext,
+  provider: string,
+  identifier: string,
+  subjectInternalId: number,
+) {
+  return queryRun(
+    database,
+    context,
+    {
+      text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
+      values: [provider, identifier, subjectInternalId],
+    },
+    (error) => {
+      if (
+        database.adapter.isUniqueViolationOfConstraint(
+          error,
+          PrincipalsUniqueProviderIdentifierConstraint,
+        )
+      ) {
+        return notOk.Conflict('Principal already exist');
+      }
+      return notOk.GenericUnexpectedException(context, error);
+    },
+  );
 }

@@ -1,11 +1,13 @@
 import {
   AdminEntityStatus,
+  ErrorType,
   EventType,
   FieldType,
+  assertIsDefined,
   type AdminClient,
   type AdminSchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
-import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SyncTestContext } from './SyncTestSuite.js';
@@ -36,26 +38,30 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
   const { sourceServer, targetServer } = context;
 
   // Ensure the servers are empty
-  const initialSyncEvents = (
+  const initialSourceSyncEvents = (
     await sourceServer.getSyncEvents({ after: null, limit: 10 })
   ).valueOrThrow();
-  assertEquals(initialSyncEvents.events.length, 0);
+  assertEquals(initialSourceSyncEvents.events.length, 0);
+
+  assertResultValue(await sourceServer.getPrincipals(), null);
 
   const initialTargetSyncEvents = (
     await targetServer.getSyncEvents({ after: null, limit: 10 })
   ).valueOrThrow();
   assertEquals(initialTargetSyncEvents.events.length, 0);
 
-  // Create admin clients
-  const sourceAdminClient = adminClientForMainPrincipal(sourceServer) as AdminClient;
-  const targetAdminClient = adminClientForMainPrincipal(targetServer) as AdminClient;
+  assertResultValue(await targetServer.getPrincipals(), null);
+
+  // Sync principals and create admin clients
+  const { sourceAdminClient, targetAdminClient, createdBy } =
+    await sync_allEventsScenario_syncPrincipals(context);
 
   let scenarioContext: ScenarioContext = {
     ...context,
     sourceAdminClient,
     targetAdminClient,
+    createdBy,
     after: null,
-    createdBy: 'placeholder',
   };
 
   for (const step of STEPS) {
@@ -63,8 +69,47 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
   }
 }
 
+async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
+  const { sourceServer, targetServer } = context;
+
+  // Setup source admin client
+  const sourceAdminClient = adminClientForMainPrincipal(sourceServer) as AdminClient;
+  // Use source admin client to force lazy creation of the main principal
+  assertErrorResult(
+    await sourceAdminClient.getEntity({ id: TITLE_ONLY_ENTITY_ID_1 }),
+    ErrorType.NotFound,
+    'No such entity',
+  );
+
+  // Get source principals
+  const sourcePrincipalConnection = (await sourceServer.getPrincipals()).valueOrThrow();
+  assertIsDefined(sourcePrincipalConnection);
+  const sourcePrincipals = sourcePrincipalConnection.edges.map((it) => it.node.valueOrThrow());
+  assertEquals(sourcePrincipals.length, 1);
+
+  // Create target principals
+  for (const principal of sourcePrincipals) {
+    assertResultValue(await targetServer.createPrincipal(principal), { effect: 'created' });
+  }
+
+  // Check that the target principals are identical
+  const targetPrincipalConnection = (await targetServer.getPrincipals()).valueOrThrow();
+  assertIsDefined(targetPrincipalConnection);
+  const targetPrincipals = targetPrincipalConnection.edges.map((it) => it.node.valueOrThrow());
+  assertEquals(targetPrincipals, sourcePrincipals);
+
+  // Create target admin client after the principals have been created
+  const targetAdminClient = adminClientForMainPrincipal(targetServer) as AdminClient;
+
+  return {
+    sourceAdminClient,
+    targetAdminClient,
+    createdBy: sourcePrincipalConnection.edges[0].node.valueOrThrow().subjectId,
+  };
+}
+
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after } = context;
+  const { sourceAdminClient, targetAdminClient, createdBy, after } = context;
 
   const expectedSchemaSpecification: AdminSchemaSpecificationWithMigrations = {
     entityTypes: [
@@ -117,8 +162,6 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
   // Apply sync events
   const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
 
-  const createdBy = events[0].createdBy;
-
   assertSyncEventsEqual(events, [
     {
       type: EventType.updateSchema,
@@ -135,7 +178,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
 
   assertEquals(targetSchemaSpecification, sourceSchemaSpecification);
 
-  return { ...nextContext, createdBy };
+  return nextContext;
 }
 
 async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {

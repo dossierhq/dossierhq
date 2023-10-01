@@ -54,6 +54,8 @@ import { schemaUpdateDeleteValueTypesFromIndexes } from './schema/updateDeleteVa
 import { schemaUpdateModifyIndexes } from './schema/updateModifyIndexes.js';
 import { schemaUpdateRenameTypes } from './schema/updateRenameTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
+import { authCreatePrincipal } from './auth/createPrincipal.js';
+import { authGetPrincipals } from './auth/getPrincipals.js';
 
 export type PostgresDatabaseOptimizationOptions = DatabaseOptimizationOptions;
 
@@ -122,9 +124,11 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(databaseAdapter, ...args),
     advisoryLockRelease: (...args) => advisoryLockRelease(databaseAdapter, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
+    authCreatePrincipal: (...args) => authCreatePrincipal(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     authCreateSyncSessionForSubject: (...args) =>
       authCreateSyncSessionForSubject(databaseAdapter, ...args),
+    authGetPrincipals: (...args) => authGetPrincipals(databaseAdapter, ...args),
     disconnect: () => databaseAdapter.disconnect(),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(databaseAdapter, ...args),
     eventGetChangelogEventsEntityInfo: (...args) =>

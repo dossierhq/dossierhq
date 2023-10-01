@@ -18,14 +18,18 @@ import {
 import type {
   DatabasePagingInfo,
   PostgresQueryBuilder,
+  PostgresSqlTemplateTag,
   ResolvedAuthKey,
 } from '@dossierhq/database-adapter';
 import { createPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import {
+  addConnectionOrderByAndLimit,
+  addConnectionPagingFilter,
+} from '../utils/ConnectionUtils.js';
 import type { CursorNativeType } from './OpaqueCursor.js';
 import { toOpaqueCursor } from './OpaqueCursor.js';
-import { resolvePagingCursors } from './Paging.js';
 
 // id and updated are included for order by
 export type SearchAdminEntitiesItem = Pick<
@@ -85,15 +89,13 @@ function sharedSearchEntitiesQuery<
   authKeys: ResolvedAuthKey[],
   published: boolean,
 ): Result<SharedEntitiesQuery<TItem>, typeof ErrorType.BadRequest> {
+  const reverse = !!query?.reverse;
+
   const { cursorType, cursorName, cursorExtractor } = queryOrderToCursor<TItem>(
     databaseAdapter,
     query?.order,
     published,
   );
-
-  const cursorsResult = resolvePagingCursors(databaseAdapter, cursorType, paging);
-  if (cursorsResult.isError()) return cursorsResult;
-  const resolvedCursors = cursorsResult.value;
 
   const queryBuilder = createPostgresSqlQuery();
   const { sql } = queryBuilder;
@@ -106,42 +108,19 @@ function sharedSearchEntitiesQuery<
   const filterResult = addQueryFilters(queryBuilder, schema, query, authKeys, published, true);
   if (filterResult.isError()) return filterResult;
 
-  // Paging 1/2
-  if (resolvedCursors.after !== null) {
-    const operator = query?.reverse ? '<' : '>';
-    sql`AND e.`;
-    addCursorNameOperatorAndValue(
-      published,
-      queryBuilder,
-      cursorName,
-      operator,
-      paging.afterInclusive,
-      resolvedCursors.after as string,
-    );
-  }
-  if (resolvedCursors.before !== null) {
-    const operator = query?.reverse ? '>' : '<';
-    sql`AND e.`;
-    addCursorNameOperatorAndValue(
-      published,
-      queryBuilder,
-      cursorName,
-      operator,
-      paging.beforeInclusive,
-      resolvedCursors.before as string,
-    );
-  }
+  const pagingFilterResult = addConnectionPagingFilter(
+    databaseAdapter,
+    sql,
+    paging,
+    cursorType,
+    reverse,
+    (sql) => addCursorName(published, sql, cursorName),
+  );
+  if (pagingFilterResult.isError()) return pagingFilterResult;
 
-  // Ordering
-  sql`ORDER BY e.`;
-  addCursorName(published, queryBuilder, cursorName);
-  let ascending = !query?.reverse;
-
-  // Paging 2/2
-  if (!paging.forwards) ascending = !ascending;
-  const countToRequest = paging.count + 1; // request one more to calculate hasMore
-  if (!ascending) sql`DESC`;
-  sql`LIMIT ${countToRequest}`;
+  addConnectionOrderByAndLimit(sql, paging, reverse, (sql) =>
+    addCursorName(published, sql, cursorName),
+  );
 
   return ok({
     sqlQuery: queryBuilder.query,
@@ -230,50 +209,24 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
   }
 }
 
-function addCursorName(published: boolean, { sql }: PostgresQueryBuilder, cursorName: CursorName) {
+function addCursorName(published: boolean, sql: PostgresSqlTemplateTag, cursorName: CursorName) {
   switch (cursorName) {
     case 'id':
-      sql`id`;
+      sql`e.id`;
       break;
     case 'name':
       if (published) {
-        sql`published_name`;
+        sql`e.published_name`;
       } else {
-        sql`name`;
+        sql`e.name`;
       }
       break;
     case 'updated':
-      sql`updated`;
+      sql`e.updated`;
       break;
     default:
       assertExhaustive(cursorName);
   }
-}
-
-function addCursorNameOperatorAndValue(
-  published: boolean,
-  queryBuilder: PostgresQueryBuilder,
-  cursorName: CursorName,
-  operator: '>' | '<',
-  orEqual: boolean,
-  value: string,
-) {
-  const { sql } = queryBuilder;
-
-  addCursorName(published, queryBuilder, cursorName);
-  switch (operator) {
-    case '>':
-      if (orEqual) sql`>=`;
-      else sql`>`;
-      break;
-    case '<':
-      if (orEqual) sql`<=`;
-      else sql`<`;
-      break;
-    default:
-      assertExhaustive(operator);
-  }
-  sql`${value}`;
 }
 
 function addFilterStatusSqlSegment(query: AdminEntitySharedQuery, { sql }: PostgresQueryBuilder) {

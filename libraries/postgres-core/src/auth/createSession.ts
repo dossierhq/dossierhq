@@ -48,10 +48,21 @@ export async function authCreateSession(
 }
 
 export async function authCreateSyncSessionForSubject(
+  database: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  subject: { subjectId: string },
+): PromiseResult<Session, typeof ErrorType.Generic> {
+  const result = await getOrCreateSubject(database, context, subject);
+  if (result.isError()) return result;
+
+  return ok(createSession({ subjectInternalId: result.value.id, subjectId: subject.subjectId }));
+}
+
+export async function getOrCreateSubject(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   { subjectId }: { subjectId: string },
-): PromiseResult<Session, typeof ErrorType.Generic> {
+) {
   const getResult = await queryNoneOrOne<Pick<SubjectsTable, 'id'>>(
     adapter,
     context,
@@ -74,7 +85,7 @@ export async function authCreateSyncSessionForSubject(
     subjectInternalId = insertResult.value.id;
   }
 
-  return ok(createSession({ subjectInternalId, subjectId }));
+  return ok({ id: subjectInternalId });
 }
 
 function createPayload<TError extends ErrorType>(
@@ -119,31 +130,40 @@ async function createSubject(
       context,
       'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid',
     );
-    if (subjectsResult.isError()) {
-      return subjectsResult;
-    }
+    if (subjectsResult.isError()) return subjectsResult;
     const { id } = subjectsResult.value;
-    const principalsResult = await queryNone(
-      adapter,
-      context,
-      {
-        text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
-        values: [provider, identifier, id],
-      },
-      (error) => {
-        if (
-          adapter.isUniqueViolationOfConstraint(
-            error,
-            UniqueConstraints.principals_provider_identifier_key,
-          )
-        ) {
-          return notOk.Conflict('Principal already exist');
-        }
-        return notOk.GenericUnexpectedException(context, error);
-      },
-    );
-    if (principalsResult.isError()) return principalsResult;
+
+    const createResult = await createPrincipal(adapter, context, provider, identifier, id);
+    if (createResult.isError()) return createResult;
 
     return createPayload('created', subjectsResult.value);
   });
+}
+
+export function createPrincipal(
+  adapter: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  provider: string,
+  identifier: string,
+  subjectInternalId: number,
+) {
+  return queryNone(
+    adapter,
+    context,
+    {
+      text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+      values: [provider, identifier, subjectInternalId],
+    },
+    (error) => {
+      if (
+        adapter.isUniqueViolationOfConstraint(
+          error,
+          UniqueConstraints.principals_provider_identifier_key,
+        )
+      ) {
+        return notOk.Conflict('Principal already exist');
+      }
+      return notOk.GenericUnexpectedException(context, error);
+    },
+  );
 }

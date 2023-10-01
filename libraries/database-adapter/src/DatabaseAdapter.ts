@@ -233,6 +233,22 @@ export interface DatabaseAuthCreateSessionPayload {
   session: Session;
 }
 
+export interface DatabaseAuthSyncPrincipal {
+  provider: string;
+  identifier: string;
+  subjectId: string;
+}
+
+export type DatabaseAuthGetPrincipalsPayload = DatabaseConnectionPayload<
+  DatabaseAuthSyncPrincipal & {
+    cursor: string;
+  }
+>;
+
+export interface DatabaseAuthCreatePrincipalPayload {
+  effect: 'created' | 'none';
+}
+
 export interface DatabaseManagementGetNextDirtyEntityPayload
   extends DatabaseAdminEntityWithResolvedReferencePayload {
   dirtyValidateLatest: boolean;
@@ -534,6 +550,22 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     arg: { subjectId: string },
   ): PromiseResult<Session, typeof ErrorType.Generic>;
+
+  authGetPrincipals(
+    context: TransactionContext,
+    paging: DatabasePagingInfo,
+  ): PromiseResult<
+    DatabaseAuthGetPrincipalsPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
+
+  authCreatePrincipal(
+    context: TransactionContext,
+    principal: DatabaseAuthSyncPrincipal,
+  ): PromiseResult<
+    DatabaseAuthCreatePrincipalPayload,
+    typeof ErrorType.Conflict | typeof ErrorType.Generic
+  >;
 
   eventGetChangelogEvents(
     context: TransactionContext,

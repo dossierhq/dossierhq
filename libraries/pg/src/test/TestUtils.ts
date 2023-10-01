@@ -81,17 +81,11 @@ export interface IntegrationTestServerInit {
 
 export async function initializeIntegrationTestServer({
   selector,
-  clear,
-  skipSchema,
-}: { selector?: 'default' | 'a' | 'b'; clear?: boolean; skipSchema?: boolean } = {}): PromiseResult<
+}: { selector?: 'default' | 'a' | 'b' } = {}): PromiseResult<
   IntegrationTestServerInit,
   typeof ErrorType.Generic | typeof ErrorType.BadRequest
 > {
   const connectionString = getConnectionString(selector);
-
-  if (clear) {
-    await clearDatabase(connectionString);
-  }
 
   const serverResult = await createServer({
     databaseAdapter: createPostgresTestAdapter(connectionString),
@@ -111,19 +105,34 @@ export async function initializeIntegrationTestServer({
     }),
   );
 
-  let adminSchema;
-  if (skipSchema) {
-    const spec = (await client.getSchemaSpecification()).valueOrThrow();
-    adminSchema = new AdminSchema(spec);
-  } else {
-    //TODO move this to integration-test and add advisory lock for update
-    const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
-    if (schemaResult.isError()) return schemaResult;
+  //TODO move this to integration-test and add advisory lock for update
+  const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
+  if (schemaResult.isError()) return schemaResult;
 
-    adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
-  }
+  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
   return ok({ server, adminSchema });
+}
+
+export async function initializeEmptyIntegrationTestServer({
+  selector,
+}: { selector?: 'default' | 'a' | 'b' } = {}): PromiseResult<
+  Server,
+  typeof ErrorType.Generic | typeof ErrorType.BadRequest
+> {
+  const connectionString = getConnectionString(selector);
+
+  await clearDatabase(connectionString);
+
+  const serverResult = await createServer({
+    databaseAdapter: createPostgresTestAdapter(connectionString),
+    authorizationAdapter: createTestAuthorizationAdapter(),
+    logger: createMockLogger(),
+  });
+  if (serverResult.isError()) return serverResult;
+  const server = serverResult.value;
+
+  return ok(server);
 }
 
 async function clearDatabase(connectionString: string) {
@@ -132,6 +141,8 @@ async function clearDatabase(connectionString: string) {
     await pool.query('DELETE FROM events');
     await pool.query('DELETE FROM entities');
     await pool.query('DELETE FROM schema_versions');
+    await pool.query('DELETE FROM principals');
+    await pool.query('DELETE FROM subjects');
   } finally {
     await pool.end();
   }
