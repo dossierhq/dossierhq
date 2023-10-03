@@ -8,7 +8,7 @@ import {
 import type { Server } from '@dossierhq/server';
 import { afterAll, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
-import { initializeSqlite3Server } from './LibSqlTestUtils.js';
+import { initializeServer } from './LibSqlTestUtils.js';
 
 let serverInit: { server: Server; adminSchema: AdminSchema } | null = null;
 
@@ -16,7 +16,7 @@ let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
   serverInit = (
-    await initializeSqlite3Server('databases/integration-test-published-entity.sqlite')
+    await initializeServer({ url: 'file:databases/integration-test-published-entity.sqlite' })
   ).valueOrThrow();
 
   readOnlyEntityRepository = (

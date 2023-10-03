@@ -7,8 +7,12 @@ registerTestSuite(
   'SyncTest',
   createSyncTestSuite({
     before: async () => {
-      const sourceServer = (await initializeEmptyServer(':memory:')).valueOrThrow();
-      const targetServer = (await initializeEmptyServer(':memory:')).valueOrThrow();
+      const sourceServer = (
+        await initializeEmptyServer({ url: 'file:databases/integration-test-sync-source.sqlite' })
+      ).valueOrThrow();
+      const targetServer = (
+        await initializeEmptyServer({ url: 'file:databases/integration-test-sync-target.sqlite' })
+      ).valueOrThrow();
       return [
         { sourceServer, targetServer },
         { sourceServer, targetServer },

@@ -3,7 +3,9 @@ import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
 import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
-import { createClient } from '@libsql/client';
+import { createClient, type Config } from '@libsql/client';
+import assert from 'node:assert';
+import { existsSync } from 'node:fs';
 import { unlink } from 'node:fs/promises';
 import type { LibSqlDatabaseAdapter } from '../../LibSqlAdapter.js';
 import { createLibSqlAdapter } from '../../LibSqlAdapter.js';
@@ -13,13 +15,10 @@ export interface ServerInit {
   adminSchema: AdminSchema;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type LooseAutocomplete<T> = T | (string & {});
-
-export async function initializeSqlite3Server(
-  filename: LooseAutocomplete<':memory:'>,
+export async function initializeServer(
+  config: Config,
 ): PromiseResult<ServerInit, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
-  const databaseAdapterResult = await createSqlite3TestAdapter(filename);
+  const databaseAdapterResult = await createAdapter(config);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const createServerResult = await createServer({
@@ -46,13 +45,15 @@ export async function initializeSqlite3Server(
 }
 
 export async function initializeEmptyServer(
-  filename: LooseAutocomplete<':memory:'>,
+  config: Config,
 ): PromiseResult<Server, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
-  if (filename !== ':memory:') {
+  assert(config.url.startsWith('file:'));
+  const filename = config.url.slice(5);
+  if (existsSync(filename)) {
     await unlink(filename);
   }
 
-  const databaseAdapterResult = await createSqlite3TestAdapter(filename);
+  const databaseAdapterResult = await createAdapter(config);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const createServerResult = await createServer({
@@ -65,11 +66,11 @@ export async function initializeEmptyServer(
   return ok(server);
 }
 
-async function createSqlite3TestAdapter(
-  filename: LooseAutocomplete<':memory:'>,
+async function createAdapter(
+  config: Config,
 ): PromiseResult<LibSqlDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const context = { logger: NoOpLogger };
-  const client = createClient({ url: `file:${filename}` });
+  const client = createClient(config);
   return await createLibSqlAdapter(context, client, {
     migrate: true,
     fts: { version: 'fts5' },
