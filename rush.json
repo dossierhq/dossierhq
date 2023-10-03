@@ -480,6 +480,11 @@
       "versionPolicyName": "DossierFramework"
     },
     {
+      "packageName": "@dossierhq/libsql",
+      "projectFolder": "libraries/libsql",
+      "versionPolicyName": "DossierFramework"
+    },
+    {
       "packageName": "@dossierhq/postgres-tools",
       "projectFolder": "libraries/postgres-tools",
       "versionPolicyName": "DossierFramework"
