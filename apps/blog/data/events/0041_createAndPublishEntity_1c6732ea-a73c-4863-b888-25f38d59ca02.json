@@ -1,0 +1,191 @@
+{
+  "id": "1c6732ea-a73c-4863-b888-25f38d59ca02",
+  "parentId": "52754ed8-1b26-487b-85f3-5043c075b12d",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-10-03T16:33:11.329Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "entity": {
+    "id": "dab6a344-679d-4bab-9cf6-d8a0934378da",
+    "info": {
+      "type": "BlogPost",
+      "name": "September summary",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "September summary",
+      "slug": "2023-september-summary",
+      "publishedDate": "2023-10-03T16:19Z",
+      "updatedDate": null,
+      "authors": [
+        {
+          "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
+        }
+      ],
+      "hero": {
+        "type": "CloudinaryImage",
+        "publicId": "Blog/qzfexndilmw7wtlhhtau",
+        "width": 6240,
+        "height": 4160,
+        "alt": "Cleaning the desk"
+      },
+      "description": "During September Dossier got more complete syncronization support which includes authentication details",
+      "body": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The support for synchronization between difference Dossier instances is now more complete. You can now export the authentication details (principals and subjects) for one Dossier instance and import them into another (see an example ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "here",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://github.com/dossierhq/dossierhq/blob/8e10db2e7e030b075e8f287bb5a2dbee88cfa113/apps/blog/scripts/sync-database-with-disk.ts#L73-L113"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ", for this blog). This allows you to keep multiple Dossier instances in sync, not just when it comes to content (via sync events), but also when it comes to authentication.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Other than that it has mainly been some cleanup to the project during September:",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "@dossierhq/sqlite3",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " is now deprecated and is no longer kept up to date, since ",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 16,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "@dossierhq/better-sqlite3",
+                      "type": "text",
+                      "version": 1
+                    },
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": " is a better alternative",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "All libraries are now only published as ESM (ECMAScript modules), since CommonJS doesn't seem necessary",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 2
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "list",
+              "version": 1,
+              "listType": "bullet",
+              "start": 1,
+              "tag": "ul"
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}
