@@ -33,7 +33,10 @@ import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire.js';
 import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired.js';
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
+import { authCreatePrincipal } from './auth/createPrincipal.js';
 import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
+import { authGetPrincipals } from './auth/getPrincipals.js';
+import { authGetPrincipalsTotalCount } from './auth/getPrincipalsTotalCount.js';
 import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
 import { eventGetChangelogEventsEntityInfo } from './event/getChangelogEventsEntityInfo.js';
 import { eventGetChangelogEventsTotalCount } from './event/getChangelogEventsTotalCount.js';
@@ -54,8 +57,6 @@ import { schemaUpdateDeleteValueTypesFromIndexes } from './schema/updateDeleteVa
 import { schemaUpdateModifyIndexes } from './schema/updateModifyIndexes.js';
 import { schemaUpdateRenameTypes } from './schema/updateRenameTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
-import { authCreatePrincipal } from './auth/createPrincipal.js';
-import { authGetPrincipals } from './auth/getPrincipals.js';
 
 export type PostgresDatabaseOptimizationOptions = DatabaseOptimizationOptions;
 
@@ -129,6 +130,7 @@ export function createPostgresDatabaseAdapterAdapter(
     authCreateSyncSessionForSubject: (...args) =>
       authCreateSyncSessionForSubject(databaseAdapter, ...args),
     authGetPrincipals: (...args) => authGetPrincipals(databaseAdapter, ...args),
+    authGetPrincipalsTotalCount: (...args) => authGetPrincipalsTotalCount(databaseAdapter, ...args),
     disconnect: () => databaseAdapter.disconnect(),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(databaseAdapter, ...args),
     eventGetChangelogEventsEntityInfo: (...args) =>

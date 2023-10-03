@@ -48,6 +48,7 @@ import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreatePrincipal } from './auth/createPrincipal.js';
 import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
 import { authGetPrincipals } from './auth/getPrincipals.js';
+import { authGetPrincipalsTotalCount } from './auth/getPrincipalsTotalCount.js';
 import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
 import { eventGetChangelogEventsEntityInfo } from './event/getChangelogEventsEntityInfo.js';
 import { eventGetChangelogEventsTotalCount } from './event/getChangelogEventsTotalCount.js';
@@ -211,6 +212,7 @@ function createOuterAdapter(
     authCreateSyncSessionForSubject: (...args) =>
       authCreateSyncSessionForSubject(database, ...args),
     authGetPrincipals: (...args) => authGetPrincipals(database, ...args),
+    authGetPrincipalsTotalCount: (...args) => authGetPrincipalsTotalCount(database, ...args),
     eventGetChangelogEvents: (...args) => eventGetChangelogEvents(database, ...args),
     eventGetChangelogEventsEntityInfo: (...args) =>
       eventGetChangelogEventsEntityInfo(database, ...args),

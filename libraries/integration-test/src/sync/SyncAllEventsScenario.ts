@@ -82,6 +82,7 @@ async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
   );
 
   // Get source principals
+  assertResultValue(await sourceServer.getPrincipalsTotalCount(), 1);
   const sourcePrincipalConnection = (await sourceServer.getPrincipals()).valueOrThrow();
   assertIsDefined(sourcePrincipalConnection);
   const sourcePrincipals = sourcePrincipalConnection.edges.map((it) => it.node.valueOrThrow());
@@ -93,6 +94,7 @@ async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
   }
 
   // Check that the target principals are identical
+  assertResultValue(await targetServer.getPrincipalsTotalCount(), 1);
   const targetPrincipalConnection = (await targetServer.getPrincipals()).valueOrThrow();
   assertIsDefined(targetPrincipalConnection);
   const targetPrincipals = targetPrincipalConnection.edges.map((it) => it.node.valueOrThrow());

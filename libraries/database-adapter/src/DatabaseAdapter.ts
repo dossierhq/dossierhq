@@ -559,6 +559,10 @@ export interface DatabaseAdapter<
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
+  authGetPrincipalsTotalCount(
+    context: TransactionContext,
+  ): PromiseResult<number, typeof ErrorType.Generic>;
+
   authCreatePrincipal(
     context: TransactionContext,
     principal: DatabaseAuthSyncPrincipal,

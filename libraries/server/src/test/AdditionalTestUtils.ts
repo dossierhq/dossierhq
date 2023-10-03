@@ -135,6 +135,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     authCreateSession: vi.fn(),
     authCreateSyncSessionForSubject: vi.fn(),
     authGetPrincipals: vi.fn(),
+    authGetPrincipalsTotalCount: vi.fn(),
     eventGetChangelogEvents: vi.fn(),
     eventGetChangelogEventsEntityInfo: vi.fn(),
     eventGetChangelogEventsTotalCount: vi.fn(),

@@ -47,6 +47,7 @@ import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { authCreatePrincipal } from './auth/authCreatePrincipal.js';
 import { autGetPrincipals } from './auth/authGetPrincipals.js';
+import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
 import { managementApplySyncEvent } from './management/managementApplySyncEvent.js';
 import {
   managementDirtyProcessNextEntity,
@@ -99,6 +100,8 @@ export interface Server<
     Connection<Edge<SyncPrincipal, typeof ErrorType.Generic>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
+
+  getPrincipalsTotalCount(): PromiseResult<number, typeof ErrorType.Generic>;
 
   createPrincipal(
     principal: SyncPrincipal,
@@ -340,6 +343,11 @@ export async function createServer<
     > {
       const managementContext = serverImpl.createInternalContext(null);
       return autGetPrincipals(databaseAdapter, managementContext, paging);
+    },
+
+    getPrincipalsTotalCount(): PromiseResult<number, typeof ErrorType.Generic> {
+      const managementContext = serverImpl.createInternalContext(null);
+      return autGetPrincipalsTotalCount(databaseAdapter, managementContext);
     },
 
     createPrincipal(
