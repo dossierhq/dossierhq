@@ -1,7 +1,7 @@
 import { createSyncTestSuite } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
-import { registerTestSuite } from '../TestUtils.js';
-import { initializeEmptyServer } from './LibSqlTestUtils.js';
+import { registerTestSuite } from '../../TestUtils.js';
+import { initializeEmptyServer } from '../../LibSqlTestUtils.js';
 
 registerTestSuite(
   'SyncTest',

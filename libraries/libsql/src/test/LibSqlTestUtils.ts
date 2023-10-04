@@ -3,12 +3,13 @@ import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
 import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
+import type { SqliteDatabaseOptions } from '@dossierhq/sqlite-core';
 import { createClient, type Config } from '@libsql/client';
 import assert from 'node:assert';
 import { existsSync } from 'node:fs';
 import { unlink } from 'node:fs/promises';
-import type { LibSqlDatabaseAdapter } from '../../LibSqlAdapter.js';
-import { createLibSqlAdapter } from '../../LibSqlAdapter.js';
+import type { LibSqlDatabaseAdapter } from '../LibSqlAdapter.js';
+import { createLibSqlAdapter } from '../LibSqlAdapter.js';
 
 export interface ServerInit {
   server: Server;
@@ -17,8 +18,9 @@ export interface ServerInit {
 
 export async function initializeServer(
   config: Config,
+  options: Pick<SqliteDatabaseOptions, 'journalMode'> = { journalMode: 'wal' },
 ): PromiseResult<ServerInit, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
-  const databaseAdapterResult = await createAdapter(config);
+  const databaseAdapterResult = await createAdapter(config, options);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const createServerResult = await createServer({
@@ -46,6 +48,7 @@ export async function initializeServer(
 
 export async function initializeEmptyServer(
   config: Config,
+  options: Pick<SqliteDatabaseOptions, 'journalMode'> = { journalMode: 'wal' },
 ): PromiseResult<Server, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
   assert(config.url.startsWith('file:'));
   const filename = config.url.slice(5);
@@ -53,7 +56,7 @@ export async function initializeEmptyServer(
     await unlink(filename);
   }
 
-  const databaseAdapterResult = await createAdapter(config);
+  const databaseAdapterResult = await createAdapter(config, options);
   if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
   const createServerResult = await createServer({
@@ -68,12 +71,13 @@ export async function initializeEmptyServer(
 
 async function createAdapter(
   config: Config,
+  options: Pick<SqliteDatabaseOptions, 'journalMode'>,
 ): PromiseResult<LibSqlDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const context = { logger: NoOpLogger };
   const client = createClient(config);
   return await createLibSqlAdapter(context, client, {
     migrate: true,
     fts: { version: 'fts5' },
-    journalMode: 'wal',
+    ...options,
   });
 }

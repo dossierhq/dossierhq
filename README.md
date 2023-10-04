@@ -88,3 +88,8 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 - 3003: apps/blog
 - 6006: libraries/react-components
 - 6007: libraries/design
+- 9000: libraries/libsql - admin entity
+- 9001: libraries/libsql - advisory lock
+- 9002: libraries/libsql - advisory lock
+- 9003: libraries/libsql - published entity
+- 9004: libraries/libsql - schema

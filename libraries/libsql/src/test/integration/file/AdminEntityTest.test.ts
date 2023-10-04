@@ -5,16 +5,18 @@ import {
   createReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'vitest';
-import { registerTestSuite } from '../TestUtils.js';
-import type { ServerInit } from './LibSqlTestUtils.js';
-import { initializeServer } from './LibSqlTestUtils.js';
+import { registerTestSuite } from '../../TestUtils.js';
+import type { ServerInit } from '../../LibSqlTestUtils.js';
+import { initializeServer } from '../../LibSqlTestUtils.js';
 
 let serverInit: ServerInit | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
 beforeAll(async () => {
   serverInit = (
-    await initializeServer({ url: 'file:databases/integration-test-admin-entity.sqlite' })
+    await initializeServer({
+      url: 'file:databases/integration-test-admin-entity.sqlite',
+    })
   ).valueOrThrow();
   readOnlyEntityRepository = (
     await createReadOnlyEntityRepository(serverInit.server)

@@ -18,7 +18,7 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && npm run test",
+    "build": "npm run prettier:check && heft build --clean && npm run test -- test/integration/file",
     "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -26,6 +26,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "vitest",
+    "test:sqld": "npm run test -- test/integration/sqld",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
   },
