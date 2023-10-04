@@ -1,14 +1,20 @@
 import { notOk, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
 import type { Transaction, TransactionContext } from '@dossierhq/database-adapter';
 import { queryRun, type Database } from './QueryFunctions.js';
+import type { AdapterTransaction } from './SqliteDatabaseAdapter.js';
+import { withQueryPerformance } from './utils/withQueryPerformance.js';
 
 const sqliteTransactionSymbol = Symbol('SqliteTransaction');
+
 export interface SqliteTransaction extends Transaction {
   [sqliteTransactionSymbol]: true;
   savePointCount: number;
   /** The start of the root transaction */
   transactionTimestamp: Date;
+  adapterTransaction: AdapterTransaction | null;
 }
+
+export type SqliteTransactionContext = TransactionContext<SqliteTransaction>;
 
 export function getTransactionTimestamp(transaction: Transaction | null): Date {
   if (transaction && sqliteTransactionSymbol in transaction) {
@@ -33,19 +39,32 @@ export async function withRootTransaction<
 
   const now = new Date();
 
+  const adapterTransaction = database.adapter.createTransaction();
+
   const transaction: SqliteTransaction = {
     _type: 'Transaction',
     [sqliteTransactionSymbol]: true,
     savePointCount: 0,
     transactionTimestamp: now,
+    adapterTransaction,
   };
   const childContext = childContextFactory(transaction);
   return await database.mutex.withLock<TOk, TError | typeof ErrorType.Generic>(
     childContext,
     async () => {
-      const beginResult = await queryRun(database, childContext, 'BEGIN');
-      if (beginResult.isError()) return beginResult;
+      // BEGIN
+      if (adapterTransaction) {
+        try {
+          await withQueryPerformance(childContext, 'BEGIN', () => adapterTransaction.begin());
+        } catch (error) {
+          return notOk.GenericUnexpectedException(childContext, error);
+        }
+      } else {
+        const beginResult = await queryRun(database, childContext, 'BEGIN');
+        if (beginResult.isError()) return beginResult;
+      }
 
+      // transaction body
       let result: Result<TOk, TError | typeof ErrorType.Generic>;
       try {
         result = await callback(childContext);
@@ -53,12 +72,31 @@ export async function withRootTransaction<
         result = notOk.GenericUnexpectedException(childContext, error);
       }
 
-      const commitOrRollbackResult = await queryRun(
-        database,
-        childContext,
-        result.isOk() ? 'COMMIT' : 'ROLLBACK',
-      );
-      if (commitOrRollbackResult.isError()) return commitOrRollbackResult;
+      // COMMIT or ROLLBACK
+      if (adapterTransaction) {
+        try {
+          if (result.isOk()) {
+            await withQueryPerformance(childContext, 'COMMIT', () => adapterTransaction.commit());
+          } else {
+            await withQueryPerformance(childContext, 'ROLLBACK', () =>
+              adapterTransaction.rollback(),
+            );
+          }
+        } catch (error) {
+          result = notOk.GenericUnexpectedException(childContext, error);
+        } finally {
+          adapterTransaction.close();
+        }
+      } else {
+        const commitOrRollbackResult = await queryRun(
+          database,
+          childContext,
+          result.isOk() ? 'COMMIT' : 'ROLLBACK',
+        );
+        if (commitOrRollbackResult.isError()) {
+          result = commitOrRollbackResult;
+        }
+      }
 
       return result;
     },

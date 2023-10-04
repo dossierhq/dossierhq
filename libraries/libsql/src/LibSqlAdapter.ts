@@ -1,20 +1,54 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
+  type AdapterTransaction,
   type ColumnValue,
   type Context,
   type DatabaseAdapter,
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
   type SqliteDatabaseOptions,
+  type SqliteTransactionContext,
   type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
-import { LibsqlError, type Client } from '@libsql/client';
+import { LibsqlError, type Client, type Transaction } from '@libsql/client';
 import { randomUUID } from 'node:crypto';
 
 export type LibSqlDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 const PARAMETERS_REGEX = /\?(\d+)/g;
+
+class TransactionAdapter implements AdapterTransaction {
+  readonly client: Client;
+  transaction: Transaction | null = null;
+
+  constructor(client: Client) {
+    this.client = client;
+  }
+
+  getTransaction() {
+    if (!this.transaction) {
+      throw new Error('Transaction is not started');
+    }
+    return this.transaction;
+  }
+
+  async begin() {
+    this.transaction = await this.client.transaction();
+  }
+
+  commit() {
+    return this.getTransaction().commit();
+  }
+
+  rollback() {
+    return this.getTransaction().rollback();
+  }
+
+  close() {
+    this.getTransaction().close();
+  }
+}
 
 export async function createLibSqlAdapter(
   context: Context,
@@ -27,15 +61,29 @@ export async function createLibSqlAdapter(
       return Promise.resolve();
     },
 
-    async query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]> {
+    createTransaction() {
+      return new TransactionAdapter(client);
+    },
+
+    async query<R>(
+      context: SqliteTransactionContext,
+      query: string,
+      values: ColumnValue[] | undefined,
+    ): Promise<R[]> {
+      const target = context.transaction
+        ? (context.transaction.adapterTransaction as TransactionAdapter).getTransaction()
+        : client;
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
-      const result = await client.execute({ sql: convertedQuery, args: convertedValues ?? {} });
+      const result = await target.execute({ sql: convertedQuery, args: convertedValues ?? {} });
       return result.rows as R[];
     },
 
-    async run(query: string, values: ColumnValue[] | undefined) {
+    async run(context: SqliteTransactionContext, query: string, values: ColumnValue[] | undefined) {
+      const target = context.transaction
+        ? (context.transaction.adapterTransaction as TransactionAdapter).getTransaction()
+        : client;
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
-      const result = await client.execute({ sql: convertedQuery, args: convertedValues ?? {} });
+      const result = await target.execute({ sql: convertedQuery, args: convertedValues ?? {} });
       return result.rowsAffected;
     },
 

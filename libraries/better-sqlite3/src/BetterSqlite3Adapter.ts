@@ -7,6 +7,7 @@ import {
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
   type SqliteDatabaseOptions,
+  type SqliteTransactionContext,
   type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
 import type { Database } from 'better-sqlite3';
@@ -36,14 +37,22 @@ export async function createBetterSqlite3Adapter(
       return Promise.resolve();
     },
 
-    query: <R>(query: string, values: ColumnValue[] | undefined) => {
+    createTransaction() {
+      return null;
+    },
+
+    query: <R>(
+      _context: SqliteTransactionContext,
+      query: string,
+      values: ColumnValue[] | undefined,
+    ) => {
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
       const statement = database.prepare(convertedQuery);
       const result = convertedValues ? statement.all(convertedValues) : statement.all();
       return Promise.resolve(result as R[]);
     },
 
-    run: (query: string, values: ColumnValue[] | undefined) => {
+    run: (_context: SqliteTransactionContext, query: string, values: ColumnValue[] | undefined) => {
       const [convertedQuery, convertedValues] = convertQueryParameters(query, values);
       const statement = database.prepare(convertedQuery);
       const result = convertedValues ? statement.run(convertedValues) : statement.run();

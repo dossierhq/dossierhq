@@ -16,12 +16,13 @@ export interface DatabasePerformanceCallbacks {
   onRootTransactionCompleted: (duration: number) => void;
 }
 
-export interface TransactionContext extends Context {
-  readonly transaction: Transaction | null;
+export interface TransactionContext<TTransaction extends Transaction = Transaction>
+  extends Context {
+  readonly transaction: TTransaction | null;
   databasePerformance: DatabasePerformanceCallbacks | null;
 
   withTransaction<TOk, TError extends ErrorType>(
-    callback: (context: TransactionContext) => PromiseResult<TOk, TError>,
+    callback: (context: TransactionContext<TTransaction>) => PromiseResult<TOk, TError>,
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 

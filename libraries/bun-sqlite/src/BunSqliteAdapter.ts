@@ -7,6 +7,7 @@ import {
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
   type SqliteDatabaseOptions,
+  type SqliteTransactionContext,
   type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
 import type { Database } from 'bun:sqlite';
@@ -24,13 +25,21 @@ export async function createBunSqliteAdapter(
       return Promise.resolve();
     },
 
-    query: <R>(query: string, values: ColumnValue[] | undefined) => {
+    createTransaction() {
+      return null;
+    },
+
+    query: <R>(
+      _context: SqliteTransactionContext,
+      query: string,
+      values: ColumnValue[] | undefined,
+    ) => {
       const statement = database.prepare<R, ColumnValue[]>(query);
       const result = values ? statement.all(...values) : statement.all();
       return Promise.resolve(result);
     },
 
-    run: (query: string, values: ColumnValue[] | undefined) => {
+    run: (_context: SqliteTransactionContext, query: string, values: ColumnValue[] | undefined) => {
       const statement = database.prepare(query);
       const result = values ? statement.all(...values) : statement.all();
       return Promise.resolve(typeof result === 'number' ? result : 0);

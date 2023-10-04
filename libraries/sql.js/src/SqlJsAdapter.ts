@@ -1,14 +1,15 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import type {
-  ColumnValue,
-  Context,
-  DatabaseAdapter,
-  SqliteDatabaseAdapter,
-  SqliteDatabaseOptimizationOptions,
-  SqliteDatabaseOptions,
-  UniqueConstraint,
+import {
+  createSqliteDatabaseAdapterAdapter,
+  type ColumnValue,
+  type Context,
+  type DatabaseAdapter,
+  type SqliteDatabaseAdapter,
+  type SqliteDatabaseOptimizationOptions,
+  type SqliteDatabaseOptions,
+  type SqliteTransactionContext,
+  type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
-import { createSqliteDatabaseAdapterAdapter } from '@dossierhq/sqlite-core';
 import type { Database } from 'sql.js';
 
 export type SqlJsDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
@@ -24,7 +25,15 @@ export async function createSqlJsAdapter(
       return Promise.resolve();
     },
 
-    query: <R>(query: string, values: ColumnValue[] | undefined) => {
+    createTransaction() {
+      return null;
+    },
+
+    query: <R>(
+      _context: SqliteTransactionContext,
+      query: string,
+      values: ColumnValue[] | undefined,
+    ) => {
       const result: R[] = [];
       const statement = database.prepare(query, values);
       while (statement.step()) {
@@ -35,7 +44,7 @@ export async function createSqlJsAdapter(
       return Promise.resolve(result);
     },
 
-    run: (query: string, values: ColumnValue[] | undefined) => {
+    run: (_context: SqliteTransactionContext, query: string, values: ColumnValue[] | undefined) => {
       database.run(query, values);
       return Promise.resolve(database.getRowsModified());
     },

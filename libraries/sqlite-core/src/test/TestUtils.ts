@@ -29,6 +29,7 @@ interface MockedSqliteDatabaseAdapter extends SqliteDatabaseAdapter {
   clearAllQueries(): void;
   mockQuery?: (query: string, values: ColumnValue[] | undefined) => unknown[] | undefined;
 
+  createTransaction: MockedFunction<SqliteDatabaseAdapter['createTransaction']>;
   query: MockedFunction<QueryFn>;
   run: MockedFunction<SqliteDatabaseAdapter['run']>;
   encodeCursor: MockedFunction<SqliteDatabaseAdapter['encodeCursor']>;
@@ -96,6 +97,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     clearAllQueries: () => {
       allQueries.length = 0;
     },
+    createTransaction: vi.fn(),
     disconnect: vi.fn(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     query: vi.fn<any, any>(),
@@ -107,7 +109,27 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     randomUUID: vi.fn(),
   };
 
-  mockAdapter.query.mockImplementation((query, values) => {
+  mockAdapter.createTransaction.mockImplementation(() => {
+    return {
+      begin() {
+        allQueries.push(['BEGIN']);
+        return Promise.resolve(undefined);
+      },
+      rollback() {
+        allQueries.push(['ROLLBACK']);
+        return Promise.resolve(undefined);
+      },
+      commit() {
+        allQueries.push(['COMMIT']);
+        return Promise.resolve(undefined);
+      },
+      close() {
+        // empty
+      },
+    };
+  });
+
+  mockAdapter.query.mockImplementation((_transaction, query, values) => {
     allQueries.push([query, ...(values ?? [])]);
 
     let result: unknown[] | undefined;
@@ -128,7 +150,7 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     return Promise.resolve(result);
   });
 
-  mockAdapter.run.mockImplementation((query, values) => {
+  mockAdapter.run.mockImplementation((transaction, query, values) => {
     allQueries.push([query, ...(values ?? [])]);
     return Promise.resolve(0);
   });

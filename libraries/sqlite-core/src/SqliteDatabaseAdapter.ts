@@ -1,5 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   Context,
   DatabaseAdapter,
@@ -8,11 +7,14 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { UniqueConstraint } from './DatabaseSchema.js';
 import { createInitializationContext } from './InitializationContext.js';
-import type { Database } from './QueryFunctions.js';
-import { queryNoneOrOne, queryOne, queryRun } from './QueryFunctions.js';
+import { queryNoneOrOne, queryOne, queryRun, type Database } from './QueryFunctions.js';
 import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
 import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
-import { withNestedTransaction, withRootTransaction } from './SqliteTransaction.js';
+import {
+  withNestedTransaction,
+  withRootTransaction,
+  type SqliteTransactionContext,
+} from './SqliteTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
@@ -78,10 +80,26 @@ const minimumSupportedVersion = { major: 3, minor: 37, patch: 0 };
 
 const supportedJournalModes = ['wal', 'delete', 'memory'] as const;
 
+export interface AdapterTransaction {
+  begin(): Promise<void>;
+  commit(): Promise<void>;
+  rollback(): Promise<void>;
+  close(): void;
+}
+
 export interface SqliteDatabaseAdapter {
   disconnect(): Promise<void>;
-  query<R>(query: string, values: ColumnValue[] | undefined): Promise<R[]>;
-  run(query: string, values: ColumnValue[] | undefined): Promise<number>;
+  createTransaction(): AdapterTransaction | null;
+  query<R>(
+    context: SqliteTransactionContext,
+    query: string,
+    values: ColumnValue[] | undefined,
+  ): Promise<R[]>;
+  run(
+    context: SqliteTransactionContext,
+    query: string,
+    values: ColumnValue[] | undefined,
+  ): Promise<number>;
   isFtsVirtualTableConstraintFailed(error: unknown): boolean;
   isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean;
   encodeCursor(value: string): string;

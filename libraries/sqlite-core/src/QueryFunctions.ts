@@ -1,8 +1,9 @@
-import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { ColumnValue, SqliteDatabaseAdapter } from './SqliteDatabaseAdapter.js';
+import type { SqliteTransactionContext } from './SqliteTransaction.js';
 import type { Mutex } from './utils/MutexUtils.js';
+import { withQueryPerformance } from './utils/withQueryPerformance.js';
 
 type ErrorConverter<TOk, TError extends ErrorType> = (
   error: unknown,
@@ -17,7 +18,7 @@ export type QueryOrQueryAndValues = string | { text: string; values?: ColumnValu
 
 async function queryCommon<TRow, TError extends ErrorType>(
   database: Database,
-  context: TransactionContext,
+  context: SqliteTransactionContext,
   queryOrQueryAndValues: QueryOrQueryAndValues,
   errorConverter: ErrorConverter<TRow[], TError> | undefined,
 ): PromiseResult<TRow[], TError | typeof ErrorType.Generic> {
@@ -30,18 +31,12 @@ async function queryCommon<TRow, TError extends ErrorType>(
     TRow[],
     TError | typeof ErrorType.Generic
   > = async () => {
-    const startTime = performance.now();
     try {
-      const rows = await database.adapter.query<TRow>(text, values);
-
-      const duration = performance.now() - startTime;
-      context.databasePerformance?.onQueryCompleted(text, true, duration);
-
+      const rows = await withQueryPerformance(context, text, () =>
+        database.adapter.query<TRow>(context, text, values),
+      );
       return ok(rows);
     } catch (error) {
-      const duration = performance.now() - startTime;
-      context.databasePerformance?.onQueryCompleted(text, false, duration);
-
       if (errorConverter) {
         return errorConverter(error);
       }
@@ -77,18 +72,12 @@ export async function queryRun<
     number,
     TError | typeof ErrorType.Generic
   > = async () => {
-    const startTime = performance.now();
     try {
-      const changes = await database.adapter.run(text, values);
-
-      const duration = performance.now() - startTime;
-      context.databasePerformance?.onQueryCompleted(text, true, duration);
-
+      const changes = await withQueryPerformance(context, text, () =>
+        database.adapter.run(context as SqliteTransactionContext, text, values),
+      );
       return ok(changes);
     } catch (error) {
-      const duration = performance.now() - startTime;
-      context.databasePerformance?.onQueryCompleted(text, false, duration);
-
       if (errorConverter) {
         return errorConverter(error);
       }
@@ -115,7 +104,7 @@ export async function queryNoneOrOne<TRow, TError extends ErrorType = typeof Err
 ): PromiseResult<TRow | null, TError | typeof ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
     database,
-    context,
+    context as SqliteTransactionContext,
     query,
     errorConverter as ErrorConverter<TRow[], TError>,
   );
@@ -140,14 +129,13 @@ export async function queryOne<TRow, TError extends ErrorType = typeof ErrorType
 ): PromiseResult<TRow, TError | typeof ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
     database,
-    context,
+    context as SqliteTransactionContext,
     query,
     errorConverter as ErrorConverter<TRow[], TError>,
   );
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
   const rows = result.value;
+
   if (rows.length !== 1) {
     return notOk.Generic(`Expected 1 row, got ${rows.length}`);
   }
@@ -162,7 +150,7 @@ export async function queryMany<TRow, TError extends ErrorType = typeof ErrorTyp
 ): PromiseResult<TRow[], TError | typeof ErrorType.Generic> {
   const result = await queryCommon<TRow, TError>(
     database,
-    context,
+    context as SqliteTransactionContext,
     query,
     errorConverter as ErrorConverter<TRow[], TError>,
   );
