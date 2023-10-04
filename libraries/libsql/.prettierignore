@@ -1,5 +1,6 @@
 /.rush/
 /coverage/
+/databases/
 /lib/
 /temp/
 /CHANGELOG.md

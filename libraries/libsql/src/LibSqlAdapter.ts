@@ -117,13 +117,21 @@ function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
 }
 
 function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
-  if (isSqliteError(error) && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-    const qualifiedColumns = constraint.columns.map((column) => `${constraint.table}.${column}`);
-    const expectedMessage = `UNIQUE constraint failed: ${qualifiedColumns.join(', ')}`;
+  if (!isSqliteError(error)) {
+    return false;
+  }
+  const qualifiedColumns = constraint.columns
+    .map((column) => `${constraint.table}.${column}`)
+    .join(', ');
+  if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+    const expectedMessage = `UNIQUE constraint failed: ${qualifiedColumns}`;
     if (error.message === expectedMessage) {
       return true;
     }
     return error.message === `${error.code}: ${expectedMessage}`;
+  } else if (error.code === 'SQLITE_CONSTRAINT') {
+    const expectedMessage = `${error.code}: SQLite error: UNIQUE constraint failed: ${qualifiedColumns}`;
+    return error.message === expectedMessage;
   }
   return false;
 }

@@ -22,10 +22,6 @@ export async function createSqldProcess(name: string, address: string): Promise<
   sqld.stdout.pipe(logStream);
   sqld.stderr.pipe(logStream);
 
-  sqld.on('close', function (code) {
-    console.log('child process exited with code ' + code);
-  });
-
   await waitForHealthy(url);
 
   return {
@@ -39,9 +35,13 @@ export async function createSqldProcess(name: string, address: string): Promise<
 async function waitForHealthy(url: string) {
   const healthUrl = `${url}/health`;
   for (let i = 0; i < 100; i++) {
-    const res = await fetch(healthUrl);
-    if (res.ok) {
-      return;
+    try {
+      const res = await fetch(healthUrl);
+      if (res.ok) {
+        return;
+      }
+    } catch (error) {
+      // ignore
     }
     await new Promise((resolve) => setTimeout(resolve, 50));
   }
