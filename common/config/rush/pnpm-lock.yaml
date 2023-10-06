@@ -540,8 +540,8 @@ importers:
         specifier: ~8.4.1
         version: 8.4.1
       jwks-rsa:
-        specifier: ~3.0.1
-        version: 3.0.1
+        specifier: ~3.1.0
+        version: 3.1.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -1861,8 +1861,8 @@ importers:
         specifier: ~5.3.0
         version: 5.3.0
       jwks-rsa:
-        specifier: ~3.0.1
-        version: 3.0.1
+        specifier: ~3.1.0
+        version: 3.1.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -8878,6 +8878,12 @@ packages:
       '@types/node': 20.8.2
     dev: false
 
+  /@types/jsonwebtoken@9.0.3:
+    resolution: {integrity: sha512-b0jGiOgHtZ2jqdPgPnP6WLCXZk1T8p06A/vPGzUvxpFGgKMbjXJDjC5m52ErqBnIuWZFgGoIJyRdeG5AyreJjA==}
+    dependencies:
+      '@types/node': 20.8.2
+    dev: false
+
   /@types/leaflet.locatecontrol@0.74.2:
     resolution: {integrity: sha512-Eu3fGi0R3WDA4MQMiBTDQmcupABAVQtqh8XV/1ve1tct5IZGRB2BAEqUNCP7/LwFgMX3Da4Bxfah9mTPL3QE9g==}
     dependencies:
@@ -13145,8 +13151,8 @@ packages:
   /jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
 
-  /jose@4.11.2:
-    resolution: {integrity: sha512-njj0VL2TsIxCtgzhO+9RRobBvws4oYyCM8TpvoUQwl/MbIM3NFJRR9+e6x0sS5xXaP1t6OCBkaBME98OV9zU5A==}
+  /jose@4.15.2:
+    resolution: {integrity: sha512-IY73F228OXRl9ar3jJagh7Vnuhj/GzBunPiZP13K0lOl7Am9SoWW3kEzq3MCllJMTtZqHTiDXQvoRd4U95aU6A==}
     dev: false
 
   /js-base64@3.7.5:
@@ -13335,16 +13341,16 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /jwks-rsa@3.0.1:
-    resolution: {integrity: sha512-UUOZ0CVReK1QVU3rbi9bC7N5/le8ziUj0A2ef1Q0M7OPD2KvjEYizptqIxGIo6fSLYDkqBrazILS18tYuRc8gw==}
+  /jwks-rsa@3.1.0:
+    resolution: {integrity: sha512-v7nqlfezb9YfHHzYII3ef2a2j1XnGeSE/bK3WfumaYCqONAIstJbrEGapz4kadScZzEt7zYCN7bucj8C0Mv/Rg==}
     engines: {node: '>=14'}
     dependencies:
       '@types/express': 4.17.18
-      '@types/jsonwebtoken': 9.0.0
+      '@types/jsonwebtoken': 9.0.3
       debug: 4.3.4
-      jose: 4.11.2
+      jose: 4.15.2
       limiter: 1.1.5
-      lru-memoizer: 2.1.4
+      lru-memoizer: 2.2.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -13620,8 +13626,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lru-memoizer@2.1.4:
-    resolution: {integrity: sha512-IXAq50s4qwrOBrXJklY+KhgZF+5y98PDaNo0gi/v2KQBFLyWr+JyFvijZXkGKjQj/h9c0OwoE+JZbwUXce76hQ==}
+  /lru-memoizer@2.2.0:
+    resolution: {integrity: sha512-QfOZ6jNkxCcM/BkIPnFsqDhtrazLRsghi9mBwFAzol5GCvj4EkFT899Za3+QwikCg5sRX8JstioBDwOxEyzaNw==}
     dependencies:
       lodash.clonedeep: 4.5.0
       lru-cache: 4.0.2

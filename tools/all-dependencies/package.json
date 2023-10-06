@@ -41,7 +41,7 @@
     "graphql-http": "~1.22.0",
     "graphql-voyager": "~2.0.0",
     "history": "~5.3.0",
-    "jwks-rsa": "~3.0.1",
+    "jwks-rsa": "~3.1.0",
     "leaflet": "~1.9.4",
     "leaflet.locatecontrol": "~0.79.0",
     "lexical": "0.12.2",
