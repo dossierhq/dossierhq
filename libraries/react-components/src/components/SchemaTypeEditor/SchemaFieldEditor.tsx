@@ -324,7 +324,7 @@ export function SchemaFieldEditor({
                 <Field.Control>
                   <FieldValueTypeSelector
                     fieldSelector={fieldSelector}
-                    valueTypes={fieldDraft.valueTypes ?? []}
+                    valueTypes={fieldDraft.componentTypes ?? []}
                     schemaEditorState={schemaEditorState}
                     dispatchSchemaEditorState={dispatchSchemaEditorState}
                   />

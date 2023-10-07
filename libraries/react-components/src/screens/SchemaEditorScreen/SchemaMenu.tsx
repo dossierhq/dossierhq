@@ -18,7 +18,7 @@ export function SchemaMenu({
   schemaEditorState: Readonly<SchemaEditorState>;
   dispatchEditorState: Dispatch<SchemaEditorStateAction>;
 }) {
-  const { activeSelector, entityTypes, valueTypes, indexes, patterns } = schemaEditorState;
+  const { activeSelector, entityTypes, componentTypes, indexes, patterns } = schemaEditorState;
   return (
     <Menu>
       {entityTypes.length > 0 ? (
@@ -40,11 +40,11 @@ export function SchemaMenu({
           </Menu.List>
         </>
       ) : null}
-      {valueTypes.length > 0 ? (
+      {componentTypes.length > 0 ? (
         <>
           <Menu.Label>Component types</Menu.Label>
           <Menu.List>
-            {valueTypes.map((typeDraft) => (
+            {componentTypes.map((typeDraft) => (
               <DraftItem
                 key={typeDraft.name}
                 {...{

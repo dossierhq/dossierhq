@@ -33,7 +33,7 @@ import type {
   SchemaPatternDraft,
   SchemaPatternSelector,
   SchemaTypeSelector,
-  SchemaValueTypeDraft,
+  SchemaComponentTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getElementIdForSelector,
@@ -115,7 +115,7 @@ export function SchemaEditorScreen({
 
   const isEmpty =
     schemaEditorState.entityTypes.length === 0 &&
-    schemaEditorState.valueTypes.length === 0 &&
+    schemaEditorState.componentTypes.length === 0 &&
     schemaEditorState.patterns.length === 0;
 
   const menuScrollToId = getElementIdForSelector(schemaEditorState.activeSelector, 'menuItem');
@@ -171,7 +171,7 @@ export function SchemaEditorScreen({
                   onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
-              {schemaEditorState.valueTypes.map((valueType) => (
+              {schemaEditorState.componentTypes.map((valueType) => (
                 <TypeEditorRows
                   key={valueType.name}
                   typeDraft={valueType}
@@ -250,7 +250,7 @@ function TypeEditorRows({
   onAddOrRenameType,
   onAddOrRenameField,
 }: {
-  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  typeDraft: SchemaEntityTypeDraft | SchemaComponentTypeDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onAddOrRenameType: (selector: SchemaTypeSelector) => void;

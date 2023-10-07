@@ -1,13 +1,164 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AddFieldAction > add field to existing component type (with existing fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddFieldAction > add field to existing component type (with existing fields) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddFieldAction > add field to existing component type (without any fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddFieldAction > add field to existing component type (without any fields) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`AddFieldAction > add field to existing entity type (with existing fields) 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -53,7 +204,6 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -98,9 +248,10 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -132,7 +283,6 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -162,156 +312,6 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
 }
 `;
 
-exports[`AddFieldAction > add field to existing value type (with existing fields) 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "title",
-      ],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "list": false,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "title",
-          "required": false,
-          "status": "",
-          "type": "String",
-          "values": [],
-        },
-        {
-          "adminOnly": false,
-          "list": false,
-          "multiline": false,
-          "name": "bar",
-          "required": false,
-          "status": "new",
-          "type": "String",
-        },
-      ],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-}
-`;
-
-exports[`AddFieldAction > add field to existing value type (with existing fields) 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "title",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-        {
-          "adminOnly": false,
-          "index": null,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "bar",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "name": "Foo",
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`AddFieldAction > add field to existing value type (without any fields) 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "list": false,
-          "multiline": false,
-          "name": "bar",
-          "required": false,
-          "status": "new",
-          "type": "String",
-        },
-      ],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-}
-`;
-
-exports[`AddFieldAction > add field to existing value type (without any fields) 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "bar",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "name": "Foo",
-    },
-  ],
-  "version": 2,
-}
-`;
-
 exports[`AddIndexAction > add index to empty schema 1`] = `
 {
   "activeSelector": {
@@ -320,9 +320,10 @@ exports[`AddIndexAction > add index to empty schema 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [
     {
@@ -334,7 +335,6 @@ exports[`AddIndexAction > add index to empty schema 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -358,9 +358,10 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
   "patterns": [
@@ -373,7 +374,6 @@ exports[`AddPatternAction > add pattern to empty schema 1`] = `
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -389,6 +389,107 @@ exports[`AddPatternAction > add pattern to empty schema 2`] = `
 }
 `;
 
+exports[`AddTypeAction > add component type to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add component type to empty schema 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`AddTypeAction > add component type to schema with existing type 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Bar",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add component type to schema with existing type 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`AddTypeAction > add entity type to empty schema 1`] = `
 {
   "activeSelector": {
@@ -397,9 +498,10 @@ exports[`AddTypeAction > add entity type to empty schema 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -421,7 +523,6 @@ exports[`AddTypeAction > add entity type to empty schema 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -448,9 +549,10 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -487,7 +589,6 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -506,6 +607,67 @@ exports[`AddTypeAction > add entity type to schema with existing type 2`] = `
 }
 `;
 
+exports[`AddTypeAction > add two component types (orders) 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Anaconda",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Anaconda",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "ZooKeeper",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add two component types (orders) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Anaconda",
+    },
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "ZooKeeper",
+    },
+  ],
+  "version": 1,
+}
+`;
+
 exports[`AddTypeAction > add two entity types (orders) 1`] = `
 {
   "activeSelector": {
@@ -514,9 +676,10 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
   },
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -553,7 +716,6 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -579,176 +741,15 @@ exports[`AddTypeAction > add two entity types (orders) 2`] = `
 }
 `;
 
-exports[`AddTypeAction > add two value types (orders) 1`] = `
-{
-  "activeSelector": {
-    "kind": "component",
-    "typeName": "Anaconda",
-  },
-  "activeSelectorEditorScrollSignal": 2,
-  "activeSelectorMenuScrollSignal": 2,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": null,
-      "fields": [],
-      "kind": "component",
-      "name": "Anaconda",
-      "status": "new",
-    },
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": null,
-      "fields": [],
-      "kind": "component",
-      "name": "ZooKeeper",
-      "status": "new",
-    },
-  ],
-}
-`;
-
-exports[`AddTypeAction > add two value types (orders) 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Anaconda",
-    },
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "ZooKeeper",
-    },
-  ],
-  "version": 1,
-}
-`;
-
-exports[`AddTypeAction > add value type to empty schema 1`] = `
-{
-  "activeSelector": {
-    "kind": "component",
-    "typeName": "Foo",
-  },
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": null,
-      "fields": [],
-      "kind": "component",
-      "name": "Foo",
-      "status": "new",
-    },
-  ],
-}
-`;
-
-exports[`AddTypeAction > add value type to empty schema 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Foo",
-    },
-  ],
-  "version": 1,
-}
-`;
-
-exports[`AddTypeAction > add value type to schema with existing type 1`] = `
-{
-  "activeSelector": {
-    "kind": "component",
-    "typeName": "Bar",
-  },
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": null,
-      "fields": [],
-      "kind": "component",
-      "name": "Bar",
-      "status": "new",
-    },
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [],
-      "kind": "component",
-      "name": "Foo",
-      "status": "",
-    },
-  ],
-}
-`;
-
-exports[`AddTypeAction > add value type to schema with existing type 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Bar",
-    },
-  ],
-  "version": 2,
-}
-`;
-
 exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -781,7 +782,6 @@ exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -812,9 +812,10 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -846,7 +847,6 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -881,9 +881,10 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -917,7 +918,6 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -951,9 +951,10 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -989,7 +990,6 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1023,9 +1023,10 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1060,7 +1061,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1073,6 +1073,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "linkEntityTypes": [
             "Foo",
@@ -1081,7 +1082,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
           "required": false,
           "richTextNodes": [],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Foo",
@@ -1097,9 +1097,10 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1115,6 +1116,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingRichTextNodesWithPlaceholders": [],
           "linkEntityTypes": [
@@ -1126,7 +1128,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
           "richTextNodesWithPlaceholders": [],
           "status": "changed",
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
@@ -1139,7 +1140,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1152,6 +1152,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "linkEntityTypes": [
             "Foo",
@@ -1160,7 +1161,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
           "required": false,
           "richTextNodes": [],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Foo",
@@ -1176,9 +1176,10 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1216,7 +1217,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1229,6 +1229,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [
             "Foo",
           ],
@@ -1244,7 +1245,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
             "text",
           ],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Foo",
@@ -1260,9 +1260,10 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1278,6 +1279,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingRichTextNodesWithPlaceholders": [
             "root, paragraph, text, linebreak, tab",
@@ -1294,7 +1296,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
           ],
           "status": "changed",
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
@@ -1307,7 +1308,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1320,6 +1320,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "linkEntityTypes": [],
           "name": "rt",
@@ -1334,7 +1335,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
             "text",
           ],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Foo",
@@ -1350,9 +1350,10 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1368,6 +1369,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingRichTextNodesWithPlaceholders": [
             "root, paragraph, text, linebreak, tab",
@@ -1384,7 +1386,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
           ],
           "status": "changed",
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
@@ -1397,7 +1398,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1410,6 +1410,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "linkEntityTypes": [],
           "name": "rt",
@@ -1423,7 +1424,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
             "text",
           ],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Foo",
@@ -1434,20 +1434,12 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing value item field 1`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing value item field 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "deletedFields": [],
@@ -1459,14 +1451,14 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
           "list": false,
           "name": "valueItem",
           "required": false,
           "status": "changed",
           "type": "Component",
-          "valueTypes": [
-            "Foo",
-          ],
         },
       ],
       "kind": "component",
@@ -1474,10 +1466,18 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
       "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing value item field 2`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing value item field 2`] = `
 {
   "componentTypes": [
     {
@@ -1485,12 +1485,12 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
           "name": "valueItem",
           "required": false,
           "type": "Component",
-          "valueTypes": [
-            "Foo",
-          ],
         },
       ],
       "name": "Foo",
@@ -1500,20 +1500,12 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value item field 1`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a new value item field 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "deletedFields": [],
@@ -1523,14 +1515,14 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
           "list": false,
           "name": "foo",
           "required": false,
           "status": "new",
           "type": "Component",
-          "valueTypes": [
-            "Foo",
-          ],
         },
       ],
       "kind": "component",
@@ -1538,10 +1530,18 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
       "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value item field 2`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a new value item field 2`] = `
 {
   "componentTypes": [
     {
@@ -1549,12 +1549,12 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
           "name": "foo",
           "required": false,
           "type": "Component",
-          "valueTypes": [
-            "Foo",
-          ],
         },
       ],
       "name": "Foo",
@@ -1572,9 +1572,10 @@ exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1617,7 +1618,6 @@ exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1658,9 +1658,10 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1713,7 +1714,6 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1758,9 +1758,10 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] =
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1794,7 +1795,6 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] =
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1826,9 +1826,10 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1860,7 +1861,6 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1895,9 +1895,10 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -1950,7 +1951,6 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -1994,9 +1994,10 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2036,7 +2037,6 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2077,9 +2077,10 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2116,7 +2117,6 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2151,9 +2151,10 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2185,7 +2186,6 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2220,9 +2220,10 @@ exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2259,7 +2260,6 @@ exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2294,9 +2294,10 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2328,7 +2329,6 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2363,9 +2363,10 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2397,7 +2398,6 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2424,14 +2424,74 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
 }
 `;
 
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing component type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Location",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing component type) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "type": "Location",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`ChangeFieldTypeAction > from string to location list (new field of existing entity type) 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2462,7 +2522,6 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2489,79 +2548,12 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
 }
 `;
 
-exports[`ChangeFieldTypeAction > from string to location list (new field of existing value type) 1`] = `
+exports[`ChangeFieldTypeAction > from string to number (new field of existing component type) 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "list": true,
-          "name": "bar",
-          "required": false,
-          "status": "new",
-          "type": "Location",
-        },
-      ],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-}
-`;
-
-exports[`ChangeFieldTypeAction > from string to location list (new field of existing value type) 2`] = `
-{
   "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "list": true,
-          "name": "bar",
-          "required": false,
-          "type": "Location",
-        },
-      ],
-      "name": "Foo",
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`ChangeFieldTypeAction > from string to number (new field of existing value type) 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
     {
       "adminOnly": false,
       "deletedFields": [],
@@ -2584,10 +2576,18 @@ exports[`ChangeFieldTypeAction > from string to number (new field of existing va
       "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
-exports[`ChangeFieldTypeAction > from string to number (new field of existing value type) 2`] = `
+exports[`ChangeFieldTypeAction > from string to number (new field of existing component type) 2`] = `
 {
   "componentTypes": [
     {
@@ -2613,9 +2613,10 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2629,12 +2630,12 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "list": false,
           "name": "bar",
           "required": false,
           "status": "new",
           "type": "Component",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
@@ -2647,7 +2648,6 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2660,10 +2660,10 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "name": "bar",
           "required": false,
           "type": "Component",
-          "valueTypes": [],
         },
       ],
       "name": "Foo",
@@ -2679,9 +2679,10 @@ exports[`ChangeFieldValues > set values on existing string field 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2725,7 +2726,6 @@ exports[`ChangeFieldValues > set values on existing string field 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2767,9 +2767,10 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2812,7 +2813,6 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2857,9 +2857,10 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -2906,7 +2907,6 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2930,9 +2930,10 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
   "patterns": [
@@ -2945,7 +2946,6 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -2961,14 +2961,57 @@ exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
 }
 `;
 
+exports[`ChangeTypeAdminOnlyAction > make existing component type admin only 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": true,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make existing component type admin only 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": true,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": true,
@@ -2990,7 +3033,6 @@ exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 1`] = 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3009,48 +3051,6 @@ exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 2`] = 
 }
 `;
 
-exports[`ChangeTypeAdminOnlyAction > make existing value type admin only 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": true,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-}
-`;
-
-exports[`ChangeTypeAdminOnlyAction > make existing value type admin only 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": true,
-      "fields": [],
-      "name": "Foo",
-    },
-  ],
-  "version": 2,
-}
-`;
-
 exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
 {
   "activeSelector": {
@@ -3059,9 +3059,10 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": true,
@@ -3083,7 +3084,6 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3107,9 +3107,10 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity typ
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3141,7 +3142,6 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity typ
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3168,9 +3168,10 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
   },
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3199,7 +3200,6 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3232,9 +3232,10 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3266,7 +3267,6 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3301,9 +3301,10 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3349,7 +3350,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3394,9 +3394,10 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3442,7 +3443,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3451,9 +3451,10 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3490,7 +3491,6 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -3499,9 +3499,10 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3523,7 +3524,6 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -3532,9 +3532,10 @@ exports[`DeleteFieldAction > delete existing entity name field 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3558,7 +3559,6 @@ exports[`DeleteFieldAction > delete existing entity name field 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3594,15 +3594,7 @@ exports[`DeleteFieldAction > delete existing value item field 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "deletedFields": [
@@ -3617,6 +3609,14 @@ exports[`DeleteFieldAction > delete existing value item field 1`] = `
       "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
@@ -3650,11 +3650,39 @@ exports[`DeleteIndexAction > delete index used 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "fieldB",
+      ],
+      "existingName": "ValueType",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "ValueType",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [
     "anIndex",
   ],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3691,34 +3719,6 @@ exports[`DeleteIndexAction > delete index used 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "fieldB",
-      ],
-      "existingName": "ValueType",
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "list": false,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "fieldB",
-          "required": false,
-          "status": "changed",
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "kind": "component",
-      "name": "ValueType",
-      "status": "changed",
-    },
-  ],
 }
 `;
 
@@ -3777,9 +3777,10 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3816,7 +3817,6 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -3846,22 +3846,163 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
 }
 `;
 
-exports[`DeleteTypeAction > delete existing entity type 1`] = `
+exports[`DeleteTypeAction > delete existing component type 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [
+  "componentTypes": [],
+  "deletedComponentTypes": [
     "Foo",
   ],
+  "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "componentType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [
+    "ToBeDeleted",
+  ],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "richText",
+        "valueItem",
+      ],
+      "existingName": "Referencing",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "changed",
+          "type": "RichText",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "Referencing",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type referenced by another type 2`] = `
+{
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "name": "valueItem",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Referencing",
+      "nameField": null,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "componentType": "ToBeDeleted",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [
+    "Foo",
+  ],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
@@ -3887,17 +4028,7 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [
-    "ToBeDeleted",
-  ],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "deletedFields": [],
@@ -3919,6 +4050,7 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
         },
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingRichTextNodesWithPlaceholders": [],
           "linkEntityTypes": [],
@@ -3928,7 +4060,6 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
           "richTextNodesWithPlaceholders": [],
           "status": "changed",
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "kind": "component",
@@ -3936,6 +4067,16 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
       "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [
+    "ToBeDeleted",
+  ],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
@@ -3954,13 +4095,13 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
         },
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "linkEntityTypes": [],
           "name": "richText",
           "required": false,
           "richTextNodes": [],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Referencing",
@@ -3981,52 +4122,32 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
 }
 `;
 
-exports[`DeleteTypeAction > delete existing value type 1`] = `
+exports[`DeleteTypeAction > delete newly added component type 1`] = `
 {
   "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [
-    "Foo",
-  ],
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [],
+  "status": "",
 }
 `;
 
-exports[`DeleteTypeAction > delete existing value type 2`] = `
-{
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteType",
-          "componentType": "Foo",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`DeleteTypeAction > delete existing value type referenced by another type 1`] = `
+exports[`DeleteTypeAction > delete newly added component type referenced by another type 1`] = `
 {
   "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [
-    "ToBeDeleted",
-  ],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4038,11 +4159,12 @@ exports[`DeleteTypeAction > delete existing value type referenced by another typ
         "richText",
         "valueItem",
       ],
-      "existingName": "Referencing",
+      "existingName": "Existing",
       "existingNameField": null,
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingRichTextNodesWithPlaceholders": [],
           "linkEntityTypes": [],
@@ -4050,75 +4172,29 @@ exports[`DeleteTypeAction > delete existing value type referenced by another typ
           "name": "richText",
           "required": false,
           "richTextNodesWithPlaceholders": [],
-          "status": "changed",
+          "status": "",
           "type": "RichText",
-          "valueTypes": [],
         },
         {
           "adminOnly": false,
+          "componentTypes": [],
           "list": false,
           "name": "valueItem",
           "required": false,
-          "status": "changed",
+          "status": "",
           "type": "Component",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
-      "name": "Referencing",
+      "name": "Existing",
       "nameField": null,
-      "status": "changed",
+      "status": "",
     },
   ],
   "indexes": [],
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [],
-}
-`;
-
-exports[`DeleteTypeAction > delete existing value type referenced by another type 2`] = `
-{
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "entityTypes": [],
-          "linkEntityTypes": [],
-          "name": "richText",
-          "required": false,
-          "richTextNodes": [],
-          "type": "RichText",
-          "valueTypes": [],
-        },
-        {
-          "adminOnly": false,
-          "name": "valueItem",
-          "required": false,
-          "type": "Component",
-          "valueTypes": [],
-        },
-      ],
-      "name": "Referencing",
-      "nameField": null,
-    },
-  ],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteType",
-          "componentType": "ToBeDeleted",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "version": 2,
+  "status": "",
 }
 `;
 
@@ -4127,15 +4203,15 @@ exports[`DeleteTypeAction > delete newly added entity type 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -4144,9 +4220,10 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4172,6 +4249,7 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
         },
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingRichTextNodesWithPlaceholders": [],
           "linkEntityTypes": [],
@@ -4181,7 +4259,6 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
           "richTextNodesWithPlaceholders": [],
           "status": "",
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
@@ -4194,83 +4271,6 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
-}
-`;
-
-exports[`DeleteTypeAction > delete newly added value type 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
-  "valueTypes": [],
-}
-`;
-
-exports[`DeleteTypeAction > delete newly added value type referenced by another type 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingAuthKeyPattern": null,
-      "existingFieldOrder": [
-        "richText",
-        "valueItem",
-      ],
-      "existingName": "Existing",
-      "existingNameField": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "entityTypes": [],
-          "existingRichTextNodesWithPlaceholders": [],
-          "linkEntityTypes": [],
-          "list": false,
-          "name": "richText",
-          "required": false,
-          "richTextNodesWithPlaceholders": [],
-          "status": "",
-          "type": "RichText",
-          "valueTypes": [],
-        },
-        {
-          "adminOnly": false,
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "status": "",
-          "type": "Component",
-          "valueTypes": [],
-        },
-      ],
-      "kind": "entity",
-      "name": "Existing",
-      "nameField": null,
-      "status": "",
-    },
-  ],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -4283,9 +4283,10 @@ exports[`RenameFieldAction > add and rename field 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4331,7 +4332,6 @@ exports[`RenameFieldAction > add and rename field 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4380,9 +4380,10 @@ exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4414,7 +4415,6 @@ exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4453,9 +4453,10 @@ exports[`RenameFieldAction > rename existing entity name field 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4492,7 +4493,6 @@ exports[`RenameFieldAction > rename existing entity name field 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4544,15 +4544,7 @@ exports[`RenameFieldAction > rename existing value item field 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "deletedFields": [],
@@ -4580,6 +4572,14 @@ exports[`RenameFieldAction > rename existing value item field 1`] = `
       "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
@@ -4628,9 +4628,10 @@ exports[`RenameIndexAction > rename existing index 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4673,7 +4674,6 @@ exports[`RenameIndexAction > rename existing index 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4724,9 +4724,10 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4795,7 +4796,6 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
   ],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4841,6 +4841,73 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
 }
 `;
 
+exports[`RenameTypeAction > add and rename component type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "new",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Bar",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > add and rename component type with fields referring to itself 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+  "version": 1,
+}
+`;
+
 exports[`RenameTypeAction > add and rename entity type with fields referring to itself 1`] = `
 {
   "activeSelector": {
@@ -4849,9 +4916,10 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   },
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4886,7 +4954,6 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4923,9 +4990,10 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   },
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -4961,7 +5029,6 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -4974,6 +5041,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "linkEntityTypes": [
             "Bar",
@@ -4982,7 +5050,6 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
           "required": false,
           "richTextNodes": [],
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "name": "Bar",
@@ -5001,9 +5068,10 @@ exports[`RenameTypeAction > add and rename type 1`] = `
   },
   "activeSelectorEditorScrollSignal": 2,
   "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5025,7 +5093,6 @@ exports[`RenameTypeAction > add and rename type 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -5044,51 +5111,140 @@ exports[`RenameTypeAction > add and rename type 2`] = `
 }
 `;
 
-exports[`RenameTypeAction > add and rename value type with fields referring to itself 1`] = `
+exports[`RenameTypeAction > rename existing component type 1`] = `
 {
   "activeSelector": {
     "kind": "component",
     "typeName": "Bar",
   },
-  "activeSelectorEditorScrollSignal": 2,
-  "activeSelectorMenuScrollSignal": 2,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
     {
       "adminOnly": false,
       "deletedFields": [],
       "existingAdminOnly": false,
       "existingFieldOrder": [],
-      "existingName": null,
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Bar",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > rename existing component type 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "componentType": "Foo",
+          "newName": "Bar",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameTypeAction > rename existing component type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "self",
+      ],
+      "existingName": "Foo",
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
           "list": false,
           "name": "self",
           "required": false,
-          "status": "new",
+          "status": "changed",
           "type": "Component",
-          "valueTypes": [
-            "Bar",
-          ],
         },
       ],
       "kind": "component",
       "name": "Bar",
-      "status": "new",
+      "status": "changed",
     },
   ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingName": "Baz",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "Baz",
+      "nameField": null,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
 }
 `;
 
-exports[`RenameTypeAction > add and rename value type with fields referring to itself 2`] = `
+exports[`RenameTypeAction > rename existing component type with fields referring to itself 2`] = `
 {
   "componentTypes": [
     {
@@ -5096,18 +5252,49 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
           "name": "self",
           "required": false,
           "type": "Component",
-          "valueTypes": [
-            "Bar",
-          ],
         },
       ],
       "name": "Bar",
     },
   ],
-  "version": 1,
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "name": "field",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Baz",
+      "nameField": null,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "componentType": "Foo",
+          "newName": "Bar",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
 }
 `;
 
@@ -5119,9 +5306,10 @@ exports[`RenameTypeAction > rename existing entity type 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5143,7 +5331,6 @@ exports[`RenameTypeAction > rename existing entity type 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -5182,9 +5369,37 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingName": "Referencing",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "linkEntityTypes": undefined,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Entity",
+        },
+      ],
+      "kind": "component",
+      "name": "Referencing",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5221,34 +5436,6 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "field",
-      ],
-      "existingName": "Referencing",
-      "fields": [
-        {
-          "adminOnly": false,
-          "entityTypes": [
-            "NewName",
-          ],
-          "linkEntityTypes": undefined,
-          "list": false,
-          "name": "field",
-          "required": false,
-          "status": "changed",
-          "type": "Entity",
-        },
-      ],
-      "kind": "component",
-      "name": "Referencing",
-      "status": "changed",
-    },
-  ],
 }
 `;
 
@@ -5306,201 +5493,15 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
 }
 `;
 
-exports[`RenameTypeAction > rename existing value type 1`] = `
-{
-  "activeSelector": {
-    "kind": "component",
-    "typeName": "Bar",
-  },
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [],
-      "kind": "component",
-      "name": "Bar",
-      "status": "changed",
-    },
-  ],
-}
-`;
-
-exports[`RenameTypeAction > rename existing value type 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Bar",
-    },
-  ],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameType",
-          "componentType": "Foo",
-          "newName": "Bar",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`RenameTypeAction > rename existing value type with fields referring to itself 1`] = `
-{
-  "activeSelector": {
-    "kind": "component",
-    "typeName": "Bar",
-  },
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingAuthKeyPattern": null,
-      "existingFieldOrder": [
-        "field",
-      ],
-      "existingName": "Baz",
-      "existingNameField": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "list": false,
-          "name": "field",
-          "required": false,
-          "status": "changed",
-          "type": "Component",
-          "valueTypes": [
-            "Bar",
-          ],
-        },
-      ],
-      "kind": "entity",
-      "name": "Baz",
-      "nameField": null,
-      "status": "changed",
-    },
-  ],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "self",
-      ],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "list": false,
-          "name": "self",
-          "required": false,
-          "status": "changed",
-          "type": "Component",
-          "valueTypes": [
-            "Bar",
-          ],
-        },
-      ],
-      "kind": "component",
-      "name": "Bar",
-      "status": "changed",
-    },
-  ],
-}
-`;
-
-exports[`RenameTypeAction > rename existing value type with fields referring to itself 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "name": "self",
-          "required": false,
-          "type": "Component",
-          "valueTypes": [
-            "Bar",
-          ],
-        },
-      ],
-      "name": "Bar",
-    },
-  ],
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "name": "field",
-          "required": false,
-          "type": "Component",
-          "valueTypes": [
-            "Bar",
-          ],
-        },
-      ],
-      "name": "Baz",
-      "nameField": null,
-    },
-  ],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameType",
-          "componentType": "Foo",
-          "newName": "Bar",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "version": 2,
-}
-`;
-
 exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5551,7 +5552,6 @@ exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -5594,9 +5594,10 @@ exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5638,7 +5639,6 @@ exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "changed",
-  "valueTypes": [],
 }
 `;
 
@@ -5678,9 +5678,10 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5723,7 +5724,6 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -5735,9 +5735,10 @@ exports[`SetActiveSelectorAction > set to type 1`] = `
   },
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5759,7 +5760,6 @@ exports[`SetActiveSelectorAction > set to type 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -5771,9 +5771,10 @@ exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
   },
   "activeSelectorEditorScrollSignal": 1,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5795,7 +5796,6 @@ exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
   "patterns": [],
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -5804,9 +5804,10 @@ exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
@@ -5824,7 +5825,147 @@ exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > component type field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "valueItem",
+      ],
+      "existingName": "ValueItem",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "ValueItem",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "componentTypes": [
+              "ValueItem",
+            ],
+            "list": false,
+            "name": "valueItem",
+            "required": false,
+            "type": "Component",
+          },
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "ValueItem",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "valueItem",
+      ],
+      "existingName": "EntityWithValueItem",
+      "existingNameField": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "ValueItem",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "componentTypes": [
+              "ValueItem",
+            ],
+            "list": false,
+            "name": "valueItem",
+            "required": false,
+            "type": "Component",
+          },
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "status": "",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityWithValueItem",
+      "nameField": null,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "componentTypes": [
+                "ValueItem",
+              ],
+              "list": false,
+              "name": "valueItem",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "ValueItem",
+        },
+      ],
+      "entityTypes": [
+        {
+          "adminOnly": false,
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "componentTypes": [
+                "ValueItem",
+              ],
+              "list": false,
+              "name": "valueItem",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "EntityWithValueItem",
+          "nameField": null,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "admin",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
 }
 `;
 
@@ -5833,9 +5974,46 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "reference",
+      ],
+      "existingName": "ValueReference",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "EntityReference",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "entityTypes": [
+              "EntityReference",
+            ],
+            "list": false,
+            "name": "reference",
+            "required": false,
+            "type": "Entity",
+          },
+          "list": false,
+          "name": "reference",
+          "required": false,
+          "status": "",
+          "type": "Entity",
+        },
+      ],
+      "kind": "component",
+      "name": "ValueReference",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5929,43 +6107,6 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "reference",
-      ],
-      "existingName": "ValueReference",
-      "fields": [
-        {
-          "adminOnly": false,
-          "entityTypes": [
-            "EntityReference",
-          ],
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "entityTypes": [
-              "EntityReference",
-            ],
-            "list": false,
-            "name": "reference",
-            "required": false,
-            "type": "Entity",
-          },
-          "list": false,
-          "name": "reference",
-          "required": false,
-          "status": "",
-          "type": "Entity",
-        },
-      ],
-      "kind": "component",
-      "name": "ValueReference",
-      "status": "",
-    },
-  ],
 }
 `;
 
@@ -5974,9 +6115,10 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -6033,7 +6175,6 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -6042,9 +6183,10 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -6139,7 +6281,91 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one component type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "TitleOnly",
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
+            "name": "title",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "TitleOnly",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "admin",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
 }
 `;
 
@@ -6148,9 +6374,10 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -6230,7 +6457,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -6239,9 +6465,10 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -6390,7 +6617,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -6399,9 +6625,10 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -6417,6 +6644,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
       "fields": [
         {
           "adminOnly": false,
+          "componentTypes": [],
           "entityTypes": [],
           "existingFieldSpec": {
             "adminOnly": false,
@@ -6454,7 +6682,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
           ],
           "status": "",
           "type": "RichText",
-          "valueTypes": [],
         },
       ],
       "kind": "entity",
@@ -6508,7 +6735,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
 }
 `;
 
@@ -6517,9 +6743,10 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -6614,233 +6841,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   },
   "schemaWillBeUpdatedDueToSave": false,
   "status": "",
-  "valueTypes": [],
-}
-`;
-
-exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "componentTypes": [
-        {
-          "adminOnly": false,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-              "values": [],
-            },
-          ],
-          "name": "TitleOnly",
-        },
-      ],
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "schemaKind": "admin",
-      "version": 1,
-    },
-  },
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "title",
-      ],
-      "existingName": "TitleOnly",
-      "fields": [
-        {
-          "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "index": null,
-            "list": false,
-            "matchPattern": null,
-            "multiline": false,
-            "name": "title",
-            "required": false,
-            "type": "String",
-            "values": [],
-          },
-          "index": null,
-          "list": false,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "title",
-          "required": false,
-          "status": "",
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "kind": "component",
-      "name": "TitleOnly",
-      "status": "",
-    },
-  ],
-}
-`;
-
-exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "deletedValueTypes": [],
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingAuthKeyPattern": null,
-      "existingFieldOrder": [
-        "valueItem",
-      ],
-      "existingName": "EntityWithValueItem",
-      "existingNameField": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "componentTypes": [
-              "ValueItem",
-            ],
-            "list": false,
-            "name": "valueItem",
-            "required": false,
-            "type": "Component",
-          },
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "status": "",
-          "type": "Component",
-          "valueTypes": [
-            "ValueItem",
-          ],
-        },
-      ],
-      "kind": "entity",
-      "name": "EntityWithValueItem",
-      "nameField": null,
-      "status": "",
-    },
-  ],
-  "indexes": [],
-  "patterns": [],
-  "schema": AdminSchema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": null,
-    "spec": {
-      "componentTypes": [
-        {
-          "adminOnly": false,
-          "fields": [
-            {
-              "adminOnly": false,
-              "componentTypes": [
-                "ValueItem",
-              ],
-              "list": false,
-              "name": "valueItem",
-              "required": false,
-              "type": "Component",
-            },
-          ],
-          "name": "ValueItem",
-        },
-      ],
-      "entityTypes": [
-        {
-          "adminOnly": false,
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "componentTypes": [
-                "ValueItem",
-              ],
-              "list": false,
-              "name": "valueItem",
-              "required": false,
-              "type": "Component",
-            },
-          ],
-          "name": "EntityWithValueItem",
-          "nameField": null,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "schemaKind": "admin",
-      "version": 1,
-    },
-  },
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "",
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "valueItem",
-      ],
-      "existingName": "ValueItem",
-      "fields": [
-        {
-          "adminOnly": false,
-          "existingFieldSpec": {
-            "adminOnly": false,
-            "componentTypes": [
-              "ValueItem",
-            ],
-            "list": false,
-            "name": "valueItem",
-            "required": false,
-            "type": "Component",
-          },
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "status": "",
-          "type": "Component",
-          "valueTypes": [
-            "ValueItem",
-          ],
-        },
-      ],
-      "kind": "component",
-      "name": "ValueItem",
-      "status": "",
-    },
-  ],
 }
 `;
 
@@ -6849,15 +6849,15 @@ exports[`initializeSchemaEditorState > no args 1`] = `
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
   "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
   "deletedEntityTypes": [],
   "deletedIndexes": [],
-  "deletedValueTypes": [],
   "entityTypes": [],
   "indexes": [],
   "patterns": [],
   "schema": null,
   "schemaWillBeUpdatedDueToSave": false,
   "status": "uninitialized",
-  "valueTypes": [],
 }
 `;

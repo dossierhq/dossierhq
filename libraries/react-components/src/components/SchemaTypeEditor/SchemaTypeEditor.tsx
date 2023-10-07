@@ -7,7 +7,7 @@ import type {
   SchemaEntityTypeDraft,
   SchemaFieldSelector,
   SchemaTypeSelector,
-  SchemaValueTypeDraft,
+  SchemaComponentTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { NameFieldSelector } from './NameFieldSelector.js';
@@ -16,7 +16,7 @@ import { SchemaFieldEditor } from './SchemaFieldEditor.js';
 
 interface Props {
   typeSelector: SchemaTypeSelector;
-  typeDraft: SchemaEntityTypeDraft | SchemaValueTypeDraft;
+  typeDraft: SchemaEntityTypeDraft | SchemaComponentTypeDraft;
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onAddOrRenameField: (selector: SchemaFieldSelector | SchemaTypeSelector) => void;

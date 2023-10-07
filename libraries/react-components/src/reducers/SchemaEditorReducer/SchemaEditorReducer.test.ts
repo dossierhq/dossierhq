@@ -41,13 +41,13 @@ function stateWithoutExistingSchema(state: Readonly<SchemaEditorState>) {
   }
 
   const entityTypes = state.entityTypes.map(removeFieldSpecs);
-  const valueTypes = state.valueTypes.map(removeFieldSpecs);
+  const componentTypes = state.componentTypes.map(removeFieldSpecs);
   const indexes = state.indexes.map((index) => {
     const { existingIndexSpec, ...other } = index;
     return other;
   });
   const { schema, ...other } = state;
-  return { ...other, entityTypes, valueTypes, indexes };
+  return { ...other, entityTypes, componentTypes, indexes };
 }
 
 describe('initializeSchemaEditorState', () => {
@@ -74,7 +74,7 @@ describe('AddTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('add value type to empty schema', () => {
+  test('add component type to empty schema', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -104,7 +104,7 @@ describe('AddTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('add value type to schema with existing type', () => {
+  test('add component type to schema with existing type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -135,7 +135,7 @@ describe('AddTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('add two value types (orders)', () => {
+  test('add two component types (orders)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -167,7 +167,7 @@ describe('AddFieldAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('add field to existing value type (without any fields)', () => {
+  test('add field to existing component type (without any fields)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -198,7 +198,7 @@ describe('AddFieldAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('add field to existing value type (with existing fields)', () => {
+  test('add field to existing component type (with existing fields)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -498,7 +498,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
 });
 
 describe('ChangeFieldAllowedValueTypesAction', () => {
-  test('change value types of a new value item field', () => {
+  test('change component types of a new value item field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -512,7 +512,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         FieldType.Component,
         false,
       ),
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+      new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
         { kind: 'component', typeName: 'Foo', fieldName: 'foo' },
         ['Foo'],
       ),
@@ -522,7 +522,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('change value types of a existing value item field', () => {
+  test('change component types of a existing value item field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -532,7 +532,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+      new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
         { kind: 'component', typeName: 'Foo', fieldName: 'valueItem' },
         ['Foo'],
       ),
@@ -904,7 +904,7 @@ describe('ChangeFieldTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('from string to location list (new field of existing value type)', () => {
+  test('from string to location list (new field of existing component type)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -924,7 +924,7 @@ describe('ChangeFieldTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('from string to number (new field of existing value type)', () => {
+  test('from string to number (new field of existing component type)', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1127,7 +1127,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('make existing value type admin only', () => {
+  test('make existing component type admin only', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1138,7 +1138,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
       new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'component', typeName: 'Foo' }, true),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
-    expect(state.valueTypes[0].status).toEqual('changed');
+    expect(state.componentTypes[0].status).toEqual('changed');
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -1259,8 +1259,8 @@ describe('DeleteIndexAction', () => {
     expect(state.entityTypes[0].fields[0].index).toBe(null);
     expect(state.entityTypes[0].fields[0].status).toBe('changed');
 
-    expect(state.valueTypes[0].fields[0].index).toBe(null);
-    expect(state.valueTypes[0].fields[0].status).toBe('changed');
+    expect(state.componentTypes[0].fields[0].index).toBe(null);
+    expect(state.componentTypes[0].fields[0].status).toBe('changed');
 
     expect(state.indexes.length).toBe(0);
 
@@ -1413,14 +1413,14 @@ describe('DeleteTypeAction', () => {
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
-    expect(state.valueTypes[0].fields[0].entityTypes).toEqual([]);
-    expect(state.valueTypes[0].fields[1].entityTypes).toEqual([]);
-    expect(state.valueTypes[0].fields[1].linkEntityTypes).toEqual([]);
+    expect(state.componentTypes[0].fields[0].entityTypes).toEqual([]);
+    expect(state.componentTypes[0].fields[1].entityTypes).toEqual([]);
+    expect(state.componentTypes[0].fields[1].linkEntityTypes).toEqual([]);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('delete newly added value type', () => {
+  test('delete newly added component type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1436,7 +1436,7 @@ describe('DeleteTypeAction', () => {
     expect(state.status).toBe(''); // should be reset
   });
 
-  test('delete existing value type', () => {
+  test('delete existing component type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1452,7 +1452,7 @@ describe('DeleteTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('delete newly added value type referenced by another type', () => {
+  test('delete newly added component type referenced by another type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1469,11 +1469,11 @@ describe('DeleteTypeAction', () => {
         }).valueOrThrow(),
       ),
       new SchemaEditorActions.AddType('component', 'Foo'),
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+      new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
         ['Foo'],
       ),
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+      new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'valueItem' },
         ['Foo'],
       ),
@@ -1482,14 +1482,14 @@ describe('DeleteTypeAction', () => {
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
-    expect(state.entityTypes[0].fields[0].valueTypes).toEqual([]);
-    expect(state.entityTypes[0].fields[1].valueTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[0].componentTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[1].componentTypes).toEqual([]);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
     expect(state.status).toBe(''); // should be reset
   });
 
-  test('delete existing value type referenced by another type', () => {
+  test('delete existing component type referenced by another type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1511,8 +1511,8 @@ describe('DeleteTypeAction', () => {
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
-    expect(state.entityTypes[0].fields[0].valueTypes).toEqual([]);
-    expect(state.entityTypes[0].fields[1].valueTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[0].componentTypes).toEqual([]);
+    expect(state.entityTypes[0].fields[1].componentTypes).toEqual([]);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
@@ -1644,7 +1644,7 @@ describe('RenameFieldAction', () => {
       ),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
-    expect(state.valueTypes[0].fields[0].status).toBe('changed');
+    expect(state.componentTypes[0].fields[0].status).toBe('changed');
 
     const update = getSchemaSpecificationUpdateFromEditorState(state);
     expect(update).toMatchSnapshot();
@@ -1835,7 +1835,7 @@ describe('RenameTypeAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('add and rename value type with fields referring to itself', () => {
+  test('add and rename component type with fields referring to itself', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1848,7 +1848,7 @@ describe('RenameTypeAction', () => {
         FieldType.Component,
         false,
       ),
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(
+      new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
         { kind: 'component', typeName: 'Foo', fieldName: 'self' },
         ['Foo'],
       ),
@@ -1856,13 +1856,13 @@ describe('RenameTypeAction', () => {
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
-    expect(state.valueTypes[0].name).toBe('Bar');
-    expect(state.valueTypes[0].fields[0].valueTypes).toEqual(['Bar']);
+    expect(state.componentTypes[0].name).toBe('Bar');
+    expect(state.componentTypes[0].fields[0].componentTypes).toEqual(['Bar']);
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('rename existing value type', () => {
+  test('rename existing component type', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1874,12 +1874,12 @@ describe('RenameTypeAction', () => {
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
-    state.valueTypes[0].status = 'changed';
+    state.componentTypes[0].status = 'changed';
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('rename existing value type with fields referring to itself', () => {
+  test('rename existing component type with fields referring to itself', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -2144,7 +2144,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
-  test('one value type', () => {
+  test('one component type', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -2191,7 +2191,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toEqual({});
   });
 
-  test('value type field', () => {
+  test('component type field', () => {
     const state = reduceSchemaEditorState(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(

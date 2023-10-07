@@ -123,7 +123,7 @@ function validateName(
   }
   if (
     schemaEditorState.entityTypes.find((it) => it.name === name) ||
-    schemaEditorState.valueTypes.find((it) => it.name === name)
+    schemaEditorState.componentTypes.find((it) => it.name === name)
   ) {
     return DialogStatus.alreadyExist;
   }
@@ -189,7 +189,7 @@ function DialogContent({
               </Radio>
               <Radio
                 name="kind"
-                value="value"
+                value="component"
                 checked={kind === 'component'}
                 onChange={onKindChange}
               >

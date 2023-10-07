@@ -116,7 +116,7 @@ function validateName(
   const typeDraft =
     selector.kind === 'entity'
       ? schemaEditorState.entityTypes.find((it) => it.name === selector.typeName)
-      : schemaEditorState.valueTypes.find((it) => it.name === selector.typeName);
+      : schemaEditorState.componentTypes.find((it) => it.name === selector.typeName);
   assertIsDefined(typeDraft);
   if (typeDraft.fields.find((it) => it.name === name)) {
     return DialogStatus.alreadyExist;

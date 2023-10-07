@@ -61,7 +61,7 @@ export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
   existingNameField: string | null;
 }
 
-export interface SchemaValueTypeDraft extends SchemaTypeDraft {
+export interface SchemaComponentTypeDraft extends SchemaTypeDraft {
   kind: 'component';
 }
 
@@ -84,8 +84,8 @@ export interface SchemaFieldDraft {
   entityTypes?: string[];
   // rich text
   linkEntityTypes?: string[];
-  // value item, rich text
-  valueTypes?: string[];
+  // component, rich text
+  componentTypes?: string[];
   // number
   integer?: boolean;
   //
@@ -109,8 +109,8 @@ export interface SchemaEditorState {
 
   entityTypes: SchemaEntityTypeDraft[];
   deletedEntityTypes: readonly string[];
-  valueTypes: SchemaValueTypeDraft[];
-  deletedValueTypes: readonly string[];
+  componentTypes: SchemaComponentTypeDraft[];
+  deletedComponentTypes: readonly string[];
   indexes: SchemaIndexDraft[];
   deletedIndexes: readonly string[];
   patterns: SchemaPatternDraft[];
@@ -148,8 +148,8 @@ export function initializeSchemaEditorState(): SchemaEditorState {
     schemaWillBeUpdatedDueToSave: false,
     entityTypes: [],
     deletedEntityTypes: [],
-    valueTypes: [],
-    deletedValueTypes: [],
+    componentTypes: [],
+    deletedComponentTypes: [],
     indexes: [],
     deletedIndexes: [],
     patterns: [],
@@ -174,13 +174,14 @@ function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['statu
   if (state.status === 'uninitialized') state.status;
   for (const type of [
     ...state.entityTypes,
-    ...state.valueTypes,
+    ...state.componentTypes,
     ...state.indexes,
     ...state.patterns,
   ]) {
     if (type.status !== '') return 'changed';
   }
-  if (state.deletedEntityTypes.length > 0 || state.deletedValueTypes.length > 0) return 'changed';
+  if (state.deletedEntityTypes.length > 0 || state.deletedComponentTypes.length > 0)
+    return 'changed';
   return '';
 }
 
@@ -191,7 +192,7 @@ function withResolvedSchemaStatus(state: Readonly<SchemaEditorState>): Readonly<
 }
 
 function resolveTypeStatus(
-  state: Readonly<SchemaEntityTypeDraft | SchemaValueTypeDraft>,
+  state: Readonly<SchemaEntityTypeDraft | SchemaComponentTypeDraft>,
 ): SchemaTypeDraft['status'] {
   if (state.status === 'new') return state.status;
   if (state.name !== state.existingName) return 'changed';
@@ -210,7 +211,7 @@ function resolveTypeStatus(
   return '';
 }
 
-function withResolvedTypeStatus<T extends SchemaEntityTypeDraft | SchemaValueTypeDraft>(
+function withResolvedTypeStatus<T extends SchemaEntityTypeDraft | SchemaComponentTypeDraft>(
   state: Readonly<T>,
 ): Readonly<T> {
   const newStatus = resolveTypeStatus(state);
@@ -242,7 +243,7 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
   if (
     (existingFieldSpec.type === FieldType.Component ||
       existingFieldSpec.type === FieldType.RichText) &&
-    !isEqual(state.valueTypes, existingFieldSpec.componentTypes)
+    !isEqual(state.componentTypes, existingFieldSpec.componentTypes)
   ) {
     return 'changed';
   }
@@ -337,7 +338,7 @@ abstract class TypeAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    const typeCollection = this.kind === 'entity' ? state.entityTypes : state.valueTypes;
+    const typeCollection = this.kind === 'entity' ? state.entityTypes : state.componentTypes;
     const typeIndex = typeCollection.findIndex((it) => it.name === this.typeName);
     if (typeIndex < 0) throw new Error(`No such ${this.kind} type ${this.typeName}`);
     const currentTypeDraft = typeCollection[typeIndex];
@@ -356,15 +357,15 @@ abstract class TypeAction implements SchemaEditorStateAction {
     if (this.kind === 'entity') {
       newState.entityTypes = newTypeCollection as SchemaEntityTypeDraft[];
     } else {
-      newState.valueTypes = newTypeCollection as SchemaValueTypeDraft[];
+      newState.componentTypes = newTypeCollection as SchemaComponentTypeDraft[];
     }
     newState.status = resolveSchemaStatus(newState);
     return newState;
   }
 
   abstract reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>;
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>;
 }
 
 abstract class FieldAction extends TypeAction {
@@ -376,8 +377,8 @@ abstract class FieldAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
     const fieldIndex = typeDraft.fields.findIndex((it) => it.name === this.fieldName);
     if (fieldIndex < 0) throw new Error(`No such field ${this.fieldName} in type ${this.typeName}`);
     const currentFieldDraft = typeDraft.fields[fieldIndex];
@@ -443,7 +444,7 @@ function reduceFieldsOfAllTypes(
   state: Readonly<SchemaEditorState>,
   reduceField: (fieldDraft: Readonly<SchemaFieldDraft>) => Readonly<SchemaFieldDraft>,
 ): Readonly<SchemaEditorState> {
-  function reduceTypeFields<T extends SchemaEntityTypeDraft | SchemaValueTypeDraft>(
+  function reduceTypeFields<T extends SchemaEntityTypeDraft | SchemaComponentTypeDraft>(
     typeDraft: Readonly<T>,
   ): Readonly<T> {
     let changedFields = false;
@@ -472,33 +473,33 @@ function reduceFieldsOfAllTypes(
     return newTypeDraft;
   });
 
-  // Value types
-  let changedValueTypes = false;
-  const newValueTypes = state.valueTypes.map((typeDraft) => {
+  // Component types
+  let changedComponentTypes = false;
+  const newComponentTypes = state.componentTypes.map((typeDraft) => {
     const newTypeDraft = reduceTypeFields(typeDraft);
     if (newTypeDraft !== typeDraft) {
-      changedValueTypes = true;
+      changedComponentTypes = true;
     }
     return newTypeDraft;
   });
 
-  if (!changedEntityTypes && !changedValueTypes) {
+  if (!changedEntityTypes && !changedComponentTypes) {
     return state;
   }
   const newState = {
     ...state,
     entityTypes: changedEntityTypes ? newEntityTypes : state.entityTypes,
-    valueTypes: changedValueTypes ? newValueTypes : state.valueTypes,
+    componentTypes: changedComponentTypes ? newComponentTypes : state.componentTypes,
   };
   newState.status = resolveSchemaStatus(newState);
   return newState;
 }
 
 function replaceFieldWithIndex(
-  typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
+  typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
   fieldIndex: number,
   newFieldDraft: SchemaFieldDraft,
-): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
   if (typeDraft.fields[fieldIndex] === newFieldDraft) {
     return typeDraft;
   }
@@ -552,11 +553,11 @@ class AddTypeAction implements SchemaEditorStateAction {
       ];
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
-      newState.valueTypes = [
-        ...newState.valueTypes,
+      newState.componentTypes = [
+        ...newState.componentTypes,
         { ...typeDraft, kind: 'component', existingFieldOrder: [] },
       ];
-      newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
+      newState.componentTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
     return withResolvedSchemaStatus(newState);
   }
@@ -716,20 +717,20 @@ class ChangeFieldAllowedRichTextNodesAction extends FieldAction {
   }
 }
 
-class ChangeFieldAllowedValueTypesAction extends FieldAction {
-  valueTypes: string[];
+class ChangeFieldAllowedComponentTypesAction extends FieldAction {
+  componentTypes: string[];
 
-  constructor(fieldSelector: SchemaFieldSelector, valueTypes: string[]) {
+  constructor(fieldSelector: SchemaFieldSelector, componentTypes: string[]) {
     super(fieldSelector);
-    this.valueTypes = [...valueTypes].sort();
+    this.componentTypes = [...componentTypes].sort();
   }
 
   reduceField(fieldDraft: Readonly<SchemaFieldDraft>): Readonly<SchemaFieldDraft> {
-    if (isEqual(fieldDraft.valueTypes, this.valueTypes)) {
+    if (isEqual(fieldDraft.componentTypes, this.componentTypes)) {
       return fieldDraft;
     }
 
-    return { ...fieldDraft, valueTypes: this.valueTypes };
+    return { ...fieldDraft, componentTypes: this.componentTypes };
   }
 }
 
@@ -869,9 +870,9 @@ class ChangeFieldTypeAction extends FieldAction {
     //TODO handle linkEntityTypes?
 
     if (this.fieldType === FieldType.Component) {
-      newFieldDraft.valueTypes = [];
+      newFieldDraft.componentTypes = [];
     } else {
-      delete newFieldDraft.valueTypes;
+      delete newFieldDraft.componentTypes;
     }
 
     return newFieldDraft;
@@ -959,8 +960,8 @@ class ChangeTypeNameFieldAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
     if (typeDraft.kind === 'component' || typeDraft.nameField === this.nameField) {
       return typeDraft;
     }
@@ -977,8 +978,8 @@ class DeleteFieldAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
     const fieldIndex = typeDraft.fields.findIndex(
       (fieldDraft) => fieldDraft.name === this.fieldName,
     );
@@ -1103,9 +1104,10 @@ class DeleteTypeAction implements SchemaEditorStateAction {
   }
 
   reduce(state: Readonly<SchemaEditorState>): Readonly<SchemaEditorState> {
-    let { activeSelector, entityTypes, deletedEntityTypes, valueTypes, deletedValueTypes } = state;
+    let { activeSelector, entityTypes, deletedEntityTypes, componentTypes, deletedComponentTypes } =
+      state;
 
-    const typeDrafts = this.selector.kind === 'entity' ? entityTypes : valueTypes;
+    const typeDrafts = this.selector.kind === 'entity' ? entityTypes : componentTypes;
     const typeIndex = typeDrafts.findIndex((it) => it.name === this.selector.typeName);
     if (typeIndex < 0)
       throw new Error(`No such ${this.selector.kind} type ${this.selector.typeName}`);
@@ -1119,9 +1121,9 @@ class DeleteTypeAction implements SchemaEditorStateAction {
         deletedEntityTypes = [...deletedEntityTypes, typeDraft.existingName].sort();
       }
     } else {
-      valueTypes = newTypeDrafts as typeof valueTypes;
+      componentTypes = newTypeDrafts as typeof componentTypes;
       if (typeDraft.existingName) {
-        deletedValueTypes = [...deletedValueTypes, typeDraft.existingName].sort();
+        deletedComponentTypes = [...deletedComponentTypes, typeDraft.existingName].sort();
       }
     }
 
@@ -1134,8 +1136,8 @@ class DeleteTypeAction implements SchemaEditorStateAction {
       activeSelector,
       entityTypes,
       deletedEntityTypes,
-      valueTypes,
-      deletedValueTypes,
+      componentTypes,
+      deletedComponentTypes,
     };
 
     // Remove references to type in fields
@@ -1159,10 +1161,10 @@ class DeleteTypeAction implements SchemaEditorStateAction {
           return newFieldDraft;
         }
       } else {
-        if (fieldDraft.valueTypes?.includes(this.selector.typeName)) {
+        if (fieldDraft.componentTypes?.includes(this.selector.typeName)) {
           return {
             ...fieldDraft,
-            valueTypes: fieldDraft.valueTypes.filter((it) => it !== this.selector.typeName),
+            componentTypes: fieldDraft.componentTypes.filter((it) => it !== this.selector.typeName),
           };
         }
       }
@@ -1189,8 +1191,8 @@ class RenameFieldAction extends FieldAction {
   }
 
   override reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
     const superTypeDraft = super.reduceType(typeDraft);
 
     if (superTypeDraft === typeDraft) {
@@ -1325,8 +1327,8 @@ class RenameTypeAction extends TypeAction {
   }
 
   reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
     return { ...typeDraft, name: this.name };
   }
 
@@ -1345,7 +1347,7 @@ class RenameTypeAction extends TypeAction {
     if (this.kind === 'entity') {
       newState.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
     } else {
-      newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
+      newState.componentTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     // Rename references to type in fields
@@ -1366,10 +1368,12 @@ class RenameTypeAction extends TypeAction {
           };
         }
       } else {
-        if (fieldDraft.valueTypes?.includes(this.typeName)) {
+        if (fieldDraft.componentTypes?.includes(this.typeName)) {
           return {
             ...fieldDraft,
-            valueTypes: fieldDraft.valueTypes.map((it) => (it === this.typeName ? this.name : it)),
+            componentTypes: fieldDraft.componentTypes.map((it) =>
+              it === this.typeName ? this.name : it,
+            ),
           };
         }
       }
@@ -1398,8 +1402,8 @@ class ReorderFieldsAction extends TypeAction {
   }
 
   override reduceType(
-    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
-  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
     if (this.fieldToMove === this.targetField) {
       return typeDraft;
     }
@@ -1481,8 +1485,8 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       existingNameField: entityTypeSpec.nameField,
     }));
 
-    const valueTypes = this.schema.spec.componentTypes.map((valueTypeSpec) =>
-      this.convertType('component', valueTypeSpec),
+    const componentTypes = this.schema.spec.componentTypes.map((componentTypeSpec) =>
+      this.convertType('component', componentTypeSpec),
     );
 
     const indexes = this.schema.spec.indexes.map<SchemaIndexDraft>((indexSpec) => ({
@@ -1505,7 +1509,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       schema: this.schema,
       schemaWillBeUpdatedDueToSave: false,
       entityTypes,
-      valueTypes,
+      componentTypes,
       indexes,
       patterns,
     };
@@ -1557,7 +1561,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
           fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes;
         }
         if (fieldSpec.type === FieldType.Component || fieldSpec.type === FieldType.RichText) {
-          fieldDraft.valueTypes = fieldSpec.componentTypes;
+          fieldDraft.componentTypes = fieldSpec.componentTypes;
         }
         return fieldDraft;
       }),
@@ -1625,10 +1629,10 @@ export const SchemaEditorActions = {
   AddPattern: AddPatternAction,
   AddType: AddTypeAction,
   ChangeFieldAdminOnly: ChangeFieldAdminOnlyAction,
+  ChangeFieldAllowedComponentTypes: ChangeFieldAllowedComponentTypesAction,
   ChangeFieldAllowedEntityTypes: ChangeFieldAllowedEntityTypesAction,
   ChangeFieldAllowedLinkEntityTypes: ChangeFieldAllowedLinkEntityTypesAction,
   ChangeFieldAllowedRichTextNodes: ChangeFieldAllowedRichTextNodesAction,
-  ChangeFieldAllowedValueTypes: ChangeFieldAllowedValueTypesAction,
   ChangeFieldIndex: ChangeFieldIndexAction,
   ChangeFieldInteger: ChangeFieldIntegerAction,
   ChangeFieldMatchPattern: ChangeFieldMatchPatternAction,
@@ -1665,7 +1669,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
     .filter((it) => it.status !== '')
     .map(getTypeUpdateFromEditorState);
 
-  const componentTypes = state.valueTypes
+  const componentTypes = state.componentTypes
     .filter((it) => it.status !== '')
     .map(getTypeUpdateFromEditorState);
 
@@ -1707,7 +1711,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
 }
 
 function getTypeUpdateFromEditorState(
-  draftType: SchemaValueTypeDraft | SchemaEntityTypeDraft,
+  draftType: SchemaComponentTypeDraft | SchemaEntityTypeDraft,
 ): AdminEntityTypeSpecificationUpdate | AdminComponentTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
     return {
@@ -1737,7 +1741,7 @@ function getTypeUpdateFromEditorState(
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
       ...(draftField.type === FieldType.Component || draftField.type === FieldType.RichText
-        ? { valueTypes: draftField.valueTypes ?? [] }
+        ? { componentTypes: draftField.componentTypes ?? [] }
         : undefined),
     };
   });
@@ -1757,11 +1761,11 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
     actions.push({ action: 'deleteType', entityType: typeName });
   }
 
-  for (const typeName of state.deletedValueTypes) {
+  for (const typeName of state.deletedComponentTypes) {
     actions.push({ action: 'deleteType', componentType: typeName });
   }
 
-  for (const typeDraft of [...state.entityTypes, ...state.valueTypes]) {
+  for (const typeDraft of [...state.entityTypes, ...state.componentTypes]) {
     if (typeDraft.status !== 'changed') {
       continue;
     }

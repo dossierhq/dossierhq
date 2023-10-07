@@ -28,7 +28,7 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
 
   useEffect(() => {
     dispatchSchemaEditorState(
-      new SchemaEditorActions.ChangeFieldAllowedValueTypes(fieldSelector, state.selectedIds),
+      new SchemaEditorActions.ChangeFieldAllowedComponentTypes(fieldSelector, state.selectedIds),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.selectedIds]);
@@ -57,7 +57,7 @@ export function FieldValueTypeSelector({
   schemaEditorState,
   dispatchSchemaEditorState,
 }: Props) {
-  const items = schemaEditorState.valueTypes.map((it) => ({ id: it.name }));
+  const items = schemaEditorState.componentTypes.map((it) => ({ id: it.name }));
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
     items,
