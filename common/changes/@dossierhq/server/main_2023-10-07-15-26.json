@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support syncing principals between dossier instances",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

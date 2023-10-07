@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Support syncing principals between dossier instances",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
