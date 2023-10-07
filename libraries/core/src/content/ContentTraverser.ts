@@ -12,7 +12,7 @@ import {
   isRichTextElementNode,
   isRichTextItemField,
   isRichTextValueItemNode,
-  isValueItemItemField,
+  isComponentItemField,
 } from './ContentTypeUtils.js';
 import {
   checkFieldItemTraversable,
@@ -259,7 +259,7 @@ function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchem
   };
   yield fieldValueNode;
 
-  if (isValueItemItemField(fieldSpec, itemValue) && itemValue) {
+  if (isComponentItemField(fieldSpec, itemValue) && itemValue) {
     yield* traverseValueItem(schema, path, itemValue);
   } else if (isRichTextItemField(fieldSpec, itemValue) && itemValue) {
     if (typeof itemValue !== 'object') {

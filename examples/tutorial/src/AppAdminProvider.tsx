@@ -2,7 +2,7 @@ import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
 } from '@dossierhq/cloudinary';
-import { FieldType, isValueItemField } from '@dossierhq/core';
+import { FieldType, isComponentItemField } from '@dossierhq/core';
 import {
   AdminDossierProvider,
   type AdminDossierContextAdapter,
@@ -43,7 +43,7 @@ class AdminAdapter implements AdminDossierContextAdapter {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&
-      isValueItemField(fieldSpec, value) &&
+      isComponentItemField(fieldSpec, value) &&
       value &&
       isAdminCloudinaryImage(value)
     ) {

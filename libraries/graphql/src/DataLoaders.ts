@@ -35,15 +35,15 @@ import type {
 } from '@dossierhq/core';
 import {
   ContentTraverseNodeType,
-  isEntityField,
+  isComponent,
+  isComponentListField,
+  isComponentSingleField,
   isEntityItemField,
   isEntityListField,
-  isItemValueItem,
+  isEntitySingleField,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
-  isRichTextField,
-  isValueItemField,
-  isValueItemListField,
+  isRichTextSingleField,
   traverseContentField,
 } from '@dossierhq/core';
 import type { GraphQLResolveInfo } from 'graphql';
@@ -287,10 +287,10 @@ function resolveFields<TContext extends SessionGraphQLContext>(
   item: Component | PublishedEntity | AdminEntity,
   isAdmin: boolean,
 ) {
-  const fields = isItemValueItem(item) ? item : item.fields;
+  const fields = isComponent(item) ? item : item.fields;
   for (const fieldSpec of spec.fields) {
     const value = fields[fieldSpec.name];
-    if (isRichTextField(fieldSpec, value) && value) {
+    if (isRichTextSingleField(fieldSpec, value) && value) {
       const ids = extractEntityIdsForRichTextField(schema, fieldSpec, value);
       fields[fieldSpec.name] = {
         root: value.root,
@@ -303,7 +303,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
                   : loadPublishedEntityList(schema as PublishedSchema, context, ids);
               },
       };
-    } else if (isEntityField(fieldSpec, value) && value) {
+    } else if (isEntitySingleField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: GraphQLResolveInfo) =>
         isAdmin
           ? loadAdminEntity(schema as AdminSchema, context, value)
@@ -315,9 +315,9 @@ function resolveFields<TContext extends SessionGraphQLContext>(
           ? loadAdminEntityList(schema as AdminSchema, context, ids)
           : loadPublishedEntityList(schema as PublishedSchema, context, ids);
       };
-    } else if (isValueItemField(fieldSpec, value) && value) {
+    } else if (isComponentSingleField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = buildResolversForValue(schema, value, isAdmin);
-    } else if (isValueItemListField(fieldSpec, value) && value && value.length > 0) {
+    } else if (isComponentListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = value.map((it) => buildResolversForValue(schema, it, isAdmin));
     }
   }

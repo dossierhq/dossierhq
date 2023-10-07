@@ -1,20 +1,21 @@
 import {
-  isBooleanField,
   isBooleanListField,
-  isEntityField,
+  isBooleanSingleField,
+  isComponentListField,
+  isComponentSingleField,
   isEntityListField,
-  isLocationField,
+  isEntitySingleField,
   isLocationListField,
-  isNumberField,
+  isLocationSingleField,
   isNumberListField,
-  isRichTextField,
+  isNumberSingleField,
   isRichTextListField,
-  isStringField,
+  isRichTextSingleField,
   isStringListField,
-  isValueItemField,
-  isValueItemListField,
+  isStringSingleField,
   type AdminFieldSpecification,
   type BooleanFieldSpecification,
+  type ComponentFieldSpecification,
   type EntityFieldSpecification,
   type FieldSpecification,
   type LocationFieldSpecification,
@@ -23,7 +24,6 @@ import {
   type RichTextFieldSpecification,
   type SaveValidationIssue,
   type StringFieldSpecification,
-  type ComponentFieldSpecification,
 } from '@dossierhq/core';
 import { useContext, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -58,7 +58,7 @@ export function FieldEditor(props: FieldEditorProps) {
   }
 
   let editor: JSX.Element;
-  if (isBooleanField(fieldSpec, value)) {
+  if (isBooleanSingleField(fieldSpec, value)) {
     editor = (
       <BooleanFieldEditor
         {...props}
@@ -76,7 +76,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={BooleanFieldEditor}
       />
     );
-  } else if (isEntityField(fieldSpec, value)) {
+  } else if (isEntitySingleField(fieldSpec, value)) {
     editor = (
       <EntityTypeFieldEditor
         {...props}
@@ -94,7 +94,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={EntityTypeFieldEditor}
       />
     );
-  } else if (isLocationField(fieldSpec, value)) {
+  } else if (isLocationSingleField(fieldSpec, value)) {
     editor = (
       <LocationFieldEditor
         {...props}
@@ -112,7 +112,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={LocationFieldEditor}
       />
     );
-  } else if (isNumberField(fieldSpec, value)) {
+  } else if (isNumberSingleField(fieldSpec, value)) {
     editor = (
       <NumberFieldEditor
         {...props}
@@ -130,7 +130,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={NumberFieldEditor}
       />
     );
-  } else if (isRichTextField(fieldSpec, value)) {
+  } else if (isRichTextSingleField(fieldSpec, value)) {
     editor = (
       <RichTextFieldEditor
         {...props}
@@ -148,7 +148,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={RichTextFieldEditor}
       />
     );
-  } else if (isStringField(fieldSpec, value)) {
+  } else if (isStringSingleField(fieldSpec, value)) {
     editor = (
       <StringFieldEditor
         {...props}
@@ -166,7 +166,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={StringFieldEditor}
       />
     );
-  } else if (isValueItemField(fieldSpec, value)) {
+  } else if (isComponentSingleField(fieldSpec, value)) {
     editor = (
       <ValueItemFieldEditor
         {...props}
@@ -174,7 +174,7 @@ export function FieldEditor(props: FieldEditorProps) {
         value={value}
       />
     );
-  } else if (isValueItemListField(fieldSpec, value)) {
+  } else if (isComponentListField(fieldSpec, value)) {
     editor = (
       <FieldListWrapper
         {...props}

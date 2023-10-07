@@ -1,6 +1,7 @@
 import {
   ContentTraverseNodeType,
   assertIsDefined,
+  isComponentItemField,
   isEntityItemField,
   isLocationItemField,
   isRichTextEntityLinkNode,
@@ -8,7 +9,6 @@ import {
   isRichTextTextNode,
   isRichTextValueItemNode,
   isStringItemField,
-  isValueItemItemField,
   type AdminSchema,
   type ContentTraverseNode,
   type ContentValuePath,
@@ -184,7 +184,7 @@ export function createValueTypesCollector<TSchema extends AdminSchema | Publishe
     collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
         case ContentTraverseNodeType.fieldItem:
-          if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
+          if (isComponentItemField(node.fieldSpec, node.value) && node.value) {
             payload.add(node.value.type);
           }
           break;

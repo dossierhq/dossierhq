@@ -17,7 +17,7 @@ import {
   isNumberItemField,
   isRichTextTextNode,
   isStringItemField,
-  isValueItemItemField,
+  isComponentItemField,
 } from './ContentTypeUtils.js';
 
 export interface SaveValidationIssue {
@@ -263,7 +263,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
             };
           }
         }
-      } else if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
+      } else if (isComponentItemField(node.fieldSpec, node.value) && node.value) {
         const valueItemFieldSpec = node.fieldSpec as ComponentFieldSpecification;
         if (
           valueItemFieldSpec.componentTypes.length > 0 &&

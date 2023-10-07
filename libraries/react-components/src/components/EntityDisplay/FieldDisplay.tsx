@@ -9,20 +9,20 @@ import type {
   StringFieldSpecification,
 } from '@dossierhq/core';
 import {
-  isBooleanField,
   isBooleanListField,
-  isEntityField,
+  isBooleanSingleField,
+  isComponentListField,
+  isComponentSingleField,
   isEntityListField,
-  isLocationField,
+  isEntitySingleField,
   isLocationListField,
-  isNumberField,
+  isLocationSingleField,
   isNumberListField,
-  isRichTextField,
+  isNumberSingleField,
   isRichTextListField,
-  isStringField,
+  isRichTextSingleField,
   isStringListField,
-  isValueItemField,
-  isValueItemListField,
+  isStringSingleField,
 } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import { useContext } from 'react';
@@ -62,7 +62,7 @@ export function FieldDisplay(props: FieldDisplayProps) {
   }
 
   let display;
-  if (isBooleanField(fieldSpec, value)) {
+  if (isBooleanSingleField(fieldSpec, value)) {
     display = (
       <BooleanFieldDisplay fieldSpec={fieldSpec as BooleanFieldSpecification} value={value} />
     );
@@ -74,7 +74,7 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={BooleanFieldDisplay}
       />
     );
-  } else if (isEntityField(fieldSpec, value)) {
+  } else if (isEntitySingleField(fieldSpec, value)) {
     display = (
       <EntityTypeFieldDisplay fieldSpec={fieldSpec as EntityFieldSpecification} value={value} />
     );
@@ -86,7 +86,7 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={EntityTypeFieldDisplay}
       />
     );
-  } else if (isLocationField(fieldSpec, value)) {
+  } else if (isLocationSingleField(fieldSpec, value)) {
     display = (
       <LocationFieldDisplay fieldSpec={fieldSpec as LocationFieldSpecification} value={value} />
     );
@@ -98,7 +98,7 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={LocationFieldDisplay}
       />
     );
-  } else if (isNumberField(fieldSpec, value)) {
+  } else if (isNumberSingleField(fieldSpec, value)) {
     display = (
       <NumberFieldDisplay fieldSpec={fieldSpec as NumberFieldSpecification} value={value} />
     );
@@ -110,7 +110,7 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={NumberFieldDisplay}
       />
     );
-  } else if (isRichTextField(fieldSpec, value)) {
+  } else if (isRichTextSingleField(fieldSpec, value)) {
     display = (
       <RichTextFieldDisplay fieldSpec={fieldSpec as RichTextFieldSpecification} value={value} />
     );
@@ -122,7 +122,7 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={RichTextFieldDisplay}
       />
     );
-  } else if (isStringField(fieldSpec, value)) {
+  } else if (isStringSingleField(fieldSpec, value)) {
     display = (
       <StringFieldDisplay fieldSpec={fieldSpec as StringFieldSpecification} value={value} />
     );
@@ -134,11 +134,11 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={StringFieldDisplay}
       />
     );
-  } else if (isValueItemField(fieldSpec, value)) {
+  } else if (isComponentSingleField(fieldSpec, value)) {
     display = (
       <ValueTypeFieldDisplay fieldSpec={fieldSpec as ComponentFieldSpecification} value={value} />
     );
-  } else if (isValueItemListField(fieldSpec, value)) {
+  } else if (isComponentListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
         fieldSpec={fieldSpec as ComponentFieldSpecification}

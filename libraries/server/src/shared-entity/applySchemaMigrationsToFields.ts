@@ -1,7 +1,7 @@
 import {
   assertExhaustive,
+  isComponentItemField,
   isRichTextValueItemNode,
-  isValueItemItemField,
   ok,
   transformEntityFields,
   type AdminSchemaMigrationAction,
@@ -53,7 +53,7 @@ export function applySchemaMigrationsToFields(
         return ok(value);
       },
       transformFieldItem: (_schema, _path, fieldSpec, value) => {
-        if (isValueItemItemField(fieldSpec, value) && value) {
+        if (isComponentItemField(fieldSpec, value) && value) {
           return ok(migrateValueItem(value, valueTypeActions));
         }
         return ok(value);

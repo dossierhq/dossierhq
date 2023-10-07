@@ -1,5 +1,5 @@
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
-import { isValueItemField } from '@dossierhq/core';
+import { isComponentItemField } from '@dossierhq/core';
 import {
   PublishedDossierProvider,
   type FieldDisplayProps,
@@ -38,7 +38,7 @@ export function AppPublishedProvider({ children }: Props) {
 class PublishedAdapter implements PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
     const { fieldSpec, value } = props;
-    if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
+    if (isComponentItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
       return CloudinaryImageFieldDisplay({
         cloudName: CLOUDINARY_CLOUD_NAME,
         value,

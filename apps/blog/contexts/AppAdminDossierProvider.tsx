@@ -15,7 +15,7 @@ import {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   createConsoleLogger,
-  isValueItemField,
+  isComponentItemField,
 } from '@dossierhq/core';
 import type {
   AdminDossierContextAdapter,
@@ -39,7 +39,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&
-      isValueItemField(fieldSpec, value) &&
+      isComponentItemField(fieldSpec, value) &&
       value &&
       isAdminCloudinaryImage(value)
     ) {

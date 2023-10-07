@@ -32,7 +32,7 @@ type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType
 > & { type: TType };
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
-export function isBooleanField(
+export function isBooleanSingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
@@ -55,8 +55,32 @@ export function isBooleanItemField(
   return fieldSpec.type === FieldType.Boolean;
 }
 
+/** Check if `value` with `fieldSpec` is a single Component field */
+export function isComponentSingleField(
+  fieldSpec: FieldSpecification,
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Component] | null {
+  return fieldSpec.type === FieldType.Component && !fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is a list Component field */
+export function isComponentListField(
+  fieldSpec: FieldSpecification,
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Component][] | null {
+  return fieldSpec.type === FieldType.Component && fieldSpec.list;
+}
+
+/** Check if `value` with `fieldSpec` is either a single Component field or an item in a list field */
+export function isComponentItemField(
+  fieldSpec: FieldSpecification,
+  value: unknown,
+): value is FieldValueTypeMap[typeof FieldType.Component] | null {
+  return fieldSpec.type === FieldType.Component;
+}
+
 /** Check if `value` with `fieldSpec` is a single Entity field */
-export function isEntityField(
+export function isEntitySingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
@@ -80,7 +104,7 @@ export function isEntityItemField(
 }
 
 /** Check if `value` with `fieldSpec` is a single Location field */
-export function isLocationField(
+export function isLocationSingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
@@ -104,7 +128,7 @@ export function isLocationItemField(
 }
 
 /** Check if `value` with `fieldSpec` is a single number field */
-export function isNumberField(
+export function isNumberSingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Number] | null {
@@ -128,7 +152,7 @@ export function isNumberItemField(
 }
 
 /** Check if `value` with `fieldSpec` is a single String field */
-export function isStringField(
+export function isStringSingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
@@ -152,7 +176,7 @@ export function isStringItemField(
 }
 
 /** Check if `value` with `fieldSpec` is a single RichText field */
-export function isRichTextField(
+export function isRichTextSingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
@@ -173,30 +197,6 @@ export function isRichTextItemField(
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText;
-}
-
-/** Check if `value` with `fieldSpec` is a single ValueItem field */
-export function isValueItemField(
-  fieldSpec: FieldSpecification,
-  value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.Component] | null {
-  return fieldSpec.type === FieldType.Component && !fieldSpec.list;
-}
-
-/** Check if `value` with `fieldSpec` is a list ValueItem field */
-export function isValueItemListField(
-  fieldSpec: FieldSpecification,
-  value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.Component][] | null {
-  return fieldSpec.type === FieldType.Component && fieldSpec.list;
-}
-
-/** Check if `value` with `fieldSpec` is either a single ValueItem field or an item in a list field */
-export function isValueItemItemField(
-  fieldSpec: FieldSpecification,
-  value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.Component] | null {
-  return fieldSpec.type === FieldType.Component;
 }
 
 export function isRichTextTextNode(
@@ -285,7 +285,7 @@ export function isRichTextListItemNode(
   return node.type === RichTextNodeType.listitem;
 }
 
-export function isItemValueItem(
+export function isComponent(
   item:
     | Component
     | PublishedEntity
@@ -297,14 +297,14 @@ export function isItemValueItem(
   return 'type' in item;
 }
 
-export function isItemAdminEntity(
+export function isAdminEntity(
   item: Component | PublishedEntity | AdminEntity,
 ): item is AdminEntity {
-  return !isItemValueItem(item) && 'version' in item.info;
+  return !isComponent(item) && 'version' in item.info;
 }
 
-export function isItemEntity(
+export function isPublishedEntity(
   item: Component | PublishedEntity | AdminEntity,
 ): item is PublishedEntity {
-  return !isItemValueItem(item) && !isItemAdminEntity(item);
+  return !isComponent(item) && !isAdminEntity(item);
 }

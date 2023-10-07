@@ -4,7 +4,7 @@ import {
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   createConsoleLogger,
-  isValueItemField,
+  isComponentItemField,
 } from '@dossierhq/core';
 import type {
   FieldDisplayProps,
@@ -26,7 +26,7 @@ const logger = createConsoleLogger(console);
 class PublishedContextAdapter implements PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
     const { fieldSpec, value } = props;
-    if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
+    if (isComponentItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
       return CloudinaryImageFieldDisplay({ cloudName: CLOUDINARY_CLOUD_NAME, value });
     }
     return null;

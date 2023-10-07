@@ -11,7 +11,7 @@ import {
   transformEntityFields,
   transformValueItem,
 } from './ContentTransformer.js';
-import { isRichTextValueItemNode, isValueItemItemField } from './ContentTypeUtils.js';
+import { isRichTextValueItemNode, isComponentItemField } from './ContentTypeUtils.js';
 import { copyEntity } from './ContentUtils.js';
 
 const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
@@ -94,7 +94,7 @@ describe('transformEntity', () => {
     const transformed = transformEntityFields(ADMIN_SCHEMA, [], VALUE_ITEMS_ENTITY_1, {
       transformField: (_schema, _path, _fieldSpec, value) => ok(value),
       transformFieldItem: (_schema, _path, fieldSpec, value) => {
-        if (isValueItemItemField(fieldSpec, value)) return ok(null);
+        if (isComponentItemField(fieldSpec, value)) return ok(null);
         return ok(value);
       },
       transformRichTextNode: (_schema, _path, _fieldSpec, node) =>

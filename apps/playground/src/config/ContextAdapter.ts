@@ -5,7 +5,7 @@ import {
   isAdminCloudinaryImage,
   isPublishedCloudinaryImage,
 } from '@dossierhq/cloudinary';
-import { FieldType, isValueItemField } from '@dossierhq/core';
+import { FieldType, isComponentItemField } from '@dossierhq/core';
 import type {
   AdminDossierContextAdapter,
   FieldDisplayProps,
@@ -21,7 +21,7 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&
-      isValueItemField(fieldSpec, value) &&
+      isComponentItemField(fieldSpec, value) &&
       value &&
       isAdminCloudinaryImage(value)
     ) {
@@ -52,7 +52,7 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
 
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
     const { fieldSpec, value } = props;
-    if (isValueItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
+    if (isComponentItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
       return CloudinaryImageFieldDisplay({
         cloudName: CLOUDINARY_CLOUD_NAME,
         value,

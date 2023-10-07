@@ -7,7 +7,7 @@ import {
   isRichTextItemField,
   isRichTextValueItemNode,
   isStringItemField,
-  isValueItemItemField,
+  isComponentItemField,
 } from './ContentTypeUtils.js';
 import { checkFieldItemTraversable, checkFieldTraversable } from './ContentUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
@@ -313,7 +313,7 @@ function transformContentFieldValue<
   if (transformFieldItemResult.isError()) return transformFieldItemResult;
   const value = transformFieldItemResult.value;
 
-  if (isValueItemItemField(fieldSpec, value) && value) {
+  if (isComponentItemField(fieldSpec, value) && value) {
     return transformValueItem(schema, path, value, transformer, options);
   } else if (isRichTextItemField(fieldSpec, value) && value) {
     return transformRichText(path, value, (path, node) => {
