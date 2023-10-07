@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/postgres-core
 
-This log was last generated on Sat, 23 Sep 2023 22:00:31 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Oct 2023 15:35:19 GMT and should not be manually modified.
+
+## 0.4.7
+Sat, 07 Oct 2023 15:35:19 GMT
+
+### Updates
+
+- Support syncing principals between dossier instances
 
 ## 0.4.6
 Sat, 23 Sep 2023 22:00:31 GMT

@@ -2,6 +2,18 @@
   "name": "@dossierhq/integration-test",
   "entries": [
     {
+      "version": "0.4.7",
+      "tag": "@dossierhq/integration-test_v0.4.7",
+      "date": "Sat, 07 Oct 2023 15:35:19 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support syncing principals between dossier instances"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.6",
       "tag": "@dossierhq/integration-test_v0.4.6",
       "date": "Sat, 23 Sep 2023 22:00:31 GMT",
