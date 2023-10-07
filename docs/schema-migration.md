@@ -1,13 +1,13 @@
 This document describes what migrations are supported and what impact they have.
 
-| Type property     | Kind     | Change | Description                                                                                                                                                       |
-| ----------------- | -------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Creating new type | `*`      | Yes    |                                                                                                                                                                   |
-| Deleting type     | `*`      | Yes    | For entity types, deleting is only possible when there are no entities with that type. Deleting value types is irreversible and requires validation and indexing. |
-| `name`            | `*`      | Yes    |                                                                                                                                                                   |
-| `adminOnly`       | `*`      | Yes    | Changing if a type is admin only requires validation and indexing.                                                                                                |
-| `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.                                                                                                              |
-| `nameField`       | `Entity` | Yes    | Only applies to newly created entities                                                                                                                            |
+| Type property     | Kind     | Change | Description                                                                                                                                                           |
+| ----------------- | -------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Creating new type | `*`      | Yes    |                                                                                                                                                                       |
+| Deleting type     | `*`      | Yes    | For entity types, deleting is only possible when there are no entities with that type. Deleting component types is irreversible and requires validation and indexing. |
+| `name`            | `*`      | Yes    |                                                                                                                                                                       |
+| `adminOnly`       | `*`      | Yes    | Changing if a type is admin only requires validation and indexing.                                                                                                    |
+| `authKeyPattern`  | `Entity` | Yes    | Adding or changing that pattern requires validation.                                                                                                                  |
+| `nameField`       | `Entity` | Yes    | Only applies to newly created entities                                                                                                                                |
 
 | Field property    | Field type             | Change | Description                                                                                                           |
 | ----------------- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -22,7 +22,7 @@ This document describes what migrations are supported and what impact they have.
 | `entityTypes`     | `Entity`/`RichText`    | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
 | `integer`         | `Number`               | Yes    | Changing from `true` to `false` requires validation.                                                                  |
 | `linkEntityTypes` | `RichText`             | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
-| `valueTypes`      | `RichText`/`ValueItem` | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
+| `componentTypes`  | `RichText`/`Component` | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
 | `richTextNodes`   | `RichText`             | Yes    | If empty, adding items requires validation. Otherwise, removing items requires validation unless the list is cleared. |
 | `multiline`       | `String`               | Yes    | Changing from `true` to `false` requires validation.                                                                  |
 | `matchPattern`    | `String`               | Yes    | Adding or changing the pattern requires validation.                                                                   |
