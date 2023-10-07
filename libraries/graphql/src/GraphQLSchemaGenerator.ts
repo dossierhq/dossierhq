@@ -314,7 +314,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       },
       ...(publishedSchema.getComponentTypeCount() > 0
         ? {
-            valueTypes: {
+            componentTypes: {
               type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedValueType'))),
             },
           }
@@ -643,7 +643,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       },
       ...(adminSchema.getComponentTypeCount() > 0
         ? {
-            valueTypes: {
+            componentTypes: {
               type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminValueType'))),
             },
           }

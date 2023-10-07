@@ -1463,7 +1463,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Couldn’t find spec for value type ${typeName}`,
+    `entity.fields.any: Couldn’t find spec for component type ${typeName}`,
   );
 }
 
@@ -2045,14 +2045,17 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
     // Check that it's in the index
     const adminCountBeforeUpdateResult = await countSearchResultWithEntity(
       adminClient,
-      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppAdminComponent['type']] },
+      { entityTypes: ['ValueItems'], componentTypes: [oldTypeName as AppAdminComponent['type']] },
       entity.id,
     );
     assertResultValue(adminCountBeforeUpdateResult, 1);
 
     const publishedCountBeforeUpdateResult = await countSearchResultWithEntity(
       publishedClient,
-      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppPublishedComponent['type']] },
+      {
+        entityTypes: ['ValueItems'],
+        componentTypes: [oldTypeName as AppPublishedComponent['type']],
+      },
       entity.id,
     );
     assertResultValue(publishedCountBeforeUpdateResult, 1);
@@ -2076,14 +2079,14 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
   // Check that it's in the index
   const adminCountAfterUpdateResult = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppAdminComponent['type']] },
+    { entityTypes: ['ValueItems'], componentTypes: [newTypeName as AppAdminComponent['type']] },
     reference.id,
   );
   assertResultValue(adminCountAfterUpdateResult, 1);
 
   const publishedCountAfterUpdateResult = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppPublishedComponent['type']] },
+    { entityTypes: ['ValueItems'], componentTypes: [newTypeName as AppPublishedComponent['type']] },
     reference.id,
   );
   assertResultValue(publishedCountAfterUpdateResult, 1);

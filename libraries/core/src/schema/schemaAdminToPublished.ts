@@ -41,11 +41,14 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<AdminSchemaSpecif
     }
   }
 
-  for (const valueSpec of adminSchema.spec.componentTypes) {
-    if (valueSpec.adminOnly) {
+  for (const componentSpec of adminSchema.spec.componentTypes) {
+    if (componentSpec.adminOnly) {
       continue;
     }
-    spec.componentTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
+    spec.componentTypes.push({
+      name: componentSpec.name,
+      fields: toPublishedFields(componentSpec.fields),
+    });
   }
 
   const usedIndexNames = new Set();

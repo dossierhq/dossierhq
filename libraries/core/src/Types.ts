@@ -295,7 +295,7 @@ export interface AdminEntitySharedQuery<
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
-  valueTypes?: TComponentType[];
+  componentTypes?: TComponentType[];
   status?: AdminEntityStatus[];
   valid?: boolean;
   linksTo?: EntityReference;
@@ -327,7 +327,7 @@ export interface PublishedEntitySharedQuery<
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
-  valueTypes?: TComponentType[];
+  componentTypes?: TComponentType[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
   boundingBox?: BoundingBox;

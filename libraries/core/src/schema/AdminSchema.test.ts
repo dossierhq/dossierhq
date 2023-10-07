@@ -161,7 +161,7 @@ describe('AdminSchema.validate()', () => {
     );
   });
 
-  test('Error: Invalid value type name', () => {
+  test('Error: Invalid component type name', () => {
     expectErrorResult(
       new AdminSchema({
         schemaKind: 'admin',
@@ -194,7 +194,7 @@ describe('AdminSchema.validate()', () => {
     );
   });
 
-  test('Error: Duplicate entity and value type names', () => {
+  test('Error: Duplicate entity and component type names', () => {
     expectErrorResult(
       new AdminSchema({
         schemaKind: 'admin',
@@ -298,7 +298,7 @@ describe('AdminSchema.validate()', () => {
     );
   });
 
-  test('Error: Field named type on value type', () => {
+  test('Error: Field named type on component type', () => {
     expectErrorResult(
       new AdminSchema({
         schemaKind: 'admin',
@@ -327,7 +327,7 @@ describe('AdminSchema.validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.type: Invalid field name for a value type',
+      'Foo.type: Invalid field name for a component type',
     );
   });
 
@@ -502,7 +502,7 @@ describe('AdminSchema.validate()', () => {
     );
   });
 
-  test('Error: Value type with invalid value type', () => {
+  test('Error: Component with invalid component', () => {
     expectErrorResult(
       new AdminSchema({
         schemaKind: 'admin',
@@ -1174,7 +1174,7 @@ describe('AdminSchema.validate()', () => {
     );
   });
 
-  test('Error: referencing adminOnly value type from non-adminOnly', () => {
+  test('Error: referencing adminOnly component type from non-adminOnly', () => {
     expectErrorResult(
       new AdminSchema({
         schemaKind: 'admin',
@@ -1523,7 +1523,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
     });
   });
 
-  test('1 entity type and 1 value type', () => {
+  test('1 entity type and 1 component type', () => {
     expect(
       AdminSchema.createAndValidate({
         entityTypes: [
@@ -1648,7 +1648,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
     });
   });
 
-  test('1 adminOnly entity type and 1 adminOnly value type', () => {
+  test('1 adminOnly entity type and 1 adminOnly component type', () => {
     expect(
       AdminSchema.createAndValidate({
         entityTypes: [
@@ -1674,7 +1674,7 @@ describe('AdminSchema.toPublishedSchema()', () => {
     });
   });
 
-  test('1 entity type with adminOnly field and 1 value type with adminOnly field', () => {
+  test('1 entity type with adminOnly field and 1 component type with adminOnly field', () => {
     expect(
       AdminSchema.createAndValidate({
         entityTypes: [

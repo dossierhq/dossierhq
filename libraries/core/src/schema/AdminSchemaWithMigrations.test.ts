@@ -64,7 +64,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     expect(result.spec.entityTypes[0].nameField).toBe('title');
   });
 
-  test('use existing adminOnly value if not specified on value type update', () => {
+  test('use existing adminOnly value if not specified on component type update', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
@@ -1016,7 +1016,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
     expect((barTypeSpec.fields[0] as EntityFieldSpecification).entityTypes).toEqual(['Bar']); // Foo is removed since it referred to the old type
   });
 
-  test('value type', () => {
+  test('component type', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
@@ -1030,7 +1030,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
     expect(result.spec.componentTypes).toEqual([]);
   });
 
-  test('value type referenced by other fields', () => {
+  test('component type referenced by other fields', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] },
@@ -1164,7 +1164,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
     expect(fooTypeSpec.fields[0].type).toBe(FieldType.Boolean);
   });
 
-  test('value type', () => {
+  test('component type', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
@@ -1181,7 +1181,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
     expect(result.spec).toMatchSnapshot();
   });
 
-  test('value type referenced by other fields', () => {
+  test('component type referenced by other fields', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [
         {

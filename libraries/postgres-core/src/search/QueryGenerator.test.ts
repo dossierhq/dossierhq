@@ -467,7 +467,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { valueTypes: [] },
+        { componentTypes: [] },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -494,7 +494,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { valueTypes: ['QueryGeneratorValueOne'] },
+        { componentTypes: ['QueryGeneratorValueOne'] },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -524,7 +524,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
+        { componentTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1133,11 +1133,11 @@ describe('searchAdminEntitiesQuery()', () => {
     const result = searchAdminEntitiesQuery(
       databaseAdapter,
       adminSchema,
-      { valueTypes: ['Invalid'] },
+      { componentTypes: ['Invalid'] },
       resolvePaging(undefined),
       authKeysNone,
     );
-    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find value type in query: Invalid');
+    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find component type in query: Invalid');
   });
 });
 
@@ -1557,7 +1557,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         publishedSchema,
-        { valueTypes: [] },
+        { componentTypes: [] },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1583,7 +1583,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         publishedSchema,
-        { valueTypes: ['QueryGeneratorValueOne'] },
+        { componentTypes: ['QueryGeneratorValueOne'] },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1612,7 +1612,7 @@ describe('searchPublishedEntitiesQuery()', () => {
       searchPublishedEntitiesQuery(
         databaseAdapter,
         publishedSchema,
-        { valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
+        { componentTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'] },
         resolvePaging(undefined),
         authKeysNone,
       ),
@@ -1861,11 +1861,11 @@ describe('searchPublishedEntitiesQuery()', () => {
     const result = searchPublishedEntitiesQuery(
       databaseAdapter,
       publishedSchema,
-      { valueTypes: ['Invalid'] },
+      { componentTypes: ['Invalid'] },
       resolvePaging(undefined),
       authKeysNone,
     );
-    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find value type in query: Invalid');
+    expectErrorResult(result, ErrorType.BadRequest, 'Can’t find component type in query: Invalid');
   });
 });
 
@@ -1918,7 +1918,7 @@ describe('sampleAdminEntitiesQuery()', () => {
     expect(
       sampleAdminEntitiesQuery(
         adminSchema,
-        { valueTypes: ['QueryGeneratorValueOne'] },
+        { componentTypes: ['QueryGeneratorValueOne'] },
         5,
         10,
         authKeysNone,
@@ -1989,7 +1989,7 @@ describe('samplePublishedEntitiesQuery()', () => {
     expect(
       samplePublishedEntitiesQuery(
         publishedSchema,
-        { valueTypes: ['QueryGeneratorValueOne'] },
+        { componentTypes: ['QueryGeneratorValueOne'] },
         5,
         10,
         authKeysNone,
@@ -2080,7 +2080,7 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('no value types => all', () => {
-    expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, { valueTypes: [] }))
+    expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, { componentTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -2096,7 +2096,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('one value type', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysNone, {
-        valueTypes: ['QueryGeneratorValueOne'],
+        componentTypes: ['QueryGeneratorValueOne'],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -2116,7 +2116,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('two value types', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysNone, {
-        valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
+        componentTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -2403,7 +2403,7 @@ describe('totalPublishedEntitiesQuery()', () => {
   });
 
   test('no value type => all', () => {
-    expect(totalPublishedEntitiesQuery(publishedSchema, authKeysNone, { valueTypes: [] }))
+    expect(totalPublishedEntitiesQuery(publishedSchema, authKeysNone, { componentTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
@@ -2419,7 +2419,7 @@ describe('totalPublishedEntitiesQuery()', () => {
   test('one value type', () => {
     expect(
       totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
-        valueTypes: ['QueryGeneratorValueOne'],
+        componentTypes: ['QueryGeneratorValueOne'],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -2439,7 +2439,7 @@ describe('totalPublishedEntitiesQuery()', () => {
   test('two value types', () => {
     expect(
       totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
-        valueTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
+        componentTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {

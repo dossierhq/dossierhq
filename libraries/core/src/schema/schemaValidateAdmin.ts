@@ -109,7 +109,7 @@ export function schemaValidateAdmin(
       }
       if (isComponentType && fieldSpec.name === 'type') {
         return notOk.BadRequest(
-          `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`,
+          `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a component type`,
         );
       }
       if (usedFieldNames.has(fieldSpec.name)) {

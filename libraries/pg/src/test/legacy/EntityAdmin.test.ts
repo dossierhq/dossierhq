@@ -1369,7 +1369,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Couldn’t find spec for value type Invalid',
+      'entity.fields.twoStrings: Couldn’t find spec for component type Invalid',
     );
   });
 

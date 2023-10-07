@@ -238,8 +238,8 @@ class SetQueryAction implements SearchEntityStateAction {
     if (query.entityTypes?.length === 0) {
       delete query.entityTypes;
     }
-    if (query.valueTypes?.length === 0) {
-      delete query.valueTypes;
+    if (query.componentTypes?.length === 0) {
+      delete query.componentTypes;
     }
     if ('status' in query && query.status?.length === 0) {
       delete query.status;

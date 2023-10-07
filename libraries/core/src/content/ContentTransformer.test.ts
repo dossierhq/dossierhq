@@ -270,7 +270,7 @@ describe('transformComponent', () => {
     expectErrorResult(
       transformed,
       ErrorType.BadRequest,
-      'component: Couldn’t find spec for value type Invalid',
+      'component: Couldn’t find spec for component type Invalid',
     );
   });
 

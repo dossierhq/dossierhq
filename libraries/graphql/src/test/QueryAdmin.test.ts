@@ -1488,12 +1488,12 @@ describe('searchAdminEntities()', () => {
     );
   });
 
-  test('Filter based on valueTypes and linksTo', async () => {
+  test('Filter based on componentTypes and linksTo', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
     const source = `query QueryWithValueTypesAndLinksTo($id: ID!) {
-      adminEntities(query: { linksTo: {id: $id }, valueTypes: [QueryAdminStringedBar] }) {
+      adminEntities(query: { linksTo: {id: $id }, componentTypes: [QueryAdminStringedBar] }) {
         edges {
           node {
             id

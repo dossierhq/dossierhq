@@ -200,7 +200,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -212,7 +212,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -535,7 +535,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -545,7 +545,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -662,7 +662,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -672,7 +672,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -871,7 +871,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -883,7 +883,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1320,7 +1320,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1332,7 +1332,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1594,7 +1594,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1604,7 +1604,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1715,7 +1715,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1725,7 +1725,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1916,7 +1916,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1928,7 +1928,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6418,7 +6418,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6430,7 +6430,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6697,7 +6697,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6707,7 +6707,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6826,7 +6826,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6836,7 +6836,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -7035,7 +7035,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7047,7 +7047,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9436,7 +9436,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9448,7 +9448,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9803,7 +9803,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9813,7 +9813,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9966,7 +9966,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9976,7 +9976,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  valueTypes: [PublishedValueType!]
+  componentTypes: [PublishedValueType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -10204,7 +10204,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -10216,7 +10216,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  valueTypes: [AdminValueType!]
+  componentTypes: [AdminValueType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput

@@ -112,7 +112,7 @@ export function transformComponent<
   const typeSpec = schema.getComponentTypeSpecification(component.type);
   if (!typeSpec) {
     return notOk.BadRequest(
-      `${contentValuePathToString(path)}: Couldn’t find spec for value type ${component.type}`,
+      `${contentValuePathToString(path)}: Couldn’t find spec for component type ${component.type}`,
     );
   }
 

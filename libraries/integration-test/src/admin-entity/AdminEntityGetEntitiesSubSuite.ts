@@ -643,7 +643,7 @@ async function getEntities_valueTypes({ server }: AdminEntityTestContext) {
 
   const matchesBeforeValueItem = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
     entity.id,
   );
   assertResultValue(matchesBeforeValueItem, 0);
@@ -657,7 +657,7 @@ async function getEntities_valueTypes({ server }: AdminEntityTestContext) {
 
   const matchesAfterValueItem = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
     entity.id,
   );
   assertResultValue(matchesAfterValueItem, 1);

@@ -69,7 +69,7 @@ function useSearchStateToTypeSelectorAdapter(
     ...(searchEntityState.query.entityTypes?.map(
       (it): TypeItem => ({ id: it, name: it, kind: 'entity' }),
     ) ?? []),
-    ...(searchEntityState.query.valueTypes?.map(
+    ...(searchEntityState.query.componentTypes?.map(
       (it): TypeItem => ({ id: it, name: it, kind: 'value' }),
     ) ?? []),
   ]);
@@ -80,10 +80,10 @@ function useSearchStateToTypeSelectorAdapter(
         items,
         selectedIds: [
           ...(searchEntityState.query.entityTypes ?? []),
-          ...(searchEntityState.query.valueTypes ?? []),
+          ...(searchEntityState.query.componentTypes ?? []),
         ],
       }),
-    [items, searchEntityState.query.entityTypes, searchEntityState.query.valueTypes],
+    [items, searchEntityState.query.entityTypes, searchEntityState.query.componentTypes],
   );
 
   const dispatchTypeFilterState = useCallback(
@@ -112,11 +112,11 @@ function useSearchStateToTypeSelectorAdapter(
 
       if (
         !isEqual(selectedEntityTypeIds, searchEntityState.query.entityTypes) ||
-        !isEqual(selectedValueTypeIds, searchEntityState.query.valueTypes)
+        !isEqual(selectedValueTypeIds, searchEntityState.query.componentTypes)
       ) {
         dispatchSearchEntityState(
           new SearchEntityStateActions.SetQuery(
-            { entityTypes: selectedEntityTypeIds, valueTypes: selectedValueTypeIds },
+            { entityTypes: selectedEntityTypeIds, componentTypes: selectedValueTypeIds },
             { partial: true, resetPagingIfModifying: true },
           ),
         );
@@ -126,7 +126,7 @@ function useSearchStateToTypeSelectorAdapter(
       dispatchSearchEntityState,
       typeFilterState,
       searchEntityState.query.entityTypes,
-      searchEntityState.query.valueTypes,
+      searchEntityState.query.componentTypes,
       searchEntityState.restrictEntityTypes,
     ],
   );
@@ -135,7 +135,7 @@ function useSearchStateToTypeSelectorAdapter(
   //   dispatchSearchEntityState,
   //   typeFilterState,
   //   entityTypes: searchEntityState.query.entityTypes,
-  //   valueTypes: searchEntityState.query.valueTypes,
+  //   componentTypes: searchEntityState.query.componentTypes,
   //   restrictEntityTypes: searchEntityState.restrictEntityTypes,
   // });
 

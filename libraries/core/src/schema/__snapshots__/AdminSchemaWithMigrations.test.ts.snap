@@ -319,6 +319,24 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on component type update 1`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": true,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 1,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on field update 1`] = `
 {
   "componentTypes": [],
@@ -339,24 +357,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly 
       "nameField": null,
     },
   ],
-  "indexes": [],
-  "migrations": [],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 1,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on value type update 1`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": true,
-      "fields": [],
-      "name": "Foo",
-    },
-  ],
-  "entityTypes": [],
   "indexes": [],
   "migrations": [],
   "patterns": [],
@@ -948,6 +948,112 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component type 1`] = `
+{
+  "componentTypes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "componentType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component type referenced by other fields 1`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "Component",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "Component",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Baz",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "componentType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 1`] = `
 {
   "componentTypes": [],
@@ -1118,112 +1224,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type,
         {
           "action": "deleteType",
           "entityType": "Foo",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 2,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > value type 1`] = `
-{
-  "componentTypes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteType",
-          "componentType": "Foo",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 2,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > value type referenced by other fields 1`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-          ],
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "type": "Component",
-        },
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-          ],
-          "entityTypes": [],
-          "linkEntityTypes": [],
-          "list": false,
-          "name": "richText",
-          "required": false,
-          "richTextNodes": [],
-          "type": "RichText",
-        },
-      ],
-      "name": "Bar",
-    },
-  ],
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-          ],
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "type": "Component",
-        },
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-          ],
-          "entityTypes": [],
-          "linkEntityTypes": [],
-          "list": false,
-          "name": "richText",
-          "required": false,
-          "richTextNodes": [],
-          "type": "RichText",
-        },
-      ],
-      "name": "Baz",
-      "nameField": null,
-    },
-  ],
-  "indexes": [],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteType",
-          "componentType": "Foo",
         },
       ],
       "version": 2,
@@ -1718,6 +1718,152 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component type 1`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "field",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo2",
+    },
+  ],
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "componentType": "Foo",
+          "newName": "Foo2",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 2,
+}
+`;
+
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component type referenced by other fields 1`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "Component",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Bar",
+    },
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo2",
+          ],
+          "list": false,
+          "name": "field",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Foo2",
+    },
+  ],
+  "entityTypes": [
+    {
+      "adminOnly": false,
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "list": false,
+          "name": "valueItem",
+          "required": false,
+          "type": "Component",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+            "Foo2",
+          ],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Baz",
+      "nameField": null,
+    },
+  ],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "componentType": "Foo",
+          "newName": "Foo2",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 1`] = `
 {
   "componentTypes": [],
@@ -1955,152 +2101,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type,
         {
           "action": "renameType",
           "entityType": "Foo",
-          "newName": "Foo2",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 2,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > value type 1`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "list": false,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "field",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "name": "Foo2",
-    },
-  ],
-  "entityTypes": [],
-  "indexes": [],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameType",
-          "componentType": "Foo",
-          "newName": "Foo2",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 2,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > value type referenced by other fields 1`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-            "Foo2",
-          ],
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "type": "Component",
-        },
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-            "Foo2",
-          ],
-          "entityTypes": [],
-          "linkEntityTypes": [],
-          "list": false,
-          "name": "richText",
-          "required": false,
-          "richTextNodes": [],
-          "type": "RichText",
-        },
-      ],
-      "name": "Bar",
-    },
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Foo2",
-          ],
-          "list": false,
-          "name": "field",
-          "required": false,
-          "type": "Component",
-        },
-      ],
-      "name": "Foo2",
-    },
-  ],
-  "entityTypes": [
-    {
-      "adminOnly": false,
-      "authKeyPattern": null,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-            "Foo2",
-          ],
-          "list": false,
-          "name": "valueItem",
-          "required": false,
-          "type": "Component",
-        },
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Bar",
-            "Foo2",
-          ],
-          "entityTypes": [],
-          "linkEntityTypes": [],
-          "list": false,
-          "name": "richText",
-          "required": false,
-          "richTextNodes": [],
-          "type": "RichText",
-        },
-      ],
-      "name": "Baz",
-      "nameField": null,
-    },
-  ],
-  "indexes": [],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameType",
-          "componentType": "Foo",
           "newName": "Foo2",
         },
       ],

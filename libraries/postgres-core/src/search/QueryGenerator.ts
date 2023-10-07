@@ -327,7 +327,7 @@ function totalCountQuery(
     if (published) sql`, entity_published_references er_from, entities e_from`;
     else sql`, entity_latest_references er_from, entities e_from`;
   }
-  if (query?.valueTypes && query.valueTypes.length > 0) {
+  if (query?.componentTypes && query.componentTypes.length > 0) {
     if (published) {
       sql`, entity_published_value_types evt`;
     } else {
@@ -370,7 +370,7 @@ function addEntityQuerySelectColumn(
     if (published) sql`, entities e_from, entity_published_references er_from`;
     else sql`, entities e_from, entity_latest_references er_from`;
   }
-  if (query?.valueTypes && query.valueTypes.length > 0) {
+  if (query?.componentTypes && query.componentTypes.length > 0) {
     if (published) sql`, entity_published_value_types evt`;
     else sql`, entity_latest_value_types evt`;
   }
@@ -416,7 +416,7 @@ function addQueryFilters(
   }
 
   // Filter: valueTypes
-  const valueTypesResult = getFilterValueTypes(schema, query);
+  const valueTypesResult = getFilterComponentTypes(schema, query);
   if (valueTypesResult.isError()) return valueTypesResult;
 
   if (valueTypesResult.value.length > 0) {
@@ -481,17 +481,17 @@ function getFilterEntityTypes(
   return ok(query.entityTypes);
 }
 
-function getFilterValueTypes(
+function getFilterComponentTypes(
   schema: PublishedSchema | AdminSchema,
   query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
-  if (!query?.valueTypes || query.valueTypes.length === 0) {
+  if (!query?.componentTypes || query.componentTypes.length === 0) {
     return ok([]);
   }
-  for (const valueType of query.valueTypes) {
-    if (schema.getComponentTypeSpecification(valueType) === null) {
-      return notOk.BadRequest(`Can’t find value type in query: ${valueType}`);
+  for (const componentType of query.componentTypes) {
+    if (schema.getComponentTypeSpecification(componentType) === null) {
+      return notOk.BadRequest(`Can’t find component type in query: ${componentType}`);
     }
   }
-  return ok(query.valueTypes);
+  return ok(query.componentTypes);
 }

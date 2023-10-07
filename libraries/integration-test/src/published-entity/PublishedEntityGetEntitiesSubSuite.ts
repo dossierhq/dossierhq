@@ -414,7 +414,7 @@ async function getEntities_valueTypes({ server }: PublishedEntityTestContext) {
 
   const matchesBeforeValueItem = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
     entity.id,
   );
   assertResultValue(matchesBeforeValueItem, 0);
@@ -431,7 +431,7 @@ async function getEntities_valueTypes({ server }: PublishedEntityTestContext) {
 
   const matchesAfterValueItem = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], valueTypes: ['ReferencesValue'] },
+    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
     entity.id,
   );
   assertResultValue(matchesAfterValueItem, 1);
