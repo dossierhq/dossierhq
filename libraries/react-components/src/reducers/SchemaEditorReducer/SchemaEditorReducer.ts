@@ -24,7 +24,7 @@ export type SchemaSelector =
   | SchemaPatternSelector;
 
 export interface SchemaTypeSelector {
-  kind: 'entity' | 'value';
+  kind: 'entity' | 'component';
   typeName: string;
 }
 
@@ -62,7 +62,7 @@ export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
 }
 
 export interface SchemaValueTypeDraft extends SchemaTypeDraft {
-  kind: 'value';
+  kind: 'component';
 }
 
 export interface SchemaFieldDraft {
@@ -328,7 +328,7 @@ function withResolvedPatternStatus(
 // ACTION HELPERS
 
 abstract class TypeAction implements SchemaEditorStateAction {
-  kind: 'entity' | 'value';
+  kind: 'entity' | 'component';
   typeName: string;
 
   constructor({ kind, typeName }: SchemaTypeSelector) {
@@ -513,10 +513,10 @@ function replaceFieldWithIndex(
 // ACTIONS
 
 class AddTypeAction implements SchemaEditorStateAction {
-  kind: 'entity' | 'value';
+  kind: 'entity' | 'component';
   name: string;
 
-  constructor(kind: 'entity' | 'value', name: string) {
+  constructor(kind: 'entity' | 'component', name: string) {
     this.kind = kind;
     this.name = name;
   }
@@ -554,7 +554,7 @@ class AddTypeAction implements SchemaEditorStateAction {
     } else {
       newState.valueTypes = [
         ...newState.valueTypes,
-        { ...typeDraft, kind: 'value', existingFieldOrder: [] },
+        { ...typeDraft, kind: 'component', existingFieldOrder: [] },
       ];
       newState.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -961,7 +961,7 @@ class ChangeTypeNameFieldAction extends TypeAction {
   reduceType(
     typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft>,
   ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaValueTypeDraft> {
-    if (typeDraft.kind === 'value' || typeDraft.nameField === this.nameField) {
+    if (typeDraft.kind === 'component' || typeDraft.nameField === this.nameField) {
       return typeDraft;
     }
     return withResolvedTypeStatus({ ...typeDraft, nameField: this.nameField });
@@ -1482,7 +1482,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     }));
 
     const valueTypes = this.schema.spec.componentTypes.map((valueTypeSpec) =>
-      this.convertType('value', valueTypeSpec),
+      this.convertType('component', valueTypeSpec),
     );
 
     const indexes = this.schema.spec.indexes.map<SchemaIndexDraft>((indexSpec) => ({
@@ -1511,7 +1511,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
     };
   }
 
-  convertType<TKind extends 'entity' | 'value'>(
+  convertType<TKind extends 'entity' | 'component'>(
     kind: TKind,
     typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
   ): SchemaTypeDraft & { kind: TKind } {

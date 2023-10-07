@@ -297,7 +297,7 @@ function TypeEditorRows({
               <Text textStyle="headline4">
                 {typeDraft.name}{' '}
                 <Text as="span" textStyle="headline6">
-                  {typeDraft.kind === 'entity' ? 'Entity type' : 'Value type'}
+                  {typeDraft.kind === 'entity' ? 'Entity type' : 'Component type'}
                 </Text>
               </Text>
             </Level.Item>
@@ -515,7 +515,7 @@ function useSelectorFocused(
         const typeName = selectorElement?.dataset.typename;
         const patternName = selectorElement?.dataset['pattern-name'];
 
-        if ((kind === 'entity' || kind === 'value') && typeName) {
+        if ((kind === 'entity' || kind === 'component') && typeName) {
           dispatchSchemaEditorState(
             new SchemaEditorActions.SetActiveSelector({ kind, typeName }, true, false),
           );

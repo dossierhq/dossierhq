@@ -317,7 +317,7 @@ export function SchemaFieldEditor({
         {showValueTypes ? (
           <Field horizontal>
             <Field.LabelColumn>
-              <Field.Label>Value types</Field.Label>
+              <Field.Label>Component types</Field.Label>
             </Field.LabelColumn>
             <Field.BodyColumn>
               <Field>

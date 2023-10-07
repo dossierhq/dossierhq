@@ -66,7 +66,7 @@ function SchemaDebugFooter() {
         </strong>
       </p>
       <p>Entity types in schema: {schema?.spec.entityTypes.map(typeToString).join(', ')}</p>
-      <p>Value types in schema: {schema?.spec.valueTypes.map(typeToString).join(', ')}</p>
+      <p>Component types in schema: {schema?.spec.componentTypes.map(typeToString).join(', ')}</p>
     </>
   );
 }

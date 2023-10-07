@@ -42,14 +42,14 @@ export function SchemaMenu({
       ) : null}
       {valueTypes.length > 0 ? (
         <>
-          <Menu.Label>Value types</Menu.Label>
+          <Menu.Label>Component types</Menu.Label>
           <Menu.List>
             {valueTypes.map((typeDraft) => (
               <DraftItem
                 key={typeDraft.name}
                 {...{
                   activeSelector,
-                  selector: { kind: 'value', typeName: typeDraft.name },
+                  selector: { kind: 'component', typeName: typeDraft.name },
                   dispatchEditorState,
                 }}
               >
@@ -143,7 +143,7 @@ function isDraftActive(selector: SchemaSelector, activeSelector: null | SchemaSe
   }
   if (
     (selector.kind === 'entity' && activeSelector.kind === 'entity') ||
-    (selector.kind === 'value' && activeSelector.kind === 'value')
+    (selector.kind === 'component' && activeSelector.kind === 'component')
   ) {
     return selector.typeName === activeSelector.typeName;
   }

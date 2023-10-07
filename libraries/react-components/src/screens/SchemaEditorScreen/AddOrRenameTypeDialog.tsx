@@ -48,11 +48,11 @@ export function AddOrRenameTypeDialog({
   onClose,
 }: Props) {
   const [name, setName] = useState('');
-  const [kind, setKind] = useState<'entity' | 'value'>('entity');
+  const [kind, setKind] = useState<'entity' | 'component'>('entity');
   const [status, setStatus] = useState<DialogStatus>(DialogStatus.empty);
 
   const handleKindChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setKind(event.target.value as 'entity' | 'value');
+    setKind(event.target.value as 'entity' | 'component');
   }, []);
 
   const handleNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +142,7 @@ function DialogContent({
   selector: SchemaTypeSelector | 'add';
   status: DialogStatus;
   name: string;
-  kind: 'entity' | 'value';
+  kind: 'entity' | 'component';
   onKindChange: ChangeEventHandler<HTMLInputElement>;
   onNameChange: ChangeEventHandler<HTMLInputElement>;
   onEnterKeyPress: () => void;
@@ -187,8 +187,13 @@ function DialogContent({
               <Radio name="kind" value="entity" checked={kind === 'entity'} onChange={onKindChange}>
                 Entity type
               </Radio>
-              <Radio name="kind" value="value" checked={kind === 'value'} onChange={onKindChange}>
-                Value type
+              <Radio
+                name="kind"
+                value="value"
+                checked={kind === 'component'}
+                onChange={onKindChange}
+              >
+                Component type
               </Radio>
             </Field.Control>
           </Field>

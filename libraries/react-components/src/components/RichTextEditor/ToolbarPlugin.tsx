@@ -483,7 +483,7 @@ function AddValueItemButton({
   return (
     <Dialog2.Trigger defaultOpen={true} onOpenChange={onClose}>
       <AdminTypePickerDialog
-        title="Select value type"
+        title="Select component type"
         showValueTypes
         valueTypes={fieldSpec.componentTypes}
         onItemClick={(type) => {

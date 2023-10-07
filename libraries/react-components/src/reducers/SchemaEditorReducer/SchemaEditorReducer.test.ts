@@ -80,7 +80,7 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Foo'),
+      new SchemaEditorActions.AddType('component', 'Foo'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -112,7 +112,7 @@ describe('AddTypeAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Bar'),
+      new SchemaEditorActions.AddType('component', 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -141,8 +141,8 @@ describe('AddTypeAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'ZooKeeper'),
-      new SchemaEditorActions.AddType('value', 'Anaconda'),
+      new SchemaEditorActions.AddType('component', 'ZooKeeper'),
+      new SchemaEditorActions.AddType('component', 'Anaconda'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -175,7 +175,7 @@ describe('AddFieldAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'component', typeName: 'Foo' }, 'bar'),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -206,7 +206,7 @@ describe('AddFieldAction', () => {
           componentTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'component', typeName: 'Foo' }, 'bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -506,14 +506,14 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'foo'),
+      new SchemaEditorActions.AddField({ kind: 'component', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
-        { kind: 'value', typeName: 'Foo', fieldName: 'foo' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'foo' },
         FieldType.Component,
         false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
-        { kind: 'value', typeName: 'Foo', fieldName: 'foo' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'foo' },
         ['Foo'],
       ),
     );
@@ -533,7 +533,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
         }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
-        { kind: 'value', typeName: 'Foo', fieldName: 'valueItem' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'valueItem' },
         ['Foo'],
       ),
     );
@@ -912,9 +912,9 @@ describe('ChangeFieldTypeAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'component', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
-        { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Location,
         true,
       ),
@@ -932,9 +932,9 @@ describe('ChangeFieldTypeAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'bar'),
+      new SchemaEditorActions.AddField({ kind: 'component', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
-        { kind: 'value', typeName: 'Foo', fieldName: 'bar' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'bar' },
         FieldType.Number,
         false,
       ),
@@ -1135,7 +1135,7 @@ describe('ChangeTypeAdminOnlyAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'value', typeName: 'Foo' }, true),
+      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'component', typeName: 'Foo' }, true),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.valueTypes[0].status).toEqual('changed');
@@ -1218,7 +1218,11 @@ describe('DeleteFieldAction', () => {
           componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.DeleteField({ kind: 'value', typeName: 'Foo', fieldName: 'field' }),
+      new SchemaEditorActions.DeleteField({
+        kind: 'component',
+        typeName: 'Foo',
+        fieldName: 'field',
+      }),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
@@ -1422,8 +1426,8 @@ describe('DeleteTypeAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Foo'),
-      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' }),
+      new SchemaEditorActions.AddType('component', 'Foo'),
+      new SchemaEditorActions.DeleteType({ kind: 'component', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1440,7 +1444,7 @@ describe('DeleteTypeAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' }),
+      new SchemaEditorActions.DeleteType({ kind: 'component', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1464,7 +1468,7 @@ describe('DeleteTypeAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Foo'),
+      new SchemaEditorActions.AddType('component', 'Foo'),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
         { kind: 'entity', typeName: 'Existing', fieldName: 'richText' },
         ['Foo'],
@@ -1473,7 +1477,7 @@ describe('DeleteTypeAction', () => {
         { kind: 'entity', typeName: 'Existing', fieldName: 'valueItem' },
         ['Foo'],
       ),
-      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'Foo' }),
+      new SchemaEditorActions.DeleteType({ kind: 'component', typeName: 'Foo' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1502,7 +1506,7 @@ describe('DeleteTypeAction', () => {
           componentTypes: [{ name: 'ToBeDeleted', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.DeleteType({ kind: 'value', typeName: 'ToBeDeleted' }),
+      new SchemaEditorActions.DeleteType({ kind: 'component', typeName: 'ToBeDeleted' }),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1635,7 +1639,7 @@ describe('RenameFieldAction', () => {
         }).valueOrThrow(),
       ),
       new SchemaEditorActions.RenameField(
-        { kind: 'value', typeName: 'Foo', fieldName: 'oldName' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'oldName' },
         'newName',
       ),
     );
@@ -1837,18 +1841,18 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({}).valueOrThrow(),
       ),
-      new SchemaEditorActions.AddType('value', 'Foo'),
-      new SchemaEditorActions.AddField({ kind: 'value', typeName: 'Foo' }, 'self'),
+      new SchemaEditorActions.AddType('component', 'Foo'),
+      new SchemaEditorActions.AddField({ kind: 'component', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
-        { kind: 'value', typeName: 'Foo', fieldName: 'self' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'self' },
         FieldType.Component,
         false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedValueTypes(
-        { kind: 'value', typeName: 'Foo', fieldName: 'self' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'self' },
         ['Foo'],
       ),
-      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar'),
+      new SchemaEditorActions.RenameType({ kind: 'component', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1866,7 +1870,7 @@ describe('RenameTypeAction', () => {
           componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar'),
+      new SchemaEditorActions.RenameType({ kind: 'component', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
@@ -1894,7 +1898,7 @@ describe('RenameTypeAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.RenameType({ kind: 'value', typeName: 'Foo' }, 'Bar'),
+      new SchemaEditorActions.RenameType({ kind: 'component', typeName: 'Foo' }, 'Bar'),
     );
 
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
