@@ -35,14 +35,14 @@ export const EntityTypesFiltered: Story = {
   },
 };
 
-export const ValueTypes: Story = {
-  args: { children: 'Select component type', showValueTypes: true },
+export const ComponentTypes: Story = {
+  args: { children: 'Select component type', showComponentTypes: true },
 };
 
-export const ValueTypesFiltered: Story = {
+export const ComponentTypesFiltered: Story = {
   args: {
     children: 'Select component type',
-    showValueTypes: true,
-    valueTypes: ['NestedValueItem'],
+    showComponentTypes: true,
+    componentTypes: ['NestedValueItem'],
   },
 };

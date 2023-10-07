@@ -46,14 +46,14 @@ function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>
 
 interface Props {
   fieldSelector: SchemaFieldSelector;
-  valueTypes: string[];
+  componentTypes: string[];
   schemaEditorState: SchemaEditorState;
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
 }
 
-export function FieldValueTypeSelector({
+export function FieldComponentTypeSelector({
   fieldSelector,
-  valueTypes,
+  componentTypes,
   schemaEditorState,
   dispatchSchemaEditorState,
 }: Props) {
@@ -61,7 +61,7 @@ export function FieldValueTypeSelector({
   const { state, dispatch } = useSynchronizeMultipleSelectorState(
     fieldSelector,
     items,
-    valueTypes,
+    componentTypes,
     dispatchSchemaEditorState,
   );
   return (

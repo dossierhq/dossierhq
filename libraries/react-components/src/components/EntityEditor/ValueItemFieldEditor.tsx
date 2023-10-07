@@ -148,8 +148,8 @@ function AddValueItemButton({
   return (
     <AdminTypePicker
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-      showValueTypes
-      valueTypes={fieldSpec.componentTypes}
+      showComponentTypes
+      componentTypes={fieldSpec.componentTypes}
       onTypeSelected={onValueTypeSelected}
     >
       Add value item

@@ -10,8 +10,8 @@ import type {
   SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { FieldComponentTypeSelector } from './FieldComponentTypeSelector.js';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
-import { FieldValueTypeSelector } from './FieldValueTypeSelector.js';
 import { IndexSelector } from './IndexSelector.js';
 import { NumberVariantSelector } from './NumberVariantSelector.js';
 import { PatternSelector } from './PatternSelector.js';
@@ -322,9 +322,9 @@ export function SchemaFieldEditor({
             <Field.BodyColumn>
               <Field>
                 <Field.Control>
-                  <FieldValueTypeSelector
+                  <FieldComponentTypeSelector
                     fieldSelector={fieldSelector}
-                    valueTypes={fieldDraft.componentTypes ?? []}
+                    componentTypes={fieldDraft.componentTypes ?? []}
                     schemaEditorState={schemaEditorState}
                     dispatchSchemaEditorState={dispatchSchemaEditorState}
                   />

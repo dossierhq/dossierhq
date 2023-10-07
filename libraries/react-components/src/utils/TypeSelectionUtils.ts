@@ -7,8 +7,8 @@ import type {
 export interface TypeSelectionFilter {
   showEntityTypes?: boolean;
   entityTypes?: string[];
-  showValueTypes?: boolean;
-  valueTypes?: string[];
+  showComponentTypes?: boolean;
+  componentTypes?: string[];
 }
 
 type Item = AdminEntityTypeSpecification | AdminComponentTypeSpecification;
@@ -18,8 +18,8 @@ export function filterTypeSpecifications(schema: AdminSchema, filter: TypeSelect
   if (filter.showEntityTypes) {
     items.push(...filterItems(schema.spec.entityTypes, filter.entityTypes));
   }
-  if (filter.showValueTypes) {
-    items.push(...filterItems(schema.spec.componentTypes, filter.valueTypes));
+  if (filter.showComponentTypes) {
+    items.push(...filterItems(schema.spec.componentTypes, filter.componentTypes));
   }
   return items;
 }

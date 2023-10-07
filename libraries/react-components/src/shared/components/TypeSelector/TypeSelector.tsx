@@ -14,7 +14,7 @@ import { useEffect, type Dispatch } from 'react';
 
 export interface TypeItem extends MultipleSelectorItem {
   name: string;
-  kind: 'entity' | 'value';
+  kind: 'entity' | 'component';
 }
 
 export type TypeSelectorReducer = MultipleSelectorReducer<TypeItem>;
@@ -45,7 +45,7 @@ export function TypeSelector({ schema, ...props }: Props): JSX.Element {
           (it): TypeItem => ({ id: it.name, name: it.name, kind: 'entity' }),
         ),
         ...schema.spec.componentTypes.map(
-          (it): TypeItem => ({ id: it.name, name: it.name, kind: 'value' }),
+          (it): TypeItem => ({ id: it.name, name: it.name, kind: 'component' }),
         ),
       ];
       dispatch(new MultipleSelectorStateActions.UpdateItems(items));

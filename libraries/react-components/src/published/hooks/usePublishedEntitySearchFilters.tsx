@@ -70,7 +70,7 @@ function useSearchStateToTypeSelectorAdapter(
       (it): TypeItem => ({ id: it, name: it, kind: 'entity' }),
     ) ?? []),
     ...(searchEntityState.query.componentTypes?.map(
-      (it): TypeItem => ({ id: it, name: it, kind: 'value' }),
+      (it): TypeItem => ({ id: it, name: it, kind: 'component' }),
     ) ?? []),
   ]);
 
@@ -93,7 +93,8 @@ function useSearchStateToTypeSelectorAdapter(
         let newItems = newState.items;
         if (searchEntityState.restrictEntityTypes.length > 0) {
           newItems = newItems.filter(
-            (it) => it.kind === 'value' || searchEntityState.restrictEntityTypes.includes(it.id),
+            (it) =>
+              it.kind === 'component' || searchEntityState.restrictEntityTypes.includes(it.id),
           );
         }
         setItems((oldItems) => (isEqual(newItems, oldItems) ? oldItems : newItems));
@@ -105,7 +106,7 @@ function useSearchStateToTypeSelectorAdapter(
         const item = newState.items.find((it) => it.id === id);
         if (item?.kind === 'entity') {
           selectedEntityTypeIds.push(id);
-        } else if (item?.kind === 'value') {
+        } else if (item?.kind === 'component') {
           selectedValueTypeIds.push(id);
         }
       }

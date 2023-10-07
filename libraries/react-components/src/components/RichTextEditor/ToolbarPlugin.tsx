@@ -484,8 +484,8 @@ function AddValueItemButton({
     <Dialog2.Trigger defaultOpen={true} onOpenChange={onClose}>
       <AdminTypePickerDialog
         title="Select component type"
-        showValueTypes
-        valueTypes={fieldSpec.componentTypes}
+        showComponentTypes
+        componentTypes={fieldSpec.componentTypes}
         onItemClick={(type) => {
           editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type });
           onClose();

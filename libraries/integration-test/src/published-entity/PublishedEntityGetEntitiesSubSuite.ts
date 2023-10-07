@@ -41,7 +41,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext
   getEntities_orderNameReversed,
   getEntities_authKeySubject,
   getEntities_authKeyNoneAndSubject,
-  getEntities_valueTypes,
+  getEntities_componentTypes,
   getEntities_linksToOneReference,
   getEntities_linksToNoReferences,
   getEntities_linksToTwoReferencesFromOneEntity,
@@ -405,7 +405,7 @@ async function getEntities_authKeyNoneAndSubject({
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
 
-async function getEntities_valueTypes({ server }: PublishedEntityTestContext) {
+async function getEntities_componentTypes({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const { entity } = (

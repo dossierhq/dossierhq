@@ -451,11 +451,13 @@ function addQueryFilters(
   }
 
   // Filter: componentTypes
-  const valueTypesResult = getFilterComponentTypes(schema, query);
-  if (valueTypesResult.isError()) return valueTypesResult;
+  const componentTypesResult = getFilterComponentTypes(schema, query);
+  if (componentTypesResult.isError()) return componentTypesResult;
 
-  if (valueTypesResult.value.length > 0) {
-    sql`AND evt.value_type IN ${addValueList(valueTypesResult.value)} AND evt.entities_id = e.id`;
+  if (componentTypesResult.value.length > 0) {
+    sql`AND evt.value_type IN ${addValueList(
+      componentTypesResult.value,
+    )} AND evt.entities_id = e.id`;
   }
 
   // Filter: status

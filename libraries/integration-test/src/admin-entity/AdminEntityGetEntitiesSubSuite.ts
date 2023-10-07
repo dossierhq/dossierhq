@@ -66,7 +66,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_statusAll,
   getEntities_invalidOnly,
   getEntities_validOnly,
-  getEntities_valueTypes,
+  getEntities_componentTypes,
   getEntities_linksToOneReference,
   getEntities_linksToOneReferenceFromRichText,
   getEntities_linksToOneReferenceFromLinkRichText,
@@ -637,7 +637,7 @@ async function getEntities_validOnly({ server }: AdminEntityTestContext) {
   assertTruthy(valid > 0);
 }
 
-async function getEntities_valueTypes({ server }: AdminEntityTestContext) {
+async function getEntities_componentTypes({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const { entity } = (await adminClient.createEntity(VALUE_ITEMS_CREATE)).valueOrThrow();
 
