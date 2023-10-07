@@ -27,14 +27,14 @@ import {
 import type {
   AdminBooleansEntity,
   AdminCloudinaryImage,
+  AdminComponentsEntity,
   AdminEntitiesEntity,
   AdminLocationsEntity,
-  AdminNestedValueItem,
+  AdminNestedComponent,
   AdminNumbersEntity,
   AdminRichTextsEntity,
+  AdminStringsComponent,
   AdminStringsEntity,
-  AdminStringsValueItem,
-  AdminValueItemsEntity,
   AppAdminClient,
   AppAdminEntity,
 } from './schema-types.js';
@@ -474,13 +474,13 @@ async function createRichTextsEntities(
   {
     numbersEntities,
     stringsEntities,
-    cloudinaryImageValueItems,
+    cloudinaryImageComponents,
   }: {
     booleansEntities: AdminBooleansEntity[];
     locationsEntities: AdminLocationsEntity[];
     numbersEntities: AdminNumbersEntity[];
     stringsEntities: AdminStringsEntity[];
-    cloudinaryImageValueItems: AdminCloudinaryImage[];
+    cloudinaryImageComponents: AdminCloudinaryImage[];
   },
 ) {
   const minimal: AdminEntityCreate<AdminRichTextsEntity> = {
@@ -519,7 +519,7 @@ async function createRichTextsEntities(
               createRichTextTextNode('Hello '),
               createRichTextTextNode('World!', { format: ['bold'] }),
             ]),
-            createRichTextValueItemNode(faker.helpers.arrayElement(cloudinaryImageValueItems)),
+            createRichTextValueItemNode(faker.helpers.arrayElement(cloudinaryImageComponents)),
           ]),
           minimal: createRichText([
             createRichTextParagraphNode([
@@ -547,11 +547,11 @@ async function createRichTextsEntities(
               createRichTextEntityLinkNode(numbersEntities[0], [createRichTextTextNode('World!')]),
             ]),
           ]),
-          nestedValueItem: createRichText([
-            createRichTextValueItemNode<AdminNestedValueItem>({
-              type: 'NestedValueItem',
+          nestedComponent: createRichText([
+            createRichTextValueItemNode<AdminNestedComponent>({
+              type: 'NestedComponent',
               text: 'root',
-              child: { type: 'NestedValueItem', text: 'child', child: null },
+              child: { type: 'NestedComponent', text: 'child', child: null },
             }),
             createRichTextParagraphNode([
               createRichTextTextNode('There is a nested value item above'),
@@ -571,8 +571,8 @@ async function createRichTextsEntities(
             createRichTextParagraphNode([
               createRichTextTextNode('Required fields are not allowed to be empty:'),
             ]),
-            createRichTextValueItemNode<AdminStringsValueItem>({
-              type: 'StringsValueItem',
+            createRichTextValueItemNode<AdminStringsComponent>({
+              type: 'StringsComponent',
               normal: null,
               list: null,
               required: null,
@@ -594,8 +594,8 @@ async function createRichTextsEntities(
                 'We can also add value items with empty required fields, but not with invalid fields:',
               ),
             ]),
-            createRichTextValueItemNode<AdminStringsValueItem>({
-              type: 'StringsValueItem',
+            createRichTextValueItemNode<AdminStringsComponent>({
+              type: 'StringsComponent',
               normal: null,
               list: null,
               required: null,
@@ -626,8 +626,8 @@ async function createRichTextsEntities(
             ]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
-          nestedValueItem: createRichText([
-            createRichTextValueItemNode<AdminCloudinaryImage>(cloudinaryImageValueItems[0]),
+          nestedComponent: createRichText([
+            createRichTextValueItemNode<AdminCloudinaryImage>(cloudinaryImageComponents[0]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
         },
@@ -730,52 +730,52 @@ async function createStringsEntities(adminClient: AppAdminClient) {
 async function createValueItemsEntities(
   adminClient: AppAdminClient,
   {
-    cloudinaryImageValueItems,
+    cloudinaryImageComponents,
   }: {
     booleansEntities: AdminBooleansEntity[];
     locationsEntities: AdminLocationsEntity[];
     numbersEntities: AdminNumbersEntity[];
     stringsEntities: AdminStringsEntity[];
-    cloudinaryImageValueItems: AdminCloudinaryImage[];
+    cloudinaryImageComponents: AdminCloudinaryImage[];
   },
 ) {
-  const minimal: AdminEntityCreate<AdminValueItemsEntity> = {
-    info: { type: 'ValueItemsEntity', authKey: 'none', name: 'ValueItems minimal' },
+  const minimal: AdminEntityCreate<AdminComponentsEntity> = {
+    info: { type: 'ComponentsEntity', authKey: 'none', name: 'Components minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
     fields: {
-      required: { type: 'NestedValueItem', text: 'Required', child: null },
+      required: { type: 'NestedComponent', text: 'Required', child: null },
       requiredList: [
-        { type: 'NestedValueItem', text: 'First', child: null },
-        { type: 'NestedValueItem', text: 'Second', child: null },
+        { type: 'NestedComponent', text: 'First', child: null },
+        { type: 'NestedComponent', text: 'Second', child: null },
       ],
     },
   });
 
   const results = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('value-items-minimal') })),
+    adminClient.createEntity(copyEntity(minimal, { id: id('components-minimal') })),
 
     adminClient.createEntity(
       copyEntity(minimalPublish, {
-        id: id('value-items-published-minimal'),
-        info: { name: 'ValueItems published minimal' },
+        id: id('components-published-minimal'),
+        info: { name: 'Components published minimal' },
       }),
       { publish: true },
     ),
 
     adminClient.createEntity(
       copyEntity(minimalPublish, {
-        id: id('value-items-filled'),
-        info: { name: 'ValueItems filled' },
+        id: id('components-filled'),
+        info: { name: 'Components filled' },
         fields: {
-          normal: { type: 'NestedValueItem', text: 'First', child: null },
+          normal: { type: 'NestedComponent', text: 'First', child: null },
           list: [
-            { type: 'NestedValueItem', text: 'First', child: null },
-            { type: 'NestedValueItem', text: 'Second', child: null },
+            { type: 'NestedComponent', text: 'First', child: null },
+            { type: 'NestedComponent', text: 'Second', child: null },
           ],
           adminOnly: {
-            type: 'StringsValueItem',
+            type: 'StringsComponent',
             normal: null,
             required: null,
             matchPattern: null,
@@ -783,32 +783,32 @@ async function createValueItemsEntities(
             requiredList: null,
             requiredListMatchPattern: null,
           },
-          cloudinaryImage: faker.helpers.arrayElement(cloudinaryImageValueItems),
+          cloudinaryImage: faker.helpers.arrayElement(cloudinaryImageComponents),
         },
       }),
     ),
 
     adminClient.createEntity(
       copyEntity(minimal, {
-        id: id('value-items-invalid'),
-        info: { name: 'ValueItems invalid' },
+        id: id('components-invalid'),
+        info: { name: 'Components invalid' },
         fields: {
           cloudinaryImage: {
-            type: 'NestedValueItem',
+            type: 'NestedComponent',
             text: 'First',
             child: null,
           } as unknown as AdminCloudinaryImage,
-          normal: { type: 'AdminOnlyValueItem', text: 'Admin only' },
+          normal: { type: 'AdminOnlyComponent', text: 'Admin only' },
         },
       }),
     ),
 
     adminClient.createEntity(
       copyEntity(minimalPublish, {
-        id: id('value-items-published-invalid'),
-        info: { name: 'ValueItems published invalid' },
+        id: id('components-published-invalid'),
+        info: { name: 'Components published invalid' },
         fields: {
-          normal: { type: 'AdminOnlyValueItem', text: 'Admin only' },
+          normal: { type: 'AdminOnlyComponent', text: 'Admin only' },
           required: null,
           requiredList: null,
         },
@@ -820,7 +820,7 @@ async function createValueItemsEntities(
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-async function createCloudinaryImageValueItems() {
+async function createCloudinaryImageComponents() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
   const images = cloudinaryImages.map<AdminCloudinaryImage>((image) => ({
@@ -841,7 +841,7 @@ async function main() {
     SCHEMA_WITHOUT_VALIDATIONS,
   );
 
-  const cloudinaryImageValueItems = await createCloudinaryImageValueItems();
+  const cloudinaryImageComponents = await createCloudinaryImageComponents();
 
   const booleansEntities = await createBooleansEntities(adminClient);
   const locationsEntities = await createLocationsEntities(adminClient);
@@ -859,14 +859,14 @@ async function main() {
     locationsEntities,
     numbersEntities,
     stringsEntities,
-    cloudinaryImageValueItems,
+    cloudinaryImageComponents,
   });
   await createValueItemsEntities(adminClient, {
     booleansEntities,
     locationsEntities,
     numbersEntities,
     stringsEntities,
-    cloudinaryImageValueItems,
+    cloudinaryImageComponents,
   });
 
   (await adminClient.updateSchemaSpecification(SCHEMA)).throwIfError();

@@ -109,10 +109,10 @@ export const SCHEMA = {
           linkEntityTypes: ['NumbersEntity'],
         },
         {
-          name: 'nestedValueItem',
+          name: 'nestedComponent',
           type: FieldType.RichText,
           richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.valueItem],
-          componentTypes: ['NestedValueItem'],
+          componentTypes: ['NestedComponent'],
         },
       ],
     },
@@ -150,7 +150,7 @@ export const SCHEMA = {
       ],
     },
     {
-      name: 'ValueItemsEntity',
+      name: 'ComponentsEntity',
       fields: [
         { name: 'normal', type: FieldType.Component, adminOnly: false },
         { name: 'required', type: FieldType.Component, required: true },
@@ -163,7 +163,7 @@ export const SCHEMA = {
   ],
   componentTypes: [
     {
-      name: 'AdminOnlyValueItem',
+      name: 'AdminOnlyComponent',
       adminOnly: true,
       fields: [{ name: 'text', type: FieldType.String }],
     },
@@ -177,14 +177,14 @@ export const SCHEMA = {
       ],
     },
     {
-      name: 'NestedValueItem',
+      name: 'NestedComponent',
       fields: [
         { name: 'text', type: FieldType.String },
-        { name: 'child', type: FieldType.Component, componentTypes: ['NestedValueItem'] },
+        { name: 'child', type: FieldType.Component, componentTypes: ['NestedComponent'] },
       ],
     },
     {
-      name: 'StringsValueItem',
+      name: 'StringsComponent',
       fields: [
         { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
@@ -246,8 +246,8 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
           richTextFieldSpec(entityType, 'stringsEntity').entityTypes = [];
           richTextFieldSpec(entityType, 'numbersEntityLink').richTextNodes = [];
           richTextFieldSpec(entityType, 'numbersEntityLink').linkEntityTypes = [];
-          richTextFieldSpec(entityType, 'nestedValueItem').richTextNodes = [];
-          richTextFieldSpec(entityType, 'nestedValueItem').componentTypes = [];
+          richTextFieldSpec(entityType, 'nestedComponent').richTextNodes = [];
+          richTextFieldSpec(entityType, 'nestedComponent').componentTypes = [];
         });
       case 'StringsEntity':
         return copyEntityType(entityType, (entityType) => {
@@ -260,9 +260,9 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
           stringFieldSpec(entityType, 'requiredListMatchPattern').required = false;
           stringFieldSpec(entityType, 'requiredListMatchPattern').matchPattern = null;
         });
-      case 'ValueItemsEntity':
+      case 'ComponentsEntity':
         return copyEntityType(entityType, (entityType) => {
-          componentFieldSpec(entityType, 'normal').adminOnly = true; // to allow adding admin only value items
+          componentFieldSpec(entityType, 'normal').adminOnly = true; // to allow adding admin only components
           componentFieldSpec(entityType, 'required').required = false;
           componentFieldSpec(entityType, 'requiredList').required = false;
           componentFieldSpec(entityType, 'adminOnly').adminOnly = false;
