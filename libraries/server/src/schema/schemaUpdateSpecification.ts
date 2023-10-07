@@ -101,7 +101,7 @@ export async function schemaUpdateSpecificationSyncAction(
   if (mergeResult.isError()) return mergeResult;
   const newSchema = mergeResult.value;
 
-  if (!isFieldValueEqual(newSchema.spec, event.schemaSpecification)) {
+  if (!isFieldValueEqual(newSchema.spec, modernSchemaSpecification)) {
     return notOk.BadRequest(
       'The new schema merged with the existing schema differs from what was expected',
     );
