@@ -167,7 +167,7 @@ describe('traverseEntity', () => {
     expect(nodes).toMatchSnapshot();
   });
 
-  test('Foo entity with TwoStrings value item', () => {
+  test('Foo entity with TwoStrings components', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
         info: { type: 'Foo' },
@@ -181,7 +181,7 @@ describe('traverseEntity', () => {
     expect(nodes).toMatchSnapshot();
   });
 
-  test('Foo entity with rich text with TwoStrings value item', () => {
+  test('Foo entity with rich text with TwoStrings component', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
         info: { type: 'Foo' },
@@ -629,7 +629,7 @@ describe('traverseEntity', () => {
 });
 
 describe('traverseComponent', () => {
-  test('Empty TwoStrings value item', () => {
+  test('Empty TwoStrings component', () => {
     const nodes = collectTraverseNodes(
       traverseComponent(adminSchema, ['component'], { type: 'TwoStrings' }),
     );

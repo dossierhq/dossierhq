@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`traverseComponent > Empty TwoStrings value item 1`] = `
+exports[`traverseComponent > Empty TwoStrings component 1`] = `
 [
   {
     "component": {
@@ -189,7 +189,7 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
 ]
 `;
 
-exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
+exports[`traverseEntity > Foo entity with TwoStrings components 1`] = `
 [
   {
     "entity": {
@@ -433,7 +433,7 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
 ]
 `;
 
-exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1`] = `
+exports[`traverseEntity > Foo entity with rich text with TwoStrings component 1`] = `
 [
   {
     "entity": {

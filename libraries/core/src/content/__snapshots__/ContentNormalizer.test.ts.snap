@@ -25,7 +25,7 @@ exports[`normalizeEntityFields > empty Foo 1`] = `
 }
 `;
 
-exports[`normalizeEntityFields > empty fields in value item 1`] = `
+exports[`normalizeEntityFields > empty fields in component 1`] = `
 {
   "richText": null,
   "string": null,
@@ -38,7 +38,7 @@ exports[`normalizeEntityFields > empty fields in value item 1`] = `
 }
 `;
 
-exports[`normalizeEntityFields > empty fields in value item in rich text 1`] = `
+exports[`normalizeEntityFields > empty fields in component in rich text 1`] = `
 {
   "richText": {
     "root": {

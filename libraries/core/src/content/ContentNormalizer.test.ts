@@ -67,7 +67,7 @@ describe('normalizeEntityFields', () => {
     ).toEqual({});
   });
 
-  test('empty fields in value item', () => {
+  test('empty fields in component', () => {
     expect(
       normalizeEntityFields(schema, ['entity'], {
         info: { type: 'Foo' },
@@ -76,7 +76,7 @@ describe('normalizeEntityFields', () => {
     ).toMatchSnapshot();
   });
 
-  test('empty fields in value item in rich text', () => {
+  test('empty fields in component in rich text', () => {
     expect(
       normalizeEntityFields(schema, ['entity'], {
         info: { type: 'Foo' },

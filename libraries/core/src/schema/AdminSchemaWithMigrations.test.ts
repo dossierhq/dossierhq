@@ -675,7 +675,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
     expect(result.spec.entityTypes[0].fields[0].type).toBe(FieldType.Boolean);
   });
 
-  test('value item field (migration only)', () => {
+  test('component field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
@@ -856,7 +856,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
     expect(result.spec.entityTypes[0].fields[1].name).toEqual('newName');
   });
 
-  test('value item field (migration only)', () => {
+  test('component field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })

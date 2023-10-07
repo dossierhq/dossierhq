@@ -690,6 +690,35 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing values val
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > component field (migration only) 1`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "componentType": "Foo",
+          "field": "field",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity field (migration only) 1`] = `
 {
   "componentTypes": [],
@@ -791,35 +820,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name
         {
           "action": "deleteField",
           "entityType": "Foo",
-          "field": "field",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 2,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > value item field (migration only) 1`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Foo",
-    },
-  ],
-  "entityTypes": [],
-  "indexes": [],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteField",
-          "componentType": "Foo",
           "field": "field",
         },
       ],
@@ -1276,6 +1276,48 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migr
 }
 `;
 
+exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > component field (migration only) 1`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newField",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "entityTypes": [],
+  "indexes": [],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "componentType": "Foo",
+          "field": "field",
+          "newName": "newField",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "patterns": [],
+  "schemaKind": "admin",
+  "version": 2,
+}
+`;
+
 exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity field (migration only) 1`] = `
 {
   "componentTypes": [],
@@ -1492,48 +1534,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
           "entityType": "Foo",
           "field": "oldName",
           "newName": "newName",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "patterns": [],
-  "schemaKind": "admin",
-  "version": 2,
-}
-`;
-
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > value item field (migration only) 1`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "list": false,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "newField",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "name": "Foo",
-    },
-  ],
-  "entityTypes": [],
-  "indexes": [],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameField",
-          "componentType": "Foo",
-          "field": "field",
-          "newName": "newField",
         },
       ],
       "version": 2,

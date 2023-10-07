@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`transformEntity > delete all value items 1`] = `
+exports[`transformEntity > delete all components 1`] = `
 {
   "component": null,
   "componentList": null,

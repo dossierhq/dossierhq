@@ -90,7 +90,7 @@ describe('transformEntity', () => {
     expect(calls).toMatchSnapshot();
   });
 
-  test('delete all value items', () => {
+  test('delete all components', () => {
     const transformed = transformEntityFields(ADMIN_SCHEMA, [], COMPONENTS_ENTITY_1, {
       transformField: (_schema, _path, _fieldSpec, value) => ok(value),
       transformFieldItem: (_schema, _path, fieldSpec, value) => {
@@ -148,7 +148,7 @@ describe('transformEntity', () => {
     expect(transformed.string).toBe(null);
   });
 
-  test('normalize value item: extra fields', () => {
+  test('normalize component: extra fields', () => {
     const copy = copyEntity(COMPONENTS_ENTITY_1, {
       fields: {
         component: {
@@ -166,7 +166,7 @@ describe('transformEntity', () => {
     expect(transformed.component).toEqual({ type: 'NestedComponent', child: null, string: null });
   });
 
-  test('normalize value item: extra fields with keepExtraFields', () => {
+  test('normalize component: extra fields with keepExtraFields', () => {
     const copy = copyEntity(COMPONENTS_ENTITY_1, {
       fields: {
         component: {
