@@ -5,7 +5,7 @@ import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type { ContentValuePath } from './ContentPath.js';
 import {
   IDENTITY_TRANSFORMER,
-  transformValueItem,
+  transformComponent,
   transformContentField,
   transformEntityFields,
   type ContentTransformerEntityFieldsOptions,
@@ -24,13 +24,13 @@ export function normalizeEntityFields<TEntity extends EntityLike<string, object>
   return transformEntityFields(schema, [...path, 'fields'], entity, IDENTITY_TRANSFORMER, options);
 }
 
-export function normalizeValueItem<TValueItem extends Component<string, object>>(
+export function normalizeComponent<TComponent extends Component<string, object>>(
   schema: AdminSchema | PublishedSchema,
   path: ContentValuePath,
-  valueItem: Readonly<TValueItem>,
+  component: Readonly<TComponent>,
   options?: ContentNormalizerOptions,
-): Result<TValueItem, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return transformValueItem(schema, path, valueItem, IDENTITY_TRANSFORMER, options);
+): Result<TComponent, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  return transformComponent(schema, path, component, IDENTITY_TRANSFORMER, options);
 }
 
 export function normalizeContentField<TSchema extends AdminSchema | PublishedSchema>(

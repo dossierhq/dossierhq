@@ -5,7 +5,7 @@ import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { contentValuePathToString } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
-import { ContentTraverseNodeType, traverseEntity, traverseValueItem } from './ContentTraverser.js';
+import { ContentTraverseNodeType, traverseComponent, traverseEntity } from './ContentTraverser.js';
 import {
   createRichText,
   createRichTextParagraphNode,
@@ -20,6 +20,13 @@ const adminSchema = AdminSchema.createAndValidate({
       fields: [
         { name: 'boolean', type: FieldType.Boolean },
         { name: 'booleanList', type: FieldType.Boolean, list: true },
+      ],
+    },
+    {
+      name: 'ComponentsEntity',
+      fields: [
+        { name: 'component', type: FieldType.Component },
+        { name: 'componentList', type: FieldType.Component, list: true },
       ],
     },
     {
@@ -55,13 +62,6 @@ const adminSchema = AdminSchema.createAndValidate({
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
-      ],
-    },
-    {
-      name: 'ValueItemsEntity',
-      fields: [
-        { name: 'valueItem', type: FieldType.Component },
-        { name: 'valueItemList', type: FieldType.Component, list: true },
       ],
     },
     {
@@ -106,8 +106,8 @@ function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
       case ContentTraverseNodeType.field:
         payload.push({ type: node.type, path, value: node.value });
         break;
-      case ContentTraverseNodeType.valueItem:
-        payload.push({ type: node.type, path, valueItem: node.valueItem });
+      case ContentTraverseNodeType.component:
+        payload.push({ type: node.type, path, component: node.component });
         break;
       default: {
         payload.push(node as unknown as CollectedNode);
@@ -565,11 +565,11 @@ describe('traverseEntity', () => {
     `);
   });
 
-  test('traversable: expect valueItem, get valueItem[]', () => {
+  test('traversable: expect component, get component[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'ValueItemsEntity' },
-        fields: { valueItem: [{ type: 'TwoStrings' }] },
+        info: { type: 'ComponentsEntity' },
+        fields: { component: [{ type: 'TwoStrings' }] },
       }),
     );
     expect(nodes).toMatchSnapshot();
@@ -577,18 +577,18 @@ describe('traverseEntity', () => {
       [
         {
           "message": "Expected single Component, got a list",
-          "path": "entity.fields.valueItem",
+          "path": "entity.fields.component",
           "type": "error",
         },
       ]
     `);
   });
 
-  test('traversable: expect valueItem[], get valueItem', () => {
+  test('traversable: expect component[], get component', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'ValueItemsEntity' },
-        fields: { valueItemList: { type: 'TwoStrings' } },
+        info: { type: 'ComponentsEntity' },
+        fields: { componentList: { type: 'TwoStrings' } },
       }),
     );
     expect(nodes).toMatchSnapshot();
@@ -596,18 +596,18 @@ describe('traverseEntity', () => {
       [
         {
           "message": "Expected a list of Component, got object",
-          "path": "entity.fields.valueItemList",
+          "path": "entity.fields.componentList",
           "type": "error",
         },
       ]
     `);
   });
 
-  test('traversable: expect valueItem, get other', () => {
+  test('traversable: expect component, get other', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'ValueItemsEntity' },
-        fields: { valueItem: 'string value', valueItemList: [{ lat: 1, lng: 2 }] },
+        info: { type: 'ComponentsEntity' },
+        fields: { component: 'string value', componentList: [{ lat: 1, lng: 2 }] },
       }),
     );
     expect(nodes).toMatchSnapshot();
@@ -615,12 +615,12 @@ describe('traverseEntity', () => {
       [
         {
           "message": "Expected a Component object, got string",
-          "path": "entity.fields.valueItem",
+          "path": "entity.fields.component",
           "type": "error",
         },
         {
           "message": "Missing a Component type",
-          "path": "entity.fields.valueItemList[0].type",
+          "path": "entity.fields.componentList[0].type",
           "type": "error",
         },
       ]
@@ -628,17 +628,17 @@ describe('traverseEntity', () => {
   });
 });
 
-describe('traverseValueItem', () => {
+describe('traverseComponent', () => {
   test('Empty TwoStrings value item', () => {
     const nodes = collectTraverseNodes(
-      traverseValueItem(adminSchema, ['valueItem'], { type: 'TwoStrings' }),
+      traverseComponent(adminSchema, ['component'], { type: 'TwoStrings' }),
     );
     expect(nodes).toMatchSnapshot();
   });
 
   test('No type', () => {
     const nodes = collectTraverseNodes(
-      traverseValueItem(adminSchema, ['valueItem'], {} as Component),
+      traverseComponent(adminSchema, ['component'], {} as Component),
     );
     expect(nodes).toMatchSnapshot();
   });

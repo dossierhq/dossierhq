@@ -1,15 +1,15 @@
 import {
   RichTextNodeType,
   createRichTextValueItemNode,
-  normalizeValueItem,
-  traverseValueItem,
+  normalizeComponent,
+  traverseComponent,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
   type AdminSchema,
+  type Component,
   type PublishValidationIssue,
   type RichTextValueItemNode,
   type SaveValidationIssue,
-  type Component,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
@@ -114,9 +114,9 @@ function validateItemValue(
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
   if (adminSchema) {
-    const normalizeResult = normalizeValueItem(adminSchema, [], value);
+    const normalizeResult = normalizeComponent(adminSchema, [], value);
     const valueToValidate = normalizeResult.isOk() ? normalizeResult.value : value;
-    for (const node of traverseValueItem(adminSchema, [], valueToValidate)) {
+    for (const node of traverseComponent(adminSchema, [], valueToValidate)) {
       const error = validateTraverseNodeForSave(adminSchema, node);
       if (error) {
         errors.push(error);
@@ -124,7 +124,7 @@ function validateItemValue(
     }
     if (!adminOnly) {
       const publishedSchema = adminSchema.toPublishedSchema();
-      for (const node of traverseValueItem(publishedSchema, [], valueToValidate)) {
+      for (const node of traverseComponent(publishedSchema, [], valueToValidate)) {
         const error = validateTraverseNodeForPublish(adminSchema, node);
         if (error) {
           errors.push(error);

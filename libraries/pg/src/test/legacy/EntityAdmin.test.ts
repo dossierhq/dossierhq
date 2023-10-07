@@ -1397,7 +1397,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: Invalid fields for value item of type EntityAdminOneString: invalid',
+      'entity.fields.oneString: Invalid fields for component of type EntityAdminOneString: invalid',
     );
   });
 

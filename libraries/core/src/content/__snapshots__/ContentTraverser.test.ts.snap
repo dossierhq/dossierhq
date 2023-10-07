@@ -1,5 +1,75 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`traverseComponent > Empty TwoStrings value item 1`] = `
+[
+  {
+    "component": {
+      "type": "TwoStrings",
+    },
+    "path": "component",
+    "type": "component",
+  },
+  {
+    "path": "component.string1",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
+      "name": "string1",
+      "required": false,
+      "type": "String",
+      "values": [],
+    },
+    "path": [
+      "component",
+      "string1",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "path": "component.string2",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "index": null,
+      "list": false,
+      "matchPattern": null,
+      "multiline": false,
+      "name": "string2",
+      "required": false,
+      "type": "String",
+      "values": [],
+    },
+    "path": [
+      "component",
+      "string2",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseComponent > No type 1`] = `
+[
+  {
+    "message": "Missing a Component type",
+    "path": "component.type",
+    "type": "error",
+  },
+]
+`;
+
 exports[`traverseEntity > Empty Foo entity 1`] = `
 [
   {
@@ -250,13 +320,13 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
     },
   },
   {
-    "path": "entity.fields.twoStrings",
-    "type": "valueItem",
-    "valueItem": {
+    "component": {
       "string1": "two-1",
       "string2": "two-2",
       "type": "TwoStrings",
     },
+    "path": "entity.fields.twoStrings",
+    "type": "component",
   },
   {
     "path": "entity.fields.twoStrings.string1",
@@ -585,13 +655,13 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
     "type": "richTextNode",
   },
   {
-    "path": "entity.fields.richText[0].data",
-    "type": "valueItem",
-    "valueItem": {
+    "component": {
       "string1": "two-1",
       "string2": "two-2",
       "type": "TwoStrings",
     },
+    "path": "entity.fields.richText[0].data",
+    "type": "component",
   },
   {
     "path": "entity.fields.richText[0].data.string1",
@@ -1152,6 +1222,140 @@ exports[`traverseEntity > traversable: expect boolean[], get boolean 1`] = `
   {
     "message": "Expected a list of Boolean, got boolean",
     "path": "entity.fields.booleanList",
+    "type": "error",
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect component, get component[] 1`] = `
+[
+  {
+    "entity": {
+      "fields": {
+        "component": [
+          {
+            "type": "TwoStrings",
+          },
+        ],
+      },
+      "info": {
+        "type": "ComponentsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
+    "path": "entity.fields.component",
+    "type": "field",
+    "value": [
+      {
+        "type": "TwoStrings",
+      },
+    ],
+  },
+  {
+    "message": "Expected single Component, got a list",
+    "path": "entity.fields.component",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.componentList",
+    "type": "field",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect component, get other 1`] = `
+[
+  {
+    "entity": {
+      "fields": {
+        "component": "string value",
+        "componentList": [
+          {
+            "lat": 1,
+            "lng": 2,
+          },
+        ],
+      },
+      "info": {
+        "type": "ComponentsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
+    "path": "entity.fields.component",
+    "type": "field",
+    "value": "string value",
+  },
+  {
+    "message": "Expected a Component object, got string",
+    "path": "entity.fields.component",
+    "type": "error",
+  },
+  {
+    "path": "entity.fields.componentList",
+    "type": "field",
+    "value": [
+      {
+        "lat": 1,
+        "lng": 2,
+      },
+    ],
+  },
+  {
+    "message": "Missing a Component type",
+    "path": "entity.fields.componentList[0].type",
+    "type": "error",
+  },
+]
+`;
+
+exports[`traverseEntity > traversable: expect component[], get component 1`] = `
+[
+  {
+    "entity": {
+      "fields": {
+        "componentList": {
+          "type": "TwoStrings",
+        },
+      },
+      "info": {
+        "type": "ComponentsEntity",
+      },
+    },
+    "path": "entity",
+    "type": "entity",
+  },
+  {
+    "path": "entity.fields.component",
+    "type": "field",
+    "value": undefined,
+  },
+  {
+    "fieldSpec": {
+      "adminOnly": false,
+      "componentTypes": [],
+      "list": false,
+      "name": "component",
+      "required": false,
+      "type": "Component",
+    },
+    "path": [
+      "entity",
+      "fields",
+      "component",
+    ],
+    "type": "fieldItem",
+    "value": undefined,
+  },
+  {
+    "message": "Expected a list of Component, got object",
+    "path": "entity.fields.componentList",
     "type": "error",
   },
 ]
@@ -1851,210 +2055,6 @@ exports[`traverseEntity > traversable: expect string[], get string 1`] = `
   {
     "message": "Expected a list of String, got string",
     "path": "entity.fields.stringList",
-    "type": "error",
-  },
-]
-`;
-
-exports[`traverseEntity > traversable: expect valueItem, get other 1`] = `
-[
-  {
-    "entity": {
-      "fields": {
-        "valueItem": "string value",
-        "valueItemList": [
-          {
-            "lat": 1,
-            "lng": 2,
-          },
-        ],
-      },
-      "info": {
-        "type": "ValueItemsEntity",
-      },
-    },
-    "path": "entity",
-    "type": "entity",
-  },
-  {
-    "path": "entity.fields.valueItem",
-    "type": "field",
-    "value": "string value",
-  },
-  {
-    "message": "Expected a Component object, got string",
-    "path": "entity.fields.valueItem",
-    "type": "error",
-  },
-  {
-    "path": "entity.fields.valueItemList",
-    "type": "field",
-    "value": [
-      {
-        "lat": 1,
-        "lng": 2,
-      },
-    ],
-  },
-  {
-    "message": "Missing a Component type",
-    "path": "entity.fields.valueItemList[0].type",
-    "type": "error",
-  },
-]
-`;
-
-exports[`traverseEntity > traversable: expect valueItem, get valueItem[] 1`] = `
-[
-  {
-    "entity": {
-      "fields": {
-        "valueItem": [
-          {
-            "type": "TwoStrings",
-          },
-        ],
-      },
-      "info": {
-        "type": "ValueItemsEntity",
-      },
-    },
-    "path": "entity",
-    "type": "entity",
-  },
-  {
-    "path": "entity.fields.valueItem",
-    "type": "field",
-    "value": [
-      {
-        "type": "TwoStrings",
-      },
-    ],
-  },
-  {
-    "message": "Expected single Component, got a list",
-    "path": "entity.fields.valueItem",
-    "type": "error",
-  },
-  {
-    "path": "entity.fields.valueItemList",
-    "type": "field",
-    "value": undefined,
-  },
-]
-`;
-
-exports[`traverseEntity > traversable: expect valueItem[], get valueItem 1`] = `
-[
-  {
-    "entity": {
-      "fields": {
-        "valueItemList": {
-          "type": "TwoStrings",
-        },
-      },
-      "info": {
-        "type": "ValueItemsEntity",
-      },
-    },
-    "path": "entity",
-    "type": "entity",
-  },
-  {
-    "path": "entity.fields.valueItem",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "componentTypes": [],
-      "list": false,
-      "name": "valueItem",
-      "required": false,
-      "type": "Component",
-    },
-    "path": [
-      "entity",
-      "fields",
-      "valueItem",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
-  {
-    "message": "Expected a list of Component, got object",
-    "path": "entity.fields.valueItemList",
-    "type": "error",
-  },
-]
-`;
-
-exports[`traverseValueItem > Empty TwoStrings value item 1`] = `
-[
-  {
-    "path": "valueItem",
-    "type": "valueItem",
-    "valueItem": {
-      "type": "TwoStrings",
-    },
-  },
-  {
-    "path": "valueItem.string1",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "index": null,
-      "list": false,
-      "matchPattern": null,
-      "multiline": false,
-      "name": "string1",
-      "required": false,
-      "type": "String",
-      "values": [],
-    },
-    "path": [
-      "valueItem",
-      "string1",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
-  {
-    "path": "valueItem.string2",
-    "type": "field",
-    "value": undefined,
-  },
-  {
-    "fieldSpec": {
-      "adminOnly": false,
-      "index": null,
-      "list": false,
-      "matchPattern": null,
-      "multiline": false,
-      "name": "string2",
-      "required": false,
-      "type": "String",
-      "values": [],
-    },
-    "path": [
-      "valueItem",
-      "string2",
-    ],
-    "type": "fieldItem",
-    "value": undefined,
-  },
-]
-`;
-
-exports[`traverseValueItem > No type 1`] = `
-[
-  {
-    "message": "Missing a ValueItem type",
-    "path": "valueItem.type",
     "type": "error",
   },
 ]

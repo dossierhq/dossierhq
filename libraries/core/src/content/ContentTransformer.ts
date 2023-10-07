@@ -93,7 +93,7 @@ export function transformEntityFields<
   return ok(transformResult.value);
 }
 
-export function transformValueItem<
+export function transformComponent<
   TSchema extends AdminSchema | PublishedSchema,
   TComponent extends Component<string, object>,
   TError extends ErrorType,
@@ -120,7 +120,7 @@ export function transformValueItem<
     schema,
     path,
     typeSpec,
-    'value',
+    'component',
     component,
     transformer,
     options,
@@ -137,7 +137,7 @@ function transformContentFields<
   schema: TSchema,
   path: ContentValuePath,
   typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['componentTypes'][number],
-  kind: 'entity' | 'value',
+  kind: 'entity' | 'component',
   fields: Record<string, unknown>,
   transformer: ContentTransformer<TSchema, TError>,
   options: ContentTransformerEntityFieldsOptions | ContentTransformerOptions | undefined,
@@ -146,7 +146,7 @@ function transformContentFields<
   TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const extraFieldNames = new Set(Object.keys(fields));
-  if (kind === 'value') {
+  if (kind === 'component') {
     extraFieldNames.delete('type');
   }
 
@@ -314,7 +314,7 @@ function transformContentFieldValue<
   const value = transformFieldItemResult.value;
 
   if (isComponentItemField(fieldSpec, value) && value) {
-    return transformValueItem(schema, path, value, transformer, options);
+    return transformComponent(schema, path, value, transformer, options);
   } else if (isRichTextItemField(fieldSpec, value) && value) {
     return transformRichText(path, value, (path, node) => {
       const nodeResult = transformer.transformRichTextNode(schema, path, fieldSpec, node);
@@ -324,7 +324,7 @@ function transformContentFieldValue<
       if (transformedNode && isRichTextValueItemNode(transformedNode)) {
         const valueItem = transformedNode.data;
 
-        const valueItemResult = transformValueItem(schema, path, valueItem, transformer, options);
+        const valueItemResult = transformComponent(schema, path, valueItem, transformer, options);
         if (valueItemResult.isError()) return valueItemResult;
         const transformedValueItem = valueItemResult.value;
 

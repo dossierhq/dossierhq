@@ -14,7 +14,7 @@ describe('isFieldValueEqual', () => {
   test('string[]!==string[] (order)', () =>
     expect(isFieldValueEqual(['hello', 'world'], ['world', 'hello'])).toBeFalsy());
 
-  test('value item===value item', () =>
+  test('component===component', () =>
     expect(
       isFieldValueEqual(
         {
@@ -34,7 +34,7 @@ describe('isFieldValueEqual', () => {
       ),
     ).toBeTruthy());
 
-  test('value item!==value item', () =>
+  test('component!==component', () =>
     expect(
       isFieldValueEqual(
         {

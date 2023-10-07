@@ -542,7 +542,7 @@ describe('Validate entity string', () => {
 });
 
 describe('Validate entity component', () => {
-  test('Fail: admin only value item in normal field', () => {
+  test('Fail: admin only component in normal field', () => {
     expect(
       validateEntity(
         copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {

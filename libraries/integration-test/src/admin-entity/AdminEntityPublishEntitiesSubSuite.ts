@@ -445,7 +445,7 @@ async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTe
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `entity(${id}).fields.any: Value item of type AdminOnlyValue is adminOnly`,
+    `entity(${id}).fields.any: Component of type AdminOnlyValue is adminOnly`,
   );
 }
 

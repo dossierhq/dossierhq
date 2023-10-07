@@ -124,22 +124,22 @@ export {
   encodeObjectToURLSearchParams,
 } from './client/UrlQueryUtils.js';
 export {
+  normalizeComponent,
   normalizeContentField,
   normalizeEntityFields,
-  normalizeValueItem,
 } from './content/ContentNormalizer.js';
 export { contentValuePathToString, type ContentValuePath } from './content/ContentPath.js';
 export {
+  transformComponent,
   transformEntityFields,
-  transformValueItem,
   type ContentTransformer,
 } from './content/ContentTransformer.js';
 export {
   ContentTraverseNodeErrorType,
   ContentTraverseNodeType,
+  traverseComponent,
   traverseContentField,
   traverseEntity,
-  traverseValueItem,
   type ContentTraverseNode,
 } from './content/ContentTraverser.js';
 export {

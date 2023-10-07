@@ -9,7 +9,7 @@ import { contentValuePathToString } from './ContentPath.js';
 import {
   IDENTITY_TRANSFORMER,
   transformEntityFields,
-  transformValueItem,
+  transformComponent,
 } from './ContentTransformer.js';
 import { isRichTextValueItemNode, isComponentItemField } from './ContentTypeUtils.js';
 import { copyEntity } from './ContentUtils.js';
@@ -24,17 +24,17 @@ const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
       ],
     },
     {
-      name: 'ValueItemsEntity',
+      name: 'ComponentsEntity',
       fields: [
         { name: 'richText', type: FieldType.RichText },
-        { name: 'valueItem', type: FieldType.Component },
-        { name: 'valueItemList', type: FieldType.Component, list: true },
+        { name: 'component', type: FieldType.Component },
+        { name: 'componentList', type: FieldType.Component, list: true },
       ],
     },
   ],
   componentTypes: [
     {
-      name: 'NestedValueItem',
+      name: 'NestedComponent',
       fields: [
         { name: 'child', type: FieldType.Component },
         { name: 'string', type: FieldType.String },
@@ -51,20 +51,20 @@ const STRINGS_ENTITY_1 = Object.freeze({
   },
 });
 
-const VALUE_ITEMS_ENTITY_1 = Object.freeze({
-  info: { type: 'ValueItemsEntity' },
+const COMPONENTS_ENTITY_1 = Object.freeze({
+  info: { type: 'ComponentsEntity' },
   fields: {
     richText: createRichText([
-      createRichTextValueItemNode({ type: 'NestedValueItem', child: null, string: null }),
+      createRichTextValueItemNode({ type: 'NestedComponent', child: null, string: null }),
     ]),
-    valueItem: {
-      type: 'NestedValueItem',
+    component: {
+      type: 'NestedComponent',
       string: '1',
-      child: { type: 'NestedValueItem', string: '1.1', child: null },
+      child: { type: 'NestedComponent', string: '1.1', child: null },
     },
-    valueItemList: [
-      { type: 'NestedValueItem', string: '1', child: null },
-      { type: 'NestedValueItem', string: '2', child: null },
+    componentList: [
+      { type: 'NestedComponent', string: '1', child: null },
+      { type: 'NestedComponent', string: '2', child: null },
     ],
   },
 });
@@ -72,7 +72,7 @@ const VALUE_ITEMS_ENTITY_1 = Object.freeze({
 describe('transformEntity', () => {
   test('identity', () => {
     const calls: unknown[][] = [];
-    const transformed = transformEntityFields(ADMIN_SCHEMA, [], VALUE_ITEMS_ENTITY_1, {
+    const transformed = transformEntityFields(ADMIN_SCHEMA, [], COMPONENTS_ENTITY_1, {
       transformField: (_schema, path, _fieldSpec, value) => {
         calls.push(['transformField', contentValuePathToString(path)]);
         return ok(value);
@@ -86,12 +86,12 @@ describe('transformEntity', () => {
         return ok(node);
       },
     }).valueOrThrow();
-    expect(transformed).toBe(VALUE_ITEMS_ENTITY_1.fields);
+    expect(transformed).toBe(COMPONENTS_ENTITY_1.fields);
     expect(calls).toMatchSnapshot();
   });
 
   test('delete all value items', () => {
-    const transformed = transformEntityFields(ADMIN_SCHEMA, [], VALUE_ITEMS_ENTITY_1, {
+    const transformed = transformEntityFields(ADMIN_SCHEMA, [], COMPONENTS_ENTITY_1, {
       transformField: (_schema, _path, _fieldSpec, value) => ok(value),
       transformFieldItem: (_schema, _path, fieldSpec, value) => {
         if (isComponentItemField(fieldSpec, value)) return ok(null);
@@ -149,12 +149,12 @@ describe('transformEntity', () => {
   });
 
   test('normalize value item: extra fields', () => {
-    const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
+    const copy = copyEntity(COMPONENTS_ENTITY_1, {
       fields: {
-        valueItem: {
-          type: 'NestedValueItem',
+        component: {
+          type: 'NestedComponent',
           unsupported: 'hello',
-        } as unknown as typeof VALUE_ITEMS_ENTITY_1.fields.valueItem,
+        } as unknown as typeof COMPONENTS_ENTITY_1.fields.component,
       },
     });
     const transformed = transformEntityFields(
@@ -163,16 +163,16 @@ describe('transformEntity', () => {
       copy,
       IDENTITY_TRANSFORMER,
     ).valueOrThrow();
-    expect(transformed.valueItem).toEqual({ type: 'NestedValueItem', child: null, string: null });
+    expect(transformed.component).toEqual({ type: 'NestedComponent', child: null, string: null });
   });
 
   test('normalize value item: extra fields with keepExtraFields', () => {
-    const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
+    const copy = copyEntity(COMPONENTS_ENTITY_1, {
       fields: {
-        valueItem: {
-          type: 'NestedValueItem',
+        component: {
+          type: 'NestedComponent',
           unsupported: 'hello',
-        } as unknown as typeof VALUE_ITEMS_ENTITY_1.fields.valueItem,
+        } as unknown as typeof COMPONENTS_ENTITY_1.fields.component,
       },
     });
     const transformed = transformEntityFields(
@@ -182,8 +182,8 @@ describe('transformEntity', () => {
       IDENTITY_TRANSFORMER,
       { keepExtraFields: true },
     ).valueOrThrow();
-    expect(transformed.valueItem).toEqual({
-      type: 'NestedValueItem',
+    expect(transformed.component).toEqual({
+      type: 'NestedComponent',
       child: null,
       string: null,
       unsupported: 'hello',
@@ -204,17 +204,17 @@ describe('transformEntity', () => {
     );
   });
 
-  test('error: missing type in value item', () => {
-    const copy = copyEntity(VALUE_ITEMS_ENTITY_1, {
+  test('error: missing type in component', () => {
+    const copy = copyEntity(COMPONENTS_ENTITY_1, {
       fields: {
-        valueItem: {} as unknown as typeof VALUE_ITEMS_ENTITY_1.fields.valueItem,
+        component: {} as unknown as typeof COMPONENTS_ENTITY_1.fields.component,
       },
     });
     const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.valueItem.type: Missing a Component type',
+      'entity.component.type: Missing a Component type',
     );
   });
 
@@ -233,27 +233,27 @@ describe('transformEntity', () => {
   });
 });
 
-describe('transformValueItem', () => {
-  test('normalize value item: extra field', () => {
-    const transformed = transformValueItem(
+describe('transformComponent', () => {
+  test('normalize component: extra field', () => {
+    const transformed = transformComponent(
       ADMIN_SCHEMA,
-      ['valueItem'],
-      { type: 'NestedValueItem', child: null, string: null, extra: 'hello' },
+      ['component'],
+      { type: 'NestedComponent', child: null, string: null, extra: 'hello' },
       IDENTITY_TRANSFORMER,
     ).valueOrThrow();
-    expect(transformed).toEqual({ type: 'NestedValueItem', child: null, string: null });
+    expect(transformed).toEqual({ type: 'NestedComponent', child: null, string: null });
   });
 
-  test('normalize value item: extra field with keepExtraFields', () => {
-    const transformed = transformValueItem(
+  test('normalize component: extra field with keepExtraFields', () => {
+    const transformed = transformComponent(
       ADMIN_SCHEMA,
-      ['valueItem'],
-      { type: 'NestedValueItem', child: null, string: null, extra: 'hello' },
+      ['component'],
+      { type: 'NestedComponent', child: null, string: null, extra: 'hello' },
       IDENTITY_TRANSFORMER,
       { keepExtraFields: true },
     ).valueOrThrow();
     expect(transformed).toEqual({
-      type: 'NestedValueItem',
+      type: 'NestedComponent',
       child: null,
       string: null,
       extra: 'hello',
@@ -261,30 +261,30 @@ describe('transformValueItem', () => {
   });
 
   test('error: invalid type name', () => {
-    const transformed = transformValueItem(
+    const transformed = transformComponent(
       ADMIN_SCHEMA,
-      ['valueItem'],
+      ['component'],
       { type: 'Invalid' },
       IDENTITY_TRANSFORMER,
     );
     expectErrorResult(
       transformed,
       ErrorType.BadRequest,
-      'valueItem: Couldn’t find spec for value type Invalid',
+      'component: Couldn’t find spec for value type Invalid',
     );
   });
 
   test('error: missing type', () => {
-    const transformed = transformValueItem(
+    const transformed = transformComponent(
       ADMIN_SCHEMA,
-      ['valueItem'],
+      ['component'],
       {} as Component,
       IDENTITY_TRANSFORMER,
     );
     expectErrorResult(
       transformed,
       ErrorType.BadRequest,
-      'valueItem.type: Missing a component type',
+      'component.type: Missing a component type',
     );
   });
 });

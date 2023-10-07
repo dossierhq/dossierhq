@@ -7,7 +7,7 @@ import { assertIsDefined } from '../utils/Asserts.js';
 import {
   normalizeContentField,
   normalizeEntityFields,
-  normalizeValueItem,
+  normalizeComponent,
 } from './ContentNormalizer.js';
 import {
   createRichText,
@@ -90,16 +90,16 @@ describe('normalizeEntityFields', () => {
   });
 });
 
-describe('normalizeValueItem', () => {
+describe('normalizeComponent', () => {
   test('empty TwoStrings', () => {
     expect(
-      normalizeValueItem(schema, ['entity'], { type: 'TwoStrings' }).valueOrThrow(),
+      normalizeComponent(schema, ['component'], { type: 'TwoStrings' }).valueOrThrow(),
     ).toMatchSnapshot();
   });
 
   test('TwoStrings with empty strings', () => {
     expect(
-      normalizeValueItem(schema, ['entity'], {
+      normalizeComponent(schema, ['component'], {
         type: 'TwoStrings',
         string1: '',
         string2: null,
@@ -210,7 +210,7 @@ describe('normalizeContentField()', () => {
     ).toBe(null);
   });
 
-  test('ValueItem: undefined => null', () => {
+  test('Component: undefined => null', () => {
     expect(
       normalizeContentField(
         schema,

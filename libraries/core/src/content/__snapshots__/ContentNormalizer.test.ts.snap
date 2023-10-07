@@ -1,5 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`normalizeComponent > TwoStrings with empty strings 1`] = `
+{
+  "string1": null,
+  "string2": null,
+  "type": "TwoStrings",
+}
+`;
+
+exports[`normalizeComponent > empty TwoStrings 1`] = `
+{
+  "string1": null,
+  "string2": null,
+  "type": "TwoStrings",
+}
+`;
+
 exports[`normalizeEntityFields > empty Foo 1`] = `
 {
   "richText": null,
@@ -48,21 +64,5 @@ exports[`normalizeEntityFields > empty fields in value item in rich text 1`] = `
   "string": null,
   "stringList": null,
   "twoStrings": null,
-}
-`;
-
-exports[`normalizeValueItem > TwoStrings with empty strings 1`] = `
-{
-  "string1": null,
-  "string2": null,
-  "type": "TwoStrings",
-}
-`;
-
-exports[`normalizeValueItem > empty TwoStrings 1`] = `
-{
-  "string1": null,
-  "string2": null,
-  "type": "TwoStrings",
 }
 `;

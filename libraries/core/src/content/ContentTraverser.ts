@@ -9,10 +9,10 @@ import type {
 } from '../schema/SchemaSpecification.js';
 import type { ContentValuePath } from './ContentPath.js';
 import {
+  isComponentItemField,
   isRichTextElementNode,
   isRichTextItemField,
   isRichTextValueItemNode,
-  isComponentItemField,
 } from './ContentTypeUtils.js';
 import {
   checkFieldItemTraversable,
@@ -21,11 +21,11 @@ import {
 } from './ContentUtils.js';
 
 export const ContentTraverseNodeType = {
+  component: 'component',
   entity: 'entity',
   error: 'error',
   field: 'field',
   fieldItem: 'fieldItem',
-  valueItem: 'valueItem',
   richTextNode: 'richTextNode',
 } as const;
 export type ContentTraverseNodeType =
@@ -39,12 +39,12 @@ export type ContentTraverseNodeErrorType =
   (typeof ContentTraverseNodeErrorType)[keyof typeof ContentTraverseNodeErrorType];
 
 export type ContentTraverseNode<TSchema extends AdminSchema | PublishedSchema> =
+  | ContentTraverseNodeComponent<TSchema>
   | ContentTraverseNodeEntity<TSchema>
   | ContentTraverseNodeErrorGeneric
   | ContentTraverseNodeErrorMissingTypeSpec
   | ContentTraverseNodeField<TSchema>
   | ContentTraverseNodeFieldItem<TSchema>
-  | ContentTraverseNodeValueItem<TSchema>
   | ContentTraverseNodeRichTextNode<TSchema>;
 
 interface ContentTraverseNodeEntity<TSchema extends AdminSchema | PublishedSchema> {
@@ -67,7 +67,7 @@ interface ContentTraverseNodeErrorMissingTypeSpec {
   errorType: 'missingTypeSpec';
   message: string;
   typeName: string;
-  kind: 'entity' | 'valueItem';
+  kind: 'entity' | 'component';
 }
 
 interface ContentTraverseNodeField<TSchema extends AdminSchema | PublishedSchema> {
@@ -84,11 +84,11 @@ interface ContentTraverseNodeFieldItem<TSchema extends AdminSchema | PublishedSc
   value: unknown;
 }
 
-interface ContentTraverseNodeValueItem<TSchema extends AdminSchema | PublishedSchema> {
+interface ContentTraverseNodeComponent<TSchema extends AdminSchema | PublishedSchema> {
   path: ContentValuePath;
-  type: 'valueItem';
-  valueSpec: TSchema['spec']['componentTypes'][number];
-  valueItem: Component;
+  type: 'component';
+  componentSpec: TSchema['spec']['componentTypes'][number];
+  component: Component;
 }
 
 interface ContentTraverseNodeRichTextNode<TSchema extends AdminSchema | PublishedSchema> {
@@ -133,44 +133,44 @@ export function* traverseEntity<TSchema extends AdminSchema | PublishedSchema>(
   );
 }
 
-export function* traverseValueItem<TSchema extends AdminSchema | PublishedSchema>(
+export function* traverseComponent<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
-  item: Component,
+  component: Component,
 ): Generator<ContentTraverseNode<TSchema>> {
-  if (!item.type) {
+  if (!component.type) {
     const errorNode: ContentTraverseNodeErrorGeneric = {
       type: ContentTraverseNodeType.error,
       path: [...path, 'type'],
       errorType: ContentTraverseNodeErrorType.generic,
-      message: 'Missing a ValueItem type',
+      message: 'Missing a Component type',
     };
     yield errorNode;
     return;
   }
-  const valueSpec = schema.getComponentTypeSpecification(item.type);
-  if (!valueSpec) {
+  const componentSpec = schema.getComponentTypeSpecification(component.type);
+  if (!componentSpec) {
     const errorNode: ContentTraverseNodeErrorMissingTypeSpec = {
       type: ContentTraverseNodeType.error,
       path,
       errorType: ContentTraverseNodeErrorType.missingTypeSpec,
-      message: `Couldn’t find spec for value type ${item.type}`,
-      typeName: item.type,
-      kind: 'valueItem',
+      message: `Couldn’t find spec for component ${component.type}`,
+      typeName: component.type,
+      kind: 'component',
     };
     yield errorNode;
     return;
   }
 
-  const valueItemNode: ContentTraverseNodeValueItem<TSchema> = {
-    type: ContentTraverseNodeType.valueItem,
+  const componentNode: ContentTraverseNodeComponent<TSchema> = {
+    type: ContentTraverseNodeType.component,
     path,
-    valueSpec,
-    valueItem: item,
+    componentSpec,
+    component,
   };
-  yield valueItemNode;
+  yield componentNode;
 
-  yield* traverseContentFields(schema, path, valueSpec, item);
+  yield* traverseContentFields(schema, path, componentSpec, component);
 }
 
 function* traverseContentFields<TSchema extends AdminSchema | PublishedSchema>(
@@ -260,7 +260,7 @@ function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchem
   yield fieldValueNode;
 
   if (isComponentItemField(fieldSpec, itemValue) && itemValue) {
-    yield* traverseValueItem(schema, path, itemValue);
+    yield* traverseComponent(schema, path, itemValue);
   } else if (isRichTextItemField(fieldSpec, itemValue) && itemValue) {
     if (typeof itemValue !== 'object') {
       const errorNode: ContentTraverseNodeErrorGeneric = {
@@ -314,7 +314,7 @@ function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
   yield traverseNode;
 
   if (isRichTextValueItemNode(node) && node.data) {
-    yield* traverseValueItem(schema, [...path, 'data'], node.data);
+    yield* traverseComponent(schema, [...path, 'data'], node.data);
   }
   if (isRichTextElementNode(node)) {
     for (let i = 0; i < node.children.length; i += 1) {

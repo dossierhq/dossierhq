@@ -1,9 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Validate entity component > Fail: admin only value item in normal field 1`] = `
+exports[`Validate entity component > Fail: admin only component in normal field 1`] = `
 [
   {
-    "message": "Value item of type AdminOnlyValueItem is adminOnly",
+    "message": "Component of type AdminOnlyValueItem is adminOnly",
     "path": [
       "entity",
       "fields",
@@ -17,7 +17,7 @@ exports[`Validate entity component > Fail: admin only value item in normal field
 exports[`Validate entity component > Fail: extra fields 1`] = `
 [
   {
-    "message": "Invalid fields for value item of type NumbersValueItem: extra",
+    "message": "Invalid fields for component of type NumbersValueItem: extra",
     "path": [
       "entity",
       "fields",

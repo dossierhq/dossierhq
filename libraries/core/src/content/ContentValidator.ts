@@ -310,18 +310,18 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
       }
       break;
     }
-    case ContentTraverseNodeType.valueItem:
+    case ContentTraverseNodeType.component:
       // Check if there are any extra fields
       if (!ignoreExtraContentFields) {
-        const invalidFields = new Set(Object.keys(node.valueItem));
+        const invalidFields = new Set(Object.keys(node.component));
         invalidFields.delete('type');
-        node.valueSpec.fields.forEach((it) => invalidFields.delete(it.name));
+        node.componentSpec.fields.forEach((it) => invalidFields.delete(it.name));
 
         if (invalidFields.size > 0) {
           return {
             type: 'save',
             path: node.path,
-            message: `Invalid fields for value item of type ${node.valueItem.type}: ${[
+            message: `Invalid fields for component of type ${node.component.type}: ${[
               ...invalidFields,
             ].join(', ')}`,
           };
@@ -351,14 +351,14 @@ export function validateTraverseNodeForPublish(
     case ContentTraverseNodeType.error:
       if (
         node.errorType === ContentTraverseNodeErrorType.missingTypeSpec &&
-        node.kind === 'valueItem'
+        node.kind === 'component'
       ) {
         const adminTypeSpec = adminSchema.getComponentTypeSpecification(node.typeName);
         if (adminTypeSpec && adminTypeSpec.adminOnly) {
           return {
             type: 'publish',
             path: node.path,
-            message: `Value item of type ${node.typeName} is adminOnly`,
+            message: `Component of type ${node.typeName} is adminOnly`,
           };
         }
       }

@@ -2,9 +2,9 @@
 
 exports[`transformEntity > delete all value items 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": null,
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;
 
@@ -36,75 +36,75 @@ exports[`transformEntity > identity 1`] = `
   ],
   [
     "transformField",
-    "valueItem",
+    "component",
   ],
   [
     "transformFieldItem",
-    "valueItem",
+    "component",
   ],
   [
     "transformField",
-    "valueItem.child",
+    "component.child",
   ],
   [
     "transformFieldItem",
-    "valueItem.child",
+    "component.child",
   ],
   [
     "transformField",
-    "valueItem.child.child",
+    "component.child.child",
   ],
   [
     "transformField",
-    "valueItem.child.string",
+    "component.child.string",
   ],
   [
     "transformFieldItem",
-    "valueItem.child.string",
+    "component.child.string",
   ],
   [
     "transformField",
-    "valueItem.string",
+    "component.string",
   ],
   [
     "transformFieldItem",
-    "valueItem.string",
+    "component.string",
   ],
   [
     "transformField",
-    "valueItemList",
+    "componentList",
   ],
   [
     "transformFieldItem",
-    "valueItemList[0]",
+    "componentList[0]",
   ],
   [
     "transformField",
-    "valueItemList[0].child",
+    "componentList[0].child",
   ],
   [
     "transformField",
-    "valueItemList[0].string",
+    "componentList[0].string",
   ],
   [
     "transformFieldItem",
-    "valueItemList[0].string",
+    "componentList[0].string",
   ],
   [
     "transformFieldItem",
-    "valueItemList[1]",
+    "componentList[1]",
   ],
   [
     "transformField",
-    "valueItemList[1].child",
+    "componentList[1].child",
   ],
   [
     "transformField",
-    "valueItemList[1].string",
+    "componentList[1].string",
   ],
   [
     "transformFieldItem",
-    "valueItemList[1].string",
+    "componentList[1].string",
   ],
 ]
 `;

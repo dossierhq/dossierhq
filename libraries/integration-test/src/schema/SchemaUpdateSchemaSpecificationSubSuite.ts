@@ -1050,7 +1050,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Invalid fields for value item of type MigrationValueItem: ${fieldName}`,
+    `entity.fields.any: Invalid fields for component of type MigrationValueItem: ${fieldName}`,
   );
 }
 
@@ -1375,7 +1375,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   assertErrorResult(
     updatedOldNameResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Invalid fields for value item of type MigrationValueItem: ${oldFieldName}`,
+    `entity.fields.any: Invalid fields for component of type MigrationValueItem: ${oldFieldName}`,
   );
 }
 
