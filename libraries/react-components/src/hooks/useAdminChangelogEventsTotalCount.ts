@@ -2,9 +2,9 @@ import type {
   AdminClient,
   AdminEntity,
   ChangelogEventQuery,
+  Component,
   ErrorResult,
   ErrorType,
-  ValueItem,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -15,7 +15,7 @@ type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 export function useAdminChangelogEventsTotalCount(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
   query: ChangelogEventQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
@@ -36,7 +36,7 @@ export function useAdminChangelogEventsTotalCount(
 }
 
 async function fetchChangelogEventsTotalCount(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getChangelogEventsTotalCount(query);

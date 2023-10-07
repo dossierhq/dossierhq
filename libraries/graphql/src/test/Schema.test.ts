@@ -486,19 +486,19 @@ describe('Value type schema spec', () => {
         name: 'Foo',
         adminOnly: false,
         fields: [
-          { name: 'valueOne', type: FieldType.ValueItem, valueTypes: ['ValueOne'] },
-          { name: 'unspecifiedValue', type: FieldType.ValueItem },
+          { name: 'valueOne', type: FieldType.Component, componentTypes: ['ValueOne'] },
+          { name: 'unspecifiedValue', type: FieldType.Component },
           {
             name: 'valueOneOrList',
-            type: FieldType.ValueItem,
-            valueTypes: ['ValueOne', 'ValueList'],
+            type: FieldType.Component,
+            componentTypes: ['ValueOne', 'ValueList'],
           },
-          { name: 'nestedValue', type: FieldType.ValueItem, valueTypes: ['NestedValue'] },
+          { name: 'nestedValue', type: FieldType.Component, componentTypes: ['NestedValue'] },
         ],
       },
       { name: 'Bar', adminOnly: false, fields: [] },
     ],
-    valueTypes: [
+    componentTypes: [
       {
         name: 'ValueOne',
         adminOnly: false,
@@ -524,7 +524,7 @@ describe('Value type schema spec', () => {
         adminOnly: false,
         fields: [
           { name: 'text', type: FieldType.String },
-          { name: 'child', type: FieldType.ValueItem, valueTypes: ['NestedValue'] },
+          { name: 'child', type: FieldType.Component, componentTypes: ['NestedValue'] },
         ],
       },
     ],
@@ -587,7 +587,7 @@ describe('Admin only entity and value schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String }],
       },
     ],
-    valueTypes: [
+    componentTypes: [
       {
         name: 'ValueOne',
         adminOnly: true,
@@ -626,7 +626,7 @@ describe('Admin only field in entity and value schema spec', () => {
         fields: [{ name: 'body', type: FieldType.String, adminOnly: true }],
       },
     ],
-    valueTypes: [
+    componentTypes: [
       {
         name: 'ValueOne',
         adminOnly: false,
@@ -660,11 +660,16 @@ describe('Required fields schema spec', () => {
         fields: [
           { name: 'body', type: FieldType.String, required: true },
           { name: 'tags', type: FieldType.String, list: true, required: true },
-          { name: 'valueOne', type: FieldType.ValueItem, required: true, valueTypes: ['ValueOne'] },
+          {
+            name: 'valueOne',
+            type: FieldType.Component,
+            required: true,
+            componentTypes: ['ValueOne'],
+          },
         ],
       },
     ],
-    valueTypes: [
+    componentTypes: [
       {
         name: 'ValueOne',
         adminOnly: false,

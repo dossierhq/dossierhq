@@ -1,13 +1,13 @@
-import { assertExhaustive, assertIsDefined } from '../utils/Asserts.js';
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
+  ComponentFieldSpecification,
   NumberFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
-  ValueItemFieldSpecification,
 } from '../schema/SchemaSpecification.js';
+import { assertExhaustive, assertIsDefined } from '../utils/Asserts.js';
 import type { ContentValuePath } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
@@ -264,17 +264,17 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
           }
         }
       } else if (isValueItemItemField(node.fieldSpec, node.value) && node.value) {
-        const valueItemFieldSpec = node.fieldSpec as ValueItemFieldSpecification;
+        const valueItemFieldSpec = node.fieldSpec as ComponentFieldSpecification;
         if (
-          valueItemFieldSpec.valueTypes.length > 0 &&
-          !valueItemFieldSpec.valueTypes.includes(node.value.type)
+          valueItemFieldSpec.componentTypes.length > 0 &&
+          !valueItemFieldSpec.componentTypes.includes(node.value.type)
         ) {
           return {
             type: 'save',
             path: node.path,
-            message: `Value item of type ${
+            message: `Component of type ${
               node.value.type
-            } is not allowed in field (supported types: ${valueItemFieldSpec.valueTypes.join(
+            } is not allowed in field (supported types: ${valueItemFieldSpec.componentTypes.join(
               ', ',
             )})`,
           };
@@ -353,7 +353,7 @@ export function validateTraverseNodeForPublish(
         node.errorType === ContentTraverseNodeErrorType.missingTypeSpec &&
         node.kind === 'valueItem'
       ) {
-        const adminTypeSpec = adminSchema.getValueTypeSpecification(node.typeName);
+        const adminTypeSpec = adminSchema.getComponentTypeSpecification(node.typeName);
         if (adminTypeSpec && adminTypeSpec.adminOnly) {
           return {
             type: 'publish',

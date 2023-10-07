@@ -65,12 +65,16 @@ const adminSchema = AdminSchema.createAndValidate({
     {
       name: 'ValueItemsEntity',
       fields: [
-        { name: 'any', type: FieldType.ValueItem },
-        { name: 'stringsValueItem', type: FieldType.ValueItem, valueTypes: ['StringsValueItem'] },
+        { name: 'any', type: FieldType.Component },
+        {
+          name: 'stringsValueItem',
+          type: FieldType.Component,
+          componentTypes: ['StringsValueItem'],
+        },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     { name: 'AdminOnlyValueItem', adminOnly: true, fields: [] },
     {
       name: 'NumbersValueItem',
@@ -537,7 +541,7 @@ describe('Validate entity string', () => {
   });
 });
 
-describe('Validate entity valueItem', () => {
+describe('Validate entity component', () => {
   test('Fail: admin only value item in normal field', () => {
     expect(
       validateEntity(
@@ -550,7 +554,7 @@ describe('Validate entity valueItem', () => {
     ).toMatchSnapshot();
   });
 
-  test('Fail: wrong type, not matching valueTypes', () => {
+  test('Fail: wrong type, not matching componentTypes', () => {
     expect(
       validateEntity(
         copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {

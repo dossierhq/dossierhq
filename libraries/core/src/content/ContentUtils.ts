@@ -92,6 +92,18 @@ export function checkFieldItemTraversable(
       }
       break;
     }
+    case FieldType.Component: {
+      if (typeof value !== 'object') {
+        return { path: [], message: `Expected a Component object, got ${typeof value}` };
+      }
+      if (!('type' in value)) {
+        return { path: ['type'], message: `Missing a Component type` };
+      }
+      if (typeof value.type !== 'string') {
+        return { path: ['type'], message: `Expected a Component type, got ${typeof value}` };
+      }
+      break;
+    }
     case FieldType.Entity: {
       if (typeof value !== 'object') {
         return { path: [], message: `Expected an entity reference, got ${typeof value}` };
@@ -151,18 +163,6 @@ export function checkFieldItemTraversable(
     case FieldType.String: {
       if (typeof value !== 'string') {
         return { path: [], message: `Expected a string, got ${typeof value}` };
-      }
-      break;
-    }
-    case FieldType.ValueItem: {
-      if (typeof value !== 'object') {
-        return { path: [], message: `Expected a ValueItem object, got ${typeof value}` };
-      }
-      if (!('type' in value)) {
-        return { path: ['type'], message: `Missing a ValueItem type` };
-      }
-      if (typeof value.type !== 'string') {
-        return { path: ['type'], message: `Expected a ValueItem type, got ${typeof value}` };
       }
       break;
     }

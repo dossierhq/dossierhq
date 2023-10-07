@@ -2,21 +2,21 @@ import type {
   AdminClient,
   AdminEntity,
   AdminSchema,
+  Component,
   ErrorResult,
   ErrorType,
   Logger,
   PublishValidationIssue,
   SaveValidationIssue,
-  ValueItem,
 } from '@dossierhq/core';
 import { createContext } from 'react';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
 export interface RichTextValueItemEditorProps {
-  value: ValueItem;
+  value: Component;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
-  onChange: (value: ValueItem<string, object>) => void;
+  onChange: (value: Component<string, object>) => void;
 }
 
 export interface AdminDossierContextAdapter {
@@ -26,7 +26,7 @@ export interface AdminDossierContextAdapter {
 
 export interface AdminDossierContextValue {
   adapter: AdminDossierContextAdapter;
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>;
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>;
   logger: Logger;
   schema: AdminSchema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

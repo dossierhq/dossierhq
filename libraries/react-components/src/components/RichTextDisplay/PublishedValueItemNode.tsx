@@ -1,4 +1,4 @@
-import type { RichTextValueItemNode, ValueItem } from '@dossierhq/core';
+import type { RichTextValueItemNode, Component } from '@dossierhq/core';
 import { createRichTextValueItemNode, RichTextNodeType } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
@@ -10,7 +10,7 @@ import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 export type SerializedPublishedValueItemNode = RichTextValueItemNode;
 
-export function $createPublishedValueItemNode(data: ValueItem): PublishedValueItemNode {
+export function $createPublishedValueItemNode(data: Component): PublishedValueItemNode {
   return new PublishedValueItemNode(data);
 }
 
@@ -32,7 +32,7 @@ function PublishedValueItemComponent({
   }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
-  data: ValueItem;
+  data: Component;
 }) {
   const { fieldSpec } = useContext(RichTextDisplayContext);
   const { adapter } = useContext(PublishedDossierContext);
@@ -55,7 +55,7 @@ function PublishedValueItemComponent({
 }
 
 export class PublishedValueItemNode extends DecoratorBlockNode {
-  __data: ValueItem;
+  __data: Component;
 
   static override getType(): string {
     return RichTextNodeType.valueItem;
@@ -65,17 +65,17 @@ export class PublishedValueItemNode extends DecoratorBlockNode {
     return new PublishedValueItemNode(node.__data, node.__format, node.__key);
   }
 
-  constructor(data: ValueItem, format?: ElementFormatType, key?: NodeKey) {
+  constructor(data: Component, format?: ElementFormatType, key?: NodeKey) {
     super(format, key);
     this.__data = data;
   }
 
-  setData(data: ValueItem) {
+  setData(data: Component) {
     const self = this.getWritable();
     self.__data = data;
   }
 
-  getData(): ValueItem {
+  getData(): Component {
     const self = this.getLatest();
     return self.__data;
   }

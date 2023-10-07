@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import type { AdminEntity, AdminEntityCreate, RichText, ValueItem } from '../Types.js';
+import type { AdminEntity, AdminEntityCreate, RichText, Component } from '../Types.js';
 import { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './ContentUtils.js';
 
 type AdminFoo = AdminEntity<'Foo', AdminFooFields, 'none'>;
@@ -11,7 +11,7 @@ interface AdminFooFields {
   richText: RichText | null;
 }
 
-type AdminTwoStrings = ValueItem<'TwoStrings', AdminTwoStringsFields>;
+type AdminTwoStrings = Component<'TwoStrings', AdminTwoStringsFields>;
 
 interface AdminTwoStringsFields {
   string1: string | null;

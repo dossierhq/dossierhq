@@ -1,5 +1,8 @@
 import type { EntityReference, EntityVersionReference } from '../Types.js';
-import type { AdminSchemaSpecificationWithMigrations } from '../schema/SchemaSpecification.js';
+import type {
+  AdminSchemaSpecificationWithMigrations,
+  LegacyAdminSchemaSpecificationWithMigrations,
+} from '../schema/SchemaSpecification.js';
 
 export const EventType = {
   createEntity: 'createEntity',
@@ -63,7 +66,9 @@ interface SyncEventShared<TEventType extends keyof typeof EventType>
 }
 
 export interface UpdateSchemaSyncEvent extends SyncEventShared<typeof EventType.updateSchema> {
-  schemaSpecification: AdminSchemaSpecificationWithMigrations;
+  schemaSpecification:
+    | AdminSchemaSpecificationWithMigrations
+    | LegacyAdminSchemaSpecificationWithMigrations;
 }
 
 export interface CreateEntitySyncEvent<

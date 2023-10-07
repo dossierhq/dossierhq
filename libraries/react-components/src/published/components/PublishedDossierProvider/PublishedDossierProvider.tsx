@@ -1,17 +1,17 @@
-import type { Logger, PublishedClient, PublishedEntity, ValueItem } from '@dossierhq/core';
+import type { Component, Logger, PublishedClient, PublishedEntity } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
-import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import type {
   PublishedDossierContextAdapter,
   PublishedDossierContextValue,
 } from '../../../contexts/PublishedDossierContext.js';
 import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
+import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 
 interface Props {
   adapter: PublishedDossierContextAdapter;
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>;
+  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>;
   authKeys: DisplayAuthKey[];
   logger?: Logger;
   children: ReactNode;

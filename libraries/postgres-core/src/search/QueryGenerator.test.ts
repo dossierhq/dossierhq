@@ -23,7 +23,7 @@ const adminSchema = AdminSchema.createAndValidate({
     { name: 'QueryGeneratorFoo', fields: [] },
     { name: 'QueryGeneratorBar', fields: [] },
   ],
-  valueTypes: [
+  componentTypes: [
     { name: 'QueryGeneratorValueOne', fields: [] },
     { name: 'QueryGeneratorValueTwo', fields: [] },
   ],

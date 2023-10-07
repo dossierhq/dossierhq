@@ -40,12 +40,12 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'bar', type: FieldType.Entity, entityTypes: ['QueryBar'] },
         { name: 'bars', type: FieldType.Entity, entityTypes: ['QueryBar'], list: true },
-        { name: 'stringedBar', type: FieldType.ValueItem, valueTypes: ['QueryStringedBar'] },
+        { name: 'stringedBar', type: FieldType.Component, componentTypes: ['QueryStringedBar'] },
       ],
     },
     { name: 'QueryBar', fields: [{ name: 'title', type: FieldType.String }] },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'QueryStringedBar',
       fields: [

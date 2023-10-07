@@ -1,14 +1,15 @@
 import type {
   AdminClient,
+  AdminComponentTypeSpecification,
+  AdminEntity,
   AdminEntityQuery,
   AdminEntitySharedQuery,
-  AdminEntity,
   AdminEntityTypeSpecification,
   AdminFieldSpecification,
   AdminSchema,
-  AdminValueTypeSpecification,
   ChangelogEvent,
   ChangelogEventQuery,
+  Component,
   ContentTraverseNode,
   Connection as CoreConnection,
   Edge as CoreEdge,
@@ -22,16 +23,15 @@ import type {
   Paging,
   PromiseResult,
   PublishedClient,
+  PublishedComponentTypeSpecification,
+  PublishedEntity,
   PublishedEntityQuery,
   PublishedEntitySharedQuery,
-  PublishedEntity,
   PublishedEntityTypeSpecification,
   PublishedFieldSpecification,
   PublishedSchema,
-  PublishedValueTypeSpecification,
   RichText,
   UniqueIndexReference,
-  ValueItem,
 } from '@dossierhq/core';
 import {
   ContentTraverseNodeType,
@@ -282,9 +282,9 @@ function resolveFields<TContext extends SessionGraphQLContext>(
   spec:
     | AdminEntityTypeSpecification
     | PublishedEntityTypeSpecification
-    | AdminValueTypeSpecification
-    | PublishedValueTypeSpecification,
-  item: ValueItem | PublishedEntity | AdminEntity,
+    | AdminComponentTypeSpecification
+    | PublishedComponentTypeSpecification,
+  item: Component | PublishedEntity | AdminEntity,
   isAdmin: boolean,
 ) {
   const fields = isItemValueItem(item) ? item : item.fields;
@@ -363,12 +363,12 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   schema: AdminSchema | PublishedSchema,
-  valueItem: ValueItem,
+  valueItem: Component,
   isAdmin: boolean,
-): ValueItem {
-  const valueSpec = schema.getValueTypeSpecification(valueItem.type);
+): Component {
+  const valueSpec = schema.getComponentTypeSpecification(valueItem.type);
   if (!valueSpec) {
-    throw new Error(`Couldn't find value spec for type: ${valueItem.type}`);
+    throw new Error(`Couldn't find component spec for type: ${valueItem.type}`);
   }
   const result = { ...valueItem };
   resolveFields<TContext>(schema, valueSpec, result, isAdmin);

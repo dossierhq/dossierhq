@@ -2,21 +2,21 @@ import type {
   AdminClient,
   AdminEntity,
   AdminExceptionClient,
+  Component,
   EntityReference,
   RichText,
-  ValueItem,
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes
 >;
 
@@ -66,7 +66,7 @@ export function assertIsAdminPerson(
   }
 }
 
-export type AppAdminValueItem = AdminCloudinaryImage;
+export type AppAdminComponent = AdminCloudinaryImage;
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
@@ -75,18 +75,18 @@ export interface AdminCloudinaryImageFields {
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
-): valueItem is AdminCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+  component: Component<string, object> | AdminCloudinaryImage,
+): component is AdminCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
 export function assertIsAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
-): asserts valueItem is AdminCloudinaryImage {
-  if (valueItem.type !== 'CloudinaryImage') {
-    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminCloudinaryImage,
+): asserts component is AdminCloudinaryImage {
+  if (component.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }

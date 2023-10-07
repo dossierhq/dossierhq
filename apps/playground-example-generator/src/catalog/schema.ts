@@ -3,6 +3,7 @@ import {
   REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
   type AdminBooleanFieldSpecificationUpdate,
+  type AdminComponentFieldSpecificationUpdate,
   type AdminEntityFieldSpecificationUpdate,
   type AdminEntityTypeSpecificationUpdate,
   type AdminLocationFieldSpecificationUpdate,
@@ -10,7 +11,6 @@ import {
   type AdminRichTextFieldSpecificationUpdate,
   type AdminSchemaSpecificationUpdate,
   type AdminStringFieldSpecificationUpdate,
-  type AdminValueItemFieldSpecificationUpdate,
 } from '@dossierhq/core';
 
 export const SCHEMA = {
@@ -112,7 +112,7 @@ export const SCHEMA = {
           name: 'nestedValueItem',
           type: FieldType.RichText,
           richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.valueItem],
-          valueTypes: ['NestedValueItem'],
+          componentTypes: ['NestedValueItem'],
         },
       ],
     },
@@ -152,16 +152,16 @@ export const SCHEMA = {
     {
       name: 'ValueItemsEntity',
       fields: [
-        { name: 'normal', type: FieldType.ValueItem, adminOnly: false },
-        { name: 'required', type: FieldType.ValueItem, required: true },
-        { name: 'list', type: FieldType.ValueItem, list: true },
-        { name: 'requiredList', type: FieldType.ValueItem, list: true, required: true },
-        { name: 'adminOnly', type: FieldType.ValueItem, adminOnly: true },
-        { name: 'cloudinaryImage', type: FieldType.ValueItem, valueTypes: ['CloudinaryImage'] },
+        { name: 'normal', type: FieldType.Component, adminOnly: false },
+        { name: 'required', type: FieldType.Component, required: true },
+        { name: 'list', type: FieldType.Component, list: true },
+        { name: 'requiredList', type: FieldType.Component, list: true, required: true },
+        { name: 'adminOnly', type: FieldType.Component, adminOnly: true },
+        { name: 'cloudinaryImage', type: FieldType.Component, componentTypes: ['CloudinaryImage'] },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'AdminOnlyValueItem',
       adminOnly: true,
@@ -180,7 +180,7 @@ export const SCHEMA = {
       name: 'NestedValueItem',
       fields: [
         { name: 'text', type: FieldType.String },
-        { name: 'child', type: FieldType.ValueItem, valueTypes: ['NestedValueItem'] },
+        { name: 'child', type: FieldType.Component, componentTypes: ['NestedValueItem'] },
       ],
     },
     {
@@ -247,7 +247,7 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
           richTextFieldSpec(entityType, 'numbersEntityLink').richTextNodes = [];
           richTextFieldSpec(entityType, 'numbersEntityLink').linkEntityTypes = [];
           richTextFieldSpec(entityType, 'nestedValueItem').richTextNodes = [];
-          richTextFieldSpec(entityType, 'nestedValueItem').valueTypes = [];
+          richTextFieldSpec(entityType, 'nestedValueItem').componentTypes = [];
         });
       case 'StringsEntity':
         return copyEntityType(entityType, (entityType) => {
@@ -262,11 +262,11 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
         });
       case 'ValueItemsEntity':
         return copyEntityType(entityType, (entityType) => {
-          valueItemFieldSpec(entityType, 'normal').adminOnly = true; // to allow adding admin only value items
-          valueItemFieldSpec(entityType, 'required').required = false;
-          valueItemFieldSpec(entityType, 'requiredList').required = false;
-          valueItemFieldSpec(entityType, 'adminOnly').adminOnly = false;
-          valueItemFieldSpec(entityType, 'cloudinaryImage').valueTypes = [];
+          componentFieldSpec(entityType, 'normal').adminOnly = true; // to allow adding admin only value items
+          componentFieldSpec(entityType, 'required').required = false;
+          componentFieldSpec(entityType, 'requiredList').required = false;
+          componentFieldSpec(entityType, 'adminOnly').adminOnly = false;
+          componentFieldSpec(entityType, 'cloudinaryImage').componentTypes = [];
         });
       default:
         return entityType;
@@ -298,6 +298,17 @@ function booleanFieldSpec(
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Boolean) {
     throw new Error(`Field ${entityType.name}.${name} is not boolean (${field.type})`);
+  }
+  return field;
+}
+
+function componentFieldSpec(
+  entityType: AdminEntityTypeSpecificationUpdate,
+  name: string,
+): AdminComponentFieldSpecificationUpdate {
+  const field = fieldSpec(entityType, name);
+  if (field.type !== FieldType.Component) {
+    throw new Error(`Field ${entityType.name}.${name} is not component (${field.type})`);
   }
   return field;
 }
@@ -353,17 +364,6 @@ function stringFieldSpec(
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.String) {
     throw new Error(`Field ${entityType.name}.${name} is not string (${field.type})`);
-  }
-  return field;
-}
-
-function valueItemFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
-  name: string,
-): AdminValueItemFieldSpecificationUpdate {
-  const field = fieldSpec(entityType, name);
-  if (field.type !== FieldType.ValueItem) {
-    throw new Error(`Field ${entityType.name}.${name} is not value item (${field.type})`);
   }
   return field;
 }

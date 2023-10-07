@@ -7,14 +7,14 @@ import type {
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes
 >;
 
@@ -204,4 +204,4 @@ export function assertIsAdminVehicle(
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;

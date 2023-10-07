@@ -109,49 +109,49 @@ beforeAll(async () => {
           },
           {
             name: 'oneString',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminOneString'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminOneString'],
           },
           {
             name: 'twoStrings',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminTwoStrings'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminTwoStrings'],
           },
           {
             name: 'twoStringsList',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminTwoStrings'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminTwoStrings'],
             list: true,
           },
           {
             name: 'booleanString',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminBooleanString'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminBooleanString'],
           },
           {
             name: 'stringReference',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminStringReference'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminStringReference'],
           },
           {
             name: 'listFields',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminListFields'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminListFields'],
           },
           {
             name: 'listFieldsList',
-            type: FieldType.ValueItem,
+            type: FieldType.Component,
             list: true,
-            valueTypes: ['EntityAdminListFields'],
+            componentTypes: ['EntityAdminListFields'],
           },
           {
             name: 'nested',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminNested'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminNested'],
           },
           {
             name: 'valueItem',
-            type: FieldType.ValueItem,
+            type: FieldType.Component,
           },
         ],
       },
@@ -162,7 +162,7 @@ beforeAll(async () => {
       },
       { name: 'AdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
     ],
-    valueTypes: [
+    componentTypes: [
       {
         name: 'EntityAdminOneString',
         fields: [{ name: 'one', type: FieldType.String, required: true }],
@@ -216,8 +216,8 @@ beforeAll(async () => {
           { name: 'title', type: FieldType.String },
           {
             name: 'child',
-            type: FieldType.ValueItem,
-            valueTypes: ['EntityAdminNested'],
+            type: FieldType.Component,
+            componentTypes: ['EntityAdminNested'],
           },
         ],
       },
@@ -1355,7 +1355,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings.type: Missing a ValueItem type',
+      'entity.fields.twoStrings.type: Missing a Component type',
     );
   });
 
@@ -1383,7 +1383,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.oneString: Value item of type EntityAdminTwoStrings is not allowed in field (supported types: EntityAdminOneString)',
+      'entity.fields.oneString: Component of type EntityAdminTwoStrings is not allowed in field (supported types: EntityAdminOneString)',
     );
   });
 
@@ -1537,7 +1537,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStringsList: Expected a list of ValueItem, got object',
+      'entity.fields.twoStringsList: Expected a list of Component, got object',
     );
   });
 
@@ -1554,7 +1554,7 @@ describe('createEntity()', () => {
     expectErrorResult(
       createResult,
       ErrorType.BadRequest,
-      'entity.fields.twoStrings: Expected single ValueItem, got a list',
+      'entity.fields.twoStrings: Expected single Component, got a list',
     );
   });
 });

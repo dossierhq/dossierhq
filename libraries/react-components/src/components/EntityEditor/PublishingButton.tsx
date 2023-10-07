@@ -1,12 +1,12 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  AdminEntityTypeSpecification,
-  ErrorType,
-  Result,
-  ValueItem,
+import {
+  AdminEntityStatus,
+  type AdminClient,
+  type AdminEntity,
+  type AdminEntityTypeSpecification,
+  type Component,
+  type ErrorType,
+  type Result,
 } from '@dossierhq/core';
-import { AdminEntityStatus } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
 import { Button, ButtonDropdown, NotificationContext, Row } from '@dossierhq/design';
 import { useContext, useMemo } from 'react';
@@ -136,7 +136,7 @@ function createPublishActions(
 async function executeAction(
   action: PublishingActionId,
   entity: AdminEntity,
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
   showNotification: (notification: NotificationInfo) => void,
 ) {
   const reference = { id: entity.id };

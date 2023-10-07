@@ -1,8 +1,8 @@
-import type { AdminClient, AdminEntity, AdminExceptionClient, PublishedClient, PublishedEntity, PublishedExceptionClient, ValueItem } from '@dossierhq/core';
+import type { AdminClient, AdminEntity, AdminExceptionClient, Component, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -25,7 +25,7 @@ export function assertIsAdminMessage(entity: AdminEntity<string, object>): asser
   }
 }
 
-export type AppAdminValueItem = AdminCloudinaryImage;
+export type AppAdminComponent = AdminCloudinaryImage;
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;
@@ -34,21 +34,21 @@ export interface AdminCloudinaryImageFields {
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
 
-export function isAdminCloudinaryImage(valueItem: ValueItem<string, object> | AdminCloudinaryImage): valueItem is AdminCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+export function isAdminCloudinaryImage(component: Component<string, object> | AdminCloudinaryImage): component is AdminCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
-export function assertIsAdminCloudinaryImage(valueItem: ValueItem<string, object> | AdminCloudinaryImage): asserts valueItem is AdminCloudinaryImage {
-  if (valueItem.type !== 'CloudinaryImage') {
-    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+export function assertIsAdminCloudinaryImage(component: Component<string, object> | AdminCloudinaryImage): asserts component is AdminCloudinaryImage {
+  if (component.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -71,7 +71,7 @@ export function assertIsPublishedMessage(entity: PublishedEntity<string, object>
   }
 }
 
-export type AppPublishedValueItem = PublishedCloudinaryImage;
+export type AppPublishedComponent = PublishedCloudinaryImage;
 
 export interface PublishedCloudinaryImageFields {
   publicId: string;
@@ -80,14 +80,14 @@ export interface PublishedCloudinaryImageFields {
   alt: string | null;
 }
 
-export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;
+export type PublishedCloudinaryImage = Component<'CloudinaryImage', PublishedCloudinaryImageFields>;
 
-export function isPublishedCloudinaryImage(valueItem: ValueItem<string, object> | PublishedCloudinaryImage): valueItem is PublishedCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+export function isPublishedCloudinaryImage(component: Component<string, object> | PublishedCloudinaryImage): component is PublishedCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
-export function assertIsPublishedCloudinaryImage(valueItem: ValueItem<string, object> | PublishedCloudinaryImage): asserts valueItem is PublishedCloudinaryImage {
-  if (valueItem.type !== 'CloudinaryImage') {
-    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+export function assertIsPublishedCloudinaryImage(component: Component<string, object> | PublishedCloudinaryImage): asserts component is PublishedCloudinaryImage {
+  if (component.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }

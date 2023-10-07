@@ -1,8 +1,9 @@
-import { assertExhaustive } from '../utils/Asserts.js';
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
+import { assertExhaustive } from '../utils/Asserts.js';
 import { isFieldValueEqual } from '../utils/isFieldValueEqual.js';
 import {
   FieldType,
+  type AdminComponentTypeSpecification,
   type AdminEntityTypeSpecification,
   type AdminFieldSpecification,
   type AdminFieldSpecificationUpdate,
@@ -10,12 +11,11 @@ import {
   type AdminSchemaSpecificationWithMigrations,
   type AdminSchemaTransientMigrationAction,
   type AdminSchemaVersionMigration,
-  type AdminValueTypeSpecification,
+  type ComponentFieldSpecification,
   type EntityFieldSpecification,
   type NumberFieldSpecification,
   type RichTextFieldSpecification,
   type StringFieldSpecification,
-  type ValueItemFieldSpecification,
 } from './SchemaSpecification.js';
 
 export function schemaUpdate(
@@ -92,34 +92,35 @@ export function schemaUpdate(
     }
   }
 
-  // Merge value types
-  if (update.valueTypes) {
-    for (const valueSpecUpdate of update.valueTypes) {
-      const existingIndex = schemaSpec.valueTypes.findIndex(
-        (it) => it.name === valueSpecUpdate.name,
+  // Merge component types
+  if (update.componentTypes) {
+    for (const componentSpecUpdate of update.componentTypes) {
+      const existingIndex = schemaSpec.componentTypes.findIndex(
+        (it) => it.name === componentSpecUpdate.name,
       );
-      const existingValueSpec = existingIndex >= 0 ? schemaSpec.valueTypes[existingIndex] : null;
+      const existingComponentSpec =
+        existingIndex >= 0 ? schemaSpec.componentTypes[existingIndex] : null;
 
       const adminOnly = valueOrExistingOrDefault(
-        valueSpecUpdate.adminOnly,
-        existingValueSpec?.adminOnly,
+        componentSpecUpdate.adminOnly,
+        existingComponentSpec?.adminOnly,
         false,
       );
 
       const collectFieldsResult = collectFieldSpecsFromUpdates(
-        valueSpecUpdate.fields,
-        existingValueSpec,
+        componentSpecUpdate.fields,
+        existingComponentSpec,
       );
       if (collectFieldsResult.isError()) return collectFieldsResult;
-      const valueSpec = {
-        name: valueSpecUpdate.name,
+      const componentSpec = {
+        name: componentSpecUpdate.name,
         adminOnly,
         fields: collectFieldsResult.value,
       };
       if (existingIndex >= 0) {
-        schemaSpec.valueTypes[existingIndex] = valueSpec;
+        schemaSpec.componentTypes[existingIndex] = componentSpec;
       } else {
-        schemaSpec.valueTypes.push(valueSpec);
+        schemaSpec.componentTypes.push(componentSpec);
       }
     }
   }
@@ -129,7 +130,7 @@ export function schemaUpdate(
     schemaSpec.entityTypes.map((it) => it.authKeyPattern).filter((it) => !!it) as string[],
   );
   const usedIndexes = new Set<string>();
-  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
+  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.componentTypes]) {
     for (const fieldSpec of typeSpec.fields) {
       if (fieldSpec.type !== FieldType.String) continue;
       if (fieldSpec.matchPattern) {
@@ -187,7 +188,7 @@ export function schemaUpdate(
 
   // Sort everything
   schemaSpec.entityTypes.sort((a, b) => a.name.localeCompare(b.name));
-  schemaSpec.valueTypes.sort((a, b) => a.name.localeCompare(b.name));
+  schemaSpec.componentTypes.sort((a, b) => a.name.localeCompare(b.name));
   schemaSpec.patterns.sort((a, b) => a.name.localeCompare(b.name));
   schemaSpec.indexes.sort((a, b) => a.name.localeCompare(b.name));
   schemaSpec.migrations.sort((a, b) => b.version - a.version);
@@ -328,21 +329,21 @@ function applyFieldMigration(
   schemaSpec: AdminSchemaSpecificationWithMigrations,
   actionSpec:
     | { action: string; entityType: string; field: string }
-    | { action: string; valueType: string; field: string },
+    | { action: string; componentType: string; field: string },
   apply: (
-    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
     fieldSpec: AdminFieldSpecification,
     fieldIndex: number,
   ) => void,
 ) {
-  let typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[];
+  let typeSpecs: (AdminEntityTypeSpecification | AdminComponentTypeSpecification)[];
   let typeName: string;
   if ('entityType' in actionSpec) {
     typeSpecs = schemaSpec.entityTypes;
     typeName = actionSpec.entityType;
   } else {
-    typeSpecs = schemaSpec.valueTypes;
-    typeName = actionSpec.valueType;
+    typeSpecs = schemaSpec.componentTypes;
+    typeName = actionSpec.componentType;
   }
 
   const typeSpec = typeSpecs.find((it) => it.name === typeName);
@@ -366,21 +367,21 @@ function applyFieldMigration(
 
 function applyTypeMigration(
   schemaSpec: AdminSchemaSpecificationWithMigrations,
-  actionSpec: { action: string; entityType: string } | { action: string; valueType: string },
+  actionSpec: { action: string; entityType: string } | { action: string; componentType: string },
   apply: (
-    typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[],
-    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    typeSpecs: (AdminEntityTypeSpecification | AdminComponentTypeSpecification)[],
+    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
     typeIndex: number,
   ) => void,
 ) {
-  let typeSpecs: (AdminEntityTypeSpecification | AdminValueTypeSpecification)[];
+  let typeSpecs: (AdminEntityTypeSpecification | AdminComponentTypeSpecification)[];
   let typeName: string;
   if ('entityType' in actionSpec) {
     typeSpecs = schemaSpec.entityTypes;
     typeName = actionSpec.entityType;
   } else {
-    typeSpecs = schemaSpec.valueTypes;
-    typeName = actionSpec.valueType;
+    typeSpecs = schemaSpec.componentTypes;
+    typeName = actionSpec.componentType;
   }
 
   const typeIndex = typeSpecs.findIndex((it) => it.name === typeName);
@@ -397,15 +398,15 @@ function applyTypeMigration(
 
 function applyTypeMigrationToTypeReferences(
   schemaSpec: AdminSchemaSpecificationWithMigrations,
-  actionSpec: { action: string; entityType: string } | { action: string; valueType: string },
+  actionSpec: { action: string; entityType: string } | { action: string; componentType: string },
   apply: (references: string[], typeIndex: number) => void,
 ) {
-  const typeName = 'entityType' in actionSpec ? actionSpec.entityType : actionSpec.valueType;
-  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
+  const typeName = 'entityType' in actionSpec ? actionSpec.entityType : actionSpec.componentType;
+  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.componentTypes]) {
     for (const fieldSpec of typeSpec.fields) {
       for (const property of 'entityType' in actionSpec
         ? ['entityTypes', 'linkEntityTypes']
-        : ['valueTypes']) {
+        : ['componentTypes']) {
         if (property in fieldSpec) {
           const references = (fieldSpec as unknown as Record<string, string[]>)[property];
           const index = references.indexOf(typeName);
@@ -468,7 +469,7 @@ function applyIndexMigrationToIndexReferences(
   actionSpec: { action: string; index: string },
   apply: () => string | null,
 ) {
-  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.valueTypes]) {
+  for (const typeSpec of [...schemaSpec.entityTypes, ...schemaSpec.componentTypes]) {
     for (const fieldSpec of typeSpec.fields) {
       if (fieldSpec.type === FieldType.String) {
         const reference = fieldSpec.index;
@@ -483,7 +484,7 @@ function applyIndexMigrationToIndexReferences(
 
 function collectFieldSpecsFromUpdates(
   fieldUpdates: AdminFieldSpecificationUpdate[],
-  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null,
+  existingTypeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification | null,
 ): Result<AdminFieldSpecification[], typeof ErrorType.BadRequest> {
   const fields: AdminFieldSpecification[] = [];
   const usedFieldNames = new Set<string>();
@@ -509,7 +510,7 @@ function collectFieldSpecsFromUpdates(
 
 function mergeAndNormalizeUpdatedFieldSpec(
   fieldSpecUpdate: AdminFieldSpecificationUpdate,
-  existingTypeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification | null,
+  existingTypeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification | null,
 ): Result<AdminFieldSpecification, typeof ErrorType.BadRequest> {
   const existingFieldSpec = existingTypeSpec?.fields.find((it) => it.name === fieldSpecUpdate.name);
 
@@ -612,10 +613,10 @@ function mergeAndNormalizeUpdatedFieldSpec(
         ),
       );
 
-      const valueTypes = sortAndRemoveDuplicates(
+      const componentTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
-          fieldSpecUpdate.valueTypes,
-          existingRichTextFieldSpec?.valueTypes,
+          fieldSpecUpdate.componentTypes,
+          existingRichTextFieldSpec?.componentTypes,
           [],
         ),
       );
@@ -629,7 +630,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
         richTextNodes,
         entityTypes,
         linkEntityTypes,
-        valueTypes,
+        componentTypes,
       });
     }
     case FieldType.String: {
@@ -672,14 +673,14 @@ function mergeAndNormalizeUpdatedFieldSpec(
         index,
       });
     }
-    case FieldType.ValueItem: {
-      const existingValueItemFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<ValueItemFieldSpecification>
+    case FieldType.Component: {
+      const existingComponentFieldSpec = existingFieldSpec as
+        | AdminFieldSpecification<ComponentFieldSpecification>
         | undefined;
-      const valueTypes = sortAndRemoveDuplicates(
+      const componentTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
-          fieldSpecUpdate.valueTypes,
-          existingValueItemFieldSpec?.valueTypes,
+          fieldSpecUpdate.componentTypes,
+          existingComponentFieldSpec?.componentTypes,
           [],
         ),
       );
@@ -689,7 +690,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
         list,
         required,
         adminOnly,
-        valueTypes,
+        componentTypes,
       });
     }
     default:

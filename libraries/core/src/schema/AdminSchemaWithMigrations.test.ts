@@ -1,17 +1,17 @@
 import { describe, expect, test } from 'vitest';
-import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { ErrorType } from '../ErrorResult.js';
 import { RichTextNodeType } from '../Types.js';
+import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { AdminSchemaWithMigrations } from './AdminSchema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
   type AdminSchemaSpecificationWithMigrations,
+  type ComponentFieldSpecification,
   type EntityFieldSpecification,
   type NumberFieldSpecification,
   type RichTextFieldSpecification,
   type StringFieldSpecification,
-  type ValueItemFieldSpecification,
 } from './SchemaSpecification.js';
 
 describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
@@ -21,7 +21,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
         schemaKind: 'admin',
         version: 1,
         entityTypes: [],
-        valueTypes: [],
+        componentTypes: [],
         patterns: [],
         indexes: [],
         migrations: [],
@@ -32,7 +32,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
       schemaKind: 'admin',
       version: 1,
       entityTypes: [],
-      valueTypes: [],
+      componentTypes: [],
       patterns: [],
       indexes: [],
       migrations: [],
@@ -66,13 +66,13 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
 
   test('use existing adminOnly value if not specified on value type update', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
+      componentTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
-      .updateAndValidate({ valueTypes: [{ name: 'Foo', fields: [] }] })
+      .updateAndValidate({ componentTypes: [{ name: 'Foo', fields: [] }] })
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
-    expect(result.spec.valueTypes[0].adminOnly).toBe(true);
+    expect(result.spec.componentTypes[0].adminOnly).toBe(true);
   });
 
   test('fields not updated are kept', () => {
@@ -275,7 +275,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
               type: FieldType.RichText,
               entityTypes: ['Foo'],
               linkEntityTypes: ['Foo'],
-              valueTypes: ['Bar'],
+              componentTypes: ['Bar'],
               richTextNodes: [
                 ...REQUIRED_RICH_TEXT_NODES,
                 RichTextNodeType.entity,
@@ -286,7 +286,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
           ],
         },
       ],
-      valueTypes: [{ name: 'Bar', fields: [] }],
+      componentTypes: [{ name: 'Bar', fields: [] }],
     })
       .valueOrThrow()
       .updateAndValidate({
@@ -298,7 +298,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     const richTextFieldSpec = result.spec.entityTypes[0].fields[0] as RichTextFieldSpecification;
     expect(richTextFieldSpec.entityTypes).toEqual(['Foo']);
     expect(richTextFieldSpec.linkEntityTypes).toEqual(['Foo']);
-    expect(richTextFieldSpec.valueTypes).toEqual(['Bar']);
+    expect(richTextFieldSpec.componentTypes).toEqual(['Bar']);
     expect(richTextFieldSpec.richTextNodes).toEqual([
       RichTextNodeType.entity,
       RichTextNodeType.entityLink,
@@ -311,7 +311,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     ]);
   });
 
-  test('use existing valueTypes value if not specified on ValueItem field update', () => {
+  test('use existing componentTypes value if not specified on Component field update', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
@@ -319,23 +319,23 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
           fields: [
             {
               name: 'field',
-              type: FieldType.ValueItem,
-              valueTypes: ['Bar'],
+              type: FieldType.Component,
+              componentTypes: ['Bar'],
             },
           ],
         },
       ],
-      valueTypes: [{ name: 'Bar', fields: [] }],
+      componentTypes: [{ name: 'Bar', fields: [] }],
     })
       .valueOrThrow()
       .updateAndValidate({
-        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.ValueItem }] }],
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Component }] }],
       })
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    const valueItemFieldSpec = result.spec.entityTypes[0].fields[0] as ValueItemFieldSpecification;
-    expect(valueItemFieldSpec.valueTypes).toEqual(['Bar']);
+    const componentFieldSpec = result.spec.entityTypes[0].fields[0] as ComponentFieldSpecification;
+    expect(componentFieldSpec.componentTypes).toEqual(['Bar']);
   });
 
   test('empty->entity with pattern', () => {
@@ -344,7 +344,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
         schemaKind: 'admin',
         version: 1,
         entityTypes: [],
-        valueTypes: [],
+        componentTypes: [],
         patterns: [],
         indexes: [],
         migrations: [],
@@ -446,7 +446,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
                 type: FieldType.RichText,
                 entityTypes: ['Entity', 'Entity'],
                 linkEntityTypes: ['Entity', 'Entity'],
-                valueTypes: ['ValueType', 'ValueType'],
+                componentTypes: ['ValueType', 'ValueType'],
                 richTextNodes: [
                   ...REQUIRED_RICH_TEXT_NODES,
                   RichTextNodeType.entity,
@@ -456,13 +456,13 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
               },
               {
                 name: 'valueItem',
-                type: FieldType.ValueItem,
-                valueTypes: ['ValueType', 'ValueType'],
+                type: FieldType.Component,
+                componentTypes: ['ValueType', 'ValueType'],
               },
             ],
           },
         ],
-        valueTypes: [{ name: 'ValueType', fields: [] }],
+        componentTypes: [{ name: 'ValueType', fields: [] }],
       })
       .valueOrThrow();
 
@@ -677,18 +677,21 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
 
   test('value item field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'deleteField', valueType: 'Foo', field: 'field' }] },
+          {
+            version: 2,
+            actions: [{ action: 'deleteField', componentType: 'Foo', field: 'field' }],
+          },
         ],
       })
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
 
-    expect(result.spec.valueTypes[0].fields).toEqual([]);
+    expect(result.spec.componentTypes[0].fields).toEqual([]);
   });
 
   test('Error: invalid type name', () => {
@@ -800,12 +803,12 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
               entityTypes: ['Foo'],
               linkEntityTypes: ['Foo'],
               richTextNodes: [...REQUIRED_RICH_TEXT_NODES, 'entity', 'entityLink', 'valueItem'],
-              valueTypes: ['ValueItem'],
+              componentTypes: ['ValueItem'],
             },
           ],
         },
       ],
-      valueTypes: [{ name: 'ValueItem', fields: [] }],
+      componentTypes: [{ name: 'ValueItem', fields: [] }],
     })
       .valueOrThrow()
       .updateAndValidate({
@@ -855,7 +858,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
 
   test('value item field (migration only)', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
       .updateAndValidate({
@@ -863,7 +866,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
           {
             version: 2,
             actions: [
-              { action: 'renameField', valueType: 'Foo', field: 'field', newName: 'newField' },
+              { action: 'renameField', componentType: 'Foo', field: 'field', newName: 'newField' },
             ],
           },
         ],
@@ -871,7 +874,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
 
-    expect(result.spec.valueTypes[0].fields[0].name).toBe('newField');
+    expect(result.spec.componentTypes[0].fields[0].name).toBe('newField');
   });
 
   test('Error: invalid type name', () => {
@@ -958,7 +961,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
           ],
         },
       ],
-      valueTypes: [
+      componentTypes: [
         {
           name: 'Baz',
           fields: [
@@ -1015,27 +1018,27 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
 
   test('value type', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
       .updateAndValidate({
-        migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'Foo' }] }],
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Foo' }] }],
       })
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
 
-    expect(result.spec.valueTypes).toEqual([]);
+    expect(result.spec.componentTypes).toEqual([]);
   });
 
   test('value type referenced by other fields', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [
+      componentTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] },
         {
           name: 'Bar',
           fields: [
-            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
-            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
       ],
@@ -1043,15 +1046,15 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
         {
           name: 'Baz',
           fields: [
-            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
-            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
       ],
     })
       .valueOrThrow()
       .updateAndValidate({
-        migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'Foo' }] }],
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Foo' }] }],
       })
       .valueOrThrow();
     expect(result.spec).toMatchSnapshot();
@@ -1104,7 +1107,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
           ],
         },
       ],
-      valueTypes: [
+      componentTypes: [
         {
           name: 'Baz',
           fields: [
@@ -1163,12 +1166,15 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
 
   test('value type', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'renameType', valueType: 'Foo', newName: 'Foo2' }] },
+          {
+            version: 2,
+            actions: [{ action: 'renameType', componentType: 'Foo', newName: 'Foo2' }],
+          },
         ],
       })
       .valueOrThrow();
@@ -1177,16 +1183,16 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
 
   test('value type referenced by other fields', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
-      valueTypes: [
+      componentTypes: [
         {
           name: 'Foo',
-          fields: [{ name: 'field', type: FieldType.ValueItem, valueTypes: ['Foo'] }],
+          fields: [{ name: 'field', type: FieldType.Component, componentTypes: ['Foo'] }],
         },
         {
           name: 'Bar',
           fields: [
-            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
-            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
       ],
@@ -1194,8 +1200,8 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
         {
           name: 'Baz',
           fields: [
-            { name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['Bar', 'Foo'] },
-            { name: 'richText', type: FieldType.RichText, valueTypes: ['Bar', 'Foo'] },
+            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
       ],
@@ -1203,7 +1209,10 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
-          { version: 2, actions: [{ action: 'renameType', valueType: 'Foo', newName: 'Foo2' }] },
+          {
+            version: 2,
+            actions: [{ action: 'renameType', componentType: 'Foo', newName: 'Foo2' }],
+          },
         ],
       })
       .valueOrThrow();
@@ -1252,7 +1261,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
           fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
         },
       ],
-      valueTypes: [
+      componentTypes: [
         {
           name: 'ValueType',
           fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
@@ -1279,7 +1288,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
           fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
         },
       ],
-      valueTypes: [
+      componentTypes: [
         {
           name: 'ValueType',
           fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
@@ -1328,7 +1337,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
           fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
         },
       ],
-      valueTypes: [
+      componentTypes: [
         {
           name: 'ValueType',
           fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
@@ -1353,9 +1362,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
           fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
         },
       ],
-      valueTypes: [
+      componentTypes: [
         {
-          name: 'ValueType',
+          name: 'ComponentType',
           fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
         },
       ],

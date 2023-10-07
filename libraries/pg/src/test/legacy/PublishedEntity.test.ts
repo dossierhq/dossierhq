@@ -58,7 +58,7 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       fields: [{ name: 'message', type: FieldType.String }],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'PublishedEntityStringedLocation',
       fields: [

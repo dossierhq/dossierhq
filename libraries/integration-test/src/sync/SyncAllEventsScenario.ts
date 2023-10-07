@@ -135,7 +135,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
         ],
       },
     ],
-    valueTypes: [],
+    componentTypes: [],
     indexes: [],
     patterns: [],
     schemaKind: 'admin',

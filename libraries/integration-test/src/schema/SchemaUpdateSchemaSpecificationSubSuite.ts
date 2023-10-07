@@ -5,8 +5,8 @@ import {
   copyEntity,
   ok,
   type AdminEntity,
+  type Component,
   type PublishedEntity,
-  type ValueItem,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -21,10 +21,10 @@ import {
   assertIsAdminValueItems,
   assertIsPublishedValueItems,
   type AdminValueItems,
+  type AppAdminComponent,
   type AppAdminEntity,
   type AppAdminUniqueIndexes,
-  type AppAdminValueItem,
-  type AppPublishedValueItem,
+  type AppPublishedComponent,
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
@@ -127,7 +127,9 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationValueItem({
       await adminClient.getSchemaSpecification({ includeMigrations: true })
     ).valueOrThrow();
 
-    const migrationValueSpec = schemaSpec.valueTypes.find((it) => it.name === 'MigrationValueItem');
+    const migrationValueSpec = schemaSpec.componentTypes.find(
+      (it) => it.name === 'MigrationValueItem',
+    );
     if (migrationValueSpec && migrationValueSpec.fields.length > 0) {
       const updateResult = await adminClient.updateSchemaSpecification({
         migrations: [
@@ -135,7 +137,7 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationValueItem({
             version: schemaSpec.version + 1,
             actions: migrationValueSpec.fields.map((it) => ({
               action: 'deleteField',
-              valueType: 'MigrationValueItem',
+              componentType: 'MigrationValueItem',
               field: it.name,
             })),
           },
@@ -158,7 +160,7 @@ async function updateSchemaSpecification_removeAllTemporaryValueTypes({
       await adminClient.getSchemaSpecification({ includeMigrations: true })
     ).valueOrThrow();
 
-    const valueSpecs = schemaSpec.valueTypes.filter(
+    const valueSpecs = schemaSpec.componentTypes.filter(
       (it) => it.name.startsWith('MigrationValueItem') && it.name !== 'MigrationValueItem',
     );
     if (valueSpecs.length > 0) {
@@ -166,7 +168,7 @@ async function updateSchemaSpecification_removeAllTemporaryValueTypes({
         migrations: [
           {
             version: schemaSpec.version + 1,
-            actions: valueSpecs.map((it) => ({ action: 'deleteType', valueType: it.name })),
+            actions: valueSpecs.map((it) => ({ action: 'deleteType', componentType: it.name })),
           },
         ],
       });
@@ -354,7 +356,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     // Make the value item adminOnly
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
       }),
     );
 
@@ -376,7 +378,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     // Make the value item normal
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
       }),
     );
 
@@ -421,7 +423,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     // Make the value item adminOnly
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
       }),
     );
 
@@ -445,7 +447,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     // Make the value item normal
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        valueTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
       }),
     );
 
@@ -987,7 +989,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [
+      componentTypes: [
         { name: 'MigrationValueItem', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
     });
@@ -1008,7 +1010,9 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteField', valueType: 'MigrationValueItem', field: fieldName }],
+          actions: [
+            { action: 'deleteField', componentType: 'MigrationValueItem', field: fieldName },
+          ],
         },
       ],
     });
@@ -1022,7 +1026,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
     await adminClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
   assertIsAdminValueItems(entityAfterMigration);
-  const adminValueItem = entityAfterMigration.fields.any as ValueItem;
+  const adminValueItem = entityAfterMigration.fields.any as Component;
   assertEquals(adminValueItem.type, 'MigrationValueItem');
   assertEquals(fieldName in adminValueItem, false);
 
@@ -1031,7 +1035,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
     await publishedClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
   assertIsPublishedValueItems(publishedEntityAfterMigration);
-  const publishedValueItem = publishedEntityAfterMigration.fields.any as ValueItem;
+  const publishedValueItem = publishedEntityAfterMigration.fields.any as Component;
   assertEquals(publishedValueItem.type, 'MigrationValueItem');
   assertEquals(fieldName in publishedValueItem, false);
 
@@ -1065,7 +1069,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [
+      componentTypes: [
         { name: 'MigrationValueItem', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
     });
@@ -1091,7 +1095,9 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteField', valueType: 'MigrationValueItem', field: fieldName }],
+          actions: [
+            { action: 'deleteField', componentType: 'MigrationValueItem', field: fieldName },
+          ],
         },
       ],
     });
@@ -1292,7 +1298,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [
+      componentTypes: [
         { name: 'MigrationValueItem', fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
     });
@@ -1316,7 +1322,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
           actions: [
             {
               action: 'renameField',
-              valueType: 'MigrationValueItem',
+              componentType: 'MigrationValueItem',
               field: oldFieldName,
               newName: newFieldName,
             },
@@ -1334,7 +1340,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   const entityAfterMigration = (
     await adminClient.getEntity({ id: entityId })
   ).valueOrThrow() as AdminEntity;
-  const valueItemAfterMigration = entityAfterMigration.fields.any as ValueItem;
+  const valueItemAfterMigration = entityAfterMigration.fields.any as Component;
   assertEquals(oldFieldName in valueItemAfterMigration, false);
   assertEquals(valueItemAfterMigration[newFieldName], 'value');
 
@@ -1342,7 +1348,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: entityId })
   ).valueOrThrow() as AdminEntity;
-  const publishedValueItem = publishedEntityAfterMigration.fields.any as ValueItem;
+  const publishedValueItem = publishedEntityAfterMigration.fields.any as Component;
   assertEquals(oldFieldName in publishedValueItem, false);
   assertEquals(publishedValueItem[newFieldName], 'value');
 
@@ -1356,7 +1362,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
       { publish: true },
     )
   ).valueOrThrow().entity as AdminEntity;
-  assertEquals((updatedNewNameEntity.fields.any as ValueItem)[newFieldName], 'updated value');
+  assertEquals((updatedNewNameEntity.fields.any as Component)[newFieldName], 'updated value');
 
   // Check that the old name is not usable
   const updatedOldNameResult = await adminClient.updateEntity(
@@ -1411,7 +1417,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1419,7 +1425,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: typeName, field: `Hello ${typeName}` } as AppAdminValueItem },
+          fields: { any: { type: typeName, field: `Hello ${typeName}` } as AppAdminComponent },
         }),
         { publish: true },
       )
@@ -1430,7 +1436,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteType', valueType: typeName }],
+          actions: [{ action: 'deleteType', componentType: typeName }],
         },
       ],
     });
@@ -1472,7 +1478,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1481,7 +1487,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: typeName, field: `Hello ${typeName}` } as AppAdminValueItem,
+            any: { type: typeName, field: `Hello ${typeName}` } as AppAdminComponent,
           },
         }),
         { publish: true },
@@ -1490,13 +1496,13 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
 
     // Delete/replace the value type
     const secondUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [
+      componentTypes: [
         { name: typeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
       ],
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteType', valueType: typeName }],
+          actions: [{ action: 'deleteType', componentType: typeName }],
         },
       ],
     });
@@ -1520,7 +1526,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
     await adminClient.updateEntity<AdminValueItems>(
       {
         id: reference.id,
-        fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppAdminValueItem },
+        fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppAdminComponent },
       },
       { publish: true },
     )
@@ -1528,7 +1534,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
   assertEquals(updatedEntity.fields.any, {
     type: typeName,
     field: [{ lat: 1, lng: 2 }],
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
 }
 
 async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid({
@@ -1541,7 +1547,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     assertOkResult(firstUpdateResult);
 
@@ -1550,7 +1556,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: typeName, field: 'this value will become invalid' } as AppAdminValueItem,
+            any: { type: typeName, field: 'this value will become invalid' } as AppAdminComponent,
           },
         }),
         { publish: true },
@@ -1560,7 +1566,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
 
     // Change validations to make the field invalid
     const secondUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [
+      componentTypes: [
         {
           name: typeName,
           fields: [{ name: 'field', type: FieldType.String, values: [{ value: 'valid' }] }],
@@ -1585,7 +1591,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteType', valueType: typeName }],
+          actions: [{ action: 'deleteType', componentType: typeName }],
         },
       ],
     });
@@ -1622,7 +1628,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1630,7 +1636,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: typeName, field: query.text } as AppAdminValueItem },
+          fields: { any: { type: typeName, field: query.text } as AppAdminComponent },
         }),
       )
     ).valueOrThrow();
@@ -1646,7 +1652,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'deleteType', valueType: typeName }],
+          actions: [{ action: 'deleteType', componentType: typeName }],
         },
       ],
     });
@@ -1867,7 +1873,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1876,7 +1882,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminValueItem,
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminComponent,
           },
         }),
         { publish: true },
@@ -1888,7 +1894,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'renameType', valueType: oldTypeName, newName: newTypeName }],
+          actions: [{ action: 'renameType', componentType: oldTypeName, newName: newTypeName }],
         },
       ],
     });
@@ -1903,7 +1909,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -1911,7 +1917,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
-  } as AppPublishedValueItem);
+  } as AppPublishedComponent);
 
   // Check that we can create new value items with the name
   const updateResult = await adminClient.updateEntity(
@@ -1936,7 +1942,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -1945,7 +1951,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminValueItem,
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminComponent,
           },
         }),
         { publish: true },
@@ -1954,13 +1960,13 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
 
     // Rename/replace the value type
     const secondUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [
+      componentTypes: [
         { name: oldTypeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
       ],
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'renameType', valueType: oldTypeName, newName: newTypeName }],
+          actions: [{ action: 'renameType', componentType: oldTypeName, newName: newTypeName }],
         },
       ],
     });
@@ -1975,7 +1981,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
 
   // And for published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -1983,7 +1989,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
-  } as AppPublishedValueItem);
+  } as AppPublishedComponent);
 
   // Check that both types are usable
   const updatedEntity = (
@@ -1991,8 +1997,8 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
       {
         id: reference.id,
         fields: {
-          any: { type: oldTypeName, field: [{ lat: 1, lng: 2 }] } as AppAdminValueItem,
-          anyAdminOnly: { type: newTypeName, field: `Hello ${newTypeName}` } as AppAdminValueItem,
+          any: { type: oldTypeName, field: [{ lat: 1, lng: 2 }] } as AppAdminComponent,
+          anyAdminOnly: { type: newTypeName, field: `Hello ${newTypeName}` } as AppAdminComponent,
         },
       },
       { publish: true },
@@ -2001,11 +2007,11 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
   assertEquals(updatedEntity.fields.any, {
     type: oldTypeName,
     field: [{ lat: 1, lng: 2 }],
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
   assertEquals(updatedEntity.fields.anyAdminOnly, {
     type: newTypeName,
     field: `Hello ${newTypeName}`,
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
 }
 
 async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes({
@@ -2020,7 +2026,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
+      componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2029,7 +2035,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminValueItem,
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminComponent,
           },
         }),
         { publish: true },
@@ -2039,14 +2045,14 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
     // Check that it's in the index
     const adminCountBeforeUpdateResult = await countSearchResultWithEntity(
       adminClient,
-      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppAdminValueItem['type']] },
+      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppAdminComponent['type']] },
       entity.id,
     );
     assertResultValue(adminCountBeforeUpdateResult, 1);
 
     const publishedCountBeforeUpdateResult = await countSearchResultWithEntity(
       publishedClient,
-      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppPublishedValueItem['type']] },
+      { entityTypes: ['ValueItems'], valueTypes: [oldTypeName as AppPublishedComponent['type']] },
       entity.id,
     );
     assertResultValue(publishedCountBeforeUpdateResult, 1);
@@ -2056,7 +2062,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
       migrations: [
         {
           version: schemaSpecification.version + 1,
-          actions: [{ action: 'renameType', valueType: oldTypeName, newName: newTypeName }],
+          actions: [{ action: 'renameType', componentType: oldTypeName, newName: newTypeName }],
         },
       ],
     });
@@ -2070,14 +2076,14 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
   // Check that it's in the index
   const adminCountAfterUpdateResult = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppAdminValueItem['type']] },
+    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppAdminComponent['type']] },
     reference.id,
   );
   assertResultValue(adminCountAfterUpdateResult, 1);
 
   const publishedCountAfterUpdateResult = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppPublishedValueItem['type']] },
+    { entityTypes: ['ValueItems'], valueTypes: [newTypeName as AppPublishedComponent['type']] },
     reference.id,
   );
   assertResultValue(publishedCountAfterUpdateResult, 1);
@@ -2241,7 +2247,9 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] }],
+      componentTypes: [
+        { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2249,7 +2257,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminValueItem },
+          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminComponent },
         }),
         { publish: true },
       )
@@ -2263,11 +2271,11 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
           actions: [
             {
               action: 'renameField',
-              valueType: oldTypeName,
+              componentType: oldTypeName,
               field: oldFieldName,
               newName: newFieldName,
             },
-            { action: 'renameType', valueType: oldTypeName, newName: newTypeName },
+            { action: 'renameType', componentType: oldTypeName, newName: newTypeName },
           ],
         },
       ],
@@ -2283,7 +2291,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -2291,7 +2299,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
-  } as AppPublishedValueItem);
+  } as AppPublishedComponent);
 
   // Check that we can create new value items with the name
   const updateResult = await adminClient.updateEntity(
@@ -2318,7 +2326,9 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     // First add new value type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
-      valueTypes: [{ name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] }],
+      componentTypes: [
+        { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
+      ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
@@ -2326,7 +2336,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminValueItem },
+          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminComponent },
         }),
         { publish: true },
       )
@@ -2338,10 +2348,10 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
         {
           version: schemaSpecification.version + 1,
           actions: [
-            { action: 'renameType', valueType: oldTypeName, newName: newTypeName },
+            { action: 'renameType', componentType: oldTypeName, newName: newTypeName },
             {
               action: 'renameField',
-              valueType: newTypeName,
+              componentType: newTypeName,
               field: oldFieldName,
               newName: newFieldName,
             },
@@ -2360,7 +2370,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
-  } as AppAdminValueItem);
+  } as AppAdminComponent);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -2368,7 +2378,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
-  } as AppPublishedValueItem);
+  } as AppPublishedComponent);
 
   // Check that we can create new value items with the name
   const updateResult = await adminClient.updateEntity(

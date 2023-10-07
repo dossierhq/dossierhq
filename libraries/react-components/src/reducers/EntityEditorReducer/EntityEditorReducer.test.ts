@@ -824,12 +824,12 @@ describe('EntityEditorReducer scenarios', () => {
             {
               name: 'Foo',
               fields: [
-                { name: 'adminOnly', type: FieldType.ValueItem, adminOnly: true },
-                { name: 'normal', type: FieldType.ValueItem },
+                { name: 'adminOnly', type: FieldType.Component, adminOnly: true },
+                { name: 'normal', type: FieldType.Component },
               ],
             },
           ],
-          valueTypes: [
+          componentTypes: [
             {
               name: 'RequiredString',
               fields: [{ name: 'required', type: FieldType.String, required: true }],

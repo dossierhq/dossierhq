@@ -3,7 +3,7 @@ import type {
   ErrorType,
   PublishedClient,
   PublishedEntity,
-  ValueItem,
+  Component,
 } from '@dossierhq/core';
 import { PublishedSchema } from '@dossierhq/core';
 import { useCallback } from 'react';
@@ -15,7 +15,7 @@ type FetcherData = PublishedSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function usePublishedSchema(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
+  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
@@ -35,7 +35,7 @@ export function usePublishedSchema(
 }
 
 async function fetchSchema(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
+  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
 ): Promise<FetcherData> {
   const result = await publishedClient.getSchemaSpecification();
   if (result.isError()) {

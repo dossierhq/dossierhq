@@ -8,7 +8,7 @@ import type {
   AdminEntity,
   AdminSchemaSpecificationUpdate,
   ClientContext,
-  ValueItem,
+  Component,
 } from '@dossierhq/core';
 import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
@@ -28,7 +28,7 @@ export async function createNewDatabase(databasePath: string): Promise<Database>
 }
 
 export async function createAdapterAndServer<
-  TAdminClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  TAdminClient extends AdminClient<AdminEntity<string, object>, Component<string, object>>,
 >(
   database: Database,
   schema: AdminSchemaSpecificationUpdate,

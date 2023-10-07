@@ -13,6 +13,7 @@ import {
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
+import { modernizeSchemaSpecification } from './SchemaModernizer.js';
 import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 import { schemaGetSpecification } from './schemaGetSpecification.js';
 
@@ -91,9 +92,12 @@ export async function schemaUpdateSpecificationSyncAction(
   }
 
   // We should be good here, but let's double check that applying the new schema to the old produces the same result
+
+  const modernSchemaSpecification = modernizeSchemaSpecification(event.schemaSpecification);
+
   // Merge update into previous schema
   const oldSchema = new AdminSchemaWithMigrations(previousSchemaSpec);
-  const mergeResult = oldSchema.updateAndValidate(event.schemaSpecification);
+  const mergeResult = oldSchema.updateAndValidate(modernSchemaSpecification);
   if (mergeResult.isError()) return mergeResult;
   const newSchema = mergeResult.value;
 
@@ -216,9 +220,9 @@ async function calculateAndUpdateSchemaSpec(
   if (deleteValueTypesResult.isError()) return deleteValueTypesResult;
 
   logger.info(
-    'Updated schema, new schema has %d entity types, %d value types, %d patterns, %d indexes',
+    'Updated schema, new schema has %d entity types, %d component types, %d patterns, %d indexes',
     newSchema.spec.entityTypes.length,
-    newSchema.spec.valueTypes.length,
+    newSchema.spec.componentTypes.length,
     newSchema.spec.patterns.length,
     newSchema.spec.indexes.length,
   );

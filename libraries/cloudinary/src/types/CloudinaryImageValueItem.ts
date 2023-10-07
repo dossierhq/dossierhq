@@ -1,4 +1,4 @@
-import type { AdminValueTypeSpecificationUpdate, ValueItem } from '@dossierhq/core';
+import type { AdminComponentTypeSpecificationUpdate, Component } from '@dossierhq/core';
 import { FieldType } from '@dossierhq/core';
 
 export interface AdminCloudinaryImageFields {
@@ -15,22 +15,22 @@ export interface PublishedCloudinaryImageFields {
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
-export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;
+export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type PublishedCloudinaryImage = Component<'CloudinaryImage', PublishedCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
+  valueItem: Component<string, object> | AdminCloudinaryImage,
 ): valueItem is AdminCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
 
 export function isPublishedCloudinaryImage(
-  valueItem: ValueItem<string, object> | PublishedCloudinaryImage,
+  valueItem: Component<string, object> | PublishedCloudinaryImage,
 ): valueItem is PublishedCloudinaryImage {
   return valueItem.type === 'CloudinaryImage';
 }
 
-export const CLOUDINARY_IMAGE_VALUE_TYPE: AdminValueTypeSpecificationUpdate = {
+export const CLOUDINARY_IMAGE_VALUE_TYPE: AdminComponentTypeSpecificationUpdate = {
   name: 'CloudinaryImage',
   fields: [
     { name: 'publicId', type: FieldType.String, required: true },

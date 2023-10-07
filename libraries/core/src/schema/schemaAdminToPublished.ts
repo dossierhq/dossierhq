@@ -12,7 +12,7 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<AdminSchemaSpecif
     schemaKind: 'published',
     version: adminSchema.spec.version,
     entityTypes: [],
-    valueTypes: [],
+    componentTypes: [],
     patterns: [],
     indexes: [],
   };
@@ -41,15 +41,15 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<AdminSchemaSpecif
     }
   }
 
-  for (const valueSpec of adminSchema.spec.valueTypes) {
+  for (const valueSpec of adminSchema.spec.componentTypes) {
     if (valueSpec.adminOnly) {
       continue;
     }
-    spec.valueTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
+    spec.componentTypes.push({ name: valueSpec.name, fields: toPublishedFields(valueSpec.fields) });
   }
 
   const usedIndexNames = new Set();
-  for (const typeSpec of [...spec.entityTypes, ...spec.valueTypes]) {
+  for (const typeSpec of [...spec.entityTypes, ...spec.componentTypes]) {
     for (const fieldSpec of typeSpec.fields) {
       if (fieldSpec.type !== FieldType.String) continue;
       if (fieldSpec.matchPattern) {

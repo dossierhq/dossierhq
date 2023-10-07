@@ -1,9 +1,9 @@
-import type {
-  RichTextFieldSpecification,
-  ValueItem,
-  ValueItemFieldSpecification,
+import {
+  FieldType,
+  type Component,
+  type ComponentFieldSpecification,
+  type RichTextFieldSpecification,
 } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import { Fragment, useContext } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
@@ -11,7 +11,7 @@ import type { FieldDisplayProps } from './FieldDisplay.js';
 import { FieldDisplay } from './FieldDisplay.js';
 
 interface Props
-  extends FieldDisplayProps<ValueItemFieldSpecification | RichTextFieldSpecification, ValueItem> {
+  extends FieldDisplayProps<ComponentFieldSpecification | RichTextFieldSpecification, Component> {
   className?: string;
 }
 
@@ -23,7 +23,7 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
   }
 
   const { type } = value;
-  const valueSpec = schema.getValueTypeSpecification(type);
+  const valueSpec = schema.getComponentTypeSpecification(type);
   if (!valueSpec) {
     return <div>Error</div>;
   }
@@ -42,7 +42,7 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
             <Text textStyle="subtitle1" marginBottom={0}>
               {valueFieldSpec.name}
             </Text>
-            {valueFieldSpec.type === FieldType.ValueItem ? (
+            {valueFieldSpec.type === FieldType.Component ? (
               <div className="nested-value-item-indentation">{fieldDisplay}</div>
             ) : (
               fieldDisplay

@@ -9,7 +9,7 @@ import {
   type PublishValidationIssue,
   type RichTextValueItemNode,
   type SaveValidationIssue,
-  type ValueItem,
+  type Component,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
@@ -33,7 +33,7 @@ export type SerializedAdminValueItemNode = RichTextValueItemNode;
 
 type ValidationIssue = SaveValidationIssue | PublishValidationIssue;
 
-export function $createAdminValueItemNode(data: ValueItem): AdminValueItemNode {
+export function $createAdminValueItemNode(data: Component): AdminValueItemNode {
   return new AdminValueItemNode(data);
 }
 
@@ -43,7 +43,7 @@ export function $isAdminValueItemNode(
   return node instanceof AdminValueItemNode;
 }
 
-export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<ValueItem> = createCommand();
+export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<Component> = createCommand();
 
 function AdminValueItemComponent({
   className,
@@ -57,16 +57,16 @@ function AdminValueItemComponent({
   }>;
   format: ElementFormatType | null;
   nodeKey: NodeKey;
-  data: ValueItem;
+  data: Component;
 }) {
   const [editor] = useLexicalComposerContext();
   const { adapter, schema: adminSchema } = useContext(AdminDossierContext);
   const { adminOnly: richTextAdminOnly } = useContext(RichTextEditorContext);
-  const valueSpec = adminSchema?.getValueTypeSpecification(data.type);
+  const valueSpec = adminSchema?.getComponentTypeSpecification(data.type);
   const adminOnly = richTextAdminOnly || !!valueSpec?.adminOnly;
 
   const setValue = useCallback(
-    (value: ValueItem) => {
+    (value: Component) => {
       editor.update(() => {
         const node = $getNodeByKey(nodeKey);
         if ($isAdminValueItemNode(node)) {
@@ -110,7 +110,7 @@ function AdminValueItemComponent({
 function validateItemValue(
   adminSchema: AdminSchema | undefined,
   adminOnly: boolean,
-  value: ValueItem,
+  value: Component,
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
   if (adminSchema) {
@@ -136,7 +136,7 @@ function validateItemValue(
 }
 
 export class AdminValueItemNode extends DecoratorBlockNode {
-  __data: ValueItem;
+  __data: Component;
 
   static override getType(): string {
     return RichTextNodeType.valueItem;
@@ -146,17 +146,17 @@ export class AdminValueItemNode extends DecoratorBlockNode {
     return new AdminValueItemNode(node.__data, node.__format, node.__key);
   }
 
-  constructor(data: ValueItem, format?: ElementFormatType, key?: NodeKey) {
+  constructor(data: Component, format?: ElementFormatType, key?: NodeKey) {
     super(format, key);
     this.__data = data;
   }
 
-  setData(data: ValueItem) {
+  setData(data: Component) {
     const self = this.getWritable();
     self.__data = data;
   }
 
-  getData(): ValueItem {
+  getData(): Component {
     const self = this.getLatest();
     return self.__data;
   }

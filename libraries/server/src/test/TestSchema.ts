@@ -7,12 +7,12 @@ export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
     {
       name: 'ValueItemsEntity',
       fields: [
-        { name: 'normal', type: FieldType.ValueItem },
-        { name: 'list', type: FieldType.ValueItem, list: true },
+        { name: 'normal', type: FieldType.Component },
+        { name: 'list', type: FieldType.Component, list: true },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'EntitiesValueItem',
       fields: [

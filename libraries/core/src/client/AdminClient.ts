@@ -25,6 +25,7 @@ import type {
   AdvisoryLockOptions,
   AdvisoryLockPayload,
   AdvisoryLockReleasePayload,
+  Component,
   Connection,
   Edge,
   EntityReference,
@@ -33,7 +34,6 @@ import type {
   EntityVersionReference,
   Paging,
   UniqueIndexReference,
-  ValueItem,
 } from '../Types.js';
 import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
 import type {
@@ -71,13 +71,13 @@ import {
 
 export interface AdminClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
-  TAdminValueItem extends ValueItem<string, object> = ValueItem,
+  TAdminComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
   TExceptionClient extends AdminExceptionClient<
     TAdminEntity,
-    TAdminValueItem,
+    TAdminComponent,
     TUniqueIndex
-  > = AdminExceptionClient<TAdminEntity, TAdminValueItem, TUniqueIndex>,
+  > = AdminExceptionClient<TAdminEntity, TAdminComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -127,7 +127,7 @@ export interface AdminClient<
   getEntities(
     query?: AdminEntityQuery<
       TAdminEntity['info']['type'],
-      TAdminValueItem['type'],
+      TAdminComponent['type'],
       TAdminEntity['info']['authKey']
     >,
     paging?: Paging,
@@ -139,7 +139,7 @@ export interface AdminClient<
   getEntitiesTotalCount(
     query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
-      TAdminValueItem['type'],
+      TAdminComponent['type'],
       TAdminEntity['info']['authKey']
     >,
   ): PromiseResult<
@@ -150,7 +150,7 @@ export interface AdminClient<
   getEntitiesSample(
     query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
-      TAdminValueItem['type'],
+      TAdminComponent['type'],
       TAdminEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
@@ -270,10 +270,10 @@ export interface AdminClient<
 
 export interface AdminExceptionClient<
   TAdminEntity extends AdminEntity<string, object> = AdminEntity,
-  TAdminValueItem extends ValueItem<string, object> = ValueItem,
+  TAdminComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
-  client: Readonly<AdminClient<TAdminEntity, TAdminValueItem, TUniqueIndex>>;
+  client: Readonly<AdminClient<TAdminEntity, TAdminComponent, TUniqueIndex>>;
 
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -310,7 +310,7 @@ export interface AdminExceptionClient<
   getEntities(
     query?: AdminEntityQuery<
       TAdminEntity['info']['type'],
-      TAdminValueItem['type'],
+      TAdminComponent['type'],
       TAdminEntity['info']['authKey']
     >,
     paging?: Paging,
@@ -319,7 +319,7 @@ export interface AdminExceptionClient<
   getEntitiesTotalCount(
     query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
-      TAdminValueItem['type'],
+      TAdminComponent['type'],
       TAdminEntity['info']['authKey']
     >,
   ): Promise<number>;
@@ -327,7 +327,7 @@ export interface AdminExceptionClient<
   getEntitiesSample(
     query?: AdminEntitySharedQuery<
       TAdminEntity['info']['type'],
-      TAdminValueItem['type'],
+      TAdminComponent['type'],
       TAdminEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
@@ -395,7 +395,7 @@ type AdminClientOperationName = keyof typeof AdminClientOperationName;
 
 type MethodParameters<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
 > = Parameters<TClient[TName]>;
 type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
   MethodReturnTypeOk<TName>,
@@ -403,17 +403,17 @@ type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
 >;
 type MethodReturnTypeWithoutPromise<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
 type MethodReturnTypeOk<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface AdminClientOperationArguments {
@@ -959,7 +959,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
 export function createBaseAdminClient<
   TContext extends ClientContext,
-  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: AdminClientMiddleware<TContext>[];
@@ -968,7 +968,7 @@ export function createBaseAdminClient<
 }
 
 export async function executeAdminClientOperationFromJson(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
   operationName: LooseAutocomplete<AdminClientOperationName>,
   operationArgs: AdminClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
@@ -1078,7 +1078,7 @@ export async function executeAdminClientOperationFromJson(
 
 export function convertJsonAdminClientResult<
   TName extends AdminClientOperationName,
-  TClient extends AdminClient<AdminEntity<string, object>, ValueItem<string, object>> = AdminClient,
+  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
 >(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>,

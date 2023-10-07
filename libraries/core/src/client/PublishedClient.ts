@@ -1,6 +1,7 @@
 import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from '../ErrorResult.js';
 import { ErrorType, notOk, ok } from '../ErrorResult.js';
 import type {
+  Component,
   Connection,
   Edge,
   EntityReference,
@@ -11,7 +12,6 @@ import type {
   PublishedEntityQuery,
   PublishedEntitySharedQuery,
   UniqueIndexReference,
-  ValueItem,
 } from '../Types.js';
 import type { PublishedSchemaSpecification } from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
@@ -33,13 +33,13 @@ import { executeOperationPipeline } from './SharedClient.js';
 
 export interface PublishedClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
-  TPublishedValueItem extends ValueItem<string, object> = ValueItem,
+  TPublishedComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
   TExceptionClient extends PublishedExceptionClient<
     TPublishedEntity,
-    TPublishedValueItem,
+    TPublishedComponent,
     TUniqueIndex
-  > = PublishedExceptionClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>,
+  > = PublishedExceptionClient<TPublishedEntity, TPublishedComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
@@ -69,7 +69,7 @@ export interface PublishedClient<
   getEntities(
     query?: PublishedEntityQuery<
       TPublishedEntity['info']['type'],
-      TPublishedValueItem['type'],
+      TPublishedComponent['type'],
       TPublishedEntity['info']['authKey']
     >,
     paging?: Paging,
@@ -81,7 +81,7 @@ export interface PublishedClient<
   getEntitiesTotalCount(
     query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
-      TPublishedValueItem['type'],
+      TPublishedComponent['type'],
       TPublishedEntity['info']['authKey']
     >,
   ): PromiseResult<
@@ -92,7 +92,7 @@ export interface PublishedClient<
   getEntitiesSample(
     query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
-      TPublishedValueItem['type'],
+      TPublishedComponent['type'],
       TPublishedEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
@@ -106,10 +106,10 @@ export interface PublishedClient<
 
 export interface PublishedExceptionClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
-  TPublishedValueItem extends ValueItem<string, object> = ValueItem,
+  TPublishedComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
-  client: Readonly<PublishedClient<TPublishedEntity, TPublishedValueItem, TUniqueIndex>>;
+  client: Readonly<PublishedClient<TPublishedEntity, TPublishedComponent, TUniqueIndex>>;
 
   getSchemaSpecification(): Promise<PublishedSchemaSpecification>;
 
@@ -132,7 +132,7 @@ export interface PublishedExceptionClient<
   getEntities(
     query?: PublishedEntityQuery<
       TPublishedEntity['info']['type'],
-      TPublishedValueItem['type'],
+      TPublishedComponent['type'],
       TPublishedEntity['info']['authKey']
     >,
     paging?: Paging,
@@ -141,7 +141,7 @@ export interface PublishedExceptionClient<
   getEntitiesTotalCount(
     query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
-      TPublishedValueItem['type'],
+      TPublishedComponent['type'],
       TPublishedEntity['info']['authKey']
     >,
   ): Promise<number>;
@@ -149,7 +149,7 @@ export interface PublishedExceptionClient<
   getEntitiesSample(
     query?: PublishedEntitySharedQuery<
       TPublishedEntity['info']['type'],
-      TPublishedValueItem['type'],
+      TPublishedComponent['type'],
       TPublishedEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
@@ -170,7 +170,7 @@ type MethodParameters<
   TName extends keyof PublishedClient,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
-    ValueItem<string, object>
+    Component<string, object>
   > = PublishedClient,
 > = Parameters<TClient[TName]>;
 type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
@@ -178,7 +178,7 @@ type MethodReturnTypeWithoutPromise<
   TName extends keyof PublishedClient,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
-    ValueItem<string, object>
+    Component<string, object>
   > = PublishedClient,
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
@@ -187,14 +187,14 @@ type MethodReturnTypeOk<
   TName extends keyof PublishedClient,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
-    ValueItem<string, object>
+    Component<string, object>
   > = PublishedClient,
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
   TName extends keyof PublishedClient,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
-    ValueItem<string, object>
+    Component<string, object>
   > = PublishedClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
@@ -419,7 +419,7 @@ export function createBasePublishedClient<
   TContext extends ClientContext,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
-    ValueItem<string, object>
+    Component<string, object>
   > = PublishedClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
@@ -429,7 +429,7 @@ export function createBasePublishedClient<
 }
 
 export async function executePublishedClientOperationFromJson(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
+  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
   operationName: LooseAutocomplete<PublishedClientOperationName>,
   operationArgs: PublishedClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
@@ -474,7 +474,7 @@ export function convertJsonPublishedClientResult<
   TName extends PublishedClientOperationName,
   TClient extends PublishedClient<
     PublishedEntity<string, object>,
-    ValueItem<string, object>
+    Component<string, object>
   > = PublishedClient,
 >(
   operationName: TName,

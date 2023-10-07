@@ -1,6 +1,6 @@
-import type { LooseAutocomplete } from '../utils/TypeUtils.js';
-import type { EntityReference, Location, RichText, ValueItem } from '../Types.js';
+import type { Component, EntityReference, Location, RichText } from '../Types.js';
 import { RichTextNodeType } from '../Types.js';
+import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 
 export interface AdminEntityTypeSpecification {
   name: string;
@@ -10,7 +10,7 @@ export interface AdminEntityTypeSpecification {
   fields: AdminFieldSpecification[];
 }
 
-export interface AdminValueTypeSpecification {
+export interface AdminComponentTypeSpecification {
   name: string;
   adminOnly: boolean;
   fields: AdminFieldSpecification[];
@@ -24,7 +24,7 @@ export interface AdminEntityTypeSpecificationUpdate {
   fields: AdminFieldSpecificationUpdate[];
 }
 
-export interface AdminValueTypeSpecificationUpdate {
+export interface AdminComponentTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
   fields: AdminFieldSpecificationUpdate[];
@@ -36,19 +36,19 @@ export interface PublishedEntityTypeSpecification {
   fields: PublishedFieldSpecification[];
 }
 
-export interface PublishedValueTypeSpecification {
+export interface PublishedComponentTypeSpecification {
   name: string;
   fields: PublishedFieldSpecification[];
 }
 
 export const FieldType = {
   Boolean: 'Boolean',
+  Component: 'Component',
   Entity: 'Entity',
   Location: 'Location',
   Number: 'Number',
   RichText: 'RichText',
   String: 'String',
-  ValueItem: 'ValueItem',
 } as const;
 export type FieldType = (typeof FieldType)[keyof typeof FieldType];
 
@@ -60,6 +60,11 @@ interface SharedFieldSpecification {
 
 export interface BooleanFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.Boolean;
+}
+
+export interface ComponentFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.Component;
+  componentTypes: string[];
 }
 
 export interface EntityFieldSpecification extends SharedFieldSpecification {
@@ -80,7 +85,7 @@ export interface RichTextFieldSpecification extends SharedFieldSpecification {
   type: typeof FieldType.RichText;
   entityTypes: string[];
   linkEntityTypes: string[];
-  valueTypes: string[];
+  componentTypes: string[];
   /** All node types are enabled if none are specified.
    *
    * The type can either be a standard RichTextNodeType or any type that's supported by the
@@ -97,11 +102,6 @@ export interface StringFieldSpecification extends SharedFieldSpecification {
   index: string | null;
 }
 
-export interface ValueItemFieldSpecification extends SharedFieldSpecification {
-  type: typeof FieldType.ValueItem;
-  valueTypes: string[];
-}
-
 export type FieldSpecification =
   | BooleanFieldSpecification
   | EntityFieldSpecification
@@ -109,7 +109,7 @@ export type FieldSpecification =
   | NumberFieldSpecification
   | RichTextFieldSpecification
   | StringFieldSpecification
-  | ValueItemFieldSpecification;
+  | ComponentFieldSpecification;
 
 export type AdminFieldSpecification<TFieldSpec extends FieldSpecification = FieldSpecification> =
   TFieldSpec & {
@@ -120,6 +120,10 @@ type PartialExcept<T, K extends keyof T> = Pick<T, K> & Partial<Omit<T, K>>;
 
 export type AdminBooleanFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<BooleanFieldSpecification>,
+  'name' | 'type'
+>;
+export type AdminComponentFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<ComponentFieldSpecification>,
   'name' | 'type'
 >;
 export type AdminEntityFieldSpecificationUpdate = PartialExcept<
@@ -142,30 +146,26 @@ export type AdminStringFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<StringFieldSpecification>,
   'name' | 'type'
 >;
-export type AdminValueItemFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<ValueItemFieldSpecification>,
-  'name' | 'type'
->;
 
 export type AdminFieldSpecificationUpdate =
   | AdminBooleanFieldSpecificationUpdate
+  | AdminComponentFieldSpecificationUpdate
   | AdminEntityFieldSpecificationUpdate
   | AdminLocationFieldSpecificationUpdate
   | AdminNumberFieldSpecificationUpdate
   | AdminRichTextFieldSpecificationUpdate
-  | AdminStringFieldSpecificationUpdate
-  | AdminValueItemFieldSpecificationUpdate;
+  | AdminStringFieldSpecificationUpdate;
 
 export type PublishedFieldSpecification = FieldSpecification;
 
 export interface FieldValueTypeMap {
   [FieldType.Boolean]: boolean;
+  [FieldType.Component]: Component;
   [FieldType.Entity]: EntityReference;
   [FieldType.Location]: Location;
   [FieldType.Number]: number;
   [FieldType.RichText]: RichText;
   [FieldType.String]: string;
-  [FieldType.ValueItem]: ValueItem;
 }
 
 export interface SchemaPatternSpecification {
@@ -182,7 +182,7 @@ export interface PublishedSchemaSpecification {
   schemaKind: 'published';
   version: number;
   entityTypes: PublishedEntityTypeSpecification[];
-  valueTypes: PublishedValueTypeSpecification[];
+  componentTypes: PublishedComponentTypeSpecification[];
   patterns: SchemaPatternSpecification[];
   indexes: SchemaIndexSpecification[];
 }
@@ -191,7 +191,7 @@ export interface AdminSchemaSpecification {
   schemaKind: 'admin';
   version: number;
   entityTypes: AdminEntityTypeSpecification[];
-  valueTypes: AdminValueTypeSpecification[];
+  componentTypes: AdminComponentTypeSpecification[];
   patterns: SchemaPatternSpecification[];
   indexes: SchemaIndexSpecification[];
 }
@@ -207,13 +207,13 @@ export interface AdminSchemaVersionMigration {
 
 export type AdminSchemaMigrationAction =
   | { action: 'renameType'; entityType: string; newName: string }
-  | { action: 'renameType'; valueType: string; newName: string }
+  | { action: 'renameType'; componentType: string; newName: string }
   | { action: 'renameField'; entityType: string; field: string; newName: string }
-  | { action: 'renameField'; valueType: string; field: string; newName: string }
+  | { action: 'renameField'; componentType: string; field: string; newName: string }
   | { action: 'deleteType'; entityType: string }
-  | { action: 'deleteType'; valueType: string }
+  | { action: 'deleteType'; componentType: string }
   | { action: 'deleteField'; entityType: string; field: string }
-  | { action: 'deleteField'; valueType: string; field: string };
+  | { action: 'deleteField'; componentType: string; field: string };
 
 export type AdminSchemaTransientMigrationAction =
   | { action: 'renameIndex'; index: string; newName: string }
@@ -222,7 +222,7 @@ export type AdminSchemaTransientMigrationAction =
 export interface AdminSchemaSpecificationUpdate {
   version?: number;
   entityTypes?: AdminEntityTypeSpecificationUpdate[];
-  valueTypes?: AdminValueTypeSpecificationUpdate[];
+  componentTypes?: AdminComponentTypeSpecificationUpdate[];
   patterns?: SchemaPatternSpecification[];
   indexes?: SchemaIndexSpecification[];
   migrations?: AdminSchemaVersionMigration[];
@@ -237,6 +237,52 @@ export interface SchemaSpecificationUpdatePayload<
   effect: 'updated' | 'none';
   schemaSpecification: TSpec;
 }
+
+export type LegacyAdminSchemaSpecificationWithMigrations =
+  Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations;
+
+/** In version after 0.4.7:
+ * - valueTypes was renamed to componentTypes
+ * - field type ValueItem was renamed to Component
+ * - field spec validations valueTypes were renamed to componentTypes
+ * - migration actions valueType selector was renamed to componentType
+ */
+interface Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations
+  extends Omit<
+    AdminSchemaSpecificationWithMigrations,
+    'entityTypes' | 'componentTypes' | 'migrations'
+  > {
+  entityTypes: (Omit<AdminEntityTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_4_7_AdminFieldSpecification[];
+  })[];
+  valueTypes: (Omit<AdminComponentTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_4_7_AdminFieldSpecification[];
+  })[];
+  migrations: (Omit<AdminSchemaVersionMigration, 'actions'> & {
+    actions: Legacy_v0_4_7_AdminSchemaMigrationAction[];
+  })[];
+}
+
+type Legacy_V0_4_7_AdminFieldSpecification<
+  T extends AdminFieldSpecification = AdminFieldSpecification,
+> = T extends ComponentFieldSpecification
+  ? Omit<AdminFieldSpecification<ComponentFieldSpecification>, 'type' | 'componentTypes'> & {
+      type: 'ValueItem';
+      valueTypes: string[];
+    }
+  : T extends RichTextFieldSpecification
+  ? Omit<AdminFieldSpecification<RichTextFieldSpecification>, 'componentTypes'> & {
+      valueTypes: string[];
+    }
+  : T;
+
+type Legacy_v0_4_7_AdminSchemaMigrationAction<
+  T extends AdminSchemaMigrationAction = AdminSchemaMigrationAction,
+> = T extends {
+  componentType: string;
+}
+  ? Omit<T, 'componentType'> & { valueType: string }
+  : T;
 
 export const REQUIRED_RICH_TEXT_NODES = [
   RichTextNodeType.root,

@@ -42,7 +42,7 @@ class AdminAdapter implements AdminDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (
-      fieldSpec.type === FieldType.ValueItem &&
+      fieldSpec.type === FieldType.Component &&
       isValueItemField(fieldSpec, value) &&
       value &&
       isAdminCloudinaryImage(value)

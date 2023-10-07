@@ -9,6 +9,7 @@ import {
   type AdminClientMiddleware,
   type AdminEntity,
   type AdminSchemaSpecificationWithMigrations,
+  type Component,
   type Connection,
   type ContextProvider,
   type Edge,
@@ -23,7 +24,6 @@ import {
   type PublishedSchema,
   type Result,
   type SyncEvent,
-  type ValueItem,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -121,7 +121,7 @@ export interface Server<
   createAdminClient<
     TClient extends AdminClient<
       AdminEntity<string, object>,
-      ValueItem<string, object>
+      Component<string, object>
     > = AdminClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
@@ -131,7 +131,7 @@ export interface Server<
   createPublishedClient<
     TClient extends PublishedClient<
       PublishedEntity<string, object>,
-      ValueItem<string, object>
+      Component<string, object>
     > = PublishedClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
@@ -394,7 +394,7 @@ export async function createServer<
     createAdminClient: <
       TClient extends AdminClient<
         AdminEntity<string, object>,
-        ValueItem<string, object>
+        Component<string, object>
       > = AdminClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
@@ -411,7 +411,7 @@ export async function createServer<
     createPublishedClient: <
       TClient extends PublishedClient<
         PublishedEntity<string, object>,
-        ValueItem<string, object>
+        Component<string, object>
       > = PublishedClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,

@@ -25,12 +25,12 @@ import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { Database } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
-import type { CursorNativeType } from './OpaqueCursor.js';
-import { toOpaqueCursor } from './OpaqueCursor.js';
 import {
   addConnectionOrderByAndLimit,
   addConnectionPagingFilter,
 } from '../utils/ConnectionUtils.js';
+import type { CursorNativeType } from './OpaqueCursor.js';
+import { toOpaqueCursor } from './OpaqueCursor.js';
 
 // id and updated_seq are included for order by
 export type SearchAdminEntitiesItem = Pick<
@@ -528,7 +528,7 @@ function getFilterValueTypes(
     return ok([]);
   }
   for (const valueType of query.valueTypes) {
-    if (schema.getValueTypeSpecification(valueType) === null) {
+    if (schema.getComponentTypeSpecification(valueType) === null) {
       return notOk.BadRequest(`Can’t find value type in query: ${valueType}`);
     }
   }

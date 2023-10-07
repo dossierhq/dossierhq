@@ -2,6 +2,7 @@ import type {
   AdminEntity,
   AdminEntityCreate,
   AdminEntityUpdate,
+  Component,
   EntityLike,
   PublishedEntity,
   RichTextCodeHighlightNode,
@@ -20,7 +21,6 @@ import type {
   RichTextTabNode,
   RichTextTextNode,
   RichTextValueItemNode,
-  ValueItem,
 } from '../Types.js';
 import { RichTextNodeType } from '../Types.js';
 import type { FieldSpecification, FieldValueTypeMap } from '../schema/SchemaSpecification.js';
@@ -179,24 +179,24 @@ export function isRichTextItemField(
 export function isValueItemField(
   fieldSpec: FieldSpecification,
   value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.ValueItem] | null {
-  return fieldSpec.type === FieldType.ValueItem && !fieldSpec.list;
+): value is FieldValueTypeMap[typeof FieldType.Component] | null {
+  return fieldSpec.type === FieldType.Component && !fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is a list ValueItem field */
 export function isValueItemListField(
   fieldSpec: FieldSpecification,
   value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.ValueItem][] | null {
-  return fieldSpec.type === FieldType.ValueItem && fieldSpec.list;
+): value is FieldValueTypeMap[typeof FieldType.Component][] | null {
+  return fieldSpec.type === FieldType.Component && fieldSpec.list;
 }
 
 /** Check if `value` with `fieldSpec` is either a single ValueItem field or an item in a list field */
 export function isValueItemItemField(
   fieldSpec: FieldSpecification,
   value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.ValueItem] | null {
-  return fieldSpec.type === FieldType.ValueItem;
+): value is FieldValueTypeMap[typeof FieldType.Component] | null {
+  return fieldSpec.type === FieldType.Component;
 }
 
 export function isRichTextTextNode(
@@ -287,24 +287,24 @@ export function isRichTextListItemNode(
 
 export function isItemValueItem(
   item:
-    | ValueItem
+    | Component
     | PublishedEntity
     | AdminEntity
     | AdminEntityCreate
     | AdminEntityUpdate
     | EntityLike,
-): item is ValueItem {
+): item is Component {
   return 'type' in item;
 }
 
 export function isItemAdminEntity(
-  item: ValueItem | PublishedEntity | AdminEntity,
+  item: Component | PublishedEntity | AdminEntity,
 ): item is AdminEntity {
   return !isItemValueItem(item) && 'version' in item.info;
 }
 
 export function isItemEntity(
-  item: ValueItem | PublishedEntity | AdminEntity,
+  item: Component | PublishedEntity | AdminEntity,
 ): item is PublishedEntity {
   return !isItemValueItem(item) && !isItemAdminEntity(item);
 }

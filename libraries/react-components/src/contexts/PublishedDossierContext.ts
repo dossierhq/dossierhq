@@ -1,18 +1,18 @@
 import type {
+  Component,
   ErrorResult,
   ErrorType,
   Logger,
   PublishedClient,
   PublishedEntity,
   PublishedSchema,
-  ValueItem,
 } from '@dossierhq/core';
 import { createContext } from 'react';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
 export interface RichTextValueItemDisplayProps {
-  value: ValueItem;
+  value: Component;
 }
 
 export interface PublishedDossierContextAdapter {
@@ -22,7 +22,7 @@ export interface PublishedDossierContextAdapter {
 
 export interface PublishedDossierContextValue {
   adapter: PublishedDossierContextAdapter;
-  publishedClient: PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>;
+  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>;
   logger: Logger;
   schema: PublishedSchema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

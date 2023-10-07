@@ -1,5 +1,47 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Validate entity component > Fail: admin only value item in normal field 1`] = `
+[
+  {
+    "message": "Value item of type AdminOnlyValueItem is adminOnly",
+    "path": [
+      "entity",
+      "fields",
+      "any",
+    ],
+    "type": "publish",
+  },
+]
+`;
+
+exports[`Validate entity component > Fail: extra fields 1`] = `
+[
+  {
+    "message": "Invalid fields for value item of type NumbersValueItem: extra",
+    "path": [
+      "entity",
+      "fields",
+      "any",
+    ],
+    "type": "save",
+  },
+]
+`;
+
+exports[`Validate entity component > Fail: wrong type, not matching componentTypes 1`] = `
+[
+  {
+    "message": "Component of type NumbersValueItem is not allowed in field (supported types: StringsValueItem)",
+    "path": [
+      "entity",
+      "fields",
+      "stringsValueItem",
+    ],
+    "type": "save",
+  },
+]
+`;
+
 exports[`Validate entity entity > Fail: reference with extra keys 1`] = `
 [
   {
@@ -151,48 +193,6 @@ exports[`Validate entity string > Fail: values unmatched string list 1`] = `
       "fields",
       "valuesList",
       1,
-    ],
-    "type": "save",
-  },
-]
-`;
-
-exports[`Validate entity valueItem > Fail: admin only value item in normal field 1`] = `
-[
-  {
-    "message": "Value item of type AdminOnlyValueItem is adminOnly",
-    "path": [
-      "entity",
-      "fields",
-      "any",
-    ],
-    "type": "publish",
-  },
-]
-`;
-
-exports[`Validate entity valueItem > Fail: extra fields 1`] = `
-[
-  {
-    "message": "Invalid fields for value item of type NumbersValueItem: extra",
-    "path": [
-      "entity",
-      "fields",
-      "any",
-    ],
-    "type": "save",
-  },
-]
-`;
-
-exports[`Validate entity valueItem > Fail: wrong type, not matching valueTypes 1`] = `
-[
-  {
-    "message": "Value item of type NumbersValueItem is not allowed in field (supported types: StringsValueItem)",
-    "path": [
-      "entity",
-      "fields",
-      "stringsValueItem",
     ],
     "type": "save",
   },

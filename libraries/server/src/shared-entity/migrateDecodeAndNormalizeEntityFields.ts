@@ -96,7 +96,7 @@ const DECODE_TRANSFORMER: ContentTransformer<
   transformFieldItem(schema, _path, fieldSpec, value: unknown) {
     if (isValueItemItemField(fieldSpec, value)) {
       const valueType = value?.type;
-      if (valueType && !schema.getValueTypeSpecification(valueType)) {
+      if (valueType && !schema.getComponentTypeSpecification(valueType)) {
         // Could be that the value type was deleted or made adminOnly (when decoding published entities)
         return ok(null);
       }
@@ -106,7 +106,7 @@ const DECODE_TRANSFORMER: ContentTransformer<
   transformRichTextNode(schema, _path, _fieldSpec, node) {
     if (isRichTextValueItemNode(node)) {
       const valueType = node.data.type;
-      if (valueType && !schema.getValueTypeSpecification(valueType)) {
+      if (valueType && !schema.getComponentTypeSpecification(valueType)) {
         // Could be that the value type was deleted or made adminOnly (when decoding published entities)
         return ok(null);
       }

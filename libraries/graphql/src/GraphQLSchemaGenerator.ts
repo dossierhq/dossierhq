@@ -6,30 +6,30 @@ import {
   isValueItemField,
   notOk,
   type AdminClient,
-  type AdminEntityQuery,
-  type AdminEntitySharedQuery,
+  type AdminComponentTypeSpecification,
   type AdminEntity,
   type AdminEntityCreate,
+  type AdminEntityQuery,
+  type AdminEntitySharedQuery,
   type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminEntityUpsert,
   type AdminSchema,
-  type AdminValueTypeSpecification,
   type AdvisoryLockOptions,
   type ChangelogEvent,
   type ChangelogEventQuery,
+  type Component,
   type EntityReference,
   type EntityVersionReference,
   type ErrorType,
   type PublishedClient,
+  type PublishedComponentTypeSpecification,
+  type PublishedEntity,
   type PublishedEntityQuery,
   type PublishedEntitySharedQuery,
-  type PublishedEntity,
   type PublishedEntityTypeSpecification,
   type PublishedSchema,
-  type PublishedValueTypeSpecification,
   type Result,
-  type ValueItem,
 } from '@dossierhq/core';
 import {
   GraphQLBoolean,
@@ -80,12 +80,12 @@ import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
   adminClient: Result<
-    AdminClient<AdminEntity> | AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+    AdminClient<AdminEntity> | AdminClient<AdminEntity<string, object>, Component<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
   publishedClient: Result<
     | PublishedClient<PublishedEntity>
-    | PublishedClient<PublishedEntity<string, object>, ValueItem<string, object>>,
+    | PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
 }
@@ -184,10 +184,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    if (publishedSchema.getValueTypeCount() > 0) {
+    if (publishedSchema.getComponentTypeCount() > 0) {
       // PublishedValueType
       const valueTypeEnumValues: GraphQLEnumValueConfigMap = {};
-      for (const valueSpec of publishedSchema.spec.valueTypes) {
+      for (const valueSpec of publishedSchema.spec.componentTypes) {
         valueTypeEnumValues[valueSpec.name] = {};
       }
       this.addType(
@@ -223,7 +223,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    if (publishedSchema.getValueTypeCount() > 0) {
+    if (publishedSchema.getComponentTypeCount() > 0) {
       // PublishedValue
       this.addType(
         new GraphQLInterfaceType({
@@ -312,7 +312,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedEntityType'))),
       },
-      ...(publishedSchema.getValueTypeCount() > 0
+      ...(publishedSchema.getComponentTypeCount() > 0
         ? {
             valueTypes: {
               type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedValueType'))),
@@ -388,20 +388,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   addPublishedValueTypes(publishedSchema: PublishedSchema): void {
-    for (const valueSpec of publishedSchema.spec.valueTypes) {
-      this.addPublishedValueType(valueSpec);
+    for (const componentSpec of publishedSchema.spec.componentTypes) {
+      this.addPublishedValueType(componentSpec);
     }
   }
 
-  addPublishedValueType(valueSpec: PublishedValueTypeSpecification): void {
+  addPublishedValueType(valueSpec: PublishedComponentTypeSpecification): void {
     // PublishedFoo
     this.addType(
-      new GraphQLObjectType<ValueItem, TContext>({
+      new GraphQLObjectType<Component, TContext>({
         name: toPublishedTypeName(valueSpec.name),
         interfaces: this.getInterfaces(toPublishedTypeName('Value')),
         isTypeOf: (source, _context, _info) => source.type === valueSpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
+          const fields: GraphQLFieldConfigMap<Component, TContext> = {
             type: { type: new GraphQLNonNull(this.getEnumType('PublishedValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, false);
@@ -430,11 +430,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    if (adminSchema.getValueTypeCount() > 0) {
+    if (adminSchema.getComponentTypeCount() > 0) {
       // AdminValueType
       const valueTypeEnumValues: GraphQLEnumValueConfigMap = {};
-      for (const valueSpec of adminSchema.spec.valueTypes) {
-        valueTypeEnumValues[valueSpec.name] = {};
+      for (const componentSpec of adminSchema.spec.componentTypes) {
+        valueTypeEnumValues[componentSpec.name] = {};
       }
       this.addType(
         new GraphQLEnumType({
@@ -641,7 +641,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityType'))),
       },
-      ...(adminSchema.getValueTypeCount() > 0
+      ...(adminSchema.getComponentTypeCount() > 0
         ? {
             valueTypes: {
               type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminValueType'))),
@@ -686,7 +686,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    if (this.adminSchema && this.adminSchema.getValueTypeCount() > 0) {
+    if (this.adminSchema && this.adminSchema.getComponentTypeCount() > 0) {
       // AdminValue
       this.addType(
         new GraphQLInterfaceType({
@@ -1162,20 +1162,20 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   addAdminValueTypes(adminSchema: AdminSchema): void {
-    for (const valueSpec of adminSchema.spec.valueTypes) {
-      this.addAdminValueType(valueSpec);
+    for (const componentSpec of adminSchema.spec.componentTypes) {
+      this.addAdminValueType(componentSpec);
     }
   }
 
-  addAdminValueType(valueSpec: AdminValueTypeSpecification): void {
+  addAdminValueType(valueSpec: AdminComponentTypeSpecification): void {
     // AdminFoo
     this.addType(
-      new GraphQLObjectType<ValueItem, TContext>({
+      new GraphQLObjectType<Component, TContext>({
         name: toAdminTypeName(valueSpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Value')),
         isTypeOf: (source, _context, _info) => source.type === valueSpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<ValueItem, TContext> = {
+          const fields: GraphQLFieldConfigMap<Component, TContext> = {
             type: { type: new GraphQLNonNull(this.getEnumType('AdminValueType')) },
           };
           this.addTypeSpecificationOutputFields(valueSpec, fields, true);
@@ -1201,9 +1201,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   addTypeSpecificationOutputFields<TSource>(
     typeSpec:
       | PublishedEntityTypeSpecification
-      | PublishedValueTypeSpecification
+      | PublishedComponentTypeSpecification
       | AdminEntityTypeSpecification
-      | AdminValueTypeSpecification,
+      | AdminComponentTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
     isAdmin: boolean,
   ): void {
@@ -1212,6 +1212,9 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       switch (fieldSpec.type) {
         case FieldType.Boolean:
           fieldType = GraphQLBoolean;
+          break;
+        case FieldType.Component:
+          fieldType = this.getOrCreateValueUnion(isAdmin, fieldSpec.componentTypes ?? []);
           break;
         case FieldType.Entity:
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
@@ -1227,9 +1230,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           break;
         case FieldType.String:
           fieldType = GraphQLString;
-          break;
-        case FieldType.ValueItem:
-          fieldType = this.getOrCreateValueUnion(isAdmin, fieldSpec.valueTypes ?? []);
           break;
         default:
           assertExhaustive(fieldSpec);
@@ -1247,7 +1247,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   addTypeSpecificationInputFields(
-    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
     fields: GraphQLInputFieldConfigMap,
   ): void {
     for (const fieldSpec of typeSpec.fields) {
@@ -1271,11 +1271,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.String:
           fieldType = GraphQLString;
           break;
-        case FieldType.ValueItem: {
+        case FieldType.Component: {
           //TODO use GraphQLJSON. Is it still needed or is normal fieldType enough?
           fields[`${fieldSpec.name}Json`] = { type: GraphQLString };
 
-          fieldType = this.getValueInputType(fieldSpec.valueTypes ?? []);
+          fieldType = this.getValueInputType(fieldSpec.componentTypes ?? []);
           break;
         }
         default:
@@ -1740,8 +1740,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     entityTypeName: string,
   ): void {
     const visitItem = (
-      item: AdminEntityCreate | AdminEntityUpdate | ValueItem,
-      typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+      item: AdminEntityCreate | AdminEntityUpdate | Component,
+      typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
       prefix: string,
       isEntity: boolean,
     ) => {
@@ -1772,12 +1772,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
               typeSpec as AdminEntityTypeSpecification,
               fieldName,
             )
-          : adminSchema.getValueFieldSpecification(typeSpec, fieldName);
+          : adminSchema.getComponentFieldSpecification(typeSpec, fieldName);
 
         // Traverse into value items
         if (fieldSpec && isValueItemField(fieldSpec, fieldValue) && fieldValue) {
           const type = fieldValue.type;
-          const valueSpec = adminSchema.getValueTypeSpecification(type);
+          const valueSpec = adminSchema.getComponentTypeSpecification(type);
           if (!valueSpec) {
             throw new Error(`${fieldPrefix}: No such type ${type}`);
           }

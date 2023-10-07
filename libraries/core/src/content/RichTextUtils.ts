@@ -19,7 +19,7 @@ import {
   type RichTextTabNode,
   type RichTextTextNode,
   type RichTextValueItemNode,
-  type ValueItem,
+  type Component,
 } from '../Types.js';
 
 export function createRichText(children: RichTextNode[]): RichText {
@@ -176,7 +176,7 @@ export function createRichTextListItemNode(
   };
 }
 
-export function createRichTextValueItemNode<T extends ValueItem<string, object>>(
+export function createRichTextValueItemNode<T extends Component<string, object>>(
   data: T,
 ): RichTextValueItemNode {
   return { type: RichTextNodeType.valueItem, data, format: '', version: 1 };

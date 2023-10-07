@@ -2,10 +2,10 @@ import {
   isFieldValueEqual,
   notOk,
   ok,
+  type AdminComponentTypeSpecification,
   type AdminEntityTypeSpecification,
   type AdminSchemaTransientMigrationAction,
   type AdminSchemaWithMigrations,
-  type AdminValueTypeSpecification,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
@@ -41,7 +41,7 @@ export function calculateSchemaChangeImpact(
   const migrationActions = next.collectMigrationActionsSinceVersion(previous.spec.version);
 
   for (const isEntityType of [true, false]) {
-    const previousTypes = isEntityType ? previous.spec.entityTypes : previous.spec.valueTypes;
+    const previousTypes = isEntityType ? previous.spec.entityTypes : previous.spec.componentTypes;
     const validateTypes = isEntityType ? validateEntityTypes : validateValueTypes;
     const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
 
@@ -52,7 +52,7 @@ export function calculateSchemaChangeImpact(
         if (
           isEntityType
             ? 'entityType' in actionSpec && actionSpec.entityType === nextTypeName
-            : 'valueType' in actionSpec && actionSpec.valueType === nextTypeName
+            : 'componentType' in actionSpec && actionSpec.componentType === nextTypeName
         ) {
           if (actionSpec.action === 'renameType') {
             nextTypeName = actionSpec.newName;
@@ -65,7 +65,7 @@ export function calculateSchemaChangeImpact(
       const nextType = nextTypeName
         ? isEntityType
           ? next.getEntityTypeSpecification(nextTypeName)
-          : next.getValueTypeSpecification(nextTypeName)
+          : next.getComponentTypeSpecification(nextTypeName)
         : null;
 
       // type is deleted
@@ -113,7 +113,7 @@ export function calculateSchemaChangeImpact(
       case 'deleteField': {
         const isEntityType = 'entityType' in actionSpec;
         const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
-        const typeName = isEntityType ? actionSpec.entityType : actionSpec.valueType;
+        const typeName = isEntityType ? actionSpec.entityType : actionSpec.componentType;
         indexTypes.add(typeName);
         break;
       }
@@ -174,9 +174,9 @@ export function calculateSchemaChangeImpact(
 function calculateTypeSelector(
   isEntityType: boolean,
   previous: AdminSchemaWithMigrations,
-  previousType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+  previousType: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
   next: AdminSchemaWithMigrations,
-  nextType: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+  nextType: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
 ): Result<{ validate: boolean; index: boolean }, typeof ErrorType.Generic> {
   let validate = false;
   let index = false;

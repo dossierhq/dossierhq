@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { AdminEntityStatus, type AdminEntity, type ValueItem } from '../Types.js';
+import { AdminEntityStatus, type AdminEntity, type Component } from '../Types.js';
 import { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
@@ -60,8 +60,8 @@ const adminSchema = AdminSchema.createAndValidate({
     {
       name: 'ValueItemsEntity',
       fields: [
-        { name: 'valueItem', type: FieldType.ValueItem },
-        { name: 'valueItemList', type: FieldType.ValueItem, list: true },
+        { name: 'valueItem', type: FieldType.Component },
+        { name: 'valueItemList', type: FieldType.Component, list: true },
       ],
     },
     {
@@ -69,13 +69,13 @@ const adminSchema = AdminSchema.createAndValidate({
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
-        { name: 'twoStrings', type: FieldType.ValueItem, valueTypes: ['TwoStrings'] },
+        { name: 'twoStrings', type: FieldType.Component, componentTypes: ['TwoStrings'] },
         { name: 'richText', type: FieldType.RichText },
         { name: 'adminOnlyString', type: FieldType.String, adminOnly: true },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'TwoStrings',
       fields: [
@@ -576,7 +576,7 @@ describe('traverseEntity', () => {
     expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
       [
         {
-          "message": "Expected single ValueItem, got a list",
+          "message": "Expected single Component, got a list",
           "path": "entity.fields.valueItem",
           "type": "error",
         },
@@ -595,7 +595,7 @@ describe('traverseEntity', () => {
     expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
       [
         {
-          "message": "Expected a list of ValueItem, got object",
+          "message": "Expected a list of Component, got object",
           "path": "entity.fields.valueItemList",
           "type": "error",
         },
@@ -614,12 +614,12 @@ describe('traverseEntity', () => {
     expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
       [
         {
-          "message": "Expected a ValueItem object, got string",
+          "message": "Expected a Component object, got string",
           "path": "entity.fields.valueItem",
           "type": "error",
         },
         {
-          "message": "Missing a ValueItem type",
+          "message": "Missing a Component type",
           "path": "entity.fields.valueItemList[0].type",
           "type": "error",
         },
@@ -638,7 +638,7 @@ describe('traverseValueItem', () => {
 
   test('No type', () => {
     const nodes = collectTraverseNodes(
-      traverseValueItem(adminSchema, ['valueItem'], {} as ValueItem),
+      traverseValueItem(adminSchema, ['valueItem'], {} as Component),
     );
     expect(nodes).toMatchSnapshot();
   });

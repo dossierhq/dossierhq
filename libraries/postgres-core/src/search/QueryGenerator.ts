@@ -489,7 +489,7 @@ function getFilterValueTypes(
     return ok([]);
   }
   for (const valueType of query.valueTypes) {
-    if (schema.getValueTypeSpecification(valueType) === null) {
+    if (schema.getComponentTypeSpecification(valueType) === null) {
       return notOk.BadRequest(`Can’t find value type in query: ${valueType}`);
     }
   }

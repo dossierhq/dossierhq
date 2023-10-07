@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { FieldType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 
 export const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
@@ -8,20 +8,20 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
       fields: [
         {
           name: 'name',
-          type: 'String',
+          type: FieldType.String,
         },
         {
           name: 'organizationNumber',
-          type: 'String',
+          type: FieldType.String,
         },
         {
           name: 'address',
-          type: 'ValueItem',
-          valueTypes: ['PostalAddress'],
+          type: FieldType.Component,
+          componentTypes: ['PostalAddress'],
         },
         {
           name: 'web',
-          type: 'String',
+          type: FieldType.String,
         },
       ],
     },
@@ -31,29 +31,29 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
       fields: [
         {
           name: 'name',
-          type: 'String',
+          type: FieldType.String,
         },
         {
           name: 'address',
-          type: 'ValueItem',
-          valueTypes: ['PostalAddress'],
+          type: FieldType.Component,
+          componentTypes: ['PostalAddress'],
         },
         {
           name: 'organization',
-          type: 'Entity',
+          type: FieldType.Entity,
           entityTypes: ['Organization'],
         },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'PostalAddress',
       fields: [
-        { name: 'address1', type: 'String', required: true },
-        { name: 'address2', type: 'String' },
-        { name: 'zip', type: 'String', required: true },
-        { name: 'city', type: 'String', required: true },
+        { name: 'address1', type: FieldType.String, required: true },
+        { name: 'address2', type: FieldType.String },
+        { name: 'zip', type: FieldType.String, required: true },
+        { name: 'city', type: FieldType.String, required: true },
       ],
     },
   ],

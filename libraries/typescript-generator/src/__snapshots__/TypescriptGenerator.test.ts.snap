@@ -3,9 +3,9 @@
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -28,16 +28,16 @@ export function assertIsAdminBooleans(entity: AdminEntity<string, object>): asse
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, EntityReference } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -60,16 +60,16 @@ export function assertIsAdminEntityTypes(entity: AdminEntity<string, object>): a
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -89,16 +89,16 @@ export function assertIsAdminFoo(entity: AdminEntity<string, object>): asserts e
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Locations 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, Location } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -121,16 +121,16 @@ export function assertIsAdminLocations(entity: AdminEntity<string, object>): ass
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Numbers 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -155,16 +155,16 @@ export function assertIsAdminNumbers(entity: AdminEntity<string, object>): asser
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, RichText } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -187,16 +187,16 @@ export function assertIsAdminRichTexts(entity: AdminEntity<string, object>): ass
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Strings 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
@@ -221,16 +221,16 @@ export function assertIsAdminStrings(entity: AdminEntity<string, object>): asser
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Unique index 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = 'slug';
 
@@ -252,23 +252,23 @@ export function assertIsAdminStrings(entity: AdminEntity<string, object>): asser
   }
 }
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > ValueItem (no fields) 1`] = `
-"import type { AdminClient, AdminEntity, AdminExceptionClient, ValueItem } from '@dossierhq/core';
+"import type { AdminClient, AdminEntity, AdminExceptionClient, Component } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
 export type AppAdminEntity = AdminValueItem;
 
 export interface AdminValueItemFields {
-  valueItem: AppAdminValueItem | null;
+  valueItem: AppAdminComponent | null;
 }
 
 export type AdminValueItem = AdminEntity<'ValueItem', AdminValueItemFields, string>;
@@ -283,40 +283,40 @@ export function assertIsAdminValueItem(entity: AdminEntity<string, object>): ass
   }
 }
 
-export type AppAdminValueItem = AdminFoo;
+export type AppAdminComponent = AdminFoo;
 
 export type AdminFooFields = Record<never, never>;
 
-export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
+export type AdminFoo = Component<'Foo', AdminFooFields>;
 
-export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): valueItem is AdminFoo {
-  return valueItem.type === 'Foo';
+export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
+  return component.type === 'Foo';
 }
 
-export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
-  if (valueItem.type !== 'Foo') {
-    throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
+export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
+  if (component.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + component.type + ')');
   }
 }
 "
 `;
 
 exports[`generateTypescriptForSchema > ValueTypes 1`] = `
-"import type { AdminClient, AdminEntity, AdminExceptionClient, ValueItem } from '@dossierhq/core';
+"import type { AdminClient, AdminEntity, AdminExceptionClient, Component } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
 export type AppAdminEntity = AdminValueTypes;
 
 export interface AdminValueTypesFields {
-  valueType: AppAdminValueItem | null;
+  valueType: AppAdminComponent | null;
   valueTypeFoo: AdminFoo | null;
   valueTypeFooBar: AdminBar | AdminFoo | null;
-  valueTypeList: AppAdminValueItem[] | null;
+  valueTypeList: AppAdminComponent[] | null;
   valueTypeListFoo: AdminFoo[] | null;
   valueTypeListFooBar: (AdminBar | AdminFoo)[] | null;
 }
@@ -333,21 +333,21 @@ export function assertIsAdminValueTypes(entity: AdminEntity<string, object>): as
   }
 }
 
-export type AppAdminValueItem = AdminBar | AdminFoo;
+export type AppAdminComponent = AdminBar | AdminFoo;
 
 export interface AdminBarFields {
   string: string | null;
 }
 
-export type AdminBar = ValueItem<'Bar', AdminBarFields>;
+export type AdminBar = Component<'Bar', AdminBarFields>;
 
-export function isAdminBar(valueItem: ValueItem<string, object> | AdminBar): valueItem is AdminBar {
-  return valueItem.type === 'Bar';
+export function isAdminBar(component: Component<string, object> | AdminBar): component is AdminBar {
+  return component.type === 'Bar';
 }
 
-export function assertIsAdminBar(valueItem: ValueItem<string, object> | AdminBar): asserts valueItem is AdminBar {
-  if (valueItem.type !== 'Bar') {
-    throw new Error('Expected type = Bar (but was ' + valueItem.type + ')');
+export function assertIsAdminBar(component: Component<string, object> | AdminBar): asserts component is AdminBar {
+  if (component.type !== 'Bar') {
+    throw new Error('Expected type = Bar (but was ' + component.type + ')');
   }
 }
 
@@ -355,15 +355,15 @@ export interface AdminFooFields {
   string: string | null;
 }
 
-export type AdminFoo = ValueItem<'Foo', AdminFooFields>;
+export type AdminFoo = Component<'Foo', AdminFooFields>;
 
-export function isAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): valueItem is AdminFoo {
-  return valueItem.type === 'Foo';
+export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
+  return component.type === 'Foo';
 }
 
-export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo): asserts valueItem is AdminFoo {
-  if (valueItem.type !== 'Foo') {
-    throw new Error('Expected type = Foo (but was ' + valueItem.type + ')');
+export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
+  if (component.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + component.type + ')');
   }
 }
 "
@@ -372,24 +372,24 @@ export function assertIsAdminFoo(valueItem: ValueItem<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > empty 1`] = `
 "import type { AdminClient, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
 
 export type AppAdminUniqueIndexes = never;
 
 export type AppAdminEntity = never;
 
-export type AppAdminValueItem = never;
+export type AppAdminComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema published > Unique index 1`] = `
 "import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = 'slug';
 
@@ -411,31 +411,31 @@ export function assertIsPublishedStrings(entity: PublishedEntity<string, object>
   }
 }
 
-export type AppPublishedValueItem = never;
+export type AppPublishedComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema published > adminOnly entity type 1`] = `
 "import type { PublishedClient, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
 export type AppPublishedEntity = never;
 
-export type AppPublishedValueItem = never;
+export type AppPublishedComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
 "import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -455,31 +455,31 @@ export function assertIsPublishedFoo(entity: PublishedEntity<string, object>): a
   }
 }
 
-export type AppPublishedValueItem = never;
+export type AppPublishedComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema published > empty 1`] = `
 "import type { PublishedClient, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
 export type AppPublishedEntity = never;
 
-export type AppPublishedValueItem = never;
+export type AppPublishedComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema published > required fields 1`] = `
 "import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -502,6 +502,6 @@ export function assertIsPublishedFoo(entity: PublishedEntity<string, object>): a
   }
 }
 
-export type AppPublishedValueItem = never;
+export type AppPublishedComponent = never;
 "
 `;

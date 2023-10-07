@@ -1,13 +1,13 @@
 import {
   FieldType,
+  type AdminComponentTypeSpecification,
   type AdminEntityTypeSpecification,
   type AdminFieldSpecification,
   type AdminSchema,
-  type AdminValueTypeSpecification,
+  type PublishedComponentTypeSpecification,
   type PublishedEntityTypeSpecification,
   type PublishedFieldSpecification,
   type PublishedSchema,
-  type PublishedValueTypeSpecification,
   type SchemaIndexSpecification,
 } from '@dossierhq/core';
 
@@ -34,9 +34,11 @@ export function generateTypescriptForSchema({
     for (const entitySpec of adminSchema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyType));
     }
-    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.valueTypes, 'Admin', 'ValueItem'));
-    for (const valueSpec of adminSchema.spec.valueTypes) {
-      paragraphs.push(...generateAdminValueType(context, valueSpec));
+    paragraphs.push(
+      ...generateAllTypesUnion(adminSchema.spec.componentTypes, 'Admin', 'Component'),
+    );
+    for (const componentSpec of adminSchema.spec.componentTypes) {
+      paragraphs.push(...generateAdminValueType(context, componentSpec));
     }
   }
   if (publishedSchema) {
@@ -49,9 +51,9 @@ export function generateTypescriptForSchema({
       paragraphs.push(...generatePublishedEntityType(context, entitySpec, authKeyType));
     }
     paragraphs.push(
-      ...generateAllTypesUnion(publishedSchema.spec.valueTypes, 'Published', 'ValueItem'),
+      ...generateAllTypesUnion(publishedSchema.spec.componentTypes, 'Published', 'Component'),
     );
-    for (const valueSpec of publishedSchema.spec.valueTypes) {
+    for (const valueSpec of publishedSchema.spec.componentTypes) {
       paragraphs.push(...generatePublishedValueType(context, valueSpec));
     }
   }
@@ -72,9 +74,9 @@ function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('AdminExceptionClient');
   return [
     '',
-    'export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
+    'export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
     '',
-    'export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminValueItem, AppAdminUniqueIndexes>;',
+    'export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;',
   ];
 }
 
@@ -83,9 +85,9 @@ function generatePublishedClientTypes(context: GeneratorContext) {
   context.coreImports.add('PublishedExceptionClient');
   return [
     '',
-    'export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
+    'export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
     '',
-    'export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedValueItem, AppPublishedUniqueIndexes>;',
+    'export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;',
   ];
 }
 
@@ -102,13 +104,13 @@ function generateAllTypesUnion(
   types:
     | AdminEntityTypeSpecification[]
     | PublishedEntityTypeSpecification[]
-    | AdminValueTypeSpecification[]
-    | PublishedValueTypeSpecification[],
+    | AdminComponentTypeSpecification[]
+    | PublishedComponentTypeSpecification[],
   adminOrPublished: 'Admin' | 'Published',
-  entityOrValueItem: 'Entity' | 'ValueItem',
+  entityOrComponent: 'Entity' | 'Component',
 ) {
   const typeDefinition = typeUnionOrNever(types.map((it) => `${adminOrPublished}${it.name}`));
-  return ['', `export type App${adminOrPublished}${entityOrValueItem} = ${typeDefinition};`];
+  return ['', `export type App${adminOrPublished}${entityOrComponent} = ${typeDefinition};`];
 }
 
 function generateAdminEntityType(
@@ -180,20 +182,23 @@ function generateEntityType(
   return paragraphs;
 }
 
-function generateAdminValueType(context: GeneratorContext, valueSpec: AdminValueTypeSpecification) {
+function generateAdminValueType(
+  context: GeneratorContext,
+  valueSpec: AdminComponentTypeSpecification,
+) {
   return generateValueType(context, valueSpec, 'Admin');
 }
 
 function generatePublishedValueType(
   context: GeneratorContext,
-  valueSpec: PublishedValueTypeSpecification,
+  valueSpec: PublishedComponentTypeSpecification,
 ) {
   return generateValueType(context, valueSpec, 'Published');
 }
 
 function generateValueType(
   context: GeneratorContext,
-  valueSpec: PublishedValueTypeSpecification,
+  valueSpec: PublishedComponentTypeSpecification,
   adminOrPublished: 'Admin' | 'Published',
 ) {
   const paragraphs: string[] = [''];
@@ -211,9 +216,9 @@ function generateValueType(
   }
   paragraphs.push('');
 
-  // value type
-  const parentTypeName = 'ValueItem';
-  const parentTypeInName = 'ValueItem<string, object>';
+  // component type
+  const parentTypeName = 'Component';
+  const parentTypeInName = 'Component<string, object>';
   const valueTypeName = `${adminOrPublished}${valueSpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
@@ -223,19 +228,19 @@ function generateValueType(
   // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function is${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): valueItem is ${valueTypeName} {`,
+    `export function is${valueTypeName}(component: ${parentTypeInName} | ${valueTypeName}): component is ${valueTypeName} {`,
   );
-  paragraphs.push(`  return valueItem.type === '${valueSpec.name}';`);
+  paragraphs.push(`  return component.type === '${valueSpec.name}';`);
   paragraphs.push(`}`);
 
   // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIs${valueTypeName}(valueItem: ${parentTypeInName} | ${valueTypeName}): asserts valueItem is ${valueTypeName} {`,
+    `export function assertIs${valueTypeName}(component: ${parentTypeInName} | ${valueTypeName}): asserts component is ${valueTypeName} {`,
   );
-  paragraphs.push(`  if (valueItem.type !== '${valueSpec.name}') {`);
+  paragraphs.push(`  if (component.type !== '${valueSpec.name}') {`);
   paragraphs.push(
-    `    throw new Error('Expected type = ${valueSpec.name} (but was ' + valueItem.type + ')');`,
+    `    throw new Error('Expected type = ${valueSpec.name} (but was ' + component.type + ')');`,
   );
   paragraphs.push(`  }`);
   paragraphs.push(`}`);
@@ -252,6 +257,13 @@ function fieldType(
   switch (fieldSpec.type) {
     case FieldType.Boolean:
       type = 'boolean';
+      break;
+    case FieldType.Component:
+      if (fieldSpec.componentTypes && fieldSpec.componentTypes.length > 0) {
+        type = fieldSpec.componentTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
+      } else {
+        type = `App${adminOrPublished}Component`;
+      }
       break;
     case FieldType.Entity:
       coreImports.add('EntityReference');
@@ -273,13 +285,6 @@ function fieldType(
         type = fieldSpec.values.map((it) => `'${it.value}'`).join(' | ');
       } else {
         type = 'string';
-      }
-      break;
-    case FieldType.ValueItem:
-      if (fieldSpec.valueTypes && fieldSpec.valueTypes.length > 0) {
-        type = fieldSpec.valueTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
-      } else {
-        type = `App${adminOrPublished}ValueItem`;
       }
       break;
   }

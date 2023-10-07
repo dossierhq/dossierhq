@@ -6,9 +6,9 @@ import {
   transformEntityFields,
   type AdminSchemaMigrationAction,
   type AdminSchemaWithMigrations,
+  type Component,
   type ErrorType,
   type Result,
-  type ValueItem,
 } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 
@@ -23,7 +23,7 @@ export function applySchemaMigrationsToFields(
     return ok(entityFields.fields);
   }
 
-  const entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[] = [];
+  const entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[] = [];
   const valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[] = [];
   for (const action of actions) {
     if ('entityType' in action) {
@@ -75,7 +75,7 @@ export function applySchemaMigrationsToFields(
 
 function getStartingEntityType(
   targetEntityType: string,
-  entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
+  entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[],
 ) {
   let entityType = targetEntityType;
   for (let i = entityTypeActions.length - 1; i >= 0; i--) {
@@ -90,7 +90,7 @@ function getStartingEntityType(
 function migrateEntityFields(
   startingEntityType: string,
   originalFields: Record<string, unknown>,
-  entityTypeActions: Exclude<AdminSchemaMigrationAction, { valueType: string }>[],
+  entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[],
 ) {
   let changed = false;
   let entityType = startingEntityType;
@@ -124,9 +124,9 @@ function migrateEntityFields(
 }
 
 function migrateValueItem(
-  originalValueItem: ValueItem | null,
+  originalValueItem: Component | null,
   valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
-): ValueItem | null {
+): Component | null {
   if (!originalValueItem) return null;
 
   const valueItem = { ...originalValueItem };
@@ -135,12 +135,12 @@ function migrateValueItem(
     const { action } = actionSpec;
     switch (action) {
       case 'deleteField':
-        if (actionSpec.valueType === valueItem.type) {
+        if (actionSpec.componentType === valueItem.type) {
           delete valueItem[actionSpec.field];
         }
         break;
       case 'renameField':
-        if (actionSpec.valueType === valueItem.type) {
+        if (actionSpec.componentType === valueItem.type) {
           if (actionSpec.field in valueItem) {
             valueItem[actionSpec.newName] = valueItem[actionSpec.field];
             delete valueItem[actionSpec.field];
@@ -148,12 +148,12 @@ function migrateValueItem(
         }
         break;
       case 'deleteType':
-        if (actionSpec.valueType === valueItem.type) {
+        if (actionSpec.componentType === valueItem.type) {
           return null;
         }
         break;
       case 'renameType':
-        if (actionSpec.valueType === valueItem.type) {
+        if (actionSpec.componentType === valueItem.type) {
           valueItem.type = actionSpec.newName;
         }
         break;

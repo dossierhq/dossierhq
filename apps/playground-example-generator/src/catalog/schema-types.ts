@@ -2,22 +2,22 @@ import type {
   AdminClient,
   AdminEntity,
   AdminExceptionClient,
+  Component,
   EntityReference,
   Location,
   RichText,
-  ValueItem,
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes
 >;
 
@@ -196,11 +196,11 @@ export function assertIsAdminStringsEntity(
 }
 
 export interface AdminValueItemsEntityFields {
-  normal: AppAdminValueItem | null;
-  required: AppAdminValueItem | null;
-  list: AppAdminValueItem[] | null;
-  requiredList: AppAdminValueItem[] | null;
-  adminOnly: AppAdminValueItem | null;
+  normal: AppAdminComponent | null;
+  required: AppAdminComponent | null;
+  list: AppAdminComponent[] | null;
+  requiredList: AppAdminComponent[] | null;
+  adminOnly: AppAdminComponent | null;
   cloudinaryImage: AdminCloudinaryImage | null;
 }
 
@@ -224,7 +224,7 @@ export function assertIsAdminValueItemsEntity(
   }
 }
 
-export type AppAdminValueItem =
+export type AppAdminComponent =
   | AdminAdminOnlyValueItem
   | AdminCloudinaryImage
   | AdminNestedValueItem
@@ -234,22 +234,22 @@ export interface AdminAdminOnlyValueItemFields {
   text: string | null;
 }
 
-export type AdminAdminOnlyValueItem = ValueItem<
+export type AdminAdminOnlyValueItem = Component<
   'AdminOnlyValueItem',
   AdminAdminOnlyValueItemFields
 >;
 
 export function isAdminAdminOnlyValueItem(
-  valueItem: ValueItem<string, object> | AdminAdminOnlyValueItem,
-): valueItem is AdminAdminOnlyValueItem {
-  return valueItem.type === 'AdminOnlyValueItem';
+  component: Component<string, object> | AdminAdminOnlyValueItem,
+): component is AdminAdminOnlyValueItem {
+  return component.type === 'AdminOnlyValueItem';
 }
 
 export function assertIsAdminAdminOnlyValueItem(
-  valueItem: ValueItem<string, object> | AdminAdminOnlyValueItem,
-): asserts valueItem is AdminAdminOnlyValueItem {
-  if (valueItem.type !== 'AdminOnlyValueItem') {
-    throw new Error('Expected type = AdminOnlyValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminAdminOnlyValueItem,
+): asserts component is AdminAdminOnlyValueItem {
+  if (component.type !== 'AdminOnlyValueItem') {
+    throw new Error('Expected type = AdminOnlyValueItem (but was ' + component.type + ')');
   }
 }
 
@@ -260,19 +260,19 @@ export interface AdminCloudinaryImageFields {
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
-): valueItem is AdminCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+  component: Component<string, object> | AdminCloudinaryImage,
+): component is AdminCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
 export function assertIsAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
-): asserts valueItem is AdminCloudinaryImage {
-  if (valueItem.type !== 'CloudinaryImage') {
-    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminCloudinaryImage,
+): asserts component is AdminCloudinaryImage {
+  if (component.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }
 
@@ -281,19 +281,19 @@ export interface AdminNestedValueItemFields {
   child: AdminNestedValueItem | null;
 }
 
-export type AdminNestedValueItem = ValueItem<'NestedValueItem', AdminNestedValueItemFields>;
+export type AdminNestedValueItem = Component<'NestedValueItem', AdminNestedValueItemFields>;
 
 export function isAdminNestedValueItem(
-  valueItem: ValueItem<string, object> | AdminNestedValueItem,
-): valueItem is AdminNestedValueItem {
-  return valueItem.type === 'NestedValueItem';
+  component: Component<string, object> | AdminNestedValueItem,
+): component is AdminNestedValueItem {
+  return component.type === 'NestedValueItem';
 }
 
 export function assertIsAdminNestedValueItem(
-  valueItem: ValueItem<string, object> | AdminNestedValueItem,
-): asserts valueItem is AdminNestedValueItem {
-  if (valueItem.type !== 'NestedValueItem') {
-    throw new Error('Expected type = NestedValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminNestedValueItem,
+): asserts component is AdminNestedValueItem {
+  if (component.type !== 'NestedValueItem') {
+    throw new Error('Expected type = NestedValueItem (but was ' + component.type + ')');
   }
 }
 
@@ -306,18 +306,18 @@ export interface AdminStringsValueItemFields {
   requiredListMatchPattern: string[] | null;
 }
 
-export type AdminStringsValueItem = ValueItem<'StringsValueItem', AdminStringsValueItemFields>;
+export type AdminStringsValueItem = Component<'StringsValueItem', AdminStringsValueItemFields>;
 
 export function isAdminStringsValueItem(
-  valueItem: ValueItem<string, object> | AdminStringsValueItem,
-): valueItem is AdminStringsValueItem {
-  return valueItem.type === 'StringsValueItem';
+  component: Component<string, object> | AdminStringsValueItem,
+): component is AdminStringsValueItem {
+  return component.type === 'StringsValueItem';
 }
 
 export function assertIsAdminStringsValueItem(
-  valueItem: ValueItem<string, object> | AdminStringsValueItem,
-): asserts valueItem is AdminStringsValueItem {
-  if (valueItem.type !== 'StringsValueItem') {
-    throw new Error('Expected type = StringsValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminStringsValueItem,
+): asserts component is AdminStringsValueItem {
+  if (component.type !== 'StringsValueItem') {
+    throw new Error('Expected type = StringsValueItem (but was ' + component.type + ')');
   }
 }

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { ErrorType, ok } from '../ErrorResult.js';
-import type { ValueItem } from '../Types.js';
+import type { Component } from '../Types.js';
 import { createRichText, createRichTextValueItemNode } from '../content/RichTextUtils.js';
 import { AdminSchemaWithMigrations } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
@@ -27,16 +27,16 @@ const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
       name: 'ValueItemsEntity',
       fields: [
         { name: 'richText', type: FieldType.RichText },
-        { name: 'valueItem', type: FieldType.ValueItem },
-        { name: 'valueItemList', type: FieldType.ValueItem, list: true },
+        { name: 'valueItem', type: FieldType.Component },
+        { name: 'valueItemList', type: FieldType.Component, list: true },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'NestedValueItem',
       fields: [
-        { name: 'child', type: FieldType.ValueItem },
+        { name: 'child', type: FieldType.Component },
         { name: 'string', type: FieldType.String },
       ],
     },
@@ -214,7 +214,7 @@ describe('transformEntity', () => {
     expectErrorResult(
       result,
       ErrorType.BadRequest,
-      'entity.valueItem.type: Missing a ValueItem type',
+      'entity.valueItem.type: Missing a Component type',
     );
   });
 
@@ -278,13 +278,13 @@ describe('transformValueItem', () => {
     const transformed = transformValueItem(
       ADMIN_SCHEMA,
       ['valueItem'],
-      {} as ValueItem,
+      {} as Component,
       IDENTITY_TRANSFORMER,
     );
     expectErrorResult(
       transformed,
       ErrorType.BadRequest,
-      'valueItem.type: Missing a ValueItem type',
+      'valueItem.type: Missing a component type',
     );
   });
 });

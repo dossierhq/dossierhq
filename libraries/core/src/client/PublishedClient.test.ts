@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
-import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { ok } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type { PublishedEntity } from '../Types.js';
+import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { convertJsonResult } from './JsonUtils.js';
 import type {
   PublishedClient,
@@ -242,7 +242,7 @@ describe('PublishedClient forward operation over JSON', () => {
               schemaKind: 'published',
               version: 0,
               entityTypes: [],
-              valueTypes: [],
+              componentTypes: [],
               patterns: [],
               indexes: [],
             }),
@@ -255,11 +255,11 @@ describe('PublishedClient forward operation over JSON', () => {
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
         {
+          "componentTypes": [],
           "entityTypes": [],
           "indexes": [],
           "patterns": [],
           "schemaKind": "published",
-          "valueTypes": [],
           "version": 0,
         }
       `);

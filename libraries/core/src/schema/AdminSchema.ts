@@ -57,7 +57,7 @@ export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificat
       schemaKind: 'admin',
       version: 0,
       entityTypes: [],
-      valueTypes: [],
+      componentTypes: [],
       patterns: [],
       indexes: [],
       migrations: [],

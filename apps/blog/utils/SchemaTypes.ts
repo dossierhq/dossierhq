@@ -2,24 +2,24 @@ import type {
   AdminClient,
   AdminEntity,
   AdminExceptionClient,
+  Component,
   EntityReference,
   PublishedClient,
   PublishedEntity,
   PublishedExceptionClient,
   RichText,
-  ValueItem,
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes
 >;
 
@@ -136,26 +136,26 @@ export function assertIsAdminGlossaryTerm(
   }
 }
 
-export type AppAdminValueItem = AdminArticleTocItem | AdminCloudinaryImage | AdminTocItem;
+export type AppAdminComponent = AdminArticleTocItem | AdminCloudinaryImage | AdminTocItem;
 
 export interface AdminArticleTocItemFields {
   title: string | null;
   article: EntityReference | null;
 }
 
-export type AdminArticleTocItem = ValueItem<'ArticleTocItem', AdminArticleTocItemFields>;
+export type AdminArticleTocItem = Component<'ArticleTocItem', AdminArticleTocItemFields>;
 
 export function isAdminArticleTocItem(
-  valueItem: ValueItem<string, object> | AdminArticleTocItem,
-): valueItem is AdminArticleTocItem {
-  return valueItem.type === 'ArticleTocItem';
+  component: Component<string, object> | AdminArticleTocItem,
+): component is AdminArticleTocItem {
+  return component.type === 'ArticleTocItem';
 }
 
 export function assertIsAdminArticleTocItem(
-  valueItem: ValueItem<string, object> | AdminArticleTocItem,
-): asserts valueItem is AdminArticleTocItem {
-  if (valueItem.type !== 'ArticleTocItem') {
-    throw new Error('Expected type = ArticleTocItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminArticleTocItem,
+): asserts component is AdminArticleTocItem {
+  if (component.type !== 'ArticleTocItem') {
+    throw new Error('Expected type = ArticleTocItem (but was ' + component.type + ')');
   }
 }
 
@@ -166,19 +166,19 @@ export interface AdminCloudinaryImageFields {
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = ValueItem<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
-): valueItem is AdminCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+  component: Component<string, object> | AdminCloudinaryImage,
+): component is AdminCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
 export function assertIsAdminCloudinaryImage(
-  valueItem: ValueItem<string, object> | AdminCloudinaryImage,
-): asserts valueItem is AdminCloudinaryImage {
-  if (valueItem.type !== 'CloudinaryImage') {
-    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminCloudinaryImage,
+): asserts component is AdminCloudinaryImage {
+  if (component.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }
 
@@ -187,32 +187,32 @@ export interface AdminTocItemFields {
   items: (AdminArticleTocItem | AdminTocItem)[] | null;
 }
 
-export type AdminTocItem = ValueItem<'TocItem', AdminTocItemFields>;
+export type AdminTocItem = Component<'TocItem', AdminTocItemFields>;
 
 export function isAdminTocItem(
-  valueItem: ValueItem<string, object> | AdminTocItem,
-): valueItem is AdminTocItem {
-  return valueItem.type === 'TocItem';
+  component: Component<string, object> | AdminTocItem,
+): component is AdminTocItem {
+  return component.type === 'TocItem';
 }
 
 export function assertIsAdminTocItem(
-  valueItem: ValueItem<string, object> | AdminTocItem,
-): asserts valueItem is AdminTocItem {
-  if (valueItem.type !== 'TocItem') {
-    throw new Error('Expected type = TocItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminTocItem,
+): asserts component is AdminTocItem {
+  if (component.type !== 'TocItem') {
+    throw new Error('Expected type = TocItem (but was ' + component.type + ')');
   }
 }
 
 export type AppPublishedClient = PublishedClient<
   AppPublishedEntity,
-  AppPublishedValueItem,
+  AppPublishedComponent,
   AppPublishedUniqueIndexes,
   AppPublishedExceptionClient
 >;
 
 export type AppPublishedExceptionClient = PublishedExceptionClient<
   AppPublishedEntity,
-  AppPublishedValueItem,
+  AppPublishedComponent,
   AppPublishedUniqueIndexes
 >;
 
@@ -341,7 +341,7 @@ export function assertIsPublishedGlossaryTerm(
   }
 }
 
-export type AppPublishedValueItem =
+export type AppPublishedComponent =
   | PublishedArticleTocItem
   | PublishedCloudinaryImage
   | PublishedTocItem;
@@ -351,19 +351,19 @@ export interface PublishedArticleTocItemFields {
   article: EntityReference;
 }
 
-export type PublishedArticleTocItem = ValueItem<'ArticleTocItem', PublishedArticleTocItemFields>;
+export type PublishedArticleTocItem = Component<'ArticleTocItem', PublishedArticleTocItemFields>;
 
 export function isPublishedArticleTocItem(
-  valueItem: ValueItem<string, object> | PublishedArticleTocItem,
-): valueItem is PublishedArticleTocItem {
-  return valueItem.type === 'ArticleTocItem';
+  component: Component<string, object> | PublishedArticleTocItem,
+): component is PublishedArticleTocItem {
+  return component.type === 'ArticleTocItem';
 }
 
 export function assertIsPublishedArticleTocItem(
-  valueItem: ValueItem<string, object> | PublishedArticleTocItem,
-): asserts valueItem is PublishedArticleTocItem {
-  if (valueItem.type !== 'ArticleTocItem') {
-    throw new Error('Expected type = ArticleTocItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedArticleTocItem,
+): asserts component is PublishedArticleTocItem {
+  if (component.type !== 'ArticleTocItem') {
+    throw new Error('Expected type = ArticleTocItem (but was ' + component.type + ')');
   }
 }
 
@@ -374,19 +374,19 @@ export interface PublishedCloudinaryImageFields {
   alt: string | null;
 }
 
-export type PublishedCloudinaryImage = ValueItem<'CloudinaryImage', PublishedCloudinaryImageFields>;
+export type PublishedCloudinaryImage = Component<'CloudinaryImage', PublishedCloudinaryImageFields>;
 
 export function isPublishedCloudinaryImage(
-  valueItem: ValueItem<string, object> | PublishedCloudinaryImage,
-): valueItem is PublishedCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+  component: Component<string, object> | PublishedCloudinaryImage,
+): component is PublishedCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
 export function assertIsPublishedCloudinaryImage(
-  valueItem: ValueItem<string, object> | PublishedCloudinaryImage,
-): asserts valueItem is PublishedCloudinaryImage {
-  if (valueItem.type !== 'CloudinaryImage') {
-    throw new Error('Expected type = CloudinaryImage (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedCloudinaryImage,
+): asserts component is PublishedCloudinaryImage {
+  if (component.type !== 'CloudinaryImage') {
+    throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }
 
@@ -395,18 +395,18 @@ export interface PublishedTocItemFields {
   items: (PublishedArticleTocItem | PublishedTocItem)[];
 }
 
-export type PublishedTocItem = ValueItem<'TocItem', PublishedTocItemFields>;
+export type PublishedTocItem = Component<'TocItem', PublishedTocItemFields>;
 
 export function isPublishedTocItem(
-  valueItem: ValueItem<string, object> | PublishedTocItem,
-): valueItem is PublishedTocItem {
-  return valueItem.type === 'TocItem';
+  component: Component<string, object> | PublishedTocItem,
+): component is PublishedTocItem {
+  return component.type === 'TocItem';
 }
 
 export function assertIsPublishedTocItem(
-  valueItem: ValueItem<string, object> | PublishedTocItem,
-): asserts valueItem is PublishedTocItem {
-  if (valueItem.type !== 'TocItem') {
-    throw new Error('Expected type = TocItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedTocItem,
+): asserts component is PublishedTocItem {
+  if (component.type !== 'TocItem') {
+    throw new Error('Expected type = TocItem (but was ' + component.type + ')');
   }
 }

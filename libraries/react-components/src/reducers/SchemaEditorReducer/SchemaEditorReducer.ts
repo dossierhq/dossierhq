@@ -3,6 +3,8 @@ import {
   REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
   assertIsDefined,
+  type AdminComponentTypeSpecification,
+  type AdminComponentTypeSpecificationUpdate,
   type AdminEntityTypeSpecification,
   type AdminEntityTypeSpecificationUpdate,
   type AdminFieldSpecification,
@@ -10,8 +12,6 @@ import {
   type AdminSchemaSpecificationUpdate,
   type AdminSchemaTransientMigrationAction,
   type AdminSchemaVersionMigration,
-  type AdminValueTypeSpecification,
-  type AdminValueTypeSpecificationUpdate,
   type SchemaIndexSpecification,
   type SchemaPatternSpecification,
 } from '@dossierhq/core';
@@ -240,9 +240,9 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
     return 'changed';
   }
   if (
-    (existingFieldSpec.type === FieldType.ValueItem ||
+    (existingFieldSpec.type === FieldType.Component ||
       existingFieldSpec.type === FieldType.RichText) &&
-    !isEqual(state.valueTypes, existingFieldSpec.valueTypes)
+    !isEqual(state.valueTypes, existingFieldSpec.componentTypes)
   ) {
     return 'changed';
   }
@@ -868,7 +868,7 @@ class ChangeFieldTypeAction extends FieldAction {
 
     //TODO handle linkEntityTypes?
 
-    if (this.fieldType === FieldType.ValueItem) {
+    if (this.fieldType === FieldType.Component) {
       newFieldDraft.valueTypes = [];
     } else {
       delete newFieldDraft.valueTypes;
@@ -1481,7 +1481,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       existingNameField: entityTypeSpec.nameField,
     }));
 
-    const valueTypes = this.schema.spec.valueTypes.map((valueTypeSpec) =>
+    const valueTypes = this.schema.spec.componentTypes.map((valueTypeSpec) =>
       this.convertType('value', valueTypeSpec),
     );
 
@@ -1513,7 +1513,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
   convertType<TKind extends 'entity' | 'value'>(
     kind: TKind,
-    typeSpec: AdminEntityTypeSpecification | AdminValueTypeSpecification,
+    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
   ): SchemaTypeDraft & { kind: TKind } {
     return {
       kind,
@@ -1556,8 +1556,8 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
         if (fieldSpec.type === FieldType.RichText) {
           fieldDraft.linkEntityTypes = fieldSpec.linkEntityTypes;
         }
-        if (fieldSpec.type === FieldType.ValueItem || fieldSpec.type === FieldType.RichText) {
-          fieldDraft.valueTypes = fieldSpec.valueTypes;
+        if (fieldSpec.type === FieldType.Component || fieldSpec.type === FieldType.RichText) {
+          fieldDraft.valueTypes = fieldSpec.componentTypes;
         }
         return fieldDraft;
       }),
@@ -1665,7 +1665,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
     .filter((it) => it.status !== '')
     .map(getTypeUpdateFromEditorState);
 
-  const valueTypes = state.valueTypes
+  const componentTypes = state.valueTypes
     .filter((it) => it.status !== '')
     .map(getTypeUpdateFromEditorState);
 
@@ -1683,8 +1683,8 @@ export function getSchemaSpecificationUpdateFromEditorState(
   if (entityTypes.length > 0) {
     update.entityTypes = entityTypes;
   }
-  if (valueTypes.length > 0) {
-    update.valueTypes = valueTypes;
+  if (componentTypes.length > 0) {
+    update.componentTypes = componentTypes;
   }
   if (indexes.length > 0) {
     update.indexes = indexes;
@@ -1708,7 +1708,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
 
 function getTypeUpdateFromEditorState(
   draftType: SchemaValueTypeDraft | SchemaEntityTypeDraft,
-): AdminEntityTypeSpecificationUpdate | AdminValueTypeSpecificationUpdate {
+): AdminEntityTypeSpecificationUpdate | AdminComponentTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
     return {
       name: draftField.name,
@@ -1736,7 +1736,7 @@ function getTypeUpdateFromEditorState(
       ...(draftField.type === FieldType.Entity || draftField.type === FieldType.RichText
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
-      ...(draftField.type === FieldType.ValueItem || draftField.type === FieldType.RichText
+      ...(draftField.type === FieldType.Component || draftField.type === FieldType.RichText
         ? { valueTypes: draftField.valueTypes ?? [] }
         : undefined),
     };
@@ -1758,7 +1758,7 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
   }
 
   for (const typeName of state.deletedValueTypes) {
-    actions.push({ action: 'deleteType', valueType: typeName });
+    actions.push({ action: 'deleteType', componentType: typeName });
   }
 
   for (const typeDraft of [...state.entityTypes, ...state.valueTypes]) {
@@ -1766,14 +1766,16 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
       continue;
     }
     const typeName =
-      typeDraft.kind === 'entity' ? { entityType: typeDraft.name } : { valueType: typeDraft.name };
+      typeDraft.kind === 'entity'
+        ? { entityType: typeDraft.name }
+        : { componentType: typeDraft.name };
 
     if (typeDraft.existingName && typeDraft.existingName !== typeDraft.name) {
       actions.push({
         action: 'renameType',
         ...(typeDraft.kind === 'entity'
           ? { entityType: typeDraft.existingName }
-          : { valueType: typeDraft.existingName }),
+          : { componentType: typeDraft.existingName }),
         newName: typeDraft.name,
       });
     }

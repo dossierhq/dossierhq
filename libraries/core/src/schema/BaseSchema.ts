@@ -1,8 +1,8 @@
 import type {
+  AdminComponentTypeSpecification,
   AdminFieldSpecification,
   AdminSchemaSpecification,
   AdminSchemaSpecificationWithMigrations,
-  AdminValueTypeSpecification,
   PublishedSchemaSpecification,
   SchemaIndexSpecification,
   SchemaPatternSpecification,
@@ -36,19 +36,19 @@ export class BaseSchema<
     return entitySpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 
-  getValueTypeCount(): number {
-    return this.spec.valueTypes.length;
+  getComponentTypeCount(): number {
+    return this.spec.componentTypes.length;
   }
 
-  getValueTypeSpecification(type: string): T['valueTypes'][number] | null {
-    return this.spec.valueTypes.find((it) => it.name === type) ?? null;
+  getComponentTypeSpecification(type: string): T['componentTypes'][number] | null {
+    return this.spec.componentTypes.find((it) => it.name === type) ?? null;
   }
 
-  getValueFieldSpecification(
-    valueSpec: AdminValueTypeSpecification,
+  getComponentFieldSpecification(
+    componentSpec: AdminComponentTypeSpecification,
     fieldName: string,
   ): AdminFieldSpecification | null {
-    return valueSpec.fields.find((it) => it.name === fieldName) ?? null;
+    return componentSpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 
   getPattern(name: string): SchemaPatternSpecification | null {

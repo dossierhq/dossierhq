@@ -6,12 +6,12 @@ import type {
   AdminFieldSpecification,
   AdminSchemaSpecification,
   BooleanFieldSpecification,
+  ComponentFieldSpecification,
   EntityFieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
-  ValueItemFieldSpecification,
 } from './SchemaSpecification.js';
 import {
   FieldType,
@@ -32,14 +32,15 @@ const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
 
 const ADMIN_FIELD_SPECIFICATION_KEYS: {
   Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
+  Component: readonly (keyof AdminFieldSpecification<ComponentFieldSpecification>)[];
   Entity: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
   Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
   Number: readonly (keyof AdminFieldSpecification<NumberFieldSpecification>)[];
   RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
   String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
-  ValueItem: readonly (keyof AdminFieldSpecification<ValueItemFieldSpecification>)[];
 } = {
   [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.Component]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'componentTypes'],
   [FieldType.Entity]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
   [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.Number]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'integer'],
@@ -47,7 +48,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
     ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
     'entityTypes',
     'linkEntityTypes',
-    'valueTypes',
+    'componentTypes',
     'richTextNodes',
   ],
   [FieldType.String]: [
@@ -57,15 +58,14 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
     'values',
     'index',
   ],
-  [FieldType.ValueItem]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'valueTypes'],
 };
 
 export function schemaValidateAdmin(
   adminSchema: BaseSchema<AdminSchemaSpecification>,
 ): Result<void, typeof ErrorType.BadRequest> {
   const usedTypeNames = new Set<string>();
-  for (const typeSpec of [...adminSchema.spec.entityTypes, ...adminSchema.spec.valueTypes]) {
-    const isValueType = adminSchema.spec.valueTypes.includes(typeSpec);
+  for (const typeSpec of [...adminSchema.spec.entityTypes, ...adminSchema.spec.componentTypes]) {
+    const isComponentType = adminSchema.spec.componentTypes.includes(typeSpec);
 
     if (!PASCAL_CASE_PATTERN.test(typeSpec.name)) {
       return notOk.BadRequest(
@@ -77,7 +77,7 @@ export function schemaValidateAdmin(
     }
     usedTypeNames.add(typeSpec.name);
 
-    if (!isValueType) {
+    if (!isComponentType) {
       const authKeyPattern = (typeSpec as AdminEntityTypeSpecification).authKeyPattern;
       if (authKeyPattern) {
         if (!adminSchema.getPattern(authKeyPattern)) {
@@ -107,7 +107,7 @@ export function schemaValidateAdmin(
           `${typeSpec.name}.${fieldSpec.name}: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123`,
         );
       }
-      if (isValueType && fieldSpec.name === 'type') {
+      if (isComponentType && fieldSpec.name === 'type') {
         return notOk.BadRequest(
           `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a value type`,
         );
@@ -172,20 +172,21 @@ export function schemaValidateAdmin(
       }
 
       if (
-        (fieldSpec.type === FieldType.ValueItem || fieldSpec.type === FieldType.RichText) &&
-        fieldSpec.valueTypes &&
-        fieldSpec.valueTypes.length > 0
+        (fieldSpec.type === FieldType.Component || fieldSpec.type === FieldType.RichText) &&
+        fieldSpec.componentTypes &&
+        fieldSpec.componentTypes.length > 0
       ) {
-        for (const referencedTypeName of fieldSpec.valueTypes) {
-          const referencedValueType = adminSchema.getValueTypeSpecification(referencedTypeName);
-          if (!referencedValueType) {
+        for (const referencedTypeName of fieldSpec.componentTypes) {
+          const referencedComponentType =
+            adminSchema.getComponentTypeSpecification(referencedTypeName);
+          if (!referencedComponentType) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Value type in valueTypes ${referencedTypeName} doesn’t exist`,
+              `${typeSpec.name}.${fieldSpec.name}: Component type in componentTypes ${referencedTypeName} doesn’t exist`,
             );
           }
-          if (referencedValueType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
+          if (referencedComponentType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Referenced value type in valueTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
+              `${typeSpec.name}.${fieldSpec.name}: Referenced component type in componentTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
             );
           }
         }
@@ -231,6 +232,16 @@ export function schemaValidateAdmin(
 
         if (usedRichTextNodes.size > 0) {
           if (
+            fieldSpec.componentTypes &&
+            fieldSpec.componentTypes.length > 0 &&
+            !usedRichTextNodes.has(RichTextNodeType.valueItem)
+          ) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: componentTypes is specified for field, but richTextNodes is missing component`,
+            );
+          }
+
+          if (
             fieldSpec.entityTypes &&
             fieldSpec.entityTypes.length > 0 &&
             !usedRichTextNodes.has(RichTextNodeType.entity)
@@ -247,16 +258,6 @@ export function schemaValidateAdmin(
           ) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: linkEntityTypes is specified for field, but richTextNodes is missing entityLink`,
-            );
-          }
-
-          if (
-            fieldSpec.valueTypes &&
-            fieldSpec.valueTypes.length > 0 &&
-            !usedRichTextNodes.has(RichTextNodeType.valueItem)
-          ) {
-            return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: valueTypes is specified for field, but richTextNodes is missing valueItem`,
             );
           }
         }

@@ -27,7 +27,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
-        { name: 'address', type: FieldType.ValueItem, valueTypes: ['Address'] },
+        { name: 'address', type: FieldType.Component, componentTypes: ['Address'] },
         { name: 'slogan', type: FieldType.String, required: true },
         { name: 'description', type: FieldType.String, multiline: true, required: true },
       ],
@@ -53,7 +53,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       fields: [{ name: 'name', type: FieldType.String, required: true }],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'Address',
       fields: [

@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { FieldType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 
 export const schemaSpecification: AdminSchemaSpecificationUpdate = {
   entityTypes: [
@@ -31,8 +31,8 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'annotatedCategory',
-          type: 'ValueItem',
-          valueTypes: ['AnnotatedCategory'],
+          type: FieldType.Component,
+          componentTypes: ['AnnotatedCategory'],
         },
         {
           name: 'tags',
@@ -56,7 +56,7 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'AnnotatedCategory',
       fields: [

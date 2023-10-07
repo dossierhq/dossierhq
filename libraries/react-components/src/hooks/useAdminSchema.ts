@@ -2,9 +2,9 @@ import {
   AdminSchemaWithMigrations,
   type AdminClient,
   type AdminEntity,
+  type Component,
   type ErrorResult,
   type ErrorType,
-  type ValueItem,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -15,7 +15,7 @@ type FetcherData = AdminSchemaWithMigrations;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminSchema(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
@@ -32,7 +32,7 @@ export function useAdminSchema(
 }
 
 async function fetchSchema(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
 ): Promise<FetcherData> {
   const result = await adminClient.getSchemaSpecification({ includeMigrations: true });
   if (result.isError()) {

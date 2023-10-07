@@ -1,9 +1,9 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import type {
+  ComponentFieldSpecification,
   PublishValidationIssue,
   SaveValidationIssue,
-  ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import { groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import {
@@ -23,7 +23,7 @@ import { useInitializeUploadWidget } from '../hooks/useInitializeUploadWidget.js
 import type { AdminCloudinaryImage } from '../types/CloudinaryImageValueItem.js';
 import type { CloudinaryUploadResult } from '../types/CloudinaryUploadWidget.js';
 
-type Props = FieldEditorProps<ValueItemFieldSpecification, AdminCloudinaryImage> & {
+type Props = FieldEditorProps<ComponentFieldSpecification, AdminCloudinaryImage> & {
   cloudName: string;
   uploadPreset: string;
   value: AdminCloudinaryImage;

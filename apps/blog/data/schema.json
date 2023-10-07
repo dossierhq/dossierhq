@@ -153,11 +153,11 @@
         },
         {
           "name": "hero",
-          "type": "ValueItem",
+          "type": "Component",
           "list": false,
           "required": true,
           "adminOnly": false,
-          "valueTypes": [
+          "componentTypes": [
             "CloudinaryImage"
           ]
         },
@@ -196,7 +196,7 @@
           "linkEntityTypes": [
             "Article"
           ],
-          "valueTypes": [
+          "componentTypes": [
             "CloudinaryImage"
           ]
         }
@@ -210,11 +210,11 @@
       "fields": [
         {
           "name": "items",
-          "type": "ValueItem",
+          "type": "Component",
           "list": true,
           "required": true,
           "adminOnly": false,
-          "valueTypes": [
+          "componentTypes": [
             "ArticleTocItem",
             "TocItem"
           ]
@@ -267,12 +267,12 @@
           "linkEntityTypes": [
             "GlossaryTerm"
           ],
-          "valueTypes": []
+          "componentTypes": []
         }
       ]
     }
   ],
-  "valueTypes": [
+  "componentTypes": [
     {
       "name": "ArticleTocItem",
       "adminOnly": false,
@@ -361,11 +361,11 @@
         },
         {
           "name": "items",
-          "type": "ValueItem",
+          "type": "Component",
           "list": true,
           "required": true,
           "adminOnly": false,
-          "valueTypes": [
+          "componentTypes": [
             "ArticleTocItem",
             "TocItem"
           ]

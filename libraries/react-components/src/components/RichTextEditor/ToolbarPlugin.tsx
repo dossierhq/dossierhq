@@ -176,7 +176,7 @@ export function ToolbarPlugin({
   const enableValueItemNode =
     (enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem)) &&
     schema &&
-    schema.getValueTypeCount() > 0;
+    schema.getComponentTypeCount() > 0;
 
   const insertItems: { id: string; name: string; show: (show: boolean) => void }[] = [];
   if (enableEntityNode) {
@@ -485,7 +485,7 @@ function AddValueItemButton({
       <AdminTypePickerDialog
         title="Select value type"
         showValueTypes
-        valueTypes={fieldSpec.valueTypes}
+        valueTypes={fieldSpec.componentTypes}
         onItemClick={(type) => {
           editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type });
           onClose();

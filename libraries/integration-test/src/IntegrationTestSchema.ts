@@ -25,8 +25,8 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'required', type: FieldType.String, required: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'richText', type: FieldType.RichText, adminOnly: false },
-        { name: 'valueItem', type: FieldType.ValueItem, adminOnly: false },
-        { name: 'valueItemList', type: FieldType.ValueItem, list: true, adminOnly: false },
+        { name: 'valueItem', type: FieldType.Component, adminOnly: false },
+        { name: 'valueItemList', type: FieldType.Component, list: true, adminOnly: false },
       ],
     },
     { name: 'MigrationEntity', fields: [] },
@@ -54,7 +54,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
           type: FieldType.RichText,
           entityTypes: ['References'],
           linkEntityTypes: ['TitleOnly'],
-          valueTypes: ['LocationsValue'],
+          componentTypes: ['LocationsValue'],
         },
       ],
     },
@@ -99,12 +99,12 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     {
       name: 'ValueItems',
       fields: [
-        { name: 'any', type: FieldType.ValueItem },
-        { name: 'anyAdminOnly', type: FieldType.ValueItem, adminOnly: true },
+        { name: 'any', type: FieldType.Component },
+        { name: 'anyAdminOnly', type: FieldType.Component, adminOnly: true },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     { name: 'AdminOnlyValue', adminOnly: true, fields: [] },
     {
       name: 'ChangeValidationsValueItem',
@@ -139,15 +139,15 @@ export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecification
         { name: 'required', type: FieldType.String, required: false },
         { name: 'matchPattern', type: FieldType.String, matchPattern: null },
         { name: 'richText', type: FieldType.RichText, adminOnly: true },
-        { name: 'valueItem', type: FieldType.ValueItem, adminOnly: true },
-        { name: 'valueItemList', type: FieldType.ValueItem, list: true, adminOnly: true },
+        { name: 'valueItem', type: FieldType.Component, adminOnly: true },
+        { name: 'valueItemList', type: FieldType.Component, list: true, adminOnly: true },
       ],
     },
   ],
 };
 
 export const ChangeValidationsValueItemWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
-  valueTypes: [
+  componentTypes: [
     {
       name: 'ChangeValidationsValueItem',
       fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: null }],

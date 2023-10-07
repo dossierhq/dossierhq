@@ -1,5 +1,5 @@
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
-import type { EntityLike, RichTextNode, ValueItem } from '../Types.js';
+import type { Component, EntityLike, RichTextNode } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { contentValuePathToString, type ContentValuePath } from './ContentPath.js';
@@ -34,21 +34,21 @@ export interface ContentTransformer<
   transformField: (
     schema: TSchema,
     path: ContentValuePath,
-    fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
+    fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
     value: unknown,
   ) => Result<unknown, TError>;
 
   transformFieldItem: (
     schema: TSchema,
     path: ContentValuePath,
-    fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
+    fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
     value: unknown,
   ) => Result<unknown, TError>;
 
   transformRichTextNode: (
     schema: TSchema,
     path: ContentValuePath,
-    fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
+    fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
     node: Readonly<RichTextNode>,
   ) => Result<Readonly<RichTextNode | null>, TError>;
 }
@@ -95,24 +95,24 @@ export function transformEntityFields<
 
 export function transformValueItem<
   TSchema extends AdminSchema | PublishedSchema,
-  TValueItem extends ValueItem<string, object>,
+  TComponent extends Component<string, object>,
   TError extends ErrorType,
 >(
   schema: TSchema,
   path: ContentValuePath,
-  item: Readonly<TValueItem>,
+  component: Readonly<TComponent>,
   transformer: ContentTransformer<TSchema, TError>,
   options?: ContentTransformerOptions,
-): Result<TValueItem, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  if (!item.type) {
+): Result<TComponent, TError | typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  if (!component.type) {
     return notOk.BadRequest(
-      `${contentValuePathToString([...path, 'type'])}: Missing a ValueItem type`,
+      `${contentValuePathToString([...path, 'type'])}: Missing a component type`,
     );
   }
-  const typeSpec = schema.getValueTypeSpecification(item.type);
+  const typeSpec = schema.getComponentTypeSpecification(component.type);
   if (!typeSpec) {
     return notOk.BadRequest(
-      `${contentValuePathToString(path)}: Couldn’t find spec for value type ${item.type}`,
+      `${contentValuePathToString(path)}: Couldn’t find spec for value type ${component.type}`,
     );
   }
 
@@ -121,13 +121,13 @@ export function transformValueItem<
     path,
     typeSpec,
     'value',
-    item,
+    component,
     transformer,
     options,
   );
   if (transformResult.isError()) return transformResult;
-  if (transformResult.value === item) return ok(item);
-  return ok({ ...transformResult.value, type: item.type } as TValueItem);
+  if (transformResult.value === component) return ok(component);
+  return ok({ ...transformResult.value, type: component.type } as TComponent);
 }
 
 function transformContentFields<
@@ -136,7 +136,7 @@ function transformContentFields<
 >(
   schema: TSchema,
   path: ContentValuePath,
-  typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['valueTypes'][number],
+  typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['componentTypes'][number],
   kind: 'entity' | 'value',
   fields: Record<string, unknown>,
   transformer: ContentTransformer<TSchema, TError>,
@@ -215,7 +215,7 @@ export function transformContentField<
 >(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
   originalValue: unknown,
   transformer: ContentTransformer<TSchema, TError>,
   options?: ContentTransformerOptions,
@@ -290,7 +290,7 @@ function transformContentFieldValue<
 >(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
   originalValue: Readonly<unknown> | null,
   transformer: ContentTransformer<TSchema, TError>,
   options: ContentTransformerOptions | undefined,

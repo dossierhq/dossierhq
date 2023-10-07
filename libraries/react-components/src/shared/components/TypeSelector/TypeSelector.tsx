@@ -44,7 +44,7 @@ export function TypeSelector({ schema, ...props }: Props): JSX.Element {
         ...schema.spec.entityTypes.map(
           (it): TypeItem => ({ id: it.name, name: it.name, kind: 'entity' }),
         ),
-        ...schema.spec.valueTypes.map(
+        ...schema.spec.componentTypes.map(
           (it): TypeItem => ({ id: it.name, name: it.name, kind: 'value' }),
         ),
       ];

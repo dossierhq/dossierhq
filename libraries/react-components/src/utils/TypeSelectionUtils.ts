@@ -1,7 +1,7 @@
 import type {
+  AdminComponentTypeSpecification,
   AdminEntityTypeSpecification,
   AdminSchema,
-  AdminValueTypeSpecification,
 } from '@dossierhq/core';
 
 export interface TypeSelectionFilter {
@@ -11,7 +11,7 @@ export interface TypeSelectionFilter {
   valueTypes?: string[];
 }
 
-type Item = AdminEntityTypeSpecification | AdminValueTypeSpecification;
+type Item = AdminEntityTypeSpecification | AdminComponentTypeSpecification;
 
 export function filterTypeSpecifications(schema: AdminSchema, filter: TypeSelectionFilter): Item[] {
   const items: Item[] = [];
@@ -19,7 +19,7 @@ export function filterTypeSpecifications(schema: AdminSchema, filter: TypeSelect
     items.push(...filterItems(schema.spec.entityTypes, filter.entityTypes));
   }
   if (filter.showValueTypes) {
-    items.push(...filterItems(schema.spec.valueTypes, filter.valueTypes));
+    items.push(...filterItems(schema.spec.componentTypes, filter.valueTypes));
   }
   return items;
 }

@@ -1,12 +1,12 @@
 import type {
   BooleanFieldSpecification,
+  ComponentFieldSpecification,
   EntityFieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
   PublishedFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
-  ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import {
   isBooleanField,
@@ -136,12 +136,12 @@ export function FieldDisplay(props: FieldDisplayProps) {
     );
   } else if (isValueItemField(fieldSpec, value)) {
     display = (
-      <ValueTypeFieldDisplay fieldSpec={fieldSpec as ValueItemFieldSpecification} value={value} />
+      <ValueTypeFieldDisplay fieldSpec={fieldSpec as ComponentFieldSpecification} value={value} />
     );
   } else if (isValueItemListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as ValueItemFieldSpecification}
+        fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
         Display={ValueTypeFieldDisplay}
       />

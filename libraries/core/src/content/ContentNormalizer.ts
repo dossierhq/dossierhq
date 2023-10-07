@@ -1,13 +1,13 @@
-import { type ErrorType, type Result } from '../ErrorResult.js';
-import { type EntityLike, type ValueItem } from '../Types.js';
+import type { ErrorType, Result } from '../ErrorResult.js';
+import type { Component, EntityLike } from '../Types.js';
 import type { AdminSchema } from '../schema/AdminSchema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type { ContentValuePath } from './ContentPath.js';
 import {
   IDENTITY_TRANSFORMER,
+  transformValueItem,
   transformContentField,
   transformEntityFields,
-  transformValueItem,
   type ContentTransformerEntityFieldsOptions,
   type ContentTransformerOptions,
 } from './ContentTransformer.js';
@@ -24,7 +24,7 @@ export function normalizeEntityFields<TEntity extends EntityLike<string, object>
   return transformEntityFields(schema, [...path, 'fields'], entity, IDENTITY_TRANSFORMER, options);
 }
 
-export function normalizeValueItem<TValueItem extends ValueItem<string, object>>(
+export function normalizeValueItem<TValueItem extends Component<string, object>>(
   schema: AdminSchema | PublishedSchema,
   path: ContentValuePath,
   valueItem: Readonly<TValueItem>,
@@ -36,7 +36,7 @@ export function normalizeValueItem<TValueItem extends ValueItem<string, object>>
 export function normalizeContentField<TSchema extends AdminSchema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
-  fieldSpec: TSchema['spec']['entityTypes' | 'valueTypes'][number]['fields'][number],
+  fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
   value: unknown,
   options?: ContentNormalizerOptions,
 ): Result<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

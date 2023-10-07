@@ -47,7 +47,7 @@ describe('calculateSchemaChangeImpact unchanged', () => {
   });
 
   test('no change: one value type, unchanged', () => {
-    const { previous, next } = build({ valueTypes: [{ name: 'OneType', fields: [] }] }, {});
+    const { previous, next } = build({ componentTypes: [{ name: 'OneType', fields: [] }] }, {});
     expect(calculateSchemaChangeImpact(previous, next, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
         "deleteEntityTypes": [],
@@ -195,8 +195,8 @@ describe('calculateSchemaChangeImpact type.adminOnly', () => {
 
   test('change: from true to false value type', () => {
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },
-      { valueTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
+      { componentTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },
+      { componentTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
@@ -266,7 +266,7 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
   test('change: from true to false value type', () => {
     const { previous, next } = build(
       {
-        valueTypes: [
+        componentTypes: [
           {
             name: 'OneType',
             fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: true }],
@@ -274,7 +274,7 @@ describe('calculateSchemaChangeImpact field.adminOnly', () => {
         ],
       },
       {
-        valueTypes: [
+        componentTypes: [
           {
             name: 'OneType',
             fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: false }],
@@ -352,7 +352,7 @@ describe('calculateSchemaChangeImpact field.index', () => {
   test('change: index change value type', () => {
     const { previous, next } = build(
       {
-        valueTypes: [
+        componentTypes: [
           {
             name: 'OneType',
             fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
@@ -361,7 +361,7 @@ describe('calculateSchemaChangeImpact field.index', () => {
         indexes: [{ name: 'anIndex', type: 'unique' }],
       },
       {
-        valueTypes: [
+        componentTypes: [
           {
             name: 'OneType',
             fields: [{ name: 'field', type: FieldType.String, index: 'anotherIndex' }],
@@ -430,7 +430,7 @@ describe('calculateSchemaChangeImpact field.matchPattern', () => {
   test('change: matchPattern pattern change value type', () => {
     const { previous, next } = build(
       {
-        valueTypes: [
+        componentTypes: [
           {
             name: 'OneType',
             fields: [{ name: 'field', type: FieldType.String, matchPattern: 'aPattern' }],
@@ -498,12 +498,14 @@ describe('calculateSchemaChangeImpact migration deleteField', () => {
 
   test('delete field on value type', () => {
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        componentTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }],
+      },
       {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'deleteField', valueType: 'OneType', field: 'field' }],
+            actions: [{ action: 'deleteField', componentType: 'OneType', field: 'field' }],
           },
         ],
       },
@@ -568,13 +570,20 @@ describe('calculateSchemaChangeImpact migration renameField', () => {
 
   test('rename field on value type', () => {
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        componentTypes: [{ name: 'OneType', fields: [{ name: 'field', type: FieldType.String }] }],
+      },
       {
         migrations: [
           {
             version: 2,
             actions: [
-              { action: 'renameField', valueType: 'OneType', field: 'field', newName: 'newName' },
+              {
+                action: 'renameField',
+                componentType: 'OneType',
+                field: 'field',
+                newName: 'newName',
+              },
             ],
           },
         ],
@@ -641,7 +650,7 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: ['OneType'] }],
           },
         ],
-        valueTypes: [
+        componentTypes: [
           {
             name: 'AnotherValueItem',
             fields: [{ name: 'richText', type: FieldType.RichText, linkEntityTypes: ['OneType'] }],
@@ -679,8 +688,10 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
 
   test('delete value type', () => {
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OneType', fields: [] }] },
-      { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
+      { componentTypes: [{ name: 'OneType', fields: [] }] },
+      {
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'OneType' }] }],
+      },
     );
     expect(calculateSchemaChangeImpact(previous, next, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
@@ -709,21 +720,23 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
   test('delete value type with referencing fields', () => {
     const { previous, next } = build(
       {
-        valueTypes: [
+        componentTypes: [
           { name: 'OneType', fields: [] },
           {
             name: 'AnotherValueItem',
-            fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['OneType'] }],
+            fields: [{ name: 'valueItem', type: FieldType.Component, componentTypes: ['OneType'] }],
           },
         ],
         entityTypes: [
           {
             name: 'AnotherEntity',
-            fields: [{ name: 'richText', type: FieldType.RichText, valueTypes: ['OneType'] }],
+            fields: [{ name: 'richText', type: FieldType.RichText, componentTypes: ['OneType'] }],
           },
         ],
       },
-      { migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'OneType' }] }] },
+      {
+        migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'OneType' }] }],
+      },
     );
     expect(calculateSchemaChangeImpact(previous, next, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
@@ -795,14 +808,14 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
   test('rename and delete value type', () => {
     // Is not a normal use case, but we want to make sure we handle it correctly
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OldName', fields: [] }] },
+      { componentTypes: [{ name: 'OldName', fields: [] }] },
       {
         migrations: [
           {
             version: 2,
             actions: [
-              { action: 'renameType', valueType: 'OldName', newName: 'NewName' },
-              { action: 'deleteType', valueType: 'NewName' },
+              { action: 'renameType', componentType: 'OldName', newName: 'NewName' },
+              { action: 'deleteType', componentType: 'NewName' },
             ],
           },
         ],
@@ -871,7 +884,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
             fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: ['OldName'] }],
           },
         ],
-        valueTypes: [
+        componentTypes: [
           {
             name: 'AnotherValueItem',
             fields: [{ name: 'richText', type: FieldType.RichText, linkEntityTypes: ['OldName'] }],
@@ -984,12 +997,14 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
 
   test('rename value type', () => {
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        componentTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }],
+      },
       {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameType', valueType: 'OldName', newName: 'NewName' }],
+            actions: [{ action: 'renameType', componentType: 'OldName', newName: 'NewName' }],
           },
         ],
       },
@@ -1012,17 +1027,17 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
   test('rename value type with referencing fields', () => {
     const { previous, next } = build(
       {
-        valueTypes: [
+        componentTypes: [
           { name: 'OldName', fields: [] },
           {
             name: 'AnotherValueItem',
-            fields: [{ name: 'valueItem', type: FieldType.ValueItem, valueTypes: ['OldName'] }],
+            fields: [{ name: 'valueItem', type: FieldType.Component, componentTypes: ['OldName'] }],
           },
         ],
         entityTypes: [
           {
             name: 'AnotherEntity',
-            fields: [{ name: 'richText', type: FieldType.RichText, valueTypes: ['OldName'] }],
+            fields: [{ name: 'richText', type: FieldType.RichText, componentTypes: ['OldName'] }],
           },
         ],
       },
@@ -1030,7 +1045,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameType', valueType: 'OldName', newName: 'NewName' }],
+            actions: [{ action: 'renameType', componentType: 'OldName', newName: 'NewName' }],
           },
         ],
       },
@@ -1061,9 +1076,11 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
 
   test('rename and change value type', () => {
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
       {
-        valueTypes: [
+        componentTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }],
+      },
+      {
+        componentTypes: [
           {
             name: 'NewName',
             fields: [{ name: 'field', type: FieldType.String, values: [{ value: 'one' }] }],
@@ -1072,7 +1089,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
         migrations: [
           {
             version: 2,
-            actions: [{ action: 'renameType', valueType: 'OldName', newName: 'NewName' }],
+            actions: [{ action: 'renameType', componentType: 'OldName', newName: 'NewName' }],
           },
         ],
       },
@@ -1102,14 +1119,16 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
   test('rename value type twice', () => {
     // Not a normal use case, but we want to make sure we handle it correctly
     const { previous, next } = build(
-      { valueTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }] },
+      {
+        componentTypes: [{ name: 'OldName', fields: [{ name: 'field', type: FieldType.String }] }],
+      },
       {
         migrations: [
           {
             version: 2,
             actions: [
-              { action: 'renameType', valueType: 'OldName', newName: 'MidName' },
-              { action: 'renameType', valueType: 'MidName', newName: 'NewName' },
+              { action: 'renameType', componentType: 'OldName', newName: 'MidName' },
+              { action: 'renameType', componentType: 'MidName', newName: 'NewName' },
             ],
           },
         ],

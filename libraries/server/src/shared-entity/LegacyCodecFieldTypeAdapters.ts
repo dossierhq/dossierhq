@@ -39,7 +39,7 @@ const stringCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.String], 
   decodeJson: (json) => json as string,
 };
 
-const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueItem], unknown> = {
+const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Component], unknown> = {
   decodeData: (_data) => {
     throw new Error('Should not be used');
   },
@@ -50,12 +50,12 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.ValueIte
 
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.Boolean]: booleanCodec,
+  [FieldType.Component]: invalidCodec,
   [FieldType.Entity]: entityTypeCodec,
   [FieldType.Location]: locationCodec,
   [FieldType.Number]: numberCodec,
   [FieldType.RichText]: invalidCodec,
   [FieldType.String]: stringCodec,
-  [FieldType.ValueItem]: invalidCodec,
 };
 
 export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {

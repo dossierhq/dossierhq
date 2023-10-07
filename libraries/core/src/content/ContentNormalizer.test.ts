@@ -22,12 +22,12 @@ const schema = AdminSchema.createAndValidate({
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'stringList', type: FieldType.String, list: true },
-        { name: 'twoStrings', type: FieldType.ValueItem, valueTypes: ['TwoStrings'] },
+        { name: 'twoStrings', type: FieldType.Component, componentTypes: ['TwoStrings'] },
         { name: 'richText', type: FieldType.RichText },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'TwoStrings',
       fields: [

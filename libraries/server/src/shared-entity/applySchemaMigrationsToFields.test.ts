@@ -1,8 +1,8 @@
 import {
   AdminSchemaWithMigrations,
   FieldType,
-  createRichTextHeadingNode,
   createRichText,
+  createRichTextHeadingNode,
   createRichTextTextNode,
   createRichTextValueItemNode,
   type RichText,
@@ -18,17 +18,17 @@ const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
       name: 'Entity',
       fields: [
         { name: 'richText', type: FieldType.RichText },
-        { name: 'valueItem', type: FieldType.ValueItem },
-        { name: 'valueItemList', type: FieldType.ValueItem, list: true },
+        { name: 'valueItem', type: FieldType.Component },
+        { name: 'valueItemList', type: FieldType.Component, list: true },
       ],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'ValueItem',
       fields: [
         { name: 'string', type: FieldType.String },
-        { name: 'child', type: FieldType.ValueItem },
+        { name: 'child', type: FieldType.Component },
       ],
     },
   ],
@@ -43,13 +43,13 @@ describe('applySchemaMigrationsToFields renameField', () => {
           actions: [
             {
               action: 'renameField',
-              valueType: 'ValueItem',
+              componentType: 'ValueItem',
               field: 'string',
               newName: 'string2',
             },
             {
               action: 'renameField',
-              valueType: 'ValueItem',
+              componentType: 'ValueItem',
               field: 'child',
               newName: 'child2',
             },
@@ -102,13 +102,13 @@ describe('applySchemaMigrationsToFields renameField', () => {
           actions: [
             {
               action: 'renameField',
-              valueType: 'ValueItem',
+              componentType: 'ValueItem',
               field: 'string',
               newName: 'string2',
             },
             {
               action: 'renameField',
-              valueType: 'ValueItem',
+              componentType: 'ValueItem',
               field: 'child',
               newName: 'child2',
             },
@@ -153,7 +153,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'deleteField', valueType: 'ValueItem', field: 'string' }],
+          actions: [{ action: 'deleteField', componentType: 'ValueItem', field: 'string' }],
         },
       ],
     }).valueOrThrow();
@@ -190,7 +190,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'deleteField', valueType: 'ValueItem', field: 'string' }],
+          actions: [{ action: 'deleteField', componentType: 'ValueItem', field: 'string' }],
         },
       ],
     }).valueOrThrow();
@@ -235,7 +235,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' }],
+          actions: [{ action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' }],
         },
       ],
     }).valueOrThrow();
@@ -281,7 +281,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' }],
+          actions: [{ action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' }],
         },
       ],
     }).valueOrThrow();
@@ -313,7 +313,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' }],
+          actions: [{ action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' }],
         },
       ],
     }).valueOrThrow();
@@ -351,7 +351,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
 describe('applySchemaMigrationsToFields deleteType', () => {
   test('nested value item', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
-      migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
@@ -374,7 +374,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
   test('value item list', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
-      migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
@@ -389,7 +389,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
   test('value item in rich text', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
-      migrations: [{ version: 2, actions: [{ action: 'deleteType', valueType: 'ValueItem' }] }],
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
@@ -417,8 +417,13 @@ describe('applySchemaMigrationsToFields combos', () => {
         {
           version: 2,
           actions: [
-            { action: 'renameType', valueType: 'ValueItem', newName: 'ValueItem2' },
-            { action: 'renameField', valueType: 'ValueItem2', field: 'string', newName: 'string2' },
+            { action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' },
+            {
+              action: 'renameField',
+              componentType: 'ValueItem2',
+              field: 'string',
+              newName: 'string2',
+            },
           ],
         },
       ],

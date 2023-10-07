@@ -98,7 +98,7 @@ export type RichTextEntityNode = Spread<
 
 export type RichTextEntityLinkNode = Spread<{ reference: EntityReference }, RichTextElementNode>;
 
-export type RichTextValueItemNode = Spread<{ data: ValueItem }, SerializedDecoratorBlockNode>;
+export type RichTextValueItemNode = Spread<{ data: Component }, SerializedDecoratorBlockNode>;
 
 export const RichTextNodeType = {
   code: 'code',
@@ -138,7 +138,7 @@ export interface BoundingBox {
   maxLng: number;
 }
 
-export type ValueItem<
+export type Component<
   TType extends string = string,
   TFields extends object = Record<string, unknown>,
 > = {
@@ -290,12 +290,12 @@ export type AdminEntityQueryOrder = keyof typeof AdminEntityQueryOrder;
 
 export interface AdminEntitySharedQuery<
   TEntityType extends string = string,
-  TValueType extends string = string,
+  TComponentType extends string = string,
   TAuthKey extends string = string,
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
-  valueTypes?: TValueType[];
+  valueTypes?: TComponentType[];
   status?: AdminEntityStatus[];
   valid?: boolean;
   linksTo?: EntityReference;
@@ -306,9 +306,9 @@ export interface AdminEntitySharedQuery<
 
 export interface AdminEntityQuery<
   TEntityType extends string = string,
-  TValueType extends string = string,
+  TComponentType extends string = string,
   TAuthKey extends string = string,
-> extends AdminEntitySharedQuery<TEntityType, TValueType, TAuthKey> {
+> extends AdminEntitySharedQuery<TEntityType, TComponentType, TAuthKey> {
   order?: AdminEntityQueryOrder;
   reverse?: boolean;
 }
@@ -322,12 +322,12 @@ export type PublishedEntityQueryOrder =
 
 export interface PublishedEntitySharedQuery<
   TEntityType extends string = string,
-  TValueType extends string = string,
+  TComponentType extends string = string,
   TAuthKey extends string = string,
 > {
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
-  valueTypes?: TValueType[];
+  valueTypes?: TComponentType[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
   boundingBox?: BoundingBox;
@@ -336,9 +336,9 @@ export interface PublishedEntitySharedQuery<
 
 export interface PublishedEntityQuery<
   TEntityType extends string = string,
-  TValueType extends string = string,
+  TComponentType extends string = string,
   TAuthKey extends string = string,
-> extends PublishedEntitySharedQuery<TEntityType, TValueType, TAuthKey> {
+> extends PublishedEntitySharedQuery<TEntityType, TComponentType, TAuthKey> {
   order?: PublishedEntityQueryOrder;
   reverse?: boolean;
 }

@@ -19,8 +19,8 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'heroImage',
-          type: FieldType.ValueItem,
-          valueTypes: ['CloudinaryImage'],
+          type: FieldType.Component,
+          componentTypes: ['CloudinaryImage'],
         },
         {
           name: 'description',
@@ -37,7 +37,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
             RichTextNodeType.valueItem,
           ],
           linkEntityTypes: ['BlogPost'],
-          valueTypes: ['CloudinaryImage'],
+          componentTypes: ['CloudinaryImage'],
         },
         {
           name: 'authors',
@@ -55,7 +55,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       fields: [{ name: 'title', type: FieldType.String, required: true }],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'CloudinaryImage',
       fields: [

@@ -217,7 +217,7 @@ exports[`AddFieldAction > add field to existing value type (with existing fields
 
 exports[`AddFieldAction > add field to existing value type (with existing fields) 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -290,7 +290,7 @@ exports[`AddFieldAction > add field to existing value type (without any fields) 
 
 exports[`AddFieldAction > add field to existing value type (without any fields) 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -624,7 +624,7 @@ exports[`AddTypeAction > add two value types (orders) 1`] = `
 
 exports[`AddTypeAction > add two value types (orders) 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [],
@@ -674,7 +674,7 @@ exports[`AddTypeAction > add value type to empty schema 1`] = `
 
 exports[`AddTypeAction > add value type to empty schema 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [],
@@ -730,7 +730,7 @@ exports[`AddTypeAction > add value type to schema with existing type 1`] = `
 
 exports[`AddTypeAction > add value type to schema with existing type 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [],
@@ -1463,7 +1463,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
           "name": "valueItem",
           "required": false,
           "status": "changed",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Foo",
           ],
@@ -1479,7 +1479,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
 
 exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing value item field 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -1487,7 +1487,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a existing v
           "adminOnly": false,
           "name": "valueItem",
           "required": false,
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Foo",
           ],
@@ -1527,7 +1527,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
           "name": "foo",
           "required": false,
           "status": "new",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Foo",
           ],
@@ -1543,7 +1543,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
 
 exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value item field 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -1551,7 +1551,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change value types of a new value 
           "adminOnly": false,
           "name": "foo",
           "required": false,
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Foo",
           ],
@@ -2529,7 +2529,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
 
 exports[`ChangeFieldTypeAction > from string to location list (new field of existing value type) 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -2589,7 +2589,7 @@ exports[`ChangeFieldTypeAction > from string to number (new field of existing va
 
 exports[`ChangeFieldTypeAction > from string to number (new field of existing value type) 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -2633,7 +2633,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
           "name": "bar",
           "required": false,
           "status": "new",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [],
         },
       ],
@@ -2662,7 +2662,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
           "adminOnly": false,
           "name": "bar",
           "required": false,
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [],
         },
       ],
@@ -3040,7 +3040,7 @@ exports[`ChangeTypeAdminOnlyAction > make existing value type admin only 1`] = `
 
 exports[`ChangeTypeAdminOnlyAction > make existing value type admin only 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": true,
       "fields": [],
@@ -3622,23 +3622,23 @@ exports[`DeleteFieldAction > delete existing value item field 1`] = `
 
 exports[`DeleteFieldAction > delete existing value item field 2`] = `
 {
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
   "migrations": [
     {
       "actions": [
         {
           "action": "deleteField",
+          "componentType": "Foo",
           "field": "field",
-          "valueType": "Foo",
         },
       ],
       "version": 2,
-    },
-  ],
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Foo",
     },
   ],
   "version": 2,
@@ -3724,6 +3724,24 @@ exports[`DeleteIndexAction > delete index used 1`] = `
 
 exports[`DeleteIndexAction > delete index used 2`] = `
 {
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ValueType",
+    },
+  ],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -3748,24 +3766,6 @@ exports[`DeleteIndexAction > delete index used 2`] = `
     {
       "action": "deleteIndex",
       "index": "anIndex",
-    },
-  ],
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "fieldB",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "name": "ValueType",
     },
   ],
   "version": 2,
@@ -3941,18 +3941,7 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
 
 exports[`DeleteTypeAction > delete existing entity type referenced by another type 2`] = `
 {
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteType",
-          "entityType": "ToBeDeleted",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -3975,6 +3964,17 @@ exports[`DeleteTypeAction > delete existing entity type referenced by another ty
         },
       ],
       "name": "Referencing",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "ToBeDeleted",
+        },
+      ],
+      "version": 2,
     },
   ],
   "version": 2,
@@ -4007,7 +4007,7 @@ exports[`DeleteTypeAction > delete existing value type 2`] = `
       "actions": [
         {
           "action": "deleteType",
-          "valueType": "Foo",
+          "componentType": "Foo",
         },
       ],
       "version": 2,
@@ -4060,7 +4060,7 @@ exports[`DeleteTypeAction > delete existing value type referenced by another typ
           "name": "valueItem",
           "required": false,
           "status": "changed",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [],
         },
       ],
@@ -4099,7 +4099,7 @@ exports[`DeleteTypeAction > delete existing value type referenced by another typ
           "adminOnly": false,
           "name": "valueItem",
           "required": false,
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [],
         },
       ],
@@ -4112,7 +4112,7 @@ exports[`DeleteTypeAction > delete existing value type referenced by another typ
       "actions": [
         {
           "action": "deleteType",
-          "valueType": "ToBeDeleted",
+          "componentType": "ToBeDeleted",
         },
       ],
       "version": 2,
@@ -4256,7 +4256,7 @@ exports[`DeleteTypeAction > delete newly added value type referenced by another 
           "name": "valueItem",
           "required": false,
           "status": "",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [],
         },
       ],
@@ -4585,20 +4585,7 @@ exports[`RenameFieldAction > rename existing value item field 1`] = `
 
 exports[`RenameFieldAction > rename existing value item field 2`] = `
 {
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameField",
-          "field": "oldName",
-          "newName": "newName",
-          "valueType": "Foo",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -4614,6 +4601,19 @@ exports[`RenameFieldAction > rename existing value item field 2`] = `
         },
       ],
       "name": "Foo",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "componentType": "Foo",
+          "field": "oldName",
+          "newName": "newName",
+        },
+      ],
+      "version": 2,
     },
   ],
   "version": 2,
@@ -5074,7 +5074,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
           "name": "self",
           "required": false,
           "status": "new",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Bar",
           ],
@@ -5090,7 +5090,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
 
 exports[`RenameTypeAction > add and rename value type with fields referring to itself 2`] = `
 {
-  "valueTypes": [
+  "componentTypes": [
     {
       "adminOnly": false,
       "fields": [
@@ -5098,7 +5098,7 @@ exports[`RenameTypeAction > add and rename value type with fields referring to i
           "adminOnly": false,
           "name": "self",
           "required": false,
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Bar",
           ],
@@ -5254,6 +5254,23 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
 
 exports[`RenameTypeAction > rename existing entity type with fields referring to itself 2`] = `
 {
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "name": "field",
+          "required": false,
+          "type": "Entity",
+        },
+      ],
+      "name": "Referencing",
+    },
+  ],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5283,23 +5300,6 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
         },
       ],
       "version": 2,
-    },
-  ],
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "entityTypes": [
-            "NewName",
-          ],
-          "name": "field",
-          "required": false,
-          "type": "Entity",
-        },
-      ],
-      "name": "Referencing",
     },
   ],
   "version": 2,
@@ -5340,23 +5340,23 @@ exports[`RenameTypeAction > rename existing value type 1`] = `
 
 exports[`RenameTypeAction > rename existing value type 2`] = `
 {
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
   "migrations": [
     {
       "actions": [
         {
           "action": "renameType",
+          "componentType": "Foo",
           "newName": "Bar",
-          "valueType": "Foo",
         },
       ],
       "version": 2,
-    },
-  ],
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Bar",
     },
   ],
   "version": 2,
@@ -5393,7 +5393,7 @@ exports[`RenameTypeAction > rename existing value type with fields referring to 
           "name": "field",
           "required": false,
           "status": "changed",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Bar",
           ],
@@ -5425,7 +5425,7 @@ exports[`RenameTypeAction > rename existing value type with fields referring to 
           "name": "self",
           "required": false,
           "status": "changed",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Bar",
           ],
@@ -5441,6 +5441,23 @@ exports[`RenameTypeAction > rename existing value type with fields referring to 
 
 exports[`RenameTypeAction > rename existing value type with fields referring to itself 2`] = `
 {
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "name": "self",
+          "required": false,
+          "type": "Component",
+          "valueTypes": [
+            "Bar",
+          ],
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
   "entityTypes": [
     {
       "adminOnly": false,
@@ -5450,7 +5467,7 @@ exports[`RenameTypeAction > rename existing value type with fields referring to 
           "adminOnly": false,
           "name": "field",
           "required": false,
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "Bar",
           ],
@@ -5465,28 +5482,11 @@ exports[`RenameTypeAction > rename existing value type with fields referring to 
       "actions": [
         {
           "action": "renameType",
+          "componentType": "Foo",
           "newName": "Bar",
-          "valueType": "Foo",
         },
       ],
       "version": 2,
-    },
-  ],
-  "valueTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "name": "self",
-          "required": false,
-          "type": "ValueItem",
-          "valueTypes": [
-            "Bar",
-          ],
-        },
-      ],
-      "name": "Bar",
     },
   ],
   "version": 2,
@@ -5704,6 +5704,7 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -5717,7 +5718,6 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
       "migrations": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -5814,11 +5814,11 @@ exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [],
       "indexes": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 0,
     },
   },
@@ -5883,6 +5883,24 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [
+                "EntityReference",
+              ],
+              "list": false,
+              "name": "reference",
+              "required": false,
+              "type": "Entity",
+            },
+          ],
+          "name": "ValueReference",
+        },
+      ],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -5906,24 +5924,6 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
       "indexes": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [
-            {
-              "adminOnly": false,
-              "entityTypes": [
-                "EntityReference",
-              ],
-              "list": false,
-              "name": "reference",
-              "required": false,
-              "type": "Entity",
-            },
-          ],
-          "name": "ValueReference",
-        },
-      ],
       "version": 1,
     },
   },
@@ -6010,6 +6010,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6027,7 +6028,6 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
         },
       ],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -6104,6 +6104,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6133,7 +6134,6 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
       ],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -6200,6 +6200,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6224,7 +6225,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
       "indexes": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -6339,6 +6339,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6384,7 +6385,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
       "indexes": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -6420,6 +6420,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
           "entityTypes": [],
           "existingFieldSpec": {
             "adminOnly": false,
+            "componentTypes": [],
             "entityTypes": [],
             "linkEntityTypes": [],
             "list": false,
@@ -6436,7 +6437,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
               "text",
             ],
             "type": "RichText",
-            "valueTypes": [],
           },
           "existingRichTextNodesWithPlaceholders": [
             "root, paragraph, text, linebreak, tab",
@@ -6469,6 +6469,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6476,6 +6477,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
           "fields": [
             {
               "adminOnly": false,
+              "componentTypes": [],
               "entityTypes": [],
               "linkEntityTypes": [],
               "list": false,
@@ -6492,7 +6494,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
                 "text",
               ],
               "type": "RichText",
-              "valueTypes": [],
             },
           ],
           "name": "TitleOnly",
@@ -6502,7 +6503,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
       "indexes": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -6579,6 +6579,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6608,7 +6609,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
         },
       ],
       "schemaKind": "admin",
-      "valueTypes": [],
       "version": 1,
     },
   },
@@ -6633,11 +6633,7 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
-      "entityTypes": [],
-      "indexes": [],
-      "patterns": [],
-      "schemaKind": "admin",
-      "valueTypes": [
+      "componentTypes": [
         {
           "adminOnly": false,
           "fields": [
@@ -6656,6 +6652,10 @@ exports[`UpdateSchemaSpecificationAction > one value type 1`] = `
           "name": "TitleOnly",
         },
       ],
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "admin",
       "version": 1,
     },
   },
@@ -6728,19 +6728,19 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
           "adminOnly": false,
           "existingFieldSpec": {
             "adminOnly": false,
+            "componentTypes": [
+              "ValueItem",
+            ],
             "list": false,
             "name": "valueItem",
             "required": false,
-            "type": "ValueItem",
-            "valueTypes": [
-              "ValueItem",
-            ],
+            "type": "Component",
           },
           "list": false,
           "name": "valueItem",
           "required": false,
           "status": "",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "ValueItem",
           ],
@@ -6758,6 +6758,24 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
     "cachedPatternRegExps": {},
     "cachedPublishedSchema": null,
     "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "componentTypes": [
+                "ValueItem",
+              ],
+              "list": false,
+              "name": "valueItem",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "ValueItem",
+        },
+      ],
       "entityTypes": [
         {
           "adminOnly": false,
@@ -6765,13 +6783,13 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
           "fields": [
             {
               "adminOnly": false,
+              "componentTypes": [
+                "ValueItem",
+              ],
               "list": false,
               "name": "valueItem",
               "required": false,
-              "type": "ValueItem",
-              "valueTypes": [
-                "ValueItem",
-              ],
+              "type": "Component",
             },
           ],
           "name": "EntityWithValueItem",
@@ -6781,24 +6799,6 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
       "indexes": [],
       "patterns": [],
       "schemaKind": "admin",
-      "valueTypes": [
-        {
-          "adminOnly": false,
-          "fields": [
-            {
-              "adminOnly": false,
-              "list": false,
-              "name": "valueItem",
-              "required": false,
-              "type": "ValueItem",
-              "valueTypes": [
-                "ValueItem",
-              ],
-            },
-          ],
-          "name": "ValueItem",
-        },
-      ],
       "version": 1,
     },
   },
@@ -6818,19 +6818,19 @@ exports[`UpdateSchemaSpecificationAction > value type field 1`] = `
           "adminOnly": false,
           "existingFieldSpec": {
             "adminOnly": false,
+            "componentTypes": [
+              "ValueItem",
+            ],
             "list": false,
             "name": "valueItem",
             "required": false,
-            "type": "ValueItem",
-            "valueTypes": [
-              "ValueItem",
-            ],
+            "type": "Component",
           },
           "list": false,
           "name": "valueItem",
           "required": false,
           "status": "",
-          "type": "ValueItem",
+          "type": "Component",
           "valueTypes": [
             "ValueItem",
           ],

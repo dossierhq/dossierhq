@@ -1,10 +1,10 @@
 import type {
   AdminClient,
-  AdminEntitySharedQuery,
   AdminEntity,
+  AdminEntitySharedQuery,
+  Component,
   ErrorResult,
   ErrorType,
-  ValueItem,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
@@ -20,7 +20,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function useAdminEntitiesTotalCount(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
   query: AdminEntitySharedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
@@ -42,7 +42,7 @@ export function useAdminEntitiesTotalCount(
 }
 
 async function fetchEntitiesTotalCount(
-  adminClient: AdminClient<AdminEntity<string, object>, ValueItem<string, object>>,
+  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getEntitiesTotalCount(query);

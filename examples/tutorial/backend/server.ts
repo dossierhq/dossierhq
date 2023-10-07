@@ -81,11 +81,11 @@ async function updateSchema(adminClient: AppAdminClient) {
         nameField: 'message',
         fields: [
           { name: 'message', type: FieldType.String, required: true },
-          { name: 'image', type: FieldType.ValueItem, valueTypes: ['CloudinaryImage'] },
+          { name: 'image', type: FieldType.Component, componentTypes: ['CloudinaryImage'] },
         ],
       },
     ],
-    valueTypes: [CLOUDINARY_IMAGE_VALUE_TYPE],
+    componentTypes: [CLOUDINARY_IMAGE_VALUE_TYPE],
   });
   return schemaResult;
 }

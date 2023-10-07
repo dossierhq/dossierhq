@@ -50,13 +50,13 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [
+        "TwoStrings",
+      ],
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
+      "type": "Component",
     },
     "path": [
       "entity",
@@ -74,6 +74,7 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -81,7 +82,6 @@ exports[`traverseEntity > Empty Foo entity 1`] = `
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -229,13 +229,13 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [
+        "TwoStrings",
+      ],
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
+      "type": "Component",
     },
     "path": [
       "entity",
@@ -318,6 +318,7 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -325,7 +326,6 @@ exports[`traverseEntity > Foo entity with TwoStrings value item 1`] = `
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -435,13 +435,13 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [
+        "TwoStrings",
+      ],
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
+      "type": "Component",
     },
     "path": [
       "entity",
@@ -479,6 +479,7 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -486,7 +487,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -519,6 +519,7 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -526,7 +527,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "node": {
       "children": [
@@ -557,6 +557,7 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -564,7 +565,6 @@ exports[`traverseEntity > Foo entity with rich text with TwoStrings value item 1
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "node": {
       "data": {
@@ -727,13 +727,13 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
   },
   {
     "fieldSpec": {
+      "componentTypes": [
+        "TwoStrings",
+      ],
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
+      "type": "Component",
     },
     "path": [
       "entity",
@@ -750,6 +750,7 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
   },
   {
     "fieldSpec": {
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -757,7 +758,6 @@ exports[`traverseEntity > Foo with adminOnly field (published) 1`] = `
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -870,13 +870,13 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [
+        "TwoStrings",
+      ],
       "list": false,
       "name": "twoStrings",
       "required": false,
-      "type": "ValueItem",
-      "valueTypes": [
-        "TwoStrings",
-      ],
+      "type": "Component",
     },
     "path": [
       "entity",
@@ -894,6 +894,7 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -901,7 +902,6 @@ exports[`traverseEntity > Foo with two strings in list 1`] = `
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -1714,6 +1714,7 @@ exports[`traverseEntity > traversable: expect richText[], get richText 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "entityTypes": [],
       "linkEntityTypes": [],
       "list": false,
@@ -1721,7 +1722,6 @@ exports[`traverseEntity > traversable: expect richText[], get richText 1`] = `
       "required": false,
       "richTextNodes": [],
       "type": "RichText",
-      "valueTypes": [],
     },
     "path": [
       "entity",
@@ -1882,7 +1882,7 @@ exports[`traverseEntity > traversable: expect valueItem, get other 1`] = `
     "value": "string value",
   },
   {
-    "message": "Expected a ValueItem object, got string",
+    "message": "Expected a Component object, got string",
     "path": "entity.fields.valueItem",
     "type": "error",
   },
@@ -1897,7 +1897,7 @@ exports[`traverseEntity > traversable: expect valueItem, get other 1`] = `
     ],
   },
   {
-    "message": "Missing a ValueItem type",
+    "message": "Missing a Component type",
     "path": "entity.fields.valueItemList[0].type",
     "type": "error",
   },
@@ -1932,7 +1932,7 @@ exports[`traverseEntity > traversable: expect valueItem, get valueItem[] 1`] = `
     ],
   },
   {
-    "message": "Expected single ValueItem, got a list",
+    "message": "Expected single Component, got a list",
     "path": "entity.fields.valueItem",
     "type": "error",
   },
@@ -1968,11 +1968,11 @@ exports[`traverseEntity > traversable: expect valueItem[], get valueItem 1`] = `
   {
     "fieldSpec": {
       "adminOnly": false,
+      "componentTypes": [],
       "list": false,
       "name": "valueItem",
       "required": false,
-      "type": "ValueItem",
-      "valueTypes": [],
+      "type": "Component",
     },
     "path": [
       "entity",
@@ -1983,7 +1983,7 @@ exports[`traverseEntity > traversable: expect valueItem[], get valueItem 1`] = `
     "value": undefined,
   },
   {
-    "message": "Expected a list of ValueItem, got object",
+    "message": "Expected a list of Component, got object",
     "path": "entity.fields.valueItemList",
     "type": "error",
   },

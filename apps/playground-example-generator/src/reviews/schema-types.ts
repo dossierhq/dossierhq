@@ -2,22 +2,22 @@ import type {
   AdminClient,
   AdminEntity,
   AdminExceptionClient,
+  Component,
   EntityReference,
   Location,
   RichText,
-  ValueItem,
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes
 >;
 
@@ -111,7 +111,7 @@ export function assertIsAdminReviewer(
   }
 }
 
-export type AppAdminValueItem = AdminAddress;
+export type AppAdminComponent = AdminAddress;
 
 export interface AdminAddressFields {
   location: Location | null;
@@ -121,18 +121,18 @@ export interface AdminAddressFields {
   city: string | null;
 }
 
-export type AdminAddress = ValueItem<'Address', AdminAddressFields>;
+export type AdminAddress = Component<'Address', AdminAddressFields>;
 
 export function isAdminAddress(
-  valueItem: ValueItem<string, object> | AdminAddress,
-): valueItem is AdminAddress {
-  return valueItem.type === 'Address';
+  component: Component<string, object> | AdminAddress,
+): component is AdminAddress {
+  return component.type === 'Address';
 }
 
 export function assertIsAdminAddress(
-  valueItem: ValueItem<string, object> | AdminAddress,
-): asserts valueItem is AdminAddress {
-  if (valueItem.type !== 'Address') {
-    throw new Error('Expected type = Address (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminAddress,
+): asserts component is AdminAddress {
+  if (component.type !== 'Address') {
+    throw new Error('Expected type = Address (but was ' + component.type + ')');
   }
 }

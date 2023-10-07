@@ -699,7 +699,7 @@ describe('AdminClient forward operation over JSON', () => {
             schemaKind: 'admin',
             version: 1,
             entityTypes: [],
-            valueTypes: [],
+            componentTypes: [],
             patterns: [],
             indexes: [],
           }),
@@ -712,11 +712,11 @@ describe('AdminClient forward operation over JSON', () => {
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
         {
+          "componentTypes": [],
           "entityTypes": [],
           "indexes": [],
           "patterns": [],
           "schemaKind": "admin",
-          "valueTypes": [],
           "version": 1,
         }
       `);
@@ -757,7 +757,7 @@ describe('AdminClient forward operation over JSON', () => {
             version: 1,
             migrations: [],
             entityTypes: [],
-            valueTypes: [],
+            componentTypes: [],
             patterns: [],
             indexes: [],
           }),
@@ -770,12 +770,12 @@ describe('AdminClient forward operation over JSON', () => {
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
         {
+          "componentTypes": [],
           "entityTypes": [],
           "indexes": [],
           "migrations": [],
           "patterns": [],
           "schemaKind": "admin",
-          "valueTypes": [],
           "version": 1,
         }
       `);
@@ -1453,7 +1453,7 @@ describe('AdminClient forward operation over JSON', () => {
               schemaKind: 'admin',
               version: 2,
               entityTypes: [],
-              valueTypes: [],
+              componentTypes: [],
               patterns: [],
               indexes: [],
             },
@@ -1463,17 +1463,20 @@ describe('AdminClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.updateSchemaSpecification({ entityTypes: [], valueTypes: [] });
+    const result = await adminClient.updateSchemaSpecification({
+      entityTypes: [],
+      componentTypes: [],
+    });
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
         {
           "effect": "updated",
           "schemaSpecification": {
+            "componentTypes": [],
             "entityTypes": [],
             "indexes": [],
             "patterns": [],
             "schemaKind": "admin",
-            "valueTypes": [],
             "version": 2,
           },
         }
@@ -1493,8 +1496,8 @@ describe('AdminClient forward operation over JSON', () => {
           {
             "args": [
               {
+                "componentTypes": [],
                 "entityTypes": [],
-                "valueTypes": [],
               },
               null,
             ],
@@ -1520,7 +1523,7 @@ describe('AdminClient forward operation over JSON', () => {
               schemaKind: 'admin',
               version: 2,
               entityTypes: [],
-              valueTypes: [],
+              componentTypes: [],
               patterns: [],
               indexes: [],
               migrations: [],
@@ -1532,7 +1535,7 @@ describe('AdminClient forward operation over JSON', () => {
     );
 
     const result = await adminClient.updateSchemaSpecification(
-      { entityTypes: [], valueTypes: [] },
+      { entityTypes: [], componentTypes: [] },
       { includeMigrations: true },
     );
     expectOkResult(result) &&
@@ -1540,12 +1543,12 @@ describe('AdminClient forward operation over JSON', () => {
         {
           "effect": "updated",
           "schemaSpecification": {
+            "componentTypes": [],
             "entityTypes": [],
             "indexes": [],
             "migrations": [],
             "patterns": [],
             "schemaKind": "admin",
-            "valueTypes": [],
             "version": 2,
           },
         }
@@ -1565,8 +1568,8 @@ describe('AdminClient forward operation over JSON', () => {
           {
             "args": [
               {
+                "componentTypes": [],
                 "entityTypes": [],
-                "valueTypes": [],
               },
               {
                 "includeMigrations": true,

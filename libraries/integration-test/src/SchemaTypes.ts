@@ -2,25 +2,25 @@ import type {
   AdminClient,
   AdminEntity,
   AdminExceptionClient,
+  Component,
   EntityReference,
   Location,
   PublishedClient,
   PublishedEntity,
   PublishedExceptionClient,
   RichText,
-  ValueItem,
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
   AppAdminEntity,
-  AppAdminValueItem,
+  AppAdminComponent,
   AppAdminUniqueIndexes
 >;
 
@@ -42,8 +42,8 @@ export interface AdminChangeValidationsFields {
   required: string | null;
   matchPattern: string | null;
   richText: RichText | null;
-  valueItem: AppAdminValueItem | null;
-  valueItemList: AppAdminValueItem[] | null;
+  valueItem: AppAdminComponent | null;
+  valueItemList: AppAdminComponent[] | null;
 }
 
 export type AdminChangeValidations = AdminEntity<
@@ -233,8 +233,8 @@ export function assertIsAdminTitleOnly(
 }
 
 export interface AdminValueItemsFields {
-  any: AppAdminValueItem | null;
-  anyAdminOnly: AppAdminValueItem | null;
+  any: AppAdminComponent | null;
+  anyAdminOnly: AppAdminComponent | null;
 }
 
 export type AdminValueItems = AdminEntity<'ValueItems', AdminValueItemsFields, string>;
@@ -251,7 +251,7 @@ export function assertIsAdminValueItems(
   }
 }
 
-export type AppAdminValueItem =
+export type AppAdminComponent =
   | AdminAdminOnlyValue
   | AdminChangeValidationsValueItem
   | AdminLocationsValue
@@ -260,19 +260,19 @@ export type AppAdminValueItem =
 
 export type AdminAdminOnlyValueFields = Record<never, never>;
 
-export type AdminAdminOnlyValue = ValueItem<'AdminOnlyValue', AdminAdminOnlyValueFields>;
+export type AdminAdminOnlyValue = Component<'AdminOnlyValue', AdminAdminOnlyValueFields>;
 
 export function isAdminAdminOnlyValue(
-  valueItem: ValueItem<string, object> | AdminAdminOnlyValue,
-): valueItem is AdminAdminOnlyValue {
-  return valueItem.type === 'AdminOnlyValue';
+  component: Component<string, object> | AdminAdminOnlyValue,
+): component is AdminAdminOnlyValue {
+  return component.type === 'AdminOnlyValue';
 }
 
 export function assertIsAdminAdminOnlyValue(
-  valueItem: ValueItem<string, object> | AdminAdminOnlyValue,
-): asserts valueItem is AdminAdminOnlyValue {
-  if (valueItem.type !== 'AdminOnlyValue') {
-    throw new Error('Expected type = AdminOnlyValue (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminAdminOnlyValue,
+): asserts component is AdminAdminOnlyValue {
+  if (component.type !== 'AdminOnlyValue') {
+    throw new Error('Expected type = AdminOnlyValue (but was ' + component.type + ')');
   }
 }
 
@@ -280,22 +280,22 @@ export interface AdminChangeValidationsValueItemFields {
   matchPattern: string | null;
 }
 
-export type AdminChangeValidationsValueItem = ValueItem<
+export type AdminChangeValidationsValueItem = Component<
   'ChangeValidationsValueItem',
   AdminChangeValidationsValueItemFields
 >;
 
 export function isAdminChangeValidationsValueItem(
-  valueItem: ValueItem<string, object> | AdminChangeValidationsValueItem,
-): valueItem is AdminChangeValidationsValueItem {
-  return valueItem.type === 'ChangeValidationsValueItem';
+  component: Component<string, object> | AdminChangeValidationsValueItem,
+): component is AdminChangeValidationsValueItem {
+  return component.type === 'ChangeValidationsValueItem';
 }
 
 export function assertIsAdminChangeValidationsValueItem(
-  valueItem: ValueItem<string, object> | AdminChangeValidationsValueItem,
-): asserts valueItem is AdminChangeValidationsValueItem {
-  if (valueItem.type !== 'ChangeValidationsValueItem') {
-    throw new Error('Expected type = ChangeValidationsValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminChangeValidationsValueItem,
+): asserts component is AdminChangeValidationsValueItem {
+  if (component.type !== 'ChangeValidationsValueItem') {
+    throw new Error('Expected type = ChangeValidationsValueItem (but was ' + component.type + ')');
   }
 }
 
@@ -304,40 +304,40 @@ export interface AdminLocationsValueFields {
   locationAdminOnly: Location | null;
 }
 
-export type AdminLocationsValue = ValueItem<'LocationsValue', AdminLocationsValueFields>;
+export type AdminLocationsValue = Component<'LocationsValue', AdminLocationsValueFields>;
 
 export function isAdminLocationsValue(
-  valueItem: ValueItem<string, object> | AdminLocationsValue,
-): valueItem is AdminLocationsValue {
-  return valueItem.type === 'LocationsValue';
+  component: Component<string, object> | AdminLocationsValue,
+): component is AdminLocationsValue {
+  return component.type === 'LocationsValue';
 }
 
 export function assertIsAdminLocationsValue(
-  valueItem: ValueItem<string, object> | AdminLocationsValue,
-): asserts valueItem is AdminLocationsValue {
-  if (valueItem.type !== 'LocationsValue') {
-    throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminLocationsValue,
+): asserts component is AdminLocationsValue {
+  if (component.type !== 'LocationsValue') {
+    throw new Error('Expected type = LocationsValue (but was ' + component.type + ')');
   }
 }
 
 export type AdminMigrationValueItemFields = Record<never, never>;
 
-export type AdminMigrationValueItem = ValueItem<
+export type AdminMigrationValueItem = Component<
   'MigrationValueItem',
   AdminMigrationValueItemFields
 >;
 
 export function isAdminMigrationValueItem(
-  valueItem: ValueItem<string, object> | AdminMigrationValueItem,
-): valueItem is AdminMigrationValueItem {
-  return valueItem.type === 'MigrationValueItem';
+  component: Component<string, object> | AdminMigrationValueItem,
+): component is AdminMigrationValueItem {
+  return component.type === 'MigrationValueItem';
 }
 
 export function assertIsAdminMigrationValueItem(
-  valueItem: ValueItem<string, object> | AdminMigrationValueItem,
-): asserts valueItem is AdminMigrationValueItem {
-  if (valueItem.type !== 'MigrationValueItem') {
-    throw new Error('Expected type = MigrationValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminMigrationValueItem,
+): asserts component is AdminMigrationValueItem {
+  if (component.type !== 'MigrationValueItem') {
+    throw new Error('Expected type = MigrationValueItem (but was ' + component.type + ')');
   }
 }
 
@@ -345,32 +345,32 @@ export interface AdminReferencesValueFields {
   reference: EntityReference | null;
 }
 
-export type AdminReferencesValue = ValueItem<'ReferencesValue', AdminReferencesValueFields>;
+export type AdminReferencesValue = Component<'ReferencesValue', AdminReferencesValueFields>;
 
 export function isAdminReferencesValue(
-  valueItem: ValueItem<string, object> | AdminReferencesValue,
-): valueItem is AdminReferencesValue {
-  return valueItem.type === 'ReferencesValue';
+  component: Component<string, object> | AdminReferencesValue,
+): component is AdminReferencesValue {
+  return component.type === 'ReferencesValue';
 }
 
 export function assertIsAdminReferencesValue(
-  valueItem: ValueItem<string, object> | AdminReferencesValue,
-): asserts valueItem is AdminReferencesValue {
-  if (valueItem.type !== 'ReferencesValue') {
-    throw new Error('Expected type = ReferencesValue (but was ' + valueItem.type + ')');
+  component: Component<string, object> | AdminReferencesValue,
+): asserts component is AdminReferencesValue {
+  if (component.type !== 'ReferencesValue') {
+    throw new Error('Expected type = ReferencesValue (but was ' + component.type + ')');
   }
 }
 
 export type AppPublishedClient = PublishedClient<
   AppPublishedEntity,
-  AppPublishedValueItem,
+  AppPublishedComponent,
   AppPublishedUniqueIndexes,
   AppPublishedExceptionClient
 >;
 
 export type AppPublishedExceptionClient = PublishedExceptionClient<
   AppPublishedEntity,
-  AppPublishedValueItem,
+  AppPublishedComponent,
   AppPublishedUniqueIndexes
 >;
 
@@ -392,8 +392,8 @@ export interface PublishedChangeValidationsFields {
   required: string;
   matchPattern: string | null;
   richText: RichText | null;
-  valueItem: AppPublishedValueItem | null;
-  valueItemList: AppPublishedValueItem[] | null;
+  valueItem: AppPublishedComponent | null;
+  valueItemList: AppPublishedComponent[] | null;
 }
 
 export type PublishedChangeValidations = PublishedEntity<
@@ -595,7 +595,7 @@ export function assertIsPublishedTitleOnly(
 }
 
 export interface PublishedValueItemsFields {
-  any: AppPublishedValueItem | null;
+  any: AppPublishedComponent | null;
 }
 
 export type PublishedValueItems = PublishedEntity<'ValueItems', PublishedValueItemsFields, string>;
@@ -614,7 +614,7 @@ export function assertIsPublishedValueItems(
   }
 }
 
-export type AppPublishedValueItem =
+export type AppPublishedComponent =
   | PublishedChangeValidationsValueItem
   | PublishedLocationsValue
   | PublishedMigrationValueItem
@@ -624,22 +624,22 @@ export interface PublishedChangeValidationsValueItemFields {
   matchPattern: string | null;
 }
 
-export type PublishedChangeValidationsValueItem = ValueItem<
+export type PublishedChangeValidationsValueItem = Component<
   'ChangeValidationsValueItem',
   PublishedChangeValidationsValueItemFields
 >;
 
 export function isPublishedChangeValidationsValueItem(
-  valueItem: ValueItem<string, object> | PublishedChangeValidationsValueItem,
-): valueItem is PublishedChangeValidationsValueItem {
-  return valueItem.type === 'ChangeValidationsValueItem';
+  component: Component<string, object> | PublishedChangeValidationsValueItem,
+): component is PublishedChangeValidationsValueItem {
+  return component.type === 'ChangeValidationsValueItem';
 }
 
 export function assertIsPublishedChangeValidationsValueItem(
-  valueItem: ValueItem<string, object> | PublishedChangeValidationsValueItem,
-): asserts valueItem is PublishedChangeValidationsValueItem {
-  if (valueItem.type !== 'ChangeValidationsValueItem') {
-    throw new Error('Expected type = ChangeValidationsValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedChangeValidationsValueItem,
+): asserts component is PublishedChangeValidationsValueItem {
+  if (component.type !== 'ChangeValidationsValueItem') {
+    throw new Error('Expected type = ChangeValidationsValueItem (but was ' + component.type + ')');
   }
 }
 
@@ -647,40 +647,40 @@ export interface PublishedLocationsValueFields {
   location: Location | null;
 }
 
-export type PublishedLocationsValue = ValueItem<'LocationsValue', PublishedLocationsValueFields>;
+export type PublishedLocationsValue = Component<'LocationsValue', PublishedLocationsValueFields>;
 
 export function isPublishedLocationsValue(
-  valueItem: ValueItem<string, object> | PublishedLocationsValue,
-): valueItem is PublishedLocationsValue {
-  return valueItem.type === 'LocationsValue';
+  component: Component<string, object> | PublishedLocationsValue,
+): component is PublishedLocationsValue {
+  return component.type === 'LocationsValue';
 }
 
 export function assertIsPublishedLocationsValue(
-  valueItem: ValueItem<string, object> | PublishedLocationsValue,
-): asserts valueItem is PublishedLocationsValue {
-  if (valueItem.type !== 'LocationsValue') {
-    throw new Error('Expected type = LocationsValue (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedLocationsValue,
+): asserts component is PublishedLocationsValue {
+  if (component.type !== 'LocationsValue') {
+    throw new Error('Expected type = LocationsValue (but was ' + component.type + ')');
   }
 }
 
 export type PublishedMigrationValueItemFields = Record<never, never>;
 
-export type PublishedMigrationValueItem = ValueItem<
+export type PublishedMigrationValueItem = Component<
   'MigrationValueItem',
   PublishedMigrationValueItemFields
 >;
 
 export function isPublishedMigrationValueItem(
-  valueItem: ValueItem<string, object> | PublishedMigrationValueItem,
-): valueItem is PublishedMigrationValueItem {
-  return valueItem.type === 'MigrationValueItem';
+  component: Component<string, object> | PublishedMigrationValueItem,
+): component is PublishedMigrationValueItem {
+  return component.type === 'MigrationValueItem';
 }
 
 export function assertIsPublishedMigrationValueItem(
-  valueItem: ValueItem<string, object> | PublishedMigrationValueItem,
-): asserts valueItem is PublishedMigrationValueItem {
-  if (valueItem.type !== 'MigrationValueItem') {
-    throw new Error('Expected type = MigrationValueItem (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedMigrationValueItem,
+): asserts component is PublishedMigrationValueItem {
+  if (component.type !== 'MigrationValueItem') {
+    throw new Error('Expected type = MigrationValueItem (but was ' + component.type + ')');
   }
 }
 
@@ -688,18 +688,18 @@ export interface PublishedReferencesValueFields {
   reference: EntityReference | null;
 }
 
-export type PublishedReferencesValue = ValueItem<'ReferencesValue', PublishedReferencesValueFields>;
+export type PublishedReferencesValue = Component<'ReferencesValue', PublishedReferencesValueFields>;
 
 export function isPublishedReferencesValue(
-  valueItem: ValueItem<string, object> | PublishedReferencesValue,
-): valueItem is PublishedReferencesValue {
-  return valueItem.type === 'ReferencesValue';
+  component: Component<string, object> | PublishedReferencesValue,
+): component is PublishedReferencesValue {
+  return component.type === 'ReferencesValue';
 }
 
 export function assertIsPublishedReferencesValue(
-  valueItem: ValueItem<string, object> | PublishedReferencesValue,
-): asserts valueItem is PublishedReferencesValue {
-  if (valueItem.type !== 'ReferencesValue') {
-    throw new Error('Expected type = ReferencesValue (but was ' + valueItem.type + ')');
+  component: Component<string, object> | PublishedReferencesValue,
+): asserts component is PublishedReferencesValue {
+  if (component.type !== 'ReferencesValue') {
+    throw new Error('Expected type = ReferencesValue (but was ' + component.type + ')');
   }
 }

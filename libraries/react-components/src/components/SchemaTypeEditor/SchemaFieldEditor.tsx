@@ -35,12 +35,12 @@ interface FieldTypeItem {
 
 const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
   FieldType.Boolean,
+  FieldType.Component,
   FieldType.Entity,
   FieldType.Location,
   FieldType.Number,
   FieldType.RichText,
   FieldType.String,
-  FieldType.ValueItem,
 ].flatMap((type) =>
   [false, true].map((list) => ({
     value: fieldTypeValue(type, list),
@@ -114,7 +114,7 @@ export function SchemaFieldEditor({
       fieldDraft.richTextNodesWithPlaceholders.length === 0 ||
       fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.entityLink));
   const showValueTypes =
-    fieldDraft.type === FieldType.ValueItem ||
+    fieldDraft.type === FieldType.Component ||
     (fieldDraft.type === FieldType.RichText &&
       (!fieldDraft.richTextNodesWithPlaceholders ||
         fieldDraft.richTextNodesWithPlaceholders.length === 0 ||

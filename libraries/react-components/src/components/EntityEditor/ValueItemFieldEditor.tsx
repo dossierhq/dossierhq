@@ -1,9 +1,9 @@
 import type {
   AdminFieldSpecification,
+  Component,
+  ComponentFieldSpecification,
   PublishValidationIssue,
   SaveValidationIssue,
-  ValueItem,
-  ValueItemFieldSpecification,
 } from '@dossierhq/core';
 import { FieldType, groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text, toFlexItemClassName } from '@dossierhq/design';
@@ -12,7 +12,7 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import { FieldEditor, type FieldEditorProps } from './FieldEditor.js';
 
-type Props = FieldEditorProps<ValueItemFieldSpecification, ValueItem>;
+type Props = FieldEditorProps<ComponentFieldSpecification, Component>;
 
 export function ValueItemFieldEditor({
   fieldSpec,
@@ -65,11 +65,11 @@ export function ValueItemFieldEditorWithoutClear({
   onChange,
 }: {
   className?: string;
-  value: ValueItem;
+  value: Component;
   adminOnly: boolean;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   dragHandle?: ReactNode;
-  onChange: (value: ValueItem) => void;
+  onChange: (value: Component) => void;
 }) {
   const { root: rootValidationIssues, children: fieldValidationIssues } = useMemo(
     () => groupValidationIssuesByTopLevelPath(validationIssues),
@@ -82,7 +82,7 @@ export function ValueItemFieldEditorWithoutClear({
   }
 
   const { type } = value;
-  const valueSpec = schema.getValueTypeSpecification(type);
+  const valueSpec = schema.getComponentTypeSpecification(type);
   if (!valueSpec) {
     return <div>Error</div>;
   }
@@ -110,7 +110,7 @@ export function ValueItemFieldEditorWithoutClear({
             <Text textStyle="subtitle1" marginBottom={0}>
               {valueFieldSpec.name}
             </Text>
-            {valueFieldSpec.type === FieldType.ValueItem ? (
+            {valueFieldSpec.type === FieldType.Component ? (
               <div className="nested-value-item-indentation">{fieldEditor}</div>
             ) : (
               fieldEditor
@@ -131,8 +131,8 @@ export function AddValueItemListItemButton({
   fieldSpec,
   onAddItem,
 }: {
-  fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>;
-  onAddItem: (value: ValueItem | null) => void;
+  fieldSpec: AdminFieldSpecification<ComponentFieldSpecification>;
+  onAddItem: (value: Component | null) => void;
 }) {
   const handleValueTypeSelected = useCallback((type: string) => onAddItem({ type }), [onAddItem]);
   return <AddValueItemButton fieldSpec={fieldSpec} onValueTypeSelected={handleValueTypeSelected} />;
@@ -142,14 +142,14 @@ function AddValueItemButton({
   fieldSpec,
   onValueTypeSelected,
 }: {
-  fieldSpec: AdminFieldSpecification<ValueItemFieldSpecification>;
+  fieldSpec: AdminFieldSpecification<ComponentFieldSpecification>;
   onValueTypeSelected: (type: string) => void;
 }) {
   return (
     <AdminTypePicker
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
       showValueTypes
-      valueTypes={fieldSpec.valueTypes}
+      valueTypes={fieldSpec.componentTypes}
       onTypeSelected={onValueTypeSelected}
     >
       Add value item
@@ -164,11 +164,11 @@ function ValueItemField({
   validationIssues,
   onChange,
 }: {
-  value: ValueItem;
+  value: Component;
   valueFieldSpec: AdminFieldSpecification;
   adminOnly: boolean;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
-  onChange: (value: ValueItem) => void;
+  onChange: (value: Component) => void;
 }) {
   const handleFieldChanged = useCallback(
     (newFieldValue: unknown) => {

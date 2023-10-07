@@ -6,13 +6,13 @@ import {
   type AdminEntityTypeSpecification,
   type AdminFieldSpecification,
   type AdminSchema,
+  type Component,
   type ContentValuePath,
   type PublishedEntityTypeSpecification,
   type PublishedFieldSpecification,
   type PublishedSchema,
   type RichText,
   type RichTextValueItemNode,
-  type ValueItem,
 } from '@dossierhq/core';
 import * as LegacyCodecFieldTypeAdapters from './LegacyCodecFieldTypeAdapters.js';
 
@@ -56,8 +56,8 @@ function decodeFieldItemOrList(
     }
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
-      if (fieldSpec.type === FieldType.ValueItem) {
-        const decodedItem = decodeValueItemField(schema, codecMode, encodedItem as ValueItem);
+      if (fieldSpec.type === FieldType.Component) {
+        const decodedItem = decodeValueItemField(schema, codecMode, encodedItem as Component);
         if (decodedItem) {
           decodedItems.push(decodedItem);
         }
@@ -73,8 +73,8 @@ function decodeFieldItemOrList(
     }
     return decodedItems.length > 0 ? decodedItems : null;
   }
-  if (fieldSpec.type === FieldType.ValueItem) {
-    return decodeValueItemField(schema, codecMode, fieldValue as ValueItem);
+  if (fieldSpec.type === FieldType.Component) {
+    return decodeValueItemField(schema, codecMode, fieldValue as Component);
   }
   if (fieldSpec.type === FieldType.RichText) {
     return decodeRichTextField(schema, fieldValue as RichText);
@@ -87,14 +87,14 @@ function decodeFieldItemOrList(
 function decodeValueItemField(
   schema: AdminSchema | PublishedSchema,
   codecMode: CodecMode,
-  encodedValue: ValueItem,
-): ValueItem | null {
-  const valueSpec = schema.getValueTypeSpecification(encodedValue.type);
+  encodedValue: Component,
+): Component | null {
+  const valueSpec = schema.getComponentTypeSpecification(encodedValue.type);
   if (!valueSpec) {
     // Could be that the value type was deleted or made adminOnly (when decoding published entities)
     return null;
   }
-  const decodedValue: ValueItem = { type: encodedValue.type };
+  const decodedValue: Component = { type: encodedValue.type };
   for (const fieldFieldSpec of valueSpec.fields) {
     const fieldName = fieldFieldSpec.name;
     const fieldValue = encodedValue[fieldName];

@@ -11,6 +11,7 @@ import type {
   EntityReference,
   EntityVersionReference,
   ErrorType,
+  LegacyAdminSchemaSpecificationWithMigrations,
   Location,
   PagingInfo,
   PromiseResult,
@@ -677,7 +678,10 @@ export interface DatabaseAdapter<
 
   schemaGetSpecification(
     context: TransactionContext,
-  ): PromiseResult<AdminSchemaSpecificationWithMigrations | null, typeof ErrorType.Generic>;
+  ): PromiseResult<
+    AdminSchemaSpecificationWithMigrations | LegacyAdminSchemaSpecificationWithMigrations | null,
+    typeof ErrorType.Generic
+  >;
 
   schemaUpdateCountEntitiesWithTypes(
     context: TransactionContext,

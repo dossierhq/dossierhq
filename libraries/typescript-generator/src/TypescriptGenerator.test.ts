@@ -160,38 +160,38 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'ValueTypes',
               fields: [
-                { name: 'valueType', type: FieldType.ValueItem, required: true },
+                { name: 'valueType', type: FieldType.Component, required: true },
                 {
                   name: 'valueTypeFoo',
-                  type: FieldType.ValueItem,
-                  valueTypes: ['Foo'],
+                  type: FieldType.Component,
+                  componentTypes: ['Foo'],
                   required: true,
                 },
                 {
                   name: 'valueTypeFooBar',
-                  type: FieldType.ValueItem,
-                  valueTypes: ['Foo', 'Bar'],
+                  type: FieldType.Component,
+                  componentTypes: ['Foo', 'Bar'],
                   required: true,
                 },
-                { name: 'valueTypeList', type: FieldType.ValueItem, list: true, required: true },
+                { name: 'valueTypeList', type: FieldType.Component, list: true, required: true },
                 {
                   name: 'valueTypeListFoo',
-                  type: FieldType.ValueItem,
-                  valueTypes: ['Foo'],
+                  type: FieldType.Component,
+                  componentTypes: ['Foo'],
                   list: true,
                   required: true,
                 },
                 {
                   name: 'valueTypeListFooBar',
-                  type: FieldType.ValueItem,
-                  valueTypes: ['Foo', 'Bar'],
+                  type: FieldType.Component,
+                  componentTypes: ['Foo', 'Bar'],
                   list: true,
                   required: true,
                 },
               ],
             },
           ],
-          valueTypes: [
+          componentTypes: [
             {
               name: 'Foo',
               fields: [{ name: 'string', type: FieldType.String, required: true }],
@@ -214,10 +214,10 @@ describe('generateTypescriptForSchema', () => {
           entityTypes: [
             {
               name: 'ValueItem',
-              fields: [{ name: 'valueItem', type: FieldType.ValueItem, required: true }],
+              fields: [{ name: 'valueItem', type: FieldType.Component, required: true }],
             },
           ],
-          valueTypes: [{ name: 'Foo', fields: [] }],
+          componentTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
         publishedSchema: null,
       }),

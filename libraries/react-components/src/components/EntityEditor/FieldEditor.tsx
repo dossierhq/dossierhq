@@ -23,7 +23,7 @@ import {
   type RichTextFieldSpecification,
   type SaveValidationIssue,
   type StringFieldSpecification,
-  type ValueItemFieldSpecification,
+  type ComponentFieldSpecification,
 } from '@dossierhq/core';
 import { useContext, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -170,7 +170,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <ValueItemFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>}
+        fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
         value={value}
       />
     );
@@ -178,7 +178,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<ValueItemFieldSpecification>}
+        fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
         value={value}
         AddButton={AddValueItemListItemButton}
         Editor={ValueItemFieldEditor}

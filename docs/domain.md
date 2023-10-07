@@ -12,7 +12,7 @@ The main piece of data is an **Entity**. An **Entity** has:
 - an **Entity Status**
 - an **Authorization Key**
 
-**TODO** Entity Type, Value item, Value Type
+**TODO** Entity Type, Component, Component Type
 
 ### Entity status
 

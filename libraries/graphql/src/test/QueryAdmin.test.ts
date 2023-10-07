@@ -61,13 +61,17 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
           list: true,
           entityTypes: ['QueryAdminBar'],
         },
-        { name: 'stringedBar', type: FieldType.ValueItem, valueTypes: ['QueryAdminStringedBar'] },
+        {
+          name: 'stringedBar',
+          type: FieldType.Component,
+          componentTypes: ['QueryAdminStringedBar'],
+        },
       ],
     },
     { name: 'QueryAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
     { name: 'QueryAdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'QueryAdminStringedBar',
       fields: [

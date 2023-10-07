@@ -37,9 +37,9 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
         { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityCodecBar'] },
         { name: 'bars', type: FieldType.Entity, list: true, entityTypes: ['EntityCodecBar'] },
         { name: 'reference', type: FieldType.Entity },
-        { name: 'valueItem', type: FieldType.ValueItem },
-        { name: 'valueItems', type: FieldType.ValueItem, list: true },
-        { name: 'valueOne', type: FieldType.ValueItem },
+        { name: 'valueItem', type: FieldType.Component },
+        { name: 'valueItems', type: FieldType.Component, list: true },
+        { name: 'valueOne', type: FieldType.Component },
         { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
         { name: 'richTexts', type: FieldType.RichText, list: true },
       ],
@@ -51,7 +51,7 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
       fields: [],
     },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'EntityCodecValueOne',
       adminOnly: false,
@@ -62,7 +62,7 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityCodecBar'] },
         { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
-        { name: 'child', type: FieldType.ValueItem, valueTypes: ['EntityCodecValueOne'] },
+        { name: 'child', type: FieldType.Component, componentTypes: ['EntityCodecValueOne'] },
       ],
     },
     {

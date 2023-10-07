@@ -60,15 +60,15 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
           list: true,
           entityTypes: ['MutationBar'],
         },
-        { name: 'stringedBar', type: FieldType.ValueItem, valueTypes: ['MutationStringedBar'] },
-        { name: 'nestedValue', type: FieldType.ValueItem, valueTypes: ['MutationNestedValue'] },
-        { name: 'anyValueItem', type: FieldType.ValueItem },
-        { name: 'anyValueItems', type: FieldType.ValueItem, list: true },
+        { name: 'stringedBar', type: FieldType.Component, componentTypes: ['MutationStringedBar'] },
+        { name: 'nestedValue', type: FieldType.Component, componentTypes: ['MutationNestedValue'] },
+        { name: 'anyValueItem', type: FieldType.Component },
+        { name: 'anyValueItems', type: FieldType.Component, list: true },
       ],
     },
     { name: 'MutationBar', fields: [] },
   ],
-  valueTypes: [
+  componentTypes: [
     {
       name: 'MutationStringedBar',
       fields: [
@@ -80,7 +80,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       name: 'MutationNestedValue',
       fields: [
         { name: 'text', type: FieldType.String },
-        { name: 'child', type: FieldType.ValueItem, valueTypes: ['MutationNestedValue'] },
+        { name: 'child', type: FieldType.Component, componentTypes: ['MutationNestedValue'] },
       ],
     },
   ],
