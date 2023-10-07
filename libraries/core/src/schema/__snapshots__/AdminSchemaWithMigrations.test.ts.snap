@@ -470,7 +470,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update 1`] = `
+exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityTypes, linkEntityTypes, componentTypes, richTextNodes values if not specified on RichText field update 1`] = `
 {
   "componentTypes": [
     {

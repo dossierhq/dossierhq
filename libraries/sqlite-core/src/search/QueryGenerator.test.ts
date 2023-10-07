@@ -1938,7 +1938,7 @@ describe('sampleAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('valueTypes', () => {
+  test('componentTypes', () => {
     expect(
       sampleAdminEntitiesQuery(
         adminSchema,
@@ -2007,7 +2007,7 @@ describe('samplePublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('valueTypes', () => {
+  test('componentTypes', () => {
     expect(
       samplePublishedEntitiesQuery(
         publishedSchema,

@@ -450,7 +450,7 @@ function addQueryFilters(
     sql`AND e.type IN ${addValueList(entityTypesResult.value)}`;
   }
 
-  // Filter: valueTypes
+  // Filter: componentTypes
   const valueTypesResult = getFilterComponentTypes(schema, query);
   if (valueTypesResult.isError()) return valueTypesResult;
 

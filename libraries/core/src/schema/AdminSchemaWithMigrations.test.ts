@@ -264,7 +264,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     expect(numberFieldSpec.integer).toBe(true);
   });
 
-  test('use existing entityTypes, linkEntityTypes, valueTypes, richTextNodes values if not specified on RichText field update', () => {
+  test('use existing entityTypes, linkEntityTypes, componentTypes, richTextNodes values if not specified on RichText field update', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
