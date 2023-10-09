@@ -18,7 +18,7 @@ export function EditEntitiesRoute() {
       value={hasChanges ? 'Changes will be lost, are you sure you want to leave the page?' : null}
     >
       <EntityEditorScreen
-        header={<NavBar current="admin-entities" />}
+        header={<NavBar current="content" />}
         urlSearchParams={searchParams}
         onUrlSearchParamsChange={handleSearchParamsChange}
         onEditorHasChangesChange={setHasChanges}

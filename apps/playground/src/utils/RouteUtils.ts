@@ -5,9 +5,9 @@ export const ROUTE = {
   server: {
     url: (serverName: string) => `/${serverName}`,
   },
-  adminEntities: {
-    route: 'admin-entities',
-    url: (serverName: string) => `/${serverName}/admin-entities`,
+  content: {
+    route: 'content',
+    url: (serverName: string) => `/${serverName}/content`,
   },
   changelog: {
     route: 'changelog',
@@ -22,7 +22,7 @@ export const ROUTE = {
     url: (serverName: string, userId: string) => `/${serverName}/login/${userId}`,
   },
   editEntities: {
-    route: 'edit-entities',
+    route: 'content/edit',
     url: (serverName: string, selectors: ({ newType: string; id: string } | { id: string })[]) => {
       const p = new URLSearchParams();
       for (const selector of selectors) {
@@ -32,17 +32,17 @@ export const ROUTE = {
           p.set('id', selector.id);
         }
       }
-      return `/${serverName}/edit-entities?${p.toString()}`;
+      return `/${serverName}/content/edit?${p.toString()}`;
     },
   },
-  publishedEntities: {
-    route: 'published-entities',
-    url: (serverName: string) => `/${serverName}/published-entities`,
+  publishedContent: {
+    route: 'published-content',
+    url: (serverName: string) => `/${serverName}/published-content`,
   },
-  publishedEntityDisplay: {
-    route: 'published-entities/display',
+  publishedContentDisplay: {
+    route: 'published-content/display',
     url: (serverName: string, entityId: string) =>
-      `/${serverName}/published-entities/display?id=${entityId}`,
+      `/${serverName}/published-content/display?id=${entityId}`,
   },
   schema: {
     route: 'schema',

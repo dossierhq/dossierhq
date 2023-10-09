@@ -65,7 +65,7 @@ export function uploadDatabase(
     const data = new Uint8Array(reader.result as ArrayBuffer);
     void createDatabase(data).then(() => {
       showNotification({ color: 'success', message: 'Loaded new database' });
-      navigate(ROUTE.adminEntities.url('upload'));
+      navigate(ROUTE.content.url('upload'));
     });
   };
   reader.readAsArrayBuffer(file);

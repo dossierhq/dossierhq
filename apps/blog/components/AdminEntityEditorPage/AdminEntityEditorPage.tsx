@@ -26,7 +26,7 @@ export default function AdminEntityEditorPage(): JSX.Element {
         <title>Edit entities | Blog</title>
       </Head>
       <EntityEditorScreen
-        header={<NavBar current="admin-entities" />}
+        header={<NavBar current="content" />}
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={onUrlSearchParamsChange}
         onEditorHasChangesChange={setHasChanges}

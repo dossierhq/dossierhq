@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AdminEntitiesRoute } from './routes/AdminEntitiesRoute.js';
+import { ContentRoute } from './routes/ContentRoute.js';
 import { ChangelogRoute } from './routes/ChangelogRoute.js';
-import { EditEntitiesRoute } from './routes/EditEntitiesRoute.js';
+import { EditEntitiesRoute } from './routes/EditContentRoute.js';
 import { EditSchemaRoute } from './routes/EditSchemaRoute.js';
 import { GraphiQLRoute } from './routes/GraphiQLRoute.js';
 import { IndexRoute } from './routes/IndexRoute.js';
 import { LoginRoute } from './routes/LoginRoute.js';
-import { PublishedEntitiesRoute } from './routes/PublishedEntitiesRoute.js';
-import { PublishedEntityDisplayRoute } from './routes/PublishedEntityDisplayRoute.js';
+import { PublishedContentRoute } from './routes/PublishedContentRoute.js';
+import { PublishedContentDisplayRoute } from './routes/PublishedContentDisplayRoute.js';
 import { RootLayout } from './routes/RootLayout.js';
 import { ServerLayout } from './routes/ServerLayout.js';
 import { ServerRoute } from './routes/ServerRoute.js';
@@ -24,11 +24,11 @@ const router = createBrowserRouter([
         element: <ServerLayout />,
         children: [
           { index: true, element: <ServerRoute /> },
-          { path: ROUTE.adminEntities.route, element: <AdminEntitiesRoute /> },
+          { path: ROUTE.content.route, element: <ContentRoute /> },
           { path: ROUTE.editEntities.route, element: <EditEntitiesRoute /> },
           { path: ROUTE.login.route, element: <LoginRoute /> },
-          { path: ROUTE.publishedEntities.route, element: <PublishedEntitiesRoute /> },
-          { path: ROUTE.publishedEntityDisplay.route, element: <PublishedEntityDisplayRoute /> },
+          { path: ROUTE.publishedContent.route, element: <PublishedContentRoute /> },
+          { path: ROUTE.publishedContentDisplay.route, element: <PublishedContentDisplayRoute /> },
           { path: ROUTE.schema.route, element: <EditSchemaRoute /> },
           { path: ROUTE.changelog.route, element: <ChangelogRoute /> },
           { path: ROUTE.graphiql.route, element: <GraphiQLRoute /> },

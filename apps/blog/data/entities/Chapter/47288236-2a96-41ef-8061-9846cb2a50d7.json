@@ -4,7 +4,9 @@
     "name": "Main chapter",
     "type": "Chapter",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "items": [
@@ -104,7 +106,7 @@
           },
           {
             "type": "ArticleTocItem",
-            "title": "⤷ managing entities",
+            "title": "⤷ managing content",
             "article": {
               "id": "0ab79be1-7c06-4f04-a810-43ece0f16030"
             }

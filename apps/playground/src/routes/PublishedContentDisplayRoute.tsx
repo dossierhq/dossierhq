@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';
 
-export function PublishedEntityDisplayRoute() {
+export function PublishedContentDisplayRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearchParamsChange = useCallback(
@@ -13,7 +13,7 @@ export function PublishedEntityDisplayRoute() {
 
   return (
     <PublishedEntityDisplayScreen
-      header={<NavBar current="published-entities" />}
+      header={<NavBar current="published-content" />}
       urlSearchParams={searchParams}
       onUrlSearchParamsChange={handleSearchParamsChange}
     />

@@ -6,7 +6,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 
-export function PublishedEntitiesRoute() {
+export function PublishedContentRoute() {
   const navigate = useNavigate();
   const { serverName } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,13 +14,13 @@ export function PublishedEntitiesRoute() {
   assertIsDefined(serverName);
 
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => navigate(ROUTE.publishedEntityDisplay.url(serverName, entity.id)),
+    (entity: PublishedEntity) => navigate(ROUTE.publishedContentDisplay.url(serverName, entity.id)),
     [navigate, serverName]
   );
 
   return (
     <PublishedEntityListScreen
-      header={<NavBar current="published-entities" />}
+      header={<NavBar current="published-content" />}
       urlSearchParams={searchParams}
       onUrlSearchParamsChange={setSearchParams}
       onOpenEntity={handleEntityOpen}

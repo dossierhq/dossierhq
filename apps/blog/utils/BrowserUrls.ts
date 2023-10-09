@@ -1,24 +1,24 @@
 export const BrowserUrls = {
   home: '/',
-  adminEntities: '/admin/admin-entities',
+  content: '/dossier/content',
   article: (slug: string) => (slug === 'overview' ? '/docs' : `/docs/${slug}`),
   blog: '/blog',
   blogPost: (slug: string) => `/blog/${slug}`,
-  changelog: '/admin/changelog',
+  changelog: '/dossier/changelog',
   docs: '/docs',
-  editPage: (ids: string[]): string => `/admin/admin-entities/edit?id=${ids.join('&id=')}`,
+  editPage: (ids: string[]): string => `/dossier/content/edit?id=${ids.join('&id=')}`,
   editPageNew: (entityType: string, id: string): string =>
-    `/admin/admin-entities/edit?new=${entityType}:${id}`,
-  isEditPage: (url: string): boolean => url.startsWith('/admin/admin-entities/edit'),
+    `/dossier/content/edit?new=${entityType}:${id}`,
+  isEditPage: (url: string): boolean => url.startsWith('/dossier/content/edit'),
   glossary: '/docs/glossary',
   glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
   github: 'https://github.com/dossierhq/dossierhq#readme',
   limitations: '/docs/limitations',
   playground: () => ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),
-  publishedEntities: '/admin/published-entities',
+  publishedContent: '/dossier/published-content',
   publishedEntityDisplay: (ids: string[]): string =>
-    `/admin/published-entities/display?id=${ids.join('&id=')}`,
-  schemaEditor: '/admin/schema',
+    `/dossier/published-content/display?id=${ids.join('&id=')}`,
+  schemaEditor: '/dossier/schema',
 };
 
 export function canonicalUrl(url: string) {

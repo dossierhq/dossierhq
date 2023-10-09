@@ -1,5 +1,5 @@
-import { AdminEntityListScreen } from '@dossierhq/react-components';
 import type { AdminEntity } from '@dossierhq/core';
+import { AdminEntityListScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -27,7 +27,7 @@ export default function AdminEntitiesListPage(): JSX.Element | null {
         <title>Entities | Blog</title>
       </Head>
       <AdminEntityListScreen
-        header={<NavBar current="admin-entities" />}
+        header={<NavBar current="content" />}
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={onUrlSearchParamsChange}
         onCreateEntity={handleCreateEntity}

@@ -4,7 +4,9 @@
     "name": "Overview",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Overview",
@@ -60,6 +62,7 @@
                 "version": 1,
                 "rel": "noopener",
                 "target": null,
+                "title": null,
                 "url": "https://playground.dossierhq.dev/",
                 "children": [
                   {
@@ -127,7 +130,8 @@
                 "version": 1,
                 "rel": "noopener",
                 "target": null,
-                "url": "https://playground.dossierhq.dev/dossier-docs/edit-entities?id=e3ece01e-240a-4c1c-9a19-206dc234af2a",
+                "title": null,
+                "url": "https://playground.dossierhq.dev/dossier-docs/content/edit?id=e3ece01e-240a-4c1c-9a19-206dc234af2a",
                 "children": [
                   {
                     "detail": 0,
@@ -145,7 +149,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "). All your changes are stored only memory, so if you refresh or close the browser tab all changes are lost. Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
+                "text": "). All your changes are stored in memory only, so if you refresh or close the browser tab all changes are lost. Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
                 "type": "text",
                 "version": 1
               },
@@ -157,6 +161,7 @@
                 "version": 1,
                 "rel": "noopener",
                 "target": null,
+                "title": null,
                 "url": "https://playground.dossierhq.dev/new/schema",
                 "children": [
                   {
@@ -223,7 +228,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Let's start with adding a type. There are two different kinds of types, entity type and value type. Entity types define the structure of entities, which is the main content stored in Dossier. Value types define the structure of value items, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
+                "text": "Let's start with adding a type. There are two different kinds of types, entity type and component type. Entity types define the structure of entities, which is the main content stored in Dossier. Component types define the structure of components, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
                 "type": "text",
                 "version": 1
               },
@@ -422,7 +427,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Now when we have an entity type in the schema we can go to the Entities screen, which will be empty.",
+                "text": "Now when we have an entity type in the schema we can go to the Content screen, which will be empty.",
                 "type": "text",
                 "version": 1
               }
@@ -435,7 +440,7 @@
               "publicId": "Blog/yehwajgwphhhngt2gy6k",
               "width": 2110,
               "height": 1380,
-              "alt": "Empty entities screen"
+              "alt": "Empty content screen"
             },
             "format": "",
             "version": 1
@@ -452,7 +457,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Click on Create and select BlogPost to go to the entity editor screen, where we can fill out the fields.",
+                "text": "Click on Create and select BlogPost to go to the content editor screen, where we can fill out the fields.",
                 "type": "text",
                 "version": 1
               }
@@ -465,7 +470,7 @@
               "publicId": "Blog/quw6nc4qcv7p1jw6rakv",
               "width": 2652,
               "height": 1450,
-              "alt": "Entity editor with a new BlogPost entity"
+              "alt": "Content editor with a new BlogPost entity"
             },
             "format": "",
             "version": 1
@@ -482,7 +487,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Fill out the fields, select None as the authorization key. Click \"Create\" to create the entity. Go back to the Entities screen and ensure that it's included in the list.",
+                "text": "Fill out the fields, select None as the authorization key. Click \"Create\" to create the entity. Go back to the Content screen and ensure that it's included in the list.",
                 "type": "text",
                 "version": 1
               }
@@ -495,7 +500,7 @@
               "publicId": "Blog/yh5u83eee5two2hhjked",
               "width": 2212,
               "height": 1324,
-              "alt": "Entities screen with the newly created entity"
+              "alt": "Content screen with the newly created entity"
             },
             "format": "",
             "version": 1
@@ -531,7 +536,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Go to the Published entities screen and ensure that it's ",
+                "text": "Go to the Published content screen and ensure that it's ",
                 "type": "text",
                 "version": 1
               },
@@ -562,7 +567,7 @@
               "publicId": "Blog/d9ms0pmg8hnwqvzwc1hm",
               "width": 2212,
               "height": 1324,
-              "alt": "Empty published entities screen"
+              "alt": "Empty published content screen"
             },
             "format": "",
             "version": 1
@@ -579,7 +584,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Go back to the entity editor and click on Publish to publish the entity. You'll see that the status changes from draft to published.",
+                "text": "Go back to the content editor and click on Publish to publish the entity. You'll see that the status changes from draft to published.",
                 "type": "text",
                 "version": 1
               }
@@ -609,7 +614,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Now the entity will show up on the Published entities screen.",
+                "text": "Now the entity will show up on the Published content screen.",
                 "type": "text",
                 "version": 1
               }

@@ -59,7 +59,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.adminEntities.url('dossier-docs')}
+          href={ROUTE.content.url('dossier-docs')}
         >
           Load Dossier docs
         </Button>
@@ -79,7 +79,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.adminEntities.url('blog')}
+          href={ROUTE.content.url('blog')}
         >
           Load Blog
         </Button>
@@ -98,7 +98,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.adminEntities.url('reviews')}
+          href={ROUTE.content.url('reviews')}
         >
           Load Reviews
         </Button>
@@ -117,7 +117,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.adminEntities.url('starwars')}
+          href={ROUTE.content.url('starwars')}
         >
           Load Star Wars
         </Button>
@@ -126,7 +126,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.adminEntities.url('catalog')}
+          href={ROUTE.content.url('catalog')}
         >
           Load Catalog
         </Button>

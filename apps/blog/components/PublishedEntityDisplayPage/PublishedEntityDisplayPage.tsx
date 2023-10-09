@@ -13,7 +13,7 @@ export default function PublishedEntityDetailPage(): JSX.Element | null {
         <title>Published entities | Blog</title>
       </Head>
       <PublishedEntityDisplayScreen
-        header={<NavBar current="published-entities" />}
+        header={<NavBar current="published-content" />}
         urlSearchParams={urlSearchParams}
         onUrlSearchParamsChange={onUrlSearchParamsChange}
       />

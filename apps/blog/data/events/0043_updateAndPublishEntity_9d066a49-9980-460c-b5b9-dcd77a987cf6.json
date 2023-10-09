@@ -1,16 +1,14 @@
 {
-  "id": "92d61acc-be05-4bc4-b840-6b8e42aed51f",
-  "parentId": "bf64aaf0-ab86-434b-9924-b945fd4430a6",
-  "type": "createAndPublishEntity",
-  "createdAt": "2023-08-31T08:17:31.473Z",
-  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "id": "9d066a49-9980-460c-b5b9-dcd77a987cf6",
+  "parentId": "6afee4a0-f43b-4c5f-8172-3cece92fc734",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2023-10-09T10:56:55.075Z",
+  "createdBy": "e223cb3d-8c47-4b8d-b3be-524175e28e8a",
   "entity": {
     "id": "e3ece01e-240a-4c1c-9a19-206dc234af2a",
     "info": {
-      "type": "Article",
       "name": "Overview",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "version": 2,
       "schemaVersion": 1
     },
     "fields": {
@@ -19,18 +17,8 @@
       "description": "Get a flavor of Dossier by using the Playground to create some content.",
       "body": {
         "root": {
-          "direction": "ltr",
-          "format": "",
-          "indent": 0,
-          "type": "root",
-          "version": 1,
           "children": [
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
@@ -41,14 +29,14 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
               "type": "paragraph",
-              "version": 1,
+              "version": 1
+            },
+            {
               "children": [
                 {
                   "detail": 0,
@@ -60,14 +48,6 @@
                   "version": 1
                 },
                 {
-                  "direction": "ltr",
-                  "format": "",
-                  "indent": 0,
-                  "type": "link",
-                  "version": 1,
-                  "rel": "noopener",
-                  "target": null,
-                  "url": "https://playground.dossierhq.dev/",
                   "children": [
                     {
                       "detail": 0,
@@ -78,7 +58,16 @@
                       "type": "text",
                       "version": 1
                     }
-                  ]
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "title": null,
+                  "url": "https://playground.dossierhq.dev/"
                 },
                 {
                   "detail": 0,
@@ -89,15 +78,14 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
-              "type": "heading",
-              "version": 1,
-              "tag": "h1",
+              "type": "paragraph",
+              "version": 1
+            },
+            {
               "children": [
                 {
                   "detail": 0,
@@ -108,14 +96,15 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
-              "type": "paragraph",
+              "type": "heading",
               "version": 1,
+              "tag": "h1"
+            },
+            {
               "children": [
                 {
                   "detail": 0,
@@ -127,14 +116,6 @@
                   "version": 1
                 },
                 {
-                  "direction": "ltr",
-                  "format": "",
-                  "indent": 0,
-                  "type": "link",
-                  "version": 1,
-                  "rel": "noopener",
-                  "target": null,
-                  "url": "https://playground.dossierhq.dev/dossier-docs/content/edit?id=e3ece01e-240a-4c1c-9a19-206dc234af2a",
                   "children": [
                     {
                       "detail": 0,
@@ -145,18 +126,7 @@
                       "type": "text",
                       "version": 1
                     }
-                  ]
-                },
-                {
-                  "detail": 0,
-                  "format": 0,
-                  "mode": "normal",
-                  "style": "",
-                  "text": "). All your changes are stored only memory, so if you refresh or close the browser tab all changes are lost. Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
-                  "type": "text",
-                  "version": 1
-                },
-                {
+                  ],
                   "direction": "ltr",
                   "format": "",
                   "indent": 0,
@@ -164,7 +134,19 @@
                   "version": 1,
                   "rel": "noopener",
                   "target": null,
-                  "url": "https://playground.dossierhq.dev/new/schema",
+                  "title": null,
+                  "url": "https://playground.dossierhq.dev/dossier-docs/content/edit?id=e3ece01e-240a-4c1c-9a19-206dc234af2a"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "). All your changes are stored in memory only, so if you refresh or close the browser tab all changes are lost. Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
                   "children": [
                     {
                       "detail": 0,
@@ -175,7 +157,16 @@
                       "type": "text",
                       "version": 1
                     }
-                  ]
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "title": null,
+                  "url": "https://playground.dossierhq.dev/new/schema"
                 },
                 {
                   "detail": 0,
@@ -186,7 +177,12 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -201,11 +197,6 @@
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
@@ -216,21 +207,21 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
               "type": "paragraph",
-              "version": 1,
+              "version": 1
+            },
+            {
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Let's start with adding a type. There are two different kinds of types, entity type and value type. Entity types define the structure of entities, which is the main content stored in Dossier. Value types define the structure of value items, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
+                  "text": "Let's start with adding a type. There are two different kinds of types, entity type and component type. Entity types define the structure of entities, which is the main content stored in Dossier. Component types define the structure of components, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
                   "type": "text",
                   "version": 1
                 },
@@ -252,7 +243,12 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -267,11 +263,6 @@
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
@@ -300,7 +291,12 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -315,11 +311,6 @@
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
@@ -330,14 +321,14 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
               "type": "paragraph",
-              "version": 1,
+              "version": 1
+            },
+            {
               "children": [
                 {
                   "detail": 0,
@@ -366,7 +357,12 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -381,11 +377,6 @@
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
@@ -396,15 +387,14 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
-              "type": "heading",
-              "version": 1,
-              "tag": "h1",
+              "type": "paragraph",
+              "version": 1
+            },
+            {
               "children": [
                 {
                   "detail": 0,
@@ -415,25 +405,31 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
-              "type": "paragraph",
+              "type": "heading",
               "version": 1,
+              "tag": "h1"
+            },
+            {
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Now when we have an entity type in the schema we can go to the Entities screen, which will be empty.",
+                  "text": "Now when we have an entity type in the schema we can go to the Content screen, which will be empty.",
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -442,28 +438,28 @@
                 "publicId": "Blog/yehwajgwphhhngt2gy6k",
                 "width": 2110,
                 "height": 1380,
-                "alt": "Empty entities screen"
+                "alt": "Empty content screen"
               },
               "format": "",
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Click on Create and select BlogPost to go to the entity editor screen, where we can fill out the fields.",
+                  "text": "Click on Create and select BlogPost to go to the content editor screen, where we can fill out the fields.",
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -472,28 +468,28 @@
                 "publicId": "Blog/quw6nc4qcv7p1jw6rakv",
                 "width": 2652,
                 "height": 1450,
-                "alt": "Entity editor with a new BlogPost entity"
+                "alt": "Content editor with a new BlogPost entity"
               },
               "format": "",
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Fill out the fields, select None as the authorization key. Click \"Create\" to create the entity. Go back to the Entities screen and ensure that it's included in the list.",
+                  "text": "Fill out the fields, select None as the authorization key. Click \"Create\" to create the entity. Go back to the Content screen and ensure that it's included in the list.",
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -502,18 +498,12 @@
                 "publicId": "Blog/yh5u83eee5two2hhjked",
                 "width": 2212,
                 "height": 1324,
-                "alt": "Entities screen with the newly created entity"
+                "alt": "Content screen with the newly created entity"
               },
               "format": "",
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "heading",
-              "version": 1,
-              "tag": "h1",
               "children": [
                 {
                   "detail": 0,
@@ -524,21 +514,22 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
-              "type": "paragraph",
+              "type": "heading",
               "version": 1,
+              "tag": "h1"
+            },
+            {
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Go to the Published entities screen and ensure that it's ",
+                  "text": "Go to the Published content screen and ensure that it's ",
                   "type": "text",
                   "version": 1
                 },
@@ -560,7 +551,12 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -569,28 +565,28 @@
                 "publicId": "Blog/d9ms0pmg8hnwqvzwc1hm",
                 "width": 2212,
                 "height": 1324,
-                "alt": "Empty published entities screen"
+                "alt": "Empty published content screen"
               },
               "format": "",
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Go back to the entity editor and click on Publish to publish the entity. You'll see that the status changes from draft to published.",
+                  "text": "Go back to the content editor and click on Publish to publish the entity. You'll see that the status changes from draft to published.",
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -605,22 +601,22 @@
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "Now the entity will show up on the Published entities screen.",
+                  "text": "Now the entity will show up on the Published content screen.",
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             },
             {
               "type": "component",
@@ -635,11 +631,6 @@
               "version": 1
             },
             {
-              "direction": "ltr",
-              "format": "",
-              "indent": 0,
-              "type": "paragraph",
-              "version": 1,
               "children": [
                 {
                   "detail": 0,
@@ -650,14 +641,14 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
-            },
-            {
+              ],
               "direction": "ltr",
               "format": "",
               "indent": 0,
               "type": "paragraph",
-              "version": 1,
+              "version": 1
+            },
+            {
               "children": [
                 {
                   "detail": 0,
@@ -668,9 +659,19 @@
                   "type": "text",
                   "version": 1
                 }
-              ]
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
             }
-          ]
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
         }
       }
     }

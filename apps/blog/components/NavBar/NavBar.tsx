@@ -11,14 +11,7 @@ import { BrowserUrls } from '../../utils/BrowserUrls';
 export function NavBar({
   current,
 }: {
-  current:
-    | 'home'
-    | 'docs'
-    | 'blog'
-    | 'admin-entities'
-    | 'published-entities'
-    | 'schema'
-    | 'changelog';
+  current: 'home' | 'docs' | 'blog' | 'content' | 'published-content' | 'schema' | 'changelog';
 }) {
   const [active, setActive] = useState(false);
   return (
@@ -42,11 +35,11 @@ export function NavBar({
         </DesignNavbar.Item>
         {ENABLE_WEB_INTERFACE ? (
           <>
-            <DesignNavbar.Item active={current === 'admin-entities'}>
-              {NavItemRender('Entities', BrowserUrls.adminEntities)}
+            <DesignNavbar.Item active={current === 'content'}>
+              {NavItemRender('Content', BrowserUrls.content)}
             </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'published-entities'}>
-              {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
+            <DesignNavbar.Item active={current === 'published-content'}>
+              {NavItemRender('Published content', BrowserUrls.publishedContent)}
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'schema'}>
               {NavItemRender('Schema', BrowserUrls.schemaEditor)}

@@ -3,6 +3,6 @@ import { BrowserUrls } from './BrowserUrls.js';
 
 describe('BrowserUrls', () => {
   test('editPage', () => {
-    expect(BrowserUrls.editPage(['id1', 'id2'])).toBe('/admin/admin-entities/edit?id=id1&id=id2');
+    expect(BrowserUrls.editPage(['id1', 'id2'])).toBe('/dossier/content/edit?id=id1&id=id2');
   });
 });
