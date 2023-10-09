@@ -307,6 +307,13 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
             message: 'Rich text text nodes cannot contain line breaks, use linebreak nodes instead',
           };
         }
+      } else if (node.node.type === 'valueItem') {
+        // Renamed after v 0.4.7
+        return {
+          type: 'save',
+          path: node.path,
+          message: 'Rich text node valueItem should be converted to a component node',
+        };
       }
       break;
     }

@@ -260,6 +260,13 @@ export function schemaValidateAdmin(
               `${typeSpec.name}.${fieldSpec.name}: linkEntityTypes is specified for field, but richTextNodes is missing entityLink`,
             );
           }
+
+          // Renamed after v 0.4.7
+          if (usedRichTextNodes.has('valueItem')) {
+            return notOk.BadRequest(
+              `${typeSpec.name}.${fieldSpec.name}: richTextNodes can’t include valueItem, it has been renamed to component`,
+            );
+          }
         }
       }
 
