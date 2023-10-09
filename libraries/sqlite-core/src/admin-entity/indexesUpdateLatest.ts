@@ -15,7 +15,7 @@ export async function adminEntityIndexesUpdateLatest(
   create: boolean,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId as number;
-  const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
+  const { fullTextSearchText, referenceIds, locations, componentTypes } = entityIndexes;
 
   // FTS
   const ftsResult = await queryRun(
@@ -93,15 +93,15 @@ export async function adminEntityIndexesUpdateLatest(
     if (insertLocationsResult.isError()) return insertLocationsResult;
   }
 
-  if (valueTypes.length > 0) {
+  if (componentTypes.length > 0) {
     const insertValueTypesResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(({ sql, addValue }) => {
         sql`INSERT INTO entity_latest_value_types (entities_id, value_type) VALUES`;
         const entitiesId = addValue(entityId);
-        for (const valueType of valueTypes) {
-          sql`, (${entitiesId}, ${valueType})`;
+        for (const componentType of componentTypes) {
+          sql`, (${entitiesId}, ${componentType})`;
         }
       }),
     );

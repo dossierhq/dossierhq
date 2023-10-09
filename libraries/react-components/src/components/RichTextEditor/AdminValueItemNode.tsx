@@ -26,7 +26,7 @@ import {
 } from 'lexical';
 import { useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ValueItemFieldEditor.js';
+import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 
 export type SerializedAdminValueItemNode = RichTextValueItemNode;
@@ -62,8 +62,8 @@ function AdminValueItemComponent({
   const [editor] = useLexicalComposerContext();
   const { adapter, schema: adminSchema } = useContext(AdminDossierContext);
   const { adminOnly: richTextAdminOnly } = useContext(RichTextEditorContext);
-  const valueSpec = adminSchema?.getComponentTypeSpecification(data.type);
-  const adminOnly = richTextAdminOnly || !!valueSpec?.adminOnly;
+  const componentSpec = adminSchema?.getComponentTypeSpecification(data.type);
+  const adminOnly = richTextAdminOnly || !!componentSpec?.adminOnly;
 
   const setValue = useCallback(
     (value: Component) => {

@@ -4,7 +4,7 @@ export {
   CloudinaryImageFieldEditorWithoutClear,
 } from './components/CloudinaryImageFieldEditor.js';
 export {
-  CLOUDINARY_IMAGE_VALUE_TYPE,
+  CLOUDINARY_IMAGE_COMPONENT_TYPE,
   isAdminCloudinaryImage,
   isPublishedCloudinaryImage,
-} from './types/CloudinaryImageValueItem.js';
+} from './types/CloudinaryImageComponent.js';

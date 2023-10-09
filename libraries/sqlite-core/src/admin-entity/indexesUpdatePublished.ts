@@ -14,7 +14,7 @@ export async function adminEntityIndexesUpdatePublished(
   entityIndexes: DatabaseEntityIndexesArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId as number;
-  const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
+  const { fullTextSearchText, referenceIds, locations, componentTypes } = entityIndexes;
 
   // FTS virtual tables don't support upsert
   // FTS upsert 1/2) Try to insert
@@ -112,15 +112,15 @@ export async function adminEntityIndexesUpdatePublished(
     if (insertLocationsResult.isError()) return insertLocationsResult;
   }
 
-  if (valueTypes.length > 0) {
+  if (componentTypes.length > 0) {
     const insertValueTypesResult = await queryRun(
       database,
       context,
       buildSqliteSqlQuery(({ sql, addValue }) => {
         sql`INSERT INTO entity_published_value_types (entities_id, value_type) VALUES`;
         const entitiesId = addValue(entityId);
-        for (const valueType of valueTypes) {
-          sql`, (${entitiesId}, ${valueType})`;
+        for (const componentType of componentTypes) {
+          sql`, (${entitiesId}, ${componentType})`;
         }
       }),
     );

@@ -5,7 +5,7 @@ import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js'
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { ValueTypeFieldDisplay } from '../EntityDisplay/ValueTypeFieldDisplay.js';
+import { ComponentFieldDisplay } from '../EntityDisplay/ComponentFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 export type SerializedPublishedValueItemNode = RichTextValueItemNode;
@@ -44,7 +44,7 @@ function PublishedValueItemComponent({
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
       {overriddenDisplay ?? (
-        <ValueTypeFieldDisplay
+        <ComponentFieldDisplay
           className="rich-text-item-indentation"
           fieldSpec={fieldSpec}
           value={data}

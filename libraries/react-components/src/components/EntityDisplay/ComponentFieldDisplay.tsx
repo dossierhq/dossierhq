@@ -15,7 +15,7 @@ interface Props
   className?: string;
 }
 
-export function ValueTypeFieldDisplay({ className, value }: Props) {
+export function ComponentFieldDisplay({ className, value }: Props) {
   const { schema } = useContext(PublishedDossierContext);
 
   if (!schema || !value) {
@@ -23,8 +23,8 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
   }
 
   const { type } = value;
-  const valueSpec = schema.getComponentTypeSpecification(type);
-  if (!valueSpec) {
+  const componentSpec = schema.getComponentTypeSpecification(type);
+  if (!componentSpec) {
     return <div>Error</div>;
   }
 
@@ -33,7 +33,7 @@ export function ValueTypeFieldDisplay({ className, value }: Props) {
       <Text textStyle="body2" marginBottom={0}>
         {type}
       </Text>
-      {valueSpec.fields.map((valueFieldSpec) => {
+      {componentSpec.fields.map((valueFieldSpec) => {
         const fieldDisplay = (
           <FieldDisplay fieldSpec={valueFieldSpec} value={value[valueFieldSpec.name]} />
         );

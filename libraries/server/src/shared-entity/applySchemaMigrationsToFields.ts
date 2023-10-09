@@ -24,12 +24,12 @@ export function applySchemaMigrationsToFields(
   }
 
   const entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[] = [];
-  const valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[] = [];
+  const componentTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[] = [];
   for (const action of actions) {
     if ('entityType' in action) {
       entityTypeActions.push(action);
     } else {
-      valueTypeActions.push(action);
+      componentTypeActions.push(action);
     }
   }
 
@@ -54,15 +54,15 @@ export function applySchemaMigrationsToFields(
       },
       transformFieldItem: (_schema, _path, fieldSpec, value) => {
         if (isComponentItemField(fieldSpec, value) && value) {
-          return ok(migrateValueItem(value, valueTypeActions));
+          return ok(migrateComponent(value, componentTypeActions));
         }
         return ok(value);
       },
       transformRichTextNode: (_schema, _path, _fieldSpec, node) => {
         if (isRichTextValueItemNode(node)) {
-          const valueItem = migrateValueItem(node.data, valueTypeActions);
-          if (!valueItem) return ok(null);
-          return ok({ ...node, data: valueItem });
+          const component = migrateComponent(node.data, componentTypeActions);
+          if (!component) return ok(null);
+          return ok({ ...node, data: component });
         }
         return ok(node);
       },
@@ -123,43 +123,43 @@ function migrateEntityFields(
   return changed ? migratedFields : originalFields;
 }
 
-function migrateValueItem(
-  originalValueItem: Component | null,
-  valueTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
+function migrateComponent(
+  originalComponent: Component | null,
+  componentTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
 ): Component | null {
-  if (!originalValueItem) return null;
+  if (!originalComponent) return null;
 
-  const valueItem = { ...originalValueItem };
+  const component = { ...originalComponent };
 
-  for (const actionSpec of valueTypeActions) {
+  for (const actionSpec of componentTypeActions) {
     const { action } = actionSpec;
     switch (action) {
       case 'deleteField':
-        if (actionSpec.componentType === valueItem.type) {
-          delete valueItem[actionSpec.field];
+        if (actionSpec.componentType === component.type) {
+          delete component[actionSpec.field];
         }
         break;
       case 'renameField':
-        if (actionSpec.componentType === valueItem.type) {
-          if (actionSpec.field in valueItem) {
-            valueItem[actionSpec.newName] = valueItem[actionSpec.field];
-            delete valueItem[actionSpec.field];
+        if (actionSpec.componentType === component.type) {
+          if (actionSpec.field in component) {
+            component[actionSpec.newName] = component[actionSpec.field];
+            delete component[actionSpec.field];
           }
         }
         break;
       case 'deleteType':
-        if (actionSpec.componentType === valueItem.type) {
+        if (actionSpec.componentType === component.type) {
           return null;
         }
         break;
       case 'renameType':
-        if (actionSpec.componentType === valueItem.type) {
-          valueItem.type = actionSpec.newName;
+        if (actionSpec.componentType === component.type) {
+          component.type = actionSpec.newName;
         }
         break;
       default:
         assertExhaustive(action);
     }
   }
-  return valueItem;
+  return component;
 }

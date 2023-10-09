@@ -27,7 +27,7 @@ import {
   createReferencesCollector,
   createRequestedReferencesCollector,
   createUniqueIndexCollector,
-  createValueTypesCollector,
+  createComponentTypesCollector,
   type RequestedReference,
   type UniqueIndexValueCollection,
 } from './EntityCollectors.js';
@@ -41,14 +41,14 @@ export function validateAdminFieldValuesAndCollectInfo(
   fullTextSearchText: string;
   references: RequestedReference[];
   locations: Location[];
-  valueTypes: string[];
+  componentTypes: string[];
   uniqueIndexValues: UniqueIndexValueCollection;
 } {
   const validationIssues: SaveValidationIssue[] = [];
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
-  const valueTypesCollector = createValueTypesCollector();
+  const componentTypesCollector = createComponentTypesCollector();
   const uniqueIndexCollector = createUniqueIndexCollector(adminSchema);
 
   for (const node of traverseEntity(adminSchema, path, entity)) {
@@ -59,7 +59,7 @@ export function validateAdminFieldValuesAndCollectInfo(
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
-    valueTypesCollector.collect(node);
+    componentTypesCollector.collect(node);
     uniqueIndexCollector.collect(node);
   }
 
@@ -68,7 +68,7 @@ export function validateAdminFieldValuesAndCollectInfo(
     fullTextSearchText: ftsCollector.result,
     references: referencesCollector.result,
     locations: locationsCollector.result,
-    valueTypes: valueTypesCollector.result,
+    componentTypes: componentTypesCollector.result,
     uniqueIndexValues: uniqueIndexCollector.result,
   };
 }
@@ -145,7 +145,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
   fullTextSearchText: string;
   references: EntityReference[];
   locations: Location[];
-  valueTypes: string[];
+  componentTypes: string[];
   uniqueIndexValues: UniqueIndexValueCollection;
 } {
   const publishedSchema = adminSchema.toPublishedSchema();
@@ -158,7 +158,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
   const locationsCollector = createLocationsCollector();
-  const valueTypesCollector = createValueTypesCollector();
+  const componentTypesCollector = createComponentTypesCollector();
   const uniqueIndexCollector = createUniqueIndexCollector(publishedSchema);
 
   for (const node of traverseEntity(publishedSchema, path, entity)) {
@@ -179,7 +179,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     locationsCollector.collect(node);
-    valueTypesCollector.collect(node);
+    componentTypesCollector.collect(node);
     uniqueIndexCollector.collect(node);
   }
 
@@ -188,7 +188,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
     fullTextSearchText: ftsCollector.result,
     references: referencesCollector.result,
     locations: locationsCollector.result,
-    valueTypes: valueTypesCollector.result,
+    componentTypes: componentTypesCollector.result,
     uniqueIndexValues: uniqueIndexCollector.result,
   };
 }

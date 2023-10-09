@@ -32,6 +32,119 @@ export type AppAdminComponent = never;
 "
 `;
 
+exports[`generateTypescriptForSchema > Component (no fields) 1`] = `
+"import type { AdminClient, AdminEntity, AdminExceptionClient, Component } from '@dossierhq/core';
+
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
+
+export type AppAdminEntity = AdminComponents;
+
+export interface AdminComponentsFields {
+  component: AppAdminComponent | null;
+}
+
+export type AdminComponents = AdminEntity<'Components', AdminComponentsFields, string>;
+
+export function isAdminComponents(entity: AdminEntity<string, object>): entity is AdminComponents {
+  return entity.info.type === 'Components';
+}
+
+export function assertIsAdminComponents(entity: AdminEntity<string, object>): asserts entity is AdminComponents {
+  if (entity.info.type !== 'Components') {
+    throw new Error('Expected info.type = Components (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AppAdminComponent = AdminFoo;
+
+export type AdminFooFields = Record<never, never>;
+
+export type AdminFoo = Component<'Foo', AdminFooFields>;
+
+export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
+  return component.type === 'Foo';
+}
+
+export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
+  if (component.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + component.type + ')');
+  }
+}
+"
+`;
+
+exports[`generateTypescriptForSchema > Components 1`] = `
+"import type { AdminClient, AdminEntity, AdminExceptionClient, Component } from '@dossierhq/core';
+
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
+
+export type AppAdminEntity = AdminValueTypes;
+
+export interface AdminValueTypesFields {
+  component: AppAdminComponent | null;
+  componentFoo: AdminFoo | null;
+  componentFooBar: AdminBar | AdminFoo | null;
+  componentList: AppAdminComponent[] | null;
+  componentListFoo: AdminFoo[] | null;
+  componentListFooBar: (AdminBar | AdminFoo)[] | null;
+}
+
+export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields, string>;
+
+export function isAdminValueTypes(entity: AdminEntity<string, object>): entity is AdminValueTypes {
+  return entity.info.type === 'ValueTypes';
+}
+
+export function assertIsAdminValueTypes(entity: AdminEntity<string, object>): asserts entity is AdminValueTypes {
+  if (entity.info.type !== 'ValueTypes') {
+    throw new Error('Expected info.type = ValueTypes (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AppAdminComponent = AdminBar | AdminFoo;
+
+export interface AdminBarFields {
+  string: string | null;
+}
+
+export type AdminBar = Component<'Bar', AdminBarFields>;
+
+export function isAdminBar(component: Component<string, object> | AdminBar): component is AdminBar {
+  return component.type === 'Bar';
+}
+
+export function assertIsAdminBar(component: Component<string, object> | AdminBar): asserts component is AdminBar {
+  if (component.type !== 'Bar') {
+    throw new Error('Expected type = Bar (but was ' + component.type + ')');
+  }
+}
+
+export interface AdminFooFields {
+  string: string | null;
+}
+
+export type AdminFoo = Component<'Foo', AdminFooFields>;
+
+export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
+  return component.type === 'Foo';
+}
+
+export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
+  if (component.type !== 'Foo') {
+    throw new Error('Expected type = Foo (but was ' + component.type + ')');
+  }
+}
+"
+`;
+
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient, EntityReference } from '@dossierhq/core';
 
@@ -253,119 +366,6 @@ export function assertIsAdminStrings(entity: AdminEntity<string, object>): asser
 }
 
 export type AppAdminComponent = never;
-"
-`;
-
-exports[`generateTypescriptForSchema > ValueItem (no fields) 1`] = `
-"import type { AdminClient, AdminEntity, AdminExceptionClient, Component } from '@dossierhq/core';
-
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
-
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
-
-export type AppAdminUniqueIndexes = never;
-
-export type AppAdminEntity = AdminValueItem;
-
-export interface AdminValueItemFields {
-  valueItem: AppAdminComponent | null;
-}
-
-export type AdminValueItem = AdminEntity<'ValueItem', AdminValueItemFields, string>;
-
-export function isAdminValueItem(entity: AdminEntity<string, object>): entity is AdminValueItem {
-  return entity.info.type === 'ValueItem';
-}
-
-export function assertIsAdminValueItem(entity: AdminEntity<string, object>): asserts entity is AdminValueItem {
-  if (entity.info.type !== 'ValueItem') {
-    throw new Error('Expected info.type = ValueItem (but was ' + entity.info.type + ')');
-  }
-}
-
-export type AppAdminComponent = AdminFoo;
-
-export type AdminFooFields = Record<never, never>;
-
-export type AdminFoo = Component<'Foo', AdminFooFields>;
-
-export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
-  return component.type === 'Foo';
-}
-
-export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
-  if (component.type !== 'Foo') {
-    throw new Error('Expected type = Foo (but was ' + component.type + ')');
-  }
-}
-"
-`;
-
-exports[`generateTypescriptForSchema > ValueTypes 1`] = `
-"import type { AdminClient, AdminEntity, AdminExceptionClient, Component } from '@dossierhq/core';
-
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
-
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
-
-export type AppAdminUniqueIndexes = never;
-
-export type AppAdminEntity = AdminValueTypes;
-
-export interface AdminValueTypesFields {
-  valueType: AppAdminComponent | null;
-  valueTypeFoo: AdminFoo | null;
-  valueTypeFooBar: AdminBar | AdminFoo | null;
-  valueTypeList: AppAdminComponent[] | null;
-  valueTypeListFoo: AdminFoo[] | null;
-  valueTypeListFooBar: (AdminBar | AdminFoo)[] | null;
-}
-
-export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields, string>;
-
-export function isAdminValueTypes(entity: AdminEntity<string, object>): entity is AdminValueTypes {
-  return entity.info.type === 'ValueTypes';
-}
-
-export function assertIsAdminValueTypes(entity: AdminEntity<string, object>): asserts entity is AdminValueTypes {
-  if (entity.info.type !== 'ValueTypes') {
-    throw new Error('Expected info.type = ValueTypes (but was ' + entity.info.type + ')');
-  }
-}
-
-export type AppAdminComponent = AdminBar | AdminFoo;
-
-export interface AdminBarFields {
-  string: string | null;
-}
-
-export type AdminBar = Component<'Bar', AdminBarFields>;
-
-export function isAdminBar(component: Component<string, object> | AdminBar): component is AdminBar {
-  return component.type === 'Bar';
-}
-
-export function assertIsAdminBar(component: Component<string, object> | AdminBar): asserts component is AdminBar {
-  if (component.type !== 'Bar') {
-    throw new Error('Expected type = Bar (but was ' + component.type + ')');
-  }
-}
-
-export interface AdminFooFields {
-  string: string | null;
-}
-
-export type AdminFoo = Component<'Foo', AdminFooFields>;
-
-export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
-  return component.type === 'Foo';
-}
-
-export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
-  if (component.type !== 'Foo') {
-    throw new Error('Expected type = Foo (but was ' + component.type + ')');
-  }
-}
 "
 `;
 

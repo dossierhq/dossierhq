@@ -18,7 +18,7 @@ import {
   createReferencesCollector,
   createRequestedReferencesCollector,
   createUniqueIndexCollector,
-  createValueTypesCollector,
+  createComponentTypesCollector,
 } from './EntityCollectors.js';
 
 const schemaSpec: AdminSchemaSpecificationUpdate = {
@@ -82,7 +82,7 @@ function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
   const requestedReferencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
   const uniqueIndexCollector = createUniqueIndexCollector(adminSchema.toPublishedSchema());
-  const valueTypesCollector = createValueTypesCollector();
+  const componentTypesCollector = createComponentTypesCollector();
 
   for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
     ftsCollector.collect(node);
@@ -90,7 +90,7 @@ function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
     requestedReferencesCollector.collect(node);
     locationsCollector.collect(node);
     uniqueIndexCollector.collect(node);
-    valueTypesCollector.collect(node);
+    componentTypesCollector.collect(node);
   }
 
   return {
@@ -99,7 +99,7 @@ function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
     locations: locationsCollector.result,
     fullTextSearchText: ftsCollector.result,
     uniqueIndex: uniqueIndexCollector.result,
-    valueTypes: valueTypesCollector.result,
+    componentTypes: componentTypesCollector.result,
   };
 }
 
@@ -108,12 +108,12 @@ describe('collectDataFromEntity', () => {
     expect(collectDataFromEntity(schema, { info: { type: 'EntityCodecFoo' }, fields: {} }))
       .toMatchInlineSnapshot(`
         {
+          "componentTypes": [],
           "fullTextSearchText": "",
           "locations": [],
           "references": [],
           "requestedReferences": [],
           "uniqueIndex": Map {},
-          "valueTypes": [],
         }
       `);
   });
@@ -126,12 +126,12 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [],
         "fullTextSearchText": "",
         "locations": [],
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [],
       }
     `);
   });
@@ -147,12 +147,12 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [],
         "fullTextSearchText": "Hello string world one two three",
         "locations": [],
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [],
       }
     `);
   });
@@ -172,14 +172,14 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+        ],
         "fullTextSearchText": "one two three four",
         "locations": [],
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-        ],
       }
     `);
   });
@@ -201,14 +201,14 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+        ],
         "fullTextSearchText": "one one one two Header text two",
         "locations": [],
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-        ],
       }
     `);
   });
@@ -227,6 +227,7 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [],
         "fullTextSearchText": "",
         "locations": [
           {
@@ -245,7 +246,6 @@ describe('collectDataFromEntity', () => {
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [],
       }
     `);
   });
@@ -266,6 +266,9 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+        ],
         "fullTextSearchText": "",
         "locations": [
           {
@@ -280,9 +283,6 @@ describe('collectDataFromEntity', () => {
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-        ],
       }
     `);
   });
@@ -299,6 +299,7 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [],
         "fullTextSearchText": "",
         "locations": [],
         "references": [
@@ -378,7 +379,6 @@ describe('collectDataFromEntity', () => {
           },
         ],
         "uniqueIndex": Map {},
-        "valueTypes": [],
       }
     `);
   });
@@ -393,6 +393,9 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+        ],
         "fullTextSearchText": "",
         "locations": [],
         "references": [
@@ -419,9 +422,6 @@ describe('collectDataFromEntity', () => {
           },
         ],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-        ],
       }
     `);
   });
@@ -440,6 +440,9 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+        ],
         "fullTextSearchText": "bar",
         "locations": [],
         "references": [
@@ -506,9 +509,6 @@ describe('collectDataFromEntity', () => {
           },
         ],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-        ],
       }
     `);
   });
@@ -524,15 +524,15 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+          "EntityCodecValueTwo",
+        ],
         "fullTextSearchText": "",
         "locations": [],
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-          "EntityCodecValueTwo",
-        ],
       }
     `);
   });
@@ -547,14 +547,14 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [
+          "EntityCodecValueOne",
+        ],
         "fullTextSearchText": "",
         "locations": [],
         "references": [],
         "requestedReferences": [],
         "uniqueIndex": Map {},
-        "valueTypes": [
-          "EntityCodecValueOne",
-        ],
       }
     `);
   });
@@ -570,6 +570,7 @@ describe('collectDataFromEntity', () => {
       }),
     ).toMatchInlineSnapshot(`
       {
+        "componentTypes": [],
         "fullTextSearchText": "foo foo bar",
         "locations": [],
         "references": [],
@@ -595,7 +596,6 @@ describe('collectDataFromEntity', () => {
             },
           ],
         },
-        "valueTypes": [],
       }
     `);
   });

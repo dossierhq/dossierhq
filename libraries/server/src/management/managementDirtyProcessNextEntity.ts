@@ -50,7 +50,7 @@ interface EntityValidityAndInfoPayload {
 }
 
 const EMPTY_ENTITY_INFO: Omit<EntityValidityAndInfoPayload, 'valid'> = {
-  entityIndexes: { fullTextSearchText: '', locations: [], referenceIds: [], valueTypes: [] },
+  entityIndexes: { fullTextSearchText: '', locations: [], referenceIds: [], componentTypes: [] },
   uniqueIndexValues: new Map(),
 };
 
@@ -229,7 +229,7 @@ async function validateAndCollectInfoFromAdminEntity(
     entityIndexes: {
       referenceIds: referencesResult.value.references,
       locations: fieldValidation.locations,
-      valueTypes: fieldValidation.valueTypes,
+      componentTypes: fieldValidation.componentTypes,
       fullTextSearchText: fieldValidation.fullTextSearchText,
     },
     uniqueIndexValues: fieldValidation.uniqueIndexValues,
@@ -312,7 +312,7 @@ async function validateAndCollectInfoFromPublishedEntity(
     entityIndexes: {
       fullTextSearchText: validateFields.fullTextSearchText,
       locations: validateFields.locations,
-      valueTypes: validateFields.valueTypes,
+      componentTypes: validateFields.componentTypes,
       referenceIds,
     },
     uniqueIndexValues: validateFields.uniqueIndexValues,

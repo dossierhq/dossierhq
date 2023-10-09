@@ -98,10 +98,10 @@ describe('Admin adminCreateEntity', () => {
               "entityInternalId": 123,
             },
             {
+              "componentTypes": [],
               "fullTextSearchText": "Title",
               "locations": [],
               "referenceIds": [],
-              "valueTypes": [],
             },
             true,
           ],

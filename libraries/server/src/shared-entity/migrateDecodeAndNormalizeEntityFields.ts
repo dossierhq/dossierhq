@@ -105,8 +105,8 @@ const DECODE_TRANSFORMER: ContentTransformer<
   },
   transformRichTextNode(schema, _path, _fieldSpec, node) {
     if (isRichTextValueItemNode(node)) {
-      const valueType = node.data.type;
-      if (valueType && !schema.getComponentTypeSpecification(valueType)) {
+      const componentType = node.data.type;
+      if (componentType && !schema.getComponentTypeSpecification(componentType)) {
         // Could be that the value type was deleted or made adminOnly (when decoding published entities)
         return ok(null);
       }

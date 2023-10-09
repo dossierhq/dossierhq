@@ -152,7 +152,7 @@ describe('generateTypescriptForSchema', () => {
     ).toMatchSnapshot();
   });
 
-  test('ValueTypes', () => {
+  test('Components', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: AdminSchema.createAndValidate({
@@ -160,29 +160,29 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'ValueTypes',
               fields: [
-                { name: 'valueType', type: FieldType.Component, required: true },
+                { name: 'component', type: FieldType.Component, required: true },
                 {
-                  name: 'valueTypeFoo',
+                  name: 'componentFoo',
                   type: FieldType.Component,
                   componentTypes: ['Foo'],
                   required: true,
                 },
                 {
-                  name: 'valueTypeFooBar',
+                  name: 'componentFooBar',
                   type: FieldType.Component,
                   componentTypes: ['Foo', 'Bar'],
                   required: true,
                 },
-                { name: 'valueTypeList', type: FieldType.Component, list: true, required: true },
+                { name: 'componentList', type: FieldType.Component, list: true, required: true },
                 {
-                  name: 'valueTypeListFoo',
+                  name: 'componentListFoo',
                   type: FieldType.Component,
                   componentTypes: ['Foo'],
                   list: true,
                   required: true,
                 },
                 {
-                  name: 'valueTypeListFooBar',
+                  name: 'componentListFooBar',
                   type: FieldType.Component,
                   componentTypes: ['Foo', 'Bar'],
                   list: true,
@@ -207,14 +207,14 @@ describe('generateTypescriptForSchema', () => {
     ).toMatchSnapshot();
   });
 
-  test('ValueItem (no fields)', () => {
+  test('Component (no fields)', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
-              name: 'ValueItem',
-              fields: [{ name: 'valueItem', type: FieldType.Component, required: true }],
+              name: 'Components',
+              fields: [{ name: 'component', type: FieldType.Component, required: true }],
             },
           ],
           componentTypes: [{ name: 'Foo', fields: [] }],

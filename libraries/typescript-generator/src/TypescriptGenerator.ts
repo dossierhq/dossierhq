@@ -53,8 +53,8 @@ export function generateTypescriptForSchema({
     paragraphs.push(
       ...generateAllTypesUnion(publishedSchema.spec.componentTypes, 'Published', 'Component'),
     );
-    for (const valueSpec of publishedSchema.spec.componentTypes) {
-      paragraphs.push(...generatePublishedValueType(context, valueSpec));
+    for (const componentSpec of publishedSchema.spec.componentTypes) {
+      paragraphs.push(...generatePublishedValueType(context, componentSpec));
     }
   }
 
@@ -184,32 +184,32 @@ function generateEntityType(
 
 function generateAdminValueType(
   context: GeneratorContext,
-  valueSpec: AdminComponentTypeSpecification,
+  componentSpec: AdminComponentTypeSpecification,
 ) {
-  return generateValueType(context, valueSpec, 'Admin');
+  return generateValueType(context, componentSpec, 'Admin');
 }
 
 function generatePublishedValueType(
   context: GeneratorContext,
-  valueSpec: PublishedComponentTypeSpecification,
+  componentSpec: PublishedComponentTypeSpecification,
 ) {
-  return generateValueType(context, valueSpec, 'Published');
+  return generateValueType(context, componentSpec, 'Published');
 }
 
 function generateValueType(
   context: GeneratorContext,
-  valueSpec: PublishedComponentTypeSpecification,
+  componentSpec: PublishedComponentTypeSpecification,
   adminOrPublished: 'Admin' | 'Published',
 ) {
   const paragraphs: string[] = [''];
 
   // fields type
-  const fieldsName = `${adminOrPublished}${valueSpec.name}Fields`;
-  if (valueSpec.fields.length === 0) {
+  const fieldsName = `${adminOrPublished}${componentSpec.name}Fields`;
+  if (componentSpec.fields.length === 0) {
     paragraphs.push(`export type ${fieldsName} = Record<never, never>;`);
   } else {
     paragraphs.push(`export interface ${fieldsName} {`);
-    for (const fieldSpec of valueSpec.fields) {
+    for (const fieldSpec of componentSpec.fields) {
       paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
     }
     paragraphs.push(`}`);
@@ -219,28 +219,28 @@ function generateValueType(
   // component type
   const parentTypeName = 'Component';
   const parentTypeInName = 'Component<string, object>';
-  const valueTypeName = `${adminOrPublished}${valueSpec.name}`;
+  const componentTypeName = `${adminOrPublished}${componentSpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
-    `export type ${valueTypeName} = ${parentTypeName}<'${valueSpec.name}', ${fieldsName}>;`,
+    `export type ${componentTypeName} = ${parentTypeName}<'${componentSpec.name}', ${fieldsName}>;`,
   );
 
   // isAdminFoo() / isPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function is${valueTypeName}(component: ${parentTypeInName} | ${valueTypeName}): component is ${valueTypeName} {`,
+    `export function is${componentTypeName}(component: ${parentTypeInName} | ${componentTypeName}): component is ${componentTypeName} {`,
   );
-  paragraphs.push(`  return component.type === '${valueSpec.name}';`);
+  paragraphs.push(`  return component.type === '${componentSpec.name}';`);
   paragraphs.push(`}`);
 
   // assertIsAdminFoo() / assertIsPublishedFoo()
   paragraphs.push('');
   paragraphs.push(
-    `export function assertIs${valueTypeName}(component: ${parentTypeInName} | ${valueTypeName}): asserts component is ${valueTypeName} {`,
+    `export function assertIs${componentTypeName}(component: ${parentTypeInName} | ${componentTypeName}): asserts component is ${componentTypeName} {`,
   );
-  paragraphs.push(`  if (component.type !== '${valueSpec.name}') {`);
+  paragraphs.push(`  if (component.type !== '${componentSpec.name}') {`);
   paragraphs.push(
-    `    throw new Error('Expected type = ${valueSpec.name} (but was ' + component.type + ')');`,
+    `    throw new Error('Expected type = ${componentSpec.name} (but was ' + component.type + ')');`,
   );
   paragraphs.push(`  }`);
   paragraphs.push(`}`);

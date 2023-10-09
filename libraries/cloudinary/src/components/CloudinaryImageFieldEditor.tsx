@@ -20,7 +20,7 @@ import {
 import type { FieldEditorProps } from '@dossierhq/react-components';
 import { useCallback, useMemo } from 'react';
 import { useInitializeUploadWidget } from '../hooks/useInitializeUploadWidget.js';
-import type { AdminCloudinaryImage } from '../types/CloudinaryImageValueItem.js';
+import type { AdminCloudinaryImage } from '../types/CloudinaryImageComponent.js';
 import type { CloudinaryUploadResult } from '../types/CloudinaryUploadWidget.js';
 
 type Props = FieldEditorProps<ComponentFieldSpecification, AdminCloudinaryImage> & {

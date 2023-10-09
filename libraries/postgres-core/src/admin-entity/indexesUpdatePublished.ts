@@ -15,7 +15,7 @@ export async function adminEntityIndexesUpdatePublished(
   entityIndexes: DatabaseEntityIndexesArg,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const entityId = reference.entityInternalId;
-  const { fullTextSearchText, referenceIds, locations, valueTypes } = entityIndexes;
+  const { fullTextSearchText, referenceIds, locations, componentTypes } = entityIndexes;
 
   // FTS
   const ftsResult = await queryNone(
@@ -88,15 +88,15 @@ export async function adminEntityIndexesUpdatePublished(
     if (insertLocationsResult.isError()) return insertLocationsResult;
   }
 
-  if (valueTypes.length > 0) {
+  if (componentTypes.length > 0) {
     const insertValueTypesResult = await queryNone(
       database,
       context,
       buildPostgresSqlQuery(({ sql, addValue }) => {
         sql`INSERT INTO entity_published_value_types (entities_id, value_type) VALUES`;
         const entitiesId = addValue(entityId);
-        for (const valueType of valueTypes) {
-          sql`, (${entitiesId}, ${valueType})`;
+        for (const componentType of componentTypes) {
+          sql`, (${entitiesId}, ${componentType})`;
         }
       }),
     );

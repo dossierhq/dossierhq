@@ -322,15 +322,15 @@ function transformContentFieldValue<
       const transformedNode = nodeResult.value;
 
       if (transformedNode && isRichTextValueItemNode(transformedNode)) {
-        const valueItem = transformedNode.data;
+        const component = transformedNode.data;
 
-        const valueItemResult = transformComponent(schema, path, valueItem, transformer, options);
+        const valueItemResult = transformComponent(schema, path, component, transformer, options);
         if (valueItemResult.isError()) return valueItemResult;
-        const transformedValueItem = valueItemResult.value;
+        const transformedComponent = valueItemResult.value;
 
-        if (transformedValueItem !== valueItem) {
+        if (transformedComponent !== component) {
           return ok(
-            transformedValueItem ? { ...transformedNode, data: transformedValueItem } : null,
+            transformedComponent ? { ...transformedNode, data: transformedComponent } : null,
           );
         }
       }

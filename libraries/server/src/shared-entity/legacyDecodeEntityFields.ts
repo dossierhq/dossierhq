@@ -89,13 +89,13 @@ function decodeValueItemField(
   codecMode: CodecMode,
   encodedValue: Component,
 ): Component | null {
-  const valueSpec = schema.getComponentTypeSpecification(encodedValue.type);
-  if (!valueSpec) {
+  const componentSpec = schema.getComponentTypeSpecification(encodedValue.type);
+  if (!componentSpec) {
     // Could be that the value type was deleted or made adminOnly (when decoding published entities)
     return null;
   }
   const decodedValue: Component = { type: encodedValue.type };
-  for (const fieldFieldSpec of valueSpec.fields) {
+  for (const fieldFieldSpec of componentSpec.fields) {
     const fieldName = fieldFieldSpec.name;
     const fieldValue = encodedValue[fieldName];
     decodedValue[fieldName] = decodeFieldItemOrList(schema, fieldFieldSpec, codecMode, fieldValue);

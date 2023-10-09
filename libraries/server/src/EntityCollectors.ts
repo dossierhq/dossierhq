@@ -178,7 +178,7 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
   };
 }
 
-export function createValueTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+export function createComponentTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
   const payload = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {

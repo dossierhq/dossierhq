@@ -284,7 +284,7 @@ export interface DatabaseEntityIndexesArg {
   fullTextSearchText: string;
   referenceIds: DatabaseResolvedEntityReference[];
   locations: Location[];
-  valueTypes: string[];
+  componentTypes: string[];
 }
 
 export interface DatabasePublishedEntityPayload {
@@ -691,12 +691,12 @@ export interface DatabaseAdapter<
   schemaUpdateRenameTypes(
     context: TransactionContext,
     entityTypes: Record<string, string>,
-    valueTypes: Record<string, string>,
+    componentTypes: Record<string, string>,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
-  schemaUpdateDeleteValueTypesFromIndexes(
+  schemaUpdateDeleteComponentTypesFromIndexes(
     context: TransactionContext,
-    valueTypes: string[],
+    componentTypes: string[],
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   schemaUpdateModifyIndexes(

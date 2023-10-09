@@ -213,7 +213,7 @@ async function calculateAndUpdateSchemaSpec(
   }
 
   // Delete value types from indexes
-  const deleteValueTypesResult = await databaseAdapter.schemaUpdateDeleteValueTypesFromIndexes(
+  const deleteValueTypesResult = await databaseAdapter.schemaUpdateDeleteComponentTypesFromIndexes(
     context,
     impactResult.value.deleteValueTypes,
   );

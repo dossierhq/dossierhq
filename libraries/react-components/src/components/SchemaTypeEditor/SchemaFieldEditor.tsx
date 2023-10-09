@@ -328,7 +328,7 @@ export function SchemaFieldEditor({
                     schemaEditorState={schemaEditorState}
                     dispatchSchemaEditorState={dispatchSchemaEditorState}
                   />
-                  {/* <FieldValueTypeDisplay valueTypes={fieldDraft.valueTypes ?? []} /> */}
+                  {/* <FieldValueTypeDisplay componentTypes={fieldDraft.componentTypes ?? []} /> */}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
@@ -373,11 +373,11 @@ function FieldTypeDisplay({ type, list }: { type: FieldType; list: boolean }) {
 //   );
 // }
 
-// function FieldValueTypeDisplay({ valueTypes }: { valueTypes: string[] }) {
+// function FieldValueTypeDisplay({ componentTypes }: { componentTypes: string[] }) {
 //   return (
 //     <TagInput>
-//       {valueTypes.map((valueType) => (
-//         <Tag key={valueType}>{valueType}</Tag>
+//       {componentTypes.map((componentType) => (
+//         <Tag key={componentType}>{componentType}</Tag>
 //       ))}
 //     </TagInput>
 //   );

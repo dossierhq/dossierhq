@@ -14,7 +14,7 @@ import { FieldEditor, type FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ComponentFieldSpecification, Component>;
 
-export function ValueItemFieldEditor({
+export function ComponentFieldEditor({
   fieldSpec,
   adminOnly,
   value,
@@ -82,8 +82,8 @@ export function ValueItemFieldEditorWithoutClear({
   }
 
   const { type } = value;
-  const valueSpec = schema.getComponentTypeSpecification(type);
-  if (!valueSpec) {
+  const componentSpec = schema.getComponentTypeSpecification(type);
+  if (!componentSpec) {
     return <div>Error</div>;
   }
 
@@ -93,7 +93,7 @@ export function ValueItemFieldEditorWithoutClear({
         {dragHandle}
         {type}
       </Text>
-      {valueSpec.fields.map((valueFieldSpec) => {
+      {componentSpec.fields.map((valueFieldSpec) => {
         const fieldEditor = (
           <ValueItemField
             {...{

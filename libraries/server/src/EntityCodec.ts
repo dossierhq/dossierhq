@@ -257,7 +257,7 @@ export async function encodeAdminEntity(
     entityIndexes: {
       referenceIds: [],
       locations: validation.locations,
-      valueTypes: validation.valueTypes,
+      componentTypes: validation.componentTypes,
       fullTextSearchText: validation.fullTextSearchText,
     },
     uniqueIndexValues: validation.uniqueIndexValues,

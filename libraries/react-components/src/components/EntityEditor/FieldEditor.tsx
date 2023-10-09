@@ -34,7 +34,7 @@ import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldE
 import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
 import { AddRichTextListItemButton, RichTextFieldEditor } from './RichTextFieldEditor.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
-import { AddValueItemListItemButton, ValueItemFieldEditor } from './ValueItemFieldEditor.js';
+import { AddValueItemListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
@@ -168,7 +168,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isComponentSingleField(fieldSpec, value)) {
     editor = (
-      <ValueItemFieldEditor
+      <ComponentFieldEditor
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
         value={value}
@@ -181,7 +181,7 @@ export function FieldEditor(props: FieldEditorProps) {
         fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
         value={value}
         AddButton={AddValueItemListItemButton}
-        Editor={ValueItemFieldEditor}
+        Editor={ComponentFieldEditor}
       />
     );
   } else {

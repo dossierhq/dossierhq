@@ -96,10 +96,10 @@ describe('Admin adminPublishEntities', () => {
               "entityInternalId": 999,
             },
             {
+              "componentTypes": [],
               "fullTextSearchText": "Title",
               "locations": [],
               "referenceIds": [],
-              "valueTypes": [],
             },
           ],
           [

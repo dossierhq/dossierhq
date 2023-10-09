@@ -34,7 +34,7 @@ import { LocationFieldDisplay } from './LocationFieldDisplay.js';
 import { NumberFieldDisplay } from './NumberFieldDisplay.js';
 import { RichTextFieldDisplay } from './RichTextFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
-import { ValueTypeFieldDisplay } from './ValueTypeFieldDisplay.js';
+import { ComponentFieldDisplay } from './ComponentFieldDisplay.js';
 
 export interface FieldDisplayProps<
   TFieldSpec extends PublishedFieldSpecification = PublishedFieldSpecification,
@@ -136,14 +136,14 @@ export function FieldDisplay(props: FieldDisplayProps) {
     );
   } else if (isComponentSingleField(fieldSpec, value)) {
     display = (
-      <ValueTypeFieldDisplay fieldSpec={fieldSpec as ComponentFieldSpecification} value={value} />
+      <ComponentFieldDisplay fieldSpec={fieldSpec as ComponentFieldSpecification} value={value} />
     );
   } else if (isComponentListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
         fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
-        Display={ValueTypeFieldDisplay}
+        Display={ComponentFieldDisplay}
       />
     );
   } else {

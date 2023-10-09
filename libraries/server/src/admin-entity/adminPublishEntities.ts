@@ -46,7 +46,7 @@ interface VersionInfoToBePublished {
   fullTextSearchText: string;
   references: EntityReference[];
   locations: Location[];
-  valueTypes: string[];
+  componentTypes: string[];
   uniqueIndexValues: UniqueIndexValueCollection;
 }
 
@@ -242,7 +242,7 @@ async function doPublishEntities(
       const entityIndexes = {
         fullTextSearchText: versionInfo.fullTextSearchText,
         locations: versionInfo.locations,
-        valueTypes: versionInfo.valueTypes,
+        componentTypes: versionInfo.componentTypes,
         referenceIds,
       };
       const updateIndexResult = await databaseAdapter.adminEntityIndexesUpdatePublished(
@@ -374,7 +374,7 @@ async function collectVersionsInfo(
           `${contentValuePathToString(firstValidationIssue.path)}: ${firstValidationIssue.message}`,
         );
       }
-      const { fullTextSearchText, references, locations, valueTypes, uniqueIndexValues } =
+      const { fullTextSearchText, references, locations, componentTypes, uniqueIndexValues } =
         validateFields;
 
       versionsInfo.push({
@@ -387,7 +387,7 @@ async function collectVersionsInfo(
         fullTextSearchText,
         references,
         locations,
-        valueTypes,
+        componentTypes,
         uniqueIndexValues,
         status: versionIsLatest ? AdminEntityStatus.published : AdminEntityStatus.modified,
       });

@@ -2,7 +2,7 @@ import {
   createBetterSqlite3Adapter,
   type BetterSqlite3DatabaseAdapter,
 } from '@dossierhq/better-sqlite3';
-import { CLOUDINARY_IMAGE_VALUE_TYPE } from '@dossierhq/cloudinary';
+import { CLOUDINARY_IMAGE_COMPONENT_TYPE } from '@dossierhq/cloudinary';
 import { FieldType, notOk, ok, type Logger } from '@dossierhq/core';
 import {
   BackgroundEntityProcessorPlugin,
@@ -85,7 +85,7 @@ async function updateSchema(adminClient: AppAdminClient) {
         ],
       },
     ],
-    componentTypes: [CLOUDINARY_IMAGE_VALUE_TYPE],
+    componentTypes: [CLOUDINARY_IMAGE_COMPONENT_TYPE],
   });
   return schemaResult;
 }

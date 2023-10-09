@@ -67,7 +67,7 @@ import { publishedEntitySampleEntities } from './published-entity/sampleEntities
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateCountEntitiesWithTypes } from './schema/updateCountEntitiesWithTypes.js';
-import { schemaUpdateDeleteValueTypesFromIndexes } from './schema/updateDeleteValueTypesFromIndexes.js';
+import { schemaUpdateDeleteComponentTypesFromIndexes } from './schema/updateDeleteComponentTypesFromIndexes.js';
 import { schemaUpdateModifyIndexes } from './schema/updateModifyIndexes.js';
 import { schemaUpdateRenameTypes } from './schema/updateRenameTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
@@ -252,8 +252,8 @@ function createOuterAdapter(
     schemaGetSpecification: (...args) => schemaGetSpecification(database, ...args),
     schemaUpdateCountEntitiesWithTypes: (...args) =>
       schemaUpdateCountEntitiesWithTypes(database, ...args),
-    schemaUpdateDeleteValueTypesFromIndexes: (...args) =>
-      schemaUpdateDeleteValueTypesFromIndexes(database, ...args),
+    schemaUpdateDeleteComponentTypesFromIndexes: (...args) =>
+      schemaUpdateDeleteComponentTypesFromIndexes(database, ...args),
     schemaUpdateModifyIndexes: (...args) => schemaUpdateModifyIndexes(database, ...args),
     schemaUpdateRenameTypes: (...args) => schemaUpdateRenameTypes(database, ...args),
     schemaUpdateSpecification: (...args) => schemaUpdateSpecification(database, ...args),

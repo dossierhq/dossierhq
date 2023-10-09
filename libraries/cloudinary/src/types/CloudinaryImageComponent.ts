@@ -19,18 +19,18 @@ export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryI
 export type PublishedCloudinaryImage = Component<'CloudinaryImage', PublishedCloudinaryImageFields>;
 
 export function isAdminCloudinaryImage(
-  valueItem: Component<string, object> | AdminCloudinaryImage,
-): valueItem is AdminCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+  component: Component<string, object> | AdminCloudinaryImage,
+): component is AdminCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
 export function isPublishedCloudinaryImage(
-  valueItem: Component<string, object> | PublishedCloudinaryImage,
-): valueItem is PublishedCloudinaryImage {
-  return valueItem.type === 'CloudinaryImage';
+  component: Component<string, object> | PublishedCloudinaryImage,
+): component is PublishedCloudinaryImage {
+  return component.type === 'CloudinaryImage';
 }
 
-export const CLOUDINARY_IMAGE_VALUE_TYPE: AdminComponentTypeSpecificationUpdate = {
+export const CLOUDINARY_IMAGE_COMPONENT_TYPE: AdminComponentTypeSpecificationUpdate = {
   name: 'CloudinaryImage',
   fields: [
     { name: 'publicId', type: FieldType.String, required: true },

@@ -94,13 +94,13 @@ async function markEntitiesDirty(
 async function markEntitiesWithValueTypesDirty(
   database: Database,
   context: TransactionContext,
-  valueTypes: string[],
+  componentTypes: string[],
   dirtyFlags: number,
 ) {
   const { sql, query, addValue, addValueList } = createSqliteSqlQuery();
   const dirtyValue = addValue(dirtyFlags);
   sql`UPDATE entities SET dirty = dirty | ${dirtyValue} FROM entity_latest_value_types elvt`;
-  sql`WHERE elvt.value_type IN ${addValueList(valueTypes)}`;
+  sql`WHERE elvt.value_type IN ${addValueList(componentTypes)}`;
   sql`AND elvt.entities_id = entities.id AND (entities.dirty & ${dirtyValue}) != ${dirtyValue}`;
 
   return await queryRun(database, context, query);

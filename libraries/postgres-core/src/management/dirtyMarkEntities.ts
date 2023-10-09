@@ -94,13 +94,13 @@ async function markEntitiesDirty(
 async function markEntitiesWithValueTypesDirty(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  valueTypes: string[],
+  componentTypes: string[],
   dirtyFlags: number,
 ) {
   const { sql, query, addValue } = createPostgresSqlQuery();
   const dirtyValue = addValue(dirtyFlags);
   sql`UPDATE entities SET dirty = dirty | ${dirtyValue} FROM entity_latest_value_types elvt`;
-  sql`WHERE elvt.value_type = ANY(${valueTypes}) AND elvt.entities_id = entities.id AND (entities.dirty & ${dirtyValue}) != ${dirtyValue}`;
+  sql`WHERE elvt.value_type = ANY(${componentTypes}) AND elvt.entities_id = entities.id AND (entities.dirty & ${dirtyValue}) != ${dirtyValue}`;
 
   return await queryRun(databaseAdapter, context, query);
 }

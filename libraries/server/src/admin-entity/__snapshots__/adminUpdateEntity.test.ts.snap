@@ -24,10 +24,10 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
       "entityInternalId": "internal-123",
     },
     {
+      "componentTypes": [],
       "fullTextSearchText": "Updated title",
       "locations": [],
       "referenceIds": [],
-      "valueTypes": [],
     },
     false,
   ],

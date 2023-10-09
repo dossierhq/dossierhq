@@ -7,7 +7,7 @@ export async function schemaUpdateRenameTypes(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   entityTypes: Record<string, string>,
-  valueTypes: Record<string, string>,
+  componentTypes: Record<string, string>,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   for (const [oldName, newName] of Object.entries(entityTypes)) {
     const result = await queryRun(
@@ -20,7 +20,7 @@ export async function schemaUpdateRenameTypes(
     if (result.isError()) return result;
   }
 
-  for (const [oldName, newName] of Object.entries(valueTypes)) {
+  for (const [oldName, newName] of Object.entries(componentTypes)) {
     const latestResult = await queryRun(
       adapter,
       context,

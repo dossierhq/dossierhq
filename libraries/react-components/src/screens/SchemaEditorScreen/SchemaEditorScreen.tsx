@@ -171,10 +171,10 @@ export function SchemaEditorScreen({
                   onAddOrRenameField={setAddOrRenameFieldSelector}
                 />
               ))}
-              {schemaEditorState.componentTypes.map((valueType) => (
+              {schemaEditorState.componentTypes.map((componentType) => (
                 <TypeEditorRows
-                  key={valueType.name}
-                  typeDraft={valueType}
+                  key={componentType.name}
+                  typeDraft={componentType}
                   schemaEditorState={schemaEditorState}
                   dispatchSchemaEditorState={dispatchSchemaEditorState}
                   onAddOrRenameType={setAddOrRenameTypeSelector}

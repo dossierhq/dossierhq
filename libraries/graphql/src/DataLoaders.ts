@@ -363,15 +363,15 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
   schema: AdminSchema | PublishedSchema,
-  valueItem: Component,
+  component: Component,
   isAdmin: boolean,
 ): Component {
-  const valueSpec = schema.getComponentTypeSpecification(valueItem.type);
-  if (!valueSpec) {
-    throw new Error(`Couldn't find component spec for type: ${valueItem.type}`);
+  const componentSpec = schema.getComponentTypeSpecification(component.type);
+  if (!componentSpec) {
+    throw new Error(`Couldn't find component spec for type: ${component.type}`);
   }
-  const result = { ...valueItem };
-  resolveFields<TContext>(schema, valueSpec, result, isAdmin);
+  const result = { ...component };
+  resolveFields<TContext>(schema, componentSpec, result, isAdmin);
   return result;
 }
 
