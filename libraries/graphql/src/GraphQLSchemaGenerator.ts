@@ -70,7 +70,7 @@ import {
   toAdminUpdatePayloadTypeName,
   toAdminUpsertInputTypeName,
   toAdminUpsertPayloadTypeName,
-  toAdminValueInputTypeName,
+  toAdminComponentInputTypeName,
   toPublishedTypeName,
 } from './NameGenerator.js';
 import { TypeRepository } from './TypeRepository.js';
@@ -185,14 +185,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
 
     if (publishedSchema.getComponentTypeCount() > 0) {
-      // PublishedValueType
+      // PublishedComponentType
       const componentTypeEnumValues: GraphQLEnumValueConfigMap = {};
       for (const componentSpec of publishedSchema.spec.componentTypes) {
         componentTypeEnumValues[componentSpec.name] = {};
       }
       this.addType(
         new GraphQLEnumType({
-          name: 'PublishedValueType',
+          name: 'PublishedComponentType',
           values: componentTypeEnumValues,
         }),
       );
@@ -229,7 +229,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLInterfaceType({
           name: toPublishedTypeName('Value'),
           fields: {
-            type: { type: new GraphQLNonNull(this.getEnumType('PublishedValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('PublishedComponentType')) },
           },
         }),
       );
@@ -315,7 +315,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       ...(publishedSchema.getComponentTypeCount() > 0
         ? {
             componentTypes: {
-              type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedValueType'))),
+              type: new GraphQLList(new GraphQLNonNull(this.getEnumType('PublishedComponentType'))),
             },
           }
         : {}),
@@ -387,13 +387,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addPublishedValueTypes(publishedSchema: PublishedSchema): void {
+  addPublishedComponentTypes(publishedSchema: PublishedSchema): void {
     for (const componentSpec of publishedSchema.spec.componentTypes) {
-      this.addPublishedValueType(componentSpec);
+      this.addPublishedComponentType(componentSpec);
     }
   }
 
-  addPublishedValueType(componentSpec: PublishedComponentTypeSpecification): void {
+  addPublishedComponentType(componentSpec: PublishedComponentTypeSpecification): void {
     // PublishedFoo
     this.addType(
       new GraphQLObjectType<Component, TContext>({
@@ -402,7 +402,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         isTypeOf: (source, _context, _info) => source.type === componentSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Component, TContext> = {
-            type: { type: new GraphQLNonNull(this.getEnumType('PublishedValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('PublishedComponentType')) },
           };
           this.addTypeSpecificationOutputFields(componentSpec, fields, false);
           return fields;
@@ -431,14 +431,14 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
 
     if (adminSchema.getComponentTypeCount() > 0) {
-      // AdminValueType
+      // AdminComponentType
       const componentTypeEnumValues: GraphQLEnumValueConfigMap = {};
       for (const componentSpec of adminSchema.spec.componentTypes) {
         componentTypeEnumValues[componentSpec.name] = {};
       }
       this.addType(
         new GraphQLEnumType({
-          name: 'AdminValueType',
+          name: 'AdminComponentType',
           values: componentTypeEnumValues,
         }),
       );
@@ -644,7 +644,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       ...(adminSchema.getComponentTypeCount() > 0
         ? {
             componentTypes: {
-              type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminValueType'))),
+              type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminComponentType'))),
             },
           }
         : {}),
@@ -692,7 +692,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         new GraphQLInterfaceType({
           name: 'AdminValue',
           fields: {
-            type: { type: new GraphQLNonNull(this.getEnumType('AdminValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('AdminComponentType')) },
           },
         }),
       );
@@ -1161,13 +1161,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addAdminValueTypes(adminSchema: AdminSchema): void {
+  addAdminComponentTypes(adminSchema: AdminSchema): void {
     for (const componentSpec of adminSchema.spec.componentTypes) {
-      this.addAdminValueType(componentSpec);
+      this.addAdminComponentType(componentSpec);
     }
   }
 
-  addAdminValueType(componentSpec: AdminComponentTypeSpecification): void {
+  addAdminComponentType(componentSpec: AdminComponentTypeSpecification): void {
     // AdminFoo
     this.addType(
       new GraphQLObjectType<Component, TContext>({
@@ -1176,7 +1176,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         isTypeOf: (source, _context, _info) => source.type === componentSpec.name,
         fields: () => {
           const fields: GraphQLFieldConfigMap<Component, TContext> = {
-            type: { type: new GraphQLNonNull(this.getEnumType('AdminValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('AdminComponentType')) },
           };
           this.addTypeSpecificationOutputFields(componentSpec, fields, true);
           return fields;
@@ -1186,10 +1186,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
     this.addType(
       new GraphQLInputObjectType({
-        name: toAdminValueInputTypeName(componentSpec.name),
+        name: toAdminComponentInputTypeName(componentSpec.name),
         fields: () => {
           const fields: GraphQLInputFieldConfigMap = {
-            type: { type: new GraphQLNonNull(this.getEnumType('AdminValueType')) },
+            type: { type: new GraphQLNonNull(this.getEnumType('AdminComponentType')) },
           };
           this.addTypeSpecificationInputFields(componentSpec, fields);
           return fields;
@@ -1917,12 +1917,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     if (this.publishedSchema) {
       this.addPublishedSupportingTypes(this.publishedSchema);
       this.addEntityTypes(this.publishedSchema);
-      this.addPublishedValueTypes(this.publishedSchema);
+      this.addPublishedComponentTypes(this.publishedSchema);
     }
     if (this.adminSchema) {
       this.addAdminSupportingTypes(this.adminSchema);
       this.addAdminEntityTypes(this.adminSchema);
-      this.addAdminValueTypes(this.adminSchema);
+      this.addAdminComponentTypes(this.adminSchema);
     }
 
     const queryType = this.buildQueryType<TSource>();

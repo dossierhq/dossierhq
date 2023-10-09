@@ -10,7 +10,7 @@ import {
   type GraphQLNamedType,
   type GraphQLOutputType,
 } from 'graphql';
-import { toAdminTypeName, toAdminValueInputTypeName, toEnumName } from './NameGenerator.js';
+import { toAdminTypeName, toAdminComponentInputTypeName, toEnumName } from './NameGenerator.js';
 
 export class TypeRepository {
   #types: GraphQLNamedType[] = [];
@@ -142,6 +142,6 @@ export class TypeRepository {
       return null; //There's no support for polymorphism on input types
     }
 
-    return this.getInputType(toAdminValueInputTypeName(uniqueNames[0]));
+    return this.getInputType(toAdminComponentInputTypeName(uniqueNames[0]));
   }
 }

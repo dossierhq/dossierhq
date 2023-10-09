@@ -30,7 +30,7 @@ export function toAdminUpsertPayloadTypeName(name: string) {
   return `Admin${name}UpsertPayload`;
 }
 
-export function toAdminValueInputTypeName(name: string) {
+export function toAdminComponentInputTypeName(name: string) {
   return `Admin${name}Input`;
 }
 

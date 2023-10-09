@@ -101,7 +101,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   ValueOne
   ValueTwo
 }
@@ -200,7 +200,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -212,7 +212,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -229,7 +229,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -407,22 +407,22 @@ type AdminFooUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 type AdminValueTwo implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueTwoInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
@@ -478,7 +478,7 @@ enum PublishedEntityType {
   Bar
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   ValueTwo
 }
 
@@ -497,7 +497,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -535,7 +535,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -545,7 +545,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -565,7 +565,7 @@ type PublishedBar implements Node & PublishedEntity {
 }
 
 type PublishedValueTwo implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   body: String
 }
 
@@ -605,7 +605,7 @@ enum PublishedEntityType {
   Bar
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   ValueTwo
 }
 
@@ -624,7 +624,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -662,7 +662,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -672,7 +672,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -692,7 +692,7 @@ type PublishedBar implements Node & PublishedEntity {
 }
 
 type PublishedValueTwo implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   body: String
 }
 
@@ -772,7 +772,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   ValueOne
   ValueTwo
 }
@@ -871,7 +871,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -883,7 +883,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -900,7 +900,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -1073,22 +1073,22 @@ type AdminFooUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 type AdminValueTwo implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueTwoInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
@@ -1222,7 +1222,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   ValueOne
 }
 
@@ -1320,7 +1320,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1332,7 +1332,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1349,7 +1349,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -1479,12 +1479,12 @@ type AdminFooUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
@@ -1537,7 +1537,7 @@ enum PublishedEntityType {
   Foo
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   ValueOne
 }
 
@@ -1556,7 +1556,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -1594,7 +1594,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1604,7 +1604,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1619,7 +1619,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type Query {
@@ -1658,7 +1658,7 @@ enum PublishedEntityType {
   Foo
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   ValueOne
 }
 
@@ -1677,7 +1677,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -1715,7 +1715,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1725,7 +1725,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -1740,7 +1740,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 enum EventType {
@@ -1818,7 +1818,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   ValueOne
 }
 
@@ -1916,7 +1916,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1928,7 +1928,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1945,7 +1945,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -2070,12 +2070,12 @@ type AdminFooUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
@@ -6320,7 +6320,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   ValueOne
 }
 
@@ -6418,7 +6418,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6430,7 +6430,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6447,7 +6447,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -6582,12 +6582,12 @@ type AdminFooUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
@@ -6640,7 +6640,7 @@ enum PublishedEntityType {
   Foo
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   ValueOne
 }
 
@@ -6659,7 +6659,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -6697,7 +6697,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6707,7 +6707,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6729,7 +6729,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   body: String!
 }
 
@@ -6769,7 +6769,7 @@ enum PublishedEntityType {
   Foo
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   ValueOne
 }
 
@@ -6788,7 +6788,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -6826,7 +6826,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6836,7 +6836,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -6858,7 +6858,7 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedValueOne implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   body: String!
 }
 
@@ -6937,7 +6937,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   ValueOne
 }
 
@@ -7035,7 +7035,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7047,7 +7047,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7064,7 +7064,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -7194,12 +7194,12 @@ type AdminFooUpsertPayload {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   body: String
 }
 
@@ -9336,7 +9336,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   NestedValue
   ValueList
   ValueOne
@@ -9436,7 +9436,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9448,7 +9448,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9465,7 +9465,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -9639,20 +9639,20 @@ type AdminFooUpsertPayload {
 }
 
 type AdminNestedValue implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   text: String
   child: AdminNestedValue
 }
 
 input AdminNestedValueInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   text: String
   childJson: String
   child: AdminNestedValueInput
 }
 
 type AdminValueList implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: [String!]
   two: [AdminBar!]
   three: [Location!]
@@ -9663,7 +9663,7 @@ type AdminValueList implements AdminValue {
 scalar Location
 
 input AdminValueListInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: [String!]
   two: [EntityReferenceInput!]
   three: [Location!]
@@ -9671,7 +9671,7 @@ input AdminValueListInput {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: String
   two: AdminBar
   three: Location
@@ -9679,7 +9679,7 @@ type AdminValueOne implements AdminValue {
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: String
   two: EntityReferenceInput
   three: Location
@@ -9744,7 +9744,7 @@ enum PublishedEntityType {
   Foo
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   NestedValue
   ValueList
   ValueOne
@@ -9765,7 +9765,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -9803,7 +9803,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9813,7 +9813,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9841,13 +9841,13 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedNestedValue implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   text: String
   child: PublishedNestedValue
 }
 
 type PublishedValueList implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   one: [String!]
   two: [PublishedBar!]
   three: [Location!]
@@ -9858,7 +9858,7 @@ type PublishedValueList implements PublishedValue {
 scalar Location
 
 type PublishedValueOne implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   one: String
   two: PublishedBar
   three: Location
@@ -9907,7 +9907,7 @@ enum PublishedEntityType {
   Foo
 }
 
-enum PublishedValueType {
+enum PublishedComponentType {
   NestedValue
   ValueList
   ValueOne
@@ -9928,7 +9928,7 @@ interface PublishedEntity implements Node {
 }
 
 interface PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
 }
 
 type PublishedRichText {
@@ -9966,7 +9966,7 @@ enum PublishedEntityQueryOrder {
 input PublishedQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -9976,7 +9976,7 @@ input PublishedQueryInput {
 input PublishedEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedValueType!]
+  componentTypes: [PublishedComponentType!]
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
   boundingBox: BoundingBoxInput
@@ -10004,13 +10004,13 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 type PublishedNestedValue implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   text: String
   child: PublishedNestedValue
 }
 
 type PublishedValueList implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   one: [String!]
   two: [PublishedBar!]
   three: [Location!]
@@ -10021,7 +10021,7 @@ type PublishedValueList implements PublishedValue {
 scalar Location
 
 type PublishedValueOne implements PublishedValue {
-  type: PublishedValueType!
+  type: PublishedComponentType!
   one: String
   two: PublishedBar
   three: Location
@@ -10104,7 +10104,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminValueType {
+enum AdminComponentType {
   NestedValue
   ValueList
   ValueOne
@@ -10204,7 +10204,7 @@ enum AdminEntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -10216,7 +10216,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  componentTypes: [AdminValueType!]
+  componentTypes: [AdminComponentType!]
   status: [AdminEntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -10233,7 +10233,7 @@ input EntityVersionReferenceInput {
 }
 
 interface AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
 }
 
 type AdminRichText {
@@ -10402,20 +10402,20 @@ type AdminFooUpsertPayload {
 }
 
 type AdminNestedValue implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   text: String
   child: AdminNestedValue
 }
 
 input AdminNestedValueInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   text: String
   childJson: String
   child: AdminNestedValueInput
 }
 
 type AdminValueList implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: [String!]
   two: [AdminBar!]
   three: [Location!]
@@ -10423,7 +10423,7 @@ type AdminValueList implements AdminValue {
 }
 
 input AdminValueListInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: [String!]
   two: [EntityReferenceInput!]
   three: [Location!]
@@ -10431,7 +10431,7 @@ input AdminValueListInput {
 }
 
 type AdminValueOne implements AdminValue {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: String
   two: AdminBar
   three: Location
@@ -10439,7 +10439,7 @@ type AdminValueOne implements AdminValue {
 }
 
 input AdminValueOneInput {
-  type: AdminValueType!
+  type: AdminComponentType!
   one: String
   two: EntityReferenceInput
   three: Location
