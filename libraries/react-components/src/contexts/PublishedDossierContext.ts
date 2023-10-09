@@ -17,7 +17,7 @@ export interface RichTextValueItemDisplayProps {
 
 export interface PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null;
-  renderPublishedRichTextValueItemDisplay(props: RichTextValueItemDisplayProps): JSX.Element | null;
+  renderPublishedRichTextComponentDisplay(props: RichTextValueItemDisplayProps): JSX.Element | null;
 }
 
 export interface PublishedDossierContextValue {

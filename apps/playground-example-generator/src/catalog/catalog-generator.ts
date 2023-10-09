@@ -8,7 +8,7 @@ import {
   createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
   type EntityReference,
@@ -519,7 +519,7 @@ async function createRichTextsEntities(
               createRichTextTextNode('Hello '),
               createRichTextTextNode('World!', { format: ['bold'] }),
             ]),
-            createRichTextValueItemNode(faker.helpers.arrayElement(cloudinaryImageComponents)),
+            createRichTextComponentNode(faker.helpers.arrayElement(cloudinaryImageComponents)),
           ]),
           minimal: createRichText([
             createRichTextParagraphNode([
@@ -548,13 +548,13 @@ async function createRichTextsEntities(
             ]),
           ]),
           nestedComponent: createRichText([
-            createRichTextValueItemNode<AdminNestedComponent>({
+            createRichTextComponentNode<AdminNestedComponent>({
               type: 'NestedComponent',
               text: 'root',
               child: { type: 'NestedComponent', text: 'child', child: null },
             }),
             createRichTextParagraphNode([
-              createRichTextTextNode('There is a nested value item above'),
+              createRichTextTextNode('There is a nested component above'),
             ]),
           ]),
         },
@@ -564,14 +564,14 @@ async function createRichTextsEntities(
     adminClient.createEntity(
       copyEntity(minimal, {
         id: id('rich-texts-value-item-validation'),
-        info: { name: 'RichTexts validation of value items' },
+        info: { name: 'RichTexts validation of components' },
         fields: {
           normal: createRichText([
             //TODO add draft entity node when we check it in the editor (currently checked on server only)
             createRichTextParagraphNode([
               createRichTextTextNode('Required fields are not allowed to be empty:'),
             ]),
-            createRichTextValueItemNode<AdminStringsComponent>({
+            createRichTextComponentNode<AdminStringsComponent>({
               type: 'StringsComponent',
               normal: null,
               list: null,
@@ -591,10 +591,10 @@ async function createRichTextsEntities(
             createRichTextEntityNode(numbersEntities.find((it) => it.info.status === 'draft')!),
             createRichTextParagraphNode([
               createRichTextTextNode(
-                'We can also add value items with empty required fields, but not with invalid fields:',
+                'We can also add components with empty required fields, but not with invalid fields:',
               ),
             ]),
-            createRichTextValueItemNode<AdminStringsComponent>({
+            createRichTextComponentNode<AdminStringsComponent>({
               type: 'StringsComponent',
               normal: null,
               list: null,
@@ -627,7 +627,7 @@ async function createRichTextsEntities(
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
           nestedComponent: createRichText([
-            createRichTextValueItemNode<AdminCloudinaryImage>(cloudinaryImageComponents[0]),
+            createRichTextComponentNode<AdminCloudinaryImage>(cloudinaryImageComponents[0]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
         },

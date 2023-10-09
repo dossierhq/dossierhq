@@ -234,7 +234,7 @@ export function schemaValidateAdmin(
           if (
             fieldSpec.componentTypes &&
             fieldSpec.componentTypes.length > 0 &&
-            !usedRichTextNodes.has(RichTextNodeType.valueItem)
+            !usedRichTextNodes.has(RichTextNodeType.component)
           ) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: componentTypes is specified for field, but richTextNodes is missing component`,

@@ -7,7 +7,7 @@ import {
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextTextNode,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   isStringItemField,
   type AdminSchema,
   type ContentTraverseNode,
@@ -190,7 +190,7 @@ export function createComponentTypesCollector<TSchema extends AdminSchema | Publ
           break;
         case ContentTraverseNodeType.richTextNode: {
           const richTextNode = node.node;
-          if (isRichTextValueItemNode(richTextNode)) {
+          if (isRichTextComponentNode(richTextNode)) {
             payload.add(richTextNode.data.type);
           }
           break;

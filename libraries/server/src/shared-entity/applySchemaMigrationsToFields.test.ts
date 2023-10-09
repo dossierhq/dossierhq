@@ -4,9 +4,9 @@ import {
   createRichText,
   createRichTextHeadingNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   type RichText,
-  type RichTextValueItemNode,
+  type RichTextComponentNode,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { applySchemaMigrationsToFields } from './applySchemaMigrationsToFields.js';
@@ -123,7 +123,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-          createRichTextValueItemNode({
+          createRichTextComponentNode({
             type: 'ValueItem',
             string: '1',
             child: { type: 'ValueItem', string: '1.1', child: null },
@@ -132,7 +132,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
-    expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
+    expect(((fieldValues.richText as RichText).root.children[1] as RichTextComponentNode).data)
       .toMatchInlineSnapshot(`
       {
         "child2": {
@@ -164,7 +164,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-          createRichTextValueItemNode({
+          createRichTextComponentNode({
             type: 'ValueItem',
             string: '1',
             child: { type: 'ValueItem', string: '1.1', child: null },
@@ -173,7 +173,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
-    expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
+    expect(((fieldValues.richText as RichText).root.children[1] as RichTextComponentNode).data)
       .toMatchInlineSnapshot(`
         {
           "child": {
@@ -324,7 +324,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-          createRichTextValueItemNode({
+          createRichTextComponentNode({
             type: 'ValueItem',
             string: '1',
             child: { type: 'ValueItem', string: '1.1', child: null },
@@ -333,7 +333,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
-    expect(((fieldValues.richText as RichText).root.children[1] as RichTextValueItemNode).data)
+    expect(((fieldValues.richText as RichText).root.children[1] as RichTextComponentNode).data)
       .toMatchInlineSnapshot(`
       {
         "child": {
@@ -398,7 +398,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
       fields: {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
-          createRichTextValueItemNode({
+          createRichTextComponentNode({
             type: 'ValueItem',
             string: '1',
             child: { type: 'ValueItem', string: '1.1', child: null },

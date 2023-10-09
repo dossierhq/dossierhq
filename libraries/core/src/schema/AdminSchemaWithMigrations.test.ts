@@ -278,9 +278,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
               componentTypes: ['Bar'],
               richTextNodes: [
                 ...REQUIRED_RICH_TEXT_NODES,
+                RichTextNodeType.component,
                 RichTextNodeType.entity,
                 RichTextNodeType.entityLink,
-                RichTextNodeType.valueItem,
               ],
             },
           ],
@@ -300,6 +300,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
     expect(richTextFieldSpec.linkEntityTypes).toEqual(['Foo']);
     expect(richTextFieldSpec.componentTypes).toEqual(['Bar']);
     expect(richTextFieldSpec.richTextNodes).toEqual([
+      RichTextNodeType.component,
       RichTextNodeType.entity,
       RichTextNodeType.entityLink,
       RichTextNodeType.linebreak,
@@ -307,7 +308,6 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
       RichTextNodeType.root,
       RichTextNodeType.tab,
       RichTextNodeType.text,
-      RichTextNodeType.valueItem,
     ]);
   });
 
@@ -451,7 +451,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
                   ...REQUIRED_RICH_TEXT_NODES,
                   RichTextNodeType.entity,
                   RichTextNodeType.entityLink,
-                  RichTextNodeType.valueItem,
+                  RichTextNodeType.component,
                 ],
               },
               {
@@ -802,7 +802,12 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
               adminOnly: true,
               entityTypes: ['Foo'],
               linkEntityTypes: ['Foo'],
-              richTextNodes: [...REQUIRED_RICH_TEXT_NODES, 'entity', 'entityLink', 'valueItem'],
+              richTextNodes: [
+                ...REQUIRED_RICH_TEXT_NODES,
+                RichTextNodeType.component,
+                RichTextNodeType.entity,
+                RichTextNodeType.entityLink,
+              ],
               componentTypes: ['ValueItem'],
             },
           ],

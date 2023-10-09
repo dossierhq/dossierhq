@@ -10,7 +10,7 @@ import {
   createRichText,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
 } from './RichTextUtils.js';
 
 const adminSchema = AdminSchema.createAndValidate({
@@ -187,7 +187,7 @@ describe('traverseEntity', () => {
         info: { type: 'Foo' },
         fields: {
           richText: createRichText([
-            createRichTextValueItemNode({ type: 'TwoStrings', string1: 'two-1', string2: 'two-2' }),
+            createRichTextComponentNode({ type: 'TwoStrings', string1: 'two-1', string2: 'two-2' }),
           ]),
         },
       }),

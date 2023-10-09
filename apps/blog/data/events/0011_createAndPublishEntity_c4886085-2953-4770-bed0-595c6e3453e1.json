@@ -7112,7 +7112,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/fqsxmfk2u1ybnxjchrf5",
@@ -16706,7 +16706,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/enilirwp4vhz5rkzrfs2",
@@ -16726,7 +16726,7 @@
               "children": []
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/hxutj1d8gjnuoooqkjom",

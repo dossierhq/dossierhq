@@ -264,17 +264,17 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
           }
         }
       } else if (isComponentItemField(node.fieldSpec, node.value) && node.value) {
-        const valueItemFieldSpec = node.fieldSpec as ComponentFieldSpecification;
+        const componentFieldSpec = node.fieldSpec as ComponentFieldSpecification;
         if (
-          valueItemFieldSpec.componentTypes.length > 0 &&
-          !valueItemFieldSpec.componentTypes.includes(node.value.type)
+          componentFieldSpec.componentTypes.length > 0 &&
+          !componentFieldSpec.componentTypes.includes(node.value.type)
         ) {
           return {
             type: 'save',
             path: node.path,
             message: `Component of type ${
               node.value.type
-            } is not allowed in field (supported types: ${valueItemFieldSpec.componentTypes.join(
+            } is not allowed in field (supported types: ${componentFieldSpec.componentTypes.join(
               ', ',
             )})`,
           };

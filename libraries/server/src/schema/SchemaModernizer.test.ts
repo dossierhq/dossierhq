@@ -227,7 +227,7 @@ describe('modernizeSchemaSpecification', () => {
               adminOnly: false,
               list: false,
               required: false,
-              richTextNodes: [],
+              richTextNodes: ['text', 'linebreak', 'paragraph', 'root', 'tab', 'valueItem'], // valueItem was renamed to component
               entityTypes: [],
               linkEntityTypes: [],
               valueTypes: ['ValueItem1'], // was renamed to componentTypes
@@ -310,7 +310,7 @@ describe('modernizeSchemaSpecification', () => {
               adminOnly: false,
               list: false,
               required: false,
-              richTextNodes: [],
+              richTextNodes: ['component', 'linebreak', 'paragraph', 'root', 'tab', 'text'],
               entityTypes: [],
               linkEntityTypes: [],
               componentTypes: ['ValueItem1'],

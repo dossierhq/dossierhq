@@ -18,7 +18,7 @@ import {
   type RichTextParagraphNode,
   type RichTextTabNode,
   type RichTextTextNode,
-  type RichTextValueItemNode,
+  type RichTextComponentNode,
   type Component,
 } from '../Types.js';
 
@@ -176,10 +176,10 @@ export function createRichTextListItemNode(
   };
 }
 
-export function createRichTextValueItemNode<T extends Component<string, object>>(
+export function createRichTextComponentNode<T extends Component<string, object>>(
   data: T,
-): RichTextValueItemNode {
-  return { type: RichTextNodeType.valueItem, data, format: '', version: 1 };
+): RichTextComponentNode {
+  return { type: RichTextNodeType.component, data, format: '', version: 1 };
 }
 
 export function richTextTextNodeHasFormat(node: RichTextTextNode, format: TextFormatType): boolean {

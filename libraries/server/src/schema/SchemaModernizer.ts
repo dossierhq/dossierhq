@@ -101,6 +101,12 @@ function modernizeField(fieldSpec: FieldSpec): AdminFieldSpecification {
       fieldSpec.richTextNodes.push('tab');
       fieldSpec.richTextNodes.sort();
     }
+    // Version 0.5: renamed valueItem to component
+    const valueItemIndex = fieldSpec.richTextNodes.indexOf('valueItem');
+    if (valueItemIndex >= 0) {
+      fieldSpec.richTextNodes[valueItemIndex] = 'component';
+      fieldSpec.richTextNodes.sort();
+    }
     // Version 0.5: renamed valueTypes to componentTypes
     if ('valueTypes' in fieldSpec) {
       (fieldSpec as unknown as RichTextFieldSpecification).componentTypes = fieldSpec.valueTypes;

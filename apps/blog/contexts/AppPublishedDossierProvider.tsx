@@ -32,7 +32,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
     return null;
   }
 
-  renderPublishedRichTextValueItemDisplay({
+  renderPublishedRichTextComponentDisplay({
     value,
   }: RichTextValueItemDisplayProps): JSX.Element | null {
     if (value && isPublishedCloudinaryImage(value)) {

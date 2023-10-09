@@ -1058,7 +1058,7 @@ describe('AdminSchema.validate()', () => {
     );
   });
 
-  test('Error: componentTypes specified but not valueItem richTextNodes', () => {
+  test('Error: componentTypes specified but not component richTextNodes', () => {
     expectErrorResult(
       new AdminSchema({
         schemaKind: 'admin',

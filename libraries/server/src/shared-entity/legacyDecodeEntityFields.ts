@@ -1,6 +1,6 @@
 import {
   FieldType,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   ok,
   transformRichText,
   type AdminEntityTypeSpecification,
@@ -12,7 +12,7 @@ import {
   type PublishedFieldSpecification,
   type PublishedSchema,
   type RichText,
-  type RichTextValueItemNode,
+  type RichTextComponentNode,
 } from '@dossierhq/core';
 import * as LegacyCodecFieldTypeAdapters from './LegacyCodecFieldTypeAdapters.js';
 
@@ -110,12 +110,12 @@ function decodeRichTextField(
 ): RichText | null {
   const path: ContentValuePath = [];
   return transformRichText(path, encodedValue, (_path, node) => {
-    if (isRichTextValueItemNode(node)) {
+    if (isRichTextComponentNode(node)) {
       const data = decodeValueItemField(schema, 'json', node.data);
       if (!data) {
         return ok(null);
       }
-      const newNode: RichTextValueItemNode = { ...node, data };
+      const newNode: RichTextComponentNode = { ...node, data };
       return ok(newNode);
     }
     return ok(node);

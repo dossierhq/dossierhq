@@ -1,6 +1,6 @@
 import {
   isComponentItemField,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   notOk,
   ok,
   transformEntityFields,
@@ -104,7 +104,7 @@ const DECODE_TRANSFORMER: ContentTransformer<
     return ok(value);
   },
   transformRichTextNode(schema, _path, _fieldSpec, node) {
-    if (isRichTextValueItemNode(node)) {
+    if (isRichTextComponentNode(node)) {
       const componentType = node.data.type;
       if (componentType && !schema.getComponentTypeSpecification(componentType)) {
         // Could be that the value type was deleted or made adminOnly (when decoding published entities)

@@ -3186,7 +3186,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "renderAdminRichTextValueItemEditor",
+                "text": "renderAdminRichTextComponentEditor",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -5634,7 +5634,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "renderPublishedRichTextValueItemDisplay",
+                "text": "renderPublishedRichTextComponentDisplay",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -26156,7 +26156,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/k3sj8tqqcsalahvticm2",
@@ -26186,7 +26186,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/qrq0ugb7bnk1bgxceyrh",
@@ -26216,7 +26216,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/mjnwdgw0iufvxnsph9ah",
@@ -26246,7 +26246,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/yiwndiocr04vwcmuokq3",
@@ -26276,7 +26276,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/c0eozm8u2qt8ehfgo76z",
@@ -26314,7 +26314,7 @@
             "children": []
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/m1yer0oklunisf7amna4",

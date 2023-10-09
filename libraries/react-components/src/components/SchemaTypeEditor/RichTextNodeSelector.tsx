@@ -21,7 +21,7 @@ const RichTextNodesNotInPlaceholders: string[] = [
   RichTextNodeType.entity,
   RichTextNodeType.entityLink,
   RichTextNodeType.link,
-  RichTextNodeType.valueItem,
+  RichTextNodeType.component,
 ];
 
 function useSynchronizeMultipleSelectorState(

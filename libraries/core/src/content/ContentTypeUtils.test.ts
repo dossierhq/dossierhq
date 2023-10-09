@@ -3,6 +3,7 @@ import type { RichTextNode } from '../Types.js';
 import {
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
+  isRichTextComponentNode,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextHeadingNode,
@@ -13,7 +14,6 @@ import {
   isRichTextParagraphNode,
   isRichTextTabNode,
   isRichTextTextNode,
-  isRichTextValueItemNode,
 } from './ContentTypeUtils.js';
 
 describe('isRichTextXxxNode', () => {
@@ -28,12 +28,12 @@ describe('isRichTextXxxNode', () => {
       const _type: 'tab' = node.type;
     } else if (isRichTextParagraphNode(node)) {
       const _type: 'paragraph' = node.type;
+    } else if (isRichTextComponentNode(node)) {
+      const _type: 'component' = node.type;
     } else if (isRichTextEntityNode(node)) {
       const _type: 'entity' = node.type;
     } else if (isRichTextEntityLinkNode(node)) {
       const _type: 'entityLink' = node.type;
-    } else if (isRichTextValueItemNode(node)) {
-      const _type: 'valueItem' = node.type;
     } else if (isRichTextCodeNode(node)) {
       const _type: 'code' = node.type;
     } else if (isRichTextCodeHighlightNode(node)) {

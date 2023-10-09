@@ -17,7 +17,7 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
 import { config } from 'dotenv';
@@ -273,7 +273,7 @@ function renderNode(context: FeedRenderContext, node: RichTextNode, key: Key | n
     return <li key={key}>{renderChildren(context, node)}</li>;
   }
 
-  if (isRichTextValueItemNode(node)) {
+  if (isRichTextComponentNode(node)) {
     if (isPublishedCloudinaryImage(node.data)) {
       return <FeedCloudinaryImage key={key} image={node.data} height={400} />;
     }

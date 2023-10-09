@@ -98,11 +98,12 @@ export type RichTextEntityNode = Spread<
 
 export type RichTextEntityLinkNode = Spread<{ reference: EntityReference }, RichTextElementNode>;
 
-export type RichTextValueItemNode = Spread<{ data: Component }, SerializedDecoratorBlockNode>;
+export type RichTextComponentNode = Spread<{ data: Component }, SerializedDecoratorBlockNode>;
 
 export const RichTextNodeType = {
   code: 'code',
   'code-highlight': 'code-highlight',
+  component: 'component',
   entity: 'entity',
   entityLink: 'entityLink',
   heading: 'heading',
@@ -114,7 +115,6 @@ export const RichTextNodeType = {
   root: 'root',
   tab: 'tab',
   text: 'text',
-  valueItem: 'valueItem',
 } as const;
 export type RichTextNodeType = (typeof RichTextNodeType)[keyof typeof RichTextNodeType];
 

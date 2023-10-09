@@ -12,7 +12,7 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
 import { ClassName, LexicalTheme } from '@dossierhq/design-ssr';
@@ -185,7 +185,7 @@ async function renderNode(context: RenderContext, node: RichTextNode, key: Key |
       </li>
     );
   }
-  if (isRichTextValueItemNode(node)) {
+  if (isRichTextComponentNode(node)) {
     if (isPublishedCloudinaryImage(node.data)) {
       return <CloudinaryImage key={key} image={node.data} height={400} />;
     }

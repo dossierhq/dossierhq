@@ -34,7 +34,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
           richTextNodes: [
             ...REQUIRED_RICH_TEXT_NODES,
             RichTextNodeType.entityLink,
-            RichTextNodeType.valueItem,
+            RichTextNodeType.component,
           ],
           linkEntityTypes: ['BlogPost'],
           componentTypes: ['CloudinaryImage'],

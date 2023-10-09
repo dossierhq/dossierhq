@@ -12,7 +12,7 @@ import {
 import {
   createRichText,
   createRichTextParagraphNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
 } from './RichTextUtils.js';
 
 const schema = AdminSchema.createAndValidate({
@@ -82,7 +82,7 @@ describe('normalizeEntityFields', () => {
         info: { type: 'Foo' },
         fields: {
           richText: createRichText([
-            createRichTextValueItemNode({ type: 'TwoStrings', string1: '', string2: null }),
+            createRichTextComponentNode({ type: 'TwoStrings', string1: '', string2: null }),
           ]),
         },
       }).valueOrThrow(),

@@ -54,7 +54,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
     return null;
   }
 
-  renderAdminRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
     const { value, validationIssues, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({

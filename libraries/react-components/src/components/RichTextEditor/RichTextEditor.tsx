@@ -26,13 +26,13 @@ import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEd
 import { AdminClickableLinkPlugin } from './AdminClickableLinkPlugin.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
-import { AdminValueItemNode } from './AdminValueItemNode.js';
+import { AdminComponentNode } from './AdminComponentNode.js';
 import { CodeHighlightPlugin } from './CodeHighlightPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 import { ToolbarPlugin } from './ToolbarPlugin.js';
-import { ValueItemPlugin } from './ValueItemPlugin.js';
+import { ComponentPlugin } from './ComponentPlugin.js';
 
 interface Props {
   fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
@@ -72,7 +72,7 @@ export function RichTextEditor({ fieldSpec, adminOnly, value, onChange }: Props)
     nodes: [
       AdminEntityLinkNode,
       AdminEntityNode,
-      AdminValueItemNode,
+      AdminComponentNode,
       CodeNode,
       CodeHighlightNode,
       HeadingNode,
@@ -110,7 +110,7 @@ export function RichTextEditor({ fieldSpec, adminOnly, value, onChange }: Props)
         <HistoryPlugin />
         <LinkPlugin />
         <ListPlugin />
-        <ValueItemPlugin />
+        <ComponentPlugin />
         <OnChangePlugin onChange={debouncedHandleChange} />
       </LexicalComposer>
     </RichTextEditorContext.Provider>

@@ -112,7 +112,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/gnvo5ovosipfmxe2ngml",
@@ -3766,7 +3766,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "renderAdminRichTextValueItemEditor",
+                "text": "renderAdminRichTextComponentEditor",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -5907,7 +5907,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "renderPublishedRichTextValueItemDisplay",
+                "text": "renderPublishedRichTextComponentDisplay",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -6590,7 +6590,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/l2t5vyglfyl080wkxzvh",
@@ -6620,7 +6620,7 @@
             ]
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/econaw7zpdasykkbl4db",
@@ -6658,7 +6658,7 @@
             "children": []
           },
           {
-            "type": "valueItem",
+            "type": "component",
             "data": {
               "type": "CloudinaryImage",
               "publicId": "Blog/hibusemvt4uzobok8r8n",

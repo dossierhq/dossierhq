@@ -154,7 +154,7 @@ export class TestContextAdapter
   renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;
   }
-  renderPublishedRichTextValueItemDisplay(
+  renderPublishedRichTextComponentDisplay(
     _props: RichTextValueItemDisplayProps,
   ): JSX.Element | null {
     return null;
@@ -162,7 +162,7 @@ export class TestContextAdapter
   renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
-  renderAdminRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
     return null;
   }
 }

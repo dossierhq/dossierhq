@@ -189,7 +189,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/womzrr0vi9yng1uxbarv",
@@ -255,7 +255,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/ljsnb6fkchbqtb7pbnei",
@@ -303,7 +303,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/f4vvq4cq0rxmt4zwvzak",
@@ -369,7 +369,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/vvxi5grl7f0zgxhupwj7",
@@ -436,7 +436,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/yehwajgwphhhngt2gy6k",
@@ -466,7 +466,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/quw6nc4qcv7p1jw6rakv",
@@ -496,7 +496,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/yh5u83eee5two2hhjked",
@@ -563,7 +563,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/d9ms0pmg8hnwqvzwc1hm",
@@ -593,7 +593,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/m2jrwszjvija9bo5xiqh",
@@ -623,7 +623,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/nypnkwgqi468gevosemv",

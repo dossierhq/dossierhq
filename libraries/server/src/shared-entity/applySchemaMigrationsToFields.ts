@@ -1,7 +1,7 @@
 import {
   assertExhaustive,
   isComponentItemField,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   ok,
   transformEntityFields,
   type AdminSchemaMigrationAction,
@@ -59,7 +59,7 @@ export function applySchemaMigrationsToFields(
         return ok(value);
       },
       transformRichTextNode: (_schema, _path, _fieldSpec, node) => {
-        if (isRichTextValueItemNode(node)) {
+        if (isRichTextComponentNode(node)) {
           const component = migrateComponent(node.data, componentTypeActions);
           if (!component) return ok(null);
           return ok({ ...node, data: component });

@@ -1274,7 +1274,7 @@
                       "format": 16,
                       "mode": "normal",
                       "style": "",
-                      "text": "valueItem",
+                      "text": "component",
                       "type": "text",
                       "version": 1
                     },
@@ -1487,7 +1487,7 @@
                   "format": 16,
                   "mode": "normal",
                   "style": "",
-                  "text": "valueItem",
+                  "text": "component",
                   "type": "text",
                   "version": 1
                 },

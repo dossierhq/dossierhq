@@ -118,7 +118,7 @@ export function SchemaFieldEditor({
     (fieldDraft.type === FieldType.RichText &&
       (!fieldDraft.richTextNodesWithPlaceholders ||
         fieldDraft.richTextNodesWithPlaceholders.length === 0 ||
-        fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.valueItem)));
+        fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.component)));
   return (
     <Card>
       <Card.Header>

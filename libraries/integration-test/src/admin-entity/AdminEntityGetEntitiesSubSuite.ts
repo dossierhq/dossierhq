@@ -7,7 +7,7 @@ import {
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   getAllNodesForConnection,
   type BoundingBox,
 } from '@dossierhq/core';
@@ -742,7 +742,7 @@ async function getEntities_linksToOneReferenceFromValueItemInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
-          createRichTextValueItemNode<AdminReferencesValue>({
+          createRichTextComponentNode<AdminReferencesValue>({
             type: 'ReferencesValue',
             reference: { id: titleOnlyId },
           }),
@@ -885,7 +885,7 @@ async function getEntities_boundingBoxOneInsideFromValueItemInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
-          createRichTextValueItemNode<AdminLocationsValue>({
+          createRichTextComponentNode<AdminLocationsValue>({
             type: 'LocationsValue',
             location: center,
             locationAdminOnly: null,

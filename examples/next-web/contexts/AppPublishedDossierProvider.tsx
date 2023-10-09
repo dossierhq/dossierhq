@@ -24,7 +24,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
     return null;
   }
 
-  renderPublishedRichTextValueItemDisplay(
+  renderPublishedRichTextComponentDisplay(
     _props: RichTextValueItemDisplayProps,
   ): JSX.Element | null {
     return null;

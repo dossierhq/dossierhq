@@ -58,6 +58,7 @@ export {
   type RichText,
   type RichTextCodeHighlightNode,
   type RichTextCodeNode,
+  type RichTextComponentNode,
   type RichTextElementNode,
   type RichTextEntityLinkNode,
   type RichTextEntityNode,
@@ -71,7 +72,6 @@ export {
   type RichTextRootNode,
   type RichTextTabNode,
   type RichTextTextNode,
-  type RichTextValueItemNode,
   type UniqueIndexReference,
 } from './Types.js';
 export {
@@ -163,6 +163,7 @@ export {
   isPublishedEntity,
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
+  isRichTextComponentNode,
   isRichTextElementNode,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
@@ -178,7 +179,6 @@ export {
   isRichTextSingleField,
   isRichTextTabNode,
   isRichTextTextNode,
-  isRichTextValueItemNode,
   isStringItemField,
   isStringListField,
   isStringSingleField,
@@ -197,6 +197,7 @@ export {
 export { transformRichText } from './content/RichTextTransformer.js';
 export {
   createRichText,
+  createRichTextComponentNode,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
@@ -207,7 +208,6 @@ export {
   createRichTextTabNode,
   createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,
-  createRichTextValueItemNode,
   richTextTextNodeHasFormat,
 } from './content/RichTextUtils.js';
 export {

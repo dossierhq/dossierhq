@@ -1,6 +1,6 @@
 import {
   RichTextNodeType,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   normalizeComponent,
   traverseComponent,
   validateTraverseNodeForPublish,
@@ -8,7 +8,7 @@ import {
   type AdminSchema,
   type Component,
   type PublishValidationIssue,
-  type RichTextValueItemNode,
+  type RichTextComponentNode,
   type SaveValidationIssue,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
@@ -29,23 +29,23 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 
-export type SerializedAdminValueItemNode = RichTextValueItemNode;
+export type SerializedAdminComponentNode = RichTextComponentNode;
 
 type ValidationIssue = SaveValidationIssue | PublishValidationIssue;
 
-export function $createAdminValueItemNode(data: Component): AdminValueItemNode {
-  return new AdminValueItemNode(data);
+export function $createAdminComponentNode(data: Component): AdminComponentNode {
+  return new AdminComponentNode(data);
 }
 
 export function $isAdminValueItemNode(
   node: LexicalNode | undefined | null,
-): node is AdminValueItemNode {
-  return node instanceof AdminValueItemNode;
+): node is AdminComponentNode {
+  return node instanceof AdminComponentNode;
 }
 
-export const INSERT_ADMIN_VALUE_ITEM_COMMAND: LexicalCommand<Component> = createCommand();
+export const INSERT_ADMIN_COMPONENT_COMMAND: LexicalCommand<Component> = createCommand();
 
-function AdminValueItemComponent({
+function AdminComponentComponent({
   className,
   format,
   nodeKey,
@@ -78,10 +78,10 @@ function AdminValueItemComponent({
   );
 
   const validationIssues = useMemo(() => {
-    return validateItemValue(adminSchema, adminOnly, data);
+    return validateComponent(adminSchema, adminOnly, data);
   }, [adminSchema, adminOnly, data]);
 
-  const overriddenEditor = adapter.renderAdminRichTextValueItemEditor({
+  const overriddenEditor = adapter.renderAdminRichTextComponentEditor({
     value: data,
     validationIssues,
     onChange: setValue,
@@ -107,7 +107,7 @@ function AdminValueItemComponent({
 // rich text node. We most likely need to change that validation to use the Lexical nodes instead
 // (as opposed to the serialized nodes which lack the node key)
 // Hopefully we can get rid on RichTextEditorContext and `adminOnly` parameters to the field editors
-function validateItemValue(
+function validateComponent(
   adminSchema: AdminSchema | undefined,
   adminOnly: boolean,
   value: Component,
@@ -135,15 +135,15 @@ function validateItemValue(
   return errors;
 }
 
-export class AdminValueItemNode extends DecoratorBlockNode {
+export class AdminComponentNode extends DecoratorBlockNode {
   __data: Component;
 
   static override getType(): string {
-    return RichTextNodeType.valueItem;
+    return RichTextNodeType.component;
   }
 
-  static override clone(node: AdminValueItemNode): AdminValueItemNode {
-    return new AdminValueItemNode(node.__data, node.__format, node.__key);
+  static override clone(node: AdminComponentNode): AdminComponentNode {
+    return new AdminComponentNode(node.__data, node.__format, node.__key);
   }
 
   constructor(data: Component, format?: ElementFormatType, key?: NodeKey) {
@@ -161,15 +161,15 @@ export class AdminValueItemNode extends DecoratorBlockNode {
     return self.__data;
   }
 
-  static override importJSON(serializedNode: SerializedAdminValueItemNode): AdminValueItemNode {
-    const node = $createAdminValueItemNode(serializedNode.data);
+  static override importJSON(serializedNode: SerializedAdminComponentNode): AdminComponentNode {
+    const node = $createAdminComponentNode(serializedNode.data);
     node.setFormat(serializedNode.format);
     return node;
   }
 
-  override exportJSON(): SerializedAdminValueItemNode {
+  override exportJSON(): SerializedAdminComponentNode {
     //TODO format
-    return createRichTextValueItemNode(this.__data);
+    return createRichTextComponentNode(this.__data);
   }
 
   override createDOM(): HTMLElement {
@@ -190,7 +190,7 @@ export class AdminValueItemNode extends DecoratorBlockNode {
     };
 
     return (
-      <AdminValueItemComponent
+      <AdminComponentComponent
         className={className}
         data={this.__data}
         format={this.__format}

@@ -4,7 +4,7 @@ import {
   createRichTextParagraphNode,
   createRichText,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
@@ -58,7 +58,7 @@ async function createBlogPost(
           ]),
           body: createRichText([
             createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),
-            createRichTextValueItemNode(faker.helpers.arrayElement(images)),
+            createRichTextComponentNode(faker.helpers.arrayElement(images)),
             createRichTextParagraphNode([createRichTextTextNode(faker.lorem.paragraph())]),
           ]),
         },

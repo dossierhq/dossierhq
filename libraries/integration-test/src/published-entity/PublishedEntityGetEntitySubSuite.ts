@@ -6,9 +6,9 @@ import {
   createRichText,
   createRichTextHeadingNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   isEntityNameAsRequested,
-  type RichTextValueItemNode,
+  type RichTextComponentNode,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -235,7 +235,7 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   const createResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
-        richText: createRichText([createRichTextValueItemNode(adminLocationsValueItem)]),
+        richText: createRichText([createRichTextComponentNode(adminLocationsValueItem)]),
       },
     }),
     { publish: true },
@@ -248,17 +248,17 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   const entity = getResult.valueOrThrow();
   assertIsPublishedRichTexts(entity);
 
-  const valueItemNode = entity.fields.richText?.root.children[0] as RichTextValueItemNode;
-  assertIsDefined(valueItemNode);
+  const componentNode = entity.fields.richText?.root.children[0] as RichTextComponentNode;
+  assertIsDefined(componentNode);
 
-  const publishedLocationsValueItem = valueItemNode.data;
-  assertIsPublishedLocationsValue(publishedLocationsValueItem);
+  const publishedLocationsComponent = componentNode.data;
+  assertIsPublishedLocationsValue(publishedLocationsComponent);
 
-  assertEquals(publishedLocationsValueItem, {
+  assertEquals(publishedLocationsComponent, {
     type: 'LocationsValue',
     location: { lat: 12, lng: 34 },
   });
-  assertEquals('locationAdminOnly' in publishedLocationsValueItem, false);
+  assertEquals('locationAdminOnly' in publishedLocationsComponent, false);
 }
 
 async function getEntity_usingUniqueIndex({ adminSchema, server }: PublishedEntityTestContext) {
@@ -350,7 +350,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
       adminClient,
       {
         richText: createRichText([
-          createRichTextValueItemNode({ type: 'AdminOnlyValue' }),
+          createRichTextComponentNode({ type: 'AdminOnlyValue' }),
           createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')]),
         ]),
       },

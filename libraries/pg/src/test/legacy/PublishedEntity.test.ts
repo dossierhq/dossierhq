@@ -10,7 +10,7 @@ import {
   FieldType,
   assertOkResult,
   createRichText,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';
@@ -327,7 +327,7 @@ describe('getEntities() boundingBox', () => {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
         fields: {
           body: createRichText([
-            createRichTextValueItemNode({
+            createRichTextComponentNode({
               type: 'PublishedEntityStringedLocation',
               string: 'Hello location',
               location: center,

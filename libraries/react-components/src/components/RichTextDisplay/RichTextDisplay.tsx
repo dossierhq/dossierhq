@@ -15,7 +15,7 @@ import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/Entity
 import { PublishedClickableLinkPlugin } from './PublishedClickableLinkPlugin.js';
 import { PublishedEntityLinkNode } from './PublishedEntityLinkNode.js';
 import { PublishedEntityNode } from './PublishedEntityNode.js';
-import { PublishedValueItemNode } from './PublishedValueItemNode.js';
+import { PublishedComponentNode } from './PublishedComponentNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
@@ -43,7 +43,7 @@ export function RichTextDisplay({ fieldSpec, value }: Props) {
       CodeHighlightNode,
       PublishedEntityNode,
       PublishedEntityLinkNode,
-      PublishedValueItemNode,
+      PublishedComponentNode,
       HeadingNode,
       LinkNode,
       ListItemNode,

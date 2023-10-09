@@ -47,9 +47,9 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePickerDialog } from '../AdminTypePickerDialog/AdminTypePickerDialog.js';
+import { INSERT_ADMIN_COMPONENT_COMMAND } from './AdminComponentNode.js';
 import { $isAdminEntityLinkNode, TOGGLE_ADMIN_ENTITY_LINK_COMMAND } from './AdminEntityLinkNode.js';
 import { INSERT_ADMIN_ENTITY_COMMAND } from './AdminEntityNode.js';
-import { INSERT_ADMIN_VALUE_ITEM_COMMAND } from './AdminValueItemNode.js';
 import { CreateLinkDialog } from './CreateLinkDialog.js';
 
 const blockTypeToBlockName = {
@@ -92,7 +92,7 @@ export function ToolbarPlugin({
   const [codeLanguage, setCodeLanguage] = useState<string>('');
 
   const [showAddEntityDialog, setShowAddEntityDialog] = useState(false);
-  const [showAddValueItemDialog, setShowAddValueItemDialog] = useState(false);
+  const [showAddComponentDialog, setShowAddComponentDialog] = useState(false);
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -173,8 +173,8 @@ export function ToolbarPlugin({
   const enableLinkNode = enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.link);
   const enableEntityLinkNode =
     enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.entityLink);
-  const enableValueItemNode =
-    (enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.valueItem)) &&
+  const enableComponentNode =
+    (enableAllNodes || fieldSpec.richTextNodes?.includes(RichTextNodeType.component)) &&
     schema &&
     schema.getComponentTypeCount() > 0;
 
@@ -182,8 +182,8 @@ export function ToolbarPlugin({
   if (enableEntityNode) {
     insertItems.push({ id: 'entity', name: 'Entity', show: setShowAddEntityDialog });
   }
-  if (enableValueItemNode) {
-    insertItems.push({ id: 'valueItem', name: 'Value item', show: setShowAddValueItemDialog });
+  if (enableComponentNode) {
+    insertItems.push({ id: 'component', name: 'Component', show: setShowAddComponentDialog });
   }
 
   return (
@@ -268,10 +268,10 @@ export function ToolbarPlugin({
       {showAddEntityDialog ? (
         <AddEntityDialog fieldSpec={fieldSpec} onClose={() => setShowAddEntityDialog(false)} />
       ) : null}
-      {showAddValueItemDialog ? (
-        <AddValueItemButton
+      {showAddComponentDialog ? (
+        <AddComponentButton
           fieldSpec={fieldSpec}
-          onClose={() => setShowAddValueItemDialog(false)}
+          onClose={() => setShowAddComponentDialog(false)}
         />
       ) : null}
     </Row>
@@ -471,7 +471,7 @@ function AddEntityDialog({
   );
 }
 
-function AddValueItemButton({
+function AddComponentButton({
   fieldSpec,
   onClose,
 }: {
@@ -487,7 +487,7 @@ function AddValueItemButton({
         showComponentTypes
         componentTypes={fieldSpec.componentTypes}
         onItemClick={(type) => {
-          editor.dispatchCommand(INSERT_ADMIN_VALUE_ITEM_COMMAND, { type });
+          editor.dispatchCommand(INSERT_ADMIN_COMPONENT_COMMAND, { type });
           onClose();
         }}
       />

@@ -5173,7 +5173,7 @@
               ]
             },
             {
-              "type": "valueItem",
+              "type": "component",
               "data": {
                 "type": "CloudinaryImage",
                 "publicId": "Blog/g8xdrhytpccxjh3ckocm",

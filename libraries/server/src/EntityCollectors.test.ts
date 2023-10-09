@@ -8,7 +8,7 @@ import {
   createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   traverseEntity,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
@@ -191,7 +191,7 @@ describe('collectDataFromEntity', () => {
         fields: {
           richText: createRichText([
             createRichTextParagraphNode([createRichTextTextNode('one one')]),
-            createRichTextValueItemNode({ type: 'EntityCodecValueOne', string: 'one two' }),
+            createRichTextComponentNode({ type: 'EntityCodecValueOne', string: 'one two' }),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Header text')]),
           ]),
           richTexts: [
@@ -257,7 +257,7 @@ describe('collectDataFromEntity', () => {
         fields: {
           valueOne: { type: 'EntityCodecValueOne', location: { lat: 1, lng: 2 } },
           richText: createRichText([
-            createRichTextValueItemNode({
+            createRichTextComponentNode({
               type: 'EntityCodecValueOne',
               location: { lat: 3, lng: 4 },
             }),
@@ -434,7 +434,7 @@ describe('collectDataFromEntity', () => {
           richText: createRichText([
             createRichTextEntityNode({ id: 'barId1' }),
             createRichTextEntityLinkNode({ id: 'barId2' }, [createRichTextTextNode('bar')]),
-            createRichTextValueItemNode({ type: 'EntityCodecValueOne', bar: { id: 'bar3Id' } }),
+            createRichTextComponentNode({ type: 'EntityCodecValueOne', bar: { id: 'bar3Id' } }),
           ]),
         },
       }),
@@ -542,7 +542,7 @@ describe('collectDataFromEntity', () => {
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
         fields: {
-          richText: createRichText([createRichTextValueItemNode({ type: 'EntityCodecValueOne' })]),
+          richText: createRichText([createRichTextComponentNode({ type: 'EntityCodecValueOne' })]),
         },
       }),
     ).toMatchInlineSnapshot(`

@@ -20,7 +20,7 @@ import type {
   RichTextRootNode,
   RichTextTabNode,
   RichTextTextNode,
-  RichTextValueItemNode,
+  RichTextComponentNode,
 } from '../Types.js';
 import { RichTextNodeType } from '../Types.js';
 import type { FieldSpecification, FieldValueTypeMap } from '../schema/SchemaSpecification.js';
@@ -231,6 +231,12 @@ export function isRichTextParagraphNode(
   return node.type === RichTextNodeType.paragraph;
 }
 
+export function isRichTextComponentNode(
+  node: RichTextNode,
+): node is WithRichTextType<RichTextComponentNode, 'component'> {
+  return node.type === RichTextNodeType.component;
+}
+
 export function isRichTextEntityNode(
   node: RichTextNode,
 ): node is WithRichTextType<RichTextEntityNode, 'entity'> {
@@ -241,12 +247,6 @@ export function isRichTextEntityLinkNode(
   node: RichTextNode,
 ): node is WithRichTextType<RichTextEntityLinkNode, 'entityLink'> {
   return node.type === RichTextNodeType.entityLink;
-}
-
-export function isRichTextValueItemNode(
-  node: RichTextNode,
-): node is WithRichTextType<RichTextValueItemNode, 'valueItem'> {
-  return node.type === RichTextNodeType.valueItem;
 }
 
 export function isRichTextCodeNode(

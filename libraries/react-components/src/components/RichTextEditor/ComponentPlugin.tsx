@@ -2,20 +2,17 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { $insertNodeToNearestRoot } from '@lexical/utils';
 import { COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
-import {
-  $createAdminValueItemNode,
-  INSERT_ADMIN_VALUE_ITEM_COMMAND,
-} from './AdminValueItemNode.js';
+import { $createAdminComponentNode, INSERT_ADMIN_COMPONENT_COMMAND } from './AdminComponentNode.js';
 
-export function ValueItemPlugin(): null {
+export function ComponentPlugin(): null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     return editor.registerCommand(
-      INSERT_ADMIN_VALUE_ITEM_COMMAND,
+      INSERT_ADMIN_COMPONENT_COMMAND,
       (payload) => {
-        const valueItemNode = $createAdminValueItemNode(payload);
-        $insertNodeToNearestRoot(valueItemNode);
+        const node = $createAdminComponentNode(payload);
+        $insertNodeToNearestRoot(node);
         return true;
       },
       COMMAND_PRIORITY_EDITOR,

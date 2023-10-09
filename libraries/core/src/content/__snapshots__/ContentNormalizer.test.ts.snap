@@ -50,7 +50,7 @@ exports[`normalizeEntityFields > empty fields in component in rich text 1`] = `
             "type": "TwoStrings",
           },
           "format": "",
-          "type": "valueItem",
+          "type": "component",
           "version": 1,
         },
       ],

@@ -8,7 +8,7 @@ import {
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
 } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -745,7 +745,7 @@ async function createEntity_withRichTextFieldWithValueItem({ server }: AdminEnti
 
   const richText = createRichText([
     createRichTextParagraphNode([
-      createRichTextValueItemNode<AdminReferencesValue>({
+      createRichTextComponentNode<AdminReferencesValue>({
         type: 'ReferencesValue',
         reference: { id: createTitleOnlyResult.value.entity.id },
       }),

@@ -49,6 +49,7 @@
           "richTextNodes": [
             "code",
             "code-highlight",
+            "component",
             "entityLink",
             "heading",
             "linebreak",
@@ -58,8 +59,7 @@
             "paragraph",
             "root",
             "tab",
-            "text",
-            "valueItem"
+            "text"
           ],
           "entityTypes": [],
           "linkEntityTypes": [
@@ -181,6 +181,7 @@
           "richTextNodes": [
             "code",
             "code-highlight",
+            "component",
             "entityLink",
             "linebreak",
             "link",
@@ -189,8 +190,7 @@
             "paragraph",
             "root",
             "tab",
-            "text",
-            "valueItem"
+            "text"
           ],
           "entityTypes": [],
           "linkEntityTypes": [

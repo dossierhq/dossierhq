@@ -36,7 +36,7 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
     return null;
   }
 
-  renderAdminRichTextValueItemEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
     const { value, validationIssues, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({
@@ -61,7 +61,7 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
     return null;
   }
 
-  renderPublishedRichTextValueItemDisplay({
+  renderPublishedRichTextComponentDisplay({
     value,
   }: RichTextValueItemDisplayProps): JSX.Element | null {
     if (value && isPublishedCloudinaryImage(value)) {

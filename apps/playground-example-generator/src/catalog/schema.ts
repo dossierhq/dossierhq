@@ -111,7 +111,7 @@ export const SCHEMA = {
         {
           name: 'nestedComponent',
           type: FieldType.RichText,
-          richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.valueItem],
+          richTextNodes: [...REQUIRED_RICH_TEXT_NODES, RichTextNodeType.component],
           componentTypes: ['NestedComponent'],
         },
       ],

@@ -31,7 +31,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
     return null;
   }
 
-  renderAdminRichTextValueItemEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
     return null;
   }
 }

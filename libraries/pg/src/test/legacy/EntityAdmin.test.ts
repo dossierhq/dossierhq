@@ -8,7 +8,7 @@ import {
   createRichText,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   isEntityNameAsRequested,
 } from '@dossierhq/core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
@@ -1584,7 +1584,7 @@ describe('getEntities() boundingBox', () => {
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
         body: createRichText([
-          createRichTextValueItemNode({
+          createRichTextComponentNode({
             type: 'EntityAdminStringedLocation',
             string: 'Hello location',
             location: center,
@@ -2772,7 +2772,7 @@ describe('publishEntities()', () => {
       info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
         body: createRichText([
-          createRichTextValueItemNode({ type: 'EntityAdminOneString', one: null }),
+          createRichTextComponentNode({ type: 'EntityAdminOneString', one: null }),
         ]),
       },
     });

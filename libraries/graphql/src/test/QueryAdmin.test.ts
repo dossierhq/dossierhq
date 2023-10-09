@@ -14,7 +14,7 @@ import {
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextValueItemNode,
+  createRichTextComponentNode,
   getAllPagesForConnection,
   notOk,
   ok,
@@ -644,7 +644,7 @@ describe('adminEntity()', () => {
 
       const body = createRichText([
         createRichTextEntityNode({ id: bar1Id }),
-        createRichTextValueItemNode({
+        createRichTextComponentNode({
           type: 'QueryAdminStringedBar',
           text: 'Hello',
           bar: { id: bar2Id },

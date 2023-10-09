@@ -5,7 +5,7 @@ import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { contentValuePathToString, type ContentValuePath } from './ContentPath.js';
 import {
   isRichTextItemField,
-  isRichTextValueItemNode,
+  isRichTextComponentNode,
   isStringItemField,
   isComponentItemField,
 } from './ContentTypeUtils.js';
@@ -321,12 +321,12 @@ function transformContentFieldValue<
       if (nodeResult.isError()) return nodeResult;
       const transformedNode = nodeResult.value;
 
-      if (transformedNode && isRichTextValueItemNode(transformedNode)) {
+      if (transformedNode && isRichTextComponentNode(transformedNode)) {
         const component = transformedNode.data;
 
-        const valueItemResult = transformComponent(schema, path, component, transformer, options);
-        if (valueItemResult.isError()) return valueItemResult;
-        const transformedComponent = valueItemResult.value;
+        const componentResult = transformComponent(schema, path, component, transformer, options);
+        if (componentResult.isError()) return componentResult;
+        const transformedComponent = componentResult.value;
 
         if (transformedComponent !== component) {
           return ok(

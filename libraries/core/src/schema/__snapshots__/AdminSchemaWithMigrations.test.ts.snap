@@ -94,6 +94,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
           "name": "richText",
           "required": false,
           "richTextNodes": [
+            "component",
             "entity",
             "entityLink",
             "linebreak",
@@ -101,7 +102,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
             "root",
             "tab",
             "text",
-            "valueItem",
           ],
           "type": "RichText",
         },
@@ -499,6 +499,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
           "name": "field",
           "required": false,
           "richTextNodes": [
+            "component",
             "entity",
             "entityLink",
             "linebreak",
@@ -506,7 +507,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
             "root",
             "tab",
             "text",
-            "valueItem",
           ],
           "type": "RichText",
         },
@@ -1509,6 +1509,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
           "name": "newName",
           "required": true,
           "richTextNodes": [
+            "component",
             "entity",
             "entityLink",
             "linebreak",
@@ -1516,7 +1517,6 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
             "root",
             "tab",
             "text",
-            "valueItem",
           ],
           "type": "RichText",
         },

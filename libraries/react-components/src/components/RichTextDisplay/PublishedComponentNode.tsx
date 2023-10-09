@@ -1,5 +1,5 @@
-import type { RichTextValueItemNode, Component } from '@dossierhq/core';
-import { createRichTextValueItemNode, RichTextNodeType } from '@dossierhq/core';
+import type { Component, RichTextComponentNode } from '@dossierhq/core';
+import { RichTextNodeType, createRichTextComponentNode } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
@@ -8,19 +8,19 @@ import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.
 import { ComponentFieldDisplay } from '../EntityDisplay/ComponentFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
-export type SerializedPublishedValueItemNode = RichTextValueItemNode;
+export type SerializedPublishedComponentNode = RichTextComponentNode;
 
-export function $createPublishedValueItemNode(data: Component): PublishedValueItemNode {
-  return new PublishedValueItemNode(data);
+export function $createPublishedComponentNode(data: Component): PublishedComponentNode {
+  return new PublishedComponentNode(data);
 }
 
-export function $isPublishedValueItemNode(
+export function $isPublishedComponentNode(
   node: LexicalNode | undefined | null,
-): node is PublishedValueItemNode {
-  return node instanceof PublishedValueItemNode;
+): node is PublishedComponentNode {
+  return node instanceof PublishedComponentNode;
 }
 
-function PublishedValueItemComponent({
+function PublishedComponentComponent({
   className,
   format,
   nodeKey,
@@ -37,7 +37,7 @@ function PublishedValueItemComponent({
   const { fieldSpec } = useContext(RichTextDisplayContext);
   const { adapter } = useContext(PublishedDossierContext);
 
-  const overriddenDisplay = adapter.renderPublishedRichTextValueItemDisplay({
+  const overriddenDisplay = adapter.renderPublishedRichTextComponentDisplay({
     value: data,
   });
 
@@ -54,15 +54,15 @@ function PublishedValueItemComponent({
   );
 }
 
-export class PublishedValueItemNode extends DecoratorBlockNode {
+export class PublishedComponentNode extends DecoratorBlockNode {
   __data: Component;
 
   static override getType(): string {
-    return RichTextNodeType.valueItem;
+    return RichTextNodeType.component;
   }
 
-  static override clone(node: PublishedValueItemNode): PublishedValueItemNode {
-    return new PublishedValueItemNode(node.__data, node.__format, node.__key);
+  static override clone(node: PublishedComponentNode): PublishedComponentNode {
+    return new PublishedComponentNode(node.__data, node.__format, node.__key);
   }
 
   constructor(data: Component, format?: ElementFormatType, key?: NodeKey) {
@@ -81,16 +81,16 @@ export class PublishedValueItemNode extends DecoratorBlockNode {
   }
 
   static override importJSON(
-    serializedNode: SerializedPublishedValueItemNode,
-  ): PublishedValueItemNode {
-    const node = $createPublishedValueItemNode(serializedNode.data);
+    serializedNode: SerializedPublishedComponentNode,
+  ): PublishedComponentNode {
+    const node = $createPublishedComponentNode(serializedNode.data);
     node.setFormat(serializedNode.format);
     return node;
   }
 
-  override exportJSON(): SerializedPublishedValueItemNode {
+  override exportJSON(): SerializedPublishedComponentNode {
     //TODO format
-    return createRichTextValueItemNode(this.__data);
+    return createRichTextComponentNode(this.__data);
   }
 
   override createDOM(): HTMLElement {
@@ -111,7 +111,7 @@ export class PublishedValueItemNode extends DecoratorBlockNode {
     };
 
     return (
-      <PublishedValueItemComponent
+      <PublishedComponentComponent
         className={className}
         data={this.__data}
         format={this.__format}

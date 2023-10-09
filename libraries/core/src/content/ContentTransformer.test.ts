@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { ErrorType, ok } from '../ErrorResult.js';
 import type { Component } from '../Types.js';
-import { createRichText, createRichTextValueItemNode } from '../content/RichTextUtils.js';
+import { createRichText, createRichTextComponentNode } from '../content/RichTextUtils.js';
 import { AdminSchemaWithMigrations } from '../schema/AdminSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
@@ -11,7 +11,7 @@ import {
   transformEntityFields,
   transformComponent,
 } from './ContentTransformer.js';
-import { isRichTextValueItemNode, isComponentItemField } from './ContentTypeUtils.js';
+import { isRichTextComponentNode, isComponentItemField } from './ContentTypeUtils.js';
 import { copyEntity } from './ContentUtils.js';
 
 const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
@@ -55,7 +55,7 @@ const COMPONENTS_ENTITY_1 = Object.freeze({
   info: { type: 'ComponentsEntity' },
   fields: {
     richText: createRichText([
-      createRichTextValueItemNode({ type: 'NestedComponent', child: null, string: null }),
+      createRichTextComponentNode({ type: 'NestedComponent', child: null, string: null }),
     ]),
     component: {
       type: 'NestedComponent',
@@ -98,7 +98,7 @@ describe('transformEntity', () => {
         return ok(value);
       },
       transformRichTextNode: (_schema, _path, _fieldSpec, node) =>
-        ok(isRichTextValueItemNode(node) ? null : node),
+        ok(isRichTextComponentNode(node) ? null : node),
     }).valueOrThrow();
     expect(transformed).toMatchSnapshot();
   });
