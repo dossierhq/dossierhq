@@ -116,9 +116,8 @@ async function main(filename: string, args: typeof parsedArgs) {
   const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     const principalsFilename = path.join(DATA_DIR, 'principals.tsv');
-    if (args.values['update-db-only']) {
-      await createPrincipalsFromDisk(server, principalsFilename);
-    } else {
+    await createPrincipalsFromDisk(server, principalsFilename);
+    if (!args.values['update-db-only']) {
       await updatePrincipalsOnDisk(server, principalsFilename);
     }
 
