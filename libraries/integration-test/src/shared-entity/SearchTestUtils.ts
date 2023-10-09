@@ -2,7 +2,6 @@ import {
   AdminEntityQueryOrder,
   AdminEntityStatus,
   PublishedEntityQueryOrder,
-  assertIsDefined,
   getAllPagesForConnection,
   ok,
   type Connection,
@@ -116,7 +115,7 @@ export function assertSearchResultEntities<TItem extends AppAdminEntity | AppPub
   if (actualEntities.length === 0) {
     assertSame(result.value, null);
   } else {
-    assertIsDefined(result.value);
+    assertTruthy(result.value);
     assertEquals(result.value.edges.length, actualEntities.length);
     for (const [index, actualEntity] of actualEntities.entries()) {
       assertResultValue(result.value.edges[index].node, actualEntity);

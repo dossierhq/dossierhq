@@ -3,11 +3,16 @@ import {
   ErrorType,
   EventType,
   FieldType,
-  assertIsDefined,
   type AdminClient,
   type AdminSchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
-import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import {
+  assertEquals,
+  assertErrorResult,
+  assertOkResult,
+  assertResultValue,
+  assertTruthy,
+} from '../Asserts.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SyncTestContext } from './SyncTestSuite.js';
@@ -84,7 +89,7 @@ async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
   // Get source principals
   assertResultValue(await sourceServer.getPrincipalsTotalCount(), 1);
   const sourcePrincipalConnection = (await sourceServer.getPrincipals()).valueOrThrow();
-  assertIsDefined(sourcePrincipalConnection);
+  assertTruthy(sourcePrincipalConnection);
   const sourcePrincipals = sourcePrincipalConnection.edges.map((it) => it.node.valueOrThrow());
   assertEquals(sourcePrincipals.length, 1);
 
@@ -96,7 +101,7 @@ async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
   // Check that the target principals are identical
   assertResultValue(await targetServer.getPrincipalsTotalCount(), 1);
   const targetPrincipalConnection = (await targetServer.getPrincipals()).valueOrThrow();
-  assertIsDefined(targetPrincipalConnection);
+  assertTruthy(targetPrincipalConnection);
   const targetPrincipals = targetPrincipalConnection.edges.map((it) => it.node.valueOrThrow());
   assertEquals(targetPrincipals, sourcePrincipals);
 

@@ -1,13 +1,12 @@
-import { assertIsDefined } from '@dossierhq/core';
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
-import { afterAll, beforeAll } from 'vitest';
-import { registerTestSuite } from '../../TestUtils.js';
+import { afterAll, assert, beforeAll } from 'vitest';
 import type { ServerInit } from '../../LibSqlTestUtils.js';
 import { initializeServer } from '../../LibSqlTestUtils.js';
+import { registerTestSuite } from '../../TestUtils.js';
 
 let serverInit: ServerInit | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;
@@ -33,7 +32,7 @@ registerTestSuite(
   'AdminEntityTest',
   createAdminEntityTestSuite({
     before: () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
       return Promise.resolve([
         {
           server: serverInit.server,

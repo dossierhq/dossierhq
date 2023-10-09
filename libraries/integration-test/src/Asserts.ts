@@ -79,3 +79,8 @@ export function assertResultValue<TOk, TError extends ErrorType>(
     throw new AssertionError(result.value, expectedValue, `Expected result values to equal`);
   }
 }
+
+export function assertExhaustive(param: never): never {
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  throw new Error(`Invalid exhaustiveness check: ${param}`);
+}

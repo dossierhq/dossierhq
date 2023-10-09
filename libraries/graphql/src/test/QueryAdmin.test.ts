@@ -8,13 +8,12 @@ import {
   AdminEntityStatus,
   EventType,
   FieldType,
-  assertIsDefined,
   assertOkResult,
   createRichText,
+  createRichTextComponentNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
   getAllPagesForConnection,
   notOk,
   ok,
@@ -22,7 +21,7 @@ import {
 import { expectOkResult } from '@dossierhq/core-vitest';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
 import { graphql } from 'graphql';
-import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, assert, beforeAll, describe, expect, test } from 'vitest';
 import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils.js';
@@ -1161,9 +1160,9 @@ describe('adminEntity.changelogEvents()', () => {
 
     expect(result.data?.adminEntity.changelogEvents.edges.length).toEqual(1);
     const firstEdge = result.data?.adminEntity.changelogEvents.edges[0];
-    assertIsDefined(firstEdge);
+    assert(firstEdge);
     const firstEvent = firstEdge.node;
-    assertIsDefined(firstEvent);
+    assert(firstEvent);
     expect(firstEvent.type).toBe(EventType.createEntity);
 
     expect(result.data?.adminEntity.changelogEvents.pageInfo.hasPreviousPage).toBeFalsy();
@@ -1677,9 +1676,9 @@ describe('changelogEvents()', () => {
 
     expect(result.data?.changelogEvents.edges.length).toBeGreaterThanOrEqual(1);
     const firstEdge = result.data?.changelogEvents.edges[0];
-    assertIsDefined(firstEdge);
+    assert(firstEdge);
     const firstEvent = firstEdge.node;
-    assertIsDefined(firstEvent);
+    assert(firstEvent);
     expect(firstEvent.type).toBe(EventType.updateSchema);
     expect(firstEvent.version).toBeGreaterThanOrEqual(1);
 

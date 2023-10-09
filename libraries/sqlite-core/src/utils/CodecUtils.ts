@@ -1,6 +1,7 @@
-import { AdminEntityStatus, assertExhaustive } from '@dossierhq/core';
+import { AdminEntityStatus } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
+import { assertExhaustive } from './AssertUtils.js';
 
 export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
   switch (status) {

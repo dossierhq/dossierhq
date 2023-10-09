@@ -5,18 +5,12 @@ import type {
   PromiseResult,
   UnpublishEntitiesSyncEvent,
 } from '@dossierhq/core';
-import {
-  AdminEntityStatus,
-  EventType,
-  assertIsDefined,
-  createErrorResult,
-  notOk,
-  ok,
-} from '@dossierhq/core';
+import { AdminEntityStatus, EventType, createErrorResult, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 

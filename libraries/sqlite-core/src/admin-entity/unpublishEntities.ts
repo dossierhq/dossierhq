@@ -5,7 +5,7 @@ import type {
   PromiseResult,
   UnpublishEntitiesSyncEvent,
 } from '@dossierhq/core';
-import { assertIsDefined, notOk, ok } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUnpublishGetEntityInfoPayload,
   DatabaseAdminEntityUnpublishUpdateEntityPayload,
@@ -23,6 +23,7 @@ import { queryMany, queryRun } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 
 export async function adminEntityUnpublishGetEntitiesInfo(
   database: Database,

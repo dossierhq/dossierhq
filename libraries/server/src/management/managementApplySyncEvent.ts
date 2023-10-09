@@ -1,7 +1,6 @@
 import {
   ErrorType,
   EventType,
-  assertExhaustive,
   notOk,
   ok,
   type AdminSchemaWithMigrations,
@@ -18,6 +17,7 @@ import { adminUnarchiveEntitySyncEvent } from '../admin-entity/adminUnarchiveEnt
 import { adminUnpublishEntitiesSyncEvent } from '../admin-entity/adminUnpublishEntities.js';
 import { adminUpdateEntitySyncEvent } from '../admin-entity/adminUpdateEntity.js';
 import { schemaUpdateSpecificationSyncAction } from '../schema/schemaUpdateSpecification.js';
+import { assertExhaustive } from '../utils/AssertUtils.js';
 
 export async function managementApplySyncEvent(
   adminSchema: AdminSchemaWithMigrations,

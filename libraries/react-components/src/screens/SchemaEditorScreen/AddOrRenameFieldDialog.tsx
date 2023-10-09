@@ -1,4 +1,3 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { Card, Dialog, Field, Input } from '@dossierhq/design';
 import type {
   ChangeEvent,
@@ -15,6 +14,7 @@ import type {
   SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { assertIsDefined } from '../../utils/AssertUtils.js';
 
 interface Props {
   selector: SchemaFieldSelector | SchemaTypeSelector | null;

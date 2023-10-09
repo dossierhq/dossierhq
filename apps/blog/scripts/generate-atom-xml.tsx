@@ -3,10 +3,10 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
 import {
-  assertIsDefined,
   getAllPagesForConnection,
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
+  isRichTextComponentNode,
   isRichTextElementNode,
   isRichTextEntityLinkNode,
   isRichTextHeadingNode,
@@ -17,10 +17,10 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
-  isRichTextComponentNode,
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
 import { config } from 'dotenv';
+import assert from 'node:assert';
 import { writeFile } from 'node:fs/promises';
 import type { Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
@@ -152,7 +152,7 @@ function FeedCloudinaryImage(
   const { image } = props;
 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  assertIsDefined(cloudName);
+  assert(cloudName);
   const cld = new Cloudinary({
     cloud: { cloudName },
     url: { forceVersion: false, analytics: false },

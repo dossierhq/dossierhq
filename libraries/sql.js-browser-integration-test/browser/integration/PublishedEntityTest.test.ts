@@ -1,11 +1,10 @@
-import { assertIsDefined } from '@dossierhq/core';
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import test from '@playwright/test';
-import { registerTestSuite } from '../TestUtils.js';
+import { assertIsDefined, registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './SqlJsTestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';
 

@@ -1,7 +1,6 @@
 import {
   AdminClientOperationName,
   AdminSchemaWithMigrations,
-  assertIsDefined,
   type AdminClient,
   type AdminClientMiddleware,
   type AdminSchemaSpecificationWithMigrations,
@@ -12,6 +11,7 @@ import type { RefObject } from 'react';
 import { useMemo, useRef } from 'react';
 import type { Cache } from 'swr';
 import { useSWRConfig } from 'swr';
+import { assertIsDefined } from './AssertUtils.js';
 import type { ScopedMutator } from './CacheUtils.js';
 import {
   clearCacheDueToSchemaMigrations,

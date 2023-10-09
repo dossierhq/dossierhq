@@ -1,5 +1,4 @@
 import {
-  assertIsDefined,
   assertOkResult,
   type ArchiveEntitySyncEvent,
   type ChangelogEvent,
@@ -18,7 +17,7 @@ import {
   type UpdateEntitySyncEvent,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
-import { assertEquals, assertSame } from '../Asserts.js';
+import { assertEquals, assertSame, assertTruthy } from '../Asserts.js';
 
 type ChangelogEventWithoutId = Omit<SchemaChangelogEvent, 'id'> | Omit<EntityChangelogEvent, 'id'>;
 
@@ -47,7 +46,7 @@ export function assertChangelogEventsConnection(
   if (expectedNodes.length === 0) {
     assertSame(actualResult.value, null);
   } else {
-    assertIsDefined(actualResult.value);
+    assertTruthy(actualResult.value);
     assertEquals(actualResult.value.edges.length, expectedNodes.length);
     for (const [index, expectedNode] of expectedNodes.entries()) {
       const actualNodeResult: Result<ChangelogEvent, ErrorType> =

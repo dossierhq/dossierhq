@@ -1,7 +1,6 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { createAuthTestSuite } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, assert, beforeAll } from 'vitest';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
 let server: Server | null = null;
@@ -21,7 +20,7 @@ registerTestSuite(
   'AuthTest',
   createAuthTestSuite({
     before: () => {
-      assertIsDefined(server);
+      assert(server);
       return Promise.resolve([{ server }, undefined]);
     },
     after: async () => {

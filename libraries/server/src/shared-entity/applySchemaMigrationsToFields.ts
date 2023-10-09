@@ -1,5 +1,4 @@
 import {
-  assertExhaustive,
   isComponentItemField,
   isRichTextComponentNode,
   ok,
@@ -11,6 +10,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
+import { assertExhaustive } from '../utils/AssertUtils.js';
 
 export function applySchemaMigrationsToFields(
   adminSchema: AdminSchemaWithMigrations,

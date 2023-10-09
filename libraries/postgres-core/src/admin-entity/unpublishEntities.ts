@@ -5,7 +5,7 @@ import type {
   PromiseResult,
   UnpublishEntitiesSyncEvent,
 } from '@dossierhq/core';
-import { assertIsDefined, notOk, ok } from '@dossierhq/core';
+import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUnpublishGetEntityInfoPayload,
   DatabaseAdminEntityUnpublishUpdateEntityPayload,
@@ -20,6 +20,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany, queryNone } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityUnpublishGetEntitiesInfo(

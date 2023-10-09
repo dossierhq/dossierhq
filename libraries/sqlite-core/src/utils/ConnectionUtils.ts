@@ -1,9 +1,10 @@
-import { assertExhaustive, ok, type ErrorType, type Result } from '@dossierhq/core';
+import { ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabasePagingInfo, SqliteSqlTemplateTag } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
 import type { CursorNativeType } from '../search/OpaqueCursor.js';
 import { resolvePagingCursors } from '../search/Paging.js';
+import { assertExhaustive } from './AssertUtils.js';
 
 export function addConnectionPagingFilter(
   database: Database,

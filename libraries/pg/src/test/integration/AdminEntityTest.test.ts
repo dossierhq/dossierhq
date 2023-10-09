@@ -1,10 +1,9 @@
-import { assertIsDefined } from '@dossierhq/core';
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, assert, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
@@ -28,7 +27,7 @@ registerTestSuite(
   'AdminEntityTest',
   createAdminEntityTestSuite({
     before: () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
       const { adminSchema, server } = serverInit;
       return Promise.resolve([{ adminSchema, server, readOnlyEntityRepository }, undefined]);
     },

@@ -1,5 +1,5 @@
 import type { AdminFieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
-import { RichTextNodeType, assertExhaustive } from '@dossierhq/core';
+import { RichTextNodeType } from '@dossierhq/core';
 import type { IconName } from '@dossierhq/design';
 import {
   ButtonDropdown,
@@ -45,6 +45,7 @@ import {
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
+import { assertExhaustive } from '../../utils/AssertUtils.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePickerDialog } from '../AdminTypePickerDialog/AdminTypePickerDialog.js';
 import { INSERT_ADMIN_COMPONENT_COMMAND } from './AdminComponentNode.js';

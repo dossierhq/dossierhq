@@ -10,7 +10,6 @@ import type {
 } from '@dossierhq/core';
 import {
   EventType,
-  assertExhaustive,
   notOk,
   ok,
   type ErrorType,
@@ -33,6 +32,7 @@ import type {
   SubjectsTable,
 } from '../DatabaseSchema.js';
 import { queryMany, queryNoneOrOne, type Database } from '../QueryFunctions.js';
+import { assertExhaustive } from '../utils/AssertUtils.js';
 
 export async function managementSyncGetEvents(
   database: Database,

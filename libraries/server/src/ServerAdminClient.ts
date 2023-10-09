@@ -1,6 +1,5 @@
 import {
   AdminClientOperationName,
-  assertExhaustive,
   createBaseAdminClient,
   ok,
   type AdminClient,
@@ -34,6 +33,7 @@ import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
 import { eventGetChangelogEvents } from './event/eventGetChangelogEvents.js';
 import { eventGetChangelogEventsTotalCount } from './event/eventGetChangelogEventsTotalCount.js';
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
+import { assertExhaustive } from './utils/AssertUtils.js';
 
 export function createServerAdminClient({
   context,

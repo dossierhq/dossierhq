@@ -1,6 +1,6 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { createSchemaTestSuite } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
+import assert from 'node:assert';
 import type { ServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
@@ -22,7 +22,7 @@ registerTestSuite(
   'SchemaTest',
   createSchemaTestSuite({
     before: () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
       return Promise.resolve([serverInit, undefined]);
     },
     after: async () => {

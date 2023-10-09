@@ -8,13 +8,7 @@ import type {
   PublishedSchema,
   Result,
 } from '@dossierhq/core';
-import {
-  AdminEntityQueryOrder,
-  PublishedEntityQueryOrder,
-  assertExhaustive,
-  notOk,
-  ok,
-} from '@dossierhq/core';
+import { AdminEntityQueryOrder, PublishedEntityQueryOrder, notOk, ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   PostgresQueryBuilder,
@@ -24,6 +18,7 @@ import type {
 import { createPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { assertExhaustive } from '../utils/AssertUtils.js';
 import {
   addConnectionOrderByAndLimit,
   addConnectionPagingFilter,

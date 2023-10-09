@@ -1,5 +1,5 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { FullscreenContainer, Menu } from '@dossierhq/design-ssr';
+import assert from 'node:assert';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { BrowserUrls } from '../../utils/BrowserUrls';
@@ -25,7 +25,7 @@ export default async function Layout({ children }: Props) {
 
   //TODO for now we only support one chapter
   const chapter = connection?.edges[0].node.valueOrThrow() ?? null;
-  assertIsDefined(chapter);
+  assert(chapter);
   if (connection?.edges.length !== 1) throw new Error('Expected exactly one chapter');
   assertIsPublishedChapter(chapter);
 

@@ -2,7 +2,6 @@ import {
   AdminEntityStatus,
   ErrorType,
   EventType,
-  assertIsDefined,
   contentValuePathToString,
   createErrorResult,
   getEntityNameBase,
@@ -32,6 +31,7 @@ import {
   validateReferencedEntitiesArePublishedAndCollectInfo,
 } from '../EntityValidator.js';
 import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { checkUUIDsAreUnique, randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 

@@ -1,6 +1,6 @@
 import {
-  assertIsDefined,
   isEntityNameAsRequested,
+  normalizeContentField,
   traverseContentField,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
@@ -12,9 +12,9 @@ import {
   type AdminSchema,
   type PublishValidationIssue,
   type SaveValidationIssue,
-  normalizeContentField,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
+import { assertIsDefined } from '../../utils/AssertUtils.js';
 
 type EntityEditorSelector = { id: string } | { id: string; newType: string };
 

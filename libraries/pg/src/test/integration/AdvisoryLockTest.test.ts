@@ -1,6 +1,5 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { createAdvisoryLockTestSuite } from '@dossierhq/integration-test';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, assert, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
@@ -20,7 +19,7 @@ registerTestSuite(
   'AdvisoryLockTest',
   createAdvisoryLockTestSuite({
     before: () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
       const { server } = serverInit;
       return Promise.resolve([{ server }, undefined]);
     },

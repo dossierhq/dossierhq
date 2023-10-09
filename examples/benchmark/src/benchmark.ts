@@ -1,19 +1,20 @@
 import type {
   AdminClient,
-  AdminEntitySharedQuery,
   AdminEntity,
   AdminEntityCreate,
+  AdminEntitySharedQuery,
   AdminEntityUpdate,
   EntityReference,
   ErrorType,
   PromiseResult,
   Result,
 } from '@dossierhq/core';
-import { AdminEntityStatus, assertIsDefined, copyEntity, notOk, ok } from '@dossierhq/core';
+import { AdminEntityStatus, copyEntity, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, Server } from '@dossierhq/server';
 import { faker } from '@faker-js/faker';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
+import assert from 'node:assert';
 import { initializeServer } from './server.js';
 
 const outputFolder = 'output';
@@ -495,7 +496,7 @@ export async function initializeAndRunTests({
 }) {
   const isCI = typeof ciOrLocal === 'object';
   if (isCI) {
-    assertIsDefined(ciOrLocal.githubSha);
+    assert(ciOrLocal.githubSha);
     runName = ciOrLocal.githubSha.slice(0, 8); // use short sha
   } else {
     const timestamp = fileTimestamp();

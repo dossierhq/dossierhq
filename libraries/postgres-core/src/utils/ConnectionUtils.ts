@@ -1,8 +1,9 @@
-import { assertExhaustive, ok, type ErrorType, type Result } from '@dossierhq/core';
+import { ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabasePagingInfo, PostgresSqlTemplateTag } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { CursorNativeType } from '../search/OpaqueCursor.js';
 import { resolvePagingCursors } from '../search/Paging.js';
+import { assertExhaustive } from './AssertUtils.js';
 
 export function addConnectionPagingFilter(
   database: PostgresDatabaseAdapter,

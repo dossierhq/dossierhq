@@ -1,7 +1,6 @@
 import {
   EventType,
   FieldType,
-  assertExhaustive,
   isComponent,
   isComponentItemField,
   notOk,
@@ -63,6 +62,7 @@ import {
 } from './DataLoaders.js';
 import * as Mutations from './Mutations.js';
 import {
+  toAdminComponentInputTypeName,
   toAdminCreateInputTypeName,
   toAdminCreatePayloadTypeName,
   toAdminTypeName,
@@ -70,12 +70,12 @@ import {
   toAdminUpdatePayloadTypeName,
   toAdminUpsertInputTypeName,
   toAdminUpsertPayloadTypeName,
-  toAdminComponentInputTypeName,
   toPublishedTypeName,
 } from './NameGenerator.js';
 import { TypeRepository } from './TypeRepository.js';
 import { DateTimeScalar } from './scalars/DateTimeScalar.js';
 import { LocationScalar } from './scalars/LocationScalar.js';
+import { assertExhaustive } from './utils/AssertUtils.js';
 import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {

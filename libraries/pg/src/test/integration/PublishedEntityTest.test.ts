@@ -1,9 +1,8 @@
-import { assertIsDefined } from '@dossierhq/core';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, assert, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 
@@ -23,7 +22,7 @@ registerTestSuite(
   'PublishedEntityTest',
   createPublishedEntityTestSuite({
     before: async () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
       const { adminSchema, server } = serverInit;
 
       const readOnlyEntityRepository = (

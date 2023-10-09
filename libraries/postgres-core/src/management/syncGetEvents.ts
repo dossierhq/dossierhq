@@ -1,6 +1,5 @@
 import {
   EventType,
-  assertExhaustive,
   notOk,
   ok,
   type AdminSchemaSpecificationWithMigrations,
@@ -32,6 +31,7 @@ import type {
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
+import { assertExhaustive } from '../utils/AssertUtils.js';
 
 export async function managementSyncGetEvents(
   database: PostgresDatabaseAdapter,

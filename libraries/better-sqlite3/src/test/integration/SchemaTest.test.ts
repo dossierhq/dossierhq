@@ -1,6 +1,5 @@
-import { assertIsDefined } from '@dossierhq/core';
 import { createSchemaTestSuite } from '@dossierhq/integration-test';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './Sqlite3TestUtils.js';
 import { initializeSqlite3Server } from './Sqlite3TestUtils.js';
@@ -23,7 +22,7 @@ registerTestSuite(
   'SchemaTest',
   createSchemaTestSuite({
     before: () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
       return Promise.resolve([serverInit, undefined]);
     },
     after: async () => {

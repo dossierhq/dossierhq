@@ -7,7 +7,7 @@ import type {
   PublishedEntity,
   Result,
 } from '@dossierhq/core';
-import { AdminSchema, assertIsDefined, ok } from '@dossierhq/core';
+import { AdminSchema, ok } from '@dossierhq/core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import {
@@ -19,7 +19,7 @@ import type { Server, SessionContext } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
 import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
-import { describe, expect, test } from 'vitest';
+import { assert, describe, expect, test } from 'vitest';
 import { createPostgresAdapter } from '../PgDatabaseAdapter.js';
 
 export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {
@@ -40,7 +40,7 @@ function getConnectionString(selector?: 'default' | 'a' | 'b') {
   } else {
     value = process.env.DATABASE_URL;
   }
-  assertIsDefined(value);
+  assert(value);
   return value;
 }
 
@@ -159,7 +159,7 @@ export function expectSearchResultEntities<TItem extends AdminEntity | Published
     if (actualEntities.length === 0) {
       expect(result.value).toBeNull();
     } else {
-      assertIsDefined(result.value);
+      assert(result.value);
       expect(result.value.edges).toHaveLength(actualEntities.length);
       for (const [index, actualEntity] of actualEntities.entries()) {
         expectResultValue(result.value.edges[index].node, actualEntity);

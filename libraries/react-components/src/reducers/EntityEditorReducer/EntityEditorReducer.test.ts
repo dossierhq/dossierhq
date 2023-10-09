@@ -3,11 +3,10 @@ import {
   AdminEntityStatus,
   AdminSchema,
   AdminSchemaWithMigrations,
-  assertIsDefined,
   copyEntity,
   FieldType,
 } from '@dossierhq/core';
-import { describe, expect, test } from 'vitest';
+import { assert, describe, expect, test } from 'vitest';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
 import {
   EntityEditorActions,
@@ -223,7 +222,7 @@ describe('SetNameAction', () => {
     expect(state).toMatchSnapshot();
 
     const draftState = state.drafts.find((it) => it.id === id);
-    assertIsDefined(draftState);
+    assert(draftState);
     expect(draftState.draft?.name).toEqual('New name');
     expect(draftState.status).toEqual('changed');
     expect(draftState.draft?.nameIsLinkedToField).toBe(false);
@@ -251,7 +250,7 @@ describe('SetNameAction', () => {
     expect(state).toMatchSnapshot();
 
     const draftState = state.drafts.find((it) => it.id === id);
-    assertIsDefined(draftState);
+    assert(draftState);
 
     expect(draftState.draft?.nameIsLinkedToField).toBe(true);
   });
@@ -384,7 +383,7 @@ describe('UpdateEntityAction', () => {
     expect(state).toMatchSnapshot();
 
     const draftState = state.drafts.find((it) => it.id === id);
-    assertIsDefined(draftState);
+    assert(draftState);
     expect(draftState.draft?.nameIsLinkedToField).toBe(true);
 
     expect(getEntityUpdateFromDraftState(draftState)).toMatchSnapshot();
@@ -427,7 +426,7 @@ describe('UpdateEntityAction', () => {
     expect(state).toMatchSnapshot();
 
     const draftState = state.drafts.find((it) => it.id === id);
-    assertIsDefined(draftState);
+    assert(draftState);
     expect(draftState.draft?.nameIsLinkedToField).toBe(false);
   });
 });
@@ -741,7 +740,7 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot();
 
     const draftState = state.drafts.find((it) => it.id === id);
-    assertIsDefined(draftState);
+    assert(draftState);
     expect(draftState.entity?.info.status).toBe(AdminEntityStatus.published);
     expect(draftState.entity?.info.updatedAt).toEqual(new Date('2022-05-01T07:51:25.56Z'));
   });

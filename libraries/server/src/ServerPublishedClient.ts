@@ -1,6 +1,5 @@
 import {
   PublishedClientOperationName,
-  assertExhaustive,
   createBasePublishedClient,
   ok,
   type ContextProvider,
@@ -17,6 +16,7 @@ import { publishedGetEntityList } from './published-entity/publishedGetEntityLis
 import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount.js';
 import { publishedSampleEntities } from './published-entity/publishedSampleEntities.js';
 import { publishedSearchEntities } from './published-entity/publishedSearchEntities.js';
+import { assertExhaustive } from './utils/AssertUtils.js';
 
 export function createServerPublishedClient({
   context,

@@ -1,6 +1,5 @@
 import type { AdminEntity, PublishedEntity } from '@dossierhq/core';
-import { assertIsDefined } from '@dossierhq/core';
-import { expect } from 'vitest';
+import { assert, expect } from 'vitest';
 
 export function expectSampledEntitiesArePartOfExpected(
   actualResult: { seed: number; totalCount: number; items: { id: string }[] } | undefined,
@@ -8,7 +7,7 @@ export function expectSampledEntitiesArePartOfExpected(
   expectedEntities: (AdminEntity | PublishedEntity)[],
 ) {
   expect(actualResult).toBeDefined();
-  assertIsDefined(actualResult);
+  assert(actualResult);
   expect(actualResult.seed).toBe(seed);
   expect(actualResult.totalCount).toBe(expectedEntities.length);
   expect(actualResult.items.length).toBeGreaterThan(0);

@@ -1,7 +1,6 @@
 import {
   AdminEntityStatus,
   ErrorType,
-  assertIsDefined,
   notOk,
   ok,
   validateEntityInfo,
@@ -29,6 +28,7 @@ import {
 } from '../EntityValidator.js';
 import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
 import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 
 export interface ProcessDirtyEntityPayload {
   id: string;

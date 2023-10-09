@@ -1,12 +1,11 @@
 import {
   AdminEntityStatus,
   ErrorType,
-  assertIsDefined,
   copyEntity,
   createRichText,
+  createRichTextComponentNode,
   createRichTextHeadingNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
   isEntityNameAsRequested,
   type RichTextComponentNode,
 } from '@dossierhq/core';
@@ -211,7 +210,7 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
   const entity = getResult.valueOrThrow();
   assertIsPublishedValueItems(entity);
   const publishedLocationsValueItem = entity.fields.any;
-  assertIsDefined(publishedLocationsValueItem);
+  assertTruthy(publishedLocationsValueItem);
   assertIsPublishedLocationsValue(publishedLocationsValueItem);
   assertEquals(publishedLocationsValueItem, {
     type: 'LocationsValue',
@@ -249,7 +248,7 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   assertIsPublishedRichTexts(entity);
 
   const componentNode = entity.fields.richText?.root.children[0] as RichTextComponentNode;
-  assertIsDefined(componentNode);
+  assertTruthy(componentNode);
 
   const publishedLocationsComponent = componentNode.data;
   assertIsPublishedLocationsValue(publishedLocationsComponent);

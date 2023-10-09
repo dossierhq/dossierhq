@@ -2,7 +2,6 @@ import {
   AdminSchemaWithMigrations,
   EventType,
   NoOpLogger,
-  assertIsDefined,
   notOk,
   ok,
   type AdminClient,
@@ -59,6 +58,7 @@ import {
   type SyncEventsPayload,
 } from './management/managementGetSyncEvents.js';
 import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
+import { assertIsDefined } from './utils/AssertUtils.js';
 
 export interface CreateSessionPayload {
   principalEffect: 'created' | 'none';

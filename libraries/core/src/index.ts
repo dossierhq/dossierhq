@@ -267,6 +267,4 @@ export {
   type SchemaSpecificationUpdatePayload,
   type StringFieldSpecification,
 } from './schema/SchemaSpecification.js';
-// TODO stop exporting assertExhaustive, assertIsDefined
-export { assertExhaustive, assertIsDefined } from './utils/Asserts.js';
 export { isFieldValueEqual } from './utils/isFieldValueEqual.js';

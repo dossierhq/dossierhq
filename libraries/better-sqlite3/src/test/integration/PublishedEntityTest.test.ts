@@ -1,12 +1,11 @@
 import type { AdminSchema } from '@dossierhq/core';
-import { assertIsDefined } from '@dossierhq/core';
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlite3Server } from './Sqlite3TestUtils.js';
 
@@ -34,7 +33,7 @@ registerTestSuite(
   'PublishedEntityTest',
   createPublishedEntityTestSuite({
     before: () => {
-      assertIsDefined(serverInit);
+      assert(serverInit);
 
       return Promise.resolve([
         {

@@ -1,9 +1,9 @@
 import 'dotenv/config';
 //
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { assertIsDefined, ok } from '@dossierhq/core';
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { PgDatabaseAdapter } from '@dossierhq/pg';
 import { createPostgresAdapter } from '@dossierhq/pg';
+import assert from 'node:assert';
 import PG from 'pg';
 import { initializeAndRunTests } from './benchmark.js';
 
@@ -29,7 +29,7 @@ async function createPostgresDatabaseAdapter(
 }
 
 async function main(runName: string, ciOrLocal: { githubSha: string | undefined } | 'local') {
-  assertIsDefined(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
+  assert(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
   const adapter = await createPostgresDatabaseAdapter(process.env.EXAMPLES_BENCHMARK_DATABASE_URL);
   const result = await initializeAndRunTests({
     runName,

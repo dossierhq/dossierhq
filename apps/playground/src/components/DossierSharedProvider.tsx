@@ -6,7 +6,7 @@ import type {
   PublishedClientMiddleware,
   Result,
 } from '@dossierhq/core';
-import { LoggingClientMiddleware, assertIsDefined, notOk, ok } from '@dossierhq/core';
+import { LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
 import { NotificationContext } from '@dossierhq/design';
 import {
   AdminDossierProvider,
@@ -23,6 +23,7 @@ import { SESSION_LOGGER } from '../config/LoggerConfig.js';
 import { LoginContext } from '../contexts/LoginContext.js';
 import { ServerContext } from '../contexts/ServerContext.js';
 import { UserContext } from '../contexts/UserContext.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 
 type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 

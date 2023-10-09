@@ -1,13 +1,12 @@
 import {
   ContentTraverseNodeType,
-  assertIsDefined,
   isComponentItemField,
   isEntityItemField,
   isLocationItemField,
+  isRichTextComponentNode,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextTextNode,
-  isRichTextComponentNode,
   isStringItemField,
   type AdminSchema,
   type ContentTraverseNode,
@@ -18,6 +17,7 @@ import {
   type PublishedSchema,
   type RichTextFieldSpecification,
 } from '@dossierhq/core';
+import { assertIsDefined } from './utils/AssertUtils.js';
 
 export interface UniqueIndexValue {
   path: ContentValuePath;

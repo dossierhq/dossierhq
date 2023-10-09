@@ -2,7 +2,6 @@ import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
-  assertIsDefined,
   type AdminComponentTypeSpecification,
   type AdminComponentTypeSpecificationUpdate,
   type AdminEntityTypeSpecification,
@@ -16,6 +15,7 @@ import {
   type SchemaPatternSpecification,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
+import { assertIsDefined } from '../../utils/AssertUtils.js';
 
 export type SchemaSelector =
   | SchemaFieldSelector
