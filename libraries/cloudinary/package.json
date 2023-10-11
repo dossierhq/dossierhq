@@ -40,7 +40,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@rushstack/heft": "0.62.3",
-    "@types/react": "~18.2.25",
+    "@types/react": "~18.2.28",
     "eslint": "~8.51.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2"

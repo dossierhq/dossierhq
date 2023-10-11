@@ -51,7 +51,7 @@
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.62.3",
-    "@types/pg": "~8.10.3",
+    "@types/pg": "~8.10.5",
     "@types/uuid": "~9.0.5",
     "dotenv": "~16.3.1",
     "eslint": "~8.51.0",

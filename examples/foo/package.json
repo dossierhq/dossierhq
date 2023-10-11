@@ -20,7 +20,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~8.7.0",
+    "better-sqlite3": "~9.0.0",
     "express": "~4.18.2",
     "graphql-http": "~1.22.0",
     "tslib": "~2.6.2"
@@ -30,7 +30,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.62.3",
     "@types/better-sqlite3": "~7.6.5",
-    "@types/express": "~4.17.18",
+    "@types/express": "~4.17.19",
     "eslint": "~8.51.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2"
