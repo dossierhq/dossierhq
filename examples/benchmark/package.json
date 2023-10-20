@@ -24,7 +24,7 @@
     "start:ci": "node lib/run-node-pg.js ci && node lib/run-node-better-sqlite3.js ci && bun run lib/run-bun-sqlite.js ci && deno run --allow-all deno/run-deno-postgres.ts ci"
   },
   "dependencies": {
-    "@faker-js/faker": "~8.1.0",
+    "@faker-js/faker": "~8.2.0",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/better-sqlite3": "workspace:*",
