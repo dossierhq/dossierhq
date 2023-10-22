@@ -27,7 +27,7 @@ jobs:
           path: |
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - uses: asdf-vm/actions/install@v2
+      - uses: asdf-vm/actions/install@v3
       - name: rush install
         run: node common/scripts/install-run-rush.js install --bypass-policy
       - name: rush change -v
