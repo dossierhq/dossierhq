@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node-esm
+#!/usr/bin/env -S bun
 import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { writeFile } from 'node:fs/promises';

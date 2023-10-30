@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node -T --esm
+#!/usr/bin/env -S npx tsx
 /* eslint-disable @next/next/no-img-element */
 import { Cloudinary } from '@cloudinary/url-gen';
 import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';

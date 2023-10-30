@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node-esm
+#!/usr/bin/env -S npx tsx
 import { AdminSchema, createConsoleLogger, type Logger } from '@dossierhq/core';
 import { type Server } from '@dossierhq/server';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';

@@ -4,7 +4,9 @@
     "name": "Tutorial – Configuring the schema",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Tutorial – Configuring the schema",
@@ -2861,7 +2863,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "#!/usr/bin/env -S npx ts-node-esm",
+                "text": "#!/usr/bin/env -S npx tsx",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "hashbang"
@@ -4192,7 +4194,8 @@
                 "style": "",
                 "text": "filename",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "interpolation"
               },
               {
                 "detail": 0,
@@ -7790,7 +7793,8 @@
                 "style": "",
                 "text": "AppAdminClient",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "generic"
               },
               {
                 "detail": 0,

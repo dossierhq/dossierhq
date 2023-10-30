@@ -5,11 +5,11 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently -n be,fe --handle-input 'nodemon --watch \"backend/*\" --exec ts-node-esm backend/main.ts' 'sleep 2 && vite'",
+    "start": "concurrently -n be,fe --handle-input 'nodemon --watch \"backend/*\" --exec tsx backend/main.ts' 'sleep 2 && vite'",
     "dev": "vite",
     "build": "./generate-typescript.ts && tsc && vite build",
     "preview": "vite preview",
-    "backend": "ts-node-esm backend.ts"
+    "backend": "tsx backend/main.ts"
   },
   "dependencies": {
     "@auth0/auth0-react": "~2.2.1",
@@ -41,7 +41,7 @@
     "@vitejs/plugin-react": "~4.1.0",
     "concurrently": "~8.2.2",
     "nodemon": "~3.0.1",
-    "ts-node": "~10.9.1",
+    "tsx": "~3.14.0",
     "typescript": "~5.2.2",
     "vite": "~4.5.0"
   }

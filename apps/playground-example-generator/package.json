@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "ts-node-esm ./scripts/generate-typescript.ts && npm run prettier:check && heft build --clean",
+    "build": "bun ./scripts/generate-typescript.ts && npm run prettier:check && heft build --clean",
     "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -38,7 +38,6 @@
     "better-sqlite3": "~9.0.0",
     "eslint": "~8.52.0",
     "prettier": "3.0.3",
-    "ts-node": "~10.9.1",
     "typescript": "~5.2.2"
   }
 }

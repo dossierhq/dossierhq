@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node -T --esm
+#!/usr/bin/env -S npx tsx
 import {
   assertOkResult,
   convertJsonSyncEvent,
