@@ -43,7 +43,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.63.0",
+    "@rushstack/heft": "0.63.1",
     "@types/better-sqlite3": "~7.6.6",
     "@types/uuid": "~9.0.6",
     "better-sqlite3": "~9.0.0",

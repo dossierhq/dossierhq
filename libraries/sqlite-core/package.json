@@ -41,7 +41,7 @@
     "@dossierhq/core-vitest": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
-    "@rushstack/heft": "0.63.0",
+    "@rushstack/heft": "0.63.1",
     "eslint": "~8.52.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2",
