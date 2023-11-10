@@ -23,7 +23,7 @@
     "@lexical/selection": "0.12.2",
     "@lexical/utils": "0.12.2",
     "@microsoft/rush-lib": "~5.110.0",
-    "@react-aria/overlays": "~3.18.1",
+    "@react-aria/overlays": "~3.19.0",
     "@rushstack/eslint-patch": "~1.5.1",
     "@typescript-eslint/eslint-plugin": "~6.9.1",
     "@typescript-eslint/parser": "~6.9.1",
