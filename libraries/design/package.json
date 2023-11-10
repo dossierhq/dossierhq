@@ -67,7 +67,7 @@
     "eslint-plugin-storybook": "~0.6.15",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.0.3",
-    "react-stately": "~3.27.1",
+    "react-stately": "~3.28.0",
     "sass": "~1.69.5",
     "sass-loader": "~13.3.2",
     "storybook": "~7.5.2",
