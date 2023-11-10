@@ -35,7 +35,7 @@
     "@rushstack/heft": "0.63.1",
     "@types/better-sqlite3": "~7.6.6",
     "@types/uuid": "~9.0.6",
-    "better-sqlite3": "~9.0.0",
+    "better-sqlite3": "~9.1.1",
     "eslint": "~8.52.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2"
