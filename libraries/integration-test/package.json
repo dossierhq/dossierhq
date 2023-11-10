@@ -40,7 +40,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@rushstack/heft": "0.63.1",
-    "@types/node": "~20.8.9",
+    "@types/node": "~20.9.0",
     "@types/uuid": "~9.0.6",
     "eslint": "~8.52.0",
     "prettier": "3.0.3",
