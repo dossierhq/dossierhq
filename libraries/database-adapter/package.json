@@ -39,7 +39,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.63.1",
-    "eslint": "~8.52.0",
+    "eslint": "~8.53.0",
     "prettier": "3.0.3",
     "typescript": "~5.2.2",
     "vitest": "~0.34.6"
