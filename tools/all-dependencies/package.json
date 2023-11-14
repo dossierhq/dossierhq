@@ -27,7 +27,7 @@
     "@rushstack/eslint-patch": "~1.5.1",
     "@typescript-eslint/eslint-plugin": "~6.9.1",
     "@typescript-eslint/parser": "~6.9.1",
-    "better-sqlite3": "~9.0.0",
+    "better-sqlite3": "~9.1.1",
     "body-parser": "~1.20.2",
     "cloudinary": "~1.41.0",
     "dotenv": "~16.3.1",
