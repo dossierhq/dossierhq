@@ -1,7 +1,7 @@
 import {
   Button as ReactAriaButton,
   GridList as ReactAriaGridList,
-  Item as ReactAriaItem,
+  GridListItem as ReactAriaGridListItem,
 } from 'react-aria-components';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import {
@@ -16,7 +16,7 @@ export type GridListProps<TItem extends object> = React.ComponentProps<
   typeof ReactAriaGridList<TItem>
 >;
 
-export type GridListItemProps = React.ComponentProps<typeof ReactAriaItem> & SpacingProps;
+export type GridListItemProps = React.ComponentProps<typeof ReactAriaGridListItem> & SpacingProps;
 
 export interface GridListDragHandleProps {}
 
@@ -27,7 +27,7 @@ export function GridList<TItem extends object>(props: GridListProps<TItem>) {
 export function GridListItem({ className, ...props }: GridListItemProps) {
   const { layoutProps, otherProps } = extractLayoutProps(props);
   return (
-    <ReactAriaItem
+    <ReactAriaGridListItem
       className={toClassName(toSpacingClassName(layoutProps), className as string)}
       {...otherProps}
     />
