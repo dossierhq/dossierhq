@@ -158,8 +158,8 @@ async function submitEntity(
         ? 'Created and published entity'
         : 'Created entity'
       : publish
-      ? 'Updated and published entity'
-      : 'Updated entity';
+        ? 'Updated and published entity'
+        : 'Updated entity';
     showNotification({ color: 'success', message });
   } else {
     const message = isCreate
@@ -167,8 +167,8 @@ async function submitEntity(
         ? 'Failed creating and publishing entity'
         : 'Failed creating entity'
       : publish
-      ? 'Failed updating and publishing entity'
-      : 'Failed updating entity';
+        ? 'Failed updating and publishing entity'
+        : 'Failed updating entity';
     showNotification({ color: 'error', message });
     dispatchEntityEditorState(
       new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false),

@@ -29,10 +29,10 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@playwright/test": "~1.39.0",
-    "@types/base-64": "~1.0.1",
-    "@types/sql.js": "~1.4.7",
-    "eslint": "~8.52.0",
-    "prettier": "3.0.3",
+    "@types/base-64": "~1.0.2",
+    "@types/sql.js": "~1.4.9",
+    "eslint": "~8.53.0",
+    "prettier": "3.1.0",
     "sql.js": "~1.8.0",
     "typescript": "~5.2.2"
   }

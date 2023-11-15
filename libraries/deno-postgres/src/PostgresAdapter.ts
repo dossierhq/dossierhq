@@ -80,7 +80,9 @@ function isUniqueViolationOfConstraint(
   constraintName: string,
 ): boolean {
   const uniqueViolation = "23505";
-  return error instanceof PostgresError &&
+  return (
+    error instanceof PostgresError &&
     error.fields.code === uniqueViolation &&
-    error.fields.constraint === constraintName;
+    error.fields.constraint === constraintName
+  );
 }

@@ -271,10 +271,10 @@ type Legacy_V0_4_7_AdminFieldSpecification<
       valueTypes: string[];
     }
   : T extends RichTextFieldSpecification
-  ? Omit<AdminFieldSpecification<RichTextFieldSpecification>, 'componentTypes'> & {
-      valueTypes: string[];
-    }
-  : T;
+    ? Omit<AdminFieldSpecification<RichTextFieldSpecification>, 'componentTypes'> & {
+        valueTypes: string[];
+      }
+    : T;
 
 type Legacy_v0_4_7_AdminSchemaMigrationAction<
   T extends AdminSchemaMigrationAction = AdminSchemaMigrationAction,

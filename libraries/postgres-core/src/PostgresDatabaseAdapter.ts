@@ -61,7 +61,7 @@ import { schemaUpdateSpecification } from './schema/updateSpecification.js';
 export type PostgresDatabaseOptimizationOptions = DatabaseOptimizationOptions;
 
 export interface PostgresQueryResult<R> {
-  rowCount?: number;
+  rowCount?: number | null;
   rows: R[];
 }
 
