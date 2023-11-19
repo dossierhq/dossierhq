@@ -25,7 +25,7 @@
     "leaflet": "~1.9.4",
     "playground-example-generator": "workspace:*",
     "react-dom": "~18.2.0",
-    "react-router-dom": "~6.18.0",
+    "react-router-dom": "~6.19.0",
     "react": "~18.2.0",
     "sql.js": "~1.8.0",
     "swr": "~2.2.4"
@@ -36,12 +36,12 @@
     "@types/react-dom": "~18.2.15",
     "@types/react": "~18.2.37",
     "@types/sql.js": "~1.4.9",
-    "@vitejs/plugin-react-swc": "~3.4.1",
-    "eslint": "~8.53.0",
+    "@vitejs/plugin-react-swc": "~3.5.0",
+    "eslint": "~8.54.0",
     "graphql-config": "~5.0.3",
     "graphql-ws": "~5.14.2",
     "rollup-plugin-visualizer": "~5.9.2",
-    "tsx": "~4.1.2",
+    "tsx": "~4.1.4",
     "typescript": "~5.2.2",
     "vite": "~4.5.0"
   }

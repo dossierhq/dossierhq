@@ -29,7 +29,7 @@
     "leaflet": "~1.9.4",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "react-router-dom": "~6.18.0"
+    "react-router-dom": "~6.19.0"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
@@ -38,10 +38,10 @@
     "@types/express": "~4.17.21",
     "@types/react": "~18.2.37",
     "@types/react-dom": "~18.2.15",
-    "@vitejs/plugin-react": "~4.1.1",
+    "@vitejs/plugin-react": "~4.2.0",
     "concurrently": "~8.2.2",
     "nodemon": "~3.0.1",
-    "tsx": "~4.1.2",
+    "tsx": "~4.1.4",
     "typescript": "~5.2.2",
     "vite": "~4.5.0"
   }

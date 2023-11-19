@@ -36,7 +36,7 @@
     "@types/better-sqlite3": "~7.6.7",
     "@types/uuid": "~9.0.7",
     "better-sqlite3": "~9.1.1",
-    "eslint": "~8.53.0",
+    "eslint": "~8.54.0",
     "prettier": "3.1.0",
     "typescript": "~5.2.2"
   }

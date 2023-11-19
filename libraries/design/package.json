@@ -59,9 +59,9 @@
     "@types/react-dom": "~18.2.15",
     "@typescript-eslint/eslint-plugin": "~6.11.0",
     "@typescript-eslint/parser": "~6.11.0",
-    "@vitejs/plugin-react": "~4.1.1",
+    "@vitejs/plugin-react": "~4.2.0",
     "bulma": "~0.9.4",
-    "eslint": "~8.53.0",
+    "eslint": "~8.54.0",
     "eslint-plugin-react": "~7.33.2",
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.6.15",
@@ -71,7 +71,7 @@
     "sass": "~1.69.5",
     "sass-loader": "~13.3.2",
     "storybook": "~7.5.3",
-    "svgo": "~3.0.3",
+    "svgo": "~3.0.4",
     "typescript": "~5.2.2",
     "vite": "~4.5.0"
   }
