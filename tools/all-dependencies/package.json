@@ -57,7 +57,7 @@
     "sql.js": "~1.8.0",
     "swr": "~2.2.4",
     "tslib": "~2.6.2",
-    "typescript": "~5.2.2",
+    "typescript": "~5.3.2",
     "uuid": "~9.0.1"
   },
   "devDependencies": {
