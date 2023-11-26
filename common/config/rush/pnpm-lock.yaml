@@ -90,8 +90,8 @@ importers:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.2.2)
       tsx:
-        specifier: ~4.1.4
-        version: 4.1.4
+        specifier: ~4.4.0
+        version: 4.4.0
       typescript:
         specifier: ~5.2.2
         version: 5.2.2
@@ -187,8 +187,8 @@ importers:
         specifier: ~5.9.2
         version: 5.9.2
       tsx:
-        specifier: ~4.1.4
-        version: 4.1.4
+        specifier: ~4.4.0
+        version: 4.4.0
       typescript:
         specifier: ~5.2.2
         version: 5.2.2
@@ -580,8 +580,8 @@ importers:
         specifier: ~3.0.1
         version: 3.0.1
       tsx:
-        specifier: ~4.1.4
-        version: 4.1.4
+        specifier: ~4.4.0
+        version: 4.4.0
       typescript:
         specifier: ~5.2.2
         version: 5.2.2
@@ -2051,8 +2051,8 @@ importers:
         specifier: ~3.0.4
         version: 3.0.4
       tsx:
-        specifier: ~4.1.4
-        version: 4.1.4
+        specifier: ~4.4.0
+        version: 4.4.0
       vite:
         specifier: ~5.0.0
         version: 5.0.0(@types/node@20.9.2)(sass@1.69.5)
@@ -17655,14 +17655,13 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /tsx@4.1.4:
-    resolution: {integrity: sha512-9X7uBCIyUsvMzIH+o8m+5o/5eL461cChCF+XUtOZsPr1a4pZx2lTQx0Muu5G5VwJWZwAGKBe3sJHLk82BENAVw==}
+  /tsx@4.4.0:
+    resolution: {integrity: sha512-4fwcEjRUxW20ciSaMB8zkpGwCPxuRGnadDuj/pBk5S9uT29zvWz15PK36GrKJo45mSJomDxVejZ73c6lr3811Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
       esbuild: 0.18.20
       get-tsconfig: 4.7.2
-      source-map-support: 0.5.21
     optionalDependencies:
       fsevents: 2.3.3
     dev: true

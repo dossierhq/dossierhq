@@ -41,7 +41,7 @@
     "@vitejs/plugin-react": "~4.2.0",
     "concurrently": "~8.2.2",
     "nodemon": "~3.0.1",
-    "tsx": "~4.1.4",
+    "tsx": "~4.4.0",
     "typescript": "~5.2.2",
     "vite": "~5.0.0"
   }
