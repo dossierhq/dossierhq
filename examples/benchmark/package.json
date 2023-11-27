@@ -44,10 +44,10 @@
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.63.2",
-    "@types/better-sqlite3": "~7.6.7",
+    "@types/better-sqlite3": "~7.6.8",
     "@types/pg": "~8.10.9",
     "eslint": "~8.54.0",
     "prettier": "3.1.0",
-    "typescript": "~5.2.2"
+    "typescript": "~5.3.2"
   }
 }
