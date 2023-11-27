@@ -91,7 +91,7 @@
     "@vitejs/plugin-react-swc": "~3.5.0",
     "base-64": "~1.0.0",
     "bulma": "~0.9.4",
-    "bun-types": "~1.0.11",
+    "bun-types": "~1.0.14",
     "concurrently": "~8.2.2",
     "eslint-config-next": "~14.0.3",
     "eslint-plugin-import": "~2.29.0",
