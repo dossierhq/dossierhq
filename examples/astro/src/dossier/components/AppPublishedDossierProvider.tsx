@@ -1,19 +1,21 @@
-import type { ClientContext, PublishedClient, PublishedClientOperation } from '@dossierhq/core';
 import {
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   createConsoleLogger,
+  encodeObjectToURLSearchParams,
+  type ClientContext,
+  type PublishedClient,
+  type PublishedClientOperation,
 } from '@dossierhq/core';
-import type {
-  FieldDisplayProps,
-  PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
+import {
+  PublishedDossierProvider,
+  type FieldDisplayProps,
+  type PublishedDossierContextAdapter,
+  type RichTextValueItemDisplayProps,
 } from '@dossierhq/react-components';
-import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { BackendUrls } from '../../components/dossier/BackendUrls';
-import { fetchJsonResult } from '../../components/dossier/BackendUtils';
-import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
+import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.js';
+import { fetchJsonResult } from '../utils/fetchJsonResult.js';
 
 type BackendContext = ClientContext;
 
@@ -61,9 +63,13 @@ async function terminatingPublishedMiddleware(
   context: BackendContext,
   operation: PublishedClientOperation,
 ): Promise<void> {
-  const result = await fetchJsonResult(
-    context,
-    BackendUrls.published(operation.name, operation.args),
-  );
+  const result = await fetchJsonResult(context, operationToUrl(operation.name, operation.args));
   operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+}
+
+function operationToUrl(operationName: string, args: unknown): RequestInfo {
+  return `/api/dossier-published/${operationName}?${encodeObjectToURLSearchParams(
+    { args },
+    { keepEmptyObjects: true },
+  )}`;
 }

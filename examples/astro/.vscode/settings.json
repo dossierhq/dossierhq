@@ -1,6 +1,9 @@
 {
   "cSpell.words": ["astro", "astrojs", "dossierhq", "tsconfigs"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "files.insertFinalNewline": true

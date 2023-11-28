@@ -1,26 +1,25 @@
-import type {
-  AdminClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
-  ClientContext,
-  ErrorType,
-  Result,
-} from '@dossierhq/core';
 import {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   createConsoleLogger,
+  encodeObjectToURLSearchParams,
+  type AdminClient,
+  type AdminClientMiddleware,
+  type AdminClientOperation,
+  type ClientContext,
+  type ErrorType,
+  type Result,
 } from '@dossierhq/core';
-import type {
-  AdminDossierContextAdapter,
-  FieldEditorProps,
-  RichTextValueItemEditorProps,
+import {
+  AdminDossierProvider,
+  useCachingAdminMiddleware,
+  type AdminDossierContextAdapter,
+  type FieldEditorProps,
+  type RichTextValueItemEditorProps,
 } from '@dossierhq/react-components';
-import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { BackendUrls } from '../../components/dossier/BackendUrls.ts';
-import { fetchJsonResult } from '../../components/dossier/BackendUtils.ts';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.ts';
+import { fetchJsonResult } from '../utils/fetchJsonResult.ts';
 
 type BackendContext = ClientContext;
 
@@ -75,13 +74,20 @@ async function terminatingAdminMiddleware(
 ): Promise<void> {
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
-    result = await fetchJsonResult(context, BackendUrls.admin(operation.name), {
+    result = await fetchJsonResult(context, operationToUrl(operation.name), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(operation.args),
     });
   } else {
-    result = await fetchJsonResult(context, BackendUrls.admin(operation.name, operation.args));
+    result = await fetchJsonResult(context, operationToUrl(operation.name, operation.args));
   }
   operation.resolve(convertJsonAdminClientResult(operation.name, result));
+}
+
+function operationToUrl(operationName: string, args?: unknown) {
+  return `/api/dossier-admin/${operationName}?${encodeObjectToURLSearchParams(
+    { args },
+    { keepEmptyObjects: true },
+  )}`;
 }
