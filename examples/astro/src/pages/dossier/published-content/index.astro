@@ -1,0 +1,8 @@
+---
+import { DossierPublishedContentListPage } from "../../../components/dossier/DossierPublishedContentListPage.jsx";
+import DossierLayout from "../../../layouts/DossierLayout.astro";
+---
+
+<DossierLayout title="Published content">
+  <DossierPublishedContentListPage client:only/>
+</DossierLayout>

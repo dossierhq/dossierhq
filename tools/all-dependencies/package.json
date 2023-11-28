@@ -10,6 +10,9 @@
     "outdated": "rush-pnpm outdated"
   },
   "dependencies": {
+    "@astrojs/check": "~0.3.1",
+    "@astrojs/node": "~6.0.4",
+    "@astrojs/react": "~3.0.6",
     "@auth0/auth0-react": "~2.2.3",
     "@cloudinary/url-gen": "~1.13.0",
     "@creativebulma/bulma-badge": "~1.0.1",
@@ -27,6 +30,7 @@
     "@rushstack/eslint-patch": "~1.6.0",
     "@typescript-eslint/eslint-plugin": "~6.12.0",
     "@typescript-eslint/parser": "~6.12.0",
+    "astro": "~3.6.1",
     "better-sqlite3": "~9.1.1",
     "body-parser": "~1.20.2",
     "cloudinary": "~1.41.0",

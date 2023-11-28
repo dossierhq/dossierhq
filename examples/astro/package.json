@@ -1,0 +1,41 @@
+{
+  "name": "@dossierhq/example-astro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run prettier:check && npx astro check && npm run build-app",
+    "build-app": "astro build",
+    "clean": "rm -rf dist/",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "start": "astro dev",
+    "start:built": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/check": "~0.3.1",
+    "@astrojs/node": "~6.0.4",
+    "@astrojs/react": "~3.0.6",
+    "@dossierhq/better-sqlite3": "workspace:*",
+    "@dossierhq/core": "workspace:*",
+    "@dossierhq/design": "workspace:*",
+    "@dossierhq/graphql": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
+    "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/server": "workspace:*",
+    "astro": "~3.6.1",
+    "better-sqlite3": "~9.1.1",
+    "leaflet": "~1.9.4",
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "~7.6.8",
+    "@types/react": "~18.2.38",
+    "prettier": "3.1.0",
+    "typescript": "~5.3.2"
+  }
+}

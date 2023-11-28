@@ -1,0 +1,8 @@
+---
+import { DossierSchemaEditorPage } from "../../components/dossier/DossierSchemaEditorPage.jsx";
+import DossierLayout from "../../layouts/DossierLayout.astro";
+---
+
+<DossierLayout title="Schema">
+  <DossierSchemaEditorPage client:only/>
+</DossierLayout>

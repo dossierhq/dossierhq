@@ -1,0 +1,8 @@
+---
+import { DossierContentListPage } from "../../../components/dossier/DossierContentListPage.jsx";
+import DossierLayout from "../../../layouts/DossierLayout.astro";
+---
+
+<DossierLayout title="Content">
+  <DossierContentListPage client:only/>
+</DossierLayout>

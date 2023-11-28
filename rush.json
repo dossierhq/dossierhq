@@ -441,6 +441,10 @@
       "projectFolder": "libraries/design-ssr"
     },
     {
+      "packageName": "@dossierhq/example-astro",
+      "projectFolder": "examples/astro"
+    },
+    {
       "packageName": "@dossierhq/example-benchmark",
       "projectFolder": "examples/benchmark"
     },
