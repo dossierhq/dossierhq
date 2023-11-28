@@ -5,7 +5,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 import type { APIContext } from 'astro';
-import { getPublishedClientForPrincipal } from '../../../dossier/utils/ServerUtils.ts';
+import { getAuthenticatedPublishedClient } from '../../../dossier/utils/ServerUtils.ts';
 
 export const prerender = false;
 
@@ -29,9 +29,7 @@ function convertResultToResponse(result: Result<unknown, ErrorType>) {
 }
 
 async function executePublishedOperation(operationName: string, operationArgs: any) {
-  const publishedClientResult = await getPublishedClientForPrincipal(
-    import.meta.env.DOSSIER_PRINCIPAL_ID,
-  );
+  const publishedClientResult = await getAuthenticatedPublishedClient();
   if (publishedClientResult.isError()) return publishedClientResult;
   const publishedClient = publishedClientResult.value;
 
