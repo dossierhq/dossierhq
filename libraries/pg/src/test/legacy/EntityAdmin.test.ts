@@ -19,6 +19,7 @@ import {
   createPostgresTestServerAndClient,
   expectSearchResultEntities,
   insecureTestUuidv4,
+  safelyUpdateSchemaSpecification,
 } from '../TestUtils.js';
 import {
   countSearchResultWithEntity,
@@ -76,7 +77,8 @@ beforeAll(async () => {
   adminClientOther = server.createAdminClient(() => sessionOtherResult);
 
   publishedClient = server.createPublishedClient(context);
-  await client.updateSchemaSpecification({
+
+  const schemaUpdateResult = await safelyUpdateSchemaSpecification(client, {
     entityTypes: [
       {
         name: 'EntityAdminFoo',
@@ -228,6 +230,7 @@ beforeAll(async () => {
       },
     ],
   });
+  schemaUpdateResult.throwIfError();
 
   await ensureEntitiesExistForAdminOnlyEditBefore(client, 'none');
   entitiesOfTypeAdminOnlyEditBeforeNone = await getEntitiesForAdminOnlyEditBefore(client, 'none');

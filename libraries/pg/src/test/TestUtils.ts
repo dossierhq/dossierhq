@@ -1,5 +1,7 @@
 import type {
+  AdminClient,
   AdminEntity,
+  AdminSchemaSpecificationUpdate,
   Connection,
   Edge,
   ErrorType,
@@ -7,7 +9,7 @@ import type {
   PublishedEntity,
   Result,
 } from '@dossierhq/core';
-import { AdminSchema, ok } from '@dossierhq/core';
+import { AdminSchema, ok, withAdvisoryLock } from '@dossierhq/core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import {
@@ -106,12 +108,10 @@ export async function initializeIntegrationTestServer({
   );
 
   //TODO move this to integration-test and add advisory lock for update
-  const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
+  const schemaResult = await safelyUpdateSchemaSpecification(client, IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
 
-  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
-
-  return ok({ server, adminSchema });
+  return ok({ server, adminSchema: schemaResult.value });
 }
 
 export async function initializeEmptyIntegrationTestServer({
@@ -178,4 +178,20 @@ export function insecureTestUuidv4(): string {
   return uuidv4({
     random,
   });
+}
+
+export async function safelyUpdateSchemaSpecification(
+  adminClient: AdminClient,
+  schemaUpdate: AdminSchemaSpecificationUpdate,
+): PromiseResult<AdminSchema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  return await withAdvisoryLock(
+    adminClient,
+    'schema-update-safely',
+    { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 2_000 - 200 },
+    async (_advisoryLock) => {
+      const result = await adminClient.updateSchemaSpecification(schemaUpdate);
+      if (result.isError()) return result;
+      return ok(new AdminSchema(result.value.schemaSpecification));
+    },
+  );
 }
