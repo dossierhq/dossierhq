@@ -302,6 +302,9 @@ importers:
         specifier: ~18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@dossierhq/typescript-generator':
+        specifier: workspace:*
+        version: link:../../libraries/typescript-generator
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.8
@@ -311,6 +314,9 @@ importers:
       prettier:
         specifier: 3.1.0
         version: 3.1.0
+      tsx:
+        specifier: ~4.5.0
+        version: 4.5.0
       typescript:
         specifier: ~5.3.2
         version: 5.3.2

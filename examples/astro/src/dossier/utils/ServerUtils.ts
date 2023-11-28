@@ -16,7 +16,11 @@ import {
   type SessionContext,
 } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
-import { getPrincipalConfig, type PrincipalConfig } from '../config/PrincipalConfig.ts';
+import {
+  getPrincipalConfig,
+  type PrincipalConfig,
+  type PrincipalIdentifier,
+} from '../config/PrincipalConfig.ts';
 
 const logger = createConsoleLogger(console);
 
@@ -63,8 +67,8 @@ function createAuthenticationAdapter(): AuthorizationAdapter {
   return NoneAndSubjectAuthorizationAdapter;
 }
 
-export async function getAuthenticatedAdminClient() {
-  const principalConfig = getPrincipalConfig(import.meta.env.DOSSIER_PRINCIPAL_ID);
+export async function getAuthenticatedAdminClient(principalId?: PrincipalIdentifier) {
+  const principalConfig = getPrincipalConfig(principalId ?? import.meta.env.DOSSIER_PRINCIPAL_ID);
   if (!principalConfig.enableAdmin) {
     return notOk.NotAuthorized('Admin access is disabled for this principal');
   }

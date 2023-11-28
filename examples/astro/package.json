@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && npx astro check && npm run build-app",
+    "build": "./scripts/generate-typescript.ts && npm run prettier:check && npx astro check && npm run build-app",
     "build-app": "astro build",
     "clean": "rm -rf dist/ && rm *.log",
     "prettier:check": "prettier --check .",
@@ -31,9 +31,11 @@
     "react-dom": "~18.2.0"
   },
   "devDependencies": {
+    "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.8",
     "@types/react": "~18.2.38",
     "prettier": "3.1.0",
+    "tsx": "~4.5.0",
     "typescript": "~5.3.2"
   }
 }

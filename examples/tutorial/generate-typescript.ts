@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx tsx
 import { AdminSchema, createConsoleLogger, type Logger } from '@dossierhq/core';
-import { type Server } from '@dossierhq/server';
+import type { Server } from '@dossierhq/server';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { writeFile } from 'node:fs/promises';
 import { initialize } from './backend/server.js';
