@@ -1,6 +1,12 @@
 ---
 import { DossierChangelogPage } from '../../dossier/components/DossierChangelogPage.jsx';
 import DossierLayout from '../../layouts/DossierLayout.astro';
+
+export const prerender = false;
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
 ---
 
 <DossierLayout title="Changelog">

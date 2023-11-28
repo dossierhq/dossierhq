@@ -2,12 +2,12 @@ import {
   ErrorType,
   decodeURLSearchParamsParam,
   executePublishedClientOperationFromJson,
-  ok,
   type Result,
 } from '@dossierhq/core';
 import type { APIContext } from 'astro';
-import { DEFAULT_AUTH_KEYS } from '../../../dossier/config/AuthKeyConfig.ts';
-import { getServer } from '../../../dossier/utils/ServerUtils.ts';
+import { getPublishedClientForPrincipal } from '../../../dossier/utils/ServerUtils.ts';
+
+export const prerender = false;
 
 export async function GET({
   params,
@@ -29,7 +29,9 @@ function convertResultToResponse(result: Result<unknown, ErrorType>) {
 }
 
 async function executePublishedOperation(operationName: string, operationArgs: any) {
-  const publishedClientResult = await getPublishedClient();
+  const publishedClientResult = await getPublishedClientForPrincipal(
+    import.meta.env.DOSSIER_PRINCIPAL_ID,
+  );
   if (publishedClientResult.isError()) return publishedClientResult;
   const publishedClient = publishedClientResult.value;
 
@@ -39,17 +41,4 @@ async function executePublishedOperation(operationName: string, operationArgs: a
     operationArgs,
   );
   return result;
-}
-
-async function getPublishedClient() {
-  const server = await getServer();
-  const sessionResult = await server.createSession({
-    provider: 'test',
-    identifier: 'john-smith',
-    defaultAuthKeys: DEFAULT_AUTH_KEYS,
-    logger: null,
-    databasePerformance: null,
-  });
-  if (sessionResult.isError()) return sessionResult;
-  return ok(server.createPublishedClient(sessionResult.value.context));
 }

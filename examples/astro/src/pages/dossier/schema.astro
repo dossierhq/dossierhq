@@ -1,8 +1,14 @@
 ---
-import { DossierSchemaEditorPage } from "../../dossier/components/DossierSchemaEditorPage.jsx";
-import DossierLayout from "../../layouts/DossierLayout.astro";
+import { DossierSchemaEditorPage } from '../../dossier/components/DossierSchemaEditorPage.jsx';
+import DossierLayout from '../../layouts/DossierLayout.astro';
+
+export const prerender = false;
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
 ---
 
 <DossierLayout title="Schema">
-  <DossierSchemaEditorPage client:only/>
+  <DossierSchemaEditorPage client:only />
 </DossierLayout>

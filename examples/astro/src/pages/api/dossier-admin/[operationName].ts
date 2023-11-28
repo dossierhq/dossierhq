@@ -4,12 +4,12 @@ import {
   decodeURLSearchParamsParam,
   executeAdminClientOperationFromJson,
   notOk,
-  ok,
   type Result,
 } from '@dossierhq/core';
 import type { APIContext } from 'astro';
-import { DEFAULT_AUTH_KEYS } from '../../../dossier/config/AuthKeyConfig.ts';
-import { getServer } from '../../../dossier/utils/ServerUtils.ts';
+import { getAdminClientForPrincipal } from '../../../dossier/utils/ServerUtils.ts';
+
+export const prerender = false;
 
 export async function GET({
   params,
@@ -50,7 +50,7 @@ async function executeAdminOperation(
     return notOk.BadRequest('Operation does not modify data, but PUT was used');
   }
 
-  const adminClientResult = await getAdminClient();
+  const adminClientResult = await getAdminClientForPrincipal(import.meta.env.DOSSIER_PRINCIPAL_ID);
   if (adminClientResult.isError()) return adminClientResult;
   const adminClient = adminClientResult.value;
 
@@ -60,19 +60,4 @@ async function executeAdminOperation(
     operationArgs,
   );
   return result;
-}
-
-async function getAdminClient() {
-  const server = await getServer();
-  const sessionResult = await server.createSession({
-    provider: 'test',
-    identifier: 'john-smith',
-    defaultAuthKeys: DEFAULT_AUTH_KEYS,
-    logger: null,
-    databasePerformance: null,
-  });
-  if (sessionResult.isError()) {
-    return sessionResult;
-  }
-  return ok(server.createAdminClient(sessionResult.value.context));
 }

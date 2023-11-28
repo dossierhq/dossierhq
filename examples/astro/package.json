@@ -7,13 +7,11 @@
   "scripts": {
     "build": "npm run prettier:check && npx astro check && npm run build-app",
     "build-app": "astro build",
-    "clean": "rm -rf dist/",
-    "eslint:check": "eslint .",
-    "eslint:fix": "eslint --fix .",
+    "clean": "rm -rf dist/ && rm *.log",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "astro dev",
-    "start:built": "astro preview"
+    "start:production": "astro preview"
   },
   "dependencies": {
     "@astrojs/check": "~0.3.1",
