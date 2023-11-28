@@ -13,5 +13,5 @@ export function useUrlSearchParams() {
     [setSearchParams],
   );
 
-  return [searchParams, updateAndSetSearchParams];
+  return [searchParams, updateAndSetSearchParams] as const;
 }

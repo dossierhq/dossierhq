@@ -1,8 +1,8 @@
 import { NotificationContainer } from '@dossierhq/design';
 import { ChangelogScreen } from '@dossierhq/react-components';
+import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
 import { AppAdminDossierProvider } from './AppAdminDossierProvider.js';
-import { NavBar } from './NavBar.js';
-import { useUrlSearchParams } from './useUrlSearchParams.js';
+import { NavBar } from './NavBar.jsx';
 
 export function DossierChangelogPage() {
   const [urlSearchParams, setSearchParams] = useUrlSearchParams();

@@ -1,9 +1,9 @@
 import type { AdminEntity } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
 import { AdminEntityListScreen } from '@dossierhq/react-components';
-import { AppAdminDossierProvider } from './AppAdminDossierProvider.jsx';
+import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
+import { AppAdminDossierProvider } from './AppAdminDossierProvider.js';
 import { NavBar } from './NavBar.js';
-import { useUrlSearchParams } from './useUrlSearchParams.js';
 
 export function DossierContentListPage() {
   const [urlSearchParams, setSearchParams] = useUrlSearchParams();

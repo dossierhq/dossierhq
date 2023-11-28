@@ -18,9 +18,9 @@ import type {
 } from '@dossierhq/react-components';
 import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from '../../config/AuthKeyConfig.ts';
-import { fetchJsonResult } from './BackendUtils.ts';
-import { BackendUrls } from './BackendUrls.ts';
+import { BackendUrls } from '../../components/dossier/BackendUrls.ts';
+import { fetchJsonResult } from '../../components/dossier/BackendUtils.ts';
+import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.ts';
 
 type BackendContext = ClientContext;
 

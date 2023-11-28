@@ -1,7 +1,7 @@
 import { NotificationContainer } from '@dossierhq/design';
 import { SchemaEditorScreen } from '@dossierhq/react-components';
 import { useState } from 'react';
-import { AppAdminDossierProvider } from './AppAdminDossierProvider.jsx';
+import { AppAdminDossierProvider } from './AppAdminDossierProvider.js';
 import { NavBar } from './NavBar.js';
 
 export function DossierSchemaEditorPage() {

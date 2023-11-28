@@ -11,9 +11,9 @@ import type {
 } from '@dossierhq/react-components';
 import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from '../../config/AuthKeyConfig';
-import { BackendUrls } from './BackendUrls';
-import { fetchJsonResult } from './BackendUtils';
+import { BackendUrls } from '../../components/dossier/BackendUrls';
+import { fetchJsonResult } from '../../components/dossier/BackendUtils';
+import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 
 type BackendContext = ClientContext;
 
@@ -25,7 +25,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
   }
 
   renderPublishedRichTextComponentDisplay({
-    _value,
+    value: _value,
   }: RichTextValueItemDisplayProps): JSX.Element | null {
     return null;
   }

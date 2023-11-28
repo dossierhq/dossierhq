@@ -17,7 +17,7 @@ import {
 } from '@dossierhq/server';
 import type { APIContext } from 'astro';
 import BetterSqlite, { type Database } from 'better-sqlite3';
-import { DEFAULT_AUTH_KEYS } from '../../../config/AuthKeyConfig.ts';
+import { DEFAULT_AUTH_KEYS } from '../../../dossier/config/AuthKeyConfig.ts';
 
 export async function GET({
   params,
