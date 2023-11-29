@@ -186,7 +186,7 @@ export async function safelyUpdateSchemaSpecification(
 ): PromiseResult<AdminSchema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withAdvisoryLock(
     adminClient,
-    'schema-update-safely',
+    'schema-update', // same name as used in withSchemaAdvisoryLock() in integration test
     { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 2_000 - 200 },
     async (_advisoryLock) => {
       const result = await adminClient.updateSchemaSpecification(schemaUpdate);
