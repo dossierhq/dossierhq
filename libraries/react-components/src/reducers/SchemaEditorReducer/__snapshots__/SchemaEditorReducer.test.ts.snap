@@ -1434,7 +1434,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing value item field 1`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing component field 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
@@ -1477,7 +1477,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change component types of a existi
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing value item field 2`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing component field 2`] = `
 {
   "componentTypes": [
     {
@@ -1500,7 +1500,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change component types of a existi
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a new value item field 1`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a new component field 1`] = `
 {
   "activeSelector": null,
   "activeSelectorEditorScrollSignal": 0,
@@ -1541,7 +1541,7 @@ exports[`ChangeFieldAllowedValueTypesAction > change component types of a new va
 }
 `;
 
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a new value item field 2`] = `
+exports[`ChangeFieldAllowedValueTypesAction > change component types of a new component field 2`] = `
 {
   "componentTypes": [
     {
@@ -3527,6 +3527,62 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
 }
 `;
 
+exports[`DeleteFieldAction > delete existing component field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [
+        "field",
+      ],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteFieldAction > delete existing component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "componentType": "Foo",
+          "field": "field",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`DeleteFieldAction > delete existing entity name field 1`] = `
 {
   "activeSelector": null,
@@ -3580,62 +3636,6 @@ exports[`DeleteFieldAction > delete existing entity name field 2`] = `
           "action": "deleteField",
           "entityType": "Foo",
           "field": "title",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`DeleteFieldAction > delete existing value item field 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [
-        "field",
-      ],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-  "deletedComponentTypes": [],
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-}
-`;
-
-exports[`DeleteFieldAction > delete existing value item field 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [],
-      "name": "Foo",
-    },
-  ],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "deleteField",
-          "componentType": "Foo",
-          "field": "field",
         },
       ],
       "version": 2,
@@ -4444,6 +4444,91 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
 }
 `;
 
+exports[`RenameFieldAction > rename existing component field 1`] = `
+{
+  "activeSelector": {
+    "fieldName": "newName",
+    "kind": "component",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "newName",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameFieldAction > rename existing component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "componentType": "Foo",
+          "field": "oldName",
+          "newName": "newName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`RenameFieldAction > rename existing entity name field 1`] = `
 {
   "activeSelector": {
@@ -4524,91 +4609,6 @@ exports[`RenameFieldAction > rename existing entity name field 2`] = `
         {
           "action": "renameField",
           "entityType": "Foo",
-          "field": "oldName",
-          "newName": "newName",
-        },
-      ],
-      "version": 2,
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`RenameFieldAction > rename existing value item field 1`] = `
-{
-  "activeSelector": {
-    "fieldName": "newName",
-    "kind": "component",
-    "typeName": "Foo",
-  },
-  "activeSelectorEditorScrollSignal": 1,
-  "activeSelectorMenuScrollSignal": 1,
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "newName",
-      ],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "list": false,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "newName",
-          "required": false,
-          "status": "changed",
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-  "deletedComponentTypes": [],
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-}
-`;
-
-exports[`RenameFieldAction > rename existing value item field 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "index": null,
-          "matchPattern": null,
-          "multiline": false,
-          "name": "newName",
-          "required": false,
-          "type": "String",
-          "values": [],
-        },
-      ],
-      "name": "Foo",
-    },
-  ],
-  "migrations": [
-    {
-      "actions": [
-        {
-          "action": "renameField",
-          "componentType": "Foo",
           "field": "oldName",
           "newName": "newName",
         },

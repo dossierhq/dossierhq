@@ -498,7 +498,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
 });
 
 describe('ChangeFieldAllowedValueTypesAction', () => {
-  test('change component types of a new value item field', () => {
+  test('change component types of a new component field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -522,7 +522,7 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('change component types of a existing value item field', () => {
+  test('change component types of a existing component field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1210,7 +1210,7 @@ describe('DeleteFieldAction', () => {
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });
 
-  test('delete existing value item field', () => {
+  test('delete existing component field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(
@@ -1625,7 +1625,7 @@ describe('RenameFieldAction', () => {
     expect(update.migrations?.[0].actions).toHaveLength(1);
   });
 
-  test('rename existing value item field', () => {
+  test('rename existing component field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
       new SchemaEditorActions.UpdateSchemaSpecification(

@@ -727,7 +727,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-async function createValueItemsEntities(
+async function createComponentsEntities(
   adminClient: AppAdminClient,
   {
     cloudinaryImageComponents,
@@ -861,7 +861,7 @@ async function main() {
     stringsEntities,
     cloudinaryImageComponents,
   });
-  await createValueItemsEntities(adminClient, {
+  await createComponentsEntities(adminClient, {
     booleansEntities,
     locationsEntities,
     numbersEntities,

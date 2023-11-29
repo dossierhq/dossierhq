@@ -152,7 +152,7 @@ function AddValueItemButton({
       componentTypes={fieldSpec.componentTypes}
       onTypeSelected={onValueTypeSelected}
     >
-      Add value item
+      Add component
     </AdminTypePicker>
   );
 }

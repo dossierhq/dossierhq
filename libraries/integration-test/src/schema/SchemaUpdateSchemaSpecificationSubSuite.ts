@@ -353,7 +353,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
       )
     ).valueOrThrow();
 
-    // Make the value item adminOnly
+    // Make the component adminOnly
     assertOkResult(
       await adminClient.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
@@ -375,7 +375,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
     assertEquals(publishedEntity.info.valid, false);
 
-    // Make the value item normal
+    // Make the component normal
     assertOkResult(
       await adminClient.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
@@ -420,7 +420,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     ).valueOrThrow();
     assertEquals(countBeforeSchemaUpdate, 1);
 
-    // Make the value item adminOnly
+    // Make the component adminOnly
     assertOkResult(
       await adminClient.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
@@ -444,7 +444,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     ).valueOrThrow();
     assertEquals(countAfterSchemaUpdate, 0);
 
-    // Make the value item normal
+    // Make the component normal
     assertOkResult(
       await adminClient.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
@@ -1445,7 +1445,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   });
   const reference = result.valueOrThrow();
 
-  // Check that the value item is removed
+  // Check that the component is removed
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
   assertIsAdminValueItems(adminEntity);
   assertEquals(adminEntity.fields.any, null);
@@ -1455,7 +1455,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   assertIsPublishedValueItems(publishedEntity);
   assertEquals(publishedEntity.fields.any, null);
 
-  // Check that we can't create new value items with the name
+  // Check that we can't create new components with the name
   const updateResult = await adminClient.updateEntity({
     id: reference.id,
     fields: { any: { type: typeName, field: 'updated value' } },
@@ -1511,7 +1511,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
   });
   const reference = result.valueOrThrow();
 
-  // Check that value item type is deleted
+  // Check that component type is deleted
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
   assertIsAdminValueItems(adminEntity);
   assertEquals(adminEntity.fields.any, null);
@@ -1903,7 +1903,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
   });
   const reference = result.valueOrThrow();
 
-  // Check that the value item has the new type
+  // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
   assertIsAdminValueItems(adminEntity);
   assertEquals(adminEntity.fields.any, {
@@ -1919,7 +1919,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
     field: `Hello ${oldTypeName}`,
   } as AppPublishedComponent);
 
-  // Check that we can create new value items with the name
+  // Check that we can create new components with the name
   const updateResult = await adminClient.updateEntity(
     {
       id: reference.id,
@@ -1975,7 +1975,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
   });
   const reference = result.valueOrThrow();
 
-  // Check that value item type is renamed
+  // Check that component type is renamed
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
   assertIsAdminValueItems(adminEntity);
   assertEquals(adminEntity.fields.any, {
@@ -2288,7 +2288,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
   });
   const reference = result.valueOrThrow();
 
-  // Check that the value item has the new type
+  // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
   assertIsAdminValueItems(adminEntity);
   assertEquals(adminEntity.fields.any, {
@@ -2304,7 +2304,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
     [newFieldName]: 'value',
   } as AppPublishedComponent);
 
-  // Check that we can create new value items with the name
+  // Check that we can create new components with the name
   const updateResult = await adminClient.updateEntity(
     {
       id: reference.id,
@@ -2367,7 +2367,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
   });
   const reference = result.valueOrThrow();
 
-  // Check that the value item has the new type
+  // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
   assertIsAdminValueItems(adminEntity);
   assertEquals(adminEntity.fields.any, {
@@ -2383,7 +2383,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
     [newFieldName]: 'value',
   } as AppPublishedComponent);
 
-  // Check that we can create new value items with the name
+  // Check that we can create new components with the name
   const updateResult = await adminClient.updateEntity(
     {
       id: reference.id,

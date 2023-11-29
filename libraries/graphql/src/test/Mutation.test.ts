@@ -1020,7 +1020,7 @@ describe('create*Entity()', () => {
     }
   });
 
-  test('Create nested value item with inner JSON', async () => {
+  test('Create nested component with inner JSON', async () => {
     const { adminClient } = server;
     const entity: AdminEntityCreate = {
       info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
@@ -1573,13 +1573,13 @@ describe('update*Entity()', () => {
                 },
                 anyValueItemJson: JSON.stringify({
                   type: 'MutationStringedBar',
-                  text: 'A value item',
+                  text: 'A component',
                   bar: { id: bar1Id },
                 }),
                 anyValueItemsJson: JSON.stringify([
                   {
                     type: 'MutationStringedBar',
-                    text: 'A value item in a list',
+                    text: 'A component in a list',
                     bar: { id: bar2Id },
                   },
                 ]),
@@ -1700,13 +1700,13 @@ describe('update*Entity()', () => {
             },
             anyValueItem: {
               type: 'MutationStringedBar',
-              text: 'A value item',
+              text: 'A component',
               bar: { id: bar1Id },
             },
             anyValueItems: [
               {
                 type: 'MutationStringedBar',
-                text: 'A value item in a list',
+                text: 'A component in a list',
                 bar: { id: bar2Id },
               },
             ],

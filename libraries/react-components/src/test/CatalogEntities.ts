@@ -13,6 +13,13 @@ export const CatalogEntities = {
     publishedMinimal: id('booleans-published-minimal'),
     publishedInvalid: id('booleans-published-invalid'),
   },
+  Components: {
+    minimal: id('components-minimal'),
+    filled: id('components-filled'),
+    publishedMinimal: id('components-published-minimal'),
+    invalid: id('components-invalid'),
+    publishedInvalid: id('components-published-invalid'),
+  },
   Entities: {
     minimal: id('entities-minimal'),
     filled: id('entities-filled'),
@@ -47,12 +54,5 @@ export const CatalogEntities = {
     publishedMinimal: id('strings-published-minimal'),
     invalid: id('strings-invalid'),
     publishedInvalid: id('strings-published-invalid'),
-  },
-  ValueItems: {
-    minimal: id('value-items-minimal'),
-    filled: id('value-items-filled'),
-    publishedMinimal: id('value-items-published-minimal'),
-    invalid: id('value-items-invalid'),
-    publishedInvalid: id('value-items-published-invalid'),
   },
 };

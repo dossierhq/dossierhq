@@ -3576,7 +3576,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
 }
 `;
 
-exports[`EntityEditorReducer scenarios > required string fields value item place in normal and adminOnly fields > 1 Initial 1`] = `
+exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 1 Initial 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -3752,7 +3752,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
 }
 `;
 
-exports[`EntityEditorReducer scenarios > required string fields value item place in normal and adminOnly fields > 2 Setting adminOnly field to empty value item 1`] = `
+exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 2 Setting adminOnly field to empty component 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -3934,7 +3934,7 @@ exports[`EntityEditorReducer scenarios > required string fields value item place
 }
 `;
 
-exports[`EntityEditorReducer scenarios > required string fields value item place in normal and adminOnly fields > 3 Setting normal field to empty value item 1`] = `
+exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 3 Setting normal field to empty component 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",

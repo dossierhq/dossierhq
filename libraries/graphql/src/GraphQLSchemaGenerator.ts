@@ -1755,7 +1755,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         const fieldPrefix = component ? `${prefix}.${fieldName}` : `${prefix}.fields.${fieldName}`;
         const fieldValue = fields[fieldName];
 
-        // Decode JSON value item fields
+        // Decode JSON component fields
         if (fieldName.endsWith('Json')) {
           const fieldNameWithoutJson = fieldName.slice(0, -'Json'.length);
           const decodedValue = this.decodeJsonInputField(fieldPrefix, fieldValue);
@@ -1772,7 +1772,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             )
           : adminSchema.getComponentFieldSpecification(typeSpec, fieldName);
 
-        // Traverse into value items
+        // Traverse into components
         if (fieldSpec && isComponentItemField(fieldSpec, fieldValue) && fieldValue) {
           const type = fieldValue.type;
           const componentSpec = adminSchema.getComponentTypeSpecification(type);

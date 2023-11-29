@@ -78,6 +78,12 @@ export const OpenAllBooleansUrl: Story = {
   },
 };
 
+export const OpenAllComponentsUrl: Story = {
+  args: {
+    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Components)),
+  },
+};
+
 export const OpenAllEntitiesUrl: Story = {
   args: {
     initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Entities)),
@@ -105,12 +111,6 @@ export const OpenAllRichTextsUrl: Story = {
 export const OpenAllStringsUrl: Story = {
   args: {
     initialUrlSearchParams: urlFor(Object.values(CatalogEntities.Strings)),
-  },
-};
-
-export const OpenAllValueItemsUrl: Story = {
-  args: {
-    initialUrlSearchParams: urlFor(Object.values(CatalogEntities.ValueItems)),
   },
 };
 

@@ -813,7 +813,7 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state.activeEntityEditorScrollSignal).toBe(2);
   });
 
-  test('required string fields value item place in normal and adminOnly fields', async () => {
+  test('required string fields component place in normal and adminOnly fields', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
@@ -848,7 +848,7 @@ describe('EntityEditorReducer scenarios', () => {
       state,
       new EntityEditorActions.SetField(id, 'adminOnly', { type: 'RequiredString', required: null }),
     );
-    expect(state).toMatchSnapshot('2 Setting adminOnly field to empty value item');
+    expect(state).toMatchSnapshot('2 Setting adminOnly field to empty component');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
     expect(state.drafts[0].hasPublishErrors).toBe(false);
     expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);
@@ -858,7 +858,7 @@ describe('EntityEditorReducer scenarios', () => {
       state,
       new EntityEditorActions.SetField(id, 'normal', { type: 'RequiredString', required: null }),
     );
-    expect(state).toMatchSnapshot('3 Setting normal field to empty value item');
+    expect(state).toMatchSnapshot('3 Setting normal field to empty component');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
     expect(state.drafts[0].hasPublishErrors).toBe(true);
     expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);

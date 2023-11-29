@@ -350,7 +350,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
       {
         richText: createRichText([
           createRichTextComponentNode({ type: 'AdminOnlyValue' }),
-          createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')]),
+          createRichTextHeadingNode('h1', [createRichTextTextNode('After component')]),
         ]),
       },
       { publish: true },
@@ -362,7 +362,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
   assertSame(publishedEntity.info.valid, false);
   assertEquals(
     publishedEntity.fields.richText,
-    createRichText([createRichTextHeadingNode('h1', [createRichTextTextNode('After value item')])]),
+    createRichText([createRichTextHeadingNode('h1', [createRichTextTextNode('After component')])]),
   );
 }
 

@@ -35,7 +35,7 @@ const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
 }).valueOrThrow();
 
 describe('applySchemaMigrationsToFields renameField', () => {
-  test('nested value item', () => {
+  test('nested component', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -94,7 +94,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
     `);
   });
 
-  test('value item in rich text', () => {
+  test('component in rich text', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -148,7 +148,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
 });
 
 describe('applySchemaMigrationsToFields deleteField', () => {
-  test('nested value item', () => {
+  test('nested component', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -185,7 +185,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       `);
   });
 
-  test('value item in rich text', () => {
+  test('component in rich text', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -230,7 +230,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
 });
 
 describe('applySchemaMigrationsToFields renameType', () => {
-  test('nested value item', () => {
+  test('nested component', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -276,7 +276,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
     `);
   });
 
-  test('value item list', () => {
+  test('component list', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -308,7 +308,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
     `);
   });
 
-  test('value item in rich text', () => {
+  test('component in rich text', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
@@ -349,7 +349,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
 });
 
 describe('applySchemaMigrationsToFields deleteType', () => {
-  test('nested value item', () => {
+  test('nested component', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
     }).valueOrThrow();
@@ -372,7 +372,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
     expect(fieldValues).toMatchSnapshot();
   });
 
-  test('value item list', () => {
+  test('component list', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
     }).valueOrThrow();
@@ -387,7 +387,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
     expect(fieldValues).toMatchSnapshot();
   });
 
-  test('value item in rich text', () => {
+  test('component in rich text', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
     }).valueOrThrow();

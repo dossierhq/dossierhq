@@ -55,7 +55,7 @@ function Screen(): JSX.Element {
           renderItem={(it) => it.name}
           onItemClick={(it) => console.log(it)}
         >
-          Add value item
+          Add component
         </ButtonDropdown>
       </Row>
       <div

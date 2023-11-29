@@ -157,7 +157,7 @@ describe('collectDataFromEntity', () => {
     `);
   });
 
-  test('value item strings', () => {
+  test('component strings', () => {
     expect(
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
@@ -250,7 +250,7 @@ describe('collectDataFromEntity', () => {
     `);
   });
 
-  test('value item locations', () => {
+  test('component locations', () => {
     expect(
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
@@ -383,7 +383,7 @@ describe('collectDataFromEntity', () => {
     `);
   });
 
-  test('value item references', () => {
+  test('component references', () => {
     expect(
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },
@@ -513,7 +513,7 @@ describe('collectDataFromEntity', () => {
     `);
   });
 
-  test('value items value types', () => {
+  test('components component types', () => {
     expect(
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },

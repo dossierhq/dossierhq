@@ -17,7 +17,7 @@ import {
 import * as LegacyCodecFieldTypeAdapters from './LegacyCodecFieldTypeAdapters.js';
 
 /** `optimized` is the original way of encoding/decoding values, using type adapters and saving less
- * data than the json. Used by entity fields, and value items in entities.
+ * data than the json. Used by entity fields, and components in entities.
  * For Rich Text, `json` is used, which means values are saved as is. Value items within rich text
  * are encoded as `json`.
  */

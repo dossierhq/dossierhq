@@ -479,7 +479,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminFoo normalizes empty value item', async () => {
+  test('Create EntityAdminFoo normalizes empty component', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Draft', authKey: 'none' },
       fields: { twoStrings: { type: 'EntityAdminTwoStrings' } },
@@ -2094,7 +2094,7 @@ describe('updateEntity()', () => {
     }
   });
 
-  test('Update EntityAdminFoo normalizes empty value item', async () => {
+  test('Update EntityAdminFoo normalizes empty component', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Draft', authKey: 'none' },
       fields: {},
@@ -2749,7 +2749,7 @@ describe('publishEntities()', () => {
     }
   });
 
-  test('Error: missing value for required field in value item', async () => {
+  test('Error: missing value for required field in component', async () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
@@ -2770,7 +2770,7 @@ describe('publishEntities()', () => {
     }
   });
 
-  test('Error: missing value for required field in value item in rich text', async () => {
+  test('Error: missing value for required field in component in rich text', async () => {
     const createBazResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz name', authKey: 'none' },
       fields: {
