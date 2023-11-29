@@ -9,7 +9,7 @@ import {
 import type {
   FieldDisplayProps,
   PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
+  RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
 import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
@@ -34,7 +34,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
 
   renderPublishedRichTextComponentDisplay({
     value,
-  }: RichTextValueItemDisplayProps): JSX.Element | null {
+  }: RichTextComponentDisplayProps): JSX.Element | null {
     if (value && isPublishedCloudinaryImage(value)) {
       return CloudinaryImageFieldDisplay({ cloudName: CLOUDINARY_CLOUD_NAME, value });
     }

@@ -20,7 +20,7 @@ import {
 import type {
   AdminDossierContextAdapter,
   FieldEditorProps,
-  RichTextValueItemEditorProps,
+  RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
 import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
@@ -54,7 +54,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
     return null;
   }
 
-  renderAdminRichTextComponentEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
     const { value, validationIssues, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({

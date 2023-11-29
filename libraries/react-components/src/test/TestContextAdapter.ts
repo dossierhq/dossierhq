@@ -26,11 +26,11 @@ import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {
   AdminDossierContextAdapter,
-  RichTextValueItemEditorProps,
+  RichTextComponentEditorProps,
 } from '../contexts/AdminDossierContext.js';
 import type {
   PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
+  RichTextComponentDisplayProps,
 } from '../contexts/PublishedDossierContext.js';
 
 interface BackendContext {
@@ -155,14 +155,14 @@ export class TestContextAdapter
     return null;
   }
   renderPublishedRichTextComponentDisplay(
-    _props: RichTextValueItemDisplayProps,
+    _props: RichTextComponentDisplayProps,
   ): JSX.Element | null {
     return null;
   }
   renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
-  renderAdminRichTextComponentEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(_props: RichTextComponentEditorProps): JSX.Element | null {
     return null;
   }
 }

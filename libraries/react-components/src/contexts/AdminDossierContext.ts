@@ -13,7 +13,7 @@ import { createContext } from 'react';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
-export interface RichTextValueItemEditorProps {
+export interface RichTextComponentEditorProps {
   value: Component;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   onChange: (value: Component<string, object>) => void;
@@ -21,7 +21,7 @@ export interface RichTextValueItemEditorProps {
 
 export interface AdminDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null;
-  renderAdminRichTextComponentEditor(props: RichTextValueItemEditorProps): JSX.Element | null;
+  renderAdminRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null;
 }
 
 export interface AdminDossierContextValue {

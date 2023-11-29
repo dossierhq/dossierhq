@@ -11,7 +11,7 @@ import {
   PublishedDossierProvider,
   type FieldDisplayProps,
   type PublishedDossierContextAdapter,
-  type RichTextValueItemDisplayProps,
+  type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.js';
@@ -28,7 +28,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
 
   renderPublishedRichTextComponentDisplay({
     value: _value,
-  }: RichTextValueItemDisplayProps): JSX.Element | null {
+  }: RichTextComponentDisplayProps): JSX.Element | null {
     return null;
   }
 }

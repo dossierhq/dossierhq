@@ -4,7 +4,7 @@ import {
   PublishedDossierProvider,
   type FieldDisplayProps,
   type PublishedDossierContextAdapter,
-  type RichTextValueItemDisplayProps,
+  type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
@@ -49,7 +49,7 @@ class PublishedAdapter implements PublishedDossierContextAdapter {
 
   renderPublishedRichTextComponentDisplay({
     value,
-  }: RichTextValueItemDisplayProps): JSX.Element | null {
+  }: RichTextComponentDisplayProps): JSX.Element | null {
     if (value && isPublishedCloudinaryImage(value)) {
       return CloudinaryImageFieldDisplay({
         cloudName: CLOUDINARY_CLOUD_NAME,

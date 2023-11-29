@@ -1215,7 +1215,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "RichTextValueItemEditorProps",
+                "text": "RichTextComponentEditorProps",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "class-name"
@@ -3225,7 +3225,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " RichTextValueItemEditorProps",
+                "text": " RichTextComponentEditorProps",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3663,7 +3663,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "RichTextValueItemDisplayProps",
+                "text": "RichTextComponentDisplayProps",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "class-name"
@@ -5677,7 +5677,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " RichTextValueItemDisplayProps",
+                "text": " RichTextComponentDisplayProps",
                 "type": "code-highlight",
                 "version": 1
               },

@@ -11,13 +11,13 @@ import { createContext } from 'react';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { DisplayAuthKey } from '../shared/types/DisplayAuthKey.js';
 
-export interface RichTextValueItemDisplayProps {
+export interface RichTextComponentDisplayProps {
   value: Component;
 }
 
 export interface PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null;
-  renderPublishedRichTextComponentDisplay(props: RichTextValueItemDisplayProps): JSX.Element | null;
+  renderPublishedRichTextComponentDisplay(props: RichTextComponentDisplayProps): JSX.Element | null;
 }
 
 export interface PublishedDossierContextValue {

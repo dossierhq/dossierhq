@@ -11,8 +11,8 @@ import type {
   FieldDisplayProps,
   FieldEditorProps,
   PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
-  RichTextValueItemEditorProps,
+  RichTextComponentDisplayProps,
+  RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
@@ -36,7 +36,7 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
     return null;
   }
 
-  renderAdminRichTextComponentEditor(props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
     const { value, validationIssues, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({
@@ -63,7 +63,7 @@ export class ContextAdapter implements AdminDossierContextAdapter, PublishedDoss
 
   renderPublishedRichTextComponentDisplay({
     value,
-  }: RichTextValueItemDisplayProps): JSX.Element | null {
+  }: RichTextComponentDisplayProps): JSX.Element | null {
     if (value && isPublishedCloudinaryImage(value)) {
       return CloudinaryImageFieldDisplay({
         cloudName: CLOUDINARY_CLOUD_NAME,

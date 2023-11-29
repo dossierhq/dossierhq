@@ -15,7 +15,7 @@ import {
   useCachingAdminMiddleware,
   type AdminDossierContextAdapter,
   type FieldEditorProps,
-  type RichTextValueItemEditorProps,
+  type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.ts';
@@ -30,7 +30,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
     return null;
   }
 
-  renderAdminRichTextComponentEditor(_props: RichTextValueItemEditorProps): JSX.Element | null {
+  renderAdminRichTextComponentEditor(_props: RichTextComponentEditorProps): JSX.Element | null {
     return null;
   }
 }

@@ -7,7 +7,7 @@ import {
 import type {
   FieldDisplayProps,
   PublishedDossierContextAdapter,
-  RichTextValueItemDisplayProps,
+  RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
 import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
@@ -25,7 +25,7 @@ class PublishedContextAdapter implements PublishedDossierContextAdapter {
   }
 
   renderPublishedRichTextComponentDisplay(
-    _props: RichTextValueItemDisplayProps,
+    _props: RichTextComponentDisplayProps,
   ): JSX.Element | null {
     return null;
   }
