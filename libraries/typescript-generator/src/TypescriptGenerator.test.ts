@@ -158,7 +158,7 @@ describe('generateTypescriptForSchema', () => {
         adminSchema: AdminSchema.createAndValidate({
           entityTypes: [
             {
-              name: 'ValueTypes',
+              name: 'ComponentTypes',
               fields: [
                 { name: 'component', type: FieldType.Component, required: true },
                 {

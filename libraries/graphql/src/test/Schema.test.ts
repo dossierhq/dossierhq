@@ -479,7 +479,7 @@ describe('List of strings, booleans, locations, numbers and references schema sp
   });
 });
 
-describe('Value type schema spec', () => {
+describe('Component type schema spec', () => {
   const adminSchema = AdminSchema.createAndValidate({
     entityTypes: [
       {

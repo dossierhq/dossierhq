@@ -446,7 +446,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
                 type: FieldType.RichText,
                 entityTypes: ['Entity', 'Entity'],
                 linkEntityTypes: ['Entity', 'Entity'],
-                componentTypes: ['ValueType', 'ValueType'],
+                componentTypes: ['ComponentType', 'ComponentType'],
                 richTextNodes: [
                   ...REQUIRED_RICH_TEXT_NODES,
                   RichTextNodeType.entity,
@@ -457,12 +457,12 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
               {
                 name: 'component',
                 type: FieldType.Component,
-                componentTypes: ['ValueType', 'ValueType'],
+                componentTypes: ['ComponentType', 'ComponentType'],
               },
             ],
           },
         ],
-        componentTypes: [{ name: 'ValueType', fields: [] }],
+        componentTypes: [{ name: 'ComponentType', fields: [] }],
       })
       .valueOrThrow();
 
@@ -1268,7 +1268,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
       ],
       componentTypes: [
         {
-          name: 'ValueType',
+          name: 'ComponentType',
           fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
         },
       ],
@@ -1295,7 +1295,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
       ],
       componentTypes: [
         {
-          name: 'ValueType',
+          name: 'ComponentType',
           fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }],
         },
       ],
@@ -1344,7 +1344,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
       ],
       componentTypes: [
         {
-          name: 'ValueType',
+          name: 'ComponentType',
           fields: [{ name: 'field', type: FieldType.String, index: 'oldIndex' }],
         },
       ],

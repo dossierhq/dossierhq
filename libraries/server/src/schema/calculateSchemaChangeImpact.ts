@@ -19,22 +19,22 @@ export function calculateSchemaChangeImpact(
   {
     deleteEntityTypes: string[];
     renameEntityTypes: Record<string, string>;
-    renameValueTypes: Record<string, string>;
+    renameComponentTypes: Record<string, string>;
     deleteUniqueValueIndexes: string[];
     renameUniqueValueIndexes: Record<string, string>;
     dirtyEntitiesSelector: DatabaseManagementMarkEntitiesDirtySelectorArg | null;
-    deleteValueTypes: string[];
+    deleteComponentTypes: string[];
   },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const validateEntityTypes = new Set<string>();
   const indexEntityTypes = new Set<string>();
-  const validateValueTypes = new Set<string>();
-  const indexValueTypes = new Set<string>();
+  const validateComponentTypes = new Set<string>();
+  const indexComponentTypes = new Set<string>();
   const deleteEntityTypes: string[] = [];
   const renameEntityTypes: Record<string, string> = {};
-  const deleteValueTypes: string[] = [];
-  const renameValueTypes: Record<string, string> = {};
+  const deleteComponentTypes: string[] = [];
+  const renameComponentTypes: Record<string, string> = {};
   const deleteUniqueValueIndexes: string[] = [];
   const renameUniqueValueIndexes: Record<string, string> = {};
 
@@ -42,8 +42,8 @@ export function calculateSchemaChangeImpact(
 
   for (const isEntityType of [true, false]) {
     const previousTypes = isEntityType ? previous.spec.entityTypes : previous.spec.componentTypes;
-    const validateTypes = isEntityType ? validateEntityTypes : validateValueTypes;
-    const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
+    const validateTypes = isEntityType ? validateEntityTypes : validateComponentTypes;
+    const indexTypes = isEntityType ? indexEntityTypes : indexComponentTypes;
 
     for (const previousType of previousTypes) {
       // Apply migrations on type
@@ -75,7 +75,7 @@ export function calculateSchemaChangeImpact(
         if (isEntityType) {
           deleteEntityTypes.push(previousType.name);
         } else {
-          deleteValueTypes.push(previousType.name);
+          deleteComponentTypes.push(previousType.name);
         }
         continue;
       }
@@ -85,7 +85,7 @@ export function calculateSchemaChangeImpact(
         if (isEntityType) {
           renameEntityTypes[previousType.name] = nextType.name;
         } else {
-          renameValueTypes[previousType.name] = nextType.name;
+          renameComponentTypes[previousType.name] = nextType.name;
         }
       }
 
@@ -112,7 +112,7 @@ export function calculateSchemaChangeImpact(
     switch (action) {
       case 'deleteField': {
         const isEntityType = 'entityType' in actionSpec;
-        const indexTypes = isEntityType ? indexEntityTypes : indexValueTypes;
+        const indexTypes = isEntityType ? indexEntityTypes : indexComponentTypes;
         const typeName = isEntityType ? actionSpec.entityType : actionSpec.componentType;
         indexTypes.add(typeName);
         break;
@@ -149,23 +149,23 @@ export function calculateSchemaChangeImpact(
   if (
     validateEntityTypes.size !== 0 ||
     indexEntityTypes.size !== 0 ||
-    validateValueTypes.size !== 0 ||
-    indexValueTypes.size !== 0
+    validateComponentTypes.size !== 0 ||
+    indexComponentTypes.size !== 0
   ) {
     dirtyEntitiesSelector = {
       validateEntityTypes: [...validateEntityTypes],
-      validateValueTypes: [...validateValueTypes],
+      validateComponentTypes: [...validateComponentTypes],
       indexEntityTypes: [...indexEntityTypes],
-      indexValueTypes: [...indexValueTypes],
+      indexComponentTypes: [...indexComponentTypes],
     };
   }
 
   return ok({
     deleteEntityTypes,
     renameEntityTypes,
-    renameValueTypes,
+    renameComponentTypes,
     dirtyEntitiesSelector,
-    deleteValueTypes,
+    deleteComponentTypes,
     deleteUniqueValueIndexes,
     renameUniqueValueIndexes,
   });

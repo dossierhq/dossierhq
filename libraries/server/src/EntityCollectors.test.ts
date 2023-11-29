@@ -537,7 +537,7 @@ describe('collectDataFromEntity', () => {
     `);
   });
 
-  test('rich text value type', () => {
+  test('rich text component type', () => {
     expect(
       collectDataFromEntity(schema, {
         info: { type: 'EntityCodecFoo' },

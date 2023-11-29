@@ -910,7 +910,7 @@ describe('adminEntity()', () => {
     }
   });
 
-  test('Query value type', async () => {
+  test('Query component type', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'QueryAdminBar', name: 'Bar name', authKey: 'none' },
@@ -1491,7 +1491,7 @@ describe('searchAdminEntities()', () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
     const [fooEntity] = fooEntities;
 
-    const source = `query QueryWithValueTypesAndLinksTo($id: ID!) {
+    const source = `query QueryWithComponentTypesAndLinksTo($id: ID!) {
       adminEntities(query: { linksTo: {id: $id }, componentTypes: [QueryAdminStringedBar] }) {
         edges {
           node {

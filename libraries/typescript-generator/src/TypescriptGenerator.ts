@@ -38,7 +38,7 @@ export function generateTypescriptForSchema({
       ...generateAllTypesUnion(adminSchema.spec.componentTypes, 'Admin', 'Component'),
     );
     for (const componentSpec of adminSchema.spec.componentTypes) {
-      paragraphs.push(...generateAdminValueType(context, componentSpec));
+      paragraphs.push(...generateAdminComponentType(context, componentSpec));
     }
   }
   if (publishedSchema) {
@@ -54,7 +54,7 @@ export function generateTypescriptForSchema({
       ...generateAllTypesUnion(publishedSchema.spec.componentTypes, 'Published', 'Component'),
     );
     for (const componentSpec of publishedSchema.spec.componentTypes) {
-      paragraphs.push(...generatePublishedValueType(context, componentSpec));
+      paragraphs.push(...generatePublishedComponentType(context, componentSpec));
     }
   }
 
@@ -182,21 +182,21 @@ function generateEntityType(
   return paragraphs;
 }
 
-function generateAdminValueType(
+function generateAdminComponentType(
   context: GeneratorContext,
   componentSpec: AdminComponentTypeSpecification,
 ) {
-  return generateValueType(context, componentSpec, 'Admin');
+  return generateComponentType(context, componentSpec, 'Admin');
 }
 
-function generatePublishedValueType(
+function generatePublishedComponentType(
   context: GeneratorContext,
   componentSpec: PublishedComponentTypeSpecification,
 ) {
-  return generateValueType(context, componentSpec, 'Published');
+  return generateComponentType(context, componentSpec, 'Published');
 }
 
-function generateValueType(
+function generateComponentType(
   context: GeneratorContext,
   componentSpec: PublishedComponentTypeSpecification,
   adminOrPublished: 'Admin' | 'Published',

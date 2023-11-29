@@ -806,7 +806,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with EntityAdminTwoStrings value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminTwoStrings component type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: { twoStrings: { type: 'EntityAdminTwoStrings', one: 'First', two: 'Second' } },
@@ -845,7 +845,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with list of EntityAdminTwoStrings value type', async () => {
+  test('Create EntityAdminBaz with list of EntityAdminTwoStrings component type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -892,7 +892,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with EntityAdminBooleanString value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminBooleanString component type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -933,7 +933,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with EntityAdminStringReference value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminStringReference component type', async () => {
     const createBarResult = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar', authKey: 'none' },
       fields: {},
@@ -996,7 +996,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with EntityAdminListFields value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminListFields component type', async () => {
     const createBar1Result = await client.createEntity({
       info: { type: 'EntityAdminBar', name: 'Bar 1', authKey: 'none' },
       fields: {},
@@ -1100,7 +1100,7 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Create EntityAdminBaz with EntityAdminNested value type', async () => {
+  test('Create EntityAdminBaz with EntityAdminNested component type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -1348,7 +1348,7 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: value type missing type', async () => {
+  test('Error: component type missing type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -1362,7 +1362,7 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: value type with invalid type', async () => {
+  test('Error: component type with invalid type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -1376,7 +1376,7 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: value type with wrong type', async () => {
+  test('Error: component type with wrong type', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -1390,7 +1390,7 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: value type with invalid field', async () => {
+  test('Error: component type with invalid field', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -1530,7 +1530,7 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: single value type when list expected', async () => {
+  test('Error: single component type when list expected', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {
@@ -1544,7 +1544,7 @@ describe('createEntity()', () => {
     );
   });
 
-  test('Error: list of value type when single item expected', async () => {
+  test('Error: list of component type when single item expected', async () => {
     const createResult = await client.createEntity({
       info: { type: 'EntityAdminBaz', name: 'Baz', authKey: 'none' },
       fields: {

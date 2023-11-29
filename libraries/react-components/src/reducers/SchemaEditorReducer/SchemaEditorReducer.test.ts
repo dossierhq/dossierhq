@@ -497,7 +497,7 @@ describe('ChangeFieldAllowedRichTextNodesAction', () => {
   });
 });
 
-describe('ChangeFieldAllowedValueTypesAction', () => {
+describe('ChangeFieldAllowedComponentTypes', () => {
   test('change component types of a new component field', () => {
     const state = reduceSchemaEditorStateActions(
       initializeSchemaEditorState(),
@@ -1244,7 +1244,7 @@ describe('DeleteIndexAction', () => {
           ],
           componentTypes: [
             {
-              name: 'ValueType',
+              name: 'ComponentType',
               fields: [{ name: 'fieldB', type: FieldType.String, index: 'anIndex' }],
             },
           ],

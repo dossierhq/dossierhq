@@ -735,7 +735,7 @@ describe('create*Entity()', () => {
     }
   });
 
-  test('Create with value type with reference', async () => {
+  test('Create with component with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },

@@ -113,7 +113,7 @@ export function SchemaFieldEditor({
     (!fieldDraft.richTextNodesWithPlaceholders ||
       fieldDraft.richTextNodesWithPlaceholders.length === 0 ||
       fieldDraft.richTextNodesWithPlaceholders?.includes(RichTextNodeType.entityLink));
-  const showValueTypes =
+  const showComponentTypes =
     fieldDraft.type === FieldType.Component ||
     (fieldDraft.type === FieldType.RichText &&
       (!fieldDraft.richTextNodesWithPlaceholders ||
@@ -314,7 +314,7 @@ export function SchemaFieldEditor({
             </Field.BodyColumn>
           </Field>
         ) : null}
-        {showValueTypes ? (
+        {showComponentTypes ? (
           <Field horizontal>
             <Field.LabelColumn>
               <Field.Label>Component types</Field.Label>
@@ -328,7 +328,7 @@ export function SchemaFieldEditor({
                     schemaEditorState={schemaEditorState}
                     dispatchSchemaEditorState={dispatchSchemaEditorState}
                   />
-                  {/* <FieldValueTypeDisplay componentTypes={fieldDraft.componentTypes ?? []} /> */}
+                  {/* <FieldComponentTypeDisplay componentTypes={fieldDraft.componentTypes ?? []} /> */}
                 </Field.Control>
               </Field>
             </Field.BodyColumn>
@@ -373,7 +373,7 @@ function FieldTypeDisplay({ type, list }: { type: FieldType; list: boolean }) {
 //   );
 // }
 
-// function FieldValueTypeDisplay({ componentTypes }: { componentTypes: string[] }) {
+// function FieldComponentTypeDisplay({ componentTypes }: { componentTypes: string[] }) {
 //   return (
 //     <TagInput>
 //       {componentTypes.map((componentType) => (

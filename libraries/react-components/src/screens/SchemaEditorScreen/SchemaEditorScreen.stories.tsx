@@ -1,4 +1,7 @@
-import type { AdminEntityTypeSpecification, AdminValueTypeSpecification } from '@dossierhq/core';
+import type {
+  AdminEntityTypeSpecification,
+  AdminComponentTypeSpecification,
+} from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useContext } from 'react';
@@ -54,7 +57,7 @@ function SchemaDebugFooter() {
   const { adminClient } = useContext(AdminDossierContext);
   const { schema } = useAdminSchema(adminClient);
 
-  function typeToString(type: AdminEntityTypeSpecification | AdminValueTypeSpecification) {
+  function typeToString(type: AdminEntityTypeSpecification | AdminComponentTypeSpecification) {
     return `${type.name} (${type.fields.map((it) => it.name).join(', ')})`;
   }
 

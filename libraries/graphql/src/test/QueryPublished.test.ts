@@ -594,7 +594,7 @@ describe('node()', () => {
     }
   });
 
-  test('Query value type', async () => {
+  test('Query component type', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
       info: { type: 'QueryBar', name: 'Bar name', authKey: 'none' },

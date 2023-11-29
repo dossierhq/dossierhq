@@ -46,13 +46,13 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
   updateSchemaSpecification_removeAllFieldsFromMigrationComponent,
-  updateSchemaSpecification_removeAllTemporaryValueTypes,
+  updateSchemaSpecification_removeAllTemporaryComponentTypes,
   //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes, add when we can delete entities
   updateSchemaSpecification_updateSchemaEvent,
   updateSchemaSpecification_concurrentUpdates,
   updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
-  updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid,
-  updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex,
+  updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEntityInvalid,
+  updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex,
   updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid,
   updateSchemaSpecification_adminOnlyFieldRemovesFromIndex,
   updateSchemaSpecification_deleteFieldOnEntity,
@@ -74,7 +74,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType,
   updateSchemaSpecification_renameTypeOnComponent,
   updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnotherType,
-  updateSchemaSpecification_renameTypeOnComponentUpdatesValueTypeIndexes,
+  updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTypeIndexes,
   updateSchemaSpecification_renameFieldAndRenameTypeOnEntity,
   updateSchemaSpecification_renameTypeAndRenameFieldOnEntity,
   updateSchemaSpecification_renameFieldAndRenameTypeOnComponent,
@@ -150,7 +150,7 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_removeAllTemporaryValueTypes({
+async function updateSchemaSpecification_removeAllTemporaryComponentTypes({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -333,7 +333,7 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityInvalid({
+async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEntityInvalid({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -387,7 +387,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
+async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -1415,13 +1415,13 @@ async function updateSchemaSpecification_deleteTypeOnComponent({ server }: Schem
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
-    // First add new value type
+    // First add new component type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the new value type
+    // Create entity with the new component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
@@ -1482,7 +1482,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the value type
+    // Create entity with the component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
@@ -1494,7 +1494,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
       )
     ).valueOrThrow();
 
-    // Delete/replace the value type
+    // Delete/replace the component type
     const secondUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
         { name: typeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
@@ -1586,7 +1586,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
       },
     ]);
 
-    // Delete the value type
+    // Delete the component type
     const thirdUpdateResult = await adminClient.updateSchemaSpecification({
       migrations: [
         {
@@ -1871,13 +1871,13 @@ async function updateSchemaSpecification_renameTypeOnComponent({ server }: Schem
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
-    // First add new value type
+    // First add new component type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the new value type
+    // Create entity with the new component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
@@ -1946,7 +1946,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the value type
+    // Create entity with the component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
@@ -1958,7 +1958,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
       )
     ).valueOrThrow();
 
-    // Rename/replace the value type
+    // Rename/replace the component type
     const secondUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
         { name: oldTypeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
@@ -2014,7 +2014,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
   } as AppAdminComponent);
 }
 
-async function updateSchemaSpecification_renameTypeOnComponentUpdatesValueTypeIndexes({
+async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTypeIndexes({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -2024,13 +2024,13 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesValueTypeIn
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
-    // First add new value type
+    // First add new component type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the new value type
+    // Create entity with the new component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
@@ -2074,7 +2074,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesValueTypeIn
   });
   const reference = result.valueOrThrow();
 
-  // No processing to check that the value types index is updated as part of the schema update
+  // No processing to check that the component types index is updated as part of the schema update
 
   // Check that it's in the index
   const adminCountAfterUpdateResult = await countSearchResultWithEntity(
@@ -2248,7 +2248,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
-    // First add new value type
+    // First add new component type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
         { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
@@ -2256,7 +2256,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the new value type
+    // Create entity with the new component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
@@ -2327,7 +2327,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
-    // First add new value type
+    // First add new component type
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
         { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
@@ -2335,7 +2335,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
-    // Create entity with the new value type
+    // Create entity with the new component type
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {

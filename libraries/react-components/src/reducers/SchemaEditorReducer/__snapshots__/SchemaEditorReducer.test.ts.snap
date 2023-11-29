@@ -876,6 +876,136 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
 }
 `;
 
+exports[`ChangeFieldAllowedComponentTypes > change component types of a existing component field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "component",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "component",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a existing component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "name": "component",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a new component field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "status": "new",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a new component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
 exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new entity field 1`] = `
 {
   "activeSelector": null,
@@ -1428,136 +1558,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
       ],
       "name": "Foo",
       "nameField": null,
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing component field 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [
-        "component",
-      ],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Foo",
-          ],
-          "list": false,
-          "name": "component",
-          "required": false,
-          "status": "changed",
-          "type": "Component",
-        },
-      ],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-  "deletedComponentTypes": [],
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-}
-`;
-
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a existing component field 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Foo",
-          ],
-          "name": "component",
-          "required": false,
-          "type": "Component",
-        },
-      ],
-      "name": "Foo",
-    },
-  ],
-  "version": 2,
-}
-`;
-
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a new component field 1`] = `
-{
-  "activeSelector": null,
-  "activeSelectorEditorScrollSignal": 0,
-  "activeSelectorMenuScrollSignal": 0,
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "deletedFields": [],
-      "existingAdminOnly": false,
-      "existingFieldOrder": [],
-      "existingName": "Foo",
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Foo",
-          ],
-          "list": false,
-          "name": "foo",
-          "required": false,
-          "status": "new",
-          "type": "Component",
-        },
-      ],
-      "kind": "component",
-      "name": "Foo",
-      "status": "changed",
-    },
-  ],
-  "deletedComponentTypes": [],
-  "deletedEntityTypes": [],
-  "deletedIndexes": [],
-  "entityTypes": [],
-  "indexes": [],
-  "patterns": [],
-  "schemaWillBeUpdatedDueToSave": false,
-  "status": "changed",
-}
-`;
-
-exports[`ChangeFieldAllowedValueTypesAction > change component types of a new component field 2`] = `
-{
-  "componentTypes": [
-    {
-      "adminOnly": false,
-      "fields": [
-        {
-          "adminOnly": false,
-          "componentTypes": [
-            "Foo",
-          ],
-          "name": "foo",
-          "required": false,
-          "type": "Component",
-        },
-      ],
-      "name": "Foo",
     },
   ],
   "version": 2,
@@ -3658,7 +3658,7 @@ exports[`DeleteIndexAction > delete index used 1`] = `
       "existingFieldOrder": [
         "fieldB",
       ],
-      "existingName": "ValueType",
+      "existingName": "ComponentType",
       "fields": [
         {
           "adminOnly": false,
@@ -3674,7 +3674,7 @@ exports[`DeleteIndexAction > delete index used 1`] = `
         },
       ],
       "kind": "component",
-      "name": "ValueType",
+      "name": "ComponentType",
       "status": "changed",
     },
   ],
@@ -3739,7 +3739,7 @@ exports[`DeleteIndexAction > delete index used 2`] = `
           "values": [],
         },
       ],
-      "name": "ValueType",
+      "name": "ComponentType",
     },
   ],
   "entityTypes": [

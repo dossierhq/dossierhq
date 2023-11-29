@@ -260,9 +260,9 @@ export interface DatabaseManagementGetNextDirtyEntityPayload
 
 export interface DatabaseManagementMarkEntitiesDirtySelectorArg {
   validateEntityTypes: string[];
-  validateValueTypes: string[];
+  validateComponentTypes: string[];
   indexEntityTypes: string[];
-  indexValueTypes: string[];
+  indexComponentTypes: string[];
 }
 
 export interface DatabaseManagementMarkEntitiesDirtyPayload {

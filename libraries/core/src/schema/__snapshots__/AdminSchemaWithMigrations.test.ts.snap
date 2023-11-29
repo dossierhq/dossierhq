@@ -43,7 +43,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
     {
       "adminOnly": false,
       "fields": [],
-      "name": "ValueType",
+      "name": "ComponentType",
     },
   ],
   "entityTypes": [
@@ -82,7 +82,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
         {
           "adminOnly": false,
           "componentTypes": [
-            "ValueType",
+            "ComponentType",
           ],
           "entityTypes": [
             "Entity",
@@ -108,7 +108,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
         {
           "adminOnly": false,
           "componentTypes": [
-            "ValueType",
+            "ComponentType",
           ],
           "list": false,
           "name": "component",
@@ -850,7 +850,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
           "values": [],
         },
       ],
-      "name": "ValueType",
+      "name": "ComponentType",
     },
   ],
   "entityTypes": [
@@ -900,7 +900,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
           "values": [],
         },
       ],
-      "name": "ValueType",
+      "name": "ComponentType",
     },
   ],
   "entityTypes": [
@@ -1563,7 +1563,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
           "values": [],
         },
       ],
-      "name": "ValueType",
+      "name": "ComponentType",
     },
   ],
   "entityTypes": [

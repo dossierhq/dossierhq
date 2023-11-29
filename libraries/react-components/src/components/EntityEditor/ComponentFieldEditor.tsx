@@ -134,9 +134,15 @@ export function AddComponentListItemButton({
   fieldSpec: AdminFieldSpecification<ComponentFieldSpecification>;
   onAddItem: (value: Component | null) => void;
 }) {
-  const handleValueTypeSelected = useCallback((type: string) => onAddItem({ type }), [onAddItem]);
+  const handleComponentTypeSelected = useCallback(
+    (type: string) => onAddItem({ type }),
+    [onAddItem],
+  );
   return (
-    <AddComponentButton fieldSpec={fieldSpec} onComponentTypeSelected={handleValueTypeSelected} />
+    <AddComponentButton
+      fieldSpec={fieldSpec}
+      onComponentTypeSelected={handleComponentTypeSelected}
+    />
   );
 }
 

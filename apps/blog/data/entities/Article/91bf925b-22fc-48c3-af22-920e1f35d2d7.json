@@ -436,7 +436,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "It's possible to limit a value type to be ",
+                "text": "It's possible to limit a component type to be ",
                 "type": "text",
                 "version": 1
               },
@@ -472,7 +472,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "The rest of the value type is defined as ",
+                "text": "The rest of the component type is defined as ",
                 "type": "text",
                 "version": 1
               },

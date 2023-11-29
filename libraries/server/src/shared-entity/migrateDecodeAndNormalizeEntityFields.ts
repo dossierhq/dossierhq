@@ -97,7 +97,7 @@ const DECODE_TRANSFORMER: ContentTransformer<
     if (isComponentItemField(fieldSpec, value)) {
       const componentType = value?.type;
       if (componentType && !schema.getComponentTypeSpecification(componentType)) {
-        // Could be that the value type was deleted or made adminOnly (when decoding published entities)
+        // Could be that the component type was deleted or made adminOnly (when decoding published entities)
         return ok(null);
       }
     }
@@ -107,7 +107,7 @@ const DECODE_TRANSFORMER: ContentTransformer<
     if (isRichTextComponentNode(node)) {
       const componentType = node.data.type;
       if (componentType && !schema.getComponentTypeSpecification(componentType)) {
-        // Could be that the value type was deleted or made adminOnly (when decoding published entities)
+        // Could be that the component type was deleted or made adminOnly (when decoding published entities)
         return ok(null);
       }
     }

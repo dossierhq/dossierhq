@@ -178,7 +178,7 @@ async function calculateAndUpdateSchemaSpec(
   const renameTypesResult = await databaseAdapter.schemaUpdateRenameTypes(
     context,
     impactResult.value.renameEntityTypes,
-    impactResult.value.renameValueTypes,
+    impactResult.value.renameComponentTypes,
   );
   if (renameTypesResult.isError()) return renameTypesResult;
 
@@ -212,12 +212,13 @@ async function calculateAndUpdateSchemaSpec(
     );
   }
 
-  // Delete value types from indexes
-  const deleteValueTypesResult = await databaseAdapter.schemaUpdateDeleteComponentTypesFromIndexes(
-    context,
-    impactResult.value.deleteValueTypes,
-  );
-  if (deleteValueTypesResult.isError()) return deleteValueTypesResult;
+  // Delete component types from indexes
+  const deleteComponentTypesResult =
+    await databaseAdapter.schemaUpdateDeleteComponentTypesFromIndexes(
+      context,
+      impactResult.value.deleteComponentTypes,
+    );
+  if (deleteComponentTypesResult.isError()) return deleteComponentTypesResult;
 
   logger.info(
     'Updated schema, new schema has %d entity types, %d component types, %d patterns, %d indexes',

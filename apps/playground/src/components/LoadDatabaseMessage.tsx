@@ -122,7 +122,7 @@ export function LoadDatabaseMessage({ className }: Props) {
           Load Star Wars
         </Button>
         <Text textStyle="headline5">Example: Catalog</Text>
-        <p>An example database with most variations of entity and value types.</p>
+        <p>An example database with most variations of entity and component types.</p>
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}

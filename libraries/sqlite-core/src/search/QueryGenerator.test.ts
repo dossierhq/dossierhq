@@ -440,7 +440,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query no value types, i.e. include all', () => {
+  test('query no component types, i.e. include all', () => {
     const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
@@ -467,7 +467,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query one value type', () => {
+  test('query one component type', () => {
     const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
@@ -495,7 +495,7 @@ describe('searchAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('query two value types', () => {
+  test('query two component types', () => {
     const databaseAdapter = createMockDatabase();
     expect(
       searchAdminEntitiesQuery(
@@ -1123,7 +1123,7 @@ describe('searchAdminEntitiesQuery()', () => {
     expectErrorResult(result, ErrorType.BadRequest, 'Can’t find entity type in query: Invalid');
   });
 
-  test('Error: invalid value type in query', () => {
+  test('Error: invalid component type in query', () => {
     const databaseAdapter = createMockDatabase();
     const result = searchAdminEntitiesQuery(
       databaseAdapter,
@@ -1545,7 +1545,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query no value type, i.e. include all', () => {
+  test('query no component type, i.e. include all', () => {
     const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
@@ -1572,7 +1572,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query one value type', () => {
+  test('query one component type', () => {
     const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
@@ -1600,7 +1600,7 @@ describe('searchPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('query two value types', () => {
+  test('query two component types', () => {
     const databaseAdapter = createMockDatabase();
     expect(
       searchPublishedEntitiesQuery(
@@ -2096,7 +2096,7 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('no value types => all', () => {
+  test('no component types => all', () => {
     expect(totalAdminEntitiesQuery(adminSchema, authKeysNone, { componentTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
@@ -2110,7 +2110,7 @@ describe('totalAdminEntitiesQuery()', () => {
       `);
   });
 
-  test('one value type', () => {
+  test('one component type', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         componentTypes: ['QueryGeneratorValueOne'],
@@ -2128,7 +2128,7 @@ describe('totalAdminEntitiesQuery()', () => {
     `);
   });
 
-  test('two value types', () => {
+  test('two component types', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysNone, {
         componentTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],
@@ -2435,7 +2435,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('no value types => all', () => {
+  test('no component types => all', () => {
     expect(totalPublishedEntitiesQuery(publishedSchema, authKeysNone, { componentTypes: [] }))
       .toMatchInlineSnapshot(`
         OkResult {
@@ -2449,7 +2449,7 @@ describe('totalPublishedEntitiesQuery()', () => {
       `);
   });
 
-  test('one value type', () => {
+  test('one component type', () => {
     expect(
       totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         componentTypes: ['QueryGeneratorValueOne'],
@@ -2467,7 +2467,7 @@ describe('totalPublishedEntitiesQuery()', () => {
     `);
   });
 
-  test('two value types', () => {
+  test('two component types', () => {
     expect(
       totalPublishedEntitiesQuery(publishedSchema, authKeysNone, {
         componentTypes: ['QueryGeneratorValueOne', 'QueryGeneratorValueTwo'],

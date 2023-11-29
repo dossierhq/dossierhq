@@ -101,23 +101,23 @@ function useSearchStateToTypeSelectorAdapter(
       }
 
       const selectedEntityTypeIds: string[] = [];
-      const selectedValueTypeIds: string[] = [];
+      const selectedComponentTypeIds: string[] = [];
       for (const id of newState.selectedIds) {
         const item = newState.items.find((it) => it.id === id);
         if (item?.kind === 'entity') {
           selectedEntityTypeIds.push(id);
         } else if (item?.kind === 'component') {
-          selectedValueTypeIds.push(id);
+          selectedComponentTypeIds.push(id);
         }
       }
 
       if (
         !isEqual(selectedEntityTypeIds, searchEntityState.query.entityTypes) ||
-        !isEqual(selectedValueTypeIds, searchEntityState.query.componentTypes)
+        !isEqual(selectedComponentTypeIds, searchEntityState.query.componentTypes)
       ) {
         dispatchSearchEntityState(
           new SearchEntityStateActions.SetQuery(
-            { entityTypes: selectedEntityTypeIds, componentTypes: selectedValueTypeIds },
+            { entityTypes: selectedEntityTypeIds, componentTypes: selectedComponentTypeIds },
             { partial: true, resetPagingIfModifying: true },
           ),
         );

@@ -2106,6 +2106,1257 @@ type Mutation {
 }"
 `;
 
+exports[`Component type schema spec > Generated QL schema (admin only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+input EntityReferenceInput {
+  id: ID!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+scalar DateTime
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
+enum AdminEntityType {
+  Bar
+  Foo
+}
+
+enum AdminComponentType {
+  NestedValue
+  ValueList
+  ValueOne
+}
+
+enum AdminEntityStatus {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  authKey: String!
+  status: AdminEntityStatus!
+  valid: Boolean!
+  validPublished: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+  authKey: String!
+}
+
+enum AdminEntityCreateEffect {
+  created
+  createdAndPublished
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+  authKey: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+  authKey: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  createdAndPublished
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
+enum AdminEntityQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminEntitiesSharedQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  componentTypes: [AdminComponentType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminEntitiesQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  componentTypes: [AdminComponentType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: AdminEntityQueryOrder
+  reverse: Boolean
+}
+
+input EntityVersionReferenceInput {
+  id: ID!
+  version: Int!
+}
+
+interface AdminValue {
+  type: AdminComponentType!
+}
+
+type AdminRichText {
+  root: JSONObject!
+  entities: [AdminEntity]
+}
+
+\\"\\"\\"
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSONObject
+
+input AdminRichTextInput {
+  root: JSONObject!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+enum AdminEntityPublishEffect {
+  published
+  none
+}
+
+type AdminEntityPublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityPublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnpublishEffect {
+  unpublished
+  none
+}
+
+type AdminEntityUnpublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnpublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityArchiveEffect {
+  archived
+  none
+}
+
+type AdminEntityArchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityArchiveEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnarchiveEffect {
+  unarchived
+  none
+}
+
+type AdminEntityUnarchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnarchiveEffect!
+  updatedAt: DateTime!
+}
+
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
+type AdminFooFields {
+  valueOne: AdminValueOne
+  unspecifiedValue: AdminValue
+  valueOneOrList: _AdminValueListOrValueOne
+  nestedValue: AdminNestedValue
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  valueOneJson: String
+  valueOne: AdminValueOneInput
+  unspecifiedValueJson: String
+  valueOneOrListJson: String
+  nestedValueJson: String
+  nestedValue: AdminNestedValueInput
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type AdminNestedValue implements AdminValue {
+  type: AdminComponentType!
+  text: String
+  child: AdminNestedValue
+}
+
+input AdminNestedValueInput {
+  type: AdminComponentType!
+  text: String
+  childJson: String
+  child: AdminNestedValueInput
+}
+
+type AdminValueList implements AdminValue {
+  type: AdminComponentType!
+  one: [String!]
+  two: [AdminBar!]
+  three: [Location!]
+  four: [Boolean!]
+}
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
+
+input AdminValueListInput {
+  type: AdminComponentType!
+  one: [String!]
+  two: [EntityReferenceInput!]
+  three: [Location!]
+  four: [Boolean!]
+}
+
+type AdminValueOne implements AdminValue {
+  type: AdminComponentType!
+  one: String
+  two: AdminBar
+  three: Location
+  four: Boolean
+}
+
+input AdminValueOneInput {
+  type: AdminComponentType!
+  one: String
+  two: EntityReferenceInput
+  three: Location
+  four: Boolean
+}
+
+enum _AdminValueListOrValueOne {
+  AdminValueList
+  AdminValueOne
+}
+
+type Query {
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
+}
+
+type Mutation {
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
+}"
+`;
+
+exports[`Component type schema spec > Generated QL schema (published only) 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+input EntityReferenceInput {
+  id: ID!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum PublishedEntityType {
+  Bar
+  Foo
+}
+
+enum PublishedComponentType {
+  NestedValue
+  ValueList
+  ValueOne
+}
+
+type PublishedEntityInfo {
+  name: String!
+  authKey: String!
+  createdAt: DateTime!
+  valid: Boolean!
+}
+
+scalar DateTime
+
+interface PublishedEntity implements Node {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+interface PublishedValue {
+  type: PublishedComponentType!
+}
+
+type PublishedRichText {
+  root: JSONObject!
+  entities: [PublishedEntity]
+}
+
+\\"\\"\\"
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSONObject
+
+type PublishedEntityEdge {
+  node: PublishedEntity
+  cursor: String!
+}
+
+type PublishedEntityConnection {
+  pageInfo: PageInfo!
+  edges: [PublishedEntityEdge]
+  totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
+enum PublishedEntityQueryOrder {
+  createdAt
+  name
+}
+
+input PublishedQueryInput {
+  authKeys: [String!]
+  entityTypes: [PublishedEntityType!]
+  componentTypes: [PublishedComponentType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedEntitiesQueryInput {
+  authKeys: [String!]
+  entityTypes: [PublishedEntityType!]
+  componentTypes: [PublishedComponentType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: PublishedEntityQueryOrder
+  reverse: Boolean
+}
+
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+type PublishedFooFields {
+  valueOne: PublishedValueOne
+  unspecifiedValue: PublishedValue
+  valueOneOrList: _PublishedValueListOrValueOne
+  nestedValue: PublishedNestedValue
+}
+
+type PublishedFoo implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
+}
+
+type PublishedNestedValue implements PublishedValue {
+  type: PublishedComponentType!
+  text: String
+  child: PublishedNestedValue
+}
+
+type PublishedValueList implements PublishedValue {
+  type: PublishedComponentType!
+  one: [String!]
+  two: [PublishedBar!]
+  three: [Location!]
+  four: [Boolean!]
+}
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
+
+type PublishedValueOne implements PublishedValue {
+  type: PublishedComponentType!
+  one: String
+  two: PublishedBar
+  three: Location
+  four: Boolean
+}
+
+enum _PublishedValueListOrValueOne {
+  PublishedValueList
+  PublishedValueOne
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  publishedEntity(id: ID!): PublishedEntity
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+}"
+`;
+
+exports[`Component type schema spec > Generated QL schema 1`] = `
+"interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+input EntityReferenceInput {
+  id: ID!
+}
+
+input BoundingBoxInput {
+  minLat: Float!
+  maxLat: Float!
+  minLng: Float!
+  maxLng: Float!
+}
+
+enum PublishedEntityType {
+  Bar
+  Foo
+}
+
+enum PublishedComponentType {
+  NestedValue
+  ValueList
+  ValueOne
+}
+
+type PublishedEntityInfo {
+  name: String!
+  authKey: String!
+  createdAt: DateTime!
+  valid: Boolean!
+}
+
+scalar DateTime
+
+interface PublishedEntity implements Node {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+interface PublishedValue {
+  type: PublishedComponentType!
+}
+
+type PublishedRichText {
+  root: JSONObject!
+  entities: [PublishedEntity]
+}
+
+\\"\\"\\"
+The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSONObject
+
+type PublishedEntityEdge {
+  node: PublishedEntity
+  cursor: String!
+}
+
+type PublishedEntityConnection {
+  pageInfo: PageInfo!
+  edges: [PublishedEntityEdge]
+  totalCount: Int!
+}
+
+type PublishedEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [PublishedEntity]
+}
+
+enum PublishedEntityQueryOrder {
+  createdAt
+  name
+}
+
+input PublishedQueryInput {
+  authKeys: [String!]
+  entityTypes: [PublishedEntityType!]
+  componentTypes: [PublishedComponentType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input PublishedEntitiesQueryInput {
+  authKeys: [String!]
+  entityTypes: [PublishedEntityType!]
+  componentTypes: [PublishedComponentType!]
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: PublishedEntityQueryOrder
+  reverse: Boolean
+}
+
+type PublishedBar implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+}
+
+type PublishedFooFields {
+  valueOne: PublishedValueOne
+  unspecifiedValue: PublishedValue
+  valueOneOrList: _PublishedValueListOrValueOne
+  nestedValue: PublishedNestedValue
+}
+
+type PublishedFoo implements Node & PublishedEntity {
+  id: ID!
+  info: PublishedEntityInfo!
+  fields: PublishedFooFields!
+}
+
+type PublishedNestedValue implements PublishedValue {
+  type: PublishedComponentType!
+  text: String
+  child: PublishedNestedValue
+}
+
+type PublishedValueList implements PublishedValue {
+  type: PublishedComponentType!
+  one: [String!]
+  two: [PublishedBar!]
+  three: [Location!]
+  four: [Boolean!]
+}
+
+\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+scalar Location
+
+type PublishedValueOne implements PublishedValue {
+  type: PublishedComponentType!
+  one: String
+  two: PublishedBar
+  three: Location
+  four: Boolean
+}
+
+enum EventType {
+  createEntity
+  createAndPublishEntity
+  updateEntity
+  updateAndPublishEntity
+  publishEntities
+  unpublishEntities
+  archiveEntity
+  unarchiveEntity
+  updateSchema
+}
+
+input ChangelogEventQueryInput {
+  reverse: Boolean
+  createdBy: ID
+  types: [EventType!]
+}
+
+interface ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type SchemaChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  version: Int!
+}
+
+type EntityChangelogEventEntityInfo {
+  id: ID!
+  version: Int!
+  type: String!
+  name: String!
+}
+
+type EntityChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+  entities: [EntityChangelogEventEntityInfo!]!
+  unauthorizedEntityCount: Int!
+}
+
+type ChangelogEventEdge {
+  node: ChangelogEvent
+  cursor: String!
+}
+
+type ChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [ChangelogEventEdge]
+  totalCount: Int!
+}
+
+type EntityChangelogEventEdge {
+  node: EntityChangelogEvent
+  cursor: String!
+}
+
+type EntityChangelogEventConnection {
+  pageInfo: PageInfo!
+  edges: [EntityChangelogEventEdge]
+  totalCount: Int!
+}
+
+enum AdminEntityType {
+  Bar
+  Foo
+}
+
+enum AdminComponentType {
+  NestedValue
+  ValueList
+  ValueOne
+}
+
+enum AdminEntityStatus {
+  draft
+  published
+  modified
+  withdrawn
+  archived
+}
+
+type AdminEntityInfo {
+  type: AdminEntityType!
+  name: String!
+  version: Int!
+  authKey: String!
+  status: AdminEntityStatus!
+  valid: Boolean!
+  validPublished: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AdminEntityCreateInfo {
+  type: AdminEntityType
+  name: String!
+  version: Int
+  authKey: String!
+}
+
+enum AdminEntityCreateEffect {
+  created
+  createdAndPublished
+  none
+}
+
+input AdminEntityUpdateInfo {
+  type: AdminEntityType
+  name: String
+  version: Int
+  authKey: String
+}
+
+enum AdminEntityUpdateEffect {
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+input AdminEntityUpsertInfo {
+  type: AdminEntityType!
+  name: String!
+  authKey: String!
+}
+
+enum AdminEntityUpsertEffect {
+  created
+  createdAndPublished
+  updated
+  updatedAndPublished
+  published
+  none
+}
+
+interface AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
+}
+
+type AdminEntityEdge {
+  node: AdminEntity
+  cursor: String!
+}
+
+type AdminEntityConnection {
+  pageInfo: PageInfo!
+  edges: [AdminEntityEdge]
+  totalCount: Int!
+}
+
+type AdminEntitySamplingPayload {
+  seed: Int!
+  totalCount: Int!
+  items: [AdminEntity]
+}
+
+enum AdminEntityQueryOrder {
+  createdAt
+  updatedAt
+  name
+}
+
+input AdminEntitiesSharedQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  componentTypes: [AdminComponentType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+}
+
+input AdminEntitiesQueryInput {
+  authKeys: [String!]
+  entityTypes: [AdminEntityType!]
+  componentTypes: [AdminComponentType!]
+  status: [AdminEntityStatus!]
+  valid: Boolean
+  linksTo: EntityReferenceInput
+  linksFrom: EntityReferenceInput
+  boundingBox: BoundingBoxInput
+  text: String
+  order: AdminEntityQueryOrder
+  reverse: Boolean
+}
+
+input EntityVersionReferenceInput {
+  id: ID!
+  version: Int!
+}
+
+interface AdminValue {
+  type: AdminComponentType!
+}
+
+type AdminRichText {
+  root: JSONObject!
+  entities: [AdminEntity]
+}
+
+input AdminRichTextInput {
+  root: JSONObject!
+}
+
+type EntityVersionInfo {
+  version: Int!
+  published: Boolean!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+enum AdminEntityPublishEffect {
+  published
+  none
+}
+
+type AdminEntityPublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityPublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnpublishEffect {
+  unpublished
+  none
+}
+
+type AdminEntityUnpublishPayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnpublishEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityArchiveEffect {
+  archived
+  none
+}
+
+type AdminEntityArchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityArchiveEffect!
+  updatedAt: DateTime!
+}
+
+enum AdminEntityUnarchiveEffect {
+  unarchived
+  none
+}
+
+type AdminEntityUnarchivePayload {
+  id: ID!
+  status: AdminEntityStatus!
+  effect: AdminEntityUnarchiveEffect!
+  updatedAt: DateTime!
+}
+
+type AdvisoryLockPayload {
+  name: String!
+  handle: Int!
+}
+
+type AdvisoryLockReleasePayload {
+  name: String!
+}
+
+type AdminBar implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
+}
+
+input AdminBarCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+}
+
+type AdminBarCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+}
+
+type AdminBarUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminBar!
+}
+
+input AdminBarUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+}
+
+type AdminBarUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminBar!
+}
+
+type AdminFooFields {
+  valueOne: AdminValueOne
+  unspecifiedValue: AdminValue
+  valueOneOrList: _AdminValueListOrValueOne
+  nestedValue: AdminNestedValue
+}
+
+type AdminFoo implements AdminEntity {
+  id: ID!
+  info: AdminEntityInfo!
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
+  fields: AdminFooFields!
+}
+
+input AdminFooFieldsInput {
+  valueOneJson: String
+  valueOne: AdminValueOneInput
+  unspecifiedValueJson: String
+  valueOneOrListJson: String
+  nestedValueJson: String
+  nestedValue: AdminNestedValueInput
+}
+
+input AdminFooCreateInput {
+  id: ID
+  info: AdminEntityCreateInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooCreatePayload {
+  effect: AdminEntityCreateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpdateInput {
+  id: ID!
+  info: AdminEntityUpdateInfo
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpdatePayload {
+  effect: AdminEntityUpdateEffect!
+  entity: AdminFoo!
+}
+
+input AdminFooUpsertInput {
+  id: ID!
+  info: AdminEntityUpsertInfo!
+  fields: AdminFooFieldsInput!
+}
+
+type AdminFooUpsertPayload {
+  effect: AdminEntityUpsertEffect!
+  entity: AdminFoo!
+}
+
+type AdminNestedValue implements AdminValue {
+  type: AdminComponentType!
+  text: String
+  child: AdminNestedValue
+}
+
+input AdminNestedValueInput {
+  type: AdminComponentType!
+  text: String
+  childJson: String
+  child: AdminNestedValueInput
+}
+
+type AdminValueList implements AdminValue {
+  type: AdminComponentType!
+  one: [String!]
+  two: [AdminBar!]
+  three: [Location!]
+  four: [Boolean!]
+}
+
+input AdminValueListInput {
+  type: AdminComponentType!
+  one: [String!]
+  two: [EntityReferenceInput!]
+  three: [Location!]
+  four: [Boolean!]
+}
+
+type AdminValueOne implements AdminValue {
+  type: AdminComponentType!
+  one: String
+  two: AdminBar
+  three: Location
+  four: Boolean
+}
+
+input AdminValueOneInput {
+  type: AdminComponentType!
+  one: String
+  two: EntityReferenceInput
+  three: Location
+  four: Boolean
+}
+
+enum _PublishedValueListOrValueOne {
+  PublishedValueList
+  PublishedValueOne
+}
+
+enum _AdminValueListOrValueOne {
+  AdminValueList
+  AdminValueOne
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]
+  publishedEntity(id: ID!): PublishedEntity
+  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
+  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
+  adminEntity(id: ID!, version: Int): AdminEntity
+  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
+  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
+}
+
+type Mutation {
+  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
+  archiveEntity(id: ID!): AdminEntityArchivePayload
+  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
+  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
+  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
+  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
+  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
+  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
+  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
+  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
+}"
+`;
+
 exports[`Empty schema spec > Generated QL schema (admin only) 1`] = `
 "interface Node {
   id: ID!
@@ -9203,1257 +10454,6 @@ input AdminFooUpsertInput {
 type AdminFooUpsertPayload {
   effect: AdminEntityUpsertEffect!
   entity: AdminFoo!
-}
-
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
-  publishedEntity(id: ID!): PublishedEntity
-  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-}
-
-type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
-  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
-  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
-  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
-}"
-`;
-
-exports[`Value type schema spec > Generated QL schema (admin only) 1`] = `
-"interface Node {
-  id: ID!
-}
-
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String!
-  endCursor: String!
-}
-
-input EntityReferenceInput {
-  id: ID!
-}
-
-input BoundingBoxInput {
-  minLat: Float!
-  maxLat: Float!
-  minLng: Float!
-  maxLng: Float!
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  id: ID!
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-scalar DateTime
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  id: ID!
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  id: ID!
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
-}
-
-type EntityChangelogEventEdge {
-  node: EntityChangelogEvent
-  cursor: String!
-}
-
-type EntityChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [EntityChangelogEventEdge]
-  totalCount: Int!
-}
-
-enum AdminEntityType {
-  Bar
-  Foo
-}
-
-enum AdminComponentType {
-  NestedValue
-  ValueList
-  ValueOne
-}
-
-enum AdminEntityStatus {
-  draft
-  published
-  modified
-  withdrawn
-  archived
-}
-
-type AdminEntityInfo {
-  type: AdminEntityType!
-  name: String!
-  version: Int!
-  authKey: String!
-  status: AdminEntityStatus!
-  valid: Boolean!
-  validPublished: Boolean
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-input AdminEntityCreateInfo {
-  type: AdminEntityType
-  name: String!
-  version: Int
-  authKey: String!
-}
-
-enum AdminEntityCreateEffect {
-  created
-  createdAndPublished
-  none
-}
-
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
-  name: String
-  version: Int
-  authKey: String
-}
-
-enum AdminEntityUpdateEffect {
-  updated
-  updatedAndPublished
-  published
-  none
-}
-
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
-  name: String!
-  authKey: String!
-}
-
-enum AdminEntityUpsertEffect {
-  created
-  createdAndPublished
-  updated
-  updatedAndPublished
-  published
-  none
-}
-
-interface AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-}
-
-type AdminEntityEdge {
-  node: AdminEntity
-  cursor: String!
-}
-
-type AdminEntityConnection {
-  pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
-  totalCount: Int!
-}
-
-type AdminEntitySamplingPayload {
-  seed: Int!
-  totalCount: Int!
-  items: [AdminEntity]
-}
-
-enum AdminEntityQueryOrder {
-  createdAt
-  updatedAt
-  name
-}
-
-input AdminEntitiesSharedQueryInput {
-  authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
-  valid: Boolean
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-}
-
-input AdminEntitiesQueryInput {
-  authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
-  valid: Boolean
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-  order: AdminEntityQueryOrder
-  reverse: Boolean
-}
-
-input EntityVersionReferenceInput {
-  id: ID!
-  version: Int!
-}
-
-interface AdminValue {
-  type: AdminComponentType!
-}
-
-type AdminRichText {
-  root: JSONObject!
-  entities: [AdminEntity]
-}
-
-\\"\\"\\"
-The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
-scalar JSONObject
-
-input AdminRichTextInput {
-  root: JSONObject!
-}
-
-type EntityVersionInfo {
-  version: Int!
-  published: Boolean!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-enum AdminEntityPublishEffect {
-  published
-  none
-}
-
-type AdminEntityPublishPayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityPublishEffect!
-  updatedAt: DateTime!
-}
-
-enum AdminEntityUnpublishEffect {
-  unpublished
-  none
-}
-
-type AdminEntityUnpublishPayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityUnpublishEffect!
-  updatedAt: DateTime!
-}
-
-enum AdminEntityArchiveEffect {
-  archived
-  none
-}
-
-type AdminEntityArchivePayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityArchiveEffect!
-  updatedAt: DateTime!
-}
-
-enum AdminEntityUnarchiveEffect {
-  unarchived
-  none
-}
-
-type AdminEntityUnarchivePayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityUnarchiveEffect!
-  updatedAt: DateTime!
-}
-
-type AdvisoryLockPayload {
-  name: String!
-  handle: Int!
-}
-
-type AdvisoryLockReleasePayload {
-  name: String!
-}
-
-type AdminBar implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-}
-
-input AdminBarCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-}
-
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-}
-
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-}
-
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
-}
-
-type AdminFooFields {
-  valueOne: AdminValueOne
-  unspecifiedValue: AdminValue
-  valueOneOrList: _AdminValueListOrValueOne
-  nestedValue: AdminNestedValue
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  valueOneJson: String
-  valueOne: AdminValueOneInput
-  unspecifiedValueJson: String
-  valueOneOrListJson: String
-  nestedValueJson: String
-  nestedValue: AdminNestedValueInput
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
-type AdminNestedValue implements AdminValue {
-  type: AdminComponentType!
-  text: String
-  child: AdminNestedValue
-}
-
-input AdminNestedValueInput {
-  type: AdminComponentType!
-  text: String
-  childJson: String
-  child: AdminNestedValueInput
-}
-
-type AdminValueList implements AdminValue {
-  type: AdminComponentType!
-  one: [String!]
-  two: [AdminBar!]
-  three: [Location!]
-  four: [Boolean!]
-}
-
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
-scalar Location
-
-input AdminValueListInput {
-  type: AdminComponentType!
-  one: [String!]
-  two: [EntityReferenceInput!]
-  three: [Location!]
-  four: [Boolean!]
-}
-
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
-  one: String
-  two: AdminBar
-  three: Location
-  four: Boolean
-}
-
-input AdminValueOneInput {
-  type: AdminComponentType!
-  one: String
-  two: EntityReferenceInput
-  three: Location
-  four: Boolean
-}
-
-enum _AdminValueListOrValueOne {
-  AdminValueList
-  AdminValueOne
-}
-
-type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
-}
-
-type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
-  acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
-  renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
-  releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
-}"
-`;
-
-exports[`Value type schema spec > Generated QL schema (published only) 1`] = `
-"interface Node {
-  id: ID!
-}
-
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String!
-  endCursor: String!
-}
-
-input EntityReferenceInput {
-  id: ID!
-}
-
-input BoundingBoxInput {
-  minLat: Float!
-  maxLat: Float!
-  minLng: Float!
-  maxLng: Float!
-}
-
-enum PublishedEntityType {
-  Bar
-  Foo
-}
-
-enum PublishedComponentType {
-  NestedValue
-  ValueList
-  ValueOne
-}
-
-type PublishedEntityInfo {
-  name: String!
-  authKey: String!
-  createdAt: DateTime!
-  valid: Boolean!
-}
-
-scalar DateTime
-
-interface PublishedEntity implements Node {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-interface PublishedValue {
-  type: PublishedComponentType!
-}
-
-type PublishedRichText {
-  root: JSONObject!
-  entities: [PublishedEntity]
-}
-
-\\"\\"\\"
-The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
-scalar JSONObject
-
-type PublishedEntityEdge {
-  node: PublishedEntity
-  cursor: String!
-}
-
-type PublishedEntityConnection {
-  pageInfo: PageInfo!
-  edges: [PublishedEntityEdge]
-  totalCount: Int!
-}
-
-type PublishedEntitySamplingPayload {
-  seed: Int!
-  totalCount: Int!
-  items: [PublishedEntity]
-}
-
-enum PublishedEntityQueryOrder {
-  createdAt
-  name
-}
-
-input PublishedQueryInput {
-  authKeys: [String!]
-  entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedComponentType!]
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-}
-
-input PublishedEntitiesQueryInput {
-  authKeys: [String!]
-  entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedComponentType!]
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-  order: PublishedEntityQueryOrder
-  reverse: Boolean
-}
-
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-type PublishedFooFields {
-  valueOne: PublishedValueOne
-  unspecifiedValue: PublishedValue
-  valueOneOrList: _PublishedValueListOrValueOne
-  nestedValue: PublishedNestedValue
-}
-
-type PublishedFoo implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-  fields: PublishedFooFields!
-}
-
-type PublishedNestedValue implements PublishedValue {
-  type: PublishedComponentType!
-  text: String
-  child: PublishedNestedValue
-}
-
-type PublishedValueList implements PublishedValue {
-  type: PublishedComponentType!
-  one: [String!]
-  two: [PublishedBar!]
-  three: [Location!]
-  four: [Boolean!]
-}
-
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
-scalar Location
-
-type PublishedValueOne implements PublishedValue {
-  type: PublishedComponentType!
-  one: String
-  two: PublishedBar
-  three: Location
-  four: Boolean
-}
-
-enum _PublishedValueListOrValueOne {
-  PublishedValueList
-  PublishedValueOne
-}
-
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]
-  publishedEntity(id: ID!): PublishedEntity
-  publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
-  publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-}"
-`;
-
-exports[`Value type schema spec > Generated QL schema 1`] = `
-"interface Node {
-  id: ID!
-}
-
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String!
-  endCursor: String!
-}
-
-input EntityReferenceInput {
-  id: ID!
-}
-
-input BoundingBoxInput {
-  minLat: Float!
-  maxLat: Float!
-  minLng: Float!
-  maxLng: Float!
-}
-
-enum PublishedEntityType {
-  Bar
-  Foo
-}
-
-enum PublishedComponentType {
-  NestedValue
-  ValueList
-  ValueOne
-}
-
-type PublishedEntityInfo {
-  name: String!
-  authKey: String!
-  createdAt: DateTime!
-  valid: Boolean!
-}
-
-scalar DateTime
-
-interface PublishedEntity implements Node {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-interface PublishedValue {
-  type: PublishedComponentType!
-}
-
-type PublishedRichText {
-  root: JSONObject!
-  entities: [PublishedEntity]
-}
-
-\\"\\"\\"
-The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
-scalar JSONObject
-
-type PublishedEntityEdge {
-  node: PublishedEntity
-  cursor: String!
-}
-
-type PublishedEntityConnection {
-  pageInfo: PageInfo!
-  edges: [PublishedEntityEdge]
-  totalCount: Int!
-}
-
-type PublishedEntitySamplingPayload {
-  seed: Int!
-  totalCount: Int!
-  items: [PublishedEntity]
-}
-
-enum PublishedEntityQueryOrder {
-  createdAt
-  name
-}
-
-input PublishedQueryInput {
-  authKeys: [String!]
-  entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedComponentType!]
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-}
-
-input PublishedEntitiesQueryInput {
-  authKeys: [String!]
-  entityTypes: [PublishedEntityType!]
-  componentTypes: [PublishedComponentType!]
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-  order: PublishedEntityQueryOrder
-  reverse: Boolean
-}
-
-type PublishedBar implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-}
-
-type PublishedFooFields {
-  valueOne: PublishedValueOne
-  unspecifiedValue: PublishedValue
-  valueOneOrList: _PublishedValueListOrValueOne
-  nestedValue: PublishedNestedValue
-}
-
-type PublishedFoo implements Node & PublishedEntity {
-  id: ID!
-  info: PublishedEntityInfo!
-  fields: PublishedFooFields!
-}
-
-type PublishedNestedValue implements PublishedValue {
-  type: PublishedComponentType!
-  text: String
-  child: PublishedNestedValue
-}
-
-type PublishedValueList implements PublishedValue {
-  type: PublishedComponentType!
-  one: [String!]
-  two: [PublishedBar!]
-  three: [Location!]
-  four: [Boolean!]
-}
-
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
-scalar Location
-
-type PublishedValueOne implements PublishedValue {
-  type: PublishedComponentType!
-  one: String
-  two: PublishedBar
-  three: Location
-  four: Boolean
-}
-
-enum EventType {
-  createEntity
-  createAndPublishEntity
-  updateEntity
-  updateAndPublishEntity
-  publishEntities
-  unpublishEntities
-  archiveEntity
-  unarchiveEntity
-  updateSchema
-}
-
-input ChangelogEventQueryInput {
-  reverse: Boolean
-  createdBy: ID
-  types: [EventType!]
-}
-
-interface ChangelogEvent {
-  id: ID!
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-type SchemaChangelogEvent implements ChangelogEvent {
-  id: ID!
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  version: Int!
-}
-
-type EntityChangelogEventEntityInfo {
-  id: ID!
-  version: Int!
-  type: String!
-  name: String!
-}
-
-type EntityChangelogEvent implements ChangelogEvent {
-  id: ID!
-  type: EventType!
-  createdBy: ID!
-  createdAt: DateTime!
-  entities: [EntityChangelogEventEntityInfo!]!
-  unauthorizedEntityCount: Int!
-}
-
-type ChangelogEventEdge {
-  node: ChangelogEvent
-  cursor: String!
-}
-
-type ChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [ChangelogEventEdge]
-  totalCount: Int!
-}
-
-type EntityChangelogEventEdge {
-  node: EntityChangelogEvent
-  cursor: String!
-}
-
-type EntityChangelogEventConnection {
-  pageInfo: PageInfo!
-  edges: [EntityChangelogEventEdge]
-  totalCount: Int!
-}
-
-enum AdminEntityType {
-  Bar
-  Foo
-}
-
-enum AdminComponentType {
-  NestedValue
-  ValueList
-  ValueOne
-}
-
-enum AdminEntityStatus {
-  draft
-  published
-  modified
-  withdrawn
-  archived
-}
-
-type AdminEntityInfo {
-  type: AdminEntityType!
-  name: String!
-  version: Int!
-  authKey: String!
-  status: AdminEntityStatus!
-  valid: Boolean!
-  validPublished: Boolean
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-input AdminEntityCreateInfo {
-  type: AdminEntityType
-  name: String!
-  version: Int
-  authKey: String!
-}
-
-enum AdminEntityCreateEffect {
-  created
-  createdAndPublished
-  none
-}
-
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
-  name: String
-  version: Int
-  authKey: String
-}
-
-enum AdminEntityUpdateEffect {
-  updated
-  updatedAndPublished
-  published
-  none
-}
-
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
-  name: String!
-  authKey: String!
-}
-
-enum AdminEntityUpsertEffect {
-  created
-  createdAndPublished
-  updated
-  updatedAndPublished
-  published
-  none
-}
-
-interface AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-}
-
-type AdminEntityEdge {
-  node: AdminEntity
-  cursor: String!
-}
-
-type AdminEntityConnection {
-  pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
-  totalCount: Int!
-}
-
-type AdminEntitySamplingPayload {
-  seed: Int!
-  totalCount: Int!
-  items: [AdminEntity]
-}
-
-enum AdminEntityQueryOrder {
-  createdAt
-  updatedAt
-  name
-}
-
-input AdminEntitiesSharedQueryInput {
-  authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
-  valid: Boolean
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-}
-
-input AdminEntitiesQueryInput {
-  authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
-  valid: Boolean
-  linksTo: EntityReferenceInput
-  linksFrom: EntityReferenceInput
-  boundingBox: BoundingBoxInput
-  text: String
-  order: AdminEntityQueryOrder
-  reverse: Boolean
-}
-
-input EntityVersionReferenceInput {
-  id: ID!
-  version: Int!
-}
-
-interface AdminValue {
-  type: AdminComponentType!
-}
-
-type AdminRichText {
-  root: JSONObject!
-  entities: [AdminEntity]
-}
-
-input AdminRichTextInput {
-  root: JSONObject!
-}
-
-type EntityVersionInfo {
-  version: Int!
-  published: Boolean!
-  createdBy: ID!
-  createdAt: DateTime!
-}
-
-enum AdminEntityPublishEffect {
-  published
-  none
-}
-
-type AdminEntityPublishPayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityPublishEffect!
-  updatedAt: DateTime!
-}
-
-enum AdminEntityUnpublishEffect {
-  unpublished
-  none
-}
-
-type AdminEntityUnpublishPayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityUnpublishEffect!
-  updatedAt: DateTime!
-}
-
-enum AdminEntityArchiveEffect {
-  archived
-  none
-}
-
-type AdminEntityArchivePayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityArchiveEffect!
-  updatedAt: DateTime!
-}
-
-enum AdminEntityUnarchiveEffect {
-  unarchived
-  none
-}
-
-type AdminEntityUnarchivePayload {
-  id: ID!
-  status: AdminEntityStatus!
-  effect: AdminEntityUnarchiveEffect!
-  updatedAt: DateTime!
-}
-
-type AdvisoryLockPayload {
-  name: String!
-  handle: Int!
-}
-
-type AdvisoryLockReleasePayload {
-  name: String!
-}
-
-type AdminBar implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-}
-
-input AdminBarCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-}
-
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-}
-
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
-}
-
-input AdminBarUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-}
-
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
-}
-
-type AdminFooFields {
-  valueOne: AdminValueOne
-  unspecifiedValue: AdminValue
-  valueOneOrList: _AdminValueListOrValueOne
-  nestedValue: AdminNestedValue
-}
-
-type AdminFoo implements AdminEntity {
-  id: ID!
-  info: AdminEntityInfo!
-  changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
-}
-
-input AdminFooFieldsInput {
-  valueOneJson: String
-  valueOne: AdminValueOneInput
-  unspecifiedValueJson: String
-  valueOneOrListJson: String
-  nestedValueJson: String
-  nestedValue: AdminNestedValueInput
-}
-
-input AdminFooCreateInput {
-  id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpdateInput {
-  id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
-}
-
-input AdminFooUpsertInput {
-  id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
-}
-
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
-}
-
-type AdminNestedValue implements AdminValue {
-  type: AdminComponentType!
-  text: String
-  child: AdminNestedValue
-}
-
-input AdminNestedValueInput {
-  type: AdminComponentType!
-  text: String
-  childJson: String
-  child: AdminNestedValueInput
-}
-
-type AdminValueList implements AdminValue {
-  type: AdminComponentType!
-  one: [String!]
-  two: [AdminBar!]
-  three: [Location!]
-  four: [Boolean!]
-}
-
-input AdminValueListInput {
-  type: AdminComponentType!
-  one: [String!]
-  two: [EntityReferenceInput!]
-  three: [Location!]
-  four: [Boolean!]
-}
-
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
-  one: String
-  two: AdminBar
-  three: Location
-  four: Boolean
-}
-
-input AdminValueOneInput {
-  type: AdminComponentType!
-  one: String
-  two: EntityReferenceInput
-  three: Location
-  four: Boolean
-}
-
-enum _PublishedValueListOrValueOne {
-  PublishedValueList
-  PublishedValueOne
-}
-
-enum _AdminValueListOrValueOne {
-  AdminValueList
-  AdminValueOne
 }
 
 type Query {

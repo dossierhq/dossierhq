@@ -86,9 +86,9 @@ export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAd
 
 export type AppAdminUniqueIndexes = never;
 
-export type AppAdminEntity = AdminValueTypes;
+export type AppAdminEntity = AdminComponentTypes;
 
-export interface AdminValueTypesFields {
+export interface AdminComponentTypesFields {
   component: AppAdminComponent | null;
   componentFoo: AdminFoo | null;
   componentFooBar: AdminBar | AdminFoo | null;
@@ -97,15 +97,15 @@ export interface AdminValueTypesFields {
   componentListFooBar: (AdminBar | AdminFoo)[] | null;
 }
 
-export type AdminValueTypes = AdminEntity<'ValueTypes', AdminValueTypesFields, string>;
+export type AdminComponentTypes = AdminEntity<'ComponentTypes', AdminComponentTypesFields, string>;
 
-export function isAdminValueTypes(entity: AdminEntity<string, object>): entity is AdminValueTypes {
-  return entity.info.type === 'ValueTypes';
+export function isAdminComponentTypes(entity: AdminEntity<string, object>): entity is AdminComponentTypes {
+  return entity.info.type === 'ComponentTypes';
 }
 
-export function assertIsAdminValueTypes(entity: AdminEntity<string, object>): asserts entity is AdminValueTypes {
-  if (entity.info.type !== 'ValueTypes') {
-    throw new Error('Expected info.type = ValueTypes (but was ' + entity.info.type + ')');
+export function assertIsAdminComponentTypes(entity: AdminEntity<string, object>): asserts entity is AdminComponentTypes {
+  if (entity.info.type !== 'ComponentTypes') {
+    throw new Error('Expected info.type = ComponentTypes (but was ' + entity.info.type + ')');
   }
 }
 

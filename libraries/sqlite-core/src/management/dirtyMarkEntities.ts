@@ -22,9 +22,9 @@ export async function managementDirtyMarkEntities(
   context: TransactionContext,
   {
     validateEntityTypes,
-    validateValueTypes,
+    validateComponentTypes,
     indexEntityTypes,
-    indexValueTypes,
+    indexComponentTypes,
   }: DatabaseManagementMarkEntitiesDirtySelectorArg,
 ): PromiseResult<DatabaseManagementMarkEntitiesDirtyPayload, typeof ErrorType.Generic> {
   let validationCount = 0;
@@ -52,22 +52,22 @@ export async function managementDirtyMarkEntities(
     indexCount += result.value;
   }
 
-  if (validateValueTypes.length > 0) {
-    const result = await markEntitiesWithValueTypesDirty(
+  if (validateComponentTypes.length > 0) {
+    const result = await markEntitiesWithComponentTypesDirty(
       database,
       context,
-      validateValueTypes,
+      validateComponentTypes,
       ENTITY_DIRTY_FLAGS_VALIDATE,
     );
     if (result.isError()) return result;
     validationCount += result.value;
   }
 
-  if (indexValueTypes.length > 0) {
-    const result = await markEntitiesWithValueTypesDirty(
+  if (indexComponentTypes.length > 0) {
+    const result = await markEntitiesWithComponentTypesDirty(
       database,
       context,
-      indexValueTypes,
+      indexComponentTypes,
       ENTITY_DIRTY_FLAGS_INDEX,
     );
     if (result.isError()) return result;
@@ -91,7 +91,7 @@ async function markEntitiesDirty(
   return await queryRun(database, context, query);
 }
 
-async function markEntitiesWithValueTypesDirty(
+async function markEntitiesWithComponentTypesDirty(
   database: Database,
   context: TransactionContext,
   componentTypes: string[],
