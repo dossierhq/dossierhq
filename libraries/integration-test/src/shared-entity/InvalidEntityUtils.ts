@@ -39,7 +39,7 @@ export async function createInvalidEntity(
   );
 }
 
-export async function createEntityWithInvalidValueItem(
+export async function createEntityWithInvalidComponent(
   server: Server,
   adminClient: AppAdminClient,
   options?: Options,

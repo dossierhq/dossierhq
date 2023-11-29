@@ -34,7 +34,7 @@ import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldE
 import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
 import { AddRichTextListItemButton, RichTextFieldEditor } from './RichTextFieldEditor.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
-import { AddValueItemListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
+import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
@@ -180,7 +180,7 @@ export function FieldEditor(props: FieldEditorProps) {
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
         value={value}
-        AddButton={AddValueItemListItemButton}
+        AddButton={AddComponentListItemButton}
         Editor={ComponentFieldEditor}
       />
     );

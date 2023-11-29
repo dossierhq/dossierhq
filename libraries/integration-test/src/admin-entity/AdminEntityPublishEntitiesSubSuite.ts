@@ -32,14 +32,14 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_twoEntitiesReferencingEachOther,
   publishEntities_publishAlreadyPublishedEntity,
   publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity,
-  publishEntities_adminOnlyFieldWithAdminOnlyValueItem,
+  publishEntities_adminOnlyFieldWithAdminOnlyComponent,
   publishEntities_publishEntitiesEvent,
   publishEntities_fixInvalidEntityByPublishing,
   publishEntities_errorInvalidId,
   publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
   publishEntities_errorWrongAuthKey,
-  publishEntities_errorAdminOnlyValueItem,
+  publishEntities_errorAdminOnlyComponent,
   publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode,
   publishEntities_errorPublishInvalidEntity,
   publishEntities_errorPublishAlreadyPublishedInvalidEntity,
@@ -251,13 +251,13 @@ async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
   assertOkResult(publishResult);
 }
 
-async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
+async function publishEntities_adminOnlyFieldWithAdminOnlyComponent({
   server,
 }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const adminOnlyValueItem: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
+  const adminOnlyComponent: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
-    copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyValueItem } }),
+    copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyComponent } }),
   );
   const {
     entity: {
@@ -423,11 +423,11 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
   );
 }
 
-async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTestContext) {
+async function publishEntities_errorAdminOnlyComponent({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const adminOnlyValueItem: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
+  const adminOnlyComponent: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
-    copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyValueItem } }),
+    copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyComponent } }),
   );
   assertOkResult(createResult);
   const {

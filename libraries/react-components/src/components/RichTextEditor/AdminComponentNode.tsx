@@ -26,7 +26,7 @@ import {
 } from 'lexical';
 import { useCallback, useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import { ValueItemFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
+import { ComponentFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 
 export type SerializedAdminComponentNode = RichTextComponentNode;
@@ -37,7 +37,7 @@ export function $createAdminComponentNode(data: Component): AdminComponentNode {
   return new AdminComponentNode(data);
 }
 
-export function $isAdminValueItemNode(
+export function $isAdminComponentNode(
   node: LexicalNode | undefined | null,
 ): node is AdminComponentNode {
   return node instanceof AdminComponentNode;
@@ -69,7 +69,7 @@ function AdminComponentComponent({
     (value: Component) => {
       editor.update(() => {
         const node = $getNodeByKey(nodeKey);
-        if ($isAdminValueItemNode(node)) {
+        if ($isAdminComponentNode(node)) {
           node.setData(value);
         }
       });
@@ -90,7 +90,7 @@ function AdminComponentComponent({
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
       {overriddenEditor ?? (
-        <ValueItemFieldEditorWithoutClear
+        <ComponentFieldEditorWithoutClear
           className="rich-text-item-indentation"
           adminOnly={adminOnly}
           value={data}

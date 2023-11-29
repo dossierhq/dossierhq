@@ -43,6 +43,6 @@ export const ComponentTypesFiltered: Story = {
   args: {
     children: 'Select component type',
     showComponentTypes: true,
-    componentTypes: ['NestedValueItem'],
+    componentTypes: ['NestedComponent'],
   },
 };

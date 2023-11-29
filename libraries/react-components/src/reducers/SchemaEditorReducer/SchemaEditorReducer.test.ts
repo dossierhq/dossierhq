@@ -528,12 +528,12 @@ describe('ChangeFieldAllowedValueTypesAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           componentTypes: [
-            { name: 'Foo', fields: [{ name: 'valueItem', type: FieldType.Component }] },
+            { name: 'Foo', fields: [{ name: 'component', type: FieldType.Component }] },
           ],
         }).valueOrThrow(),
       ),
       new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
-        { kind: 'component', typeName: 'Foo', fieldName: 'valueItem' },
+        { kind: 'component', typeName: 'Foo', fieldName: 'component' },
         ['Foo'],
       ),
     );
@@ -1462,7 +1462,7 @@ describe('DeleteTypeAction', () => {
               name: 'Existing',
               fields: [
                 { name: 'richText', type: FieldType.RichText },
-                { name: 'valueItem', type: FieldType.Component },
+                { name: 'component', type: FieldType.Component },
               ],
             },
           ],
@@ -1474,7 +1474,7 @@ describe('DeleteTypeAction', () => {
         ['Foo'],
       ),
       new SchemaEditorActions.ChangeFieldAllowedComponentTypes(
-        { kind: 'entity', typeName: 'Existing', fieldName: 'valueItem' },
+        { kind: 'entity', typeName: 'Existing', fieldName: 'component' },
         ['Foo'],
       ),
       new SchemaEditorActions.DeleteType({ kind: 'component', typeName: 'Foo' }),
@@ -1499,7 +1499,7 @@ describe('DeleteTypeAction', () => {
               name: 'Referencing',
               fields: [
                 { name: 'richText', type: FieldType.RichText, componentTypes: ['ToBeDeleted'] },
-                { name: 'valueItem', type: FieldType.Component, componentTypes: ['ToBeDeleted'] },
+                { name: 'component', type: FieldType.Component, componentTypes: ['ToBeDeleted'] },
               ],
             },
           ],
@@ -2198,17 +2198,17 @@ describe('UpdateSchemaSpecificationAction', () => {
         AdminSchema.createAndValidate({
           entityTypes: [
             {
-              name: 'EntityWithValueItem',
+              name: 'EntityWithComponent',
               fields: [
-                { name: 'valueItem', type: FieldType.Component, componentTypes: ['ValueItem'] },
+                { name: 'component', type: FieldType.Component, componentTypes: ['Component'] },
               ],
             },
           ],
           componentTypes: [
             {
-              name: 'ValueItem',
+              name: 'Component',
               fields: [
-                { name: 'valueItem', type: FieldType.Component, componentTypes: ['ValueItem'] },
+                { name: 'component', type: FieldType.Component, componentTypes: ['Component'] },
               ],
             },
           ],

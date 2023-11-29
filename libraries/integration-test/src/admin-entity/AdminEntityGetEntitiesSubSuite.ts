@@ -74,7 +74,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_linksToOneReference,
   getEntities_linksToOneReferenceFromRichText,
   getEntities_linksToOneReferenceFromLinkRichText,
-  getEntities_linksToOneReferenceFromValueItemInRichText,
+  getEntities_linksToOneReferenceFromComponentInRichText,
   getEntities_linksToFromAdminOnlyField,
   getEntities_linksToNoReferences,
   getEntities_linksToTwoReferencesFromOneEntity,
@@ -82,7 +82,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_linksFromNoReferences,
   getEntities_linksFromTwoReferencesFromOneEntity,
   getEntities_boundingBoxOneInside,
-  getEntities_boundingBoxOneInsideFromValueItemInRichText,
+  getEntities_boundingBoxOneInsideFromComponentInRichText,
   getEntities_boundingBoxOneEntityTwoLocationsInside,
   getEntities_boundingBoxOneInsideFromAdminOnlyField,
   getEntities_boundingBoxOneOutside,
@@ -645,12 +645,12 @@ async function getEntities_componentTypes({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const { entity } = (await adminClient.createEntity(VALUE_ITEMS_CREATE)).valueOrThrow();
 
-  const matchesBeforeValueItem = await countSearchResultWithEntity(
+  const matchesBeforeComponent = await countSearchResultWithEntity(
     adminClient,
     { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
-  assertResultValue(matchesBeforeValueItem, 0);
+  assertResultValue(matchesBeforeComponent, 0);
 
   (
     await adminClient.updateEntity<AdminComponents>({
@@ -659,12 +659,12 @@ async function getEntities_componentTypes({ server }: AdminEntityTestContext) {
     })
   ).throwIfError();
 
-  const matchesAfterValueItem = await countSearchResultWithEntity(
+  const matchesAfterComponent = await countSearchResultWithEntity(
     adminClient,
     { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
-  assertResultValue(matchesAfterValueItem, 1);
+  assertResultValue(matchesAfterComponent, 1);
 }
 
 async function getEntities_linksToOneReference({ server }: AdminEntityTestContext) {
@@ -732,7 +732,7 @@ async function getEntities_linksToOneReferenceFromLinkRichText({ server }: Admin
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function getEntities_linksToOneReferenceFromValueItemInRichText({
+async function getEntities_linksToOneReferenceFromComponentInRichText({
   server,
 }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -879,7 +879,7 @@ async function getEntities_boundingBoxOneInside({ server }: AdminEntityTestConte
   assertResultValue(matches, 1);
 }
 
-async function getEntities_boundingBoxOneInsideFromValueItemInRichText({
+async function getEntities_boundingBoxOneInsideFromComponentInRichText({
   server,
 }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);

@@ -28,7 +28,7 @@ export function ComponentFieldEditor({
   if (!value) {
     return (
       <>
-        <AddValueItemButton fieldSpec={fieldSpec} onValueTypeSelected={handleCreate} />
+        <AddComponentButton fieldSpec={fieldSpec} onComponentTypeSelected={handleCreate} />
         {validationIssues.map((error, index) => (
           <Text key={index} textStyle="body2" marginTop={1} color="danger">
             {error.message}
@@ -43,7 +43,7 @@ export function ComponentFieldEditor({
       <HoverRevealStack.Item top right>
         <Delete onClick={handleDeleteClick} />
       </HoverRevealStack.Item>
-      <ValueItemFieldEditorWithoutClear
+      <ComponentFieldEditorWithoutClear
         value={value}
         adminOnly={adminOnly}
         validationIssues={validationIssues}
@@ -56,7 +56,7 @@ export function ComponentFieldEditor({
 
 const noErrors: (SaveValidationIssue | PublishValidationIssue)[] = [];
 
-export function ValueItemFieldEditorWithoutClear({
+export function ComponentFieldEditorWithoutClear({
   className,
   value,
   adminOnly,
@@ -95,7 +95,7 @@ export function ValueItemFieldEditorWithoutClear({
       </Text>
       {componentSpec.fields.map((valueFieldSpec) => {
         const fieldEditor = (
-          <ValueItemField
+          <ComponentField
             {...{
               value,
               valueFieldSpec,
@@ -127,7 +127,7 @@ export function ValueItemFieldEditorWithoutClear({
   );
 }
 
-export function AddValueItemListItemButton({
+export function AddComponentListItemButton({
   fieldSpec,
   onAddItem,
 }: {
@@ -135,29 +135,31 @@ export function AddValueItemListItemButton({
   onAddItem: (value: Component | null) => void;
 }) {
   const handleValueTypeSelected = useCallback((type: string) => onAddItem({ type }), [onAddItem]);
-  return <AddValueItemButton fieldSpec={fieldSpec} onValueTypeSelected={handleValueTypeSelected} />;
+  return (
+    <AddComponentButton fieldSpec={fieldSpec} onComponentTypeSelected={handleValueTypeSelected} />
+  );
 }
 
-function AddValueItemButton({
+function AddComponentButton({
   fieldSpec,
-  onValueTypeSelected,
+  onComponentTypeSelected,
 }: {
   fieldSpec: AdminFieldSpecification<ComponentFieldSpecification>;
-  onValueTypeSelected: (type: string) => void;
+  onComponentTypeSelected: (type: string) => void;
 }) {
   return (
     <AdminTypePicker
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
       showComponentTypes
       componentTypes={fieldSpec.componentTypes}
-      onTypeSelected={onValueTypeSelected}
+      onTypeSelected={onComponentTypeSelected}
     >
       Add component
     </AdminTypePicker>
   );
 }
 
-function ValueItemField({
+function ComponentField({
   value,
   valueFieldSpec,
   adminOnly,

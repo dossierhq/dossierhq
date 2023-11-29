@@ -1,7 +1,7 @@
 import { assertEquals, assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
-  createEntityWithInvalidValueItem,
+  createEntityWithInvalidComponent,
   createInvalidEntity,
 } from '../shared-entity/InvalidEntityUtils.js';
 import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
@@ -11,7 +11,7 @@ export const ServerProcessNextDirtyEntitySubSuite: UnboundTestFunction<SchemaTes
   serverProcessNextDirtyEntity_all,
   serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity,
   serverProcessNextDirtyEntity_changingValidationsWithInvalidPublishedEntity,
-  serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem,
+  serverProcessNextDirtyEntity_changingValidationsWithInvalidComponent,
 ];
 
 async function serverProcessNextDirtyEntity_all({ server }: SchemaTestContext) {
@@ -66,13 +66,13 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublis
   ]);
 }
 
-async function serverProcessNextDirtyEntity_changingValidationsWithInvalidValueItem({
+async function serverProcessNextDirtyEntity_changingValidationsWithInvalidComponent({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
   const { entity, validations } = (
-    await createEntityWithInvalidValueItem(server, adminClient)
+    await createEntityWithInvalidComponent(server, adminClient)
   ).valueOrThrow();
 
   assertEquals(validations, [

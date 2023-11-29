@@ -57,7 +57,7 @@ const emptyBazFields = {
   title: null,
   twoStrings: null,
   twoStringsList: null,
-  valueItem: null,
+  component: null,
 };
 
 beforeAll(async () => {
@@ -152,7 +152,7 @@ beforeAll(async () => {
             componentTypes: ['EntityAdminNested'],
           },
           {
-            name: 'valueItem',
+            name: 'component',
             type: FieldType.Component,
           },
         ],

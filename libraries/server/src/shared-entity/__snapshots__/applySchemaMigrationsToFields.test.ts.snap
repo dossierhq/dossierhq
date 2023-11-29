@@ -2,6 +2,8 @@
 
 exports[`applySchemaMigrationsToFields deleteField > nested component 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": {
     "root": {
       "children": [
@@ -28,9 +30,9 @@ exports[`applySchemaMigrationsToFields deleteField > nested component 1`] = `
           "data": {
             "child": {
               "child": null,
-              "type": "ValueItem",
+              "type": "Component",
             },
-            "type": "ValueItem",
+            "type": "Component",
           },
           "format": "",
           "type": "component",
@@ -44,13 +46,13 @@ exports[`applySchemaMigrationsToFields deleteField > nested component 1`] = `
       "version": 1,
     },
   },
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFields deleteType > component in rich text 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": {
     "root": {
       "children": [
@@ -81,29 +83,29 @@ exports[`applySchemaMigrationsToFields deleteType > component in rich text 1`] =
       "version": 1,
     },
   },
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFields deleteType > component list 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": null,
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFields deleteType > nested component 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": null,
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFields renameField > component in rich text 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": {
     "root": {
       "children": [
@@ -131,10 +133,10 @@ exports[`applySchemaMigrationsToFields renameField > component in rich text 1`] 
             "child2": {
               "child2": null,
               "string2": "1.1",
-              "type": "ValueItem",
+              "type": "Component",
             },
             "string2": "1",
-            "type": "ValueItem",
+            "type": "Component",
           },
           "format": "",
           "type": "component",
@@ -148,13 +150,13 @@ exports[`applySchemaMigrationsToFields renameField > component in rich text 1`] 
       "version": 1,
     },
   },
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;
 
 exports[`applySchemaMigrationsToFields renameType > component in rich text 1`] = `
 {
+  "component": null,
+  "componentList": null,
   "richText": {
     "root": {
       "children": [
@@ -182,10 +184,10 @@ exports[`applySchemaMigrationsToFields renameType > component in rich text 1`] =
             "child": {
               "child": null,
               "string": "1.1",
-              "type": "ValueItem2",
+              "type": "Component2",
             },
             "string": "1",
-            "type": "ValueItem2",
+            "type": "Component2",
           },
           "format": "",
           "type": "component",
@@ -199,7 +201,5 @@ exports[`applySchemaMigrationsToFields renameType > component in rich text 1`] =
       "version": 1,
     },
   },
-  "valueItem": null,
-  "valueItemList": null,
 }
 `;

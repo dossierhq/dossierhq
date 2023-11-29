@@ -412,12 +412,12 @@ async function getEntities_componentTypes({ server }: PublishedEntityTestContext
     await adminClient.createEntity(VALUE_ITEMS_CREATE, { publish: true })
   ).valueOrThrow();
 
-  const matchesBeforeValueItem = await countSearchResultWithEntity(
+  const matchesBeforeComponent = await countSearchResultWithEntity(
     publishedClient,
     { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
-  assertResultValue(matchesBeforeValueItem, 0);
+  assertResultValue(matchesBeforeComponent, 0);
 
   (
     await adminClient.updateEntity<AdminComponents>(
@@ -429,12 +429,12 @@ async function getEntities_componentTypes({ server }: PublishedEntityTestContext
     )
   ).throwIfError();
 
-  const matchesAfterValueItem = await countSearchResultWithEntity(
+  const matchesAfterComponent = await countSearchResultWithEntity(
     publishedClient,
     { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
-  assertResultValue(matchesAfterValueItem, 1);
+  assertResultValue(matchesAfterComponent, 1);
 }
 
 async function getEntities_linksToOneReference({

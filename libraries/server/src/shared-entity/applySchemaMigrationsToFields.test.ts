@@ -18,14 +18,14 @@ const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
       name: 'Entity',
       fields: [
         { name: 'richText', type: FieldType.RichText },
-        { name: 'valueItem', type: FieldType.Component },
-        { name: 'valueItemList', type: FieldType.Component, list: true },
+        { name: 'component', type: FieldType.Component },
+        { name: 'componentList', type: FieldType.Component, list: true },
       ],
     },
   ],
   componentTypes: [
     {
-      name: 'ValueItem',
+      name: 'Component',
       fields: [
         { name: 'string', type: FieldType.String },
         { name: 'child', type: FieldType.Component },
@@ -43,13 +43,13 @@ describe('applySchemaMigrationsToFields renameField', () => {
           actions: [
             {
               action: 'renameField',
-              componentType: 'ValueItem',
+              componentType: 'Component',
               field: 'string',
               newName: 'string2',
             },
             {
               action: 'renameField',
-              componentType: 'ValueItem',
+              componentType: 'Component',
               field: 'child',
               newName: 'child2',
             },
@@ -62,34 +62,34 @@ describe('applySchemaMigrationsToFields renameField', () => {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItem: {
-          type: 'ValueItem',
+        component: {
+          type: 'Component',
           string: '1',
           child: {
-            type: 'ValueItem',
+            type: 'Component',
             string: '1.1',
-            child: { type: 'ValueItem', string: '1.1.1', child: null },
+            child: { type: 'Component', string: '1.1.1', child: null },
           },
         },
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
-        "richText": null,
-        "valueItem": {
+        "component": {
           "child2": {
             "child2": {
               "child2": null,
               "string2": "1.1.1",
-              "type": "ValueItem",
+              "type": "Component",
             },
             "string2": "1.1",
-            "type": "ValueItem",
+            "type": "Component",
           },
           "string2": "1",
-          "type": "ValueItem",
+          "type": "Component",
         },
-        "valueItemList": null,
+        "componentList": null,
+        "richText": null,
       }
     `);
   });
@@ -102,13 +102,13 @@ describe('applySchemaMigrationsToFields renameField', () => {
           actions: [
             {
               action: 'renameField',
-              componentType: 'ValueItem',
+              componentType: 'Component',
               field: 'string',
               newName: 'string2',
             },
             {
               action: 'renameField',
-              componentType: 'ValueItem',
+              componentType: 'Component',
               field: 'child',
               newName: 'child2',
             },
@@ -124,9 +124,9 @@ describe('applySchemaMigrationsToFields renameField', () => {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
           createRichTextComponentNode({
-            type: 'ValueItem',
+            type: 'Component',
             string: '1',
-            child: { type: 'ValueItem', string: '1.1', child: null },
+            child: { type: 'Component', string: '1.1', child: null },
           }),
         ]),
       },
@@ -138,10 +138,10 @@ describe('applySchemaMigrationsToFields renameField', () => {
         "child2": {
           "child2": null,
           "string2": "1.1",
-          "type": "ValueItem",
+          "type": "Component",
         },
         "string2": "1",
-        "type": "ValueItem",
+        "type": "Component",
       }
     `);
   });
@@ -153,7 +153,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'deleteField', componentType: 'ValueItem', field: 'string' }],
+          actions: [{ action: 'deleteField', componentType: 'Component', field: 'string' }],
         },
       ],
     }).valueOrThrow();
@@ -165,9 +165,9 @@ describe('applySchemaMigrationsToFields deleteField', () => {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
           createRichTextComponentNode({
-            type: 'ValueItem',
+            type: 'Component',
             string: '1',
-            child: { type: 'ValueItem', string: '1.1', child: null },
+            child: { type: 'Component', string: '1.1', child: null },
           }),
         ]),
       },
@@ -178,9 +178,9 @@ describe('applySchemaMigrationsToFields deleteField', () => {
         {
           "child": {
             "child": null,
-            "type": "ValueItem",
+            "type": "Component",
           },
-          "type": "ValueItem",
+          "type": "Component",
         }
       `);
   });
@@ -190,7 +190,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'deleteField', componentType: 'ValueItem', field: 'string' }],
+          actions: [{ action: 'deleteField', componentType: 'Component', field: 'string' }],
         },
       ],
     }).valueOrThrow();
@@ -199,31 +199,31 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItem: {
-          type: 'ValueItem',
+        component: {
+          type: 'Component',
           string: '1',
           child: {
-            type: 'ValueItem',
+            type: 'Component',
             string: '1.1',
-            child: { type: 'ValueItem', string: '1.1.1', child: null },
+            child: { type: 'Component', string: '1.1.1', child: null },
           },
         },
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
-        "richText": null,
-        "valueItem": {
+        "component": {
           "child": {
             "child": {
               "child": null,
-              "type": "ValueItem",
+              "type": "Component",
             },
-            "type": "ValueItem",
+            "type": "Component",
           },
-          "type": "ValueItem",
+          "type": "Component",
         },
-        "valueItemList": null,
+        "componentList": null,
+        "richText": null,
       }
     `);
   });
@@ -235,7 +235,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' }],
+          actions: [{ action: 'renameType', componentType: 'Component', newName: 'Component2' }],
         },
       ],
     }).valueOrThrow();
@@ -244,34 +244,34 @@ describe('applySchemaMigrationsToFields renameType', () => {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItem: {
-          type: 'ValueItem',
+        component: {
+          type: 'Component',
           string: '1',
           child: {
-            type: 'ValueItem',
+            type: 'Component',
             string: '1.1',
-            child: { type: 'ValueItem', string: '1.1.1', child: null },
+            child: { type: 'Component', string: '1.1.1', child: null },
           },
         },
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
-        "richText": null,
-        "valueItem": {
+        "component": {
           "child": {
             "child": {
               "child": null,
               "string": "1.1.1",
-              "type": "ValueItem2",
+              "type": "Component2",
             },
             "string": "1.1",
-            "type": "ValueItem2",
+            "type": "Component2",
           },
           "string": "1",
-          "type": "ValueItem2",
+          "type": "Component2",
         },
-        "valueItemList": null,
+        "componentList": null,
+        "richText": null,
       }
     `);
   });
@@ -281,7 +281,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' }],
+          actions: [{ action: 'renameType', componentType: 'Component', newName: 'Component2' }],
         },
       ],
     }).valueOrThrow();
@@ -290,20 +290,20 @@ describe('applySchemaMigrationsToFields renameType', () => {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+        componentList: [{ type: 'Component', string: '1', child: null }],
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
-        "richText": null,
-        "valueItem": null,
-        "valueItemList": [
+        "component": null,
+        "componentList": [
           {
             "child": null,
             "string": "1",
-            "type": "ValueItem2",
+            "type": "Component2",
           },
         ],
+        "richText": null,
       }
     `);
   });
@@ -313,7 +313,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       migrations: [
         {
           version: 2,
-          actions: [{ action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' }],
+          actions: [{ action: 'renameType', componentType: 'Component', newName: 'Component2' }],
         },
       ],
     }).valueOrThrow();
@@ -325,9 +325,9 @@ describe('applySchemaMigrationsToFields renameType', () => {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
           createRichTextComponentNode({
-            type: 'ValueItem',
+            type: 'Component',
             string: '1',
-            child: { type: 'ValueItem', string: '1.1', child: null },
+            child: { type: 'Component', string: '1.1', child: null },
           }),
         ]),
       },
@@ -339,10 +339,10 @@ describe('applySchemaMigrationsToFields renameType', () => {
         "child": {
           "child": null,
           "string": "1.1",
-          "type": "ValueItem2",
+          "type": "Component2",
         },
         "string": "1",
-        "type": "ValueItem2",
+        "type": "Component2",
       }
     `);
   });
@@ -351,20 +351,20 @@ describe('applySchemaMigrationsToFields renameType', () => {
 describe('applySchemaMigrationsToFields deleteType', () => {
   test('nested component', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
-      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Component' }] }],
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItem: {
-          type: 'ValueItem',
+        component: {
+          type: 'Component',
           string: '1',
           child: {
-            type: 'ValueItem',
+            type: 'Component',
             string: '1.1',
-            child: { type: 'ValueItem', string: '1.1.1', child: null },
+            child: { type: 'Component', string: '1.1.1', child: null },
           },
         },
       },
@@ -374,14 +374,14 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
   test('component list', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
-      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Component' }] }],
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItemList: [{ type: 'ValueItem', string: '1', child: null }],
+        componentList: [{ type: 'Component', string: '1', child: null }],
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchSnapshot();
@@ -389,7 +389,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
   test('component in rich text', () => {
     const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
-      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'ValueItem' }] }],
+      migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Component' }] }],
     }).valueOrThrow();
 
     const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
@@ -399,9 +399,9 @@ describe('applySchemaMigrationsToFields deleteType', () => {
         richText: createRichText([
           createRichTextHeadingNode('h1', [createRichTextTextNode('Heading 1')]),
           createRichTextComponentNode({
-            type: 'ValueItem',
+            type: 'Component',
             string: '1',
-            child: { type: 'ValueItem', string: '1.1', child: null },
+            child: { type: 'Component', string: '1.1', child: null },
           }),
         ]),
       },
@@ -417,10 +417,10 @@ describe('applySchemaMigrationsToFields combos', () => {
         {
           version: 2,
           actions: [
-            { action: 'renameType', componentType: 'ValueItem', newName: 'ValueItem2' },
+            { action: 'renameType', componentType: 'Component', newName: 'Component2' },
             {
               action: 'renameField',
-              componentType: 'ValueItem2',
+              componentType: 'Component2',
               field: 'string',
               newName: 'string2',
             },
@@ -433,34 +433,34 @@ describe('applySchemaMigrationsToFields combos', () => {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
-        valueItem: {
-          type: 'ValueItem',
+        component: {
+          type: 'Component',
           string: '1',
           child: {
-            type: 'ValueItem',
+            type: 'Component',
             string: '1.1',
-            child: { type: 'ValueItem', string: '1.1.1', child: null },
+            child: { type: 'Component', string: '1.1.1', child: null },
           },
         },
       },
     }).valueOrThrow();
     expect(fieldValues).toMatchInlineSnapshot(`
       {
-        "richText": null,
-        "valueItem": {
+        "component": {
           "child": {
             "child": {
               "child": null,
               "string2": "1.1.1",
-              "type": "ValueItem2",
+              "type": "Component2",
             },
             "string2": "1.1",
-            "type": "ValueItem2",
+            "type": "Component2",
           },
           "string2": "1",
-          "type": "ValueItem2",
+          "type": "Component2",
         },
-        "valueItemList": null,
+        "componentList": null,
+        "richText": null,
       }
     `);
   });

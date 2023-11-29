@@ -57,7 +57,7 @@ function decodeFieldItemOrList(
     const decodedItems: unknown[] = [];
     for (const encodedItem of fieldValue) {
       if (fieldSpec.type === FieldType.Component) {
-        const decodedItem = decodeValueItemField(schema, codecMode, encodedItem as Component);
+        const decodedItem = decodeComponentField(schema, codecMode, encodedItem as Component);
         if (decodedItem) {
           decodedItems.push(decodedItem);
         }
@@ -74,7 +74,7 @@ function decodeFieldItemOrList(
     return decodedItems.length > 0 ? decodedItems : null;
   }
   if (fieldSpec.type === FieldType.Component) {
-    return decodeValueItemField(schema, codecMode, fieldValue as Component);
+    return decodeComponentField(schema, codecMode, fieldValue as Component);
   }
   if (fieldSpec.type === FieldType.RichText) {
     return decodeRichTextField(schema, fieldValue as RichText);
@@ -84,7 +84,7 @@ function decodeFieldItemOrList(
     : fieldAdapter.decodeJson(fieldValue);
 }
 
-function decodeValueItemField(
+function decodeComponentField(
   schema: AdminSchema | PublishedSchema,
   codecMode: CodecMode,
   encodedValue: Component,
@@ -111,7 +111,7 @@ function decodeRichTextField(
   const path: ContentValuePath = [];
   return transformRichText(path, encodedValue, (_path, node) => {
     if (isRichTextComponentNode(node)) {
-      const data = decodeValueItemField(schema, 'json', node.data);
+      const data = decodeComponentField(schema, 'json', node.data);
       if (!data) {
         return ok(null);
       }

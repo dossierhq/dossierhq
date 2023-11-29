@@ -35,7 +35,7 @@ import {
   adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import {
-  createEntityWithInvalidValueItem,
+  createEntityWithInvalidComponent,
   createInvalidEntity,
 } from '../shared-entity/InvalidEntityUtils.js';
 import {
@@ -58,7 +58,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_updateEntityEvent,
   updateEntity_updateAndPublishEntityEvent,
   updateEntity_fixInvalidEntity,
-  updateEntity_fixInvalidValueItem,
+  updateEntity_fixInvalidComponent,
   updateEntity_withMultilineField,
   updateEntity_withTwoReferences,
   updateEntity_withMultipleLocations,
@@ -571,10 +571,10 @@ async function updateEntity_fixInvalidEntity({ server }: AdminEntityTestContext)
   assertEquals(getEntity, expectedEntity);
 }
 
-async function updateEntity_fixInvalidValueItem({ server }: AdminEntityTestContext) {
+async function updateEntity_fixInvalidComponent({ server }: AdminEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
 
-  const { entity } = (await createEntityWithInvalidValueItem(server, adminClient)).valueOrThrow();
+  const { entity } = (await createEntityWithInvalidComponent(server, adminClient)).valueOrThrow();
 
   const updateResult = await adminClient.updateEntity<AdminComponents>({
     id: entity.id,

@@ -45,7 +45,7 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
-  updateSchemaSpecification_removeAllFieldsFromMigrationValueItem,
+  updateSchemaSpecification_removeAllFieldsFromMigrationComponent,
   updateSchemaSpecification_removeAllTemporaryValueTypes,
   //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes, add when we can delete entities
   updateSchemaSpecification_updateSchemaEvent,
@@ -60,25 +60,25 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid,
   updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated,
   updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenWhenInvalid,
-  updateSchemaSpecification_deleteFieldOnValueItem,
-  updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated,
+  updateSchemaSpecification_deleteFieldOnComponent,
+  updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated,
   updateSchemaSpecification_renameFieldOnEntity,
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
-  updateSchemaSpecification_renameFieldOnValueItem,
+  updateSchemaSpecification_renameFieldOnComponent,
   updateSchemaSpecification_deleteTypeOnEntityType,
-  updateSchemaSpecification_deleteTypeOnValueItem,
-  updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnotherType,
-  updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid,
-  updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated,
+  updateSchemaSpecification_deleteTypeOnComponent,
+  updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnotherType,
+  updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid,
+  updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated,
   updateSchemaSpecification_renameTypeOnEntity,
   updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType,
-  updateSchemaSpecification_renameTypeOnValueItem,
-  updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnotherType,
-  updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes,
+  updateSchemaSpecification_renameTypeOnComponent,
+  updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnotherType,
+  updateSchemaSpecification_renameTypeOnComponentUpdatesValueTypeIndexes,
   updateSchemaSpecification_renameFieldAndRenameTypeOnEntity,
   updateSchemaSpecification_renameTypeAndRenameFieldOnEntity,
-  updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem,
-  updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem,
+  updateSchemaSpecification_renameFieldAndRenameTypeOnComponent,
+  updateSchemaSpecification_renameTypeAndRenameFieldOnComponent,
   updateSchemaSpecification_addingIndexToField,
   updateSchemaSpecification_deleteIndexClearsIndexDirectly,
   updateSchemaSpecification_renameIndexMaintainsLinkDirectly,
@@ -117,7 +117,7 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_removeAllFieldsFromMigrationValueItem({
+async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -980,7 +980,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
   assertEquals(countAfterSchemaUpdate, 0);
 }
 
-async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: SchemaTestContext) {
+async function updateSchemaSpecification_deleteFieldOnComponent({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const fieldName = `field${new Date().getTime()}`;
@@ -1026,18 +1026,18 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
     await adminClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
   assertIsAdminComponents(entityAfterMigration);
-  const adminValueItem = entityAfterMigration.fields.any as Component;
-  assertEquals(adminValueItem.type, 'MigrationComponent');
-  assertEquals(fieldName in adminValueItem, false);
+  const adminComponent = entityAfterMigration.fields.any as Component;
+  assertEquals(adminComponent.type, 'MigrationComponent');
+  assertEquals(fieldName in adminComponent, false);
 
   // And in published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
   assertIsPublishedComponents(publishedEntityAfterMigration);
-  const publishedValueItem = publishedEntityAfterMigration.fields.any as Component;
-  assertEquals(publishedValueItem.type, 'MigrationComponent');
-  assertEquals(fieldName in publishedValueItem, false);
+  const publishedComponent = publishedEntityAfterMigration.fields.any as Component;
+  assertEquals(publishedComponent.type, 'MigrationComponent');
+  assertEquals(fieldName in publishedComponent, false);
 
   // Ensure it's not possible to use the field
   const updateResult = await adminClient.updateEntity(
@@ -1054,7 +1054,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
   );
 }
 
-async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
+async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -1288,7 +1288,7 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
   assertEquals(updatedEntity.fields[newFieldName], 'updated value');
 }
 
-async function updateSchemaSpecification_renameFieldOnValueItem({ server }: SchemaTestContext) {
+async function updateSchemaSpecification_renameFieldOnComponent({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const oldFieldName = `field${new Date().getTime()}`;
@@ -1340,17 +1340,17 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   const entityAfterMigration = (
     await adminClient.getEntity({ id: entityId })
   ).valueOrThrow() as AdminEntity;
-  const valueItemAfterMigration = entityAfterMigration.fields.any as Component;
-  assertEquals(oldFieldName in valueItemAfterMigration, false);
-  assertEquals(valueItemAfterMigration[newFieldName], 'value');
+  const componentAfterMigration = entityAfterMigration.fields.any as Component;
+  assertEquals(oldFieldName in componentAfterMigration, false);
+  assertEquals(componentAfterMigration[newFieldName], 'value');
 
   // And in published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: entityId })
   ).valueOrThrow() as AdminEntity;
-  const publishedValueItem = publishedEntityAfterMigration.fields.any as Component;
-  assertEquals(oldFieldName in publishedValueItem, false);
-  assertEquals(publishedValueItem[newFieldName], 'value');
+  const publishedComponent = publishedEntityAfterMigration.fields.any as Component;
+  assertEquals(oldFieldName in publishedComponent, false);
+  assertEquals(publishedComponent[newFieldName], 'value');
 
   // Check that the new name is usable
   const updatedNewNameEntity = (
@@ -1408,7 +1408,7 @@ async function updateSchemaSpecification_deleteTypeOnEntityType({ server }: Sche
   assertEquals(entityType, undefined);
 }
 
-async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: SchemaTestContext) {
+async function updateSchemaSpecification_deleteTypeOnComponent({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const typeName = `MigrationComponent${new Date().getTime()}`;
@@ -1467,7 +1467,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
   );
 }
 
-async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnotherType({
+async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnotherType({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -1537,7 +1537,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
   } as AppAdminComponent);
 }
 
-async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesValid({
+async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -1613,7 +1613,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
+async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -1863,7 +1863,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
   );
 }
 
-async function updateSchemaSpecification_renameTypeOnValueItem({ server }: SchemaTestContext) {
+async function updateSchemaSpecification_renameTypeOnComponent({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
@@ -1930,7 +1930,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
   assertOkResult(updateResult);
 }
 
-async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnotherType({
+async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnotherType({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -2014,7 +2014,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
   } as AppAdminComponent);
 }
 
-async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIndexes({
+async function updateSchemaSpecification_renameTypeOnComponentUpdatesValueTypeIndexes({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -2236,7 +2236,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   assertEquals(oldFieldName in publishedEntity.fields, false);
 }
 
-async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
+async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -2315,7 +2315,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
   assertOkResult(updateResult);
 }
 
-async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
+async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);

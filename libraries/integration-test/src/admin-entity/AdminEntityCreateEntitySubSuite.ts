@@ -80,7 +80,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withRichTextListField,
   createEntity_withRichTextFieldWithReference,
   createEntity_withRichTextFieldWithLinkReference,
-  createEntity_withRichTextFieldWithValueItem,
+  createEntity_withRichTextFieldWithComponent,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
   createEntity_errorAuthKeyNotMatchingPattern,
@@ -737,7 +737,7 @@ async function createEntity_withRichTextFieldWithLinkReference({ server }: Admin
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withRichTextFieldWithValueItem({ server }: AdminEntityTestContext) {
+async function createEntity_withRichTextFieldWithComponent({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
 
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);

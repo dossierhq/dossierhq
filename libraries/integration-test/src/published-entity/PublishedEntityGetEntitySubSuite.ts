@@ -51,13 +51,13 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_archivedThenPublished,
   getEntity_oldVersion,
   getEntity_entityAdminOnlyFieldIsExcluded,
-  getEntity_valueItemAdminOnlyFieldIsExcluded,
-  getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded,
+  getEntity_componentAdminOnlyFieldIsExcluded,
+  getEntity_componentAdminOnlyFieldInRichTextIsExcluded,
   getEntity_usingUniqueIndex,
   getEntity_invalidEntity,
-  getEntity_invalidEntityAdminOnlyValueItem,
-  getEntity_invalidEntityAdminOnlyValueItemList,
-  getEntity_invalidEntityAdminOnlyValueItemInRichText,
+  getEntity_invalidEntityAdminOnlyComponent,
+  getEntity_invalidEntityAdminOnlyComponentList,
+  getEntity_invalidEntityAdminOnlyComponentInRichText,
   getEntity_errorInvalidId,
   getEntity_errorInvalidUniqueIndexValue,
   getEntity_errorUniqueIndexValueFromAdminOnlyField,
@@ -186,11 +186,11 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({ server }: PublishedEnt
   assertEquals((entity.fields as AdminStringsFields).stringAdminOnly, undefined);
 }
 
-async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: PublishedEntityTestContext) {
+async function getEntity_componentAdminOnlyFieldIsExcluded({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const adminLocationsValueItem: AdminLocationsComponent = {
+  const adminLocationsComponent: AdminLocationsComponent = {
     type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
     locationAdminOnly: { lat: 56, lng: 78 },
@@ -198,7 +198,7 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
 
   const createResult = await adminClient.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, {
-      fields: { any: adminLocationsValueItem },
+      fields: { any: adminLocationsComponent },
     }),
     { publish: true },
   );
@@ -209,23 +209,23 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
   const getResult = await publishedClient.getEntity({ id });
   const entity = getResult.valueOrThrow();
   assertIsPublishedComponents(entity);
-  const publishedLocationsValueItem = entity.fields.any;
-  assertTruthy(publishedLocationsValueItem);
-  assertIsPublishedLocationsComponent(publishedLocationsValueItem);
-  assertEquals(publishedLocationsValueItem, {
+  const publishedLocationsComponent = entity.fields.any;
+  assertTruthy(publishedLocationsComponent);
+  assertIsPublishedLocationsComponent(publishedLocationsComponent);
+  assertEquals(publishedLocationsComponent, {
     type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
   });
-  assertEquals('locationAdminOnly' in publishedLocationsValueItem, false);
+  assertEquals('locationAdminOnly' in publishedLocationsComponent, false);
 }
 
-async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
+async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const adminLocationsValueItem: AdminLocationsComponent = {
+  const adminLocationsComponent: AdminLocationsComponent = {
     type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
     locationAdminOnly: { lat: 56, lng: 78 },
@@ -234,7 +234,7 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   const createResult = await adminClient.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
-        richText: createRichText([createRichTextComponentNode(adminLocationsValueItem)]),
+        richText: createRichText([createRichTextComponentNode(adminLocationsComponent)]),
       },
     }),
     { publish: true },
@@ -297,7 +297,7 @@ async function getEntity_invalidEntity({ server }: PublishedEntityTestContext) {
   assertSame(result.value.info.valid, false);
 }
 
-async function getEntity_invalidEntityAdminOnlyValueItem({ server }: PublishedEntityTestContext) {
+async function getEntity_invalidEntityAdminOnlyComponent({ server }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
@@ -316,7 +316,7 @@ async function getEntity_invalidEntityAdminOnlyValueItem({ server }: PublishedEn
   assertSame(publishedEntity.fields.component, null);
 }
 
-async function getEntity_invalidEntityAdminOnlyValueItemList({
+async function getEntity_invalidEntityAdminOnlyComponentList({
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
@@ -337,7 +337,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemList({
   assertSame(publishedEntity.fields.componentList, null);
 }
 
-async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
+async function getEntity_invalidEntityAdminOnlyComponentInRichText({
   server,
 }: PublishedEntityTestContext) {
   const adminClient = adminClientForMainPrincipal(server);

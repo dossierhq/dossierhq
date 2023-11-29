@@ -652,7 +652,7 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
         ],
         componentTypes: [
           {
-            name: 'AnotherValueItem',
+            name: 'AnotherComponent',
             fields: [{ name: 'richText', type: FieldType.RichText, linkEntityTypes: ['OneType'] }],
           },
         ],
@@ -676,7 +676,7 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "OneType",
           ],
           "validateValueTypes": [
-            "AnotherValueItem",
+            "AnotherComponent",
           ],
         },
         "renameEntityTypes": {},
@@ -723,8 +723,8 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
         componentTypes: [
           { name: 'OneType', fields: [] },
           {
-            name: 'AnotherValueItem',
-            fields: [{ name: 'valueItem', type: FieldType.Component, componentTypes: ['OneType'] }],
+            name: 'AnotherComponent',
+            fields: [{ name: 'component', type: FieldType.Component, componentTypes: ['OneType'] }],
           },
         ],
         entityTypes: [
@@ -754,7 +754,7 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
             "AnotherEntity",
           ],
           "validateValueTypes": [
-            "AnotherValueItem",
+            "AnotherComponent",
             "OneType",
           ],
         },
@@ -886,7 +886,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
         ],
         componentTypes: [
           {
-            name: 'AnotherValueItem',
+            name: 'AnotherComponent',
             fields: [{ name: 'richText', type: FieldType.RichText, linkEntityTypes: ['OldName'] }],
           },
         ],
@@ -912,7 +912,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
             "AnotherEntity",
           ],
           "validateValueTypes": [
-            "AnotherValueItem",
+            "AnotherComponent",
           ],
         },
         "renameEntityTypes": {
@@ -1030,8 +1030,8 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
         componentTypes: [
           { name: 'OldName', fields: [] },
           {
-            name: 'AnotherValueItem',
-            fields: [{ name: 'valueItem', type: FieldType.Component, componentTypes: ['OldName'] }],
+            name: 'AnotherComponent',
+            fields: [{ name: 'component', type: FieldType.Component, componentTypes: ['OldName'] }],
           },
         ],
         entityTypes: [
@@ -1062,7 +1062,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
             "AnotherEntity",
           ],
           "validateValueTypes": [
-            "AnotherValueItem",
+            "AnotherComponent",
           ],
         },
         "renameEntityTypes": {},
