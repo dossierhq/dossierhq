@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Sat, 07 Oct 2023 15:35:18 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 23:11:50 GMT and should not be manually modified.
+
+## 0.5.0
+Wed, 29 Nov 2023 23:11:50 GMT
+
+### Updates
+
+- Breaks: Rename value item to component in schema. Rename isValueItemXxxField() -> isComponentXxxField(). Rename isXxxField() -> isXxxSingleField(). Rename traverse/validate/normalizeValueItem->t/v/nComponent(). Rename traverse node valueItem->component. Rename valueTypes to componentTypes in entity queries. Rename RichTextNode.valueItem->.component, isRichTextValueItemNode()->isRichTextComponentNode(). createRichTextValueItemNode()->createRichTextComponentNode(). Remove assertIsDefined and assertExhaustive exports.
 
 ## 0.4.7
 Sat, 07 Oct 2023 15:35:18 GMT

@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.5.0",
+      "tag": "@dossierhq/core_v0.5.0",
+      "date": "Wed, 29 Nov 2023 23:11:50 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Breaks: Rename value item to component in schema. Rename isValueItemXxxField() -> isComponentXxxField(). Rename isXxxField() -> isXxxSingleField(). Rename traverse/validate/normalizeValueItem->t/v/nComponent(). Rename traverse node valueItem->component. Rename valueTypes to componentTypes in entity queries. Rename RichTextNode.valueItem->.component, isRichTextValueItemNode()->isRichTextComponentNode(). createRichTextValueItemNode()->createRichTextComponentNode(). Remove assertIsDefined and assertExhaustive exports."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.4.7",
       "tag": "@dossierhq/core_v0.4.7",
       "date": "Sat, 07 Oct 2023 15:35:18 GMT",

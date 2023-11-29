@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Sat, 07 Oct 2023 15:35:19 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 23:11:50 GMT and should not be manually modified.
+
+## 0.5.0
+Wed, 29 Nov 2023 23:11:50 GMT
+
+### Updates
+
+- Breaks: Rename screens to ChangelogListScreen, ContentListScreen, ContentEditorScreen, PublishedContentListScreen, PublishedContentDisplayScreen, SchemaEditorScreen.
 
 ## 0.4.7
 Sat, 07 Oct 2023 15:35:19 GMT
