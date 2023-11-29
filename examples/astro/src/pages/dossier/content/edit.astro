@@ -1,5 +1,5 @@
 ---
-import { DossierContentEditPage } from '../../../dossier/components/DossierContentEditPage.jsx';
+import { DossierContentEditorPage } from '../../../dossier/components/DossierContentEditorPage.jsx';
 import DossierLayout from '../../../layouts/DossierLayout.astro';
 
 export const prerender = false;
@@ -10,5 +10,5 @@ if (import.meta.env.PROD) {
 ---
 
 <DossierLayout title="Edit">
-  <DossierContentEditPage client:only />
+  <DossierContentEditorPage client:only />
 </DossierLayout>

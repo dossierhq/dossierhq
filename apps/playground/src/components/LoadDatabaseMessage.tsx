@@ -44,7 +44,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.schema.url('new')}
+          href={ROUTE.schemaEditor.url('new')}
         >
           Load empty database
         </Button>
@@ -59,7 +59,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.content.url('dossier-docs')}
+          href={ROUTE.contentList.url('dossier-docs')}
         >
           Load Dossier docs
         </Button>
@@ -79,7 +79,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.content.url('blog')}
+          href={ROUTE.contentList.url('blog')}
         >
           Load Blog
         </Button>
@@ -98,7 +98,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.content.url('reviews')}
+          href={ROUTE.contentList.url('reviews')}
         >
           Load Reviews
         </Button>
@@ -117,7 +117,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.content.url('starwars')}
+          href={ROUTE.contentList.url('starwars')}
         >
           Load Star Wars
         </Button>
@@ -126,7 +126,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         <Button
           as="a"
           className={toSpacingClassName({ marginTop: 2, marginBottom: 4 })}
-          href={ROUTE.content.url('catalog')}
+          href={ROUTE.contentList.url('catalog')}
         >
           Load Catalog
         </Button>

@@ -12,11 +12,11 @@ export type {
   RichTextComponentDisplayProps,
 } from './contexts/PublishedDossierContext.js';
 export { PublishedDossierProvider } from './published/components/PublishedDossierProvider/PublishedDossierProvider.js';
-export { AdminEntityListScreen } from './screens/AdminEntityListScreen/AdminEntityListScreen.js';
-export { ChangelogScreen } from './screens/ChangelogScreen/ChangelogScreen.js';
-export { EntityEditorScreen } from './screens/EntityEditorScreen/EntityEditorScreen.js';
-export { PublishedEntityDisplayScreen } from './screens/PublishedEntityDisplayScreen/PublishedEntityDisplayScreen.js';
-export { PublishedEntityListScreen } from './screens/PublishedEntityListScreen/PublishedEntityListScreen.js';
+export { ChangelogListScreen } from './screens/ChangelogListScreen/ChangelogListScreen.js';
+export { ContentEditorScreen } from './screens/ContentEditorScreen/ContentEditorScreen.js';
+export { ContentListScreen } from './screens/ContentListScreen/ContentListScreen.js';
+export { PublishedContentDisplayScreen } from './screens/PublishedContentDisplayScreen/PublishedContentDisplayScreen.js';
+export { PublishedContentListScreen } from './screens/PublishedContentListScreen/PublishedContentListScreen.js';
 export { SchemaEditorScreen } from './screens/SchemaEditorScreen/SchemaEditorScreen.js';
 export type { DisplayAuthKey } from './shared/types/DisplayAuthKey.js';
 export { useCachingAdminMiddleware } from './utils/CachingAdminMiddleware.js';

@@ -1,9 +1,12 @@
 import dynamic from 'next/dynamic';
 
-const ChangelogPage = dynamic(() => import('../../components/ChangelogPage/ChangelogPage'), {
-  ssr: false,
-});
+const ChangelogListPage = dynamic(
+  () => import('../../components/ChangelogListPage/ChangelogListPage'),
+  {
+    ssr: false,
+  },
+);
 
-export default function ChangelogPage_(): JSX.Element {
-  return <ChangelogPage />;
+export default function ChangelogListPage_(): JSX.Element {
+  return <ChangelogListPage />;
 }

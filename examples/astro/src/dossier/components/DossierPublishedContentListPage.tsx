@@ -1,6 +1,6 @@
 import type { PublishedEntity } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
-import { PublishedEntityListScreen } from '@dossierhq/react-components';
+import { PublishedContentListScreen } from '@dossierhq/react-components';
 import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
 import { AppPublishedDossierProvider } from './AppPublishedDossierProvider.js';
 import { NavBar } from './NavBar.js';
@@ -10,7 +10,7 @@ export function DossierPublishedContentListPage() {
   return (
     <AppPublishedDossierProvider>
       <NotificationContainer>
-        <PublishedEntityListScreen
+        <PublishedContentListScreen
           header={<NavBar current="published-content" />}
           urlSearchParams={urlSearchParams}
           onUrlSearchParamsChange={setSearchParams}

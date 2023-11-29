@@ -1,4 +1,4 @@
-import { PublishedEntityDisplayScreen } from '@dossierhq/react-components';
+import { PublishedContentDisplayScreen } from '@dossierhq/react-components';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { NavBar } from '../components/NavBar.js';
@@ -12,7 +12,7 @@ export function PublishedContentDisplayRoute() {
   );
 
   return (
-    <PublishedEntityDisplayScreen
+    <PublishedContentDisplayScreen
       header={<NavBar current="published-content" />}
       urlSearchParams={searchParams}
       onUrlSearchParamsChange={handleSearchParamsChange}

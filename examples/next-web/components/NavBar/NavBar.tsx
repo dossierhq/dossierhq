@@ -7,8 +7,8 @@ import { BrowserUrls } from '../../utils/BrowserUrls';
 interface Props {
   current:
     | 'home'
-    | 'admin-entities'
-    | 'published-entities'
+    | 'content'
+    | 'published-content'
     | 'schema'
     | 'changelog'
     | 'graphiql'
@@ -28,17 +28,17 @@ export function NavBar({ current }: Props) {
       <DesignNavbar.Menu active={active}>
         {ENABLE_WEB_INTERFACE ? (
           <>
-            <DesignNavbar.Item active={current === 'admin-entities'}>
-              {NavItemRender('Entities', BrowserUrls.adminEntities)}
+            <DesignNavbar.Item active={current === 'content'}>
+              {NavItemRender('Content', BrowserUrls.contentList)}
             </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'published-entities'}>
-              {NavItemRender('Published entities', BrowserUrls.publishedEntities)}
+            <DesignNavbar.Item active={current === 'published-content'}>
+              {NavItemRender('Published content', BrowserUrls.publishedContentList)}
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'schema'}>
               {NavItemRender('Schema', BrowserUrls.schemaEditor)}
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'changelog'}>
-              {NavItemRender('Changelog', BrowserUrls.changelog)}
+              {NavItemRender('Changelog', BrowserUrls.changelogList)}
             </DesignNavbar.Item>
             <DesignNavbar.Item active={current === 'graphiql'}>
               {NavItemRender('GraphiQL', BrowserUrls.graphiql)}

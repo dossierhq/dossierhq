@@ -1,6 +1,6 @@
 import type { AdminEntity } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
-import { AdminEntityListScreen } from '@dossierhq/react-components';
+import { ContentListScreen } from '@dossierhq/react-components';
 import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
 import { AppAdminDossierProvider } from './AppAdminDossierProvider.js';
 import { NavBar } from './NavBar.js';
@@ -10,7 +10,7 @@ export function DossierContentListPage() {
   return (
     <AppAdminDossierProvider>
       <NotificationContainer>
-        <AdminEntityListScreen
+        <ContentListScreen
           header={<NavBar current="content" />}
           urlSearchParams={urlSearchParams}
           onUrlSearchParamsChange={setSearchParams}

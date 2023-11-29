@@ -1,24 +1,24 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { NotificationContainer } from '@dossierhq/design';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AdminChangelogRoute } from './AdminChangelogRoute.js';
-import { AdminEntityEditorRoute } from './AdminEntityEditorRoute.js';
-import { AdminEntityListRoute } from './AdminEntityListRoute.js';
-import { AdminSchemaEditorRoute } from './AdminSchemaEditorRoute.js';
 import { AppAdminProvider } from './AppAdminProvider.js';
 import { AppPublishedProvider } from './AppPublishedProvider.js';
+import { ChangelogListRoute } from './ChangelogListRoute.js';
+import { ContentEditorRoute } from './ContentEditorRoute.js';
+import { ContentListRoute } from './ContentListRoute.js';
 import { IndexRoute } from './IndexRoute.js';
-import { PublishedEntityDisplayRoute } from './PublishedEntityDisplayRoute.js';
-import { PublishedEntityListRoute } from './PublishedEntityListRoute.js';
+import { PublishedContentDisplayRoute } from './PublishedContentDisplayRoute.js';
+import { PublishedContentListRoute } from './PublishedContentListRoute.js';
+import { SchemaEditorRoute } from './SchemaEditorRoute.js';
 
 const router = createBrowserRouter([
   { path: '/', element: <IndexRoute /> },
-  { path: '/admin-entities', element: <AdminEntityListRoute /> },
-  { path: '/edit-entities', element: <AdminEntityEditorRoute /> },
-  { path: '/published-entities', element: <PublishedEntityListRoute /> },
-  { path: '/published-entities/display', element: <PublishedEntityDisplayRoute /> },
-  { path: '/schema', element: <AdminSchemaEditorRoute /> },
-  { path: '/changelog', element: <AdminChangelogRoute /> },
+  { path: '/content', element: <ContentListRoute /> },
+  { path: '/edit-content', element: <ContentEditorRoute /> },
+  { path: '/published-content', element: <PublishedContentListRoute /> },
+  { path: '/published-content/display', element: <PublishedContentDisplayRoute /> },
+  { path: '/schema', element: <SchemaEditorRoute /> },
+  { path: '/changelog', element: <ChangelogListRoute /> },
 ]);
 
 export default function App() {

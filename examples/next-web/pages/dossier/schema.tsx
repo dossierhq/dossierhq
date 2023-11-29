@@ -2,9 +2,7 @@ import dynamic from 'next/dynamic';
 
 const SchemaEditorPage = dynamic(
   () => import('../../components/SchemaEditorPage/SchemaEditorPage'),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 export default function SchemaEditorPage_(): JSX.Element {

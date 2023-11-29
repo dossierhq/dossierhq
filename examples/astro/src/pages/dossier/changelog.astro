@@ -1,5 +1,5 @@
 ---
-import { DossierChangelogPage } from '../../dossier/components/DossierChangelogPage.jsx';
+import { DossierChangelogListPage } from '../../dossier/components/DossierChangelogListPage.jsx';
 import DossierLayout from '../../layouts/DossierLayout.astro';
 
 export const prerender = false;
@@ -10,5 +10,5 @@ if (import.meta.env.PROD) {
 ---
 
 <DossierLayout title="Changelog">
-  <DossierChangelogPage client:only />
+  <DossierChangelogListPage client:only />
 </DossierLayout>

@@ -5,11 +5,11 @@ export const ROUTE = {
   server: {
     url: (serverName: string) => `/${serverName}`,
   },
-  content: {
+  contentList: {
     route: 'content',
     url: (serverName: string) => `/${serverName}/content`,
   },
-  changelog: {
+  changelogList: {
     route: 'changelog',
     url: (serverName: string) => `/${serverName}/changelog`,
   },
@@ -21,7 +21,7 @@ export const ROUTE = {
     route: 'login/:userId',
     url: (serverName: string, userId: string) => `/${serverName}/login/${userId}`,
   },
-  editEntities: {
+  contentEditor: {
     route: 'content/edit',
     url: (serverName: string, selectors: ({ newType: string; id: string } | { id: string })[]) => {
       const p = new URLSearchParams();
@@ -35,7 +35,7 @@ export const ROUTE = {
       return `/${serverName}/content/edit?${p.toString()}`;
     },
   },
-  publishedContent: {
+  publishedContentList: {
     route: 'published-content',
     url: (serverName: string) => `/${serverName}/published-content`,
   },
@@ -44,7 +44,7 @@ export const ROUTE = {
     url: (serverName: string, entityId: string) =>
       `/${serverName}/published-content/display?id=${entityId}`,
   },
-  schema: {
+  schemaEditor: {
     route: 'schema',
     url: (serverName: string) => `/${serverName}/schema`,
   },

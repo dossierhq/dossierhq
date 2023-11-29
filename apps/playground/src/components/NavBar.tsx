@@ -57,20 +57,20 @@ export function NavBar({ current }: Props) {
           {serverName ? (
             <>
               <DesignNavbar.Item active={current === 'content'}>
-                {NavItemRender('Content', ROUTE.content.url(serverName), handleLinkClick)}
+                {NavItemRender('Content', ROUTE.contentList.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'published-content'}>
                 {NavItemRender(
                   'Published content',
-                  ROUTE.publishedContent.url(serverName),
+                  ROUTE.publishedContentList.url(serverName),
                   handleLinkClick
                 )}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'schema'}>
-                {NavItemRender('Schema', ROUTE.schema.url(serverName), handleLinkClick)}
+                {NavItemRender('Schema', ROUTE.schemaEditor.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'changelog'}>
-                {NavItemRender('Changelog', ROUTE.changelog.url(serverName), handleLinkClick)}
+                {NavItemRender('Changelog', ROUTE.changelogList.url(serverName), handleLinkClick)}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'graphiql'}>
                 {NavItemRender('GraphiQL', ROUTE.graphiql.url(serverName), handleLinkClick)}

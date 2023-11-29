@@ -83,9 +83,12 @@ For more information about Dossier, head over to [dossierhq.dev](https://www.dos
 
 ## Ports
 
+- 3000: examples/tutorial
 - 3001: examples/next-web
 - 3002: apps/playground
 - 3003: apps/blog
+- 4321: examples/astro
+- 5173: examples/tutorial
 - 6006: libraries/react-components
 - 6007: libraries/design
 - 9000: libraries/libsql - admin entity
