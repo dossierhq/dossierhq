@@ -55,6 +55,15 @@ export const OpenBooleans: Story = {
   },
 };
 
+export const OpenComponents: Story = {
+  args: {
+    initialUrlSearchParams: urlFor([
+      CatalogEntities.Components.publishedMinimal,
+      CatalogEntities.Components.publishedInvalid,
+    ]),
+  },
+};
+
 export const OpenEntities: Story = {
   args: {
     initialUrlSearchParams: urlFor([
@@ -96,15 +105,6 @@ export const OpenStrings: Story = {
     initialUrlSearchParams: urlFor([
       CatalogEntities.Strings.publishedMinimal,
       CatalogEntities.Strings.publishedInvalid,
-    ]),
-  },
-};
-
-export const OpenValueItems: Story = {
-  args: {
-    initialUrlSearchParams: urlFor([
-      CatalogEntities.ValueItems.publishedMinimal,
-      CatalogEntities.ValueItems.publishedInvalid,
     ]),
   },
 };

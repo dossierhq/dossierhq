@@ -46,7 +46,7 @@ export const CatalogEntities = {
     invalid: id('rich-texts-invalid'),
     publishedMinimal: id('rich-texts-published-minimal'),
     publishedInvalid: id('rich-texts-published-invalid'),
-    validationOfValueItems: id('rich-texts-validation-of-value-items'),
+    validationOfComponents: id('rich-texts-validation-of-components'),
   },
   Strings: {
     minimal: id('strings-minimal'),

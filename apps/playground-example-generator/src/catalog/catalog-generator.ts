@@ -563,7 +563,7 @@ async function createRichTextsEntities(
 
     adminClient.createEntity(
       copyEntity(minimal, {
-        id: id('rich-texts-value-item-validation'),
+        id: id('rich-texts-validation-of-components'),
         info: { name: 'RichTexts validation of components' },
         fields: {
           normal: createRichText([
