@@ -9,6 +9,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 import {
+  BackgroundEntityProcessorPlugin,
   NoneAndSubjectAuthorizationAdapter,
   createServer,
   type AuthorizationAdapter,
@@ -36,10 +37,18 @@ export async function getServer(): Promise<
       const databaseAdapterResult = await createDatabaseAdapter(logger);
       if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
-      return await createServer({
+      const serverResult = await createServer({
         databaseAdapter: databaseAdapterResult.value,
         authorizationAdapter: createAuthenticationAdapter(),
       });
+      if (serverResult.isError()) return serverResult;
+      const server = serverResult.value;
+
+      const processorPlugin = new BackgroundEntityProcessorPlugin(server, logger);
+      server.addPlugin(processorPlugin);
+      processorPlugin.start();
+
+      return ok(server);
     })();
   }
 
@@ -88,11 +97,6 @@ export async function getAuthenticatedPublishedClient() {
   const { server, sessionContext } = result.value;
 
   return ok(server.createPublishedClient(sessionContext));
-}
-
-export async function getAuthenticatedPublishedExceptionClient() {
-  const publishedClient = (await getAuthenticatedPublishedClient()).valueOrThrow();
-  return publishedClient.toExceptionClient();
 }
 
 async function createSessionForPrincipal(

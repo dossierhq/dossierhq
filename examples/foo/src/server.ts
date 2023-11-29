@@ -1,7 +1,11 @@
 import type { Logger } from '@dossierhq/core';
-import { AdminSchema } from '@dossierhq/core';
+import { AdminSchema, ok } from '@dossierhq/core';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
-import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import {
+  BackgroundEntityProcessorPlugin,
+  NoneAndSubjectAuthorizationAdapter,
+  createServer,
+} from '@dossierhq/server';
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import Database from 'better-sqlite3';
 import { schemaSpecification } from './schema.js';
@@ -23,7 +27,14 @@ export async function initializeServer(logger: Logger) {
     authorizationAdapter: createAuthorizationAdapter(),
     logger,
   });
-  return serverResult;
+  if (serverResult.isError()) return serverResult;
+  const server = serverResult.value;
+
+  const processorPlugin = new BackgroundEntityProcessorPlugin(server, logger);
+  server.addPlugin(processorPlugin);
+  processorPlugin.start();
+
+  return ok(server);
 }
 
 export async function updateSchema(server: Server) {

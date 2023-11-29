@@ -1,6 +1,10 @@
 #!/usr/bin/env -S bun
 import { createConsoleLogger, FieldType } from '@dossierhq/core';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
+import {
+  BackgroundEntityProcessorPlugin,
+  createServer,
+  NoneAndSubjectAuthorizationAdapter,
+} from '@dossierhq/server';
 import { createAdapter } from './ServerUtils.js';
 
 const logger = createConsoleLogger(console);
@@ -11,8 +15,12 @@ const serverResult = await createServer({
   authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
 });
 if (serverResult.isError()) throw serverResult.toError();
-
 const server = serverResult.value;
+
+const processorPlugin = new BackgroundEntityProcessorPlugin(server, logger);
+server.addPlugin(processorPlugin);
+processorPlugin.start();
+
 try {
   const sessionResult = await server.createSession({
     provider: 'sys',
@@ -37,8 +45,8 @@ try {
 
   const createResult = await adminClient.createEntity(
     {
-      info: { type: 'TitleOnly', name: 'Deno test', authKey: 'none' },
-      fields: { title: 'Deno test' },
+      info: { type: 'TitleOnly', name: 'Bun test', authKey: 'none' },
+      fields: { title: 'Bun test' },
     },
     { publish: true },
   );
