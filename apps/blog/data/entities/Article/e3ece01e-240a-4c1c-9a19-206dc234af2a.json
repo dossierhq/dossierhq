@@ -118,7 +118,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "In Playground you can start with an database or explore any of the examples (e.g. this article is available in the ",
+                "text": "In Playground you can start with an empty database or explore any of the examples (e.g. this article is available in the ",
                 "type": "text",
                 "version": 1
               },
@@ -149,7 +149,25 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "). All your changes are stored in memory only, so if you refresh or close the browser tab all changes are lost. Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
+                "text": "). All your changes are stored in the browser memory only, so if you refresh or close the browser tab all changes are lost.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
                 "type": "text",
                 "version": 1
               },
@@ -228,7 +246,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Let's start with adding a type. There are two different kinds of types, entity type and component type. Entity types define the structure of entities, which is the main content stored in Dossier. Component types define the structure of components, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
+                "text": "Let's start with adding a type. There are two different kinds of types, entity and component type. Entity types define the structure of entities, which is the main content stored in Dossier. Component types define the structure of components, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
                 "type": "text",
                 "version": 1
               },

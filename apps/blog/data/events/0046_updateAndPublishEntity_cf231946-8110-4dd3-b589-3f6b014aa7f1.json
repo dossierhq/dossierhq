@@ -1,0 +1,697 @@
+{
+  "id": "cf231946-8110-4dd3-b589-3f6b014aa7f1",
+  "parentId": "fff7b06e-2369-4fac-b6c4-0bf3372b002d",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2023-11-29T11:49:17.902Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "entity": {
+    "id": "e3ece01e-240a-4c1c-9a19-206dc234af2a",
+    "info": {
+      "name": "Overview",
+      "version": 3,
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Overview",
+      "slug": "overview",
+      "description": "Get a flavor of Dossier by using the Playground to create some content.",
+      "body": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Dossier enables you to build solutions where you’re in full control of the content. By bringing your own auth (authentication and authorization), database and backend, you can build a headless Content Management System (CMS) and integrate it with your app.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "To get a flavor of Dossier, let's use the ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Playground",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "title": null,
+                  "url": "https://playground.dossierhq.dev/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " to create some content.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Create schema with entity type",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1"
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "In Playground you can start with an empty database or explore any of the examples (e.g. this article is available in the ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "documentation example",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "title": null,
+                  "url": "https://playground.dossierhq.dev/dossier-docs/content/edit?id=e3ece01e-240a-4c1c-9a19-206dc234af2a"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "). All your changes are stored in the browser memory only, so if you refresh or close the browser tab all changes are lost.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Let's start with an empty database by clicking on the \"Load empty database\" button, which takes us to ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "the Schema page",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noopener",
+                  "target": null,
+                  "title": null,
+                  "url": "https://playground.dossierhq.dev/new/schema"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/womzrr0vi9yng1uxbarv",
+                "width": 2110,
+                "height": 1422,
+                "alt": "An empty schema editor"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "As you can see the schema is empty. The schema defines the structure of all content so we need to configure it before we can store any content in Dossier.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Let's start with adding a type. There are two different kinds of types, entity and component type. Entity types define the structure of entities, which is the main content stored in Dossier. Component types define the structure of components, which are similar but have to be stored in an entity and can't live on their own. Click on \"Add type\", and add an entity type with the name ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 16,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "BlogPost",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/ljsnb6fkchbqtb7pbnei",
+                "width": 2104,
+                "height": 1402,
+                "alt": "Adding an entity type with the name BlogPost"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "An entity type without any fields is quite useless. Click on \"Add field\" and create a field with the name ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 16,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "title",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/f4vvq4cq0rxmt4zwvzak",
+                "width": 2104,
+                "height": 1402,
+                "alt": "Adding a field with the name title"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Since we want to ensure that every blog post has a title, check \"Required\". We also want the title to automatically fill in the name of the entity select \"title\" in the \"Name field\" dropdown.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Before we're done, let's add a ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 16,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "body",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " field, make it required and change the type to RichText.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/vvxi5grl7f0zgxhupwj7",
+                "width": 2110,
+                "height": 2234,
+                "alt": "Schema editor with the title and body fields"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Click on \"Review & save schema\" and \"Save\".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Create entity",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1"
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Now when we have an entity type in the schema we can go to the Content screen, which will be empty.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/yehwajgwphhhngt2gy6k",
+                "width": 2110,
+                "height": 1380,
+                "alt": "Empty content screen"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Click on Create and select BlogPost to go to the content editor screen, where we can fill out the fields.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/quw6nc4qcv7p1jw6rakv",
+                "width": 2652,
+                "height": 1450,
+                "alt": "Content editor with a new BlogPost entity"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Fill out the fields, select None as the authorization key. Click \"Create\" to create the entity. Go back to the Content screen and ensure that it's included in the list.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/yh5u83eee5two2hhjked",
+                "width": 2212,
+                "height": 1324,
+                "alt": "Content screen with the newly created entity"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Publish entity",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "heading",
+              "version": 1,
+              "tag": "h1"
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Go to the Published content screen and ensure that it's ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 2,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "not",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " included, since we haven't published the entity.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/d9ms0pmg8hnwqvzwc1hm",
+                "width": 2212,
+                "height": 1324,
+                "alt": "Empty published content screen"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Go back to the content editor and click on Publish to publish the entity. You'll see that the status changes from draft to published.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/m2jrwszjvija9bo5xiqh",
+                "width": 2646,
+                "height": 1414,
+                "alt": "Publish the entity"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Now the entity will show up on the Published content screen.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "type": "CloudinaryImage",
+                "publicId": "Blog/nypnkwgqi468gevosemv",
+                "width": 2052,
+                "height": 1394,
+                "alt": "Published entities screen with one entity"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Now you should have a good grasp of to make changes to the schema and manage content. Remember to download the database to your computer if you want to keep your changes.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Explore the Playground or read more in the deep dive documentation.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}

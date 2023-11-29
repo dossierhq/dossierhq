@@ -1,14 +1,16 @@
 {
   "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e",
   "info": {
-    "name": "Value type",
+    "name": "Component type",
     "type": "GlossaryTerm",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
-    "title": "Value type",
-    "slug": "value-type",
+    "title": "Component type",
+    "slug": "component-type",
     "description": {
       "root": {
         "direction": "ltr",
@@ -29,7 +31,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "The description of the shape of value items.",
+                "text": "The description of the shape of components.",
                 "type": "text",
                 "version": 1
               }

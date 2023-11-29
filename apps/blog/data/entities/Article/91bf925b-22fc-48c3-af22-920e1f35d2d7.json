@@ -4,7 +4,9 @@
     "name": "Schema – structuring the content",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Schema – structuring the content",
@@ -331,7 +333,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ". The way the fields are specified is the same for entity types and value types, so you can read about it below.",
+                "text": ". The way the fields are specified is the same for entity types and component types, so you can read about it below.",
                 "type": "text",
                 "version": 1
               }
@@ -350,7 +352,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Value type",
+                "text": "Component type",
                 "type": "text",
                 "version": 1
               }
@@ -387,7 +389,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "value type",
+                    "text": "component type",
                     "type": "text",
                     "version": 1
                   }
@@ -452,7 +454,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ". A value item of that type can't be published. It you want to store a value item in an entity that is published, it has to be in an admin only field.",
+                "text": ". A component of that type can't be published. It you want to store a component in an entity that is published, it has to be in an admin only field.",
                 "type": "text",
                 "version": 1
               }
@@ -525,7 +527,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Entity types and value types can contain any number of fields.",
+                "text": "Entity types and component types can contain any number of fields.",
                 "type": "text",
                 "version": 1
               }
@@ -669,7 +671,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " (Boolean, Entity, Location, Number, Rich text, String or Value item).",
+                "text": " (Boolean, Component, Entity, Location, Number, Rich text or String).",
                 "type": "text",
                 "version": 1
               }
@@ -705,7 +707,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " of values. All items in the list must be of the same field type, e.g. a list of String, or a list of Value item.",
+                "text": " of values. All items in the list must be of the same field type, e.g. a list of String, or a list of Component.",
                 "type": "text",
                 "version": 1
               }
@@ -761,6 +763,79 @@
                 "mode": "normal",
                 "style": "",
                 "text": "A boolean field can be true, false or not set.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h2",
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Component",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "A component field contains a component.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "It's possible to restrict which ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 1,
+                "mode": "normal",
+                "style": "",
+                "text": "component types",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " can be used in the field. ",
                 "type": "text",
                 "version": 1
               }
@@ -980,7 +1055,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "A rich text field contains text with formatting (e.g. bold, italic) and can contain multiple blocks (e.g paragraph, bullet list) and other content. It can also contain value items and references to entities.",
+                "text": "A rich text field contains text with formatting (e.g. bold, italic) and can contain multiple blocks (e.g paragraph, bullet list) and other content. It can also contain components and references to entities.",
                 "type": "text",
                 "version": 1
               }
@@ -1276,7 +1351,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": " is needed for embedded value items",
+                    "text": " is needed for embedded components",
                     "type": "text",
                     "version": 1
                   }
@@ -1363,7 +1438,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " that can be embedded in the rich text field. This configuration required ",
+                "text": " that can be embedded in the rich text field. This configuration requires ",
                 "type": "text",
                 "version": 1
               },
@@ -1462,7 +1537,7 @@
                 "format": 1,
                 "mode": "normal",
                 "style": "",
-                "text": "value types",
+                "text": "component types",
                 "type": "text",
                 "version": 1
               },
@@ -1471,7 +1546,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " that can be embedded in the rich text field. This configuration required ",
+                "text": " that can be embedded in the rich text field. This configuration requires ",
                 "type": "text",
                 "version": 1
               },
@@ -1647,79 +1722,6 @@
             "type": "heading",
             "version": 1,
             "tag": "h2",
-            "children": [
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "Value item",
-                "type": "text",
-                "version": 1
-              }
-            ]
-          },
-          {
-            "direction": "ltr",
-            "format": "",
-            "indent": 0,
-            "type": "paragraph",
-            "version": 1,
-            "children": [
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "A value item field contains a value item.",
-                "type": "text",
-                "version": 1
-              }
-            ]
-          },
-          {
-            "direction": "ltr",
-            "format": "",
-            "indent": 0,
-            "type": "paragraph",
-            "version": 1,
-            "children": [
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "It's possible to restrict which ",
-                "type": "text",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 1,
-                "mode": "normal",
-                "style": "",
-                "text": "value types",
-                "type": "text",
-                "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": " can be used in the field. ",
-                "type": "text",
-                "version": 1
-              }
-            ]
-          },
-          {
-            "direction": "ltr",
-            "format": "",
-            "indent": 0,
-            "type": "heading",
-            "version": 1,
-            "tag": "h1",
             "children": [
               {
                 "detail": 0,

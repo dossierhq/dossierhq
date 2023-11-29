@@ -4,7 +4,9 @@
     "name": "Key concept – admin and published views",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Key concept – admin and published views",
@@ -84,7 +86,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "The web interface contains two different pages for interacting with the entities. In the entities page you use the admin view to search for and create entities. The published entities page uses the published view and is read-only so you can't make any changes.",
+                "text": "The web interface contains two different pages for interacting with the entities. In the content page you use the admin view to search for and create entities. The published content page uses the published view and is read-only so you can't make any changes.",
                 "type": "text",
                 "version": 1
               }

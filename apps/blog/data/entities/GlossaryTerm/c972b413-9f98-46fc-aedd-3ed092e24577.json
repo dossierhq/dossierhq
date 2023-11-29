@@ -4,7 +4,9 @@
     "name": "Schema",
     "type": "GlossaryTerm",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Schema",
@@ -78,7 +80,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "value types",
+                    "text": "component types",
                     "type": "text",
                     "version": 1
                   }

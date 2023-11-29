@@ -1,15 +1,17 @@
 {
   "id": "6384629e-72aa-482c-b070-bc26d90e0fc6",
   "info": {
-    "name": "Content – entities and value items",
+    "name": "Content – entities and components",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
-    "title": "Content – entities and value items",
+    "title": "Content – entities and components",
     "slug": "content",
-    "description": "Learn about entities (the main content type in Dossier) and value items.",
+    "description": "Learn about entities (the main content type in Dossier) and components.",
     "body": {
       "root": {
         "direction": "ltr",
@@ -163,7 +165,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "a name (\"Content – entities and value items\")",
+                    "text": "a name (\"Content – entities and components\")",
                     "type": "text",
                     "version": 1
                   }
@@ -182,7 +184,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "a title field with \"Content – entities and value items\"",
+                    "text": "a title field with \"Content – entities and components\"",
                     "type": "text",
                     "version": 1
                   }
@@ -300,6 +302,7 @@
                 "version": 1,
                 "rel": "noopener",
                 "target": null,
+                "title": null,
                 "url": "https://playground.dossierhq.dev/dossier-docs/content/edit?id=6384629e-72aa-482c-b070-bc26d90e0fc6",
                 "children": [
                   {
@@ -325,7 +328,7 @@
             ]
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",
@@ -345,7 +348,7 @@
             "version": 1
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",
@@ -723,7 +726,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Value item",
+                "text": "Component",
                 "type": "text",
                 "version": 1
               }
@@ -760,7 +763,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "value items",
+                    "text": "components",
                     "type": "text",
                     "version": 1
                   }
@@ -771,7 +774,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " for structured data. Value items have fields just as entities, but you can't manage value items on their own, they need to be part of an entity. A value item can also be part of another value item, which enables combining value items to create more complex data.",
+                "text": " for structured data. Components have fields just as entities, but you can't manage components on their own, they need to be part of an entity. A component can also be part of another component, which enables you to create more complex data.",
                 "type": "text",
                 "version": 1
               }
@@ -789,7 +792,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "An example of where a value item is used is in the menu to the left on this page. The menu is stored in an entity with the entity type \"Chapter\". In its \"items\" field there is a value item representing this article. The value item has the following fields:",
+                "text": "An example of where a component is used is in the menu to the left on this page. The menu is stored in an entity with the entity type \"Chapter\". In its \"items\" field there is a component representing this article. The component has the following fields:",
                 "type": "text",
                 "version": 1
               }
@@ -818,7 +821,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "a title field with \"Content\" (which is shorter than the article entity's title \"Content – entities and value items\")",
+                    "text": "a title field with \"Content\" (which is shorter than the article entity's title \"Content – entities and components\")",
                     "type": "text",
                     "version": 1
                   }
@@ -857,7 +860,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Each value item has a ",
+                "text": "Each component has a ",
                 "type": "text",
                 "version": 1
               },
@@ -876,7 +879,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "value type",
+                    "text": "component type",
                     "type": "text",
                     "version": 1
                   }
@@ -887,7 +890,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " that defines the structure of the value item and its fields. The value item representing this article in the menu, has the value type \"ArticleTocItem\".",
+                "text": " that defines the structure of the component and its fields. The component representing this article in the menu, has the component type \"ArticleTocItem\".",
                 "type": "text",
                 "version": 1
               }
@@ -917,6 +920,7 @@
                 "version": 1,
                 "rel": "noopener",
                 "target": null,
+                "title": null,
                 "url": "https://playground.dossierhq.dev/dossier-docs/content/edit?id=47288236-2a96-41ef-8061-9846cb2a50d7",
                 "children": [
                   {
@@ -954,7 +958,7 @@
             "version": 1
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",

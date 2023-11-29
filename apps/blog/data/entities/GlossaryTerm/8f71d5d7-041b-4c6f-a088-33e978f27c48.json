@@ -1,14 +1,16 @@
 {
   "id": "8f71d5d7-041b-4c6f-a088-33e978f27c48",
   "info": {
-    "name": "Value item",
+    "name": "Component",
     "type": "GlossaryTerm",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
-    "title": "Value item",
-    "slug": "value-item",
+    "title": "Component",
+    "slug": "component",
     "description": {
       "root": {
         "direction": "ltr",
@@ -48,7 +50,7 @@
                     "format": 0,
                     "mode": "normal",
                     "style": "",
-                    "text": "value type",
+                    "text": "component type",
                     "type": "text",
                     "version": 1
                   }
@@ -59,7 +61,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": ". A value item is similar to an entity, but a value item doesn't have an identity and has to be stored in an entity. There are two views of a value item, the admin value item contains all fields of the entity. The published value item doesn't contain admin only fields (as specified by the value type).",
+                "text": ". A component is similar to an entity, but a component doesn't have an identity and has to be stored in an entity. There are two views of a component, the admin component contains all fields of the component. The published component doesn't contain admin only fields (as specified by the component type).",
                 "type": "text",
                 "version": 1
               }

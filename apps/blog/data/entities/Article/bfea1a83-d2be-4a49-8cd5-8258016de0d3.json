@@ -41,7 +41,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " Add web interface to the frontend to manage the content, with four screens for the admin web interface (entity list, entity editor, schema editor and changelog), and two for the published web interface (entity list and entity display).",
+                "text": " Add web interface to the frontend to manage the content, with four screens for the admin web interface (content list, content editor, schema editor and changelog), and two for the published web interface (content list and content display).",
                 "type": "text",
                 "version": 1
               }
@@ -6799,7 +6799,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "As for the routes we want to support four screens for the admin web interface (entity list, entity editor, schema editor and changelog), and two for the published web interface (entity list and entity display). The library provide most of the layout and functionality, but we get to adapt it to the router, react to screen navigation and add an app specific navbar as a header.",
+                "text": "As for the routes we want to support four screens for the admin web interface (content list, content editor, schema editor and changelog), and two for the published web interface (content list and content display). The library provide most of the layout and functionality, but we get to adapt it to the router, react to screen navigation and add an app specific navbar as a header.",
                 "type": "text",
                 "version": 1
               }
@@ -26149,7 +26149,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Now we can access all the screens. The entities list screen looks like this:",
+                "text": "Now we can access all the screens. The content list screen looks like this:",
                 "type": "text",
                 "version": 1
               }
@@ -26162,7 +26162,7 @@
               "publicId": "Blog/k3sj8tqqcsalahvticm2",
               "width": 2118,
               "height": 1040,
-              "alt": "Screenshot of the entities list screen"
+              "alt": "Screenshot of the content list screen"
             },
             "format": "",
             "version": 1
@@ -26179,7 +26179,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Opening the edit screen for an entity looks like this:",
+                "text": "Opening the content editor screen for an entity looks like this:",
                 "type": "text",
                 "version": 1
               }
@@ -26192,7 +26192,7 @@
               "publicId": "Blog/qrq0ugb7bnk1bgxceyrh",
               "width": 2118,
               "height": 1040,
-              "alt": "Screenshot of the entity edit screen"
+              "alt": "Screenshot of the content editor screen"
             },
             "format": "",
             "version": 1
@@ -26209,7 +26209,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "The published entities list screen looks like this:",
+                "text": "The published content list screen looks like this:",
                 "type": "text",
                 "version": 1
               }
@@ -26222,7 +26222,7 @@
               "publicId": "Blog/mjnwdgw0iufvxnsph9ah",
               "width": 2118,
               "height": 1040,
-              "alt": "Screenshot of published entities list screen"
+              "alt": "Screenshot of published content list screen"
             },
             "format": "",
             "version": 1
@@ -26239,7 +26239,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Opening the display entity screen for an entity looks like this:",
+                "text": "Opening the content display screen for an entity looks like this:",
                 "type": "text",
                 "version": 1
               }
@@ -26252,7 +26252,7 @@
               "publicId": "Blog/yiwndiocr04vwcmuokq3",
               "width": 2118,
               "height": 1040,
-              "alt": "Screenshot of display published entity screen"
+              "alt": "Screenshot of content display screen"
             },
             "format": "",
             "version": 1
@@ -26306,7 +26306,7 @@
             ]
           },
           {
-            "direction": null,
+            "direction": "ltr",
             "format": "",
             "indent": 0,
             "type": "paragraph",

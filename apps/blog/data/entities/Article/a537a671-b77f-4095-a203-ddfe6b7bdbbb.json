@@ -4,7 +4,9 @@
     "name": "Tutorial – Images using Cloudinary",
     "type": "Article",
     "authKey": "none",
-    "status": "published"
+    "status": "published",
+    "valid": true,
+    "validPublished": true
   },
   "fields": {
     "title": "Tutorial – Images using Cloudinary",
@@ -39,7 +41,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " Add support for a new value type and uploading images using Cloudinary.",
+                "text": " Add support for a new component type and uploading images using Cloudinary.",
                 "type": "text",
                 "version": 1
               }
@@ -69,6 +71,7 @@
                 "version": 1,
                 "rel": "noopener",
                 "target": null,
+                "title": null,
                 "url": "https://cloudinary.com/",
                 "children": [
                   {
@@ -310,7 +313,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "In order to support Cloudinary in the schema we want to add a value type called ",
+                "text": "In order to support Cloudinary in the schema we want to add a component type called ",
                 "type": "text",
                 "version": 1
               },
@@ -400,7 +403,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " provides definition of the type with all the fields:",
+                "text": " provides a definition of the type with all the fields:",
                 "type": "text",
                 "version": 1
               }
@@ -457,7 +460,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "CLOUDINARY_IMAGE_VALUE_TYPE",
+                "text": "CLOUDINARY_IMAGE_COMPONENT_TYPE",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "constant"
@@ -1491,7 +1494,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "    valueTypes",
+                "text": "    componentTypes",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -1529,7 +1532,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "CLOUDINARY_IMAGE_VALUE_TYPE",
+                "text": "CLOUDINARY_IMAGE_COMPONENT_TYPE",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "constant"
@@ -1667,7 +1670,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "When the backend is restarted we can see that the value type is set up:",
+                "text": "When the backend is restarted we can see that the component type is set up:",
                 "type": "text",
                 "version": 1
               }
@@ -1699,7 +1702,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "[be] info: Loaded schema with 1 entity types, 0 value types, 0 patterns, 0 indexes",
+                "text": "[be] info: Loaded schema with 1 entity types, 0 component types, 0 patterns, 0 indexes",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -1712,7 +1715,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "[be] info: Updated schema, new schema has 1 entity types, 1 value types, 0 patterns, 0 indexes",
+                "text": "[be] info: Updated schema, new schema has 1 entity types, 1 component types, 0 patterns, 0 indexes",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -2327,7 +2330,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " isValueItemField ",
+                "text": " isComponentItemField ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3124,7 +3127,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "ValueItem ",
+                "text": "Component ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -3156,7 +3159,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "isValueItemField",
+                "text": "isComponentItemField",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -4732,7 +4735,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " isValueItemField ",
+                "text": " isComponentItemField ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -5439,7 +5442,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "isValueItemField",
+                "text": "isComponentItemField",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -6547,7 +6550,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "And that's it. Now we can add a value item of type ",
+                "text": "And that's it. Now we can add a component of type ",
                 "type": "text",
                 "version": 1
               },

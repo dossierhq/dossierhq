@@ -1,0 +1,108 @@
+{
+  "id": "2cd26919-c67d-45a4-b123-773c1beb4a6a",
+  "parentId": "1fe03d0a-3d64-48e0-b2c7-4c32afa38135",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2023-11-29T11:53:10.663Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "entity": {
+    "id": "c972b413-9f98-46fc-aedd-3ed092e24577",
+    "info": {
+      "name": "Schema",
+      "version": 2,
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Schema",
+      "slug": "schema",
+      "description": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Describes the structure of the data, especially ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "entity types",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "15e396c5-7498-4ba1-9f3e-0c3ce5759968"
+                  }
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " and ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "component types",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e"
+                  }
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}

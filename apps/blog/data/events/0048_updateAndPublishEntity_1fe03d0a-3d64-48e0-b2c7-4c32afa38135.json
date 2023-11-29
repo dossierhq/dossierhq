@@ -1,0 +1,78 @@
+{
+  "id": "1fe03d0a-3d64-48e0-b2c7-4c32afa38135",
+  "parentId": "0a11fed8-6748-4489-baea-905db5e60910",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2023-11-29T11:51:58.853Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "entity": {
+    "id": "8f71d5d7-041b-4c6f-a088-33e978f27c48",
+    "info": {
+      "name": "Component",
+      "version": 2,
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Component",
+      "slug": "component",
+      "description": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "A piece of data of a certain ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "component type",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "entityLink",
+                  "version": 1,
+                  "reference": {
+                    "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e"
+                  }
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ". A component is similar to an entity, but a component doesn't have an identity and has to be stored in an entity. There are two views of a component, the admin component contains all fields of the component. The published component doesn't contain admin only fields (as specified by the component type).",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}

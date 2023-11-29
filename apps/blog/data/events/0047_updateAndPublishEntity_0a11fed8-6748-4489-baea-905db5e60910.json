@@ -1,0 +1,48 @@
+{
+  "id": "0a11fed8-6748-4489-baea-905db5e60910",
+  "parentId": "cf231946-8110-4dd3-b589-3f6b014aa7f1",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2023-11-29T11:50:45.536Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "entity": {
+    "id": "745b8258-3b17-4a89-81a6-1a2fb3d2066e",
+    "info": {
+      "name": "Component type",
+      "version": 2,
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Component type",
+      "slug": "component-type",
+      "description": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The description of the shape of components.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}
