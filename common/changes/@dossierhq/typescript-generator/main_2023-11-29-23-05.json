@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/typescript-generator",
+      "comment": "Break: Rename AppAdminValueItem to AppAdminComponent",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/typescript-generator"
+}

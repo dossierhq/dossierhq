@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Breaks: Rename screens to ChangelogListScreen, ContentListScreen, ContentEditorScreen, PublishedContentListScreen, PublishedContentDisplayScreen, SchemaEditorScreen.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}
