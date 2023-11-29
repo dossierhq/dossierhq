@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "start": "vite --force --port 3002",
     "build": "./scripts/sync-dossier-docs-database.sh && tsc && npm run eslint:check && (vite build 2>&1)",
