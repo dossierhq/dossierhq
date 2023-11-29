@@ -75,15 +75,15 @@ describe('publishedGetEntity', () => {
     const context = createMockSessionContext({ databaseAdapter });
 
     mockPublishedEntityGetOneCall(databaseAdapter, {
-      type: 'ValueItemsEntity',
+      type: 'ComponentsEntity',
       encodeVersion: ENCODE_VERSION_LEGACY,
       fields: {
         // References were stored as just the id
-        normal: { type: 'EntitiesValueItem', normal: '12345', list: ['23456', '34567'] },
+        normal: { type: 'EntitiesComponent', normal: '12345', list: ['23456', '34567'] },
         list: [
           // Locations were stored as [lat, lng]
           {
-            type: 'LocationsValueItem',
+            type: 'LocationsComponent',
             normal: [1, 2],
             list: [
               [3, 4],

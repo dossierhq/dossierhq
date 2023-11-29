@@ -63,24 +63,24 @@ const adminSchema = AdminSchema.createAndValidate({
       ],
     },
     {
-      name: 'ValueItemsEntity',
+      name: 'ComponentsEntity',
       fields: [
         { name: 'any', type: FieldType.Component },
         {
-          name: 'stringsValueItem',
+          name: 'stringsComponent',
           type: FieldType.Component,
-          componentTypes: ['StringsValueItem'],
+          componentTypes: ['StringsComponent'],
         },
       ],
     },
   ],
   componentTypes: [
-    { name: 'AdminOnlyValueItem', adminOnly: true, fields: [] },
+    { name: 'AdminOnlyComponent', adminOnly: true, fields: [] },
     {
-      name: 'NumbersValueItem',
+      name: 'NumbersComponent',
       fields: [{ name: 'integer', type: FieldType.Number, integer: true }],
     },
-    { name: 'StringsValueItem', fields: [{ name: 'string', type: FieldType.String }] },
+    { name: 'StringsComponent', fields: [{ name: 'string', type: FieldType.String }] },
   ],
   patterns: [
     { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
@@ -130,7 +130,7 @@ const RICH_TEXTS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
 };
 
 const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
-  info: { type: 'ValueItemsEntity', name: 'ValueItemsEntity', authKey: 'none' },
+  info: { type: 'ComponentsEntity', name: 'ComponentsEntity', authKey: 'none' },
   fields: {},
 };
 
@@ -547,7 +547,7 @@ describe('Validate entity component', () => {
       validateEntity(
         copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
           fields: {
-            any: { type: 'AdminOnlyValueItem' },
+            any: { type: 'AdminOnlyComponent' },
           },
         }),
       ),
@@ -559,7 +559,7 @@ describe('Validate entity component', () => {
       validateEntity(
         copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
           fields: {
-            stringsValueItem: { type: 'NumbersValueItem', integer: 1 },
+            stringsComponent: { type: 'NumbersComponent', integer: 1 },
           },
         }),
       ),
@@ -571,7 +571,7 @@ describe('Validate entity component', () => {
       validateEntity(
         copyEntity(VALUE_ITEMS_ENTITY_CREATE_DEFAULT, {
           fields: {
-            any: { type: 'NumbersValueItem', integer: 1, extra: 1.234 },
+            any: { type: 'NumbersComponent', integer: 1, extra: 1.234 },
           },
         }),
         { keepExtraFields: true },

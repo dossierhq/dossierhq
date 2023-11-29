@@ -25,8 +25,8 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
         { name: 'required', type: FieldType.String, required: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },
         { name: 'richText', type: FieldType.RichText, adminOnly: false },
-        { name: 'valueItem', type: FieldType.Component, adminOnly: false },
-        { name: 'valueItemList', type: FieldType.Component, list: true, adminOnly: false },
+        { name: 'component', type: FieldType.Component, adminOnly: false },
+        { name: 'componentList', type: FieldType.Component, list: true, adminOnly: false },
       ],
     },
     { name: 'MigrationEntity', fields: [] },
@@ -54,7 +54,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
           type: FieldType.RichText,
           entityTypes: ['References'],
           linkEntityTypes: ['TitleOnly'],
-          componentTypes: ['LocationsValue'],
+          componentTypes: ['LocationsComponent'],
         },
       ],
     },
@@ -97,7 +97,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [{ name: 'title', type: FieldType.String, required: true }],
     },
     {
-      name: 'ValueItems',
+      name: 'Components',
       fields: [
         { name: 'any', type: FieldType.Component },
         { name: 'anyAdminOnly', type: FieldType.Component, adminOnly: true },
@@ -105,21 +105,21 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
   ],
   componentTypes: [
-    { name: 'AdminOnlyValue', adminOnly: true, fields: [] },
+    { name: 'AdminOnlyComponent', adminOnly: true, fields: [] },
     {
-      name: 'ChangeValidationsValueItem',
+      name: 'ChangeValidationsComponent',
       adminOnly: false,
       fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' }],
     },
     {
-      name: 'LocationsValue',
+      name: 'LocationsComponent',
       fields: [
         { name: 'location', type: FieldType.Location },
         { name: 'locationAdminOnly', type: FieldType.Location, adminOnly: true },
       ],
     },
-    { name: 'MigrationValueItem', fields: [] },
-    { name: 'ReferencesValue', fields: [{ name: 'reference', type: FieldType.Entity }] },
+    { name: 'MigrationComponent', fields: [] },
+    { name: 'ReferencesComponent', fields: [{ name: 'reference', type: FieldType.Entity }] },
   ],
   patterns: [
     { name: 'subject', pattern: '^subject$' },
@@ -139,17 +139,17 @@ export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecification
         { name: 'required', type: FieldType.String, required: false },
         { name: 'matchPattern', type: FieldType.String, matchPattern: null },
         { name: 'richText', type: FieldType.RichText, adminOnly: true },
-        { name: 'valueItem', type: FieldType.Component, adminOnly: true },
-        { name: 'valueItemList', type: FieldType.Component, list: true, adminOnly: true },
+        { name: 'component', type: FieldType.Component, adminOnly: true },
+        { name: 'componentList', type: FieldType.Component, list: true, adminOnly: true },
       ],
     },
   ],
 };
 
-export const ChangeValidationsValueItemWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
+export const ChangeValidationsComponentWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
   componentTypes: [
     {
-      name: 'ChangeValidationsValueItem',
+      name: 'ChangeValidationsComponent',
       fields: [{ name: 'matchPattern', type: FieldType.String, matchPattern: null }],
     },
   ],

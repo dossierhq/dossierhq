@@ -3,17 +3,21 @@ import {
   AdminEntityStatus,
   copyEntity,
   createRichText,
+  createRichTextComponentNode,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
   getAllNodesForConnection,
   type BoundingBox,
 } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminLocationsValue, AdminReferencesValue, AdminValueItems } from '../SchemaTypes.js';
+import type {
+  AdminComponents,
+  AdminLocationsComponent,
+  AdminReferencesComponent,
+} from '../SchemaTypes.js';
 import {
   CHANGE_VALIDATIONS_CREATE,
   LOCATIONS_CREATE,
@@ -643,21 +647,21 @@ async function getEntities_componentTypes({ server }: AdminEntityTestContext) {
 
   const matchesBeforeValueItem = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
+    { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
   assertResultValue(matchesBeforeValueItem, 0);
 
   (
-    await adminClient.updateEntity<AdminValueItems>({
+    await adminClient.updateEntity<AdminComponents>({
       id: entity.id,
-      fields: { any: { type: 'ReferencesValue', reference: null } },
+      fields: { any: { type: 'ReferencesComponent', reference: null } },
     })
   ).throwIfError();
 
   const matchesAfterValueItem = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
+    { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
   assertResultValue(matchesAfterValueItem, 1);
@@ -742,8 +746,8 @@ async function getEntities_linksToOneReferenceFromValueItemInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
-          createRichTextComponentNode<AdminReferencesValue>({
-            type: 'ReferencesValue',
+          createRichTextComponentNode<AdminReferencesComponent>({
+            type: 'ReferencesComponent',
             reference: { id: titleOnlyId },
           }),
         ]),
@@ -885,8 +889,8 @@ async function getEntities_boundingBoxOneInsideFromValueItemInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
-          createRichTextComponentNode<AdminLocationsValue>({
-            type: 'LocationsValue',
+          createRichTextComponentNode<AdminLocationsComponent>({
+            type: 'LocationsComponent',
             location: center,
             locationAdminOnly: null,
           }),

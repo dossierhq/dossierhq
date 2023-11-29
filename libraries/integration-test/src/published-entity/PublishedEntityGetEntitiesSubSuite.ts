@@ -1,7 +1,7 @@
 import { copyEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminValueItems } from '../SchemaTypes.js';
+import type { AdminComponents } from '../SchemaTypes.js';
 import {
   adminToPublishedEntity,
   LOCATIONS_CREATE,
@@ -414,16 +414,16 @@ async function getEntities_componentTypes({ server }: PublishedEntityTestContext
 
   const matchesBeforeValueItem = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
+    { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
   assertResultValue(matchesBeforeValueItem, 0);
 
   (
-    await adminClient.updateEntity<AdminValueItems>(
+    await adminClient.updateEntity<AdminComponents>(
       {
         id: entity.id,
-        fields: { any: { type: 'ReferencesValue', reference: null } },
+        fields: { any: { type: 'ReferencesComponent', reference: null } },
       },
       { publish: true },
     )
@@ -431,7 +431,7 @@ async function getEntities_componentTypes({ server }: PublishedEntityTestContext
 
   const matchesAfterValueItem = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], componentTypes: ['ReferencesValue'] },
+    { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
   assertResultValue(matchesAfterValueItem, 1);

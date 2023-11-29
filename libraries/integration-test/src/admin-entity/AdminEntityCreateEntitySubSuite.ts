@@ -30,7 +30,7 @@ import {
   assertIsAdminTitleOnly,
   type AdminLocations,
   type AdminReferences,
-  type AdminReferencesValue,
+  type AdminReferencesComponent,
   type AdminRichTexts,
   type AdminStrings,
   type AdminSubjectOnly,
@@ -745,8 +745,8 @@ async function createEntity_withRichTextFieldWithValueItem({ server }: AdminEnti
 
   const richText = createRichText([
     createRichTextParagraphNode([
-      createRichTextComponentNode<AdminReferencesValue>({
-        type: 'ReferencesValue',
+      createRichTextComponentNode<AdminReferencesComponent>({
+        type: 'ReferencesComponent',
         reference: { id: createTitleOnlyResult.value.entity.id },
       }),
     ]),

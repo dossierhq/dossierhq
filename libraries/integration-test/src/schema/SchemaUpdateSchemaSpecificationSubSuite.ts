@@ -18,9 +18,9 @@ import {
 } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import {
-  assertIsAdminValueItems,
-  assertIsPublishedValueItems,
-  type AdminValueItems,
+  assertIsAdminComponents,
+  assertIsPublishedComponents,
+  type AdminComponents,
   type AppAdminComponent,
   type AppAdminEntity,
   type AppAdminUniqueIndexes,
@@ -128,7 +128,7 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationValueItem({
     ).valueOrThrow();
 
     const migrationValueSpec = schemaSpec.componentTypes.find(
-      (it) => it.name === 'MigrationValueItem',
+      (it) => it.name === 'MigrationComponent',
     );
     if (migrationValueSpec && migrationValueSpec.fields.length > 0) {
       const updateResult = await adminClient.updateSchemaSpecification({
@@ -137,7 +137,7 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationValueItem({
             version: schemaSpec.version + 1,
             actions: migrationValueSpec.fields.map((it) => ({
               action: 'deleteField',
-              componentType: 'MigrationValueItem',
+              componentType: 'MigrationComponent',
               field: it.name,
             })),
           },
@@ -161,7 +161,7 @@ async function updateSchemaSpecification_removeAllTemporaryValueTypes({
     ).valueOrThrow();
 
     const valueSpecs = schemaSpec.componentTypes.filter(
-      (it) => it.name.startsWith('MigrationValueItem') && it.name !== 'MigrationValueItem',
+      (it) => it.name.startsWith('MigrationComponent') && it.name !== 'MigrationComponent',
     );
     if (valueSpecs.length > 0) {
       const updateResult = await adminClient.updateSchemaSpecification({
@@ -347,7 +347,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: null } },
+          fields: { any: { type: 'ChangeValidationsComponent', matchPattern: null } },
         }),
         { publish: true },
       )
@@ -356,7 +356,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     // Make the component adminOnly
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: true, fields: [] }],
       }),
     );
 
@@ -378,7 +378,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeMakesPublishedEntityI
     // Make the component normal
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: false, fields: [] }],
       }),
     );
 
@@ -394,7 +394,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
   const publishedClient = publishedClientForMainPrincipal(server);
 
   const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
-    entityTypes: ['ValueItems'],
+    entityTypes: ['Components'],
     text: 'baz',
   };
 
@@ -407,7 +407,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: 'ChangeValidationsValueItem', matchPattern: query.text! },
+            any: { type: 'ChangeValidationsComponent', matchPattern: query.text! },
           },
         }),
         { publish: true },
@@ -423,7 +423,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     // Make the component adminOnly
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: true, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: true, fields: [] }],
       }),
     );
 
@@ -447,7 +447,7 @@ async function updateSchemaSpecification_adminOnlyValueTypeRemovesFromIndex({
     // Make the component normal
     assertOkResult(
       await adminClient.updateSchemaSpecification({
-        componentTypes: [{ name: 'ChangeValidationsValueItem', adminOnly: false, fields: [] }],
+        componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: false, fields: [] }],
       }),
     );
 
@@ -990,7 +990,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
-        { name: 'MigrationValueItem', fields: [{ name: fieldName, type: FieldType.String }] },
+        { name: 'MigrationComponent', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
@@ -999,7 +999,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: 'MigrationValueItem', [fieldName]: 'value' } },
+          fields: { any: { type: 'MigrationComponent', [fieldName]: 'value' } },
         }),
         { publish: true },
       )
@@ -1011,7 +1011,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
         {
           version: schemaSpecification.version + 1,
           actions: [
-            { action: 'deleteField', componentType: 'MigrationValueItem', field: fieldName },
+            { action: 'deleteField', componentType: 'MigrationComponent', field: fieldName },
           ],
         },
       ],
@@ -1025,32 +1025,32 @@ async function updateSchemaSpecification_deleteFieldOnValueItem({ server }: Sche
   const entityAfterMigration = (
     await adminClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
-  assertIsAdminValueItems(entityAfterMigration);
+  assertIsAdminComponents(entityAfterMigration);
   const adminValueItem = entityAfterMigration.fields.any as Component;
-  assertEquals(adminValueItem.type, 'MigrationValueItem');
+  assertEquals(adminValueItem.type, 'MigrationComponent');
   assertEquals(fieldName in adminValueItem, false);
 
   // And in published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntityAfterMigration);
+  assertIsPublishedComponents(publishedEntityAfterMigration);
   const publishedValueItem = publishedEntityAfterMigration.fields.any as Component;
-  assertEquals(publishedValueItem.type, 'MigrationValueItem');
+  assertEquals(publishedValueItem.type, 'MigrationComponent');
   assertEquals(fieldName in publishedValueItem, false);
 
   // Ensure it's not possible to use the field
   const updateResult = await adminClient.updateEntity(
     {
       id: result.value.id,
-      fields: { any: { type: 'MigrationValueItem', [fieldName]: 'new value' } },
+      fields: { any: { type: 'MigrationComponent', [fieldName]: 'new value' } },
     },
     { publish: true },
   );
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Invalid fields for component of type MigrationValueItem: ${fieldName}`,
+    `entity.fields.any: Invalid fields for component of type MigrationComponent: ${fieldName}`,
   );
 }
 
@@ -1061,7 +1061,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
   const fieldName = `field${new Date().getTime()}`;
 
   const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
-    entityTypes: ['ValueItems'],
+    entityTypes: ['Components'],
     text: 'Copyrightable',
   };
 
@@ -1070,7 +1070,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
-        { name: 'MigrationValueItem', fields: [{ name: fieldName, type: FieldType.String }] },
+        { name: 'MigrationComponent', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
@@ -1079,7 +1079,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: 'MigrationValueItem', [fieldName]: query.text } },
+          fields: { any: { type: 'MigrationComponent', [fieldName]: query.text } },
         }),
       )
     ).valueOrThrow();
@@ -1096,7 +1096,7 @@ async function updateSchemaSpecification_deleteFieldOnValueItemIndexesUpdated({
         {
           version: schemaSpecification.version + 1,
           actions: [
-            { action: 'deleteField', componentType: 'MigrationValueItem', field: fieldName },
+            { action: 'deleteField', componentType: 'MigrationComponent', field: fieldName },
           ],
         },
       ],
@@ -1299,7 +1299,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
     // First add new field
     const firstUpdateResult = await adminClient.updateSchemaSpecification({
       componentTypes: [
-        { name: 'MigrationValueItem', fields: [{ name: oldFieldName, type: FieldType.String }] },
+        { name: 'MigrationComponent', fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
@@ -1308,7 +1308,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: 'MigrationValueItem', [oldFieldName]: 'value' } },
+          fields: { any: { type: 'MigrationComponent', [oldFieldName]: 'value' } },
         }),
         { publish: true },
       )
@@ -1322,7 +1322,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
           actions: [
             {
               action: 'renameField',
-              componentType: 'MigrationValueItem',
+              componentType: 'MigrationComponent',
               field: oldFieldName,
               newName: newFieldName,
             },
@@ -1357,7 +1357,7 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
     await adminClient.updateEntity(
       {
         id: entityId,
-        fields: { any: { type: 'MigrationValueItem', [newFieldName]: 'updated value' } },
+        fields: { any: { type: 'MigrationComponent', [newFieldName]: 'updated value' } },
       },
       { publish: true },
     )
@@ -1368,14 +1368,14 @@ async function updateSchemaSpecification_renameFieldOnValueItem({ server }: Sche
   const updatedOldNameResult = await adminClient.updateEntity(
     {
       id: entityId,
-      fields: { any: { type: 'MigrationValueItem', [oldFieldName]: 'updated value' } },
+      fields: { any: { type: 'MigrationComponent', [oldFieldName]: 'updated value' } },
     },
     { publish: true },
   );
   assertErrorResult(
     updatedOldNameResult,
     ErrorType.BadRequest,
-    `entity.fields.any: Invalid fields for component of type MigrationValueItem: ${oldFieldName}`,
+    `entity.fields.any: Invalid fields for component of type MigrationComponent: ${oldFieldName}`,
   );
 }
 
@@ -1411,7 +1411,7 @@ async function updateSchemaSpecification_deleteTypeOnEntityType({ server }: Sche
 async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const typeName = `MigrationValueItem${new Date().getTime()}`;
+  const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
@@ -1447,12 +1447,12 @@ async function updateSchemaSpecification_deleteTypeOnValueItem({ server }: Schem
 
   // Check that the component is removed
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminValueItems(adminEntity);
+  assertIsAdminComponents(adminEntity);
   assertEquals(adminEntity.fields.any, null);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntity);
+  assertIsPublishedComponents(publishedEntity);
   assertEquals(publishedEntity.fields.any, null);
 
   // Check that we can't create new components with the name
@@ -1472,7 +1472,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const typeName = `MigrationValueItem${new Date().getTime()}`;
+  const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
@@ -1513,17 +1513,17 @@ async function updateSchemaSpecification_deleteTypeOnValueItemAndReplaceWithAnot
 
   // Check that component type is deleted
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminValueItems(adminEntity);
+  assertIsAdminComponents(adminEntity);
   assertEquals(adminEntity.fields.any, null);
 
   // And for published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntity);
+  assertIsPublishedComponents(publishedEntity);
   assertEquals(publishedEntity.fields.any, null);
 
   // Check that the new type is usable
   const updatedEntity = (
-    await adminClient.updateEntity<AdminValueItems>(
+    await adminClient.updateEntity<AdminComponents>(
       {
         id: reference.id,
         fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppAdminComponent },
@@ -1541,7 +1541,7 @@ async function updateSchemaSpecification_deleteTypeOnValueItemInvalidBecomesVali
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const typeName = `MigrationValueItem${new Date().getTime()}`;
+  const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
@@ -1617,10 +1617,10 @@ async function updateSchemaSpecification_deleteTypeOnValueItemIndexesUpdated({
   server,
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
-  const typeName = `MigrationValueItem${new Date().getTime()}`;
+  const typeName = `MigrationComponent${new Date().getTime()}`;
 
   const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
-    entityTypes: ['ValueItems'],
+    entityTypes: ['Components'],
     text: 'wingspan hero',
   };
 
@@ -1866,7 +1866,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
 async function updateSchemaSpecification_renameTypeOnValueItem({ server }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
@@ -1905,7 +1905,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
 
   // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminValueItems(adminEntity);
+  assertIsAdminComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
@@ -1913,7 +1913,7 @@ async function updateSchemaSpecification_renameTypeOnValueItem({ server }: Schem
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntity);
+  assertIsPublishedComponents(publishedEntity);
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
@@ -1935,7 +1935,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
@@ -1977,7 +1977,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
 
   // Check that component type is renamed
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminValueItems(adminEntity);
+  assertIsAdminComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
@@ -1985,7 +1985,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
 
   // And for published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntity);
+  assertIsPublishedComponents(publishedEntity);
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
@@ -1993,7 +1993,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemAndReplaceWithAnot
 
   // Check that both types are usable
   const updatedEntity = (
-    await adminClient.updateEntity<AdminValueItems>(
+    await adminClient.updateEntity<AdminComponents>(
       {
         id: reference.id,
         fields: {
@@ -2019,7 +2019,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
@@ -2045,7 +2045,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
     // Check that it's in the index
     const adminCountBeforeUpdateResult = await countSearchResultWithEntity(
       adminClient,
-      { entityTypes: ['ValueItems'], componentTypes: [oldTypeName as AppAdminComponent['type']] },
+      { entityTypes: ['Components'], componentTypes: [oldTypeName as AppAdminComponent['type']] },
       entity.id,
     );
     assertResultValue(adminCountBeforeUpdateResult, 1);
@@ -2053,7 +2053,7 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
     const publishedCountBeforeUpdateResult = await countSearchResultWithEntity(
       publishedClient,
       {
-        entityTypes: ['ValueItems'],
+        entityTypes: ['Components'],
         componentTypes: [oldTypeName as AppPublishedComponent['type']],
       },
       entity.id,
@@ -2079,14 +2079,14 @@ async function updateSchemaSpecification_renameTypeOnValueItemUpdatesValueTypeIn
   // Check that it's in the index
   const adminCountAfterUpdateResult = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['ValueItems'], componentTypes: [newTypeName as AppAdminComponent['type']] },
+    { entityTypes: ['Components'], componentTypes: [newTypeName as AppAdminComponent['type']] },
     reference.id,
   );
   assertResultValue(adminCountAfterUpdateResult, 1);
 
   const publishedCountAfterUpdateResult = await countSearchResultWithEntity(
     publishedClient,
-    { entityTypes: ['ValueItems'], componentTypes: [newTypeName as AppPublishedComponent['type']] },
+    { entityTypes: ['Components'], componentTypes: [newTypeName as AppPublishedComponent['type']] },
     reference.id,
   );
   assertResultValue(publishedCountAfterUpdateResult, 1);
@@ -2241,7 +2241,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
   const oldFieldName = 'oldField';
   const newFieldName = 'newField';
@@ -2290,7 +2290,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
 
   // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminValueItems(adminEntity);
+  assertIsAdminComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
@@ -2298,7 +2298,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnValueItem({
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntity);
+  assertIsPublishedComponents(publishedEntity);
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
@@ -2320,7 +2320,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
 }: SchemaTestContext) {
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
-  const oldTypeName = `MigrationValueItem${new Date().getTime()}`;
+  const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
   const oldFieldName = 'oldField';
   const newFieldName = 'newField';
@@ -2369,7 +2369,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
 
   // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminValueItems(adminEntity);
+  assertIsAdminComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
@@ -2377,7 +2377,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnValueItem({
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
-  assertIsPublishedValueItems(publishedEntity);
+  assertIsPublishedComponents(publishedEntity);
   assertEquals(publishedEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',

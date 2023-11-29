@@ -20,12 +20,12 @@ import {
 import type { UnboundTestFunction } from '../Builder.js';
 import {
   assertIsPublishedChangeValidations,
-  assertIsPublishedLocationsValue,
+  assertIsPublishedComponents,
+  assertIsPublishedLocationsComponent,
   assertIsPublishedRichTexts,
   assertIsPublishedStrings,
   assertIsPublishedTitleOnly,
-  assertIsPublishedValueItems,
-  type AdminLocationsValue,
+  type AdminLocationsComponent,
   type AdminStringsFields,
   type AdminTitleOnly,
   type AppPublishedUniqueIndexes,
@@ -190,8 +190,8 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const adminLocationsValueItem: AdminLocationsValue = {
-    type: 'LocationsValue',
+  const adminLocationsValueItem: AdminLocationsComponent = {
+    type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
     locationAdminOnly: { lat: 56, lng: 78 },
   };
@@ -208,12 +208,12 @@ async function getEntity_valueItemAdminOnlyFieldIsExcluded({ server }: Published
 
   const getResult = await publishedClient.getEntity({ id });
   const entity = getResult.valueOrThrow();
-  assertIsPublishedValueItems(entity);
+  assertIsPublishedComponents(entity);
   const publishedLocationsValueItem = entity.fields.any;
   assertTruthy(publishedLocationsValueItem);
-  assertIsPublishedLocationsValue(publishedLocationsValueItem);
+  assertIsPublishedLocationsComponent(publishedLocationsValueItem);
   assertEquals(publishedLocationsValueItem, {
-    type: 'LocationsValue',
+    type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
   });
   assertEquals('locationAdminOnly' in publishedLocationsValueItem, false);
@@ -225,8 +225,8 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   const adminClient = adminClientForMainPrincipal(server);
   const publishedClient = publishedClientForMainPrincipal(server);
 
-  const adminLocationsValueItem: AdminLocationsValue = {
-    type: 'LocationsValue',
+  const adminLocationsValueItem: AdminLocationsComponent = {
+    type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
     locationAdminOnly: { lat: 56, lng: 78 },
   };
@@ -251,10 +251,10 @@ async function getEntity_valueItemAdminOnlyFieldInRichTextIsExcluded({
   assertTruthy(componentNode);
 
   const publishedLocationsComponent = componentNode.data;
-  assertIsPublishedLocationsValue(publishedLocationsComponent);
+  assertIsPublishedLocationsComponent(publishedLocationsComponent);
 
   assertEquals(publishedLocationsComponent, {
-    type: 'LocationsValue',
+    type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
   });
   assertEquals('locationAdminOnly' in publishedLocationsComponent, false);
@@ -305,7 +305,7 @@ async function getEntity_invalidEntityAdminOnlyValueItem({ server }: PublishedEn
     await createInvalidEntity(
       server,
       adminClient,
-      { valueItem: { type: 'AdminOnlyValue' } },
+      { component: { type: 'AdminOnlyComponent' } },
       { publish: true },
     )
   ).valueOrThrow();
@@ -313,7 +313,7 @@ async function getEntity_invalidEntityAdminOnlyValueItem({ server }: PublishedEn
   const publishedEntity = (await publishedClient.getEntity({ id: entity.id })).valueOrThrow();
   assertIsPublishedChangeValidations(publishedEntity);
   assertSame(publishedEntity.info.valid, false);
-  assertSame(publishedEntity.fields.valueItem, null);
+  assertSame(publishedEntity.fields.component, null);
 }
 
 async function getEntity_invalidEntityAdminOnlyValueItemList({
@@ -326,7 +326,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemList({
     await createInvalidEntity(
       server,
       adminClient,
-      { valueItemList: [{ type: 'AdminOnlyValue' }] },
+      { componentList: [{ type: 'AdminOnlyComponent' }] },
       { publish: true },
     )
   ).valueOrThrow();
@@ -334,7 +334,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemList({
   const publishedEntity = (await publishedClient.getEntity({ id: entity.id })).valueOrThrow();
   assertIsPublishedChangeValidations(publishedEntity);
   assertSame(publishedEntity.info.valid, false);
-  assertSame(publishedEntity.fields.valueItemList, null);
+  assertSame(publishedEntity.fields.componentList, null);
 }
 
 async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
@@ -349,7 +349,7 @@ async function getEntity_invalidEntityAdminOnlyValueItemInRichText({
       adminClient,
       {
         richText: createRichText([
-          createRichTextComponentNode({ type: 'AdminOnlyValue' }),
+          createRichTextComponentNode({ type: 'AdminOnlyComponent' }),
           createRichTextHeadingNode('h1', [createRichTextTextNode('After component')]),
         ]),
       },

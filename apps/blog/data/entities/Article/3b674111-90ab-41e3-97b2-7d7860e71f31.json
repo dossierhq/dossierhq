@@ -68,7 +68,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "If an entity is not published it's not visible in the published view. When it's published, you can only see the published version. Moreover, if there is a field that's marked as \"admin only\" in the schema, it will be hidden from the published view. This applies to fields in value items as well.",
+                "text": "If an entity is not published it's not visible in the published view. When it's published, you can only see the published version. Moreover, if there is a field that's marked as \"admin only\" in the schema, it will be hidden from the published view. This applies to fields in components as well.",
                 "type": "text",
                 "version": 1
               }

@@ -111,7 +111,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
             "ValueType",
           ],
           "list": false,
-          "name": "valueItem",
+          "name": "component",
           "required": false,
           "type": "Component",
         },
@@ -982,7 +982,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component ty
             "Bar",
           ],
           "list": false,
-          "name": "valueItem",
+          "name": "component",
           "required": false,
           "type": "Component",
         },
@@ -1014,7 +1014,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component ty
             "Bar",
           ],
           "list": false,
-          "name": "valueItem",
+          "name": "component",
           "required": false,
           "type": "Component",
         },
@@ -1486,7 +1486,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
     {
       "adminOnly": false,
       "fields": [],
-      "name": "ValueItem",
+      "name": "Component",
     },
   ],
   "entityTypes": [
@@ -1497,7 +1497,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
         {
           "adminOnly": true,
           "componentTypes": [
-            "ValueItem",
+            "Component",
           ],
           "entityTypes": [
             "Foo",
@@ -1772,7 +1772,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component ty
             "Foo2",
           ],
           "list": false,
-          "name": "valueItem",
+          "name": "component",
           "required": false,
           "type": "Component",
         },
@@ -1822,7 +1822,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component ty
             "Foo2",
           ],
           "list": false,
-          "name": "valueItem",
+          "name": "component",
           "required": false,
           "type": "Component",
         },

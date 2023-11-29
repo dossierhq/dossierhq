@@ -5,7 +5,7 @@ export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
     { name: 'EntitiesEntity', fields: [{ name: 'normal', type: FieldType.Entity }] },
     { name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] },
     {
-      name: 'ValueItemsEntity',
+      name: 'ComponentsEntity',
       fields: [
         { name: 'normal', type: FieldType.Component },
         { name: 'list', type: FieldType.Component, list: true },
@@ -14,14 +14,14 @@ export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
   ],
   componentTypes: [
     {
-      name: 'EntitiesValueItem',
+      name: 'EntitiesComponent',
       fields: [
         { name: 'normal', type: FieldType.Entity },
         { name: 'list', type: FieldType.Entity, list: true },
       ],
     },
     {
-      name: 'LocationsValueItem',
+      name: 'LocationsComponent',
       fields: [
         { name: 'normal', type: FieldType.Location },
         { name: 'list', type: FieldType.Location, list: true },

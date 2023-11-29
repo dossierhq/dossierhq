@@ -37,8 +37,8 @@ const emptyFooFields = {
   bars: null,
   stringedBar: null,
   nestedValue: null,
-  anyValueItem: null,
-  anyValueItems: null,
+  anyComponent: null,
+  anyComponents: null,
 };
 
 const schemaSpecification: AdminSchemaSpecificationUpdate = {
@@ -62,8 +62,8 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         { name: 'stringedBar', type: FieldType.Component, componentTypes: ['MutationStringedBar'] },
         { name: 'nestedValue', type: FieldType.Component, componentTypes: ['MutationNestedValue'] },
-        { name: 'anyValueItem', type: FieldType.Component },
-        { name: 'anyValueItems', type: FieldType.Component, list: true },
+        { name: 'anyComponent', type: FieldType.Component },
+        { name: 'anyComponents', type: FieldType.Component, list: true },
       ],
     },
     { name: 'MutationBar', fields: [] },
@@ -897,12 +897,12 @@ describe('create*Entity()', () => {
           authKey: 'none',
         },
         fields: {
-          anyValueItemJson: JSON.stringify({
+          anyComponentJson: JSON.stringify({
             type: 'MutationStringedBar',
             text: 'A value',
             bar: { id: barId },
           }),
-          anyValueItemsJson: JSON.stringify([
+          anyComponentsJson: JSON.stringify([
             {
               type: 'MutationStringedBar',
               text: 'A value in a list',
@@ -928,11 +928,11 @@ describe('create*Entity()', () => {
                   updatedAt
                 }
                 fields {
-                  anyValueItem {
+                  anyComponent {
                     __typename
                     type
                   }
-                  anyValueItems {
+                  anyComponents {
                     __typename
                     type
                   }
@@ -971,11 +971,11 @@ describe('create*Entity()', () => {
                 updatedAt,
               },
               fields: {
-                anyValueItem: {
+                anyComponent: {
                   __typename: 'AdminMutationStringedBar',
                   type: 'MutationStringedBar',
                 },
-                anyValueItems: [
+                anyComponents: [
                   {
                     __typename: 'AdminMutationStringedBar',
                     type: 'MutationStringedBar',
@@ -1003,12 +1003,12 @@ describe('create*Entity()', () => {
         },
         fields: {
           ...emptyFooFields,
-          anyValueItem: {
+          anyComponent: {
             type: 'MutationStringedBar',
             text: 'A value',
             bar: { id: barId },
           },
-          anyValueItems: [
+          anyComponents: [
             {
               type: 'MutationStringedBar',
               text: 'A value in a list',
@@ -1539,11 +1539,11 @@ describe('update*Entity()', () => {
                         id
                       }
                     }
-                    anyValueItem {
+                    anyComponent {
                       __typename
                       type
                     }
-                    anyValueItems {
+                    anyComponents {
                       __typename
                       type
                     }
@@ -1571,12 +1571,12 @@ describe('update*Entity()', () => {
                   text: 'Value text',
                   bar: { id: bar2Id },
                 },
-                anyValueItemJson: JSON.stringify({
+                anyComponentJson: JSON.stringify({
                   type: 'MutationStringedBar',
                   text: 'A component',
                   bar: { id: bar1Id },
                 }),
-                anyValueItemsJson: JSON.stringify([
+                anyComponentsJson: JSON.stringify([
                   {
                     type: 'MutationStringedBar',
                     text: 'A component in a list',
@@ -1656,11 +1656,11 @@ describe('update*Entity()', () => {
                       id: bar2Id,
                     },
                   },
-                  anyValueItem: {
+                  anyComponent: {
                     __typename: 'AdminMutationStringedBar',
                     type: 'MutationStringedBar',
                   },
-                  anyValueItems: [
+                  anyComponents: [
                     {
                       __typename: 'AdminMutationStringedBar',
                       type: 'MutationStringedBar',
@@ -1698,12 +1698,12 @@ describe('update*Entity()', () => {
               text: 'Value text',
               bar: { id: bar2Id },
             },
-            anyValueItem: {
+            anyComponent: {
               type: 'MutationStringedBar',
               text: 'A component',
               bar: { id: bar1Id },
             },
-            anyValueItems: [
+            anyComponents: [
               {
                 type: 'MutationStringedBar',
                 text: 'A component in a list',

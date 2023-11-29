@@ -10,11 +10,7 @@ import {
 } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import {
-  type AdminAdminOnlyValue,
-  type AdminReferences,
-  type AdminTitleOnly,
-} from '../SchemaTypes.js';
+import type { AdminAdminOnlyComponent, AdminReferences, AdminTitleOnly } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
   REFERENCES_CREATE,
@@ -259,7 +255,7 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyValueItem({
   server,
 }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
+  const adminOnlyValueItem: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyValueItem } }),
   );
@@ -429,7 +425,7 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
 
 async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTestContext) {
   const client = adminClientForMainPrincipal(server);
-  const adminOnlyValueItem: AdminAdminOnlyValue = { type: 'AdminOnlyValue' };
+  const adminOnlyValueItem: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyValueItem } }),
   );
@@ -445,7 +441,7 @@ async function publishEntities_errorAdminOnlyValueItem({ server }: AdminEntityTe
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
-    `entity(${id}).fields.any: Component of type AdminOnlyValue is adminOnly`,
+    `entity(${id}).fields.any: Component of type AdminOnlyComponent is adminOnly`,
   );
 }
 

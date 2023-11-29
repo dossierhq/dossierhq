@@ -18,12 +18,12 @@ import {
 import type { UnboundTestFunction } from '../Builder.js';
 import {
   assertIsAdminChangeValidations,
+  assertIsAdminComponents,
   assertIsAdminReferences,
-  assertIsAdminValueItems,
   type AdminChangeValidations,
+  type AdminComponents,
   type AdminReferences,
   type AdminTitleOnly,
-  type AdminValueItems,
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
@@ -576,9 +576,9 @@ async function updateEntity_fixInvalidValueItem({ server }: AdminEntityTestConte
 
   const { entity } = (await createEntityWithInvalidValueItem(server, adminClient)).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity<AdminValueItems>({
+  const updateResult = await adminClient.updateEntity<AdminComponents>({
     id: entity.id,
-    fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'foo' } },
+    fields: { any: { type: 'ChangeValidationsComponent', matchPattern: 'foo' } },
   });
   const {
     entity: {
@@ -588,7 +588,7 @@ async function updateEntity_fixInvalidValueItem({ server }: AdminEntityTestConte
 
   const expectedEntity = copyEntity(entity, {
     info: { updatedAt, version: 2, valid: true },
-    fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'foo' } },
+    fields: { any: { type: 'ChangeValidationsComponent', matchPattern: 'foo' } },
   });
 
   assertResultValue(updateResult, {
@@ -597,7 +597,7 @@ async function updateEntity_fixInvalidValueItem({ server }: AdminEntityTestConte
   });
 
   const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
-  assertIsAdminValueItems(getEntity);
+  assertIsAdminComponents(getEntity);
   assertEquals(getEntity, expectedEntity);
 }
 

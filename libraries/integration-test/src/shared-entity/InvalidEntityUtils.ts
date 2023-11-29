@@ -12,11 +12,11 @@ import {
 } from '@dossierhq/core';
 import type { ProcessDirtyEntityPayload, Server } from '@dossierhq/server';
 import {
-  ChangeValidationsValueItemWithoutValidationsUpdate,
+  ChangeValidationsComponentWithoutValidationsUpdate,
   ChangeValidationsWithoutValidationsUpdate,
   IntegrationTestSchema,
 } from '../IntegrationTestSchema.js';
-import type { AdminChangeValidations, AdminValueItems, AppAdminClient } from '../SchemaTypes.js';
+import type { AdminChangeValidations, AdminComponents, AppAdminClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 import { processAllDirtyEntities, withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 
@@ -44,12 +44,12 @@ export async function createEntityWithInvalidValueItem(
   adminClient: AppAdminClient,
   options?: Options,
 ) {
-  return doCreateInvalidEntity<AdminValueItems>(
+  return doCreateInvalidEntity<AdminComponents>(
     server,
     adminClient,
-    ChangeValidationsValueItemWithoutValidationsUpdate,
+    ChangeValidationsComponentWithoutValidationsUpdate,
     copyEntity(VALUE_ITEMS_CREATE, {
-      fields: { any: { type: 'ChangeValidationsValueItem', matchPattern: 'no match' } },
+      fields: { any: { type: 'ChangeValidationsComponent', matchPattern: 'no match' } },
     }),
     options,
   );

@@ -10,6 +10,7 @@ import {
 import { assertEquals } from '../Asserts.js';
 import type {
   AdminChangeValidations,
+  AdminComponents,
   AdminLocations,
   AdminMigrationEntity,
   AdminReferences,
@@ -17,7 +18,6 @@ import type {
   AdminStrings,
   AdminSubjectOnly,
   AdminTitleOnly,
-  AdminValueItems,
   AppAdminEntity,
   AppPublishedEntity,
   PublishedTitleOnly,
@@ -224,10 +224,10 @@ export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedTitleOnly> = {
   fields: { title: 'Title' },
 };
 
-export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminValueItems>> = {
+export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminComponents>> = {
   info: {
-    type: 'ValueItems',
-    name: 'ValueItems name',
+    type: 'Components',
+    name: 'Components name',
     authKey: 'none',
   },
   fields: {},

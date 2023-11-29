@@ -3,7 +3,7 @@
 exports[`Validate entity component > Fail: admin only component in normal field 1`] = `
 [
   {
-    "message": "Component of type AdminOnlyValueItem is adminOnly",
+    "message": "Component of type AdminOnlyComponent is adminOnly",
     "path": [
       "entity",
       "fields",
@@ -17,7 +17,7 @@ exports[`Validate entity component > Fail: admin only component in normal field 
 exports[`Validate entity component > Fail: extra fields 1`] = `
 [
   {
-    "message": "Invalid fields for component of type NumbersValueItem: extra",
+    "message": "Invalid fields for component of type NumbersComponent: extra",
     "path": [
       "entity",
       "fields",
@@ -31,11 +31,11 @@ exports[`Validate entity component > Fail: extra fields 1`] = `
 exports[`Validate entity component > Fail: wrong type, not matching componentTypes 1`] = `
 [
   {
-    "message": "Component of type NumbersValueItem is not allowed in field (supported types: StringsValueItem)",
+    "message": "Component of type NumbersComponent is not allowed in field (supported types: StringsComponent)",
     "path": [
       "entity",
       "fields",
-      "stringsValueItem",
+      "stringsComponent",
     ],
     "type": "save",
   },

@@ -19,7 +19,7 @@ exports[`publishedGetEntity > Legacy codec 1`] = `
           "lat": 1,
           "lng": 2,
         },
-        "type": "LocationsValueItem",
+        "type": "LocationsComponent",
       },
     ],
     "normal": {
@@ -34,7 +34,7 @@ exports[`publishedGetEntity > Legacy codec 1`] = `
       "normal": {
         "id": "12345",
       },
-      "type": "EntitiesValueItem",
+      "type": "EntitiesComponent",
     },
   },
   "id": "123",
@@ -42,7 +42,7 @@ exports[`publishedGetEntity > Legacy codec 1`] = `
     "authKey": "none",
     "createdAt": 2023-08-09T08:22:35.810Z,
     "name": "Name",
-    "type": "ValueItemsEntity",
+    "type": "ComponentsEntity",
     "valid": true,
   },
 }

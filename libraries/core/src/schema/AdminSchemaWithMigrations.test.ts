@@ -455,7 +455,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
                 ],
               },
               {
-                name: 'valueItem',
+                name: 'component',
                 type: FieldType.Component,
                 componentTypes: ['ValueType', 'ValueType'],
               },
@@ -808,12 +808,12 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
                 RichTextNodeType.entity,
                 RichTextNodeType.entityLink,
               ],
-              componentTypes: ['ValueItem'],
+              componentTypes: ['Component'],
             },
           ],
         },
       ],
-      componentTypes: [{ name: 'ValueItem', fields: [] }],
+      componentTypes: [{ name: 'Component', fields: [] }],
     })
       .valueOrThrow()
       .updateAndValidate({
@@ -1042,7 +1042,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
         {
           name: 'Bar',
           fields: [
-            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'component', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
             { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
@@ -1051,7 +1051,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
         {
           name: 'Baz',
           fields: [
-            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'component', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
             { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
@@ -1196,7 +1196,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
         {
           name: 'Bar',
           fields: [
-            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'component', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
             { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
@@ -1205,7 +1205,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
         {
           name: 'Baz',
           fields: [
-            { name: 'valueItem', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
+            { name: 'component', type: FieldType.Component, componentTypes: ['Bar', 'Foo'] },
             { name: 'richText', type: FieldType.RichText, componentTypes: ['Bar', 'Foo'] },
           ],
         },
