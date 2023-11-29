@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Wed, 29 Nov 2023 23:11:50 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 23:38:35 GMT and should not be manually modified.
+
+## 0.5.1
+Wed, 29 Nov 2023 23:38:35 GMT
+
+_Version update only_
 
 ## 0.5.0
 Wed, 29 Nov 2023 23:11:50 GMT

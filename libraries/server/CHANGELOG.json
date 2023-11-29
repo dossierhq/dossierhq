@@ -2,6 +2,12 @@
   "name": "@dossierhq/server",
   "entries": [
     {
+      "version": "0.5.1",
+      "tag": "@dossierhq/server_v0.5.1",
+      "date": "Wed, 29 Nov 2023 23:38:35 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.5.0",
       "tag": "@dossierhq/server_v0.5.0",
       "date": "Wed, 29 Nov 2023 23:11:50 GMT",
