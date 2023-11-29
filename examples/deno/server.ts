@@ -48,7 +48,7 @@ try {
       info: { type: "TitleOnly", name: "Deno test", authKey: "none" },
       fields: { title: "Deno test" },
     },
-    { publish: true }
+    { publish: true },
   );
   if (createResult.isError()) {
     logger.error("Failed creating entity: %O", createResult);
