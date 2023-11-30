@@ -3,6 +3,7 @@ export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter.js';
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite.js';
 export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite.js';
 export { createAuthTestSuite } from './auth/AuthTestSuite.js';
+export { createChangelogTestSuite } from './changelog/ChangelogTestSuite.js';
 export { createPublishedEntityTestSuite } from './published-entity/PublishedEntityTestSuite.js';
 export { createSchemaTestSuite } from './schema/SchemaTestSuite.js';
 export {

@@ -14,7 +14,7 @@ export function RichTextFieldEditor({
   dragHandle,
   onChange,
 }: Props) {
-  //TODO validation issues in value items in the rich text are shown both here and in the value item editor
+  //TODO validation issues in components in the rich text are shown both here and in the component editor
   //TODO would be good to show the validation issues in context in the rich text editor
   const uniqueValidationIssues = useMemo(() => {
     const messages = new Set<string>(validationIssues.map((error) => error.message));

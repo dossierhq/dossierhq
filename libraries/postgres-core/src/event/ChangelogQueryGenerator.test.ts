@@ -112,7 +112,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
   test('default', () => {
     expect(generateGetChangelogTotalCountQuery({}, null).valueOrThrow()).toMatchInlineSnapshot(`
       {
-        "text": "SELECT COUNT(*) AS count FROM events e",
+        "text": "SELECT COUNT(*)::integer AS count FROM events e",
         "values": [],
       }
     `);
@@ -122,7 +122,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
     expect(generateGetChangelogTotalCountQuery({ reverse: true }, null).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
-          "text": "SELECT COUNT(*) AS count FROM events e",
+          "text": "SELECT COUNT(*)::integer AS count FROM events e",
           "values": [],
         }
       `);
@@ -132,7 +132,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
     expect(generateGetChangelogTotalCountQuery({ createdBy: '1-2-3' }, null).valueOrThrow())
       .toMatchInlineSnapshot(`
         {
-          "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = $1)",
+          "text": "SELECT COUNT(*)::integer AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = $1)",
           "values": [
             "1-2-3",
           ],
@@ -148,7 +148,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
       ).valueOrThrow(),
     ).toMatchInlineSnapshot(`
       {
-        "text": "SELECT COUNT(*) AS count FROM events e JOIN event_entity_versions eev ON eev.events_id = e.id JOIN entity_versions ev ON eev.entity_versions_id = ev.id WHERE ev.entities_id = $1",
+        "text": "SELECT COUNT(*)::integer AS count FROM events e JOIN event_entity_versions eev ON eev.events_id = e.id JOIN entity_versions ev ON eev.entity_versions_id = ev.id WHERE ev.entities_id = $1",
         "values": [
           123,
         ],
@@ -161,7 +161,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
       generateGetChangelogTotalCountQuery({ types: [EventType.updateSchema] }, null).valueOrThrow(),
     ).toMatchInlineSnapshot(`
       {
-        "text": "SELECT COUNT(*) AS count FROM events e WHERE e.type = ANY($1)",
+        "text": "SELECT COUNT(*)::integer AS count FROM events e WHERE e.type = ANY($1)",
         "values": [
           [
             "updateSchema",
@@ -179,7 +179,7 @@ describe('generateGetChangelogTotalCountQuery', () => {
       ).valueOrThrow(),
     ).toMatchInlineSnapshot(`
       {
-        "text": "SELECT COUNT(*) AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = $1) AND e.type = ANY($2)",
+        "text": "SELECT COUNT(*)::integer AS count FROM events e WHERE e.created_by = (SELECT id FROM subjects WHERE uuid = $1) AND e.type = ANY($2)",
         "values": [
           "1-2-3",
           [

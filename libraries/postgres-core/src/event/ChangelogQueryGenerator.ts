@@ -65,7 +65,8 @@ export function generateGetChangelogTotalCountQuery(
   const queryBuilder = createPostgresSqlQuery();
   const { sql, removeTrailingWhere } = queryBuilder;
 
-  sql`SELECT COUNT(*) AS count FROM events e`;
+  // Convert count to ::integer since count() is bigint (js doesn't support 64 bit numbers so pg return it as string)
+  sql`SELECT COUNT(*)::integer AS count FROM events e`;
   if (entity) {
     sql`JOIN event_entity_versions eev ON eev.events_id = e.id`;
     sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
