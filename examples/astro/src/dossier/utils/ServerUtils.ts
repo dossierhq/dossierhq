@@ -1,9 +1,9 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import {
-  ErrorType,
   createConsoleLogger,
   notOk,
   ok,
+  type ErrorType,
   type Logger,
   type PromiseResult,
   type Result,

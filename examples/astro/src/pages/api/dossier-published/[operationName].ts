@@ -1,7 +1,7 @@
 import {
-  ErrorType,
   decodeURLSearchParamsParam,
   executePublishedClientOperationFromJson,
+  type ErrorType,
   type Result,
 } from '@dossierhq/core';
 import type { APIContext } from 'astro';

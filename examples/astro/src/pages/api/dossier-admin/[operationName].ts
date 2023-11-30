@@ -1,9 +1,9 @@
 import {
   AdminClientModifyingOperations,
-  ErrorType,
   decodeURLSearchParamsParam,
   executeAdminClientOperationFromJson,
   notOk,
+  type ErrorType,
   type Result,
 } from '@dossierhq/core';
 import type { APIContext } from 'astro';
