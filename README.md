@@ -6,6 +6,12 @@ Dossier enables you to build solutions where you’re in full control of the con
 
 For more information about Dossier, head over to [dossierhq.dev](https://www.dossierhq.dev). The rest of this readme is focused on developing and contributing to Dossier itself.
 
+If you just want to get started using Dossier, these destinations might get you there faster:
+
+- [Dossier Playground](https://playground.dossierhq.dev/) - use Dossier in a browser
+- [dossier-next-sqlite-app](https://github.com/dossierhq/dossier-next-sqlite-app) - a template using Dossier, Next.js and SQLite
+- [dossier-astro-sqlite-app](https://github.com/dossierhq/dossier-astro-sqlite-app) - a template using Dossier, Astro and SQLite
+
 ## Published packages
 
 | Package                           | Version                                                                                                                                      | Folder                                                              |
