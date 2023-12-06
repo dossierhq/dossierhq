@@ -1,0 +1,620 @@
+{
+  "id": "365623d4-174b-439e-acd2-3d9dfde87315",
+  "parentId": "a4709af2-6e9a-4d42-80ce-6825f911d2f0",
+  "type": "createAndPublishEntity",
+  "createdAt": "2023-12-06T16:35:39.456Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "entity": {
+    "id": "e270a24f-0c2f-4b0b-814d-be2bf0ddfa88",
+    "info": {
+      "type": "BlogPost",
+      "name": "Releasing a status page template running on Cloudflare Workers / D1",
+      "authKey": "none",
+      "resolvedAuthKey": "none",
+      "schemaVersion": 1
+    },
+    "fields": {
+      "title": "Releasing a status page template running on Cloudflare Workers / D1",
+      "slug": "status-page-template",
+      "publishedDate": "2023-12-06T16:27Z",
+      "updatedDate": null,
+      "authors": [
+        {
+          "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
+        }
+      ],
+      "hero": {
+        "type": "CloudinaryImage",
+        "publicId": "Blog/tr6yilmmjmkzjhcrwbkp",
+        "width": 1756,
+        "height": 1288,
+        "alt": "A screenshot of the status page template"
+      },
+      "description": "Releasing a new status page template running on Cloudflare Workers and D1 database.",
+      "body": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "A status page is a great opportunity to explore different technology choices. You normally want it to run on a different infrastructure from what you're monitoring and you want it to be as simple as possible. So when setting up a status page for ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Dossier",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://www.dossierhq.dev/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ", I decided to create something from scratch using ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Cloudflare Workers",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://workers.cloudflare.com/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "My main motivation was to get more hands-on experience with ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "D1",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://developers.cloudflare.com/d1/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ", the SQLite based edge database from Cloudflare. I've also only been using Cloudflare Workers as packaged by Vercel (",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "edge functions",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://vercel.com/docs/functions/edge-functions"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "), so I wanted to give the underlying service a try. Additionally, ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Hono",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://hono.dev/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " is a promising web framework that I've had my eyes on for a while.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Obviously, if a status page is business critical, you should probably use a hosted service.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Cloudflare Workers is a serverless platform that almost begs to be used for a status page. You can do a lot for free, including database and CRON triggers.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "I've published my starter template for a status page on GitHub ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "cloudflare-status-template",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://github.com/jonasb/cloudflare-status-template/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ". An example page is running ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "here",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://cloudflare-status-template.dossierhq.workers.dev/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ".",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "The templates features:",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Probes that are run periodically to check the status of a service or component",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Webhooks that record events from external services",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 2
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "Persistent logs when there are unexpected errors in the configuration or execution of a probe or webhook",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "listitem",
+                  "version": 1,
+                  "value": 3
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "list",
+              "version": 1,
+              "listType": "bullet",
+              "start": 1,
+              "tag": "ul"
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "So, what did I think about the technology choices?",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 1,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Cloudflare Workers",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " is a simple serverless platform, and given only CPU time is counted (and not time spent waiting for I/O) makes it super powerful. For this project I didn't run into any limitations in the runtime itself, but it's something to keep in mind that you can't run everything that works on Node.js.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 1,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "D1",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " is on the one hand just SQLite, so I feel right at home. But on the other hand, given that it's a edge database the main thing to consider is that there's no support for interactive transactions. Instead you need to use ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "batching",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://developers.cloudflare.com/d1/platform/client-api/#batch-statements"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " to optimize the latency when executing multiple statements. This makes D1 hard to adopt for a product like Dossier, which uses interactive transactions to ensure consistency. It might be possible, but would require major refactorings.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 1,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Hono",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " is a joy to work with. Since it works on most runtimes, it's a good tool for the tool belt. Being able use JSX for server side rendering is a big plus. Not having the full power of e.g. Next.js makes it harder for me to do client interactions, but I enjoy the simplicity of the framework.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Head over to the ",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "children": [
+                    {
+                      "detail": 0,
+                      "format": 0,
+                      "mode": "normal",
+                      "style": "",
+                      "text": "GitHub repository",
+                      "type": "text",
+                      "version": 1
+                    }
+                  ],
+                  "direction": "ltr",
+                  "format": "",
+                  "indent": 0,
+                  "type": "link",
+                  "version": 1,
+                  "rel": "noreferrer",
+                  "target": null,
+                  "title": null,
+                  "url": "https://github.com/jonasb/cloudflare-status-template/"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " for instructions on how to get started, or just build your own from scratch, with a technology stack of your choice. It's fun and educational!",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}
