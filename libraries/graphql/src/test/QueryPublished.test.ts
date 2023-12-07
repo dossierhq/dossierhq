@@ -1009,7 +1009,7 @@ describe('publishedEntity()', () => {
     const errorStrings = result.errors?.map((it) => it.toString());
     expect(errorStrings).toMatchInlineSnapshot(`
       [
-        "Variable \\"$index\\" got invalid value \\"unknownIndex\\"; Value \\"unknownIndex\\" does not exist in \\"PublishedUniqueIndex\\" enum.
+        "Variable "$index" got invalid value "unknownIndex"; Value "unknownIndex" does not exist in "PublishedUniqueIndex" enum.
 
       GraphQL request:2:37
       1 |

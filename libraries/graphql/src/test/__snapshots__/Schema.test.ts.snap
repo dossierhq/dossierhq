@@ -237,9 +237,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -505,9 +505,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -632,9 +632,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -1357,9 +1357,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -1564,9 +1564,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -1685,9 +1685,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -2344,9 +2344,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -2530,7 +2530,7 @@ type AdminValueList implements AdminValue {
   four: [Boolean!]
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 input AdminValueListInput {
@@ -2644,9 +2644,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -2725,7 +2725,7 @@ type PublishedValueList implements PublishedValue {
   four: [Boolean!]
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type PublishedValueOne implements PublishedValue {
@@ -2807,9 +2807,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -2888,7 +2888,7 @@ type PublishedValueList implements PublishedValue {
   four: [Boolean!]
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type PublishedValueOne implements PublishedValue {
@@ -3628,9 +3628,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -3746,7 +3746,7 @@ type AdminFooFields {
   bars: [AdminBar!]
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type AdminFoo implements AdminEntity {
@@ -3870,9 +3870,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -3931,7 +3931,7 @@ type PublishedFooFields {
   bars: [PublishedBar!]
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type PublishedFoo implements Node & PublishedEntity {
@@ -3996,9 +3996,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -4057,7 +4057,7 @@ type PublishedFooFields {
   bars: [PublishedBar!]
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type PublishedFoo implements Node & PublishedEntity {
@@ -4686,9 +4686,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -4974,9 +4974,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -5113,9 +5113,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -5862,9 +5862,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -6039,9 +6039,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -6146,9 +6146,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -6758,9 +6758,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -6947,9 +6947,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 enum PublishedUniqueIndex {
@@ -7063,9 +7063,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 enum PublishedUniqueIndex {
@@ -7706,9 +7706,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -7918,9 +7918,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -8047,9 +8047,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -8706,9 +8706,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -8895,9 +8895,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -9007,9 +9007,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -9633,9 +9633,9 @@ type AdminRichText {
   entities: [AdminEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 input AdminRichTextInput {
@@ -9713,7 +9713,7 @@ type AdminBarFields {
   barField4: Boolean
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type AdminBar implements AdminEntity {
@@ -9883,9 +9883,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -9937,7 +9937,7 @@ type PublishedBarFields {
   barField4: Boolean
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type PublishedBar implements Node & PublishedEntity {
@@ -10012,9 +10012,9 @@ type PublishedRichText {
   entities: [PublishedEntity]
 }
 
-\\"\\"\\"
+"""
 The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
+"""
 scalar JSONObject
 
 type PublishedEntityEdge {
@@ -10066,7 +10066,7 @@ type PublishedBarFields {
   barField4: Boolean
 }
 
-\\"\\"\\"Geographic location using EPSG:4326/WGS 84\\"\\"\\"
+"""Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
 type PublishedBar implements Node & PublishedEntity {
