@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/postgres-core
 
-This log was last generated on Wed, 29 Nov 2023 23:38:35 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Dec 2023 20:47:42 GMT and should not be manually modified.
+
+## 0.5.2
+Thu, 07 Dec 2023 20:47:42 GMT
+
+### Updates
+
+- Return number (not bigint) for getChangelogTotalCount()
 
 ## 0.5.1
 Wed, 29 Nov 2023 23:38:35 GMT

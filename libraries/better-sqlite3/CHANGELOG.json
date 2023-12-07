@@ -2,6 +2,12 @@
   "name": "@dossierhq/better-sqlite3",
   "entries": [
     {
+      "version": "0.5.2",
+      "tag": "@dossierhq/better-sqlite3_v0.5.2",
+      "date": "Thu, 07 Dec 2023 20:47:42 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.5.1",
       "tag": "@dossierhq/better-sqlite3_v0.5.1",
       "date": "Wed, 29 Nov 2023 23:38:35 GMT",
