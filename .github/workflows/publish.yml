@@ -4,6 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 16
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
