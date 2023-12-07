@@ -17,7 +17,7 @@
     "bun-types": "~1.0.14",
     "eslint": "~8.55.0",
     "prettier": "3.1.0",
-    "typescript": "~5.3.2"
+    "typescript": "~5.3.3"
   },
   "dependencies": {
     "@dossierhq/bun-sqlite": "workspace:*",

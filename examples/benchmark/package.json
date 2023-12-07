@@ -34,7 +34,7 @@
     "@dossierhq/bun-sqlite": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
-    "better-sqlite3": "~9.1.1",
+    "better-sqlite3": "~9.2.2",
     "dotenv": "~16.3.1",
     "pg": "~8.11.3",
     "tslib": "~2.6.2"
@@ -48,6 +48,6 @@
     "@types/pg": "~8.10.9",
     "eslint": "~8.55.0",
     "prettier": "3.1.0",
-    "typescript": "~5.3.2"
+    "typescript": "~5.3.3"
   }
 }
