@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "Return number (not bigint) for getChangelogTotalCount()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}
