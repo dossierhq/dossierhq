@@ -184,8 +184,8 @@ importers:
         specifier: ~5.14.2
         version: 5.14.2(graphql@16.8.1)
       rollup-plugin-visualizer:
-        specifier: ~5.10.0
-        version: 5.10.0
+        specifier: ~5.11.0
+        version: 5.11.0
       tsx:
         specifier: ~4.6.2
         version: 4.6.2
@@ -2124,8 +2124,8 @@ importers:
         specifier: ~3.28.0
         version: 3.28.0(react@18.2.0)
       rollup-plugin-visualizer:
-        specifier: ~5.10.0
-        version: 5.10.0
+        specifier: ~5.11.0
+        version: 5.11.0
       sass:
         specifier: ~1.69.5
         version: 1.69.5
@@ -17294,8 +17294,8 @@ packages:
     dependencies:
       glob: 7.2.3
 
-  /rollup-plugin-visualizer@5.10.0:
-    resolution: {integrity: sha512-N4AkNL0qFvipegbDJ0kupS+8eKGjL0q+lYwV46NflLX/B8Rh73wz3kCIdg50bR6XVhNcaMA4Eb519xtm90Ckfg==}
+  /rollup-plugin-visualizer@5.11.0:
+    resolution: {integrity: sha512-exM0Ms2SN3AgTzMeW7y46neZQcyLY7eKwWAop1ZoRTCZwyrIRdMMJ6JjToAJbML77X/9N8ZEpmXG4Z/Clb9k8g==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
