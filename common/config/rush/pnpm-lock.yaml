@@ -1033,8 +1033,8 @@ importers:
         specifier: ~7.6.4
         version: 7.6.4
       svgo:
-        specifier: ~3.0.5
-        version: 3.0.5
+        specifier: ~3.1.0
+        version: 3.1.0
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1232,8 +1232,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       svgo:
-        specifier: ~3.0.5
-        version: 3.0.5
+        specifier: ~3.1.0
+        version: 3.1.0
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -2139,8 +2139,8 @@ importers:
         specifier: ~7.6.4
         version: 7.6.4
       svgo:
-        specifier: ~3.0.5
-        version: 3.0.5
+        specifier: ~3.1.0
+        version: 3.1.0
       tsx:
         specifier: ~4.6.2
         version: 4.6.2
@@ -17993,8 +17993,8 @@ packages:
     resolution: {integrity: sha512-JaKkGHHfGvRrcMPdJWkssLBeWqM+Isg/a09H7kgNNajT1cX5AztDTNs+C8UzpCxjCTRrG34WbquwaovZbmSk9g==}
     dev: false
 
-  /svgo@3.0.5:
-    resolution: {integrity: sha512-HQKHEo73pMNOlDlBcLgZRcHW2+1wo7bFYayAXkGN0l/2+h68KjlfZyMRhdhaGvoHV2eApOovl12zoFz42sT6rQ==}
+  /svgo@3.1.0:
+    resolution: {integrity: sha512-R5SnNA89w1dYgNv570591F66v34b3eQShpIBcQtZtM5trJwm1VvxbIoMpRYY3ybTAutcKTLEmTsdnaknOHbiQA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
