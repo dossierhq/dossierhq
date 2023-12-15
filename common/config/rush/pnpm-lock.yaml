@@ -84,8 +84,8 @@ importers:
         specifier: ~14.0.3
         version: 14.0.3(eslint@8.55.0)(typescript@5.3.3)
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       schema-dts:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.3.3)
@@ -248,8 +248,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -258,7 +258,7 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ~0.3.1
-        version: 0.3.1(prettier@3.1.0)(typescript@5.3.3)
+        version: 0.3.1(prettier@3.1.1)(typescript@5.3.3)
       '@astrojs/node':
         specifier: ~7.0.0
         version: 7.0.0(astro@4.0.3)
@@ -318,8 +318,8 @@ importers:
         specifier: ~18.2.42
         version: 18.2.42
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       tsx:
         specifier: ~4.6.2
         version: 4.6.2
@@ -394,8 +394,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -422,8 +422,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -495,8 +495,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -562,8 +562,8 @@ importers:
         specifier: ~14.0.3
         version: 14.0.3(eslint@8.55.0)(typescript@5.3.3)
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -684,8 +684,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -727,8 +727,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -767,8 +767,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -810,8 +810,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -835,8 +835,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -866,8 +866,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -897,8 +897,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1018,8 +1018,8 @@ importers:
         specifier: ~1.4.4
         version: 1.4.4
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       react-stately:
         specifier: ~3.28.0
         version: 3.28.0(react@18.2.0)
@@ -1082,8 +1082,8 @@ importers:
         specifier: ~4.6.0
         version: 4.6.0(eslint@8.55.0)
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1131,8 +1131,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1180,8 +1180,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1229,8 +1229,8 @@ importers:
         specifier: ~1.4.4
         version: 1.4.4
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       svgo:
         specifier: ~3.0.5
         version: 3.0.5
@@ -1272,8 +1272,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1333,8 +1333,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1373,8 +1373,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1515,8 +1515,8 @@ importers:
         specifier: workspace:*
         version: link:../../apps/playground-example-generator
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       storybook:
         specifier: ~7.6.4
         version: 7.6.4
@@ -1561,8 +1561,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1610,8 +1610,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       sql.js:
         specifier: ~1.9.0
         version: 1.9.0
@@ -1656,8 +1656,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       sql.js:
         specifier: ~1.9.0
         version: 1.9.0
@@ -1693,8 +1693,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1724,8 +1724,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1798,8 +1798,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1826,8 +1826,8 @@ importers:
         specifier: ~8.55.0
         version: 8.55.0
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1836,7 +1836,7 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ~0.3.1
-        version: 0.3.1(prettier@3.1.0)(typescript@5.3.3)
+        version: 0.3.1(prettier@3.1.1)(typescript@5.3.3)
       '@astrojs/node':
         specifier: ~7.0.0
         version: 7.0.0(astro@4.0.3)
@@ -2118,8 +2118,8 @@ importers:
         specifier: ~3.0.2
         version: 3.0.2
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       react-stately:
         specifier: ~3.28.0
         version: 3.28.0(react@18.2.0)
@@ -2185,13 +2185,13 @@ packages:
       - encoding
     dev: true
 
-  /@astrojs/check@0.3.1(prettier@3.1.0)(typescript@5.3.3):
+  /@astrojs/check@0.3.1(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-3LjEUvh7Z4v9NPokaqKMXQ0DwnSXfmtcyAuWVTjNt9yzjv54SxykobV5CTOB3TIko+Rqg59ejamJBxaJN6fvkw==}
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
-      '@astrojs/language-server': 2.5.2(prettier@3.1.0)(typescript@5.3.3)
+      '@astrojs/language-server': 2.5.2(prettier@3.1.1)(typescript@5.3.3)
       chokidar: 3.5.3
       fast-glob: 3.3.1
       kleur: 4.1.5
@@ -2210,7 +2210,7 @@ packages:
     resolution: {integrity: sha512-06DD2ZnItMwUnH81LBLco3tWjcZ1lGU9rLCCBaeUCGYe9cI0wKyY2W3kDyoW1I6GmcWgt1fu+D1CTvz+FIKf8A==}
     dev: false
 
-  /@astrojs/language-server@2.5.2(prettier@3.1.0)(typescript@5.3.3):
+  /@astrojs/language-server@2.5.2(prettier@3.1.1)(typescript@5.3.3):
     resolution: {integrity: sha512-O5SMzoQ65wSxA1KygreI9UJYmHpgt15bSYBxceHwqX7OCDM4Ek8mr6mZn45LGDtwM3dp1uup7kp8exfRPwIFbA==}
     hasBin: true
     peerDependencies:
@@ -2232,11 +2232,11 @@ packages:
       '@volar/typescript': 1.10.10
       fast-glob: 3.3.1
       muggle-string: 0.3.1
-      prettier: 3.1.0
+      prettier: 3.1.1
       volar-service-css: 0.0.16(@volar/language-service@1.10.10)
       volar-service-emmet: 0.0.16(@volar/language-service@1.10.10)
       volar-service-html: 0.0.16(@volar/language-service@1.10.10)
-      volar-service-prettier: 0.0.16(@volar/language-service@1.10.10)(prettier@3.1.0)
+      volar-service-prettier: 0.0.16(@volar/language-service@1.10.10)(prettier@3.1.1)
       volar-service-typescript: 0.0.16(@volar/language-service@1.10.10)(@volar/typescript@1.10.10)
       volar-service-typescript-twoslash-queries: 0.0.16(@volar/language-service@1.10.10)
       vscode-html-languageservice: 5.1.1
@@ -2297,7 +2297,7 @@ packages:
     dependencies:
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@vitejs/plugin-react': 4.2.0(vite@5.0.6)
+      '@vitejs/plugin-react': 4.2.1(vite@5.0.6)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       ultrahtml: 1.5.2
@@ -2547,7 +2547,6 @@ packages:
     dependencies:
       '@babel/highlight': 7.23.4
       chalk: 2.4.2
-    dev: true
 
   /@babel/compat-data@7.22.9:
     resolution: {integrity: sha512-5UamI7xkUcJ3i9qVDS+KFDEK8/7oJ55/sJMB1Ge7IEapr7KfdfV/HErR+koZwOfd+SgtFKOKRhRakdg++DcJpQ==}
@@ -2601,7 +2600,6 @@ packages:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/generator@7.23.3:
     resolution: {integrity: sha512-keeZWAV4LU3tW0qRi19HRpabC/ilM0HRBBzf9/k8FFiG4KVpiv0FIy4hHfLfFQZNhziCTPTmd59zoyv6DNISzg==}
@@ -2620,7 +2618,6 @@ packages:
       '@jridgewell/gen-mapping': 0.3.2
       '@jridgewell/trace-mapping': 0.3.18
       jsesc: 2.5.2
-    dev: true
 
   /@babel/helper-annotate-as-pure@7.22.5:
     resolution: {integrity: sha512-LvBTxu8bQSQkcyKOU+a1btnNFQ1dMAd0R6PyW3arXes06F6QLWLIrd681bxRPIXlrMGR3XYnW9JyML7dP3qgxg==}
@@ -2745,7 +2742,6 @@ packages:
       '@babel/helper-simple-access': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/helper-validator-identifier': 7.22.20
-    dev: true
 
   /@babel/helper-optimise-call-expression@7.22.5:
     resolution: {integrity: sha512-HBwaojN0xFRx4yIvpwGqxiV2tUfl7401jlok564NgB9EHS1y6QT17FmKWm4ztqjeVdXLuC4fSvHc5ePpQjoTbw==}
@@ -2846,7 +2842,6 @@ packages:
       '@babel/types': 7.23.5
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/highlight@7.22.20:
     resolution: {integrity: sha512-dkdMCN3py0+ksCgYmGG8jKeGA/8Tk+gJwSYYlFGxG5lmhfKNoAy004YpLxpS1W2J8m/EK2Ew+yOs9pVRwO89mg==}
@@ -2863,7 +2858,6 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-    dev: true
 
   /@babel/parser@7.16.4:
     resolution: {integrity: sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==}
@@ -2880,7 +2874,6 @@ packages:
     resolution: {integrity: sha512-hOOqoiNXrmGdFbhgCzu6GiURxUgM27Xwd/aPuu8RfHEZPBzL1Z54okAHAQjXfcQNwvrlkAmAp4SlRTZ45vlthQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
-    dev: true
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@7.23.3(@babel/core@7.23.3):
     resolution: {integrity: sha512-iRkKcCqb7iGnq9+3G6rZ+Ciz5VywC4XNRHe57lKM+jOeYAoR0lVqdeeDRfh0tQcTfw/+vBhHn926FmQhLtlFLQ==}
@@ -3558,6 +3551,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.3
       '@babel/helper-plugin-utils': 7.22.5
+    dev: true
 
   /@babel/plugin-transform-react-jsx-self@7.23.3(@babel/core@7.23.5):
     resolution: {integrity: sha512-qXRvbeKDSfwnlJnanVRp0SfuWE5DQhwQr5xtLBzp56Wabyo+4CMosF6Kfp+eOD/4FYpql64XVJ2W0pVLlJZxOQ==}
@@ -3567,7 +3561,6 @@ packages:
     dependencies:
       '@babel/core': 7.23.5
       '@babel/helper-plugin-utils': 7.22.5
-    dev: true
 
   /@babel/plugin-transform-react-jsx-source@7.23.3(@babel/core@7.23.3):
     resolution: {integrity: sha512-91RS0MDnAWDNvGC6Wio5XYkyWI39FMFO+JK9+4AlgaTH+yWwVTsw7/sn6LK0lH7c5F+TFkpv/3LfCJ1Ydwof/g==}
@@ -3577,6 +3570,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.3
       '@babel/helper-plugin-utils': 7.22.5
+    dev: true
 
   /@babel/plugin-transform-react-jsx-source@7.23.3(@babel/core@7.23.5):
     resolution: {integrity: sha512-91RS0MDnAWDNvGC6Wio5XYkyWI39FMFO+JK9+4AlgaTH+yWwVTsw7/sn6LK0lH7c5F+TFkpv/3LfCJ1Ydwof/g==}
@@ -3586,7 +3580,6 @@ packages:
     dependencies:
       '@babel/core': 7.23.5
       '@babel/helper-plugin-utils': 7.22.5
-    dev: true
 
   /@babel/plugin-transform-react-jsx@7.23.4(@babel/core@7.23.3):
     resolution: {integrity: sha512-5xOpoPguCZCRbo/JeHlloSkTA8Bld1J/E1/kLfD1nsuiW1m8tduTA1ERCgIZokDflX/IBzKcqR3l7VlRgiIfHA==}
@@ -3930,7 +3923,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/types@7.23.4:
     resolution: {integrity: sha512-7uIFwVYpoplT5jp/kVv6EF93VaJ8H+Yn5IczYiaAi98ajzjfoZfslet/e0sLh+wVBjb2qqIut1b0S26VSafsSQ==}
@@ -3947,7 +3939,6 @@ packages:
       '@babel/helper-string-parser': 7.23.4
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
-    dev: true
 
   /@base2/pretty-print-object@1.0.1:
     resolution: {integrity: sha512-4iri8i1AqYHJE2DstZYkyEprg6Pq6sKx3xn5FpySk9sNhH7qN2LLlHJCfDTZRILNwQNPD7mATWM0TBui7uC1pA==}
@@ -3956,13 +3947,7 @@ packages:
   /@cloudinary/transformation-builder-sdk@1.9.0:
     resolution: {integrity: sha512-19ZV3r2dE2mYMZTN/ytP7p7hmqiD7PC6EoWdQwJByabN4JXtNwgotElHYC509/eD7j5xJajghgHiIXTonrgMhQ==}
     dependencies:
-      '@cloudinary/url-gen': 1.13.0
-    dev: false
-
-  /@cloudinary/url-gen@1.13.0:
-    resolution: {integrity: sha512-p7ASCX2fZw1JWtMG2ADd/Y0TfvE5SX9v0TDJDlzXX3OlNxLSuqzLWGgj5oJD4ZTo62FdxH24N8HPZ7NXEXtj5g==}
-    dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.9.0
+      '@cloudinary/url-gen': 1.14.0
     dev: false
 
   /@cloudinary/url-gen@1.14.0:
@@ -9342,7 +9327,6 @@ packages:
       '@types/babel__generator': 7.6.4
       '@types/babel__template': 7.4.1
       '@types/babel__traverse': 7.18.3
-    dev: true
 
   /@types/babel__generator@7.6.4:
     resolution: {integrity: sha512-tFkciB9j2K755yrTALxD44McOrk+gfpIpvC3sxHjRawj6PfnQxrse4Clq5y/Rq+G3mrBurMax/lG8Qn2t9mSsg==}
@@ -9367,14 +9351,14 @@ packages:
   /@types/better-sqlite3@7.6.8:
     resolution: {integrity: sha512-ASndM4rdGrzk7iXXqyNC4fbwt4UEjpK0i3j4q4FyeQrLAthfB6s7EF135ZJE0qQxtKIMFwmyT6x0switET7uIw==}
     dependencies:
-      '@types/node': 20.10.2
+      '@types/node': 20.10.4
     dev: true
 
   /@types/body-parser@1.19.5:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 20.10.2
+      '@types/node': 20.10.4
 
   /@types/codemirror@0.0.90:
     resolution: {integrity: sha512-8Z9+tSg27NPRGubbUPUCrt5DDG/OWzLph5BvcDykwR5D7RyZh5mhHG0uS1ePKV1YFCA+/cwc4Ey2AJAEFfV3IA==}
@@ -9591,11 +9575,6 @@ packages:
     resolution: {integrity: sha512-wf3Vz+jCmOQ2HV1YUJuCWdL64adYxumkrxtc+H1VUQlnQI04+5HtH+qZCOE21lBE7gIrt+CwX2Wv8Acrw5Ak6w==}
     dev: true
 
-  /@types/node@20.10.2:
-    resolution: {integrity: sha512-37MXfxkb0vuIlRKHNxwCkb60PNBpR94u4efQuN4JgIAm66zfCDXGSAFCef9XUWFovX2R1ok6Z7MHhtdVXXkkIw==}
-    dependencies:
-      undici-types: 5.26.5
-
   /@types/node@20.10.4:
     resolution: {integrity: sha512-D08YG6rr8X90YB56tSIuBaddy/UXAA9RKJoFvrsnogAum/0pmjkgi4+2nx96A330FmioegBWmEYQ+syqCFaveg==}
     dependencies:
@@ -9611,7 +9590,7 @@ packages:
   /@types/pg@8.10.9:
     resolution: {integrity: sha512-UksbANNE/f8w0wOMxVKKIrLCbEMV+oM1uKejmwXr39olg4xqcfBDbXxObJAt6XxHbDa4XTKOlUEcEltXDX+XLQ==}
     dependencies:
-      '@types/node': 20.10.2
+      '@types/node': 20.10.4
       pg-protocol: 1.6.0
       pg-types: 4.0.1
     dev: true
@@ -9673,7 +9652,7 @@ packages:
     resolution: {integrity: sha512-ep8b36RKHlgWPqjNG9ToUrPiwkhwh0AEzy883mO5Xnd+cL6VBH1EvSjBAAuxLUFF2Vn/moE3Me6v9E1Lo+48GQ==}
     dependencies:
       '@types/emscripten': 1.39.6
-      '@types/node': 20.10.2
+      '@types/node': 20.10.4
     dev: true
 
   /@types/tapable@1.0.6:
@@ -9774,27 +9753,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@typescript-eslint/parser@6.13.1(eslint@8.55.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-fs2XOhWCzRhqMmQf0eicLa/CWSaYss2feXsy7xBD/pLyWke/jCIVc2s1ikEAtSW7ina1HNhv7kONoEfVNEcdDQ==}
-    engines: {node: ^16.0.0 || >=18.0.0}
-    peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@typescript-eslint/scope-manager': 6.13.1
-      '@typescript-eslint/types': 6.13.1
-      '@typescript-eslint/typescript-estree': 6.13.1(typescript@5.3.3)
-      '@typescript-eslint/visitor-keys': 6.13.1
-      debug: 4.3.4(supports-color@5.5.0)
-      eslint: 8.55.0
-      typescript: 5.3.3
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@typescript-eslint/parser@6.13.2(eslint@8.55.0)(typescript@5.3.3):
     resolution: {integrity: sha512-MUkcC+7Wt/QOGeVlM8aGGJZy1XV5YKjTpq9jK6r6/iLsGXhBVaGP5N0UYvFsu9BFlSpwY9kMretzdBH01rkRXg==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -9821,14 +9779,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.59.2
       '@typescript-eslint/visitor-keys': 5.59.2
-    dev: true
-
-  /@typescript-eslint/scope-manager@6.13.1:
-    resolution: {integrity: sha512-BW0kJ7ceiKi56GbT2KKzZzN+nDxzQK2DS6x0PiSMPjciPgd/JRQGMibyaN2cPt2cAvuoH0oNvn2fwonHI+4QUQ==}
-    engines: {node: ^16.0.0 || >=18.0.0}
-    dependencies:
-      '@typescript-eslint/types': 6.13.1
-      '@typescript-eslint/visitor-keys': 6.13.1
     dev: true
 
   /@typescript-eslint/scope-manager@6.13.2:
@@ -9862,11 +9812,6 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@typescript-eslint/types@6.13.1:
-    resolution: {integrity: sha512-gjeEskSmiEKKFIbnhDXUyiqVma1gRCQNbVZ1C8q7Zjcxh3WZMbzWVfGE9rHfWd1msQtPS0BVD9Jz9jded44eKg==}
-    engines: {node: ^16.0.0 || >=18.0.0}
-    dev: true
-
   /@typescript-eslint/types@6.13.2:
     resolution: {integrity: sha512-7sxbQ+EMRubQc3wTfTsycgYpSujyVbI1xw+3UMRUcrhSy+pN09y/lWzeKDbvhoqcRbHdc+APLs/PWYi/cisLPg==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -9887,27 +9832,6 @@ packages:
       is-glob: 4.0.3
       semver: 7.5.4
       tsutils: 3.21.0(typescript@5.3.3)
-      typescript: 5.3.3
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /@typescript-eslint/typescript-estree@6.13.1(typescript@5.3.3):
-    resolution: {integrity: sha512-sBLQsvOC0Q7LGcUHO5qpG1HxRgePbT6wwqOiGLpR8uOJvPJbfs0mW3jPA3ujsDvfiVwVlWUDESNXv44KtINkUQ==}
-    engines: {node: ^16.0.0 || >=18.0.0}
-    peerDependencies:
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@typescript-eslint/types': 6.13.1
-      '@typescript-eslint/visitor-keys': 6.13.1
-      debug: 4.3.4(supports-color@5.5.0)
-      globby: 11.1.0
-      is-glob: 4.0.3
-      semver: 7.5.4
-      ts-api-utils: 1.0.1(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -9979,14 +9903,6 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@typescript-eslint/visitor-keys@6.13.1:
-    resolution: {integrity: sha512-NDhQUy2tg6XGNBGDRm1XybOHSia8mcXmlbKWoQP+nm1BIIMxa55shyJfZkHpEBN62KNPLrocSM2PdPcaLgDKMQ==}
-    engines: {node: ^16.0.0 || >=18.0.0}
-    dependencies:
-      '@typescript-eslint/types': 6.13.1
-      eslint-visitor-keys: 3.4.3
-    dev: true
-
   /@typescript-eslint/visitor-keys@6.13.2:
     resolution: {integrity: sha512-OGznFs0eAQXJsp+xSd6k/O1UbFi/K/L7WjqeRoFE7vadjAF9y0uppXhYNQNEqygjou782maGClOoZwPqF0Drlw==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -10024,22 +9940,6 @@ packages:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-react@4.2.0(vite@5.0.6):
-    resolution: {integrity: sha512-+MHTH/e6H12kRp5HUkzOGqPMksezRMmW+TNzlh/QXfI8rRf6l2Z2yH/v12no1UvTwhZgEDMuQ7g7rrfMseU6FQ==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    peerDependencies:
-      vite: ^4.2.0 || ^5.0.0
-    dependencies:
-      '@babel/core': 7.23.3
-      '@babel/plugin-transform-react-jsx-self': 7.23.3(@babel/core@7.23.3)
-      '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.3)
-      '@types/babel__core': 7.20.4
-      react-refresh: 0.14.0
-      vite: 5.0.6(@types/node@20.10.4)(sass@1.69.5)
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@vitejs/plugin-react@4.2.1(vite@5.0.6):
     resolution: {integrity: sha512-oojO9IDc4nCUUi8qIR11KoQm0XFFLIwsRBwHRR4d/88IWghn1y6ckz/bJ8GHDCsYEJee8mDzqtJxh15/cisJNQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -10054,7 +9954,6 @@ packages:
       vite: 5.0.6(@types/node@20.10.4)(sass@1.69.5)
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@vitest/expect@1.0.2:
     resolution: {integrity: sha512-mAIo/8uddSWkjQMLFcjqZP3WmkwvvN0OtlyZIu33jFnwme3vZds8m8EDMxtj+Uzni2DwtPfHNjJcTM8zTV1f4A==}
@@ -12276,7 +12175,7 @@ packages:
     dependencies:
       '@next/eslint-plugin-next': 14.0.3
       '@rushstack/eslint-patch': 1.6.0
-      '@typescript-eslint/parser': 6.13.1(eslint@8.55.0)(typescript@5.3.3)
+      '@typescript-eslint/parser': 6.13.2(eslint@8.55.0)(typescript@5.3.3)
       eslint: 8.55.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.5.2(eslint-plugin-import@2.29.0)(eslint@8.55.0)
@@ -16478,8 +16377,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier@3.1.0:
-    resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
+  /prettier@3.1.1:
+    resolution: {integrity: sha512-22UbSzg8luF4UuZtzgiUOfcGM8s4tjBv6dJRT7j275NXsy2jb4aJa4NNveul5x4eqlF1wuhuR2RElK71RvmVaw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -19110,7 +19009,7 @@ packages:
       vscode-uri: 3.0.8
     dev: false
 
-  /volar-service-prettier@0.0.16(@volar/language-service@1.10.10)(prettier@3.1.0):
+  /volar-service-prettier@0.0.16(@volar/language-service@1.10.10)(prettier@3.1.1):
     resolution: {integrity: sha512-Kj2ZdwJGEvfYbsHW8Sjrew/7EB4PgRoas4f8yAJzUUVxIC/kvhUwLDxQc8+N2IibomN76asJGWe+i6VZZvgIkw==}
     peerDependencies:
       '@volar/language-service': ~1.10.0
@@ -19122,7 +19021,7 @@ packages:
         optional: true
     dependencies:
       '@volar/language-service': 1.10.10
-      prettier: 3.1.0
+      prettier: 3.1.1
     dev: false
 
   /volar-service-typescript-twoslash-queries@0.0.16(@volar/language-service@1.10.10):
