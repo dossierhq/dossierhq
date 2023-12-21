@@ -39,10 +39,10 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@rushstack/heft": "0.63.4",
-    "@types/node": "~20.10.4",
+    "@rushstack/heft": "0.63.5",
+    "@types/node": "~20.10.5",
     "@types/uuid": "~9.0.7",
-    "eslint": "~8.55.0",
+    "eslint": "~8.56.0",
     "prettier": "3.1.1",
     "typescript": "~5.3.3"
   }

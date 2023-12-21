@@ -36,7 +36,7 @@ export function NavBar({ current }: Props) {
 function NavItemRender(text: string, href: string) {
   const renderer = ({ className }: { className: string }) => {
     return (
-      <a className={className} href={href}>
+      <a class={className} href={href}>
         {text}
       </a>
     );
