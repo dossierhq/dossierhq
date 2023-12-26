@@ -680,6 +680,9 @@ importers:
       '@rushstack/heft':
         specifier: 0.63.5
         version: 0.63.5(@types/node@20.10.5)
+      '@types/bun':
+        specifier: ~1.0.0
+        version: 1.0.0
       '@types/node':
         specifier: ~20.10.5
         version: 20.10.5
