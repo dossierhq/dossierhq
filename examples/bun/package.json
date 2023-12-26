@@ -12,16 +12,16 @@
     "prettier:fix": "prettier --write .",
     "test": "bun test 2>&1"
   },
-  "devDependencies": {
-    "@dossierhq/eslint-config-generic": "workspace:*",
-    "bun-types": "~1.0.14",
-    "eslint": "~8.56.0",
-    "prettier": "3.1.1",
-    "typescript": "~5.3.3"
-  },
   "dependencies": {
     "@dossierhq/bun-sqlite": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/server": "workspace:*"
+  },
+  "devDependencies": {
+    "@dossierhq/eslint-config-generic": "workspace:*",
+    "@types/bun": "~1.0.0",
+    "eslint": "~8.56.0",
+    "prettier": "3.1.1",
+    "typescript": "~5.3.3"
   }
 }
