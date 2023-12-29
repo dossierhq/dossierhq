@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["dossierhq", "rushstack", "vitest"],
+  "cSpell.words": ["Bengtsson", "dossierhq", "rushstack", "vitest"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],

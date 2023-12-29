@@ -8,6 +8,9 @@
     "cloudinary"
   ],
   "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {

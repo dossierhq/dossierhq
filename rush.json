@@ -371,9 +371,13 @@
       "projectFolder": "libraries/benchpress"
     },
     {
-      "packageName": "@dossierhq/react-components",
-      "projectFolder": "libraries/react-components",
+      "packageName": "@dossierhq/better-sqlite3",
+      "projectFolder": "libraries/better-sqlite3",
       "versionPolicyName": "DossierFramework"
+    },
+    {
+      "packageName": "@dossierhq/bun-sqlite",
+      "projectFolder": "libraries/bun-sqlite"
     },
     {
       "packageName": "@dossierhq/core",
@@ -391,13 +395,18 @@
       "versionPolicyName": "DossierFramework"
     },
     {
-      "packageName": "@dossierhq/postgres-core",
-      "projectFolder": "libraries/postgres-core",
+      "packageName": "@dossierhq/deno-postgres",
+      "projectFolder": "libraries/deno-postgres"
+    },
+    {
+      "packageName": "@dossierhq/design",
+      "projectFolder": "libraries/design",
       "versionPolicyName": "DossierFramework"
     },
     {
-      "packageName": "@dossierhq/deno-postgres",
-      "projectFolder": "libraries/deno-postgres"
+      "packageName": "@dossierhq/postgres-core",
+      "projectFolder": "libraries/postgres-core",
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/pg",
@@ -405,13 +414,9 @@
       "versionPolicyName": "DossierFramework"
     },
     {
-      "packageName": "@dossierhq/better-sqlite3",
-      "projectFolder": "libraries/better-sqlite3",
+      "packageName": "@dossierhq/react-components",
+      "projectFolder": "libraries/react-components",
       "versionPolicyName": "DossierFramework"
-    },
-    {
-      "packageName": "@dossierhq/bun-sqlite",
-      "projectFolder": "libraries/bun-sqlite"
     },
     {
       "packageName": "@dossierhq/sqlite-core",
@@ -429,11 +434,6 @@
     {
       "packageName": "@dossierhq/integration-test",
       "projectFolder": "libraries/integration-test",
-      "versionPolicyName": "DossierFramework"
-    },
-    {
-      "packageName": "@dossierhq/design",
-      "projectFolder": "libraries/design",
       "versionPolicyName": "DossierFramework"
     },
     {

@@ -10,6 +10,9 @@
     "better-sqlite3"
   ],
   "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {

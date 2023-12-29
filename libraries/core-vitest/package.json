@@ -9,6 +9,9 @@
     "vitest"
   ],
   "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "type": "module",
   "exports": {
     ".": "./lib/index.js"

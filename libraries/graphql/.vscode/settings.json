@@ -1,6 +1,7 @@
 {
   "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "cSpell.words": [
+    "Bengtsson",
     "dossierhq",
     "graphqlid",
     "postgres",

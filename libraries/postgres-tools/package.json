@@ -10,6 +10,9 @@
     "migration"
   ],
   "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "main": "src/index.js",
   "type": "module",
   "license": "MIT",
