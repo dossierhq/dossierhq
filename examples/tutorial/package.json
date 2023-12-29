@@ -29,14 +29,14 @@
     "leaflet": "~1.9.4",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "react-router-dom": "~6.21.0"
+    "react-router-dom": "~6.21.1"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.8",
     "@types/body-parser": "~1.19.5",
     "@types/express": "~4.17.21",
-    "@types/react": "~18.2.45",
+    "@types/react": "~18.2.46",
     "@types/react-dom": "~18.2.18",
     "@vitejs/plugin-react": "~4.2.1",
     "concurrently": "~8.2.2",
