@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Improve tree-shaking. Enable Next.js server-side rendering",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}

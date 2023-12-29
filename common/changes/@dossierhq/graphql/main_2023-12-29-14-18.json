@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Improve tree-shaking",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

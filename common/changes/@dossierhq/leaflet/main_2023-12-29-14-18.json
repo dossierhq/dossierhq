@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/leaflet",
+      "comment": "Improve tree-shaking",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/leaflet"
+}
