@@ -3,6 +3,7 @@
   "version": "0.1.36",
   "description": "",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./lib/index.js"
   },
