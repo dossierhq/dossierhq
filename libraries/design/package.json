@@ -10,6 +10,7 @@
   ],
   "homepage": "https://dossierhq.dev",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./lib/index.js",
     "./main.css": "./lib/main.css"

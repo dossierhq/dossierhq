@@ -11,4 +11,6 @@ function tree_shake() {
 
 tree_shake test-cases/better-sqlite3-empty.js --platform=node
 tree_shake test-cases/core-empty.js
+tree_shake test-cases/design-empty.js
+tree_shake test-cases/react-components-empty.js
 tree_shake test-cases/server-empty.js

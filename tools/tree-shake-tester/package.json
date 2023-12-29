@@ -8,6 +8,8 @@
   "dependencies": {
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/core": "workspace:*",
+    "@dossierhq/design": "workspace:*",
+    "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*"
   },
   "devDependencies": {

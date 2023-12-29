@@ -2180,6 +2180,12 @@ importers:
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../../libraries/core
+      '@dossierhq/design':
+        specifier: workspace:*
+        version: link:../../libraries/design
+      '@dossierhq/react-components':
+        specifier: workspace:*
+        version: link:../../libraries/react-components
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../../libraries/server
