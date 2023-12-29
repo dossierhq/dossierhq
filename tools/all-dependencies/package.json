@@ -70,6 +70,7 @@
     "@graphiql/toolkit": "~0.9.1",
     "@libsql/client": "~0.3.6",
     "@playwright/test": "~1.40.1",
+    "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-node-resolve": "~15.2.3",
     "@rushstack/heft": "0.63.5",
     "@rushstack/heft-lint-plugin": "~0.2.15",
