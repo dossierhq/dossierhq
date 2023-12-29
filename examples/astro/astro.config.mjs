@@ -3,6 +3,7 @@ import react from '@astrojs/react';
 import sentry from '@sentry/astro';
 import spotlightjs from '@spotlightjs/astro';
 import { defineConfig } from 'astro/config';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +15,10 @@ export default defineConfig({
   vite: {
     build: {
       chunkSizeWarningLimit: 900,
+      sourcemap: true,
+      rollupOptions: {
+        plugins: [visualizer()],
+      },
     },
     server: {
       fs: {
