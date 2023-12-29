@@ -1,3 +1,4 @@
+'use client';
 import * as ReactAriaOverlays from '@react-aria/overlays';
 import type { FunctionComponent, MouseEventHandler, ReactNode, RefObject } from 'react';
 import { useEffect, useRef } from 'react';

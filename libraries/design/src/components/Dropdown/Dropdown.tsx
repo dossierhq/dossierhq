@@ -1,3 +1,4 @@
+'use client';
 import type { ReactNode, Ref } from 'react';
 import { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';

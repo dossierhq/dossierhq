@@ -1,3 +1,4 @@
+'use client';
 import type { Dispatch, ReactNode } from 'react';
 import { useCallback, useRef, useState } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';

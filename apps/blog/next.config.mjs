@@ -6,6 +6,9 @@ const config = {
   images: {
     domains: ['res.cloudinary.com'],
   },
+  experimental: {
+    optimizePackageImports: ['@dossierhq/design', '@dossierhq/react-components'],
+  },
 };
 
 export default config;

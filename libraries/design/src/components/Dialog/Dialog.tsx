@@ -1,3 +1,4 @@
+'use client';
 import type { ReactNode, SyntheticEvent } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';

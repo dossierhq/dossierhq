@@ -1,3 +1,4 @@
+'use client';
 import { createClientContext } from '../utils/ContextUtils.js';
 
 export interface NotificationInfo {
