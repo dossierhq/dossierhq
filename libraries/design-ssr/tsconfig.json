@@ -1,4 +1,0 @@
-{
-  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/library-react-esm/tsconfig-base.json",
-  "compilerOptions": {}
-}

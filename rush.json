@@ -437,10 +437,6 @@
       "versionPolicyName": "DossierFramework"
     },
     {
-      "packageName": "@dossierhq/design-ssr",
-      "projectFolder": "libraries/design-ssr"
-    },
-    {
       "packageName": "@dossierhq/example-astro",
       "projectFolder": "examples/astro"
     },

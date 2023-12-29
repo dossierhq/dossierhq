@@ -1045,52 +1045,6 @@ importers:
         specifier: ~5.0.10
         version: 5.0.10(@types/node@20.10.5)(sass@1.69.6)
 
-  ../../libraries/design-ssr:
-    dependencies:
-      react:
-        specifier: ~18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ~18.2.0
-        version: 18.2.0(react@18.2.0)
-      tslib:
-        specifier: ~2.6.2
-        version: 2.6.2
-    devDependencies:
-      '@dossierhq/heft-node-rig':
-        specifier: workspace:*
-        version: link:../../rigs/heft-node-rig
-      '@rushstack/heft':
-        specifier: 0.63.5
-        version: 0.63.5(@types/node@20.10.5)
-      '@types/react':
-        specifier: ~18.2.46
-        version: 18.2.46
-      '@types/react-dom':
-        specifier: ~18.2.18
-        version: 18.2.18
-      '@typescript-eslint/eslint-plugin':
-        specifier: ~6.16.0
-        version: 6.16.0(@typescript-eslint/parser@6.16.0)(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: ~6.16.0
-        version: 6.16.0(eslint@8.56.0)(typescript@5.3.3)
-      eslint:
-        specifier: ~8.56.0
-        version: 8.56.0
-      eslint-plugin-react:
-        specifier: ~7.33.2
-        version: 7.33.2(eslint@8.56.0)
-      eslint-plugin-react-hooks:
-        specifier: ~4.6.0
-        version: 4.6.0(eslint@8.56.0)
-      prettier:
-        specifier: 3.1.1
-        version: 3.1.1
-      typescript:
-        specifier: ~5.3.3
-        version: 5.3.3
-
   ../../libraries/graphql:
     dependencies:
       '@dossierhq/core':
