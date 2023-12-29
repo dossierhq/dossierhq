@@ -1,4 +1,4 @@
-import { Card2, DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
+import { Card2, DateDisplay, Text, toSpacingClassName } from '@dossierhq/design';
 import type { Metadata } from 'next';
 import Link from 'next/link.js';
 import { CloudinaryImage } from '../../components/CloudinaryImage/CloudinaryImage';

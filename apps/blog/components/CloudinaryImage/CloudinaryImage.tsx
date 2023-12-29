@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { toSizeClassName } from '@dossierhq/design-ssr';
+import { toSizeClassName } from '@dossierhq/design';
 import { getCloudinaryConfig } from '../../config/CloudinaryConfig';
 import { getResponsiveImageUrlsForLimitFit } from '../../utils/CloudinaryUtils';
 import type { PublishedCloudinaryImage } from '../../utils/SchemaTypes';

@@ -1,4 +1,4 @@
-import { FullscreenContainer } from '@dossierhq/design-ssr';
+import { FullscreenContainer } from '@dossierhq/design';
 import { NavBar } from '../../components/NavBar/NavBar';
 
 interface Props {

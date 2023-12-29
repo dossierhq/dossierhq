@@ -2,6 +2,7 @@ import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/cor
 import {
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
+  isRichTextComponentNode,
   isRichTextElementNode,
   isRichTextEntityLinkNode,
   isRichTextHeadingNode,
@@ -12,10 +13,9 @@ import {
   isRichTextParagraphNode,
   isRichTextRootNode,
   isRichTextTextNode,
-  isRichTextComponentNode,
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
-import { ClassName, LexicalTheme } from '@dossierhq/design-ssr';
+import { ClassName, LexicalTheme } from '@dossierhq/design';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';

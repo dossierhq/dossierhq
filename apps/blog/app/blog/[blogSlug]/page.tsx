@@ -1,4 +1,4 @@
-import { DateDisplay, Text, toSpacingClassName } from '@dossierhq/design-ssr';
+import { DateDisplay, Text, toSpacingClassName } from '@dossierhq/design';
 import type { Metadata } from 'next';
 import type { BlogPosting } from 'schema-dts';
 import { CloudinaryImage } from '../../../components/CloudinaryImage/CloudinaryImage';

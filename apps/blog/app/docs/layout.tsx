@@ -1,4 +1,4 @@
-import { FullscreenContainer, Menu } from '@dossierhq/design-ssr';
+import { FullscreenContainer, Menu } from '@dossierhq/design';
 import assert from 'node:assert';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';

@@ -1,4 +1,4 @@
-import { Button } from '@dossierhq/design-ssr';
+import { Button } from '@dossierhq/design';
 import Link from 'next/link.js';
 
 type Props = Omit<React.ComponentPropsWithRef<typeof Button>, 'as'> & {

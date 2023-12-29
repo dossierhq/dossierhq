@@ -24,7 +24,6 @@
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
-    "@dossierhq/design-ssr": "workspace:*",
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",

@@ -7,7 +7,7 @@ import {
   toClassName,
   toFlexItemClassName,
   toSpacingClassName,
-} from '@dossierhq/design-ssr';
+} from '@dossierhq/design';
 import type { Metadata } from 'next';
 import Image from 'next/image.js';
 import Link from 'next/link.js';

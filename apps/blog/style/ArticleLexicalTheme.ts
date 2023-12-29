@@ -1,5 +1,4 @@
-import { LexicalTheme } from '@dossierhq/design-ssr';
-import { toTextStyleClassName } from '@dossierhq/design-ssr';
+import { LexicalTheme, toTextStyleClassName } from '@dossierhq/design';
 import type { EditorThemeClasses } from 'lexical';
 
 export const ArticleLexicalTheme: EditorThemeClasses = {

@@ -1,4 +1,4 @@
-import { Text } from '@dossierhq/design-ssr';
+import { Text } from '@dossierhq/design';
 import type { Metadata } from 'next';
 import type { Article } from 'schema-dts';
 import { JsonLd } from '../../../components/JsonLd/JsonLd';

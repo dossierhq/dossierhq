@@ -25,9 +25,6 @@ importers:
       '@dossierhq/design':
         specifier: workspace:*
         version: link:../../libraries/design
-      '@dossierhq/design-ssr':
-        specifier: workspace:*
-        version: link:../../libraries/design-ssr
       '@dossierhq/leaflet':
         specifier: workspace:*
         version: link:../../libraries/leaflet
