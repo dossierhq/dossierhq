@@ -32,13 +32,13 @@ import { $setBlocksType } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import type { LexicalEditor, NodeKey } from 'lexical';
 import {
+  $INTERNAL_isPointSelection,
   $createParagraphNode,
   $getNodeByKey,
   $getSelection,
   $isRangeSelection,
   $isRootOrShadowRoot,
   COMMAND_PRIORITY_CRITICAL,
-  DEPRECATED_$isGridSelection,
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
@@ -312,7 +312,7 @@ function BlockFormatDropDown({
           // Corresponds to formatParagraph() in Playground
           editor.update(() => {
             const selection = $getSelection();
-            if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+            if ($INTERNAL_isPointSelection(selection)) {
               $setBlocksType(selection, () => $createParagraphNode());
             }
           });
@@ -328,7 +328,7 @@ function BlockFormatDropDown({
           if (blockType !== headingLevel) {
             editor.update(() => {
               const selection = $getSelection();
-              if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+              if ($INTERNAL_isPointSelection(selection)) {
                 $setBlocksType(selection, () => $createHeadingNode(headingLevel));
               }
             });
