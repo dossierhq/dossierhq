@@ -9,6 +9,7 @@
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
+    "@dossierhq/graphql": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*"
   },

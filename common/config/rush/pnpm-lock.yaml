@@ -2183,6 +2183,9 @@ importers:
       '@dossierhq/design':
         specifier: workspace:*
         version: link:../../libraries/design
+      '@dossierhq/graphql':
+        specifier: workspace:*
+        version: link:../../libraries/graphql
       '@dossierhq/react-components':
         specifier: workspace:*
         version: link:../../libraries/react-components
