@@ -1,3 +1,4 @@
+'use client';
 import type { AdminEntity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';

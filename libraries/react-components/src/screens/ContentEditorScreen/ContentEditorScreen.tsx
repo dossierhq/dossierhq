@@ -1,3 +1,4 @@
+'use client';
 import type { AdminEntity } from '@dossierhq/core';
 import {
   Button,

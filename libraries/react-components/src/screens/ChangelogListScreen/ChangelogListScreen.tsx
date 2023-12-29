@@ -1,3 +1,4 @@
+'use client';
 import { FullscreenContainer } from '@dossierhq/design';
 import { useReducer, type ReactNode } from 'react';
 import { ChangelogConnectionButtons } from '../../components/ChangelogConnectionButtons/ChangelogConnectionButtons.js';
