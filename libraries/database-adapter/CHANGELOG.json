@@ -2,6 +2,18 @@
   "name": "@dossierhq/database-adapter",
   "entries": [
     {
+      "version": "0.5.4",
+      "tag": "@dossierhq/database-adapter_v0.5.4",
+      "date": "Fri, 29 Dec 2023 14:26:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improve tree-shaking"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.3",
       "tag": "@dossierhq/database-adapter_v0.5.3",
       "date": "Thu, 07 Dec 2023 20:57:43 GMT",

@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/leaflet
 
-This log was last generated on Thu, 07 Dec 2023 20:57:43 GMT and should not be manually modified.
+This log was last generated on Fri, 29 Dec 2023 14:26:15 GMT and should not be manually modified.
+
+## 0.5.4
+Fri, 29 Dec 2023 14:26:15 GMT
+
+### Updates
+
+- Improve tree-shaking
 
 ## 0.5.3
 Thu, 07 Dec 2023 20:57:43 GMT
