@@ -1,6 +1,12 @@
 import { describe, expect, test } from 'vitest';
 import type { Result } from './ErrorResult.js';
-import { ErrorType, createErrorResultFromError, notOk, ok } from './ErrorResult.js';
+import {
+  ErrorType,
+  createErrorResult,
+  createErrorResultFromError,
+  notOk,
+  ok,
+} from './ErrorResult.js';
 import { expectErrorResult, expectOkResult } from './test/CoreTestUtils.js';
 import { createMockLogger } from './test/MockLogger.js';
 
@@ -151,5 +157,20 @@ describe('notOk', () => {
       'Unexpected exception: 123',
     );
     expect(logger.error.mock.calls).toMatchInlineSnapshot('[]');
+  });
+
+  test('fromHttpStatus round trip', () => {
+    for (const errorType of Object.keys(ErrorType)) {
+      const errorResult = createErrorResult(
+        errorType as (typeof ErrorType)[keyof typeof ErrorType],
+        'Message',
+      );
+      const status = errorResult.httpStatus;
+      expect(status).toBeGreaterThanOrEqual(400);
+      expect(status).toBeLessThanOrEqual(500);
+
+      const roundTrip = notOk.fromHttpStatus(status, errorResult.message);
+      expect(roundTrip.error).toEqual(errorType);
+    }
   });
 });

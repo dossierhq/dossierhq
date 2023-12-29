@@ -4,10 +4,7 @@ import { queryRun, type Database } from './QueryFunctions.js';
 import type { AdapterTransaction } from './SqliteDatabaseAdapter.js';
 import { withQueryPerformance } from './utils/withQueryPerformance.js';
 
-const sqliteTransactionSymbol = Symbol('SqliteTransaction');
-
 export interface SqliteTransaction extends Transaction {
-  [sqliteTransactionSymbol]: true;
   savePointCount: number;
   /** The start of the root transaction */
   transactionTimestamp: Date;
@@ -17,7 +14,7 @@ export interface SqliteTransaction extends Transaction {
 export type SqliteTransactionContext = TransactionContext<SqliteTransaction>;
 
 export function getTransactionTimestamp(transaction: Transaction | null): Date {
-  if (transaction && sqliteTransactionSymbol in transaction) {
+  if (transaction && 'transactionTimestamp' in transaction) {
     return (transaction as SqliteTransaction).transactionTimestamp;
   }
   return new Date();
@@ -43,7 +40,6 @@ export async function withRootTransaction<
 
   const transaction: SqliteTransaction = {
     _type: 'Transaction',
-    [sqliteTransactionSymbol]: true,
     savePointCount: 0,
     transactionTimestamp: now,
     adapterTransaction,

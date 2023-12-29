@@ -1,0 +1,16 @@
+{
+  "name": "@dossierhq/tree-shake-tester",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "./tree-shake.sh"
+  },
+  "dependencies": {
+    "@dossierhq/better-sqlite3": "workspace:*",
+    "@dossierhq/core": "workspace:*",
+    "@dossierhq/server": "workspace:*"
+  },
+  "devDependencies": {
+    "esbuild": "~0.19.10"
+  }
+}

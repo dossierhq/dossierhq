@@ -94,7 +94,23 @@ export class ErrorResult<TOk, TError extends ErrorType> {
   }
 
   get httpStatus(): number {
-    return errorTypeToHttpStatus.get(this.error) ?? 500;
+    switch (this.error) {
+      case ErrorType.BadRequest:
+        return 400;
+      case ErrorType.NotAuthenticated:
+        return 401;
+      case ErrorType.NotAuthorized:
+        return 403;
+      case ErrorType.NotFound:
+        return 404;
+      case ErrorType.Conflict:
+        return 409;
+      case ErrorType.Generic:
+        return 500;
+      default:
+        this.error satisfies never;
+        return 500;
+    }
   }
 }
 
@@ -144,7 +160,20 @@ export function ok<TOk, TError extends ErrorType>(value: TOk): OkResult<TOk, TEr
 
 export const notOk = {
   fromHttpStatus: (status: number, message: string): ErrorResult<unknown, ErrorType> => {
-    const errorType = httpStatusToErrorType.get(status) ?? ErrorType.Generic;
+    let errorType;
+    if (status === 400) {
+      errorType = ErrorType.BadRequest;
+    } else if (status === 401) {
+      errorType = ErrorType.NotAuthenticated;
+    } else if (status === 403) {
+      errorType = ErrorType.NotAuthorized;
+    } else if (status === 404) {
+      errorType = ErrorType.NotFound;
+    } else if (status === 409) {
+      errorType = ErrorType.Conflict;
+    } else {
+      errorType = ErrorType.Generic;
+    }
     return createErrorResult(errorType, message);
   },
   BadRequest: (message: string): ErrorResult<unknown, typeof ErrorType.BadRequest> =>
@@ -179,17 +208,6 @@ export const notOk = {
   NotFound: (message: string): ErrorResult<unknown, typeof ErrorType.NotFound> =>
     createErrorResult(ErrorType.NotFound, message),
 };
-
-const httpStatusToErrorType = new Map<number, ErrorType>();
-httpStatusToErrorType.set(400, ErrorType.BadRequest);
-httpStatusToErrorType.set(409, ErrorType.Conflict);
-httpStatusToErrorType.set(401, ErrorType.NotAuthenticated);
-httpStatusToErrorType.set(403, ErrorType.NotAuthorized);
-httpStatusToErrorType.set(404, ErrorType.NotFound);
-httpStatusToErrorType.set(500, ErrorType.Generic);
-
-const errorTypeToHttpStatus = new Map<ErrorType, number>();
-httpStatusToErrorType.forEach((errorType, status) => errorTypeToHttpStatus.set(errorType, status));
 
 // ASSERTIONS
 

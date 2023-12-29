@@ -38,7 +38,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   Number: readonly (keyof AdminFieldSpecification<NumberFieldSpecification>)[];
   RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
   String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
-} = {
+} = /* @__PURE__ */ (() => ({
   [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.Component]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'componentTypes'],
   [FieldType.Entity]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
@@ -58,7 +58,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
     'values',
     'index',
   ],
-};
+}))();
 
 export function schemaValidateAdmin(
   adminSchema: BaseSchema<AdminSchemaSpecification>,

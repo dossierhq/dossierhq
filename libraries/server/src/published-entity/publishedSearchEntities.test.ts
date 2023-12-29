@@ -55,7 +55,6 @@ describe('publishedSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -153,7 +152,6 @@ describe('publishedSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -250,7 +248,6 @@ describe('publishedSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -286,7 +283,6 @@ describe('publishedSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {

@@ -525,6 +525,10 @@
     {
       "packageName": "@dossierhq/all-dependencies",
       "projectFolder": "tools/all-dependencies"
+    },
+    {
+      "packageName": "@dossierhq/tree-shake-tester",
+      "projectFolder": "tools/tree-shake-tester"
     }
 
     // {

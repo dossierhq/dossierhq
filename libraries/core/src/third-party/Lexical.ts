@@ -77,17 +77,17 @@ export type SerializedTabNode = SerializedTextNode;
 
 // Text node formatting
 const IS_BOLD = 1;
-const IS_ITALIC = 1 << 1;
-const IS_STRIKETHROUGH = 1 << 2;
-const IS_UNDERLINE = 1 << 3;
-const IS_CODE = 1 << 4;
-const IS_SUBSCRIPT = 1 << 5;
-const IS_SUPERSCRIPT = 1 << 6;
-const IS_HIGHLIGHT = 1 << 7;
+const IS_ITALIC = 2;
+const IS_STRIKETHROUGH = 4;
+const IS_UNDERLINE = 8;
+const IS_CODE = 16;
+const IS_SUBSCRIPT = 32;
+const IS_SUPERSCRIPT = 64;
+const IS_HIGHLIGHT = 128;
 
 // Text node details
 export const IS_DIRECTIONLESS = 1;
-export const IS_UNMERGEABLE = 1 << 1;
+export const IS_UNMERGEABLE = 2;
 
 // our own type, not from lexical
 export const TEXT_TYPE_TO_FORMAT = {

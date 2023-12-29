@@ -284,15 +284,15 @@ type Legacy_v0_4_7_AdminSchemaMigrationAction<
   ? Omit<T, 'componentType'> & { valueType: string }
   : T;
 
-export const REQUIRED_RICH_TEXT_NODES = [
+export const REQUIRED_RICH_TEXT_NODES = /* @__PURE__ */ (() => [
   RichTextNodeType.root,
   RichTextNodeType.paragraph,
   RichTextNodeType.text,
   RichTextNodeType.linebreak,
   RichTextNodeType.tab,
-];
+])();
 
-export const GROUPED_RICH_TEXT_NODE_TYPES: RichTextNodeType[][] = [
+export const GROUPED_RICH_TEXT_NODE_TYPES: RichTextNodeType[][] = /* @__PURE__ */ (() => [
   [RichTextNodeType.list, RichTextNodeType.listitem],
   [RichTextNodeType.code, RichTextNodeType['code-highlight']],
-];
+])();

@@ -53,7 +53,6 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -154,7 +153,6 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -254,7 +252,6 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {
@@ -290,7 +287,6 @@ describe('Admin adminSearchEntities', () => {
                 "subjectInternalId": 123,
               },
               "transaction": null,
-              Symbol(SessionContext): undefined,
             },
             undefined,
             {

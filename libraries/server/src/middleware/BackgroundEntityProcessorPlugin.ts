@@ -11,7 +11,7 @@ import {
 import type { SessionContext } from '../Context.js';
 import type { Server, ServerPlugin } from '../Server.js';
 
-const TIME_SINCE_LAST_OPERATION_MS = 1000 * 2;
+const TIME_SINCE_LAST_OPERATION_MS = 2000;
 const TIME_SINCE_LAST_PROCESSING_MS = 5;
 
 export class BackgroundEntityProcessorPlugin implements ServerPlugin {

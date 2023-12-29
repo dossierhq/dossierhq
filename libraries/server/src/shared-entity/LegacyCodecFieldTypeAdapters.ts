@@ -48,7 +48,7 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Componen
   },
 };
 
-const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
+const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = /* @__PURE__ */ (() => ({
   [FieldType.Boolean]: booleanCodec,
   [FieldType.Component]: invalidCodec,
   [FieldType.Entity]: entityTypeCodec,
@@ -56,7 +56,7 @@ const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = {
   [FieldType.Number]: numberCodec,
   [FieldType.RichText]: invalidCodec,
   [FieldType.String]: stringCodec,
-};
+}))();
 
 export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
   return getAdapterForType(fieldSpec.type as FieldType);
