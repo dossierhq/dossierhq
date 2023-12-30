@@ -7,6 +7,7 @@ interface Props {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(canonicalUrl('/')),
   title: {
     default: 'Dossier – the open source headless CMS toolkit',
     template: '%s | Dossier',
