@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/better-sqlite3",
+      "comment": "Remove Context export",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/better-sqlite3"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Add type attribute to Button",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}
