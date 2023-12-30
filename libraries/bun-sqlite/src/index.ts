@@ -1,5 +1,4 @@
 export type {
-  Context,
   SqliteDatabaseOptimizationOptions,
   SqliteDatabaseOptions,
 } from '@dossierhq/sqlite-core';

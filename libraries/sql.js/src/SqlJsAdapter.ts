@@ -1,8 +1,7 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import type { ErrorType, LoggerContext, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
   type ColumnValue,
-  type Context,
   type DatabaseAdapter,
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
@@ -15,7 +14,7 @@ import type { Database } from 'sql.js';
 export type SqlJsDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 export async function createSqlJsAdapter(
-  context: Context,
+  context: LoggerContext,
   database: Database,
   options: SqliteDatabaseOptions,
 ): PromiseResult<SqlJsDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

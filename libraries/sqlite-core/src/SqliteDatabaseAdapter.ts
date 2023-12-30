@@ -1,6 +1,5 @@
-import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type LoggerContext, type PromiseResult } from '@dossierhq/core';
 import type {
-  Context,
   DatabaseAdapter,
   DatabaseOptimizationOptions,
   TransactionContext,
@@ -127,7 +126,7 @@ export interface SqliteDatabaseOptimizationOptions extends DatabaseOptimizationO
 }
 
 export async function createSqliteDatabaseAdapterAdapter(
-  context: Context,
+  context: LoggerContext,
   sqliteAdapter: SqliteDatabaseAdapter,
   options: SqliteDatabaseOptions,
 ): PromiseResult<

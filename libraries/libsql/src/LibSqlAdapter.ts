@@ -1,9 +1,8 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import type { ErrorType, LoggerContext, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
   type AdapterTransaction,
   type ColumnValue,
-  type Context,
   type DatabaseAdapter,
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
@@ -51,7 +50,7 @@ class TransactionAdapter implements AdapterTransaction {
 }
 
 export async function createLibSqlAdapter(
-  context: Context,
+  context: LoggerContext,
   client: Client,
   options: SqliteDatabaseOptions,
 ): PromiseResult<LibSqlDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

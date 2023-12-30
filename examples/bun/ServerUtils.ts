@@ -1,8 +1,8 @@
-import type { Context } from '@dossierhq/bun-sqlite';
 import { createBunSqliteAdapter } from '@dossierhq/bun-sqlite';
+import type { LoggerContext } from '@dossierhq/core';
 import { Database } from 'bun:sqlite';
 
-export function createAdapter(context: Context, filename: string) {
+export function createAdapter(context: LoggerContext, filename: string) {
   const database = Database.open(filename);
   return createBunSqliteAdapter(context, database, {
     migrate: true,

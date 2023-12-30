@@ -1,8 +1,7 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import type { ErrorType, LoggerContext, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
   type ColumnValue,
-  type Context,
   type DatabaseAdapter,
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
@@ -15,7 +14,7 @@ import type { Database } from 'bun:sqlite';
 export type BunSqliteDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
 export async function createBunSqliteAdapter(
-  context: Context,
+  context: LoggerContext,
   database: Database,
   options: SqliteDatabaseOptions,
 ): PromiseResult<BunSqliteDatabaseAdapter, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

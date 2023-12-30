@@ -62,7 +62,6 @@ export {
 } from './SqlQueryBuilder.js';
 export { TransactionContextImpl } from './TransactionContext.js';
 export type {
-  Context,
   DatabasePerformanceCallbacks,
   Transaction,
   TransactionContext,

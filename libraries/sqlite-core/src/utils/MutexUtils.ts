@@ -1,5 +1,4 @@
-import { notOk, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import type { Context } from '@dossierhq/database-adapter';
+import { notOk, type ErrorType, type PromiseResult, type LoggerContext } from '@dossierhq/core';
 
 export class Mutex {
   #locking: Promise<void>;
@@ -29,7 +28,7 @@ export class Mutex {
   }
 
   async withLock<TOk, TError extends ErrorType>(
-    context: Context,
+    context: LoggerContext,
     worker: () => PromiseResult<TOk, TError>,
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
     const unlock = await this.#lock();

@@ -1,9 +1,5 @@
-import type { ErrorType, Logger, PromiseResult } from '@dossierhq/core';
+import type { ErrorType, Logger, LoggerContext, PromiseResult } from '@dossierhq/core';
 import type { DatabaseAdapter } from './DatabaseAdapter.js';
-
-export interface Context {
-  readonly logger: Logger;
-}
 
 export interface Transaction {
   _type: 'Transaction';
@@ -17,7 +13,7 @@ export interface DatabasePerformanceCallbacks {
 }
 
 export interface TransactionContext<TTransaction extends Transaction = Transaction>
-  extends Context {
+  extends LoggerContext {
   readonly transaction: TTransaction | null;
   databasePerformance: DatabasePerformanceCallbacks | null;
 

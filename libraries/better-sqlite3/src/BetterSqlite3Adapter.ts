@@ -1,8 +1,7 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
+import type { ErrorType, LoggerContext, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
   type ColumnValue,
-  type Context,
   type DatabaseAdapter,
   type SqliteDatabaseAdapter,
   type SqliteDatabaseOptimizationOptions,
@@ -24,7 +23,7 @@ interface SqliteError extends Error {
 const PARAMETERS_REGEX = /\?(\d+)/g;
 
 export async function createBetterSqlite3Adapter(
-  context: Context,
+  context: LoggerContext,
   database: Database,
   options: SqliteDatabaseOptions,
 ): PromiseResult<
