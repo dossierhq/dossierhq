@@ -2,6 +2,18 @@
   "name": "@dossierhq/better-sqlite3",
   "entries": [
     {
+      "version": "0.5.5",
+      "tag": "@dossierhq/better-sqlite3_v0.5.5",
+      "date": "Sat, 30 Dec 2023 13:16:10 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove Context export"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.4",
       "tag": "@dossierhq/better-sqlite3_v0.5.4",
       "date": "Fri, 29 Dec 2023 14:26:15 GMT",
