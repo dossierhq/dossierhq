@@ -20,6 +20,7 @@ export type ButtonProps = {
   | {
       as?: 'button';
       disabled?: boolean;
+      type?: 'button' | 'submit' | 'reset';
       onClick?: MouseEventHandler<HTMLButtonElement>;
       onMouseDown?: MouseEventHandler<HTMLButtonElement>;
     }
@@ -74,6 +75,7 @@ const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
         onClick={props.onClick}
         onMouseDown={props.onMouseDown}
         disabled={props.disabled}
+        type={props.type}
       >
         {content}
       </button>
