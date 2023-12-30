@@ -32,6 +32,10 @@ export interface Logger {
   debug(message: string, ...args: unknown[]): void;
 }
 
+export interface LoggerContext {
+  readonly logger: Logger;
+}
+
 const noop = (): void => {
   // no-op
 };

@@ -1,4 +1,4 @@
-import type { Logger } from './Logger.js';
+import type { LoggerContext } from './Logger.js';
 
 export const ErrorType = {
   /** Corresponds to 400 Bad Request */
@@ -134,7 +134,7 @@ export function createErrorResult<TError extends ErrorType>(
 }
 
 export function createErrorResultFromError<TError extends ErrorType | typeof ErrorType.Generic>(
-  context: { logger: Logger },
+  context: LoggerContext,
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   error: ErrorResultError | unknown,
   expectedErrorTypes: TError[] | null = null,
@@ -187,7 +187,7 @@ export const notOk = {
   ): ErrorResult<unknown, typeof ErrorType.Generic> =>
     createErrorResult(ErrorType.Generic, `Unexpected error: ${result.error}: ${result.message}`),
   GenericUnexpectedException: (
-    context: { logger: Logger },
+    context: LoggerContext,
     error: unknown,
   ): ErrorResult<unknown, typeof ErrorType.Generic> => {
     if (error instanceof Error) {

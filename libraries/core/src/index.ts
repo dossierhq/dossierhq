@@ -14,7 +14,7 @@ export {
   type PromiseResult,
   type Result,
 } from './ErrorResult.js';
-export { NoOpLogger, createConsoleLogger, type Logger } from './Logger.js';
+export { NoOpLogger, createConsoleLogger, type Logger, type LoggerContext } from './Logger.js';
 export {
   AdminEntityQueryOrder,
   AdminEntityStatus,
