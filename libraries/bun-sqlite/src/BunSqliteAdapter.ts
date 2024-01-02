@@ -13,6 +13,14 @@ import type { Database } from 'bun:sqlite';
 
 export type BunSqliteDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 
+// TODO this is a copy of @types/bun, remove when new version is released
+interface SQLiteError extends Error {
+  readonly name: 'SQLiteError';
+  errno: number;
+  code?: string;
+  readonly byteOffset: number;
+}
+
 export async function createBunSqliteAdapter(
   context: LoggerContext,
   database: Database,
@@ -64,23 +72,19 @@ export async function createBunSqliteAdapter(
   return await createSqliteDatabaseAdapterAdapter(context, adapter, options);
 }
 
-function isSqlite3Error(error: unknown): error is Error {
-  // https://github.com/oven-sh/bun/issues/871
-  // TODO Bun's error only contain the message, not error codes
-  return error instanceof Error;
+function isSqlite3Error(error: unknown): error is SQLiteError {
+  return error instanceof Error && error.name === 'SQLiteError';
 }
 
 function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
   return isSqlite3Error(error) && error.message === 'constraint failed';
 }
 
-function isUniqueViolationOfConstraint(error: unknown, _constraint: UniqueConstraint): boolean {
-  return isSqlite3Error(error) && error.message === 'constraint failed';
-  // TODO improve when bun returns better error messages
-  // if (isSqlite3Error(error) && error.message.startsWith('constraint failed')) {
-  //   const qualifiedColumns = constraint.columns.map((column) => `${constraint.table}.${column}`);
-  //   const expectedMessage = `UNIQUE constraint failed: ${qualifiedColumns.join(', ')}`;
-  //   return error.message === expectedMessage;
-  // }
-  // return false;
+function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
+  if (isSqlite3Error(error) && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+    const qualifiedColumns = constraint.columns.map((column) => `${constraint.table}.${column}`);
+    const expectedMessage = `UNIQUE constraint failed: ${qualifiedColumns.join(', ')}`;
+    return error.message === expectedMessage;
+  }
+  return false;
 }
