@@ -2,6 +2,18 @@
   "name": "@dossierhq/design",
   "entries": [
     {
+      "version": "0.5.6",
+      "tag": "@dossierhq/design_v0.5.6",
+      "date": "Thu, 04 Jan 2024 15:15:30 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add Button2"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.5",
       "tag": "@dossierhq/design_v0.5.5",
       "date": "Sat, 30 Dec 2023 13:16:10 GMT",
