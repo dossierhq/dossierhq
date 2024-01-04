@@ -5,7 +5,7 @@ import type {
   EntityReference,
 } from '@dossierhq/core';
 import {
-  Button,
+  Button2,
   Column,
   Delete,
   Dialog2,
@@ -171,12 +171,12 @@ function AddEntityButton({
 
   return (
     <Dialog2.Trigger isOpen={showSelector} onOpenChange={setShowSelector}>
-      <Button
+      <Button2
         className={toFlexItemClassName({ alignSelf: 'flex-start' })}
         onClick={handleSelectClick}
       >
         Select entity
-      </Button>
+      </Button2>
       {showSelector ? (
         <AdminEntitySelectorDialog
           title="Select entity"

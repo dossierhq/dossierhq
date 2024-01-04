@@ -1,4 +1,4 @@
-import { Button, Dialog2, Row, Tag, Text } from '@dossierhq/design';
+import { Button2, Dialog2, Row, Tag, Text } from '@dossierhq/design';
 import { useContext, useState } from 'react';
 import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';
 import { EntityChangelogList } from '../../components/EntityChangelogList/EntityChangelogList.js';
@@ -44,7 +44,7 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
           <AdminEntityLinks entityReference={{ id: entity.id }} />
           {entity.info.version > 1 ? (
             <Dialog2.Trigger isOpen={historyIsOpen} onOpenChange={setHistoryIsOpen}>
-              <Button onClick={() => setHistoryIsOpen(true)}>Entity history</Button>
+              <Button2 onClick={() => setHistoryIsOpen(true)}>Entity history</Button2>
               <AdminEntityHistoryDialog reference={{ id: entity.id }} />
             </Dialog2.Trigger>
           ) : null}

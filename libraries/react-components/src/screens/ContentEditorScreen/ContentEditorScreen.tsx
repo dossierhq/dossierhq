@@ -1,7 +1,7 @@
 'use client';
 import type { AdminEntity } from '@dossierhq/core';
 import {
-  Button,
+  Button2,
   Dialog2,
   EmptyStateMessage,
   FullscreenContainer,
@@ -117,9 +117,9 @@ export function ContentEditorScreen({
             >
               <Row gap={2}>
                 <Dialog2.Trigger isOpen={showEntitySelector} onOpenChange={setShowEntitySelector}>
-                  <Button iconLeft="search" onClick={handleShowEntitySelector}>
+                  <Button2 iconLeft="search" onClick={handleShowEntitySelector}>
                     Open
-                  </Button>
+                  </Button2>
                   <AdminEntitySelectorDialog
                     title="Select entity"
                     onItemClick={handleOpenEntityClick}

@@ -1,6 +1,7 @@
 export { Badge } from './components/Badge/Badge.js';
 export { BeforeUnload } from './components/BeforeUnload/BeforeUnload.js';
 export { Button } from './components/Button/Button.js';
+export { Button2 } from './components/Button2/Button2.js';
 export { ButtonDropdown } from './components/ButtonDropdown/ButtonDropdown.js';
 export { Card } from './components/Card/Card.js';
 export { Card2 } from './components/Card2/Card2.js';

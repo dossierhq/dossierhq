@@ -1,5 +1,5 @@
 import type { Location, LocationFieldSpecification, PublishedEntity } from '@dossierhq/core';
-import { Button, Dialog2 } from '@dossierhq/design';
+import { Button2, Dialog2 } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
@@ -22,9 +22,9 @@ export function LocationFieldDisplay({ value }: Props) {
 
   return value ? (
     <Dialog2.Trigger isOpen={showSelector} onOpenChange={setShowSelector}>
-      <Button onClick={handleShowSelector} iconLeft="location">
+      <Button2 onClick={handleShowSelector} iconLeft="location">
         {value.lat}, {value.lng}
-      </Button>
+      </Button2>
       <PublishedLocationDisplayDialog
         title="Location"
         value={value}

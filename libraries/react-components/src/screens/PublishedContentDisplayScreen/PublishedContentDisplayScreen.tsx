@@ -1,7 +1,7 @@
 'use client';
 import type { PublishedEntity } from '@dossierhq/core';
 import {
-  Button,
+  Button2,
   Dialog2,
   EmptyStateMessage,
   findAscendantHTMLElement,
@@ -100,13 +100,13 @@ export function PublishedContentDisplayScreen({
               scrollToIdSignal={activeEntityMenuScrollSignal}
             >
               <Dialog2.Trigger isOpen={showEntitySelector} onOpenChange={setShowEntitySelector}>
-                <Button
+                <Button2
                   className={toFlexItemClassName({ alignSelf: 'flex-start' })}
                   iconLeft="search"
                   onClick={handleShowEntitySelector}
                 >
                   Open
-                </Button>
+                </Button2>
                 <PublishedEntitySelectorDialog
                   title="Select entity"
                   onItemClick={handleOpenEntityClick}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import { Button } from '../Button/Button.js';
+import { Button2 } from '../Button2/Button2.js';
 import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
 import { Card } from '../Card/Card.js';
 import { FullscreenContainer } from '../FullscreenContainer/FullscreenContainer.js';
@@ -36,10 +36,10 @@ function Wrapper({ children, ...args }: StoryProps) {
           height: '100vh',
         }}
       >
-        <Button>Unrelated button</Button>
+        <Button2>Unrelated button</Button2>
 
         <Dialog2.Trigger isOpen={isOpen} onOpenChange={setIsOpen}>
-          <Button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Hide' : 'Show'}</Button>
+          <Button2 onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Hide' : 'Show'}</Button2>
           <Dialog2 {...args}>{children}</Dialog2>
         </Dialog2.Trigger>
 

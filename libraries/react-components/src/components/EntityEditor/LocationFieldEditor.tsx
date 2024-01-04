@@ -1,6 +1,6 @@
 import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
 import {
-  Button,
+  Button2,
   Delete,
   Dialog2,
   HoverRevealContainer,
@@ -40,9 +40,9 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
             </HoverRevealContainer.Item>
           ) : null}
           <HoverRevealContainer.Item forceVisible flexGrow={1}>
-            <Button onClick={handleShowSelector} iconLeft="location">
+            <Button2 onClick={handleShowSelector} iconLeft="location">
               {value.lat}, {value.lng}
-            </Button>
+            </Button2>
           </HoverRevealContainer.Item>
           <HoverRevealContainer.Item>
             <Delete onClick={handleDeleteClick} />
@@ -51,14 +51,14 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
       ) : dragHandle ? (
         <Row gap={2}>
           {dragHandle}
-          <Button onClick={handleShowSelector} iconLeft="map">
+          <Button2 onClick={handleShowSelector} iconLeft="map">
             Select location
-          </Button>
+          </Button2>
         </Row>
       ) : (
-        <Button onClick={handleShowSelector} iconLeft="map">
+        <Button2 onClick={handleShowSelector} iconLeft="map">
           Select location
-        </Button>
+        </Button2>
       )}
       {validationIssues.map((error, index) => (
         <Text key={index} textStyle="body2" marginTop={1} color="danger">
@@ -81,11 +81,11 @@ export function AddLocationListItemButton({
   onAddItem: (value: Location | null) => void;
 }) {
   return (
-    <Button
+    <Button2
       className={toFlexItemClassName({ alignSelf: 'flex-start' })}
       onClick={() => onAddItem(null)}
     >
       Add
-    </Button>
+    </Button2>
   );
 }
