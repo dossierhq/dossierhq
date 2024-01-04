@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Add Button2",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}
