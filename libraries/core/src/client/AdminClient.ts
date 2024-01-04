@@ -1071,7 +1071,7 @@ export async function executeAdminClientOperationFromJson(
       return await adminClient.upsertEntity(entity, options);
     }
     default: {
-      const _never: never = name; // ensure exhaustiveness
+      name satisfies never;
       return notOk.BadRequest(`Unknown operation ${operationName}`);
     }
   }

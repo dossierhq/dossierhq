@@ -464,7 +464,7 @@ export async function executePublishedClientOperationFromJson(
       return await publishedClient.getSchemaSpecification();
     }
     default: {
-      const _never: never = name; // ensure exhaustiveness
+      name satisfies never;
       return notOk.BadRequest(`Unknown operation ${operationName}`);
     }
   }
