@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Support running advisory test without server",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
