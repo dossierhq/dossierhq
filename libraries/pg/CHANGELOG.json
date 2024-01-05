@@ -2,6 +2,12 @@
   "name": "@dossierhq/pg",
   "entries": [
     {
+      "version": "0.5.7",
+      "tag": "@dossierhq/pg_v0.5.7",
+      "date": "Fri, 05 Jan 2024 09:39:57 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.5.6",
       "tag": "@dossierhq/pg_v0.5.6",
       "date": "Thu, 04 Jan 2024 15:15:30 GMT",

@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/postgres-tools
 
-This log was last generated on Thu, 04 Jan 2024 15:15:30 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Jan 2024 09:39:57 GMT and should not be manually modified.
+
+## 0.5.7
+Fri, 05 Jan 2024 09:39:57 GMT
+
+_Version update only_
 
 ## 0.5.6
 Thu, 04 Jan 2024 15:15:30 GMT
