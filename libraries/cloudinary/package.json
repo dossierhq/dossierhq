@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/cloudinary",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "A field editor Dossier for Cloudinary images.",
   "keywords": [
     "dossier",
