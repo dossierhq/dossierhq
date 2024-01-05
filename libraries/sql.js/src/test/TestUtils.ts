@@ -2,7 +2,6 @@ import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
 import type { TestSuite } from '@dossierhq/integration-test';
 import * as base64 from 'base-64';
-import { randomUUID } from 'node:crypto';
 import * as SqlJs from 'sql.js';
 import { describe, test } from 'vitest';
 import type { SqlJsDatabaseAdapter } from '../SqlJsAdapter.js';
@@ -22,22 +21,12 @@ export async function createSqlJsTestAdapter(): PromiseResult<
 }
 
 export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {
-  polyfillCrypto();
   polyfillAtoBToA();
   describe(testSuiteName, () => {
     for (const [testName, testFunction] of Object.entries(testSuite)) {
       test(testName, testFunction);
     }
   });
-}
-
-function polyfillCrypto() {
-  // This package is meant to be run in a browser, polyfill crypto for Node
-  if (!globalThis.crypto) {
-    globalThis.crypto = {
-      randomUUID,
-    } as Crypto;
-  }
 }
 
 function polyfillAtoBToA() {

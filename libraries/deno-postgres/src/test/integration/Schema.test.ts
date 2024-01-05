@@ -1,4 +1,7 @@
-import { createSchemaTestSuite } from "@dossierhq/integration-test";
+import {
+  createSchemaTestSuite,
+  createSharedClientProvider,
+} from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
   initializeIntegrationTestServer,
@@ -8,9 +11,14 @@ import {
 registerTestSuite(
   createSchemaTestSuite({
     before: async () => {
-      const serverInit = (await initializeIntegrationTestServer())
-        .valueOrThrow();
-      return [serverInit, serverInit];
+      const serverInit = (
+        await initializeIntegrationTestServer()
+      ).valueOrThrow();
+      const { server } = serverInit;
+      return [
+        { server, clientProvider: createSharedClientProvider(server) },
+        serverInit,
+      ];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();

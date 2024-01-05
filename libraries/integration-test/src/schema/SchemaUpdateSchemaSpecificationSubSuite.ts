@@ -37,10 +37,6 @@ import {
   collectMatchingSearchResultNodes,
   countSearchResultWithEntity,
 } from '../shared-entity/SearchTestUtils.js';
-import {
-  adminClientForMainPrincipal,
-  publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
@@ -87,9 +83,9 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
 ];
 
 async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     const schemaSpec = (
@@ -118,9 +114,9 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
 }
 
 async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     const schemaSpec = (
@@ -151,9 +147,9 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
 }
 
 async function updateSchemaSpecification_removeAllTemporaryComponentTypes({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
     const schemaSpec = (
@@ -179,8 +175,8 @@ async function updateSchemaSpecification_removeAllTemporaryComponentTypes({
   assertOkResult(result);
 }
 
-async function updateSchemaSpecification_updateSchemaEvent({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function updateSchemaSpecification_updateSchemaEvent({ clientProvider }: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
 
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
@@ -207,8 +203,8 @@ async function updateSchemaSpecification_updateSchemaEvent({ server }: SchemaTes
   assertEquals(eventsWithVersion.length, 1);
 }
 
-async function updateSchemaSpecification_concurrentUpdates({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function updateSchemaSpecification_concurrentUpdates({ clientProvider }: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
   const fieldName1 = `field${new Date().getTime()}`;
   const fieldName2 = `${fieldName1}2`;
 
@@ -260,9 +256,10 @@ async function updateSchemaSpecification_concurrentUpdates({ server }: SchemaTes
 
 async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
     text: 'splendid presentation',
@@ -335,9 +332,10 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
 
 async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEntityInvalid({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   // Lock since the version needs to be consecutive
   const result = await withSchemaAdvisoryLock(adminClient, async () => {
@@ -389,9 +387,10 @@ async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEnt
 
 async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
     entityTypes: ['Components'],
@@ -458,9 +457,10 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
 
 async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -543,9 +543,10 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
 
 async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
@@ -614,9 +615,11 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
   assertEquals(countAfterSchemaUpdate, 0);
 }
 
-async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_deleteFieldOnEntity({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -679,10 +682,10 @@ async function updateSchemaSpecification_deleteFieldOnEntity({ server }: SchemaT
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -748,8 +751,9 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
 
 async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -823,8 +827,9 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
 
 async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
 
   const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
@@ -890,10 +895,11 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
 
 async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenWhenInvalid({
   server,
+  clientProvider,
 }: SchemaTestContext) {
   // The reason why we test this is that we want to ensure that we update indexes even when an entity
   // becomes invalid.
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const fieldToDeleteName = `field${new Date().getTime()}Delete`;
   const fieldToBecomeInvalidName = `field${new Date().getTime()}Invalid`;
 
@@ -980,9 +986,11 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
   assertEquals(countAfterSchemaUpdate, 0);
 }
 
-async function updateSchemaSpecification_deleteFieldOnComponent({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_deleteFieldOnComponent({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -1056,8 +1064,9 @@ async function updateSchemaSpecification_deleteFieldOnComponent({ server }: Sche
 
 async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
 
   const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
@@ -1125,9 +1134,11 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
   assertEquals(countAfterSchemaUpdate, 0);
 }
 
-async function updateSchemaSpecification_renameFieldOnEntity({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_renameFieldOnEntity({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldFieldName = `field${new Date().getTime()}`;
   const newFieldName = `${oldFieldName}New`;
 
@@ -1207,10 +1218,10 @@ async function updateSchemaSpecification_renameFieldOnEntity({ server }: SchemaT
 }
 
 async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldFieldName = `field${new Date().getTime()}`;
   const newFieldName = `${oldFieldName}New`;
 
@@ -1288,9 +1299,11 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
   assertEquals(updatedEntity.fields[newFieldName], 'updated value');
 }
 
-async function updateSchemaSpecification_renameFieldOnComponent({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_renameFieldOnComponent({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldFieldName = `field${new Date().getTime()}`;
   const newFieldName = `${oldFieldName}New`;
 
@@ -1379,8 +1392,10 @@ async function updateSchemaSpecification_renameFieldOnComponent({ server }: Sche
   );
 }
 
-async function updateSchemaSpecification_deleteTypeOnEntityType({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function updateSchemaSpecification_deleteTypeOnEntityType({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
   const typeName = `MigrationEntity${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -1408,9 +1423,11 @@ async function updateSchemaSpecification_deleteTypeOnEntityType({ server }: Sche
   assertEquals(entityType, undefined);
 }
 
-async function updateSchemaSpecification_deleteTypeOnComponent({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_deleteTypeOnComponent({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -1468,10 +1485,10 @@ async function updateSchemaSpecification_deleteTypeOnComponent({ server }: Schem
 }
 
 async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnotherType({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -1539,8 +1556,9 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
 
 async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
@@ -1615,8 +1633,9 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
 
 async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
   server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
@@ -1680,9 +1699,9 @@ async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
   assertEquals(countAfterSchemaUpdate, 0);
 }
 
-async function updateSchemaSpecification_renameTypeOnEntity({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
@@ -1778,10 +1797,10 @@ async function updateSchemaSpecification_renameTypeOnEntity({ server }: SchemaTe
 }
 
 async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
@@ -1863,9 +1882,11 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
   );
 }
 
-async function updateSchemaSpecification_renameTypeOnComponent({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function updateSchemaSpecification_renameTypeOnComponent({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
@@ -1931,10 +1952,10 @@ async function updateSchemaSpecification_renameTypeOnComponent({ server }: Schem
 }
 
 async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnotherType({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
@@ -2015,10 +2036,10 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
 }
 
 async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTypeIndexes({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
@@ -2093,10 +2114,10 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
 }
 
 async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
   const oldFieldName = 'oldField';
@@ -2165,10 +2186,10 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
 }
 
 async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
   const oldFieldName = 'oldField';
@@ -2237,10 +2258,10 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
 }
 
 async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
   const oldFieldName = 'oldField';
@@ -2316,10 +2337,10 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
 }
 
 async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
   const oldFieldName = 'oldField';
@@ -2394,8 +2415,11 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   assertOkResult(updateResult);
 }
 
-async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function updateSchemaSpecification_addingIndexToField({
+  server,
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
   const indexName = fieldName;
 
@@ -2473,9 +2497,9 @@ async function updateSchemaSpecification_addingIndexToField({ server }: SchemaTe
 }
 
 async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
   const indexName = fieldName as AppAdminUniqueIndexes;
   const uniqueValue = 'unique value';
@@ -2522,9 +2546,9 @@ async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
 }
 
 async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
   const oldIndexName = fieldName as AppAdminUniqueIndexes;
   const newIndexName = `${fieldName}New` as AppAdminUniqueIndexes;
@@ -2573,11 +2597,11 @@ async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
   assertEquals(entity.id, reference.id);
 }
 
-async function updateSchemaSpecification_errorWrongVersion({ server }: SchemaTestContext) {
-  const client = adminClientForMainPrincipal(server);
-  const schemaSpec = (await client.getSchemaSpecification()).valueOrThrow();
+async function updateSchemaSpecification_errorWrongVersion({ clientProvider }: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const schemaSpec = (await adminClient.getSchemaSpecification()).valueOrThrow();
   const version = schemaSpec.version;
-  const result = await client.updateSchemaSpecification({ version });
+  const result = await adminClient.updateSchemaSpecification({ version });
   assertErrorResult(
     result,
     ErrorType.BadRequest,
@@ -2586,9 +2610,9 @@ async function updateSchemaSpecification_errorWrongVersion({ server }: SchemaTes
 }
 
 async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExistingEntities({
-  server,
+  clientProvider,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const typeName = `MigrationEntity${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive

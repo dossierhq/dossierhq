@@ -1,4 +1,4 @@
-import { createChangelogTestSuite } from '@dossierhq/integration-test';
+import { createAdminClientProvider, createChangelogTestSuite } from '@dossierhq/integration-test';
 import test from '@playwright/test';
 import { assertIsDefined, registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './SqlJsTestUtils.js';
@@ -22,7 +22,7 @@ registerTestSuite(
     before: () => {
       assertIsDefined(serverInit);
       const { server } = serverInit;
-      return Promise.resolve([{ server }, undefined]);
+      return Promise.resolve([{ clientProvider: createAdminClientProvider(server) }, undefined]);
     },
     after: async () => {
       //empty

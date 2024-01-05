@@ -4,7 +4,6 @@ import {
   createEntityWithInvalidComponent,
   createInvalidEntity,
 } from '../shared-entity/InvalidEntityUtils.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { SchemaTestContext } from './SchemaTestSuite.js';
 
 export const ServerProcessNextDirtyEntitySubSuite: UnboundTestFunction<SchemaTestContext>[] = [
@@ -27,9 +26,10 @@ async function serverProcessNextDirtyEntity_all({ server }: SchemaTestContext) {
 serverProcessNextDirtyEntity_all.timeout = 'long';
 
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity({
+  clientProvider,
   server,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
 
   const { entity, validations } = (
     await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
@@ -47,9 +47,10 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity
 }
 
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublishedEntity({
+  clientProvider,
   server,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
 
   const { entity, validations } = (
     await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
@@ -67,9 +68,10 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublis
 }
 
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidComponent({
+  clientProvider,
   server,
 }: SchemaTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
 
   const { entity, validations } = (
     await createEntityWithInvalidComponent(server, adminClient)

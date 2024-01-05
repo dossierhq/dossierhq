@@ -1,11 +1,9 @@
-import type { Server } from '@dossierhq/server';
 import { assertSame } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';
-import type { TestFunctionInitializer, TestSuite } from '../index.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
+import type { AdminClientProvider, TestFunctionInitializer, TestSuite } from '../index.js';
 
 interface ChangelogTestContext {
-  server: Server;
+  clientProvider: AdminClientProvider;
 }
 
 export function createChangelogTestSuite<TCleanup>(
@@ -14,8 +12,10 @@ export function createChangelogTestSuite<TCleanup>(
   return buildSuite(initializer, getChangelogEventsTotalCount_resultIsNumber);
 }
 
-async function getChangelogEventsTotalCount_resultIsNumber({ server }: ChangelogTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getChangelogEventsTotalCount_resultIsNumber({
+  clientProvider,
+}: ChangelogTestContext) {
+  const adminClient = clientProvider.adminClient();
   const result = await adminClient.getChangelogEventsTotalCount();
   const count = result.valueOrThrow();
   assertSame(typeof count, 'number');

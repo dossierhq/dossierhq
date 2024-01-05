@@ -1,4 +1,4 @@
-import { createSchemaTestSuite } from '@dossierhq/integration-test';
+import { createSchemaTestSuite, createSharedClientProvider } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import type { ServerInit } from '../../LibSqlTestUtils.js';
 import { initializeServer } from '../../LibSqlTestUtils.js';
@@ -29,7 +29,11 @@ registerTestSuite(
   createSchemaTestSuite({
     before: () => {
       assert(serverInit);
-      return Promise.resolve([serverInit, undefined]);
+      const { server } = serverInit;
+      return Promise.resolve([
+        { server, clientProvider: createSharedClientProvider(server) },
+        undefined,
+      ]);
     },
     after: async () => {
       //empty

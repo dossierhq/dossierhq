@@ -1,4 +1,4 @@
-import { createSchemaTestSuite } from '@dossierhq/integration-test';
+import { createSchemaTestSuite, createSharedClientProvider } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
 import assert from 'node:assert';
 import type { ServerInit } from '../TestUtils.js';
@@ -23,7 +23,11 @@ registerTestSuite(
   createSchemaTestSuite({
     before: () => {
       assert(serverInit);
-      return Promise.resolve([serverInit, undefined]);
+      const { server } = serverInit;
+      return Promise.resolve([
+        { server, clientProvider: createSharedClientProvider(server) },
+        undefined,
+      ]);
     },
     after: async () => {
       //empty

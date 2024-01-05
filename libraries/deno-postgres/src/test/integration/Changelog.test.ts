@@ -1,4 +1,7 @@
-import { createChangelogTestSuite } from "@dossierhq/integration-test";
+import {
+  createAdminClientProvider,
+  createChangelogTestSuite,
+} from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
   initializeIntegrationTestServer,
@@ -11,7 +14,10 @@ registerTestSuite(
       const { server } = (
         await initializeIntegrationTestServer()
       ).valueOrThrow();
-      return [{ server }, { server }];
+      return [
+        { clientProvider: createAdminClientProvider(server) },
+        { server },
+      ];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();
