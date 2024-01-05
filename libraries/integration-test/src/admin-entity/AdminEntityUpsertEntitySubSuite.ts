@@ -11,7 +11,6 @@ import {
   TITLE_ONLY_CREATE,
   TITLE_ONLY_UPSERT,
 } from '../shared-entity/Fixtures.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -24,8 +23,8 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   upsertEntity_errorUpdateNoAuthKey,
 ];
 
-async function upsertEntity_minimalCreate({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const upsertResult = await client.upsertEntity<AdminTitleOnly>(
     copyEntity(TITLE_ONLY_UPSERT, { id }),
@@ -57,8 +56,8 @@ async function upsertEntity_minimalCreate({ server }: AdminEntityTestContext) {
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function upsertEntity_minimalUpdate({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function upsertEntity_minimalUpdate({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -89,8 +88,8 @@ async function upsertEntity_minimalUpdate({ server }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function upsertEntity_updateWithoutChange({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function upsertEntity_updateWithoutChange({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const { entity } = createResult.value;
@@ -107,8 +106,10 @@ async function upsertEntity_updateWithoutChange({ server }: AdminEntityTestConte
   assertResultValue(getResult, entity);
 }
 
-async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function upsertEntity_updateAndPublishWithSubjectAuthKey({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
@@ -147,9 +148,9 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({ server }: Admin
 }
 
 async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const upsertResult = await client.upsertEntity(
     copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: 'none' } }),
@@ -164,8 +165,10 @@ async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
-async function upsertEntity_errorUpdateTryingToChangeAuthKey({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function upsertEntity_errorUpdateTryingToChangeAuthKey({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -189,8 +192,8 @@ async function upsertEntity_errorUpdateTryingToChangeAuthKey({ server }: AdminEn
   assertResultValue(getResult, createResult.value.entity);
 }
 
-async function upsertEntity_errorUpdateNoAuthKey({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function upsertEntity_errorUpdateNoAuthKey({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const result = await client.upsertEntity({
     id,

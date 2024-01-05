@@ -2,6 +2,7 @@ import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
 import assert from 'node:assert';
@@ -35,6 +36,7 @@ registerTestSuite(
         {
           server: serverInit.server,
           adminSchema: serverInit.adminSchema,
+          clientProvider: createSharedClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
         undefined,

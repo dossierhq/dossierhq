@@ -17,7 +17,6 @@ import {
   assertSampledEntitiesArePartOfExpected,
   countEntityStatuses,
 } from '../shared-entity/SampleTestUtils.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const GetEntitiesSampleSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -48,11 +47,11 @@ export const GetEntitiesSampleSubSuite: UnboundTestFunction<AdminEntityTestConte
 ];
 
 async function getEntitiesSample_minimal({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
   });
   assertOkResult(result);
@@ -62,8 +61,8 @@ async function getEntitiesSample_minimal({
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
-async function getEntitiesSample_statusDraft({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusDraft({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.draft],
   });
@@ -81,8 +80,8 @@ async function getEntitiesSample_statusDraft({ server }: AdminEntityTestContext)
   });
 }
 
-async function getEntitiesSample_statusPublished({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusPublished({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.published],
   });
@@ -100,8 +99,8 @@ async function getEntitiesSample_statusPublished({ server }: AdminEntityTestCont
   });
 }
 
-async function getEntitiesSample_statusModified({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusModified({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.modified],
   });
@@ -119,8 +118,8 @@ async function getEntitiesSample_statusModified({ server }: AdminEntityTestConte
   });
 }
 
-async function getEntitiesSample_statusWithdrawn({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusWithdrawn({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.withdrawn],
   });
@@ -138,8 +137,8 @@ async function getEntitiesSample_statusWithdrawn({ server }: AdminEntityTestCont
   });
 }
 
-async function getEntitiesSample_statusArchived({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusArchived({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.archived],
   });
@@ -157,8 +156,8 @@ async function getEntitiesSample_statusArchived({ server }: AdminEntityTestConte
   });
 }
 
-async function getEntitiesSample_statusDraftArchived({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusDraftArchived({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
   });
@@ -178,8 +177,10 @@ async function getEntitiesSample_statusDraftArchived({ server }: AdminEntityTest
   });
 }
 
-async function getEntitiesSample_statusModifiedPublished({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusModifiedPublished({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [AdminEntityStatus.modified, AdminEntityStatus.published],
   });
@@ -199,8 +200,8 @@ async function getEntitiesSample_statusModifiedPublished({ server }: AdminEntity
   });
 }
 
-async function getEntitiesSample_statusAll({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+async function getEntitiesSample_statusAll({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [
       AdminEntityStatus.draft,
@@ -226,8 +227,8 @@ async function getEntitiesSample_statusAll({ server }: AdminEntityTestContext) {
   assertTruthy(withdrawn > 0);
 }
 
-async function getEntitiesSample_linksToOneReference({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_linksToOneReference({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
@@ -246,8 +247,8 @@ async function getEntitiesSample_linksToOneReference({ server }: AdminEntityTest
   assertSampledEntities(sampleResult, 123, [referenceResult.value.entity]);
 }
 
-async function getEntitiesSample_linksToNoReferences({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_linksToNoReferences({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
@@ -262,9 +263,9 @@ async function getEntitiesSample_linksToNoReferences({ server }: AdminEntityTest
 }
 
 async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
@@ -285,8 +286,8 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
   assertSampledEntities(sampleResult, 789, [referenceResult.value.entity]);
 }
 
-async function getEntitiesSample_linksFromOneReference({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_linksFromOneReference({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const { entity: titleEntity } = titleOnlyResult.value;
@@ -306,8 +307,8 @@ async function getEntitiesSample_linksFromOneReference({ server }: AdminEntityTe
   assertSampledEntities(sampleResult, 123, [titleEntity]);
 }
 
-async function getEntitiesSample_linksFromNoReferences({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_linksFromNoReferences({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
   assertOkResult(referenceResult);
   const {
@@ -319,9 +320,9 @@ async function getEntitiesSample_linksFromNoReferences({ server }: AdminEntityTe
 }
 
 async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
@@ -343,8 +344,8 @@ async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
   assertSampledEntities(sampleResult, 789, [titleOnlyEntity]);
 }
 
-async function getEntitiesSample_boundingBoxOneInside({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_boundingBoxOneInside({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const boundingBox = randomBoundingBox();
 
   const center = boundingBoxCenter(boundingBox);
@@ -373,9 +374,9 @@ async function getEntitiesSample_boundingBoxOneInside({ server }: AdminEntityTes
 }
 
 async function getEntitiesSample_boundingBoxOneEntityTwoLocationsInside({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
   const inside = boundingBoxBelowCenter(boundingBox);
@@ -402,8 +403,8 @@ async function getEntitiesSample_boundingBoxOneEntityTwoLocationsInside({
   assertSampledEntities(sampleResult, 321, [{ id }]);
 }
 
-async function getEntitiesSample_boundingBoxOneOutside({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_boundingBoxOneOutside({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const boundingBox = randomBoundingBox();
   const outside = {
     lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
@@ -436,9 +437,9 @@ async function getEntitiesSample_boundingBoxOneOutside({ server }: AdminEntityTe
 }
 
 async function getEntitiesSample_boundingBoxWrappingMaxMinLongitude({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
   const center = boundingBoxCenter(boundingBox);
   const createResult = await adminClient.createEntity(
@@ -463,19 +464,21 @@ async function getEntitiesSample_boundingBoxWrappingMaxMinLongitude({
 }
 
 async function getEntitiesSample_authKeySubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
-async function getEntitiesSample_textIncludedAfterCreation({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_textIncludedAfterCreation({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       fields: { title: 'this is a serious title with the best storytelling' },
@@ -499,8 +502,10 @@ async function getEntitiesSample_textIncludedAfterCreation({ server }: AdminEnti
   assertSampledEntities(sampleResult, 111, [titleOnlyEntity]);
 }
 
-async function getEntitiesSample_textIncludedAfterUpdate({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_textIncludedAfterUpdate({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -540,8 +545,10 @@ async function getEntitiesSample_textIncludedAfterUpdate({ server }: AdminEntity
   );
 }
 
-async function getEntitiesSample_textExcludedAfterUpdate({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntitiesSample_textExcludedAfterUpdate({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's eating? It is the bear" } }),
   );
@@ -584,14 +591,14 @@ async function getEntitiesSample_textExcludedAfterUpdate({ server }: AdminEntity
 }
 
 async function getEntitiesSample_authKeyNoneAndSubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities([
     'none',
     'subject',
   ]);
-  const result = await adminClientForMainPrincipal(server).getEntitiesSample({
+  const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });

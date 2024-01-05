@@ -4,11 +4,11 @@ import {
   EventType,
   copyEntity,
   createRichText,
+  createRichTextComponentNode,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
 } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -52,10 +52,6 @@ import {
   TITLE_ONLY_CREATE,
   adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
-import {
-  adminClientForMainPrincipal,
-  publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -94,8 +90,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_errorPublishWithoutRequiredTitle,
 ];
 
-async function createEntity_minimal({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_minimal({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   const {
     entity: {
@@ -124,8 +120,8 @@ async function createEntity_minimal({ server }: AdminEntityTestContext) {
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withId({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withId({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity<AdminTitleOnly>(
     copyEntity(TITLE_ONLY_CREATE, { id }),
@@ -157,8 +153,8 @@ async function createEntity_withId({ server }: AdminEntityTestContext) {
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_duplicateName({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_duplicateName({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const firstResult = await client.createEntity(TITLE_ONLY_CREATE);
   const secondResult = await client.createEntity(TITLE_ONLY_CREATE);
 
@@ -180,8 +176,10 @@ async function createEntity_duplicateName({ server }: AdminEntityTestContext) {
   assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
 }
 
-async function createEntity_canUsePublishedNameOfOtherEntity({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function createEntity_canUsePublishedNameOfOtherEntity({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   // Create/published first entity
   const {
@@ -208,8 +206,8 @@ async function createEntity_canUsePublishedNameOfOtherEntity({ server }: AdminEn
   assertSame(firstName, secondName);
 }
 
-async function createEntity_fiveInParallelWithSameName({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_fiveInParallelWithSameName({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const results = await Promise.all(
     [1, 2, 3, 4, 5].map((num) =>
       client.createEntity(copyEntity(TITLE_ONLY_CREATE, { fields: { title: `Title ${num}` } })),
@@ -220,8 +218,8 @@ async function createEntity_fiveInParallelWithSameName({ server }: AdminEntityTe
   }
 }
 
-async function createEntity_publishMinimal({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_publishMinimal({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,
   });
@@ -254,8 +252,8 @@ async function createEntity_publishMinimal({ server }: AdminEntityTestContext) {
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_publishWithSubjectAuthKey({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminTitleOnly>(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true },
@@ -293,10 +291,10 @@ async function createEntity_publishWithSubjectAuthKey({ server }: AdminEntityTes
 
 async function createEntity_publishWithUniqueIndexValue({
   adminSchema,
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity<AdminStrings>(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
@@ -309,9 +307,11 @@ async function createEntity_publishWithUniqueIndexValue({
   assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
 }
 
-async function createEntity_publishConflictingPublishedName({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function createEntity_publishConflictingPublishedName({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   // Create/published first entity
   const {
@@ -348,8 +348,8 @@ async function createEntity_publishConflictingPublishedName({ server }: AdminEnt
   assertSame(secondPublishedName, secondName);
 }
 
-async function createEntity_createEntityEvent({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_createEntityEvent({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
   const {
     entity: {
@@ -372,8 +372,10 @@ async function createEntity_createEntityEvent({ server }: AdminEntityTestContext
   ]);
 }
 
-async function createEntity_createAndPublishEntityEvent({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_createAndPublishEntityEvent({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,
   });
@@ -398,8 +400,8 @@ async function createEntity_createAndPublishEntityEvent({ server }: AdminEntityT
   ]);
 }
 
-async function createEntity_withAuthKeyMatchingPattern({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withAuthKeyMatchingPattern({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminSubjectOnly>(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -429,8 +431,8 @@ async function createEntity_withAuthKeyMatchingPattern({ server }: AdminEntityTe
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withMultilineField({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withMultilineField({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminStrings>(
     copyEntity(STRINGS_CREATE, { fields: { multiline: 'one\ntwo\nthree' } }),
   );
@@ -459,8 +461,8 @@ async function createEntity_withMultilineField({ server }: AdminEntityTestContex
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withMatchingPattern({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withMatchingPattern({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminStrings>(
     copyEntity(STRINGS_CREATE, { fields: { pattern: 'foo', patternList: ['foo', 'bar', 'baz'] } }),
   );
@@ -489,8 +491,8 @@ async function createEntity_withMatchingPattern({ server }: AdminEntityTestConte
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withMatchingValue({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withMatchingValue({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminStrings>(
     copyEntity(STRINGS_CREATE, { fields: { values: 'foo', valuesList: ['foo', 'bar', 'baz'] } }),
   );
@@ -519,8 +521,8 @@ async function createEntity_withMatchingValue({ server }: AdminEntityTestContext
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withUniqueIndexValue({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const unique = Math.random().toString();
   const createResult = await client.createEntity<AdminStrings>(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
@@ -550,9 +552,9 @@ async function createEntity_withUniqueIndexValue({ server }: AdminEntityTestCont
 }
 
 async function createEntity_withUniqueIndexValueSameValueInTwoIndexes({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const unique = Math.random().toString();
 
   (
@@ -589,11 +591,11 @@ async function createEntity_withUniqueIndexValueSameValueInTwoIndexes({
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withRichTextField({ server }: AdminEntityTestContext) {
+async function createEntity_withRichTextField({ clientProvider }: AdminEntityTestContext) {
   const richText = createRichText([
     createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
   ]);
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminRichTexts>(
     copyEntity(RICH_TEXTS_CREATE, { fields: { richText } }),
   );
@@ -622,14 +624,14 @@ async function createEntity_withRichTextField({ server }: AdminEntityTestContext
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withRichTextListField({ server }: AdminEntityTestContext) {
+async function createEntity_withRichTextListField({ clientProvider }: AdminEntityTestContext) {
   const richText1 = createRichText([
     createRichTextParagraphNode([createRichTextTextNode('Hello world 1')]),
   ]);
   const richText2 = createRichText([
     createRichTextParagraphNode([createRichTextTextNode('Hello world 2')]),
   ]);
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminRichTexts>(
     copyEntity(RICH_TEXTS_CREATE, { fields: { richTextList: [richText1, richText2] } }),
   );
@@ -658,8 +660,10 @@ async function createEntity_withRichTextListField({ server }: AdminEntityTestCon
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withRichTextFieldWithReference({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withRichTextFieldWithReference({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
 
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnlyResult);
@@ -697,8 +701,10 @@ async function createEntity_withRichTextFieldWithReference({ server }: AdminEnti
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withRichTextFieldWithLinkReference({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withRichTextFieldWithLinkReference({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
 
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnlyResult);
@@ -737,8 +743,10 @@ async function createEntity_withRichTextFieldWithLinkReference({ server }: Admin
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withRichTextFieldWithComponent({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withRichTextFieldWithComponent({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
 
   const createTitleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnlyResult);
@@ -779,8 +787,8 @@ async function createEntity_withRichTextFieldWithComponent({ server }: AdminEnti
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withTwoReferences({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withTwoReferences({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createTitleOnly1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const createTitleOnly2Result = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createTitleOnly1Result);
@@ -830,8 +838,8 @@ async function createEntity_withTwoReferences({ server }: AdminEntityTestContext
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_withMultipleLocations({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_withMultipleLocations({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminLocations>(
     copyEntity(LOCATIONS_CREATE, {
       fields: {
@@ -879,8 +887,10 @@ async function createEntity_withMultipleLocations({ server }: AdminEntityTestCon
   assertEquals(getResult.value, expectedEntity);
 }
 
-async function createEntity_errorAuthKeyNotMatchingPattern({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_errorAuthKeyNotMatchingPattern({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: 'none' } }),
@@ -895,8 +905,10 @@ async function createEntity_errorAuthKeyNotMatchingPattern({ server }: AdminEnti
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
-async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_errorMultilineStringInTitle({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Hello\nWorld\n' } }),
@@ -911,8 +923,10 @@ async function createEntity_errorMultilineStringInTitle({ server }: AdminEntityT
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
-async function createEntity_errorStringNotMatchingMatchPattern({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_errorStringNotMatchingMatchPattern({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { id, fields: { pattern: 'not matching' } }),
@@ -924,8 +938,10 @@ async function createEntity_errorStringNotMatchingMatchPattern({ server }: Admin
   );
 }
 
-async function createEntity_errorDuplicateUniqueIndexValue({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_errorDuplicateUniqueIndexValue({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const unique = Math.random().toString();
 
   const firstResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
@@ -942,9 +958,9 @@ async function createEntity_errorDuplicateUniqueIndexValue({ server }: AdminEnti
 }
 
 async function createEntity_errorStringListNotMatchingMatchPattern({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { id, fields: { patternList: ['foo', 'not matching'] } }),
@@ -956,8 +972,10 @@ async function createEntity_errorStringListNotMatchingMatchPattern({
   );
 }
 
-async function createEntity_errorStringListNotMatchingValues({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_errorStringListNotMatchingValues({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { id, fields: { valuesList: ['foo', 'not matching' as 'bar'] } }),
@@ -970,9 +988,9 @@ async function createEntity_errorStringListNotMatchingValues({ server }: AdminEn
 }
 
 async function createEntity_errorRichTextWithUnsupportedEntityNode({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const referenceId = uuidv4();
   const createResult = await client.createEntity(
@@ -994,10 +1012,10 @@ async function createEntity_errorRichTextWithUnsupportedEntityNode({
 }
 
 async function createEntity_errorRichTextWithUnsupportedLinkEntityType({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const referenceId = readOnlyEntityRepository.getMainPrincipalAdminEntities()[0].id;
   const id = uuidv4();
   const createResult = await client.createEntity(
@@ -1020,8 +1038,10 @@ async function createEntity_errorRichTextWithUnsupportedLinkEntityType({
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
 }
 
-async function createEntity_errorPublishWithoutRequiredTitle({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function createEntity_errorPublishWithoutRequiredTitle({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: null } }),

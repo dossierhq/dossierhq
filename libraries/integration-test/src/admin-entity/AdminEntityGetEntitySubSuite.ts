@@ -11,10 +11,6 @@ import type { AdminTitleOnly, AppAdminUniqueIndexes } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
-import {
-  adminClientForMainPrincipal,
-  adminClientForSecondaryPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -30,8 +26,8 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
   getEntity_errorWrongAuthKey,
 ];
 
-async function getEntity_withSubjectAuthKey({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function getEntity_withSubjectAuthKey({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity<AdminTitleOnly>(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
@@ -46,8 +42,8 @@ async function getEntity_withSubjectAuthKey({ server }: AdminEntityTestContext) 
   assertEquals(getResult.value, createResult.value.entity);
 }
 
-async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntity_getLatestVersion({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -62,8 +58,8 @@ async function getEntity_getLatestVersion({ server }: AdminEntityTestContext) {
   assertResultValue(result, updateResult.value.entity);
 }
 
-async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntity_usingUniqueIndex({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
@@ -75,8 +71,8 @@ async function getEntity_usingUniqueIndex({ server }: AdminEntityTestContext) {
   assertResultValue(result, createResult.value.entity);
 }
 
-async function getEntity_getOldVersion({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntity_getOldVersion({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
   );
@@ -98,8 +94,8 @@ async function getEntity_getOldVersion({ server }: AdminEntityTestContext) {
   assertSame(isEntityNameAsRequested(result.value.info.name, 'Original name'), true);
 }
 
-async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntity_invalidEntity({ clientProvider, server }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const { entity } = (
     await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
@@ -110,8 +106,11 @@ async function getEntity_invalidEntity({ server }: AdminEntityTestContext) {
   assertSame(result.value.info.validPublished, null); // not published
 }
 
-async function getEntity_invalidPublishedEntity({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntity_invalidPublishedEntity({
+  clientProvider,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const { entity } = (
     await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
@@ -122,14 +121,14 @@ async function getEntity_invalidPublishedEntity({ server }: AdminEntityTestConte
   assertSame(result.value.info.validPublished, false);
 }
 
-async function getEntity_errorInvalidId({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function getEntity_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const result = await client.getEntity({ id: '13e4c7da-616e-44a3-a039-24f96f9b17da' });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
-async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function getEntity_errorInvalidVersion({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
 
   assertOkResult(createResult);
@@ -144,8 +143,8 @@ async function getEntity_errorInvalidVersion({ server }: AdminEntityTestContext)
   assertErrorResult(resultPlusOne, ErrorType.NotFound, 'No such entity or version');
 }
 
-async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function getEntity_errorInvalidUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const result = await client.getEntity({
     index: 'unknown-index' as AppAdminUniqueIndexes,
     value: 'unknown-value',
@@ -153,8 +152,8 @@ async function getEntity_errorInvalidUniqueIndexValue({ server }: AdminEntityTes
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
-async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
-  const createResult = await adminClientForMainPrincipal(server).createEntity(
+async function getEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
+  const createResult = await clientProvider.adminClient().createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       info: { authKey: 'subject' },
     }),
@@ -165,6 +164,6 @@ async function getEntity_errorWrongAuthKey({ server }: AdminEntityTestContext) {
     entity: { id },
   } = createResult.value;
 
-  const getResult = await adminClientForSecondaryPrincipal(server).getEntity({ id });
+  const getResult = await clientProvider.adminClient('secondary').getEntity({ id });
   assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }

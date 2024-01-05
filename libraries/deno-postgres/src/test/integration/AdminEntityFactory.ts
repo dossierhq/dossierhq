@@ -1,6 +1,7 @@
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
@@ -14,13 +15,22 @@ export function registerAdminEntityTestSuite(suitePage: {
 }) {
   const testSuite = createAdminEntityTestSuite({
     before: async () => {
-      const { adminSchema, server } = (await initializeIntegrationTestServer())
-        .valueOrThrow();
+      const { adminSchema, server } = (
+        await initializeIntegrationTestServer()
+      ).valueOrThrow();
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(server)
       ).valueOrThrow();
 
-      return [{ adminSchema, server, readOnlyEntityRepository }, { server }];
+      return [
+        {
+          adminSchema,
+          clientProvider: createSharedClientProvider(server),
+          server,
+          readOnlyEntityRepository,
+        },
+        { server },
+      ];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();

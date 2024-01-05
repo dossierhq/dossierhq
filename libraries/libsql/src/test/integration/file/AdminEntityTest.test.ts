@@ -2,6 +2,7 @@ import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import type { ServerInit } from '../../LibSqlTestUtils.js';
@@ -36,6 +37,7 @@ registerTestSuite(
       return Promise.resolve([
         {
           server: serverInit.server,
+          clientProvider: createSharedClientProvider(serverInit.server),
           adminSchema: serverInit.adminSchema,
           readOnlyEntityRepository,
         },

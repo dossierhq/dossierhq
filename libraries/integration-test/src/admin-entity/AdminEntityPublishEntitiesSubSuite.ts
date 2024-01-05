@@ -19,10 +19,6 @@ import {
   VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
-import {
-  adminClientForMainPrincipal,
-  adminClientForSecondaryPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -45,8 +41,8 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_errorPublishAlreadyPublishedInvalidEntity,
 ];
 
-async function publishEntities_minimal({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_minimal({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
 
   const { entity } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
   const {
@@ -74,8 +70,8 @@ async function publishEntities_minimal({ server }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_authKeySubject({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_authKeySubject({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
@@ -107,8 +103,8 @@ async function publishEntities_authKeySubject({ server }: AdminEntityTestContext
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_oldVersion({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_oldVersion({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -138,8 +134,10 @@ async function publishEntities_oldVersion({ server }: AdminEntityTestContext) {
   assertResultValue(getResult, expectedEntity);
 }
 
-async function publishEntities_twoEntitiesReferencingEachOther({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_twoEntitiesReferencingEachOther({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const create1Result = await client.createEntity(REFERENCES_CREATE);
   assertOkResult(create1Result);
   const {
@@ -189,8 +187,10 @@ async function publishEntities_twoEntitiesReferencingEachOther({ server }: Admin
   assertResultValue(getResult, expected1Entity);
 }
 
-async function publishEntities_publishAlreadyPublishedEntity({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_publishAlreadyPublishedEntity({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
@@ -229,9 +229,9 @@ async function publishEntities_publishAlreadyPublishedEntity({ server }: AdminEn
 }
 
 async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const {
     entity: { id: draftId },
   } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
@@ -252,9 +252,9 @@ async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
 }
 
 async function publishEntities_adminOnlyFieldWithAdminOnlyComponent({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const adminOnlyComponent: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyComponent } }),
@@ -270,8 +270,8 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyComponent({
   assertOkResult(publishResult);
 }
 
-async function publishEntities_publishEntitiesEvent({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_publishEntitiesEvent({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
 
   const createResult1 = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 1' } }),
@@ -335,8 +335,11 @@ async function publishEntities_publishEntitiesEvent({ server }: AdminEntityTestC
   ]);
 }
 
-async function publishEntities_fixInvalidEntityByPublishing({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function publishEntities_fixInvalidEntityByPublishing({
+  clientProvider,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const {
     entity: { id: entityId },
   } = (
@@ -357,10 +360,10 @@ async function publishEntities_fixInvalidEntityByPublishing({ server }: AdminEnt
   assertOkResult(publishResult);
 }
 
-async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext) {
-  const publishResult = await adminClientForMainPrincipal(server).publishEntities([
-    { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
-  ]);
+async function publishEntities_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
+  const publishResult = await clientProvider
+    .adminClient()
+    .publishEntities([{ id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 }]);
   assertErrorResult(
     publishResult,
     ErrorType.NotFound,
@@ -368,8 +371,8 @@ async function publishEntities_errorInvalidId({ server }: AdminEntityTestContext
   );
 }
 
-async function publishEntities_errorDuplicateIds({ server }: AdminEntityTestContext) {
-  const publishResult = await adminClientForMainPrincipal(server).publishEntities([
+async function publishEntities_errorDuplicateIds({ clientProvider }: AdminEntityTestContext) {
+  const publishResult = await clientProvider.adminClient().publishEntities([
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
   ]);
@@ -380,8 +383,10 @@ async function publishEntities_errorDuplicateIds({ server }: AdminEntityTestCont
   );
 }
 
-async function publishEntities_errorMissingRequiredTitle({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_errorMissingRequiredTitle({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } }),
   );
@@ -401,10 +406,10 @@ async function publishEntities_errorMissingRequiredTitle({ server }: AdminEntity
   );
 }
 
-async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestContext) {
-  const createResult = await adminClientForMainPrincipal(server).createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+async function publishEntities_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
+  const createResult = await clientProvider
+    .adminClient()
+    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }));
   assertOkResult(createResult);
   const {
     entity: {
@@ -413,9 +418,9 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
     },
   } = createResult.value;
 
-  const publishResult = await adminClientForSecondaryPrincipal(server).publishEntities([
-    { id, version },
-  ]);
+  const publishResult = await clientProvider
+    .adminClient('secondary')
+    .publishEntities([{ id, version }]);
   assertErrorResult(
     publishResult,
     ErrorType.NotAuthorized,
@@ -423,8 +428,8 @@ async function publishEntities_errorWrongAuthKey({ server }: AdminEntityTestCont
   );
 }
 
-async function publishEntities_errorAdminOnlyComponent({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function publishEntities_errorAdminOnlyComponent({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const adminOnlyComponent: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyComponent } }),
@@ -446,9 +451,9 @@ async function publishEntities_errorAdminOnlyComponent({ server }: AdminEntityTe
 }
 
 async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode({
-  server,
+  clientProvider,
 }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+  const client = clientProvider.adminClient();
   const {
     entity: { id: titleOnlyId },
   } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
@@ -481,8 +486,11 @@ async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntity
   );
 }
 
-async function publishEntities_errorPublishInvalidEntity({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function publishEntities_errorPublishInvalidEntity({
+  clientProvider,
+  server,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const { entity } = (
     await createInvalidEntity(server, adminClient, {
       required: 'Required',
@@ -506,9 +514,10 @@ async function publishEntities_errorPublishInvalidEntity({ server }: AdminEntity
 }
 
 async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
+  clientProvider,
   server,
 }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
   const { entity } = (
     await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
   ).valueOrThrow();

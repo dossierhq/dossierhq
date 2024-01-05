@@ -4,10 +4,6 @@ import { assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppAdminEntity } from '../SchemaTypes.js';
 import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
-import {
-  adminClientForMainPrincipal,
-  adminClientForSecondaryPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const GetEntityListSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -18,8 +14,8 @@ export const GetEntityListSubSuite: UnboundTestFunction<AdminEntityTestContext>[
   getEntityList_oneMissingOneExisting,
 ];
 
-async function getEntityList_minimal({ server }: AdminEntityTestContext) {
-  const client = adminClientForMainPrincipal(server);
+async function getEntityList_minimal({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
   const create1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const create2Result = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(create1Result);
@@ -38,13 +34,13 @@ async function getEntityList_minimal({ server }: AdminEntityTestContext) {
   ]);
 }
 
-async function getEntityList_none({ server }: AdminEntityTestContext) {
-  const result = await adminClientForMainPrincipal(server).getEntityList([]);
+async function getEntityList_none({ clientProvider }: AdminEntityTestContext) {
+  const result = await clientProvider.adminClient().getEntityList([]);
   assertResultValue(result, []);
 }
 
-async function getEntityList_getLatestVersion({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntityList_getLatestVersion({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -61,11 +57,13 @@ async function getEntityList_getLatestVersion({ server }: AdminEntityTestContext
   ]);
 }
 
-async function getEntityList_authKeySubjectOneCorrectOneWrong({ server }: AdminEntityTestContext) {
-  const adminClientMain = adminClientForMainPrincipal(server);
-  const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+async function getEntityList_authKeySubjectOneCorrectOneWrong({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClientMain = clientProvider.adminClient();
+  const create1Result = await clientProvider
+    .adminClient('secondary')
+    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }));
   const create2Result = await adminClientMain.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
   );
@@ -85,8 +83,8 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({ server }: AdminE
   ]);
 }
 
-async function getEntityList_oneMissingOneExisting({ server }: AdminEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function getEntityList_oneMissingOneExisting({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
