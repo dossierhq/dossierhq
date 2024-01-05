@@ -1,4 +1,7 @@
-import { createAdvisoryLockTestSuite } from '@dossierhq/integration-test';
+import {
+  createAdminClientProvider,
+  createAdvisoryLockTestSuite,
+} from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
 import assert from 'node:assert';
 import type { ServerInit } from '../TestUtils.js';
@@ -23,7 +26,10 @@ registerTestSuite(
   createAdvisoryLockTestSuite({
     before: () => {
       assert(serverInit);
-      return Promise.resolve([{ server: serverInit.server }, undefined]);
+      return Promise.resolve([
+        { clientProvider: createAdminClientProvider(serverInit.server) },
+        undefined,
+      ]);
     },
     after: async () => {
       //empty

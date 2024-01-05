@@ -1,7 +1,6 @@
 import { ErrorType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite.js';
 
 export const AdvisoryLockReleaseSubSuite: UnboundTestFunction<AdvisoryLockTestContext>[] = [
@@ -10,8 +9,8 @@ export const AdvisoryLockReleaseSubSuite: UnboundTestFunction<AdvisoryLockTestCo
   releaseLock_errorInvalidHandle,
 ];
 
-async function releaseLock_minimal({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function releaseLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   const acquireResult = await adminClient.acquireAdvisoryLock('releaseLock_minimal', {
     leaseDuration: 1_000,
@@ -28,15 +27,15 @@ async function releaseLock_minimal({ server }: AdvisoryLockTestContext) {
   assertOkResult(acquireAgainResult);
 }
 
-async function releaseLock_errorInvalidName({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function releaseLock_errorInvalidName({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   const releaseResult = await adminClient.releaseAdvisoryLock('releaseLock_errorInvalidName', 123);
   assertErrorResult(releaseResult, ErrorType.NotFound, 'No such name or handle exists');
 }
 
-async function releaseLock_errorInvalidHandle({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function releaseLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   const acquireResult = await adminClient.acquireAdvisoryLock('releaseLock_errorInvalidHandle', {
     leaseDuration: 500,

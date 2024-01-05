@@ -1,4 +1,5 @@
 export { IntegrationTestSchema } from './IntegrationTestSchema.js';
+export type { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
 export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter.js';
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite.js';
 export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite.js';
@@ -10,6 +11,13 @@ export {
   createReadOnlyEntityRepository,
   type ReadOnlyEntityRepository,
 } from './shared-entity/ReadOnlyEntityRepository.js';
+export {
+  createAdminClientProvider,
+  createSharedClientProvider,
+  type AdminClientProvider,
+  type PublishedClientProvider,
+  type TestPrincipal,
+} from './shared-entity/TestClients.js';
 export { createSyncTestSuite } from './sync/SyncTestSuite.js';
 
 export interface TestFunctionInitializer<TContext, TCleanup> {

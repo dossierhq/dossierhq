@@ -1,7 +1,6 @@
 import { ErrorType } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite.js';
 
 export const AdvisoryLockAcquireSubSuite: UnboundTestFunction<AdvisoryLockTestContext>[] = [
@@ -9,8 +8,8 @@ export const AdvisoryLockAcquireSubSuite: UnboundTestFunction<AdvisoryLockTestCo
   acquireLock_errorConflictIfAlreadyAcquired,
 ];
 
-async function acquireLock_minimal({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function acquireLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
   const result = await adminClient.acquireAdvisoryLock('acquireLock_minimal', { leaseDuration: 1 });
   assertOkResult(result);
   const { name, handle } = result.value;
@@ -18,8 +17,10 @@ async function acquireLock_minimal({ server }: AdvisoryLockTestContext) {
   assertEquals(typeof handle, 'number');
 }
 
-async function acquireLock_errorConflictIfAlreadyAcquired({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function acquireLock_errorConflictIfAlreadyAcquired({
+  clientProvider,
+}: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
   const firstResult = await adminClient.acquireAdvisoryLock(
     'acquireLock_errorConflictIfAlreadyAcquired',
     { leaseDuration: 500 },

@@ -1,7 +1,6 @@
 import { ErrorType } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { adminClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite.js';
 
 export const AdvisoryLockRenewSubSuite: UnboundTestFunction<AdvisoryLockTestContext>[] = [
@@ -10,8 +9,8 @@ export const AdvisoryLockRenewSubSuite: UnboundTestFunction<AdvisoryLockTestCont
   renewLock_errorInvalidHandle,
 ];
 
-async function renewLock_minimal({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function renewLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   const acquireResult = await adminClient.acquireAdvisoryLock('renewLock_minimal', {
     leaseDuration: 500,
@@ -29,15 +28,15 @@ async function renewLock_minimal({ server }: AdvisoryLockTestContext) {
   assertEquals(acquireResult.value.handle, renewResult.value.handle);
 }
 
-async function renewLock_errorInvalidName({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function renewLock_errorInvalidName({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   const renewResult = await adminClient.renewAdvisoryLock('renewLock_errorInvalidName', 123);
   assertErrorResult(renewResult, ErrorType.NotFound, 'No such name or handle exists');
 }
 
-async function renewLock_errorInvalidHandle({ server }: AdvisoryLockTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
+async function renewLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient();
 
   const acquireResult = await adminClient.acquireAdvisoryLock('renewLock_errorInvalidHandle', {
     leaseDuration: 500,

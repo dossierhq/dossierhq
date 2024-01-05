@@ -1,4 +1,7 @@
-import { createAdvisoryLockTestSuite } from '@dossierhq/integration-test';
+import {
+  createAdminClientProvider,
+  createAdvisoryLockTestSuite,
+} from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import type { ServerInit } from './SqlJsTestUtils.js';
@@ -20,8 +23,10 @@ registerTestSuite(
   createAdvisoryLockTestSuite({
     before: () => {
       assert(serverInit);
-      const { server } = serverInit;
-      return Promise.resolve([{ server }, undefined]);
+      return Promise.resolve([
+        { clientProvider: createAdminClientProvider(serverInit.server) },
+        undefined,
+      ]);
     },
     after: async () => {
       //empty
