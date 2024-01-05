@@ -43,26 +43,6 @@ export async function sessionForMainPrincipal(
   return result.map((it) => it.context);
 }
 
-export function adminClientForMainPrincipal(server: Server): AppAdminClient {
-  const sessionResult = sessionForPrincipal(server, 'main');
-  return server.createAdminClient(() => sessionResult);
-}
-
-export function adminClientForSecondaryPrincipal(server: Server): AppAdminClient {
-  const sessionResult = sessionForPrincipal(server, 'secondary');
-  return server.createAdminClient(() => sessionResult);
-}
-
-export function publishedClientForMainPrincipal(server: Server): AppPublishedClient {
-  const sessionResult = sessionForPrincipal(server, 'main');
-  return server.createPublishedClient(() => sessionResult);
-}
-
-export function publishedClientForSecondaryPrincipal(server: Server): AppPublishedClient {
-  const sessionResult = sessionForPrincipal(server, 'secondary');
-  return server.createPublishedClient(() => sessionResult);
-}
-
 export function createAdminClientProvider(server: Server): AdminClientProvider {
   return {
     adminClient(principal) {

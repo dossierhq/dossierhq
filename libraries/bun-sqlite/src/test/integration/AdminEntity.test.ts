@@ -17,7 +17,10 @@ beforeAll(async () => {
     await initializeIntegrationTestServer('databases/integration-test-admin-entity.sqlite')
   ).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server, 'admin-entity')
+    await createReadOnlyEntityRepository(
+      createSharedClientProvider(serverInit.server),
+      'admin-entity',
+    )
   ).valueOrThrow();
 });
 afterAll(async () => {

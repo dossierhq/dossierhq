@@ -1,6 +1,5 @@
 import type { AdminEntityUpsert, ErrorType, PromiseResult } from '@dossierhq/core';
 import { AdminEntityStatus, copyEntity, ok, withAdvisoryLock } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
 import { v5 as uuidv5 } from 'uuid';
 import { assertExhaustive, assertOkResult, assertSame } from '../Asserts.js';
 import {
@@ -9,7 +8,7 @@ import {
   type AppAdminClient,
   type PublishedReadOnly,
 } from '../SchemaTypes.js';
-import { adminClientForMainPrincipal, adminClientForSecondaryPrincipal } from './TestClients.js';
+import type { AdminClientProvider } from './TestClients.js';
 
 const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
@@ -75,7 +74,7 @@ const createEntitiesPromises: Record<
 > = {};
 
 export async function createReadOnlyEntityRepository(
-  server: Server,
+  clientProvider: AdminClientProvider,
   databaseName?: string,
 ): PromiseResult<
   ReadOnlyEntityRepository,
@@ -87,20 +86,20 @@ export async function createReadOnlyEntityRepository(
   const resolvedName = databaseName ?? 'shared';
   let promise = createEntitiesPromises[resolvedName];
   if (!promise) {
-    promise = doCreateReadOnlyEntityRepository(server);
+    promise = doCreateReadOnlyEntityRepository(clientProvider);
     createEntitiesPromises[resolvedName] = promise;
   }
   return promise;
 }
 
 async function doCreateReadOnlyEntityRepository(
-  server: Server,
+  clientProvider: AdminClientProvider,
 ): PromiseResult<
   ReadOnlyEntityRepository,
   typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const adminClientMain = adminClientForMainPrincipal(server);
-  const adminClientSecondary = adminClientForSecondaryPrincipal(server);
+  const adminClientMain = clientProvider.adminClient('main');
+  const adminClientSecondary = clientProvider.adminClient('secondary');
 
   return await withAdvisoryLock(
     adminClientMain,

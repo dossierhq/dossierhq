@@ -3,6 +3,7 @@ import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { afterAll, assert, beforeAll } from 'vitest';
@@ -19,7 +20,7 @@ beforeAll(async () => {
   ).valueOrThrow();
 
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server)
+    await createReadOnlyEntityRepository(createSharedClientProvider(serverInit.server))
   ).valueOrThrow();
 });
 afterAll(async () => {
@@ -39,6 +40,7 @@ registerTestSuite(
         {
           server: serverInit.server,
           adminSchema: serverInit.adminSchema,
+          clientProvider: createSharedClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
         undefined,

@@ -17,10 +17,6 @@ import {
   assertSearchResultEntities,
   countSearchResultWithEntity,
 } from '../shared-entity/SearchTestUtils.js';
-import {
-  adminClientForMainPrincipal,
-  publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -58,11 +54,11 @@ export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext
 ];
 
 async function getEntities_minimal({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
@@ -73,14 +69,13 @@ async function getEntities_minimal({
 }
 
 async function getEntities_pagingFirst({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities(
-    { entityTypes: ['ReadOnly'] },
-    { first: 10 },
-  );
+  const result = await clientProvider
+    .publishedClient()
+    .getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 10);
   assertPageInfoEquals(result, {
     hasPreviousPage: false,
@@ -88,40 +83,37 @@ async function getEntities_pagingFirst({
   });
 }
 
-async function getEntities_pagingFirst0({ server }: PublishedEntityTestContext) {
-  const result = await publishedClientForMainPrincipal(server).getEntities(
-    { entityTypes: ['ReadOnly'] },
-    { first: 0 },
-  );
+async function getEntities_pagingFirst0({ clientProvider }: PublishedEntityTestContext) {
+  const result = await clientProvider
+    .publishedClient()
+    .getEntities({ entityTypes: ['ReadOnly'] }, { first: 0 });
   assertResultValue(result, null);
 }
 
 async function getEntities_pagingLast({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities(
-    { entityTypes: ['ReadOnly'] },
-    { last: 10 },
-  );
+  const result = await clientProvider
+    .publishedClient()
+    .getEntities({ entityTypes: ['ReadOnly'] }, { last: 10 });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, -10, undefined);
   assertPageInfoEquals(result, { hasPreviousPage: true, hasNextPage: false });
 }
 
-async function getEntities_pagingLast0({ server }: PublishedEntityTestContext) {
-  const result = await publishedClientForMainPrincipal(server).getEntities(
-    { entityTypes: ['ReadOnly'] },
-    { last: 0 },
-  );
+async function getEntities_pagingLast0({ clientProvider }: PublishedEntityTestContext) {
+  const result = await clientProvider
+    .publishedClient()
+    .getEntities({ entityTypes: ['ReadOnly'] }, { last: 0 });
   assertResultValue(result, null);
 }
 
 async function getEntities_pagingFirstAfter({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
-  const client = publishedClientForMainPrincipal(server);
+  const client = clientProvider.publishedClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertOkResult(firstResult);
@@ -137,10 +129,10 @@ async function getEntities_pagingFirstAfter({
 }
 
 async function getEntities_pagingFirstAfterFirstEntity({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
-  const client = publishedClientForMainPrincipal(server);
+  const client = clientProvider.publishedClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertOkResult(firstResult);
@@ -157,10 +149,10 @@ async function getEntities_pagingFirstAfterFirstEntity({
 
 async function getEntities_pagingFirstAfterNameWithUnicode({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   // Since the name is converted to base64 encoded cursors, use unicode in the name
   // to ensure the encode/decode is proper
@@ -214,10 +206,10 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
 }
 
 async function getEntities_pagingLastBefore({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
-  const client = publishedClientForMainPrincipal(server);
+  const client = clientProvider.publishedClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { last: 10 });
   assertOkResult(firstResult);
@@ -230,10 +222,10 @@ async function getEntities_pagingLastBefore({
 }
 
 async function getEntities_pagingFirstBetween({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
-  const client = publishedClientForMainPrincipal(server);
+  const client = clientProvider.publishedClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
   assertOkResult(firstResult);
@@ -256,10 +248,10 @@ async function getEntities_pagingFirstBetween({
 }
 
 async function getEntities_pagingLastBetween({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
-  const client = publishedClientForMainPrincipal(server);
+  const client = clientProvider.publishedClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
   assertOkResult(firstResult);
@@ -282,11 +274,11 @@ async function getEntities_pagingLastBetween({
 }
 
 async function getEntities_orderCreatedAt({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: PublishedEntityQueryOrder.createdAt,
   });
@@ -304,11 +296,11 @@ async function getEntities_orderCreatedAt({
 }
 
 async function getEntities_orderCreatedAtReversed({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: PublishedEntityQueryOrder.createdAt,
     reverse: true,
@@ -328,11 +320,11 @@ async function getEntities_orderCreatedAtReversed({
 }
 
 async function getEntities_orderName({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: PublishedEntityQueryOrder.name,
   });
@@ -350,11 +342,11 @@ async function getEntities_orderName({
 }
 
 async function getEntities_orderNameReversed({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: PublishedEntityQueryOrder.name,
     reverse: true,
@@ -374,11 +366,11 @@ async function getEntities_orderNameReversed({
 }
 
 async function getEntities_authKeySubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -390,14 +382,14 @@ async function getEntities_authKeySubject({
 }
 
 async function getEntities_authKeyNoneAndSubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities([
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).getEntities({
+  const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });
@@ -405,9 +397,9 @@ async function getEntities_authKeyNoneAndSubject({
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
 
-async function getEntities_componentTypes({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntities_componentTypes({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
   const { entity } = (
     await adminClient.createEntity(VALUE_ITEMS_CREATE, { publish: true })
   ).valueOrThrow();
@@ -439,10 +431,10 @@ async function getEntities_componentTypes({ server }: PublishedEntityTestContext
 
 async function getEntities_linksToOneReference({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -462,9 +454,9 @@ async function getEntities_linksToOneReference({
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function getEntities_linksToNoReferences({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntities_linksToNoReferences({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -478,10 +470,10 @@ async function getEntities_linksToNoReferences({ server }: PublishedEntityTestCo
 
 async function getEntities_linksToTwoReferencesFromOneEntity({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -505,10 +497,10 @@ async function getEntities_linksToTwoReferencesFromOneEntity({
 
 async function getEntities_linksToExcludedAfterUnpublish({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -539,10 +531,10 @@ async function getEntities_linksToExcludedAfterUnpublish({
 
 async function getEntities_linksToExcludedAfterUpdateWithNoReference({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -577,10 +569,10 @@ async function getEntities_linksToExcludedAfterUpdateWithNoReference({
 }
 
 async function getEntities_linksToExcludedForAdminOnlyField({
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const {
     entity: { id: titleOnlyId },
@@ -598,10 +590,10 @@ async function getEntities_linksToExcludedForAdminOnlyField({
 
 async function getEntities_linksFromOneReference({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -621,9 +613,9 @@ async function getEntities_linksFromOneReference({
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function getEntities_linksFromNoReferences({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntities_linksFromNoReferences({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const referenceResult = await adminClient.createEntity(REFERENCES_CREATE, { publish: true });
   assertOkResult(referenceResult);
@@ -637,10 +629,10 @@ async function getEntities_linksFromNoReferences({ server }: PublishedEntityTest
 
 async function getEntities_linksFromTwoReferencesFromOneEntity({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -662,9 +654,9 @@ async function getEntities_linksFromTwoReferencesFromOneEntity({
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
-async function getEntities_boundingBox({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntities_boundingBox({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
@@ -682,10 +674,10 @@ async function getEntities_boundingBox({ server }: PublishedEntityTestContext) {
 }
 
 async function getEntities_boundingBoxExcludedWithInAdminOnlyField({
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
@@ -702,9 +694,9 @@ async function getEntities_boundingBoxExcludedWithInAdminOnlyField({
   assertResultValue(matches, 0);
 }
 
-async function getEntities_textIncluded({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntities_textIncluded({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
@@ -721,9 +713,11 @@ async function getEntities_textIncluded({ server }: PublishedEntityTestContext) 
   assertResultValue(matches, 1);
 }
 
-async function getEntities_textExcludedInAdminOnlyField({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntities_textExcludedInAdminOnlyField({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const createResult = await adminClient.createEntity(
     copyEntity(STRINGS_CREATE, {

@@ -19,7 +19,7 @@ beforeAll(async () => {
     })
   ).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server)
+    await createReadOnlyEntityRepository(createSharedClientProvider(serverInit.server))
   ).valueOrThrow();
 });
 afterAll(async () => {

@@ -4,11 +4,6 @@ import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppPublishedEntity } from '../SchemaTypes.js';
 import { TITLE_ONLY_CREATE, adminToPublishedEntity } from '../shared-entity/Fixtures.js';
-import {
-  adminClientForMainPrincipal,
-  adminClientForSecondaryPrincipal,
-  publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -19,9 +14,9 @@ export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestConte
   getEntityList_errorArchivedEntity,
 ];
 
-async function getEntityList_minimal({ adminSchema, server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntityList_minimal({ adminSchema, clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
@@ -43,23 +38,25 @@ async function getEntityList_minimal({ adminSchema, server }: PublishedEntityTes
   assertEquals(get2Result.value, adminToPublishedEntity(adminSchema, create2Result.value.entity));
 }
 
-async function getEntityList_none({ server }: PublishedEntityTestContext) {
-  const result = await publishedClientForMainPrincipal(server).getEntityList([]);
+async function getEntityList_none({ clientProvider }: PublishedEntityTestContext) {
+  const result = await clientProvider.publishedClient().getEntityList([]);
   assertResultValue(result, []);
 }
 
 async function getEntityList_authKeySubjectOneCorrectOneWrong({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const create1Result = await adminClientForSecondaryPrincipal(server).createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true },
-  );
-  const create2Result = await adminClientForMainPrincipal(server).createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true },
-  );
+  const create1Result = await clientProvider
+    .adminClient('secondary')
+    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }), {
+      publish: true,
+    });
+  const create2Result = await clientProvider
+    .adminClient()
+    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }), {
+      publish: true,
+    });
   assertOkResult(create1Result);
   assertOkResult(create2Result);
   const {
@@ -69,10 +66,9 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
     entity: { id: id2 },
   } = create2Result.value;
 
-  const getResult = await publishedClientForMainPrincipal(server).getEntityList([
-    { id: id1 },
-    { id: id2 },
-  ]);
+  const getResult = await clientProvider
+    .publishedClient()
+    .getEntityList([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<AppPublishedEntity, typeof ErrorType.Generic>(
@@ -83,9 +79,9 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
 
 async function getEntityList_oneMissingOneExisting({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const createResult = await adminClientForMainPrincipal(server).createEntity(TITLE_ONLY_CREATE, {
+  const createResult = await clientProvider.adminClient().createEntity(TITLE_ONLY_CREATE, {
     publish: true,
   });
   assertOkResult(createResult);
@@ -93,10 +89,9 @@ async function getEntityList_oneMissingOneExisting({
     entity: { id },
   } = createResult.value;
 
-  const getResult = await publishedClientForMainPrincipal(server).getEntityList([
-    { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
-    { id },
-  ]);
+  const getResult = await clientProvider
+    .publishedClient()
+    .getEntityList([{ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' }, { id }]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
     ok<AppPublishedEntity, typeof ErrorType.Generic>(
@@ -105,9 +100,9 @@ async function getEntityList_oneMissingOneExisting({
   ]);
 }
 
-async function getEntityList_errorArchivedEntity({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntityList_errorArchivedEntity({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);

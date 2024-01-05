@@ -1,6 +1,5 @@
 import { assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { publishedClientForMainPrincipal } from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetEntitiesTotalCountSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -10,22 +9,22 @@ export const GetEntitiesTotalCountSubSuite: UnboundTestFunction<PublishedEntityT
 ];
 
 async function getEntitiesTotalCount_minimal({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntitiesTotalCount({
+  const result = await clientProvider.publishedClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
   });
   assertResultValue(result, expectedEntities.length);
 }
 
 async function getEntitiesTotalCount_authKeySubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).getEntitiesTotalCount({
+  const result = await clientProvider.publishedClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -33,14 +32,14 @@ async function getEntitiesTotalCount_authKeySubject({
 }
 
 async function getEntitiesTotalCount_authKeyNoneAndSubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities([
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).getEntitiesTotalCount({
+  const result = await clientProvider.publishedClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });

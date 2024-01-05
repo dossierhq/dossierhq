@@ -15,7 +15,10 @@ let readOnlyEntityRepository: ReadOnlyEntityRepository;
 test.beforeAll(async () => {
   serverInit = (await initializeSqlJsServer()).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server, 'AdminEntityTest')
+    await createReadOnlyEntityRepository(
+      createSharedClientProvider(serverInit.server),
+      'AdminEntityTest',
+    )
   ).valueOrThrow();
 });
 test.afterAll(async () => {

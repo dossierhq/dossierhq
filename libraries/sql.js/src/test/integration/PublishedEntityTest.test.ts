@@ -2,6 +2,7 @@ import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
@@ -14,7 +15,7 @@ let readOnlyEntityRepository: ReadOnlyEntityRepository;
 beforeAll(async () => {
   serverInit = (await initializeSqlJsServer()).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server)
+    await createReadOnlyEntityRepository(createSharedClientProvider(serverInit.server))
   ).valueOrThrow();
 });
 afterAll(async () => {
@@ -30,7 +31,15 @@ registerTestSuite(
     before: () => {
       assert(serverInit);
       const { adminSchema, server } = serverInit;
-      return Promise.resolve([{ adminSchema, server, readOnlyEntityRepository }, undefined]);
+      return Promise.resolve([
+        {
+          adminSchema,
+          clientProvider: createSharedClientProvider(server),
+          server,
+          readOnlyEntityRepository,
+        },
+        undefined,
+      ]);
     },
     after: async () => {
       //empty

@@ -1,6 +1,7 @@
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import type { IntegrationTestServerInit } from '../TestUtils.js';
@@ -25,11 +26,12 @@ registerTestSuite(
       assert(serverInit);
       const { adminSchema, server } = serverInit;
 
+      const clientProvider = createSharedClientProvider(server);
       const readOnlyEntityRepository = (
-        await createReadOnlyEntityRepository(server)
+        await createReadOnlyEntityRepository(clientProvider)
       ).valueOrThrow();
 
-      return [{ adminSchema, server, readOnlyEntityRepository }, undefined];
+      return [{ adminSchema, clientProvider, server, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty

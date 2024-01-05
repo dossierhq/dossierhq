@@ -18,17 +18,13 @@ export function registerAdminEntityTestSuite(suitePage: {
       const { adminSchema, server } = (
         await initializeIntegrationTestServer()
       ).valueOrThrow();
+      const clientProvider = createSharedClientProvider(server);
       const readOnlyEntityRepository = (
-        await createReadOnlyEntityRepository(server)
+        await createReadOnlyEntityRepository(clientProvider)
       ).valueOrThrow();
 
       return [
-        {
-          adminSchema,
-          clientProvider: createSharedClientProvider(server),
-          server,
-          readOnlyEntityRepository,
-        },
+        { adminSchema, clientProvider, server, readOnlyEntityRepository },
         { server },
       ];
     },

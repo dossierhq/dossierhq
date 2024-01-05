@@ -2,6 +2,7 @@ import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
+  createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
 import assert from 'node:assert';
@@ -16,7 +17,10 @@ beforeAll(async () => {
     await initializeIntegrationTestServer('databases/integration-test-published-entity.sqlite')
   ).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(serverInit.server, 'published-entity')
+    await createReadOnlyEntityRepository(
+      createSharedClientProvider(serverInit.server),
+      'published-entity',
+    )
   ).valueOrThrow();
 });
 afterAll(async () => {
@@ -36,6 +40,7 @@ registerTestSuite(
         {
           server: serverInit.server,
           adminSchema: serverInit.adminSchema,
+          clientProvider: createSharedClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
         undefined,

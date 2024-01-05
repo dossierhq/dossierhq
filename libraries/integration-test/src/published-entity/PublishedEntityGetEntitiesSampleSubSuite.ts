@@ -10,10 +10,6 @@ import {
   assertSampledEntities,
   assertSampledEntitiesArePartOfExpected,
 } from '../shared-entity/SampleTestUtils.js';
-import {
-  adminClientForMainPrincipal,
-  publishedClientForMainPrincipal,
-} from '../shared-entity/TestClients.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetEntitiesSampleSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -29,22 +25,22 @@ export const GetEntitiesSampleSubSuite: UnboundTestFunction<PublishedEntityTestC
 ];
 
 async function getEntitiesSample_minimal({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities();
-  const result = await publishedClientForMainPrincipal(server).getEntitiesSample({
+  const result = await clientProvider.publishedClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }
 
 async function getEntitiesSample_authKeySubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities(['subject']);
-  const result = await publishedClientForMainPrincipal(server).getEntitiesSample({
+  const result = await clientProvider.publishedClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -52,14 +48,14 @@ async function getEntitiesSample_authKeySubject({
 }
 
 async function getEntitiesSample_authKeyNoneAndSubject({
-  server,
+  clientProvider,
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities([
     'none',
     'subject',
   ]);
-  const result = await publishedClientForMainPrincipal(server).getEntitiesSample({
+  const result = await clientProvider.publishedClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['none', 'subject'],
   });
@@ -68,10 +64,10 @@ async function getEntitiesSample_authKeyNoneAndSubject({
 
 async function getEntitiesSample_linksToOneReference({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -93,9 +89,11 @@ async function getEntitiesSample_linksToOneReference({
   assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(adminSchema, referenceEntity)]);
 }
 
-async function getEntitiesSample_linksToNoReferences({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntitiesSample_linksToNoReferences({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -109,10 +107,10 @@ async function getEntitiesSample_linksToNoReferences({ server }: PublishedEntity
 
 async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -138,10 +136,10 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
 
 async function getEntitiesSample_linksFromOneReference({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -163,9 +161,11 @@ async function getEntitiesSample_linksFromOneReference({
   assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
 }
 
-async function getEntitiesSample_linksFromNoReferences({ server }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+async function getEntitiesSample_linksFromNoReferences({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const referenceResult = await adminClient.createEntity(REFERENCES_CREATE, { publish: true });
   assertOkResult(referenceResult);
@@ -182,10 +182,10 @@ async function getEntitiesSample_linksFromNoReferences({ server }: PublishedEnti
 
 async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
   adminSchema,
-  server,
+  clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = adminClientForMainPrincipal(server);
-  const publishedClient = publishedClientForMainPrincipal(server);
+  const adminClient = clientProvider.adminClient();
+  const publishedClient = clientProvider.publishedClient();
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
