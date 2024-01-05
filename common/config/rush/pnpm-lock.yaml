@@ -284,11 +284,11 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@sentry/astro':
-        specifier: ~7.91.0
-        version: 7.91.0(astro@4.0.8)
+        specifier: ~7.92.0
+        version: 7.92.0(astro@4.0.8)
       '@spotlightjs/astro':
         specifier: ~1.0.9
-        version: 1.0.9(@sentry/astro@7.91.0)(astro@4.0.8)
+        version: 1.0.9(@sentry/astro@7.92.0)(astro@4.0.8)
       astro:
         specifier: ~4.0.8
         version: 4.0.8(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
@@ -1849,11 +1849,11 @@ importers:
         specifier: ~1.6.1
         version: 1.6.1
       '@sentry/astro':
-        specifier: ~7.91.0
-        version: 7.91.0(astro@4.0.8)
+        specifier: ~7.92.0
+        version: 7.92.0(astro@4.0.8)
       '@spotlightjs/astro':
         specifier: ~1.0.9
-        version: 1.0.9(@sentry/astro@7.91.0)(astro@4.0.8)
+        version: 1.0.9(@sentry/astro@7.92.0)(astro@4.0.8)
       '@typescript-eslint/eslint-plugin':
         specifier: ~6.17.0
         version: 6.17.0(@typescript-eslint/parser@6.17.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -8318,35 +8318,35 @@ packages:
       colors: 1.2.5
       string-argv: 0.3.1
 
-  /@sentry-internal/feedback@7.91.0:
-    resolution: {integrity: sha512-SJKTSaz68F5YIwF79EttBm915M2LnacgZMYRnRumyTmMKnebGhYQLwWbZdpaDvOa1U18dgRajDX8Qed/8A3tXw==}
+  /@sentry-internal/feedback@7.92.0:
+    resolution: {integrity: sha512-/jEALRtVqboxB9kcK2tag8QCO6XANTlGBb9RV3oeGXJe0DDNJXRq6wVZbfgztXJRrfgx4XVDcNt1pRVoGGG++g==}
     engines: {node: '>=12'}
     dependencies:
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/core': 7.92.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
     dev: false
 
-  /@sentry-internal/tracing@7.91.0:
-    resolution: {integrity: sha512-JH5y6gs6BS0its7WF2DhySu7nkhPDfZcdpAXldxzIlJpqFkuwQKLU5nkYJpiIyZz1NHYYtW5aum2bV2oCOdDRA==}
+  /@sentry-internal/tracing@7.92.0:
+    resolution: {integrity: sha512-ur55vPcUUUWFUX4eVLNP71ohswK7ZZpleNZw9Y1GfLqyI+0ILQUwjtzqItJrdClvVsdRZJMRmDV40Hp9Lbb9mA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/core': 7.92.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
     dev: false
 
-  /@sentry/astro@7.91.0(astro@4.0.8):
-    resolution: {integrity: sha512-qpQBvzs6lWmqnJImeAvDpTcmnla52JEj4Mfd6eRxRj/MsIYpexsU5tuowT4duFtnQQd1ON7MQLeTlp9zZbzu/Q==}
+  /@sentry/astro@7.92.0(astro@4.0.8):
+    resolution: {integrity: sha512-dv2H2SpDofkx8OcwC17SleO35J6pVpy86bQFVyoXx93vNwAC1UCIr+pDQbmvDH7NZHOJIranYKyS6pMQ55Xinw==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       astro: '>=3.x || >=4.0.0-beta'
     dependencies:
-      '@sentry/browser': 7.91.0
-      '@sentry/core': 7.91.0
-      '@sentry/node': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/browser': 7.92.0
+      '@sentry/core': 7.92.0
+      '@sentry/node': 7.92.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
       '@sentry/vite-plugin': 2.10.2
       astro: 4.0.8(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
     transitivePeerDependencies:
@@ -8354,16 +8354,16 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/browser@7.91.0:
-    resolution: {integrity: sha512-lJv3x/xekzC/biiyAsVCioq2XnKNOZhI6jY3ZzLJZClYV8eKRi7D3KCsHRvMiCdGak1d/6sVp8F4NYY+YiWy1Q==}
+  /@sentry/browser@7.92.0:
+    resolution: {integrity: sha512-loMr02/zQ38u8aQhYLtIBg0i5n3ps2e3GUXrt3CdsJQdkRYfa62gcrE7SzvoEpMVHTk7VOI4fWGht8cWw/1k3A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/feedback': 7.91.0
-      '@sentry-internal/tracing': 7.91.0
-      '@sentry/core': 7.91.0
-      '@sentry/replay': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry-internal/feedback': 7.92.0
+      '@sentry-internal/tracing': 7.92.0
+      '@sentry/core': 7.92.0
+      '@sentry/replay': 7.92.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
     dev: false
 
   /@sentry/bundler-plugin-core@2.10.2:
@@ -8371,8 +8371,8 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       '@sentry/cli': 2.23.0
-      '@sentry/node': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/node': 7.92.0
+      '@sentry/utils': 7.92.0
       dotenv: 16.3.1
       find-up: 5.0.0
       glob: 9.3.2
@@ -8468,47 +8468,47 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/core@7.91.0:
-    resolution: {integrity: sha512-tu+gYq4JrTdrR+YSh5IVHF0fJi/Pi9y0HZ5H9HnYy+UMcXIotxf6hIEaC6ZKGeLWkGXffz2gKpQLe/g6vy/lPA==}
+  /@sentry/core@7.92.0:
+    resolution: {integrity: sha512-1Tly7YB2I1byI5xb0Cwrxs56Rhww+6mQ7m9P7rTmdC3/ijOzbEoohtYIUPwcooCEarpbEJe/tAayRx6BrH2UbQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
     dev: false
 
-  /@sentry/node@7.91.0:
-    resolution: {integrity: sha512-hTIfSQxD7L+AKIqyjoq8CWBRkEQrrMZmA3GSZgPI5JFWBHgO0HBo5TH/8TU81oEJh6kqqHAl2ObMhmcnaFqlzg==}
+  /@sentry/node@7.92.0:
+    resolution: {integrity: sha512-LZeQL1r6kikEoOzA9K61OmMl32/lK/6PzmFNDH6z7UYwQopCZgVA6IP+CZuln8K2ys5c9hCyF7ICQMysXfpNJA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.91.0
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry-internal/tracing': 7.92.0
+      '@sentry/core': 7.92.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@sentry/replay@7.91.0:
-    resolution: {integrity: sha512-XwbesnLLNtaVXKtDoyBB96GxJuhGi9zy3a662Ba/McmumCnkXrMQYpQPh08U7MgkTyDRgjDwm7PXDhiKpcb03g==}
+  /@sentry/replay@7.92.0:
+    resolution: {integrity: sha512-G1t9Uvc9cR8VpNkElwvHIMGzykjIKikb10n0tfVd3e+rBPMCCjCPWOduwG6jZYxcvCjTpqmJh6NSLXxL/Mt4JA==}
     engines: {node: '>=12'}
     dependencies:
-      '@sentry-internal/tracing': 7.91.0
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry-internal/tracing': 7.92.0
+      '@sentry/core': 7.92.0
+      '@sentry/types': 7.92.0
+      '@sentry/utils': 7.92.0
     dev: false
 
-  /@sentry/types@7.91.0:
-    resolution: {integrity: sha512-bcQnb7J3P3equbCUc+sPuHog2Y47yGD2sCkzmnZBjvBT0Z1B4f36fI/5WjyZhTjLSiOdg3F2otwvikbMjmBDew==}
+  /@sentry/types@7.92.0:
+    resolution: {integrity: sha512-APmSOuZuoRGpbPpPeYIbMSplPjiWNLZRQa73QiXuTflW4Tu/ItDlU8hOa2+A6JKVkJCuD2EN6yUrxDGSMyNXeg==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.91.0:
-    resolution: {integrity: sha512-fvxjrEbk6T6Otu++Ax9ntlQ0sGRiwSC179w68aC3u26Wr30FAIRKqHTCCdc2jyWk7Gd9uWRT/cq+g8NG/8BfSg==}
+  /@sentry/utils@7.92.0:
+    resolution: {integrity: sha512-3nEfrQ1z28b/2zgFGANPh5yMVtgwXmrasZxTvKbrAj+KWJpjrJHrIR84r9W277J44NMeZ5RhRW2uoDmuBslPnA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.91.0
+      '@sentry/types': 7.92.0
     dev: false
 
   /@sentry/vite-plugin@2.10.2:
@@ -8531,13 +8531,13 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /@spotlightjs/astro@1.0.9(@sentry/astro@7.91.0)(astro@4.0.8):
+  /@spotlightjs/astro@1.0.9(@sentry/astro@7.92.0)(astro@4.0.8):
     resolution: {integrity: sha512-0dduGDgrvMeJR3/mNSRJPn9pMoNEMg70qY1WSZsCMB1ImUT7p4Ko/s7tbBTfxj018Wc+xd36+HQh1xcjwIAuig==}
     peerDependencies:
       '@sentry/astro': '>=7.84.0'
       astro: '>=3.4.0 || >=4.0.0-beta'
     dependencies:
-      '@sentry/astro': 7.91.0(astro@4.0.8)
+      '@sentry/astro': 7.92.0(astro@4.0.8)
       '@spotlightjs/overlay': 1.2.3
       '@spotlightjs/sidecar': 1.3.3
       astro: 4.0.8(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
