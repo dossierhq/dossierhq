@@ -62,6 +62,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField,
   updateSchemaSpecification_renameFieldOnComponent,
   updateSchemaSpecification_deleteTypeOnEntityType,
+  updateSchemaSpecification_deleteTypeOnTwoEntityTypes,
   updateSchemaSpecification_deleteTypeOnComponent,
   updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnotherType,
   updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid,
@@ -1420,6 +1421,46 @@ async function updateSchemaSpecification_deleteTypeOnEntityType({
   const schemaSpec = result.valueOrThrow();
 
   const entityType = schemaSpec.entityTypes.find((et) => et.name === typeName);
+  assertEquals(entityType, undefined);
+}
+
+async function updateSchemaSpecification_deleteTypeOnTwoEntityTypes({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const typeName1 = `MigrationEntity${new Date().getTime()}`;
+  const typeName2 = `${typeName1}2`;
+
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+    // First add new types
+    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+      entityTypes: [
+        { name: typeName1, fields: [{ name: 'field', type: FieldType.String }] },
+        { name: typeName2, fields: [{ name: 'field', type: FieldType.String }] },
+      ],
+    });
+    const { schemaSpecification } = firstUpdateResult.valueOrThrow();
+
+    // Delete the types
+    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+      migrations: [
+        {
+          version: schemaSpecification.version + 1,
+          actions: [
+            { action: 'deleteType', entityType: typeName1 },
+            { action: 'deleteType', entityType: typeName2 },
+          ],
+        },
+      ],
+    });
+    return ok(secondUpdateResult.valueOrThrow().schemaSpecification);
+  });
+  const schemaSpec = result.valueOrThrow();
+
+  const entityType = schemaSpec.entityTypes.find(
+    (et) => et.name === typeName1 || et.name === typeName2,
+  );
   assertEquals(entityType, undefined);
 }
 
