@@ -5727,6 +5727,172 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
 }
 `;
 
+exports[`SchemaEditorReducer scenarios > delete component type, save, force update 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "deleteType",
+              "componentType": "Hello",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "admin",
+      "version": 2,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > delete entity type, save, force update 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "deleteType",
+              "entityType": "Hello",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "admin",
+      "version": 2,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > delete index, save, force update 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Hello",
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
+            "name": "title",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "Hello",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": AdminSchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Hello",
+        },
+      ],
+      "entityTypes": [],
+      "indexes": [],
+      "migrations": [],
+      "patterns": [],
+      "schemaKind": "admin",
+      "version": 2,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
 exports[`SetActiveSelectorAction > set to type 1`] = `
 {
   "activeSelector": {

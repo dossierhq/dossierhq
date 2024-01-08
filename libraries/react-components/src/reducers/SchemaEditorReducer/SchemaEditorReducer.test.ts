@@ -2277,4 +2277,76 @@ describe('SchemaEditorReducer scenarios', () => {
 
     expect(afterSaveState).toMatchSnapshot();
   });
+
+  test('delete entity type, save, force update', () => {
+    const initialSchema = AdminSchemaWithMigrations.createAndValidate({
+      entityTypes: [{ name: 'Hello', fields: [] }],
+    }).valueOrThrow();
+    const beforeSaveState = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),
+      new SchemaEditorActions.DeleteType({ kind: 'entity', typeName: 'Hello' }),
+      new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
+    );
+
+    const newAdminSchema = initialSchema
+      .updateAndValidate(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
+      .valueOrThrow();
+
+    const afterSaveState = reduceSchemaEditorState(
+      beforeSaveState,
+      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema),
+    );
+
+    expect(afterSaveState).toMatchSnapshot();
+  });
+
+  test('delete component type, save, force update', () => {
+    const initialSchema = AdminSchemaWithMigrations.createAndValidate({
+      componentTypes: [{ name: 'Hello', fields: [] }],
+    }).valueOrThrow();
+    const beforeSaveState = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),
+      new SchemaEditorActions.DeleteType({ kind: 'component', typeName: 'Hello' }),
+      new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
+    );
+
+    const newAdminSchema = initialSchema
+      .updateAndValidate(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
+      .valueOrThrow();
+
+    const afterSaveState = reduceSchemaEditorState(
+      beforeSaveState,
+      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema),
+    );
+
+    expect(afterSaveState).toMatchSnapshot();
+  });
+
+  test('delete index, save, force update', () => {
+    const initialSchema = AdminSchemaWithMigrations.createAndValidate({
+      componentTypes: [
+        { name: 'Hello', fields: [{ name: 'title', type: FieldType.String, index: 'anIndex' }] },
+      ],
+      indexes: [{ name: 'anIndex', type: 'unique' }],
+    }).valueOrThrow();
+    const beforeSaveState = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(initialSchema),
+      new SchemaEditorActions.DeleteIndex({ kind: 'index', name: 'anIndex' }),
+      new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
+    );
+
+    const newAdminSchema = initialSchema
+      .updateAndValidate(getSchemaSpecificationUpdateFromEditorState(beforeSaveState))
+      .valueOrThrow();
+
+    const afterSaveState = reduceSchemaEditorState(
+      beforeSaveState,
+      new SchemaEditorActions.UpdateSchemaSpecification(newAdminSchema),
+    );
+
+    expect(afterSaveState).toMatchSnapshot();
+  });
 });

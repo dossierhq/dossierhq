@@ -1509,8 +1509,11 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       schema: this.schema,
       schemaWillBeUpdatedDueToSave: false,
       entityTypes,
+      deletedEntityTypes: [],
       componentTypes,
+      deletedComponentTypes: [],
       indexes,
+      deletedIndexes: [],
       patterns,
     };
   }
