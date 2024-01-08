@@ -13,9 +13,9 @@ export async function schemaUpdateModifyIndexes(
       database,
       context,
       buildSqliteSqlQuery(({ sql, addValueList }) => {
-        sql`DELETE FROM unique_index_values WHERE index_name IN (${addValueList(
+        sql`DELETE FROM unique_index_values WHERE index_name IN ${addValueList(
           deleteUniqueValueIndexes,
-        )})`;
+        )}`;
       }),
     );
     if (deleteResult.isError()) return deleteResult;
