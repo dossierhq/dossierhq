@@ -9,17 +9,9 @@ import {
   type SqliteTransactionContext,
   type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
-import type { Database } from 'bun:sqlite';
+import type { Database, SQLiteError } from 'bun:sqlite';
 
 export type BunSqliteDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
-
-// TODO this is a copy of @types/bun, remove when new version is released
-interface SQLiteError extends Error {
-  readonly name: 'SQLiteError';
-  errno: number;
-  code?: string;
-  readonly byteOffset: number;
-}
 
 export async function createBunSqliteAdapter(
   context: LoggerContext,
