@@ -535,11 +535,11 @@ async function updateEntity_updateAndPublishEntityEvent({
   ]);
 }
 
-async function updateEntity_fixInvalidEntity({ clientProvider, server }: AdminEntityTestContext) {
+async function updateEntity_fixInvalidEntity({ clientProvider }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
 
   const { entity } = (
-    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
+    await createInvalidEntity(adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 
   const updateResult = await adminClient.updateEntity<AdminChangeValidations>({
@@ -573,13 +573,10 @@ async function updateEntity_fixInvalidEntity({ clientProvider, server }: AdminEn
   assertEquals(getEntity, expectedEntity);
 }
 
-async function updateEntity_fixInvalidComponent({
-  clientProvider,
-  server,
-}: AdminEntityTestContext) {
+async function updateEntity_fixInvalidComponent({ clientProvider }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
 
-  const { entity } = (await createEntityWithInvalidComponent(server, adminClient)).valueOrThrow();
+  const { entity } = (await createEntityWithInvalidComponent(adminClient)).valueOrThrow();
 
   const updateResult = await adminClient.updateEntity<AdminComponents>({
     id: entity.id,

@@ -32,7 +32,7 @@ import {
   MIGRATIONS_ENTITY_CREATE,
   VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
-import { processDirtyEntity, withSchemaAdvisoryLock } from '../shared-entity/SchemaTestUtils.js';
+import { withSchemaAdvisoryLock } from '../shared-entity/SchemaTestUtils.js';
 import {
   collectMatchingSearchResultNodes,
   countSearchResultWithEntity,
@@ -257,7 +257,6 @@ async function updateSchemaSpecification_concurrentUpdates({ clientProvider }: S
 }
 
 async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -288,15 +287,13 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
     );
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, reference), [
-      {
-        id: entityId,
-        valid: true,
-        validPublished: false,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity(reference), {
+      id: entityId,
+      valid: true,
+      validPublished: false,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     // Check that the entity is invalid
     const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
@@ -333,7 +330,6 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
 }
 
 async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEntityInvalid({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -361,15 +357,13 @@ async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEnt
     );
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entityId }), [
-      {
-        id: entityId,
-        valid: true,
-        validPublished: false,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+      id: entityId,
+      valid: true,
+      validPublished: false,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     // Check that the entity is invalid
     const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
@@ -388,7 +382,6 @@ async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEnt
 }
 
 async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -429,15 +422,13 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
     );
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entityId }), [
-      {
-        id: entityId,
-        valid: true,
-        validPublished: false,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+      id: entityId,
+      valid: true,
+      validPublished: false,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     // Check that it's no longer in the index
     const countAfterSchemaUpdate = (
@@ -458,7 +449,6 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
 }
 
 async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -496,15 +486,13 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     );
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entityId }), [
-      {
-        id: entityId,
-        valid: true,
-        validPublished: false,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+      id: entityId,
+      valid: true,
+      validPublished: false,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     // Check that the entity is invalid
     const publishedEntity = (await publishedClient.getEntity({ id: entityId })).valueOrThrow();
@@ -523,15 +511,13 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     );
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entityId }), [
-      {
-        id: entityId,
-        valid: true,
-        validPublished: true,
-        previousValid: true,
-        previousValidPublished: false,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+      id: entityId,
+      valid: true,
+      validPublished: true,
+      previousValid: true,
+      previousValidPublished: false,
+    });
 
     return ok(entityId);
   });
@@ -544,7 +530,6 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
 }
 
 async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -596,15 +581,13 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
     );
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entityId }), [
-      {
-        id: entityId,
-        valid: true,
-        validPublished: true,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+      id: entityId,
+      valid: true,
+      validPublished: true,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     return ok(entityId);
   });
@@ -752,7 +735,6 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -790,15 +772,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     const { schemaSpecification } = secondUpdateResult.valueOrThrow();
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: entity.id,
-        valid: false,
-        validPublished: false,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: entity.id,
+      valid: false,
+      validPublished: false,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     // Delete the field
     const thirdUpdateResult = await adminClient.updateSchemaSpecification({
@@ -812,15 +792,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     assertOkResult(thirdUpdateResult);
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: entity.id,
-        valid: true,
-        validPublished: true,
-        previousValid: false,
-        previousValidPublished: false,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: entity.id,
+      valid: true,
+      validPublished: true,
+      previousValid: false,
+      previousValidPublished: false,
+    });
 
     return ok(undefined);
   });
@@ -828,7 +806,6 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -874,15 +851,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: entity.id,
-        valid: true,
-        validPublished: null,
-        previousValid: true,
-        previousValidPublished: null,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: entity.id,
+      valid: true,
+      validPublished: null,
+      previousValid: true,
+      previousValidPublished: null,
+    });
 
     return ok(entity);
   });
@@ -896,7 +871,6 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
 }
 
 async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenWhenInvalid({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   // The reason why we test this is that we want to ensure that we update indexes even when an entity
@@ -967,15 +941,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: entity.id,
-        valid: false,
-        validPublished: null,
-        previousValid: true,
-        previousValidPublished: null,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: entity.id,
+      valid: false,
+      validPublished: null,
+      previousValid: true,
+      previousValidPublished: null,
+    });
 
     return ok(entity);
   });
@@ -1065,7 +1037,6 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
 }
 
 async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -1115,15 +1086,13 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: entity.id,
-        valid: true,
-        validPublished: null,
-        previousValid: true,
-        previousValidPublished: null,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: entity.id,
+      valid: true,
+      validPublished: null,
+      previousValid: true,
+      previousValidPublished: null,
+    });
 
     return ok(entity);
   });
@@ -1597,7 +1566,6 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
 }
 
 async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -1636,15 +1604,13 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
     const { schemaSpecification } = secondUpdateResult.valueOrThrow();
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, reference), [
-      {
-        id: reference.id,
-        valid: false,
-        validPublished: false,
-        previousValid: true,
-        previousValidPublished: true,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity(reference), {
+      id: reference.id,
+      valid: false,
+      validPublished: false,
+      previousValid: true,
+      previousValidPublished: true,
+    });
 
     // Delete the component type
     const thirdUpdateResult = await adminClient.updateSchemaSpecification({
@@ -1658,15 +1624,13 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
     assertOkResult(thirdUpdateResult);
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: reference.id,
-        valid: true,
-        validPublished: true,
-        previousValid: false,
-        previousValidPublished: false,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: reference.id,
+      valid: true,
+      validPublished: true,
+      previousValid: false,
+      previousValidPublished: false,
+    });
 
     return ok(undefined);
   });
@@ -1674,7 +1638,6 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
 }
 
 async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
-  server,
   clientProvider,
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
@@ -1720,15 +1683,13 @@ async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await processDirtyEntity(server, { id: entity.id }), [
-      {
-        id: entity.id,
-        valid: true,
-        validPublished: null,
-        previousValid: true,
-        previousValidPublished: null,
-      },
-    ]);
+    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+      id: entity.id,
+      valid: true,
+      validPublished: null,
+      previousValid: true,
+      previousValidPublished: null,
+    });
 
     return ok({ id: entity.id });
   });
@@ -2457,10 +2418,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   assertOkResult(updateResult);
 }
 
-async function updateSchemaSpecification_addingIndexToField({
-  server,
-  clientProvider,
-}: SchemaTestContext) {
+async function updateSchemaSpecification_addingIndexToField({ clientProvider }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
   const indexName = fieldName;
@@ -2505,8 +2463,8 @@ async function updateSchemaSpecification_addingIndexToField({
     assertOkResult(secondUpdateResult);
 
     // Process the entities
-    assertOkResult(await processDirtyEntity(server, { id: entityA.id }));
-    assertOkResult(await processDirtyEntity(server, { id: entityB.id }));
+    assertOkResult(await adminClient.processDirtyEntity({ id: entityA.id }));
+    assertOkResult(await adminClient.processDirtyEntity({ id: entityB.id }));
 
     // Check that the unique values work
     const uniqueA = (

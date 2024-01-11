@@ -10,7 +10,7 @@ import {
   type PromiseResult,
   type Result,
 } from '@dossierhq/core';
-import type { ProcessDirtyEntityPayload, Server } from '@dossierhq/server';
+import type { ProcessDirtyEntityPayload } from '@dossierhq/server';
 import {
   ChangeValidationsComponentWithoutValidationsUpdate,
   ChangeValidationsWithoutValidationsUpdate,
@@ -18,20 +18,18 @@ import {
 } from '../IntegrationTestSchema.js';
 import type { AdminChangeValidations, AdminComponents, AppAdminClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
-import { processAllDirtyEntities, withSchemaAdvisoryLock } from './SchemaTestUtils.js';
+import { withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 
 interface Options {
   publish?: boolean;
 }
 
 export async function createInvalidEntity(
-  server: Server,
   adminClient: AppAdminClient,
   fields: Partial<AdminChangeValidations['fields']>,
   options?: Options,
 ) {
   return doCreateInvalidEntity<AdminChangeValidations>(
-    server,
     adminClient,
     ChangeValidationsWithoutValidationsUpdate,
     copyEntity(CHANGE_VALIDATIONS_CREATE, { fields }),
@@ -40,12 +38,10 @@ export async function createInvalidEntity(
 }
 
 export async function createEntityWithInvalidComponent(
-  server: Server,
   adminClient: AppAdminClient,
   options?: Options,
 ) {
   return doCreateInvalidEntity<AdminComponents>(
-    server,
     adminClient,
     ChangeValidationsComponentWithoutValidationsUpdate,
     copyEntity(VALUE_ITEMS_CREATE, {
@@ -56,7 +52,6 @@ export async function createEntityWithInvalidComponent(
 }
 
 async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object> = AdminEntity>(
-  server: Server,
   adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   entity: AdminEntityCreate<TEntity>,
@@ -79,7 +74,6 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
     | typeof ErrorType.Generic
   > = notOk.Generic('not set');
   const schemaResult = await withTemporarySchemaChange(
-    server,
     adminClient,
     schemaUpdate,
     async () => {
@@ -103,7 +97,6 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
 }
 
 async function withTemporarySchemaChange(
-  server: Server,
   adminClient: AppAdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
   onChangedSchema: () => Promise<EntityReference | undefined>,
@@ -121,6 +114,15 @@ async function withTemporarySchemaChange(
     if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
     // process dirty
-    return processAllDirtyEntities(server, filter, onProcessed);
+    if (filter) {
+      const processResult = await adminClient.processDirtyEntity(filter);
+      if (processResult.isError()) return processResult;
+
+      if (processResult.value) {
+        onProcessed(processResult.value);
+      }
+    }
+
+    return ok(undefined);
   });
 }

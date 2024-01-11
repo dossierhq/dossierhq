@@ -337,13 +337,12 @@ async function publishEntities_publishEntitiesEvent({ clientProvider }: AdminEnt
 
 async function publishEntities_fixInvalidEntityByPublishing({
   clientProvider,
-  server,
 }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const {
     entity: { id: entityId },
   } = (
-    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
+    await createInvalidEntity(adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
 
   const entity = (await adminClient.getEntity({ id: entityId })).valueOrThrow();
@@ -488,11 +487,10 @@ async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntity
 
 async function publishEntities_errorPublishInvalidEntity({
   clientProvider,
-  server,
 }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const { entity } = (
-    await createInvalidEntity(server, adminClient, {
+    await createInvalidEntity(adminClient, {
       required: 'Required',
       matchPattern: 'no match',
     })
@@ -515,11 +513,10 @@ async function publishEntities_errorPublishInvalidEntity({
 
 async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
   clientProvider,
-  server,
 }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const { entity } = (
-    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
+    await createInvalidEntity(adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
 
   const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 1 }]);

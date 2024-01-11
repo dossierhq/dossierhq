@@ -287,12 +287,12 @@ async function getEntity_usingUniqueIndex({
   );
 }
 
-async function getEntity_invalidEntity({ clientProvider, server }: PublishedEntityTestContext) {
+async function getEntity_invalidEntity({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
-    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' }, { publish: true })
+    await createInvalidEntity(adminClient, { matchPattern: 'no match' }, { publish: true })
   ).valueOrThrow();
 
   const result = await publishedClient.getEntity({ id: entity.id });
@@ -302,14 +302,12 @@ async function getEntity_invalidEntity({ clientProvider, server }: PublishedEnti
 
 async function getEntity_invalidEntityAdminOnlyComponent({
   clientProvider,
-  server,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
     await createInvalidEntity(
-      server,
       adminClient,
       { component: { type: 'AdminOnlyComponent' } },
       { publish: true },
@@ -324,14 +322,12 @@ async function getEntity_invalidEntityAdminOnlyComponent({
 
 async function getEntity_invalidEntityAdminOnlyComponentList({
   clientProvider,
-  server,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
     await createInvalidEntity(
-      server,
       adminClient,
       { componentList: [{ type: 'AdminOnlyComponent' }] },
       { publish: true },
@@ -346,14 +342,12 @@ async function getEntity_invalidEntityAdminOnlyComponentList({
 
 async function getEntity_invalidEntityAdminOnlyComponentInRichText({
   clientProvider,
-  server,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
     await createInvalidEntity(
-      server,
       adminClient,
       {
         richText: createRichText([

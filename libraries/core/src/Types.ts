@@ -378,6 +378,14 @@ export interface Edge<TOk, TError extends ErrorType> {
   cursor: string;
 }
 
+export interface ProcessDirtyEntityPayload {
+  id: string;
+  valid: boolean;
+  validPublished: boolean | null;
+  previousValid: boolean;
+  previousValidPublished: boolean | null;
+}
+
 export interface AdvisoryLockOptions {
   leaseDuration: number;
 }

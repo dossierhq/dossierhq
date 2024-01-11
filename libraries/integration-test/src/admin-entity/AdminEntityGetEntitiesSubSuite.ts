@@ -598,10 +598,10 @@ async function getEntities_statusAll({ clientProvider }: AdminEntityTestContext)
   assertTruthy(withdrawn > 0);
 }
 
-async function getEntities_invalidOnly({ clientProvider, server }: AdminEntityTestContext) {
+async function getEntities_invalidOnly({ clientProvider }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const { entity } = (
-    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
+    await createInvalidEntity(adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 
   const matches = await countSearchResultWithEntity(

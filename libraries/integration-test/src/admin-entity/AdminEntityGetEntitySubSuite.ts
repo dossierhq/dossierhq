@@ -94,10 +94,10 @@ async function getEntity_getOldVersion({ clientProvider }: AdminEntityTestContex
   assertSame(isEntityNameAsRequested(result.value.info.name, 'Original name'), true);
 }
 
-async function getEntity_invalidEntity({ clientProvider, server }: AdminEntityTestContext) {
+async function getEntity_invalidEntity({ clientProvider }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const { entity } = (
-    await createInvalidEntity(server, adminClient, { matchPattern: 'no match' })
+    await createInvalidEntity(adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 
   const result = await adminClient.getEntity({ id: entity.id });
@@ -106,13 +106,10 @@ async function getEntity_invalidEntity({ clientProvider, server }: AdminEntityTe
   assertSame(result.value.info.validPublished, null); // not published
 }
 
-async function getEntity_invalidPublishedEntity({
-  clientProvider,
-  server,
-}: AdminEntityTestContext) {
+async function getEntity_invalidPublishedEntity({ clientProvider }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const { entity } = (
-    await createInvalidEntity(server, adminClient, { required: null }, { publish: true })
+    await createInvalidEntity(adminClient, { required: null }, { publish: true })
   ).valueOrThrow();
 
   const result = await adminClient.getEntity({ id: entity.id });

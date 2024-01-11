@@ -1,4 +1,3 @@
-import type { Server } from '@dossierhq/server';
 import { buildSuite } from '../Builder.js';
 import type {
   AdminClientProvider,
@@ -12,7 +11,6 @@ import { ServerProcessNextDirtyEntitySubSuite } from './ServerProcessNextDirtyEn
 
 export interface SchemaTestContext {
   clientProvider: AdminClientProvider & PublishedClientProvider;
-  server: Server;
 }
 
 export function createSchemaTestSuite<TCleanup>(

@@ -33,6 +33,7 @@ import type {
   EntitySamplingPayload,
   EntityVersionReference,
   Paging,
+  ProcessDirtyEntityPayload,
   UniqueIndexReference,
 } from '../Types.js';
 import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
@@ -244,6 +245,10 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
+  processDirtyEntity(
+    reference: EntityReference,
+  ): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic>;
+
   acquireAdvisoryLock(
     name: string,
     options: AdvisoryLockOptions,
@@ -363,6 +368,8 @@ export interface AdminExceptionClient<
 
   unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload>;
 
+  processDirtyEntity(reference: EntityReference): Promise<ProcessDirtyEntityPayload | null>;
+
   acquireAdvisoryLock(name: string, options: AdvisoryLockOptions): Promise<AdvisoryLockPayload>;
 
   renewAdvisoryLock(name: string, handle: number): Promise<AdvisoryLockPayload>;
@@ -382,6 +389,7 @@ export const AdminClientOperationName = {
   getEntity: 'getEntity',
   getEntityList: 'getEntityList',
   getSchemaSpecification: 'getSchemaSpecification',
+  processDirtyEntity: 'processDirtyEntity',
   publishEntities: 'publishEntities',
   releaseAdvisoryLock: 'releaseAdvisoryLock',
   renewAdvisoryLock: 'renewAdvisoryLock',
@@ -428,6 +436,7 @@ interface AdminClientOperationArguments {
   [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
   [AdminClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
+  [AdminClientOperationName.processDirtyEntity]: MethodParameters<'processDirtyEntity'>;
   [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodParameters<'releaseAdvisoryLock'>;
   [AdminClientOperationName.renewAdvisoryLock]: MethodParameters<'renewAdvisoryLock'>;
@@ -450,6 +459,7 @@ interface AdminClientOperationReturnOk {
   [AdminClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
   [AdminClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
+  [AdminClientOperationName.processDirtyEntity]: MethodReturnTypeOk<'processDirtyEntity'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeOk<'releaseAdvisoryLock'>;
   [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeOk<'renewAdvisoryLock'>;
@@ -472,6 +482,7 @@ interface AdminClientOperationReturnError {
   [AdminClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
   [AdminClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
   [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
+  [AdminClientOperationName.processDirtyEntity]: MethodReturnTypeError<'processDirtyEntity'>;
   [AdminClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
   [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeError<'releaseAdvisoryLock'>;
   [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeError<'renewAdvisoryLock'>;
@@ -505,6 +516,7 @@ export const AdminClientModifyingOperations: Readonly<Set<string>> = /* @__PURE_
     AdminClientOperationName.acquireAdvisoryLock,
     AdminClientOperationName.archiveEntity,
     AdminClientOperationName.createEntity,
+    AdminClientOperationName.processDirtyEntity,
     AdminClientOperationName.publishEntities,
     AdminClientOperationName.releaseAdvisoryLock,
     AdminClientOperationName.renewAdvisoryLock,
@@ -743,6 +755,16 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
+  processDirtyEntity(
+    reference: EntityReference,
+  ): MethodReturnType<typeof AdminClientOperationName.processDirtyEntity> {
+    return this.executeOperation({
+      name: AdminClientOperationName.processDirtyEntity,
+      args: [reference],
+      modifies: true,
+    });
+  }
+
   acquireAdvisoryLock(
     name: string,
     options: AdvisoryLockOptions,
@@ -942,6 +964,10 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.unarchiveEntity(reference)).valueOrThrow();
   }
 
+  async processDirtyEntity(reference: EntityReference): Promise<ProcessDirtyEntityPayload | null> {
+    return (await this.client.processDirtyEntity(reference)).valueOrThrow();
+  }
+
   async acquireAdvisoryLock(
     name: string,
     options: AdvisoryLockOptions,
@@ -1029,6 +1055,11 @@ export async function executeAdminClientOperationFromJson(
       const [options] =
         operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getSchemaSpecification];
       return await adminClient.getSchemaSpecification(options);
+    }
+    case AdminClientOperationName.processDirtyEntity: {
+      const [reference] =
+        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.processDirtyEntity];
+      return await adminClient.processDirtyEntity(reference);
     }
     case AdminClientOperationName.publishEntities: {
       const [references] =
@@ -1171,6 +1202,12 @@ export function convertJsonAdminClientResult<
     }
     case AdminClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
+    case AdminClientOperationName.processDirtyEntity: {
+      const result: MethodReturnTypeWithoutPromise<
+        typeof AdminClientOperationName.processDirtyEntity
+      > = ok(value as ProcessDirtyEntityPayload);
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
     case AdminClientOperationName.publishEntities: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.publishEntities

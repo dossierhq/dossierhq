@@ -32,6 +32,7 @@ import { releaseAdvisoryLock } from './advisory-lock/releaseAdvisoryLock.js';
 import { renewAdvisoryLock } from './advisory-lock/renewAdvisoryLock.js';
 import { eventGetChangelogEvents } from './event/eventGetChangelogEvents.js';
 import { eventGetChangelogEventsTotalCount } from './event/eventGetChangelogEventsTotalCount.js';
+import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 import { assertExhaustive } from './utils/AssertUtils.js';
 
@@ -121,6 +122,58 @@ export function createServerAdminClient({
         );
         break;
       }
+      case AdminClientOperationName.getEntities: {
+        const {
+          args: [query, paging],
+          resolve,
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
+        resolve(
+          await adminSearchEntities(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            paging,
+          ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getEntitiesSample: {
+        const {
+          args: [query, options],
+          resolve,
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntitiesSample>;
+        resolve(
+          await adminSampleEntities(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+            options,
+          ),
+        );
+        break;
+      }
+      case AdminClientOperationName.getEntitiesTotalCount: {
+        const {
+          args: [query],
+          resolve,
+        } = operation as AdminClientOperation<
+          typeof AdminClientOperationName.getEntitiesTotalCount
+        >;
+        resolve(
+          await adminGetTotalCount(
+            serverImpl.getAdminSchema(),
+            authorizationAdapter,
+            databaseAdapter,
+            context,
+            query,
+          ),
+        );
+        break;
+      }
       case AdminClientOperationName.getEntity: {
         const {
           args: [reference],
@@ -170,20 +223,17 @@ export function createServerAdminClient({
         }
         break;
       }
-      case AdminClientOperationName.getEntitiesTotalCount: {
+      case AdminClientOperationName.processDirtyEntity: {
         const {
-          args: [query],
+          args: [reference],
           resolve,
-        } = operation as AdminClientOperation<
-          typeof AdminClientOperationName.getEntitiesTotalCount
-        >;
+        } = operation as AdminClientOperation<typeof AdminClientOperationName.processDirtyEntity>;
         resolve(
-          await adminGetTotalCount(
+          await managementDirtyProcessNextEntity(
             serverImpl.getAdminSchema(),
-            authorizationAdapter,
             databaseAdapter,
             context,
-            query,
+            reference,
           ),
         );
         break;
@@ -218,40 +268,6 @@ export function createServerAdminClient({
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.renewAdvisoryLock>;
         resolve(await renewAdvisoryLock(databaseAdapter, context, name, handle));
-        break;
-      }
-      case AdminClientOperationName.getEntitiesSample: {
-        const {
-          args: [query, options],
-          resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntitiesSample>;
-        resolve(
-          await adminSampleEntities(
-            serverImpl.getAdminSchema(),
-            authorizationAdapter,
-            databaseAdapter,
-            context,
-            query,
-            options,
-          ),
-        );
-        break;
-      }
-      case AdminClientOperationName.getEntities: {
-        const {
-          args: [query, paging],
-          resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
-        resolve(
-          await adminSearchEntities(
-            serverImpl.getAdminSchema(),
-            authorizationAdapter,
-            databaseAdapter,
-            context,
-            query,
-            paging,
-          ),
-        );
         break;
       }
       case AdminClientOperationName.unarchiveEntity: {
