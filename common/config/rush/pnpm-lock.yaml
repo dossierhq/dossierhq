@@ -123,8 +123,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/sql.js
       graphiql:
-        specifier: ~3.0.10
-        version: 3.0.10(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ~3.1.0
+        version: 3.1.0(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
       graphql:
         specifier: ~16.8.1
         version: 16.8.1
@@ -1891,8 +1891,8 @@ importers:
         specifier: ~8.4.1
         version: 8.4.1
       graphiql:
-        specifier: ~3.0.10
-        version: 3.0.10(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ~3.1.0
+        version: 3.1.0(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
       graphql:
         specifier: ~16.8.1
         version: 16.8.1
@@ -13347,8 +13347,8 @@ packages:
   /graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  /graphiql@3.0.10(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-xgRFCg0mgIyca8keWkmBFA3knh9exDg53SxqFh96ewoMWYLeziqc0xIGFe2L/As8Aw1u5pFZcW913HwX3IXztw==}
+  /graphiql@3.1.0(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1l2PecYNvFYYNSYq+4vIJOACXkP60Kod0E0SnKu+2f0Ux/npFNr3TfwJLZs7eKqqSh0KODmorvHi/XBP46Ua7A==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17 || ^18
@@ -13415,7 +13415,7 @@ packages:
     dependencies:
       graphql: 16.8.1
       nullthrows: 1.1.1
-      vscode-languageserver-types: 3.17.1
+      vscode-languageserver-types: 3.17.5
     dev: false
 
   /graphql-voyager@2.0.0(@types/react@18.2.46)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
@@ -19213,10 +19213,6 @@ packages:
 
   /vscode-languageserver-textdocument@1.0.11:
     resolution: {integrity: sha512-X+8T3GoiwTVlJbicx/sIAF+yuJAqz8VvwJyoMVhwEMoEKE/fkDmrqUgDMyBECcM2A2frVZIUj5HI/ErRXCfOeA==}
-    dev: false
-
-  /vscode-languageserver-types@3.17.1:
-    resolution: {integrity: sha512-K3HqVRPElLZVVPtMeKlsyL9aK0GxGQpvtAUTfX4k7+iJ4mc1M+JM+zQwkgGy2LzY0f0IAafe8MKqIkJrxfGGjQ==}
     dev: false
 
   /vscode-languageserver-types@3.17.5:
