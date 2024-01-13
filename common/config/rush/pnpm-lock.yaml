@@ -94,7 +94,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../apps/playground:
     dependencies:
@@ -124,7 +124,7 @@ importers:
         version: link:../../libraries/sql.js
       graphiql:
         specifier: ~3.1.0
-        version: 3.1.0(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
+        version: 3.1.0(@types/node@20.11.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
       graphql:
         specifier: ~16.8.1
         version: 16.8.1
@@ -158,7 +158,7 @@ importers:
         version: link:../../stack/eslint-config-react
       '@graphiql/toolkit':
         specifier: ~0.9.1
-        version: 0.9.1(@types/node@20.10.6)(graphql-ws@5.14.3)(graphql@16.8.1)
+        version: 0.9.1(@types/node@20.11.0)(graphql-ws@5.14.3)(graphql@16.8.1)
       '@types/react':
         specifier: ~18.2.46
         version: 18.2.46
@@ -176,7 +176,7 @@ importers:
         version: 8.56.0
       graphql-config:
         specifier: ~5.0.3
-        version: 5.0.3(@types/node@20.10.6)(graphql@16.8.1)
+        version: 5.0.3(@types/node@20.11.0)(graphql@16.8.1)
       graphql-ws:
         specifier: ~5.14.3
         version: 5.14.3(graphql@16.8.1)
@@ -191,7 +191,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ~5.0.10
-        version: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+        version: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
 
   ../../apps/playground-example-generator:
     dependencies:
@@ -231,7 +231,7 @@ importers:
         version: link:../../libraries/typescript-generator
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.8
@@ -291,7 +291,7 @@ importers:
         version: 1.0.9(@sentry/astro@7.93.0)(astro@4.1.1)
       astro:
         specifier: ~4.1.1
-        version: 4.1.1(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
+        version: 4.1.1(@types/node@20.11.0)(sass@1.69.6)(typescript@5.3.3)
       better-sqlite3:
         specifier: ~9.2.2
         version: 9.2.2
@@ -383,7 +383,7 @@ importers:
         version: link:../../libraries/postgres-tools
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.8
@@ -487,7 +487,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.8
@@ -663,7 +663,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ~5.0.10
-        version: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+        version: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/benchpress:
     dependencies:
@@ -679,13 +679,13 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/bun':
         specifier: ~1.0.1
         version: 1.0.1
       '@types/node':
-        specifier: ~20.10.6
-        version: 20.10.6
+        specifier: ~20.11.0
+        version: 20.11.0
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -722,7 +722,7 @@ importers:
         version: link:../server
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.8
@@ -740,7 +740,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/bun-sqlite:
     dependencies:
@@ -765,7 +765,7 @@ importers:
         version: link:../server
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/bun':
         specifier: ~1.0.1
         version: 1.0.1
@@ -808,7 +808,7 @@ importers:
         version: link:../react-components
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/react':
         specifier: ~18.2.46
         version: 18.2.46
@@ -836,7 +836,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -848,7 +848,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/core-vitest:
     dependencies:
@@ -867,7 +867,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -879,7 +879,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/database-adapter:
     dependencies:
@@ -898,7 +898,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -910,7 +910,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/deno-postgres:
     devDependencies:
@@ -965,7 +965,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@storybook/addon-actions':
         specifier: ~7.6.7
         version: 7.6.7
@@ -1046,7 +1046,7 @@ importers:
         version: 5.3.3
       vite:
         specifier: ~5.0.10
-        version: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+        version: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/graphql:
     dependencies:
@@ -1077,7 +1077,7 @@ importers:
         version: link:../server
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.8
@@ -1101,7 +1101,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/integration-test:
     dependencies:
@@ -1129,10 +1129,10 @@ importers:
         version: link:../typescript-generator
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/node':
-        specifier: ~20.10.6
-        version: 20.10.6
+        specifier: ~20.11.0
+        version: 20.11.0
       '@types/uuid':
         specifier: ~9.0.7
         version: 9.0.7
@@ -1172,7 +1172,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/leaflet':
         specifier: ~1.9.8
         version: 1.9.8
@@ -1227,7 +1227,7 @@ importers:
         version: 0.3.6
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1239,7 +1239,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/pg:
     dependencies:
@@ -1279,7 +1279,7 @@ importers:
         version: link:../server
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/pg':
         specifier: ~8.10.9
         version: 8.10.9
@@ -1303,7 +1303,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/postgres-core:
     dependencies:
@@ -1328,7 +1328,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1340,7 +1340,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/postgres-tools:
     dependencies:
@@ -1416,7 +1416,7 @@ importers:
         version: link:../server
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@storybook/addon-actions':
         specifier: ~7.6.7
         version: 7.6.7
@@ -1488,10 +1488,10 @@ importers:
         version: 9.0.1
       vite:
         specifier: ~5.0.10
-        version: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+        version: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/server:
     dependencies:
@@ -1516,7 +1516,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1528,7 +1528,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/sql.js:
     dependencies:
@@ -1556,7 +1556,7 @@ importers:
         version: link:../server
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -1580,7 +1580,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/sql.js-browser-integration-test:
     dependencies:
@@ -1648,7 +1648,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1660,7 +1660,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../libraries/typescript-generator:
     dependencies:
@@ -1679,7 +1679,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1691,7 +1691,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../rigs/heft-node-rig:
     dependencies:
@@ -1704,13 +1704,13 @@ importers:
     devDependencies:
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.2.15
-        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.10.6)
+        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.11.0)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.2.15
-        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.10.6)
+        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.11.0)
 
   ../../stack/eslint-config-generic:
     dependencies:
@@ -1753,7 +1753,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1765,7 +1765,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../templates/tool:
     dependencies:
@@ -1781,7 +1781,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1841,7 +1841,7 @@ importers:
         version: 0.12.5(lexical@0.12.5)
       '@microsoft/rush-lib':
         specifier: ~5.112.2
-        version: 5.112.2(@types/node@20.10.6)
+        version: 5.112.2(@types/node@20.11.0)
       '@react-aria/overlays':
         specifier: ~3.20.0
         version: 3.20.0(react-dom@18.2.0)(react@18.2.0)
@@ -1862,7 +1862,7 @@ importers:
         version: 6.18.1(eslint@8.56.0)(typescript@5.3.3)
       astro:
         specifier: ~4.1.1
-        version: 4.1.1(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
+        version: 4.1.1(@types/node@20.11.0)(sass@1.69.6)(typescript@5.3.3)
       better-sqlite3:
         specifier: ~9.2.2
         version: 9.2.2
@@ -1892,7 +1892,7 @@ importers:
         version: 8.4.1
       graphiql:
         specifier: ~3.1.0
-        version: 3.1.0(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
+        version: 3.1.0(@types/node@20.11.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
       graphql:
         specifier: ~16.8.1
         version: 16.8.1
@@ -1962,7 +1962,7 @@ importers:
     devDependencies:
       '@graphiql/toolkit':
         specifier: ~0.9.1
-        version: 0.9.1(@types/node@20.10.6)(graphql-ws@5.14.3)(graphql@16.8.1)
+        version: 0.9.1(@types/node@20.11.0)(graphql-ws@5.14.3)(graphql@16.8.1)
       '@libsql/client':
         specifier: ~0.3.6
         version: 0.3.6
@@ -1977,13 +1977,13 @@ importers:
         version: 15.2.3(rollup@4.9.2)
       '@rushstack/heft':
         specifier: 0.63.6
-        version: 0.63.6(@types/node@20.10.6)
+        version: 0.63.6(@types/node@20.11.0)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.2.15
-        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.10.6)
+        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.11.0)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.2.15
-        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.10.6)
+        version: 0.2.15(@rushstack/heft@0.63.6)(@types/node@20.11.0)
       '@storybook/addon-actions':
         specifier: ~7.6.7
         version: 7.6.7
@@ -2030,8 +2030,8 @@ importers:
         specifier: ~4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: ~20.10.6
-        version: 20.10.6
+        specifier: ~20.11.0
+        version: 20.11.0
       '@types/pg':
         specifier: ~8.10.9
         version: 8.10.9
@@ -2076,7 +2076,7 @@ importers:
         version: 0.6.15(eslint@8.56.0)(typescript@5.3.3)
       graphql-config:
         specifier: ~5.0.3
-        version: 5.0.3(@types/node@20.10.6)(graphql@16.8.1)
+        version: 5.0.3(@types/node@20.11.0)(graphql@16.8.1)
       graphql-ws:
         specifier: ~5.14.3
         version: 5.14.3(graphql@16.8.1)
@@ -2118,10 +2118,10 @@ importers:
         version: 4.7.0
       vite:
         specifier: ~5.0.10
-        version: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+        version: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
       vitest:
         specifier: ~1.1.1
-        version: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+        version: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
 
   ../../tools/generic-tools:
     dependencies:
@@ -2281,7 +2281,7 @@ packages:
     peerDependencies:
       astro: ^4.0.0
     dependencies:
-      astro: 4.1.1(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
+      astro: 4.1.1(@types/node@20.11.0)(sass@1.69.6)(typescript@5.3.3)
       send: 0.18.0
       server-destroy: 1.0.1
     dev: false
@@ -4506,14 +4506,14 @@ packages:
       '@fortawesome/fontawesome-common-types': 6.5.1
     dev: false
 
-  /@graphiql/react@0.20.2(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
+  /@graphiql/react@0.20.2(@types/node@20.11.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-/crAUlM+4iVHyNHVdiZjsTEqfMXBHfjEvrMwCwTVig6YXmCAVuaxqkD7NlDtrrPQArLGkABmf1Nw7ObRpby5lg==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17 || ^18
       react-dom: ^16.8.0 || ^17 || ^18
     dependencies:
-      '@graphiql/toolkit': 0.9.1(@types/node@20.10.6)(graphql-ws@5.14.3)(graphql@16.8.1)
+      '@graphiql/toolkit': 0.9.1(@types/node@20.11.0)(graphql-ws@5.14.3)(graphql@16.8.1)
       '@headlessui/react': 1.7.15(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-dialog': 1.0.4(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-dropdown-menu': 2.0.5(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
@@ -4539,7 +4539,7 @@ packages:
       - graphql-ws
     dev: false
 
-  /@graphiql/toolkit@0.9.1(@types/node@20.10.6)(graphql-ws@5.14.3)(graphql@16.8.1):
+  /@graphiql/toolkit@0.9.1(@types/node@20.11.0)(graphql-ws@5.14.3)(graphql@16.8.1):
     resolution: {integrity: sha512-LVt9pdk0830so50ZnU2Znb2rclcoWznG8r8asqAENzV0U1FM1kuY0sdPpc/rBc9MmmNgnB6A+WZzDhq6dbhTHA==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
@@ -4551,7 +4551,7 @@ packages:
       '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
       graphql: 16.8.1
       graphql-ws: 5.14.3(graphql@16.8.1)
-      meros: 1.2.1(@types/node@20.10.6)
+      meros: 1.2.1(@types/node@20.11.0)
     transitivePeerDependencies:
       - '@types/node'
 
@@ -4603,7 +4603,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@graphql-tools/executor-http@1.0.0(@types/node@20.10.6)(graphql@16.8.1):
+  /@graphql-tools/executor-http@1.0.0(@types/node@20.11.0)(graphql@16.8.1):
     resolution: {integrity: sha512-7R9IWRN1Iszyayd4qgguITLLTmRUZ3wSS5umK0xwShB8mFQ5cSsVx6rewPhGIwGEenN6e9ahwcGX9ytuLlw55g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -4615,7 +4615,7 @@ packages:
       dset: 3.1.3
       extract-files: 11.0.0
       graphql: 16.8.1
-      meros: 1.2.1(@types/node@20.10.6)
+      meros: 1.2.1(@types/node@20.11.0)
       tslib: 2.6.2
       value-or-promise: 1.0.12
     transitivePeerDependencies:
@@ -4729,7 +4729,7 @@ packages:
       value-or-promise: 1.0.12
     dev: true
 
-  /@graphql-tools/url-loader@8.0.0(@types/node@20.10.6)(graphql@16.8.1):
+  /@graphql-tools/url-loader@8.0.0(@types/node@20.11.0)(graphql@16.8.1):
     resolution: {integrity: sha512-rPc9oDzMnycvz+X+wrN3PLrhMBQkG4+sd8EzaFN6dypcssiefgWKToXtRKI8HHK68n2xEq1PyrOpkjHFJB+GwA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -4738,7 +4738,7 @@ packages:
       '@ardatan/sync-fetch': 0.0.1
       '@graphql-tools/delegate': 10.0.0(graphql@16.8.1)
       '@graphql-tools/executor-graphql-ws': 1.0.0(graphql@16.8.1)
-      '@graphql-tools/executor-http': 1.0.0(@types/node@20.10.6)(graphql@16.8.1)
+      '@graphql-tools/executor-http': 1.0.0(@types/node@20.11.0)(graphql@16.8.1)
       '@graphql-tools/executor-legacy-ws': 1.0.0(graphql@16.8.1)
       '@graphql-tools/utils': 10.0.0(graphql@16.8.1)
       '@graphql-tools/wrap': 10.0.0(graphql@16.8.1)
@@ -5093,7 +5093,7 @@ packages:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.3
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       '@types/yargs': 17.0.20
       chalk: 4.1.2
     dev: true
@@ -5112,7 +5112,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.3.3)
       typescript: 5.3.3
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.2:
@@ -5473,22 +5473,22 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@microsoft/rush-lib@5.112.2(@types/node@20.10.6):
+  /@microsoft/rush-lib@5.112.2(@types/node@20.11.0):
     resolution: {integrity: sha512-JcLIyxK8uVsB3P0xWBwTFXAN3gLxTio38m0hrAdNPK07eoVV9RdIOMMNeq9AbdUv4lTCVCP46Z6lTmKgj65d1g==}
     engines: {node: '>=5.6.0'}
     dependencies:
       '@pnpm/dependency-path': 2.1.2
       '@pnpm/link-bins': 5.3.25
-      '@rushstack/heft-config-file': 0.14.3(@types/node@20.10.6)
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@rushstack/package-deps-hash': 4.1.14(@types/node@20.10.6)
-      '@rushstack/package-extractor': 0.6.17(@types/node@20.10.6)
+      '@rushstack/heft-config-file': 0.14.3(@types/node@20.11.0)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@rushstack/package-deps-hash': 4.1.14(@types/node@20.11.0)
+      '@rushstack/package-extractor': 0.6.17(@types/node@20.11.0)
       '@rushstack/rig-package': 0.5.1
-      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.112.2(@types/node@20.10.6)
-      '@rushstack/rush-azure-storage-build-cache-plugin': 5.112.2(@types/node@20.10.6)
-      '@rushstack/rush-http-build-cache-plugin': 5.112.2(@types/node@20.10.6)
-      '@rushstack/stream-collator': 4.1.15(@types/node@20.10.6)
-      '@rushstack/terminal': 0.7.14(@types/node@20.10.6)
+      '@rushstack/rush-amazon-s3-build-cache-plugin': 5.112.2(@types/node@20.11.0)
+      '@rushstack/rush-azure-storage-build-cache-plugin': 5.112.2(@types/node@20.11.0)
+      '@rushstack/rush-http-build-cache-plugin': 5.112.2(@types/node@20.11.0)
+      '@rushstack/stream-collator': 4.1.15(@types/node@20.11.0)
+      '@rushstack/terminal': 0.7.14(@types/node@20.11.0)
       '@rushstack/ts-command-line': 4.17.1
       '@types/node-fetch': 2.6.2
       '@yarnpkg/lockfile': 1.0.2
@@ -8111,47 +8111,47 @@ packages:
   /@rushstack/eslint-patch@1.6.1:
     resolution: {integrity: sha512-UY+FGM/2jjMkzQLn8pxcHGMaVLh9aEitG3zY2CiY7XHdLiz3bZOwa6oDxNqEMv7zZkV+cj5DOdz0cQ1BP5Hjgw==}
 
-  /@rushstack/heft-config-file@0.14.3(@types/node@20.10.6):
+  /@rushstack/heft-config-file@0.14.3(@types/node@20.11.0):
     resolution: {integrity: sha512-NjkqzE8A8wn+SHiVWH8BzWKH/dvu3L/8ISt/0ziMfeiNH+lT7hvH0mpTu/FPNQpEx6XqEuoWg0AWkLT7DIpWGw==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
       '@rushstack/rig-package': 0.5.1
       jsonpath-plus: 4.0.0
     transitivePeerDependencies:
       - '@types/node'
 
-  /@rushstack/heft-config-file@0.14.4(@types/node@20.10.6):
+  /@rushstack/heft-config-file@0.14.4(@types/node@20.11.0):
     resolution: {integrity: sha512-qC9xIh/zaj2g1Jp58uvsuW6FtKOQm8ETynE7DJybtBguhBf2F6f//l8BZBX7UTzW3rwoHyGsQpbp97PulPjZKg==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      '@rushstack/node-core-library': 3.63.0(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.63.0(@types/node@20.11.0)
       '@rushstack/rig-package': 0.5.1
       jsonpath-plus: 4.0.0
     transitivePeerDependencies:
       - '@types/node'
     dev: true
 
-  /@rushstack/heft-lint-plugin@0.2.15(@rushstack/heft@0.63.6)(@types/node@20.10.6):
+  /@rushstack/heft-lint-plugin@0.2.15(@rushstack/heft@0.63.6)(@types/node@20.11.0):
     resolution: {integrity: sha512-Ovc+xKF86+FHpc4EcqDMOqatikLsc0ZuV7vk6eyaOp9GYRzEWs9kQvwu1rwXieiofddfvnHlChuXoLZQKEQJcA==}
     peerDependencies:
       '@rushstack/heft': 0.63.5
     dependencies:
-      '@rushstack/heft': 0.63.6(@types/node@20.10.6)
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
+      '@rushstack/heft': 0.63.6(@types/node@20.11.0)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
       semver: 7.5.4
     transitivePeerDependencies:
       - '@types/node'
     dev: true
 
-  /@rushstack/heft-typescript-plugin@0.2.15(@rushstack/heft@0.63.6)(@types/node@20.10.6):
+  /@rushstack/heft-typescript-plugin@0.2.15(@rushstack/heft@0.63.6)(@types/node@20.11.0):
     resolution: {integrity: sha512-xaEewmKyihwJx4hiD7LIfAfaiIPeo3W2RefPt5EXzIt55k66teXNFaUbKtEBOtFBwawTkZerOUuEWVvXhT2XAA==}
     peerDependencies:
       '@rushstack/heft': 0.63.5
     dependencies:
-      '@rushstack/heft': 0.63.6(@types/node@20.10.6)
-      '@rushstack/heft-config-file': 0.14.3(@types/node@20.10.6)
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
+      '@rushstack/heft': 0.63.6(@types/node@20.11.0)
+      '@rushstack/heft-config-file': 0.14.3(@types/node@20.11.0)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
       '@types/tapable': 1.0.6
       semver: 7.5.4
       tapable: 1.1.3
@@ -8159,14 +8159,14 @@ packages:
       - '@types/node'
     dev: true
 
-  /@rushstack/heft@0.63.6(@types/node@20.10.6):
+  /@rushstack/heft@0.63.6(@types/node@20.11.0):
     resolution: {integrity: sha512-y7NctpabmKykHzdqlXWJqt3SEg0mA4GMah04f39wu4Xx+1gNh9nusaIDHmpzV67wq5KAFr5GDeGcSION0Nx4Mw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dependencies:
-      '@rushstack/heft-config-file': 0.14.4(@types/node@20.10.6)
-      '@rushstack/node-core-library': 3.63.0(@types/node@20.10.6)
-      '@rushstack/operation-graph': 0.2.2(@types/node@20.10.6)
+      '@rushstack/heft-config-file': 0.14.4(@types/node@20.11.0)
+      '@rushstack/node-core-library': 3.63.0(@types/node@20.11.0)
+      '@rushstack/operation-graph': 0.2.2(@types/node@20.11.0)
       '@rushstack/rig-package': 0.5.1
       '@rushstack/ts-command-line': 4.17.1
       '@types/tapable': 1.0.6
@@ -8181,7 +8181,7 @@ packages:
       - '@types/node'
     dev: true
 
-  /@rushstack/node-core-library@3.62.0(@types/node@20.10.6):
+  /@rushstack/node-core-library@3.62.0(@types/node@20.11.0):
     resolution: {integrity: sha512-88aJn2h8UpSvdwuDXBv1/v1heM6GnBf3RjEy6ZPP7UnzHNCqOHA2Ut+ScYUbXcqIdfew9JlTAe3g+cnX9xQ/Aw==}
     peerDependencies:
       '@types/node': '*'
@@ -8189,7 +8189,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -8198,7 +8198,7 @@ packages:
       semver: 7.5.4
       z-schema: 5.0.2
 
-  /@rushstack/node-core-library@3.63.0(@types/node@20.10.6):
+  /@rushstack/node-core-library@3.63.0(@types/node@20.11.0):
     resolution: {integrity: sha512-Q7B3dVpBQF1v+mUfxNcNZh5uHVR8ntcnkN5GYjbBLrxUYHBGKbnCM+OdcN+hzCpFlLBH6Ob0dEHhZ0spQwf24A==}
     peerDependencies:
       '@types/node': '*'
@@ -8206,7 +8206,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -8216,7 +8216,7 @@ packages:
       z-schema: 5.0.2
     dev: true
 
-  /@rushstack/operation-graph@0.2.2(@types/node@20.10.6):
+  /@rushstack/operation-graph@0.2.2(@types/node@20.11.0):
     resolution: {integrity: sha512-i1LLqTfgR3ntyJKB6i/TdZfow1zTqUzrUO8DKm8GAp9ZKp6iEwGehcUCioTk0bX7VV3J2qmNdNcuCo9NezWf8w==}
     peerDependencies:
       '@types/node': '*'
@@ -8224,24 +8224,24 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@rushstack/node-core-library': 3.63.0(@types/node@20.10.6)
-      '@types/node': 20.10.6
+      '@rushstack/node-core-library': 3.63.0(@types/node@20.11.0)
+      '@types/node': 20.11.0
     dev: true
 
-  /@rushstack/package-deps-hash@4.1.14(@types/node@20.10.6):
+  /@rushstack/package-deps-hash@4.1.14(@types/node@20.11.0):
     resolution: {integrity: sha512-OhKs8KhuKvjs2e1YmKCLNfwEVrvziXT5nGvLbc0bZEqPMUpj3OFNARVt6DIdN3pTKqk+YIZeuEZ41GT0MM+cqg==}
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
     transitivePeerDependencies:
       - '@types/node'
     dev: false
 
-  /@rushstack/package-extractor@0.6.17(@types/node@20.10.6):
+  /@rushstack/package-extractor@0.6.17(@types/node@20.11.0):
     resolution: {integrity: sha512-cNHY0TdTNTaFM9+Lp1dlmNqgt6Wp4UKWldjnkIKudHguhfHFUeaUNi8IU5Q2P2sWnBMjMn+rBDAHO3+RZVkj5w==}
     dependencies:
       '@pnpm/link-bins': 5.3.25
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@rushstack/terminal': 0.7.14(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@rushstack/terminal': 0.7.14(@types/node@20.11.0)
       ignore: 5.1.9
       jszip: 3.8.0
       minimatch: 3.0.8
@@ -8257,11 +8257,11 @@ packages:
       resolve: 1.22.8
       strip-json-comments: 3.1.1
 
-  /@rushstack/rush-amazon-s3-build-cache-plugin@5.112.2(@types/node@20.10.6):
+  /@rushstack/rush-amazon-s3-build-cache-plugin@5.112.2(@types/node@20.11.0):
     resolution: {integrity: sha512-5vOBZYywOHPOJjuPh3gRT7GxCyA153gBalaRBkXj3SMGEL5s3MSqgU86/YiLaFdkQqWhk9cliIlfhz0NNN5ZEw==}
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@rushstack/rush-sdk': 5.112.2(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@rushstack/rush-sdk': 5.112.2(@types/node@20.11.0)
       https-proxy-agent: 5.0.1
       node-fetch: 2.6.7
     transitivePeerDependencies:
@@ -8270,25 +8270,25 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-azure-storage-build-cache-plugin@5.112.2(@types/node@20.10.6):
+  /@rushstack/rush-azure-storage-build-cache-plugin@5.112.2(@types/node@20.11.0):
     resolution: {integrity: sha512-VAv42pO6CJZ83Odw6jdLWvxJ5sgKeNgz0NNtrQOQX+I6Tx1OdjV87/4Zz1tkLa1v3TFbOTThXfqXWwVs5lP/6w==}
     dependencies:
       '@azure/identity': 4.0.0
       '@azure/storage-blob': 12.17.0
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@rushstack/rush-sdk': 5.112.2(@types/node@20.10.6)
-      '@rushstack/terminal': 0.7.14(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@rushstack/rush-sdk': 5.112.2(@types/node@20.11.0)
+      '@rushstack/terminal': 0.7.14(@types/node@20.11.0)
     transitivePeerDependencies:
       - '@types/node'
       - encoding
       - supports-color
     dev: false
 
-  /@rushstack/rush-http-build-cache-plugin@5.112.2(@types/node@20.10.6):
+  /@rushstack/rush-http-build-cache-plugin@5.112.2(@types/node@20.11.0):
     resolution: {integrity: sha512-s1Axj9RqHcjtUUwFzElmoKFonPxrs6dvExpF95+GKOO0pAu4cGlddUIkQ156t04y2Y60lelFFJavNEZew9U1dg==}
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@rushstack/rush-sdk': 5.112.2(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@rushstack/rush-sdk': 5.112.2(@types/node@20.11.0)
       https-proxy-agent: 5.0.1
       node-fetch: 2.6.7
     transitivePeerDependencies:
@@ -8297,26 +8297,26 @@ packages:
       - supports-color
     dev: false
 
-  /@rushstack/rush-sdk@5.112.2(@types/node@20.10.6):
+  /@rushstack/rush-sdk@5.112.2(@types/node@20.11.0):
     resolution: {integrity: sha512-m5XZwJjfA4vVbr0zBBaKXSuEiQ7rc3O2xSGekrwSsHrukMgkiF+J676/KwFrmt62glE+9JU/+RcV8eCfHGH4bA==}
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
       '@types/node-fetch': 2.6.2
       tapable: 2.2.1
     transitivePeerDependencies:
       - '@types/node'
     dev: false
 
-  /@rushstack/stream-collator@4.1.15(@types/node@20.10.6):
+  /@rushstack/stream-collator@4.1.15(@types/node@20.11.0):
     resolution: {integrity: sha512-CmrFt4LraAFtKOfXbNgAf1CgIa5vaRvWennGmf+h0YBpH6Q+7Jepv+8W17vbdGJolat1zrUgG7nsyoRrP4lZ0w==}
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@rushstack/terminal': 0.7.14(@types/node@20.10.6)
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@rushstack/terminal': 0.7.14(@types/node@20.11.0)
     transitivePeerDependencies:
       - '@types/node'
     dev: false
 
-  /@rushstack/terminal@0.7.14(@types/node@20.10.6):
+  /@rushstack/terminal@0.7.14(@types/node@20.11.0):
     resolution: {integrity: sha512-hI5oWcuhqDwLChnv3zlyS9I0AzXYFTiub71CV51Bz+xa9pMyvMNMa/CkIzOzdWRmG9RACgDRPI6wITd0/CpGdA==}
     peerDependencies:
       '@types/node': '*'
@@ -8324,8 +8324,8 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@rushstack/node-core-library': 3.62.0(@types/node@20.10.6)
-      '@types/node': 20.10.6
+      '@rushstack/node-core-library': 3.62.0(@types/node@20.11.0)
+      '@types/node': 20.11.0
     dev: false
 
   /@rushstack/ts-command-line@4.17.1:
@@ -8366,7 +8366,7 @@ packages:
       '@sentry/types': 7.93.0
       '@sentry/utils': 7.93.0
       '@sentry/vite-plugin': 2.10.2
-      astro: 4.1.1(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
+      astro: 4.1.1(@types/node@20.11.0)(sass@1.69.6)(typescript@5.3.3)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8558,7 +8558,7 @@ packages:
       '@sentry/astro': 7.93.0(astro@4.1.1)
       '@spotlightjs/overlay': 1.2.3
       '@spotlightjs/sidecar': 1.3.3
-      astro: 4.1.1(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3)
+      astro: 4.1.1(@types/node@20.11.0)(sass@1.69.6)(typescript@5.3.3)
       source-map: 0.7.4
     dev: false
 
@@ -8806,7 +8806,7 @@ packages:
       magic-string: 0.30.5
       rollup: 3.27.2
       typescript: 5.3.3
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -9178,7 +9178,7 @@ packages:
       react: 18.2.0
       react-docgen: 7.0.1
       react-dom: 18.2.0(react@18.2.0)
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - encoding
@@ -9466,14 +9466,14 @@ packages:
   /@types/better-sqlite3@7.6.8:
     resolution: {integrity: sha512-ASndM4rdGrzk7iXXqyNC4fbwt4UEjpK0i3j4q4FyeQrLAthfB6s7EF135ZJE0qQxtKIMFwmyT6x0switET7uIw==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: true
 
   /@types/body-parser@1.19.5:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
 
   /@types/bun@1.0.1:
     resolution: {integrity: sha512-PPDvyihNJVW1I3Wt0C+nM/4HI5xvT2pFMmazIPHQV45yYIh0JW4G5V4KO3UZoqL9MT5RsU7nJ8KQgmixw72BfQ==}
@@ -9496,12 +9496,12 @@ packages:
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
 
   /@types/cross-spawn@6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: true
 
   /@types/debug@4.1.12:
@@ -9551,7 +9551,7 @@ packages:
   /@types/express-serve-static-core@4.17.33:
     resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
 
@@ -9575,13 +9575,13 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: true
 
   /@types/graceful-fs@4.1.5:
     resolution: {integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: true
 
   /@types/hast@3.0.3:
@@ -9616,13 +9616,13 @@ packages:
   /@types/jsonwebtoken@9.0.0:
     resolution: {integrity: sha512-mM4TkDpA9oixqg1Fv2vVpOFyIVLJjm5x4k0V+K/rEsizfjD7Tk7LKk3GTtbB7KCfP0FEHQtsZqFxYA0+sijNVg==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: false
 
   /@types/jsonwebtoken@9.0.3:
     resolution: {integrity: sha512-b0jGiOgHtZ2jqdPgPnP6WLCXZk1T8p06A/vPGzUvxpFGgKMbjXJDjC5m52ErqBnIuWZFgGoIJyRdeG5AyreJjA==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: false
 
   /@types/leaflet.locatecontrol@0.74.4:
@@ -9682,22 +9682,22 @@ packages:
   /@types/node-fetch@2.6.2:
     resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       form-data: 3.0.1
     dev: false
 
   /@types/node-fetch@2.6.4:
     resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       form-data: 3.0.1
 
   /@types/node@18.18.6:
     resolution: {integrity: sha512-wf3Vz+jCmOQ2HV1YUJuCWdL64adYxumkrxtc+H1VUQlnQI04+5HtH+qZCOE21lBE7gIrt+CwX2Wv8Acrw5Ak6w==}
     dev: true
 
-  /@types/node@20.10.6:
-    resolution: {integrity: sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==}
+  /@types/node@20.11.0:
+    resolution: {integrity: sha512-o9bjXmDNcF7GbM4CNQpmi+TutCgap/K3w1JyKgxAjqx41zp9qlIAVFi0IhCNsJcXolEqLWhbFbEeL0PvYm4pcQ==}
     dependencies:
       undici-types: 5.26.5
 
@@ -9711,7 +9711,7 @@ packages:
   /@types/pg@8.10.9:
     resolution: {integrity: sha512-UksbANNE/f8w0wOMxVKKIrLCbEMV+oM1uKejmwXr39olg4xqcfBDbXxObJAt6XxHbDa4XTKOlUEcEltXDX+XLQ==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       pg-protocol: 1.6.0
       pg-types: 4.0.1
     dev: true
@@ -9771,13 +9771,13 @@ packages:
     resolution: {integrity: sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ==}
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
 
   /@types/sql.js@1.4.9:
     resolution: {integrity: sha512-ep8b36RKHlgWPqjNG9ToUrPiwkhwh0AEzy883mO5Xnd+cL6VBH1EvSjBAAuxLUFF2Vn/moE3Me6v9E1Lo+48GQ==}
     dependencies:
       '@types/emscripten': 1.39.6
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: true
 
   /@types/tapable@1.0.6:
@@ -9793,7 +9793,7 @@ packages:
   /@types/tunnel@0.0.3:
     resolution: {integrity: sha512-sOUTGn6h1SfQ+gbgqC364jLFBw2lnFqkgF3q0WovEHRLMrVD1sd5aufqi/aJObLekJO+Aq5z646U4Oxy6shXMA==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: false
 
   /@types/unist@2.0.6:
@@ -9810,7 +9810,7 @@ packages:
   /@types/ws@8.5.6:
     resolution: {integrity: sha512-8B5EO9jLVCy+B58PLHvLDuOD8DRVMgQzq8d55SjLCOn9kqGyqOvy27exVaTio1q1nX5zLu8/6N0n2ThSxOM6tg==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
     dev: true
 
   /@types/yargs-parser@20.2.1:
@@ -10045,7 +10045,7 @@ packages:
       vite: ^4 || ^5
     dependencies:
       '@swc/core': 1.3.96
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -10061,7 +10061,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.5)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10077,7 +10077,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.5)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     transitivePeerDependencies:
       - supports-color
 
@@ -10602,7 +10602,7 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /astro@4.1.1(@types/node@20.10.6)(sass@1.69.6)(typescript@5.3.3):
+  /astro@4.1.1(@types/node@20.11.0)(sass@1.69.6)(typescript@5.3.3):
     resolution: {integrity: sha512-p/S1Ns4+yVh2lEsFW9hkJNRbnPfFWZ+1Wv7DSR3mDnabgCs49T7EbvOy8YIlLo0gtPAjI+b+4OEKRsxtBay2aA==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
@@ -10665,7 +10665,7 @@ packages:
       tsconfck: 3.0.0(typescript@5.3.3)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
       vitefu: 0.2.5(vite@5.0.10)
       which-pm: 2.1.1
       yargs-parser: 21.1.1
@@ -11019,7 +11019,7 @@ packages:
   /bun-types@1.0.21:
     resolution: {integrity: sha512-Ugagjf+XZUXDvxDRa3EnhLeMzm2g8ZYFleBF55Ac3GZSzPqdMLAdK9kvZB6M1H4nAFvrEHdV2PHqkzIoNs+3wQ==}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       '@types/ws': 8.5.6
       undici-types: 5.26.5
     dev: true
@@ -13341,15 +13341,15 @@ packages:
   /graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  /graphiql@3.1.0(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
+  /graphiql@3.1.0(@types/node@20.11.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1l2PecYNvFYYNSYq+4vIJOACXkP60Kod0E0SnKu+2f0Ux/npFNr3TfwJLZs7eKqqSh0KODmorvHi/XBP46Ua7A==}
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0
       react: ^16.8.0 || ^17 || ^18
       react-dom: ^16.8.0 || ^17 || ^18
     dependencies:
-      '@graphiql/react': 0.20.2(@types/node@20.10.6)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
-      '@graphiql/toolkit': 0.9.1(@types/node@20.10.6)(graphql-ws@5.14.3)(graphql@16.8.1)
+      '@graphiql/react': 0.20.2(@types/node@20.11.0)(@types/react-dom@18.2.18)(@types/react@18.2.46)(graphql-ws@5.14.3)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
+      '@graphiql/toolkit': 0.9.1(@types/node@20.11.0)(graphql-ws@5.14.3)(graphql@16.8.1)
       graphql: 16.8.1
       graphql-language-service: 5.2.0(graphql@16.8.1)
       markdown-it: 12.3.2
@@ -13363,7 +13363,7 @@ packages:
       - graphql-ws
     dev: false
 
-  /graphql-config@5.0.3(@types/node@20.10.6)(graphql@16.8.1):
+  /graphql-config@5.0.3(@types/node@20.11.0)(graphql@16.8.1):
     resolution: {integrity: sha512-BNGZaoxIBkv9yy6Y7omvsaBUHOzfFcII3UN++tpH8MGOKFPFkCPZuwx09ggANMt8FgyWP1Od8SWPmrUEZca4NQ==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
@@ -13377,7 +13377,7 @@ packages:
       '@graphql-tools/json-file-loader': 8.0.0(graphql@16.8.1)
       '@graphql-tools/load': 8.0.0(graphql@16.8.1)
       '@graphql-tools/merge': 9.0.0(graphql@16.8.1)
-      '@graphql-tools/url-loader': 8.0.0(@types/node@20.10.6)(graphql@16.8.1)
+      '@graphql-tools/url-loader': 8.0.0(@types/node@20.11.0)(graphql@16.8.1)
       '@graphql-tools/utils': 10.0.0(graphql@16.8.1)
       cosmiconfig: 8.1.3
       graphql: 16.8.1
@@ -14291,7 +14291,7 @@ packages:
     dependencies:
       '@jest/types': 29.4.1
       '@types/graceful-fs': 4.1.5
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       anymatch: 3.1.2
       fb-watchman: 2.0.1
       graceful-fs: 4.2.11
@@ -14314,7 +14314,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.4.1
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -14325,7 +14325,7 @@ packages:
     resolution: {integrity: sha512-O9doU/S1EBe+yp/mstQ0VpPwpv0Clgn68TkNwGxL6/usX/KUW9Arnn4ag8C3jc6qHcXznhsT5Na1liYzAsuAbQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       jest-util: 29.4.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -15086,7 +15086,7 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  /meros@1.2.1(@types/node@20.10.6):
+  /meros@1.2.1(@types/node@20.11.0):
     resolution: {integrity: sha512-R2f/jxYqCAGI19KhAvaxSOxALBMkaXWH2a7rOyqQw+ZmizX5bKkEYWLzdhC+U82ZVVPVp6MCXe3EkVligh+12g==}
     engines: {node: '>=13'}
     peerDependencies:
@@ -15095,7 +15095,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
 
   /methods@1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
@@ -18966,7 +18966,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /vite-node@1.1.1(@types/node@20.10.6)(sass@1.69.6):
+  /vite-node@1.1.1(@types/node@20.11.0)(sass@1.69.6):
     resolution: {integrity: sha512-2bGE5w4jvym5v8llF6Gu1oBrmImoNSs4WmRVcavnG2me6+8UQntTqLiAMFyiAobp+ZXhj5ZFhI7SmLiFr/jrow==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -18975,7 +18975,7 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -18987,7 +18987,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.10(@types/node@20.10.6)(sass@1.69.6):
+  /vite@5.0.10(@types/node@20.11.0)(sass@1.69.6):
     resolution: {integrity: sha512-2P8J7WWgmc355HUMlFrwofacvr98DAjoE52BfdbwQtyLH06XKwaL/FMnmKM2crF0iX4MpmMKoDlNCB1ok7zHCw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19015,7 +19015,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       esbuild: 0.19.11
       postcss: 8.4.32
       rollup: 4.9.2
@@ -19031,10 +19031,10 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
     dev: false
 
-  /vitest@1.1.1(@types/node@20.10.6)(sass@1.69.6):
+  /vitest@1.1.1(@types/node@20.11.0)(sass@1.69.6):
     resolution: {integrity: sha512-Ry2qs4UOu/KjpXVfOCfQkTnwSXYGrqTbBZxw6reIYEFjSy1QUARRg5pxiI5BEXy+kBVntxUYNMlq4Co+2vD3fQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19059,7 +19059,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.10.6
+      '@types/node': 20.11.0
       '@vitest/expect': 1.1.1
       '@vitest/runner': 1.1.1
       '@vitest/snapshot': 1.1.1
@@ -19078,8 +19078,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.10(@types/node@20.10.6)(sass@1.69.6)
-      vite-node: 1.1.1(@types/node@20.10.6)(sass@1.69.6)
+      vite: 5.0.10(@types/node@20.11.0)(sass@1.69.6)
+      vite-node: 1.1.1(@types/node@20.11.0)(sass@1.69.6)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
