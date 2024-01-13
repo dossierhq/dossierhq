@@ -50,10 +50,10 @@
     "@rushstack/heft": "0.63.6",
     "@types/leaflet": "~1.9.8",
     "@types/leaflet.locatecontrol": "~0.74.4",
-    "@types/react": "~18.2.46",
+    "@types/react": "~18.2.47",
     "eslint": "~8.56.0",
     "mini-svg-data-uri": "~1.4.4",
-    "prettier": "3.1.1",
+    "prettier": "3.2.1",
     "svgo": "~3.2.0",
     "typescript": "~5.3.3"
   }

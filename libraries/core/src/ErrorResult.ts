@@ -22,9 +22,8 @@ export type Result<TOk, TError extends ErrorType> =
 export type PromiseResult<TOk, TError extends ErrorType> = Promise<Result<TOk, TError>>;
 
 export type OkFromResult<T> = Awaited<T> extends Result<infer TOk, infer _TError> ? TOk : never;
-export type ErrorFromResult<T> = Awaited<T> extends Result<infer _TOk, infer TError>
-  ? TError
-  : never;
+export type ErrorFromResult<T> =
+  Awaited<T> extends Result<infer _TOk, infer TError> ? TError : never;
 
 export class OkResult<TOk, TError extends ErrorType> {
   readonly value: TOk;

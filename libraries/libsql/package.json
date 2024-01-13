@@ -49,8 +49,8 @@
     "@libsql/client": "~0.3.6",
     "@rushstack/heft": "0.63.6",
     "eslint": "~8.56.0",
-    "prettier": "3.1.1",
+    "prettier": "3.2.1",
     "typescript": "~5.3.3",
-    "vitest": "~1.1.1"
+    "vitest": "~1.2.0"
   }
 }
