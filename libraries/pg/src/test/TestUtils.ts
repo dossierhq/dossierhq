@@ -78,7 +78,6 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
 
 export interface IntegrationTestServerInit {
   server: Server;
-  adminSchema: AdminSchema;
 }
 
 export async function initializeIntegrationTestServer({
@@ -111,7 +110,7 @@ export async function initializeIntegrationTestServer({
   const schemaResult = await safelyUpdateSchemaSpecification(client, IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
 
-  return ok({ server, adminSchema: schemaResult.value });
+  return ok({ server });
 }
 
 export async function initializeEmptyIntegrationTestServer({

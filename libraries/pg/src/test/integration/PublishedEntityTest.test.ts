@@ -24,14 +24,14 @@ registerTestSuite(
   createPublishedEntityTestSuite({
     before: async () => {
       assert(serverInit);
-      const { adminSchema, server } = serverInit;
+      const { server } = serverInit;
 
       const clientProvider = createSharedClientProvider(server);
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(clientProvider)
       ).valueOrThrow();
 
-      return [{ adminSchema, clientProvider, server, readOnlyEntityRepository }, undefined];
+      return [{ clientProvider, server, readOnlyEntityRepository }, undefined];
     },
     after: async () => {
       // empty

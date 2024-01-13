@@ -15,7 +15,7 @@ export function registerAdminEntityTestSuite(suitePage: {
 }) {
   const testSuite = createAdminEntityTestSuite({
     before: async () => {
-      const { adminSchema, server } = (
+      const { server } = (
         await initializeIntegrationTestServer()
       ).valueOrThrow();
       const clientProvider = createSharedClientProvider(server);
@@ -23,10 +23,7 @@ export function registerAdminEntityTestSuite(suitePage: {
         await createReadOnlyEntityRepository(clientProvider)
       ).valueOrThrow();
 
-      return [
-        { adminSchema, clientProvider, server, readOnlyEntityRepository },
-        { server },
-      ];
+      return [{ clientProvider, server, readOnlyEntityRepository }, { server }];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();

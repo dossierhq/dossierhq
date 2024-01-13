@@ -30,10 +30,9 @@ registerTestSuite(
   createAdminEntityTestSuite({
     before: () => {
       assert(serverInit);
-      const { adminSchema, server } = serverInit;
+      const { server } = serverInit;
       return Promise.resolve([
         {
-          adminSchema,
           clientProvider: createSharedClientProvider(server),
           server,
           readOnlyEntityRepository,

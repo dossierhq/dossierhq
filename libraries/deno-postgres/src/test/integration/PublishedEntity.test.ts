@@ -12,7 +12,7 @@ import {
 registerTestSuite(
   createPublishedEntityTestSuite({
     before: async () => {
-      const { adminSchema, server } = (
+      const { server } = (
         await initializeIntegrationTestServer()
       ).valueOrThrow();
 
@@ -21,10 +21,7 @@ registerTestSuite(
         await createReadOnlyEntityRepository(clientProvider, "published-entity")
       ).valueOrThrow();
 
-      return [
-        { adminSchema, clientProvider, server, readOnlyEntityRepository },
-        { server },
-      ];
+      return [{ clientProvider, server, readOnlyEntityRepository }, { server }];
     },
     after: async ({ server }: { server: Server }) => {
       await server.shutdown();

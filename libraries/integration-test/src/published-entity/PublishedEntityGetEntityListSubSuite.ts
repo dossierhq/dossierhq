@@ -1,5 +1,4 @@
-import type { ErrorType } from '@dossierhq/core';
-import { copyEntity, notOk, ok } from '@dossierhq/core';
+import { AdminSchema, copyEntity, notOk, ok, type ErrorType } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppPublishedEntity } from '../SchemaTypes.js';
@@ -14,9 +13,10 @@ export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestConte
   getEntityList_errorArchivedEntity,
 ];
 
-async function getEntityList_minimal({ adminSchema, clientProvider }: PublishedEntityTestContext) {
+async function getEntityList_minimal({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
@@ -44,19 +44,24 @@ async function getEntityList_none({ clientProvider }: PublishedEntityTestContext
 }
 
 async function getEntityList_authKeySubjectOneCorrectOneWrong({
-  adminSchema,
   clientProvider,
 }: PublishedEntityTestContext) {
+  const primaryAdminClient = clientProvider.adminClient();
+  const adminSchema = new AdminSchema(
+    (await primaryAdminClient.getSchemaSpecification()).valueOrThrow(),
+  );
+
   const create1Result = await clientProvider
     .adminClient('secondary')
     .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }), {
       publish: true,
     });
-  const create2Result = await clientProvider
-    .adminClient()
-    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }), {
+  const create2Result = await primaryAdminClient.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
+    {
       publish: true,
-    });
+    },
+  );
   assertOkResult(create1Result);
   assertOkResult(create2Result);
   const {
@@ -77,26 +82,18 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
   ]);
 }
 
-async function getEntityList_oneMissingOneExisting({
-  adminSchema,
-  clientProvider,
-}: PublishedEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(TITLE_ONLY_CREATE, {
-    publish: true,
-  });
-  assertOkResult(createResult);
-  const {
-    entity: { id },
-  } = createResult.value;
+async function getEntityList_oneMissingOneExisting({ clientProvider }: PublishedEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const { entity } = createResult.valueOrThrow();
 
   const getResult = await clientProvider
     .publishedClient()
-    .getEntityList([{ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' }, { id }]);
+    .getEntityList([{ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' }, { id: entity.id }]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    ok<AppPublishedEntity, typeof ErrorType.Generic>(
-      adminToPublishedEntity(adminSchema, createResult.value.entity),
-    ),
+    ok<AppPublishedEntity, typeof ErrorType.Generic>(adminToPublishedEntity(adminSchema, entity)),
   ]);
 }
 

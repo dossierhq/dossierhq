@@ -1,4 +1,4 @@
-import { copyEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
+import { AdminSchema, copyEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminComponents } from '../SchemaTypes.js';
@@ -148,11 +148,11 @@ async function getEntities_pagingFirstAfterFirstEntity({
 }
 
 async function getEntities_pagingFirstAfterNameWithUnicode({
-  adminSchema,
   clientProvider,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   // Since the name is converted to base64 encoded cursors, use unicode in the name
   // to ensure the encode/decode is proper
@@ -429,12 +429,10 @@ async function getEntities_componentTypes({ clientProvider }: PublishedEntityTes
   assertResultValue(matchesAfterComponent, 1);
 }
 
-async function getEntities_linksToOneReference({
-  adminSchema,
-  clientProvider,
-}: PublishedEntityTestContext) {
+async function getEntities_linksToOneReference({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -469,11 +467,11 @@ async function getEntities_linksToNoReferences({ clientProvider }: PublishedEnti
 }
 
 async function getEntities_linksToTwoReferencesFromOneEntity({
-  adminSchema,
   clientProvider,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -496,11 +494,11 @@ async function getEntities_linksToTwoReferencesFromOneEntity({
 }
 
 async function getEntities_linksToExcludedAfterUnpublish({
-  adminSchema,
   clientProvider,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -530,11 +528,11 @@ async function getEntities_linksToExcludedAfterUnpublish({
 }
 
 async function getEntities_linksToExcludedAfterUpdateWithNoReference({
-  adminSchema,
   clientProvider,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -588,12 +586,10 @@ async function getEntities_linksToExcludedForAdminOnlyField({
   assertSearchResultEntities(searchResult, []);
 }
 
-async function getEntities_linksFromOneReference({
-  adminSchema,
-  clientProvider,
-}: PublishedEntityTestContext) {
+async function getEntities_linksFromOneReference({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -628,11 +624,11 @@ async function getEntities_linksFromNoReferences({ clientProvider }: PublishedEn
 }
 
 async function getEntities_linksFromTwoReferencesFromOneEntity({
-  adminSchema,
   clientProvider,
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);

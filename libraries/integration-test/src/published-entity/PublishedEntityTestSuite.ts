@@ -1,4 +1,3 @@
-import type { AdminSchema } from '@dossierhq/core';
 import { buildSuite } from '../Builder.js';
 import type {
   AdminClientProvider,
@@ -14,7 +13,6 @@ import { GetEntityListSubSuite } from './PublishedEntityGetEntityListSubSuite.js
 import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite.js';
 
 export interface PublishedEntityTestContext {
-  adminSchema: AdminSchema;
   clientProvider: AdminClientProvider & PublishedClientProvider;
   readOnlyEntityRepository: ReadOnlyEntityRepository;
 }

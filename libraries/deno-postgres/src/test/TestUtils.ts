@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult } from "@dossierhq/core";
-import { AdminSchema, ok } from "@dossierhq/core";
+import { ok } from "@dossierhq/core";
 import {
   createTestAuthorizationAdapter,
   IntegrationTestSchema,
@@ -12,7 +12,6 @@ import { createPostgresAdapter } from "../PostgresAdapter.ts";
 
 export interface ServerInit {
   server: Server;
-  adminSchema: AdminSchema;
 }
 
 export function registerTestSuite(
@@ -36,9 +35,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
   ServerInit,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
-  const databaseAdapter = createPostgresAdapter(
-    (await load()).DATABASE_URL,
-  );
+  const databaseAdapter = createPostgresAdapter((await load()).DATABASE_URL);
 
   const serverResult = await createServer({
     databaseAdapter,
@@ -60,7 +57,6 @@ export async function initializeIntegrationTestServer(): PromiseResult<
     IntegrationTestSchema,
   );
   if (schemaResult.isError()) return schemaResult;
-  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
-  return ok({ server, adminSchema });
+  return ok({ server });
 }

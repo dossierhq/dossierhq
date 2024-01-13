@@ -1,4 +1,3 @@
-import type { AdminSchema } from '@dossierhq/core';
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
@@ -12,7 +11,7 @@ import { registerTestSuite } from '../../TestUtils.js';
 import { createSqldProcess, type SqldProcess } from './SqldRunner.js';
 
 let sqldProcess: SqldProcess | null = null;
-let serverInit: { server: Server; adminSchema: AdminSchema } | null = null;
+let serverInit: { server: Server } | null = null;
 
 let readOnlyEntityRepository: ReadOnlyEntityRepository;
 
@@ -45,7 +44,6 @@ registerTestSuite(
       return Promise.resolve([
         {
           server: serverInit.server,
-          adminSchema: serverInit.adminSchema,
           clientProvider: createSharedClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },

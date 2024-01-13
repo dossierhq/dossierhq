@@ -1,5 +1,6 @@
 import {
   AdminEntityStatus,
+  AdminSchema,
   ErrorType,
   copyEntity,
   createRichText,
@@ -60,12 +61,11 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_errorArchivedEntity,
 ];
 
-async function getEntity_withSubjectAuthKey({
-  adminSchema,
-  clientProvider,
-}: PublishedEntityTestContext) {
+async function getEntity_withSubjectAuthKey({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+
   const createResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
     { publish: true },
@@ -260,11 +260,10 @@ async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
   assertEquals('locationAdminOnly' in publishedLocationsComponent, false);
 }
 
-async function getEntity_usingUniqueIndex({
-  adminSchema,
-  clientProvider,
-}: PublishedEntityTestContext) {
+async function getEntity_usingUniqueIndex({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
+  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),

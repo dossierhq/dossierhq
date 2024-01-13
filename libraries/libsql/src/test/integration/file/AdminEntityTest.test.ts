@@ -38,7 +38,6 @@ registerTestSuite(
         {
           server: serverInit.server,
           clientProvider: createSharedClientProvider(serverInit.server),
-          adminSchema: serverInit.adminSchema,
           readOnlyEntityRepository,
         },
         undefined,

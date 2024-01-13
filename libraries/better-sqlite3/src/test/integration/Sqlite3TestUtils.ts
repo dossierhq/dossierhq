@@ -1,5 +1,5 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { AdminSchema, NoOpLogger, ok } from '@dossierhq/core';
+import { NoOpLogger, ok } from '@dossierhq/core';
 import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { createServer } from '@dossierhq/server';
@@ -10,7 +10,6 @@ import { createBetterSqlite3Adapter } from '../../BetterSqlite3Adapter.js';
 
 export interface ServerInit {
   server: Server;
-  adminSchema: AdminSchema;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -41,9 +40,8 @@ export async function initializeSqlite3Server(
 
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;
-  const adminSchema = new AdminSchema(schemaResult.value.schemaSpecification);
 
-  return ok({ server, adminSchema });
+  return ok({ server });
 }
 
 export async function initializeEmptySqlite3Server(

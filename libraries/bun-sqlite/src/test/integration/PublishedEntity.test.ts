@@ -39,7 +39,6 @@ registerTestSuite(
       return Promise.resolve([
         {
           server: serverInit.server,
-          adminSchema: serverInit.adminSchema,
           clientProvider: createSharedClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
