@@ -378,7 +378,7 @@ export interface Edge<TOk, TError extends ErrorType> {
   cursor: string;
 }
 
-export interface ProcessDirtyEntityPayload {
+export interface AdminEntityProcessDirtyPayload {
   id: string;
   valid: boolean;
   validPublished: boolean | null;

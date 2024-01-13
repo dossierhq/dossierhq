@@ -4,6 +4,7 @@ import {
   notOk,
   ok,
   validateEntityInfo,
+  type AdminEntityProcessDirtyPayload,
   type AdminSchemaWithMigrations,
   type EntityReference,
   type ErrorResult,
@@ -30,14 +31,6 @@ import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexe
 import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import { assertIsDefined } from '../utils/AssertUtils.js';
 
-export interface ProcessDirtyEntityPayload {
-  id: string;
-  valid: boolean;
-  validPublished: boolean | null;
-  previousValid: boolean;
-  previousValidPublished: boolean | null;
-}
-
 interface EntityValidity {
   validAdmin: boolean;
   validPublished: boolean | null;
@@ -59,7 +52,7 @@ export async function managementDirtyProcessNextEntity(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   filter: EntityReference | undefined,
-): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic> {
+): PromiseResult<AdminEntityProcessDirtyPayload | null, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
     // Fetch info about next dirty entity
     const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context, filter);

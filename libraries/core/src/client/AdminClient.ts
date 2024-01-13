@@ -13,6 +13,7 @@ import type {
   AdminEntityCreate,
   AdminEntityCreatePayload,
   AdminEntityMutationOptions,
+  AdminEntityProcessDirtyPayload,
   AdminEntityPublishPayload,
   AdminEntityQuery,
   AdminEntitySharedQuery,
@@ -33,7 +34,6 @@ import type {
   EntitySamplingPayload,
   EntityVersionReference,
   Paging,
-  ProcessDirtyEntityPayload,
   UniqueIndexReference,
 } from '../Types.js';
 import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
@@ -247,7 +247,10 @@ export interface AdminClient<
 
   processDirtyEntity(
     reference: EntityReference,
-  ): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic>;
+  ): PromiseResult<
+    AdminEntityProcessDirtyPayload | null,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   acquireAdvisoryLock(
     name: string,
@@ -368,7 +371,7 @@ export interface AdminExceptionClient<
 
   unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload>;
 
-  processDirtyEntity(reference: EntityReference): Promise<ProcessDirtyEntityPayload | null>;
+  processDirtyEntity(reference: EntityReference): Promise<AdminEntityProcessDirtyPayload | null>;
 
   acquireAdvisoryLock(name: string, options: AdvisoryLockOptions): Promise<AdvisoryLockPayload>;
 
@@ -964,7 +967,9 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.unarchiveEntity(reference)).valueOrThrow();
   }
 
-  async processDirtyEntity(reference: EntityReference): Promise<ProcessDirtyEntityPayload | null> {
+  async processDirtyEntity(
+    reference: EntityReference,
+  ): Promise<AdminEntityProcessDirtyPayload | null> {
     return (await this.client.processDirtyEntity(reference)).valueOrThrow();
   }
 
@@ -1205,7 +1210,7 @@ export function convertJsonAdminClientResult<
     case AdminClientOperationName.processDirtyEntity: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.processDirtyEntity
-      > = ok(value as ProcessDirtyEntityPayload);
+      > = ok(value as AdminEntityProcessDirtyPayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.publishEntities: {

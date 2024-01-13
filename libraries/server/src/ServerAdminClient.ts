@@ -1,6 +1,7 @@
 import {
   AdminClientOperationName,
   createBaseAdminClient,
+  notOk,
   ok,
   type AdminClient,
   type AdminClientMiddleware,
@@ -228,14 +229,18 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.processDirtyEntity>;
-        resolve(
-          await managementDirtyProcessNextEntity(
-            serverImpl.getAdminSchema(),
-            databaseAdapter,
-            context,
-            reference,
-          ),
-        );
+        if (!reference || typeof reference.id !== 'string') {
+          resolve(notOk.BadRequest('Invalid reference'));
+        } else {
+          resolve(
+            await managementDirtyProcessNextEntity(
+              serverImpl.getAdminSchema(),
+              databaseAdapter,
+              context,
+              reference,
+            ),
+          );
+        }
         break;
       }
       case AdminClientOperationName.publishEntities: {

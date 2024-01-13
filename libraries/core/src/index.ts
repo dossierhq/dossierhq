@@ -26,6 +26,7 @@ export {
   type AdminEntityCreatePayload,
   type AdminEntityInfo,
   type AdminEntityMutationOptions,
+  type AdminEntityProcessDirtyPayload,
   type AdminEntityPublishPayload,
   type AdminEntityPublishingPayload,
   type AdminEntityQuery,

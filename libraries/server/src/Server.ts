@@ -7,6 +7,7 @@ import {
   type AdminClient,
   type AdminClientMiddleware,
   type AdminEntity,
+  type AdminEntityProcessDirtyPayload,
   type AdminSchemaSpecificationWithMigrations,
   type Component,
   type Connection,
@@ -48,10 +49,7 @@ import { authCreatePrincipal } from './auth/authCreatePrincipal.js';
 import { autGetPrincipals } from './auth/authGetPrincipals.js';
 import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
 import { managementApplySyncEvent } from './management/managementApplySyncEvent.js';
-import {
-  managementDirtyProcessNextEntity,
-  type ProcessDirtyEntityPayload,
-} from './management/managementDirtyProcessNextEntity.js';
+import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
 import {
   managementGetSyncEvents,
   type SyncEventQuery,
@@ -84,7 +82,7 @@ export interface Server<
 
   processNextDirtyEntity(
     filter?: EntityReference,
-  ): PromiseResult<ProcessDirtyEntityPayload | null, typeof ErrorType.Generic>;
+  ): PromiseResult<AdminEntityProcessDirtyPayload | null, typeof ErrorType.Generic>;
 
   getSyncEvents(
     query: SyncEventQuery,
