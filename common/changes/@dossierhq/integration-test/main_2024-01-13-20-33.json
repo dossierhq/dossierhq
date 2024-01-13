@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Remove server and admin schema from changelog, schema, admin/published entity test",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

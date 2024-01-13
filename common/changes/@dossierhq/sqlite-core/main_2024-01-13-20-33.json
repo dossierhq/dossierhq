@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite-core",
+      "comment": "Fix deleting multiple indexes and entity types from schema",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite-core"
+}
