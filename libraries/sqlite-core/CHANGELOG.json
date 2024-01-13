@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.5.8",
+      "tag": "@dossierhq/sqlite-core_v0.5.8",
+      "date": "Sat, 13 Jan 2024 20:41:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix deleting multiple indexes and entity types from schema"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.7",
       "tag": "@dossierhq/sqlite-core_v0.5.7",
       "date": "Fri, 05 Jan 2024 09:39:57 GMT",

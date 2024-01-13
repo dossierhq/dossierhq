@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Fri, 05 Jan 2024 09:39:57 GMT and should not be manually modified.
+This log was last generated on Sat, 13 Jan 2024 20:41:15 GMT and should not be manually modified.
+
+## 0.5.8
+Sat, 13 Jan 2024 20:41:15 GMT
+
+### Updates
+
+- Fix saving schema multiple times after deleting type/index
 
 ## 0.5.7
 Fri, 05 Jan 2024 09:39:57 GMT

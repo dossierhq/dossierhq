@@ -2,6 +2,18 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.5.8",
+      "tag": "@dossierhq/react-components_v0.5.8",
+      "date": "Sat, 13 Jan 2024 20:41:15 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix saving schema multiple times after deleting type/index"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.7",
       "tag": "@dossierhq/react-components_v0.5.7",
       "date": "Fri, 05 Jan 2024 09:39:57 GMT",
