@@ -19,7 +19,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@cloudinary/url-gen": "~1.15.0",
+    "@cloudinary/url-gen": "~1.16.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",

@@ -14,7 +14,7 @@
     "@astrojs/node": "~7.0.4",
     "@astrojs/react": "~3.0.9",
     "@auth0/auth0-react": "~2.2.4",
-    "@cloudinary/url-gen": "~1.15.0",
+    "@cloudinary/url-gen": "~1.16.0",
     "@creativebulma/bulma-badge": "~1.0.1",
     "@faker-js/faker": "~8.3.1",
     "@fortawesome/free-solid-svg-icons": "~6.5.1",
