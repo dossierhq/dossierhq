@@ -11,8 +11,8 @@ importers:
   ../../apps/blog:
     dependencies:
       '@cloudinary/url-gen':
-        specifier: ~1.15.0
-        version: 1.15.0
+        specifier: ~1.16.0
+        version: 1.16.0
       '@dossierhq/better-sqlite3':
         specifier: workspace:*
         version: link:../../libraries/better-sqlite3
@@ -782,8 +782,8 @@ importers:
   ../../libraries/cloudinary:
     dependencies:
       '@cloudinary/url-gen':
-        specifier: ~1.15.0
-        version: 1.15.0
+        specifier: ~1.16.0
+        version: 1.16.0
       '@dossierhq/design':
         specifier: workspace:*
         version: link:../design
@@ -1807,8 +1807,8 @@ importers:
         specifier: ~2.2.4
         version: 2.2.4(react-dom@18.2.0)(react@18.2.0)
       '@cloudinary/url-gen':
-        specifier: ~1.15.0
-        version: 1.15.0
+        specifier: ~1.16.0
+        version: 1.16.0
       '@creativebulma/bulma-badge':
         specifier: ~1.0.1
         version: 1.0.1
@@ -3829,11 +3829,11 @@ packages:
   /@cloudinary/transformation-builder-sdk@1.10.0:
     resolution: {integrity: sha512-T8evZcLOgvcrBS6bVLseZPGL/BXLReRn+DbbBnKj7yTuJ9ppZ+8EFXpZn7c0Bb2hZz6C/0mC4B5fxKfgTPzDsw==}
     dependencies:
-      '@cloudinary/url-gen': 1.15.0
+      '@cloudinary/url-gen': 1.16.0
     dev: false
 
-  /@cloudinary/url-gen@1.15.0:
-    resolution: {integrity: sha512-bjU67eZxLUgoRy/Plli4TQio7q6P31OYqnEgXxeN9TKXrzr6h0DeEdIUhKI9gy3HkEBWXWWJIPh7j7gkOJPnyA==}
+  /@cloudinary/url-gen@1.16.0:
+    resolution: {integrity: sha512-0hbxLuoTGgd555LLZKf8Ut5ey3lIaRTyvtvqD99rLeKUsbq8vrdFoSSwIP+se8pglO5ZSz6y8x6Iu5ddY3wyMw==}
     dependencies:
       '@cloudinary/transformation-builder-sdk': 1.10.0
     dev: false
