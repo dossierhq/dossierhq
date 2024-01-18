@@ -27,7 +27,7 @@
     "@lexical/utils": "0.12.5",
     "@microsoft/rush-lib": "~5.112.2",
     "@react-aria/overlays": "~3.20.0",
-    "@rushstack/eslint-patch": "~1.6.1",
+    "@rushstack/eslint-patch": "~1.7.0",
     "@sentry/astro": "~7.93.0",
     "@spotlightjs/astro": "~1.0.9",
     "@typescript-eslint/eslint-plugin": "~6.18.1",
