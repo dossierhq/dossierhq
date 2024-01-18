@@ -147,8 +147,8 @@ importers:
         specifier: ~6.21.2
         version: 6.21.2(react-dom@18.2.0)(react@18.2.0)
       sql.js:
-        specifier: ~1.9.0
-        version: 1.9.0
+        specifier: ~1.10.1
+        version: 1.10.1
       swr:
         specifier: ~2.2.4
         version: 2.2.4(react@18.2.0)
@@ -1573,8 +1573,8 @@ importers:
         specifier: 3.2.4
         version: 3.2.4
       sql.js:
-        specifier: ~1.9.0
-        version: 1.9.0
+        specifier: ~1.10.1
+        version: 1.10.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1619,8 +1619,8 @@ importers:
         specifier: 3.2.4
         version: 3.2.4
       sql.js:
-        specifier: ~1.9.0
-        version: 1.9.0
+        specifier: ~1.10.1
+        version: 1.10.1
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1945,8 +1945,8 @@ importers:
         specifier: ~6.21.2
         version: 6.21.2(react-dom@18.2.0)(react@18.2.0)
       sql.js:
-        specifier: ~1.9.0
-        version: 1.9.0
+        specifier: ~1.10.1
+        version: 1.10.1
       swr:
         specifier: ~2.2.4
         version: 2.2.4(react@18.2.0)
@@ -17668,8 +17668,8 @@ packages:
   /sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
-  /sql.js@1.9.0:
-    resolution: {integrity: sha512-+QMN8NU5KJxofT+lEaSLYdhh+Pdq7ZYS6X5bSbpmD+4SKFf+qBmr+coKT07LZ+keUNh1sf3Nz9dQwD8WNI2i/Q==}
+  /sql.js@1.10.1:
+    resolution: {integrity: sha512-fAPNKMWCoHgMIGd5ah5rBMu73iuFGtomayvIEMfRaMdjG5gTEMIDuyXIMWQ7vMlUT7B6cJE5ajXp7HI9y4xorQ==}
 
   /ssri@8.0.1:
     resolution: {integrity: sha512-97qShzy1AiyxvPNIkLWoGua7xoQzzPjQ0HAH4B0rWKo7SZ6USuPcrUiAFrws0UH8RrbWmgq3LMTObhPIHbbBeQ==}
