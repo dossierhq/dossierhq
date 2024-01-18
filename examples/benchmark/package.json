@@ -34,7 +34,7 @@
     "@dossierhq/bun-sqlite": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "benchpress": "workspace:*",
-    "better-sqlite3": "~9.2.2",
+    "better-sqlite3": "~9.3.0",
     "dotenv": "~16.3.1",
     "pg": "~8.11.3",
     "tslib": "~2.6.2"
