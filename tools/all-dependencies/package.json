@@ -74,7 +74,7 @@
     "@rollup/plugin-node-resolve": "~15.2.3",
     "@rushstack/heft": "0.64.0",
     "@rushstack/heft-lint-plugin": "~0.3.0",
-    "@rushstack/heft-typescript-plugin": "~0.2.16",
+    "@rushstack/heft-typescript-plugin": "~0.3.0",
     "@storybook/addon-actions": "~7.6.8",
     "@storybook/addon-docs": "~7.6.8",
     "@storybook/addon-essentials": "~7.6.8",
