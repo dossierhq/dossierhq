@@ -7,6 +7,21 @@ export function execFile(
   args: string[],
   options: { cwd: string; input?: string },
 ): string | typeof NoSuchCommand {
+  if (typeof Bun !== 'undefined') {
+    const resolvedFile = Bun.which(file);
+    if (!resolvedFile) {
+      return NoSuchCommand;
+    }
+    const { stdout } = Bun.spawnSync({
+      cmd: [file, ...args],
+      cwd: options.cwd,
+      stdin: options.input ? new TextEncoder().encode(options.input) : undefined,
+    });
+    if (!stdout) {
+      throw new Error('Bun.spawnSync did not return stdout');
+    }
+    return stdout.toString();
+  }
   try {
     return childProcess.execFileSync(file, args, options).toString();
   } catch (error) {
