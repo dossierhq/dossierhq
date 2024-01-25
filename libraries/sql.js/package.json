@@ -36,14 +36,14 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.64.0",
+    "@rushstack/heft": "0.64.3",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
     "base-64": "~1.0.0",
     "eslint": "~8.56.0",
     "prettier": "3.2.4",
-    "sql.js": "~1.10.1",
+    "sql.js": "~1.10.2",
     "typescript": "~5.3.3",
-    "vitest": "~1.2.0"
+    "vitest": "~1.2.1"
   }
 }

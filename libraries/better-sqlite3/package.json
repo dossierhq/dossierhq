@@ -47,12 +47,12 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.64.0",
+    "@rushstack/heft": "0.64.3",
     "@types/better-sqlite3": "~7.6.8",
     "better-sqlite3": "~9.3.0",
     "eslint": "~8.56.0",
     "prettier": "3.2.4",
     "typescript": "~5.3.3",
-    "vitest": "~1.2.0"
+    "vitest": "~1.2.1"
   }
 }

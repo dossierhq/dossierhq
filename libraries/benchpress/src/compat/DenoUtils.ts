@@ -7,17 +7,5 @@ declare global {
 
 export interface DenoGlobal {
   args: string[];
-  isatty(rid: number): boolean;
-  run(options: {
-    cmd: string[];
-    cwd?: string;
-    stdin?: 'piped' | undefined;
-    stdout?: 'piped' | undefined;
-  }): {
-    close: () => Promise<void>;
-    stdin: { write(input: Uint8Array): Promise<void>; close(): Promise<void> };
-    output: () => Promise<Uint8Array>;
-    status: () => Promise<{ success: boolean; code: number }>;
-  };
-  stdout: { readonly rid: number; writeSync(data: Uint8Array): void };
+  stdout: { writeSync(data: Uint8Array): void; isTerminal(): boolean };
 }

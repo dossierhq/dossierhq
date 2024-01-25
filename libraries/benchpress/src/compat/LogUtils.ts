@@ -1,7 +1,7 @@
 export function replaceStdoutLineIfSupported(message: string): boolean {
   const output = `\x1b[0G${message}`;
   if (typeof Deno !== 'undefined') {
-    if (!Deno.isatty(Deno.stdout.rid)) {
+    if (!Deno.stdout.isTerminal()) {
       return false;
     }
     Deno.stdout.writeSync(new TextEncoder().encode(output));

@@ -53,14 +53,14 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.64.0",
-    "@types/pg": "~8.10.9",
+    "@rushstack/heft": "0.64.3",
+    "@types/pg": "~8.11.0",
     "@types/uuid": "~9.0.7",
-    "dotenv": "~16.3.1",
+    "dotenv": "~16.4.1",
     "eslint": "~8.56.0",
     "prettier": "3.2.4",
     "typescript": "~5.3.3",
     "uuid": "~9.0.1",
-    "vitest": "~1.2.0"
+    "vitest": "~1.2.1"
   }
 }
