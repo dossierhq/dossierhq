@@ -9,7 +9,7 @@ let sqldProcess: SqldProcess | null = null;
 let serverInit: ServerInit | null = null;
 
 beforeAll(async () => {
-  sqldProcess = await createSqldProcess('changelog', '127.0.0.1:9000');
+  sqldProcess = await createSqldProcess('changelog', '127.0.0.1:9005');
   serverInit = (
     await initializeServer({ url: sqldProcess.url }, { journalMode: undefined })
   ).valueOrThrow();

@@ -102,3 +102,4 @@ If you just want to get started using Dossier, these destinations might get you 
 - 9002: libraries/libsql - advisory lock
 - 9003: libraries/libsql - published entity
 - 9004: libraries/libsql - schema
+- 9005: libraries/libsql - changelog
