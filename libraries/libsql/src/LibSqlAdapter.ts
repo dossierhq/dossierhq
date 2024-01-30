@@ -111,7 +111,8 @@ function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
   return (
     isSqliteError(error) &&
     error.code === 'SQLITE_CONSTRAINT' &&
-    error.message === 'SQLITE_CONSTRAINT: constraint failed'
+    (error.message === 'SQLITE_CONSTRAINT: SQLite error: constraint failed' ||
+      error.message === 'SQLITE_CONSTRAINT: constraint failed')
   );
 }
 
