@@ -22,7 +22,14 @@ jobs:
           path: |
             common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - uses: asdf-vm/actions/install@v3
+      - uses: asdf-vm/actions/setup@v2
+      - name: Install asdf
+        run: |
+          asdf plugin add bun
+          asdf plugin add deno
+          asdf plugin add nodejs
+          asdf plugin add libsql-server https://github.com/jonasb/asdf-libsql-server.git
+          asdf install
       - name: Install gnuplot
         run: |
           sudo apt-get update # to avoid error: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
