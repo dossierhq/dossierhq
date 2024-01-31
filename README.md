@@ -36,6 +36,7 @@ If you just want to get started using Dossier, these destinations might get you 
 ## Development dependencies
 
 - Use [asdf](https://asdf-vm.com/) to install the tools in `.tools-versions`
+  - `asdf plugin add libsql-server https://github.com/jonasb/asdf-libsql-server.git`
 - `npm install -g @microsoft/rush`
 - `brew install pgcli` (optional, for Postgres access)
 - `brew install gnuplot` (for benchmarking)
