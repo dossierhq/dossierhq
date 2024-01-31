@@ -28,6 +28,12 @@ jobs:
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - uses: asdf-vm/actions/install@v3
+      - name: Install libsql-server
+        run: |
+          curl --location https://github.com/tursodatabase/libsql/releases/download/libsql-server-v0.22.16/libsql-server-x86_64-unknown-linux-gnu.tar.xz -o libsql-server.tar.xz
+          tar -xf libsql-server.tar.xz
+          echo "$PWD/libsql-server-x86_64-unknown-linux-gnu" >> $GITHUB_PATH
+          ./libsql-server-x86_64-unknown-linux-gnu/sqld --version
       - name: rush install
         run: |
           node common/scripts/install-run-rush.js install --bypass-policy
