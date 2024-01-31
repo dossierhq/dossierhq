@@ -12,7 +12,7 @@ function bundle_rollup {
   INFILE=$1
   OUTFILE=${INFILE%.*}-rollup.${INFILE##*.}
   ARGS=${@:2}
-  npx rollup "$INFILE" --file "$OUTFILE" --format iife -p @rollup/plugin-node-resolve $ARGS 2>&1
+  npx rollup "$INFILE" --config rollup.config.js --file "$OUTFILE" --format iife -p @rollup/plugin-node-resolve $ARGS 2>&1
 }
 
 rm test-cases/*-esbuild.js || true
