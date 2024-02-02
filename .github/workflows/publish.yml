@@ -31,7 +31,7 @@ jobs:
             app/blog/.next/cache/
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - uses: asdf-vm/actions/setup@v2
+      - uses: asdf-vm/actions/setup@v3
       - name: Install asdf
         run: |
           asdf plugin add bun
