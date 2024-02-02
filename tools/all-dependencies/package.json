@@ -35,7 +35,7 @@
     "astro": "~4.2.4",
     "better-sqlite3": "~9.3.0",
     "body-parser": "~1.20.2",
-    "cloudinary": "~1.41.3",
+    "cloudinary": "~2.0.0",
     "dotenv": "~16.4.1",
     "eslint": "~8.56.0",
     "eslint-plugin-react": "~7.33.2",
