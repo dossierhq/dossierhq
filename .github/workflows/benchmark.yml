@@ -22,7 +22,7 @@ jobs:
           path: |
             common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - uses: asdf-vm/actions/setup@v2
+      - uses: asdf-vm/actions/setup@v3
       - name: Install asdf
         run: |
           asdf plugin add bun
