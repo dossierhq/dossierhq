@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@graphiql/toolkit": "~0.9.1",
-    "@libsql/client": "~0.3.6",
+    "@libsql/client": "~0.4.3",
     "@playwright/test": "~1.41.1",
     "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-node-resolve": "~15.2.3",

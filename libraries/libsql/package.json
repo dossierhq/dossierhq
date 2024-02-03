@@ -46,7 +46,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@libsql/client": "~0.3.6",
+    "@libsql/client": "~0.4.3",
     "@rushstack/heft": "0.64.3",
     "eslint": "~8.56.0",
     "prettier": "3.2.4",
