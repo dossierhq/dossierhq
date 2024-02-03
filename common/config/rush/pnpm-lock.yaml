@@ -257,8 +257,8 @@ importers:
         specifier: ~0.4.1
         version: 0.4.1(prettier@3.2.4)(typescript@5.3.3)
       '@astrojs/node':
-        specifier: ~8.0.0
-        version: 8.0.0(astro@4.2.8)
+        specifier: ~8.2.0
+        version: 8.2.0(astro@4.2.8)
       '@astrojs/react':
         specifier: ~3.0.9
         version: 3.0.9(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(vite@5.0.12)
@@ -1798,8 +1798,8 @@ importers:
         specifier: ~0.4.1
         version: 0.4.1(prettier@3.2.4)(typescript@5.3.3)
       '@astrojs/node':
-        specifier: ~8.0.0
-        version: 8.0.0(astro@4.2.8)
+        specifier: ~8.2.0
+        version: 8.2.0(astro@4.2.8)
       '@astrojs/react':
         specifier: ~3.0.9
         version: 3.0.9(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(vite@5.0.12)
@@ -2272,8 +2272,8 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@8.0.0(astro@4.2.8):
-    resolution: {integrity: sha512-qgLN2k0/GPHRNRYyXNMxx7bGR2DBNsVMWBv/S4w/q5LtsHNc+y2lhGsuk0Cz4xxvuORqXkJARjloDvtlpYwYzQ==}
+  /@astrojs/node@8.2.0(astro@4.2.8):
+    resolution: {integrity: sha512-keQIPvdx8hquG+KnWoJp7io/GoczBEJer9X8WzPHK2fnVRXYDKGzXWZw3Dbg0ZhXJreVV3xzniN7nr6e7hgDXg==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
