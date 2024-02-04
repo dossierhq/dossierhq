@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/postgres-core",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "A library used by concrete PostgreSQL adapters for Dossier.",
   "keywords": [
     "dossier",
