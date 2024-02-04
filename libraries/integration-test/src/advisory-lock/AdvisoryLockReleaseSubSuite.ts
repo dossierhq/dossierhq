@@ -31,7 +31,11 @@ async function releaseLock_errorInvalidName({ clientProvider }: AdvisoryLockTest
   const adminClient = clientProvider.adminClient();
 
   const releaseResult = await adminClient.releaseAdvisoryLock('releaseLock_errorInvalidName', 123);
-  assertErrorResult(releaseResult, ErrorType.NotFound, 'No such name or handle exists');
+  assertErrorResult(
+    releaseResult,
+    ErrorType.NotFound,
+    "No advisory lock with the name 'releaseLock_errorInvalidName' exists",
+  );
 }
 
 async function releaseLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTestContext) {
@@ -46,5 +50,9 @@ async function releaseLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTe
     'releaseLock_errorInvalidHandle',
     acquireResult.value.handle + 1,
   );
-  assertErrorResult(releaseResult, ErrorType.NotFound, 'No such name or handle exists');
+  assertErrorResult(
+    releaseResult,
+    ErrorType.NotFound,
+    "Invalid handle used for releasing lock 'releaseLock_errorInvalidHandle'",
+  );
 }

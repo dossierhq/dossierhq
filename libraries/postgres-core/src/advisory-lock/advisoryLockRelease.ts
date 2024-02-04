@@ -1,9 +1,7 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
-import type { TransactionContext } from '@dossierhq/database-adapter';
-import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { buildPostgresSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
 
 export async function advisoryLockRelease(
@@ -12,16 +10,30 @@ export async function advisoryLockRelease(
   name: string,
   handle: number,
 ): PromiseResult<void, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
+  type Row = Pick<AdvisoryLocksTable, 'id'>;
   const query = buildPostgresSqlQuery(({ sql }) => {
     sql`DELETE FROM advisory_locks WHERE name = ${name} AND handle = ${handle} RETURNING id`;
   });
 
-  const result = await queryNoneOrOne<Pick<AdvisoryLocksTable, 'id'>>(
+  const deleteResult = await queryNoneOrOne<Row>(databaseAdapter, context, query);
+  if (deleteResult.isError()) return deleteResult;
+
+  if (deleteResult.value !== null) {
+    return ok(undefined);
+  }
+
+  const existingResult = await queryNoneOrOne<Row>(
     databaseAdapter,
     context,
-    query,
+    buildPostgresSqlQuery(({ sql }) => {
+      sql`SELECT id FROM advisory_locks WHERE name = ${name}`;
+    }),
   );
-  if (result.isError()) return result;
+  if (existingResult.isError()) return existingResult;
 
-  return result.value !== null ? ok(undefined) : notOk.NotFound('No such name or handle exists');
+  return notOk.NotFound(
+    existingResult.value
+      ? `Invalid handle used for releasing lock '${name}'`
+      : `No advisory lock with the name '${name}' exists`,
+  );
 }
