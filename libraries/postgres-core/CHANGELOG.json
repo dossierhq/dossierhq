@@ -2,6 +2,18 @@
   "name": "@dossierhq/postgres-core",
   "entries": [
     {
+      "version": "0.5.9",
+      "tag": "@dossierhq/postgres-core_v0.5.9",
+      "date": "Sun, 04 Feb 2024 23:37:34 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improve error messages for release advisory lock"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.8",
       "tag": "@dossierhq/postgres-core_v0.5.8",
       "date": "Sat, 13 Jan 2024 20:41:15 GMT",
