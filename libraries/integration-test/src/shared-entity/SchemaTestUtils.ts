@@ -8,7 +8,7 @@ export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
   return await withAdvisoryLock(
     adminClient,
     'schema-update',
-    { acquireInterval: 50, leaseDuration: 500, renewInterval: 200 },
+    { acquireInterval: 300, leaseDuration: 2_000, renewInterval: 1_000 },
     callback,
   );
 }

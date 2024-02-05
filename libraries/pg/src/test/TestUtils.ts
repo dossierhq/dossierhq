@@ -186,7 +186,7 @@ export async function safelyUpdateSchemaSpecification(
   return await withAdvisoryLock(
     adminClient,
     'schema-update', // same name as used in withSchemaAdvisoryLock() in integration test
-    { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 2_000 - 200 },
+    { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 1_000 },
     async (_advisoryLock) => {
       const result = await adminClient.updateSchemaSpecification(schemaUpdate);
       if (result.isError()) return result;

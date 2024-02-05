@@ -104,7 +104,7 @@ async function doCreateReadOnlyEntityRepository(
   return await withAdvisoryLock(
     adminClientMain,
     ADVISORY_LOCK_NAME,
-    { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 2_000 - 200 },
+    { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 1_000 },
     async (advisoryLock) => {
       // Decide configurations for the entities
       const entityConfigs: {
