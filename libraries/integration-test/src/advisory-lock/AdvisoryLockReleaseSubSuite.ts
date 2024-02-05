@@ -34,7 +34,7 @@ async function releaseLock_errorInvalidName({ clientProvider }: AdvisoryLockTest
   assertErrorResult(
     releaseResult,
     ErrorType.NotFound,
-    "No advisory lock with the name 'releaseLock_errorInvalidName' exists",
+    "Failed releasing lock, no advisory lock with the name 'releaseLock_errorInvalidName' exists",
   );
 }
 

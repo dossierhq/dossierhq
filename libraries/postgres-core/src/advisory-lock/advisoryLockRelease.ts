@@ -34,6 +34,6 @@ export async function advisoryLockRelease(
   return notOk.NotFound(
     existingResult.value
       ? `Invalid handle used for releasing lock '${name}'`
-      : `No advisory lock with the name '${name}' exists`,
+      : `Failed releasing lock, no advisory lock with the name '${name}' exists`,
   );
 }

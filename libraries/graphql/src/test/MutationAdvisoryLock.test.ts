@@ -155,7 +155,7 @@ describe('renewAdvisoryLock()', () => {
           "renewAdvisoryLock": null,
         },
         "errors": [
-          [GraphQLError: NotFound: No such name or handle exists],
+          [GraphQLError: NotFound: Failed renewing lock, no advisory lock with the name 'Invalid lock name' exists],
         ],
       }
     `);
@@ -196,7 +196,7 @@ describe('releaseAdvisoryLock()', () => {
           "releaseAdvisoryLock": null,
         },
         "errors": [
-          [GraphQLError: NotFound: No advisory lock with the name 'Invalid lock name' exists],
+          [GraphQLError: NotFound: Failed releasing lock, no advisory lock with the name 'Invalid lock name' exists],
         ],
       }
     `);

@@ -32,7 +32,11 @@ async function renewLock_errorInvalidName({ clientProvider }: AdvisoryLockTestCo
   const adminClient = clientProvider.adminClient();
 
   const renewResult = await adminClient.renewAdvisoryLock('renewLock_errorInvalidName', 123);
-  assertErrorResult(renewResult, ErrorType.NotFound, 'No such name or handle exists');
+  assertErrorResult(
+    renewResult,
+    ErrorType.NotFound,
+    "Failed renewing lock, no advisory lock with the name 'renewLock_errorInvalidName' exists",
+  );
 }
 
 async function renewLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTestContext) {
@@ -44,8 +48,12 @@ async function renewLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTest
   assertOkResult(acquireResult);
 
   const renewResult = await adminClient.renewAdvisoryLock(
-    'renewLock_errorInvalidName',
+    'renewLock_errorInvalidHandle',
     acquireResult.value.handle + 1,
   );
-  assertErrorResult(renewResult, ErrorType.NotFound, 'No such name or handle exists');
+  assertErrorResult(
+    renewResult,
+    ErrorType.NotFound,
+    "Invalid handle used for renewing lock 'renewLock_errorInvalidHandle'",
+  );
 }
