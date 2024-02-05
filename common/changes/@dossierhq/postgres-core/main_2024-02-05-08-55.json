@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-core",
+      "comment": "Improve error messages for advisory lock",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-core"
+}

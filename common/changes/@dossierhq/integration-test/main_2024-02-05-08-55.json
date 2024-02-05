@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Increase advisory lock timing",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
