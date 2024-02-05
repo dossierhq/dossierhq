@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/react-components",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "React components for creating a headless CMS using Dossier.",
   "keywords": [
     "dossier",
