@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.5.10",
+      "tag": "@dossierhq/sqlite-core_v0.5.10",
+      "date": "Mon, 05 Feb 2024 09:02:18 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improve error messages for advisory lock"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.9",
       "tag": "@dossierhq/sqlite-core_v0.5.9",
       "date": "Sun, 04 Feb 2024 23:37:34 GMT",

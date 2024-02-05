@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/leaflet
 
-This log was last generated on Sun, 04 Feb 2024 23:37:34 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Feb 2024 09:02:17 GMT and should not be manually modified.
+
+## 0.5.10
+Mon, 05 Feb 2024 09:02:17 GMT
+
+_Version update only_
 
 ## 0.5.9
 Sun, 04 Feb 2024 23:37:34 GMT
