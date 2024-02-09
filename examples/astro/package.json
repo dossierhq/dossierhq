@@ -14,7 +14,7 @@
     "start:production": "astro preview"
   },
   "dependencies": {
-    "@astrojs/check": "~0.4.1",
+    "@astrojs/check": "~0.5.1",
     "@astrojs/node": "~8.2.0",
     "@astrojs/react": "~3.0.9",
     "@dossierhq/better-sqlite3": "workspace:*",
