@@ -63,7 +63,7 @@
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.6.15",
     "playground-example-generator": "workspace:*",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "storybook": "~7.6.10",
     "typescript": "~5.3.3",
     "uuid": "~9.0.1",
