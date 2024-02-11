@@ -35,8 +35,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -239,8 +239,8 @@ importers:
         specifier: ~9.0.7
         version: 9.0.8
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -293,8 +293,8 @@ importers:
         specifier: ~4.2.4
         version: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -360,8 +360,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/benchpress
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       dotenv:
         specifier: ~16.4.1
         version: 16.4.1
@@ -467,8 +467,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       express:
         specifier: ~4.18.2
         version: 4.18.2
@@ -528,8 +528,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       graphql:
         specifier: ~16.8.1
         version: 16.8.1
@@ -598,8 +598,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       body-parser:
         specifier: ~1.20.2
         version: 1.20.2
@@ -727,8 +727,8 @@ importers:
         specifier: ~7.6.8
         version: 7.6.9
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1085,8 +1085,8 @@ importers:
         specifier: ~9.0.7
         version: 9.0.8
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       eslint:
         specifier: ~8.56.0
         version: 8.56.0
@@ -1864,8 +1864,8 @@ importers:
         specifier: ~4.2.4
         version: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
       better-sqlite3:
-        specifier: ~9.3.0
-        version: 9.3.0
+        specifier: ~9.4.0
+        version: 9.4.0
       body-parser:
         specifier: ~1.20.2
         version: 1.20.2
@@ -10891,8 +10891,8 @@ packages:
       is-windows: 1.0.2
     dev: false
 
-  /better-sqlite3@9.3.0:
-    resolution: {integrity: sha512-ww73jVpQhRRdS9uMr761ixlkl4bWoXi8hMQlBGhoN6vPNlUHpIsNmw4pKN6kjknlt/wopdvXHvLk1W75BI+n0Q==}
+  /better-sqlite3@9.4.0:
+    resolution: {integrity: sha512-5kynxekMxSjCMiFyUBLHggFcJkCmiZi6fUkiGz/B5GZOvdRWQJD0klqCx5/Y+bm2AKP7I/DHbSFx26AxjruWNg==}
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
