@@ -81,8 +81,8 @@ importers:
         specifier: ~14.1.0
         version: 14.1.0(eslint@8.56.0)(typescript@5.3.3)
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       schema-dts:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.3.3)
@@ -245,8 +245,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -255,7 +255,7 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ~0.5.1
-        version: 0.5.1(prettier@3.2.4)(typescript@5.3.3)
+        version: 0.5.1(prettier@3.2.5)(typescript@5.3.3)
       '@astrojs/node':
         specifier: ~8.2.0
         version: 8.2.0(astro@4.2.8)
@@ -315,8 +315,8 @@ importers:
         specifier: ~18.2.48
         version: 18.2.48
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       rollup-plugin-visualizer:
         specifier: ~5.12.0
         version: 5.12.0(rollup@4.9.6)
@@ -397,8 +397,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -425,8 +425,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -498,8 +498,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -565,8 +565,8 @@ importers:
         specifier: ~14.1.0
         version: 14.1.0(eslint@8.56.0)(typescript@5.3.3)
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -690,8 +690,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -733,8 +733,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -773,8 +773,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -816,8 +816,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -841,8 +841,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -872,8 +872,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -903,8 +903,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1024,8 +1024,8 @@ importers:
         specifier: ~1.4.4
         version: 1.4.4
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       react-stately:
         specifier: ~3.29.1
         version: 3.29.1(react@18.2.0)
@@ -1091,8 +1091,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1140,8 +1140,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1189,8 +1189,8 @@ importers:
         specifier: ~1.4.4
         version: 1.4.4
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       svgo:
         specifier: ~3.2.0
         version: 3.2.0
@@ -1232,8 +1232,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1293,8 +1293,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1333,8 +1333,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1475,8 +1475,8 @@ importers:
         specifier: workspace:*
         version: link:../../apps/playground-example-generator
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       storybook:
         specifier: ~7.6.10
         version: 7.6.12
@@ -1521,8 +1521,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1570,8 +1570,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       sql.js:
         specifier: ~1.10.2
         version: 1.10.2
@@ -1616,8 +1616,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       sql.js:
         specifier: ~1.10.2
         version: 1.10.2
@@ -1653,8 +1653,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1684,8 +1684,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1758,8 +1758,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1786,8 +1786,8 @@ importers:
         specifier: ~8.56.0
         version: 8.56.0
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       typescript:
         specifier: ~5.3.3
         version: 5.3.3
@@ -1796,7 +1796,7 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ~0.5.1
-        version: 0.5.1(prettier@3.2.4)(typescript@5.3.3)
+        version: 0.5.1(prettier@3.2.5)(typescript@5.3.3)
       '@astrojs/node':
         specifier: ~8.2.0
         version: 8.2.0(astro@4.2.8)
@@ -2087,8 +2087,8 @@ importers:
         specifier: ~3.0.3
         version: 3.0.3
       prettier:
-        specifier: 3.2.4
-        version: 3.2.4
+        specifier: 3.2.5
+        version: 3.2.5
       react-stately:
         specifier: ~3.29.1
         version: 3.29.1(react@18.2.0)
@@ -2191,13 +2191,13 @@ packages:
       - encoding
     dev: true
 
-  /@astrojs/check@0.5.1(prettier@3.2.4)(typescript@5.3.3):
+  /@astrojs/check@0.5.1(prettier@3.2.5)(typescript@5.3.3):
     resolution: {integrity: sha512-BeAEE4UBTpXp7ICLf81ZB8vUogtzYXztuoxliJNnxBbDZydoThsks4VRBv0AdSNLmaLZMYLb8Xpobrjz+S5Oyg==}
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
-      '@astrojs/language-server': 2.7.1(prettier@3.2.4)(typescript@5.3.3)
+      '@astrojs/language-server': 2.7.1(prettier@3.2.5)(typescript@5.3.3)
       chokidar: 3.5.3
       fast-glob: 3.3.2
       kleur: 4.1.5
@@ -2216,7 +2216,7 @@ packages:
     resolution: {integrity: sha512-06DD2ZnItMwUnH81LBLco3tWjcZ1lGU9rLCCBaeUCGYe9cI0wKyY2W3kDyoW1I6GmcWgt1fu+D1CTvz+FIKf8A==}
     dev: false
 
-  /@astrojs/language-server@2.7.1(prettier@3.2.4)(typescript@5.3.3):
+  /@astrojs/language-server@2.7.1(prettier@3.2.5)(typescript@5.3.3):
     resolution: {integrity: sha512-0B5DLmw9UYzUcT54oGmCBZMRNVFjBNTnt2ddtKhTgvmgLzmHmJyUJidjbgsBjUg+L7TDRLfCrX0XrZvGQySF6Q==}
     hasBin: true
     peerDependencies:
@@ -2236,11 +2236,11 @@ packages:
       '@volar/language-service': 2.0.2
       '@volar/typescript': 2.0.2
       fast-glob: 3.3.2
-      prettier: 3.2.4
+      prettier: 3.2.5
       volar-service-css: 0.0.28(@volar/language-service@2.0.2)
       volar-service-emmet: 0.0.28(@volar/language-service@2.0.2)
       volar-service-html: 0.0.28(@volar/language-service@2.0.2)
-      volar-service-prettier: 0.0.28(@volar/language-service@2.0.2)(prettier@3.2.4)
+      volar-service-prettier: 0.0.28(@volar/language-service@2.0.2)(prettier@3.2.5)
       volar-service-typescript: 0.0.28(@volar/language-service@2.0.2)(@volar/typescript@2.0.2)
       volar-service-typescript-twoslash-queries: 0.0.28(@volar/language-service@2.0.2)
       vscode-html-languageservice: 5.1.2
@@ -16699,8 +16699,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier@3.2.4:
-    resolution: {integrity: sha512-FWu1oLHKCrtpO1ypU6J0SbK2d9Ckwysq6bHj/uaCP26DxrPpppCLQRGVuqAxSTvhF00AcvDRyYrLNW7ocBhFFQ==}
+  /prettier@3.2.5:
+    resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -19349,7 +19349,7 @@ packages:
       vscode-uri: 3.0.8
     dev: false
 
-  /volar-service-prettier@0.0.28(@volar/language-service@2.0.2)(prettier@3.2.4):
+  /volar-service-prettier@0.0.28(@volar/language-service@2.0.2)(prettier@3.2.5):
     resolution: {integrity: sha512-wfHTMhZKxv2JqgJW7kljEb1nd/tZVjiWcygeBQnIGNp+qJ8nGWE9Fi9DOgLzJ7qlzKrnvIZN3nT0lW+NP71rYA==}
     peerDependencies:
       '@volar/language-service': ~2.0.1
@@ -19361,7 +19361,7 @@ packages:
         optional: true
     dependencies:
       '@volar/language-service': 2.0.2
-      prettier: 3.2.4
+      prettier: 3.2.5
       vscode-uri: 3.0.8
     dev: false
 

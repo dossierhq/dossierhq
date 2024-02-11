@@ -44,7 +44,7 @@
     "dotenv": "~16.4.1",
     "eslint": "~8.56.0",
     "eslint-config-next": "~14.1.0",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "schema-dts": "~1.1.2",
     "tsx": "~4.7.0",
     "typescript": "~5.3.3",

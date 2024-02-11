@@ -70,7 +70,7 @@
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-storybook": "~0.6.15",
     "mini-svg-data-uri": "~1.4.4",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "react-stately": "~3.29.1",
     "sass": "~1.70.0",
     "sass-loader": "~14.1.0",

@@ -37,7 +37,7 @@
     "@types/uuid": "~9.0.7",
     "better-sqlite3": "~9.4.0",
     "eslint": "~8.56.0",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "typescript": "~5.3.3"
   }
 }
