@@ -10,7 +10,7 @@
     "outdated": "rush-pnpm outdated"
   },
   "dependencies": {
-    "@astrojs/check": "~0.4.1",
+    "@astrojs/check": "~0.5.1",
     "@astrojs/node": "~8.2.0",
     "@astrojs/react": "~3.0.9",
     "@auth0/auth0-react": "~2.2.4",
