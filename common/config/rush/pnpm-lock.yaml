@@ -258,7 +258,7 @@ importers:
         version: 0.5.1(prettier@3.2.5)(typescript@5.3.3)
       '@astrojs/node':
         specifier: ~8.2.0
-        version: 8.2.0(astro@4.2.8)
+        version: 8.2.0(astro@4.3.5)
       '@astrojs/react':
         specifier: ~3.0.9
         version: 3.0.9(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(vite@5.1.0)
@@ -285,13 +285,13 @@ importers:
         version: link:../../libraries/server
       '@sentry/astro':
         specifier: ~7.98.0
-        version: 7.98.0(astro@4.2.8)
+        version: 7.98.0(astro@4.3.5)
       '@spotlightjs/astro':
         specifier: ~1.0.10
-        version: 1.0.13(@sentry/astro@7.98.0)(astro@4.2.8)
+        version: 1.0.13(@sentry/astro@7.98.0)(astro@4.3.5)
       astro:
-        specifier: ~4.2.4
-        version: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
+        specifier: ~4.3.5
+        version: 4.3.5(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
       better-sqlite3:
         specifier: ~9.4.0
         version: 9.4.0
@@ -1799,7 +1799,7 @@ importers:
         version: 0.5.1(prettier@3.2.5)(typescript@5.3.3)
       '@astrojs/node':
         specifier: ~8.2.0
-        version: 8.2.0(astro@4.2.8)
+        version: 8.2.0(astro@4.3.5)
       '@astrojs/react':
         specifier: ~3.0.9
         version: 3.0.9(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(vite@5.1.0)
@@ -1850,10 +1850,10 @@ importers:
         version: 1.7.2
       '@sentry/astro':
         specifier: ~7.98.0
-        version: 7.98.0(astro@4.2.8)
+        version: 7.98.0(astro@4.3.5)
       '@spotlightjs/astro':
         specifier: ~1.0.10
-        version: 1.0.13(@sentry/astro@7.98.0)(astro@4.2.8)
+        version: 1.0.13(@sentry/astro@7.98.0)(astro@4.3.5)
       '@typescript-eslint/eslint-plugin':
         specifier: ~6.21.0
         version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1861,8 +1861,8 @@ importers:
         specifier: ~6.21.0
         version: 6.21.0(eslint@8.56.0)(typescript@5.3.3)
       astro:
-        specifier: ~4.2.4
-        version: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
+        specifier: ~4.3.5
+        version: 4.3.5(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
       better-sqlite3:
         specifier: ~9.4.0
         version: 9.4.0
@@ -2212,6 +2212,10 @@ packages:
     resolution: {integrity: sha512-fm9HNYu1tVnJjZYHE+SdDM5k6fZKNPXS9PwT43Mf6l4HVGx8d1jQwhGQqCvLkYJJBwQ9OysiexFMt7wtNuXhmQ==}
     dev: false
 
+  /@astrojs/compiler@2.5.3:
+    resolution: {integrity: sha512-jzj01BRv/fmo+9Mr2FhocywGzEYiyiP2GVHje1ziGNU6c97kwhYGsnvwMkHrncAy9T9Vi54cjaMK7UE4ClX4vA==}
+    dev: false
+
   /@astrojs/internal-helpers@0.2.1:
     resolution: {integrity: sha512-06DD2ZnItMwUnH81LBLco3tWjcZ1lGU9rLCCBaeUCGYe9cI0wKyY2W3kDyoW1I6GmcWgt1fu+D1CTvz+FIKf8A==}
     dev: false
@@ -2270,12 +2274,12 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@8.2.0(astro@4.2.8):
+  /@astrojs/node@8.2.0(astro@4.3.5):
     resolution: {integrity: sha512-keQIPvdx8hquG+KnWoJp7io/GoczBEJer9X8WzPHK2fnVRXYDKGzXWZw3Dbg0ZhXJreVV3xzniN7nr6e7hgDXg==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
+      astro: 4.3.5(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
       send: 0.18.0
       server-destroy: 1.0.1
     dev: false
@@ -8459,7 +8463,7 @@ packages:
       '@sentry/utils': 7.98.0
     dev: false
 
-  /@sentry/astro@7.98.0(astro@4.2.8):
+  /@sentry/astro@7.98.0(astro@4.3.5):
     resolution: {integrity: sha512-/juNBEqQeJUFhXoxj4jA/bx5+uWFHHV6L+u/s1q5DWOsfHlrn9bNzq4r9Xg/QxRhNuRV64k0mDNflKdoHwOEwg==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
@@ -8471,7 +8475,7 @@ packages:
       '@sentry/types': 7.98.0
       '@sentry/utils': 7.98.0
       '@sentry/vite-plugin': 2.10.3
-      astro: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
+      astro: 4.3.5(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8653,16 +8657,16 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /@spotlightjs/astro@1.0.13(@sentry/astro@7.98.0)(astro@4.2.8):
+  /@spotlightjs/astro@1.0.13(@sentry/astro@7.98.0)(astro@4.3.5):
     resolution: {integrity: sha512-cPZpj1SgtqHIE+vD8D+0IR2VQjBnrAUHUic0sDEEHQ4SUTPEaypoPVMlHHWgOliy7gGTN9x7PPNVacxMHBDRZQ==}
     peerDependencies:
       '@sentry/astro': '>=7.84.0'
       astro: '>=3.4.0 || >=4.0.0-beta'
     dependencies:
-      '@sentry/astro': 7.98.0(astro@4.2.8)
+      '@sentry/astro': 7.98.0(astro@4.3.5)
       '@spotlightjs/overlay': 1.4.1
       '@spotlightjs/sidecar': 1.3.5
-      astro: 4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
+      astro: 4.3.5(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3)
       source-map: 0.7.4
     dev: false
 
@@ -10707,12 +10711,12 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /astro@4.2.8(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-h78IAdSEPMo1bvR40HECQYpnMPfDnk9WxRNJ1+Hw5szk4k5IMUw3nG153nErJABRnaxb6WLv7dtS4tukzJz0mw==}
+  /astro@4.3.5(@types/node@20.11.13)(sass@1.70.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-7jPffNlcmDO94NlkWe/hUWta/pIjlx1LVD/DZb/fyjT1Jv+7mGhKZBIjkDfeVpequW70mep8cAS5RM7Pxa0Gdg==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 2.5.2
+      '@astrojs/compiler': 2.5.3
       '@astrojs/internal-helpers': 0.2.1
       '@astrojs/markdown-remark': 4.2.1
       '@astrojs/telemetry': 3.0.4
@@ -11497,6 +11501,7 @@ packages:
 
   /color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+    requiresBuild: true
 
   /color-string@1.9.1:
     resolution: {integrity: sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==}
