@@ -81,6 +81,7 @@ describe('Admin adminPublishEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "type": "publishEntities",
             },

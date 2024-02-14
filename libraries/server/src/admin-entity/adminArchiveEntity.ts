@@ -54,6 +54,11 @@ async function doArchiveEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  if (context.session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to archive entity');
+  }
+  const { session } = context;
+
   return context.withTransaction(async (context) => {
     // Step 1: Get entity info
     const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
@@ -99,11 +104,7 @@ async function doArchiveEntity(
     // Step 5: Create publishing event
     const publishingEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
       context,
-      {
-        session: context.session,
-        type: EventType.archiveEntity,
-        references: [{ entityVersionInternalId }],
-      },
+      { session, type: EventType.archiveEntity, references: [{ entityVersionInternalId }] },
       syncEvent,
     );
     if (publishingEventResult.isError()) return publishingEventResult;

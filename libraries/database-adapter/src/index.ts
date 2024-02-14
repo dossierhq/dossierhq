@@ -48,7 +48,7 @@ export type {
   DatabaseResolvedEntityReference,
   DatabaseResolvedEntityVersionReference,
 } from './DatabaseAdapter.js';
-export type { ResolvedAuthKey, Session } from './Session.js';
+export type { ReadOnlySession, ResolvedAuthKey, Session, WriteSession } from './Session.js';
 export {
   DEFAULT,
   buildPostgresSqlQuery,

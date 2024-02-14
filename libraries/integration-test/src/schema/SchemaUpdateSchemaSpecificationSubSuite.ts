@@ -82,6 +82,7 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
   updateSchemaSpecification_renameIndexMaintainsLinkDirectly,
   updateSchemaSpecification_errorWrongVersion,
   updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExistingEntities,
+  updateSchemaSpecification_errorReadonlySession,
 ];
 
 async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
@@ -2713,4 +2714,16 @@ async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExisting
     return ok(undefined);
   });
   assertOkResult(result);
+}
+
+async function updateSchemaSpecification_errorReadonlySession({
+  clientProvider,
+}: SchemaTestContext) {
+  const adminClient = clientProvider.adminClient('main', 'readonly');
+  const result = await adminClient.updateSchemaSpecification({});
+  assertErrorResult(
+    result,
+    ErrorType.BadRequest,
+    'Readonly session used to update schema specification',
+  );
 }

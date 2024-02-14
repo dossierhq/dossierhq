@@ -11,7 +11,7 @@ import {
   type SchemaSpecificationUpdatePayload,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter, WriteSession } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
 import { modernizeSchemaSpecification } from './SchemaModernizer.js';
 import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
@@ -25,6 +25,11 @@ export async function schemaUpdateSpecification(
   SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
+  const { session } = context;
+  if (session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to update schema specification');
+  }
+
   return await context.withTransaction<
     SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -59,6 +64,7 @@ export async function schemaUpdateSpecification(
     const updateResult = await calculateAndUpdateSchemaSpec(
       databaseAdapter,
       context,
+      session,
       previousSchema,
       newSchema,
       update.version ?? null,
@@ -79,6 +85,11 @@ export async function schemaUpdateSpecificationSyncAction(
   AdminSchemaWithMigrations,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
+  const { session } = context;
+  if (session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to update schema specification');
+  }
+
   const previousSpecificationResult = await schemaGetSpecification(databaseAdapter, context, false);
   if (previousSpecificationResult.isError()) return previousSpecificationResult;
   const previousSchemaSpec = previousSpecificationResult.value;
@@ -111,6 +122,7 @@ export async function schemaUpdateSpecificationSyncAction(
   const updateResult = await calculateAndUpdateSchemaSpec(
     databaseAdapter,
     context,
+    session,
     oldSchema,
     newSchema,
     event.schemaSpecification.version,
@@ -125,6 +137,7 @@ export async function schemaUpdateSpecificationSyncAction(
 async function calculateAndUpdateSchemaSpec(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
+  session: WriteSession,
   oldSchema: AdminSchemaWithMigrations,
   newSchema: AdminSchemaWithMigrations,
   specifiedVersion: number | null,
@@ -158,7 +171,7 @@ async function calculateAndUpdateSchemaSpec(
   // Update the schema spec
   const updateResult = await databaseAdapter.schemaUpdateSpecification(
     context,
-    context.session,
+    session,
     newSchema.spec,
     syncEvent,
   );

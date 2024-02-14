@@ -1,21 +1,21 @@
-import type { ErrorType, PromiseResult, Result } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAuthCreateSessionPayload,
-  TransactionContext,
   ResolvedAuthKey,
-  Session,
+  TransactionContext,
+  WriteSession,
 } from '@dossierhq/database-adapter';
-import { ensureRequired } from './utils/ValidationUtils.js';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';
+import { ensureRequired } from './utils/ValidationUtils.js';
 
 export async function authCreateSession(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   provider: string,
   identifier: string,
+  readonly: boolean,
 ): PromiseResult<
   DatabaseAuthCreateSessionPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
@@ -23,7 +23,7 @@ export async function authCreateSession(
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) return assertion;
 
-  return await databaseAdapter.authCreateSession(context, provider, identifier);
+  return await databaseAdapter.authCreateSession(context, provider, identifier, readonly);
 }
 
 /** N.B. don't use this function normally, instead use {@link authCreateSession}.
@@ -35,7 +35,7 @@ export async function authCreateSyncSessionForSubject(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   arg: { subjectId: string },
-): PromiseResult<Session, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<WriteSession, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   if (!arg.subjectId) {
     return notOk.BadRequest('No subject provided');
   }

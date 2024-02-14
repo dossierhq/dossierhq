@@ -53,6 +53,7 @@ describe('publishedSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -150,6 +151,7 @@ describe('publishedSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -246,6 +248,7 @@ describe('publishedSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -281,6 +284,7 @@ describe('publishedSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },

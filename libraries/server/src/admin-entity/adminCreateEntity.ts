@@ -92,6 +92,11 @@ async function doCreateEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  if (context.session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to create entity');
+  }
+  const { session } = context;
+
   // validate
   const validationIssue = validateEntityInfoForCreate(adminSchema, ['entity'], entity);
   if (validationIssue) {
@@ -143,7 +148,7 @@ async function doCreateEntity(
         type: encodeEntityPayload.type,
         name: encodeEntityPayload.name,
         version,
-        session: context.session,
+        session,
         resolvedAuthKey,
         publish,
         schemaVersion: adminSchema.spec.version,

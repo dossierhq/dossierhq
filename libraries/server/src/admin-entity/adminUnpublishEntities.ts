@@ -6,7 +6,7 @@ import type {
   UnpublishEntitiesSyncEvent,
 } from '@dossierhq/core';
 import { AdminEntityStatus, EventType, createErrorResult, notOk, ok } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter, WriteSession } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
@@ -75,6 +75,11 @@ async function doUnpublishEntities(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  if (context.session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to unpublish entities');
+  }
+  const { session } = context;
+
   const uniqueIdCheck = checkUUIDsAreUnique(references);
   if (uniqueIdCheck.isError()) return uniqueIdCheck;
 
@@ -123,6 +128,7 @@ async function doUnpublishEntities(
     const unpublishEventsResult = await createUnpublishEvents(
       databaseAdapter,
       context,
+      session,
       unpublishEntitiesInfo,
       syncEvent,
     );
@@ -256,6 +262,7 @@ async function ensureReferencedEntitiesAreNotPublished(
 async function createUnpublishEvents(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
+  session: WriteSession,
   unpublishEntityInfo: EntityInfoToBeUnpublished[],
   syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
@@ -265,7 +272,7 @@ async function createUnpublishEvents(
   return await databaseAdapter.adminEntityCreateEntityEvent(
     context,
     {
-      session: context.session,
+      session,
       type: EventType.unpublishEntities,
       references: unpublishEntityInfo.map(({ entityInternalId, entityVersionInternalId }) => ({
         entityInternalId,

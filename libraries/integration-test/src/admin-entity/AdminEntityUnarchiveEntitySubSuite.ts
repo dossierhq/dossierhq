@@ -11,6 +11,7 @@ export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext
   unarchiveEntity_previouslyPublished,
   unarchiveEntity_errorInvalidId,
   unarchiveEntity_errorWrongAuthKey,
+  unarchiveEntity_errorReadonlySession,
 ];
 
 async function unarchiveEntity_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -123,12 +124,26 @@ async function unarchiveEntity_errorWrongAuthKey({ clientProvider }: AdminEntity
       info: { authKey: 'subject' },
     }),
   );
-
-  assertOkResult(createResult);
   const {
     entity: { id },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
-  const getResult = await clientProvider.adminClient('secondary').unarchiveEntity({ id });
-  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+  const unarchiveResult = await clientProvider.adminClient('secondary').unarchiveEntity({ id });
+  assertErrorResult(unarchiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+}
+
+async function unarchiveEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const createResult = await clientProvider.adminClient().createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const unarchiveResult = await clientProvider
+    .adminClient('main', 'readonly')
+    .unarchiveEntity({ id });
+  assertErrorResult(
+    unarchiveResult,
+    ErrorType.BadRequest,
+    'Readonly session used to unarchive entity',
+  );
 }

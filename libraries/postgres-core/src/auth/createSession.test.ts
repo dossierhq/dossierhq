@@ -13,10 +13,10 @@ describe('authCreateSession', () => {
       else result = { rows: [] };
       return Promise.resolve(result);
     });
-    const result = await authCreateSession(adapter, context, 'test', 'hello');
+    const result = await authCreateSession(adapter, context, 'test', 'hello', false);
     expectResultValue(result, {
       principalEffect: 'created',
-      session: { subjectId: '4321' },
+      session: { type: 'write', subjectId: '4321' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
@@ -54,10 +54,10 @@ describe('authCreateSession', () => {
       }
       return Promise.resolve({ rows: [] });
     });
-    const result = await authCreateSession(adapter, context, 'test', 'hello');
+    const result = await authCreateSession(adapter, context, 'test', 'hello', false);
     expectResultValue(result, {
       principalEffect: 'none',
-      session: { subjectId: '4321' },
+      session: { type: 'write', subjectId: '4321' },
     });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [

@@ -18,6 +18,7 @@ exports[`Admin adminSampleEntities > No result - float seed 1`] = `
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
+        "type": "write",
       },
       "transaction": null,
     },
@@ -50,6 +51,7 @@ exports[`Admin adminSampleEntities > No result 1`] = `
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
+        "type": "write",
       },
       "transaction": null,
     },
@@ -82,6 +84,7 @@ exports[`Admin adminSampleEntities > One result 1`] = `
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
+        "type": "write",
       },
       "transaction": null,
     },
@@ -111,6 +114,7 @@ exports[`Admin adminSampleEntities > One result 1`] = `
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
+        "type": "write",
       },
       "transaction": null,
     },

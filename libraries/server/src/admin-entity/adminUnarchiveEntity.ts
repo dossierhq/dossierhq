@@ -1,6 +1,7 @@
 import {
   AdminEntityStatus,
   EventType,
+  notOk,
   ok,
   type AdminEntityUnarchivePayload,
   type EntityReference,
@@ -56,6 +57,11 @@ async function doUnarchiveEntity(
   | typeof ErrorType.NotFound
   | typeof ErrorType.Generic
 > {
+  if (context.session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to unarchive entity');
+  }
+  const { session } = context;
+
   return context.withTransaction(async (context) => {
     // Step 1: Get entity info
     const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
@@ -103,11 +109,7 @@ async function doUnarchiveEntity(
       // Step 4: Create publishing event
       const createEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
         context,
-        {
-          session: context.session,
-          type: EventType.unarchiveEntity,
-          references: [{ entityVersionInternalId }],
-        },
+        { session, type: EventType.unarchiveEntity, references: [{ entityVersionInternalId }] },
         syncEvent,
       );
       if (createEventResult.isError()) return createEventResult;

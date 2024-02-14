@@ -86,6 +86,7 @@ describe('Admin adminCreateEntity', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "type": "TitleOnly",
               "version": 1,

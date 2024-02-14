@@ -14,13 +14,15 @@ describe('Auth authCreateSession', () => {
     const context = createMockTransactionContext();
 
     databaseAdapter.authCreateSession.mockReturnValueOnce(
-      Promise.resolve(ok({ principalEffect: 'created', session: { subjectId: '1-2-3' } })),
+      Promise.resolve(
+        ok({ principalEffect: 'created', session: { type: 'write', subjectId: '1-2-3' } }),
+      ),
     );
-    const result = await authCreateSession(databaseAdapter, context, 'test', 'hello');
+    const result = await authCreateSession(databaseAdapter, context, 'test', 'hello', false);
 
     expectResultValue(result, {
       principalEffect: 'created',
-      session: { subjectId: '1-2-3' },
+      session: { type: 'write', subjectId: '1-2-3' },
     });
     expect(getDatabaseAdapterMockedCallsWithoutContextAndUnordered(databaseAdapter))
       .toMatchInlineSnapshot(`
@@ -29,6 +31,7 @@ describe('Auth authCreateSession', () => {
             "authCreateSession",
             "test",
             "hello",
+            false,
           ],
         ]
       `);

@@ -89,6 +89,7 @@ export function createMockSessionContext({
   logger?: Logger;
 }): SessionContext {
   const resolvedSession = session ?? {
+    type: 'write',
     subjectId: 'subject-id',
     subjectInternalId: 123,
   };

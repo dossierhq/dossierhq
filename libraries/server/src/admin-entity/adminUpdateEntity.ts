@@ -87,6 +87,11 @@ async function doUpdateEntity(
   | typeof ErrorType.Generic
 > {
   {
+    if (context.session.type === 'readonly') {
+      return notOk.BadRequest('Readonly session used to update entity');
+    }
+    const { session } = context;
+
     return await context.withTransaction(async (context) => {
       // get info of existing entity
       const entityInfoResult = await databaseAdapter.adminEntityUpdateGetEntityInfo(context, {
@@ -170,7 +175,7 @@ async function doUpdateEntity(
           changeName: name !== previousName || (publish && name !== publishedName),
           type: updatedEntity.info.type,
           publish,
-          session: context.session,
+          session,
           version: updatedEntity.info.version,
           status: updatedEntity.info.status,
           schemaVersion: adminSchema.spec.version,

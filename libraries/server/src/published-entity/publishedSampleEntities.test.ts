@@ -50,6 +50,7 @@ describe('Published publishedSampleEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -132,6 +133,7 @@ describe('Published publishedSampleEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -161,6 +163,7 @@ describe('Published publishedSampleEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },

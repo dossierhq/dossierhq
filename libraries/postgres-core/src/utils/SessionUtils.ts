@@ -3,16 +3,16 @@ import { assertIsDefined } from './AssertUtils.js';
 
 const sessionWeakMap = new WeakMap<Session, number>();
 
-export function createSession({
-  subjectId,
+export function createSession<TSession extends Session = Session>({
+  session,
   subjectInternalId,
 }: {
-  subjectId: string;
+  session: TSession;
   subjectInternalId: number;
-}): Readonly<Session> {
-  const session: Readonly<Session> = Object.freeze({ subjectId });
-  sessionWeakMap.set(session, subjectInternalId);
-  return session;
+}): Readonly<TSession> {
+  const frozenSession = Object.freeze({ ...session }) as Readonly<TSession>;
+  sessionWeakMap.set(frozenSession as Session, subjectInternalId);
+  return frozenSession;
 }
 
 export function getSessionSubjectInternalId(session: Readonly<Session>): number {

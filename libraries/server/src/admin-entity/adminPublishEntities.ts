@@ -149,6 +149,11 @@ async function doPublishEntities(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
+  if (context.session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to publish entities');
+  }
+  const { session } = context;
+
   const uniqueIdCheck = checkUUIDsAreUnique(references);
   if (uniqueIdCheck.isError()) return uniqueIdCheck;
 
@@ -224,11 +229,7 @@ async function doPublishEntities(
     if (createEvents && eventReferences.length > 0) {
       const publishEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
         context,
-        {
-          session: context.session,
-          type: EventType.publishEntities,
-          references: eventReferences,
-        },
+        { session, type: EventType.publishEntities, references: eventReferences },
         syncEvent,
       );
       if (publishEventResult.isError()) return publishEventResult;

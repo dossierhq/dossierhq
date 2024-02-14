@@ -39,6 +39,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode,
   publishEntities_errorPublishInvalidEntity,
   publishEntities_errorPublishAlreadyPublishedInvalidEntity,
+  publishEntities_errorReadonlySession,
 ];
 
 async function publishEntities_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -524,5 +525,18 @@ async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
     publishResult,
     ErrorType.BadRequest,
     `entity(${entity.id}): Already published version is invalid`,
+  );
+}
+
+async function publishEntities_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const normalAdminClient = clientProvider.adminClient('main', 'write');
+  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+  const { entity } = (await normalAdminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const publishResult = await readonlyAdminClient.publishEntities([{ id: entity.id, version: 1 }]);
+  assertErrorResult(
+    publishResult,
+    ErrorType.BadRequest,
+    'Readonly session used to publish entities',
   );
 }

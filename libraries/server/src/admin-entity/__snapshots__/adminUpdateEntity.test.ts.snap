@@ -53,6 +53,7 @@ exports[`Admin adminUpdateEntity > Minimal 1`] = `
       "session": {
         "subjectId": "subject-id",
         "subjectInternalId": 123,
+        "type": "write",
       },
       "status": "draft",
       "type": "TitleOnly",

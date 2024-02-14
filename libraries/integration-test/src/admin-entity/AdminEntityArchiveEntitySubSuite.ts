@@ -11,6 +11,7 @@ export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[
   archiveEntity_errorInvalidError,
   archiveEntity_errorWrongAuthKey,
   archiveEntity_errorPublishedEntity,
+  archiveEntity_errorReadonlySession,
 ];
 
 async function archiveEntity_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -96,8 +97,8 @@ async function archiveEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTe
     entity: { id },
   } = createResult.value;
 
-  const getResult = await clientProvider.adminClient('secondary').archiveEntity({ id });
-  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+  const archiveResult = await clientProvider.adminClient('secondary').archiveEntity({ id });
+  assertErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }
 
 async function archiveEntity_errorPublishedEntity({ clientProvider }: AdminEntityTestContext) {
@@ -110,6 +111,18 @@ async function archiveEntity_errorPublishedEntity({ clientProvider }: AdminEntit
     entity: { id },
   } = createResult.value;
 
-  const getResult = await adminClient.archiveEntity({ id });
-  assertErrorResult(getResult, ErrorType.BadRequest, 'Entity is published');
+  const archiveResult = await adminClient.archiveEntity({ id });
+  assertErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
+}
+
+async function archiveEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const normalAdminClient = clientProvider.adminClient('main', 'write');
+  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+  const createResult = await normalAdminClient.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const archiveResult = await readonlyAdminClient.archiveEntity({ id });
+  assertErrorResult(archiveResult, ErrorType.BadRequest, 'Readonly session used to archive entity');
 }

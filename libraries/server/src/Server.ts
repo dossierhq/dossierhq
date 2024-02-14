@@ -29,7 +29,9 @@ import type {
   DatabaseAdapter,
   DatabaseOptimizationOptions,
   DatabasePerformanceCallbacks,
+  ReadOnlySession,
   Session,
+  WriteSession,
 } from '@dossierhq/database-adapter';
 import {
   authCreateSession,
@@ -58,9 +60,9 @@ import {
 import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
 import { assertIsDefined } from './utils/AssertUtils.js';
 
-export interface CreateSessionPayload {
+export interface CreateSessionPayload<TSession extends Session = Session> {
   principalEffect: 'created' | 'none';
-  context: SessionContext;
+  context: SessionContext<TSession>;
 }
 
 export interface SyncPrincipal {
@@ -114,7 +116,22 @@ export interface Server<
     defaultAuthKeys: readonly string[];
     logger: Logger | null;
     databasePerformance: DatabasePerformanceCallbacks | null;
-  }): PromiseResult<CreateSessionPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
+    readonly: true;
+  }): PromiseResult<
+    CreateSessionPayload<ReadOnlySession>,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
+  createSession(params: {
+    provider: string;
+    identifier: string;
+    defaultAuthKeys: readonly string[];
+    logger: Logger | null;
+    databasePerformance: DatabasePerformanceCallbacks | null;
+    readonly?: boolean;
+  }): PromiseResult<
+    CreateSessionPayload<WriteSession>,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >;
 
   createAdminClient<
     TClient extends AdminClient<
@@ -358,14 +375,22 @@ export async function createServer<
       return authCreatePrincipal(databaseAdapter, managementContext, principal);
     },
 
-    createSession: async ({
+    createSession: async <TSession extends Session>({
       provider,
       identifier,
       defaultAuthKeys,
       logger: sessionLogger,
       databasePerformance,
+      readonly,
+    }: {
+      provider: string;
+      identifier: string;
+      defaultAuthKeys: readonly string[];
+      logger: Logger | null;
+      databasePerformance: DatabasePerformanceCallbacks | null;
+      readonly?: boolean;
     }): PromiseResult<
-      CreateSessionPayload,
+      CreateSessionPayload<TSession>,
       typeof ErrorType.BadRequest | typeof ErrorType.Generic
     > => {
       const authContext = serverImpl.createInternalContext(databasePerformance);
@@ -374,6 +399,7 @@ export async function createServer<
         authContext,
         provider,
         identifier,
+        readonly ?? false,
       );
       if (sessionResult.isError()) return sessionResult;
       const { principalEffect, session } = sessionResult.value;
@@ -386,7 +412,10 @@ export async function createServer<
       );
       if (contextResult.isError()) return contextResult;
 
-      return ok({ principalEffect, context: contextResult.value });
+      return ok({
+        principalEffect,
+        context: contextResult.value as SessionContext<TSession>,
+      });
     },
 
     createAdminClient: <

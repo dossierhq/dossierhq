@@ -13,6 +13,7 @@ export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestConte
   unpublishEntities_errorDuplicateIds,
   unpublishEntities_errorWrongAuthKey,
   unpublishEntities_errorUniqueIndexValue,
+  unpublishEntities_errorReadonlySession,
 ];
 
 async function unpublishEntities_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -222,4 +223,22 @@ async function unpublishEntities_errorUniqueIndexValue({ clientProvider }: Admin
     value: unique,
   });
   assertErrorResult(secondPublishedGetResult, ErrorType.NotFound, 'No such entity');
+}
+
+async function unpublishEntities_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const createResult = await clientProvider
+    .adminClient()
+    .createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const unpublishResult = await clientProvider
+    .adminClient('main', 'readonly')
+    .unpublishEntities([{ id }]);
+  assertErrorResult(
+    unpublishResult,
+    ErrorType.BadRequest,
+    'Readonly session used to unpublish entities',
+  );
 }

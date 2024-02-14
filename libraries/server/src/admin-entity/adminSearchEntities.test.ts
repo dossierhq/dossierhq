@@ -51,6 +51,7 @@ describe('Admin adminSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -151,6 +152,7 @@ describe('Admin adminSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -250,6 +252,7 @@ describe('Admin adminSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },
@@ -285,6 +288,7 @@ describe('Admin adminSearchEntities', () => {
               "session": {
                 "subjectId": "subject-id",
                 "subjectInternalId": 123,
+                "type": "write",
               },
               "transaction": null,
             },

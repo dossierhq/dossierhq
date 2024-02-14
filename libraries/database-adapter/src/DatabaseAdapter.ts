@@ -27,7 +27,7 @@ import type {
   UpdateEntitySyncEvent,
   UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
-import type { ResolvedAuthKey, Session } from './Session.js';
+import type { ResolvedAuthKey, Session, WriteSession } from './Session.js';
 import type { Transaction, TransactionContext } from './TransactionContext.js';
 
 export interface DatabasePagingInfo extends PagingInfo {
@@ -66,7 +66,7 @@ export interface DatabaseAdminEntityCreateEntityArg {
   type: string;
   name: string;
   version: number;
-  session: Session;
+  session: WriteSession;
   resolvedAuthKey: ResolvedAuthKey;
   publish: boolean;
   schemaVersion: number;
@@ -144,7 +144,7 @@ export interface DatabaseAdminEntityPublishUpdateEntityPayload
 }
 
 export interface DatabaseAdminEntityCreateEntityEventArg {
-  session: Session;
+  session: WriteSession;
   type: EntityChangelogEvent['type'];
   references: { entityVersionInternalId: unknown; publishedName?: string }[];
 }
@@ -200,7 +200,7 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   type: string;
   publish: boolean;
   status: AdminEntityStatus;
-  session: Session;
+  session: WriteSession;
   schemaVersion: number;
   encodeVersion: number;
   fields: Record<string, unknown>;
@@ -545,12 +545,13 @@ export interface DatabaseAdapter<
     context: TransactionContext,
     provider: string,
     identifier: string,
+    readOnly: boolean,
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
 
   authCreateSyncSessionForSubject(
     context: TransactionContext,
     arg: { subjectId: string },
-  ): PromiseResult<Session, typeof ErrorType.Generic>;
+  ): PromiseResult<WriteSession, typeof ErrorType.Generic>;
 
   authGetPrincipals(
     context: TransactionContext,
@@ -707,7 +708,7 @@ export interface DatabaseAdapter<
 
   schemaUpdateSpecification(
     context: TransactionContext,
-    session: Session,
+    session: WriteSession,
     schemaSpec: AdminSchemaSpecificationWithMigrations,
     syncEvent: UpdateSchemaSyncEvent | null,
   ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;

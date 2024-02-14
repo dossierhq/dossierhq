@@ -67,6 +67,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_errorPublishWithoutRequiredTitle,
   updateEntity_errorInvalidField,
   updateEntity_errorDuplicateUniqueIndexValue,
+  updateEntity_errorReadonlySession,
 ];
 
 async function updateEntity_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -900,4 +901,21 @@ async function updateEntity_errorDuplicateUniqueIndexValue({
     ErrorType.BadRequest,
     `entity.fields.unique: Value is not unique (stringsUnique:${unique})`,
   );
+}
+
+async function updateEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const normalAdminClient = clientProvider.adminClient();
+  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+
+  const createResult = await normalAdminClient.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: { id },
+  } = createResult.valueOrThrow();
+
+  const updateResult = await readonlyAdminClient.updateEntity({
+    id,
+    info: { name: 'Updated name' },
+    fields: {},
+  });
+  assertErrorResult(updateResult, ErrorType.BadRequest, 'Readonly session used to update entity');
 }

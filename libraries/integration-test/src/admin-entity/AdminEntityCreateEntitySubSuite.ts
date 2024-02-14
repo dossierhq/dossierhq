@@ -89,6 +89,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_errorRichTextWithUnsupportedEntityNode,
   createEntity_errorRichTextWithUnsupportedLinkEntityType,
   createEntity_errorPublishWithoutRequiredTitle,
+  createEntity_errorReadonlySession,
 ];
 
 async function createEntity_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -1057,4 +1058,10 @@ async function createEntity_errorPublishWithoutRequiredTitle({
 
   const getResult = await client.getEntity({ id });
   assertErrorResult(getResult, ErrorType.NotFound, 'No such entity');
+}
+
+async function createEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient('main', 'readonly');
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertErrorResult(createResult, ErrorType.BadRequest, 'Readonly session used to create entity');
 }

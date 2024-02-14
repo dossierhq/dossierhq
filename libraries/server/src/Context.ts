@@ -14,12 +14,12 @@ export interface InternalContext extends TransactionContext {
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 
-export interface SessionContext extends TransactionContext {
-  readonly session: Session;
+export interface SessionContext<TSession extends Session = Session> extends TransactionContext {
+  readonly session: TSession;
   readonly defaultAuthKeys: readonly string[];
 
   withTransaction<TOk, TError extends ErrorType>(
-    callback: (context: SessionContext) => PromiseResult<TOk, TError>,
+    callback: (context: SessionContext<TSession>) => PromiseResult<TOk, TError>,
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 

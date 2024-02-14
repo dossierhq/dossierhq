@@ -21,6 +21,8 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   upsertEntity_errorCreateAuthKeyNotMatchingPattern,
   upsertEntity_errorUpdateTryingToChangeAuthKey,
   upsertEntity_errorUpdateNoAuthKey,
+  upsertEntity_errorCreateReadonlySession,
+  upsertEntity_errorUpdateReadonlySession,
 ];
 
 async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestContext) {
@@ -206,4 +208,24 @@ async function upsertEntity_errorUpdateNoAuthKey({ clientProvider }: AdminEntity
   } as AdminEntityUpsert<AppAdminEntity>);
 
   assertErrorResult(result, ErrorType.BadRequest, 'entity.info.authKey: AuthKey is required');
+}
+
+async function upsertEntity_errorCreateReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient('main', 'readonly');
+  const upsertResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id: uuidv4() }));
+  assertErrorResult(upsertResult, ErrorType.BadRequest, 'Readonly session used to create entity');
+}
+
+async function upsertEntity_errorUpdateReadonlySession({ clientProvider }: AdminEntityTestContext) {
+  const normalAdminClient = clientProvider.adminClient();
+  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+
+  const {
+    entity: { id },
+  } = (await normalAdminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const upsertResult = await readonlyAdminClient.upsertEntity(
+    copyEntity(TITLE_ONLY_UPSERT, { id }),
+  );
+  assertErrorResult(upsertResult, ErrorType.BadRequest, 'Readonly session used to update entity');
 }

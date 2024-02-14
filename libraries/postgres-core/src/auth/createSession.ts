@@ -1,13 +1,11 @@
-import type { OkResult, PromiseResult } from '@dossierhq/core';
-import { ErrorType, notOk, ok } from '@dossierhq/core';
+import { ErrorType, notOk, ok, type OkResult, type PromiseResult } from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
   type DatabaseAuthCreateSessionPayload,
-  type Session,
   type TransactionContext,
+  type WriteSession,
 } from '@dossierhq/database-adapter';
-import type { SubjectsTable } from '../DatabaseSchema.js';
-import { UniqueConstraints } from '../DatabaseSchema.js';
+import { UniqueConstraints, type SubjectsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
 import { createSession } from '../utils/SessionUtils.js';
@@ -17,12 +15,17 @@ export async function authCreateSession(
   context: TransactionContext,
   provider: string,
   identifier: string,
+  readonly: boolean,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
-  const firstGetResult = await getSubject(adapter, context, provider, identifier);
+  const firstGetResult = await getSubject(adapter, context, provider, identifier, readonly);
   if (firstGetResult.isError()) return firstGetResult;
 
   if (firstGetResult.value) {
     return ok(firstGetResult.value);
+  }
+
+  if (readonly) {
+    return ok({ principalEffect: 'none', session: { type: 'readonly', subjectId: null } });
   }
 
   const createResult = await createSubject(adapter, context, provider, identifier);
@@ -31,7 +34,7 @@ export async function authCreateSession(
   }
   if (createResult.isErrorType(ErrorType.Conflict)) {
     // this should only happen if the principal is created by another request after our first check
-    const secondGetResult = await getSubject(adapter, context, provider, identifier);
+    const secondGetResult = await getSubject(adapter, context, provider, identifier, readonly);
     if (secondGetResult.isError()) {
       return secondGetResult;
     }
@@ -51,11 +54,16 @@ export async function authCreateSyncSessionForSubject(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
   subject: { subjectId: string },
-): PromiseResult<Session, typeof ErrorType.Generic> {
+): PromiseResult<WriteSession, typeof ErrorType.Generic> {
   const result = await getOrCreateSubject(database, context, subject);
   if (result.isError()) return result;
 
-  return ok(createSession({ subjectInternalId: result.value.id, subjectId: subject.subjectId }));
+  return ok(
+    createSession({
+      subjectInternalId: result.value.id,
+      session: { type: 'write', subjectId: subject.subjectId },
+    }),
+  );
 }
 
 export async function getOrCreateSubject(
@@ -90,9 +98,13 @@ export async function getOrCreateSubject(
 
 function createPayload<TError extends ErrorType>(
   principalEffect: 'created' | 'none',
+  readonly: boolean,
   { id, uuid }: Pick<SubjectsTable, 'id' | 'uuid'>,
 ): OkResult<DatabaseAuthCreateSessionPayload, TError> {
-  const session = createSession({ subjectInternalId: id, subjectId: uuid });
+  const session = createSession({
+    subjectInternalId: id,
+    session: readonly ? { type: 'readonly', subjectId: uuid } : { type: 'write', subjectId: uuid },
+  });
   return ok({ principalEffect, session });
 }
 
@@ -101,6 +113,7 @@ async function getSubject(
   context: TransactionContext,
   provider: string,
   identifier: string,
+  readonly: boolean,
 ): PromiseResult<DatabaseAuthCreateSessionPayload | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SubjectsTable, 'id' | 'uuid'>>(adapter, context, {
     text: `SELECT s.id, s.uuid FROM subjects s, principals p
@@ -110,7 +123,7 @@ async function getSubject(
   if (result.isError()) return result;
 
   if (result.value) {
-    return createPayload('none', result.value);
+    return createPayload('none', readonly, result.value);
   }
   return ok(null);
 }
@@ -136,7 +149,7 @@ async function createSubject(
     const createResult = await createPrincipal(adapter, context, provider, identifier, id);
     if (createResult.isError()) return createResult;
 
-    return createPayload('created', subjectsResult.value);
+    return createPayload('created', false, subjectsResult.value);
   });
 }
 
