@@ -43,6 +43,7 @@
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
+    "@types/better-sqlite3": "~7.6.8",
     "better-sqlite3": "~9.4.0"
   },
   "devDependencies": {
