@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sqlite-core",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sqlite-core"
+}

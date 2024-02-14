@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support readonly session",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

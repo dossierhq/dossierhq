@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Support readonly session",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
