@@ -19,7 +19,11 @@ export async function acquireAdvisoryLock(
   AdvisoryLockPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.Conflict | typeof ErrorType.Generic
 > {
-  const { logger } = context;
+  const { logger, session } = context;
+
+  if (session.type === 'readonly') {
+    return notOk.BadRequest('Readonly session used to acquire advisory lock');
+  }
 
   if (!name) {
     return notOk.BadRequest('No name provided');

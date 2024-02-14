@@ -229,7 +229,9 @@ export function createServerAdminClient({
           args: [reference],
           resolve,
         } = operation as AdminClientOperation<typeof AdminClientOperationName.processDirtyEntity>;
-        if (!reference || typeof reference.id !== 'string') {
+        if (context.session.type === 'readonly') {
+          resolve(notOk.BadRequest('Readonly session used to process dirty entity'));
+        } else if (!reference || typeof reference.id !== 'string') {
           resolve(notOk.BadRequest('Invalid reference'));
         } else {
           resolve(

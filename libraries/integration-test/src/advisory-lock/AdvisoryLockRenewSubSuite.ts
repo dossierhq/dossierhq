@@ -7,6 +7,7 @@ export const AdvisoryLockRenewSubSuite: UnboundTestFunction<AdvisoryLockTestCont
   renewLock_minimal,
   renewLock_errorInvalidName,
   renewLock_errorInvalidHandle,
+  renewLock_errorReadonlySession,
 ];
 
 async function renewLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
@@ -56,4 +57,10 @@ async function renewLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTest
     ErrorType.NotFound,
     "Invalid handle used for renewing lock 'renewLock_errorInvalidHandle'",
   );
+}
+
+async function renewLock_errorReadonlySession({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient('main', 'readonly');
+  const result = await adminClient.renewAdvisoryLock('renewLock_errorReadonlySession', 123);
+  assertErrorResult(result, ErrorType.BadRequest, 'Readonly session used to renew advisory lock');
 }

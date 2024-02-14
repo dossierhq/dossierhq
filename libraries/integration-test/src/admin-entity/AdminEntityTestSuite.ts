@@ -13,6 +13,7 @@ import { GetEntitiesSubSuite } from './AdminEntityGetEntitiesSubSuite.js';
 import { GetEntitiesTotalCountSubSuite } from './AdminEntityGetEntitiesTotalCountSubSuite.js';
 import { GetEntityListSubSuite } from './AdminEntityGetEntityListSubSuite.js';
 import { GetEntitySubSuite } from './AdminEntityGetEntitySubSuite.js';
+import { ProcessDirtyEntitySubSuite } from './AdminEntityProcessDirtyEntitySubSuite.js';
 import { PublishEntitiesSubSuite } from './AdminEntityPublishEntitiesSubSuite.js';
 import { UnarchiveEntitySubSuite } from './AdminEntityUnarchiveEntitySubSuite.js';
 import { UnpublishEntitiesSubSuite } from './AdminEntityUnpublishEntitiesSubSuite.js';
@@ -36,6 +37,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     ...GetEntitiesTotalCountSubSuite,
     ...GetEntityListSubSuite,
     ...GetEntitySubSuite,
+    ...ProcessDirtyEntitySubSuite,
     ...PublishEntitiesSubSuite,
     ...UnarchiveEntitySubSuite,
     ...UnpublishEntitiesSubSuite,

@@ -263,14 +263,17 @@ export interface AdminClient<
   renewAdvisoryLock(
     name: string,
     handle: number,
-  ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
+  ): PromiseResult<
+    AdvisoryLockPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
 
   releaseAdvisoryLock(
     name: string,
     handle: number,
   ): PromiseResult<
     AdvisoryLockReleasePayload,
-    typeof ErrorType.NotFound | typeof ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
   >;
 
   toExceptionClient(): TExceptionClient;
@@ -785,7 +788,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   renewAdvisoryLock(
     name: string,
     handle: number,
-  ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.NotFound | typeof ErrorType.Generic> {
+  ): PromiseResult<
+    AdvisoryLockPayload,
+    typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
+  > {
     return this.executeOperation({
       name: AdminClientOperationName.renewAdvisoryLock,
       args: [name, handle],
@@ -798,7 +804,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     handle: number,
   ): PromiseResult<
     AdvisoryLockReleasePayload,
-    typeof ErrorType.NotFound | typeof ErrorType.Generic
+    typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
   > {
     return this.executeOperation({
       name: AdminClientOperationName.releaseAdvisoryLock,

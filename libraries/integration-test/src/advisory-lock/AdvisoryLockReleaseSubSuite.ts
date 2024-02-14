@@ -7,6 +7,7 @@ export const AdvisoryLockReleaseSubSuite: UnboundTestFunction<AdvisoryLockTestCo
   releaseLock_minimal,
   releaseLock_errorInvalidName,
   releaseLock_errorInvalidHandle,
+  releaseLock_errorReadonlySession,
 ];
 
 async function releaseLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
@@ -55,4 +56,10 @@ async function releaseLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTe
     ErrorType.NotFound,
     "Invalid handle used for releasing lock 'releaseLock_errorInvalidHandle'",
   );
+}
+
+async function releaseLock_errorReadonlySession({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient('main', 'readonly');
+  const result = await adminClient.releaseAdvisoryLock('releaseLock_errorReadonlySession', 123);
+  assertErrorResult(result, ErrorType.BadRequest, 'Readonly session used to release advisory lock');
 }

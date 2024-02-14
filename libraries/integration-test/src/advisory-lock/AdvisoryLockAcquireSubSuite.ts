@@ -6,6 +6,7 @@ import type { AdvisoryLockTestContext } from './AdvisoryLockTestSuite.js';
 export const AdvisoryLockAcquireSubSuite: UnboundTestFunction<AdvisoryLockTestContext>[] = [
   acquireLock_minimal,
   acquireLock_errorConflictIfAlreadyAcquired,
+  acquireLock_errorReadonlySession,
 ];
 
 async function acquireLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
@@ -36,4 +37,12 @@ async function acquireLock_errorConflictIfAlreadyAcquired({
     ErrorType.Conflict,
     "Lock with name 'acquireLock_errorConflictIfAlreadyAcquired' already exists",
   );
+}
+
+async function acquireLock_errorReadonlySession({ clientProvider }: AdvisoryLockTestContext) {
+  const adminClient = clientProvider.adminClient('main', 'readonly');
+  const result = await adminClient.acquireAdvisoryLock('acquireLock_errorReadonlySession', {
+    leaseDuration: 1,
+  });
+  assertErrorResult(result, ErrorType.BadRequest, 'Readonly session used to acquire advisory lock');
 }
