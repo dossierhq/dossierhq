@@ -1,8 +1,19 @@
-import type { EntityReference, RichTextEntityLinkNode } from '@dossierhq/core';
-import { RichTextNodeType } from '@dossierhq/core';
+import {
+  RichTextNodeType,
+  type EntityReference,
+  type RichTextEntityLinkNode,
+} from '@dossierhq/core';
 import { addClassNamesToElement } from '@lexical/utils';
-import type { EditorConfig, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
-import { $getSelection, $isElementNode, $isRangeSelection, ElementNode } from 'lexical';
+import {
+  $getSelection,
+  $isElementNode,
+  $isRangeSelection,
+  ElementNode,
+  type EditorConfig,
+  type LexicalEditor,
+  type LexicalNode,
+  type NodeKey,
+} from 'lexical';
 
 export type SerializedPublishedEntityLinkNode = RichTextEntityLinkNode;
 
@@ -189,8 +200,8 @@ function replaceParentNodesWithChildren(
   }
 }
 
-function $getLinkAncestor(node: LexicalNode): null | LexicalNode {
-  return $getAncestor(node, $isPublishedEntityLinkNode);
+function $getLinkAncestor(node: LexicalNode): null | PublishedEntityLinkNode {
+  return $getAncestor(node, $isPublishedEntityLinkNode) as PublishedEntityLinkNode | null;
 }
 
 function $getAncestor(

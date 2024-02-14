@@ -32,7 +32,6 @@ import { $setBlocksType } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import type { LexicalEditor, NodeKey } from 'lexical';
 import {
-  $INTERNAL_isPointSelection,
   $createParagraphNode,
   $getNodeByKey,
   $getSelection,
@@ -312,9 +311,7 @@ function BlockFormatDropDown({
           // Corresponds to formatParagraph() in Playground
           editor.update(() => {
             const selection = $getSelection();
-            if ($INTERNAL_isPointSelection(selection)) {
-              $setBlocksType(selection, () => $createParagraphNode());
-            }
+            $setBlocksType(selection, () => $createParagraphNode());
           });
           break;
         case 'h1':
@@ -328,9 +325,7 @@ function BlockFormatDropDown({
           if (blockType !== headingLevel) {
             editor.update(() => {
               const selection = $getSelection();
-              if ($INTERNAL_isPointSelection(selection)) {
-                $setBlocksType(selection, () => $createHeadingNode(headingLevel));
-              }
+              $setBlocksType(selection, () => $createHeadingNode(headingLevel));
             });
           }
           break;

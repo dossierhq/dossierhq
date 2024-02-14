@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "astro",
     "astrojs",
     "bulma",
     "codemirror",
@@ -11,7 +12,8 @@
     "libsql",
     "locatecontrol",
     "postgrator",
-    "rushstack"
+    "rushstack",
+    "spotlightjs"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

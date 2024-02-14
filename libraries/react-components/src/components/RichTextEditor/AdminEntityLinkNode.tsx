@@ -196,8 +196,8 @@ function replaceParentNodesWithChildren(
   }
 }
 
-function $getLinkAncestor(node: LexicalNode): null | LexicalNode {
-  return $getAncestor(node, $isAdminEntityLinkNode);
+function $getLinkAncestor(node: LexicalNode): null | AdminEntityLinkNode {
+  return $getAncestor(node, $isAdminEntityLinkNode) as AdminEntityLinkNode | null;
 }
 
 function $getAncestor(

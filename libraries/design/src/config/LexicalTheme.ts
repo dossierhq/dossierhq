@@ -47,6 +47,7 @@ export const LexicalTheme = {
   list: {
     ol: 'ol',
     ul: 'ul',
+    checklist: 'PlaygroundEditorTheme__checklist',
     listitem: 'li',
     listitemChecked: 'PlaygroundEditorTheme__listItemChecked',
     listitemUnchecked: 'PlaygroundEditorTheme__listItemUnchecked',
