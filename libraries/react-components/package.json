@@ -39,8 +39,30 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git",
     "directory": "libraries/react-components"
   },
+  "dependencies": {
+    "@dossierhq/design": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
+    "@lexical/code": "0.12.5",
+    "@lexical/link": "0.12.5",
+    "@lexical/list": "0.12.5",
+    "@lexical/react": "0.12.5",
+    "@lexical/rich-text": "0.12.5",
+    "@lexical/selection": "0.12.5",
+    "@lexical/utils": "0.12.5",
+    "leaflet": "~1.9.4",
+    "lexical": "0.12.5",
+    "lodash": "~4.17.21",
+    "swr": "~2.2.4",
+    "tslib": "~2.6.2"
+  },
+  "peerDependencies": {
+    "@dossierhq/core": "workspace:*",
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0"
+  },
   "devDependencies": {
     "@dossierhq/better-sqlite3": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.64.6",
@@ -64,29 +86,12 @@
     "eslint-plugin-storybook": "~0.6.15",
     "playground-example-generator": "workspace:*",
     "prettier": "3.2.5",
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0",
     "storybook": "~7.6.10",
     "typescript": "~5.3.3",
     "uuid": "~9.0.1",
     "vite": "~5.1.0",
     "vitest": "~1.2.1"
-  },
-  "dependencies": {
-    "@dossierhq/core": "workspace:*",
-    "@dossierhq/design": "workspace:*",
-    "@dossierhq/leaflet": "workspace:*",
-    "@lexical/code": "0.12.5",
-    "@lexical/link": "0.12.5",
-    "@lexical/list": "0.12.5",
-    "@lexical/react": "0.12.5",
-    "@lexical/rich-text": "0.12.5",
-    "@lexical/selection": "0.12.5",
-    "@lexical/utils": "0.12.5",
-    "leaflet": "~1.9.4",
-    "lexical": "0.12.5",
-    "lodash": "~4.17.21",
-    "react": "~18.2.0",
-    "react-dom": "~18.2.0",
-    "swr": "~2.2.4",
-    "tslib": "~2.6.2"
   }
 }

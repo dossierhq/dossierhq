@@ -43,10 +43,12 @@
     "@fortawesome/free-solid-svg-icons": "~6.5.1",
     "@react-aria/overlays": "~3.20.0",
     "lodash": "~4.17.21",
-    "react": "~18.2.0",
     "react-aria-components": "~1.0.1",
-    "react-dom": "~18.2.0",
     "tslib": "~2.6.2"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
@@ -71,6 +73,8 @@
     "eslint-plugin-storybook": "~0.6.15",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.2.5",
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0",
     "react-stately": "~3.29.1",
     "sass": "~1.70.0",
     "sass-loader": "~14.1.0",

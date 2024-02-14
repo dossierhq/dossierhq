@@ -21,6 +21,9 @@
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*"
   },
+  "peerDependencies": {
+    "@dossierhq/core": "workspace:*"
+  },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",

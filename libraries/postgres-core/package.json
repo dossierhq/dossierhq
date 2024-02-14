@@ -36,11 +36,14 @@
     "directory": "libraries/postgres-core"
   },
   "dependencies": {
-    "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "tslib": "~2.6.2"
   },
+  "peerDependencies": {
+    "@dossierhq/core": "workspace:*"
+  },
   "devDependencies": {
+    "@dossierhq/core": "workspace:*",
     "@dossierhq/core-vitest": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",

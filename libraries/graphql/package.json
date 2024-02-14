@@ -37,12 +37,15 @@
     "directory": "libraries/graphql"
   },
   "dependencies": {
-    "@dossierhq/core": "workspace:*",
     "graphql": "~16.8.1",
     "tslib": "~2.6.2"
   },
+  "peerDependencies": {
+    "@dossierhq/core": "workspace:*"
+  },
   "devDependencies": {
     "@dossierhq/better-sqlite3": "workspace:*",
+    "@dossierhq/core": "workspace:*",
     "@dossierhq/core-vitest": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",

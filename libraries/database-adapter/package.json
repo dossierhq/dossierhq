@@ -36,10 +36,13 @@
     "directory": "libraries/database-adapter"
   },
   "dependencies": {
-    "@dossierhq/core": "workspace:*",
     "tslib": "~2.6.2"
   },
+  "peerDependencies": {
+    "@dossierhq/core": "workspace:*"
+  },
   "devDependencies": {
+    "@dossierhq/core": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.64.6",
