@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Tweak dependencies/peerDependencies",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

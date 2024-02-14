@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/leaflet",
+      "comment": "Tweak dependencies/peerDependencies",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/leaflet"
+}

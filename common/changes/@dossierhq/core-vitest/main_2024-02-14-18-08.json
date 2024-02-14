@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core-vitest",
+      "comment": "Tweak dependencies/peerDependencies",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core-vitest"
+}
