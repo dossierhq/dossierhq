@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/integration-test
 
-This log was last generated on Wed, 14 Feb 2024 18:15:01 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Feb 2024 20:49:59 GMT and should not be manually modified.
+
+## 0.5.12
+Wed, 14 Feb 2024 20:49:59 GMT
+
+### Updates
+
+- Support readonly session
 
 ## 0.5.11
 Wed, 14 Feb 2024 18:15:01 GMT

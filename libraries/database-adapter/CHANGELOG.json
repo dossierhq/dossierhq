@@ -2,6 +2,18 @@
   "name": "@dossierhq/database-adapter",
   "entries": [
     {
+      "version": "0.5.12",
+      "tag": "@dossierhq/database-adapter_v0.5.12",
+      "date": "Wed, 14 Feb 2024 20:49:59 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support readonly session"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.11",
       "tag": "@dossierhq/database-adapter_v0.5.11",
       "date": "Wed, 14 Feb 2024 18:15:01 GMT",
