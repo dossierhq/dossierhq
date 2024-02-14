@@ -2,6 +2,18 @@
   "name": "@dossierhq/server",
   "entries": [
     {
+      "version": "0.5.11",
+      "tag": "@dossierhq/server_v0.5.11",
+      "date": "Wed, 14 Feb 2024 18:15:01 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "v"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.10",
       "tag": "@dossierhq/server_v0.5.10",
       "date": "Mon, 05 Feb 2024 09:02:18 GMT",
