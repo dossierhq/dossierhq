@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Support server.reloadSchema()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
