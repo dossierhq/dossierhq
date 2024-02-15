@@ -78,6 +78,8 @@ export interface Server<
 
   addPlugin(plugin: ServerPlugin): void;
 
+  reloadSchema(): PromiseResult<boolean, typeof ErrorType.Generic>;
+
   optimizeDatabase(
     options: TDatabaseOptimizationOptions,
   ): PromiseResult<void, typeof ErrorType.Generic>;
@@ -194,13 +196,14 @@ export class ServerImpl {
     return notOk.Generic('Trying to shutdown twice');
   }
 
-  async reloadSchema(context: InternalContext): PromiseResult<void, typeof ErrorType.Generic> {
+  async reloadSchema(context: InternalContext): PromiseResult<boolean, typeof ErrorType.Generic> {
     assertIsDefined(this.#databaseAdapter);
+    const previousVersion = this.#adminSchema?.spec.version ?? -1;
     const result = await schemaGetSpecification(this.#databaseAdapter, context, true);
     if (result.isError()) return result;
 
     this.setAdminSchema(result.value);
-    return ok(undefined);
+    return ok(result.value.version !== previousVersion);
   }
 
   addPlugin(plugin: ServerPlugin): void {
@@ -289,6 +292,11 @@ export async function createServer<
   const server: Server<TDatabaseOptimizationOptions> = {
     shutdown() {
       return serverImpl.shutdown();
+    },
+
+    reloadSchema() {
+      const managementContext = serverImpl.createInternalContext(null);
+      return serverImpl.reloadSchema(managementContext);
     },
 
     addPlugin(plugin) {
