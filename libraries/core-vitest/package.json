@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/core-vitest",
-  "version": "0.5.12",
+  "version": "0.5.13",
   "description": "A test library for users of @dossierhq/core for usage with Vitest",
   "keywords": [
     "dossier",
