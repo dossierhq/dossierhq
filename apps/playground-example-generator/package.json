@@ -19,12 +19,12 @@
     "generate:starwars": "node lib/starwars/starwars-generator.js"
   },
   "dependencies": {
-    "@faker-js/faker": "~8.4.0",
+    "@faker-js/faker": "~8.4.1",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "cloudinary": "~2.0.0",
-    "dotenv": "~16.4.1",
+    "cloudinary": "~2.0.1",
+    "dotenv": "~16.4.4",
     "tslib": "~2.6.2",
     "uuid": "~9.0.1"
   },
@@ -32,10 +32,10 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.64.6",
+    "@rushstack/heft": "0.64.8",
     "@types/better-sqlite3": "~7.6.8",
     "@types/uuid": "~9.0.7",
-    "better-sqlite3": "~9.4.0",
+    "better-sqlite3": "~9.4.1",
     "eslint": "~8.56.0",
     "prettier": "3.2.5",
     "typescript": "~5.3.3"
