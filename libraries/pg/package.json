@@ -46,7 +46,7 @@
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
-    "pg": "~8.11.3"
+    "pg": ">=8"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
