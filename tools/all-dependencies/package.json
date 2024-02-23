@@ -108,7 +108,7 @@
     "graphql-config": "~5.0.3",
     "graphql-ws": "~5.15.0",
     "mini-svg-data-uri": "~1.4.4",
-    "nodemon": "~3.0.3",
+    "nodemon": "~3.1.0",
     "prettier": "3.2.5",
     "react-stately": "~3.29.1",
     "rollup": "~4.12.0",
