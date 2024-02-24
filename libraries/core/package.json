@@ -28,6 +28,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
   },
@@ -43,9 +44,10 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@rushstack/heft": "0.65.4",
+    "@vitest/coverage-v8": "~1.3.1",
     "eslint": "~8.56.0",
     "prettier": "3.2.5",
     "typescript": "~5.3.3",
-    "vitest": "~1.3.0"
+    "vitest": "~1.3.1"
   }
 }
