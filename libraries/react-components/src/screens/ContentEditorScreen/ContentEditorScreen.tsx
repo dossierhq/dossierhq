@@ -64,14 +64,14 @@ export function ContentEditorScreen({
   const [showEntitySelector, setShowEntitySelector] = useState(false);
   const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
   const handleOpenEntityClick = useCallback((entity: AdminEntity) => {
-    dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entity.id })),
-      setShowEntitySelector(false);
+    dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entity.id }));
+    setShowEntitySelector(false);
   }, []);
   const handleCreateItemClick = useCallback((type: string) => {
     dispatchEntityEditorState(
       new EntityEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type }),
-    ),
-      setShowEntitySelector(false);
+    );
+    setShowEntitySelector(false);
   }, []);
 
   const onCreateEntity = useCallback((type: string) => {

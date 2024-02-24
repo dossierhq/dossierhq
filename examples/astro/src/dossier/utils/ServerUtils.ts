@@ -32,7 +32,7 @@ let serverPromise: Promise<
 export async function getServer(): Promise<
   Result<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
 > {
-  if (!serverPromise) {
+  if (serverPromise === null) {
     serverPromise = (async () => {
       const databaseAdapterResult = await createDatabaseAdapter(logger);
       if (databaseAdapterResult.isError()) return databaseAdapterResult;

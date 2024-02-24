@@ -6,8 +6,10 @@ import {
 } from '../third-party/Lexical.js';
 import {
   RichTextNodeType,
+  type Component,
   type EntityReference,
   type RichText,
+  type RichTextComponentNode,
   type RichTextEntityLinkNode,
   type RichTextEntityNode,
   type RichTextHeadingNode,
@@ -18,8 +20,6 @@ import {
   type RichTextParagraphNode,
   type RichTextTabNode,
   type RichTextTextNode,
-  type RichTextComponentNode,
-  type Component,
 } from '../Types.js';
 
 export function createRichText(children: RichTextNode[]): RichText {
@@ -108,7 +108,7 @@ export function createRichTextTextAndWhitespaceNodes(
   if (!(text.includes('\n') || text.includes('\r') || text.includes('\t'))) {
     return [createRichTextTextNode(text, options)];
   }
-  const linesOrNewline = text.replace(/\r[^\n]|\r$/g, '').split(/(\r?\n|\t)/);
+  const linesOrNewline = text.replace(/(?:\r[^\n])|(?:\r$)/g, '').split(/(\r?\n|\t)/);
   return linesOrNewline
     .filter((it) => it.length > 0)
     .map((it) => {

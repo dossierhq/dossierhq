@@ -19,7 +19,7 @@ export const ReadOnly: Story = { args: { value: 'Read only', readOnly: true } };
 
 export const LeftIcon: Story = { args: { iconLeft: 'map' } };
 
-export const Number: Story = { args: { type: 'number', min: 0, max: 100, step: 1 } };
+export const NumberType: Story = { args: { type: 'number', min: 0, max: 100, step: 1 } };
 
 export const CodeTextStyle: Story = { args: { textStyle: 'code1' } };
 

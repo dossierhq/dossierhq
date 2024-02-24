@@ -76,8 +76,7 @@ export function PublishedContentDisplayScreen({
   const [showEntitySelector, setShowEntitySelector] = useState(false);
   const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
   const handleOpenEntityClick = useCallback((entity: PublishedEntity) => {
-    dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id)),
-      setShowEntitySelector(false);
+    dispatchEntityDisplayState(new EntityDisplayActions.AddEntity(entity.id));
     setShowEntitySelector(false);
   }, []);
 

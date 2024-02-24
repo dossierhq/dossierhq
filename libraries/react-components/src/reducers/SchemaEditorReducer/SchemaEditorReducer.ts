@@ -171,17 +171,22 @@ export function reduceSchemaEditorState(
 // STATUS RESOLVERS
 
 function resolveSchemaStatus(state: SchemaEditorState): SchemaEditorState['status'] {
-  if (state.status === 'uninitialized') state.status;
+  if (state.status === 'uninitialized') {
+    return state.status;
+  }
   for (const type of [
     ...state.entityTypes,
     ...state.componentTypes,
     ...state.indexes,
     ...state.patterns,
   ]) {
-    if (type.status !== '') return 'changed';
+    if (type.status !== '') {
+      return 'changed';
+    }
   }
-  if (state.deletedEntityTypes.length > 0 || state.deletedComponentTypes.length > 0)
+  if (state.deletedEntityTypes.length > 0 || state.deletedComponentTypes.length > 0) {
     return 'changed';
+  }
   return '';
 }
 

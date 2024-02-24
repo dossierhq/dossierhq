@@ -22,7 +22,7 @@ async function collectUrls(publishedClient: AppPublishedClient) {
   urls.push(canonicalUrl(BrowserUrls.blog));
   urls.push(...(await blogUrls(publishedClient)));
 
-  urls.sort();
+  urls.sort((a, b) => a.localeCompare(b));
 
   return urls;
 }
