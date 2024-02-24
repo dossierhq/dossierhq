@@ -48,7 +48,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@rushstack/heft": "0.65.4",
     "@types/react": "~18.2.57",
-    "eslint": "~8.56.0",
+    "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "react": "~18.2.0",
     "typescript": "~5.3.3"
