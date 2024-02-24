@@ -10,28 +10,35 @@ export function GraphiQLRoute(): JSX.Element {
   const { schema: adminSchema } = useContext(AdminDossierContext);
   const { schema: publishedSchema } = useContext(PublishedDossierContext);
 
+  let content;
+  if (!adminSchema || !publishedSchema) {
+    content = null;
+  } else if (adminSchema.getEntityTypeCount() === 0) {
+    content = (
+      <EmptyStateMessage
+        icon="add"
+        title="No entity types"
+        message="Add an entity type to the schema to enable GraphQL"
+      />
+    );
+  } else {
+    content = (
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
+        </Suspense>
+      </ErrorBoundary>
+    );
+  }
+
   return (
-    <>
-      <FullscreenContainer>
-        <FullscreenContainer.Row fullWidth>
-          <NavBar current="graphiql" />
-        </FullscreenContainer.Row>
-        <FullscreenContainer.Row fullWidth fillHeight>
-          {!adminSchema || !publishedSchema ? null : adminSchema.getEntityTypeCount() === 0 ? (
-            <EmptyStateMessage
-              icon="add"
-              title="No entity types"
-              message="Add an entity type to the schema to enable GraphQL"
-            />
-          ) : (
-            <ErrorBoundary>
-              <Suspense fallback={null}>
-                <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </FullscreenContainer.Row>
-      </FullscreenContainer>
-    </>
+    <FullscreenContainer>
+      <FullscreenContainer.Row fullWidth>
+        <NavBar current="graphiql" />
+      </FullscreenContainer.Row>
+      <FullscreenContainer.Row fullWidth fillHeight>
+        {content}
+      </FullscreenContainer.Row>
+    </FullscreenContainer>
   );
 }

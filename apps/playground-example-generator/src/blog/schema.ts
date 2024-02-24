@@ -1,6 +1,5 @@
 import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
-import { REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
+import { FieldType, REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from '@dossierhq/core';
 
 export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
