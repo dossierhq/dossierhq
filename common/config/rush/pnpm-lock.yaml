@@ -11,8 +11,8 @@ importers:
   ../../apps/blog:
     dependencies:
       '@cloudinary/url-gen':
-        specifier: ~1.16.1
-        version: 1.16.1
+        specifier: ~1.17.0
+        version: 1.17.0
       '@dossierhq/better-sqlite3':
         specifier: workspace:*
         version: link:../../libraries/better-sqlite3
@@ -782,8 +782,8 @@ importers:
   ../../libraries/cloudinary:
     dependencies:
       '@cloudinary/url-gen':
-        specifier: ~1.16.1
-        version: 1.16.1
+        specifier: ~1.17.0
+        version: 1.17.0
       '@dossierhq/design':
         specifier: workspace:*
         version: link:../design
@@ -1819,8 +1819,8 @@ importers:
         specifier: ~2.2.4
         version: 2.2.4(react-dom@18.2.0)(react@18.2.0)
       '@cloudinary/url-gen':
-        specifier: ~1.16.1
-        version: 1.16.1
+        specifier: ~1.17.0
+        version: 1.17.0
       '@creativebulma/bulma-badge':
         specifier: ~1.0.1
         version: 1.0.1
@@ -3806,16 +3806,16 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@cloudinary/transformation-builder-sdk@1.11.0:
-    resolution: {integrity: sha512-BRHcjkMc0zSgyLnYtE+KQG1AyaC2EAHfuGzSJRGiLVsLD8UzLcC8S3GFzzKOPVzGQi0IPm21b1F7M6oqsF8FrQ==}
+  /@cloudinary/transformation-builder-sdk@1.12.1:
+    resolution: {integrity: sha512-tcFJsd5Ry+OB3ujhdW+QnGZ66w4aT9sb+8412WjuymeEXG72pp7TOW9eoQUP1mElH7vk7nH777gHU+icBIUH9Q==}
     dependencies:
-      '@cloudinary/url-gen': 1.16.1
+      '@cloudinary/url-gen': 1.17.0
     dev: false
 
-  /@cloudinary/url-gen@1.16.1:
-    resolution: {integrity: sha512-lRg0LlRJKrHHhSAedwR7u4YDvPQ2zuyXH3FpmyD8Ki6+/pcRVEJmkokKYnnbRNsu40smXFNJa6IHqjxsfbMmQg==}
+  /@cloudinary/url-gen@1.17.0:
+    resolution: {integrity: sha512-wqacCl25ixiKBtOGs4vCb7PYo4hU2NtIPZNCNgRBwwPPP5OWZz5SsCd3uqYeVi7KB2Vil0rirgBYUsMyWjCQ6g==}
     dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.11.0
+      '@cloudinary/transformation-builder-sdk': 1.12.1
     dev: false
 
   /@colors/colors@1.5.0:
