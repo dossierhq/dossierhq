@@ -2138,6 +2138,25 @@ importers:
         specifier: ~1.3.1
         version: 1.3.1(@types/node@20.11.19)(sass@1.71.0)
 
+  ../../tools/better-sqlite3-amalgamation:
+    dependencies:
+      better-sqlite3:
+        specifier: ~9.4.1
+        version: 9.4.1
+    devDependencies:
+      '@types/better-sqlite3':
+        specifier: ~7.6.8
+        version: 7.6.9
+      '@vitest/coverage-v8':
+        specifier: ~1.3.1
+        version: 1.3.1(vitest@1.3.1)
+      typescript:
+        specifier: ~5.3.3
+        version: 5.3.3
+      vitest:
+        specifier: ~1.3.1
+        version: 1.3.1(@types/node@20.11.19)(sass@1.71.0)
+
   ../../tools/generic-tools:
     dependencies:
       dotenv:

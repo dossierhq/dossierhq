@@ -1,0 +1,22 @@
+{
+  "name": "@dossierhq/better-sqlite3-amalgamation",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist/ && rm -rf coverage/ && rm -f better-sqlite3-amalgamation.build.log",
+    "db:clear": "rm databases/*.sqlite",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch"
+  },
+  "dependencies": {
+    "better-sqlite3": "~9.4.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "~7.6.8",
+    "@vitest/coverage-v8": "~1.3.1",
+    "typescript": "~5.3.3",
+    "vitest": "~1.3.1"
+  }
+}

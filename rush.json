@@ -523,6 +523,10 @@
       "projectFolder": "tools/all-dependencies"
     },
     {
+      "packageName": "@dossierhq/better-sqlite3-amalgamation",
+      "projectFolder": "tools/better-sqlite3-amalgamation"
+    },
+    {
       "packageName": "@dossierhq/tree-shake-tester",
       "projectFolder": "tools/tree-shake-tester"
     }

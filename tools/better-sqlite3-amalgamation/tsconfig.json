@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "outDir": "dist",
+    "paths": {
+      "@dossierhq/better-sqlite3": ["../../libraries/better-sqlite3/src/index.ts"],
+      "@dossierhq/core": ["../../libraries/core/src/index.ts"],
+      "@dossierhq/server": ["../../libraries/server/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}
