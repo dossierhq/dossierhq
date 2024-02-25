@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/start-server.ts",
+    "build": "",
     "_build": "tsc",
     "clean": "rm -rf dist/ && rm -rf coverage/ && rm -f better-sqlite3-amalgamation.build.log",
-    "db:clear": "rm databases/*.sqlite",
+    "db:clear": "rm -f databases/*.sqlite",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest --watch"

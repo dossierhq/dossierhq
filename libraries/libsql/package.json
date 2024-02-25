@@ -22,6 +22,7 @@
     "build": "npm run prettier:check && heft build --clean && npm run test",
     "build:watch": "heft build-watch",
     "clean": "heft clean",
+    "db:clear": "rm -f databases/*.sqlite && rm -rf databases/sqld-*",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
