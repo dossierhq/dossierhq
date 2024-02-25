@@ -15,5 +15,9 @@
   "files.insertFinalNewline": true,
   "typescript.tsdk": "../../common/temp/node_modules/.pnpm/typescript@4.9.5/node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.preferences.importModuleSpecifierEnding": "minimal"
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "dossierhq-dossierhq",
+    "projectKey": "dossierhq_dossierhq"
+  }
 }

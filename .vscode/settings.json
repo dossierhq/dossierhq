@@ -44,5 +44,9 @@
       "fileMatch": ["version-policies.json"],
       "url": "https://raw.githubusercontent.com/microsoft/rushstack/master/apps/rush-lib/src/schemas/version-policies.schema.json"
     }
-  ]
+  ],
+  "sonarlint.connectedMode.project": {
+    "connectionId": "dossierhq-dossierhq",
+    "projectKey": "dossierhq_dossierhq"
+  }
 }
