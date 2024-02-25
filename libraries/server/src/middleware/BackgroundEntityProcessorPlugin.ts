@@ -17,7 +17,7 @@ const TIME_SINCE_LAST_PROCESSING_MS = 5;
 export class BackgroundEntityProcessorPlugin implements ServerPlugin {
   private server: Server;
   private logger: Logger;
-  private handle: NodeJS.Timeout | null = null;
+  private handle: ReturnType<typeof setTimeout> | null = null;
   private lastOperationTimestamp = 0;
   private processing = false;
   private batchCount = 0;
