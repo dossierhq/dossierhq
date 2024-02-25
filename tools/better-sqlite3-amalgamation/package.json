@@ -1,6 +1,7 @@
 {
   "name": "@dossierhq/better-sqlite3-amalgamation",
   "version": "1.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "start": "tsx src/start-server.ts",
