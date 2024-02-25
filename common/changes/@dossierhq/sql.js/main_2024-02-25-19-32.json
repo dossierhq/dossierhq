@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/sql.js",
+      "comment": "Initial release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/sql.js"
+}

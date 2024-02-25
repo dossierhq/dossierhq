@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
