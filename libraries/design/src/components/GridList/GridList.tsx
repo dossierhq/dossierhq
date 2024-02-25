@@ -1,3 +1,4 @@
+'use client';
 import {
   Button as ReactAriaButton,
   GridList as ReactAriaGridList,
