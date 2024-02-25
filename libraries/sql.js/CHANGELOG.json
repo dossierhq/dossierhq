@@ -1,0 +1,17 @@
+{
+  "name": "@dossierhq/sql.js",
+  "entries": [
+    {
+      "version": "0.5.15",
+      "tag": "@dossierhq/sql.js_v0.5.15",
+      "date": "Sun, 25 Feb 2024 19:40:27 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Initial release"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/integration-test
 
-This log was last generated on Mon, 19 Feb 2024 23:33:24 GMT and should not be manually modified.
+This log was last generated on Sun, 25 Feb 2024 19:40:27 GMT and should not be manually modified.
+
+## 0.5.15
+Sun, 25 Feb 2024 19:40:27 GMT
+
+### Updates
+
+- Add more tests for archive and unpublish entities
 
 ## 0.5.14
 Mon, 19 Feb 2024 23:33:24 GMT

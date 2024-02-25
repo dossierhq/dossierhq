@@ -2,6 +2,12 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.5.15",
+      "tag": "@dossierhq/react-components_v0.5.15",
+      "date": "Sun, 25 Feb 2024 19:40:27 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.5.14",
       "tag": "@dossierhq/react-components_v0.5.14",
       "date": "Mon, 19 Feb 2024 23:33:24 GMT",
