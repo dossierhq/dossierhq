@@ -452,20 +452,22 @@ describe('getEntitiesTotalCount', () => {
   });
 
   test('Query based on text', async () => {
-    const resultBefore = await publishedClient.getEntitiesTotalCount({ text: 'sensational clown' });
+    const resultBefore = await publishedClient.getEntitiesTotalCount({
+      text: 'fierce firefighter',
+    });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
         await adminClient.createEntity(
           {
             info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
-            fields: { title: 'That was indeed a sensational clown' },
+            fields: { title: 'That was indeed a fierce firefighter' },
           },
           { publish: true },
         ),
       );
 
       const resultAfter = await publishedClient.getEntitiesTotalCount({
-        text: 'sensational clown',
+        text: 'fierce firefighter',
       });
       expectResultValue(resultAfter, resultBefore.value + 1);
     }
