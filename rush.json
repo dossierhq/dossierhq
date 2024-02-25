@@ -425,7 +425,8 @@
     },
     {
       "packageName": "@dossierhq/sql.js",
-      "projectFolder": "libraries/sql.js"
+      "projectFolder": "libraries/sql.js",
+      "versionPolicyName": "DossierFramework"
     },
     {
       "packageName": "@dossierhq/sql.js-browser-integration-test",

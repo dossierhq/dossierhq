@@ -1,7 +1,18 @@
 {
   "name": "@dossierhq/sql.js",
-  "version": "0.1.1-25",
-  "description": "",
+  "version": "0.5.14",
+  "description": "A Dossier database adapter for sql.js.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "sqlite",
+    "sqlite3",
+    "sql.js"
+  ],
+  "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {
