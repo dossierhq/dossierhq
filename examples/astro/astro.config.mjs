@@ -25,6 +25,9 @@ export default defineConfig({
         // The monorepo root
         allow: ['../..'],
       },
+      hmr: {
+        port: 4322,
+      },
       watch: {
         ignored: ['**/*.log', '**/dist/**', '**/.rush/**', '**/database/*'],
       },

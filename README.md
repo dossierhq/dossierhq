@@ -96,6 +96,7 @@ If you just want to get started using Dossier, these destinations might get you 
 - 3002: apps/playground
 - 3003: apps/blog
 - 4321: examples/astro
+- 4322: examples/astro (HMR)
 - 5173: examples/tutorial
 - 6006: libraries/react-components
 - 6007: libraries/design
