@@ -27,6 +27,10 @@ updates:
         patterns:
           - "eslint-config-next"
           - "next"
+      react-aria:
+        patterns:
+          - "react-aria-components"
+          - "react-stately"
       storybook:
         patterns:
           - "@storybook/*"
