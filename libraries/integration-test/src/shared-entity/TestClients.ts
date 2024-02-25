@@ -1,14 +1,17 @@
 import type { Server } from '@dossierhq/server';
 import type { AppAdminClient, AppPublishedClient } from '../SchemaTypes.js';
 
-export type TestPrincipal = 'main' | 'secondary';
+export type TestPrincipal = 'main' | 'secondary' | 'random';
 
 export interface AdminClientProvider {
   adminClient: (principal?: TestPrincipal, sessionType?: 'readonly' | 'write') => AppAdminClient;
 }
 
 export interface PublishedClientProvider {
-  publishedClient: (principal?: TestPrincipal) => AppPublishedClient;
+  publishedClient: (
+    principal?: TestPrincipal,
+    sessionType?: 'readonly' | 'write',
+  ) => AppPublishedClient;
 }
 
 const principals = {
@@ -22,6 +25,11 @@ const principals = {
     identifier: 'secondary',
     defaultAuthKeys: ['none'],
   },
+  random: {
+    provider: 'test',
+    identifier: 'random',
+    defaultAuthKeys: ['none'],
+  },
 } as const;
 
 async function sessionForPrincipal(
@@ -30,9 +38,14 @@ async function sessionForPrincipal(
   sessionType?: 'readonly' | 'write',
 ) {
   principal ??= 'main';
-  const principalConfig = principals[principal];
+  const principalConfig = { ...principals[principal] };
+  let identifier: string = principalConfig.identifier;
+  if (identifier === 'random') {
+    identifier = `random-${Math.random()}`;
+  }
   return await server.createSession({
     ...principalConfig,
+    identifier,
     logger: null,
     databasePerformance: null,
     readonly: sessionType === 'readonly',
@@ -56,8 +69,8 @@ export function createSharedClientProvider(
       const sessionResult = sessionForPrincipal(server, principal, sessionType);
       return server.createAdminClient(() => sessionResult);
     },
-    publishedClient(principal) {
-      const sessionResult = sessionForPrincipal(server, principal);
+    publishedClient(principal, sessionType) {
+      const sessionResult = sessionForPrincipal(server, principal, sessionType);
       return server.createPublishedClient(() => sessionResult);
     },
   };

@@ -12,6 +12,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const GetEntitiesTotalCountSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   getEntitiesTotalCount_minimal,
   getEntitiesTotalCount_authKeySubject,
+  getEntitiesTotalCount_authKeySubjectFromReadonlyRandom,
   getEntitiesTotalCount_authKeyNoneAndSubject,
   getEntitiesTotalCount_statusDraft,
   getEntitiesTotalCount_statusPublished,
@@ -51,6 +52,15 @@ async function getEntitiesTotalCount_authKeySubject({
     authKeys: ['subject'],
   });
   assertResultValue(result, expectedEntities.length);
+}
+
+async function getEntitiesTotalCount_authKeySubjectFromReadonlyRandom({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient('random', 'readonly');
+
+  const result = await adminClient.getEntitiesTotalCount({ authKeys: ['subject'] });
+  assertResultValue(result, 0);
 }
 
 async function getEntitiesTotalCount_authKeyNoneAndSubject({

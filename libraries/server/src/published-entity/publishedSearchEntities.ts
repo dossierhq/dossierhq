@@ -1,13 +1,14 @@
-import type {
-  AdminSchemaWithMigrations,
-  Connection,
-  Edge,
-  ErrorType,
-  Paging,
-  PromiseResult,
-  PublishedEntityQuery,
-  PublishedEntity,
-  PublishedSchema,
+import {
+  ok,
+  type AdminSchemaWithMigrations,
+  type Connection,
+  type Edge,
+  type ErrorType,
+  type Paging,
+  type PromiseResult,
+  type PublishedEntity,
+  type PublishedEntityQuery,
+  type PublishedSchema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
@@ -34,6 +35,12 @@ export async function publishedSearchEntities(
     query?.authKeys,
   );
   if (authKeysResult.isError()) return authKeysResult;
+  const authKeys = authKeysResult.value;
+
+  if (authKeys.length === 0) {
+    // User requested with authKeys, but they resolved to nothing, so we won't match any entity
+    return ok(null);
+  }
 
   return fetchAndDecodeConnection(
     paging,
@@ -43,7 +50,7 @@ export async function publishedSearchEntities(
         context,
         query,
         pagingInfo,
-        authKeysResult.value,
+        authKeys,
       ),
     (edge) => decodePublishedEntity(adminSchema, edge),
   );

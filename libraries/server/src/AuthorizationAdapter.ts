@@ -1,5 +1,4 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { ResolvedAuthKey } from '@dossierhq/database-adapter';
 import type { SessionContext } from './Context.js';
 
@@ -25,7 +24,11 @@ export const NoneAndSubjectAuthorizationAdapter: AuthorizationAdapter = {
     for (const authKey of authKeys) {
       let resolvedAuthKey: string;
       if (authKey === 'subject') {
-        resolvedAuthKey = `subject:${context.session.subjectId}`;
+        if (!context.session.subjectId) {
+          continue;
+        } else {
+          resolvedAuthKey = `subject:${context.session.subjectId}`;
+        }
       } else if (authKey === 'none') {
         resolvedAuthKey = 'none';
       } else {

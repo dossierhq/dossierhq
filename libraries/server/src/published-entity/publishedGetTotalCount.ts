@@ -1,8 +1,9 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedEntitySharedQuery,
-  PublishedSchema,
+import {
+  ok,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedEntitySharedQuery,
+  type PublishedSchema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
@@ -24,14 +25,13 @@ export async function publishedGetTotalCount(
     context,
     query?.authKeys,
   );
-  if (authKeysResult.isError()) {
-    return authKeysResult;
+  if (authKeysResult.isError()) return authKeysResult;
+  const authKeys = authKeysResult.value;
+
+  if (authKeys.length === 0) {
+    // User requested with authKeys, but they resolved to nothing, so we won't match any entity
+    return ok(0);
   }
 
-  return await databaseAdapter.publishedEntitySearchTotalCount(
-    schema,
-    context,
-    query,
-    authKeysResult.value,
-  );
+  return await databaseAdapter.publishedEntitySearchTotalCount(schema, context, query, authKeys);
 }

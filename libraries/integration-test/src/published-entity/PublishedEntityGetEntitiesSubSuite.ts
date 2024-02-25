@@ -36,6 +36,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<PublishedEntityTestContext
   getEntities_orderName,
   getEntities_orderNameReversed,
   getEntities_authKeySubject,
+  getEntities_authKeySubjectFromReadonlyRandom,
   getEntities_authKeyNoneAndSubject,
   getEntities_componentTypes,
   getEntities_linksToOneReference,
@@ -379,6 +380,14 @@ async function getEntities_authKeySubject({
     hasPreviousPage: false,
     hasNextPage: expectedEntities.length > 25,
   });
+}
+
+async function getEntities_authKeySubjectFromReadonlyRandom({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const publishedClient = clientProvider.publishedClient('random', 'readonly');
+  const result = await publishedClient.getEntities({ authKeys: ['subject'] });
+  assertResultValue(result, null);
 }
 
 async function getEntities_authKeyNoneAndSubject({

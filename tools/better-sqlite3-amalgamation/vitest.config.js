@@ -6,6 +6,10 @@ export default {
         import.meta.url
       ).pathname,
       '@dossierhq/core': new URL('../../libraries/core/src/index.ts', import.meta.url).pathname,
+      '@dossierhq/integration-test': new URL(
+        '../../libraries/integration-test/src/index.ts',
+        import.meta.url
+      ).pathname,
       '@dossierhq/server': new URL('../../libraries/server/src/index.ts', import.meta.url).pathname,
     },
     coverage: {

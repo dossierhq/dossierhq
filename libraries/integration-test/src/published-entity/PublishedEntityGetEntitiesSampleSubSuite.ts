@@ -15,6 +15,7 @@ import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 export const GetEntitiesSampleSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntitiesSample_minimal,
   getEntitiesSample_authKeySubject,
+  getEntitiesSample_authKeySubjectFromReadonlyRandom,
   getEntitiesSample_authKeyNoneAndSubject,
   getEntitiesSample_linksToOneReference,
   getEntitiesSample_linksToNoReferences,
@@ -45,6 +46,14 @@ async function getEntitiesSample_authKeySubject({
     authKeys: ['subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
+}
+
+async function getEntitiesSample_authKeySubjectFromReadonlyRandom({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const publishedClient = clientProvider.publishedClient('random', 'readonly');
+  const result = await publishedClient.getEntitiesSample({ authKeys: ['subject'] });
+  assertSampledEntitiesArePartOfExpected(result, []);
 }
 
 async function getEntitiesSample_authKeyNoneAndSubject({

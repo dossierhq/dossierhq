@@ -91,6 +91,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_textIncludedAfterUpdate,
   getEntities_textExcludedAfterUpdate,
   getEntities_authKeySubject,
+  getEntities_authKeySubjectFromReadonlyRandom,
   getEntities_authKeyNoneAndSubject,
 ];
 
@@ -1006,6 +1007,15 @@ async function getEntities_authKeySubject({
     hasPreviousPage: false,
     hasNextPage: expectedEntities.length > 25,
   });
+}
+
+async function getEntities_authKeySubjectFromReadonlyRandom({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient('random', 'readonly');
+
+  const result = await adminClient.getEntities({ authKeys: ['subject'] });
+  assertResultValue(result, null);
 }
 
 async function getEntities_textIncludedAfterCreation({ clientProvider }: AdminEntityTestContext) {

@@ -1,12 +1,13 @@
-import type {
-  AdminEntityQuery,
-  AdminEntity,
-  AdminSchemaWithMigrations,
-  Connection,
-  Edge,
-  ErrorType,
-  Paging,
-  PromiseResult,
+import {
+  ok,
+  type AdminEntity,
+  type AdminEntityQuery,
+  type AdminSchemaWithMigrations,
+  type Connection,
+  type Edge,
+  type ErrorType,
+  type Paging,
+  type PromiseResult,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';
@@ -32,17 +33,17 @@ export async function adminSearchEntities(
     query?.authKeys,
   );
   if (authKeysResult.isError()) return authKeysResult;
+  const authKeys = authKeysResult.value;
+
+  if (authKeys.length === 0) {
+    // User requested with authKeys, but they resolved to nothing, so we won't match any entity
+    return ok(null);
+  }
 
   return fetchAndDecodeConnection(
     paging,
     (pagingInfo) =>
-      databaseAdapter.adminEntitySearchEntities(
-        schema,
-        context,
-        query,
-        pagingInfo,
-        authKeysResult.value,
-      ),
+      databaseAdapter.adminEntitySearchEntities(schema, context, query, pagingInfo, authKeys),
     (edge) => decodeAdminEntity(schema, edge),
   );
 }

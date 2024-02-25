@@ -11,6 +11,7 @@ export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestConte
   getEntityList_authKeySubjectOneCorrectOneWrong,
   getEntityList_oneMissingOneExisting,
   getEntityList_errorArchivedEntity,
+  getEntityList_errorWrongAuthKeyFromReadonlyRandom,
 ];
 
 async function getEntityList_minimal({ clientProvider }: PublishedEntityTestContext) {
@@ -112,4 +113,22 @@ async function getEntityList_errorArchivedEntity({ clientProvider }: PublishedEn
 
   const result = await publishedClient.getEntityList([{ id }]);
   assertResultValue(result, [notOk.NotFound('No such entity')]);
+}
+
+async function getEntityList_errorWrongAuthKeyFromReadonlyRandom({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const primaryAdminClient = clientProvider.adminClient();
+
+  const { entity } = (
+    await primaryAdminClient.createEntity(
+      copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  const getResult = await clientProvider
+    .publishedClient('random', 'readonly')
+    .getEntityList([{ id: entity.id }]);
+  assertResultValue(getResult, [notOk.NotAuthorized('Wrong authKey provided')]);
 }

@@ -11,6 +11,7 @@ export const GetEntityListSubSuite: UnboundTestFunction<AdminEntityTestContext>[
   getEntityList_none,
   getEntityList_getLatestVersion,
   getEntityList_authKeySubjectOneCorrectOneWrong,
+  getEntityList_errorAuthKeySubjectFromReadonlyRandom,
   getEntityList_oneMissingOneExisting,
 ];
 
@@ -81,6 +82,22 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<AppAdminEntity, typeof ErrorType.Generic>(create2Result.value.entity),
   ]);
+}
+
+async function getEntityList_errorAuthKeySubjectFromReadonlyRandom({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClientMain = clientProvider.adminClient();
+  const { entity } = (
+    await adminClientMain.createEntity(
+      copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
+    )
+  ).valueOrThrow();
+
+  const getResult = await clientProvider
+    .adminClient('random', 'readonly')
+    .getEntityList([{ id: entity.id }]);
+  assertResultValue(getResult, [notOk.NotAuthorized('Wrong authKey provided')]);
 }
 
 async function getEntityList_oneMissingOneExisting({ clientProvider }: AdminEntityTestContext) {

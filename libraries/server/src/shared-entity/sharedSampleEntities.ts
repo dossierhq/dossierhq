@@ -51,9 +51,15 @@ export async function sharedSampleEntities<
     query?.authKeys,
   );
   if (authKeysResult.isError()) return authKeysResult;
+  const authKeys = authKeysResult.value;
+
+  if (authKeys.length === 0) {
+    // User requested with authKeys, but they resolved to nothing, so we won't match any entity
+    return ok({ seed, totalCount: 0, items: [] });
+  }
 
   // Get total count
-  const totalCountResult = await getTotal(authKeysResult.value);
+  const totalCountResult = await getTotal(authKeys);
   if (totalCountResult.isError()) return totalCountResult;
   const totalCount = totalCountResult.value;
 

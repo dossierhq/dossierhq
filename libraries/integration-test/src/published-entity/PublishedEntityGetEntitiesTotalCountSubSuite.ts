@@ -5,6 +5,7 @@ import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 export const GetEntitiesTotalCountSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
   getEntitiesTotalCount_minimal,
   getEntitiesTotalCount_authKeySubject,
+  getEntitiesTotalCount_authKeySubjectFromReadonlyRandom,
   getEntitiesTotalCount_authKeyNoneAndSubject,
 ];
 
@@ -29,6 +30,14 @@ async function getEntitiesTotalCount_authKeySubject({
     authKeys: ['subject'],
   });
   assertResultValue(result, expectedEntities.length);
+}
+
+async function getEntitiesTotalCount_authKeySubjectFromReadonlyRandom({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const publishedClient = clientProvider.publishedClient('random', 'readonly');
+  const result = await publishedClient.getEntitiesTotalCount({ authKeys: ['subject'] });
+  assertResultValue(result, 0);
 }
 
 async function getEntitiesTotalCount_authKeyNoneAndSubject({

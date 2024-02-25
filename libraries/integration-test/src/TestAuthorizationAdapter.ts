@@ -14,6 +14,9 @@ export function createTestAuthorizationAdapter(): AuthorizationAdapter {
       for (const authKey of authKeys) {
         let resolvedAuthKey: string = authKey;
         if (authKey === 'subject') {
+          if (!context.session.subjectId) {
+            continue;
+          }
           resolvedAuthKey = `subject:${context.session.subjectId}`;
         } else if (authKey === 'unauthorized') {
           return Promise.resolve(

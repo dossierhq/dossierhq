@@ -58,6 +58,7 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
   getEntity_errorInvalidUniqueIndexValue,
   getEntity_errorUniqueIndexValueFromAdminOnlyField,
   getEntity_errorWrongAuthKey,
+  getEntity_errorWrongAuthKeyFromReadonlyRandom,
   getEntity_errorArchivedEntity,
 ];
 
@@ -417,6 +418,24 @@ async function getEntity_errorWrongAuthKey({ clientProvider }: PublishedEntityTe
   } = createResult.value;
 
   const getResult = await clientProvider.publishedClient('secondary').getEntity({ id });
+  assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
+}
+
+async function getEntity_errorWrongAuthKeyFromReadonlyRandom({
+  clientProvider,
+}: PublishedEntityTestContext) {
+  const { entity } = (
+    await clientProvider.adminClient().createEntity(
+      copyEntity(TITLE_ONLY_CREATE, {
+        info: { authKey: 'subject' },
+      }),
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  const getResult = await clientProvider
+    .publishedClient('random', 'readonly')
+    .getEntity({ id: entity.id });
   assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }
 
