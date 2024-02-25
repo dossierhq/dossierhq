@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Add random test principal and readnly session type to published clinet provider.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Enable authorization adapter to return no authkey when resolving. Handle readonly temporary session for session authkey.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
