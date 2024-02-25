@@ -25,7 +25,7 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "dependencies": {
-    "dotenv": "~16.4.4",
+    "dotenv": "~16.4.5",
     "pg": "~8.11.3",
     "tslib": "~2.6.2"
   }

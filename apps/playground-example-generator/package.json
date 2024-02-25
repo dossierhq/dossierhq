@@ -24,7 +24,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "cloudinary": "~2.0.1",
-    "dotenv": "~16.4.4",
+    "dotenv": "~16.4.5",
     "tslib": "~2.6.2",
     "uuid": "~9.0.1"
   },
@@ -32,10 +32,10 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.65.4",
+    "@rushstack/heft": "0.65.5",
     "@types/better-sqlite3": "~7.6.8",
     "@types/uuid": "~9.0.7",
-    "better-sqlite3": "~9.4.1",
+    "better-sqlite3": "~9.4.3",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.3.3"

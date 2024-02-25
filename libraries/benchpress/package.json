@@ -26,9 +26,9 @@
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.65.4",
-    "@types/bun": "~1.0.4",
-    "@types/node": "~20.11.19",
+    "@rushstack/heft": "0.65.5",
+    "@types/bun": "~1.0.7",
+    "@types/node": "~20.11.20",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.3.3"
