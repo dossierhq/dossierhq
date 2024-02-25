@@ -7,6 +7,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   archiveEntity_minimal,
+  archiveEntity_archivedEntity,
   archiveEntity_archiveEntityEvent,
   archiveEntity_errorInvalidError,
   archiveEntity_errorWrongAuthKey,
@@ -17,25 +18,46 @@ export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[
 async function archiveEntity_minimal({ clientProvider }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
-  assertOkResult(createResult);
-  const {
-    entity: { id },
-  } = createResult.value;
+  const { entity } = createResult.valueOrThrow();
 
-  const archiveResult = await adminClient.archiveEntity({ id });
+  const archiveResult = await adminClient.archiveEntity({ id: entity.id });
   const { updatedAt } = archiveResult.valueOrThrow();
   assertResultValue(archiveResult, {
-    id,
+    id: entity.id,
     effect: 'archived',
     status: AdminEntityStatus.archived,
     updatedAt,
   });
 
-  const expectedEntity = copyEntity(createResult.value.entity, {
+  const expectedEntity = copyEntity(entity, {
     info: { status: AdminEntityStatus.archived, updatedAt },
   });
 
-  const getResult = await adminClient.getEntity({ id });
+  const getResult = await adminClient.getEntity({ id: entity.id });
+  assertResultValue(getResult, expectedEntity);
+}
+
+async function archiveEntity_archivedEntity({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const { entity } = createResult.valueOrThrow();
+
+  const firstArchiveResult = await adminClient.archiveEntity({ id: entity.id });
+  const { updatedAt } = firstArchiveResult.valueOrThrow();
+
+  const secondArchiveResult = await adminClient.archiveEntity({ id: entity.id });
+  assertResultValue(secondArchiveResult, {
+    id: entity.id,
+    effect: 'none',
+    status: AdminEntityStatus.archived,
+    updatedAt,
+  });
+
+  const expectedEntity = copyEntity(entity, {
+    info: { status: AdminEntityStatus.archived, updatedAt },
+  });
+
+  const getResult = await adminClient.getEntity({ id: entity.id });
   assertResultValue(getResult, expectedEntity);
 }
 

@@ -2,18 +2,23 @@ import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
-import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import { REFERENCES_CREATE, STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   unpublishEntities_minimal,
   unpublishEntities_unpublishEntitiesEvent,
   unpublishEntities_releasesName,
+  unpublishEntities_draftEntity,
+  unpublishEntities_withdrawnEntity,
+  unpublishEntities_archivedEntity,
+  unpublishEntities_twoPublishedEntitiesReferencingEachOther,
   unpublishEntities_errorInvalidId,
   unpublishEntities_errorDuplicateIds,
   unpublishEntities_errorWrongAuthKey,
   unpublishEntities_errorUniqueIndexValue,
   unpublishEntities_errorReadonlySession,
+  unpublishEntities_errorReferencedByPublishedEntity,
 ];
 
 async function unpublishEntities_minimal({ clientProvider }: AdminEntityTestContext) {
@@ -152,6 +157,106 @@ async function unpublishEntities_releasesName({ clientProvider }: AdminEntityTes
   assertSame(firstEntity.info.name, secondEntity.info.name);
 }
 
+async function unpublishEntities_draftEntity({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+
+  const { entity } = (await adminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const unpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  assertResultValue(unpublishResult, [
+    {
+      id: entity.id,
+      effect: 'none',
+      updatedAt: entity.info.updatedAt,
+      status: AdminEntityStatus.draft,
+    },
+  ]);
+}
+
+async function unpublishEntities_withdrawnEntity({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+
+  const { entity } = (
+    await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })
+  ).valueOrThrow();
+
+  const firstUnpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  assertOkResult(firstUnpublishResult);
+
+  const secondUnpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  assertResultValue(secondUnpublishResult, [
+    {
+      id: entity.id,
+      effect: 'none',
+      updatedAt: firstUnpublishResult.valueOrThrow()[0].updatedAt,
+      status: AdminEntityStatus.withdrawn,
+    },
+  ]);
+}
+
+async function unpublishEntities_archivedEntity({ clientProvider }: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+
+  const { entity } = (await adminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const archiveResult = await adminClient.archiveEntity({ id: entity.id });
+  assertOkResult(archiveResult);
+
+  const unpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  assertResultValue(unpublishResult, [
+    {
+      id: entity.id,
+      effect: 'none',
+      updatedAt: archiveResult.valueOrThrow().updatedAt,
+      status: AdminEntityStatus.archived,
+    },
+  ]);
+}
+
+async function unpublishEntities_twoPublishedEntitiesReferencingEachOther({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+
+  // Create entity1 and entity2, where entity2 --> entity1
+  const { entity: entity1 } = (
+    await adminClient.createEntity(REFERENCES_CREATE, { publish: true })
+  ).valueOrThrow();
+  const { entity: entity2 } = (
+    await adminClient.createEntity(
+      copyEntity(REFERENCES_CREATE, { fields: { any: { id: entity1.id } } }),
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  // Update entity1 --> entity2
+  assertOkResult(
+    await adminClient.updateEntity(
+      { id: entity1.id, fields: { any: { id: entity2.id } } },
+      { publish: true },
+    ),
+  );
+
+  const unpublishResult = await adminClient.unpublishEntities([
+    { id: entity1.id },
+    { id: entity2.id },
+  ]);
+  assertResultValue(unpublishResult, [
+    {
+      id: entity1.id,
+      effect: 'unpublished',
+      updatedAt: unpublishResult.valueOrThrow()[0].updatedAt,
+      status: AdminEntityStatus.withdrawn,
+    },
+    {
+      id: entity2.id,
+      effect: 'unpublished',
+      updatedAt: unpublishResult.valueOrThrow()[1].updatedAt,
+      status: AdminEntityStatus.withdrawn,
+    },
+  ]);
+}
+
 async function unpublishEntities_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
   const unpublishResult = await clientProvider
     .adminClient()
@@ -240,5 +345,29 @@ async function unpublishEntities_errorReadonlySession({ clientProvider }: AdminE
     unpublishResult,
     ErrorType.BadRequest,
     'Readonly session used to unpublish entities',
+  );
+}
+
+async function unpublishEntities_errorReferencedByPublishedEntity({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const adminClient = clientProvider.adminClient();
+
+  // Create entity1 and entity2, where entity2 --> entity1
+  const { entity: entity1 } = (
+    await adminClient.createEntity(REFERENCES_CREATE, { publish: true })
+  ).valueOrThrow();
+  const { entity: entity2 } = (
+    await adminClient.createEntity(
+      copyEntity(REFERENCES_CREATE, { fields: { any: { id: entity1.id } } }),
+      { publish: true },
+    )
+  ).valueOrThrow();
+
+  const unpublishResult = await adminClient.unpublishEntities([{ id: entity1.id }]);
+  assertErrorResult(
+    unpublishResult,
+    ErrorType.BadRequest,
+    `${entity1.id}: Published entities referencing entity: ${entity2.id}`,
   );
 }
