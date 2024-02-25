@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/integration-test
 
-This log was last generated on Sun, 25 Feb 2024 19:40:27 GMT and should not be manually modified.
+This log was last generated on Sun, 25 Feb 2024 23:10:35 GMT and should not be manually modified.
+
+## 0.5.16
+Sun, 25 Feb 2024 23:10:35 GMT
+
+### Updates
+
+- Add random test principal and readnly session type to published clinet provider.
 
 ## 0.5.15
 Sun, 25 Feb 2024 19:40:27 GMT

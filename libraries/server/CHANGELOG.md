@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Sun, 25 Feb 2024 19:40:27 GMT and should not be manually modified.
+This log was last generated on Sun, 25 Feb 2024 23:10:35 GMT and should not be manually modified.
+
+## 0.5.16
+Sun, 25 Feb 2024 23:10:35 GMT
+
+### Updates
+
+- Enable authorization adapter to return no authkey when resolving. Handle readonly temporary session for session authkey.
 
 ## 0.5.15
 Sun, 25 Feb 2024 19:40:27 GMT

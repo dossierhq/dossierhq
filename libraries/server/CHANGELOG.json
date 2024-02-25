@@ -2,6 +2,18 @@
   "name": "@dossierhq/server",
   "entries": [
     {
+      "version": "0.5.16",
+      "tag": "@dossierhq/server_v0.5.16",
+      "date": "Sun, 25 Feb 2024 23:10:35 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Enable authorization adapter to return no authkey when resolving. Handle readonly temporary session for session authkey."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.15",
       "tag": "@dossierhq/server_v0.5.15",
       "date": "Sun, 25 Feb 2024 19:40:27 GMT",
