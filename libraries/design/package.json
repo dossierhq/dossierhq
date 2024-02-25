@@ -43,7 +43,7 @@
     "@fortawesome/free-solid-svg-icons": "~6.5.1",
     "@react-aria/overlays": "~3.21.1",
     "lodash": "~4.17.21",
-    "react-aria-components": "~1.0.1",
+    "react-aria-components": "~1.1.1",
     "tslib": "~2.6.2"
   },
   "peerDependencies": {
@@ -75,7 +75,7 @@
     "prettier": "3.2.5",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
-    "react-stately": "~3.29.1",
+    "react-stately": "~3.30.1",
     "sass": "~1.71.0",
     "sass-loader": "~14.1.1",
     "storybook": "~7.6.16",
