@@ -28,7 +28,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@playwright/test": "~1.41.2",
+    "@playwright/test": "~1.42.0",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
     "eslint": "~8.57.0",
