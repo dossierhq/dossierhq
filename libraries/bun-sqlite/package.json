@@ -31,7 +31,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.65.5",
+    "@rushstack/heft": "0.65.8",
     "@types/bun": "~1.0.7",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",

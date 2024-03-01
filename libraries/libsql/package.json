@@ -51,7 +51,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@libsql/client": "~0.5.2",
-    "@rushstack/heft": "0.65.5",
+    "@rushstack/heft": "0.65.8",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.3.3",

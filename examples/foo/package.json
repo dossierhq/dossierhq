@@ -28,7 +28,7 @@
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@rushstack/heft": "0.65.5",
+    "@rushstack/heft": "0.65.8",
     "@types/better-sqlite3": "~7.6.8",
     "@types/express": "~4.17.21",
     "eslint": "~8.57.0",
