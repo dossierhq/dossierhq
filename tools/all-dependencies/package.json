@@ -72,7 +72,7 @@
     "@playwright/test": "~1.41.2",
     "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-node-resolve": "~15.2.3",
-    "@rushstack/heft": "0.65.5",
+    "@rushstack/heft": "0.65.8",
     "@rushstack/heft-lint-plugin": "~0.3.14",
     "@rushstack/heft-typescript-plugin": "~0.3.14",
     "@storybook/addon-actions": "~7.6.17",
