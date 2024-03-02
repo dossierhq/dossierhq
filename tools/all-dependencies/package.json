@@ -25,7 +25,7 @@
     "@lexical/rich-text": "0.13.1",
     "@lexical/selection": "0.13.1",
     "@lexical/utils": "0.13.1",
-    "@microsoft/rush-lib": "~5.115.0",
+    "@microsoft/rush-lib": "~5.117.1",
     "@react-aria/overlays": "~3.21.1",
     "@rushstack/eslint-patch": "~1.7.1",
     "@sentry/astro": "~7.102.1",
