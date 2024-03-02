@@ -28,7 +28,7 @@
     "@microsoft/rush-lib": "~5.117.1",
     "@react-aria/overlays": "~3.21.1",
     "@rushstack/eslint-patch": "~1.7.1",
-    "@sentry/astro": "~7.102.1",
+    "@sentry/astro": "~7.104.0",
     "@spotlightjs/astro": "~1.0.16",
     "@typescript-eslint/eslint-plugin": "~7.1.0",
     "@typescript-eslint/parser": "~7.1.0",
