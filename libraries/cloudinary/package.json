@@ -33,7 +33,7 @@
     "directory": "libraries/cloudinary"
   },
   "dependencies": {
-    "@cloudinary/url-gen": "~1.18.0",
+    "@cloudinary/url-gen": "~1.19.0",
     "@dossierhq/design": "workspace:*",
     "tslib": "~2.6.2"
   },
