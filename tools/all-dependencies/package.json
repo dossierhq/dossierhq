@@ -12,7 +12,7 @@
   "dependencies": {
     "@astrojs/check": "~0.5.5",
     "@astrojs/node": "~8.2.1",
-    "@astrojs/react": "~3.0.10",
+    "@astrojs/react": "~3.1.0",
     "@auth0/auth0-react": "~2.2.4",
     "@cloudinary/url-gen": "~1.19.0",
     "@creativebulma/bulma-badge": "~1.0.1",
