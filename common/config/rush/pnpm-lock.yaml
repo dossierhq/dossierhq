@@ -985,8 +985,8 @@ importers:
         specifier: ~7.6.17
         version: 7.6.17(react-dom@18.2.0)(react@18.2.0)(rollup@4.13.0)(typescript@5.4.2)(vite@5.1.4)
       '@types/lodash':
-        specifier: ~4.14.202
-        version: 4.14.202
+        specifier: ~4.17.0
+        version: 4.17.0
       '@types/react':
         specifier: ~18.2.58
         version: 18.2.58
@@ -1436,8 +1436,8 @@ importers:
         specifier: ~1.9.8
         version: 1.9.8
       '@types/lodash':
-        specifier: ~4.14.202
-        version: 4.14.202
+        specifier: ~4.17.0
+        version: 4.17.0
       '@types/react':
         specifier: ~18.2.58
         version: 18.2.58
@@ -2039,8 +2039,8 @@ importers:
         specifier: ~0.74.4
         version: 0.74.4
       '@types/lodash':
-        specifier: ~4.14.202
-        version: 4.14.202
+        specifier: ~4.17.0
+        version: 4.17.0
       '@types/node':
         specifier: ~20.11.20
         version: 20.11.20
@@ -8865,7 +8865,7 @@ packages:
       '@storybook/preview-api': 7.6.17
       '@storybook/theming': 7.6.17(react-dom@18.2.0)(react@18.2.0)
       '@storybook/types': 7.6.17
-      '@types/lodash': 4.14.202
+      '@types/lodash': 4.17.0
       color-convert: 2.0.1
       dequal: 2.0.3
       lodash: 4.17.21
@@ -9784,8 +9784,8 @@ packages:
       '@types/geojson': 7946.0.14
     dev: true
 
-  /@types/lodash@4.14.202:
-    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+  /@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
 
   /@types/mdast@4.0.3:
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
@@ -11350,7 +11350,7 @@ packages:
     resolution: {integrity: sha512-OqeheDucGKifjQRx524URgV4z4NaKjocGhygTptDea+DLROre4ZEecA4KXDq+P7qlGCohYVNOh3qr+y5XH5Ftg==}
     dependencies:
       '@devexpress/error-stack-parser': 2.0.6
-      '@types/lodash': 4.14.202
+      '@types/lodash': 4.17.0
       callsite: 1.0.0
       chalk: 2.4.2
       highlight-es: 1.0.3
