@@ -27,8 +27,8 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.66.1",
-    "@types/bun": "~1.0.7",
-    "@types/node": "~20.11.20",
+    "@types/bun": "~1.0.8",
+    "@types/node": "~20.11.28",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.4.2"

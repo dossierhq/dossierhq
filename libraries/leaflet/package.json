@@ -52,7 +52,7 @@
     "@rushstack/heft": "0.66.1",
     "@types/leaflet": "~1.9.8",
     "@types/leaflet.locatecontrol": "~0.74.4",
-    "@types/react": "~18.2.58",
+    "@types/react": "18.2.58",
     "eslint": "~8.57.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.2.5",

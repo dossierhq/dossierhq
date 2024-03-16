@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@rushstack/heft": "0.66.1",
-    "@rushstack/heft-lint-plugin": "~0.3.14",
-    "@rushstack/heft-typescript-plugin": "~0.3.14"
+    "@rushstack/heft-lint-plugin": "~0.3.21",
+    "@rushstack/heft-typescript-plugin": "~0.3.21"
   }
 }

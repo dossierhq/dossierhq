@@ -45,8 +45,8 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.66.1",
     "@types/better-sqlite3": "~7.6.8",
-    "@types/bun": "~1.0.7",
-    "@types/pg": "~8.11.1",
+    "@types/bun": "~1.0.8",
+    "@types/pg": "~8.11.2",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.4.2"
