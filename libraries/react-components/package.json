@@ -65,7 +65,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.66.0",
+    "@rushstack/heft": "0.66.1",
     "@storybook/addon-actions": "~7.6.17",
     "@storybook/addon-essentials": "~7.6.17",
     "@storybook/addon-links": "~7.6.17",
