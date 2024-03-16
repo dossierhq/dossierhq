@@ -45,7 +45,7 @@ importers:
         version: 0.13.1
       next:
         specifier: ~14.1.0
-        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.71.1)
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0)
       react:
         specifier: ~18.2.0
         version: 18.2.0
@@ -94,7 +94,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../apps/playground:
     dependencies:
@@ -191,7 +191,7 @@ importers:
         version: 5.4.2
       vite:
         specifier: ~5.1.4
-        version: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+        version: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
 
   ../../apps/playground-example-generator:
     dependencies:
@@ -291,7 +291,7 @@ importers:
         version: 1.0.16(@sentry/astro@7.105.0)(astro@4.5.5)
       astro:
         specifier: ~4.5.5
-        version: 4.5.5(@types/node@20.11.20)(sass@1.71.1)(typescript@5.4.2)
+        version: 4.5.5(@types/node@20.11.20)(sass@1.72.0)(typescript@5.4.2)
       better-sqlite3:
         specifier: ~9.4.3
         version: 9.4.3
@@ -541,7 +541,7 @@ importers:
         version: 1.9.4
       next:
         specifier: ~14.1.0
-        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.71.1)
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0)
       react:
         specifier: ~18.2.0
         version: 18.2.0
@@ -663,7 +663,7 @@ importers:
         version: 5.4.2
       vite:
         specifier: ~5.1.4
-        version: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+        version: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/benchpress:
     dependencies:
@@ -740,7 +740,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/bun-sqlite:
     dependencies:
@@ -851,7 +851,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/core-vitest:
     dependencies:
@@ -882,7 +882,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/database-adapter:
     dependencies:
@@ -913,7 +913,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/deno-postgres:
     devDependencies:
@@ -1033,11 +1033,11 @@ importers:
         specifier: ~3.30.1
         version: 3.30.1(react@18.2.0)
       sass:
-        specifier: ~1.71.1
-        version: 1.71.1
+        specifier: ~1.72.0
+        version: 1.72.0
       sass-loader:
         specifier: ~14.1.1
-        version: 14.1.1(sass@1.71.1)
+        version: 14.1.1(sass@1.72.0)
       storybook:
         specifier: ~7.6.17
         version: 7.6.17
@@ -1049,7 +1049,7 @@ importers:
         version: 5.4.2
       vite:
         specifier: ~5.1.4
-        version: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+        version: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/graphql:
     dependencies:
@@ -1107,7 +1107,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/integration-test:
     dependencies:
@@ -1245,7 +1245,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/pg:
     dependencies:
@@ -1309,7 +1309,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/postgres-core:
     dependencies:
@@ -1346,7 +1346,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/postgres-tools:
     dependencies:
@@ -1494,10 +1494,10 @@ importers:
         version: 9.0.1
       vite:
         specifier: ~5.1.4
-        version: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+        version: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/server:
     dependencies:
@@ -1537,7 +1537,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/sql.js:
     dependencies:
@@ -1589,7 +1589,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/sql.js-browser-integration-test:
     dependencies:
@@ -1669,7 +1669,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../libraries/typescript-generator:
     dependencies:
@@ -1703,7 +1703,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../rigs/heft-node-rig:
     dependencies:
@@ -1777,7 +1777,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../templates/tool:
     dependencies:
@@ -1874,7 +1874,7 @@ importers:
         version: 7.2.0(eslint@8.57.0)(typescript@5.4.2)
       astro:
         specifier: ~4.5.5
-        version: 4.5.5(@types/node@20.11.20)(sass@1.71.1)(typescript@5.4.2)
+        version: 4.5.5(@types/node@20.11.20)(sass@1.72.0)(typescript@5.4.2)
       better-sqlite3:
         specifier: ~9.4.3
         version: 9.4.3
@@ -1934,7 +1934,7 @@ importers:
         version: 4.17.21
       next:
         specifier: ~14.1.0
-        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.71.1)
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0)
       pg:
         specifier: ~8.11.3
         version: 8.11.3
@@ -2114,11 +2114,11 @@ importers:
         specifier: ~5.12.0
         version: 5.12.0(rollup@4.13.0)
       sass:
-        specifier: ~1.71.1
-        version: 1.71.1
+        specifier: ~1.72.0
+        version: 1.72.0
       sass-loader:
         specifier: ~14.1.1
-        version: 14.1.1(sass@1.71.1)
+        version: 14.1.1(sass@1.72.0)
       schema-dts:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.4.2)
@@ -2133,10 +2133,10 @@ importers:
         version: 4.7.1
       vite:
         specifier: ~5.1.4
-        version: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+        version: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../tools/better-sqlite3-amalgamation:
     dependencies:
@@ -2158,7 +2158,7 @@ importers:
         version: 5.4.2
       vitest:
         specifier: ~1.3.1
-        version: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+        version: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
 
   ../../tools/generic-tools:
     dependencies:
@@ -2320,7 +2320,7 @@ packages:
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.5.5(@types/node@20.11.20)(sass@1.71.1)(typescript@5.4.2)
+      astro: 4.5.5(@types/node@20.11.20)(sass@1.72.0)(typescript@5.4.2)
       send: 0.18.0
       server-destroy: 1.0.1
     dev: false
@@ -5142,7 +5142,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.4.2)
       typescript: 5.4.2
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -8507,7 +8507,7 @@ packages:
       '@sentry/types': 7.105.0
       '@sentry/utils': 7.105.0
       '@sentry/vite-plugin': 2.10.3
-      astro: 4.5.5(@types/node@20.11.20)(sass@1.71.1)(typescript@5.4.2)
+      astro: 4.5.5(@types/node@20.11.20)(sass@1.72.0)(typescript@5.4.2)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -8702,7 +8702,7 @@ packages:
       '@sentry/astro': 7.105.0(astro@4.5.5)
       '@spotlightjs/overlay': 1.7.0
       '@spotlightjs/sidecar': 1.4.0
-      astro: 4.5.5(@types/node@20.11.20)(sass@1.71.1)(typescript@5.4.2)
+      astro: 4.5.5(@types/node@20.11.20)(sass@1.72.0)(typescript@5.4.2)
       source-map: 0.7.4
     dev: false
 
@@ -8950,7 +8950,7 @@ packages:
       magic-string: 0.30.6
       rollup: 3.29.4
       typescript: 5.4.2
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -9268,7 +9268,7 @@ packages:
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      sass-loader: 14.1.1(sass@1.71.1)
+      sass-loader: 14.1.1(sass@1.72.0)
     dev: true
 
   /@storybook/preview-api@7.6.17:
@@ -9321,7 +9321,7 @@ packages:
       react: 18.2.0
       react-docgen: 7.0.3
       react-dom: 18.2.0(react@18.2.0)
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - encoding
@@ -10270,7 +10270,7 @@ packages:
       vite: ^4 || ^5
     dependencies:
       '@swc/core': 1.3.107
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -10286,7 +10286,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.9)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10302,7 +10302,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.23.9)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -10324,7 +10324,7 @@ packages:
       std-env: 3.7.0
       test-exclude: 6.0.0
       v8-to-istanbul: 9.2.0
-      vitest: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+      vitest: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10872,7 +10872,7 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /astro@4.5.5(@types/node@20.11.20)(sass@1.71.1)(typescript@5.4.2):
+  /astro@4.5.5(@types/node@20.11.20)(sass@1.72.0)(typescript@5.4.2):
     resolution: {integrity: sha512-gZ3jR06dLmY9/SMkKMr+3pRSrUjhuwjnXt+9abFJV3WGwhCnLZbSNsTBrLMsaFHpAS1ReJChcTWyKRCvs/jCIQ==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
@@ -10933,7 +10933,7 @@ packages:
       tsconfck: 3.0.1(typescript@5.4.2)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
       vitefu: 0.2.5(vite@5.1.4)
       which-pm: 2.1.1
       yargs-parser: 21.1.1
@@ -16120,7 +16120,7 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next@14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.71.1):
+  /next@14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.72.0):
     resolution: {integrity: sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -16143,7 +16143,7 @@ packages:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sass: 1.71.1
+      sass: 1.72.0
       styled-jsx: 5.1.1(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.1.0
@@ -18088,7 +18088,7 @@ packages:
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader@14.1.1(sass@1.71.1):
+  /sass-loader@14.1.1(sass@1.72.0):
     resolution: {integrity: sha512-QX8AasDg75monlybel38BZ49JP5Z+uSKfKwF2rO7S74BywaRmGQMUBw9dtkS+ekyM/QnP+NOrRYq8ABMZ9G8jw==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
@@ -18110,11 +18110,11 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.71.1
+      sass: 1.72.0
     dev: true
 
-  /sass@1.71.1:
-    resolution: {integrity: sha512-wovtnV2PxzteLlfNzbgm1tFXPLoZILYAMJtvoXXkD7/+1uP41eKkIt1ypWq5/q2uT94qHjXehEYfmjKOvjL9sg==}
+  /sass@1.72.0:
+    resolution: {integrity: sha512-Gpczt3WA56Ly0Mn8Sl21Vj94s1axi9hDIzDFn9Ph9x3C3p4nNyvsqJoQyVXKou6cBlfFWEgRW4rT8Tb4i3XnVA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -19610,7 +19610,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /vite-node@1.3.1(@types/node@20.11.20)(sass@1.71.1):
+  /vite-node@1.3.1(@types/node@20.11.20)(sass@1.72.0):
     resolution: {integrity: sha512-azbRrqRxlWTJEVbzInZCTchx0X69M/XPTCz4H+TLvlTcR/xH/3hkRqhOakT41fMJCMzXTu4UvegkZiEoJAWvng==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19619,7 +19619,7 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -19631,7 +19631,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.1.4(@types/node@20.11.20)(sass@1.71.1):
+  /vite@5.1.4(@types/node@20.11.20)(sass@1.72.0):
     resolution: {integrity: sha512-n+MPqzq+d9nMVTKyewqw6kSt+R3CkvF9QAKY8obiQn8g1fwTscKxyfaYnC632HtBXAQGc1Yjomphwn1dtwGAHg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19663,7 +19663,7 @@ packages:
       esbuild: 0.19.12
       postcss: 8.4.35
       rollup: 4.13.0
-      sass: 1.71.1
+      sass: 1.72.0
     optionalDependencies:
       fsevents: 2.3.3
 
@@ -19675,10 +19675,10 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
     dev: false
 
-  /vitest@1.3.1(@types/node@20.11.20)(sass@1.71.1):
+  /vitest@1.3.1(@types/node@20.11.20)(sass@1.72.0):
     resolution: {integrity: sha512-/1QJqXs8YbCrfv/GPQ05wAZf2eakUPLPa18vkJAKE7RXOKfVHqMZZ1WlTjiwl6Gcn65M5vpNUB6EFLnEdRdEXQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19721,8 +19721,8 @@ packages:
       strip-literal: 2.0.0
       tinybench: 2.6.0
       tinypool: 0.8.2
-      vite: 5.1.4(@types/node@20.11.20)(sass@1.71.1)
-      vite-node: 1.3.1(@types/node@20.11.20)(sass@1.71.1)
+      vite: 5.1.4(@types/node@20.11.20)(sass@1.72.0)
+      vite-node: 1.3.1(@types/node@20.11.20)(sass@1.72.0)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
