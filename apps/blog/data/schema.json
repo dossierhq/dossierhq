@@ -67,7 +67,8 @@
             "GlossaryTerm"
           ],
           "componentTypes": [
-            "CloudinaryImage"
+            "CloudinaryImage",
+            "CodapiSnippet"
           ]
         }
       ]
@@ -338,6 +339,45 @@
           "required": false,
           "adminOnly": false,
           "multiline": false,
+          "matchPattern": null,
+          "values": [],
+          "index": null
+        }
+      ]
+    },
+    {
+      "name": "CodapiSnippet",
+      "adminOnly": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "String",
+          "list": false,
+          "required": false,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": null,
+          "values": [],
+          "index": null
+        },
+        {
+          "name": "dependsOn",
+          "type": "String",
+          "list": false,
+          "required": false,
+          "adminOnly": false,
+          "multiline": false,
+          "matchPattern": null,
+          "values": [],
+          "index": null
+        },
+        {
+          "name": "code",
+          "type": "String",
+          "list": false,
+          "required": true,
+          "adminOnly": false,
+          "multiline": true,
           "matchPattern": null,
           "values": [],
           "index": null

@@ -1,0 +1,453 @@
+{
+  "id": "88350878-a247-4564-b793-05a73497fca0",
+  "parentId": "fc38bc56-a6c3-431b-87ee-8dba4542f335",
+  "type": "updateSchema",
+  "createdAt": "2024-03-18T19:54:35.295Z",
+  "createdBy": "86246f70-a2e0-4a25-8851-45d0e06f5421",
+  "schemaSpecification": {
+    "version": 3,
+    "schemaKind": "admin",
+    "entityTypes": [
+      {
+        "name": "Article",
+        "adminOnly": false,
+        "authKeyPattern": "none",
+        "nameField": "title",
+        "fields": [
+          {
+            "name": "title",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "slug",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": "slug",
+            "values": [],
+            "index": "articleSlug"
+          },
+          {
+            "name": "description",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "body",
+            "type": "RichText",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "richTextNodes": [
+              "code",
+              "code-highlight",
+              "component",
+              "entityLink",
+              "heading",
+              "linebreak",
+              "link",
+              "list",
+              "listitem",
+              "paragraph",
+              "root",
+              "tab",
+              "text"
+            ],
+            "entityTypes": [],
+            "linkEntityTypes": [
+              "Article",
+              "GlossaryTerm"
+            ],
+            "componentTypes": [
+              "CloudinaryImage",
+              "CodapiSnippet"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Author",
+        "adminOnly": false,
+        "authKeyPattern": "none",
+        "nameField": "name",
+        "fields": [
+          {
+            "name": "name",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          }
+        ]
+      },
+      {
+        "name": "BlogPost",
+        "adminOnly": false,
+        "authKeyPattern": "none",
+        "nameField": "title",
+        "fields": [
+          {
+            "name": "title",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "slug",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": "slug",
+            "values": [],
+            "index": "blogSlug"
+          },
+          {
+            "name": "publishedDate",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": "date",
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "updatedDate",
+            "type": "String",
+            "list": false,
+            "required": false,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": "date",
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "authors",
+            "type": "Entity",
+            "list": true,
+            "required": false,
+            "adminOnly": false,
+            "entityTypes": [
+              "Author"
+            ]
+          },
+          {
+            "name": "hero",
+            "type": "Component",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "componentTypes": [
+              "CloudinaryImage"
+            ]
+          },
+          {
+            "name": "description",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "body",
+            "type": "RichText",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "richTextNodes": [
+              "code",
+              "code-highlight",
+              "component",
+              "entityLink",
+              "linebreak",
+              "link",
+              "list",
+              "listitem",
+              "paragraph",
+              "root",
+              "tab",
+              "text"
+            ],
+            "entityTypes": [],
+            "linkEntityTypes": [
+              "Article"
+            ],
+            "componentTypes": [
+              "CloudinaryImage"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Chapter",
+        "adminOnly": false,
+        "authKeyPattern": "none",
+        "nameField": null,
+        "fields": [
+          {
+            "name": "items",
+            "type": "Component",
+            "list": true,
+            "required": true,
+            "adminOnly": false,
+            "componentTypes": [
+              "ArticleTocItem",
+              "TocItem"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "GlossaryTerm",
+        "adminOnly": false,
+        "authKeyPattern": "none",
+        "nameField": "title",
+        "fields": [
+          {
+            "name": "title",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "slug",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": "slug",
+            "values": [],
+            "index": "glossarySlug"
+          },
+          {
+            "name": "description",
+            "type": "RichText",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "richTextNodes": [
+              "entityLink",
+              "linebreak",
+              "paragraph",
+              "root",
+              "tab",
+              "text"
+            ],
+            "entityTypes": [],
+            "linkEntityTypes": [
+              "GlossaryTerm"
+            ],
+            "componentTypes": []
+          }
+        ]
+      }
+    ],
+    "componentTypes": [
+      {
+        "name": "ArticleTocItem",
+        "adminOnly": false,
+        "fields": [
+          {
+            "name": "title",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "article",
+            "type": "Entity",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "entityTypes": [
+              "Article"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CloudinaryImage",
+        "adminOnly": false,
+        "fields": [
+          {
+            "name": "publicId",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "width",
+            "type": "Number",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "integer": true
+          },
+          {
+            "name": "height",
+            "type": "Number",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "integer": true
+          },
+          {
+            "name": "alt",
+            "type": "String",
+            "list": false,
+            "required": false,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          }
+        ]
+      },
+      {
+        "name": "CodapiSnippet",
+        "adminOnly": false,
+        "fields": [
+          {
+            "name": "id",
+            "type": "String",
+            "list": false,
+            "required": false,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "dependsOn",
+            "type": "String",
+            "list": false,
+            "required": false,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "code",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": true,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          }
+        ]
+      },
+      {
+        "name": "TocItem",
+        "adminOnly": false,
+        "fields": [
+          {
+            "name": "title",
+            "type": "String",
+            "list": false,
+            "required": true,
+            "adminOnly": false,
+            "multiline": false,
+            "matchPattern": null,
+            "values": [],
+            "index": null
+          },
+          {
+            "name": "items",
+            "type": "Component",
+            "list": true,
+            "required": true,
+            "adminOnly": false,
+            "componentTypes": [
+              "ArticleTocItem",
+              "TocItem"
+            ]
+          }
+        ]
+      }
+    ],
+    "patterns": [
+      {
+        "name": "date",
+        "pattern": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z)$"
+      },
+      {
+        "name": "none",
+        "pattern": "^none$"
+      },
+      {
+        "name": "slug",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    ],
+    "indexes": [
+      {
+        "name": "articleSlug",
+        "type": "unique"
+      },
+      {
+        "name": "blogSlug",
+        "type": "unique"
+      },
+      {
+        "name": "glossarySlug",
+        "type": "unique"
+      }
+    ],
+    "migrations": []
+  }
+}

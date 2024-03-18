@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./scripts/generate-typescript.js 2>&1 && tsx ./scripts/sync-database-with-disk.ts && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1 && npx tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
+    "build": "./scripts/generate-typescript.js 2>&1 && tsx ./scripts/sync-database-with-disk.ts && cp node_modules/@antonz/codapi/dist/snippet.js public/codapi-snippet.js && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1 && npx tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -19,6 +19,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
+    "@antonz/codapi": "~0.19.0",
     "@cloudinary/url-gen": "~1.19.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",

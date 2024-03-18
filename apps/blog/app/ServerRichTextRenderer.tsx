@@ -20,11 +20,13 @@ import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
 import type { Key, ReactNode } from 'react';
 import { CloudinaryImage } from '../components/CloudinaryImage/CloudinaryImage';
+import { CodapiSnippet } from '../components/CodapiSnippet/CodapiSnippet';
 import { BrowserUrls } from '../utils/BrowserUrls';
 import type { AppPublishedClient } from '../utils/SchemaTypes';
 import {
   isPublishedArticle,
   isPublishedCloudinaryImage,
+  isPublishedCodapiSnippet,
   isPublishedGlossaryTerm,
 } from '../utils/SchemaTypes';
 
@@ -188,6 +190,9 @@ async function renderNode(context: RenderContext, node: RichTextNode, key: Key |
   if (isRichTextComponentNode(node)) {
     if (isPublishedCloudinaryImage(node.data)) {
       return <CloudinaryImage key={key} image={node.data} height={400} />;
+    }
+    if (isPublishedCodapiSnippet(node.data)) {
+      return <CodapiSnippet key={key} snippet={node.data} />;
     }
   }
 

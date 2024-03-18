@@ -35,4 +35,5 @@ yarn-error.log*
 
 #
 public/atom.xml
+public/codapi-snippet.js
 tsconfig.tsbuildinfo

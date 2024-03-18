@@ -136,7 +136,11 @@ export function assertIsAdminGlossaryTerm(
   }
 }
 
-export type AppAdminComponent = AdminArticleTocItem | AdminCloudinaryImage | AdminTocItem;
+export type AppAdminComponent =
+  | AdminArticleTocItem
+  | AdminCloudinaryImage
+  | AdminCodapiSnippet
+  | AdminTocItem;
 
 export interface AdminArticleTocItemFields {
   title: string | null;
@@ -179,6 +183,28 @@ export function assertIsAdminCloudinaryImage(
 ): asserts component is AdminCloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
+  }
+}
+
+export interface AdminCodapiSnippetFields {
+  id: string | null;
+  dependsOn: string | null;
+  code: string | null;
+}
+
+export type AdminCodapiSnippet = Component<'CodapiSnippet', AdminCodapiSnippetFields>;
+
+export function isAdminCodapiSnippet(
+  component: Component<string, object> | AdminCodapiSnippet,
+): component is AdminCodapiSnippet {
+  return component.type === 'CodapiSnippet';
+}
+
+export function assertIsAdminCodapiSnippet(
+  component: Component<string, object> | AdminCodapiSnippet,
+): asserts component is AdminCodapiSnippet {
+  if (component.type !== 'CodapiSnippet') {
+    throw new Error('Expected type = CodapiSnippet (but was ' + component.type + ')');
   }
 }
 
@@ -344,6 +370,7 @@ export function assertIsPublishedGlossaryTerm(
 export type AppPublishedComponent =
   | PublishedArticleTocItem
   | PublishedCloudinaryImage
+  | PublishedCodapiSnippet
   | PublishedTocItem;
 
 export interface PublishedArticleTocItemFields {
@@ -387,6 +414,28 @@ export function assertIsPublishedCloudinaryImage(
 ): asserts component is PublishedCloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
+  }
+}
+
+export interface PublishedCodapiSnippetFields {
+  id: string | null;
+  dependsOn: string | null;
+  code: string;
+}
+
+export type PublishedCodapiSnippet = Component<'CodapiSnippet', PublishedCodapiSnippetFields>;
+
+export function isPublishedCodapiSnippet(
+  component: Component<string, object> | PublishedCodapiSnippet,
+): component is PublishedCodapiSnippet {
+  return component.type === 'CodapiSnippet';
+}
+
+export function assertIsPublishedCodapiSnippet(
+  component: Component<string, object> | PublishedCodapiSnippet,
+): asserts component is PublishedCodapiSnippet {
+  if (component.type !== 'CodapiSnippet') {
+    throw new Error('Expected type = CodapiSnippet (but was ' + component.type + ')');
   }
 }
 

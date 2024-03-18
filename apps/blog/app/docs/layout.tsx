@@ -1,4 +1,6 @@
+import '@antonz/codapi/dist/snippet.css';
 import { FullscreenContainer, Menu } from '@dossierhq/design';
+import Script from 'next/script';
 import assert from 'node:assert';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
@@ -63,6 +65,7 @@ export default async function Layout({ children }: Props) {
         </FullscreenContainer.ScrollableColumn>
         <FullscreenContainer.Column width="2/12" />
       </FullscreenContainer.Columns>
+      <Script src="/codapi-snippet.js" async />
     </FullscreenContainer>
   );
 }
