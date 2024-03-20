@@ -42,9 +42,12 @@ export function CodapiSnippet({ snippet }: { snippet: PublishedCodapiSnippet }) 
       />
       <Script id={id + '_script'} type="module" async>
         {`
-import {CodeJar} from '/codejar.js';
-const editor = document.getElementById('${id}');
-const jar = CodeJar(editor, ()=>{}, { tab: '  ', });
+import { CodeJar } from '/codejar.js';
+const editor = document.getElementById(${JSON.stringify(id)});
+const jar = CodeJar(editor, (editor) => {
+  editor.textContent = editor.textContent;
+  Prism.highlightElement(editor);
+}, { tab: '  ' });
 `}
       </Script>
     </>
