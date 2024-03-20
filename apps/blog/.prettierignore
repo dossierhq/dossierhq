@@ -2,4 +2,6 @@
 /.rush/
 /data/
 /coverage/
+/public/codejar.js
+/public/prism.js
 /public/voyager.worker.js

@@ -2,6 +2,7 @@ import '@antonz/codapi/dist/snippet.css';
 import { FullscreenContainer, Menu } from '@dossierhq/design';
 import Script from 'next/script';
 import assert from 'node:assert';
+import 'prismjs/themes/prism.min.css';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { BrowserUrls } from '../../utils/BrowserUrls';
@@ -66,6 +67,7 @@ export default async function Layout({ children }: Props) {
         <FullscreenContainer.Column width="2/12" />
       </FullscreenContainer.Columns>
       <Script src="/codapi-snippet.js" async />
+      <Script src="/prism.js" async />
     </FullscreenContainer>
   );
 }

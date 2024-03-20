@@ -5,8 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./scripts/generate-typescript.js 2>&1 && tsx ./scripts/sync-database-with-disk.ts && cp node_modules/@antonz/codapi/dist/snippet.js public/codapi-snippet.js && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1 && npx tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
+    "build": "./scripts/generate-typescript.js 2>&1 && tsx ./scripts/sync-database-with-disk.ts && npm run copy-public-resources && npm run prettier:check && npm run eslint:check && npm run test && npm run build-app 2>&1 && npx tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
+    "copy-public-resources": "cp node_modules/@antonz/codapi/dist/snippet.js public/codapi-snippet.js && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/prismjs/prism.js public/",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
@@ -29,9 +30,11 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "better-sqlite3": "~9.4.3",
+    "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.13.1",
     "next": "~14.1.3",
+    "prismjs": "~1.29.0",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
     "tslib": "~2.6.2"

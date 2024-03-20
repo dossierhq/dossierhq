@@ -3,11 +3,13 @@
     "antonz",
     "Bengtsson",
     "codapi",
+    "codejar",
     "dossierhq",
     "embeddable",
     "graphiql",
     "linebreak",
     "listitem",
+    "prismjs",
     "tsbuildinfo"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
