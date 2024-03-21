@@ -1,0 +1,34 @@
+.container codapi-snippet {
+  white-space: normal;
+  min-height: 2.5rem;
+}
+
+.container pre {
+  padding: 1em;
+  margin: 0.5em 0;
+  font-size: 16px !important;
+}
+
+.container pre code {
+  white-space: pre-wrap;
+}
+
+.container codapi-ref {
+  display: none;
+}
+
+.container button {
+  background-color: hsl(171, 100%, 41%);
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  border-color: transparent;
+  font-size: 1rem;
+}
+
+.container :global(.number) {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}

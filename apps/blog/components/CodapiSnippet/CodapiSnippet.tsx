@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import { useId, type HTMLAttributes } from 'react';
 import type { PublishedCodapiSnippet } from '../../utils/SchemaTypes';
+import styles from './codapi.module.css';
 
 interface CodapiSnippetElement extends HTMLElement {}
 
@@ -26,7 +27,7 @@ declare global {
 export function CodapiSnippet({ snippet }: { snippet: PublishedCodapiSnippet }) {
   const id = useId();
   return (
-    <>
+    <div className={styles.container}>
       <pre>
         <code id={id} className="language-js">
           {snippet.code}
@@ -50,6 +51,6 @@ const jar = CodeJar(editor, (editor) => {
 }, { tab: '  ' });
 `}
       </Script>
-    </>
+    </div>
   );
 }
