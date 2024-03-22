@@ -21,7 +21,7 @@ jobs:
           asdf install
       - name: Fetch Dependabot metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1
+        uses: dependabot/fetch-metadata@v2
       - name: Make dependencies consistent
         run: |
           ./tools/generic-tools/scripts/dependabot-make-consistent.js "${{ steps.dependabot-metadata.outputs.dependency-names }}"
