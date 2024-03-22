@@ -74,7 +74,7 @@
     "@types/leaflet": "~1.9.8",
     "@types/lodash": "~4.17.0",
     "@types/react-dom": "~18.2.22",
-    "@types/react": "18.2.58",
+    "@types/react": "18.2.67",
     "@types/uuid": "~9.0.7",
     "@typescript-eslint/eslint-plugin": "~7.2.0",
     "@typescript-eslint/parser": "~7.2.0",
