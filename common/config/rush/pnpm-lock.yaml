@@ -11,8 +11,8 @@ importers:
   ../../apps/blog:
     dependencies:
       '@antonz/codapi':
-        specifier: ~0.19.0
-        version: 0.19.0
+        specifier: ~0.19.1
+        version: 0.19.1
       '@cloudinary/url-gen':
         specifier: ~1.19.0
         version: 1.19.0
@@ -1816,8 +1816,8 @@ importers:
   ../../tools/all-dependencies:
     dependencies:
       '@antonz/codapi':
-        specifier: ~0.19.0
-        version: 0.19.0
+        specifier: ~0.19.1
+        version: 0.19.1
       '@astrojs/check':
         specifier: ~0.5.9
         version: 0.5.9(prettier@3.2.5)(typescript@5.4.2)
@@ -2237,8 +2237,8 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.22
 
-  /@antonz/codapi@0.19.0:
-    resolution: {integrity: sha512-N+asiwfdsA97P+ALIa81Db1Q+O6C/GqerNlsNPQLiJEu3MF+nLQtoXXxRTUhF7OcIF7aEhb6fh53/+Yf33wcLw==}
+  /@antonz/codapi@0.19.1:
+    resolution: {integrity: sha512-M0VgZw1CR59BR+xD8qh8L+9noD//ob89sZO9RrgdydczTM7oKh5ijOI93/2KOz/iNiaYLYKuc1U0IR49I+b/mA==}
     dev: false
 
   /@ardatan/sync-fetch@0.0.1:
