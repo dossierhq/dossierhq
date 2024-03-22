@@ -95,7 +95,7 @@
     "@types/lodash": "~4.17.0",
     "@types/node": "~20.11.28",
     "@types/pg": "~8.11.2",
-    "@types/react": "18.2.58",
+    "@types/react": "18.2.67",
     "@types/react-dom": "~18.2.22",
     "@types/sql.js": "~1.4.9",
     "@types/uuid": "~9.0.7",
