@@ -35,7 +35,7 @@
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.8",
-    "@types/react": "18.2.58",
+    "@types/react": "18.2.67",
     "prettier": "3.2.5",
     "rollup-plugin-visualizer": "~5.12.0",
     "tsx": "~4.7.1",
