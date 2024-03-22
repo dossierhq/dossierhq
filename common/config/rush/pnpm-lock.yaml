@@ -1012,8 +1012,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(vite@5.2.2)
       bulma:
-        specifier: ~0.9.4
-        version: 0.9.4
+        specifier: ~1.0.0
+        version: 1.0.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2090,8 +2090,8 @@ importers:
         specifier: ~1.0.0
         version: 1.0.0
       bulma:
-        specifier: ~0.9.4
-        version: 0.9.4
+        specifier: ~1.0.0
+        version: 1.0.0
       concurrently:
         specifier: ~8.2.2
         version: 8.2.2
@@ -10702,8 +10702,10 @@ packages:
     resolution: {integrity: sha512-uYBjakWipfaO/bXI7E8rq6kpwHRZK5cNYrUv2OzZSI/FvmdMyXJ2tG9dKcjEC5YHmHpUAwsargWIZNWdxb/bnQ==}
     dev: false
 
-  /bulma@0.9.4:
-    resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
+  /bulma@1.0.0:
+    resolution: {integrity: sha512-7n49v/gdHXaHcU9fVobqGXO2OguiCoMh6CLbeX7jq00XrZ5vOSE4LNS0S/0Q6rlBbckY6kk6W7LwqxS0nu4bug==}
+    dependencies:
+      sass: 1.72.0
     dev: true
 
   /bun-types@1.0.29:
