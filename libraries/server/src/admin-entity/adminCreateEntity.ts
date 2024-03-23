@@ -114,7 +114,7 @@ async function doCreateEntity(
   const resolvedAuthKeyResult = await authResolveAuthorizationKey(
     authorizationAdapter,
     context,
-    createEntity.info.authKey,
+    createEntity.info.authKey ?? '',
   );
   if (resolvedAuthKeyResult.isError()) return resolvedAuthKeyResult;
   const resolvedAuthKey = resolvedAuthKeyResult.value;
@@ -172,7 +172,8 @@ async function doCreateEntity(
     const payload: AdminEntity = {
       id,
       info: {
-        ...createEntity.info,
+        type: createEntity.info.type,
+        authKey: resolvedAuthKey.authKey,
         name,
         status: AdminEntityStatus.draft,
         valid: true,

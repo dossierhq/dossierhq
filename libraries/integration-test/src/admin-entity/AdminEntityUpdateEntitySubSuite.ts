@@ -806,7 +806,7 @@ async function updateEntity_errorTryingToChangeAuthKey({ clientProvider }: Admin
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none',
+    'entity.info.authKey: New authKey doesn’t correspond to previous authKey (subject!=none)',
   );
 
   const getResult = await client.getEntity({ id });

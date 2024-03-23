@@ -484,7 +484,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           type: { type: this.getEnumType('AdminEntityType') },
           name: { type: new GraphQLNonNull(GraphQLString) },
           version: { type: GraphQLInt },
-          authKey: { type: new GraphQLNonNull(GraphQLString) },
+          authKey: { type: GraphQLString },
         },
       }),
     );
@@ -534,7 +534,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           type: { type: new GraphQLNonNull(this.getEnumType('AdminEntityType')) },
           name: { type: new GraphQLNonNull(GraphQLString) },
-          authKey: { type: new GraphQLNonNull(GraphQLString) },
+          authKey: { type: GraphQLString },
         },
       }),
     );

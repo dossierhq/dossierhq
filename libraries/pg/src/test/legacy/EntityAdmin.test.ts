@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, AdminEntityCreate, PublishedClient } from '@dossierhq/core';
+import type { AdminClient, AdminEntity, PublishedClient } from '@dossierhq/core';
 import {
   AdminEntityStatus,
   ErrorType,
@@ -6,9 +6,9 @@ import {
   assertOkResult,
   copyEntity,
   createRichText,
+  createRichTextComponentNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
   isEntityNameAsRequested,
 } from '@dossierhq/core';
 import { expectErrorResult, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
@@ -1217,18 +1217,6 @@ describe('createEntity()', () => {
       ErrorType.BadRequest,
       'entity.info.version: Version must be 1 when creating a new entity',
     );
-  });
-
-  test('Error: Create without authKey', async () => {
-    const result = await client.createEntity({
-      info: {
-        type: 'EntityAdminFoo',
-        name: 'Foo',
-      },
-      fields: {},
-    } as AdminEntityCreate);
-
-    expectErrorResult(result, ErrorType.BadRequest, 'entity.info.authKey: AuthKey is required');
   });
 
   test('Error: Using authKey where adapter returns error', async () => {
@@ -2580,29 +2568,6 @@ describe('upsertEntity()', () => {
       ErrorType.NotAuthorized,
       'User not authorized to use authKey unauthorized',
     );
-  });
-
-  test('Error: Update Using wrong authKey', async () => {
-    const createResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'subject' },
-      fields: { title: 'Foo title' },
-    });
-    if (expectOkResult(createResult)) {
-      const {
-        entity: { id },
-      } = createResult.value;
-
-      const updateResult = await adminClientOther.upsertEntity({
-        id,
-        info: { type: 'EntityAdminFoo', name: 'Foo name', authKey: 'none' },
-        fields: {},
-      });
-      expectErrorResult(
-        updateResult,
-        ErrorType.BadRequest,
-        'entity.info.authKey: New authKey none doesn’t correspond to previous authKey subject',
-      );
-    }
   });
 });
 

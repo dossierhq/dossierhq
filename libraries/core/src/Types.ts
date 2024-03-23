@@ -219,7 +219,7 @@ export interface AdminEntityCreate<T extends AdminEntity<string, object> = Admin
      * appended to the name. */
     name: string;
     version?: 1;
-    authKey: T['info']['authKey'];
+    authKey?: T['info']['authKey'] | null;
   };
   fields: Partial<T['fields']>;
 }
@@ -238,7 +238,7 @@ export interface AdminEntityUpdate<T extends AdminEntity<string, object> = Admin
     /** If provided, has to be the same as the existing version + 1 */
     version?: number;
     /** If provided, has to be the same as the existing authKey, i.e. there's no way to change the authKey of an entity */
-    authKey?: T['info']['authKey'];
+    authKey?: T['info']['authKey'] | null;
   };
   fields: Partial<T['fields']>;
 }
@@ -253,7 +253,7 @@ export interface AdminEntityUpsert<T extends AdminEntity<string, object> = Admin
   info: {
     name: string;
     type: T['info']['type'];
-    authKey: T['info']['authKey'];
+    authKey?: T['info']['authKey'] | null;
   };
   fields: Partial<T['fields']>;
 }

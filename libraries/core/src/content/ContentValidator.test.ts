@@ -84,7 +84,7 @@ const adminSchema = AdminSchema.createAndValidate({
   ],
   patterns: [
     { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
-    { name: 'noneSubject', pattern: '^(none|subject)$' },
+    { name: 'noneSubject', pattern: '^(|none|subject)$' },
   ],
 }).valueOrThrow();
 
@@ -188,7 +188,7 @@ describe('validateEntityInfo', () => {
       validateEntityInfo(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: '' } }),
+        copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: null as unknown as string } }),
       ),
     ).toMatchSnapshot();
   });
@@ -244,14 +244,24 @@ describe('validateEntityInfoForCreate', () => {
     ).toMatchSnapshot();
   });
 
-  test('no authKey', () => {
+  test('valid: no authKey (undefined)', () => {
     expect(
       validateEntityInfoForCreate(
         adminSchema,
         ['entity'],
-        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: '' } }),
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: undefined } }),
       ),
-    ).toMatchSnapshot();
+    ).toBeNull();
+  });
+
+  test('valid: no authKey (null)', () => {
+    expect(
+      validateEntityInfoForCreate(
+        adminSchema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: null } }),
+      ),
+    ).toBeNull();
   });
 
   test('authKey not matching pattern', () => {
@@ -324,6 +334,26 @@ describe('validateEntityInfoForUpdate', () => {
         { id: '123', info: { authKey: 'subject' }, fields: {} },
       ),
     ).toMatchSnapshot();
+  });
+
+  test('valid: no authKey (undefined)', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { authKey: undefined }, fields: {} },
+      ),
+    ).toBeNull();
+  });
+
+  test('valid: no authKey (null)', () => {
+    expect(
+      validateEntityInfoForUpdate(
+        ['entity'],
+        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { id: '123', info: { authKey: null }, fields: {} },
+      ),
+    ).toBeNull();
   });
 
   test('valid: same authKey', () => {

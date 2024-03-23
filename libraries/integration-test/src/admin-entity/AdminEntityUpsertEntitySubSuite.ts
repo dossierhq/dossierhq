@@ -1,9 +1,8 @@
-import type { AdminEntityUpsert } from '@dossierhq/core';
 import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminTitleOnly, AppAdminEntity } from '../SchemaTypes.js';
+import type { AdminTitleOnly } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import {
   SUBJECT_ONLY_UPSERT,
@@ -16,11 +15,12 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   upsertEntity_minimalCreate,
   upsertEntity_minimalUpdate,
+  upsertEntity_createNoAuthKey,
   upsertEntity_updateWithoutChange,
   upsertEntity_updateAndPublishWithSubjectAuthKey,
   upsertEntity_errorCreateAuthKeyNotMatchingPattern,
   upsertEntity_errorUpdateTryingToChangeAuthKey,
-  upsertEntity_errorUpdateNoAuthKey,
+  upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey,
   upsertEntity_errorCreateReadonlySession,
   upsertEntity_errorUpdateReadonlySession,
 ];
@@ -88,6 +88,20 @@ async function upsertEntity_minimalUpdate({ clientProvider }: AdminEntityTestCon
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function upsertEntity_createNoAuthKey({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
+  const id = uuidv4();
+  const { entity } = (
+    await client.upsertEntity({
+      id,
+      info: { type: 'TitleOnly', name: 'TitleOnly name' },
+      fields: {},
+    })
+  ).valueOrThrow();
+
+  assertEquals(entity.info.authKey, '');
 }
 
 async function upsertEntity_updateWithoutChange({ clientProvider }: AdminEntityTestContext) {
@@ -187,27 +201,38 @@ async function upsertEntity_errorUpdateTryingToChangeAuthKey({
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,
-    'entity.info.authKey: New authKey subject doesn’t correspond to previous authKey none',
+    'entity.info.authKey: New authKey doesn’t correspond to previous authKey (subject!=none)',
   );
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, createResult.value.entity);
 }
 
-async function upsertEntity_errorUpdateNoAuthKey({ clientProvider }: AdminEntityTestContext) {
+async function upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey({
+  clientProvider,
+}: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const id = uuidv4();
-  const result = await client.upsertEntity({
-    id,
-    info: {
-      type: 'TitleOnly',
-      name: 'TitleOnly name',
-      // no authKey
-    },
-    fields: {},
-  } as AdminEntityUpsert<AppAdminEntity>);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  assertOkResult(createResult);
+  const {
+    entity: { id },
+  } = createResult.value;
 
-  assertErrorResult(result, ErrorType.BadRequest, 'entity.info.authKey: AuthKey is required');
+  const updateResult = await client.upsertEntity(
+    copyEntity(TITLE_ONLY_UPSERT, {
+      id,
+      info: { authKey: undefined },
+      fields: {},
+    }),
+  );
+  assertErrorResult(
+    updateResult,
+    ErrorType.BadRequest,
+    'entity.info.authKey: New authKey doesn’t correspond to previous authKey (!=none)',
+  );
+
+  const getResult = await client.getEntity({ id });
+  assertResultValue(getResult, createResult.value.entity);
 }
 
 async function upsertEntity_errorCreateReadonlySession({ clientProvider }: AdminEntityTestContext) {

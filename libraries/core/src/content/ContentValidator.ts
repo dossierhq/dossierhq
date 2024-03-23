@@ -40,7 +40,7 @@ export function validateEntityInfo(
   entity: AdminEntity,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
-  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity);
+  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity, false);
   if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
@@ -56,7 +56,7 @@ export function validateEntityInfoForCreate(
   entity: AdminEntityCreate,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
-  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity);
+  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity, true);
   if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
@@ -89,11 +89,12 @@ export function validateEntityInfoForUpdate(
     };
   }
 
-  if (entity.info?.authKey && entity.info.authKey !== existingEntity.info.authKey) {
+  const authKey = entity.info?.authKey;
+  if (authKey !== undefined && authKey !== null && authKey !== existingEntity.info.authKey) {
     return {
       type: 'save',
       path: [...path, 'info', 'authKey'],
-      message: `New authKey ${entity.info.authKey} doesn’t correspond to previous authKey ${existingEntity.info.authKey}`,
+      message: `New authKey doesn’t correspond to previous authKey (${authKey}!=${existingEntity.info.authKey})`,
     };
   }
 
@@ -118,6 +119,7 @@ function validateTypeAndAuthKey(
   adminSchema: AdminSchema,
   path: ContentValuePath,
   entity: AdminEntityCreate | AdminEntity,
+  create: boolean,
 ): SaveValidationIssue | null {
   // info.type
   const type = entity.info.type;
@@ -135,9 +137,17 @@ function validateTypeAndAuthKey(
   }
 
   // info.authKey
-  const authKey = entity.info.authKey;
-  if (!authKey) {
-    return { type: 'save', path: [...path, 'info', 'authKey'], message: 'AuthKey is required' };
+  let authKey = entity.info.authKey;
+  if (create && (authKey === undefined || authKey === null)) {
+    authKey = '';
+  }
+
+  if (typeof authKey !== 'string') {
+    return {
+      type: 'save',
+      path: [...path, 'info', 'authKey'],
+      message: 'AuthKey must be a string',
+    };
   }
 
   if (entitySpec.authKeyPattern) {

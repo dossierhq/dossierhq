@@ -44,9 +44,6 @@ export async function authCreateSyncSessionForSubject(
 
 //TODO harmonize with core
 function verifyAuthKeyFormat(authKey: string): Result<void, typeof ErrorType.BadRequest> {
-  if (!authKey) {
-    return notOk.BadRequest('No authKey provided');
-  }
   if (authKey.trimStart() !== authKey) {
     return notOk.BadRequest(`Invalid authKey (${authKey}), can’t start with whitespace`);
   }

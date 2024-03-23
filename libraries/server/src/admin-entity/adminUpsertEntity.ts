@@ -1,13 +1,16 @@
-import type {
-  AdminEntityMutationOptions,
-  AdminEntityUpdate,
-  AdminEntityUpsert,
-  AdminEntityUpsertPayload,
-  AdminSchemaWithMigrations,
-  ErrorResult,
-  PromiseResult,
+import {
+  ErrorType,
+  isEntityNameAsRequested,
+  notOk,
+  ok,
+  type AdminEntityMutationOptions,
+  type AdminEntityUpdate,
+  type AdminEntityUpsert,
+  type AdminEntityUpsertPayload,
+  type AdminSchemaWithMigrations,
+  type ErrorResult,
+  type PromiseResult,
 } from '@dossierhq/core';
-import { ErrorType, isEntityNameAsRequested, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
@@ -43,7 +46,11 @@ export async function adminUpsertEntity(
   let entityUpdate: AdminEntityUpdate = entity;
   if (isEntityNameAsRequested(nameResult.value, entity.info.name)) {
     // Remove name since we don't to change it the current name is the same but with a #number
-    entityUpdate = { ...entity, info: { ...entity.info, name: undefined } };
+    entityUpdate = { ...entityUpdate, info: { ...entityUpdate.info, name: undefined } };
+  }
+
+  if (entityUpdate.info?.authKey === undefined || entityUpdate.info.authKey === null) {
+    entityUpdate = { ...entityUpdate, info: { ...entityUpdate.info, authKey: '' } };
   }
 
   const updateResult = await adminUpdateEntity(

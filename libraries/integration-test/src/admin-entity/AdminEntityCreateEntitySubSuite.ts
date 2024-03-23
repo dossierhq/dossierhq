@@ -61,6 +61,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_duplicateName,
   createEntity_canUsePublishedNameOfOtherEntity,
   createEntity_fiveInParallelWithSameName,
+  createEntity_noAuthKeyUndefined,
+  createEntity_noAuthKeyNull,
   createEntity_publishMinimal,
   createEntity_publishWithSubjectAuthKey,
   createEntity_publishWithUniqueIndexValue,
@@ -218,6 +220,34 @@ async function createEntity_fiveInParallelWithSameName({ clientProvider }: Admin
   for (const result of results) {
     assertOkResult(result);
   }
+}
+
+async function createEntity_noAuthKeyUndefined({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
+  const createResult = await client.createEntity<AdminTitleOnly>(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: undefined } }),
+  );
+  const {
+    entity: {
+      info: { authKey },
+    },
+  } = createResult.valueOrThrow();
+
+  assertEquals(authKey, '');
+}
+
+async function createEntity_noAuthKeyNull({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.adminClient();
+  const createResult = await client.createEntity<AdminTitleOnly>(
+    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: null } }),
+  );
+  const {
+    entity: {
+      info: { authKey },
+    },
+  } = createResult.valueOrThrow();
+
+  assertEquals(authKey, '');
 }
 
 async function createEntity_publishMinimal({ clientProvider }: AdminEntityTestContext) {

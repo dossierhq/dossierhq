@@ -1911,7 +1911,7 @@ describe('update*Entity()', () => {
             "updateMutationFooEntity": null,
           },
           "errors": [
-            [GraphQLError: BadRequest: entity.info.authKey: New authKey none doesn’t correspond to previous authKey subject],
+            [GraphQLError: BadRequest: entity.info.authKey: New authKey doesn’t correspond to previous authKey (none!=subject)],
           ],
         }
       `);

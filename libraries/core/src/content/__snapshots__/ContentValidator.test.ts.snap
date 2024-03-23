@@ -201,7 +201,7 @@ exports[`Validate entity string > Fail: values unmatched string list 1`] = `
 
 exports[`validateEntityInfo > authKey not matching pattern 1`] = `
 {
-  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(none|subject)$)",
+  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(|none|subject)$)",
   "path": [
     "info",
     "authKey",
@@ -236,7 +236,7 @@ exports[`validateEntityInfo > name with line break 1`] = `
 
 exports[`validateEntityInfo > no authKey 1`] = `
 {
-  "message": "AuthKey is required",
+  "message": "AuthKey must be a string",
   "path": [
     "entity",
     "info",
@@ -272,7 +272,7 @@ exports[`validateEntityInfo > no type 1`] = `
 
 exports[`validateEntityInfoForCreate > authKey not matching pattern 1`] = `
 {
-  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(none|subject)$)",
+  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(|none|subject)$)",
   "path": [
     "info",
     "authKey",
@@ -317,18 +317,6 @@ exports[`validateEntityInfoForCreate > name with line break 1`] = `
 }
 `;
 
-exports[`validateEntityInfoForCreate > no authKey 1`] = `
-{
-  "message": "AuthKey is required",
-  "path": [
-    "entity",
-    "info",
-    "authKey",
-  ],
-  "type": "save",
-}
-`;
-
 exports[`validateEntityInfoForCreate > no name 1`] = `
 {
   "message": "Name is required",
@@ -355,7 +343,7 @@ exports[`validateEntityInfoForCreate > no type 1`] = `
 
 exports[`validateEntityInfoForUpdate > change authKey 1`] = `
 {
-  "message": "New authKey subject doesn’t correspond to previous authKey none",
+  "message": "New authKey doesn’t correspond to previous authKey (subject!=none)",
   "path": [
     "entity",
     "info",

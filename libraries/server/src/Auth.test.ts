@@ -43,14 +43,6 @@ describe('Auth verifyAuthKeysFormat', () => {
     expectOkResult(verifyAuthKeysFormat(['none', 'subject']));
   });
 
-  test('Error: Empty', () => {
-    expectErrorResult(
-      verifyAuthKeysFormat(['none', '']),
-      ErrorType.BadRequest,
-      'No authKey provided',
-    );
-  });
-
   test('Error: Initial whitespace', () => {
     expectErrorResult(
       verifyAuthKeysFormat(['none', ' subject']),
