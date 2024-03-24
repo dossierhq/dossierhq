@@ -139,7 +139,7 @@ async function updateEntity(
 function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
   const name = faker.company.name();
   return cleanupEntity({
-    info: { authKey: 'none', type: 'Organization', name },
+    info: { type: 'Organization', name },
     fields: {
       name,
       organizationNumber: randomNullUndefined('000000-000', 99, 0, 1),
@@ -171,7 +171,7 @@ async function createPerson(
   const name = `${faker.person.firstName()} ${faker.person.lastName()}`;
   return ok(
     cleanupEntity({
-      info: { authKey: 'none', type: 'Person', name },
+      info: { type: 'Person', name },
       fields: {
         name,
         address: createPostalAddress(),
@@ -510,7 +510,7 @@ export async function initializeAndRunTests({
     const sessionResult = await server.createSession({
       provider: 'test',
       identifier: 'principal1',
-      defaultAuthKeys: ['none'],
+      defaultAuthKeys: [''],
       logger: null,
       databasePerformance: null,
     });

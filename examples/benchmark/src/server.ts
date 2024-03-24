@@ -13,7 +13,7 @@ export async function initializeServer(databaseAdapter: DatabaseAdapter) {
   const sessionResult = await server.createSession({
     provider: 'sys',
     identifier: 'schemaloader',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
     logger: null,
     databasePerformance: null,
   });
