@@ -201,10 +201,7 @@ export const SCHEMA = {
       ],
     },
   ],
-  patterns: [
-    { name: 'none', pattern: '^none$' },
-    { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
-  ],
+  patterns: [{ name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' }],
   indexes: [{ name: 'slug', type: 'unique' }],
 } satisfies AdminSchemaSpecificationUpdate;
 

@@ -162,7 +162,7 @@ async function createFilms(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminFilm>(
         {
           id: uuidForEntity('film', film.pk),
-          info: { type: 'Film', authKey: 'none', name: film.fields.title },
+          info: { type: 'Film', name: film.fields.title },
           fields: {
             title: film.fields.title,
             episodeId: film.fields.episode_id,
@@ -190,7 +190,7 @@ async function createPeople(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminPerson>(
         {
           id: uuidForEntity('person', person.pk),
-          info: { type: 'Person', authKey: 'none', name: person.fields.name },
+          info: { type: 'Person', name: person.fields.name },
           fields: {
             name: person.fields.name,
             gender: person.fields.gender,
@@ -216,7 +216,7 @@ async function createPlanets(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminPlanet>(
         {
           id: uuidForEntity('planet', planet.pk),
-          info: { type: 'Planet', authKey: 'none', name: planet.fields.name },
+          info: { type: 'Planet', name: planet.fields.name },
           fields: {
             name: planet.fields.name,
             climate: splitCsv(planet.fields.climate),
@@ -242,7 +242,7 @@ async function createSpecies(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminSpecies>(
         {
           id: uuidForEntity('species', species.pk),
-          info: { type: 'Species', authKey: 'none', name: species.fields.name },
+          info: { type: 'Species', name: species.fields.name },
           fields: {
             name: species.fields.name,
             classification: species.fields.classification,
@@ -272,7 +272,7 @@ async function createStarships(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminStarship>(
         {
           id: uuidForEntity('starship', starship.pk),
-          info: { type: 'Starship', authKey: 'none', name: starship.fields.starship_class },
+          info: { type: 'Starship', name: starship.fields.starship_class },
           fields: {
             starshipClass: starship.fields.starship_class,
             mglt: starship.fields.MGLT,
@@ -293,7 +293,7 @@ async function createTransports(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminTransport>(
         {
           id: uuidForEntity('transport', transport.pk),
-          info: { type: 'Transport', authKey: 'none', name: transport.fields.name },
+          info: { type: 'Transport', name: transport.fields.name },
           fields: {
             name: transport.fields.name,
             model: transport.fields.model,
@@ -320,7 +320,7 @@ async function createVehicles(adminClient: AppAdminClient) {
       await adminClient.createEntity<AdminVehicle>(
         {
           id: uuidForEntity('vehicle', vehicle.pk),
-          info: { type: 'Vehicle', authKey: 'none', name: vehicle.fields.vehicle_class },
+          info: { type: 'Vehicle', name: vehicle.fields.vehicle_class },
           fields: {
             vehicleClass: vehicle.fields.vehicle_class,
             pilots: uuidReferences('person', vehicle.fields.pilots),

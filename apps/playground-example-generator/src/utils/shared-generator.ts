@@ -57,7 +57,7 @@ export async function createAdapterAndServer<
     await server.createSession({
       provider: 'sys',
       identifier: 'alice',
-      defaultAuthKeys: ['none', 'subject'],
+      defaultAuthKeys: ['', 'subject'],
       logger: createConsoleLogger(console),
       databasePerformance: null,
     })
@@ -71,7 +71,7 @@ export async function createAdapterAndServer<
   const bobSession = server.createSession({
     provider: 'sys',
     identifier: 'bob',
-    defaultAuthKeys: ['none', 'subject'],
+    defaultAuthKeys: ['', 'subject'],
     logger: createConsoleLogger(console),
     databasePerformance: null,
   });

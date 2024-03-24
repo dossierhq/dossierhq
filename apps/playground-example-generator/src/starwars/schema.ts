@@ -5,7 +5,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Film',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'title',
       fields: [
         { name: 'title', type: FieldType.String, required: true },
@@ -53,7 +53,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Person',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -69,7 +69,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Planet',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -85,7 +85,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Species',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -103,7 +103,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Starship',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'starshipClass',
       fields: [
         { name: 'starshipClass', type: FieldType.String, required: true },
@@ -114,7 +114,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Transport',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -131,7 +131,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Vehicle',
-      authKeyPattern: 'none',
+      authKeyPattern: 'default',
       nameField: 'vehicleClass',
       fields: [
         { name: 'vehicleClass', type: FieldType.String, required: true },
@@ -139,5 +139,5 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
-  patterns: [{ name: 'none', pattern: '^none$' }],
+  patterns: [{ name: 'default', pattern: '^$' }],
 };

@@ -27,7 +27,7 @@ async function createPerson(adminClient: AppAdminClient) {
   return (
     await adminClient.createEntity<AdminPerson>(
       {
-        info: { type: 'Person', authKey: 'none', name },
+        info: { type: 'Person', name },
         fields: { title: name },
       },
       { publish: true },
@@ -45,7 +45,7 @@ async function createBlogPost(
   return (
     await adminClient.createEntity<AdminBlogPost>(
       {
-        info: { type: 'BlogPost', authKey: 'none', name: title },
+        info: { type: 'BlogPost', name: title },
         fields: {
           title,
           slug: faker.helpers.slugify(title.toLowerCase()),

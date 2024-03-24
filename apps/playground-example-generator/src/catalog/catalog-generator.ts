@@ -234,7 +234,7 @@ function id(name: string) {
 
 async function createBooleansEntities(adminClient: AppAdminClient) {
   const minimal: AdminEntityCreate<AdminBooleansEntity> = {
-    info: { type: 'BooleansEntity', authKey: 'none', name: 'Booleans minimal' },
+    info: { type: 'BooleansEntity', name: 'Booleans minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, { fields: { required: true } });
@@ -291,7 +291,7 @@ async function createEntitiesEntities(
   },
 ) {
   const minimal: AdminEntityCreate<AdminEntitiesEntity> = {
-    info: { type: 'EntitiesEntity', authKey: 'none', name: 'Entities minimal' },
+    info: { type: 'EntitiesEntity', name: 'Entities minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
@@ -365,7 +365,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
   const london = { lat: 51.459952, lng: -0.011228 };
 
   const minimal: AdminEntityCreate<AdminLocationsEntity> = {
-    info: { type: 'LocationsEntity', authKey: 'none', name: 'Locations minimal' },
+    info: { type: 'LocationsEntity', name: 'Locations minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
@@ -412,7 +412,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
 
 async function createNumbersEntities(adminClient: AppAdminClient) {
   const minimal: AdminEntityCreate<AdminNumbersEntity> = {
-    info: { type: 'NumbersEntity', authKey: 'none', name: 'Numbers minimal' },
+    info: { type: 'NumbersEntity', name: 'Numbers minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
@@ -484,7 +484,7 @@ async function createRichTextsEntities(
   },
 ) {
   const minimal: AdminEntityCreate<AdminRichTextsEntity> = {
-    info: { type: 'RichTextsEntity', authKey: 'none', name: 'RichTexts minimal' },
+    info: { type: 'RichTextsEntity', name: 'RichTexts minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
@@ -650,7 +650,7 @@ async function createRichTextsEntities(
 
 async function createStringsEntities(adminClient: AppAdminClient) {
   const minimal: AdminEntityCreate<AdminStringsEntity> = {
-    info: { type: 'StringsEntity', authKey: 'none', name: 'Strings minimal' },
+    info: { type: 'StringsEntity', name: 'Strings minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
@@ -740,7 +740,7 @@ async function createComponentsEntities(
   },
 ) {
   const minimal: AdminEntityCreate<AdminComponentsEntity> = {
-    info: { type: 'ComponentsEntity', authKey: 'none', name: 'Components minimal' },
+    info: { type: 'ComponentsEntity', name: 'Components minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {

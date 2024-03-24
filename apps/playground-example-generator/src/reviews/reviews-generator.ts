@@ -49,7 +49,7 @@ async function createPlaceOfBusiness(
   return (
     await adminClient.createEntity<AdminPlaceOfBusiness>(
       {
-        info: { type: 'PlaceOfBusiness', authKey: 'none', name },
+        info: { type: 'PlaceOfBusiness', name },
         fields: {
           name,
           slogan: faker.company.catchPhrase(),
@@ -74,7 +74,7 @@ async function createReviewer(adminClient: AppAdminClient) {
   return (
     await adminClient.createEntity<AdminReviewer>(
       {
-        info: { type: 'Reviewer', authKey: 'none', name },
+        info: { type: 'Reviewer', name },
         fields: { name },
       },
       { publish: true },
@@ -90,7 +90,7 @@ async function createReview(
   return (
     await adminClient.createEntity<AdminReview>(
       {
-        info: { type: 'Review', authKey: 'none', name: 'Review' },
+        info: { type: 'Review', name: 'Review' },
         fields: {
           placeOfBusiness: { id: placeOfBusiness.id },
           reviewer,
