@@ -42,7 +42,7 @@ async function main() {
     });
 
     await adminClient.createEntity({
-      info: { type: 'TitleOnly', name: 'Hello', authKey: 'none' },
+      info: { type: 'TitleOnly', name: 'Hello' },
       fields: { title: 'Hello, World!' },
     });
   } finally {
