@@ -50,7 +50,7 @@ async function setUpRealServerWithSession(
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'identifier',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
     logger: null,
     databasePerformance: null,
   });
@@ -63,7 +63,7 @@ async function setUpRealServerWithSession(
   const sessionOtherResult = server.createSession({
     provider: 'test',
     identifier: 'other',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
     logger: null,
     databasePerformance: null,
   });

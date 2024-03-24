@@ -87,7 +87,7 @@ describe('node()', () => {
   test('Query all fields of created entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'QueryFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'QueryFoo', name: 'Howdy name' },
       fields: {
         title: 'Howdy title',
         summary: 'Howdy summary',
@@ -141,7 +141,7 @@ describe('node()', () => {
           node: {
             __typename: 'PublishedQueryFoo',
             id,
-            info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
+            info: { name, authKey: '', createdAt: createdAt.toISOString() },
             fields: {
               title: 'Howdy title',
               summary: 'Howdy summary',
@@ -161,7 +161,7 @@ describe('node()', () => {
   test('Query null fields of created entity', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'QueryFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'QueryFoo', name: 'Howdy name' },
       fields: {},
     });
     if (expectOkResult(createResult)) {
@@ -215,7 +215,7 @@ describe('node()', () => {
           node: {
             __typename: 'PublishedQueryFoo',
             id,
-            info: { name, authKey: 'none', createdAt: createdAt.toISOString() },
+            info: { name, authKey: '', createdAt: createdAt.toISOString() },
             fields: {
               title: null,
               summary: null,
@@ -238,7 +238,7 @@ describe('node()', () => {
       createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
     ]);
     const createFooResult = await adminClient.createEntity({
-      info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
+      info: { type: 'QueryFoo', name: 'Foo name' },
       fields: { body },
     });
     if (expectOkResult(createFooResult)) {
@@ -283,7 +283,7 @@ describe('node()', () => {
           node: {
             __typename: 'PublishedQueryFoo',
             id: fooId,
-            info: { name, authKey: 'none' },
+            info: { name, authKey: '' },
             fields: {
               body: { ...body, entities: [] },
             },
@@ -304,7 +304,7 @@ describe('node()', () => {
     } = (
       await adminClient.createEntity(
         {
-          info: { type: 'QueryBar', name: 'Bar 1 name', authKey: 'none' },
+          info: { type: 'QueryBar', name: 'Bar 1 name' },
           fields: { title: 'Bar title' },
         },
         { publish: true },
@@ -319,7 +319,7 @@ describe('node()', () => {
     } = (
       await adminClient.createEntity(
         {
-          info: { type: 'QueryBar', name: 'Bar 2 name', authKey: 'none' },
+          info: { type: 'QueryBar', name: 'Bar 2 name' },
           fields: { title: 'Bar title' },
         },
         { publish: true },
@@ -340,7 +340,7 @@ describe('node()', () => {
     } = (
       await adminClient.createEntity(
         {
-          info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
+          info: { type: 'QueryFoo', name: 'Foo name' },
           fields: {
             body,
           },
@@ -384,7 +384,7 @@ describe('node()', () => {
         node: {
           __typename: 'PublishedQueryFoo',
           id: fooId,
-          info: { name: fooName, authKey: 'none' },
+          info: { name: fooName, authKey: '' },
           fields: {
             body: {
               ...body,
@@ -402,7 +402,7 @@ describe('node()', () => {
   test('Query referenced entity', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'QueryBar', name: 'Bar name', authKey: 'none' },
+      info: { type: 'QueryBar', name: 'Bar name' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
@@ -416,7 +416,7 @@ describe('node()', () => {
       expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
 
       const createFooResult = await adminClient.createEntity({
-        info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
+        info: { type: 'QueryFoo', name: 'Foo name' },
         fields: { title: 'Foo title', bar: { id: barId } },
       });
       if (expectOkResult(createFooResult)) {
@@ -467,13 +467,13 @@ describe('node()', () => {
             node: {
               __typename: 'PublishedQueryFoo',
               id: fooId,
-              info: { name: fooName, authKey: 'none' },
+              info: { name: fooName, authKey: '' },
               fields: {
                 title: 'Foo title',
                 bar: {
                   __typename: 'PublishedQueryBar',
                   id: barId,
-                  info: { name: barName, authKey: 'none' },
+                  info: { name: barName, authKey: '' },
                   fields: {
                     title: 'Bar title',
                   },
@@ -489,11 +489,11 @@ describe('node()', () => {
   test('Query referenced entity list', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      info: { type: 'QueryBar', name: 'Bar 1 name', authKey: 'none' },
+      info: { type: 'QueryBar', name: 'Bar 1 name' },
       fields: { title: 'Bar 1 title' },
     });
     const createBar2Result = await adminClient.createEntity({
-      info: { type: 'QueryBar', name: 'Bar 2 name', authKey: 'none' },
+      info: { type: 'QueryBar', name: 'Bar 2 name' },
       fields: { title: 'Bar 2 title' },
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -518,7 +518,7 @@ describe('node()', () => {
       );
 
       const createFooResult = await adminClient.createEntity({
-        info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
+        info: { type: 'QueryFoo', name: 'Foo name' },
         fields: { title: 'Foo title', bars: [{ id: bar1Id }, { id: bar2Id }] },
       });
       if (expectOkResult(createFooResult)) {
@@ -569,20 +569,20 @@ describe('node()', () => {
             node: {
               __typename: 'PublishedQueryFoo',
               id: fooId,
-              info: { name: fooName, authKey: 'none' },
+              info: { name: fooName, authKey: '' },
               fields: {
                 title: 'Foo title',
                 bars: [
                   {
                     __typename: 'PublishedQueryBar',
                     id: bar1Id,
-                    info: { name: bar1Name, authKey: 'none' },
+                    info: { name: bar1Name, authKey: '' },
                     fields: { title: 'Bar 1 title' },
                   },
                   {
                     __typename: 'PublishedQueryBar',
                     id: bar2Id,
-                    info: { name: bar2Name, authKey: 'none' },
+                    info: { name: bar2Name, authKey: '' },
                     fields: { title: 'Bar 2 title' },
                   },
                 ],
@@ -597,7 +597,7 @@ describe('node()', () => {
   test('Query component type', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'QueryBar', name: 'Bar name', authKey: 'none' },
+      info: { type: 'QueryBar', name: 'Bar name' },
       fields: { title: 'Bar title' },
     });
     if (expectOkResult(createBarResult)) {
@@ -611,7 +611,7 @@ describe('node()', () => {
       expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
 
       const createFooResult = await adminClient.createEntity({
-        info: { type: 'QueryFoo', name: 'Foo name', authKey: 'none' },
+        info: { type: 'QueryFoo', name: 'Foo name' },
         fields: {
           title: 'Foo title',
           stringedBar: { type: 'QueryStringedBar', text: 'Value text', bar: { id: barId } },
@@ -670,7 +670,7 @@ describe('node()', () => {
             node: {
               __typename: 'PublishedQueryFoo',
               id: fooId,
-              info: { name: fooName, authKey: 'none' },
+              info: { name: fooName, authKey: '' },
               fields: {
                 title: 'Foo title',
                 stringedBar: {
@@ -680,7 +680,7 @@ describe('node()', () => {
                   bar: {
                     __typename: 'PublishedQueryBar',
                     id: barId,
-                    info: { name: barName, authKey: 'none' },
+                    info: { name: barName, authKey: '' },
                     fields: { title: 'Bar title' },
                   },
                 },
@@ -753,11 +753,11 @@ describe('nodes()', () => {
   test('Query 2 entities', async () => {
     const { adminClient } = server;
     const createFoo1Result = await adminClient.createEntity({
-      info: { type: 'QueryFoo', name: 'Howdy name 1', authKey: 'none' },
+      info: { type: 'QueryFoo', name: 'Howdy name 1' },
       fields: {},
     });
     const createFoo2Result = await adminClient.createEntity({
-      info: { type: 'QueryFoo', name: 'Howdy name 2', authKey: 'none' },
+      info: { type: 'QueryFoo', name: 'Howdy name 2' },
       fields: {},
     });
     if (expectOkResult(createFoo1Result) && expectOkResult(createFoo2Result)) {
@@ -807,12 +807,12 @@ describe('nodes()', () => {
             {
               __typename: 'PublishedQueryFoo',
               id: foo1Id,
-              info: { name: foo1Name, authKey: 'none', createdAt: foo1CreatedAt.toISOString() },
+              info: { name: foo1Name, authKey: '', createdAt: foo1CreatedAt.toISOString() },
             },
             {
               __typename: 'PublishedQueryFoo',
               id: foo2Id,
-              info: { name: foo2Name, authKey: 'none', createdAt: foo2CreatedAt.toISOString() },
+              info: { name: foo2Name, authKey: '', createdAt: foo2CreatedAt.toISOString() },
             },
           ],
         },
@@ -862,7 +862,7 @@ describe('publishedEntity()', () => {
     const slug = Math.random().toString();
     const createResult = await adminClient.createEntity(
       {
-        info: { type: 'QueryFoo', name: 'Howdy name', authKey: 'none' },
+        info: { type: 'QueryFoo', name: 'Howdy name' },
         fields: {
           title: 'Slug title',
           summary: 'Slug summary',
@@ -888,7 +888,7 @@ describe('publishedEntity()', () => {
         publishedEntity: {
           __typename: 'PublishedQueryFoo',
           id,
-          info: { name, authKey: 'none', createdAt: createdAt.toISOString(), valid: true },
+          info: { name, authKey: '', createdAt: createdAt.toISOString(), valid: true },
           fields: {
             title: 'Slug title',
             summary: 'Slug summary',
@@ -906,7 +906,7 @@ describe('publishedEntity()', () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity(
       {
-        info: { type: 'QueryFoo', name: 'Howdy name', authKey: 'none' },
+        info: { type: 'QueryFoo', name: 'Howdy name' },
         fields: {
           title: 'Howdy title',
           summary: 'Howdy summary',
@@ -934,7 +934,7 @@ describe('publishedEntity()', () => {
         publishedEntity: {
           __typename: 'PublishedQueryFoo',
           id,
-          info: { name, authKey: 'none', createdAt: createdAt.toISOString(), valid: true },
+          info: { name, authKey: '', createdAt: createdAt.toISOString(), valid: true },
           fields: {
             title: 'Howdy title',
             slug: null,

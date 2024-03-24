@@ -175,7 +175,7 @@ describe('create*Entity()', () => {
   test('Create', async () => {
     const { adminClient } = server;
     const entity: AdminEntityCreate = {
-      info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
         title: 'Foo title',
         summary: 'Foo summary',
@@ -215,7 +215,7 @@ describe('create*Entity()', () => {
               type: 'MutationFoo',
               name,
               version: 1,
-              authKey: 'none',
+              authKey: '',
               status: AdminEntityStatus.draft,
               createdAt,
               updatedAt,
@@ -242,7 +242,7 @@ describe('create*Entity()', () => {
         type: 'MutationFoo',
         name,
         version: 1,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.draft,
         valid: true,
         validPublished: null,
@@ -267,7 +267,7 @@ describe('create*Entity()', () => {
     const id = insecureTestUuidv4();
     const entity: AdminEntityCreate = {
       id,
-      info: { type: 'MutationFoo', name: 'Foo name', version: 1, authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo name', version: 1 },
       fields: {
         title: 'Foo title',
         summary: 'Foo summary',
@@ -298,7 +298,7 @@ describe('create*Entity()', () => {
               type: 'MutationFoo',
               name,
               version: 1,
-              authKey: 'none',
+              authKey: '',
               status: AdminEntityStatus.draft,
               createdAt,
               updatedAt,
@@ -318,7 +318,7 @@ describe('create*Entity()', () => {
 
   test('Create and publish', async () => {
     const entity: AdminEntityCreate = {
-      info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
         title: 'Foo title',
         summary: 'Foo summary',
@@ -352,7 +352,7 @@ describe('create*Entity()', () => {
               type: 'MutationFoo',
               name,
               version: 1,
-              authKey: 'none',
+              authKey: '',
               status: AdminEntityStatus.published,
               createdAt,
               updatedAt,
@@ -373,7 +373,7 @@ describe('create*Entity()', () => {
   test('Create with rich text with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
@@ -386,7 +386,7 @@ describe('create*Entity()', () => {
         createRichTextEntityNode({ id: barId }),
       ]);
       const entity: AdminEntityCreate = {
-        info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+        info: { type: 'MutationFoo', name: 'Foo name' },
         fields: {
           title: 'Foo title',
           summary: 'Foo summary',
@@ -444,7 +444,7 @@ describe('create*Entity()', () => {
                 type: 'MutationFoo',
                 name: fooName,
                 version: 1,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.draft,
                 createdAt,
                 updatedAt,
@@ -466,7 +466,7 @@ describe('create*Entity()', () => {
           type: 'MutationFoo',
           name: fooName,
           version: 1,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -489,7 +489,7 @@ describe('create*Entity()', () => {
   test('Create with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
@@ -504,7 +504,6 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
-          authKey: 'none',
         },
         fields: {
           title: 'Foo title',
@@ -567,7 +566,7 @@ describe('create*Entity()', () => {
                 type: 'MutationFoo',
                 name: fooName,
                 version: 1,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.draft,
                 createdAt,
                 updatedAt,
@@ -589,7 +588,7 @@ describe('create*Entity()', () => {
           type: 'MutationFoo',
           name: fooName,
           version: 1,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -609,11 +608,11 @@ describe('create*Entity()', () => {
   test('Create with reference list', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 1', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar 1' },
       fields: {},
     });
     const createBar2Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 2', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar 2' },
       fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -634,7 +633,6 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
-          authKey: 'none',
         },
         fields: {
           title: 'Foo title',
@@ -718,7 +716,7 @@ describe('create*Entity()', () => {
           type: 'MutationFoo',
           name: fooName,
           version: 1,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -738,7 +736,7 @@ describe('create*Entity()', () => {
   test('Create with component with reference', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar' },
       fields: {},
     });
     if (expectOkResult(createBarResult)) {
@@ -753,7 +751,6 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
-          authKey: 'none',
         },
         fields: {
           title: 'Foo title',
@@ -857,7 +854,7 @@ describe('create*Entity()', () => {
           type: 'MutationFoo',
           name: fooName,
           version: 1,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -881,7 +878,7 @@ describe('create*Entity()', () => {
   test('Create with value JSON', async () => {
     const { adminClient } = server;
     const createBarResult = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar', authKey: '' },
       fields: {},
     });
 
@@ -894,7 +891,6 @@ describe('create*Entity()', () => {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
-          authKey: 'none',
         },
         fields: {
           anyComponentJson: JSON.stringify({
@@ -994,7 +990,7 @@ describe('create*Entity()', () => {
           type: 'MutationFoo',
           name: fooName,
           version: 1,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -1023,7 +1019,7 @@ describe('create*Entity()', () => {
   test('Create nested component with inner JSON', async () => {
     const { adminClient } = server;
     const entity: AdminEntityCreate = {
-      info: { type: 'MutationFoo', name: 'Foo name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
         nestedValue: {
           type: 'MutationNestedValue',
@@ -1126,7 +1122,7 @@ describe('create*Entity()', () => {
         type: 'MutationFoo',
         name: fooName,
         version: 1,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.draft,
         valid: true,
         validPublished: null,
@@ -1148,7 +1144,6 @@ describe('create*Entity()', () => {
     const entity = {
       info: {
         name: 'Foo name',
-        authKey: 'none',
       },
       fields: {
         title: 'Foo title',
@@ -1224,7 +1219,6 @@ describe('create*Entity()', () => {
           info: {
             type: 'MutationBar', // should be Foo
             name: 'Foo name',
-            authKey: 'none',
           },
           fields: {
             title: 'Foo title',
@@ -1257,7 +1251,6 @@ describe('create*Entity()', () => {
             type: 'MutationFoo',
             name: 'Foo name',
             version: 0,
-            authKey: 'none',
           },
           fields: {
             title: 'Foo title',
@@ -1284,7 +1277,7 @@ describe('update*Entity()', () => {
   test('Update minimal', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'First name' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
@@ -1344,7 +1337,7 @@ describe('update*Entity()', () => {
                 type: 'MutationFoo',
                 name,
                 version: 2,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.draft,
                 createdAt: createdAt.toISOString(),
                 updatedAt: updatedAt,
@@ -1366,7 +1359,7 @@ describe('update*Entity()', () => {
           type: 'MutationFoo',
           name,
           version: 2,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -1386,7 +1379,7 @@ describe('update*Entity()', () => {
   test('Update with version', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'First name' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
@@ -1442,7 +1435,7 @@ describe('update*Entity()', () => {
                 type: 'MutationFoo',
                 name,
                 version: 2,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.draft,
               },
               fields: {
@@ -1460,11 +1453,11 @@ describe('update*Entity()', () => {
   test('Update with all values including references', async () => {
     const { adminClient } = server;
     const createBar1Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 1', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar 1' },
       fields: {},
     });
     const createBar2Result = await adminClient.createEntity({
-      info: { type: 'MutationBar', name: 'Bar 2', authKey: 'none' },
+      info: { type: 'MutationBar', name: 'Bar 2' },
       fields: {},
     });
     if (expectOkResult(createBar1Result) && expectOkResult(createBar2Result)) {
@@ -1482,7 +1475,7 @@ describe('update*Entity()', () => {
       } = createBar2Result.value;
 
       const createFooResult = await adminClient.createEntity({
-        info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
+        info: { type: 'MutationFoo', name: 'First name' },
         fields: {
           title: 'First title',
           summary: 'First summary',
@@ -1679,7 +1672,7 @@ describe('update*Entity()', () => {
             type: 'MutationFoo',
             name: name,
             version: 2,
-            authKey: 'none',
+            authKey: '',
             status: AdminEntityStatus.draft,
             valid: true,
             validPublished: null,
@@ -1719,7 +1712,7 @@ describe('update*Entity()', () => {
   test('Update and publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'First name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'First name' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
     if (expectOkResult(createResult)) {
@@ -1779,7 +1772,7 @@ describe('update*Entity()', () => {
                 type: 'MutationFoo',
                 name,
                 version: 2,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.published,
                 createdAt: createdAt.toISOString(),
                 updatedAt: updatedAtString,
@@ -1801,7 +1794,7 @@ describe('update*Entity()', () => {
           type: 'MutationFoo',
           name,
           version: 2,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.published,
           valid: true,
           validPublished: true,
@@ -1821,7 +1814,7 @@ describe('update*Entity()', () => {
   test('Error: Update with the wrong type', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Name' },
       fields: {},
     });
     if (expectOkResult(createResult)) {
@@ -1895,7 +1888,7 @@ describe('update*Entity()', () => {
             id,
             info: {
               name: 'Foo name',
-              authKey: 'none', // Shouldn't be specified or be 'subject'
+              authKey: '', // Shouldn't be specified or be 'subject'
             },
             fields: {
               title: 'Foo title',
@@ -1911,7 +1904,7 @@ describe('update*Entity()', () => {
             "updateMutationFooEntity": null,
           },
           "errors": [
-            [GraphQLError: BadRequest: entity.info.authKey: New authKey doesn’t correspond to previous authKey (none!=subject)],
+            [GraphQLError: BadRequest: entity.info.authKey: New authKey doesn’t correspond to previous authKey (!=subject)],
           ],
         }
       `);
@@ -1925,7 +1918,7 @@ describe('upsert*Entity()', () => {
     const id = insecureTestUuidv4();
     const entity: AdminEntityUpsert = {
       id,
-      info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Name' },
       fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
     };
     const result = (await graphql({
@@ -1950,7 +1943,7 @@ describe('upsert*Entity()', () => {
               type: 'MutationFoo',
               name,
               version: 1,
-              authKey: 'none',
+              authKey: '',
               status: AdminEntityStatus.draft,
               createdAt,
               updatedAt,
@@ -1972,7 +1965,7 @@ describe('upsert*Entity()', () => {
         type: 'MutationFoo',
         name,
         version: 1,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.draft,
         valid: true,
         validPublished: null,
@@ -1992,7 +1985,7 @@ describe('upsert*Entity()', () => {
     const { adminClient } = server;
 
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Foo', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo' },
       fields: { title: 'Title' },
     });
     if (expectOkResult(createResult)) {
@@ -2006,7 +1999,7 @@ describe('upsert*Entity()', () => {
         variableValues: {
           entity: {
             id,
-            info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
+            info: { type: 'MutationFoo', name: 'Name' },
             fields: { title: 'Updated title' },
           },
         },
@@ -2025,7 +2018,7 @@ describe('upsert*Entity()', () => {
                 type: 'MutationFoo',
                 name,
                 version: 2,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.draft,
                 createdAt,
                 updatedAt,
@@ -2047,7 +2040,7 @@ describe('upsert*Entity()', () => {
           type: 'MutationFoo',
           name,
           version: 2,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.draft,
           valid: true,
           validPublished: null,
@@ -2068,7 +2061,7 @@ describe('upsert*Entity()', () => {
     const { adminClient } = server;
 
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Foo', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Foo' },
       fields: { title: 'Title' },
     });
     if (expectOkResult(createResult)) {
@@ -2082,7 +2075,7 @@ describe('upsert*Entity()', () => {
         variableValues: {
           entity: {
             id,
-            info: { type: 'MutationFoo', name: 'Foo', authKey: 'none' },
+            info: { type: 'MutationFoo', name: 'Foo' },
             fields: { title: 'Title' },
           },
         },
@@ -2101,7 +2094,7 @@ describe('upsert*Entity()', () => {
                 type: 'MutationFoo',
                 name,
                 version: 1,
-                authKey: 'none',
+                authKey: '',
                 status: AdminEntityStatus.draft,
                 createdAt,
                 updatedAt,
@@ -2123,7 +2116,7 @@ describe('upsert*Entity()', () => {
     const id = insecureTestUuidv4();
     const entity: AdminEntityUpsert = {
       id,
-      info: { type: 'MutationFoo', name: 'Name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Name' },
       fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
     };
     const result = (await graphql({
@@ -2149,7 +2142,7 @@ describe('upsert*Entity()', () => {
               type: 'MutationFoo',
               name,
               version: 1,
-              authKey: 'none',
+              authKey: '',
               status: AdminEntityStatus.published,
               createdAt,
               updatedAt,
@@ -2171,7 +2164,7 @@ describe('upsert*Entity()', () => {
         type: 'MutationFoo',
         name,
         version: 1,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.published,
         valid: true,
         validPublished: true,
@@ -2198,7 +2191,6 @@ describe('upsert*Entity()', () => {
           info: {
             type: 'MutationBar', // should be Foo
             name: 'Foo name',
-            authKey: 'none',
           },
           fields: {
             title: 'Foo title',
@@ -2225,7 +2217,7 @@ describe('publishEntities()', () => {
   test('Publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2330,7 +2322,7 @@ describe('unpublishEntities()', () => {
   test('Unpublish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2437,7 +2429,7 @@ describe('archiveEntity()', () => {
   test('Archive', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2517,7 +2509,7 @@ describe('unarchiveEntity()', () => {
   test('Unarchive', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
@@ -2625,7 +2617,7 @@ describe('Multiple', () => {
   test('Update and publish', async () => {
     const { adminClient } = server;
     const createResult = await adminClient.createEntity({
-      info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'none' },
+      info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
     if (expectOkResult(createResult)) {
