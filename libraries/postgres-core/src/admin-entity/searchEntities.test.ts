@@ -16,7 +16,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     uuid: `uuid-${id}`,
     type: 'TitleOnly',
     name: `Title#${id}`,
-    auth_key: 'none',
+    auth_key: '',
     created_at: new Date('2021-08-17T07:51:25.56Z'),
     updated_at: new Date('2021-08-17T07:51:25.56Z'),
     updated: id,
@@ -28,6 +28,8 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     data: { title: 'Title' },
   };
 }
+
+const defaultAuthKeys = [{ authKey: '', resolvedAuthKey: '' }];
 
 describe('adminEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
@@ -42,7 +44,7 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expectResultValue(result, { edges: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
@@ -50,7 +52,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
-          "none",
+          "",
           26,
         ],
       ]
@@ -71,14 +73,14 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
@@ -107,7 +109,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
-          "none",
+          "",
           26,
         ],
       ]
@@ -126,14 +128,14 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -162,7 +164,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
-          "none",
+          "",
           1,
           11,
         ],
@@ -182,14 +184,14 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -218,7 +220,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
         FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
-          "none",
+          "",
           1,
           11,
         ],

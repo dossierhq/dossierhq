@@ -17,13 +17,15 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     type: 'TitleOnly',
     published_name: `Title#${id}`,
     invalid: 0,
-    auth_key: 'none',
+    auth_key: '',
     created_at: new Date('2021-08-17T07:51:25.56Z'),
     schema_version: 1,
     encode_version: 1,
     data: { title: 'Title' },
   };
 }
+
+const defaultAuthKeys = [{ authKey: '', resolvedAuthKey: '' }];
 
 describe('publishedEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
@@ -38,14 +40,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expectResultValue(result, { edges: [], hasMore: false });
     expect(getQueryCalls(adapter)).toMatchInlineSnapshot(`
       [
         [
           "SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
-          "none",
+          "",
           26,
         ],
       ]
@@ -64,14 +66,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
@@ -95,7 +97,7 @@ describe('publishedEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
-          "none",
+          "",
           26,
         ],
       ]
@@ -114,14 +116,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -145,7 +147,7 @@ describe('publishedEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
-          "none",
+          "",
           1,
           11,
         ],
@@ -165,14 +167,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      defaultAuthKeys,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -196,7 +198,7 @@ describe('publishedEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.invalid, ev.schema_version, ev.encode_version, ev.data FROM entities e, entity_versions ev WHERE e.published_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
-          "none",
+          "",
           1,
           11,
         ],

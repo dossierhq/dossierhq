@@ -88,9 +88,9 @@ beforeAll(async () => {
   publishedClient = server.createPublishedClient(context);
 
   (await safelyUpdateSchemaSpecification(adminClient, SCHEMA)).throwIfError();
-  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, 'none');
+  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, '');
   entitiesOfTypePublishedEntityOnlyEditBeforeNone =
-    await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, 'none');
+    await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, '');
 });
 afterAll(async () => {
   await server.shutdown();
@@ -127,7 +127,7 @@ async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient, 
 async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1) {
   const createBarResult = await adminClient.createEntity(
     {
-      info: { type: 'PublishedEntityBar', name: 'Bar', authKey: 'none' },
+      info: { type: 'PublishedEntityBar', name: 'Bar' },
       fields: { title: 'Bar' },
     },
     { publish: true },
@@ -146,7 +146,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
     const bars = [...new Array<undefined>(referencesPerFoo - 1)].map(() => ({ id: barId }));
     const createFooResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i, authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i },
         fields: { bar: { id: barId }, bars },
       },
       { publish: true },
@@ -215,7 +215,7 @@ describe('getEntities() linksTo', () => {
 
     const anotherBarCreateResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
+        info: { type: 'PublishedEntityBar', name: 'Another Bar' },
         fields: { entity: { id: barId } },
       },
       { publish: true },
@@ -251,7 +251,7 @@ describe('getEntities() boundingBox', () => {
     };
     const createAndPublishResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { location: center },
       },
       { publish: true },
@@ -275,7 +275,7 @@ describe('getEntities() boundingBox', () => {
     };
     const createAndPublishResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: '' },
         fields: { location: outside },
       },
       { publish: true },
@@ -303,7 +303,7 @@ describe('getEntities() boundingBox', () => {
 
     const createAndPublishResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { locations: [center, inside] },
       },
       { publish: true },
@@ -327,7 +327,7 @@ describe('getEntities() boundingBox', () => {
 
     const createAndPublishResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: {
           body: createRichText([
             createRichTextComponentNode({
@@ -355,7 +355,7 @@ describe('getEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
     const createResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { title: 'this is some serious summary with the best conclusion' },
       },
       { publish: true },
@@ -398,7 +398,7 @@ describe('getEntitiesTotalCount', () => {
 
     const anotherBarCreateResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityBar', name: 'Another Bar', authKey: 'none' },
+        info: { type: 'PublishedEntityBar', name: 'Another Bar' },
         fields: { entity: { id: barId } },
       },
       { publish: true },
@@ -432,7 +432,7 @@ describe('getEntitiesTotalCount', () => {
 
     const createResult = await adminClient.createEntity(
       {
-        info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+        info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { locations: [center, inside] },
       },
       { publish: true },
@@ -459,7 +459,7 @@ describe('getEntitiesTotalCount', () => {
       expectOkResult(
         await adminClient.createEntity(
           {
-            info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: 'none' },
+            info: { type: 'PublishedEntityFoo', name: 'Foo' },
             fields: { title: 'That was indeed a fierce firefighter' },
           },
           { publish: true },

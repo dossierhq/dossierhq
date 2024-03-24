@@ -64,7 +64,7 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'identifier',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
     logger: null,
     databasePerformance: null,
   });
@@ -100,7 +100,7 @@ export async function initializeIntegrationTestServer({
     server.createSession({
       provider: 'test',
       identifier: 'schema-loader',
-      defaultAuthKeys: ['none'],
+      defaultAuthKeys: [''],
       logger: null,
       databasePerformance: null,
     }),
