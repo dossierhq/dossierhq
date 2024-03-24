@@ -30,8 +30,8 @@ function mockPublishedEntityGetOneCall(
         id: '123',
         name: 'Name',
         type,
-        authKey: 'none',
-        resolvedAuthKey: 'none',
+        authKey: '',
+        resolvedAuthKey: '',
         createdAt: date,
         validPublished: true,
         entityFields: {

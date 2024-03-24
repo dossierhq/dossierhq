@@ -42,7 +42,7 @@ describe('publishedSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -68,8 +68,8 @@ describe('publishedSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -113,7 +113,7 @@ describe('publishedSearchEntities', () => {
                 },
                 "id": "id-1",
                 "info": {
-                  "authKey": "none",
+                  "authKey": "",
                   "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "type": "TitleOnly",
@@ -140,7 +140,7 @@ describe('publishedSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -166,8 +166,8 @@ describe('publishedSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -210,7 +210,7 @@ describe('publishedSearchEntities', () => {
                 },
                 "id": "id-2",
                 "info": {
-                  "authKey": "none",
+                  "authKey": "",
                   "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "type": "TitleOnly",
@@ -237,7 +237,7 @@ describe('publishedSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -263,8 +263,8 @@ describe('publishedSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -273,7 +273,7 @@ describe('publishedSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -299,8 +299,8 @@ describe('publishedSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -315,7 +315,7 @@ function createDatabaseEntity(id = 1): DatabasePublishedEntitySearchPayloadEntit
     cursor: `cursor-${id}`,
     name: 'TitleOnly name',
     type: 'TitleOnly',
-    authKey: 'none',
+    authKey: '',
     validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),
     entityFields: {

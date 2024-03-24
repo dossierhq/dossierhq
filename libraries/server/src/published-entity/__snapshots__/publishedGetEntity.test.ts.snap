@@ -39,7 +39,7 @@ exports[`publishedGetEntity > Legacy codec 1`] = `
   },
   "id": "123",
   "info": {
-    "authKey": "none",
+    "authKey": "",
     "createdAt": 2023-08-09T08:22:35.810Z,
     "name": "Name",
     "type": "ComponentsEntity",
@@ -55,7 +55,7 @@ exports[`publishedGetEntity > Minimal 1`] = `
   },
   "id": "123",
   "info": {
-    "authKey": "none",
+    "authKey": "",
     "createdAt": 2023-08-09T08:22:35.810Z,
     "name": "Name",
     "type": "TitleOnly",

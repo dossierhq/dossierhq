@@ -49,7 +49,7 @@ describe('Admin adminSampleEntities', () => {
           type: 'TitleOnly',
           name: 'TitleOnly name',
           version: 1,
-          authKey: 'none',
+          authKey: '',
           status: AdminEntityStatus.published,
           valid: true,
           validPublished: true,
@@ -76,7 +76,7 @@ describe('Admin adminSampleEntities', () => {
         {
           id: '123',
           info: {
-            authKey: 'none',
+            authKey: '',
             type: 'TitleOnly',
             createdAt: now,
             updatedAt: now,

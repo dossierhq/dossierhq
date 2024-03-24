@@ -40,7 +40,7 @@ describe('Admin adminSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -66,8 +66,8 @@ describe('Admin adminSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -110,7 +110,7 @@ describe('Admin adminSearchEntities', () => {
                 },
                 "id": "id-1",
                 "info": {
-                  "authKey": "none",
+                  "authKey": "",
                   "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "status": "modified",
@@ -141,7 +141,7 @@ describe('Admin adminSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -167,8 +167,8 @@ describe('Admin adminSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -210,7 +210,7 @@ describe('Admin adminSearchEntities', () => {
                 },
                 "id": "id-2",
                 "info": {
-                  "authKey": "none",
+                  "authKey": "",
                   "createdAt": 2022-03-15T08:51:25.560Z,
                   "name": "TitleOnly name",
                   "status": "modified",
@@ -241,7 +241,7 @@ describe('Admin adminSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -267,8 +267,8 @@ describe('Admin adminSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -277,7 +277,7 @@ describe('Admin adminSearchEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -303,8 +303,8 @@ describe('Admin adminSearchEntities', () => {
             },
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -319,7 +319,7 @@ function createDatabaseEntity(id = 1): DatabaseAdminEntitySearchPayloadEntity {
     cursor: `cursor-${id}`,
     name: 'TitleOnly name',
     type: 'TitleOnly',
-    authKey: 'none',
+    authKey: '',
     version: 1,
     status: AdminEntityStatus.modified,
     valid: true,

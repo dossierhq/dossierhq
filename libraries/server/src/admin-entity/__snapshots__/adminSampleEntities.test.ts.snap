@@ -7,7 +7,7 @@ exports[`Admin adminSampleEntities > No result - float seed 1`] = `
     SessionContextImpl {
       "databasePerformance": null,
       "defaultAuthKeys": [
-        "none",
+        "",
       ],
       "logger": {
         "debug": [Function],
@@ -25,8 +25,8 @@ exports[`Admin adminSampleEntities > No result - float seed 1`] = `
     undefined,
     [
       {
-        "authKey": "none",
-        "resolvedAuthKey": "none",
+        "authKey": "",
+        "resolvedAuthKey": "",
       },
     ],
   ],
@@ -40,7 +40,7 @@ exports[`Admin adminSampleEntities > No result 1`] = `
     SessionContextImpl {
       "databasePerformance": null,
       "defaultAuthKeys": [
-        "none",
+        "",
       ],
       "logger": {
         "debug": [Function],
@@ -58,8 +58,8 @@ exports[`Admin adminSampleEntities > No result 1`] = `
     undefined,
     [
       {
-        "authKey": "none",
-        "resolvedAuthKey": "none",
+        "authKey": "",
+        "resolvedAuthKey": "",
       },
     ],
   ],
@@ -73,7 +73,7 @@ exports[`Admin adminSampleEntities > One result 1`] = `
     SessionContextImpl {
       "databasePerformance": null,
       "defaultAuthKeys": [
-        "none",
+        "",
       ],
       "logger": {
         "debug": [Function],
@@ -93,8 +93,8 @@ exports[`Admin adminSampleEntities > One result 1`] = `
     25,
     [
       {
-        "authKey": "none",
-        "resolvedAuthKey": "none",
+        "authKey": "",
+        "resolvedAuthKey": "",
       },
     ],
   ],
@@ -103,7 +103,7 @@ exports[`Admin adminSampleEntities > One result 1`] = `
     SessionContextImpl {
       "databasePerformance": null,
       "defaultAuthKeys": [
-        "none",
+        "",
       ],
       "logger": {
         "debug": [Function],
@@ -121,8 +121,8 @@ exports[`Admin adminSampleEntities > One result 1`] = `
     undefined,
     [
       {
-        "authKey": "none",
-        "resolvedAuthKey": "none",
+        "authKey": "",
+        "resolvedAuthKey": "",
       },
     ],
   ],

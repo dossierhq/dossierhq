@@ -40,12 +40,12 @@ describe('Auth authCreateSession', () => {
 
 describe('Auth verifyAuthKeysFormat', () => {
   test('Ok', () => {
-    expectOkResult(verifyAuthKeysFormat(['none', 'subject']));
+    expectOkResult(verifyAuthKeysFormat(['', 'subject']));
   });
 
   test('Error: Initial whitespace', () => {
     expectErrorResult(
-      verifyAuthKeysFormat(['none', ' subject']),
+      verifyAuthKeysFormat(['', ' subject']),
       ErrorType.BadRequest,
       'Invalid authKey ( subject), can’t start with whitespace',
     );
@@ -53,7 +53,7 @@ describe('Auth verifyAuthKeysFormat', () => {
 
   test('Error: Ending whitespace', () => {
     expectErrorResult(
-      verifyAuthKeysFormat(['none', 'subject ']),
+      verifyAuthKeysFormat(['', 'subject ']),
       ErrorType.BadRequest,
       'Invalid authKey (subject ), can’t end with whitespace',
     );
@@ -61,7 +61,7 @@ describe('Auth verifyAuthKeysFormat', () => {
 
   test('Error: Comma', () => {
     expectErrorResult(
-      verifyAuthKeysFormat(['none', 'sub,ject']),
+      verifyAuthKeysFormat(['', 'sub,ject']),
       ErrorType.BadRequest,
       'Invalid authKey (sub,ject), can’t contain comma',
     );

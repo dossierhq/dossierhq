@@ -39,7 +39,7 @@ describe('Published publishedSampleEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -57,8 +57,8 @@ describe('Published publishedSampleEntities', () => {
             undefined,
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -79,7 +79,7 @@ describe('Published publishedSampleEntities', () => {
           id: '123',
           type: 'TitleOnly',
           name: 'TitleOnly name',
-          authKey: 'none',
+          authKey: '',
           validPublished: true,
           createdAt: now,
           entityFields: { schemaVersion: 1, encodeVersion: ENCODE_VERSION_AS_IS, fields: {} },
@@ -104,7 +104,7 @@ describe('Published publishedSampleEntities', () => {
         {
           id: '123',
           info: {
-            authKey: 'none',
+            authKey: '',
             type: 'TitleOnly',
             createdAt: now,
             name: 'TitleOnly name',
@@ -122,7 +122,7 @@ describe('Published publishedSampleEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -142,8 +142,8 @@ describe('Published publishedSampleEntities', () => {
             25,
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],
@@ -152,7 +152,7 @@ describe('Published publishedSampleEntities', () => {
             SessionContextImpl {
               "databasePerformance": null,
               "defaultAuthKeys": [
-                "none",
+                "",
               ],
               "logger": {
                 "debug": [Function],
@@ -170,8 +170,8 @@ describe('Published publishedSampleEntities', () => {
             undefined,
             [
               {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
             ],
           ],

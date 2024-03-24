@@ -93,7 +93,7 @@ export function createMockSessionContext({
     subjectId: 'subject-id',
     subjectInternalId: 123,
   };
-  const resolvedDefaultAuthKeys = defaultAuthKeys ?? ['none'];
+  const resolvedDefaultAuthKeys = defaultAuthKeys ?? [''];
   const resolvedLogger = logger ?? NoOpLogger;
   return new SessionContextImpl(
     resolvedSession,
@@ -178,7 +178,7 @@ export function createMockAuthorizationAdapter(): MockAuthorizationAdapter {
     resolveAuthorizationKeys: vi.fn(),
   };
   adapter.resolveAuthorizationKeys.mockReturnValueOnce(
-    Promise.resolve(ok([{ authKey: 'none', resolvedAuthKey: 'none' }])),
+    Promise.resolve(ok([{ authKey: '', resolvedAuthKey: '' }])),
   );
   return adapter;
 }

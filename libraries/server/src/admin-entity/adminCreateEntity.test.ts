@@ -38,7 +38,7 @@ describe('Admin adminCreateEntity', () => {
       databaseAdapter,
       context,
       {
-        info: { name: 'TitleOnly name', authKey: 'none', type: 'TitleOnly' },
+        info: { name: 'TitleOnly name', type: 'TitleOnly' },
         fields: { title: 'Title' },
       },
       undefined,
@@ -51,7 +51,7 @@ describe('Admin adminCreateEntity', () => {
         info: {
           type: 'TitleOnly',
           name: 'TitleOnly name',
-          authKey: 'none',
+          authKey: '',
           version: 1,
           createdAt: now,
           updatedAt: now,
@@ -79,8 +79,8 @@ describe('Admin adminCreateEntity', () => {
               "name": "TitleOnly name",
               "publish": false,
               "resolvedAuthKey": {
-                "authKey": "none",
-                "resolvedAuthKey": "none",
+                "authKey": "",
+                "resolvedAuthKey": "",
               },
               "schemaVersion": 1,
               "session": {
@@ -126,7 +126,7 @@ describe('Admin adminCreateEntity', () => {
       databaseAdapter,
       context,
       {
-        info: { type: 'Invalid', name: 'name', authKey: 'none' },
+        info: { type: 'Invalid', name: 'name' },
         fields: { foo: 'title' },
       },
       undefined,
@@ -153,7 +153,7 @@ describe('Admin adminCreateEntity', () => {
       databaseAdapter,
       context,
       {
-        info: { type: '', name: 'Foo', authKey: 'none' },
+        info: { type: '', name: 'Foo' },
         fields: { foo: 'title' },
       },
       undefined,
@@ -176,7 +176,7 @@ describe('Admin adminCreateEntity', () => {
       databaseAdapter,
       context,
       {
-        info: { type: 'TitleOnly', name: 'TitleOnly', authKey: 'none' },
+        info: { type: 'TitleOnly', name: 'TitleOnly' },
         fields: { title: 'Hello\nWorld\n' },
       },
       undefined,
