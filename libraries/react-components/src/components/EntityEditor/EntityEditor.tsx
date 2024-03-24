@@ -68,7 +68,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
     draftState.status === 'changed' &&
     !draftState.hasSaveErrors &&
     draftState.draft.name &&
-    draftState.draft.authKey;
+    draftState.draft.authKey !== null;
   const isPublishable = !draftState.hasPublishErrors;
 
   return (
@@ -95,7 +95,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
               onValueChange={handleAuthKeyChange}
             />
           </Field.Control>
-          {!draftState.draft.authKey ? (
+          {draftState.draft.authKey === null ? (
             <Field.Help color="danger">Authorization key is required</Field.Help>
           ) : null}
         </Field>

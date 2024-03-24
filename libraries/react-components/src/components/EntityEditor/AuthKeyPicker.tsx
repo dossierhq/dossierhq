@@ -19,7 +19,7 @@ export function AuthKeyPicker({ patternName, value, onValueChange }: Props) {
 
   const items = filteredAuthKeys.map((it) => ({ id: it.authKey, displayName: it.displayName }));
   let text = 'Select authorization key';
-  if (value) {
+  if (value !== null) {
     const key = authKeys.find((it) => it.authKey === value);
     text = key ? key.displayName : value;
   }

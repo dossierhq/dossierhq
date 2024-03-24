@@ -459,7 +459,7 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
     draftState: Readonly<EntityEditorDraftState>,
     _editorState: Readonly<EntityEditorState>,
   ): Readonly<EntityEditorDraftState> {
-    if (!draftState.draft || draftState.draft?.name === this.authKey) {
+    if (!draftState.draft || draftState.draft.authKey === this.authKey) {
       return draftState;
     }
 
