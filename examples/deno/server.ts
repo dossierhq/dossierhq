@@ -24,7 +24,7 @@ try {
   const sessionResult = await server.createSession({
     provider: "sys",
     identifier: "test",
-    defaultAuthKeys: ["none", "subject"],
+    defaultAuthKeys: ["", "subject"],
     logger,
     databasePerformance: null,
   });
@@ -45,7 +45,7 @@ try {
 
   const createResult = await adminClient.createEntity(
     {
-      info: { type: "TitleOnly", name: "Deno test", authKey: "none" },
+      info: { type: "TitleOnly", name: "Deno test" },
       fields: { title: "Deno test" },
     },
     { publish: true },
