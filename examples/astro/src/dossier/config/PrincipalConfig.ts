@@ -17,7 +17,7 @@ const principals = {
   reader: {
     provider: 'sys',
     identifier: 'reader',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
     enableAdmin: false,
   },
 } satisfies Record<string, PrincipalConfig>;
