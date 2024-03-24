@@ -20,7 +20,7 @@ function createPublishedEntity(id: string): PublishedEntity {
     info: {
       name: `Entity ${id}`,
       type: 'TitleOnly',
-      authKey: 'none',
+      authKey: '',
       createdAt: new Date('2022-03-19T07:51:25.56Z'),
       valid: true,
     },

@@ -126,7 +126,7 @@ describe('AddDraftAction', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -365,7 +365,7 @@ describe('UpdateEntityAction', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -408,7 +408,7 @@ describe('UpdateEntityAction', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Different name',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -474,7 +474,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: "Foo's title#123456",
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -515,7 +515,7 @@ describe('EntityEditorReducer scenarios', () => {
     state = reduceEntityEditorState(state, new EntityEditorActions.SetName(id, 'Foo name'));
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, 'none'));
+    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, ''));
     expect(state).toMatchSnapshot();
 
     expect(
@@ -533,7 +533,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo name#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -572,7 +572,7 @@ describe('EntityEditorReducer scenarios', () => {
     state = reduceEntityEditorState(state, new EntityEditorActions.SetName(id, 'Foo name'));
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, 'none'));
+    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, ''));
     expect(state).toMatchSnapshot();
 
     state = reduceEntityEditorState(
@@ -596,7 +596,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo name#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -633,7 +633,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -671,7 +671,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'New title#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -694,7 +694,7 @@ describe('EntityEditorReducer scenarios', () => {
     const entity: AdminEntity = {
       id,
       info: {
-        authKey: 'none',
+        authKey: '',
         name: 'Foo name#123456',
         type: 'Foo',
         status: AdminEntityStatus.draft,
@@ -764,7 +764,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id: firstId,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo name#123456',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -793,7 +793,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity({
         id: secondId,
         info: {
-          authKey: 'none',
+          authKey: '',
           name: 'Foo 2',
           type: 'Foo',
           status: AdminEntityStatus.draft,
@@ -873,7 +873,7 @@ describe('EntityEditorReducer scenarios', () => {
     const initialEntity: AdminEntity = {
       id,
       info: {
-        authKey: 'none',
+        authKey: '',
         name: 'Foo',
         type: 'Foo',
         status: AdminEntityStatus.draft,

@@ -40,7 +40,7 @@ interface BackendContext {
 const GENERATE_ENTITIES_UUID_NAMESPACE = '96597f34-8654-4f66-b98d-3e9f5bb7cc9a';
 
 export const DISPLAY_AUTH_KEYS = [
-  { authKey: 'none', displayName: 'None' },
+  { authKey: '', displayName: 'Default' },
   { authKey: 'subject', displayName: 'User private' },
 ];
 const AUTH_KEYS_HEADER = {
@@ -178,7 +178,7 @@ export async function ensureManyBarEntities(
     const id = uuidv5(`bar-${i}`, GENERATE_ENTITIES_UUID_NAMESPACE);
     const result = await adminClient.createEntity({
       id,
-      info: { type: 'Bar', name: `Generated bar ${i}`, authKey: 'none' },
+      info: { type: 'Bar', name: `Generated bar ${i}` },
       fields: { title: `Generated bar ${i}` },
     });
     if (result.isError()) {

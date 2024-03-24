@@ -8,7 +8,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -57,7 +57,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo",
           "status": "draft",
@@ -586,7 +586,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -708,7 +708,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "info": {
-    "authKey": "none",
+    "authKey": "",
     "name": "Foo name",
     "type": "Foo",
   },
@@ -723,7 +723,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -846,7 +846,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -895,7 +895,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "draft",
@@ -1231,7 +1231,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -1354,7 +1354,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -1476,7 +1476,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   },
   "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "info": {
-    "authKey": "none",
+    "authKey": "",
     "name": "Foo name",
     "type": "Foo",
   },
@@ -1491,7 +1491,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -1614,7 +1614,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -1663,7 +1663,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "draft",
@@ -1753,7 +1753,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -1802,7 +1802,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo title#123456",
           "status": "draft",
@@ -1892,7 +1892,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -1941,7 +1941,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo title#123456",
           "status": "draft",
@@ -2044,7 +2044,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2093,7 +2093,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo title#123456",
           "status": "draft",
@@ -2183,7 +2183,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2232,7 +2232,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "New title#123456",
           "status": "draft",
@@ -2322,7 +2322,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2371,7 +2371,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "draft",
@@ -2461,7 +2461,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2510,7 +2510,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "published",
@@ -2671,7 +2671,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2720,7 +2720,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo's title#123456",
           "status": "draft",
@@ -2810,7 +2810,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2859,7 +2859,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "draft",
@@ -2943,7 +2943,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -2992,7 +2992,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "draft",
@@ -3085,7 +3085,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -3134,7 +3134,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo name#123456",
           "status": "draft",
@@ -3153,7 +3153,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
     },
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -3196,7 +3196,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
         },
         "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo 2",
           "status": "draft",
@@ -3280,7 +3280,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -3329,7 +3329,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo",
           "status": "draft",
@@ -3432,7 +3432,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -3481,7 +3481,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo",
           "status": "draft",
@@ -4975,7 +4975,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -5024,7 +5024,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Foo title#123456",
           "status": "draft",
@@ -5126,7 +5126,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
   "drafts": [
     {
       "draft": {
-        "authKey": "none",
+        "authKey": "",
         "entitySpec": {
           "adminOnly": false,
           "authKeyPattern": null,
@@ -5175,7 +5175,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
         },
         "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
         "info": {
-          "authKey": "none",
+          "authKey": "",
           "createdAt": 2022-04-30T07:51:25.560Z,
           "name": "Different name",
           "status": "draft",
