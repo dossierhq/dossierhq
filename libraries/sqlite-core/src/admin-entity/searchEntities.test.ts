@@ -15,7 +15,7 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     uuid: `uuid-${id}`,
     type: 'TitleOnly',
     name: `Title#${id}`,
-    auth_key: 'none',
+    auth_key: '',
     created_at: '2021-08-17T07:51:25.56Z',
     updated_at: '2021-08-17T07:51:25.56Z',
     updated_seq: id,
@@ -27,6 +27,8 @@ function createEntityDbRow(id: number): SearchAdminEntitiesItem {
     fields: JSON.stringify({ title: 'Title' }),
   };
 }
+
+const authKeysDefault = [{ authKey: '', resolvedAuthKey: '' }];
 
 describe('adminEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
@@ -40,7 +42,7 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expectResultValue(result, { edges: [], hasMore: false });
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
@@ -48,7 +50,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
-          "none",
+          "",
           26,
         ],
       ]
@@ -66,14 +68,14 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
@@ -102,7 +104,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
-          "none",
+          "",
           26,
         ],
       ]
@@ -120,14 +122,14 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -156,7 +158,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
-          "none",
+          "",
           1,
           11,
         ],
@@ -176,14 +178,14 @@ describe('adminEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -212,7 +214,7 @@ describe('adminEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e WHERE e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
-          "none",
+          "",
           1,
           11,
         ],

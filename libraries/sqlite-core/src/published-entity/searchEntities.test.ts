@@ -15,7 +15,7 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     uuid: `uuid-${id}`,
     type: 'TitleOnly',
     published_name: `Title#${id}`,
-    auth_key: 'none',
+    auth_key: '',
     created_at: '2021-08-17T07:51:25.56Z',
     invalid: 0,
     schema_version: 1,
@@ -23,6 +23,8 @@ function createEntityDbRow(id: number): SearchPublishedEntitiesItem {
     fields: JSON.stringify({ title: 'Title' }),
   };
 }
+
+const authKeysDefault = [{ authKey: '', resolvedAuthKey: '' }];
 
 describe('publishedEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
@@ -35,7 +37,7 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expectResultValue(result, { edges: [], hasMore: false });
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
@@ -43,7 +45,7 @@ describe('publishedEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
-          "none",
+          "",
           26,
         ],
       ]
@@ -61,14 +63,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging(undefined),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "MQ==",
               "entityFields": {
@@ -93,7 +95,7 @@ describe('publishedEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 ORDER BY e.id LIMIT ?2)
       SELECT e.*, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
-          "none",
+          "",
           26,
         ],
       ]
@@ -111,14 +113,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ after: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -143,7 +145,7 @@ describe('publishedEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id > ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
-          "none",
+          "",
           1,
           11,
         ],
@@ -162,14 +164,14 @@ describe('publishedEntitySearchEntities', () => {
       context,
       undefined,
       resolvePaging({ before: 'MQ==', first: 10 }),
-      [{ authKey: 'none', resolvedAuthKey: 'none' }],
+      authKeysDefault,
     );
     expect(result).toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "edges": [
             {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "cursor": "Mg==",
               "entityFields": {
@@ -194,7 +196,7 @@ describe('publishedEntitySearchEntities', () => {
         [
           "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.published_name, e.auth_key, e.created_at, e.published_entity_versions_id, e.invalid FROM entities e WHERE e.published_entity_versions_id IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id < ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.published_entity_versions_id = ev.id",
-          "none",
+          "",
           1,
           11,
         ],
