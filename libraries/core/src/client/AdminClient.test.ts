@@ -102,7 +102,7 @@ function createDummyEntity(changes: {
         name: 'Foo name',
         type: 'FooType',
         version: 1,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.draft,
         valid: true,
         validPublished: null,
@@ -123,7 +123,7 @@ describe('Custom AdminEntity types', () => {
     });
 
     const fooCreate: AdminEntityCreate<AdminFooEntity> = {
-      info: { type: 'FooType', name: 'Foo name', authKey: 'none' },
+      info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
@@ -144,7 +144,7 @@ describe('Custom AdminEntity types', () => {
 
     const fooUpdate: AdminEntityUpdate<AdminFooEntity> = {
       id: '123',
-      info: { type: 'FooType', name: 'Foo name', authKey: 'none' },
+      info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
@@ -165,7 +165,7 @@ describe('Custom AdminEntity types', () => {
 
     const fooUpsert: AdminEntityUpsert<AdminFooEntity> = {
       id: '123',
-      info: { type: 'FooType', name: 'Foo name', authKey: 'none' },
+      info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
@@ -303,7 +303,7 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.createEntity(
       {
         id: '1234',
-        info: { name: 'Name', type: 'FooType', authKey: 'none' },
+        info: { name: 'Name', type: 'FooType', authKey: '' },
         fields: {},
       },
       { publish: true },
@@ -321,7 +321,7 @@ describe('AdminClient forward operation over JSON', () => {
             },
             "id": "1234",
             "info": {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "name": "Foo name",
               "status": "published",
@@ -353,7 +353,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "fields": {},
                 "id": "1234",
                 "info": {
-                  "authKey": "none",
+                  "authKey": "",
                   "name": "Name",
                   "type": "FooType",
                 },
@@ -552,7 +552,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
               "id": "1234",
               "info": {
-                "authKey": "none",
+                "authKey": "",
                 "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "status": "draft",
@@ -571,7 +571,7 @@ describe('AdminClient forward operation over JSON', () => {
               },
               "id": "5678",
               "info": {
-                "authKey": "none",
+                "authKey": "",
                 "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "status": "draft",
@@ -648,7 +648,7 @@ describe('AdminClient forward operation over JSON', () => {
           },
           "id": "1234",
           "info": {
-            "authKey": "none",
+            "authKey": "",
             "createdAt": 2021-08-17T07:51:25.560Z,
             "name": "Foo name",
             "status": "draft",
@@ -1017,7 +1017,7 @@ describe('AdminClient forward operation over JSON', () => {
         type: 'Foo',
         name: 'Name',
         version: 2,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.published,
         valid: true,
         validPublished: true,
@@ -1091,7 +1091,7 @@ describe('AdminClient forward operation over JSON', () => {
         type: 'Foo',
         name: 'Name',
         version: 2,
-        authKey: 'none',
+        authKey: '',
         status: AdminEntityStatus.published,
         valid: true,
         validPublished: true,
@@ -1395,7 +1395,7 @@ describe('AdminClient forward operation over JSON', () => {
             },
             "id": "1234",
             "info": {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "name": "Foo name",
               "status": "published",
@@ -1609,7 +1609,7 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.upsertEntity(
       {
         id: '1234',
-        info: { name: 'Name', type: 'FooType', authKey: 'none' },
+        info: { name: 'Name', type: 'FooType', authKey: '' },
         fields: {},
       },
       { publish: true },
@@ -1627,7 +1627,7 @@ describe('AdminClient forward operation over JSON', () => {
             },
             "id": "1234",
             "info": {
-              "authKey": "none",
+              "authKey": "",
               "createdAt": 2021-08-17T07:51:25.560Z,
               "name": "Foo name",
               "status": "published",
@@ -1659,7 +1659,7 @@ describe('AdminClient forward operation over JSON', () => {
                 "fields": {},
                 "id": "1234",
                 "info": {
-                  "authKey": "none",
+                  "authKey": "",
                   "name": "Name",
                   "type": "FooType",
                 },

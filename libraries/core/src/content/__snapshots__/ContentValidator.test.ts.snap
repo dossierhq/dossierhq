@@ -201,7 +201,7 @@ exports[`Validate entity string > Fail: values unmatched string list 1`] = `
 
 exports[`validateEntityInfo > authKey not matching pattern 1`] = `
 {
-  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(|none|subject)$)",
+  "message": "AuthKey 'something else' does not match pattern 'defaultOrSubject' (^(|subject)$)",
   "path": [
     "info",
     "authKey",
@@ -272,7 +272,7 @@ exports[`validateEntityInfo > no type 1`] = `
 
 exports[`validateEntityInfoForCreate > authKey not matching pattern 1`] = `
 {
-  "message": "AuthKey 'something else' does not match pattern 'noneSubject' (^(|none|subject)$)",
+  "message": "AuthKey 'something else' does not match pattern 'defaultOrSubject' (^(|subject)$)",
   "path": [
     "info",
     "authKey",
@@ -343,7 +343,7 @@ exports[`validateEntityInfoForCreate > no type 1`] = `
 
 exports[`validateEntityInfoForUpdate > change authKey 1`] = `
 {
-  "message": "New authKey doesn’t correspond to previous authKey (subject!=none)",
+  "message": "New authKey doesn’t correspond to previous authKey (subject!=)",
   "path": [
     "entity",
     "info",

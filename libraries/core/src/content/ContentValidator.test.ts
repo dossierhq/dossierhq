@@ -41,7 +41,7 @@ const adminSchema = AdminSchema.createAndValidate({
     },
     {
       name: 'StringsEntity',
-      authKeyPattern: 'noneSubject',
+      authKeyPattern: 'defaultOrSubject',
       fields: [
         { name: 'normal', type: FieldType.String },
         { name: 'required', type: FieldType.String, required: true },
@@ -84,27 +84,27 @@ const adminSchema = AdminSchema.createAndValidate({
   ],
   patterns: [
     { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
-    { name: 'noneSubject', pattern: '^(|none|subject)$' },
+    { name: 'defaultOrSubject', pattern: '^(|subject)$' },
   ],
 }).valueOrThrow();
 
 const ENTITIES_ENTITY_DEFAULT: AdminEntityCreate = {
-  info: { type: 'EntitiesEntity', name: 'EntitiesEntity', authKey: 'none' },
+  info: { type: 'EntitiesEntity', name: 'EntitiesEntity' },
   fields: {},
 };
 
 const LOCATIONS_ENTITY_DEFAULT: AdminEntityCreate = {
-  info: { type: 'LocationsEntity', name: 'LocationsEntity', authKey: 'none' },
+  info: { type: 'LocationsEntity', name: 'LocationsEntity' },
   fields: {},
 };
 
 const NUMBERS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
-  info: { type: 'NumbersEntity', name: 'NumbersEntity', authKey: 'none' },
+  info: { type: 'NumbersEntity', name: 'NumbersEntity' },
   fields: {},
 };
 
 const STRINGS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
-  info: { type: 'StringsEntity', name: 'StringsEntity', authKey: 'none' },
+  info: { type: 'StringsEntity', name: 'StringsEntity' },
   fields: { required: '-' },
 };
 
@@ -113,7 +113,7 @@ const STRINGS_ENTITY_DEFAULT: AdminEntity = {
   info: {
     type: 'StringsEntity',
     name: 'StringsEntity',
-    authKey: 'none',
+    authKey: '',
     version: 1,
     status: 'draft',
     valid: true,
@@ -125,12 +125,12 @@ const STRINGS_ENTITY_DEFAULT: AdminEntity = {
 };
 
 const RICH_TEXTS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
-  info: { type: 'RichTextsEntity', name: 'RichTextsEntity', authKey: 'none' },
+  info: { type: 'RichTextsEntity', name: 'RichTextsEntity' },
   fields: {},
 };
 
 const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
-  info: { type: 'ComponentsEntity', name: 'ComponentsEntity', authKey: 'none' },
+  info: { type: 'ComponentsEntity', name: 'ComponentsEntity' },
   fields: {},
 };
 
@@ -228,7 +228,7 @@ describe('validateEntityInfoForCreate', () => {
   test('no type', () => {
     expect(
       validateEntityInfoForCreate(adminSchema, ['entity'], {
-        info: { type: '', name: 'No type', authKey: 'none' },
+        info: { type: '', name: 'No type' },
         fields: {},
       }),
     ).toMatchSnapshot();
@@ -310,7 +310,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { type: 'RichTextsEntity' }, fields: {} },
       ),
     ).toMatchSnapshot();
@@ -320,7 +320,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { type: 'StringEntity' }, fields: {} },
       ),
     ).toBeNull();
@@ -330,7 +330,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { authKey: 'subject' }, fields: {} },
       ),
     ).toMatchSnapshot();
@@ -340,7 +340,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { authKey: undefined }, fields: {} },
       ),
     ).toBeNull();
@@ -350,7 +350,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { authKey: null }, fields: {} },
       ),
     ).toBeNull();
@@ -360,8 +360,8 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
-        { id: '123', info: { authKey: 'none' }, fields: {} },
+        { info: { type: 'StringEntity', authKey: 'subject', version: 1 } },
+        { id: '123', info: { authKey: 'subject' }, fields: {} },
       ),
     ).toBeNull();
   });
@@ -370,7 +370,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { name: 'hello\nworld' }, fields: {} },
       ),
     ).toMatchSnapshot();
@@ -380,7 +380,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { version: 1 }, fields: {} },
       ),
     ).toMatchSnapshot();
@@ -390,7 +390,7 @@ describe('validateEntityInfoForUpdate', () => {
     expect(
       validateEntityInfoForUpdate(
         ['entity'],
-        { info: { type: 'StringEntity', authKey: 'none', version: 1 } },
+        { info: { type: 'StringEntity', authKey: '', version: 1 } },
         { id: '123', info: { version: 2 }, fields: {} },
       ),
     ).toBeNull();

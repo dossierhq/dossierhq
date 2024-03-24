@@ -1022,7 +1022,7 @@ exports[`traverseEntity > Generated schema type 1`] = `
       },
       "id": "123",
       "info": {
-        "authKey": "none",
+        "authKey": "",
         "createdAt": 2023-09-11T22:10:56.334Z,
         "name": "Name",
         "status": "draft",

@@ -74,7 +74,7 @@ function createDummyEntity({ id }: { id: string }): PublishedEntity {
     info: {
       name: 'Foo name',
       type: 'FooType',
-      authKey: 'none',
+      authKey: '',
       valid: true,
       createdAt: new Date('2021-08-17T07:51:25.56Z'),
     },
@@ -111,7 +111,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "fields": {},
               "id": "1234",
               "info": {
-                "authKey": "none",
+                "authKey": "",
                 "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "type": "FooType",
@@ -124,7 +124,7 @@ describe('PublishedClient forward operation over JSON', () => {
               "fields": {},
               "id": "5678",
               "info": {
-                "authKey": "none",
+                "authKey": "",
                 "createdAt": 2021-08-17T07:51:25.560Z,
                 "name": "Foo name",
                 "type": "FooType",
@@ -194,7 +194,7 @@ describe('PublishedClient forward operation over JSON', () => {
           "fields": {},
           "id": "1234",
           "info": {
-            "authKey": "none",
+            "authKey": "",
             "createdAt": 2021-08-17T07:51:25.560Z,
             "name": "Foo name",
             "type": "FooType",
@@ -342,7 +342,7 @@ describe('PublishedClient forward operation over JSON', () => {
       info: {
         type: 'Foo',
         name: 'Name',
-        authKey: 'none',
+        authKey: '',
         valid: true,
         createdAt: new Date(),
       },
@@ -409,7 +409,7 @@ describe('PublishedClient forward operation over JSON', () => {
       info: {
         type: 'Foo',
         name: 'Name',
-        authKey: 'none',
+        authKey: '',
         valid: true,
         createdAt: new Date(),
       },

@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import type { AdminEntity, AdminEntityCreate, RichText, Component } from '../Types.js';
 import { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './ContentUtils.js';
 
-type AdminFoo = AdminEntity<'Foo', AdminFooFields, 'none'>;
+type AdminFoo = AdminEntity<'Foo', AdminFooFields, ''>;
 
 interface AdminFooFields {
   string: string | null;
@@ -21,14 +21,14 @@ interface AdminTwoStringsFields {
 describe('copyEntity', () => {
   test('AdminEntityCreate with app type', () => {
     const entity: AdminEntityCreate<AdminFoo> = {
-      info: { type: 'Foo', authKey: 'none', name: 'Name' },
+      info: { type: 'Foo', name: 'Name', authKey: '' },
       fields: { string: 'hello' },
     };
     const copy: AdminEntityCreate<AdminFoo> = copyEntity(entity, {
       fields: { stringList: ['world'] },
     });
     expect(copy).toEqual({
-      info: { authKey: 'none', name: 'Name', type: 'Foo' },
+      info: { name: 'Name', type: 'Foo', authKey: '' },
       fields: { string: 'hello', stringList: ['world'] },
     });
   });

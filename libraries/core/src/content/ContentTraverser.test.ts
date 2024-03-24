@@ -148,7 +148,7 @@ describe('traverseEntity', () => {
         validPublished: true,
         createdAt: new Date('2023-09-11T22:10:56.334Z'),
         updatedAt: new Date('2023-09-11T22:10:56.334Z'),
-        authKey: 'none',
+        authKey: '',
       },
       fields: { string: 'hello', stringList: ['1', '2'] },
     };
