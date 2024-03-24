@@ -23,7 +23,7 @@ async function main() {
     const sessionResult = await server.createSession({
       provider: 'sys',
       identifier: 'anonymous',
-      defaultAuthKeys: ['none'],
+      defaultAuthKeys: [''],
       logger: null,
       databasePerformance: null,
     });
