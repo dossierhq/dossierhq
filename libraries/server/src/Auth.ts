@@ -75,6 +75,10 @@ export async function authResolveAuthorizationKey(
   ResolvedAuthKey,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
+  if (authKey === '') {
+    return ok({ authKey: '', resolvedAuthKey: '' });
+  }
+
   const verifyResult = verifyAuthKeyFormat(authKey);
   if (verifyResult.isError()) return verifyResult;
 
@@ -98,16 +102,34 @@ export async function authResolveAuthorizationKeys(
   ResolvedAuthKey[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const expectedAuthKeys =
+  let authKeys =
     requestedAuthKeys && requestedAuthKeys.length > 0 ? requestedAuthKeys : context.defaultAuthKeys;
-  if (expectedAuthKeys.length === 0) {
+  if (authKeys.length === 0) {
     return notOk.BadRequest('No authKeys provided');
   }
 
-  const verifyResult = verifyAuthKeysFormat(expectedAuthKeys);
+  const defaultIndex = authKeys.indexOf('');
+  if (defaultIndex !== -1) {
+    if (authKeys.length === 1) {
+      return ok([{ authKey: '', resolvedAuthKey: '' }]);
+    }
+    authKeys = authKeys.filter((it) => it !== '');
+  }
+
+  const verifyResult = verifyAuthKeysFormat(authKeys);
   if (verifyResult.isError()) return verifyResult;
 
-  return await authorizationAdapter.resolveAuthorizationKeys(context, expectedAuthKeys);
+  const resoledAuthKeysResult = await authorizationAdapter.resolveAuthorizationKeys(
+    context,
+    authKeys,
+  );
+  if (resoledAuthKeysResult.isError()) return resoledAuthKeysResult;
+  const resoledAuthKeys = resoledAuthKeysResult.value;
+
+  if (defaultIndex !== -1) {
+    resoledAuthKeys.push({ authKey: '', resolvedAuthKey: '' });
+  }
+  return ok(resoledAuthKeys);
 }
 
 export async function authVerifyAuthorizationKey(
