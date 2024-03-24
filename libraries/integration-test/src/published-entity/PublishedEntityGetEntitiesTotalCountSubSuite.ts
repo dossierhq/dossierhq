@@ -45,12 +45,12 @@ async function getEntitiesTotalCount_authKeyNoneAndSubject({
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities([
-    'none',
+    '',
     'subject',
   ]);
   const result = await clientProvider.publishedClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    authKeys: ['none', 'subject'],
+    authKeys: ['', 'subject'],
   });
   assertResultValue(result, expectedEntities.length);
 }

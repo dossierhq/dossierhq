@@ -1119,13 +1119,10 @@ async function getEntities_authKeyNoneAndSubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities([
-    'none',
-    'subject',
-  ]);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
   const result = await clientProvider.adminClient().getEntities({
     entityTypes: ['ReadOnly'],
-    authKeys: ['none', 'subject'],
+    authKeys: ['', 'subject'],
   });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });

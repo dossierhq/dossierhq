@@ -16,7 +16,7 @@ const ADVISORY_LOCK_NAME = 'integration-test-read-only-entities';
 
 const READONLY_UPSERT: AdminEntityUpsert<AdminReadOnly> = {
   id: 'REPLACE',
-  info: { type: 'ReadOnly', name: `ReadOnly`, authKey: 'none' },
+  info: { type: 'ReadOnly', name: `ReadOnly` },
   fields: { message: 'Hello' },
 };
 
@@ -29,12 +29,12 @@ export class ReadOnlyEntityRepository {
   }
 
   getMainPrincipalAdminEntities(authKeys?: string[]): AdminReadOnly[] {
-    const checkAuthKeys = authKeys ?? ['none'];
+    const checkAuthKeys = authKeys ?? [''];
 
     const entities = [
       ...this.mainEntities.filter((it) => checkAuthKeys.includes(it.info.authKey)),
       ...this.secondaryEntities.filter(
-        (it) => it.info.authKey === 'none' && checkAuthKeys.includes(it.info.authKey),
+        (it) => it.info.authKey === '' && checkAuthKeys.includes(it.info.authKey),
       ),
     ];
 
@@ -109,12 +109,12 @@ async function doCreateReadOnlyEntityRepository(
       // Decide configurations for the entities
       const entityConfigs: {
         principal: 'main' | 'secondary';
-        authKey: 'none' | 'subject';
+        authKey: '' | 'subject';
         status: AdminEntityStatus;
         index: number;
       }[] = [];
       for (const principal of ['secondary', 'main'] as const) {
-        for (const authKey of ['none', 'subject'] as const) {
+        for (const authKey of ['', 'subject'] as const) {
           for (const status of Object.values(AdminEntityStatus)) {
             for (let index = 0; index < ENTITIES_PER_CATEGORY; index++) {
               entityConfigs.push({ principal, authKey, status, index });

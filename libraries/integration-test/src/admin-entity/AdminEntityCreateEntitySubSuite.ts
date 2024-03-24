@@ -926,12 +926,12 @@ async function createEntity_errorAuthKeyNotMatchingPattern({
   const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
-    copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: 'none' } }),
+    copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: '' } }),
   );
   assertErrorResult(
     createResult,
     ErrorType.BadRequest,
-    "info.authKey: AuthKey 'none' does not match pattern 'subject' (^subject$)",
+    "info.authKey: AuthKey '' does not match pattern 'subject' (^subject$)",
   );
 
   const getResult = await client.getEntity({ id });

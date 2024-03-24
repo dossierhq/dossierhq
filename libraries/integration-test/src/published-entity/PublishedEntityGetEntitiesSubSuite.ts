@@ -395,12 +395,12 @@ async function getEntities_authKeyNoneAndSubject({
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities([
-    'none',
+    '',
     'subject',
   ]);
   const result = await clientProvider.publishedClient().getEntities({
     entityTypes: ['ReadOnly'],
-    authKeys: ['none', 'subject'],
+    authKeys: ['', 'subject'],
   });
   assertPublishedEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });

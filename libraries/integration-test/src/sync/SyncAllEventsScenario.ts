@@ -197,7 +197,7 @@ async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
   const { effect, entity: sourceEntity } = (
     await sourceAdminClient.createEntity({
       id,
-      info: { type: 'TitleOnly', name: 'TitleOnly entity', authKey: 'none' },
+      info: { type: 'TitleOnly', name: 'TitleOnly entity' },
       fields: { title: 'Hello' },
     })
   ).valueOrThrow();
@@ -216,8 +216,8 @@ async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
         info: {
           type: 'TitleOnly',
           name: 'TitleOnly entity',
-          authKey: 'none',
-          resolvedAuthKey: 'none',
+          authKey: '',
+          resolvedAuthKey: '',
           schemaVersion: 1,
         },
         fields: { title: 'Hello' },
@@ -242,7 +242,7 @@ async function sync_allEventsScenario_3_createAndPublishEntity(context: Scenario
     await sourceAdminClient.createEntity(
       {
         id,
-        info: { type: 'TitleOnly', name: 'TitleOnly published entity', authKey: 'none' },
+        info: { type: 'TitleOnly', name: 'TitleOnly published entity' },
         fields: { title: 'Published' },
       },
       { publish: true },
@@ -263,8 +263,8 @@ async function sync_allEventsScenario_3_createAndPublishEntity(context: Scenario
         info: {
           type: 'TitleOnly',
           name: 'TitleOnly published entity',
-          authKey: 'none',
-          resolvedAuthKey: 'none',
+          authKey: '',
+          resolvedAuthKey: '',
           schemaVersion: 1,
         },
         fields: { title: 'Published' },

@@ -67,13 +67,10 @@ async function getEntitiesTotalCount_authKeyNoneAndSubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities([
-    'none',
-    'subject',
-  ]);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    authKeys: ['none', 'subject'],
+    authKeys: ['', 'subject'],
   });
   assertResultValue(result, expectedEntities.length);
 }

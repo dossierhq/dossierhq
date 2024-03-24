@@ -604,13 +604,10 @@ async function getEntitiesSample_authKeyNoneAndSubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities([
-    'none',
-    'subject',
-  ]);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    authKeys: ['none', 'subject'],
+    authKeys: ['', 'subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }

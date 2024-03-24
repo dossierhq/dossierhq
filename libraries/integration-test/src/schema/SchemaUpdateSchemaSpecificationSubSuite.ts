@@ -1724,7 +1724,6 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
           info: {
             type: oldTypeName as AppAdminEntity['info']['type'],
             name: oldTypeName,
-            authKey: 'none',
           },
           fields: { field: 'value' },
         },
@@ -1770,7 +1769,6 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
         info: {
           type: newTypeName as AppAdminEntity['info']['type'],
           name: `${newTypeName}`,
-          authKey: 'none',
         },
         fields: { field: 'value' },
       },
@@ -1823,7 +1821,6 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
           info: {
             type: oldTypeName as AppAdminEntity['info']['type'],
             name: oldTypeName,
-            authKey: 'none',
           },
           fields: { field: 'value' },
         },
@@ -1863,7 +1860,6 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
         info: {
           type: newTypeName as AppAdminEntity['info']['type'],
           name: newTypeName,
-          authKey: 'none',
         },
         fields: { field: 'value' },
       },
@@ -1877,7 +1873,6 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
         info: {
           type: oldTypeName as AppAdminEntity['info']['type'],
           name: oldTypeName,
-          authKey: 'none',
         },
         fields: { field: [{ lat: 1, lng: 2 }] },
       },
@@ -2144,7 +2139,6 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
           info: {
             type: oldTypeName as AppAdminEntity['info']['type'],
             name: oldTypeName,
-            authKey: 'none',
           },
           fields: { [oldFieldName]: 'value' },
         },
@@ -2216,7 +2210,6 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
           info: {
             type: oldTypeName as AppAdminEntity['info']['type'],
             name: oldTypeName,
-            authKey: 'none',
           },
           fields: { [oldFieldName]: 'value' },
         },
@@ -2691,7 +2684,7 @@ async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExisting
     // Create an entity with the type
     assertOkResult(
       await adminClient.createEntity({
-        info: { type: typeName as AppAdminEntity['info']['type'], name: typeName, authKey: 'none' },
+        info: { type: typeName as AppAdminEntity['info']['type'], name: typeName },
         fields: { field: 'value' },
       }),
     );

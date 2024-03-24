@@ -61,12 +61,12 @@ async function getEntitiesSample_authKeyNoneAndSubject({
   readOnlyEntityRepository,
 }: PublishedEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalPublishedEntities([
-    'none',
+    '',
     'subject',
   ]);
   const result = await clientProvider.publishedClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    authKeys: ['none', 'subject'],
+    authKeys: ['', 'subject'],
   });
   assertSampledEntitiesArePartOfExpected(result, expectedEntities);
 }

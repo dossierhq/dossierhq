@@ -32,7 +32,7 @@ async function createSession(
   return await server.createSession({
     provider: options?.provider ?? 'test',
     identifier: options?.identifier ?? randomIdentifier(),
-    defaultAuthKeys: options?.defaultAuthKeys ?? ['none'],
+    defaultAuthKeys: options?.defaultAuthKeys ?? [''],
     logger: null,
     databasePerformance: null,
   });
@@ -70,7 +70,7 @@ async function createSession_error_create_missing_identifier({ server }: AuthTes
 }
 
 async function createSession_error_invalid_default_auth_key({ server }: AuthTestContext) {
-  const result = await createSession(server, { defaultAuthKeys: ['none', ' starting whitespace'] });
+  const result = await createSession(server, { defaultAuthKeys: ['', ' starting whitespace'] });
   assertErrorResult(
     result,
     ErrorType.BadRequest,

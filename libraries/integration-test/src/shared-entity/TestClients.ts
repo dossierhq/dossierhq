@@ -18,17 +18,17 @@ const principals = {
   main: {
     provider: 'test',
     identifier: 'main',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
   },
   secondary: {
     provider: 'test',
     identifier: 'secondary',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
   },
   random: {
     provider: 'test',
     identifier: 'random',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
   },
 } as const;
 
