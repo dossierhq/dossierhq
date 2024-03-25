@@ -57,7 +57,7 @@ async function createSessionForRequest(server: Server, req: Request) {
   return await server.createSession({
     provider,
     identifier,
-    defaultAuthKeys: ['none', 'subject'],
+    defaultAuthKeys: ['', 'subject'],
     logger: null,
     databasePerformance: null,
   });
@@ -93,7 +93,7 @@ async function updateSchema(adminClient: AppAdminClient) {
 async function createMessages(logger: Logger, adminClient: AppAdminClient) {
   const totalMessageCountResult = await adminClient.getEntitiesTotalCount({
     entityTypes: ['Message'],
-    authKeys: ['none'],
+    authKeys: [''],
   });
   if (totalMessageCountResult.isError()) return totalMessageCountResult;
 
@@ -102,7 +102,7 @@ async function createMessages(logger: Logger, adminClient: AppAdminClient) {
     const message = `Message ${i}!`;
     const createResult = await adminClient.createEntity(
       {
-        info: { type: 'Message', authKey: 'none', name: message },
+        info: { type: 'Message', name: message },
         fields: { message },
       },
       { publish: true }

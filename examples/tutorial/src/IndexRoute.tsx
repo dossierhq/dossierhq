@@ -27,7 +27,7 @@ export function IndexRoute() {
     if (!adminClient) return;
     const result = await adminClient.createEntity(
       {
-        info: { type: 'Message', authKey: 'none', name: newMessage },
+        info: { type: 'Message', name: newMessage },
         fields: { message: newMessage },
       },
       { publish: true }

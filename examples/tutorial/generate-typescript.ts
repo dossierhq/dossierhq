@@ -10,7 +10,7 @@ async function generateTypes(logger: Logger, adminSchema: AdminSchema, filename:
   const sourceCode = generateTypescriptForSchema({
     adminSchema,
     publishedSchema,
-    authKeyType: "'none' | 'subject'",
+    authKeyType: "'' | 'subject'",
   });
   await writeFile(filename, sourceCode);
   logger.info(`Wrote ${filename}`);
