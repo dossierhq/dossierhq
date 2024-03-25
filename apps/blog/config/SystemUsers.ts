@@ -7,11 +7,11 @@ export const SYSTEM_USERS = {
   serverRenderer: {
     provider: 'sys',
     identifier: 'serverRenderer',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
   },
   editor: {
     provider: 'sys',
     identifier: 'editor',
-    defaultAuthKeys: ['none'],
+    defaultAuthKeys: [''],
   },
 } as const;

@@ -3,7 +3,7 @@
   "info": {
     "name": "Main chapter",
     "type": "Chapter",
-    "authKey": "none",
+    "authKey": "",
     "status": "published",
     "valid": true,
     "validPublished": true

@@ -3,7 +3,7 @@
   "info": {
     "name": "New starter template using Astro",
     "type": "BlogPost",
-    "authKey": "none",
+    "authKey": "",
     "status": "published",
     "valid": true,
     "validPublished": true

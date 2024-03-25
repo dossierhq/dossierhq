@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Codapi test",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 3
     },
     "fields": {

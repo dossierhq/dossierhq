@@ -3,7 +3,7 @@
   "info": {
     "name": "Hello world",
     "type": "BlogPost",
-    "authKey": "none",
+    "authKey": "",
     "status": "published"
   },
   "fields": {

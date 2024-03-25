@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Content – entities and value items",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

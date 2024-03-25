@@ -9,8 +9,8 @@
     "info": {
       "type": "BlogPost",
       "name": "August summary",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

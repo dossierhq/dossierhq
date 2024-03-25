@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Limitations",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

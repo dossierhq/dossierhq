@@ -9,8 +9,8 @@
     "info": {
       "type": "Chapter",
       "name": "Main chapter",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

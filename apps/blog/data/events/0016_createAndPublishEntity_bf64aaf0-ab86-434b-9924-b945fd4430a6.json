@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Getting started developing app",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

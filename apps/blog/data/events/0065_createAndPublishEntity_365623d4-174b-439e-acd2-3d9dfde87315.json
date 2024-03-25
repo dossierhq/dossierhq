@@ -9,8 +9,8 @@
     "info": {
       "type": "BlogPost",
       "name": "Releasing a status page template running on Cloudflare Workers / D1",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

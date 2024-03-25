@@ -4,7 +4,7 @@
     {
       "name": "Article",
       "adminOnly": false,
-      "authKeyPattern": "none",
+      "authKeyPattern": "default",
       "nameField": "title",
       "fields": [
         {
@@ -76,7 +76,7 @@
     {
       "name": "Author",
       "adminOnly": false,
-      "authKeyPattern": "none",
+      "authKeyPattern": "default",
       "nameField": "name",
       "fields": [
         {
@@ -95,7 +95,7 @@
     {
       "name": "BlogPost",
       "adminOnly": false,
-      "authKeyPattern": "none",
+      "authKeyPattern": "default",
       "nameField": "title",
       "fields": [
         {
@@ -206,7 +206,7 @@
     {
       "name": "Chapter",
       "adminOnly": false,
-      "authKeyPattern": "none",
+      "authKeyPattern": "default",
       "nameField": null,
       "fields": [
         {
@@ -225,7 +225,7 @@
     {
       "name": "GlossaryTerm",
       "adminOnly": false,
-      "authKeyPattern": "none",
+      "authKeyPattern": "default",
       "nameField": "title",
       "fields": [
         {
@@ -419,8 +419,8 @@
       "pattern": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z)$"
     },
     {
-      "name": "none",
-      "pattern": "^none$"
+      "name": "default",
+      "pattern": "^$"
     },
     {
       "name": "slug",

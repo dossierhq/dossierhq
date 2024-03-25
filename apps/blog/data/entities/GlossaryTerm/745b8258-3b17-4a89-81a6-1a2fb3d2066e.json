@@ -3,7 +3,7 @@
   "info": {
     "name": "Component type",
     "type": "GlossaryTerm",
-    "authKey": "none",
+    "authKey": "",
     "status": "published",
     "valid": true,
     "validPublished": true

@@ -9,8 +9,8 @@
     "info": {
       "type": "BlogPost",
       "name": "New example app using Astro",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

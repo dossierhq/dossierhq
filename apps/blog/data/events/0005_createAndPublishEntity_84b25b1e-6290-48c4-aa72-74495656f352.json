@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Tutorial – Setting up the server",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

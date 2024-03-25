@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Tutorial – Auth using Auth0",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

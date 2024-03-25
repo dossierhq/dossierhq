@@ -9,8 +9,8 @@
     "info": {
       "type": "BlogPost",
       "name": "Exploring Observable notebook",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

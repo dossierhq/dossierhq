@@ -9,8 +9,8 @@
     "info": {
       "type": "Article",
       "name": "Tutorial – Managing entities programmatically",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {

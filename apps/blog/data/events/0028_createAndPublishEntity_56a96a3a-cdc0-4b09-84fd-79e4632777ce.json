@@ -9,8 +9,8 @@
     "info": {
       "type": "GlossaryTerm",
       "name": "Entity",
-      "authKey": "none",
-      "resolvedAuthKey": "none",
+      "authKey": "",
+      "resolvedAuthKey": "",
       "schemaVersion": 1
     },
     "fields": {
