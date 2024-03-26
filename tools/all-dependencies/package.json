@@ -103,7 +103,7 @@
     "@vitejs/plugin-react-swc": "~3.6.0",
     "@vitest/coverage-v8": "~1.4.0",
     "base-64": "~1.0.0",
-    "bulma": "~0.9.4",
+    "bulma": "~1.0.0",
     "concurrently": "~8.2.2",
     "esbuild": "~0.20.2",
     "eslint-config-next": "~14.1.3",
