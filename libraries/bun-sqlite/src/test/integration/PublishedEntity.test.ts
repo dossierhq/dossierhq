@@ -5,7 +5,7 @@ import {
   createSharedClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import type { ServerInit } from '../TestUtils.js';
 import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
 

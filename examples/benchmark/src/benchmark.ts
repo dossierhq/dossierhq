@@ -14,7 +14,7 @@ import type { DatabaseAdapter, Server } from '@dossierhq/server';
 import { faker } from '@faker-js/faker';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
 import { fileTimestamp, reportResult, runTest } from 'benchpress';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import { initializeServer } from './server.js';
 
 const outputFolder = 'output';

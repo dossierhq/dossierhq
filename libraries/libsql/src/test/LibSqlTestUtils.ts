@@ -4,7 +4,7 @@ import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierh
 import { createServer, type Server } from '@dossierhq/server';
 import type { SqliteDatabaseOptions } from '@dossierhq/sqlite-core';
 import { createClient, type Config } from '@libsql/client';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { unlink } from 'node:fs/promises';
 import type { LibSqlDatabaseAdapter } from '../LibSqlAdapter.js';

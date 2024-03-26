@@ -20,7 +20,7 @@ import {
   richTextTextNodeHasFormat,
 } from '@dossierhq/core';
 import { config } from 'dotenv';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import { writeFile } from 'node:fs/promises';
 import type { Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';

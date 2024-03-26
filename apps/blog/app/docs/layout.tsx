@@ -1,7 +1,7 @@
 import '@antonz/codapi/dist/snippet.css';
 import { FullscreenContainer, Menu } from '@dossierhq/design';
 import Script from 'next/script';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import 'prismjs/themes/prism.min.css';
 import { MenuLinkItem } from '../../components/MenuLinkItem/MenuLinkItem';
 import { NavBar } from '../../components/NavBar/NavBar';

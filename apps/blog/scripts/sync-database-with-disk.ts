@@ -7,7 +7,7 @@ import {
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { config } from 'dotenv';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';

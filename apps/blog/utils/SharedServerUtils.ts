@@ -7,7 +7,7 @@ import {
   type DatabaseAdapter,
 } from '@dossierhq/server';
 import Database from 'better-sqlite3';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 
 const logger = createConsoleLogger(console);
 
