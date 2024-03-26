@@ -115,7 +115,7 @@ export interface Server<
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthKeys: readonly string[];
+    defaultAuthKeys: readonly string[] | null;
     logger: Logger | null;
     databasePerformance: DatabasePerformanceCallbacks | null;
     readonly: true;
@@ -126,7 +126,7 @@ export interface Server<
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthKeys: readonly string[];
+    defaultAuthKeys: readonly string[] | null;
     logger: Logger | null;
     databasePerformance: DatabasePerformanceCallbacks | null;
     readonly?: boolean;
@@ -236,11 +236,15 @@ export class ServerImpl {
 
   createSessionContext(
     session: Readonly<Session>,
-    defaultAuthKeys: readonly string[],
+    defaultAuthKeys: readonly string[] | null,
     logger: Logger | null,
     databasePerformance: DatabasePerformanceCallbacks | null,
   ): Result<SessionContext, typeof ErrorType.BadRequest> {
     assertIsDefined(this.#databaseAdapter);
+
+    if (!defaultAuthKeys) {
+      defaultAuthKeys = [''];
+    }
 
     const verifyResult = verifyAuthKeysFormat(defaultAuthKeys);
     if (verifyResult.isError()) return verifyResult;
@@ -336,7 +340,7 @@ export async function createServer<
       if (sessionResult.isError()) return sessionResult;
       const contextResult = serverImpl.createSessionContext(
         sessionResult.value,
-        [],
+        null,
         serverLogger ?? null,
         null,
       );
@@ -393,7 +397,7 @@ export async function createServer<
     }: {
       provider: string;
       identifier: string;
-      defaultAuthKeys: readonly string[];
+      defaultAuthKeys: readonly string[] | null;
       logger: Logger | null;
       databasePerformance: DatabasePerformanceCallbacks | null;
       readonly?: boolean;
@@ -414,7 +418,7 @@ export async function createServer<
 
       const contextResult = serverImpl.createSessionContext(
         session,
-        defaultAuthKeys ?? [],
+        defaultAuthKeys,
         sessionLogger ?? serverLogger ?? null,
         databasePerformance,
       );

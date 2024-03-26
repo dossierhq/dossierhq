@@ -100,7 +100,7 @@ export async function initializeIntegrationTestServer({
     server.createSession({
       provider: 'test',
       identifier: 'schema-loader',
-      defaultAuthKeys: [''],
+      defaultAuthKeys: null,
       logger: null,
       databasePerformance: null,
     }),

@@ -127,7 +127,7 @@ export async function initialize(logger: Logger) {
   const initSession = server.createSession({
     provider: 'sys',
     identifier: 'init',
-    defaultAuthKeys: [],
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance: null,
   });

@@ -20,7 +20,7 @@ async function getAdminSchema(server: Server) {
   const initSession = server.createSession({
     provider: 'sys',
     identifier: 'init',
-    defaultAuthKeys: [],
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance: null,
   });

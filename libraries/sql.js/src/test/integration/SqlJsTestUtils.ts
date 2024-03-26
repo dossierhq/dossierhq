@@ -26,7 +26,7 @@ export async function initializeSqlJsServer(): PromiseResult<
   const sessionResult = server.createSession({
     provider: 'test',
     identifier: 'schema-loader',
-    defaultAuthKeys: [],
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance: null,
   });

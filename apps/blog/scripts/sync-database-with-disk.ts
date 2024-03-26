@@ -123,6 +123,7 @@ async function main(filename: string, args: typeof parsedArgs) {
 
     const authResult = await server.createSession({
       ...SYSTEM_USERS.serverRenderer,
+      defaultAuthKeys: null,
       logger: null,
       databasePerformance: null,
     });

@@ -1,7 +1,6 @@
 import type { AdminSchema, ErrorType, Result } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
-import type { SessionGraphQLContext } from '@dossierhq/graphql';
-import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
+import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
 import type { Server } from '@dossierhq/server';
 import express from 'express';
 import type { OperationContext, RequestHeaders } from 'graphql-http';
@@ -29,7 +28,7 @@ async function createSessionContext(server: Server, headers: RequestHeaders) {
   const sessionResult = await server.createSession({
     provider: provider.value,
     identifier: identifier.value,
-    defaultAuthKeys: [''],
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance: null,
   });

@@ -1,8 +1,6 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
-import type { Server } from '@dossierhq/server';
-import { createServer } from '@dossierhq/server';
+import { createServer, type Server } from '@dossierhq/server';
 import { createSqlJsTestAdapter } from '../TestUtils.js';
 
 export interface ServerInit {
@@ -37,7 +35,7 @@ export async function initializeSqlJsServer(): PromiseResult<
   const sessionResult = server.createSession({
     provider: 'test',
     identifier: 'schema-loader',
-    defaultAuthKeys: [],
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance: null,
   });

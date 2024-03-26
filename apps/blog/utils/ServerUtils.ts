@@ -19,6 +19,7 @@ export async function getSessionContextForRequest(
   //TODO actually authenticate
   const sessionResult = await server.createSession({
     ...SYSTEM_USERS.editor,
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance,
   });
