@@ -16,7 +16,7 @@ export interface AdminBooleansFields {
   booleanList: boolean[] | null;
 }
 
-export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields, string>;
+export type AdminBooleans = AdminEntity<'Booleans', AdminBooleansFields, ''>;
 
 export function isAdminBooleans(entity: AdminEntity<string, object>): entity is AdminBooleans {
   return entity.info.type === 'Booleans';
@@ -47,7 +47,7 @@ export interface AdminComponentsFields {
   component: AppAdminComponent | null;
 }
 
-export type AdminComponents = AdminEntity<'Components', AdminComponentsFields, string>;
+export type AdminComponents = AdminEntity<'Components', AdminComponentsFields, ''>;
 
 export function isAdminComponents(entity: AdminEntity<string, object>): entity is AdminComponents {
   return entity.info.type === 'Components';
@@ -97,7 +97,7 @@ export interface AdminComponentTypesFields {
   componentListFooBar: (AdminBar | AdminFoo)[] | null;
 }
 
-export type AdminComponentTypes = AdminEntity<'ComponentTypes', AdminComponentTypesFields, string>;
+export type AdminComponentTypes = AdminEntity<'ComponentTypes', AdminComponentTypesFields, ''>;
 
 export function isAdminComponentTypes(entity: AdminEntity<string, object>): entity is AdminComponentTypes {
   return entity.info.type === 'ComponentTypes';
@@ -161,7 +161,7 @@ export interface AdminEntityTypesFields {
   entityTypeList: EntityReference[] | null;
 }
 
-export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields, string>;
+export type AdminEntityTypes = AdminEntity<'EntityTypes', AdminEntityTypesFields, ''>;
 
 export function isAdminEntityTypes(entity: AdminEntity<string, object>): entity is AdminEntityTypes {
   return entity.info.type === 'EntityTypes';
@@ -190,7 +190,7 @@ export type AppAdminEntity = AdminFoo;
 
 export type AdminFooFields = Record<never, never>;
 
-export type AdminFoo = AdminEntity<'Foo', AdminFooFields, string>;
+export type AdminFoo = AdminEntity<'Foo', AdminFooFields, ''>;
 
 export function isAdminFoo(entity: AdminEntity<string, object>): entity is AdminFoo {
   return entity.info.type === 'Foo';
@@ -222,7 +222,7 @@ export interface AdminLocationsFields {
   locationList: Location[] | null;
 }
 
-export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields, string>;
+export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields, ''>;
 
 export function isAdminLocations(entity: AdminEntity<string, object>): entity is AdminLocations {
   return entity.info.type === 'Locations';
@@ -256,7 +256,7 @@ export interface AdminNumbersFields {
   numberIntegerList: number[] | null;
 }
 
-export type AdminNumbers = AdminEntity<'Numbers', AdminNumbersFields, string>;
+export type AdminNumbers = AdminEntity<'Numbers', AdminNumbersFields, ''>;
 
 export function isAdminNumbers(entity: AdminEntity<string, object>): entity is AdminNumbers {
   return entity.info.type === 'Numbers';
@@ -288,7 +288,7 @@ export interface AdminRichTextsFields {
   richTextList: RichText[] | null;
 }
 
-export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields, string>;
+export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields, ''>;
 
 export function isAdminRichTexts(entity: AdminEntity<string, object>): entity is AdminRichTexts {
   return entity.info.type === 'RichTexts';
@@ -322,7 +322,7 @@ export interface AdminStringsFields {
   valuesList: ('bar' | 'baz' | 'foo')[] | null;
 }
 
-export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, ''>;
 
 export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
   return entity.info.type === 'Strings';
@@ -353,7 +353,7 @@ export interface AdminStringsFields {
   string: string | null;
 }
 
-export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, string>;
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, ''>;
 
 export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
   return entity.info.type === 'Strings';
@@ -399,7 +399,7 @@ export interface PublishedStringsFields {
   string: string | null;
 }
 
-export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields, string>;
+export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields, ''>;
 
 export function isPublishedStrings(entity: PublishedEntity<string, object>): entity is PublishedStrings {
   return entity.info.type === 'Strings';
@@ -443,7 +443,7 @@ export type AppPublishedEntity = PublishedFoo;
 
 export type PublishedFooFields = Record<never, never>;
 
-export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields, string>;
+export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields, ''>;
 
 export function isPublishedFoo(entity: PublishedEntity<string, object>): entity is PublishedFoo {
   return entity.info.type === 'Foo';
@@ -490,7 +490,7 @@ export interface PublishedFooFields {
   stringList: string[];
 }
 
-export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields, string>;
+export type PublishedFoo = PublishedEntity<'Foo', PublishedFooFields, ''>;
 
 export function isPublishedFoo(entity: PublishedEntity<string, object>): entity is PublishedFoo {
   return entity.info.type === 'Foo';

@@ -8,7 +8,11 @@ import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
   const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
   const publishedSchema = adminSchema.toPublishedSchema();
-  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
+  const sourceCode = generateTypescriptForSchema({
+    adminSchema,
+    publishedSchema,
+    authKeyType: "''|'subject'",
+  });
 
   const prettierConfig = await resolveConfig(filename);
   const formattedSource = await format(sourceCode, {

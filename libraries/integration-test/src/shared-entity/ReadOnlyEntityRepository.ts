@@ -1,11 +1,19 @@
-import type { AdminEntityUpsert, ErrorType, PromiseResult } from '@dossierhq/core';
-import { AdminEntityStatus, copyEntity, ok, withAdvisoryLock } from '@dossierhq/core';
+import {
+  AdminEntityStatus,
+  copyEntity,
+  ok,
+  withAdvisoryLock,
+  type AdminEntityUpsert,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import { v5 as uuidv5 } from 'uuid';
 import { assertExhaustive, assertOkResult, assertSame } from '../Asserts.js';
 import {
   assertIsAdminReadOnly,
   type AdminReadOnly,
   type AppAdminClient,
+  type AppAdminEntity,
   type PublishedReadOnly,
 } from '../SchemaTypes.js';
 import type { AdminClientProvider } from './TestClients.js';
@@ -145,7 +153,7 @@ async function doCreateReadOnlyEntityRepository(
 async function createEntity(
   adminClient: AppAdminClient,
   id: string,
-  authKey: string,
+  authKey: AppAdminEntity['info']['authKey'],
   status: AdminEntityStatus,
 ): PromiseResult<
   AdminReadOnly,

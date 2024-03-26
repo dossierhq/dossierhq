@@ -18,7 +18,7 @@ interface GeneratorContext {
 export function generateTypescriptForSchema({
   adminSchema,
   publishedSchema,
-  authKeyType = 'string',
+  authKeyType = "''",
 }: {
   adminSchema: AdminSchema | null;
   publishedSchema: PublishedSchema | null;

@@ -38,7 +38,7 @@ export interface AdminBooleansEntityFields {
   list: boolean[] | null;
 }
 
-export type AdminBooleansEntity = AdminEntity<'BooleansEntity', AdminBooleansEntityFields, string>;
+export type AdminBooleansEntity = AdminEntity<'BooleansEntity', AdminBooleansEntityFields, ''>;
 
 export function isAdminBooleansEntity(
   entity: AdminEntity<string, object>,
@@ -66,7 +66,7 @@ export interface AdminComponentsEntityFields {
 export type AdminComponentsEntity = AdminEntity<
   'ComponentsEntity',
   AdminComponentsEntityFields,
-  string
+  ''
 >;
 
 export function isAdminComponentsEntity(
@@ -93,7 +93,7 @@ export interface AdminEntitiesEntityFields {
   stringsAndLocationsEntityList: EntityReference[] | null;
 }
 
-export type AdminEntitiesEntity = AdminEntity<'EntitiesEntity', AdminEntitiesEntityFields, string>;
+export type AdminEntitiesEntity = AdminEntity<'EntitiesEntity', AdminEntitiesEntityFields, ''>;
 
 export function isAdminEntitiesEntity(
   entity: AdminEntity<string, object>,
@@ -116,11 +116,7 @@ export interface AdminLocationsEntityFields {
   requiredList: Location[] | null;
 }
 
-export type AdminLocationsEntity = AdminEntity<
-  'LocationsEntity',
-  AdminLocationsEntityFields,
-  string
->;
+export type AdminLocationsEntity = AdminEntity<'LocationsEntity', AdminLocationsEntityFields, ''>;
 
 export function isAdminLocationsEntity(
   entity: AdminEntity<string, object>,
@@ -145,7 +141,7 @@ export interface AdminNumbersEntityFields {
   requiredIntegerList: number[] | null;
 }
 
-export type AdminNumbersEntity = AdminEntity<'NumbersEntity', AdminNumbersEntityFields, string>;
+export type AdminNumbersEntity = AdminEntity<'NumbersEntity', AdminNumbersEntityFields, ''>;
 
 export function isAdminNumbersEntity(
   entity: AdminEntity<string, object>,
@@ -173,11 +169,7 @@ export interface AdminRichTextsEntityFields {
   nestedComponent: RichText | null;
 }
 
-export type AdminRichTextsEntity = AdminEntity<
-  'RichTextsEntity',
-  AdminRichTextsEntityFields,
-  string
->;
+export type AdminRichTextsEntity = AdminEntity<'RichTextsEntity', AdminRichTextsEntityFields, ''>;
 
 export function isAdminRichTextsEntity(
   entity: AdminEntity<string, object>,
@@ -208,7 +200,7 @@ export interface AdminStringsEntityFields {
   requiredListMatchPattern: string[] | null;
 }
 
-export type AdminStringsEntity = AdminEntity<'StringsEntity', AdminStringsEntityFields, string>;
+export type AdminStringsEntity = AdminEntity<'StringsEntity', AdminStringsEntityFields, ''>;
 
 export function isAdminStringsEntity(
   entity: AdminEntity<string, object>,

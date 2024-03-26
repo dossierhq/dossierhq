@@ -85,7 +85,7 @@ export function createMockSessionContext({
 }: {
   databaseAdapter: DatabaseAdapter;
   session?: Session;
-  defaultAuthKeys?: string[];
+  defaultAuthKeys?: string[] | null;
   logger?: Logger;
 }): SessionContext {
   const resolvedSession = session ?? {
