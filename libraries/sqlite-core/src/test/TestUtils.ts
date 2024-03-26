@@ -1,22 +1,33 @@
-import type { ErrorType, Logger, Paging, PromiseResult } from '@dossierhq/core';
-import { AdminSchema, NoOpLogger, getPagingInfo, ok } from '@dossierhq/core';
-import type {
-  DatabaseAdapter,
-  DatabasePagingInfo,
-  DatabasePerformanceCallbacks,
-  Transaction,
-  TransactionContext,
+import {
+  AdminSchema,
+  NoOpLogger,
+  getPagingInfo,
+  ok,
+  type ErrorType,
+  type Logger,
+  type Paging,
+  type PromiseResult,
+} from '@dossierhq/core';
+import {
+  TransactionContextImpl,
+  type DatabaseAdapter,
+  type DatabasePagingInfo,
+  type DatabasePerformanceCallbacks,
+  type Transaction,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { TransactionContextImpl } from '@dossierhq/database-adapter';
 import { randomUUID } from 'node:crypto';
-import { vi, type SpyInstance } from 'vitest';
+import { vi, type MockInstance } from 'vitest';
 import { REQUIRED_SCHEMA_VERSION } from '../SchemaDefinition.js';
-import type { ColumnValue, SqliteDatabaseAdapter } from '../SqliteDatabaseAdapter.js';
-import { createSqliteDatabaseAdapterAdapter } from '../SqliteDatabaseAdapter.js';
+import {
+  createSqliteDatabaseAdapterAdapter,
+  type ColumnValue,
+  type SqliteDatabaseAdapter,
+} from '../SqliteDatabaseAdapter.js';
 import { Mutex } from '../utils/MutexUtils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
+type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<
   Parameters<TFn>,
   ReturnType<TFn>
 > &

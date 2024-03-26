@@ -1,9 +1,9 @@
 import type { Logger } from '@dossierhq/core';
-import type { SpyInstance } from 'vitest';
+import type { MockInstance } from 'vitest';
 import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = SpyInstance<
+type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<
   Parameters<TFn>,
   ReturnType<TFn>
 > &
