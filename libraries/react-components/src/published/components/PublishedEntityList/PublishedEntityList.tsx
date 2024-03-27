@@ -14,12 +14,14 @@ import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
+  showAuthKeys: boolean;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   onItemClick: (item: PublishedEntity) => void;
 }
 
 export function PublishedEntityList({
   searchEntityState,
+  showAuthKeys,
   dispatchSearchEntityState,
   onItemClick,
 }: Props) {
@@ -53,7 +55,7 @@ export function PublishedEntityList({
             Name
           </Table.Header>
           <Table.Header>Entity type</Table.Header>
-          <Table.Header narrow>Auth key</Table.Header>
+          {showAuthKeys && <Table.Header narrow>Auth key</Table.Header>}
         </Table.Row>
       </Table.Head>
       <Table.Body>
@@ -77,6 +79,7 @@ export function PublishedEntityList({
                   {...{
                     entity,
                     authKeys,
+                    showAuthKeys,
                     order: order as PublishedEntityQueryOrder | undefined,
                     onItemClick,
                   }}
@@ -93,19 +96,25 @@ export function PublishedEntityList({
 function EntityListRow({
   entity,
   authKeys,
+  showAuthKeys,
   onItemClick,
 }: {
   entity: PublishedEntity;
   authKeys: DisplayAuthKey[];
+  showAuthKeys: boolean;
   onItemClick: (item: PublishedEntity) => void;
 }) {
   return (
     <Table.Row key={entity.id} clickable onClick={() => onItemClick(entity)}>
       <Table.Cell>{entity.info.name}</Table.Cell>
       <Table.Cell>{entity.info.type}</Table.Cell>
-      <Table.Cell narrow>
-        <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
-      </Table.Cell>
+      {showAuthKeys && (
+        <Table.Cell narrow>
+          {!!entity.info.authKey && (
+            <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
+          )}
+        </Table.Cell>
+      )}
     </Table.Row>
   );
 }

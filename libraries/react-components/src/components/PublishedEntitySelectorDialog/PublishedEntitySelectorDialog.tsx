@@ -103,6 +103,8 @@ function Content({
   // load search/total or sampling
   usePublishedLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
 
+  const showAuthKeys = !!schema && schema.spec.entityTypes.some((it) => !!it.authKeyPattern);
+
   return (
     <>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
@@ -112,6 +114,7 @@ function Content({
             searchEntityState,
             typeFilterState,
             authKeyFilterState,
+            showAuthKeys,
             dispatchSearchEntityState,
             dispatchTypeFilterState,
             dispatchAuthKeyFilterState,
@@ -147,7 +150,7 @@ function Content({
               />
             </FullscreenContainer.Item>
             <PublishedEntityList
-              {...{ searchEntityState, dispatchSearchEntityState, onItemClick }}
+              {...{ searchEntityState, showAuthKeys, dispatchSearchEntityState, onItemClick }}
             />
           </FullscreenContainer.Row>
         </FullscreenContainer.ScrollableRow>

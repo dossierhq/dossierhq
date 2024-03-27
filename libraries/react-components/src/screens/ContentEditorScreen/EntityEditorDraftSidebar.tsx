@@ -39,7 +39,9 @@ export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
             {entity.info.validPublished === false ? (
               <Tag color="danger">Invalid published</Tag>
             ) : null}
-            <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
+            {!!entity.info.authKey && (
+              <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
+            )}
           </Row>
           <AdminEntityLinks entityReference={{ id: entity.id }} />
           {entity.info.version > 1 ? (

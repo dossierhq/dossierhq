@@ -21,6 +21,7 @@ interface Props {
   searchEntityState: SearchEntityState;
   typeFilterState: TypeSelectorState;
   authKeyFilterState: MultipleSelectorState<AuthKeyItem>;
+  showAuthKeys: boolean;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   dispatchTypeFilterState: TypeSelectorDispatch;
   dispatchAuthKeyFilterState: Dispatch<MultipleSelectorStateAction<AuthKeyItem>>;
@@ -32,6 +33,7 @@ export function PublishedEntitySearchToolbar({
   searchEntityState,
   typeFilterState,
   authKeyFilterState,
+  showAuthKeys,
   dispatchSearchEntityState,
   dispatchTypeFilterState,
   dispatchAuthKeyFilterState,
@@ -44,13 +46,15 @@ export function PublishedEntitySearchToolbar({
       <TypeSelector schema={schema} state={typeFilterState} dispatch={dispatchTypeFilterState}>
         Type
       </TypeSelector>
-      <AuthKeySelector
-        state={authKeyFilterState}
-        authKeys={authKeys}
-        dispatch={dispatchAuthKeyFilterState}
-      >
-        Auth keys
-      </AuthKeySelector>
+      {showAuthKeys && (
+        <AuthKeySelector
+          state={authKeyFilterState}
+          authKeys={authKeys}
+          dispatch={dispatchAuthKeyFilterState}
+        >
+          Auth keys
+        </AuthKeySelector>
+      )}
       <IconButton icon={showMap ? 'list' : 'map'} onClick={onToggleMapClick} />
     </>
   );

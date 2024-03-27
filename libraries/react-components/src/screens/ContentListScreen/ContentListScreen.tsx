@@ -86,6 +86,8 @@ export function ContentListScreen({
 
   const isEmpty = searchEntityState.entities?.length === 0;
 
+  const showAuthKeys = !!schema && schema.spec.entityTypes.some((it) => !!it.authKeyPattern);
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
@@ -99,6 +101,7 @@ export function ContentListScreen({
               onToggleMapClick: handleToggleShowMap,
               onCreateEntity,
               typeFilterState,
+              showAuthKeys,
               dispatchTypeFilterState,
               statusFilterState,
               dispatchStatusFilterState,
@@ -138,7 +141,7 @@ export function ContentListScreen({
               />
             </FullscreenContainer.Item>
             <AdminEntityList
-              {...{ searchEntityState, dispatchSearchEntityState }}
+              {...{ searchEntityState, dispatchSearchEntityState, showAuthKeys }}
               onItemClick={onOpenEntity}
             />
           </FullscreenContainer.Row>

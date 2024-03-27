@@ -26,6 +26,7 @@ interface Props {
   typeFilterState: MultipleSelectorState<TypeItem>;
   statusFilterState: MultipleSelectorState<StatusItem>;
   authKeyFilterState: MultipleSelectorState<AuthKeyItem>;
+  showAuthKeys: boolean;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   dispatchTypeFilterState: TypeSelectorDispatch;
   dispatchStatusFilterState: Dispatch<MultipleSelectorStateAction<StatusItem>>;
@@ -40,6 +41,7 @@ export function AdminEntitySearchToolbar({
   typeFilterState,
   statusFilterState,
   authKeyFilterState,
+  showAuthKeys,
   dispatchSearchEntityState,
   dispatchTypeFilterState,
   dispatchStatusFilterState,
@@ -57,13 +59,15 @@ export function AdminEntitySearchToolbar({
       <StatusSelector state={statusFilterState} dispatch={dispatchStatusFilterState}>
         Status
       </StatusSelector>
-      <AuthKeySelector
-        state={authKeyFilterState}
-        authKeys={authKeys}
-        dispatch={dispatchAuthKeyFilterState}
-      >
-        Auth keys
-      </AuthKeySelector>
+      {showAuthKeys && (
+        <AuthKeySelector
+          state={authKeyFilterState}
+          authKeys={authKeys}
+          dispatch={dispatchAuthKeyFilterState}
+        >
+          Auth keys
+        </AuthKeySelector>
+      )}
       <IconButton icon={showMap ? 'list' : 'map'} onClick={onToggleMapClick} />
       {onCreateEntity ? (
         <AdminTypePicker

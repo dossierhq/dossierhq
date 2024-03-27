@@ -15,12 +15,14 @@ import { StatusTag } from '../StatusTag/StatusTag.js';
 
 interface Props {
   searchEntityState: SearchEntityState;
+  showAuthKeys: boolean;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
   onItemClick: (item: AdminEntity) => void;
 }
 
 export function AdminEntityList({
   searchEntityState,
+  showAuthKeys,
   dispatchSearchEntityState,
   onItemClick,
 }: Props) {
@@ -55,7 +57,7 @@ export function AdminEntityList({
           </Table.Header>
           <Table.Header>Entity type</Table.Header>
           <Table.Header narrow>Status</Table.Header>
-          <Table.Header narrow>Auth key</Table.Header>
+          {showAuthKeys && <Table.Header narrow>Auth key</Table.Header>}
           <Table.Header
             narrow
             order={order === AdminEntityQueryOrder.createdAt ? direction : ''}
@@ -108,6 +110,7 @@ export function AdminEntityList({
                     entity,
                     authKeys,
                     order: order as AdminEntityQueryOrder | undefined,
+                    showAuthKeys,
                     onItemClick,
                   }}
                 />
@@ -124,11 +127,13 @@ function EntityListRow({
   entity,
   order,
   authKeys,
+  showAuthKeys,
   onItemClick,
 }: {
   entity: AdminEntity;
   order: AdminEntityQueryOrder | undefined;
   authKeys: DisplayAuthKey[];
+  showAuthKeys: boolean;
   onItemClick: (item: AdminEntity) => void;
 }) {
   return (
@@ -144,9 +149,13 @@ function EntityListRow({
           </>
         ) : null}
       </Table.Cell>
-      <Table.Cell narrow>
-        <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
-      </Table.Cell>
+      {showAuthKeys && (
+        <Table.Cell narrow>
+          {!!entity.info.authKey && (
+            <AuthKeyTag authKey={entity.info.authKey} authKeys={authKeys} />
+          )}
+        </Table.Cell>
+      )}
       <Table.Cell narrow>
         <DateDisplay date={entity.info.createdAt} />
       </Table.Cell>

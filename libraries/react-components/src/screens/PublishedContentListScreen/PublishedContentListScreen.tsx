@@ -82,6 +82,8 @@ export function PublishedContentListScreen({
 
   const isEmpty = searchEntityState.entities?.length === 0;
 
+  const showAuthKeys = !!schema && schema.spec.entityTypes.some((it) => !!it.authKeyPattern);
+
   return (
     <FullscreenContainer>
       {header ? <FullscreenContainer.Row fullWidth>{header}</FullscreenContainer.Row> : null}
@@ -92,6 +94,7 @@ export function PublishedContentListScreen({
             searchEntityState,
             typeFilterState,
             authKeyFilterState,
+            showAuthKeys,
             dispatchAuthKeyFilterState,
             dispatchTypeFilterState,
             dispatchSearchEntityState,
@@ -128,7 +131,7 @@ export function PublishedContentListScreen({
               />
             </FullscreenContainer.Item>
             <PublishedEntityList
-              {...{ searchEntityState, dispatchSearchEntityState }}
+              {...{ searchEntityState, dispatchSearchEntityState, showAuthKeys }}
               onItemClick={onOpenEntity}
             />
           </FullscreenContainer.Row>

@@ -112,6 +112,8 @@ function Content({
   // load search/total or sampling
   useAdminLoadEntitySearch(searchEntityState, dispatchSearchEntityState);
 
+  const showAuthKeys = !!schema && schema.spec.entityTypes.some((it) => !!it.authKeyPattern);
+
   return (
     <>
       <FullscreenContainer.Row center flexDirection="row" gap={2} paddingVertical={2}>
@@ -122,6 +124,7 @@ function Content({
             typeFilterState,
             statusFilterState,
             authKeyFilterState,
+            showAuthKeys,
             dispatchSearchEntityState,
             dispatchTypeFilterState,
             dispatchStatusFilterState,
@@ -159,7 +162,9 @@ function Content({
                 dispatch={dispatchAuthKeyFilterState}
               />
             </FullscreenContainer.Item>
-            <AdminEntityList {...{ searchEntityState, dispatchSearchEntityState, onItemClick }} />
+            <AdminEntityList
+              {...{ searchEntityState, showAuthKeys, dispatchSearchEntityState, onItemClick }}
+            />
           </FullscreenContainer.Row>
         </FullscreenContainer.ScrollableRow>
       )}
