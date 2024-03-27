@@ -5,7 +5,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'BlogPost',
-      authKeyPattern: 'default',
       nameField: 'title',
       fields: [
         { name: 'title', type: FieldType.String, required: true },
@@ -49,7 +48,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Person',
-      authKeyPattern: 'default',
       nameField: 'title',
       fields: [{ name: 'title', type: FieldType.String, required: true }],
     },
@@ -66,10 +64,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
   ],
   patterns: [
-    {
-      name: 'default',
-      pattern: '^$',
-    },
     {
       name: 'slug',
       pattern: '^[a-z0-9-]+$',

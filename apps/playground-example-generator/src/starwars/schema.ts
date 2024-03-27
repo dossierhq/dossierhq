@@ -5,7 +5,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Film',
-      authKeyPattern: 'default',
       nameField: 'title',
       fields: [
         { name: 'title', type: FieldType.String, required: true },
@@ -53,7 +52,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Person',
-      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -69,7 +67,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Planet',
-      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -85,7 +82,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Species',
-      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -103,7 +99,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Starship',
-      authKeyPattern: 'default',
       nameField: 'starshipClass',
       fields: [
         { name: 'starshipClass', type: FieldType.String, required: true },
@@ -114,7 +109,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Transport',
-      authKeyPattern: 'default',
       nameField: 'name',
       fields: [
         { name: 'name', type: FieldType.String, required: true },
@@ -131,7 +125,6 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'Vehicle',
-      authKeyPattern: 'default',
       nameField: 'vehicleClass',
       fields: [
         { name: 'vehicleClass', type: FieldType.String, required: true },
@@ -139,5 +132,4 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
-  patterns: [{ name: 'default', pattern: '^$' }],
 };
