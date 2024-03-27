@@ -39,7 +39,7 @@ export interface AdminArticleFields {
   body: RichText | null;
 }
 
-export type AdminArticle = AdminEntity<'Article', AdminArticleFields, string>;
+export type AdminArticle = AdminEntity<'Article', AdminArticleFields, ''>;
 
 export function isAdminArticle(entity: AdminEntity<string, object>): entity is AdminArticle {
   return entity.info.type === 'Article';
@@ -57,7 +57,7 @@ export interface AdminAuthorFields {
   name: string | null;
 }
 
-export type AdminAuthor = AdminEntity<'Author', AdminAuthorFields, string>;
+export type AdminAuthor = AdminEntity<'Author', AdminAuthorFields, ''>;
 
 export function isAdminAuthor(entity: AdminEntity<string, object>): entity is AdminAuthor {
   return entity.info.type === 'Author';
@@ -82,7 +82,7 @@ export interface AdminBlogPostFields {
   body: RichText | null;
 }
 
-export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields, string>;
+export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields, ''>;
 
 export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is AdminBlogPost {
   return entity.info.type === 'BlogPost';
@@ -100,7 +100,7 @@ export interface AdminChapterFields {
   items: (AdminArticleTocItem | AdminTocItem)[] | null;
 }
 
-export type AdminChapter = AdminEntity<'Chapter', AdminChapterFields, string>;
+export type AdminChapter = AdminEntity<'Chapter', AdminChapterFields, ''>;
 
 export function isAdminChapter(entity: AdminEntity<string, object>): entity is AdminChapter {
   return entity.info.type === 'Chapter';
@@ -120,7 +120,7 @@ export interface AdminGlossaryTermFields {
   description: RichText | null;
 }
 
-export type AdminGlossaryTerm = AdminEntity<'GlossaryTerm', AdminGlossaryTermFields, string>;
+export type AdminGlossaryTerm = AdminEntity<'GlossaryTerm', AdminGlossaryTermFields, ''>;
 
 export function isAdminGlossaryTerm(
   entity: AdminEntity<string, object>,
@@ -258,7 +258,7 @@ export interface PublishedArticleFields {
   body: RichText;
 }
 
-export type PublishedArticle = PublishedEntity<'Article', PublishedArticleFields, string>;
+export type PublishedArticle = PublishedEntity<'Article', PublishedArticleFields, ''>;
 
 export function isPublishedArticle(
   entity: PublishedEntity<string, object>,
@@ -278,7 +278,7 @@ export interface PublishedAuthorFields {
   name: string;
 }
 
-export type PublishedAuthor = PublishedEntity<'Author', PublishedAuthorFields, string>;
+export type PublishedAuthor = PublishedEntity<'Author', PublishedAuthorFields, ''>;
 
 export function isPublishedAuthor(
   entity: PublishedEntity<string, object>,
@@ -305,7 +305,7 @@ export interface PublishedBlogPostFields {
   body: RichText;
 }
 
-export type PublishedBlogPost = PublishedEntity<'BlogPost', PublishedBlogPostFields, string>;
+export type PublishedBlogPost = PublishedEntity<'BlogPost', PublishedBlogPostFields, ''>;
 
 export function isPublishedBlogPost(
   entity: PublishedEntity<string, object>,
@@ -325,7 +325,7 @@ export interface PublishedChapterFields {
   items: (PublishedArticleTocItem | PublishedTocItem)[];
 }
 
-export type PublishedChapter = PublishedEntity<'Chapter', PublishedChapterFields, string>;
+export type PublishedChapter = PublishedEntity<'Chapter', PublishedChapterFields, ''>;
 
 export function isPublishedChapter(
   entity: PublishedEntity<string, object>,
@@ -350,7 +350,7 @@ export interface PublishedGlossaryTermFields {
 export type PublishedGlossaryTerm = PublishedEntity<
   'GlossaryTerm',
   PublishedGlossaryTermFields,
-  string
+  ''
 >;
 
 export function isPublishedGlossaryTerm(

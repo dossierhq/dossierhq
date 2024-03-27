@@ -30,7 +30,11 @@ export interface AdminPersonalNoteFields {
   placeOfBusiness: EntityReference | null;
 }
 
-export type AdminPersonalNote = AdminEntity<'PersonalNote', AdminPersonalNoteFields, ''>;
+export type AdminPersonalNote = AdminEntity<
+  'PersonalNote',
+  AdminPersonalNoteFields,
+  '' | 'subject'
+>;
 
 export function isAdminPersonalNote(
   entity: AdminEntity<string, object>,
@@ -53,7 +57,11 @@ export interface AdminPlaceOfBusinessFields {
   description: string | null;
 }
 
-export type AdminPlaceOfBusiness = AdminEntity<'PlaceOfBusiness', AdminPlaceOfBusinessFields, ''>;
+export type AdminPlaceOfBusiness = AdminEntity<
+  'PlaceOfBusiness',
+  AdminPlaceOfBusinessFields,
+  '' | 'subject'
+>;
 
 export function isAdminPlaceOfBusiness(
   entity: AdminEntity<string, object>,
@@ -75,7 +83,7 @@ export interface AdminReviewFields {
   review: string | null;
 }
 
-export type AdminReview = AdminEntity<'Review', AdminReviewFields, ''>;
+export type AdminReview = AdminEntity<'Review', AdminReviewFields, '' | 'subject'>;
 
 export function isAdminReview(entity: AdminEntity<string, object>): entity is AdminReview {
   return entity.info.type === 'Review';
@@ -93,7 +101,7 @@ export interface AdminReviewerFields {
   name: string | null;
 }
 
-export type AdminReviewer = AdminEntity<'Reviewer', AdminReviewerFields, ''>;
+export type AdminReviewer = AdminEntity<'Reviewer', AdminReviewerFields, '' | 'subject'>;
 
 export function isAdminReviewer(entity: AdminEntity<string, object>): entity is AdminReviewer {
   return entity.info.type === 'Reviewer';
