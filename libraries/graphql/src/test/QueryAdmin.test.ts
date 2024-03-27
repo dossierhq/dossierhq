@@ -69,7 +69,11 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       ],
     },
     { name: 'QueryAdminBar', fields: [{ name: 'title', type: FieldType.String }] },
-    { name: 'QueryAdminOnlyEditBefore', fields: [{ name: 'message', type: FieldType.String }] },
+    {
+      name: 'QueryAdminOnlyEditBefore',
+      authKeyPattern: 'subjectOrDefault',
+      fields: [{ name: 'message', type: FieldType.String }],
+    },
   ],
   componentTypes: [
     {
