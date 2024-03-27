@@ -2,7 +2,7 @@ import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import { SUBJECT_ONLY_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -119,11 +119,7 @@ async function unarchiveEntity_errorInvalidId({ clientProvider }: AdminEntityTes
 }
 
 async function unarchiveEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(
-    copyEntity(TITLE_ONLY_CREATE, {
-      info: { authKey: 'subject' },
-    }),
-  );
+  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();

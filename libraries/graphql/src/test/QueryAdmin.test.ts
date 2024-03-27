@@ -43,6 +43,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
     {
       name: 'QueryAdminFoo',
       nameField: 'title',
+      authKeyPattern: 'subjectOrDefault',
       fields: [
         { name: 'title', type: FieldType.String },
         { name: 'slug', type: FieldType.String, index: 'queryAdminSlug' },
@@ -85,6 +86,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       type: 'unique',
     },
   ],
+  patterns: [{ name: 'subjectOrDefault', pattern: '^(?:subject|)$' }],
 };
 
 const ADMIN_FOO_EMPTY_FIELDS = {

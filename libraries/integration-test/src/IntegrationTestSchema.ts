@@ -16,6 +16,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     },
     {
       name: 'ReadOnly',
+      authKeyPattern: 'subjectOrDefault',
       fields: [{ name: 'message', type: FieldType.String, required: true }],
     },
     {
@@ -92,6 +93,11 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       fields: [{ name: 'message', type: FieldType.String, required: true }],
     },
     {
+      name: 'SubjectOrDefaultAuthKey',
+      authKeyPattern: 'subjectOrDefault',
+      fields: [{ name: 'message', type: FieldType.String, required: true }],
+    },
+    {
       name: 'TitleOnly',
       nameField: 'title',
       fields: [{ name: 'title', type: FieldType.String, required: true }],
@@ -123,6 +129,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   ],
   patterns: [
     { name: 'subject', pattern: '^subject$' },
+    { name: 'subjectOrDefault', pattern: '^(?:subject|)$' },
     { name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' },
   ],
   indexes: [

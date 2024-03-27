@@ -24,6 +24,7 @@ import {
   type AdminChangeValidations,
   type AdminComponents,
   type AdminReferences,
+  type AdminSubjectOnly,
   type AdminTitleOnly,
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
@@ -32,6 +33,7 @@ import {
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
   STRINGS_CREATE,
+  SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
   adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
@@ -123,17 +125,16 @@ async function updateEntity_noChange({ clientProvider }: AdminEntityTestContext)
 
 async function updateEntity_minimalWithSubjectAuthKey({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
-  const updateResult = await client.updateEntity({
+
+  const updateResult = await client.updateEntity<AdminSubjectOnly>({
     id,
     info: { authKey: 'subject' },
-    fields: { title: 'Updated title' },
+    fields: { message: 'Updated message' },
   });
   assertOkResult(updateResult);
   const {
@@ -148,7 +149,7 @@ async function updateEntity_minimalWithSubjectAuthKey({ clientProvider }: AdminE
       version: 2,
     },
     fields: {
-      title: 'Updated title',
+      message: 'Updated message',
     },
   });
 
@@ -165,16 +166,15 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
-  } = createResult.value;
-  const updateResult = await client.updateEntity({
+  } = createResult.valueOrThrow();
+
+  const updateResult = await client.updateEntity<AdminSubjectOnly>({
     id,
-    fields: { title: 'Updated title' },
+    fields: { message: 'Updated message' },
   });
   assertOkResult(updateResult);
   const {
@@ -189,7 +189,7 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
       version: 2,
     },
     fields: {
-      title: 'Updated title',
+      message: 'Updated message',
     },
   });
 
@@ -254,23 +254,21 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
-  const updateResult = await client.updateEntity(
-    { id, info: { authKey: 'subject' }, fields: { title: 'Updated title' } },
+
+  const updateResult = await client.updateEntity<AdminSubjectOnly>(
+    { id, info: { authKey: 'subject' }, fields: { message: 'Updated message' } },
     { publish: true },
   );
-  assertOkResult(updateResult);
   const {
     entity: {
       info: { updatedAt },
     },
-  } = updateResult.value;
+  } = updateResult.valueOrThrow();
 
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
@@ -280,7 +278,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
       validPublished: true,
     },
     fields: {
-      title: 'Updated title',
+      message: 'Updated message',
     },
   });
 

@@ -46,6 +46,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
     {
       name: 'MutationFoo',
       nameField: 'title',
+      authKeyPattern: 'anyAuthKey',
       fields: [
         { name: 'title', type: FieldType.String },
         { name: 'summary', type: FieldType.String },
@@ -84,6 +85,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       ],
     },
   ],
+  patterns: [{ name: 'anyAuthKey', pattern: '.*' }],
 };
 
 const createMutationFooGqlQuery = gql`

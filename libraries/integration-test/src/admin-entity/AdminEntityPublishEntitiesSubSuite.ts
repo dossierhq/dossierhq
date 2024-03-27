@@ -15,6 +15,7 @@ import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtil
 import {
   REFERENCES_CREATE,
   RICH_TEXTS_CREATE,
+  SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
   VALUE_ITEMS_CREATE,
 } from '../shared-entity/Fixtures.js';
@@ -73,16 +74,14 @@ async function publishEntities_minimal({ clientProvider }: AdminEntityTestContex
 
 async function publishEntities_authKeySubject({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
       id,
       info: { version },
     },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const publishResult = await client.publishEntities([{ id, version }]);
   assertOkResult(publishResult);
@@ -407,16 +406,13 @@ async function publishEntities_errorMissingRequiredTitle({
 }
 
 async function publishEntities_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider
-    .adminClient()
-    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }));
-  assertOkResult(createResult);
+  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: {
       id,
       info: { version },
     },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const publishResult = await clientProvider
     .adminClient('secondary')

@@ -17,6 +17,7 @@ import type {
   AdminRichTexts,
   AdminStrings,
   AdminSubjectOnly,
+  AdminSubjectOrDefaultAuthKey,
   AdminTitleOnly,
   AppAdminEntity,
   AppPublishedEntity,
@@ -176,6 +177,22 @@ export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
   },
   fields: { message: 'Message' },
 };
+
+export const SUBJECT_OR_DEFAULT_CREATE: Readonly<AdminEntityCreate<AdminSubjectOrDefaultAuthKey>> =
+  {
+    info: {
+      type: 'SubjectOrDefaultAuthKey',
+      name: 'SubjectOrDefaultAuthKey name',
+      authKey: 'subject',
+    },
+    fields: { message: 'Message' },
+  };
+
+export const SUBJECT_OR_DEFAULT_UPSERT: Readonly<AdminEntityUpsert<AdminSubjectOrDefaultAuthKey>> =
+  {
+    id: 'REPLACE',
+    ...SUBJECT_OR_DEFAULT_CREATE,
+  };
 
 export const TITLE_ONLY_CREATE: Readonly<AdminEntityCreate<AdminTitleOnly>> = {
   info: {

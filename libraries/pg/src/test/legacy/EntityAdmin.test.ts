@@ -83,6 +83,7 @@ beforeAll(async () => {
       {
         name: 'EntityAdminFoo',
         nameField: 'title',
+        authKeyPattern: 'anyAuthKey',
         fields: [
           { name: 'title', type: FieldType.String, required: true },
           { name: 'summary', type: FieldType.String },
@@ -229,6 +230,7 @@ beforeAll(async () => {
         fields: [{ name: 'one', type: FieldType.String, required: true }],
       },
     ],
+    patterns: [{ name: 'anyAuthKey', pattern: '.*' }],
   });
   schemaUpdateResult.throwIfError();
 

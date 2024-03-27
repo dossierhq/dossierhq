@@ -7,9 +7,13 @@ import {
   assertSame,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminTitleOnly, AppAdminUniqueIndexes } from '../SchemaTypes.js';
-import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
-import { STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import type { AppAdminUniqueIndexes } from '../SchemaTypes.js';
+import { assertIsAdminSubjectOnly } from '../SchemaTypes.js';
+import {
+  STRINGS_CREATE,
+  SUBJECT_ONLY_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
@@ -29,9 +33,7 @@ export const GetEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = 
 
 async function getEntity_withSubjectAuthKey({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity<AdminTitleOnly>(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
@@ -39,7 +41,7 @@ async function getEntity_withSubjectAuthKey({ clientProvider }: AdminEntityTestC
 
   const getResult = await client.getEntity({ id });
   assertOkResult(getResult);
-  assertIsAdminTitleOnly(getResult.value);
+  assertIsAdminSubjectOnly(getResult.value);
   assertEquals(getResult.value, createResult.value.entity);
 }
 
@@ -151,16 +153,10 @@ async function getEntity_errorInvalidUniqueIndexValue({ clientProvider }: AdminE
 }
 
 async function getEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(
-    copyEntity(TITLE_ONLY_CREATE, {
-      info: { authKey: 'subject' },
-    }),
-  );
-
-  assertOkResult(createResult);
+  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: { id },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const getResult = await clientProvider.adminClient('secondary').getEntity({ id });
   assertErrorResult(getResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
@@ -170,11 +166,7 @@ async function getEntity_errorWrongAuthKeyFromReadonlyRandom({
   clientProvider,
 }: AdminEntityTestContext) {
   const { entity } = (
-    await clientProvider.adminClient().createEntity(
-      copyEntity(TITLE_ONLY_CREATE, {
-        info: { authKey: 'subject' },
-      }),
-    )
+    await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE)
   ).valueOrThrow();
 
   const getResult = await clientProvider

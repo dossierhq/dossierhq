@@ -34,6 +34,7 @@ import {
 import {
   RICH_TEXTS_CREATE,
   STRINGS_CREATE,
+  SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
   TITLE_ONLY_PUBLISHED_ENTITY,
   VALUE_ITEMS_CREATE,
@@ -67,10 +68,7 @@ async function getEntity_withSubjectAuthKey({ clientProvider }: PublishedEntityT
   const publishedClient = clientProvider.publishedClient();
   const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
-  const createResult = await adminClient.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true },
-  );
+  const createResult = await adminClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
     entity: { id },
@@ -405,12 +403,9 @@ async function getEntity_errorUniqueIndexValueFromAdminOnlyField({
 }
 
 async function getEntity_errorWrongAuthKey({ clientProvider }: PublishedEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(
-    copyEntity(TITLE_ONLY_CREATE, {
-      info: { authKey: 'subject' },
-    }),
-    { publish: true },
-  );
+  const createResult = await clientProvider
+    .adminClient()
+    .createEntity(SUBJECT_ONLY_CREATE, { publish: true });
 
   assertOkResult(createResult);
   const {
@@ -425,12 +420,7 @@ async function getEntity_errorWrongAuthKeyFromReadonlyRandom({
   clientProvider,
 }: PublishedEntityTestContext) {
   const { entity } = (
-    await clientProvider.adminClient().createEntity(
-      copyEntity(TITLE_ONLY_CREATE, {
-        info: { authKey: 'subject' },
-      }),
-      { publish: true },
-    )
+    await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
   const getResult = await clientProvider

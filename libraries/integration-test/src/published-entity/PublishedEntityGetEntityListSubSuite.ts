@@ -1,8 +1,12 @@
-import { AdminSchema, copyEntity, notOk, ok, type ErrorType } from '@dossierhq/core';
+import { AdminSchema, notOk, ok, type ErrorType } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppPublishedEntity } from '../SchemaTypes.js';
-import { TITLE_ONLY_CREATE, adminToPublishedEntity } from '../shared-entity/Fixtures.js';
+import {
+  SUBJECT_ONLY_CREATE,
+  TITLE_ONLY_CREATE,
+  adminToPublishedEntity,
+} from '../shared-entity/Fixtures.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 
 export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestContext>[] = [
@@ -54,15 +58,10 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
 
   const create1Result = await clientProvider
     .adminClient('secondary')
-    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }), {
-      publish: true,
-    });
-  const create2Result = await primaryAdminClient.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    {
-      publish: true,
-    },
-  );
+    .createEntity(SUBJECT_ONLY_CREATE, { publish: true });
+  const create2Result = await primaryAdminClient.createEntity(SUBJECT_ONLY_CREATE, {
+    publish: true,
+  });
   assertOkResult(create1Result);
   assertOkResult(create2Result);
   const {
@@ -121,10 +120,7 @@ async function getEntityList_errorWrongAuthKeyFromReadonlyRandom({
   const primaryAdminClient = clientProvider.adminClient();
 
   const { entity } = (
-    await primaryAdminClient.createEntity(
-      copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-      { publish: true },
-    )
+    await primaryAdminClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
   const getResult = await clientProvider

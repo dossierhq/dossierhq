@@ -2,7 +2,7 @@ import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
-import { TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import { SUBJECT_ONLY_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -108,16 +108,10 @@ async function archiveEntity_errorInvalidError({ clientProvider }: AdminEntityTe
 }
 
 async function archiveEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(
-    copyEntity(TITLE_ONLY_CREATE, {
-      info: { authKey: 'subject' },
-    }),
-  );
-
-  assertOkResult(createResult);
+  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: { id },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const archiveResult = await clientProvider.adminClient('secondary').archiveEntity({ id });
   assertErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');

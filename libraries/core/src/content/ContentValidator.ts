@@ -166,6 +166,14 @@ function validateTypeAndAuthKey(
         message: `AuthKey '${authKey}' does not match pattern '${entitySpec.authKeyPattern}' (${authKeyRegExp.source})`,
       };
     }
+  } else {
+    if (authKey !== '') {
+      return {
+        type: 'save',
+        path: [...path, 'info', 'authKey'],
+        message: 'AuthKey is not allowed for this entity type since no authKeyPattern is defined',
+      };
+    }
   }
 
   return null;

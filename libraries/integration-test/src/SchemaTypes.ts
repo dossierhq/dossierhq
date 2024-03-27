@@ -36,6 +36,7 @@ export type AppAdminEntity =
   | AdminRichTexts
   | AdminStrings
   | AdminSubjectOnly
+  | AdminSubjectOrDefaultAuthKey
   | AdminTitleOnly;
 
 export interface AdminChangeValidationsFields {
@@ -233,6 +234,32 @@ export function assertIsAdminSubjectOnly(
   }
 }
 
+export interface AdminSubjectOrDefaultAuthKeyFields {
+  message: string | null;
+}
+
+export type AdminSubjectOrDefaultAuthKey = AdminEntity<
+  'SubjectOrDefaultAuthKey',
+  AdminSubjectOrDefaultAuthKeyFields,
+  '' | 'subject'
+>;
+
+export function isAdminSubjectOrDefaultAuthKey(
+  entity: AdminEntity<string, object>,
+): entity is AdminSubjectOrDefaultAuthKey {
+  return entity.info.type === 'SubjectOrDefaultAuthKey';
+}
+
+export function assertIsAdminSubjectOrDefaultAuthKey(
+  entity: AdminEntity<string, object>,
+): asserts entity is AdminSubjectOrDefaultAuthKey {
+  if (entity.info.type !== 'SubjectOrDefaultAuthKey') {
+    throw new Error(
+      'Expected info.type = SubjectOrDefaultAuthKey (but was ' + entity.info.type + ')',
+    );
+  }
+}
+
 export interface AdminTitleOnlyFields {
   title: string | null;
 }
@@ -395,6 +422,7 @@ export type AppPublishedEntity =
   | PublishedRichTexts
   | PublishedStrings
   | PublishedSubjectOnly
+  | PublishedSubjectOrDefaultAuthKey
   | PublishedTitleOnly;
 
 export interface PublishedChangeValidationsFields {
@@ -620,6 +648,32 @@ export function assertIsPublishedSubjectOnly(
 ): asserts entity is PublishedSubjectOnly {
   if (entity.info.type !== 'SubjectOnly') {
     throw new Error('Expected info.type = SubjectOnly (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface PublishedSubjectOrDefaultAuthKeyFields {
+  message: string;
+}
+
+export type PublishedSubjectOrDefaultAuthKey = PublishedEntity<
+  'SubjectOrDefaultAuthKey',
+  PublishedSubjectOrDefaultAuthKeyFields,
+  '' | 'subject'
+>;
+
+export function isPublishedSubjectOrDefaultAuthKey(
+  entity: PublishedEntity<string, object>,
+): entity is PublishedSubjectOrDefaultAuthKey {
+  return entity.info.type === 'SubjectOrDefaultAuthKey';
+}
+
+export function assertIsPublishedSubjectOrDefaultAuthKey(
+  entity: PublishedEntity<string, object>,
+): asserts entity is PublishedSubjectOrDefaultAuthKey {
+  if (entity.info.type !== 'SubjectOrDefaultAuthKey') {
+    throw new Error(
+      'Expected info.type = SubjectOrDefaultAuthKey (but was ' + entity.info.type + ')',
+    );
   }
 }
 

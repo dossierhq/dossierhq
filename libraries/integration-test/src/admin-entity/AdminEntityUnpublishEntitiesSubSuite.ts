@@ -2,7 +2,12 @@ import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
-import { REFERENCES_CREATE, STRINGS_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import {
+  REFERENCES_CREATE,
+  STRINGS_CREATE,
+  SUBJECT_ONLY_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
@@ -283,15 +288,12 @@ async function unpublishEntities_errorDuplicateIds({ clientProvider }: AdminEnti
 }
 
 async function unpublishEntities_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider
-    .adminClient()
-    .createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }), {
-      publish: true,
-    });
-  assertOkResult(createResult);
+  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE, {
+    publish: true,
+  });
   const {
     entity: { id },
-  } = createResult.value;
+  } = createResult.valueOrThrow();
 
   const publishResult = await clientProvider.adminClient('secondary').unpublishEntities([{ id }]);
   assertErrorResult(

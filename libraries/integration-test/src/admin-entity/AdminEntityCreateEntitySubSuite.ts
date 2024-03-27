@@ -286,10 +286,9 @@ async function createEntity_publishMinimal({ clientProvider }: AdminEntityTestCo
 
 async function createEntity_publishWithSubjectAuthKey({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity<AdminTitleOnly>(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-    { publish: true },
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE, {
+    publish: true,
+  });
   assertOkResult(createResult);
   const {
     entity: {
@@ -298,7 +297,7 @@ async function createEntity_publishWithSubjectAuthKey({ clientProvider }: AdminE
     },
   } = createResult.value;
 
-  const expectedEntity = copyEntity(TITLE_ONLY_ADMIN_ENTITY, {
+  const expectedEntity = copyEntity(SUBJECT_ONLY_ADMIN_ENTITY, {
     id,
     info: {
       name,
@@ -317,7 +316,7 @@ async function createEntity_publishWithSubjectAuthKey({ clientProvider }: AdminE
 
   const getResult = await client.getEntity({ id });
   assertOkResult(getResult);
-  assertIsAdminTitleOnly(getResult.value);
+  assertIsAdminSubjectOnly(getResult.value);
   assertEquals(getResult.value, expectedEntity);
 }
 

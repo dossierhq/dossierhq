@@ -5,6 +5,7 @@ import type { UnboundTestFunction } from '../Builder.js';
 import type { AdminTitleOnly } from '../SchemaTypes.js';
 import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
 import {
+  SUBJECT_ONLY_CREATE,
   SUBJECT_ONLY_UPSERT,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
@@ -126,19 +127,17 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
   const upsertResult = await client.upsertEntity(
-    copyEntity(TITLE_ONLY_UPSERT, {
+    copyEntity(SUBJECT_ONLY_UPSERT, {
       id,
       info: { authKey: 'subject' },
-      fields: { title: 'Updated title' },
+      fields: { message: 'Updated message' },
     }),
     { publish: true },
   );
@@ -151,7 +150,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({
 
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: { version: 2, updatedAt, status: AdminEntityStatus.published, validPublished: true },
-    fields: { title: 'Updated title' },
+    fields: { message: 'Updated message' },
   });
 
   assertResultValue(upsertResult, {
@@ -212,16 +211,14 @@ async function upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity(
-    copyEntity(TITLE_ONLY_CREATE, { info: { authKey: 'subject' } }),
-  );
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
   const updateResult = await client.upsertEntity(
-    copyEntity(TITLE_ONLY_UPSERT, {
+    copyEntity(SUBJECT_ONLY_UPSERT, {
       id,
       info: { authKey: undefined },
       fields: {},
