@@ -85,7 +85,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         </Field.Control>
         {!draftState.draft.name ? <Field.Help color="danger">Name is required</Field.Help> : null}
       </Field>
-      {!draftState.entity ? (
+      {!draftState.entity && draftState.draft.entitySpec.authKeyPattern ? (
         <Field>
           <Field.Label>Authorization key</Field.Label>
           <Field.Control>

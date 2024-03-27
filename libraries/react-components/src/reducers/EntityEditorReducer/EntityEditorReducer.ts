@@ -94,7 +94,10 @@ function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDra
     return '';
   }
   if (!draftState.entity) {
-    if (draftState.draft.authKey !== null || draftState.draft.name) {
+    if (
+      (draftState.draft.entitySpec.authKeyPattern && draftState.draft.authKey !== null) ||
+      draftState.draft.name
+    ) {
       return 'changed';
     }
   } else {
@@ -616,6 +619,12 @@ function createEditorEntityDraftState(
     return { status: '', fieldSpec, adminOnly, value, normalizedValue, validationIssues };
   });
 
+  // authKey
+  let authKey = entity?.info.authKey ?? null;
+  if (authKey === null && !entitySpec.authKeyPattern) {
+    authKey = ''; // default
+  }
+
   // Check if name is linked to a field
   let nameIsLinkedToField = false;
   if (entity) {
@@ -634,7 +643,7 @@ function createEditorEntityDraftState(
 
   return {
     entitySpec,
-    authKey: entity?.info.authKey ?? null,
+    authKey,
     name: entity?.info.name ?? '',
     nameIsLinkedToField,
     fields,
