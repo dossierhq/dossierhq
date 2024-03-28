@@ -168,7 +168,7 @@ async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
   const client = clientProvider.adminClient();
   const id = uuidv4();
   const upsertResult = await client.upsertEntity(
-    copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: '' } }),
+    copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: '' as 'subject' } }),
   );
   assertErrorResult(
     upsertResult,
@@ -193,7 +193,7 @@ async function upsertEntity_errorUpdateTryingToChangeAuthKey({
   const updateResult = await client.upsertEntity(
     copyEntity(TITLE_ONLY_UPSERT, {
       id,
-      info: { authKey: 'subject' },
+      info: { authKey: 'subject' as '' },
       fields: {},
     }),
   );

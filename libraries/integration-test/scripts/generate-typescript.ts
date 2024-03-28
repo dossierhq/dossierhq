@@ -11,7 +11,7 @@ async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filenam
   const sourceCode = generateTypescriptForSchema({
     adminSchema,
     publishedSchema,
-    authKeyType: "''|'subject'",
+    authKeyPatternTypeMap: { subjectOrDefault: "''|'subject'", subject: "'subject'" },
   });
 
   const prettierConfig = await resolveConfig(filename);

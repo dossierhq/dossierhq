@@ -925,7 +925,7 @@ async function createEntity_errorAuthKeyNotMatchingPattern({
   const client = clientProvider.adminClient();
   const id = uuidv4();
   const createResult = await client.createEntity(
-    copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: '' } }),
+    copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: '' as 'subject' } }),
   );
   assertErrorResult(
     createResult,

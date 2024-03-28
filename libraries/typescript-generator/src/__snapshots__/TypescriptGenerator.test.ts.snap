@@ -1,5 +1,34 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`generateTypescriptForSchema > Auth key pattern 1`] = `
+"import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
+
+export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+
+export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+
+export type AppAdminUniqueIndexes = never;
+
+export type AppAdminEntity = AdminAbc;
+
+export type AdminAbcFields = Record<never, never>;
+
+export type AdminAbc = AdminEntity<'Abc', AdminAbcFields, 'a'|'b'|'c'>;
+
+export function isAdminAbc(entity: AdminEntity<string, object>): entity is AdminAbc {
+  return entity.info.type === 'Abc';
+}
+
+export function assertIsAdminAbc(entity: AdminEntity<string, object>): asserts entity is AdminAbc {
+  if (entity.info.type !== 'Abc') {
+    throw new Error('Expected info.type = Abc (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AppAdminComponent = never;
+"
+`;
+
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { AdminClient, AdminEntity, AdminExceptionClient } from '@dossierhq/core';
 
@@ -381,6 +410,35 @@ export type AppAdminUniqueIndexes = never;
 export type AppAdminEntity = never;
 
 export type AppAdminComponent = never;
+"
+`;
+
+exports[`generateTypescriptForSchema published > Auth key pattern 1`] = `
+"import type { PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
+
+export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+
+export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+
+export type AppPublishedUniqueIndexes = never;
+
+export type AppPublishedEntity = PublishedAbc;
+
+export type PublishedAbcFields = Record<never, never>;
+
+export type PublishedAbc = PublishedEntity<'Abc', PublishedAbcFields, 'a'|'b'|'c'>;
+
+export function isPublishedAbc(entity: PublishedEntity<string, object>): entity is PublishedAbc {
+  return entity.info.type === 'Abc';
+}
+
+export function assertIsPublishedAbc(entity: PublishedEntity<string, object>): asserts entity is PublishedAbc {
+  if (entity.info.type !== 'Abc') {
+    throw new Error('Expected info.type = Abc (but was ' + entity.info.type + ')');
+  }
+}
+
+export type AppPublishedComponent = never;
 "
 `;
 

@@ -11,14 +11,14 @@ import { SCHEMA as STARWARS_SCHEMA } from '../src/starwars/schema.js';
 async function generateTypes(
   schemaSpec: AdminSchemaSpecificationUpdate,
   filename: string,
-  { authKeyType }: { authKeyType?: string } = {},
+  { authKeyPatternTypeMap }: { authKeyPatternTypeMap?: Record<string, string> } = {},
 ) {
   const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
 
   const sourceCode = generateTypescriptForSchema({
     adminSchema,
     publishedSchema: null,
-    authKeyType,
+    authKeyPatternTypeMap,
   });
 
   const prettierConfig = await resolveConfig(filename);
@@ -33,6 +33,6 @@ async function generateTypes(
 await generateTypes(BLOG_SCHEMA, './src/blog/schema-types.ts');
 await generateTypes(CATALOG_SCHEMA, './src/catalog/schema-types.ts');
 await generateTypes(REVIEWS_SCHEMA, './src/reviews/schema-types.ts', {
-  authKeyType: "''|'subject'",
+  authKeyPatternTypeMap: { subject: "'subject'" },
 });
 await generateTypes(STARWARS_SCHEMA, './src/starwars/schema-types.ts');

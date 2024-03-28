@@ -19,7 +19,6 @@ async function generateTypes(
   const sourceCode = generateTypescriptForSchema({
     adminSchema,
     publishedSchema,
-    authKeyType: "'' | 'subject'",
   });
 
   const prettierConfig = await resolveConfig(filename);

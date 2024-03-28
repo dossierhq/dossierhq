@@ -50,7 +50,7 @@ export interface AdminChangeValidationsFields {
 export type AdminChangeValidations = AdminEntity<
   'ChangeValidations',
   AdminChangeValidationsFields,
-  '' | 'subject'
+  ''
 >;
 
 export function isAdminChangeValidations(
@@ -72,7 +72,7 @@ export interface AdminComponentsFields {
   anyAdminOnly: AppAdminComponent | null;
 }
 
-export type AdminComponents = AdminEntity<'Components', AdminComponentsFields, '' | 'subject'>;
+export type AdminComponents = AdminEntity<'Components', AdminComponentsFields, ''>;
 
 export function isAdminComponents(entity: AdminEntity<string, object>): entity is AdminComponents {
   return entity.info.type === 'Components';
@@ -92,7 +92,7 @@ export interface AdminLocationsFields {
   locationAdminOnly: Location | null;
 }
 
-export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields, '' | 'subject'>;
+export type AdminLocations = AdminEntity<'Locations', AdminLocationsFields, ''>;
 
 export function isAdminLocations(entity: AdminEntity<string, object>): entity is AdminLocations {
   return entity.info.type === 'Locations';
@@ -108,11 +108,7 @@ export function assertIsAdminLocations(
 
 export type AdminMigrationEntityFields = Record<never, never>;
 
-export type AdminMigrationEntity = AdminEntity<
-  'MigrationEntity',
-  AdminMigrationEntityFields,
-  '' | 'subject'
->;
+export type AdminMigrationEntity = AdminEntity<'MigrationEntity', AdminMigrationEntityFields, ''>;
 
 export function isAdminMigrationEntity(
   entity: AdminEntity<string, object>,
@@ -153,7 +149,7 @@ export interface AdminReferencesFields {
   titleOnly: EntityReference | null;
 }
 
-export type AdminReferences = AdminEntity<'References', AdminReferencesFields, '' | 'subject'>;
+export type AdminReferences = AdminEntity<'References', AdminReferencesFields, ''>;
 
 export function isAdminReferences(entity: AdminEntity<string, object>): entity is AdminReferences {
   return entity.info.type === 'References';
@@ -174,7 +170,7 @@ export interface AdminRichTextsFields {
   richTextLimitedTypes: RichText | null;
 }
 
-export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields, '' | 'subject'>;
+export type AdminRichTexts = AdminEntity<'RichTexts', AdminRichTextsFields, ''>;
 
 export function isAdminRichTexts(entity: AdminEntity<string, object>): entity is AdminRichTexts {
   return entity.info.type === 'RichTexts';
@@ -200,7 +196,7 @@ export interface AdminStringsFields {
   uniqueGenericIndex: string | null;
 }
 
-export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, '' | 'subject'>;
+export type AdminStrings = AdminEntity<'Strings', AdminStringsFields, ''>;
 
 export function isAdminStrings(entity: AdminEntity<string, object>): entity is AdminStrings {
   return entity.info.type === 'Strings';
@@ -218,7 +214,7 @@ export interface AdminSubjectOnlyFields {
   message: string | null;
 }
 
-export type AdminSubjectOnly = AdminEntity<'SubjectOnly', AdminSubjectOnlyFields, '' | 'subject'>;
+export type AdminSubjectOnly = AdminEntity<'SubjectOnly', AdminSubjectOnlyFields, 'subject'>;
 
 export function isAdminSubjectOnly(
   entity: AdminEntity<string, object>,
@@ -264,7 +260,7 @@ export interface AdminTitleOnlyFields {
   title: string | null;
 }
 
-export type AdminTitleOnly = AdminEntity<'TitleOnly', AdminTitleOnlyFields, '' | 'subject'>;
+export type AdminTitleOnly = AdminEntity<'TitleOnly', AdminTitleOnlyFields, ''>;
 
 export function isAdminTitleOnly(entity: AdminEntity<string, object>): entity is AdminTitleOnly {
   return entity.info.type === 'TitleOnly';
@@ -436,7 +432,7 @@ export interface PublishedChangeValidationsFields {
 export type PublishedChangeValidations = PublishedEntity<
   'ChangeValidations',
   PublishedChangeValidationsFields,
-  '' | 'subject'
+  ''
 >;
 
 export function isPublishedChangeValidations(
@@ -457,11 +453,7 @@ export interface PublishedComponentsFields {
   any: AppPublishedComponent | null;
 }
 
-export type PublishedComponents = PublishedEntity<
-  'Components',
-  PublishedComponentsFields,
-  '' | 'subject'
->;
+export type PublishedComponents = PublishedEntity<'Components', PublishedComponentsFields, ''>;
 
 export function isPublishedComponents(
   entity: PublishedEntity<string, object>,
@@ -482,11 +474,7 @@ export interface PublishedLocationsFields {
   locationList: Location[] | null;
 }
 
-export type PublishedLocations = PublishedEntity<
-  'Locations',
-  PublishedLocationsFields,
-  '' | 'subject'
->;
+export type PublishedLocations = PublishedEntity<'Locations', PublishedLocationsFields, ''>;
 
 export function isPublishedLocations(
   entity: PublishedEntity<string, object>,
@@ -507,7 +495,7 @@ export type PublishedMigrationEntityFields = Record<never, never>;
 export type PublishedMigrationEntity = PublishedEntity<
   'MigrationEntity',
   PublishedMigrationEntityFields,
-  '' | 'subject'
+  ''
 >;
 
 export function isPublishedMigrationEntity(
@@ -554,11 +542,7 @@ export interface PublishedReferencesFields {
   titleOnly: EntityReference | null;
 }
 
-export type PublishedReferences = PublishedEntity<
-  'References',
-  PublishedReferencesFields,
-  '' | 'subject'
->;
+export type PublishedReferences = PublishedEntity<'References', PublishedReferencesFields, ''>;
 
 export function isPublishedReferences(
   entity: PublishedEntity<string, object>,
@@ -581,11 +565,7 @@ export interface PublishedRichTextsFields {
   richTextLimitedTypes: RichText | null;
 }
 
-export type PublishedRichTexts = PublishedEntity<
-  'RichTexts',
-  PublishedRichTextsFields,
-  '' | 'subject'
->;
+export type PublishedRichTexts = PublishedEntity<'RichTexts', PublishedRichTextsFields, ''>;
 
 export function isPublishedRichTexts(
   entity: PublishedEntity<string, object>,
@@ -611,7 +591,7 @@ export interface PublishedStringsFields {
   uniqueGenericIndex: string | null;
 }
 
-export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields, '' | 'subject'>;
+export type PublishedStrings = PublishedEntity<'Strings', PublishedStringsFields, ''>;
 
 export function isPublishedStrings(
   entity: PublishedEntity<string, object>,
@@ -634,7 +614,7 @@ export interface PublishedSubjectOnlyFields {
 export type PublishedSubjectOnly = PublishedEntity<
   'SubjectOnly',
   PublishedSubjectOnlyFields,
-  '' | 'subject'
+  'subject'
 >;
 
 export function isPublishedSubjectOnly(
@@ -681,11 +661,7 @@ export interface PublishedTitleOnlyFields {
   title: string;
 }
 
-export type PublishedTitleOnly = PublishedEntity<
-  'TitleOnly',
-  PublishedTitleOnlyFields,
-  '' | 'subject'
->;
+export type PublishedTitleOnly = PublishedEntity<'TitleOnly', PublishedTitleOnlyFields, ''>;
 
 export function isPublishedTitleOnly(
   entity: PublishedEntity<string, object>,

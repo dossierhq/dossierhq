@@ -224,6 +224,25 @@ describe('generateTypescriptForSchema', () => {
     ).toMatchSnapshot();
   });
 
+  test('Auth key pattern', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Abc',
+              authKeyPattern: 'abc',
+              fields: [],
+            },
+          ],
+          patterns: [{ name: 'abc', pattern: '^[abc]$' }],
+        }).valueOrThrow(),
+        publishedSchema: null,
+        authKeyPatternTypeMap: { abc: "'a'|'b'|'c'" },
+      }),
+    ).toMatchSnapshot();
+  });
+
   test('Unique index', () => {
     expect(
       generateTypescriptForSchema({
@@ -300,6 +319,27 @@ describe('generateTypescriptForSchema published', () => {
         })
           .valueOrThrow()
           .toPublishedSchema(),
+      }),
+    ).toMatchSnapshot();
+  });
+
+  test('Auth key pattern', () => {
+    expect(
+      generateTypescriptForSchema({
+        adminSchema: null,
+        publishedSchema: AdminSchema.createAndValidate({
+          entityTypes: [
+            {
+              name: 'Abc',
+              authKeyPattern: 'abc',
+              fields: [],
+            },
+          ],
+          patterns: [{ name: 'abc', pattern: '^[abc]$' }],
+        })
+          .valueOrThrow()
+          .toPublishedSchema(),
+        authKeyPatternTypeMap: { abc: "'a'|'b'|'c'" },
       }),
     ).toMatchSnapshot();
   });

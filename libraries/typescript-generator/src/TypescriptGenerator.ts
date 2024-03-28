@@ -18,11 +18,11 @@ interface GeneratorContext {
 export function generateTypescriptForSchema({
   adminSchema,
   publishedSchema,
-  authKeyType = "''",
+  authKeyPatternTypeMap,
 }: {
   adminSchema: AdminSchema | null;
   publishedSchema: PublishedSchema | null;
-  authKeyType?: string;
+  authKeyPatternTypeMap?: Record<string, string>;
 }) {
   const context: GeneratorContext = { coreImports: new Set<string>() };
   const paragraphs: string[] = [];
@@ -32,7 +32,7 @@ export function generateTypescriptForSchema({
     paragraphs.push(...generateUniqueIndexesType('Admin', adminSchema.spec.indexes));
     paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entity'));
     for (const entitySpec of adminSchema.spec.entityTypes) {
-      paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyType));
+      paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyPatternTypeMap ?? {}));
     }
     paragraphs.push(
       ...generateAllTypesUnion(adminSchema.spec.componentTypes, 'Admin', 'Component'),
@@ -48,7 +48,9 @@ export function generateTypescriptForSchema({
       ...generateAllTypesUnion(publishedSchema.spec.entityTypes, 'Published', 'Entity'),
     );
     for (const entitySpec of publishedSchema.spec.entityTypes) {
-      paragraphs.push(...generatePublishedEntityType(context, entitySpec, authKeyType));
+      paragraphs.push(
+        ...generatePublishedEntityType(context, entitySpec, authKeyPatternTypeMap ?? {}),
+      );
     }
     paragraphs.push(
       ...generateAllTypesUnion(publishedSchema.spec.componentTypes, 'Published', 'Component'),
@@ -116,24 +118,24 @@ function generateAllTypesUnion(
 function generateAdminEntityType(
   context: GeneratorContext,
   entitySpec: AdminEntityTypeSpecification,
-  authKeyType: string,
+  authKeyPatternTypeMap: Record<string, string>,
 ) {
-  return generateEntityType(context, entitySpec, 'Admin', authKeyType);
+  return generateEntityType(context, entitySpec, 'Admin', authKeyPatternTypeMap);
 }
 
 function generatePublishedEntityType(
   context: GeneratorContext,
   entitySpec: PublishedEntityTypeSpecification,
-  authKeyType: string,
+  authKeyPatternTypeMap: Record<string, string>,
 ) {
-  return generateEntityType(context, entitySpec, 'Published', authKeyType);
+  return generateEntityType(context, entitySpec, 'Published', authKeyPatternTypeMap);
 }
 
 function generateEntityType(
   context: GeneratorContext,
   entitySpec: PublishedEntityTypeSpecification,
   adminOrPublished: 'Admin' | 'Published',
-  authKeyType: string,
+  authKeyPatternTypeMap: Record<string, string>,
 ) {
   const paragraphs: string[] = [''];
 
@@ -149,6 +151,17 @@ function generateEntityType(
     paragraphs.push(`}`);
   }
   paragraphs.push('');
+
+  // auth key
+  let authKeyType = "''";
+  if (entitySpec.authKeyPattern) {
+    const authKeyPatternType = authKeyPatternTypeMap[entitySpec.authKeyPattern];
+    if (authKeyPatternType) {
+      authKeyType = authKeyPatternType;
+    } else {
+      throw new Error(`No type found for auth key pattern ${entitySpec.authKeyPattern}`);
+    }
+  }
 
   // entity type
   const parentTypeName = `${adminOrPublished}Entity`;
