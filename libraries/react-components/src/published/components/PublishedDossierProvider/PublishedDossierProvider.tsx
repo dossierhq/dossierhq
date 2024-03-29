@@ -12,7 +12,7 @@ import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 interface Props {
   adapter: PublishedDossierContextAdapter;
   publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>;
-  authKeys: DisplayAuthKey[];
+  authKeys?: DisplayAuthKey[];
   logger?: Logger;
   children: ReactNode;
 }
@@ -29,7 +29,7 @@ export function PublishedDossierProvider({
     return {
       adapter,
       publishedClient,
-      authKeys,
+      authKeys: authKeys ?? [{ authKey: '', displayName: 'Default' }],
       logger: logger ?? NoOpLogger,
       schema,
       schemaError,

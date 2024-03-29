@@ -1,9 +1,7 @@
-import { DEFAULT_AUTH_KEYS } from './AuthKeyConfig.ts';
-
 export interface PrincipalConfig {
   provider: string;
   identifier: string;
-  defaultAuthKeys: string[];
+  defaultAuthKeys: string[] | null;
   enableAdmin: boolean;
 }
 
@@ -17,7 +15,7 @@ const principals = {
   reader: {
     provider: 'sys',
     identifier: 'reader',
-    defaultAuthKeys: [''],
+    defaultAuthKeys: null,
     enableAdmin: false,
   },
 } satisfies Record<string, PrincipalConfig>;

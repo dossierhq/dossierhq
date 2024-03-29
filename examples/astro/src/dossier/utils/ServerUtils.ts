@@ -11,7 +11,6 @@ import {
 import {
   BackgroundEntityProcessorPlugin,
   createServer,
-  type AuthorizationAdapter,
   type Server,
   type SessionContext,
 } from '@dossierhq/server';

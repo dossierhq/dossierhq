@@ -13,7 +13,6 @@ import type {
 } from '@dossierhq/react-components';
 import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
@@ -47,7 +46,6 @@ export function AppPublishedDossierProvider({ children }: { children: React.Reac
     () => ({
       publishedClient: createBackendPublishedClient(),
       adapter: new PublishedContextAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
     }),
     [],
   );

@@ -18,7 +18,6 @@ import type {
 } from '@dossierhq/react-components';
 import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
 
@@ -43,7 +42,6 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
     () => ({
       adminClient: createBackendAdminClient(cachingMiddleware),
       adapter: new AdminContextAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
     }),
     [cachingMiddleware],
   );

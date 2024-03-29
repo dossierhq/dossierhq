@@ -18,7 +18,6 @@ import {
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.ts';
 import { fetchJsonResult } from '../utils/fetchJsonResult.ts';
 
 type BackendContext = ClientContext;
@@ -42,7 +41,6 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
     () => ({
       adminClient: createBackendAdminClient(cachingMiddleware),
       adapter: new AdminContextAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
     }),
     [cachingMiddleware],
   );

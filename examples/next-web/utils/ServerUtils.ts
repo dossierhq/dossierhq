@@ -7,11 +7,9 @@ import type {
   PublishedClient,
 } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
-import type { AuthorizationAdapter, Server } from '@dossierhq/server';
-import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
+import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { NextApiRequest } from 'next';
-import { DEFAULT_AUTH_KEYS } from '../config/AuthKeyConfig';
 import { schemaSpecification } from './schema';
 
 let serverConnectionPromise: Promise<{ server: Server }> | null = null;
@@ -28,7 +26,7 @@ export async function getSessionContextForRequest(
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'john-smith',
-    defaultAuthKeys: DEFAULT_AUTH_KEYS,
+    defaultAuthKeys: null,
     logger: null,
     databasePerformance: null,
   });

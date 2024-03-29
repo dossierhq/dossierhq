@@ -13,7 +13,7 @@ interface Props {
   adapter: AdminDossierContextAdapter;
   adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>;
   logger?: Logger;
-  authKeys: DisplayAuthKey[];
+  authKeys?: DisplayAuthKey[];
   children: ReactNode;
 }
 
@@ -32,7 +32,7 @@ export function AdminDossierProvider({
       logger: logger ?? NoOpLogger,
       schema,
       schemaError,
-      authKeys,
+      authKeys: authKeys ?? [{ authKey: '', displayName: 'Default' }],
     };
   }, [adapter, adminClient, logger, schema, schemaError, authKeys]);
 

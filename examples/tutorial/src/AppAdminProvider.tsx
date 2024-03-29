@@ -10,7 +10,6 @@ import {
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { useAdminClient } from './ClientUtils.js';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 import { isAdminCloudinaryImage } from './SchemaTypes.js';
@@ -24,7 +23,6 @@ export function AppAdminProvider({ children }: Props) {
   const args = useMemo(
     () => ({
       adapter: new AdminAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
     }),
     []
   );

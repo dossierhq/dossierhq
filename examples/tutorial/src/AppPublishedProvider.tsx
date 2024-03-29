@@ -7,7 +7,6 @@ import {
   type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from './AuthConfig.js';
 import { usePublishedClient } from './ClientUtils.js';
 import { CLOUDINARY_CLOUD_NAME } from './CloudinaryConfig.js';
 import { isPublishedCloudinaryImage } from './SchemaTypes.js';
@@ -21,7 +20,6 @@ export function AppPublishedProvider({ children }: Props) {
   const args = useMemo(
     () => ({
       adapter: new PublishedAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
     }),
     []
   );

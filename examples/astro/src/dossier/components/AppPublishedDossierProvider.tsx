@@ -14,7 +14,6 @@ import {
   type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { DISPLAY_AUTH_KEYS } from '../config/AuthKeyConfig.js';
 import { fetchJsonResult } from '../utils/fetchJsonResult.js';
 
 type BackendContext = ClientContext;
@@ -38,7 +37,6 @@ export function AppPublishedDossierProvider({ children }: { children: React.Reac
     () => ({
       publishedClient: createBackendPublishedClient(),
       adapter: new PublishedContextAdapter(),
-      authKeys: DISPLAY_AUTH_KEYS,
     }),
     [],
   );
