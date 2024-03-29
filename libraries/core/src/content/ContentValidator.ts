@@ -12,12 +12,12 @@ import type { ContentValuePath } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
 import {
+  isComponentItemField,
   isEntityItemField,
   isLocationItemField,
   isNumberItemField,
   isRichTextTextNode,
   isStringItemField,
-  isComponentItemField,
 } from './ContentTypeUtils.js';
 
 export interface SaveValidationIssue {
@@ -379,7 +379,7 @@ export function validateTraverseNodeForPublish(
         node.kind === 'component'
       ) {
         const adminTypeSpec = adminSchema.getComponentTypeSpecification(node.typeName);
-        if (adminTypeSpec && adminTypeSpec.adminOnly) {
+        if (adminTypeSpec?.adminOnly) {
           return {
             type: 'publish',
             path: node.path,
