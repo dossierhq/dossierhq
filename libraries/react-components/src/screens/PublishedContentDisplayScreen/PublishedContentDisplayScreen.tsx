@@ -27,7 +27,7 @@ import { PublishedEntitySelectorDialog } from '../../components/PublishedEntityS
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayStateContext } from '../../contexts/EntityDisplayStateContext.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { usePublishedEntity } from '../../published/hooks/usePublishedEntity.js';
+import { usePublishedEntity } from '../../hooks/usePublishedEntity.js';
 import {
   EntityDisplayActions,
   reduceEntityDisplayState,

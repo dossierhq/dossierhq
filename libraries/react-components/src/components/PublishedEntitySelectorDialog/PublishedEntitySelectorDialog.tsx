@@ -2,10 +2,8 @@ import type { EntityReference, PublishedEntity } from '@dossierhq/core';
 import { Dialog2, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
-import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { usePublishedEntitySearchFilters } from '../../published/hooks/usePublishedEntitySearchFilters.js';
-import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
+import { usePublishedEntitySearchFilters } from '../../hooks/usePublishedEntitySearchFilters.js';
+import { usePublishedLoadEntitySearch } from '../../hooks/usePublishedLoadEntitySearch.js';
 import {
   SearchEntityStateActions,
   initializeSearchEntityState,
@@ -15,6 +13,8 @@ import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/A
 import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
 import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
+import { PublishedEntityList } from '../PublishedEntityList/PublishedEntityList.js';
+import { PublishedEntityMapMarker } from '../PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedEntitySearchToolbar } from '../PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 
 interface PublishedEntitySelectorDialogProps {

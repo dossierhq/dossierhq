@@ -1,14 +1,14 @@
 import type {
+  Component,
   ErrorResult,
   ErrorType,
   PublishedClient,
   PublishedEntity,
-  Component,
 } from '@dossierhq/core';
 import { PublishedSchema } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { CACHE_KEYS } from '../../utils/CacheUtils.js';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = string;
 type FetcherData = PublishedSchema;

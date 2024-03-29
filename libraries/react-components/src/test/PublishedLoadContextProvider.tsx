@@ -4,7 +4,7 @@ import {
   DISPLAY_AUTH_KEYS,
   TestContextAdapter,
   createBackendPublishedClient,
-} from '../../test/TestContextAdapter';
+} from './TestContextAdapter';
 import { PublishedDossierProvider } from '../components/PublishedDossierProvider/PublishedDossierProvider.js';
 
 interface Props {

@@ -9,14 +9,14 @@ import {
 } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
-import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
+import { usePublishedLoadEntitySearch } from '../../hooks/usePublishedLoadEntitySearch.js';
 import {
   SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
+import { PublishedEntityMapMarker } from '../PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 
 interface PublishedLocationDisplayDialogProps {
   title: string;

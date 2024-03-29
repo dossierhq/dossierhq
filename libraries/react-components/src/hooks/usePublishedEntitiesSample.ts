@@ -4,12 +4,12 @@ import type {
   ErrorResult,
   ErrorType,
   PublishedClient,
-  PublishedEntitySharedQuery,
   PublishedEntity,
+  PublishedEntitySharedQuery,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { CACHE_KEYS } from '../../utils/CacheUtils.js';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<
   [string, PublishedEntitySharedQuery | undefined, EntitySamplingOptions | undefined]

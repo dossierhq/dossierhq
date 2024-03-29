@@ -3,7 +3,7 @@ import { Button, Dialog2, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { usePublishedEntitiesTotalCount } from '../../published/hooks/usePublishedEntitiesTotalCount.js';
+import { usePublishedEntitiesTotalCount } from '../../hooks/usePublishedEntitiesTotalCount.js';
 
 interface Props {
   entityReference: EntityReference;

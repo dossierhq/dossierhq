@@ -5,12 +5,12 @@ import type {
   ErrorType,
   Paging,
   PublishedClient,
-  PublishedEntityQuery,
   PublishedEntity,
+  PublishedEntityQuery,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { CACHE_KEYS } from '../../utils/CacheUtils.js';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<[string, PublishedEntityQuery | undefined, Paging | undefined]>;
 type FetcherData<T> = Connection<Edge<T, ErrorType>> | null;

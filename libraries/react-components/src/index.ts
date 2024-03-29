@@ -1,6 +1,7 @@
 export { AdminDossierProvider } from './components/AdminDossierProvider/AdminDossierProvider.js';
 export type { FieldDisplayProps } from './components/EntityDisplay/FieldDisplay.js';
 export type { FieldEditorProps } from './components/EntityEditor/FieldEditor.js';
+export { PublishedDossierProvider } from './components/PublishedDossierProvider/PublishedDossierProvider.js';
 export { AdminDossierContext } from './contexts/AdminDossierContext.js';
 export type {
   AdminDossierContextAdapter,
@@ -11,7 +12,6 @@ export type {
   PublishedDossierContextAdapter,
   RichTextComponentDisplayProps,
 } from './contexts/PublishedDossierContext.js';
-export { PublishedDossierProvider } from './published/components/PublishedDossierProvider/PublishedDossierProvider.js';
 export { ChangelogListScreen } from './screens/ChangelogListScreen/ChangelogListScreen.js';
 export { ContentEditorScreen } from './screens/ContentEditorScreen/ContentEditorScreen.js';
 export { ContentListScreen } from './screens/ContentListScreen/ContentListScreen.js';

@@ -3,18 +3,18 @@ import type {
   Edge,
   EntitySamplingPayload,
   ErrorType,
+  PublishedEntity,
   PublishedEntityQuery,
   PublishedEntitySharedQuery,
-  PublishedEntity,
 } from '@dossierhq/core';
 import type { Dispatch } from 'react';
 import { useContext, useEffect } from 'react';
-import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../contexts/PublishedDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { usePublishedEntities } from './usePublishedEntities.js';
 import { usePublishedEntitiesSample } from './usePublishedEntitiesSample.js';
 import { usePublishedEntitiesTotalCount } from './usePublishedEntitiesTotalCount.js';

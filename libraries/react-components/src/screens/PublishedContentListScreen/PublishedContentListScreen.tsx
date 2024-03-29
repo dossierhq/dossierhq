@@ -2,12 +2,12 @@
 import type { PublishedEntity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
+import { PublishedEntityList } from '../../components/PublishedEntityList/PublishedEntityList.js';
+import { PublishedEntityMapMarker } from '../../components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedEntitySearchToolbar } from '../../components/PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import { PublishedEntityList } from '../../published/components/PublishedEntityList/PublishedEntityList.js';
-import { PublishedEntityMapMarker } from '../../published/components/PublishedEntityMapMarker/PublishedEntityMapMarker.js';
-import { usePublishedEntitySearchFilters } from '../../published/hooks/usePublishedEntitySearchFilters.js';
-import { usePublishedLoadEntitySearch } from '../../published/hooks/usePublishedLoadEntitySearch.js';
+import { usePublishedEntitySearchFilters } from '../../hooks/usePublishedEntitySearchFilters.js';
+import { usePublishedLoadEntitySearch } from '../../hooks/usePublishedLoadEntitySearch.js';
 import {
   SearchEntityStateActions,
   reduceSearchEntityState,

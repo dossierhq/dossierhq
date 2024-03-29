@@ -3,14 +3,14 @@ import { PublishedEntityQueryOrder } from '@dossierhq/core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
-import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { AuthKeyTag } from '../../../shared/components/AuthKeyTag/AuthKeyTag.js';
-import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
+import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 
 interface Props {
   searchEntityState: SearchEntityState;

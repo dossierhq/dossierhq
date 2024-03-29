@@ -4,9 +4,9 @@ import { useMemo, type ReactNode } from 'react';
 import type {
   PublishedDossierContextAdapter,
   PublishedDossierContextValue,
-} from '../../../contexts/PublishedDossierContext.js';
-import { PublishedDossierContext } from '../../../contexts/PublishedDossierContext.js';
-import type { DisplayAuthKey } from '../../../shared/types/DisplayAuthKey.js';
+} from '../../contexts/PublishedDossierContext.js';
+import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
+import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
 
 interface Props {
