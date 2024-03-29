@@ -2,6 +2,12 @@
   "name": "@dossierhq/sql.js",
   "entries": [
     {
+      "version": "0.6.1",
+      "tag": "@dossierhq/sql.js_v0.6.1",
+      "date": "Fri, 29 Mar 2024 16:34:07 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.6.0",
       "tag": "@dossierhq/sql.js_v0.6.0",
       "date": "Fri, 29 Mar 2024 16:18:10 GMT",
