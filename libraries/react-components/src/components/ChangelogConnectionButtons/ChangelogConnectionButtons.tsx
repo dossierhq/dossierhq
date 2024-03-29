@@ -5,8 +5,8 @@ import {
   type ChangelogState,
   type ChangelogStateAction,
 } from '../../reducers/ChangelogReducer/ChangelogReducer.js';
-import { ConnectionPagingButtons } from '../../shared/components/ConnectionPagingButtons/ConnectionPagingButtons.js';
-import { ConnectionPagingCount } from '../../shared/components/ConnectionPagingCount/ConnectionPagingCount.js';
+import { ConnectionPagingButtons } from '../ConnectionPagingButtons/ConnectionPagingButtons.js';
+import { ConnectionPagingCount } from '../ConnectionPagingCount/ConnectionPagingCount.js';
 
 interface Props {
   changelogState: ChangelogState;

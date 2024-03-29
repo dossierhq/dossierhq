@@ -7,7 +7,7 @@ import type {
 } from '../../contexts/AdminDossierContext.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminSchema } from '../../hooks/useAdminSchema.js';
-import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
+import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
 interface Props {
   adapter: AdminDossierContextAdapter;

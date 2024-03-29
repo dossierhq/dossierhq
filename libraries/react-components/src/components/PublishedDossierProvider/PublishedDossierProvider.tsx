@@ -6,8 +6,8 @@ import type {
   PublishedDossierContextValue,
 } from '../../contexts/PublishedDossierContext.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
 import { usePublishedSchema } from '../../hooks/usePublishedSchema.js';
+import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
 interface Props {
   adapter: PublishedDossierContextAdapter;

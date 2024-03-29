@@ -5,7 +5,11 @@ import { useCallback, useContext, useReducer, useState, type ReactNode } from 'r
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../../components/AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';
+import { AuthKeyTagSelector } from '../../components/AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../../components/EntityMap/EntityMap.js';
+import { SearchOrSampleEntitiesButtons } from '../../components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 import { StatusTagSelector } from '../../components/StatusTagSelector/StatusTagSelector.js';
+import { TypeTagSelector } from '../../components/TypeTagSelector/TypeTagSelector.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
@@ -17,10 +21,6 @@ import {
   initializeSearchEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
-import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
-import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
-import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
-import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
 
 export interface ContentListScreenProps {
   header?: ReactNode;

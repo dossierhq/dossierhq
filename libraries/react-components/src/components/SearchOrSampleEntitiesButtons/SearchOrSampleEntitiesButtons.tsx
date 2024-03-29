@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
-} from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+} from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
+import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SampleEntitiesOptionsCount } from '../SampleEntitiesOptionsCount/SampleEntitiesOptionsCount.js';
 import { SearchEntityPagingButtons } from '../SearchEntityPagingButtons/SearchEntityPagingButtons.js';
 import { SearchEntityPagingCount } from '../SearchEntityPagingCount/SearchEntityPagingCount.js';

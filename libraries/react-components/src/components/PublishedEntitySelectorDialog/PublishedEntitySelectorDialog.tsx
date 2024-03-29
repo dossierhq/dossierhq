@@ -9,13 +9,13 @@ import {
   initializeSearchEntityState,
   reduceSearchEntityState,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
-import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
-import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
-import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
+import { AuthKeyTagSelector } from '../AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../EntityMap/EntityMap.js';
 import { PublishedEntityList } from '../PublishedEntityList/PublishedEntityList.js';
 import { PublishedEntityMapMarker } from '../PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 import { PublishedEntitySearchToolbar } from '../PublishedEntitySearchToolbar/PublishedEntitySearchToolbar.js';
+import { SearchOrSampleEntitiesButtons } from '../SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
+import { TypeTagSelector } from '../TypeTagSelector/TypeTagSelector.js';
 
 interface PublishedEntitySelectorDialogProps {
   title: string;

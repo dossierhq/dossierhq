@@ -1,7 +1,7 @@
 import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
 import { getPagingInfo } from '@dossierhq/core';
 import { ButtonDropdown } from '@dossierhq/design';
-import { numberWithThousandsSeparator } from '../../../utils/NumberDisplayUtils.js';
+import { numberWithThousandsSeparator } from '../../utils/NumberDisplayUtils.js';
 
 interface Props {
   connection: Connection<Edge<unknown, ErrorType>> | null | undefined;

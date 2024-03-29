@@ -12,20 +12,20 @@ import {
   type Dispatch,
 } from 'react';
 import {
+  initializeAuthKeySelectorState,
+  reduceAuthKeySelectorState,
+} from '../components/AuthKeySelector/AuthKeySelector.js';
+import {
   initializeStatusSelectorState,
   reduceStatusSelectorState,
 } from '../components/StatusSelector/StatusSelector.js';
+import type { TypeItem } from '../components/TypeSelector/TypeSelector.js';
 import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import {
-  initializeAuthKeySelectorState,
-  reduceAuthKeySelectorState,
-} from '../shared/components/AuthKeySelector/AuthKeySelector.js';
-import type { TypeItem } from '../shared/components/TypeSelector/TypeSelector.js';
 
 export function useAdminEntitySearchFilters(
   searchEntityState: SearchEntityState,

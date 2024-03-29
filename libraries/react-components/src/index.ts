@@ -18,5 +18,5 @@ export { ContentListScreen } from './screens/ContentListScreen/ContentListScreen
 export { PublishedContentDisplayScreen } from './screens/PublishedContentDisplayScreen/PublishedContentDisplayScreen.js';
 export { PublishedContentListScreen } from './screens/PublishedContentListScreen/PublishedContentListScreen.js';
 export { SchemaEditorScreen } from './screens/SchemaEditorScreen/SchemaEditorScreen.js';
-export type { DisplayAuthKey } from './shared/types/DisplayAuthKey.js';
+export type { DisplayAuthKey } from './types/DisplayAuthKey.js';
 export { useCachingAdminMiddleware } from './utils/CachingAdminMiddleware.js';

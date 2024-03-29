@@ -4,10 +4,6 @@ import { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
-import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
-import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
-import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
-import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
 import {
   SearchEntityStateActions,
   initializeSearchEntityState,
@@ -16,7 +12,11 @@ import {
 import { AdminEntityList } from '../AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { AdminEntitySearchToolbar } from '../AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';
+import { AuthKeyTagSelector } from '../AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../EntityMap/EntityMap.js';
+import { SearchOrSampleEntitiesButtons } from '../SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 import { StatusTagSelector } from '../StatusTagSelector/StatusTagSelector.js';
+import { TypeTagSelector } from '../TypeTagSelector/TypeTagSelector.js';
 
 interface AdminEntitySelectorDialogProps {
   title: string;

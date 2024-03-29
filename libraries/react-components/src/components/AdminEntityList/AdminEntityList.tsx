@@ -9,8 +9,8 @@ import type {
   SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
-import type { DisplayAuthKey } from '../../shared/types/DisplayAuthKey.js';
+import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
+import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag.js';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
 interface Props {

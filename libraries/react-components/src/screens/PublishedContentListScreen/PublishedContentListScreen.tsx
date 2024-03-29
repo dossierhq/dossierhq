@@ -16,10 +16,10 @@ import {
   initializeSearchEntityStateFromUrlQuery,
   useSynchronizeUrlQueryAndSearchEntityState,
 } from '../../reducers/SearchEntityReducer/SearchEntityUrlSynchronizer.js';
-import { AuthKeyTagSelector } from '../../shared/components/AuthKeyTagSelector/AuthKeyTagSelector.js';
-import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
-import { SearchOrSampleEntitiesButtons } from '../../shared/components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
-import { TypeTagSelector } from '../../shared/components/TypeTagSelector/TypeTagSelector.js';
+import { AuthKeyTagSelector } from '../../components/AuthKeyTagSelector/AuthKeyTagSelector.js';
+import { EntityMap } from '../../components/EntityMap/EntityMap.js';
+import { SearchOrSampleEntitiesButtons } from '../../components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
+import { TypeTagSelector } from '../../components/TypeTagSelector/TypeTagSelector.js';
 
 export interface PublishedContentListScreenProps {
   header?: ReactNode;

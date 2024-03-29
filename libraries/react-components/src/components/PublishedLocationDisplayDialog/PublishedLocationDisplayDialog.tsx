@@ -15,7 +15,7 @@ import {
   initializeSearchEntityState,
   reduceSearchEntityState,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { EntityMap } from '../../shared/components/EntityMap/EntityMap.js';
+import { EntityMap } from '../EntityMap/EntityMap.js';
 import { PublishedEntityMapMarker } from '../PublishedEntityMapMarker/PublishedEntityMapMarker.js';
 
 interface PublishedLocationDisplayDialogProps {

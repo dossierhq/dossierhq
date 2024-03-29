@@ -1,11 +1,11 @@
 import { Button2, Dialog2, Row, Tag, Text } from '@dossierhq/design';
 import { useContext, useState } from 'react';
 import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDialog/AdminEntityHistoryDialog.js';
+import { AuthKeyTag } from '../../components/AuthKeyTag/AuthKeyTag.js';
 import { EntityChangelogList } from '../../components/EntityChangelogList/EntityChangelogList.js';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
-import { AuthKeyTag } from '../../shared/components/AuthKeyTag/AuthKeyTag.js';
 import { assertIsDefined } from '../../utils/AssertUtils.js';
 import { AdminEntityLinks } from './AdminEntityLinks.js';
 
