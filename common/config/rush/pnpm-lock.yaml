@@ -1730,8 +1730,8 @@ importers:
         specifier: ~0.3.21
         version: 0.3.21(@rushstack/heft@0.66.1)(@types/node@20.11.28)
       '@rushstack/heft-typescript-plugin':
-        specifier: ~0.4.0
-        version: 0.4.0(@rushstack/heft@0.66.1)(@types/node@20.11.28)
+        specifier: ~0.5.0
+        version: 0.5.0(@rushstack/heft@0.66.1)(@types/node@20.11.28)
 
   ../../stack/eslint-config-generic:
     dependencies:
@@ -2012,8 +2012,8 @@ importers:
         specifier: ~0.3.21
         version: 0.3.21(@rushstack/heft@0.66.1)(@types/node@20.11.28)
       '@rushstack/heft-typescript-plugin':
-        specifier: ~0.4.0
-        version: 0.4.0(@rushstack/heft@0.66.1)(@types/node@20.11.28)
+        specifier: ~0.5.0
+        version: 0.5.0(@rushstack/heft@0.66.1)(@types/node@20.11.28)
       '@storybook/addon-actions':
         specifier: ~8.0.0
         version: 8.0.0
@@ -7795,8 +7795,8 @@ packages:
       - '@types/node'
     dev: true
 
-  /@rushstack/heft-typescript-plugin@0.4.0(@rushstack/heft@0.66.1)(@types/node@20.11.28):
-    resolution: {integrity: sha512-NhZ+q7Mm2DHkiywpYujpOWGgF+RZMdUjiiD/88ky4DaYSw+tmw5skyJkP48yzucXdy5dI8cWxJp5+Qv23U2LZA==}
+  /@rushstack/heft-typescript-plugin@0.5.0(@rushstack/heft@0.66.1)(@types/node@20.11.28):
+    resolution: {integrity: sha512-w4kb54MGwA5KL1XuKPGy4amxNp9n8S3wY8u1bsRGYB8wg4s6iMdkuKIfflRnmWVBosVN9/mkfFJfOzvHqK2y5g==}
     peerDependencies:
       '@rushstack/heft': 0.66.2
     dependencies:
