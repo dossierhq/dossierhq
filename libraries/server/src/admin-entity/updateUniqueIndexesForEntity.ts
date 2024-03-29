@@ -57,7 +57,7 @@ export async function updateUniqueIndexesForEntity(
   const valuesToRemove: DatabaseAdminEntityUniqueIndexReference[] = [];
   for (const existingValue of existingResult.value) {
     const indexValues = targetValues.get(existingValue.index);
-    if (indexValues && indexValues.has(existingValue.value)) {
+    if (indexValues?.has(existingValue.value)) {
       continue;
     }
     valuesToRemove.push({ index: existingValue.index, value: existingValue.value });

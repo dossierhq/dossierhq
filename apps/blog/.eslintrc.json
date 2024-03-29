@@ -1,8 +1,10 @@
 {
   "extends": ["next", "next/core-web-vitals"],
   "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
   "rules": {
-    "@typescript-eslint/consistent-type-imports": ["warn"],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
