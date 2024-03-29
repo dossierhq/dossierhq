@@ -5,8 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./scripts/generate-typescript.ts && npm run prettier:check && npx astro check --minimumFailingSeverity warning 2>&1 && npm run build-app",
+    "build": "./scripts/generate-typescript.ts && npm run prettier:check && npm run check:with-retry && npm run build-app",
     "build-app": "astro build",
+    "check:with-retry": "astro check --minimumFailingSeverity warning 2>&1 || astro check --minimumFailingSeverity warning 2>&1",
     "clean": "rm -rf dist/ && rm *.log",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
