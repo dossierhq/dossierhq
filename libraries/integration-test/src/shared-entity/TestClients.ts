@@ -46,8 +46,6 @@ async function sessionForPrincipal(
   return await server.createSession({
     ...principalConfig,
     identifier,
-    logger: null,
-    databasePerformance: null,
     readonly: sessionType === 'readonly',
   });
 }

@@ -56,9 +56,7 @@ export async function createAdapterAndServer<
     await server.createSession({
       provider: 'sys',
       identifier: 'alice',
-      defaultAuthKeys: null,
       logger: createConsoleLogger(console),
-      databasePerformance: null,
     })
   ).valueOrThrow();
 
@@ -70,9 +68,7 @@ export async function createAdapterAndServer<
   const bobSession = server.createSession({
     provider: 'sys',
     identifier: 'bob',
-    defaultAuthKeys: null,
     logger: createConsoleLogger(console),
-    databasePerformance: null,
   });
   const bobAdminClient = server.createAdminClient<TAdminClient>(
     () => bobSession,

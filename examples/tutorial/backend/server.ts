@@ -45,13 +45,7 @@ async function createSessionForRequest(server: Server, req: Request) {
     provider = 'auth0';
     identifier = req.auth.sub;
   }
-  return await server.createSession({
-    provider,
-    identifier,
-    defaultAuthKeys: null,
-    logger: null,
-    databasePerformance: null,
-  });
+  return await server.createSession({ provider, identifier });
 }
 
 export function getAdminClientForRequest(server: Server, req: Request) {
@@ -117,9 +111,6 @@ export async function initialize(logger: Logger) {
   const initSession = server.createSession({
     provider: 'sys',
     identifier: 'init',
-    defaultAuthKeys: null,
-    logger: null,
-    databasePerformance: null,
   });
   const adminClient = server.createAdminClient<AppAdminClient>(() => initSession);
 

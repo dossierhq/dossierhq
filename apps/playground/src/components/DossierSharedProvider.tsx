@@ -122,7 +122,6 @@ async function loginUser(server: Server, userId: string, cache: Cache<any>, muta
     identifier: userId,
     defaultAuthKeys: DISPLAY_AUTH_KEYS.map((it) => it.authKey),
     logger: SESSION_LOGGER,
-    databasePerformance: null,
   });
 
   if (result.isError()) return result;

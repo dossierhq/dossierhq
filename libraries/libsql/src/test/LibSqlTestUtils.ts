@@ -31,9 +31,6 @@ export async function initializeServer(
   const sessionResult = server.createSession({
     provider: 'test',
     identifier: 'schema-loader',
-    defaultAuthKeys: [],
-    logger: null,
-    databasePerformance: null,
   });
   const client = server.createAdminClient(() => sessionResult);
 

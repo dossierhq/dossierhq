@@ -13,13 +13,7 @@ async function generateTypes(logger: Logger, adminSchema: AdminSchema, filename:
 }
 
 async function getAdminSchema(server: Server) {
-  const initSession = server.createSession({
-    provider: 'sys',
-    identifier: 'init',
-    defaultAuthKeys: null,
-    logger: null,
-    databasePerformance: null,
-  });
+  const initSession = server.createSession({ provider: 'sys', identifier: 'init' });
   const adminClient = server.createAdminClient(() => initSession);
   const schemaResult = await adminClient.getSchemaSpecification();
   return new AdminSchema(schemaResult.valueOrThrow());

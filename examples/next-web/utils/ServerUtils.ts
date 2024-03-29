@@ -26,9 +26,6 @@ export async function getSessionContextForRequest(
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'john-smith',
-    defaultAuthKeys: null,
-    logger: null,
-    databasePerformance: null,
   });
   if (sessionResult.isError()) {
     return notOk.NotAuthenticated(
@@ -55,9 +52,6 @@ export async function getServerConnection(): Promise<{ server: Server }> {
         await server.createSession({
           provider: 'sys',
           identifier: 'schemaloader',
-          defaultAuthKeys: [],
-          logger: null,
-          databasePerformance: null,
         })
       ).valueOrThrow();
       const client = server.createAdminClient(context);

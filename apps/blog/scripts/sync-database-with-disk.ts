@@ -121,12 +121,7 @@ async function main(filename: string, args: typeof parsedArgs) {
       await updatePrincipalsOnDisk(server, principalsFilename);
     }
 
-    const authResult = await server.createSession({
-      ...SYSTEM_USERS.serverRenderer,
-      defaultAuthKeys: null,
-      logger: null,
-      databasePerformance: null,
-    });
+    const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
     const adminClient = server.createAdminClient<AppAdminClient>(async () => authResult);
 
     const { unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(adminClient);

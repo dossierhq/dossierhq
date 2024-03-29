@@ -50,9 +50,6 @@ async function setUpRealServerWithSession(
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'identifier',
-    defaultAuthKeys: [''],
-    logger: null,
-    databasePerformance: null,
   });
   assertOkResult(sessionResult);
   const { context } = sessionResult.value;
@@ -63,9 +60,6 @@ async function setUpRealServerWithSession(
   const sessionOtherResult = server.createSession({
     provider: 'test',
     identifier: 'other',
-    defaultAuthKeys: [''],
-    logger: null,
-    databasePerformance: null,
   });
   const adminClientOther = server.createAdminClient(() => sessionOtherResult);
   const publishedClient = server.createPublishedClient(context);

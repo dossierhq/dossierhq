@@ -33,8 +33,6 @@ async function createSession(
     provider: options?.provider ?? 'test',
     identifier: options?.identifier ?? randomIdentifier(),
     defaultAuthKeys: options?.defaultAuthKeys ?? [''],
-    logger: null,
-    databasePerformance: null,
   });
 }
 

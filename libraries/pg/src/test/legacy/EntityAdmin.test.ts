@@ -71,8 +71,6 @@ beforeAll(async () => {
     provider: 'test',
     identifier: 'other',
     defaultAuthKeys: [''],
-    logger: null,
-    databasePerformance: null,
   });
   adminClientOther = server.createAdminClient(() => sessionOtherResult);
 

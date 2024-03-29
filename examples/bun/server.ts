@@ -20,9 +20,7 @@ try {
   const sessionResult = await server.createSession({
     provider: 'sys',
     identifier: 'test',
-    defaultAuthKeys: null,
     logger,
-    databasePerformance: null,
   });
   if (sessionResult.isError()) throw sessionResult.toError();
   const adminClient = server.createAdminClient(sessionResult.value.context);

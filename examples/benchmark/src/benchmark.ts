@@ -510,9 +510,6 @@ export async function initializeAndRunTests({
     const sessionResult = await server.createSession({
       provider: 'test',
       identifier: 'principal1',
-      defaultAuthKeys: [''],
-      logger: null,
-      databasePerformance: null,
     });
     if (sessionResult.isError()) return sessionResult;
 

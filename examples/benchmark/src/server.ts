@@ -10,9 +10,6 @@ export async function initializeServer(databaseAdapter: DatabaseAdapter) {
   const sessionResult = await server.createSession({
     provider: 'sys',
     identifier: 'schemaloader',
-    defaultAuthKeys: null,
-    logger: null,
-    databasePerformance: null,
   });
   if (sessionResult.isError()) return sessionResult;
 

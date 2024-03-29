@@ -8,12 +8,7 @@ export function getPublishedClientForServerComponent(): Promise<AppPublishedClie
   if (!publishedClientPromise) {
     publishedClientPromise = (async () => {
       const { server } = await getServerConnection();
-      const authResult = await server.createSession({
-        ...SYSTEM_USERS.serverRenderer,
-        defaultAuthKeys: null,
-        logger: null,
-        databasePerformance: null,
-      });
+      const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
       return server.createPublishedClient<AppPublishedClient>(authResult.valueOrThrow().context);
     })();
   }

@@ -307,12 +307,7 @@ async function main() {
   console.log('Starting generating atom feed...');
   const { server } = (await initializeServer()).valueOrThrow();
   try {
-    const authResult = await server.createSession({
-      ...SYSTEM_USERS.serverRenderer,
-      defaultAuthKeys: null,
-      logger: null,
-      databasePerformance: null,
-    });
+    const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
     const publishedClient = server
       .createPublishedClient<AppPublishedClient>(async () => authResult)
       .toExceptionClient();

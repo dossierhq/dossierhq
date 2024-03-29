@@ -115,9 +115,9 @@ export interface Server<
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthKeys: readonly string[] | null;
-    logger: Logger | null;
-    databasePerformance: DatabasePerformanceCallbacks | null;
+    defaultAuthKeys?: readonly string[] | null;
+    logger?: Logger | null;
+    databasePerformance?: DatabasePerformanceCallbacks | null;
     readonly: true;
   }): PromiseResult<
     CreateSessionPayload<ReadOnlySession>,
@@ -126,9 +126,9 @@ export interface Server<
   createSession(params: {
     provider: string;
     identifier: string;
-    defaultAuthKeys: readonly string[] | null;
-    logger: Logger | null;
-    databasePerformance: DatabasePerformanceCallbacks | null;
+    defaultAuthKeys?: readonly string[] | null;
+    logger?: Logger | null;
+    databasePerformance?: DatabasePerformanceCallbacks | null;
     readonly?: boolean;
   }): PromiseResult<
     CreateSessionPayload<WriteSession>,
@@ -399,15 +399,15 @@ export async function createServer<
     }: {
       provider: string;
       identifier: string;
-      defaultAuthKeys: readonly string[] | null;
-      logger: Logger | null;
-      databasePerformance: DatabasePerformanceCallbacks | null;
+      defaultAuthKeys?: readonly string[] | null;
+      logger?: Logger | null;
+      databasePerformance?: DatabasePerformanceCallbacks | null;
       readonly?: boolean;
     }): PromiseResult<
       CreateSessionPayload<TSession>,
       typeof ErrorType.BadRequest | typeof ErrorType.Generic
     > => {
-      const authContext = serverImpl.createInternalContext(databasePerformance);
+      const authContext = serverImpl.createInternalContext(databasePerformance ?? null);
       const sessionResult = await authCreateSession(
         databaseAdapter,
         authContext,
@@ -420,9 +420,9 @@ export async function createServer<
 
       const contextResult = serverImpl.createSessionContext(
         session,
-        defaultAuthKeys,
+        defaultAuthKeys ?? null,
         sessionLogger ?? serverLogger ?? null,
-        databasePerformance,
+        databasePerformance ?? null,
       );
       if (contextResult.isError()) return contextResult;
 

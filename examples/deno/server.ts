@@ -2,7 +2,6 @@
 import {
   BackgroundEntityProcessorPlugin,
   createServer,
-  NoneAndSubjectAuthorizationAdapter,
 } from "@dossierhq/server";
 import { getLogger } from "./Logger.ts";
 import { createDotenvAdapter } from "./ServerUtils.ts";
@@ -12,7 +11,6 @@ const logger = getLogger();
 const serverResult = await createServer({
   databaseAdapter: createDotenvAdapter(),
   logger,
-  authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
 });
 const server = serverResult.valueOrThrow();
 
@@ -24,9 +22,7 @@ try {
   const sessionResult = await server.createSession({
     provider: "sys",
     identifier: "test",
-    defaultAuthKeys: ["", "subject"],
     logger,
-    databasePerformance: null,
   });
   if (sessionResult.isError()) throw sessionResult.toError();
   const adminClient = server.createAdminClient(sessionResult.value.context);

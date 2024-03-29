@@ -104,8 +104,6 @@ async function createSessionForPrincipal(
     provider: principalConfig.provider,
     identifier: principalConfig.identifier,
     defaultAuthKeys: principalConfig.defaultAuthKeys,
-    logger: null,
-    databasePerformance: null,
   });
   if (sessionResult.isError()) return sessionResult;
   const sessionContext = sessionResult.value.context;

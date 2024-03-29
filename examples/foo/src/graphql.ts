@@ -28,9 +28,6 @@ async function createSessionContext(server: Server, headers: RequestHeaders) {
   const sessionResult = await server.createSession({
     provider: provider.value,
     identifier: identifier.value,
-    defaultAuthKeys: null,
-    logger: null,
-    databasePerformance: null,
   });
   return sessionResult;
 }

@@ -64,9 +64,6 @@ export async function createPostgresTestServerAndClient(): PromiseResult<
   const sessionResult = await server.createSession({
     provider: 'test',
     identifier: 'identifier',
-    defaultAuthKeys: [''],
-    logger: null,
-    databasePerformance: null,
   });
   if (sessionResult.isError()) {
     await server.shutdown(); // ignore result
@@ -100,9 +97,6 @@ export async function initializeIntegrationTestServer({
     server.createSession({
       provider: 'test',
       identifier: 'schema-loader',
-      defaultAuthKeys: null,
-      logger: null,
-      databasePerformance: null,
     }),
   );
 

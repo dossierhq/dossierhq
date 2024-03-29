@@ -57,8 +57,6 @@ const expressMiddleWare = (router) => {
         provider: 'sys',
         identifier: 'storybook',
         defaultAuthKeys,
-        logger: null,
-        databasePerformance: null,
       });
       const adminClient = server.createAdminClient(() => sessionResult, [LoggingClientMiddleware]);
       const modifies = AdminClientModifyingOperations.has(name);
@@ -77,8 +75,6 @@ const expressMiddleWare = (router) => {
         provider: 'sys',
         identifier: 'storybook',
         defaultAuthKeys,
-        logger: null,
-        databasePerformance: null,
       });
       const adminClient = server.createPublishedClient(
         () => sessionResult,
