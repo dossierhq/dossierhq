@@ -2,6 +2,18 @@
   "name": "@dossierhq/react-components",
   "entries": [
     {
+      "version": "0.6.0",
+      "tag": "@dossierhq/react-components_v0.6.0",
+      "date": "Fri, 29 Mar 2024 16:18:10 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make specifying authKeys optional. Hide default authkey when there are no authKeys. Default entity editor to authKey '' if no pattern is defined. Support default auth key."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.16",
       "tag": "@dossierhq/react-components_v0.5.16",
       "date": "Sun, 25 Feb 2024 23:10:35 GMT",

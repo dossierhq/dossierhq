@@ -2,6 +2,12 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.6.0",
+      "tag": "@dossierhq/sqlite-core_v0.6.0",
+      "date": "Fri, 29 Mar 2024 16:18:10 GMT",
+      "comments": {}
+    },
+    {
       "version": "0.5.16",
       "tag": "@dossierhq/sqlite-core_v0.5.16",
       "date": "Sun, 25 Feb 2024 23:10:35 GMT",

@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Sun, 25 Feb 2024 23:10:35 GMT and should not be manually modified.
+This log was last generated on Fri, 29 Mar 2024 16:18:10 GMT and should not be manually modified.
+
+## 0.6.0
+Fri, 29 Mar 2024 16:18:10 GMT
+
+### Updates
+
+- Make specifying authKeys optional. Hide default authkey when there are no authKeys. Default entity editor to authKey '' if no pattern is defined. Support default auth key.
 
 ## 0.5.16
 Sun, 25 Feb 2024 23:10:35 GMT

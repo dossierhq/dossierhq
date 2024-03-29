@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.6.0",
+      "tag": "@dossierhq/core_v0.6.0",
+      "date": "Fri, 29 Mar 2024 16:18:10 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Types without authKeyPattern can only use '' as authKey. Default ('') can now be used as authKey."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.5.16",
       "tag": "@dossierhq/core_v0.5.16",
       "date": "Sun, 25 Feb 2024 23:10:35 GMT",
