@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Break: Replace NoneAndSubjectAuthorizationAdapter with SubjectAuthorizationAdapter and make DefaultAuthorizationAdapter the default. Support '' as default authKey. Make auth adapter optional. Add default defaultAuthKeys. Make optional args optional in createSession()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

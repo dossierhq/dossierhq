@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Break: Types without authKeyPattern can only use '' as authKey. Default ('') can now be used as authKey.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}

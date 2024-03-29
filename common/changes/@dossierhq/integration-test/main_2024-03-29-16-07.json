@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/integration-test",
+      "comment": "Switch from \"none\" to \"\" as default authKe",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/integration-test"
+}
