@@ -23,7 +23,7 @@
     "better-sqlite3": "~9.4.3",
     "body-parser": "~1.20.2",
     "dotenv": "~16.4.5",
-    "express": "~4.19.1",
+    "express": "~4.19.2",
     "express-jwt": "~8.4.1",
     "jwks-rsa": "~3.1.0",
     "leaflet": "~1.9.4",
@@ -42,7 +42,7 @@
     "concurrently": "~8.2.2",
     "nodemon": "~3.1.0",
     "tsx": "~4.7.1",
-    "typescript": "~5.4.2",
-    "vite": "~5.2.2"
+    "typescript": "~5.4.3",
+    "vite": "~5.2.7"
   }
 }

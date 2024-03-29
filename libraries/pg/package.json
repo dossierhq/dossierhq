@@ -57,13 +57,13 @@
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@rushstack/heft": "0.66.2",
-    "@types/pg": "~8.11.2",
+    "@types/pg": "~8.11.4",
     "@types/uuid": "~9.0.7",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
     "pg": "~8.11.3",
     "prettier": "3.2.5",
-    "typescript": "~5.4.2",
+    "typescript": "~5.4.3",
     "uuid": "~9.0.1",
     "vitest": "~1.4.0"
   }
