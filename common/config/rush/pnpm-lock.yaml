@@ -239,8 +239,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.9
@@ -391,8 +391,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/postgres-tools
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.9
@@ -495,8 +495,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.9
@@ -687,8 +687,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/bun':
         specifier: ~1.0.8
         version: 1.0.8
@@ -730,8 +730,8 @@ importers:
         specifier: workspace:*
         version: link:../server
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.9
@@ -773,8 +773,8 @@ importers:
         specifier: workspace:*
         version: link:../server
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/bun':
         specifier: ~1.0.8
         version: 1.0.8
@@ -813,8 +813,8 @@ importers:
         specifier: workspace:*
         version: link:../react-components
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/react':
         specifier: 18.2.58
         version: 18.2.58
@@ -844,8 +844,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@vitest/coverage-v8':
         specifier: ~1.4.0
         version: 1.4.0(vitest@1.4.0)
@@ -878,8 +878,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -909,8 +909,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -970,8 +970,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@storybook/addon-actions':
         specifier: ~8.0.0
         version: 8.0.0
@@ -1088,8 +1088,8 @@ importers:
         specifier: workspace:*
         version: link:../server
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/better-sqlite3':
         specifier: ~7.6.8
         version: 7.6.9
@@ -1143,8 +1143,8 @@ importers:
         specifier: workspace:*
         version: link:../typescript-generator
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/node':
         specifier: ~20.11.28
         version: 20.11.28
@@ -1183,8 +1183,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/leaflet':
         specifier: ~1.9.8
         version: 1.9.8
@@ -1241,8 +1241,8 @@ importers:
         specifier: ~0.6.0
         version: 0.6.0
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1290,8 +1290,8 @@ importers:
         specifier: workspace:*
         version: link:../server
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/pg':
         specifier: ~8.11.2
         version: 8.11.2
@@ -1342,8 +1342,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1424,8 +1424,8 @@ importers:
         specifier: workspace:*
         version: link:../server
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@storybook/addon-actions':
         specifier: ~8.0.0
         version: 8.0.0
@@ -1530,8 +1530,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@vitest/coverage-v8':
         specifier: ~1.4.0
         version: 1.4.0(vitest@1.4.0)
@@ -1573,8 +1573,8 @@ importers:
         specifier: workspace:*
         version: link:../server
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -1665,8 +1665,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1696,8 +1696,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@vitest/coverage-v8':
         specifier: ~1.4.0
         version: 1.4.0(vitest@1.4.0)
@@ -1724,14 +1724,14 @@ importers:
         version: 5.4.2
     devDependencies:
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.3.21
-        version: 0.3.21(@rushstack/heft@0.66.1)(@types/node@20.11.28)
+        version: 0.3.21(@rushstack/heft@0.66.2)(@types/node@20.11.28)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.5.0
-        version: 0.5.0(@rushstack/heft@0.66.1)(@types/node@20.11.28)
+        version: 0.5.0(@rushstack/heft@0.66.2)(@types/node@20.11.28)
 
   ../../stack/eslint-config-generic:
     dependencies:
@@ -1773,8 +1773,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1801,8 +1801,8 @@ importers:
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2006,14 +2006,14 @@ importers:
         specifier: ~15.2.3
         version: 15.2.3(rollup@4.13.0)
       '@rushstack/heft':
-        specifier: 0.66.1
-        version: 0.66.1(@types/node@20.11.28)
+        specifier: 0.66.2
+        version: 0.66.2(@types/node@20.11.28)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.3.21
-        version: 0.3.21(@rushstack/heft@0.66.1)(@types/node@20.11.28)
+        version: 0.3.21(@rushstack/heft@0.66.2)(@types/node@20.11.28)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.5.0
-        version: 0.5.0(@rushstack/heft@0.66.1)(@types/node@20.11.28)
+        version: 0.5.0(@rushstack/heft@0.66.2)(@types/node@20.11.28)
       '@storybook/addon-actions':
         specifier: ~8.0.0
         version: 8.0.0
@@ -7776,24 +7776,24 @@ packages:
     transitivePeerDependencies:
       - '@types/node'
 
-  /@rushstack/heft-lint-plugin@0.3.21(@rushstack/heft@0.66.1)(@types/node@20.11.28):
+  /@rushstack/heft-lint-plugin@0.3.21(@rushstack/heft@0.66.2)(@types/node@20.11.28):
     resolution: {integrity: sha512-wOlK/20EjxVJkZsIrhv+MHXm3UACydmlSonXQIuEN5vTgLFM2AHDxJLaaYiSLL08At+5oEZTty/76z4/M+bHuA==}
     peerDependencies:
       '@rushstack/heft': 0.66.1
     dependencies:
-      '@rushstack/heft': 0.66.1(@types/node@20.11.28)
+      '@rushstack/heft': 0.66.2(@types/node@20.11.28)
       '@rushstack/node-core-library': 4.0.2(@types/node@20.11.28)
       semver: 7.5.4
     transitivePeerDependencies:
       - '@types/node'
     dev: true
 
-  /@rushstack/heft-typescript-plugin@0.5.0(@rushstack/heft@0.66.1)(@types/node@20.11.28):
+  /@rushstack/heft-typescript-plugin@0.5.0(@rushstack/heft@0.66.2)(@types/node@20.11.28):
     resolution: {integrity: sha512-w4kb54MGwA5KL1XuKPGy4amxNp9n8S3wY8u1bsRGYB8wg4s6iMdkuKIfflRnmWVBosVN9/mkfFJfOzvHqK2y5g==}
     peerDependencies:
       '@rushstack/heft': 0.66.2
     dependencies:
-      '@rushstack/heft': 0.66.1(@types/node@20.11.28)
+      '@rushstack/heft': 0.66.2(@types/node@20.11.28)
       '@rushstack/heft-config-file': 0.14.14(@types/node@20.11.28)
       '@rushstack/node-core-library': 4.0.2(@types/node@20.11.28)
       '@types/tapable': 1.0.6
@@ -7803,8 +7803,8 @@ packages:
       - '@types/node'
     dev: true
 
-  /@rushstack/heft@0.66.1(@types/node@20.11.28):
-    resolution: {integrity: sha512-n96icOKWsz5TbXXgeCKey0bTTCwZBJvZ/C4AV5HBzjtDAly0HvSRnMy6Pdd0bY0jSmNJBwRLzocjytusOB0aKA==}
+  /@rushstack/heft@0.66.2(@types/node@20.11.28):
+    resolution: {integrity: sha512-1qD+R5XAU6LdLFf8/PoB8PpLs7J2/4Zs4tOmI14cf8BP/1zZ47kvKXJq9jvRNomd6C/826/vgZbcu7ycMA/t8w==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dependencies:

@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
-    "@rushstack/heft": "0.66.1",
+    "@rushstack/heft": "0.66.2",
     "@storybook/addon-actions": "~8.0.0",
     "@storybook/addon-docs": "~8.0.0",
     "@storybook/addon-essentials": "~8.0.0",

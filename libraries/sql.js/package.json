@@ -50,7 +50,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@rushstack/heft": "0.66.1",
+    "@rushstack/heft": "0.66.2",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
     "base-64": "~1.0.0",
