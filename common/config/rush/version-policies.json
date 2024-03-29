@@ -13,7 +13,7 @@
     "definitionName": "lockStepVersion",
     "policyName": "DossierFramework",
     "version": "0.6.0",
-    "nextBump": "minor"
+    "nextBump": "patch"
   },
   {
     "definitionName": "individualVersion",
