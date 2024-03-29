@@ -38,7 +38,7 @@ import {
   authCreateSyncSessionForSubject,
   verifyAuthKeysFormat,
 } from './Auth.js';
-import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+import { DefaultAuthorizationAdapter, type AuthorizationAdapter } from './AuthorizationAdapter.js';
 import {
   InternalContextImpl,
   SessionContextImpl,
@@ -283,7 +283,7 @@ export async function createServer<
   logger: serverLogger,
 }: {
   databaseAdapter: DatabaseAdapter<TDatabaseOptimizationOptions>;
-  authorizationAdapter: AuthorizationAdapter;
+  authorizationAdapter?: AuthorizationAdapter;
   logger?: Logger;
 }): PromiseResult<Server<TDatabaseOptimizationOptions>, typeof ErrorType.Generic> {
   const serverImpl = new ServerImpl({
@@ -292,6 +292,8 @@ export async function createServer<
   });
   const loadSchemaResult = await serverImpl.reloadSchema(serverImpl.createInternalContext(null));
   if (loadSchemaResult.isError()) return loadSchemaResult;
+
+  const resolvedAuthorizationAdapter = authorizationAdapter ?? DefaultAuthorizationAdapter;
 
   const server: Server<TDatabaseOptimizationOptions> = {
     shutdown() {
@@ -348,7 +350,7 @@ export async function createServer<
 
       const applyResult = await managementApplySyncEvent(
         serverImpl.getAdminSchema(),
-        authorizationAdapter,
+        resolvedAuthorizationAdapter,
         databaseAdapter,
         contextResult.value,
         event,
@@ -441,7 +443,7 @@ export async function createServer<
     ) =>
       createServerAdminClient({
         context,
-        authorizationAdapter,
+        authorizationAdapter: resolvedAuthorizationAdapter,
         databaseAdapter,
         serverImpl,
         middleware: serverImpl.resolveAdminClientMiddleware(middleware ?? []),
@@ -458,7 +460,7 @@ export async function createServer<
     ) =>
       createServerPublishedClient({
         context,
-        authorizationAdapter,
+        authorizationAdapter: resolvedAuthorizationAdapter,
         databaseAdapter,
         serverImpl,
         middleware: serverImpl.resolvePublishedClientMiddleware(middleware ?? []),

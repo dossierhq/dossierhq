@@ -3,8 +3,11 @@ export type {
   DatabasePerformanceCallbacks,
   ResolvedAuthKey,
 } from '@dossierhq/database-adapter';
-export { NoneAndSubjectAuthorizationAdapter } from './AuthorizationAdapter.js';
-export type { AuthorizationAdapter } from './AuthorizationAdapter.js';
+export {
+  DefaultAuthorizationAdapter,
+  SubjectAuthorizationAdapter,
+  type AuthorizationAdapter,
+} from './AuthorizationAdapter.js';
 export type { SessionContext } from './Context.js';
 export { createServer } from './Server.js';
 export type { CreateSessionPayload, Server, ServerPlugin } from './Server.js';

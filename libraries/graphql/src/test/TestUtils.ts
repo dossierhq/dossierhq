@@ -8,7 +8,7 @@ import type {
 } from '@dossierhq/core';
 import { AdminSchema, NoOpLogger, assertOkResult } from '@dossierhq/core';
 import type { AuthorizationAdapter } from '@dossierhq/server';
-import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import { SubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -84,7 +84,7 @@ async function setUpRealServerWithSession(
 }
 
 function createTestAuthorizationAdapter(): AuthorizationAdapter {
-  return NoneAndSubjectAuthorizationAdapter;
+  return SubjectAuthorizationAdapter;
 }
 
 /** N.B. This is insecure but needed since the default uuidv4() results in open handle for tests */

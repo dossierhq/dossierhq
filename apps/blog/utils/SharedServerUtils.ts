@@ -2,7 +2,6 @@ import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import { createConsoleLogger, ok } from '@dossierhq/core';
 import {
   BackgroundEntityProcessorPlugin,
-  NoneAndSubjectAuthorizationAdapter,
   createServer,
   type DatabaseAdapter,
 } from '@dossierhq/server';
@@ -21,7 +20,6 @@ export async function initializeServer(filename?: string) {
 async function createBlogServer(databaseAdapter: DatabaseAdapter) {
   const serverResult = await createServer({
     databaseAdapter,
-    authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
     logger,
   });
   if (serverResult.isError()) return serverResult;

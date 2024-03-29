@@ -11,7 +11,7 @@ const principals = {
   editor: {
     provider: 'sys',
     identifier: 'editor',
-    defaultAuthKeys: DEFAULT_AUTH_KEYS,
+    defaultAuthKeys: null,
     enableAdmin: true,
   },
   reader: {

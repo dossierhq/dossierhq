@@ -11,8 +11,7 @@ import type {
   Component,
 } from '@dossierhq/core';
 import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
-import { createServer, NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
+import { createServer, SubjectAuthorizationAdapter, type Server } from '@dossierhq/server';
 import BetterSqlite3, { type Database } from 'better-sqlite3';
 import { unlink } from 'fs/promises';
 
@@ -49,7 +48,7 @@ export async function createAdapterAndServer<
   const server = (
     await createServer({
       databaseAdapter,
-      authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
+      authorizationAdapter: SubjectAuthorizationAdapter,
     })
   ).valueOrThrow();
 
@@ -57,7 +56,7 @@ export async function createAdapterAndServer<
     await server.createSession({
       provider: 'sys',
       identifier: 'alice',
-      defaultAuthKeys: ['', 'subject'],
+      defaultAuthKeys: null,
       logger: createConsoleLogger(console),
       databasePerformance: null,
     })
@@ -71,7 +70,7 @@ export async function createAdapterAndServer<
   const bobSession = server.createSession({
     provider: 'sys',
     identifier: 'bob',
-    defaultAuthKeys: ['', 'subject'],
+    defaultAuthKeys: null,
     logger: createConsoleLogger(console),
     databasePerformance: null,
   });

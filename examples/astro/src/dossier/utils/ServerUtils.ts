@@ -10,7 +10,6 @@ import {
 } from '@dossierhq/core';
 import {
   BackgroundEntityProcessorPlugin,
-  NoneAndSubjectAuthorizationAdapter,
   createServer,
   type AuthorizationAdapter,
   type Server,
@@ -37,10 +36,7 @@ export async function getServer(): Promise<
       const databaseAdapterResult = await createDatabaseAdapter(logger);
       if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
-      const serverResult = await createServer({
-        databaseAdapter: databaseAdapterResult.value,
-        authorizationAdapter: createAuthenticationAdapter(),
-      });
+      const serverResult = await createServer({ databaseAdapter: databaseAdapterResult.value });
       if (serverResult.isError()) return serverResult;
       const server = serverResult.value;
 
@@ -70,10 +66,6 @@ async function createDatabaseAdapter(logger: Logger) {
     journalMode: 'wal',
   });
   return databaseAdapterResult;
-}
-
-function createAuthenticationAdapter(): AuthorizationAdapter {
-  return NoneAndSubjectAuthorizationAdapter;
 }
 
 export async function getAuthenticatedAdminClient(principalId?: PrincipalIdentifier) {

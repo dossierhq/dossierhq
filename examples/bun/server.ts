@@ -1,10 +1,6 @@
 #!/usr/bin/env -S bun
 import { createConsoleLogger, FieldType } from '@dossierhq/core';
-import {
-  BackgroundEntityProcessorPlugin,
-  createServer,
-  NoneAndSubjectAuthorizationAdapter,
-} from '@dossierhq/server';
+import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import { createAdapter } from './ServerUtils.js';
 
 const logger = createConsoleLogger(console);
@@ -12,7 +8,6 @@ const logger = createConsoleLogger(console);
 const serverResult = await createServer({
   databaseAdapter: (await createAdapter({ logger }, 'databases/server.sqlite')).valueOrThrow(),
   logger,
-  authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
 });
 if (serverResult.isError()) throw serverResult.toError();
 const server = serverResult.value;
@@ -25,7 +20,7 @@ try {
   const sessionResult = await server.createSession({
     provider: 'sys',
     identifier: 'test',
-    defaultAuthKeys: ['', 'subject'],
+    defaultAuthKeys: null,
     logger,
     databasePerformance: null,
   });

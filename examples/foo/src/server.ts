@@ -1,12 +1,8 @@
+import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import type { Logger } from '@dossierhq/core';
 import { AdminSchema, ok } from '@dossierhq/core';
-import type { AuthorizationAdapter, Server } from '@dossierhq/server';
-import {
-  BackgroundEntityProcessorPlugin,
-  NoneAndSubjectAuthorizationAdapter,
-  createServer,
-} from '@dossierhq/server';
-import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
+import type { Server } from '@dossierhq/server';
+import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
 import { schemaSpecification } from './schema.js';
 
@@ -22,11 +18,7 @@ export async function initializeServer(logger: Logger) {
   });
   if (adapterResult.isError()) return adapterResult;
 
-  const serverResult = await createServer({
-    databaseAdapter: adapterResult.value,
-    authorizationAdapter: createAuthorizationAdapter(),
-    logger,
-  });
+  const serverResult = await createServer({ databaseAdapter: adapterResult.value, logger });
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
@@ -50,8 +42,4 @@ export async function updateSchema(server: Server) {
 
   const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
   return new AdminSchema(schemaResult.valueOrThrow().schemaSpecification);
-}
-
-function createAuthorizationAdapter(): AuthorizationAdapter {
-  return NoneAndSubjectAuthorizationAdapter;
 }

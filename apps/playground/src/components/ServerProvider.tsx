@@ -1,7 +1,7 @@
 import { notOk, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   BackgroundEntityProcessorPlugin,
-  NoneAndSubjectAuthorizationAdapter,
+  SubjectAuthorizationAdapter,
   createServer,
   type Server,
 } from '@dossierhq/server';
@@ -53,7 +53,7 @@ async function initializeServer(
 
     const serverResult = await createServer({
       databaseAdapter: adapterResult.value,
-      authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
+      authorizationAdapter: SubjectAuthorizationAdapter,
       logger: SERVER_LOGGER,
     });
     if (serverResult.isError()) return serverResult;

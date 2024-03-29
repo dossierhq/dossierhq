@@ -7,11 +7,7 @@ import { initialize } from './backend/server.js';
 
 async function generateTypes(logger: Logger, adminSchema: AdminSchema, filename: string) {
   const publishedSchema = adminSchema.toPublishedSchema();
-  const sourceCode = generateTypescriptForSchema({
-    adminSchema,
-    publishedSchema,
-    authKeyType: "'' | 'subject'",
-  });
+  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
   await writeFile(filename, sourceCode);
   logger.info(`Wrote ${filename}`);
 }

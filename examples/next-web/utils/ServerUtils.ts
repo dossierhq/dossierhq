@@ -8,11 +8,7 @@ import type {
 } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import type { AuthorizationAdapter, Server } from '@dossierhq/server';
-import {
-  BackgroundEntityProcessorPlugin,
-  createServer,
-  NoneAndSubjectAuthorizationAdapter,
-} from '@dossierhq/server';
+import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { NextApiRequest } from 'next';
 import { DEFAULT_AUTH_KEYS } from '../config/AuthKeyConfig';
@@ -51,12 +47,7 @@ export async function getServerConnection(): Promise<{ server: Server }> {
   if (!serverConnectionPromise) {
     serverConnectionPromise = (async () => {
       const databaseAdapter = (await createDatabaseAdapter(logger)).valueOrThrow();
-      const server = (
-        await createServer({
-          databaseAdapter,
-          authorizationAdapter: createAuthenticationAdapter(),
-        })
-      ).valueOrThrow();
+      const server = (await createServer({ databaseAdapter })).valueOrThrow();
 
       const processorPlugin = new BackgroundEntityProcessorPlugin(server, logger);
       server.addPlugin(processorPlugin);
@@ -95,8 +86,4 @@ async function createDatabaseAdapter(logger: Logger) {
     journalMode: 'wal',
   });
   return databaseAdapterResult;
-}
-
-function createAuthenticationAdapter(): AuthorizationAdapter {
-  return NoneAndSubjectAuthorizationAdapter;
 }
