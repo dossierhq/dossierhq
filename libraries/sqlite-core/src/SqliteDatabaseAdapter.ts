@@ -46,7 +46,6 @@ import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire.js';
 import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired.js';
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
-import { authCreatePrincipal } from './auth/createPrincipal.js';
 import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
 import { authGetPrincipals } from './auth/getPrincipals.js';
 import { authGetPrincipalsTotalCount } from './auth/getPrincipalsTotalCount.js';
@@ -224,7 +223,6 @@ function createOuterAdapter(
     advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(database, ...args),
     advisoryLockRelease: (...args) => advisoryLockRelease(database, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(database, ...args),
-    authCreatePrincipal: (...args) => authCreatePrincipal(database, ...args),
     authCreateSession: (...args) => authCreateSession(database, ...args),
     authCreateSyncSessionForSubject: (...args) =>
       authCreateSyncSessionForSubject(database, ...args),

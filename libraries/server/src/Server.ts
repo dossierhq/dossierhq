@@ -47,7 +47,6 @@ import {
 } from './Context.js';
 import { createServerAdminClient } from './ServerAdminClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
-import { authCreatePrincipal } from './auth/authCreatePrincipal.js';
 import { autGetPrincipals } from './auth/authGetPrincipals.js';
 import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
 import {
@@ -107,13 +106,6 @@ export interface Server<
   >;
 
   getPrincipalsTotalCount(): PromiseResult<number, typeof ErrorType.Generic>;
-
-  createPrincipal(
-    principal: SyncPrincipal,
-  ): PromiseResult<
-    { effect: 'created' | 'none' },
-    typeof ErrorType.Conflict | typeof ErrorType.Generic
-  >;
 
   createSession(params: {
     provider: string;
@@ -386,16 +378,6 @@ export async function createServer<
     getPrincipalsTotalCount(): PromiseResult<number, typeof ErrorType.Generic> {
       const managementContext = serverImpl.createInternalContext(null);
       return autGetPrincipalsTotalCount(databaseAdapter, managementContext);
-    },
-
-    createPrincipal(
-      principal: SyncPrincipal,
-    ): PromiseResult<
-      { effect: 'created' | 'none' },
-      typeof ErrorType.Conflict | typeof ErrorType.Generic
-    > {
-      const managementContext = serverImpl.createInternalContext(null);
-      return authCreatePrincipal(databaseAdapter, managementContext, principal);
     },
 
     createSession: async <TSession extends Session>({

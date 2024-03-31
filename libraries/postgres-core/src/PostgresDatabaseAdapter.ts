@@ -33,7 +33,6 @@ import { advisoryLockAcquire } from './advisory-lock/advisoryLockAcquire.js';
 import { advisoryLockDeleteExpired } from './advisory-lock/advisoryLockDeleteExpired.js';
 import { advisoryLockRelease } from './advisory-lock/advisoryLockRelease.js';
 import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
-import { authCreatePrincipal } from './auth/createPrincipal.js';
 import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
 import { authGetPrincipals } from './auth/getPrincipals.js';
 import { authGetPrincipalsTotalCount } from './auth/getPrincipalsTotalCount.js';
@@ -125,7 +124,6 @@ export function createPostgresDatabaseAdapterAdapter(
     advisoryLockDeleteExpired: (...args) => advisoryLockDeleteExpired(databaseAdapter, ...args),
     advisoryLockRelease: (...args) => advisoryLockRelease(databaseAdapter, ...args),
     advisoryLockRenew: (...args) => advisoryLockRenew(databaseAdapter, ...args),
-    authCreatePrincipal: (...args) => authCreatePrincipal(databaseAdapter, ...args),
     authCreateSession: (...args) => authCreateSession(databaseAdapter, ...args),
     authCreateSyncSessionForSubject: (...args) =>
       authCreateSyncSessionForSubject(databaseAdapter, ...args),

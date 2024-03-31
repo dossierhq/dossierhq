@@ -132,7 +132,6 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     advisoryLockDeleteExpired: vi.fn(),
     advisoryLockRelease: vi.fn(),
     advisoryLockRenew: vi.fn(),
-    authCreatePrincipal: vi.fn(),
     authCreateSession: vi.fn(),
     authCreateSyncSessionForSubject: vi.fn(),
     authGetPrincipals: vi.fn(),

@@ -20,7 +20,6 @@ export type {
   DatabaseAdminEntityUnpublishUpdateEntityPayload,
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseAdminEntityWithResolvedReferencePayload,
-  DatabaseAuthCreatePrincipalPayload,
   DatabaseAuthCreateSessionPayload,
   DatabaseAuthGetPrincipalsPayload,
   DatabaseAuthSyncPrincipal,

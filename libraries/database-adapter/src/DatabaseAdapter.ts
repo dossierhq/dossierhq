@@ -248,10 +248,6 @@ export type DatabaseAuthGetPrincipalsPayload = DatabaseConnectionPayload<
   }
 >;
 
-export interface DatabaseAuthCreatePrincipalPayload {
-  effect: 'created' | 'none';
-}
-
 export interface DatabaseManagementGetNextDirtyEntityPayload
   extends DatabaseAdminEntityWithResolvedReferencePayload {
   dirtyValidateLatest: boolean;
@@ -568,14 +564,6 @@ export interface DatabaseAdapter<
   authGetPrincipalsTotalCount(
     context: TransactionContext,
   ): PromiseResult<number, typeof ErrorType.Generic>;
-
-  authCreatePrincipal(
-    context: TransactionContext,
-    principal: DatabaseAuthSyncPrincipal,
-  ): PromiseResult<
-    DatabaseAuthCreatePrincipalPayload,
-    typeof ErrorType.Conflict | typeof ErrorType.Generic
-  >;
 
   eventGetChangelogEvents(
     context: TransactionContext,
