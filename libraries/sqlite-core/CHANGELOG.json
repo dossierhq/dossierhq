@@ -2,6 +2,18 @@
   "name": "@dossierhq/sqlite-core",
   "entries": [
     {
+      "version": "0.6.2",
+      "tag": "@dossierhq/sqlite-core_v0.6.2",
+      "date": "Sun, 31 Mar 2024 22:07:35 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support createPrincipal event. Reduce logging when migrating database schema."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.6.1",
       "tag": "@dossierhq/sqlite-core_v0.6.1",
       "date": "Fri, 29 Mar 2024 16:34:07 GMT",
