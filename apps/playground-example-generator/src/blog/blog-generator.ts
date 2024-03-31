@@ -22,7 +22,7 @@ import type {
 import { SCHEMA } from './schema.js';
 
 async function createPerson(adminClient: AppAdminClient) {
-  const name = faker.name.fullName();
+  const name = faker.person.fullName();
 
   return (
     await adminClient.createEntity<AdminPerson>(
