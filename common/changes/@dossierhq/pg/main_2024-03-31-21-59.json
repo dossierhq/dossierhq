@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/pg",
+      "comment": "Support createPrincipal event",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/pg"
+}

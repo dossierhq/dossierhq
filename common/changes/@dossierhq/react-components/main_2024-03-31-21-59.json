@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Support createPrincipal event",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}

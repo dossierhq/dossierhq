@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-tools",
+      "comment": "Schema change: support createPrincipal event",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-tools"
+}
