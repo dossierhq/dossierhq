@@ -32,21 +32,37 @@ export async function migrate(
   context: TransactionContext,
   schemaVersionGenerator: (version: number) => SchemaVersionMigrationPlan | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
+  const { logger } = context;
   const initialVersionResult = await getCurrentSchemaVersion(database, context);
   if (initialVersionResult.isError()) return initialVersionResult;
+  const initialVersion = initialVersionResult.value;
 
-  let version = initialVersionResult.value + 1;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
+  let version = initialVersion + 1;
+  let done = false;
+  while (!done) {
     const plan = schemaVersionGenerator(version);
     if (!plan) {
-      return ok(undefined);
+      done = true;
+      break;
     }
+
     const migrateVersionResult = await migrateVersion(database, context, version, plan);
-    if (migrateVersionResult.isError()) return migrateVersionResult;
+    if (migrateVersionResult.isError()) {
+      logger.error(
+        `Failed to migrate database schema to version=${version} (initial version=${initialVersion})`,
+      );
+      return migrateVersionResult;
+    }
 
     version += 1;
   }
+
+  if (version !== initialVersion + 1) {
+    logger.info(
+      `Finished migration of database schema from version ${initialVersion} to ${version - 1}`,
+    );
+  }
+  return ok(undefined);
 }
 
 async function migrateVersion(
@@ -55,9 +71,6 @@ async function migrateVersion(
   version: number,
   plan: SchemaVersionMigrationPlan,
 ): PromiseResult<undefined, typeof ErrorType.Generic> {
-  const { logger } = context;
-  logger.info(`Starting migration of database schema to version=${version}...`);
-
   if (plan.temporarilyDisableForeignKeys) {
     const disableForeignKeysResult = await queryRun(database, context, 'PRAGMA foreign_keys=OFF');
     if (disableForeignKeysResult.isError()) return disableForeignKeysResult;
@@ -95,7 +108,6 @@ async function migrateVersion(
         'PRAGMA user_version=' + version,
       );
       if (updateVersionResult.isError()) return updateVersionResult;
-      logger.info(`Migrated database schema to version=${version}`);
       return ok(undefined);
     },
   );
