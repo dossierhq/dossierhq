@@ -1,0 +1,9 @@
+{
+  "id": "46f4f840-1931-499f-aa54-3862960c734c",
+  "parentId": null,
+  "type": "createPrincipal",
+  "createdAt": "2023-08-31T08:17:29.316Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "provider": "sys",
+  "identifier": "editor"
+}
