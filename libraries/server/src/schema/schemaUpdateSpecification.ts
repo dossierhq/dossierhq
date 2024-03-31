@@ -77,7 +77,7 @@ export async function schemaUpdateSpecification(
   });
 }
 
-export async function schemaUpdateSpecificationSyncAction(
+export async function schemaUpdateSpecificationSyncEvent(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   event: UpdateSchemaSyncEvent,

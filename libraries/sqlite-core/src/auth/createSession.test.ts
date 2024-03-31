@@ -1,3 +1,4 @@
+import { EventType } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
@@ -14,10 +15,11 @@ describe('authCreateSession', () => {
     innerAdapter.clearAllQueries();
     innerAdapter.mockQuery = (query, _values) => {
       if (query.startsWith('INSERT INTO subjects')) return [{ id: 123 }];
+      if (query.startsWith('INSERT INTO principals')) return [{ id: 456 }];
       return [];
     };
 
-    const result = await outerAdapter.authCreateSession(context, 'test', 'hello', false);
+    const result = await outerAdapter.authCreateSession(context, 'test', 'hello', false, null);
     const {
       session: { subjectId },
     } = result.valueOrThrow();
@@ -40,10 +42,18 @@ describe('authCreateSession', () => {
         expect.anything(),
       ],
       [
-        'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
+        'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3) RETURNING id',
         'test',
         'hello',
         123,
+      ],
+      [
+        'INSERT INTO events (uuid, type, created_by, created_at, principals_id) VALUES (?1, ?2, ?3, ?4, ?5)',
+        expect.anything(),
+        EventType.createPrincipal,
+        123,
+        expect.anything(),
+        456,
       ],
       ['COMMIT'],
     ]);
@@ -59,7 +69,7 @@ describe('authCreateSession', () => {
       return [];
     };
 
-    const result = await outerAdapter.authCreateSession(context, 'test', 'hello', false);
+    const result = await outerAdapter.authCreateSession(context, 'test', 'hello', false, null);
     const {
       session: { subjectId },
     } = result.valueOrThrow();

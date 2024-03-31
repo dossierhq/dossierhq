@@ -5,6 +5,7 @@ import type {
 } from '../schema/SchemaSpecification.js';
 
 export const EventType = {
+  createPrincipal: 'createPrincipal',
   createEntity: 'createEntity',
   createAndPublishEntity: 'createAndPublishEntity',
   updateEntity: 'updateEntity',
@@ -16,7 +17,7 @@ export const EventType = {
   updateSchema: 'updateSchema',
 } as const;
 
-type EntityEventTypes = keyof Omit<typeof EventType, 'updateSchema'>;
+type EntityEventTypes = keyof Omit<typeof EventType, 'createPrincipal' | 'updateSchema'>;
 
 interface EventShared<TEventType extends keyof typeof EventType> {
   id: string;
@@ -32,7 +33,12 @@ export interface ChangelogEventQuery {
   types?: (keyof typeof EventType)[];
 }
 
-export type ChangelogEvent = SchemaChangelogEvent | EntityChangelogEvent;
+export type ChangelogEvent =
+  | CreatePrincipalChangelogEvent
+  | SchemaChangelogEvent
+  | EntityChangelogEvent;
+
+export type CreatePrincipalChangelogEvent = EventShared<typeof EventType.createPrincipal>;
 
 export interface SchemaChangelogEvent extends EventShared<typeof EventType.updateSchema> {
   version: number;
@@ -52,6 +58,7 @@ export interface EntityChangelogEvent<TEventType extends EntityEventTypes = Enti
 //TODO how to handle deleted entities? include id and add a deleted flag?
 
 export type SyncEvent =
+  | CreatePrincipalSyncEvent
   | UpdateSchemaSyncEvent
   | CreateEntitySyncEvent
   | UpdateEntitySyncEvent
@@ -63,6 +70,12 @@ export type SyncEvent =
 interface SyncEventShared<TEventType extends keyof typeof EventType>
   extends EventShared<TEventType> {
   parentId: string | null;
+}
+
+export interface CreatePrincipalSyncEvent
+  extends SyncEventShared<typeof EventType.createPrincipal> {
+  provider: string;
+  identifier: string;
 }
 
 export interface UpdateSchemaSyncEvent extends SyncEventShared<typeof EventType.updateSchema> {

@@ -479,6 +479,12 @@ const VERSION_25: SchemaVersionDefinition = {
   ],
 };
 
+const VERSION_26: SchemaVersionDefinition = {
+  queries: [
+    'ALTER TABLE events ADD COLUMN principals_id INTEGER REFERENCES principals(id) ON DELETE CASCADE',
+  ],
+};
+
 const VERSIONS: SchemaVersionDefinition[] = /* @__PURE__ */ (() => [
   { queries: [] }, // nothing for version 0
   VERSION_1,
@@ -506,6 +512,7 @@ const VERSIONS: SchemaVersionDefinition[] = /* @__PURE__ */ (() => [
   VERSION_23,
   VERSION_24,
   VERSION_25,
+  VERSION_26,
 ])();
 
 export const REQUIRED_SCHEMA_VERSION = /* @__PURE__ */ (() => VERSIONS.length - 1)();

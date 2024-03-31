@@ -38,7 +38,8 @@ CREATE TYPE public.event_type AS ENUM (
     'unpublishEntities',
     'archiveEntity',
     'unarchiveEntity',
-    'updateSchema'
+    'updateSchema',
+    'createPrincipal'
 );
 
 SET default_tablespace = '';
@@ -250,7 +251,8 @@ CREATE TABLE public.events (
     created_by integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     schema_versions_id integer,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    principals_id integer
 );
 
 CREATE SEQUENCE public.events_id_seq
@@ -505,6 +507,9 @@ ALTER TABLE ONLY public.event_entity_versions
 
 ALTER TABLE ONLY public.events
     ADD CONSTRAINT events_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.subjects(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_principals_id_fkey FOREIGN KEY (principals_id) REFERENCES public.principals(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.events
     ADD CONSTRAINT events_schema_versions_id_fkey FOREIGN KEY (schema_versions_id) REFERENCES public.schema_versions(id) ON DELETE CASCADE;

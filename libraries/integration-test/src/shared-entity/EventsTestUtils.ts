@@ -4,6 +4,7 @@ import {
   type ChangelogEvent,
   type Connection,
   type CreateEntitySyncEvent,
+  type CreatePrincipalSyncEvent,
   type Edge,
   type EntityChangelogEvent,
   type ErrorType,
@@ -24,6 +25,7 @@ type ChangelogEventWithoutId = Omit<SchemaChangelogEvent, 'id'> | Omit<EntityCha
 type WithCreatedAt<T extends SyncEvent> = Omit<T, 'id' | 'createdAt'>;
 
 type SyncEventWithoutIdAndCreatedAt =
+  | WithCreatedAt<CreatePrincipalSyncEvent>
   | WithCreatedAt<UpdateSchemaSyncEvent>
   | WithCreatedAt<CreateEntitySyncEvent>
   | WithCreatedAt<UpdateEntitySyncEvent>

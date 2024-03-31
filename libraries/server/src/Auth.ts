@@ -1,4 +1,11 @@
-import { notOk, ok, type ErrorType, type PromiseResult, type Result } from '@dossierhq/core';
+import {
+  notOk,
+  ok,
+  type ErrorType,
+  type PromiseResult,
+  type Result,
+  type CreatePrincipalSyncEvent,
+} from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAuthCreateSessionPayload,
@@ -23,7 +30,21 @@ export async function authCreateSession(
   const assertion = ensureRequired({ provider, identifier });
   if (assertion.isError()) return assertion;
 
-  return await databaseAdapter.authCreateSession(context, provider, identifier, readonly);
+  return await databaseAdapter.authCreateSession(context, provider, identifier, readonly, null);
+}
+
+export async function authCreatePrincipalSyncEvent(
+  databaseAdapter: DatabaseAdapter,
+  context: TransactionContext,
+  event: CreatePrincipalSyncEvent,
+) {
+  return await databaseAdapter.authCreateSession(
+    context,
+    event.provider,
+    event.identifier,
+    false,
+    event,
+  );
 }
 
 /** N.B. don't use this function normally, instead use {@link authCreateSession}.

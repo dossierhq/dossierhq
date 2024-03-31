@@ -10,10 +10,11 @@ describe('authCreateSession', () => {
     adapter.query.mockImplementation((_transaction, query, _values) => {
       let result;
       if (query.startsWith('INSERT INTO subjects')) result = { rows: [{ id: 123, uuid: '4321' }] };
+      else if (query.startsWith('INSERT INTO principals')) result = { rows: [{ id: 456 }] };
       else result = { rows: [] };
       return Promise.resolve(result);
     });
-    const result = await authCreateSession(adapter, context, 'test', 'hello', false);
+    const result = await authCreateSession(adapter, context, 'test', 'hello', false, null);
     expectResultValue(result, {
       principalEffect: 'created',
       session: { type: 'write', subjectId: '4321' },
@@ -30,13 +31,19 @@ describe('authCreateSession', () => {
           "BEGIN",
         ],
         [
-          "INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid",
+          "INSERT INTO subjects (uuid, created_at) VALUES (DEFAULT, DEFAULT) RETURNING id, uuid",
         ],
         [
-          "INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)",
+          "INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3) RETURNING id",
           "test",
           "hello",
           123,
+        ],
+        [
+          "INSERT INTO events (uuid, type, created_by, created_at, principals_id) VALUES (DEFAULT, $1, $2, DEFAULT, $3)",
+          "createPrincipal",
+          123,
+          456,
         ],
         [
           "COMMIT",
@@ -54,7 +61,7 @@ describe('authCreateSession', () => {
       }
       return Promise.resolve({ rows: [] });
     });
-    const result = await authCreateSession(adapter, context, 'test', 'hello', false);
+    const result = await authCreateSession(adapter, context, 'test', 'hello', false, null);
     expectResultValue(result, {
       principalEffect: 'none',
       session: { type: 'write', subjectId: '4321' },

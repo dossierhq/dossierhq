@@ -7,6 +7,8 @@ import type {
   ArchiveEntitySyncEvent,
   ChangelogEventQuery,
   CreateEntitySyncEvent,
+  CreatePrincipalChangelogEvent,
+  CreatePrincipalSyncEvent,
   EntityChangelogEvent,
   EntityReference,
   EntityVersionReference,
@@ -333,6 +335,7 @@ export type DatabaseEventChangelogEntityEventPayload = Omit<
 };
 
 export type DatabaseEventChangelogEventPayload =
+  | (CreatePrincipalChangelogEvent & { cursor: string })
   | (SchemaChangelogEvent & { cursor: string })
   | DatabaseEventChangelogEntityEventPayload;
 
@@ -378,7 +381,7 @@ export interface DatabaseAdapter<
   adminEntityCreateEntityEvent(
     context: TransactionContext,
     event: DatabaseAdminEntityCreateEntityEventArg,
-    syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
+    syncEvent: Exclude<Exclude<SyncEvent, UpdateSchemaSyncEvent>, CreatePrincipalSyncEvent> | null,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
   adminEntityGetEntityName(
@@ -546,6 +549,7 @@ export interface DatabaseAdapter<
     provider: string,
     identifier: string,
     readOnly: boolean,
+    syncEvent: CreatePrincipalSyncEvent | null,
   ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic>;
 
   authCreateSyncSessionForSubject(

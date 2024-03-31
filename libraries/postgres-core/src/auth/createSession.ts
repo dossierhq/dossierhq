@@ -1,13 +1,22 @@
-import { ErrorType, notOk, ok, type OkResult, type PromiseResult } from '@dossierhq/core';
+import {
+  ErrorType,
+  notOk,
+  ok,
+  type CreatePrincipalSyncEvent,
+  type OkResult,
+  type PromiseResult,
+} from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
+  DEFAULT,
   type DatabaseAuthCreateSessionPayload,
   type TransactionContext,
   type WriteSession,
 } from '@dossierhq/database-adapter';
-import { UniqueConstraints, type SubjectsTable } from '../DatabaseSchema.js';
+import { UniqueConstraints, type PrincipalsTable, type SubjectsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
-import { queryNone, queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryOne } from '../QueryFunctions.js';
+import { createCreatePrincipalEvent } from '../utils/EventUtils.js';
 import { createSession } from '../utils/SessionUtils.js';
 
 export async function authCreateSession(
@@ -16,19 +25,28 @@ export async function authCreateSession(
   provider: string,
   identifier: string,
   readonly: boolean,
+  syncEvent: CreatePrincipalSyncEvent | null,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
-  const firstGetResult = await getSubject(adapter, context, provider, identifier, readonly);
-  if (firstGetResult.isError()) return firstGetResult;
+  if (syncEvent === null) {
+    const firstGetResult = await getSubject(adapter, context, provider, identifier, readonly);
+    if (firstGetResult.isError()) return firstGetResult;
 
-  if (firstGetResult.value) {
-    return ok(firstGetResult.value);
+    if (firstGetResult.value) {
+      return ok(firstGetResult.value);
+    }
+
+    if (readonly) {
+      return ok({ principalEffect: 'none', session: { type: 'readonly', subjectId: null } });
+    }
   }
 
-  if (readonly) {
-    return ok({ principalEffect: 'none', session: { type: 'readonly', subjectId: null } });
-  }
-
-  const createResult = await createSubject(adapter, context, provider, identifier);
+  const createResult = await createSubjectAndPrincipal(
+    adapter,
+    context,
+    provider,
+    identifier,
+    syncEvent,
+  );
   if (createResult.isOk()) {
     return createResult.map((it) => it);
   }
@@ -128,11 +146,12 @@ async function getSubject(
   return ok(null);
 }
 
-async function createSubject(
+async function createSubjectAndPrincipal(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   provider: string,
   identifier: string,
+  syncEvent: CreatePrincipalSyncEvent | null,
 ): PromiseResult<
   DatabaseAuthCreateSessionPayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
@@ -141,13 +160,27 @@ async function createSubject(
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id' | 'uuid'>>(
       adapter,
       context,
-      'INSERT INTO subjects DEFAULT VALUES RETURNING id, uuid',
+      buildPostgresSqlQuery(({ sql }) => {
+        const uuid = syncEvent?.createdBy ?? DEFAULT;
+        const createdAt = syncEvent?.createdAt ?? DEFAULT;
+        sql`INSERT INTO subjects (uuid, created_at) VALUES (${uuid}, ${createdAt}) RETURNING id, uuid`;
+      }),
     );
     if (subjectsResult.isError()) return subjectsResult;
     const { id } = subjectsResult.value;
 
-    const createResult = await createPrincipal(adapter, context, provider, identifier, id);
-    if (createResult.isError()) return createResult;
+    const principalResult = await createPrincipal(adapter, context, provider, identifier, id);
+    if (principalResult.isError()) return principalResult;
+    const principalId = principalResult.value.id;
+
+    const eventResult = await createCreatePrincipalEvent(
+      adapter,
+      context,
+      id,
+      principalId,
+      syncEvent,
+    );
+    if (eventResult.isError()) return eventResult;
 
     return createPayload('created', false, subjectsResult.value);
   });
@@ -159,12 +192,13 @@ export function createPrincipal(
   provider: string,
   identifier: string,
   subjectInternalId: number,
-) {
-  return queryNone(
+): PromiseResult<{ id: number }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
+  type Row = Pick<PrincipalsTable, 'id'>;
+  return queryOne<Row, typeof ErrorType.Conflict>(
     adapter,
     context,
     {
-      text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3)',
+      text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES ($1, $2, $3) RETURNING id',
       values: [provider, identifier, subjectInternalId],
     },
     (error) => {

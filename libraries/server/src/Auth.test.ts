@@ -32,6 +32,7 @@ describe('Auth authCreateSession', () => {
             "test",
             "hello",
             false,
+            null,
           ],
         ]
       `);

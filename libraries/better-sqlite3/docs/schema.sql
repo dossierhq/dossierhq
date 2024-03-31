@@ -212,7 +212,7 @@ CREATE TABLE "events" (
   type TEXT NOT NULL,
   created_by INTEGER NOT NULL,
   created_at TEXT NOT NULL,
-  schema_versions_id INTEGER,
+  schema_versions_id INTEGER, principals_id INTEGER REFERENCES principals(id) ON DELETE CASCADE,
   CONSTRAINT events_uuid UNIQUE (uuid)
   FOREIGN KEY (created_by) REFERENCES subjects(id) ON DELETE CASCADE,
   FOREIGN KEY (schema_versions_id) REFERENCES schema_versions(id) ON DELETE CASCADE

@@ -4,27 +4,55 @@ import {
   notOk,
   ok,
   type AdminSchemaWithMigrations,
+  type CreatePrincipalSyncEvent,
   type PromiseResult,
   type SyncEvent,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import { authCreatePrincipalSyncEvent } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
-import type { SessionContext } from '../Context.js';
+import type { InternalContext, SessionContext } from '../Context.js';
 import { adminArchiveEntitySyncEvent } from '../admin-entity/adminArchiveEntity.js';
 import { adminCreateEntitySyncEvent } from '../admin-entity/adminCreateEntity.js';
 import { adminPublishEntitiesSyncEvent } from '../admin-entity/adminPublishEntities.js';
 import { adminUnarchiveEntitySyncEvent } from '../admin-entity/adminUnarchiveEntity.js';
 import { adminUnpublishEntitiesSyncEvent } from '../admin-entity/adminUnpublishEntities.js';
 import { adminUpdateEntitySyncEvent } from '../admin-entity/adminUpdateEntity.js';
-import { schemaUpdateSpecificationSyncAction } from '../schema/schemaUpdateSpecification.js';
+import { schemaUpdateSpecificationSyncEvent } from '../schema/schemaUpdateSpecification.js';
 import { assertExhaustive } from '../utils/AssertUtils.js';
+
+export async function managementApplyAuthSyncEvent(
+  databaseAdapter: DatabaseAdapter,
+  context: InternalContext,
+  event: CreatePrincipalSyncEvent,
+): PromiseResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  if (!(event.createdAt instanceof Date)) {
+    return notOk.BadRequest(`Expected createdAt to be a Date, but was ${typeof event.createdAt}`);
+  }
+  return await context.withTransaction<
+    unknown,
+    typeof ErrorType.BadRequest | typeof ErrorType.Generic
+  >(async (context) => {
+    // Check head
+    const headResult = await databaseAdapter.managementSyncGetHeadEventId(context);
+    if (headResult.isError()) return headResult;
+
+    if (event.parentId !== headResult.value) {
+      return notOk.BadRequest(
+        `Expected head event ID to be ${event.parentId}, but was ${headResult.value}`,
+      );
+    }
+
+    return await authCreatePrincipalSyncEvent(databaseAdapter, context, event);
+  });
+}
 
 export async function managementApplySyncEvent(
   adminSchema: AdminSchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  event: SyncEvent,
+  event: Exclude<SyncEvent, CreatePrincipalSyncEvent>,
 ): PromiseResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   if (!(event.createdAt instanceof Date)) {
     return notOk.BadRequest(`Expected createdAt to be a Date, but was ${typeof event.createdAt}`);
@@ -68,7 +96,7 @@ function applyEvent(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  event: SyncEvent,
+  event: Exclude<SyncEvent, CreatePrincipalSyncEvent>,
 ): PromiseResult<unknown, ErrorType> {
   const { type } = event;
   switch (type) {
@@ -105,7 +133,7 @@ function applyEvent(
     case EventType.unpublishEntities:
       return adminUnpublishEntitiesSyncEvent(databaseAdapter, authorizationAdapter, context, event);
     case EventType.updateSchema:
-      return schemaUpdateSpecificationSyncAction(databaseAdapter, context, event);
+      return schemaUpdateSpecificationSyncEvent(databaseAdapter, context, event);
     default:
       assertExhaustive(type);
   }

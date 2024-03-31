@@ -1,4 +1,10 @@
-import type { ErrorType, PromiseResult, SyncEvent, UpdateSchemaSyncEvent } from '@dossierhq/core';
+import type {
+  CreatePrincipalSyncEvent,
+  ErrorType,
+  PromiseResult,
+  SyncEvent,
+  UpdateSchemaSyncEvent,
+} from '@dossierhq/core';
 import type {
   DatabaseAdminEntityCreateEntityEventArg,
   TransactionContext,
@@ -10,7 +16,7 @@ export async function adminEntityCreateEntityEvent(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   event: DatabaseAdminEntityCreateEntityEventArg,
-  syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
+  syncEvent: Exclude<Exclude<SyncEvent, UpdateSchemaSyncEvent>, CreatePrincipalSyncEvent> | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   return await createEntityEvent(
     databaseAdapter,

@@ -2,6 +2,7 @@ import type {
   AdminSchemaSpecificationWithMigrations,
   ArchiveEntitySyncEvent,
   CreateEntitySyncEvent,
+  CreatePrincipalSyncEvent,
   PublishEntitiesSyncEvent,
   UnarchiveEntitySyncEvent,
   UnpublishEntitiesSyncEvent,
@@ -28,6 +29,7 @@ import type {
   EntityVersionsTable,
   EventEntityVersionsTable,
   EventsTable,
+  PrincipalsTable,
   SchemaVersionsTable,
   SubjectsTable,
 } from '../DatabaseSchema.js';
@@ -87,7 +89,8 @@ async function resolveAfterId(
 
 type EventRow = Pick<EventsTable, 'id' | 'uuid' | 'type' | 'created_at'> & {
   created_by: SubjectsTable['uuid'];
-} & Pick<SchemaVersionsTable, 'version' | 'specification'>;
+} & Pick<SchemaVersionsTable, 'version' | 'specification'> &
+  Pick<PrincipalsTable, 'provider' | 'identifier'>;
 
 async function getEvents(
   database: Database,
@@ -99,9 +102,10 @@ async function getEvents(
     database,
     context,
     buildSqliteSqlQuery(({ sql }) => {
-      sql`SELECT e.id, e.uuid, e.type, e.created_at, s.uuid AS created_by, sv.version, sv.specification FROM events e`;
+      sql`SELECT e.id, e.uuid, e.type, e.created_at, s.uuid AS created_by, sv.version, sv.specification, p.provider, p.identifier FROM events e`;
       sql`JOIN subjects s ON e.created_by = s.id`;
       sql`LEFT JOIN schema_versions sv ON e.schema_versions_id = sv.id`; // only available on schema events
+      sql`LEFT JOIN principals p ON e.principals_id = p.id`; // only available on principal events
       if (afterId !== null) {
         sql`WHERE e.id > ${afterId}`;
       }
@@ -222,6 +226,15 @@ function convertEventRowsToPayload(
     const parentId = previousId;
     previousId = eventRow.uuid;
 
+    if (type === EventType.createPrincipal) {
+      events.push(
+        makeEvent<CreatePrincipalSyncEvent>(type, parentId, eventRow, {
+          provider: eventRow.provider,
+          identifier: eventRow.identifier,
+        }),
+      );
+      continue;
+    }
     if (type === EventType.updateSchema) {
       const schemaSpecification: AdminSchemaSpecificationWithMigrations = {
         version: eventRow.version,

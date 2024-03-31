@@ -1,6 +1,7 @@
 import {
   EventType,
   ok,
+  type CreatePrincipalSyncEvent,
   type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
@@ -23,7 +24,7 @@ export async function createEntityEvent(
   session: Session,
   eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number; publishedName?: string }[],
-  syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
+  syncEvent: Exclude<Exclude<SyncEvent, UpdateSchemaSyncEvent>, CreatePrincipalSyncEvent> | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const now = (
     syncEvent ? syncEvent.createdAt : getTransactionTimestamp(context.transaction)
@@ -57,13 +58,36 @@ export async function createEntityEvent(
   return ok(undefined);
 }
 
+export async function createCreatePrincipalEvent(
+  database: Database,
+  context: TransactionContext,
+  subjectInternalId: number,
+  principalInternalId: number,
+  syncEvent: CreatePrincipalSyncEvent | null,
+): PromiseResult<void, typeof ErrorType.Generic> {
+  const now = (
+    syncEvent ? syncEvent.createdAt : getTransactionTimestamp(context.transaction)
+  ).toISOString();
+  const uuid = syncEvent ? syncEvent.id : database.adapter.randomUUID();
+  const result = await queryRun(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql }) => {
+      sql`INSERT INTO events (uuid, type, created_by, created_at, principals_id)`;
+      sql`VALUES (${uuid}, ${EventType.createPrincipal}, ${subjectInternalId}, ${now}, ${principalInternalId})`;
+    }),
+  );
+  if (result.isError()) return result;
+  return ok(undefined);
+}
+
 export async function createUpdateSchemaEvent(
   database: Database,
   context: TransactionContext,
   session: Session,
   schemaVersionId: number,
   syncEvent: UpdateSchemaSyncEvent | null,
-): PromiseResult<undefined, typeof ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   const now = (
     syncEvent ? syncEvent.createdAt : getTransactionTimestamp(context.transaction)
   ).toISOString();

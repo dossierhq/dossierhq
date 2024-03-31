@@ -66,6 +66,9 @@ export function ChangelogList({ changelogState, dispatchChangelogState }: Props)
 function ChangelogListRow({ event }: { event: ChangelogEvent }) {
   let details;
   switch (event.type) {
+    case EventType.createPrincipal:
+      details = null;
+      break;
     case EventType.updateSchema:
       details = `Version ${event.version}`;
       break;

@@ -50,7 +50,10 @@ import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { authCreatePrincipal } from './auth/authCreatePrincipal.js';
 import { autGetPrincipals } from './auth/authGetPrincipals.js';
 import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
-import { managementApplySyncEvent } from './management/managementApplySyncEvent.js';
+import {
+  managementApplyAuthSyncEvent,
+  managementApplySyncEvent,
+} from './management/managementApplySyncEvent.js';
 import { managementDirtyProcessNextEntity } from './management/managementDirtyProcessNextEntity.js';
 import {
   managementGetSyncEvents,
@@ -335,6 +338,12 @@ export async function createServer<
       event: SyncEvent,
     ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
       const authContext = serverImpl.createInternalContext(null);
+
+      if (event.type === EventType.createPrincipal) {
+        const applyResult = await managementApplyAuthSyncEvent(databaseAdapter, authContext, event);
+        if (applyResult.isError()) return applyResult;
+        return ok(undefined);
+      }
 
       const sessionResult = await authCreateSyncSessionForSubject(databaseAdapter, authContext, {
         subjectId: event.createdBy,

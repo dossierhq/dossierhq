@@ -142,7 +142,7 @@ function decodeChangelogEvent(
   changelogEvent: DatabaseEventChangelogEventPayload,
 ): Result<ChangelogEvent, typeof ErrorType.Generic> {
   const { cursor, ...event } = changelogEvent;
-  if (event.type === EventType.updateSchema) {
+  if (event.type === EventType.createPrincipal || event.type === EventType.updateSchema) {
     return ok(event);
   }
   const entities: EntityChangelogEvent['entities'] = [];

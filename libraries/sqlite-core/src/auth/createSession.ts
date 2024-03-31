@@ -1,14 +1,22 @@
-import { ErrorType, notOk, ok, type OkResult, type PromiseResult } from '@dossierhq/core';
+import {
+  ErrorType,
+  notOk,
+  ok,
+  type CreatePrincipalSyncEvent,
+  type OkResult,
+  type PromiseResult,
+} from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type DatabaseAuthCreateSessionPayload,
   type TransactionContext,
   type WriteSession,
 } from '@dossierhq/database-adapter';
-import type { SubjectsTable } from '../DatabaseSchema.js';
+import type { PrincipalsTable, SubjectsTable } from '../DatabaseSchema.js';
 import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
-import { queryNoneOrOne, queryOne, queryRun, type Database } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryOne, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
+import { createCreatePrincipalEvent } from '../utils/EventUtils.js';
 import { createSession } from '../utils/SessionUtils.js';
 
 export async function authCreateSession(
@@ -17,19 +25,28 @@ export async function authCreateSession(
   provider: string,
   identifier: string,
   readonly: boolean,
+  syncEvent: CreatePrincipalSyncEvent | null,
 ): PromiseResult<DatabaseAuthCreateSessionPayload, typeof ErrorType.Generic> {
-  const firstGetResult = await getSubject(database, context, provider, identifier, readonly);
-  if (firstGetResult.isError()) return firstGetResult;
+  if (syncEvent === null) {
+    const firstGetResult = await getSubject(database, context, provider, identifier, readonly);
+    if (firstGetResult.isError()) return firstGetResult;
 
-  if (firstGetResult.value) {
-    return ok(firstGetResult.value);
+    if (firstGetResult.value) {
+      return ok(firstGetResult.value);
+    }
+
+    if (readonly) {
+      return ok({ principalEffect: 'none', session: { type: 'readonly', subjectId: null } });
+    }
   }
 
-  if (readonly) {
-    return ok({ principalEffect: 'none', session: { type: 'readonly', subjectId: null } });
-  }
-
-  const createResult = await createSubject(database, context, provider, identifier);
+  const createResult = await createSubjectAndPrincipal(
+    database,
+    context,
+    provider,
+    identifier,
+    syncEvent,
+  );
   if (createResult.isOk()) {
     return createResult.map((it) => it);
   }
@@ -117,18 +134,19 @@ async function getSubject(
   return ok(null);
 }
 
-async function createSubject(
+async function createSubjectAndPrincipal(
   database: Database,
   context: TransactionContext,
   provider: string,
   identifier: string,
+  syncEvent: CreatePrincipalSyncEvent | null,
 ): PromiseResult<
   DatabaseAuthCreateSessionPayload,
   typeof ErrorType.Conflict | typeof ErrorType.Generic
 > {
   return await context.withTransaction(async (context) => {
-    const uuid = database.adapter.randomUUID();
-    const now = getTransactionTimestamp(context.transaction);
+    const uuid = syncEvent?.createdBy ?? database.adapter.randomUUID();
+    const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
     const subjectsResult = await queryOne<Pick<SubjectsTable, 'id'>>(database, context, {
       text: 'INSERT INTO subjects (uuid, created_at) VALUES (?1, ?2) RETURNING id',
       values: [uuid, now.toISOString()],
@@ -136,8 +154,18 @@ async function createSubject(
     if (subjectsResult.isError()) return subjectsResult;
     const { id } = subjectsResult.value;
 
-    const createResult = await createPrincipal(database, context, provider, identifier, id);
-    if (createResult.isError()) return createResult;
+    const principalResult = await createPrincipal(database, context, provider, identifier, id);
+    if (principalResult.isError()) return principalResult;
+    const principalId = principalResult.value.id;
+
+    const eventResult = await createCreatePrincipalEvent(
+      database,
+      context,
+      id,
+      principalId,
+      syncEvent,
+    );
+    if (eventResult.isError()) return eventResult;
 
     return createPayload('created', false, { id, uuid });
   });
@@ -149,12 +177,13 @@ export function createPrincipal(
   provider: string,
   identifier: string,
   subjectInternalId: number,
-) {
-  return queryRun(
+): PromiseResult<{ id: number }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
+  type Row = Pick<PrincipalsTable, 'id'>;
+  return queryOne<Row, typeof ErrorType.Conflict>(
     database,
     context,
     {
-      text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3)',
+      text: 'INSERT INTO principals (provider, identifier, subjects_id) VALUES (?1, ?2, ?3) RETURNING id',
       values: [provider, identifier, subjectInternalId],
     },
     (error) => {

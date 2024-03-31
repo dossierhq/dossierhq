@@ -217,6 +217,8 @@ export {
   type ChangelogEvent,
   type ChangelogEventQuery,
   type CreateEntitySyncEvent,
+  type CreatePrincipalChangelogEvent,
+  type CreatePrincipalSyncEvent,
   type EntityChangelogEvent,
   type PublishEntitiesSyncEvent,
   type SchemaChangelogEvent,

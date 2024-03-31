@@ -74,7 +74,10 @@ export interface EventsTable {
   id: number;
   uuid: string;
   type: keyof typeof EventType;
+  created_by: number;
   created_at: string;
+  principals_id: number | null;
+  schema_versions_id: number | null;
 }
 
 export interface EventEntityVersionsTable {

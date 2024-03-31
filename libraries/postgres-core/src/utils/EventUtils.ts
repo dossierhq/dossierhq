@@ -1,6 +1,7 @@
 import {
   EventType,
   ok,
+  type CreatePrincipalSyncEvent,
   type EntityChangelogEvent,
   type ErrorType,
   type PromiseResult,
@@ -24,7 +25,7 @@ export async function createEntityEvent(
   session: Session,
   eventType: EntityChangelogEvent['type'],
   entityVersions: { entityVersionsId: number; publishedName?: string }[],
-  syncEvent: Exclude<SyncEvent, UpdateSchemaSyncEvent> | null,
+  syncEvent: Exclude<Exclude<SyncEvent, UpdateSchemaSyncEvent>, CreatePrincipalSyncEvent> | null,
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const eventResult = await queryOne<Pick<EventsTable, 'id'>>(
@@ -56,13 +57,34 @@ export async function createEntityEvent(
   return ok(undefined);
 }
 
+export async function createCreatePrincipalEvent(
+  database: PostgresDatabaseAdapter,
+  context: TransactionContext,
+  subjectInternalId: number,
+  principalInternalId: number,
+  syncEvent: CreatePrincipalSyncEvent | null,
+): PromiseResult<void, typeof ErrorType.Generic> {
+  const result = await queryRun(
+    database,
+    context,
+    buildPostgresSqlQuery(({ sql }) => {
+      const uuid = syncEvent?.id ?? DEFAULT;
+      const createdAt = syncEvent?.createdAt ?? DEFAULT;
+      sql`INSERT INTO events (uuid, type, created_by, created_at, principals_id)`;
+      sql`VALUES (${uuid}, ${EventType.createPrincipal}, ${subjectInternalId}, ${createdAt}, ${principalInternalId})`;
+    }),
+  );
+  if (result.isError()) return result;
+  return ok(undefined);
+}
+
 export async function createUpdateSchemaEvent(
   database: PostgresDatabaseAdapter,
   context: TransactionContext,
   session: Session,
   schemaVersionId: number,
   syncEvent: UpdateSchemaSyncEvent | null,
-): PromiseResult<undefined, typeof ErrorType.Generic> {
+): PromiseResult<void, typeof ErrorType.Generic> {
   const createdBy = getSessionSubjectInternalId(session);
   const result = await queryRun(
     database,

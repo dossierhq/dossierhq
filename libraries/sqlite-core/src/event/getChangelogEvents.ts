@@ -87,6 +87,14 @@ function convertEdge(
   const createdBy = row.created_by;
   const createdAt = new Date(row.created_at);
   switch (row.type) {
+    case EventType.createPrincipal:
+      return {
+        cursor,
+        id,
+        type: EventType.createPrincipal,
+        createdAt,
+        createdBy,
+      };
     case EventType.updateSchema:
       return {
         cursor,

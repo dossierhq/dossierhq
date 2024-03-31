@@ -57,24 +57,15 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
 
   assertResultValue(await targetServer.getPrincipals(), null);
 
-  // Sync principals and create admin clients
-  const { sourceAdminClient, targetAdminClient, createdBy } =
-    await sync_allEventsScenario_syncPrincipals(context);
-
-  let scenarioContext: ScenarioContext = {
-    ...context,
-    sourceAdminClient,
-    targetAdminClient,
-    createdBy,
-    after: null,
-  };
+  // Create principal and create admin clients
+  let scenarioContext = await sync_allEventsScenario_createPrincipal(context);
 
   for (const step of STEPS) {
     scenarioContext = await step(scenarioContext);
   }
 }
 
-async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
+async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) {
   const { sourceServer, targetServer } = context;
 
   // Setup source admin client
@@ -93,10 +84,23 @@ async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
   const sourcePrincipals = sourcePrincipalConnection.edges.map((it) => it.node.valueOrThrow());
   assertEquals(sourcePrincipals.length, 1);
 
-  // Create target principals
-  for (const principal of sourcePrincipals) {
-    assertResultValue(await targetServer.createPrincipal(principal), { effect: 'created' });
-  }
+  const createdBy = sourcePrincipalConnection.edges[0].node.valueOrThrow().subjectId;
+
+  // Apply sync events
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext({
+    ...context,
+    after: null,
+  });
+
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.createPrincipal,
+      parentId: null,
+      createdBy,
+      provider: 'test',
+      identifier: 'main',
+    },
+  ]);
 
   // Check that the target principals are identical
   assertResultValue(await targetServer.getPrincipalsTotalCount(), 1);
@@ -108,11 +112,15 @@ async function sync_allEventsScenario_syncPrincipals(context: SyncTestContext) {
   // Create target admin client after the principals have been created
   const targetAdminClient = createAdminClientProvider(targetServer).adminClient() as AdminClient;
 
-  return {
+  const scenarioContext: ScenarioContext = {
+    ...context,
     sourceAdminClient,
     targetAdminClient,
-    createdBy: sourcePrincipalConnection.edges[0].node.valueOrThrow().subjectId,
+    createdBy,
+    after: nextContext.after,
   };
+
+  return scenarioContext;
 }
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
@@ -484,7 +492,9 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
   return nextContext;
 }
 
-async function applyEventsOnTargetAndResolveNextContext(context: ScenarioContext) {
+async function applyEventsOnTargetAndResolveNextContext<
+  TContext extends Pick<ScenarioContext, 'sourceServer' | 'targetServer' | 'after'>,
+>(context: TContext) {
   const { sourceServer, targetServer, after } = context;
 
   // Apply source events on target server
