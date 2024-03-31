@@ -1,6 +1,6 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import { FieldType, createConsoleLogger } from '@dossierhq/core';
-import { NoneAndSubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import { createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
 
 async function main() {
@@ -14,7 +14,6 @@ async function main() {
   const databaseAdapter = databaseAdapterResult.valueOrThrow();
   const serverResult = await createServer({
     databaseAdapter,
-    authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
     logger,
   });
   const server = serverResult.valueOrThrow();

@@ -1,6 +1,6 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import { createConsoleLogger } from '@dossierhq/core';
-import { NoneAndSubjectAuthorizationAdapter } from '@dossierhq/server';
+import { SubjectAuthorizationAdapter } from '@dossierhq/server';
 import { describe, expect, test } from 'vitest';
 
 describe('@dossierhq/better-sqlite3', () => {
@@ -16,7 +16,7 @@ describe('@dossierhq/core', () => {
 });
 
 describe('@dossierhq/server', () => {
-  test('NoneAndSubjectAuthorizationAdapter', () => {
-    expect(NoneAndSubjectAuthorizationAdapter).toBeTruthy();
+  test('SubjectAuthorizationAdapter', () => {
+    expect(SubjectAuthorizationAdapter).toBeTruthy();
   });
 });
