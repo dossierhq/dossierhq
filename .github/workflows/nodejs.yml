@@ -52,6 +52,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: rush build
         run: |
+          env CI_SKIP_BROWSER_TEST=true node common/scripts/install-run-rush.js build --to @dossierhq/example-astro --verbose --timeline
           env CI_SKIP_BROWSER_TEST=true node common/scripts/install-run-rush.js build --verbose --timeline
       - name: stop db
         run: |
