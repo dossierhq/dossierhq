@@ -8,7 +8,7 @@ const {
   LoggingClientMiddleware,
   notOk,
 } = require('@dossierhq/core');
-const { createServer, NoneAndSubjectAuthorizationAdapter } = require('@dossierhq/server');
+const { createServer, SubjectAuthorizationAdapter } = require('@dossierhq/server');
 const { createBetterSqlite3Adapter } = require('@dossierhq/better-sqlite3');
 const Database = require('better-sqlite3');
 const bodyParser = require('body-parser');
@@ -39,7 +39,7 @@ async function getServer() {
       const serverResult = await createServer({
         databaseAdapter: adapterResult.value,
         logger,
-        authorizationAdapter: NoneAndSubjectAuthorizationAdapter,
+        authorizationAdapter: SubjectAuthorizationAdapter,
       });
 
       return serverResult;
