@@ -28,7 +28,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@rushstack/heft": "0.66.2",
     "@types/bun": "~1.0.11",
-    "@types/node": "~20.11.30",
+    "@types/node": "~20.12.4",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.4.3"
