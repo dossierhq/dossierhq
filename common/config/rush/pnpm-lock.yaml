@@ -217,8 +217,8 @@ importers:
         specifier: ~8.4.1
         version: 8.4.1
       cloudinary:
-        specifier: ~2.0.3
-        version: 2.0.3
+        specifier: ~2.1.0
+        version: 2.1.0
       dotenv:
         specifier: ~16.4.5
         version: 16.4.5
@@ -1894,8 +1894,8 @@ importers:
         specifier: ~1.20.2
         version: 1.20.2
       cloudinary:
-        specifier: ~2.0.3
-        version: 2.0.3
+        specifier: ~2.1.0
+        version: 2.1.0
       codejar:
         specifier: ~4.2.0
         version: 4.2.0
@@ -11157,8 +11157,8 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
 
-  /cloudinary@2.0.3:
-    resolution: {integrity: sha512-2JPxAUuV4iHwiW4ATSOZvii6+BhhKI9+9KscgUkxJPKa6V6wOnZJHlYyovBGrrIbIgEdmGSZgqEsLfD0wWBhBg==}
+  /cloudinary@2.1.0:
+    resolution: {integrity: sha512-v7ywNaPHoM8N8ZuWieWK5tENIgB+9X4QhRaJHfHefd/Q7ZTzppLa8GX7IJMsF5mdQGL2TD2RbM8RZ+rrnsfP5w==}
     engines: {node: '>=9'}
     dependencies:
       lodash: 4.17.21
