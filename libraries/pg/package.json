@@ -60,7 +60,7 @@
     "@types/pg": "~8.11.4",
     "@types/uuid": "~9.0.7",
     "dotenv": "~16.4.5",
-    "eslint": "~8.57.0",
+    "eslint": "~9.0.0",
     "pg": "~8.11.3",
     "prettier": "3.2.5",
     "typescript": "~5.4.3",

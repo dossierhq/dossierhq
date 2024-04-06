@@ -38,7 +38,7 @@
     "@types/react": "18.2.58",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react-swc": "~3.6.0",
-    "eslint": "~8.57.0",
+    "eslint": "~9.0.0",
     "graphql-config": "~5.0.3",
     "graphql-ws": "~5.16.0",
     "rollup-plugin-visualizer": "~5.12.0",
