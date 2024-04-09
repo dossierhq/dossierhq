@@ -269,8 +269,8 @@ importers:
         specifier: ~8.2.5
         version: 8.2.5(astro@4.5.12)
       '@astrojs/react':
-        specifier: ~3.1.0
-        version: 3.1.0(@types/react-dom@18.2.22)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7)
+        specifier: ~3.2.0
+        version: 3.2.0(@types/react-dom@18.2.22)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7)
       '@dossierhq/better-sqlite3':
         specifier: workspace:*
         version: link:../../libraries/better-sqlite3
@@ -1825,8 +1825,8 @@ importers:
         specifier: ~8.2.5
         version: 8.2.5(astro@4.5.12)
       '@astrojs/react':
-        specifier: ~3.1.0
-        version: 3.1.0(@types/react-dom@18.2.22)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7)
+        specifier: ~3.2.0
+        version: 3.2.0(@types/react-dom@18.2.22)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7)
       '@auth0/auth0-react':
         specifier: ~2.2.4
         version: 2.2.4(react-dom@18.2.0)(react@18.2.0)
@@ -2353,8 +2353,8 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/react@3.1.0(@types/react-dom@18.2.22)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7):
-    resolution: {integrity: sha512-KZhZyV+sUDZEjlrmPWNiPGeYowG9uq6/aMbCgVaeKEBlWT4Kg32TNwBOhZk6AcE4LY1l3mIwt3orUGE2JV96/g==}
+  /@astrojs/react@3.2.0(@types/react-dom@18.2.22)(@types/react@18.2.58)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7):
+    resolution: {integrity: sha512-27ISrGBM7Sh5CV0IeIiv3OOJwSF6l+Zo+fD1PZI8A81g+cPO/NgaYBjrYhCtg2ZCAuJzN3NFYG14NIAbxVu+2w==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       '@types/react': ^17.0.50 || ^18.0.21
