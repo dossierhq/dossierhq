@@ -1,6 +1,6 @@
 import type {
-  ReferenceFieldSpecification,
   EntityReference,
+  ReferenceFieldSpecification,
   RichTextFieldSpecification,
 } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
@@ -20,7 +20,7 @@ interface Props
   className?: string;
 }
 
-export function EntityTypeFieldDisplay({ className, value }: Props) {
+export function ReferenceFieldDisplay({ className, value }: Props) {
   const { publishedClient } = useContext(PublishedDossierContext);
   const dispatchEntityDisplayState = useContext(EntityDisplayDispatchContext);
   const { entity, entityError: _error } = usePublishedEntity(publishedClient, value ?? undefined);

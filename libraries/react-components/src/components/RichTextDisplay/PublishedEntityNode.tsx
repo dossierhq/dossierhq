@@ -1,10 +1,10 @@
 import type { EntityReference, RichTextEntityNode } from '@dossierhq/core';
-import { createRichTextEntityNode, RichTextNodeType } from '@dossierhq/core';
+import { RichTextNodeType, createRichTextEntityNode } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import { useContext } from 'react';
-import { EntityTypeFieldDisplay } from '../EntityDisplay/EntityTypeFieldDisplay.js';
+import { ReferenceFieldDisplay } from '../EntityDisplay/ReferenceFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 export type SerializedPublishedEntityNode = RichTextEntityNode;
@@ -37,7 +37,7 @@ function PublishedEntityComponent({
 
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
-      <EntityTypeFieldDisplay
+      <ReferenceFieldDisplay
         className="rich-text-item-indentation"
         fieldSpec={fieldSpec}
         value={reference}

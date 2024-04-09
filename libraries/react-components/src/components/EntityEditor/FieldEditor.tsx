@@ -3,12 +3,12 @@ import {
   isBooleanSingleField,
   isComponentListField,
   isComponentSingleField,
-  isReferenceListField,
-  isReferenceSingleField,
   isLocationListField,
   isLocationSingleField,
   isNumberListField,
   isNumberSingleField,
+  isReferenceListField,
+  isReferenceSingleField,
   isRichTextListField,
   isRichTextSingleField,
   isStringListField,
@@ -16,11 +16,11 @@ import {
   type AdminFieldSpecification,
   type BooleanFieldSpecification,
   type ComponentFieldSpecification,
-  type ReferenceFieldSpecification,
   type FieldSpecification,
   type LocationFieldSpecification,
   type NumberFieldSpecification,
   type PublishValidationIssue,
+  type ReferenceFieldSpecification,
   type RichTextFieldSpecification,
   type SaveValidationIssue,
   type StringFieldSpecification,
@@ -28,13 +28,13 @@ import {
 import { useContext, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
-import { AddEntityListItemButton, EntityTypeFieldEditor } from './EntityTypeFieldEditor.js';
+import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 import { FieldListWrapper } from './FieldListWrapper.js';
 import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldEditor.js';
 import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
+import { AddEntityListItemButton, ReferenceFieldEditor } from './ReferenceFieldEditor.js';
 import { AddRichTextListItemButton, RichTextFieldEditor } from './RichTextFieldEditor.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
-import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
@@ -78,7 +78,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isReferenceSingleField(fieldSpec, value)) {
     editor = (
-      <EntityTypeFieldEditor
+      <ReferenceFieldEditor
         {...props}
         fieldSpec={fieldSpec as AdminFieldSpecification<ReferenceFieldSpecification>}
         value={value}
@@ -91,7 +91,7 @@ export function FieldEditor(props: FieldEditorProps) {
         fieldSpec={fieldSpec as AdminFieldSpecification<ReferenceFieldSpecification>}
         value={value}
         AddButton={AddEntityListItemButton}
-        Editor={EntityTypeFieldEditor}
+        Editor={ReferenceFieldEditor}
       />
     );
   } else if (isLocationSingleField(fieldSpec, value)) {

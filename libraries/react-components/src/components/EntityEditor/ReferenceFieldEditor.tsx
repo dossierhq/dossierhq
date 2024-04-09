@@ -1,8 +1,8 @@
 import type {
   AdminEntity,
   AdminFieldSpecification,
-  ReferenceFieldSpecification,
   EntityReference,
+  ReferenceFieldSpecification,
 } from '@dossierhq/core';
 import {
   Button2,
@@ -26,7 +26,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<ReferenceFieldSpecification, EntityReference>;
 
-export function EntityTypeFieldEditor({
+export function ReferenceFieldEditor({
   fieldSpec,
   value,
   validationIssues,
@@ -92,7 +92,7 @@ export function EntityTypeFieldEditor({
   );
 }
 
-export function EntityTypeFieldEditorWithoutClear({
+export function ReferenceFieldEditorWithoutClear({
   className,
   value,
 }: {

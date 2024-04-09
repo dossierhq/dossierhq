@@ -1,5 +1,5 @@
 import type { EntityReference, RichTextEntityNode } from '@dossierhq/core';
-import { createRichTextEntityNode, RichTextNodeType } from '@dossierhq/core';
+import { RichTextNodeType, createRichTextEntityNode } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type {
@@ -11,7 +11,7 @@ import type {
   NodeKey,
 } from 'lexical';
 import { createCommand } from 'lexical';
-import { EntityTypeFieldEditorWithoutClear } from '../EntityEditor/EntityTypeFieldEditor.js';
+import { ReferenceFieldEditorWithoutClear } from '../EntityEditor/ReferenceFieldEditor.js';
 
 export type SerializedAdminEntityNode = RichTextEntityNode;
 
@@ -41,7 +41,7 @@ function AdminEntityComponent({
 }) {
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
-      <EntityTypeFieldEditorWithoutClear className="rich-text-item-indentation" value={reference} />
+      <ReferenceFieldEditorWithoutClear className="rich-text-item-indentation" value={reference} />
     </BlockWithAlignableContents>
   );
 }

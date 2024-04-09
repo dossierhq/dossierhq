@@ -1,10 +1,10 @@
 import type {
   BooleanFieldSpecification,
   ComponentFieldSpecification,
-  ReferenceFieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
   PublishedFieldSpecification,
+  ReferenceFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
 } from '@dossierhq/core';
@@ -13,12 +13,12 @@ import {
   isBooleanSingleField,
   isComponentListField,
   isComponentSingleField,
-  isReferenceListField,
-  isReferenceSingleField,
   isLocationListField,
   isLocationSingleField,
   isNumberListField,
   isNumberSingleField,
+  isReferenceListField,
+  isReferenceSingleField,
   isRichTextListField,
   isRichTextSingleField,
   isStringListField,
@@ -28,13 +28,13 @@ import { Text } from '@dossierhq/design';
 import { useContext } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
-import { EntityTypeFieldDisplay } from './EntityTypeFieldDisplay.js';
+import { ComponentFieldDisplay } from './ComponentFieldDisplay.js';
 import { FieldDisplayListWrapper } from './FieldDisplayListWrapper.js';
 import { LocationFieldDisplay } from './LocationFieldDisplay.js';
 import { NumberFieldDisplay } from './NumberFieldDisplay.js';
+import { ReferenceFieldDisplay } from './ReferenceFieldDisplay.js';
 import { RichTextFieldDisplay } from './RichTextFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
-import { ComponentFieldDisplay } from './ComponentFieldDisplay.js';
 
 export interface FieldDisplayProps<
   TFieldSpec extends PublishedFieldSpecification = PublishedFieldSpecification,
@@ -76,14 +76,14 @@ export function FieldDisplay(props: FieldDisplayProps) {
     );
   } else if (isReferenceSingleField(fieldSpec, value)) {
     display = (
-      <EntityTypeFieldDisplay fieldSpec={fieldSpec as ReferenceFieldSpecification} value={value} />
+      <ReferenceFieldDisplay fieldSpec={fieldSpec as ReferenceFieldSpecification} value={value} />
     );
   } else if (isReferenceListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
         fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
-        Display={EntityTypeFieldDisplay}
+        Display={ReferenceFieldDisplay}
       />
     );
   } else if (isLocationSingleField(fieldSpec, value)) {
