@@ -13,7 +13,7 @@
     "@antonz/codapi": "~0.19.1",
     "@astrojs/check": "~0.5.10",
     "@astrojs/node": "~8.2.5",
-    "@astrojs/react": "~3.1.0",
+    "@astrojs/react": "~3.2.0",
     "@auth0/auth0-react": "~2.2.4",
     "@cloudinary/url-gen": "~1.19.0",
     "@creativebulma/bulma-badge": "~1.0.1",
