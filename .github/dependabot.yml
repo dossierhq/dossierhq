@@ -18,7 +18,7 @@ updates:
       eslint:
         patterns:
           - "@typescript-eslint/*"
-          - "eslint"
+          # skip until supported by typescript-eslint: - "eslint"
       lexical:
         patterns:
           - "lexical"
