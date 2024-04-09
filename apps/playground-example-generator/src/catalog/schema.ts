@@ -4,10 +4,10 @@ import {
   RichTextNodeType,
   type AdminBooleanFieldSpecificationUpdate,
   type AdminComponentFieldSpecificationUpdate,
-  type AdminEntityFieldSpecificationUpdate,
   type AdminEntityTypeSpecificationUpdate,
   type AdminLocationFieldSpecificationUpdate,
   type AdminNumberFieldSpecificationUpdate,
+  type AdminReferenceFieldSpecificationUpdate,
   type AdminRichTextFieldSpecificationUpdate,
   type AdminSchemaSpecificationUpdate,
   type AdminStringFieldSpecificationUpdate,
@@ -24,26 +24,26 @@ export const SCHEMA = {
       ],
     },
     {
-      name: 'EntitiesEntity',
+      name: 'ReferencesEntity',
       fields: [
-        { name: 'normal', type: FieldType.Entity },
-        { name: 'required', type: FieldType.Entity, required: true },
-        { name: 'list', type: FieldType.Entity, list: true },
-        { name: 'stringsEntity', type: FieldType.Entity, entityTypes: ['StringsEntity'] },
+        { name: 'normal', type: FieldType.Reference },
+        { name: 'required', type: FieldType.Reference, required: true },
+        { name: 'list', type: FieldType.Reference, list: true },
+        { name: 'stringsEntity', type: FieldType.Reference, entityTypes: ['StringsEntity'] },
         {
           name: 'stringsEntityList',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           list: true,
           entityTypes: ['StringsEntity'],
         },
         {
           name: 'stringsAndLocationsEntity',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           entityTypes: ['LocationsEntity', 'StringsEntity'],
         },
         {
           name: 'stringsAndLocationsEntityList',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           list: true,
           entityTypes: ['LocationsEntity', 'StringsEntity'],
         },
@@ -213,13 +213,13 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
         return copyEntityType(entityType, (entityType) => {
           booleanFieldSpec(entityType, 'required').required = false;
         });
-      case 'EntitiesEntity':
+      case 'ReferencesEntity':
         return copyEntityType(entityType, (entityType) => {
-          entityFieldSpec(entityType, 'required').required = false;
-          entityFieldSpec(entityType, 'stringsEntity').entityTypes = [];
-          entityFieldSpec(entityType, 'stringsEntityList').entityTypes = [];
-          entityFieldSpec(entityType, 'stringsAndLocationsEntity').entityTypes = [];
-          entityFieldSpec(entityType, 'stringsAndLocationsEntityList').entityTypes = [];
+          referenceFieldSpec(entityType, 'required').required = false;
+          referenceFieldSpec(entityType, 'stringsEntity').entityTypes = [];
+          referenceFieldSpec(entityType, 'stringsEntityList').entityTypes = [];
+          referenceFieldSpec(entityType, 'stringsAndLocationsEntity').entityTypes = [];
+          referenceFieldSpec(entityType, 'stringsAndLocationsEntityList').entityTypes = [];
         });
       case 'LocationsEntity':
         return copyEntityType(entityType, (entityType) => {
@@ -310,12 +310,12 @@ function componentFieldSpec(
   return field;
 }
 
-function entityFieldSpec(
+function referenceFieldSpec(
   entityType: AdminEntityTypeSpecificationUpdate,
   name: string,
-): AdminEntityFieldSpecificationUpdate {
+): AdminReferenceFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
-  if (field.type !== FieldType.Entity) {
+  if (field.type !== FieldType.Reference) {
     throw new Error(`Field ${entityType.name}.${name} is not entity (${field.type})`);
   }
   return field;

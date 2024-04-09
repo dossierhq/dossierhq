@@ -34,7 +34,7 @@ exports[`adminGetEntity > Legacy codec 1`] = `
       "normal": {
         "id": "12345",
       },
-      "type": "EntitiesComponent",
+      "type": "ReferencesComponent",
     },
   },
   "id": "123",

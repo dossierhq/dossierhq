@@ -3,8 +3,8 @@ import {
   isBooleanSingleField,
   isComponentListField,
   isComponentSingleField,
-  isEntityListField,
-  isEntitySingleField,
+  isReferenceListField,
+  isReferenceSingleField,
   isLocationListField,
   isLocationSingleField,
   isNumberListField,
@@ -16,7 +16,7 @@ import {
   type AdminFieldSpecification,
   type BooleanFieldSpecification,
   type ComponentFieldSpecification,
-  type EntityFieldSpecification,
+  type ReferenceFieldSpecification,
   type FieldSpecification,
   type LocationFieldSpecification,
   type NumberFieldSpecification,
@@ -76,19 +76,19 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={BooleanFieldEditor}
       />
     );
-  } else if (isEntitySingleField(fieldSpec, value)) {
+  } else if (isReferenceSingleField(fieldSpec, value)) {
     editor = (
       <EntityTypeFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<EntityFieldSpecification>}
+        fieldSpec={fieldSpec as AdminFieldSpecification<ReferenceFieldSpecification>}
         value={value}
       />
     );
-  } else if (isEntityListField(fieldSpec, value)) {
+  } else if (isReferenceListField(fieldSpec, value)) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<EntityFieldSpecification>}
+        fieldSpec={fieldSpec as AdminFieldSpecification<ReferenceFieldSpecification>}
         value={value}
         AddButton={AddEntityListItemButton}
         Editor={EntityTypeFieldEditor}

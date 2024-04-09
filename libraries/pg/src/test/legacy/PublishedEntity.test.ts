@@ -40,10 +40,10 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'body', type: FieldType.RichText },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['PublishedEntityBar'] },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['PublishedEntityBar'] },
         {
           name: 'bars',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           entityTypes: ['PublishedEntityBar'],
           list: true,
         },
@@ -54,7 +54,7 @@ const SCHEMA: AdminSchemaSpecificationUpdate = {
       nameField: 'title',
       fields: [
         { name: 'title', type: FieldType.String },
-        { name: 'entity', type: FieldType.Entity },
+        { name: 'entity', type: FieldType.Reference },
       ],
     },
     {

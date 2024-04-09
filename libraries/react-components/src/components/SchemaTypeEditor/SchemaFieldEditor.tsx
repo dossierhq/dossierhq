@@ -36,7 +36,7 @@ interface FieldTypeItem {
 const FIELD_TYPE_ITEMS: FieldTypeItem[] = [
   FieldType.Boolean,
   FieldType.Component,
-  FieldType.Entity,
+  FieldType.Reference,
   FieldType.Location,
   FieldType.Number,
   FieldType.RichText,
@@ -103,7 +103,7 @@ export function SchemaFieldEditor({
   ];
 
   const showEntityTypes =
-    fieldDraft.type === FieldType.Entity ||
+    fieldDraft.type === FieldType.Reference ||
     (fieldDraft.type === FieldType.RichText &&
       (!fieldDraft.richTextNodesWithPlaceholders ||
         fieldDraft.richTextNodesWithPlaceholders.length === 0 ||

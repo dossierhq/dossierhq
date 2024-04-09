@@ -1216,7 +1216,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.Component:
           fieldType = this.getOrCreateValueUnion(isAdmin, fieldSpec.componentTypes ?? []);
           break;
-        case FieldType.Entity:
+        case FieldType.Reference:
           fieldType = this.getOrCreateEntityUnion(isAdmin, fieldSpec.entityTypes ?? []);
           break;
         case FieldType.Location:
@@ -1256,7 +1256,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         case FieldType.Boolean:
           fieldType = GraphQLBoolean;
           break;
-        case FieldType.Entity:
+        case FieldType.Reference:
           fieldType = this.getInputType('EntityReferenceInput');
           break;
         case FieldType.Location:

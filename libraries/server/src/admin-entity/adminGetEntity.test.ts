@@ -86,7 +86,7 @@ describe('adminGetEntity', () => {
       encodeVersion: ENCODE_VERSION_LEGACY,
       fields: {
         // References were stored as just the id
-        normal: { type: 'EntitiesComponent', normal: '12345', list: ['23456', '34567'] },
+        normal: { type: 'ReferencesComponent', normal: '12345', list: ['23456', '34567'] },
         list: [
           // Locations were stored as [lat, lng]
           {

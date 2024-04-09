@@ -79,28 +79,28 @@ export function isComponentItemField(
   return fieldSpec.type === FieldType.Component;
 }
 
-/** Check if `value` with `fieldSpec` is a single Entity field */
-export function isEntitySingleField(
+/** Check if `value` with `fieldSpec` is a single Reference field */
+export function isReferenceSingleField(
   fieldSpec: FieldSpecification,
   value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
-  return fieldSpec.type === FieldType.Entity && !fieldSpec.list;
+): value is FieldValueTypeMap[typeof FieldType.Reference] | null {
+  return fieldSpec.type === FieldType.Reference && !fieldSpec.list;
 }
 
-/** Check if `value` with `fieldSpec` is a list Entity field */
-export function isEntityListField(
+/** Check if `value` with `fieldSpec` is a list Reference field */
+export function isReferenceListField(
   fieldSpec: FieldSpecification,
   value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.Entity][] | null {
-  return fieldSpec.type === FieldType.Entity && fieldSpec.list;
+): value is FieldValueTypeMap[typeof FieldType.Reference][] | null {
+  return fieldSpec.type === FieldType.Reference && fieldSpec.list;
 }
 
-/** Check if `value` with `fieldSpec` is either a single Entity field or an item in a list field */
-export function isEntityItemField(
+/** Check if `value` with `fieldSpec` is either a single Reference field or an item in a list field */
+export function isReferenceItemField(
   fieldSpec: FieldSpecification,
   value: unknown,
-): value is FieldValueTypeMap[typeof FieldType.Entity] | null {
-  return fieldSpec.type === FieldType.Entity;
+): value is FieldValueTypeMap[typeof FieldType.Reference] | null {
+  return fieldSpec.type === FieldType.Reference;
 }
 
 /** Check if `value` with `fieldSpec` is a single Location field */

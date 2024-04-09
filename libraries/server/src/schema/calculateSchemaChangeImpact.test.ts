@@ -647,7 +647,7 @@ describe('calculateSchemaChangeImpact migration deleteType', () => {
           { name: 'OneType', fields: [] },
           {
             name: 'AnotherEntity',
-            fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: ['OneType'] }],
+            fields: [{ name: 'entity', type: FieldType.Reference, entityTypes: ['OneType'] }],
           },
         ],
         componentTypes: [
@@ -881,7 +881,7 @@ describe('calculateSchemaChangeImpact migration renameType', () => {
           { name: 'OldName', fields: [] },
           {
             name: 'AnotherEntity',
-            fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: ['OldName'] }],
+            fields: [{ name: 'entity', type: FieldType.Reference, entityTypes: ['OldName'] }],
           },
         ],
         componentTypes: [

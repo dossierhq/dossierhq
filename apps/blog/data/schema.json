@@ -144,7 +144,7 @@
         },
         {
           "name": "authors",
-          "type": "Entity",
+          "type": "Reference",
           "list": true,
           "required": false,
           "adminOnly": false,
@@ -291,7 +291,7 @@
         },
         {
           "name": "article",
-          "type": "Entity",
+          "type": "Reference",
           "list": false,
           "required": true,
           "adminOnly": false,

@@ -20,12 +20,12 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'category',
-          type: 'Entity',
+          type: 'Reference',
           entityTypes: ['Category'],
         },
         {
           name: 'categories',
-          type: 'Entity',
+          type: 'Reference',
           list: true,
           entityTypes: ['Category'],
         },
@@ -66,7 +66,7 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'category',
-          type: 'Entity',
+          type: 'Reference',
           entityTypes: ['Category'],
         },
       ],

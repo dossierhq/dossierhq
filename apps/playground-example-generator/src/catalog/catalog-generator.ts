@@ -3,12 +3,12 @@ import 'dotenv/config';
 import {
   copyEntity,
   createRichText,
+  createRichTextComponentNode,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
   type EntityReference,
@@ -28,10 +28,10 @@ import type {
   AdminBooleansEntity,
   AdminCloudinaryImage,
   AdminComponentsEntity,
-  AdminEntitiesEntity,
   AdminLocationsEntity,
   AdminNestedComponent,
   AdminNumbersEntity,
+  AdminReferencesEntity,
   AdminRichTextsEntity,
   AdminStringsComponent,
   AdminStringsEntity,
@@ -290,8 +290,8 @@ async function createEntitiesEntities(
     stringsEntities: AdminStringsEntity[];
   },
 ) {
-  const minimal: AdminEntityCreate<AdminEntitiesEntity> = {
-    info: { type: 'EntitiesEntity', name: 'Entities minimal' },
+  const minimal: AdminEntityCreate<AdminReferencesEntity> = {
+    info: { type: 'ReferencesEntity', name: 'References minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, {
@@ -299,20 +299,20 @@ async function createEntitiesEntities(
   });
 
   const results = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('entities-minimal') })),
+    adminClient.createEntity(copyEntity(minimal, { id: id('references-minimal') })),
 
     adminClient.createEntity(
       copyEntity(minimalPublish, {
-        id: id('entities-published-minimal'),
-        info: { name: 'Entities published minimal' },
+        id: id('references-published-minimal'),
+        info: { name: 'References published minimal' },
       }),
       { publish: true },
     ),
 
     adminClient.createEntity(
       copyEntity(minimalPublish, {
-        id: id('entities-filled'),
-        info: { name: 'Entities filled' },
+        id: id('references-filled'),
+        info: { name: 'References filled' },
         fields: {
           normal: entityRef(booleansEntities.at(-1)),
           list: entityRefs(numbersEntities.slice(0, 2)),
@@ -329,8 +329,8 @@ async function createEntitiesEntities(
 
     adminClient.createEntity(
       copyEntity(minimal, {
-        id: id('entities-invalid'),
-        info: { name: 'Entities invalid' },
+        id: id('references-invalid'),
+        info: { name: 'References invalid' },
         fields: {
           stringsEntity: entityRef(booleansEntities.at(-1)),
           stringsEntityList: entityRefs(booleansEntities.slice(0, 2)),
@@ -342,8 +342,8 @@ async function createEntitiesEntities(
 
     adminClient.createEntity(
       copyEntity(minimalPublish, {
-        id: id('entities-published-invalid'),
-        info: { name: 'Entities published invalid' },
+        id: id('references-published-invalid'),
+        info: { name: 'References published invalid' },
       }),
       { publish: true },
     ),

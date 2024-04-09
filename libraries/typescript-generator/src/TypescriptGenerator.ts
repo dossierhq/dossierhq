@@ -278,7 +278,7 @@ function fieldType(
         type = `App${adminOrPublished}Component`;
       }
       break;
-    case FieldType.Entity:
+    case FieldType.Reference:
       coreImports.add('EntityReference');
       type = 'EntityReference';
       break;

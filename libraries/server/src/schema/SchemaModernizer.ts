@@ -7,6 +7,8 @@ import {
   type AdminSchemaMigrationAction,
   type AdminSchemaSpecificationWithMigrations,
   type ComponentFieldSpecification,
+  type LegacyAdminComponentTypeSpecification,
+  type LegacyAdminEntityTypeSpecification,
   type LegacyAdminSchemaSpecificationWithMigrations,
   type RichTextFieldSpecification,
 } from '@dossierhq/core';
@@ -40,17 +42,9 @@ export function modernizeSchemaSpecification(
   return payload;
 }
 
-type EntityTypeSpec =
-  | AdminEntityTypeSpecification
-  | LegacyAdminSchemaSpecificationWithMigrations['entityTypes'][number];
-type ComponentTypeSpec =
-  | AdminComponentTypeSpecification
-  | LegacyAdminSchemaSpecificationWithMigrations['valueTypes'][number];
-type FieldSpec =
-  | AdminFieldSpecification
-  | LegacyAdminSchemaSpecificationWithMigrations[
-      | 'entityTypes'
-      | 'valueTypes'][number]['fields'][number];
+type EntityTypeSpec = AdminEntityTypeSpecification | LegacyAdminEntityTypeSpecification;
+type ComponentTypeSpec = AdminComponentTypeSpecification | LegacyAdminComponentTypeSpecification;
+type FieldSpec = AdminFieldSpecification | EntityTypeSpec['fields'][number];
 type ActionSpec =
   | AdminSchemaMigrationAction
   | LegacyAdminSchemaSpecificationWithMigrations['migrations'][number]['actions'][number];
@@ -78,10 +72,12 @@ function modernizeField(fieldSpec: FieldSpec): AdminFieldSpecification {
   // Version 0.2.3: moved isName from field to nameField on entity types, isName is deprecated
   delete (fieldSpec as { isName?: boolean }).isName;
   // Field types were renamed
-  if ((fieldSpec.type as string) === 'EntityType') fieldSpec.type = FieldType.Entity;
+  if ((fieldSpec.type as string) === 'EntityType') fieldSpec.type = FieldType.Reference;
   if ((fieldSpec.type as string) === 'ValueType') fieldSpec.type = FieldType.Component;
   // Version 0.5: renamed ValueItem to Component
   if ((fieldSpec.type as string) === 'ValueItem') fieldSpec.type = FieldType.Component;
+  // Version 0.7: renamed Entity to Reference
+  if ((fieldSpec.type as string) === 'Entity') fieldSpec.type = FieldType.Reference;
 
   if (fieldSpec.type === FieldType.Component) {
     // Version 0.5: renamed valueTypes to componentTypes

@@ -8,8 +8,8 @@ import {
   REQUIRED_RICH_TEXT_NODES,
   type AdminSchemaSpecificationWithMigrations,
   type ComponentFieldSpecification,
-  type EntityFieldSpecification,
   type NumberFieldSpecification,
+  type ReferenceFieldSpecification,
   type RichTextFieldSpecification,
   type StringFieldSpecification,
 } from './SchemaSpecification.js';
@@ -233,17 +233,20 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   test('use existing entityTypes value if not specified on Entity field update', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
-        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
+        {
+          name: 'Foo',
+          fields: [{ name: 'field', type: FieldType.Reference, entityTypes: ['Foo'] }],
+        },
       ],
     })
       .valueOrThrow()
       .updateAndValidate({
-        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity }] }],
+        entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Reference }] }],
       })
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    const entityFieldSpec = result.spec.entityTypes[0].fields[0] as EntityFieldSpecification;
+    const entityFieldSpec = result.spec.entityTypes[0].fields[0] as ReferenceFieldSpecification;
     expect(entityFieldSpec.entityTypes).toEqual(['Foo']);
   });
 
@@ -435,7 +438,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
             name: 'Entity',
             adminOnly: false,
             fields: [
-              { name: 'entity', type: FieldType.Entity, entityTypes: ['Entity', 'Entity'] },
+              { name: 'entity', type: FieldType.Reference, entityTypes: ['Entity', 'Entity'] },
               {
                 name: 'string',
                 type: FieldType.String,
@@ -956,7 +959,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
         {
           name: 'Bar',
           fields: [
-            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            { name: 'entity', type: FieldType.Reference, entityTypes: ['Bar', 'Foo'] },
             {
               name: 'richText',
               type: FieldType.RichText,
@@ -970,7 +973,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
         {
           name: 'Baz',
           fields: [
-            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            { name: 'entity', type: FieldType.Reference, entityTypes: ['Bar', 'Foo'] },
             {
               name: 'richText',
               type: FieldType.RichText,
@@ -996,7 +999,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
         {
           name: 'Bar',
           fields: [
-            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            { name: 'entity', type: FieldType.Reference, entityTypes: ['Bar', 'Foo'] },
             {
               name: 'richText',
               type: FieldType.RichText,
@@ -1018,7 +1021,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
     const fooTypeSpec = result.spec.entityTypes.find((it) => it.name === 'Foo')!;
     expect(fooTypeSpec.fields[0].type).toBe(FieldType.Boolean);
     const barTypeSpec = result.spec.entityTypes.find((it) => it.name === 'Bar')!;
-    expect((barTypeSpec.fields[0] as EntityFieldSpecification).entityTypes).toEqual(['Bar']); // Foo is removed since it referred to the old type
+    expect((barTypeSpec.fields[0] as ReferenceFieldSpecification).entityTypes).toEqual(['Bar']); // Foo is removed since it referred to the old type
   });
 
   test('component type', () => {
@@ -1098,11 +1101,14 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   test('entity type referenced by other fields', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
-        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
+        {
+          name: 'Foo',
+          fields: [{ name: 'field', type: FieldType.Reference, entityTypes: ['Foo'] }],
+        },
         {
           name: 'Bar',
           fields: [
-            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            { name: 'entity', type: FieldType.Reference, entityTypes: ['Bar', 'Foo'] },
             {
               name: 'richText',
               type: FieldType.RichText,
@@ -1116,7 +1122,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
         {
           name: 'Baz',
           fields: [
-            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            { name: 'entity', type: FieldType.Reference, entityTypes: ['Bar', 'Foo'] },
             {
               name: 'richText',
               type: FieldType.RichText,
@@ -1140,11 +1146,14 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   test('entity type, add other entity type with same name', () => {
     const result = AdminSchemaWithMigrations.createAndValidate({
       entityTypes: [
-        { name: 'Foo', fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['Foo'] }] },
+        {
+          name: 'Foo',
+          fields: [{ name: 'field', type: FieldType.Reference, entityTypes: ['Foo'] }],
+        },
         {
           name: 'Bar',
           fields: [
-            { name: 'entity', type: FieldType.Entity, entityTypes: ['Bar', 'Foo'] },
+            { name: 'entity', type: FieldType.Reference, entityTypes: ['Bar', 'Foo'] },
             {
               name: 'richText',
               type: FieldType.RichText,

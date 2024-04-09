@@ -299,7 +299,7 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'foo'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'foo' },
-        FieldType.Entity,
+        FieldType.Reference,
         false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
@@ -318,7 +318,10 @@ describe('ChangeFieldAllowedEntityTypesAction', () => {
       new SchemaEditorActions.UpdateSchemaSpecification(
         AdminSchema.createAndValidate({
           entityTypes: [
-            { name: 'Foo', fields: [{ name: 'entity', type: FieldType.Entity, entityTypes: [] }] },
+            {
+              name: 'Foo',
+              fields: [{ name: 'entity', type: FieldType.Reference, entityTypes: [] }],
+            },
           ],
         }).valueOrThrow(),
       ),
@@ -955,7 +958,7 @@ describe('ChangeFieldTypeAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'bar'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'bar' },
-        FieldType.Entity,
+        FieldType.Reference,
         false,
       ),
     );
@@ -1352,7 +1355,7 @@ describe('DeleteTypeAction', () => {
             {
               name: 'Existing',
               fields: [
-                { name: 'entity', type: FieldType.Entity },
+                { name: 'entity', type: FieldType.Reference },
                 { name: 'richText', type: FieldType.RichText },
               ],
             },
@@ -1396,7 +1399,7 @@ describe('DeleteTypeAction', () => {
             {
               name: 'Referencing',
               fields: [
-                { name: 'entity', type: FieldType.Entity, entityTypes: ['ToBeDeleted'] },
+                { name: 'entity', type: FieldType.Reference, entityTypes: ['ToBeDeleted'] },
                 {
                   name: 'richText',
                   type: FieldType.RichText,
@@ -1747,7 +1750,7 @@ describe('RenameTypeAction', () => {
       new SchemaEditorActions.AddField({ kind: 'entity', typeName: 'Foo' }, 'self'),
       new SchemaEditorActions.ChangeFieldType(
         { kind: 'entity', typeName: 'Foo', fieldName: 'self' },
-        FieldType.Entity,
+        FieldType.Reference,
         false,
       ),
       new SchemaEditorActions.ChangeFieldAllowedEntityTypes(
@@ -1816,13 +1819,13 @@ describe('RenameTypeAction', () => {
           entityTypes: [
             {
               name: 'OldName',
-              fields: [{ name: 'self', type: FieldType.Entity, entityTypes: ['OldName'] }],
+              fields: [{ name: 'self', type: FieldType.Reference, entityTypes: ['OldName'] }],
             },
           ],
           componentTypes: [
             {
               name: 'Referencing',
-              fields: [{ name: 'field', type: FieldType.Entity, entityTypes: ['OldName'] }],
+              fields: [{ name: 'field', type: FieldType.Reference, entityTypes: ['OldName'] }],
             },
           ],
         }).valueOrThrow(),
@@ -2170,7 +2173,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             {
               name: 'EntityReference',
               fields: [
-                { name: 'reference', type: FieldType.Entity, entityTypes: ['EntityReference'] },
+                { name: 'reference', type: FieldType.Reference, entityTypes: ['EntityReference'] },
               ],
             },
           ],
@@ -2178,7 +2181,7 @@ describe('UpdateSchemaSpecificationAction', () => {
             {
               name: 'ValueReference',
               fields: [
-                { name: 'reference', type: FieldType.Entity, entityTypes: ['EntityReference'] },
+                { name: 'reference', type: FieldType.Reference, entityTypes: ['EntityReference'] },
               ],
             },
           ],

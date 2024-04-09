@@ -1,5 +1,5 @@
 import type {
-  EntityFieldSpecification,
+  ReferenceFieldSpecification,
   EntityReference,
   RichTextFieldSpecification,
 } from '@dossierhq/core';
@@ -14,7 +14,7 @@ import type { FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props
   extends FieldDisplayProps<
-    EntityFieldSpecification | RichTextFieldSpecification,
+    ReferenceFieldSpecification | RichTextFieldSpecification,
     EntityReference
   > {
   className?: string;

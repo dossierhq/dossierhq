@@ -7,7 +7,7 @@ import type {
   AdminSchemaSpecification,
   BooleanFieldSpecification,
   ComponentFieldSpecification,
-  EntityFieldSpecification,
+  ReferenceFieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
   RichTextFieldSpecification,
@@ -33,17 +33,17 @@ const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
 const ADMIN_FIELD_SPECIFICATION_KEYS: {
   Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
   Component: readonly (keyof AdminFieldSpecification<ComponentFieldSpecification>)[];
-  Entity: readonly (keyof AdminFieldSpecification<EntityFieldSpecification>)[];
   Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
   Number: readonly (keyof AdminFieldSpecification<NumberFieldSpecification>)[];
+  Reference: readonly (keyof AdminFieldSpecification<ReferenceFieldSpecification>)[];
   RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
   String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
 } = /* @__PURE__ */ (() => ({
   [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.Component]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'componentTypes'],
-  [FieldType.Entity]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
   [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.Number]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'integer'],
+  [FieldType.Reference]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
   [FieldType.RichText]: [
     ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
     'entityTypes',
@@ -132,7 +132,7 @@ export function schemaValidateAdmin(
       }
 
       if (
-        (fieldSpec.type === FieldType.Entity || fieldSpec.type === FieldType.RichText) &&
+        (fieldSpec.type === FieldType.Reference || fieldSpec.type === FieldType.RichText) &&
         fieldSpec.entityTypes &&
         fieldSpec.entityTypes.length > 0
       ) {

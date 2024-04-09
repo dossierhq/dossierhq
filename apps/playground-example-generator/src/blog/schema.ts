@@ -39,7 +39,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'authors',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           list: true,
           entityTypes: ['Person'],
         },
@@ -57,8 +57,18 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
       name: 'CloudinaryImage',
       fields: [
         { name: 'publicId', type: FieldType.String, required: true },
-        { name: 'width', type: FieldType.Number, integer: true, required: true },
-        { name: 'height', type: FieldType.Number, integer: true, required: true },
+        {
+          name: 'width',
+          type: FieldType.Number,
+          integer: true,
+          required: true,
+        },
+        {
+          name: 'height',
+          type: FieldType.Number,
+          integer: true,
+          required: true,
+        },
         { name: 'alt', type: FieldType.String },
       ],
     },

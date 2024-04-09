@@ -15,7 +15,7 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'placeOfBusiness',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           entityTypes: ['PlaceOfBusiness'],
           required: true,
         },
@@ -34,10 +34,10 @@ export const SCHEMA: AdminSchemaSpecificationUpdate = {
     {
       name: 'Review',
       fields: [
-        { name: 'reviewer', type: FieldType.Entity, entityTypes: ['Reviewer'], required: true },
+        { name: 'reviewer', type: FieldType.Reference, entityTypes: ['Reviewer'], required: true },
         {
           name: 'placeOfBusiness',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           entityTypes: ['PlaceOfBusiness'],
           required: true,
         },

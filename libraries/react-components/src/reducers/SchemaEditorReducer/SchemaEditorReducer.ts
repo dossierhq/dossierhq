@@ -239,7 +239,7 @@ function resolveFieldStatus(state: SchemaFieldDraft): SchemaFieldDraft['status']
     return 'changed';
   }
   if (
-    (existingFieldSpec.type === FieldType.Entity ||
+    (existingFieldSpec.type === FieldType.Reference ||
       existingFieldSpec.type === FieldType.RichText) &&
     !isEqual(state.entityTypes, existingFieldSpec.entityTypes)
   ) {
@@ -866,7 +866,7 @@ class ChangeFieldTypeAction extends FieldAction {
     }
 
     //TODO handle rich text?
-    if (this.fieldType === FieldType.Entity) {
+    if (this.fieldType === FieldType.Reference) {
       newFieldDraft.entityTypes = [];
     } else {
       delete newFieldDraft.entityTypes;
@@ -1559,7 +1559,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
             ...fieldDraft.richTextNodesWithPlaceholders,
           ];
         }
-        if (fieldSpec.type === FieldType.Entity || fieldSpec.type === FieldType.RichText) {
+        if (fieldSpec.type === FieldType.Reference || fieldSpec.type === FieldType.RichText) {
           fieldDraft.entityTypes = fieldSpec.entityTypes;
         }
         if (fieldSpec.type === FieldType.Number) {
@@ -1745,7 +1745,7 @@ function getTypeUpdateFromEditorState(
           }
         : undefined),
       ...(draftField.type === FieldType.Number ? { integer: !!draftField.integer } : undefined),
-      ...(draftField.type === FieldType.Entity || draftField.type === FieldType.RichText
+      ...(draftField.type === FieldType.Reference || draftField.type === FieldType.RichText
         ? { entityTypes: draftField.entityTypes ?? [] }
         : undefined),
       ...(draftField.type === FieldType.Component || draftField.type === FieldType.RichText

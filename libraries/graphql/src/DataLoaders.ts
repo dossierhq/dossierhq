@@ -38,9 +38,9 @@ import {
   isComponent,
   isComponentListField,
   isComponentSingleField,
-  isEntityItemField,
-  isEntityListField,
-  isEntitySingleField,
+  isReferenceItemField,
+  isReferenceListField,
+  isReferenceSingleField,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextSingleField,
@@ -303,12 +303,12 @@ function resolveFields<TContext extends SessionGraphQLContext>(
                   : loadPublishedEntityList(schema as PublishedSchema, context, ids);
               },
       };
-    } else if (isEntitySingleField(fieldSpec, value) && value) {
+    } else if (isReferenceSingleField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: GraphQLResolveInfo) =>
         isAdmin
           ? loadAdminEntity(schema as AdminSchema, context, value)
           : loadPublishedEntity(schema as PublishedSchema, context, value);
-    } else if (isEntityListField(fieldSpec, value) && value && value.length > 0) {
+    } else if (isReferenceListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((it) => it.id);
         return isAdmin
@@ -342,7 +342,7 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
     collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
         case ContentTraverseNodeType.fieldItem:
-          if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
+          if (isReferenceItemField(node.fieldSpec, node.value) && node.value) {
             references.add(node.value.id);
           }
           break;

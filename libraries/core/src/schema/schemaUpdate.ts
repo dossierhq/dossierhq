@@ -12,8 +12,8 @@ import {
   type AdminSchemaTransientMigrationAction,
   type AdminSchemaVersionMigration,
   type ComponentFieldSpecification,
-  type EntityFieldSpecification,
   type NumberFieldSpecification,
+  type ReferenceFieldSpecification,
   type RichTextFieldSpecification,
   type StringFieldSpecification,
 } from './SchemaSpecification.js';
@@ -544,9 +544,9 @@ function mergeAndNormalizeUpdatedFieldSpec(
   switch (type) {
     case FieldType.Boolean:
       return ok({ name, type, list, required, adminOnly });
-    case FieldType.Entity: {
+    case FieldType.Reference: {
       const existingEntityFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<EntityFieldSpecification>
+        | AdminFieldSpecification<ReferenceFieldSpecification>
         | undefined;
       const entityTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(

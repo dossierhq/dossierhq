@@ -30,10 +30,10 @@ const adminSchema = AdminSchema.createAndValidate({
       ],
     },
     {
-      name: 'EntitiesEntity',
+      name: 'ReferencesEntity',
       fields: [
-        { name: 'entity', type: FieldType.Entity },
-        { name: 'entityList', type: FieldType.Entity, list: true },
+        { name: 'entity', type: FieldType.Reference },
+        { name: 'entityList', type: FieldType.Reference, list: true },
       ],
     },
     {
@@ -271,7 +271,7 @@ describe('traverseEntity', () => {
   test('traversable: expect entity, get entity[]', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'EntitiesEntity' },
+        info: { type: 'ReferencesEntity' },
         fields: { entity: [{ id: 'id1' }, { id: 'id2' }] },
       }),
     );
@@ -279,7 +279,7 @@ describe('traverseEntity', () => {
     expect(filterErrorTraverseNodes(nodes)).toMatchInlineSnapshot(`
       [
         {
-          "message": "Expected single Entity, got a list",
+          "message": "Expected single Reference, got a list",
           "path": "entity.fields.entity",
           "type": "error",
         },
@@ -290,7 +290,7 @@ describe('traverseEntity', () => {
   test('traversable: expect entity[], get entity', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'EntitiesEntity' },
+        info: { type: 'ReferencesEntity' },
         fields: { entitiesList: { id: '123' } },
       }),
     );
@@ -301,7 +301,7 @@ describe('traverseEntity', () => {
   test('traversable: expect entity, get string', () => {
     const nodes = collectTraverseNodes(
       traverseEntity(adminSchema, ['entity'], {
-        info: { type: 'EntitiesEntity' },
+        info: { type: 'ReferencesEntity' },
         fields: {
           entity: 'string value',
         },

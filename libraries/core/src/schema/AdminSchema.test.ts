@@ -90,7 +90,7 @@ describe('AdminSchema.validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.Entity,
+                type: FieldType.Reference,
                 list: false,
                 adminOnly: true,
                 required: false,
@@ -416,7 +416,7 @@ describe('AdminSchema.validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.Entity,
+                type: FieldType.Reference,
                 list: false,
                 required: false,
                 adminOnly: false,
@@ -1107,7 +1107,7 @@ describe('AdminSchema.validate()', () => {
             fields: [
               {
                 name: 'bar',
-                type: FieldType.Entity,
+                type: FieldType.Reference,
                 list: false,
                 required: false,
                 adminOnly: false,

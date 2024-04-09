@@ -1376,7 +1376,7 @@ exports[`traverseEntity > traversable: expect entity, get entity[] 1`] = `
         ],
       },
       "info": {
-        "type": "EntitiesEntity",
+        "type": "ReferencesEntity",
       },
     },
     "path": "entity",
@@ -1395,7 +1395,7 @@ exports[`traverseEntity > traversable: expect entity, get entity[] 1`] = `
     ],
   },
   {
-    "message": "Expected single Entity, got a list",
+    "message": "Expected single Reference, got a list",
     "path": "entity.fields.entity",
     "type": "error",
   },
@@ -1415,7 +1415,7 @@ exports[`traverseEntity > traversable: expect entity, get string 1`] = `
         "entity": "string value",
       },
       "info": {
-        "type": "EntitiesEntity",
+        "type": "ReferencesEntity",
       },
     },
     "path": "entity",
@@ -1449,7 +1449,7 @@ exports[`traverseEntity > traversable: expect entity[], get entity 1`] = `
         },
       },
       "info": {
-        "type": "EntitiesEntity",
+        "type": "ReferencesEntity",
       },
     },
     "path": "entity",
@@ -1467,7 +1467,7 @@ exports[`traverseEntity > traversable: expect entity[], get entity 1`] = `
       "list": false,
       "name": "entity",
       "required": false,
-      "type": "Entity",
+      "type": "Reference",
     },
     "path": [
       "entity",

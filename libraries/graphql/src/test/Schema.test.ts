@@ -377,7 +377,7 @@ describe('Two entity types with reference schema spec', () => {
         adminOnly: false,
         fields: [
           { name: 'barField1', type: FieldType.String },
-          { name: 'barField2', type: FieldType.Entity },
+          { name: 'barField2', type: FieldType.Reference },
           { name: 'barField3', type: FieldType.Location },
           { name: 'barField4', type: FieldType.Boolean },
         ],
@@ -408,17 +408,17 @@ describe('Multiple references with entityTypes schema spec', () => {
         name: 'Foo',
         adminOnly: false,
         fields: [
-          { name: 'noMeansAll', type: FieldType.Entity, entityTypes: [] },
-          { name: 'bar', type: FieldType.Entity, entityTypes: ['Bar'] },
-          { name: 'bazBar', type: FieldType.Entity, entityTypes: ['Baz', 'Bar'] },
+          { name: 'noMeansAll', type: FieldType.Reference, entityTypes: [] },
+          { name: 'bar', type: FieldType.Reference, entityTypes: ['Bar'] },
+          { name: 'bazBar', type: FieldType.Reference, entityTypes: ['Baz', 'Bar'] },
           {
             name: 'fooBarBaz',
-            type: FieldType.Entity,
+            type: FieldType.Reference,
             entityTypes: ['Foo', 'Bar', 'Baz'],
           },
           {
             name: 'barBarBar',
-            type: FieldType.Entity,
+            type: FieldType.Reference,
             entityTypes: ['Bar', 'Bar', 'Bar'],
           },
         ],
@@ -456,7 +456,7 @@ describe('List of strings, booleans, locations, numbers and references schema sp
           { name: 'locations', type: FieldType.Location, list: true },
           { name: 'floats', type: FieldType.Number, list: true },
           { name: 'integers', type: FieldType.Number, integer: true, list: true },
-          { name: 'bars', type: FieldType.Entity, list: true, entityTypes: ['Bar'] },
+          { name: 'bars', type: FieldType.Reference, list: true, entityTypes: ['Bar'] },
         ],
       },
       { name: 'Bar', adminOnly: false, fields: [] },
@@ -504,7 +504,7 @@ describe('Component type schema spec', () => {
         adminOnly: false,
         fields: [
           { name: 'one', type: FieldType.String },
-          { name: 'two', type: FieldType.Entity, entityTypes: ['Bar'] },
+          { name: 'two', type: FieldType.Reference, entityTypes: ['Bar'] },
           { name: 'three', type: FieldType.Location },
           { name: 'four', type: FieldType.Boolean },
         ],
@@ -514,7 +514,7 @@ describe('Component type schema spec', () => {
         adminOnly: false,
         fields: [
           { name: 'one', type: FieldType.String, list: true },
-          { name: 'two', type: FieldType.Entity, list: true, entityTypes: ['Bar'] },
+          { name: 'two', type: FieldType.Reference, list: true, entityTypes: ['Bar'] },
           { name: 'three', type: FieldType.Location, list: true },
           { name: 'four', type: FieldType.Boolean, list: true },
         ],

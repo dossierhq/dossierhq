@@ -13,9 +13,9 @@ import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
 import {
   isComponentItemField,
-  isEntityItemField,
   isLocationItemField,
   isNumberItemField,
+  isReferenceItemField,
   isRichTextTextNode,
   isStringItemField,
 } from './ContentTypeUtils.js';
@@ -224,7 +224,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
     case ContentTraverseNodeType.field:
       break;
     case ContentTraverseNodeType.fieldItem:
-      if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
+      if (isReferenceItemField(node.fieldSpec, node.value) && node.value) {
         const invalidKeys = Object.keys(node.value).filter((it) => it !== 'id');
         if (invalidKeys.length > 0) {
           return {

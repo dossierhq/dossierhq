@@ -3,22 +3,22 @@ import {
   AdminSchema,
   FieldType,
   createRichText,
+  createRichTextComponentNode,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
   traverseEntity,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import {
+  createComponentTypesCollector,
   createFullTextSearchCollector,
   createLocationsCollector,
   createReferencesCollector,
   createRequestedReferencesCollector,
   createUniqueIndexCollector,
-  createComponentTypesCollector,
 } from './EntityCollectors.js';
 
 const schemaSpec: AdminSchemaSpecificationUpdate = {
@@ -34,9 +34,9 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
         { name: 'strings', type: FieldType.String, list: true },
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityCodecBar'] },
-        { name: 'bars', type: FieldType.Entity, list: true, entityTypes: ['EntityCodecBar'] },
-        { name: 'reference', type: FieldType.Entity },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['EntityCodecBar'] },
+        { name: 'bars', type: FieldType.Reference, list: true, entityTypes: ['EntityCodecBar'] },
+        { name: 'reference', type: FieldType.Reference },
         { name: 'component', type: FieldType.Component },
         { name: 'components', type: FieldType.Component, list: true },
         { name: 'valueOne', type: FieldType.Component },
@@ -60,7 +60,7 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
         { name: 'strings', type: FieldType.String, list: true },
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['EntityCodecBar'] },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['EntityCodecBar'] },
         { name: 'richText', type: FieldType.RichText, entityTypes: ['EntityCodecBar'] },
         { name: 'child', type: FieldType.Component, componentTypes: ['EntityCodecValueOne'] },
       ],

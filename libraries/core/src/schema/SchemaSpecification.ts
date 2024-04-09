@@ -44,9 +44,9 @@ export interface PublishedComponentTypeSpecification {
 export const FieldType = {
   Boolean: 'Boolean',
   Component: 'Component',
-  Entity: 'Entity',
   Location: 'Location',
   Number: 'Number',
+  Reference: 'Reference',
   RichText: 'RichText',
   String: 'String',
 } as const;
@@ -67,8 +67,8 @@ export interface ComponentFieldSpecification extends SharedFieldSpecification {
   componentTypes: string[];
 }
 
-export interface EntityFieldSpecification extends SharedFieldSpecification {
-  type: typeof FieldType.Entity;
+export interface ReferenceFieldSpecification extends SharedFieldSpecification {
+  type: typeof FieldType.Reference;
   entityTypes: string[];
 }
 
@@ -104,12 +104,12 @@ export interface StringFieldSpecification extends SharedFieldSpecification {
 
 export type FieldSpecification =
   | BooleanFieldSpecification
-  | EntityFieldSpecification
+  | ComponentFieldSpecification
   | LocationFieldSpecification
   | NumberFieldSpecification
+  | ReferenceFieldSpecification
   | RichTextFieldSpecification
-  | StringFieldSpecification
-  | ComponentFieldSpecification;
+  | StringFieldSpecification;
 
 export type AdminFieldSpecification<TFieldSpec extends FieldSpecification = FieldSpecification> =
   TFieldSpec & {
@@ -126,8 +126,8 @@ export type AdminComponentFieldSpecificationUpdate = PartialExcept<
   AdminFieldSpecification<ComponentFieldSpecification>,
   'name' | 'type'
 >;
-export type AdminEntityFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<EntityFieldSpecification>,
+export type AdminReferenceFieldSpecificationUpdate = PartialExcept<
+  AdminFieldSpecification<ReferenceFieldSpecification>,
   'name' | 'type'
 >;
 export type AdminLocationFieldSpecificationUpdate = PartialExcept<
@@ -150,9 +150,9 @@ export type AdminStringFieldSpecificationUpdate = PartialExcept<
 export type AdminFieldSpecificationUpdate =
   | AdminBooleanFieldSpecificationUpdate
   | AdminComponentFieldSpecificationUpdate
-  | AdminEntityFieldSpecificationUpdate
   | AdminLocationFieldSpecificationUpdate
   | AdminNumberFieldSpecificationUpdate
+  | AdminReferenceFieldSpecificationUpdate
   | AdminRichTextFieldSpecificationUpdate
   | AdminStringFieldSpecificationUpdate;
 
@@ -161,9 +161,9 @@ export type PublishedFieldSpecification = FieldSpecification;
 export interface FieldValueTypeMap {
   [FieldType.Boolean]: boolean;
   [FieldType.Component]: Component;
-  [FieldType.Entity]: EntityReference;
   [FieldType.Location]: Location;
   [FieldType.Number]: number;
+  [FieldType.Reference]: EntityReference;
   [FieldType.RichText]: RichText;
   [FieldType.String]: string;
 }
@@ -239,7 +239,16 @@ export interface SchemaSpecificationUpdatePayload<
 }
 
 export type LegacyAdminSchemaSpecificationWithMigrations =
-  Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations;
+  | Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations
+  | Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations;
+
+export type LegacyAdminEntityTypeSpecification =
+  | Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations['entityTypes'][number]
+  | Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations['entityTypes'][number];
+
+export type LegacyAdminComponentTypeSpecification =
+  | Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations['valueTypes'][number]
+  | Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations['componentTypes'][number];
 
 /** In version after 0.4.7:
  * - valueTypes was renamed to componentTypes
@@ -282,6 +291,27 @@ type Legacy_v0_4_7_AdminSchemaMigrationAction<
   componentType: string;
 }
   ? Omit<T, 'componentType'> & { valueType: string }
+  : T;
+
+/** In version after 0.6.2:
+ * - Entity field type was renamed to Reference
+ */
+interface Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations
+  extends Omit<AdminSchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes'> {
+  entityTypes: (Omit<AdminEntityTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_6_2_AdminFieldSpecification[];
+  })[];
+  componentTypes: (Omit<AdminComponentTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_6_2_AdminFieldSpecification[];
+  })[];
+}
+
+type Legacy_V0_6_2_AdminFieldSpecification<
+  T extends AdminFieldSpecification = AdminFieldSpecification,
+> = T extends ReferenceFieldSpecification
+  ? Omit<AdminFieldSpecification<ReferenceFieldSpecification>, 'type'> & {
+      type: 'Entity';
+    }
   : T;
 
 export const REQUIRED_RICH_TEXT_NODES = /* @__PURE__ */ (() => [

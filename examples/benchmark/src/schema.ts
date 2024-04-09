@@ -40,7 +40,7 @@ export const schemaSpecification: AdminSchemaSpecificationUpdate = {
         },
         {
           name: 'organization',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           entityTypes: ['Organization'],
         },
       ],

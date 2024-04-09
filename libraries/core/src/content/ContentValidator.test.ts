@@ -26,7 +26,7 @@ import {
 
 const adminSchema = AdminSchema.createAndValidate({
   entityTypes: [
-    { name: 'EntitiesEntity', fields: [{ name: 'normal', type: FieldType.Entity }] },
+    { name: 'ReferencesEntity', fields: [{ name: 'normal', type: FieldType.Reference }] },
     {
       name: 'LocationsEntity',
       fields: [{ name: 'normal', type: FieldType.Location }],
@@ -89,7 +89,7 @@ const adminSchema = AdminSchema.createAndValidate({
 }).valueOrThrow();
 
 const ENTITIES_ENTITY_DEFAULT: AdminEntityCreate = {
-  info: { type: 'EntitiesEntity', name: 'EntitiesEntity' },
+  info: { type: 'ReferencesEntity', name: 'ReferencesEntity' },
   fields: {},
 };
 

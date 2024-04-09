@@ -16,7 +16,7 @@ const booleanCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Boolean]
   decodeJson: (json) => json as boolean,
 };
 
-const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Entity], string> = {
+const entityTypeCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Reference], string> = {
   decodeData: (it) => ({ id: it }),
   decodeJson: (json) => json as EntityReference,
 };
@@ -51,7 +51,7 @@ const invalidCodec: FieldTypeAdapter<FieldValueTypeMap[typeof FieldType.Componen
 const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = /* @__PURE__ */ (() => ({
   [FieldType.Boolean]: booleanCodec,
   [FieldType.Component]: invalidCodec,
-  [FieldType.Entity]: entityTypeCodec,
+  [FieldType.Reference]: entityTypeCodec,
   [FieldType.Location]: locationCodec,
   [FieldType.Number]: numberCodec,
   [FieldType.RichText]: invalidCodec,

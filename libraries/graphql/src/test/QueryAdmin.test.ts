@@ -54,10 +54,10 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
         { name: 'locations', type: FieldType.Location, list: true },
         { name: 'active', type: FieldType.Boolean },
         { name: 'activeList', type: FieldType.Boolean, list: true },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['QueryAdminBar'] },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['QueryAdminBar'] },
         {
           name: 'bars',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           list: true,
           entityTypes: ['QueryAdminBar'],
         },
@@ -80,7 +80,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       name: 'QueryAdminStringedBar',
       fields: [
         { name: 'text', type: FieldType.String },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['QueryAdminBar'] },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['QueryAdminBar'] },
       ],
     },
   ],

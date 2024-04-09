@@ -104,7 +104,7 @@ export function checkFieldItemTraversable(
       }
       break;
     }
-    case FieldType.Entity: {
+    case FieldType.Reference: {
       if (typeof value !== 'object') {
         return { path: [], message: `Expected an entity reference, got ${typeof value}` };
       }

@@ -2,7 +2,7 @@ import { AdminSchemaWithMigrations, FieldType } from '@dossierhq/core';
 
 export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
   entityTypes: [
-    { name: 'EntitiesEntity', fields: [{ name: 'normal', type: FieldType.Entity }] },
+    { name: 'ReferencesEntity', fields: [{ name: 'normal', type: FieldType.Reference }] },
     { name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] },
     {
       name: 'ComponentsEntity',
@@ -14,10 +14,10 @@ export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
   ],
   componentTypes: [
     {
-      name: 'EntitiesComponent',
+      name: 'ReferencesComponent',
       fields: [
-        { name: 'normal', type: FieldType.Entity },
-        { name: 'list', type: FieldType.Entity, list: true },
+        { name: 'normal', type: FieldType.Reference },
+        { name: 'list', type: FieldType.Reference, list: true },
       ],
     },
     {

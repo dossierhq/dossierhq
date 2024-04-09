@@ -54,10 +54,10 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
         { name: 'body', type: FieldType.RichText, entityTypes: ['MutationBar'] },
         { name: 'location', type: FieldType.Location },
         { name: 'locations', type: FieldType.Location, list: true },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['MutationBar'] },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['MutationBar'] },
         {
           name: 'bars',
-          type: FieldType.Entity,
+          type: FieldType.Reference,
           list: true,
           entityTypes: ['MutationBar'],
         },
@@ -74,7 +74,7 @@ const schemaSpecification: AdminSchemaSpecificationUpdate = {
       name: 'MutationStringedBar',
       fields: [
         { name: 'text', type: FieldType.String },
-        { name: 'bar', type: FieldType.Entity, entityTypes: ['MutationBar'] },
+        { name: 'bar', type: FieldType.Reference, entityTypes: ['MutationBar'] },
       ],
     },
     {

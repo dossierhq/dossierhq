@@ -365,4 +365,92 @@ describe('modernizeSchemaSpecification', () => {
       ],
     });
   });
+
+  test('Version <=0.7 schema', () => {
+    const schemaSpec: LegacyAdminSchemaSpecificationWithMigrations = {
+      version: 2,
+      schemaKind: 'admin',
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: null,
+          fields: [
+            {
+              name: 'reference',
+              type: 'Entity', // was renamed to Reference
+              adminOnly: false,
+              list: false,
+              required: false,
+              entityTypes: [],
+            },
+          ],
+        },
+      ],
+      componentTypes: [
+        {
+          name: 'Component1',
+          adminOnly: false,
+          fields: [
+            {
+              name: 'reference',
+              type: 'Entity', // was renamed to Reference
+              adminOnly: false,
+              list: true,
+              required: false,
+              entityTypes: [],
+            },
+          ],
+        },
+      ],
+      patterns: [],
+      indexes: [],
+      migrations: [],
+    };
+
+    expect(
+      modernizeSchemaSpecification(schemaSpec),
+    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+      schemaKind: 'admin',
+      version: 2,
+      entityTypes: [
+        {
+          name: 'Foo',
+          adminOnly: false,
+          authKeyPattern: null,
+          nameField: null,
+          fields: [
+            {
+              name: 'reference',
+              type: FieldType.Reference,
+              adminOnly: false,
+              list: false,
+              required: false,
+              entityTypes: [],
+            },
+          ],
+        },
+      ],
+      componentTypes: [
+        {
+          name: 'Component1',
+          adminOnly: false,
+          fields: [
+            {
+              name: 'reference',
+              type: FieldType.Reference,
+              adminOnly: false,
+              list: true,
+              required: false,
+              entityTypes: [],
+            },
+          ],
+        },
+      ],
+      patterns: [],
+      indexes: [],
+      migrations: [],
+    });
+  });
 });

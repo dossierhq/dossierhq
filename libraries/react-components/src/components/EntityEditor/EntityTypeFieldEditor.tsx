@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
   AdminFieldSpecification,
-  EntityFieldSpecification,
+  ReferenceFieldSpecification,
   EntityReference,
 } from '@dossierhq/core';
 import {
@@ -24,7 +24,7 @@ import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEnt
 import { StatusTag } from '../StatusTag/StatusTag.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 
-type Props = FieldEditorProps<EntityFieldSpecification, EntityReference>;
+type Props = FieldEditorProps<ReferenceFieldSpecification, EntityReference>;
 
 export function EntityTypeFieldEditor({
   fieldSpec,
@@ -144,7 +144,7 @@ export function AddEntityListItemButton({
   fieldSpec,
   onAddItem,
 }: {
-  fieldSpec: AdminFieldSpecification<EntityFieldSpecification>;
+  fieldSpec: AdminFieldSpecification<ReferenceFieldSpecification>;
   onAddItem: (value: EntityReference | null) => void;
 }) {
   return <AddEntityButton fieldSpec={fieldSpec} onEntitySelected={onAddItem} />;
@@ -154,7 +154,7 @@ function AddEntityButton({
   fieldSpec,
   onEntitySelected,
 }: {
-  fieldSpec: AdminFieldSpecification<EntityFieldSpecification>;
+  fieldSpec: AdminFieldSpecification<ReferenceFieldSpecification>;
   onEntitySelected: (entity: EntityReference) => void;
 }) {
   const [showSelector, setShowSelector] = useState(false);

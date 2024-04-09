@@ -1,7 +1,7 @@
 import type {
   BooleanFieldSpecification,
   ComponentFieldSpecification,
-  EntityFieldSpecification,
+  ReferenceFieldSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
   PublishedFieldSpecification,
@@ -13,8 +13,8 @@ import {
   isBooleanSingleField,
   isComponentListField,
   isComponentSingleField,
-  isEntityListField,
-  isEntitySingleField,
+  isReferenceListField,
+  isReferenceSingleField,
   isLocationListField,
   isLocationSingleField,
   isNumberListField,
@@ -74,14 +74,14 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={BooleanFieldDisplay}
       />
     );
-  } else if (isEntitySingleField(fieldSpec, value)) {
+  } else if (isReferenceSingleField(fieldSpec, value)) {
     display = (
-      <EntityTypeFieldDisplay fieldSpec={fieldSpec as EntityFieldSpecification} value={value} />
+      <EntityTypeFieldDisplay fieldSpec={fieldSpec as ReferenceFieldSpecification} value={value} />
     );
-  } else if (isEntityListField(fieldSpec, value)) {
+  } else if (isReferenceListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as EntityFieldSpecification}
+        fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
         Display={EntityTypeFieldDisplay}
       />

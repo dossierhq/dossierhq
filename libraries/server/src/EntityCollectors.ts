@@ -1,7 +1,7 @@
 import {
   ContentTraverseNodeType,
   isComponentItemField,
-  isEntityItemField,
+  isReferenceItemField,
   isLocationItemField,
   isRichTextComponentNode,
   isRichTextEntityLinkNode,
@@ -11,10 +11,10 @@ import {
   type AdminSchema,
   type ContentTraverseNode,
   type ContentValuePath,
-  type EntityFieldSpecification,
   type EntityReference,
   type Location,
   type PublishedSchema,
+  type ReferenceFieldSpecification,
   type RichTextFieldSpecification,
 } from '@dossierhq/core';
 import { assertIsDefined } from './utils/AssertUtils.js';
@@ -66,7 +66,7 @@ export function createReferencesCollector<TSchema extends AdminSchema | Publishe
     collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
         case ContentTraverseNodeType.fieldItem:
-          if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
+          if (isReferenceItemField(node.fieldSpec, node.value) && node.value) {
             references.add(node.value.id);
           }
           break;
@@ -93,8 +93,8 @@ export function createRequestedReferencesCollector<
     collect: (node: ContentTraverseNode<TSchema>) => {
       switch (node.type) {
         case ContentTraverseNodeType.fieldItem:
-          if (isEntityItemField(node.fieldSpec, node.value) && node.value) {
-            const entityItemFieldSpec = node.fieldSpec as EntityFieldSpecification;
+          if (isReferenceItemField(node.fieldSpec, node.value) && node.value) {
+            const entityItemFieldSpec = node.fieldSpec as ReferenceFieldSpecification;
             requestedReferences.push({
               path: node.path,
               uuids: [node.value.id],

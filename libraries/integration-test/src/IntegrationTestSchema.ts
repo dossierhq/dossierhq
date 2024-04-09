@@ -34,10 +34,10 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
     {
       name: 'References',
       fields: [
-        { name: 'any', type: FieldType.Entity },
-        { name: 'anyList', type: FieldType.Entity, list: true },
-        { name: 'anyAdminOnly', type: FieldType.Entity, adminOnly: true },
-        { name: 'titleOnly', type: FieldType.Entity, entityTypes: ['TitleOnly'] },
+        { name: 'any', type: FieldType.Reference },
+        { name: 'anyList', type: FieldType.Reference, list: true },
+        { name: 'anyAdminOnly', type: FieldType.Reference, adminOnly: true },
+        { name: 'titleOnly', type: FieldType.Reference, entityTypes: ['TitleOnly'] },
       ],
     },
     {
@@ -125,7 +125,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
       ],
     },
     { name: 'MigrationComponent', fields: [] },
-    { name: 'ReferencesComponent', fields: [{ name: 'reference', type: FieldType.Entity }] },
+    { name: 'ReferencesComponent', fields: [{ name: 'reference', type: FieldType.Reference }] },
   ],
   patterns: [
     { name: 'subject', pattern: '^subject$' },

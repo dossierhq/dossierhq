@@ -50,8 +50,8 @@ describe('generateTypescriptForSchema', () => {
             {
               name: 'EntityTypes',
               fields: [
-                { name: 'entityType', type: FieldType.Entity },
-                { name: 'entityTypeList', type: FieldType.Entity, list: true },
+                { name: 'entityType', type: FieldType.Reference },
+                { name: 'entityTypeList', type: FieldType.Reference, list: true },
               ],
             },
           ],

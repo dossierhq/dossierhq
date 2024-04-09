@@ -26,9 +26,9 @@ export type AppAdminUniqueIndexes = 'slug';
 export type AppAdminEntity =
   | AdminBooleansEntity
   | AdminComponentsEntity
-  | AdminEntitiesEntity
   | AdminLocationsEntity
   | AdminNumbersEntity
+  | AdminReferencesEntity
   | AdminRichTextsEntity
   | AdminStringsEntity;
 
@@ -83,32 +83,6 @@ export function assertIsAdminComponentsEntity(
   }
 }
 
-export interface AdminEntitiesEntityFields {
-  normal: EntityReference | null;
-  required: EntityReference | null;
-  list: EntityReference[] | null;
-  stringsEntity: EntityReference | null;
-  stringsEntityList: EntityReference[] | null;
-  stringsAndLocationsEntity: EntityReference | null;
-  stringsAndLocationsEntityList: EntityReference[] | null;
-}
-
-export type AdminEntitiesEntity = AdminEntity<'EntitiesEntity', AdminEntitiesEntityFields, ''>;
-
-export function isAdminEntitiesEntity(
-  entity: AdminEntity<string, object>,
-): entity is AdminEntitiesEntity {
-  return entity.info.type === 'EntitiesEntity';
-}
-
-export function assertIsAdminEntitiesEntity(
-  entity: AdminEntity<string, object>,
-): asserts entity is AdminEntitiesEntity {
-  if (entity.info.type !== 'EntitiesEntity') {
-    throw new Error('Expected info.type = EntitiesEntity (but was ' + entity.info.type + ')');
-  }
-}
-
 export interface AdminLocationsEntityFields {
   normal: Location | null;
   required: Location | null;
@@ -154,6 +128,36 @@ export function assertIsAdminNumbersEntity(
 ): asserts entity is AdminNumbersEntity {
   if (entity.info.type !== 'NumbersEntity') {
     throw new Error('Expected info.type = NumbersEntity (but was ' + entity.info.type + ')');
+  }
+}
+
+export interface AdminReferencesEntityFields {
+  normal: EntityReference | null;
+  required: EntityReference | null;
+  list: EntityReference[] | null;
+  stringsEntity: EntityReference | null;
+  stringsEntityList: EntityReference[] | null;
+  stringsAndLocationsEntity: EntityReference | null;
+  stringsAndLocationsEntityList: EntityReference[] | null;
+}
+
+export type AdminReferencesEntity = AdminEntity<
+  'ReferencesEntity',
+  AdminReferencesEntityFields,
+  ''
+>;
+
+export function isAdminReferencesEntity(
+  entity: AdminEntity<string, object>,
+): entity is AdminReferencesEntity {
+  return entity.info.type === 'ReferencesEntity';
+}
+
+export function assertIsAdminReferencesEntity(
+  entity: AdminEntity<string, object>,
+): asserts entity is AdminReferencesEntity {
+  if (entity.info.type !== 'ReferencesEntity') {
+    throw new Error('Expected info.type = ReferencesEntity (but was ' + entity.info.type + ')');
   }
 }
 
