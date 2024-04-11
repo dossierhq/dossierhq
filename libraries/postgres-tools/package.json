@@ -29,7 +29,7 @@
     "directory": "libraries/postgres-tools"
   },
   "dependencies": {
-    "pg": "~8.11.3",
+    "pg": "~8.11.5",
     "postgrator": "~7.2.0"
   }
 }

@@ -17,7 +17,7 @@
   "dependencies": {
     "@astrojs/check": "~0.5.10",
     "@astrojs/node": "~8.2.5",
-    "@astrojs/react": "~3.2.0",
+    "@astrojs/react": "~3.3.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
@@ -25,10 +25,10 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@sentry/astro": "~7.109.0",
-    "@spotlightjs/astro": "~1.0.19",
-    "astro": "~4.5.12",
-    "better-sqlite3": "~9.4.3",
+    "@sentry/astro": "~7.110.0",
+    "@spotlightjs/astro": "~1.0.20",
+    "astro": "~4.6.0",
+    "better-sqlite3": "~9.5.0",
     "leaflet": "~1.9.4",
     "react": "~18.2.0",
     "react-dom": "~18.2.0"
@@ -39,7 +39,7 @@
     "@types/react": "18.2.58",
     "prettier": "3.2.5",
     "rollup-plugin-visualizer": "~5.12.0",
-    "tsx": "~4.7.1",
-    "typescript": "~5.4.3"
+    "tsx": "~4.7.2",
+    "typescript": "~5.4.5"
   }
 }

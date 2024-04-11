@@ -14,14 +14,14 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "better-sqlite3": "~9.4.3"
+    "better-sqlite3": "~9.5.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "~7.6.8",
-    "@types/node": "~20.12.4",
-    "@vitest/coverage-v8": "~1.4.0",
-    "tsx": "~4.7.1",
-    "typescript": "~5.4.3",
-    "vitest": "~1.4.0"
+    "@types/node": "~20.12.7",
+    "@vitest/coverage-v8": "~1.5.0",
+    "tsx": "~4.7.2",
+    "typescript": "~5.4.5",
+    "vitest": "~1.5.0"
   }
 }

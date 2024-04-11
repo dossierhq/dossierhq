@@ -23,7 +23,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~9.4.3",
+    "better-sqlite3": "~9.5.0",
     "graphql": "~16.8.1",
     "graphql-voyager": "~2.0.0",
     "leaflet": "~1.9.4",
@@ -38,6 +38,6 @@
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.1.4",
     "prettier": "3.2.5",
-    "typescript": "~5.4.3"
+    "typescript": "~5.4.5"
   }
 }

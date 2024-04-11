@@ -29,7 +29,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~9.4.3",
+    "better-sqlite3": "~9.5.0",
     "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.13.1",
@@ -50,8 +50,8 @@
     "eslint-config-next": "~14.1.4",
     "prettier": "3.2.5",
     "schema-dts": "~1.1.2",
-    "tsx": "~4.7.1",
-    "typescript": "~5.4.3",
-    "vitest": "~1.4.0"
+    "tsx": "~4.7.2",
+    "typescript": "~5.4.5",
+    "vitest": "~1.5.0"
   }
 }
