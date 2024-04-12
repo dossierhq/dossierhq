@@ -1167,8 +1167,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: ~0.79.0
-        version: 0.79.0
+        specifier: ~0.81.0
+        version: 0.81.0
       react-leaflet:
         specifier: ~4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
@@ -1939,8 +1939,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: ~0.79.0
-        version: 0.79.0
+        specifier: ~0.81.0
+        version: 0.81.0
       lexical:
         specifier: 0.13.1
         version: 0.13.1
@@ -7912,13 +7912,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@rushstack/eslint-patch@1.10.1:
-    resolution: {integrity: sha512-S3Kq8e7LqxkA9s7HKLqXGTGck1uwis5vAXan3FnU5yw1Ec5hsSGnq4s/UCaSqABPOnOTg7zASLyst7+ohgWexg==}
-    dev: true
-
   /@rushstack/eslint-patch@1.10.2:
     resolution: {integrity: sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==}
-    dev: false
 
   /@rushstack/heft-config-file@0.14.15(@types/node@20.12.7):
     resolution: {integrity: sha512-wEieN3PFBgau9gStjbP4EmO3G9muCCicsqZJPC6ylwLUb6xyCdNO4/c48vaBG4z7NIoz5O6WW9v8ihKolk934g==}
@@ -9287,14 +9282,14 @@ packages:
   /@types/better-sqlite3@7.6.9:
     resolution: {integrity: sha512-FvktcujPDj9XKMJQWFcl2vVl7OdRIqsSRX9b0acWwTmwLK9CF2eqo/FRcmMLNpugKoX/avA6pb7TorDLmpgTnQ==}
     dependencies:
-      '@types/node': 20.12.4
+      '@types/node': 20.12.7
     dev: true
 
   /@types/body-parser@1.19.5:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.12.4
+      '@types/node': 20.12.7
 
   /@types/bun@1.0.12:
     resolution: {integrity: sha512-qPb5FcygbpSS1NDBjWyQCWeI9kKXwSYSR1Enu7yb+gMXgFwGMhlyOvgV/7FGrdvAjlSXWRY6IDepos7k8WzAtQ==}
@@ -9493,11 +9488,6 @@ packages:
       undici-types: 5.26.5
     dev: true
 
-  /@types/node@20.12.4:
-    resolution: {integrity: sha512-E+Fa9z3wSQpzgYQdYmme5X3OTuejnnTx88A6p6vkkJosR3KBz+HpE3kqNm98VE6cfLFcISx7zW7MsJkH6KwbTw==}
-    dependencies:
-      undici-types: 5.26.5
-
   /@types/node@20.12.7:
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
     dependencies:
@@ -9584,7 +9574,7 @@ packages:
     resolution: {integrity: sha512-ep8b36RKHlgWPqjNG9ToUrPiwkhwh0AEzy883mO5Xnd+cL6VBH1EvSjBAAuxLUFF2Vn/moE3Me6v9E1Lo+48GQ==}
     dependencies:
       '@types/emscripten': 1.39.10
-      '@types/node': 20.12.4
+      '@types/node': 20.12.7
     dev: true
 
   /@types/tapable@1.0.6:
@@ -12223,7 +12213,7 @@ packages:
         optional: true
     dependencies:
       '@next/eslint-plugin-next': 14.1.4
-      '@rushstack/eslint-patch': 1.10.1
+      '@rushstack/eslint-patch': 1.10.2
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
@@ -14524,8 +14514,8 @@ packages:
       dotenv-expand: 10.0.0
     dev: true
 
-  /leaflet.locatecontrol@0.79.0:
-    resolution: {integrity: sha512-h64QIHFkypYdr90lkSfjKvPvvk8/b8UnP3m9WuoWdp5p2AaCWC0T1NVwyuj4rd5U4fBW3tQt4ppmZ2LceHMIDg==}
+  /leaflet.locatecontrol@0.81.0:
+    resolution: {integrity: sha512-5Dqj6VXVFl1vPquYZW95hQYegvzqSI4eLIpZrBMuHuyoAo5i9y6js3z02TF//XXZByIyTI/XBtlxlZLUM08Pcg==}
     dev: false
 
   /leaflet@1.9.4:
