@@ -15,8 +15,9 @@ export function MenuLinkItem({
 }) {
   const selectedSegments = useSelectedLayoutSegments();
   const isActive =
-    selectedSegments.length === activeSegments.length &&
-    selectedSegments.every((segment, index) => segment === activeSegments[index]);
+    (selectedSegments === null && activeSegments.length === 0) ||
+    (selectedSegments?.length === activeSegments.length &&
+      selectedSegments.every((segment, index) => segment === activeSegments[index]));
 
   return (
     <Menu.Item>
