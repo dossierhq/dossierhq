@@ -1167,8 +1167,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: ~0.79.0
-        version: 0.79.0
+        specifier: ~0.81.0
+        version: 0.81.0
       react-leaflet:
         specifier: ~4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
@@ -1939,8 +1939,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: ~0.79.0
-        version: 0.79.0
+        specifier: ~0.81.0
+        version: 0.81.0
       lexical:
         specifier: 0.13.1
         version: 0.13.1
@@ -14514,8 +14514,8 @@ packages:
       dotenv-expand: 10.0.0
     dev: true
 
-  /leaflet.locatecontrol@0.79.0:
-    resolution: {integrity: sha512-h64QIHFkypYdr90lkSfjKvPvvk8/b8UnP3m9WuoWdp5p2AaCWC0T1NVwyuj4rd5U4fBW3tQt4ppmZ2LceHMIDg==}
+  /leaflet.locatecontrol@0.81.0:
+    resolution: {integrity: sha512-5Dqj6VXVFl1vPquYZW95hQYegvzqSI4eLIpZrBMuHuyoAo5i9y6js3z02TF//XXZByIyTI/XBtlxlZLUM08Pcg==}
     dev: false
 
   /leaflet@1.9.4:
