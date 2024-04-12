@@ -23,7 +23,6 @@ import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   ListNode,
-  REMOVE_LIST_COMMAND,
 } from '@lexical/list';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import type { HeadingTagType } from '@lexical/rich-text';
@@ -306,13 +305,18 @@ function BlockFormatDropDown({
 
   const handleItemClick = useCallback(
     (item: (typeof items)[number]) => {
+      const formatParagraph = () => {
+        editor.update(() => {
+          const selection = $getSelection();
+          if ($isRangeSelection(selection)) {
+            $setBlocksType(selection, () => $createParagraphNode());
+          }
+        });
+      };
+
       switch (item.id) {
         case 'paragraph':
-          // Corresponds to formatParagraph() in Playground
-          editor.update(() => {
-            const selection = $getSelection();
-            $setBlocksType(selection, () => $createParagraphNode());
-          });
+          formatParagraph();
           break;
         case 'h1':
         case 'h2':
@@ -334,21 +338,21 @@ function BlockFormatDropDown({
           if (blockType !== 'bullet') {
             editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
           } else {
-            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+            formatParagraph();
           }
           break;
         case 'check':
           if (blockType !== 'check') {
             editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
           } else {
-            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+            formatParagraph();
           }
           break;
         case 'number':
           if (blockType !== 'number') {
             editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
           } else {
-            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+            formatParagraph();
           }
           break;
         case 'code':

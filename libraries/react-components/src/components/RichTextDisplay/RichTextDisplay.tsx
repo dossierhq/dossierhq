@@ -8,14 +8,14 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
 import { HeadingNode } from '@lexical/rich-text';
-import type { LexicalEditor } from 'lexical/LexicalEditor.js';
+import type { LexicalEditor } from 'lexical';
 import { useCallback, useContext } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import { PublishedClickableLinkPlugin } from './PublishedClickableLinkPlugin.js';
+import { PublishedComponentNode } from './PublishedComponentNode.js';
 import { PublishedEntityLinkNode } from './PublishedEntityLinkNode.js';
 import { PublishedEntityNode } from './PublishedEntityNode.js';
-import { PublishedComponentNode } from './PublishedComponentNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
