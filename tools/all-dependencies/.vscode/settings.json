@@ -1,8 +1,11 @@
 {
   "cSpell.words": [
+    "antonz",
     "astro",
     "astrojs",
     "bulma",
+    "codapi",
+    "codejar",
     "codemirror",
     "creativebulma",
     "dossierhq",
@@ -12,6 +15,7 @@
     "libsql",
     "locatecontrol",
     "postgrator",
+    "prismjs",
     "rushstack",
     "spotlightjs"
   ],
