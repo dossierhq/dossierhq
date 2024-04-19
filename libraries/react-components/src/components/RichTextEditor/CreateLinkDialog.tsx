@@ -1,4 +1,11 @@
-import { Button, Dialog2, FullscreenContainer, IconButton, Text } from '@dossierhq/design';
+import {
+  Button,
+  ButtonGroup,
+  Dialog2,
+  FullscreenContainer,
+  IconButton,
+  Text,
+} from '@dossierhq/design';
 
 interface Props {
   onCreateLink: () => void;
@@ -17,10 +24,10 @@ export function CreateLinkDialog({ onCreateLink, onCreateEntityLink }: Props) {
             <IconButton icon="close" color="white" onClick={close} />
           </FullscreenContainer.Row>
           <FullscreenContainer.Row margin={2}>
-            <Button.Group centered>
+            <ButtonGroup centered>
               <Button onClick={onCreateLink}>Link</Button>
               <Button onClick={onCreateEntityLink}>Entity link</Button>
-            </Button.Group>
+            </ButtonGroup>
           </FullscreenContainer.Row>
         </FullscreenContainer>
       )}

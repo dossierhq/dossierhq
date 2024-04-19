@@ -18,7 +18,7 @@ import {
 import { ClassName, LexicalTheme } from '@dossierhq/design';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
-import type { Key, ReactNode } from 'react';
+import { Fragment, type Key, type ReactNode } from 'react';
 import { CloudinaryImage } from '../components/CloudinaryImage/CloudinaryImage';
 import { CodapiSnippet } from '../components/CodapiSnippet/CodapiSnippet';
 import { BrowserUrls } from '../utils/BrowserUrls';
@@ -61,7 +61,11 @@ export function ServerRichTextRenderer({
   return renderNode(context, richText.root, null);
 }
 
-async function renderNode(context: RenderContext, node: RichTextNode, key: Key | null) {
+async function renderNode(
+  context: RenderContext,
+  node: RichTextNode,
+  key: Key | null,
+): Promise<JSX.Element> {
   const { theme } = context;
 
   if (isRichTextRootNode(node)) {
@@ -121,7 +125,7 @@ async function renderNode(context: RenderContext, node: RichTextNode, key: Key |
         </code>
       );
     }
-    return formattedText;
+    return <Fragment key={key}>{formattedText}</Fragment>;
   }
   if (isRichTextEntityLinkNode(node)) {
     const entityResult = await context.publishedClient.getEntity(node.reference);
@@ -198,12 +202,12 @@ async function renderNode(context: RenderContext, node: RichTextNode, key: Key |
 
   // fallback for unknown element nodes
   if (isRichTextElementNode(node)) {
-    return renderChildren(context, node);
+    return <Fragment key={key}>{renderChildren(context, node)}</Fragment>;
   }
-  return null;
+  return <Fragment key={key}></Fragment>;
 }
 
-function renderChildren(context: RenderContext, node: RichTextElementNode): Promise<ReactNode[]> {
+function renderChildren(context: RenderContext, node: RichTextElementNode): Promise<JSX.Element[]> {
   return Promise.all(node.children.map((child, index) => renderNode(context, child, index)));
 }
 

@@ -1,5 +1,5 @@
 import type { EntityReference, PublishedEntity } from '@dossierhq/core';
-import { Button, Dialog2, Field } from '@dossierhq/design';
+import { Button, ButtonGroup, Dialog2, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { PublishedEntitySelectorDialog } from '../../components/PublishedEntitySelectorDialog/PublishedEntitySelectorDialog.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
@@ -37,7 +37,7 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
     <Field>
       <Field.Label>Entity links</Field.Label>
       <Field.Control>
-        <Button.Group hasAddons>
+        <ButtonGroup hasAddons>
           <Dialog2.Trigger isOpen={showDialog !== ''} onOpenChange={handleOpenChanged}>
             <Button
               disabled={!linksToTotal}
@@ -62,7 +62,7 @@ export function PublishedEntityLinks({ entityReference, onItemClick }: Props) {
               onItemClick={handleItemClick}
             />
           </Dialog2.Trigger>
-        </Button.Group>
+        </ButtonGroup>
       </Field.Control>
     </Field>
   );

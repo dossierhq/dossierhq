@@ -1,4 +1,4 @@
-import type { FunctionComponent, MouseEvent, ReactNode, Ref } from 'react';
+import type { MouseEvent, ReactNode, Ref } from 'react';
 import { forwardRef } from 'react';
 import { Tag } from '../Tag/Tag.js';
 
@@ -8,7 +8,7 @@ export interface TagInputProps {
   children: ReactNode;
 }
 
-export const TagInput: FunctionComponent<TagInputProps> = forwardRef(
+export const TagInput = forwardRef<HTMLDivElement, TagInputProps>(
   ({ onClick, children }: TagInputProps, ref) => {
     return (
       <div className="control">

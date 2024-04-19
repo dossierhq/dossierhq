@@ -2,6 +2,7 @@
 import {
   Button,
   ButtonDropdown,
+  ButtonGroup,
   EmptyStateMessage,
   findAscendantHTMLElement,
   FullscreenContainer,
@@ -25,6 +26,7 @@ import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/Schema
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import type {
+  SchemaComponentTypeDraft,
   SchemaEditorState,
   SchemaEditorStateAction,
   SchemaEntityTypeDraft,
@@ -34,7 +36,6 @@ import type {
   SchemaPatternDraft,
   SchemaPatternSelector,
   SchemaTypeSelector,
-  SchemaComponentTypeDraft,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getElementIdForSelector,
@@ -133,11 +134,11 @@ export function SchemaEditorScreen({
           scrollToId={menuScrollToId}
           scrollToIdSignal={schemaEditorState.activeSelectorMenuScrollSignal}
         >
-          <Button.Group centered noBottomMargin>
+          <ButtonGroup centered noBottomMargin>
             <Button onClick={() => setAddOrRenameTypeSelector('add')}>Add type</Button>
             <Button onClick={() => setAddOrRenameIndexSelector('add')}>Add index</Button>
             <Button onClick={() => setAddOrRenamePatternSelector('add')}>Add pattern</Button>
-          </Button.Group>
+          </ButtonGroup>
           <Button
             disabled={schemaEditorState.status !== 'changed'}
             color="primary"

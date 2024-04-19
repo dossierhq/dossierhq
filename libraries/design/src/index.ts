@@ -3,6 +3,7 @@ export { BeforeUnload } from './components/BeforeUnload/BeforeUnload.js';
 export { Button } from './components/Button/Button.js';
 export { Button2 } from './components/Button2/Button2.js';
 export { ButtonDropdown } from './components/ButtonDropdown/ButtonDropdown.js';
+export { ButtonGroup } from './components/ButtonGroup/ButtonGroup.js';
 export { Card } from './components/Card/Card.js';
 export { Card2 } from './components/Card2/Card2.js';
 export { Checkbox } from './components/Checkbox/Checkbox.js';

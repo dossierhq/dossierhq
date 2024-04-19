@@ -1,4 +1,4 @@
-import type { CSSProperties, FunctionComponent, MouseEventHandler, ReactNode, Ref } from 'react';
+import type { CSSProperties, MouseEventHandler, ReactNode, Ref } from 'react';
 import { forwardRef } from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toColorClassName } from '../../config/Colors.js';
@@ -26,18 +26,7 @@ export type ButtonProps = {
     }
 );
 
-export interface ButtonGroupProps {
-  centered?: boolean;
-  hasAddons?: boolean;
-  noBottomMargin?: boolean;
-  children: ReactNode;
-}
-
-interface ButtonComponent extends FunctionComponent<ButtonProps> {
-  Group: FunctionComponent<ButtonGroupProps>;
-}
-
-const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
+export const Button = forwardRef(
   (
     { className, iconLeft, iconRight, color, style, title, children, ...props }: ButtonProps,
     ref,
@@ -82,22 +71,4 @@ const ButtonWithRef: FunctionComponent<ButtonProps> = forwardRef(
     );
   },
 );
-ButtonWithRef.displayName = 'Button';
-
-export const Button = ButtonWithRef as ButtonComponent;
-
-Button.Group = ({ centered, hasAddons, noBottomMargin, children }: ButtonGroupProps) => {
-  return (
-    <div
-      className={toClassName(
-        'buttons',
-        centered && 'is-centered',
-        hasAddons && 'has-addons',
-        noBottomMargin && 'mb-0',
-      )}
-    >
-      {children}
-    </div>
-  );
-};
-Button.Group.displayName = 'Button.Group';
+Button.displayName = 'Button';

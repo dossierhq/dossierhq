@@ -1,5 +1,5 @@
 import {
-  Button,
+  ButtonGroup,
   Card2,
   FullscreenContainer,
   Message,
@@ -103,7 +103,7 @@ export default function Page() {
               <Text className={toSpacingClassName({ marginBottom: 3 })} textStyle="body1">
                 Read the docs to learn more or jump straight in and try it out in the Playground.
               </Text>
-              <Button.Group>
+              <ButtonGroup>
                 <LinkButton href={BrowserUrls.docs} color="primary">
                   Read the docs
                 </LinkButton>
@@ -114,7 +114,7 @@ export default function Page() {
                 >
                   Explore the Playground
                 </LinkButton>
-              </Button.Group>
+              </ButtonGroup>
             </Card2.Content>
           </Card2>
           <Message color="warning">
