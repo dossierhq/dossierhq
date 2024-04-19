@@ -397,8 +397,8 @@ importers:
         specifier: ~7.6.8
         version: 7.6.9
       '@types/bun':
-        specifier: ~1.0.12
-        version: 1.0.12
+        specifier: ~1.1.0
+        version: 1.1.0
       '@types/pg':
         specifier: ~8.11.5
         version: 8.11.5
@@ -428,8 +428,8 @@ importers:
         specifier: workspace:*
         version: link:../../stack/eslint-config-generic
       '@types/bun':
-        specifier: ~1.0.12
-        version: 1.0.12
+        specifier: ~1.1.0
+        version: 1.1.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -690,8 +690,8 @@ importers:
         specifier: 0.66.3
         version: 0.66.3(@types/node@20.12.7)
       '@types/bun':
-        specifier: ~1.0.12
-        version: 1.0.12
+        specifier: ~1.1.0
+        version: 1.1.0
       '@types/node':
         specifier: ~20.12.7
         version: 20.12.7
@@ -776,8 +776,8 @@ importers:
         specifier: 0.66.3
         version: 0.66.3(@types/node@20.12.7)
       '@types/bun':
-        specifier: ~1.0.12
-        version: 1.0.12
+        specifier: ~1.1.0
+        version: 1.1.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2045,8 +2045,8 @@ importers:
         specifier: ~1.19.5
         version: 1.19.5
       '@types/bun':
-        specifier: ~1.0.12
-        version: 1.0.12
+        specifier: ~1.1.0
+        version: 1.1.0
       '@types/express':
         specifier: ~4.17.21
         version: 4.17.21
@@ -9248,10 +9248,10 @@ packages:
       '@types/connect': 3.4.38
       '@types/node': 20.12.7
 
-  /@types/bun@1.0.12:
-    resolution: {integrity: sha512-qPb5FcygbpSS1NDBjWyQCWeI9kKXwSYSR1Enu7yb+gMXgFwGMhlyOvgV/7FGrdvAjlSXWRY6IDepos7k8WzAtQ==}
+  /@types/bun@1.1.0:
+    resolution: {integrity: sha512-QGK0yU4jh0OK1A7DyhPkQuKjHQCC5jSJa3dpWIEhHv/rPfb6zLfdArc4/uUUZBMTcjilsafRXnPWO+1owb572Q==}
     dependencies:
-      bun-types: 1.0.36
+      bun-types: 1.1.0
     dev: true
 
   /@types/codemirror@0.0.90:
@@ -10810,8 +10810,8 @@ packages:
     resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
     dev: true
 
-  /bun-types@1.0.36:
-    resolution: {integrity: sha512-gaIb1SyhB0JZfIEg73/kSFhqolUqJXC68peguhXGwqr27HuvI8nkD0LTIHp/1DY4cNadfXHYgYrZIWX7oEoXlg==}
+  /bun-types@1.1.0:
+    resolution: {integrity: sha512-GhMDD7TosdJzQPGUOcQD5PZshvXVxDfwGAZs2dq+eSaPsRn3iUCzvpFlsg7Q51bXVzLAUs+FWHlnmpgZ5UggIg==}
     dependencies:
       '@types/node': 20.11.30
       '@types/ws': 8.5.10
