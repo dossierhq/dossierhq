@@ -1,5 +1,5 @@
 {
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "entityTypes": [
     {
       "name": "Article",

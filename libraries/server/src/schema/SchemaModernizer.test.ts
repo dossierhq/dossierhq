@@ -39,7 +39,7 @@ describe('modernizeSchemaSpecification', () => {
     expect(
       modernizeSchemaSpecification(schemaSpec),
     ).toEqual<AdminSchemaSpecificationWithMigrations>({
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 1,
       migrations: [],
       entityTypes: [
@@ -100,7 +100,7 @@ describe('modernizeSchemaSpecification', () => {
     expect(
       modernizeSchemaSpecification(schemaSpec),
     ).toEqual<AdminSchemaSpecificationWithMigrations>({
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 1,
       entityTypes: [
         {
@@ -167,7 +167,7 @@ describe('modernizeSchemaSpecification', () => {
     expect(
       modernizeSchemaSpecification(schemaSpec),
     ).toEqual<AdminSchemaSpecificationWithMigrations>({
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 1,
       migrations: [],
       entityTypes: [
@@ -205,7 +205,7 @@ describe('modernizeSchemaSpecification', () => {
   test('Version <=0.4.7 schema', () => {
     const schemaSpec: LegacyAdminSchemaSpecificationWithMigrations = {
       version: 2,
-      schemaKind: 'admin',
+      schemaKind: 'full',
       entityTypes: [
         {
           name: 'Foo',
@@ -287,7 +287,7 @@ describe('modernizeSchemaSpecification', () => {
     expect(
       modernizeSchemaSpecification(schemaSpec),
     ).toEqual<AdminSchemaSpecificationWithMigrations>({
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 2,
       entityTypes: [
         {
@@ -369,7 +369,7 @@ describe('modernizeSchemaSpecification', () => {
   test('Version <=0.7 schema', () => {
     const schemaSpec: LegacyAdminSchemaSpecificationWithMigrations = {
       version: 2,
-      schemaKind: 'admin',
+      schemaKind: 'full',
       entityTypes: [
         {
           name: 'Foo',
@@ -412,7 +412,7 @@ describe('modernizeSchemaSpecification', () => {
     expect(
       modernizeSchemaSpecification(schemaSpec),
     ).toEqual<AdminSchemaSpecificationWithMigrations>({
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 2,
       entityTypes: [
         {

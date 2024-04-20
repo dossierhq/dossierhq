@@ -188,7 +188,7 @@ export interface PublishedSchemaSpecification {
 }
 
 export interface AdminSchemaSpecification {
-  schemaKind: 'admin';
+  schemaKind: 'full';
   version: number;
   entityTypes: AdminEntityTypeSpecification[];
   componentTypes: AdminComponentTypeSpecification[];

@@ -18,7 +18,7 @@ describe('schemaGetSpecification', () => {
 
     // defaults to empty spec
     expectResultValue(result, {
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 0,
       entityTypes: [],
       componentTypes: [],
@@ -41,7 +41,7 @@ describe('schemaGetSpecification', () => {
     const context = createMockTransactionContext();
 
     const schemaSpec: AdminSchemaSpecificationWithMigrations = {
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 1,
       migrations: [],
       entityTypes: [

@@ -19,7 +19,7 @@ export function modernizeSchemaSpecification(
     | LegacyAdminSchemaSpecificationWithMigrations,
 ): AdminSchemaSpecificationWithMigrations {
   const payload: AdminSchemaSpecificationWithMigrations = {
-    schemaKind: 'admin',
+    schemaKind: 'full',
     version: specification.version,
     entityTypes: specification.entityTypes.map(modernizeEntityType),
     componentTypes: [],

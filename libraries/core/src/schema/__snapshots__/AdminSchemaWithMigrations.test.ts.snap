@@ -32,7 +32,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > change index 1`] = `
   ],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -123,7 +123,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -148,7 +148,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > empty->entity with patt
       "pattern": "^hello$",
     },
   ],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -185,7 +185,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > field with index 1`] = 
   ],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -222,7 +222,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > field with matchPattern
       "pattern": "^pattern$",
     },
   ],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -269,7 +269,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > fields not updated are 
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -289,7 +289,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > unused pattern is remov
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -314,7 +314,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
       "pattern": "^new-pattern$",
     },
   ],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -332,7 +332,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly 
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -360,7 +360,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly 
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -397,7 +397,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly,
       "pattern": ".*",
     },
   ],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -434,7 +434,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing componentT
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -465,7 +465,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -518,7 +518,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -560,7 +560,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing index, mul
       "pattern": ".*",
     },
   ],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -589,7 +589,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing integer va
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -621,7 +621,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing list value
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -649,7 +649,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing required v
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -685,7 +685,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing values val
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 1,
 }
 `;
@@ -714,7 +714,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > component f
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -745,7 +745,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity fiel
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -784,7 +784,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity fiel
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -827,7 +827,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -877,7 +877,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
   "indexes": [],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -943,7 +943,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
   ],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -965,7 +965,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component ty
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1049,7 +1049,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component ty
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1071,7 +1071,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1159,7 +1159,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1230,7 +1230,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type,
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1271,7 +1271,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migr
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 3,
 }
 `;
@@ -1313,7 +1313,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > component f
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1357,7 +1357,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity fiel
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1416,7 +1416,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity fiel
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1475,7 +1475,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity name
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1540,7 +1540,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1595,7 +1595,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
   ],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1661,7 +1661,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
   ],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1713,7 +1713,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
   ],
   "migrations": [],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1754,7 +1754,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component ty
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1859,7 +1859,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component ty
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -1902,7 +1902,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -2015,7 +2015,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;
@@ -2108,7 +2108,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type,
     },
   ],
   "patterns": [],
-  "schemaKind": "admin",
+  "schemaKind": "full",
   "version": 2,
 }
 `;

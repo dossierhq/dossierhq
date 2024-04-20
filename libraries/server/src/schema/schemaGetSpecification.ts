@@ -21,7 +21,7 @@ export async function schemaGetSpecification(
   if (!storedSpecification) {
     if (initialLoad) logger.info('No schema set, defaulting to empty');
     return ok({
-      schemaKind: 'admin',
+      schemaKind: 'full',
       version: 0,
       entityTypes: [],
       componentTypes: [],
