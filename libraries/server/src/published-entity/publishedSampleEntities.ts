@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type EntitySamplingOptions,
   type EntitySamplingPayload,
   type ErrorType,
@@ -17,7 +17,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities.js';
 
 export async function publishedSampleEntities(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

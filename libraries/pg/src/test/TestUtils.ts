@@ -9,7 +9,7 @@ import type {
   PublishedEntity,
   Result,
 } from '@dossierhq/core';
-import { AdminSchema, ok, withAdvisoryLock } from '@dossierhq/core';
+import { Schema, ok, withAdvisoryLock } from '@dossierhq/core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import {
@@ -176,7 +176,7 @@ export function insecureTestUuidv4(): string {
 export async function safelyUpdateSchemaSpecification(
   adminClient: AdminClient,
   schemaUpdate: AdminSchemaSpecificationUpdate,
-): PromiseResult<AdminSchema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): PromiseResult<Schema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withAdvisoryLock(
     adminClient,
     'schema-update', // same name as used in withSchemaAdvisoryLock() in integration test
@@ -184,7 +184,7 @@ export async function safelyUpdateSchemaSpecification(
     async (_advisoryLock) => {
       const result = await adminClient.updateSchemaSpecification(schemaUpdate);
       if (result.isError()) return result;
-      return ok(new AdminSchema(result.value.schemaSpecification));
+      return ok(new Schema(result.value.schemaSpecification));
     },
   );
 }

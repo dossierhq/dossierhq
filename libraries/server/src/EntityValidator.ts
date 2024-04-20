@@ -6,7 +6,7 @@ import {
   validateTraverseNodeForSave,
   type AdminEntity,
   type AdminEntityCreate,
-  type AdminSchema,
+  type Schema,
   type ContentValuePath,
   type EntityLike,
   type EntityReference,
@@ -33,7 +33,7 @@ import {
 } from './EntityCollectors.js';
 
 export function validateAdminFieldValuesAndCollectInfo(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   path: ContentValuePath,
   entity: AdminEntity | AdminEntityCreate,
 ): {
@@ -136,7 +136,7 @@ export async function validateReferencedEntitiesForSaveAndCollectInfo(
 }
 
 export function validatePublishedFieldValuesAndCollectInfo(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   path: ContentValuePath,
   type: string,
   entityFields: Record<string, unknown>,

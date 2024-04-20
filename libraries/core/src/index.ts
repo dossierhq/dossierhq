@@ -228,8 +228,8 @@ export {
   type UpdateEntitySyncEvent,
   type UpdateSchemaSyncEvent,
 } from './events/EventTypes.js';
-export { AdminSchema, AdminSchemaWithMigrations } from './schema/AdminSchema.js';
 export { PublishedSchema } from './schema/PublishedSchema.js';
+export { Schema, SchemaWithMigrations } from './schema/Schema.js';
 export {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,

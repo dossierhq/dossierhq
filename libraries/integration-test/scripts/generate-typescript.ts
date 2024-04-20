@@ -1,12 +1,12 @@
 #!/usr/bin/env -S bun
-import { AdminSchema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { Schema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
 
 async function generateTypes(schemaSpec: AdminSchemaSpecificationUpdate, filename: string) {
-  const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
+  const adminSchema = Schema.createAndValidate(schemaSpec).valueOrThrow();
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({
     adminSchema,

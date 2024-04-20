@@ -2911,7 +2911,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminSchema",
+                  "text": " Schema",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -3615,7 +3615,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminSchema",
+                  "text": " Schema",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -5107,7 +5107,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminSchema",
+                  "text": "Schema",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "class-name"

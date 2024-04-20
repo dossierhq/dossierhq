@@ -1,7 +1,7 @@
 import {
   ok,
   type AdminEntityQuery,
-  type AdminSchema,
+  type Schema,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -20,7 +20,7 @@ import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js'
 
 export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
-  schema: AdminSchema,
+  schema: Schema,
   context: TransactionContext,
   query: AdminEntityQuery | undefined,
   paging: DatabasePagingInfo,

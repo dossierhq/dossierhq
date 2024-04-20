@@ -1,4 +1,4 @@
-import type { AdminEntityQuery, AdminSchema, ErrorType, PromiseResult } from '@dossierhq/core';
+import type { AdminEntityQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
@@ -15,7 +15,7 @@ import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js'
 
 export async function adminEntitySearchEntities(
   database: Database,
-  schema: AdminSchema,
+  schema: Schema,
   context: TransactionContext,
   query: AdminEntityQuery | undefined,
   paging: DatabasePagingInfo,

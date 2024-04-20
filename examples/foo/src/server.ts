@@ -1,6 +1,6 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import type { Logger } from '@dossierhq/core';
-import { AdminSchema, ok } from '@dossierhq/core';
+import { Schema, ok } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
@@ -38,5 +38,5 @@ export async function updateSchema(server: Server) {
   const adminClient = server.createAdminClient(() => sessionResult);
 
   const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
-  return new AdminSchema(schemaResult.valueOrThrow().schemaSpecification);
+  return new Schema(schemaResult.valueOrThrow().schemaSpecification);
 }

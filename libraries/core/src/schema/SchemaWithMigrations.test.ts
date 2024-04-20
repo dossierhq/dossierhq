@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { ErrorType } from '../ErrorResult.js';
 import { RichTextNodeType } from '../Types.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
-import { AdminSchemaWithMigrations } from './AdminSchema.js';
+import { SchemaWithMigrations } from './Schema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
@@ -14,10 +14,10 @@ import {
   type StringFieldSpecification,
 } from './SchemaSpecification.js';
 
-describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
+describe('SchemaWithMigrations.updateAndValidate()', () => {
   test('empty->empty->empty', () => {
     expect(
-      new AdminSchemaWithMigrations({
+      new SchemaWithMigrations({
         schemaKind: 'full',
         version: 1,
         entityTypes: [],
@@ -40,7 +40,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing adminOnly, authKeyPattern value if not specified on entity type update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -65,7 +65,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing adminOnly value if not specified on component type update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
     })
       .valueOrThrow()
@@ -76,7 +76,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('fields not updated are kept', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -105,7 +105,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing list value if not specified on field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: true }] },
       ],
@@ -121,7 +121,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing required value if not specified on field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean, required: true }] },
       ],
@@ -137,7 +137,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing adminOnly value if not specified on field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean, adminOnly: true }] },
       ],
@@ -153,7 +153,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing index, multiline, matchPattern values if not specified on String field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -186,7 +186,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('change index', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, index: 'anIndex' }] },
       ],
@@ -211,7 +211,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing values value if not specified on String field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -231,7 +231,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing entityTypes value if not specified on Entity field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -251,7 +251,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing integer value if not specified on Number field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.Number, integer: true }] },
       ],
@@ -268,7 +268,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing entityTypes, linkEntityTypes, componentTypes, richTextNodes values if not specified on RichText field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -315,7 +315,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('use existing componentTypes value if not specified on Component field update', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -343,7 +343,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
 
   test('empty->entity with pattern', () => {
     expect(
-      new AdminSchemaWithMigrations({
+      new SchemaWithMigrations({
         schemaKind: 'full',
         version: 1,
         entityTypes: [],
@@ -361,7 +361,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('update pattern', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
       patterns: [{ name: 'aPattern', pattern: '^old-pattern$' }],
     })
@@ -377,7 +377,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('unused pattern is removed', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', authKeyPattern: 'aPattern', fields: [] }],
       patterns: [{ name: 'aPattern', pattern: '^pattern$' }],
     })
@@ -392,7 +392,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('field with matchPattern', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         entityTypes: [
@@ -411,7 +411,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('field with index', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         entityTypes: [
@@ -430,7 +430,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('duplicate values', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         entityTypes: [
@@ -473,7 +473,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('Error: changing type of field', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
     })
       .valueOrThrow()
@@ -489,7 +489,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 
   test('Error: changing list of field', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String, list: true }] },
       ],
@@ -509,9 +509,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate()', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
+describe('SchemaWithMigrations.updateAndValidate() migrations', () => {
   test('empty actions is removed', () => {
-    const schema = AdminSchemaWithMigrations.createAndValidate({
+    const schema = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'one', type: FieldType.Boolean }] }],
     })
       .valueOrThrow()
@@ -524,7 +524,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
   });
 
   test('include migrations for older versions', () => {
-    const firstSchema = AdminSchemaWithMigrations.createAndValidate({
+    const firstSchema = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -560,7 +560,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
   });
 
   test('Error: duplicate for version', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [] }],
     })
       .valueOrThrow()
@@ -575,7 +575,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
   });
 
   test('Error: wrong version', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [] }],
     })
       .valueOrThrow()
@@ -593,7 +593,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
   });
 
   test('Error: old version is different than existing migration', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.Boolean }] }],
     })
       .valueOrThrow()
@@ -616,9 +616,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() migrations', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
+describe('SchemaWithMigrations.updateAndValidate() deleteField', () => {
   test('entity field (migration only)', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -634,7 +634,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   });
 
   test('entity name field with another field', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -662,7 +662,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   });
 
   test('entity field, replace with other field of same name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -679,7 +679,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   });
 
   test('component field (migration only)', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -698,7 +698,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   });
 
   test('Error: invalid type name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
@@ -714,7 +714,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   });
 
   test('Error: invalid field name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [] }],
     })
       .valueOrThrow()
@@ -732,9 +732,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteField', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
+describe('SchemaWithMigrations.updateAndValidate() renameField', () => {
   test('entity field (migration only)', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -755,7 +755,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 
   test('entity name field, modify validations', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -792,7 +792,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 
   test('entity rich text field, many validations', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -835,7 +835,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 
   test('entity field with other fields', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -865,7 +865,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 
   test('component field (migration only)', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -886,7 +886,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 
   test('Error: invalid type name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
@@ -907,7 +907,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 
   test('Error: invalid field name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [] }],
     })
       .valueOrThrow()
@@ -930,9 +930,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameField', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
+describe('SchemaWithMigrations.updateAndValidate() deleteType', () => {
   test('entity type', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -946,7 +946,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
   });
 
   test('entity type referenced by other fields', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -993,7 +993,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
   });
 
   test('entity type, replace with other entity type with same name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] },
         {
@@ -1025,7 +1025,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
   });
 
   test('component type', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -1039,7 +1039,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
   });
 
   test('component type referenced by other fields', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [
         { name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] },
         {
@@ -1069,7 +1069,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
   });
 
   test('Error: invalid type name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         migrations: [{ version: 1, actions: [{ action: 'deleteType', entityType: 'Foo' }] }],
@@ -1083,9 +1083,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteType', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
+describe('SchemaWithMigrations.updateAndValidate() renameType', () => {
   test('entity type', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -1099,7 +1099,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 
   test('entity type referenced by other fields', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -1144,7 +1144,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 
   test('entity type, add other entity type with same name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'Foo',
@@ -1179,7 +1179,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 
   test('component type', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [{ name: 'Foo', fields: [{ name: 'field', type: FieldType.String }] }],
     })
       .valueOrThrow()
@@ -1196,7 +1196,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 
   test('component type referenced by other fields', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       componentTypes: [
         {
           name: 'Foo',
@@ -1234,7 +1234,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 
   test('Error: invalid type name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         migrations: [
@@ -1250,9 +1250,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameType', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() transientMigrations', () => {
+describe('SchemaWithMigrations.updateAndValidate() transientMigrations', () => {
   test('error: specified without version', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         transientMigrations: [{ action: 'renameIndex', index: 'anIndex', newName: 'newName' }],
@@ -1266,9 +1266,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() transientMigrations', ()
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
+describe('SchemaWithMigrations.updateAndValidate() deleteIndex', () => {
   test('unique index', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'EntityType',
@@ -1295,7 +1295,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
   });
 
   test('unique index, replace with other index with same name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'EntityType',
@@ -1327,7 +1327,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
   });
 
   test('Error: invalid type name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         version: 2,
@@ -1342,9 +1342,9 @@ describe('AdminSchemaWithMigrations.updateAndValidate() deleteIndex', () => {
   });
 });
 
-describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
+describe('SchemaWithMigrations.updateAndValidate() renameIndex', () => {
   test('unique index', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'EntityType',
@@ -1369,7 +1369,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
   });
 
   test('unique index and add to another field', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'EntityType',
@@ -1400,7 +1400,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
   });
 
   test('unique index, add other index with same name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({
+    const result = SchemaWithMigrations.createAndValidate({
       entityTypes: [
         {
           name: 'OneEntity',
@@ -1426,7 +1426,7 @@ describe('AdminSchemaWithMigrations.updateAndValidate() renameIndex', () => {
   });
 
   test('Error: invalid index name', () => {
-    const result = AdminSchemaWithMigrations.createAndValidate({})
+    const result = SchemaWithMigrations.createAndValidate({})
       .valueOrThrow()
       .updateAndValidate({
         version: 2,

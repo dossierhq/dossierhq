@@ -1,5 +1,5 @@
 import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '../Types.js';
-import type { AdminSchema } from '../schema/AdminSchema.js';
+import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
   ComponentFieldSpecification,
@@ -35,7 +35,7 @@ export interface PublishValidationIssue {
 const LINE_BREAK_REGEX = /[\r\n]/;
 
 export function validateEntityInfo(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   path: ContentValuePath,
   entity: AdminEntity,
 ): SaveValidationIssue | null {
@@ -51,7 +51,7 @@ export function validateEntityInfo(
 }
 
 export function validateEntityInfoForCreate(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   path: ContentValuePath,
   entity: AdminEntityCreate,
 ): SaveValidationIssue | null {
@@ -116,7 +116,7 @@ export function validateEntityInfoForUpdate(
 }
 
 function validateTypeAndAuthKey(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   path: ContentValuePath,
   entity: AdminEntityCreate | AdminEntity,
   create: boolean,
@@ -194,7 +194,7 @@ function validateName(path: ContentValuePath, name: string): SaveValidationIssue
   return null;
 }
 
-export function validateTraverseNodeForSave<TSchema extends AdminSchema | PublishedSchema>(
+export function validateTraverseNodeForSave<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   node: ContentTraverseNode<TSchema>,
   options?: { ignoreExtraContentFields: boolean },
@@ -360,7 +360,7 @@ export function validateTraverseNodeForSave<TSchema extends AdminSchema | Publis
 }
 
 export function validateTraverseNodeForPublish(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   node: ContentTraverseNode<PublishedSchema>,
 ): PublishValidationIssue | null {
   switch (node.type) {

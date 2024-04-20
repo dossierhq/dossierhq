@@ -4,7 +4,7 @@ import {
   type AdminEntityPublishingPayload,
   type AdminEntityQuery,
   type AdminEntitySharedQuery,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type ChangelogEventQuery,
   type EntityReference,
   type EntitySamplingOptions,
@@ -79,7 +79,7 @@ export function clearCacheDueToSchemaMigrations(mutate: ScopedMutator) {
 export function updateCacheSchemas(
   cache: Cache,
   mutate: ScopedMutator,
-  adminSchema: AdminSchemaWithMigrations | undefined,
+  adminSchema: SchemaWithMigrations | undefined,
 ) {
   const hasAdmin = !!cache.get(CACHE_KEYS.adminSchema);
   const hasPublished = !!cache.get(CACHE_KEYS.publishedSchema);

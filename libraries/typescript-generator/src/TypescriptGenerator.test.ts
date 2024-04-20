@@ -1,4 +1,4 @@
-import { AdminSchema, FieldType } from '@dossierhq/core';
+import { Schema, FieldType } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { generateTypescriptForSchema } from './TypescriptGenerator.js';
 
@@ -6,7 +6,7 @@ describe('generateTypescriptForSchema', () => {
   test('empty', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({}).valueOrThrow(),
+        adminSchema: Schema.createAndValidate({}).valueOrThrow(),
         publishedSchema: null,
       }),
     ).toMatchSnapshot();
@@ -15,7 +15,7 @@ describe('generateTypescriptForSchema', () => {
   test('Foo (no fields)', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
         publishedSchema: null,
@@ -26,7 +26,7 @@ describe('generateTypescriptForSchema', () => {
   test('Booleans', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Booleans',
@@ -45,7 +45,7 @@ describe('generateTypescriptForSchema', () => {
   test('EntityTypes', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'EntityTypes',
@@ -64,7 +64,7 @@ describe('generateTypescriptForSchema', () => {
   test('Locations', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Locations',
@@ -83,7 +83,7 @@ describe('generateTypescriptForSchema', () => {
   test('Numbers', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Numbers',
@@ -104,7 +104,7 @@ describe('generateTypescriptForSchema', () => {
   test('RichTexts', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'RichTexts',
@@ -123,7 +123,7 @@ describe('generateTypescriptForSchema', () => {
   test('Strings', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Strings',
@@ -155,7 +155,7 @@ describe('generateTypescriptForSchema', () => {
   test('Components', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'ComponentTypes',
@@ -210,7 +210,7 @@ describe('generateTypescriptForSchema', () => {
   test('Component (no fields)', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Components',
@@ -227,7 +227,7 @@ describe('generateTypescriptForSchema', () => {
   test('Auth key pattern', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Abc',
@@ -246,7 +246,7 @@ describe('generateTypescriptForSchema', () => {
   test('Unique index', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: AdminSchema.createAndValidate({
+        adminSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Strings',
@@ -266,7 +266,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: AdminSchema.createAndValidate({}).valueOrThrow().toPublishedSchema(),
+        publishedSchema: Schema.createAndValidate({}).valueOrThrow().toPublishedSchema(),
       }),
     ).toMatchSnapshot();
   });
@@ -275,7 +275,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: AdminSchema.createAndValidate({
+        publishedSchema: Schema.createAndValidate({
           entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
         })
           .valueOrThrow()
@@ -288,7 +288,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: AdminSchema.createAndValidate({
+        publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -306,7 +306,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: AdminSchema.createAndValidate({
+        publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -327,7 +327,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: AdminSchema.createAndValidate({
+        publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Abc',
@@ -348,7 +348,7 @@ describe('generateTypescriptForSchema published', () => {
     expect(
       generateTypescriptForSchema({
         adminSchema: null,
-        publishedSchema: AdminSchema.createAndValidate({
+        publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Strings',

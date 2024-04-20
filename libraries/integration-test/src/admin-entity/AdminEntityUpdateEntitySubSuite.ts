@@ -1,6 +1,6 @@
 import {
   AdminEntityStatus,
-  AdminSchema,
+  Schema,
   ErrorType,
   EventType,
   copyEntity,
@@ -296,7 +296,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
 }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const createResult = await adminClient.createEntity(STRINGS_CREATE);
   const {

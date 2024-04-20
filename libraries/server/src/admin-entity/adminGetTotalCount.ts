@@ -1,7 +1,7 @@
 import {
   ok,
   type AdminEntitySharedQuery,
-  type AdminSchema,
+  type Schema,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -11,7 +11,7 @@ import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
 
 export async function adminGetTotalCount(
-  schema: AdminSchema,
+  schema: Schema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

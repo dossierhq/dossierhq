@@ -5,7 +5,7 @@ import {
   traverseComponent,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
-  type AdminSchema,
+  type Schema,
   type Component,
   type PublishValidationIssue,
   type RichTextComponentNode,
@@ -108,7 +108,7 @@ function AdminComponentComponent({
 // (as opposed to the serialized nodes which lack the node key)
 // Hopefully we can get rid on RichTextEditorContext and `adminOnly` parameters to the field editors
 function validateComponent(
-  adminSchema: AdminSchema | undefined,
+  adminSchema: Schema | undefined,
   adminOnly: boolean,
   value: Component,
 ): ValidationIssue[] {

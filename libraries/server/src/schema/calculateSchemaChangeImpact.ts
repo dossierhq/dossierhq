@@ -5,15 +5,15 @@ import {
   type AdminComponentTypeSpecification,
   type AdminEntityTypeSpecification,
   type AdminSchemaTransientMigrationAction,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
 import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/database-adapter';
 
 export function calculateSchemaChangeImpact(
-  previous: AdminSchemaWithMigrations,
-  next: AdminSchemaWithMigrations,
+  previous: SchemaWithMigrations,
+  next: SchemaWithMigrations,
   transientMigrations: AdminSchemaTransientMigrationAction[] | null,
 ): Result<
   {
@@ -173,9 +173,9 @@ export function calculateSchemaChangeImpact(
 
 function calculateTypeSelector(
   isEntityType: boolean,
-  previous: AdminSchemaWithMigrations,
+  previous: SchemaWithMigrations,
   previousType: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
-  next: AdminSchemaWithMigrations,
+  next: SchemaWithMigrations,
   nextType: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
 ): Result<{ validate: boolean; index: boolean }, typeof ErrorType.Generic> {
   let validate = false;
@@ -237,9 +237,9 @@ function calculateTypeSelector(
 }
 
 function validateDueToPatternChange(
-  previous: AdminSchemaWithMigrations,
+  previous: SchemaWithMigrations,
   previousPatternName: string | null,
-  next: AdminSchemaWithMigrations,
+  next: SchemaWithMigrations,
   nextPatternName: string | null,
 ): Result<boolean, typeof ErrorType.Generic> {
   if (!previousPatternName && nextPatternName) {

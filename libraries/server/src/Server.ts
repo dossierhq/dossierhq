@@ -1,5 +1,5 @@
 import {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   EventType,
   NoOpLogger,
   notOk,
@@ -166,7 +166,7 @@ export interface ServerPlugin {
 export class ServerImpl {
   #databaseAdapter: DatabaseAdapter | null;
   #logger: Logger;
-  #adminSchema: AdminSchemaWithMigrations | null = null;
+  #adminSchema: SchemaWithMigrations | null = null;
   #publishedSchema: PublishedSchema | null = null;
   #plugins: ServerPlugin[] = [];
 
@@ -205,9 +205,9 @@ export class ServerImpl {
     this.#plugins.push(plugin);
   }
 
-  getAdminSchema(): AdminSchemaWithMigrations {
+  getAdminSchema(): SchemaWithMigrations {
     if (!this.#adminSchema) {
-      throw new Error('AdminSchema is not set');
+      throw new Error('Schema is not set');
     }
     return this.#adminSchema;
   }
@@ -220,7 +220,7 @@ export class ServerImpl {
   }
 
   setAdminSchema(schemaSpec: AdminSchemaSpecificationWithMigrations): void {
-    this.#adminSchema = new AdminSchemaWithMigrations(schemaSpec);
+    this.#adminSchema = new SchemaWithMigrations(schemaSpec);
     this.#publishedSchema = this.#adminSchema.toPublishedSchema();
   }
 
@@ -359,7 +359,7 @@ export async function createServer<
       if (applyResult.isError()) return applyResult;
 
       if (event.type === EventType.updateSchema) {
-        const updatedSchema = applyResult.value as AdminSchemaWithMigrations;
+        const updatedSchema = applyResult.value as SchemaWithMigrations;
         serverImpl.setAdminSchema(updatedSchema.spec);
       }
       return ok(undefined);

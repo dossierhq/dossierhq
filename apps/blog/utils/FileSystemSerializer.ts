@@ -1,6 +1,6 @@
 import {
   AdminClientOperationName,
-  AdminSchema,
+  Schema,
   isRichTextElementNode,
   notOk,
   traverseEntity,
@@ -80,7 +80,7 @@ async function updateEntityFile(
   entity: AdminEntity<string, object>,
   dataDir: string,
 ) {
-  const adminSchema = new AdminSchema(
+  const adminSchema = new Schema(
     (await backChannelAdminClient.getSchemaSpecification()).valueOrThrow(),
   );
 
@@ -92,7 +92,7 @@ async function updateEntityFile(
   await fs.writeFile(jsonFilePath, JSON.stringify(save, null, 2) + '\n');
 }
 
-function createCleanedUpEntity(adminSchema: AdminSchema, entity: AdminEntity<string, object>) {
+function createCleanedUpEntity(adminSchema: Schema, entity: AdminEntity<string, object>) {
   const copy = structuredClone(entity);
 
   // Remove unnecessary fields

@@ -1,4 +1,4 @@
-import { AdminSchema } from '@dossierhq/core';
+import { Schema } from '@dossierhq/core';
 import { assertOkResult } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import type { SchemaTestContext } from './SchemaTestSuite.js';
@@ -11,6 +11,6 @@ async function getSchemaSpecification_normal({ clientProvider }: SchemaTestConte
   const adminClient = clientProvider.adminClient();
   const result = await adminClient.getSchemaSpecification();
   assertOkResult(result);
-  const schema = new AdminSchema(result.value);
+  const schema = new Schema(result.value);
   assertOkResult(schema.validate());
 }

@@ -1,4 +1,4 @@
-import type { AdminSchema, ErrorType, Result } from '@dossierhq/core';
+import type { Schema, ErrorType, Result } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
 import type { Server } from '@dossierhq/server';
@@ -32,7 +32,7 @@ async function createSessionContext(server: Server, headers: RequestHeaders) {
   return sessionResult;
 }
 
-function startExpressServer(server: Server, schema: AdminSchema, port: number) {
+function startExpressServer(server: Server, schema: Schema, port: number) {
   const gqlSchema = new GraphQLSchemaGenerator({
     adminSchema: schema,
     publishedSchema: schema.toPublishedSchema(),

@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   EntityReference,
   EntityVersionReference,
   ErrorType,
@@ -15,7 +15,7 @@ import { decodeAdminEntity } from '../EntityCodec.js';
 import { validateEntityReference } from '../utils/ValidationUtils.js';
 
 export async function adminGetEntity(
-  schema: AdminSchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

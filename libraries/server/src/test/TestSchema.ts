@@ -1,6 +1,6 @@
-import { AdminSchemaWithMigrations, FieldType } from '@dossierhq/core';
+import { SchemaWithMigrations, FieldType } from '@dossierhq/core';
 
-export const adminTestSchema = AdminSchemaWithMigrations.createAndValidate({
+export const adminTestSchema = SchemaWithMigrations.createAndValidate({
   entityTypes: [
     { name: 'ReferencesEntity', fields: [{ name: 'normal', type: FieldType.Reference }] },
     { name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] },

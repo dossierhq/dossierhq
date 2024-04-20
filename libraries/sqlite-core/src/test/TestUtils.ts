@@ -1,5 +1,5 @@
 import {
-  AdminSchema,
+  Schema,
   NoOpLogger,
   getPagingInfo,
   ok,
@@ -181,8 +181,8 @@ export function getRunAndQueryCalls(
   return adapter.allQueries;
 }
 
-export function createTestAdminSchema(): AdminSchema {
-  return AdminSchema.createAndValidate({}).valueOrThrow();
+export function createTestAdminSchema(): Schema {
+  return Schema.createAndValidate({}).valueOrThrow();
 }
 
 export function resolvePaging(

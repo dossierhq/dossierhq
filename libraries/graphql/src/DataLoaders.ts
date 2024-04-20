@@ -6,7 +6,7 @@ import type {
   AdminEntitySharedQuery,
   AdminEntityTypeSpecification,
   AdminFieldSpecification,
-  AdminSchema,
+  Schema,
   ChangelogEvent,
   ChangelogEventQuery,
   Component,
@@ -197,7 +197,7 @@ async function buildResolversForConnection<TContext extends SessionGraphQLContex
 }
 
 export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   reference: EntityReference | EntityVersionReference | UniqueIndexReference,
 ): Promise<AdminEntity> {
@@ -207,7 +207,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function loadAdminEntityList<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   ids: string[],
 ): Promise<FieldValueOrResolver<TContext, AdminEntity | null>[]> {
@@ -223,7 +223,7 @@ export async function loadAdminEntityList<TContext extends SessionGraphQLContext
 }
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   entity: AdminEntity,
 ): AdminEntityPayload<TContext> {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
@@ -246,7 +246,7 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 }
 
 export async function loadAdminEntitiesSample<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   query: AdminEntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
@@ -262,7 +262,7 @@ export async function loadAdminEntitiesSample<TContext extends SessionGraphQLCon
 }
 
 export function loadAdminEntities<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   query: AdminEntityQuery | undefined,
   paging: Paging,
@@ -278,7 +278,7 @@ export function loadAdminEntities<TContext extends SessionGraphQLContext>(
 }
 
 function resolveFields<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   spec:
     | AdminEntityTypeSpecification
     | PublishedEntityTypeSpecification
@@ -299,20 +299,20 @@ function resolveFields<TContext extends SessionGraphQLContext>(
             ? []
             : (_args: undefined, context: TContext, _info: unknown) => {
                 return isAdmin
-                  ? loadAdminEntityList(schema as AdminSchema, context, ids)
+                  ? loadAdminEntityList(schema as Schema, context, ids)
                   : loadPublishedEntityList(schema as PublishedSchema, context, ids);
               },
       };
     } else if (isReferenceSingleField(fieldSpec, value) && value) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: GraphQLResolveInfo) =>
         isAdmin
-          ? loadAdminEntity(schema as AdminSchema, context, value)
+          ? loadAdminEntity(schema as Schema, context, value)
           : loadPublishedEntity(schema as PublishedSchema, context, value);
     } else if (isReferenceListField(fieldSpec, value) && value && value.length > 0) {
       fields[fieldSpec.name] = (_args: undefined, context: TContext, _info: unknown) => {
         const ids = value.map((it) => it.id);
         return isAdmin
-          ? loadAdminEntityList(schema as AdminSchema, context, ids)
+          ? loadAdminEntityList(schema as Schema, context, ids)
           : loadPublishedEntityList(schema as PublishedSchema, context, ids);
       };
     } else if (isComponentSingleField(fieldSpec, value) && value) {
@@ -324,7 +324,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 }
 
 function extractEntityIdsForRichTextField(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   value: RichText,
 ) {
@@ -336,7 +336,7 @@ function extractEntityIdsForRichTextField(
 }
 
 //TODO we have two identical (three similar) implementations of this function, should it move to core?
-function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+function createReferencesCollector<TSchema extends Schema | PublishedSchema>() {
   const references = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -362,7 +362,7 @@ function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema
 }
 
 export function buildResolversForValue<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   component: Component,
   isAdmin: boolean,
 ): Component {

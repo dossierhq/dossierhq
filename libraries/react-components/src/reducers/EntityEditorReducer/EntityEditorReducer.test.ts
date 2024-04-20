@@ -1,8 +1,8 @@
 import type { AdminEntity } from '@dossierhq/core';
 import {
   AdminEntityStatus,
-  AdminSchema,
-  AdminSchemaWithMigrations,
+  Schema,
+  SchemaWithMigrations,
   copyEntity,
   FieldType,
 } from '@dossierhq/core';
@@ -99,7 +99,7 @@ describe('AddDraftAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
         }).valueOrThrow(),
       ),
@@ -113,7 +113,7 @@ describe('AddDraftAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -154,7 +154,7 @@ describe('DeleteDraftAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -179,7 +179,7 @@ describe('SetActiveEntityAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             { name: 'Foo', fields: [] },
             { name: 'Bar', fields: [] },
@@ -207,7 +207,7 @@ describe('SetNameAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -233,7 +233,7 @@ describe('SetNameAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -262,7 +262,7 @@ describe('SetFieldAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -283,7 +283,7 @@ describe('SetFieldAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -305,7 +305,7 @@ describe('SetFieldAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -328,7 +328,7 @@ describe('SetAuthKeyAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -351,7 +351,7 @@ describe('UpdateEntityAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -394,7 +394,7 @@ describe('UpdateEntityAction', () => {
     const state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -436,7 +436,7 @@ describe('UpdateSchemaSpecificationAction', () => {
     const state = reduceEntityEditorState(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({}).valueOrThrow(),
+        Schema.createAndValidate({}).valueOrThrow(),
       ),
     );
     expect(state).toMatchSnapshot();
@@ -455,7 +455,7 @@ describe('EntityEditorReducer scenarios', () => {
     state = reduceEntityEditorState(
       state,
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -499,7 +499,7 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -556,7 +556,7 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -619,7 +619,7 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -711,7 +711,7 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -751,7 +751,7 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -818,7 +818,7 @@ describe('EntityEditorReducer scenarios', () => {
     let state = reduceEntityEditorStateActions(
       initializeEntityEditorState(),
       new EntityEditorActions.UpdateSchemaSpecification(
-        AdminSchema.createAndValidate({
+        Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Foo',
@@ -888,7 +888,7 @@ describe('EntityEditorReducer scenarios', () => {
       },
     };
 
-    const schema = AdminSchemaWithMigrations.createAndValidate({
+    const schema = SchemaWithMigrations.createAndValidate({
       entityTypes: [{ name: 'Foo', fields: [{ name: 'oldName', type: FieldType.String }] }],
     })
       .valueOrThrow()

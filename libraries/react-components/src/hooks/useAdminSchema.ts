@@ -1,5 +1,5 @@
 import {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   type AdminClient,
   type AdminEntity,
   type Component,
@@ -11,7 +11,7 @@ import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = string;
-type FetcherData = AdminSchemaWithMigrations;
+type FetcherData = SchemaWithMigrations;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminSchema(
@@ -34,9 +34,11 @@ export function useAdminSchema(
 async function fetchSchema(
   adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
 ): Promise<FetcherData> {
-  const result = await adminClient.getSchemaSpecification({ includeMigrations: true });
+  const result = await adminClient.getSchemaSpecification({
+    includeMigrations: true,
+  });
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }
-  return new AdminSchemaWithMigrations(result.value);
+  return new SchemaWithMigrations(result.value);
 }

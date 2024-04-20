@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminSchema,
+  Schema,
   BoundingBox,
   Location,
   PublishedEntity,
@@ -21,7 +21,7 @@ const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;
 
 export interface EntityMapProps<TEntity> {
   className?: string;
-  schema: AdminSchema | PublishedSchema | undefined;
+  schema: Schema | PublishedSchema | undefined;
   center?: Location | null;
   resetSignal?: unknown;
   searchEntityState: SearchEntityState;
@@ -84,7 +84,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
 }
 
 function extractEntityLocations(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   entity: AdminEntity | PublishedEntity,
 ) {
   const locations: Location[] = [];

@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx tsx
 import {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   createConsoleLogger,
   type AdminClient,
   type Logger,
@@ -10,11 +10,7 @@ import { writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { getAuthenticatedAdminClient, getServer } from '../src/dossier/utils/ServerUtils.js';
 
-async function generateTypes(
-  logger: Logger,
-  adminSchema: AdminSchemaWithMigrations,
-  filename: string,
-) {
+async function generateTypes(logger: Logger, adminSchema: SchemaWithMigrations, filename: string) {
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({
     adminSchema,
@@ -32,8 +28,10 @@ async function generateTypes(
 }
 
 async function getAdminSchema(logger: Logger, adminClient: AdminClient) {
-  const schemaResult = await adminClient.getSchemaSpecification({ includeMigrations: true });
-  let adminSchema = new AdminSchemaWithMigrations(schemaResult.valueOrThrow());
+  const schemaResult = await adminClient.getSchemaSpecification({
+    includeMigrations: true,
+  });
+  let adminSchema = new SchemaWithMigrations(schemaResult.valueOrThrow());
 
   if (adminSchema.getEntityTypeCount() === 0) {
     logger.info('No entities found, adding placeholder with name "Placeholder"');

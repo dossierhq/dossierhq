@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-import { AdminSchema } from '@dossierhq/core';
+import { Schema } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { readFile, writeFile } from 'node:fs/promises';
 import prettier from 'prettier';
 
 async function generateTypes(schemaSpec, filename) {
-  const adminSchema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
+  const adminSchema = Schema.createAndValidate(schemaSpec).valueOrThrow();
   const publishedSchema = adminSchema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
 

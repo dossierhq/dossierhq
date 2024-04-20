@@ -8,7 +8,7 @@ import {
   isRichTextEntityNode,
   isRichTextTextNode,
   isStringItemField,
-  type AdminSchema,
+  type Schema,
   type ContentTraverseNode,
   type ContentValuePath,
   type EntityReference,
@@ -34,7 +34,7 @@ export interface RequestedReference {
   linkEntityTypes: string[] | undefined;
 }
 
-export function createFullTextSearchCollector<TSchema extends AdminSchema | PublishedSchema>() {
+export function createFullTextSearchCollector<TSchema extends Schema | PublishedSchema>() {
   const fullTextSearchText: string[] = [];
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -60,7 +60,7 @@ export function createFullTextSearchCollector<TSchema extends AdminSchema | Publ
 }
 
 //TODO we have three similar implementations of this function, should it move to core?
-export function createReferencesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+export function createReferencesCollector<TSchema extends Schema | PublishedSchema>() {
   const references = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -85,9 +85,7 @@ export function createReferencesCollector<TSchema extends AdminSchema | Publishe
   };
 }
 
-export function createRequestedReferencesCollector<
-  TSchema extends AdminSchema | PublishedSchema,
->() {
+export function createRequestedReferencesCollector<TSchema extends Schema | PublishedSchema>() {
   const requestedReferences: RequestedReference[] = [];
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -126,7 +124,7 @@ export function createRequestedReferencesCollector<
   };
 }
 
-export function createUniqueIndexCollector<TSchema extends AdminSchema | PublishedSchema>(
+export function createUniqueIndexCollector<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
 ) {
   const uniqueIndexValues: UniqueIndexValueCollection = new Map();
@@ -160,7 +158,7 @@ export function createUniqueIndexCollector<TSchema extends AdminSchema | Publish
   };
 }
 
-export function createLocationsCollector<TSchema extends AdminSchema | PublishedSchema>() {
+export function createLocationsCollector<TSchema extends Schema | PublishedSchema>() {
   const locations: Location[] = [];
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -178,7 +176,7 @@ export function createLocationsCollector<TSchema extends AdminSchema | Published
   };
 }
 
-export function createComponentTypesCollector<TSchema extends AdminSchema | PublishedSchema>() {
+export function createComponentTypesCollector<TSchema extends Schema | PublishedSchema>() {
   const payload = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {

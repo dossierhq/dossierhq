@@ -6,7 +6,7 @@ import {
   transformEntityFields,
   type AdminEntity,
   type AdminEntityTypeSpecification,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type ContentTransformer,
   type ContentValuePath,
   type ErrorType,
@@ -22,7 +22,7 @@ export const ENCODE_VERSION_LEGACY = 0;
 export const ENCODE_VERSION_AS_IS = 1; // version 0.4.2+: Used to encoding all content, old content is still encoded with version 0
 
 export function migrateDecodeAndNormalizeAdminEntityFields(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   entitySpec: AdminEntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
@@ -37,7 +37,7 @@ export function migrateDecodeAndNormalizeAdminEntityFields(
 }
 
 export function migrateDecodeAndNormalizePublishedEntityFields(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   entitySpec: PublishedEntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
@@ -52,9 +52,9 @@ export function migrateDecodeAndNormalizePublishedEntityFields(
 }
 
 function migrateDecodeAndNormalizeEntityFields<
-  TSchema extends AdminSchemaWithMigrations | PublishedSchema,
+  TSchema extends SchemaWithMigrations | PublishedSchema,
 >(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   decodeSchema: TSchema,
   entitySpec: TSchema['spec']['entityTypes'][number],
   path: ContentValuePath,
@@ -87,7 +87,7 @@ function migrateDecodeAndNormalizeEntityFields<
 }
 
 const DECODE_TRANSFORMER: ContentTransformer<
-  AdminSchemaWithMigrations | PublishedSchema,
+  SchemaWithMigrations | PublishedSchema,
   typeof ErrorType.Generic
 > = {
   transformField(_schema, _path, _fieldSpec, value: unknown) {

@@ -5,7 +5,7 @@ import {
   ok,
   validateEntityInfo,
   type AdminEntityProcessDirtyPayload,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type EntityReference,
   type ErrorResult,
   type PromiseResult,
@@ -48,7 +48,7 @@ const EMPTY_ENTITY_INFO: Omit<EntityValidityAndInfoPayload, 'valid'> = {
 };
 
 export async function managementDirtyProcessNextEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   filter: EntityReference | undefined,
@@ -181,7 +181,7 @@ export async function managementDirtyProcessNextEntity(
 }
 
 async function validateAndCollectInfoFromAdminEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entityData: DatabaseAdminEntityPayload,
@@ -230,7 +230,7 @@ async function validateAndCollectInfoFromAdminEntity(
 }
 
 async function validateAndCollectInfoFromPublishedEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   reference: EntityReference,

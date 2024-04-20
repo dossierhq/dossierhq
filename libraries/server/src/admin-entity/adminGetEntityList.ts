@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -17,7 +17,7 @@ import type { SessionContext } from '../Context.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
 
 export async function adminGetEntityList(
-  schema: AdminSchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -55,7 +55,7 @@ export async function adminGetEntityList(
 }
 
 async function mapItem(
-  schema: AdminSchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,

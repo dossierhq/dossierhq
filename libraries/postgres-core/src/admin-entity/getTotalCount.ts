@@ -1,7 +1,7 @@
 import {
   ok,
   type AdminEntitySharedQuery,
-  type AdminSchema,
+  type Schema,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -12,7 +12,7 @@ import { totalAdminEntitiesQuery } from '../search/QueryGenerator.js';
 
 export async function adminEntitySearchTotalCount(
   databaseAdapter: PostgresDatabaseAdapter,
-  schema: AdminSchema,
+  schema: Schema,
   context: TransactionContext,
   query: AdminEntitySharedQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[],

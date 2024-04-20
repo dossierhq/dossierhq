@@ -7,8 +7,8 @@ import {
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityUpdate,
-  type AdminSchema,
-  type AdminSchemaWithMigrations,
+  type Schema,
+  type SchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
   type PublishedEntity,
@@ -45,7 +45,7 @@ export interface EncodeAdminEntityPayload {
 }
 
 export function decodePublishedEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   values: DatabasePublishedEntityPayload,
 ): Result<PublishedEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const publishedSchema = adminSchema.toPublishedSchema();
@@ -78,7 +78,7 @@ export function decodePublishedEntity(
 }
 
 export function decodeAdminEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
 ): Result<AdminEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const entitySpec = adminSchema.getEntityTypeSpecification(values.type);
@@ -115,7 +115,7 @@ export function decodeAdminEntity(
 }
 
 export function resolveCreateEntity(
-  schema: AdminSchema,
+  schema: Schema,
   entity: AdminEntityCreate,
 ): Result<
   { createEntity: AdminEntityCreate },
@@ -142,7 +142,7 @@ export function resolveCreateEntity(
 }
 
 export function resolveUpdateEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   entityUpdate: AdminEntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
@@ -238,7 +238,7 @@ export function resolveUpdateEntity(
 }
 
 export async function encodeAdminEntity(
-  schema: AdminSchema,
+  schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entity: AdminEntity | AdminEntityCreate,

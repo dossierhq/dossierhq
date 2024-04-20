@@ -1,5 +1,5 @@
 import {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   FieldType,
   type AdminSchemaSpecificationUpdate,
 } from '@dossierhq/core';
@@ -10,7 +10,7 @@ function build(
   previousUpdate: AdminSchemaSpecificationUpdate,
   nextUpdate: AdminSchemaSpecificationUpdate,
 ) {
-  const previous = AdminSchemaWithMigrations.createAndValidate(previousUpdate).valueOrThrow();
+  const previous = SchemaWithMigrations.createAndValidate(previousUpdate).valueOrThrow();
   const next = previous.updateAndValidate(nextUpdate).valueOrThrow();
   return { previous, next, transientMigrations: nextUpdate.transientMigrations ?? null };
 }

@@ -2,7 +2,7 @@ import {
   ContentTraverseNodeType,
   isLocationItemField,
   type AdminEntity,
-  type AdminSchema,
+  type Schema,
   type Location,
 } from '@dossierhq/core';
 import {
@@ -183,7 +183,7 @@ function Content({
 }
 
 function extractDraftLocations(
-  schema: AdminSchema | undefined,
+  schema: Schema | undefined,
   drafts: EntityEditorDraftState[],
   value: Location | null,
 ) {

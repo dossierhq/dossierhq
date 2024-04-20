@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminSchema,
+  Schema,
   Component,
   ErrorResult,
   ErrorType,
@@ -28,7 +28,7 @@ export interface AdminDossierContextValue {
   adapter: AdminDossierContextAdapter;
   adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>;
   logger: Logger;
-  schema: AdminSchema | undefined;
+  schema: Schema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;
   authKeys: DisplayAuthKey[];
 }

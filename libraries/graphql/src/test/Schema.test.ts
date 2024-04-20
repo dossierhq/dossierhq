@@ -1,10 +1,10 @@
-import { AdminSchema, FieldType } from '@dossierhq/core';
+import { Schema, FieldType } from '@dossierhq/core';
 import { graphql, printSchema } from 'graphql';
 import { describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
 
 function buildSchema(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   { published, admin }: { published: boolean; admin: boolean },
 ) {
   const generator = new GraphQLSchemaGenerator({
@@ -15,7 +15,7 @@ function buildSchema(
 }
 
 function describeGeneratedSchema(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   options: { published: boolean; admin: boolean },
 ) {
   const graphQLSchema = buildSchema(adminSchema, options);
@@ -23,7 +23,7 @@ function describeGeneratedSchema(
 }
 
 async function querySchema(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   options: { published: boolean; admin: boolean },
   query: string,
 ) {
@@ -32,7 +32,7 @@ async function querySchema(
 }
 
 describe('Empty schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({}).valueOrThrow();
+  const adminSchema = Schema.createAndValidate({}).valueOrThrow();
 
   test('Generated QL schema', () => {
     const result = describeGeneratedSchema(adminSchema, { admin: true, published: true });
@@ -51,7 +51,7 @@ describe('Empty schema spec', () => {
 });
 
 describe('One empty entity type schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
   }).valueOrThrow();
 
@@ -369,7 +369,7 @@ describe('One empty entity type schema spec', () => {
 });
 
 describe('Two entity types with reference schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       { name: 'Foo', adminOnly: false, fields: [{ name: 'fooField', type: FieldType.String }] },
       {
@@ -402,7 +402,7 @@ describe('Two entity types with reference schema spec', () => {
 });
 
 describe('Multiple references with entityTypes schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -445,7 +445,7 @@ describe('Multiple references with entityTypes schema spec', () => {
 });
 
 describe('List of strings, booleans, locations, numbers and references schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -480,7 +480,7 @@ describe('List of strings, booleans, locations, numbers and references schema sp
 });
 
 describe('Component type schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -547,7 +547,7 @@ describe('Component type schema spec', () => {
 });
 
 describe('Rich text schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -574,7 +574,7 @@ describe('Rich text schema spec', () => {
 });
 
 describe('Admin only entity and value schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -618,7 +618,7 @@ describe('Admin only entity and value schema spec', () => {
 });
 
 describe('Admin only field in entity and value schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -652,7 +652,7 @@ describe('Admin only field in entity and value schema spec', () => {
 });
 
 describe('Required fields schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',
@@ -695,7 +695,7 @@ describe('Required fields schema spec', () => {
 });
 
 describe('One entity type with unique index schema spec', () => {
-  const adminSchema = AdminSchema.createAndValidate({
+  const adminSchema = Schema.createAndValidate({
     entityTypes: [
       {
         name: 'Foo',

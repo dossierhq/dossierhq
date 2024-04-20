@@ -1,5 +1,5 @@
 import {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   FieldType,
   createRichText,
   createRichTextHeadingNode,
@@ -12,7 +12,7 @@ import { describe, expect, test } from 'vitest';
 import { applySchemaMigrationsToFields } from './applySchemaMigrationsToFields.js';
 import { ENCODE_VERSION_AS_IS } from './migrateDecodeAndNormalizeEntityFields.js';
 
-const ADMIN_SCHEMA_BASE = AdminSchemaWithMigrations.createAndValidate({
+const ADMIN_SCHEMA_BASE = SchemaWithMigrations.createAndValidate({
   entityTypes: [
     {
       name: 'Entity',

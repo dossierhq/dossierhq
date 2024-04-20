@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
   AdminEntitySharedQuery,
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorType,
@@ -16,7 +16,7 @@ import { decodeAdminEntity } from '../EntityCodec.js';
 import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities.js';
 
 export async function adminSampleEntities(
-  schema: AdminSchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

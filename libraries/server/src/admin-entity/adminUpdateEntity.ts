@@ -8,7 +8,7 @@ import {
   type AdminEntityMutationOptions,
   type AdminEntityUpdate,
   type AdminEntityUpdatePayload,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
   type UpdateEntitySyncEvent,
@@ -23,7 +23,7 @@ import { adminPublishEntityAfterMutation } from './adminPublishEntities.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminUpdateEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -48,7 +48,7 @@ export async function adminUpdateEntity(
 }
 
 export async function adminUpdateEntitySyncEvent(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -72,7 +72,7 @@ export async function adminUpdateEntitySyncEvent(
 }
 
 async function doUpdateEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

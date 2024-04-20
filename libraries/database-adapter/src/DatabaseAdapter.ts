@@ -2,7 +2,7 @@ import type {
   AdminEntityQuery,
   AdminEntitySharedQuery,
   AdminEntityStatus,
-  AdminSchema,
+  Schema,
   AdminSchemaSpecificationWithMigrations,
   ArchiveEntitySyncEvent,
   ChangelogEventQuery,
@@ -432,7 +432,7 @@ export interface DatabaseAdapter<
   ): PromiseResult<DatabaseAdminEntityPublishUpdateEntityPayload, typeof ErrorType.Generic>;
 
   adminEntitySampleEntities(
-    schema: AdminSchema,
+    schema: Schema,
     context: TransactionContext,
     query: AdminEntitySharedQuery | undefined,
     offset: number,
@@ -444,7 +444,7 @@ export interface DatabaseAdapter<
   >;
 
   adminEntitySearchEntities(
-    schema: AdminSchema,
+    schema: Schema,
     context: TransactionContext,
     query: AdminEntityQuery | undefined,
     paging: DatabasePagingInfo,
@@ -455,7 +455,7 @@ export interface DatabaseAdapter<
   >;
 
   adminEntitySearchTotalCount(
-    schema: AdminSchema,
+    schema: Schema,
     context: TransactionContext,
     query: AdminEntitySharedQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[],

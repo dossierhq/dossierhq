@@ -1,6 +1,6 @@
 import {
   AdminClientOperationName,
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   type AdminClient,
   type AdminClientMiddleware,
   type AdminSchemaSpecificationWithMigrations,
@@ -133,9 +133,9 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           const payload = result.value as OkFromResult<
             ReturnType<AdminClient['updateSchemaSpecification']>
           >;
-          let adminSchema: AdminSchemaWithMigrations | undefined;
+          let adminSchema: SchemaWithMigrations | undefined;
           if (args[1]?.includeMigrations) {
-            adminSchema = new AdminSchemaWithMigrations(
+            adminSchema = new SchemaWithMigrations(
               payload.schemaSpecification as AdminSchemaSpecificationWithMigrations,
             );
           }

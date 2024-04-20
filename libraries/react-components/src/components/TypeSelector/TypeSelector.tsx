@@ -1,4 +1,4 @@
-import type { AdminSchema, PublishedSchema } from '@dossierhq/core';
+import type { Schema, PublishedSchema } from '@dossierhq/core';
 import {
   DropdownSelector,
   MultipleSelectorStateActions,
@@ -23,7 +23,7 @@ export type TypeSelectorState = MultipleSelectorState<TypeItem>;
 export type TypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<TypeItem>>;
 
 type Props = Omit<DropdownSelectorProps<TypeItem>, 'renderItem'> & {
-  schema: AdminSchema | PublishedSchema | undefined;
+  schema: Schema | PublishedSchema | undefined;
 };
 
 export function initializeTypeSelectorState({

@@ -4,7 +4,7 @@ import {
   ok,
   transformEntityFields,
   type AdminSchemaMigrationAction,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type Component,
   type ErrorType,
   type Result,
@@ -13,7 +13,7 @@ import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import { assertExhaustive } from '../utils/AssertUtils.js';
 
 export function applySchemaMigrationsToFields(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   targetEntityType: string,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<Record<string, unknown>, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

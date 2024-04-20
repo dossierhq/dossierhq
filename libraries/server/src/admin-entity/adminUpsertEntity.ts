@@ -7,7 +7,7 @@ import {
   type AdminEntityUpdate,
   type AdminEntityUpsert,
   type AdminEntityUpsertPayload,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type ErrorResult,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -18,7 +18,7 @@ import { adminCreateEntity } from './adminCreateEntity.js';
 import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 export async function adminUpsertEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -74,7 +74,7 @@ export async function adminUpsertEntity(
 }
 
 async function createNewEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

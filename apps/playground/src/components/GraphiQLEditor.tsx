@@ -1,6 +1,6 @@
 import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
 import { AdminDossierContext, PublishedDossierContext } from '@dossierhq/react-components';
-import type { AdminSchema, PublishedSchema } from '@dossierhq/core';
+import type { Schema, PublishedSchema } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@dossierhq/graphql';
 import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
@@ -49,7 +49,7 @@ export default function GraphiQLEditor({
   adminSchema,
   publishedSchema,
 }: {
-  adminSchema: AdminSchema;
+  adminSchema: Schema;
   publishedSchema: PublishedSchema;
 }) {
   const { adminClient } = useContext(AdminDossierContext);

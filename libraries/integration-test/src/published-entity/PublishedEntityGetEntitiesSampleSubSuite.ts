@@ -1,4 +1,4 @@
-import { AdminSchema, copyEntity } from '@dossierhq/core';
+import { Schema, copyEntity } from '@dossierhq/core';
 import { assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
@@ -76,7 +76,7 @@ async function getEntitiesSample_linksToOneReference({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -119,7 +119,7 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -148,7 +148,7 @@ async function getEntitiesSample_linksFromOneReference({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -194,7 +194,7 @@ async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);

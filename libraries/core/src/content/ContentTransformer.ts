@@ -1,19 +1,19 @@
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import type { Component, EntityLike, RichTextNode } from '../Types.js';
-import type { AdminSchema } from '../schema/AdminSchema.js';
+import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { contentValuePathToString, type ContentValuePath } from './ContentPath.js';
 import {
-  isRichTextItemField,
-  isRichTextComponentNode,
-  isStringItemField,
   isComponentItemField,
+  isRichTextComponentNode,
+  isRichTextItemField,
+  isStringItemField,
 } from './ContentTypeUtils.js';
 import { checkFieldItemTraversable, checkFieldTraversable } from './ContentUtils.js';
 import { transformRichText } from './RichTextTransformer.js';
 
 export const IDENTITY_TRANSFORMER: ContentTransformer<
-  AdminSchema | PublishedSchema,
+  Schema | PublishedSchema,
   typeof ErrorType.BadRequest
 > = {
   transformField(_schema, _path, _fieldSpec, value) {
@@ -28,7 +28,7 @@ export const IDENTITY_TRANSFORMER: ContentTransformer<
 };
 
 export interface ContentTransformer<
-  TSchema extends AdminSchema | PublishedSchema,
+  TSchema extends Schema | PublishedSchema,
   TError extends ErrorType,
 > {
   transformField: (
@@ -62,7 +62,7 @@ export interface ContentTransformerOptions {
 }
 
 export function transformEntityFields<
-  TSchema extends AdminSchema | PublishedSchema,
+  TSchema extends Schema | PublishedSchema,
   TEntity extends EntityLike<string, object>,
   TError extends ErrorType,
 >(
@@ -94,7 +94,7 @@ export function transformEntityFields<
 }
 
 export function transformComponent<
-  TSchema extends AdminSchema | PublishedSchema,
+  TSchema extends Schema | PublishedSchema,
   TComponent extends Component<string, object>,
   TError extends ErrorType,
 >(
@@ -130,10 +130,7 @@ export function transformComponent<
   return ok({ ...transformResult.value, type: component.type } as TComponent);
 }
 
-function transformContentFields<
-  TSchema extends AdminSchema | PublishedSchema,
-  TError extends ErrorType,
->(
+function transformContentFields<TSchema extends Schema | PublishedSchema, TError extends ErrorType>(
   schema: TSchema,
   path: ContentValuePath,
   typeSpec: TSchema['spec']['entityTypes'][number] | TSchema['spec']['componentTypes'][number],
@@ -210,7 +207,7 @@ function transformContentFields<
 }
 
 export function transformContentField<
-  TSchema extends AdminSchema | PublishedSchema,
+  TSchema extends Schema | PublishedSchema,
   TError extends ErrorType,
 >(
   schema: TSchema,
@@ -285,7 +282,7 @@ export function transformContentField<
 }
 
 function transformContentFieldValue<
-  TSchema extends AdminSchema | PublishedSchema,
+  TSchema extends Schema | PublishedSchema,
   TError extends ErrorType,
 >(
   schema: TSchema,

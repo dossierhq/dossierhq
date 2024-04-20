@@ -1,7 +1,7 @@
 import {
   AdminEntityQueryOrder,
   AdminEntityStatus,
-  AdminSchema,
+  Schema,
   ErrorType,
   PublishedEntityQueryOrder,
 } from '@dossierhq/core';
@@ -18,7 +18,7 @@ import {
   totalPublishedEntitiesQuery,
 } from './QueryGenerator.js';
 
-const adminSchema = AdminSchema.createAndValidate({
+const adminSchema = Schema.createAndValidate({
   entityTypes: [
     { name: 'QueryGeneratorFoo', fields: [] },
     { name: 'QueryGeneratorBar', fields: [] },

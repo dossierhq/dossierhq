@@ -1,11 +1,11 @@
-import type { AdminSchema, ContentTraverseNode } from '@dossierhq/core';
+import type { Schema, ContentTraverseNode } from '@dossierhq/core';
 import { traverseContentField } from '@dossierhq/core';
 import type { EntityEditorDraftState } from './EntityEditorReducer.js';
 
 export function* traverseEntityEditorDraft(
-  schema: AdminSchema,
+  schema: Schema,
   draftState: EntityEditorDraftState,
-): Generator<ContentTraverseNode<AdminSchema>> {
+): Generator<ContentTraverseNode<Schema>> {
   if (!draftState.draft) {
     return;
   }

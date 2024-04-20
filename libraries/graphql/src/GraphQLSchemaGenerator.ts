@@ -13,7 +13,7 @@ import {
   type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminEntityUpsert,
-  type AdminSchema,
+  type Schema,
   type AdvisoryLockOptions,
   type ChangelogEvent,
   type ChangelogEventQuery,
@@ -97,14 +97,14 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
 }
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> extends TypeRepository {
-  private readonly adminSchema: AdminSchema | null;
+  private readonly adminSchema: Schema | null;
   private readonly publishedSchema: PublishedSchema | null;
 
   constructor({
     adminSchema,
     publishedSchema,
   }: {
-    adminSchema: AdminSchema | null;
+    adminSchema: Schema | null;
     publishedSchema: PublishedSchema | null;
   }) {
     super();
@@ -411,7 +411,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addAdminSupportingTypes(adminSchema: AdminSchema): void {
+  addAdminSupportingTypes(adminSchema: Schema): void {
     if (adminSchema.getEntityTypeCount() === 0) {
       return;
     }
@@ -993,7 +993,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addAdminEntityTypes(adminSchema: AdminSchema): void {
+  addAdminEntityTypes(adminSchema: Schema): void {
     for (const entitySpec of adminSchema.spec.entityTypes) {
       this.addAdminEntityType(entitySpec);
     }
@@ -1161,7 +1161,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addAdminComponentTypes(adminSchema: AdminSchema): void {
+  addAdminComponentTypes(adminSchema: Schema): void {
     for (const componentSpec of adminSchema.spec.componentTypes) {
       this.addAdminComponentType(componentSpec);
     }
@@ -1358,9 +1358,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldAdminEntity<TSource>(
-    adminSchema: AdminSchema,
-  ): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminEntity<TSource>(adminSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
     if (adminSchema.spec.indexes.length === 0) {
       return fieldConfigWithArgs<TSource, TContext, { id: string; version?: number | null }>({
         type: this.getInterface('AdminEntity'),
@@ -1410,7 +1408,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminEntityList<TSource>(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('AdminEntity')),
@@ -1424,7 +1422,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminEntitiesSample<TSource>(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1450,7 +1448,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildQueryFieldAdminEntities<TSource>(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1592,7 +1590,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildMutationCreateEntity<TSource>(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
     entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1626,7 +1624,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildMutationUpdateEntity<TSource>(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
     entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1659,7 +1657,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildMutationUpsertEntity<TSource>(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
     entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1735,7 +1733,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   resolveJsonInputFields(
-    adminSchema: AdminSchema,
+    adminSchema: Schema,
     entity: AdminEntityCreate | AdminEntityUpdate,
     entityTypeName: string,
   ): void {
@@ -1873,7 +1871,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildMutationType<TSource>(adminSchema: AdminSchema): GraphQLObjectType | null {
+  buildMutationType<TSource>(adminSchema: Schema): GraphQLObjectType | null {
     const includeEntities = adminSchema.getEntityTypeCount() > 0;
     if (!includeEntities) {
       return null;

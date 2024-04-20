@@ -3,7 +3,7 @@ import {
   type AdminComponentTypeSpecification,
   type AdminEntityTypeSpecification,
   type AdminFieldSpecification,
-  type AdminSchema,
+  type Schema,
   type PublishedComponentTypeSpecification,
   type PublishedEntityTypeSpecification,
   type PublishedFieldSpecification,
@@ -20,7 +20,7 @@ export function generateTypescriptForSchema({
   publishedSchema,
   authKeyPatternTypeMap,
 }: {
-  adminSchema: AdminSchema | null;
+  adminSchema: Schema | null;
   publishedSchema: PublishedSchema | null;
   authKeyPatternTypeMap?: Record<string, string>;
 }) {

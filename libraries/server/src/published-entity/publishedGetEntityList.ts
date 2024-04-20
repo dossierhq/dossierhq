@@ -1,5 +1,5 @@
 import type {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -26,7 +26,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
  */
 
 export async function publishedGetEntityList(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -63,7 +63,7 @@ export async function publishedGetEntityList(
 }
 
 async function mapItem(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,

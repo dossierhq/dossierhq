@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type Connection,
   type Edge,
   type ErrorType,
@@ -18,7 +18,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
 
 export async function publishedSearchEntities(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,

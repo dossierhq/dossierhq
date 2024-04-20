@@ -1,5 +1,5 @@
 import {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   ErrorType,
   isFieldValueEqual,
   notOk,
@@ -51,7 +51,7 @@ export async function schemaUpdateSpecification(
     }
 
     // Merge update into previous schema
-    const previousSchema = new AdminSchemaWithMigrations(previousSchemaSpec);
+    const previousSchema = new SchemaWithMigrations(previousSchemaSpec);
     const mergeResult = previousSchema.updateAndValidate(update);
     if (mergeResult.isError()) return mergeResult;
     const newSchema = mergeResult.value;
@@ -81,10 +81,7 @@ export async function schemaUpdateSpecificationSyncEvent(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   event: UpdateSchemaSyncEvent,
-): PromiseResult<
-  AdminSchemaWithMigrations,
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
-> {
+): PromiseResult<SchemaWithMigrations, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const { session } = context;
   if (session.type === 'readonly') {
     return notOk.BadRequest('Readonly session used to update schema specification');
@@ -107,7 +104,7 @@ export async function schemaUpdateSpecificationSyncEvent(
   const modernSchemaSpecification = modernizeSchemaSpecification(event.schemaSpecification);
 
   // Merge update into previous schema
-  const oldSchema = new AdminSchemaWithMigrations(previousSchemaSpec);
+  const oldSchema = new SchemaWithMigrations(previousSchemaSpec);
   const mergeResult = oldSchema.updateAndValidate(modernSchemaSpecification);
   if (mergeResult.isError()) return mergeResult;
   const newSchema = mergeResult.value;
@@ -138,8 +135,8 @@ async function calculateAndUpdateSchemaSpec(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   session: WriteSession,
-  oldSchema: AdminSchemaWithMigrations,
-  newSchema: AdminSchemaWithMigrations,
+  oldSchema: SchemaWithMigrations,
+  newSchema: SchemaWithMigrations,
   specifiedVersion: number | null,
   transientMigrations: AdminSchemaTransientMigrationAction[] | null,
   syncEvent: UpdateSchemaSyncEvent | null,

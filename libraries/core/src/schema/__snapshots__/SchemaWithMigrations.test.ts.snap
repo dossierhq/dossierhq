@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > change index 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > change index 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -37,7 +37,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > change index 1`] = `
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > duplicate values 1`] = `
 {
   "componentTypes": [
     {
@@ -128,7 +128,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > duplicate values 1`] = 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > empty->entity with pattern 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > empty->entity with pattern 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -153,7 +153,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > empty->entity with patt
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > field with index 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > field with index 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -190,7 +190,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > field with index 1`] = 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > field with matchPattern 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > field with matchPattern 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -227,7 +227,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > field with matchPattern
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > fields not updated are kept 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > fields not updated are kept 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -274,7 +274,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > fields not updated are 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > unused pattern is removed 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > unused pattern is removed 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -294,7 +294,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > unused pattern is remov
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -319,7 +319,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on component type update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on component type update 1`] = `
 {
   "componentTypes": [
     {
@@ -337,7 +337,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly value if not specified on field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -365,7 +365,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly, authKeyPattern value if not specified on entity type update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -402,7 +402,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing adminOnly,
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing componentTypes value if not specified on Component field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing componentTypes value if not specified on Component field update 1`] = `
 {
   "componentTypes": [
     {
@@ -439,7 +439,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing componentT
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityTypes value if not specified on Entity field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing entityTypes value if not specified on Entity field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -470,7 +470,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityTypes, linkEntityTypes, componentTypes, richTextNodes values if not specified on RichText field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing entityTypes, linkEntityTypes, componentTypes, richTextNodes values if not specified on RichText field update 1`] = `
 {
   "componentTypes": [
     {
@@ -523,7 +523,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing entityType
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing index, multiline, matchPattern values if not specified on String field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing index, multiline, matchPattern values if not specified on String field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -565,7 +565,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing index, mul
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing integer value if not specified on Number field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing integer value if not specified on Number field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -594,7 +594,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing integer va
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing list value if not specified on field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing list value if not specified on field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -626,7 +626,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing list value
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing required value if not specified on field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing required value if not specified on field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -654,7 +654,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing required v
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing values value if not specified on String field update 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() > use existing values value if not specified on String field update 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -690,7 +690,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() > use existing values val
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > component field (migration only) 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteField > component field (migration only) 1`] = `
 {
   "componentTypes": [
     {
@@ -719,7 +719,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > component f
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity field (migration only) 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity field (migration only) 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -750,7 +750,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity fiel
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity field, replace with other field of same name 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity field, replace with other field of same name 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -789,7 +789,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity fiel
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name field with another field 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity name field with another field 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -832,7 +832,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteField > entity name
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique index 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteIndex > unique index 1`] = `
 {
   "componentTypes": [
     {
@@ -882,7 +882,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique index, replace with other index with same name 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteIndex > unique index, replace with other index with same name 1`] = `
 {
   "componentTypes": [
     {
@@ -948,7 +948,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteIndex > unique inde
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component type 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteType > component type 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [],
@@ -970,7 +970,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component ty
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component type referenced by other fields 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteType > component type referenced by other fields 1`] = `
 {
   "componentTypes": [
     {
@@ -1054,7 +1054,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > component ty
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [],
@@ -1076,7 +1076,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type referenced by other fields 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type referenced by other fields 1`] = `
 {
   "componentTypes": [
     {
@@ -1164,7 +1164,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type, replace with other entity type with same name 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type, replace with other entity type with same name 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1235,7 +1235,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() deleteType > entity type,
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migrations for older versions 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() migrations > include migrations for older versions 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1276,7 +1276,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() migrations > include migr
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > component field (migration only) 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameField > component field (migration only) 1`] = `
 {
   "componentTypes": [
     {
@@ -1318,7 +1318,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > component f
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity field (migration only) 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameField > entity field (migration only) 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1362,7 +1362,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity fiel
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity field with other fields 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameField > entity field with other fields 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1421,7 +1421,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity fiel
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity name field, modify validations 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameField > entity name field, modify validations 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1480,7 +1480,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity name
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich text field, many validations 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameField > entity rich text field, many validations 1`] = `
 {
   "componentTypes": [
     {
@@ -1545,7 +1545,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameField > entity rich
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique index 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index 1`] = `
 {
   "componentTypes": [
     {
@@ -1600,7 +1600,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique index and add to another field 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index and add to another field 1`] = `
 {
   "componentTypes": [
     {
@@ -1666,7 +1666,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique index, add other index with same name 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index, add other index with same name 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1718,7 +1718,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameIndex > unique inde
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component type 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameType > component type 1`] = `
 {
   "componentTypes": [
     {
@@ -1759,7 +1759,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component ty
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component type referenced by other fields 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameType > component type referenced by other fields 1`] = `
 {
   "componentTypes": [
     {
@@ -1864,7 +1864,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > component ty
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [
@@ -1907,7 +1907,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type referenced by other fields 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type referenced by other fields 1`] = `
 {
   "componentTypes": [
     {
@@ -2020,7 +2020,7 @@ exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type 
 }
 `;
 
-exports[`AdminSchemaWithMigrations.updateAndValidate() renameType > entity type, add other entity type with same name 1`] = `
+exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type, add other entity type with same name 1`] = `
 {
   "componentTypes": [],
   "entityTypes": [

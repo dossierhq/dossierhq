@@ -8,7 +8,7 @@ import {
   notOk,
   ok,
   type AdminEntityPublishPayload,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type CreateEntitySyncEvent,
   type EntityReference,
   type EntityVersionReference,
@@ -59,7 +59,7 @@ interface VersionInfoAlreadyPublished {
 }
 
 export async function adminPublishEntities(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -83,7 +83,7 @@ export async function adminPublishEntities(
 }
 
 export function adminPublishEntitiesSyncEvent(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -101,7 +101,7 @@ export function adminPublishEntitiesSyncEvent(
 }
 
 export async function adminPublishEntityAfterMutation(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -135,7 +135,7 @@ export async function adminPublishEntityAfterMutation(
 }
 
 async function doPublishEntities(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -285,7 +285,7 @@ async function doPublishEntities(
 }
 
 async function collectVersionsInfo(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

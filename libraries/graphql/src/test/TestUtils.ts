@@ -6,14 +6,14 @@ import type {
   PromiseResult,
   PublishedClient,
 } from '@dossierhq/core';
-import { AdminSchema, NoOpLogger, assertOkResult } from '@dossierhq/core';
+import { Schema, NoOpLogger, assertOkResult } from '@dossierhq/core';
 import type { AuthorizationAdapter } from '@dossierhq/server';
 import { SubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
 import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface TestServerWithSession {
-  schema: AdminSchema;
+  schema: Schema;
   adminClient: AdminClient;
   adminClientOther: AdminClient;
   publishedClient: PublishedClient;
@@ -68,7 +68,7 @@ async function setUpRealServerWithSession(
   assertOkResult(schemaResult);
 
   return {
-    schema: new AdminSchema(schemaResult.value.schemaSpecification),
+    schema: new Schema(schemaResult.value.schemaSpecification),
     adminClient,
     adminClientOther,
     publishedClient,

@@ -7,7 +7,7 @@ import {
   type AdminEntityTypeSpecification,
   type AdminEntityTypeSpecificationUpdate,
   type AdminFieldSpecification,
-  type AdminSchema,
+  type Schema,
   type AdminSchemaSpecificationUpdate,
   type AdminSchemaTransientMigrationAction,
   type AdminSchemaVersionMigration,
@@ -104,7 +104,7 @@ export interface SchemaPatternDraft extends SchemaPatternSpecification {
 
 export interface SchemaEditorState {
   status: 'uninitialized' | 'changed' | '';
-  schema: AdminSchema | null;
+  schema: Schema | null;
   schemaWillBeUpdatedDueToSave: boolean;
 
   entityTypes: SchemaEntityTypeDraft[];
@@ -1475,9 +1475,9 @@ class SetNextUpdateSchemaSpecificationIsDueToSaveAction implements SchemaEditorS
 }
 
 class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
-  schema: AdminSchema;
+  schema: Schema;
 
-  constructor(schema: AdminSchema) {
+  constructor(schema: Schema) {
     this.schema = schema;
   }
 

@@ -1,5 +1,5 @@
 import type { Logger, Paging } from '@dossierhq/core';
-import { AdminSchema, NoOpLogger, getPagingInfo } from '@dossierhq/core';
+import { Schema, NoOpLogger, getPagingInfo } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePagingInfo,
@@ -101,8 +101,8 @@ export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, 
   });
 }
 
-export function createTestAdminSchema(): AdminSchema {
-  return AdminSchema.createAndValidate({}).valueOrThrow();
+export function createTestAdminSchema(): Schema {
+  return Schema.createAndValidate({}).valueOrThrow();
 }
 
 export function resolvePaging(

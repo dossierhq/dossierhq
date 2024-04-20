@@ -4,7 +4,7 @@ import {
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityUpsert,
-  type AdminSchema,
+  type Schema,
   type PublishedEntity,
 } from '@dossierhq/core';
 import { assertEquals } from '../Asserts.js';
@@ -244,7 +244,7 @@ export const VALUE_ITEMS_CREATE: Readonly<AdminEntityCreate<AdminComponents>> = 
 };
 
 export function adminToPublishedEntity<T extends AppAdminEntity>(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   entity: T,
 ): AppPublishedEntity {
   assertEquals(entity.info.status, AdminEntityStatus.published);

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import type { AdminEntity, AdminEntityCreate, EntityLike } from '../Types.js';
-import { AdminSchema } from '../schema/AdminSchema.js';
+import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import {
   normalizeEntityFields,
@@ -24,7 +24,7 @@ import {
   createRichTextTextNode,
 } from './RichTextUtils.js';
 
-const adminSchema = AdminSchema.createAndValidate({
+const adminSchema = Schema.createAndValidate({
   entityTypes: [
     { name: 'ReferencesEntity', fields: [{ name: 'normal', type: FieldType.Reference }] },
     {

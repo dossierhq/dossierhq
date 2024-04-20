@@ -5,7 +5,7 @@ import {
   transformRichText,
   type AdminEntityTypeSpecification,
   type AdminFieldSpecification,
-  type AdminSchema,
+  type Schema,
   type Component,
   type ContentValuePath,
   type PublishedEntityTypeSpecification,
@@ -24,7 +24,7 @@ import * as LegacyCodecFieldTypeAdapters from './LegacyCodecFieldTypeAdapters.js
 type CodecMode = 'optimized' | 'json';
 
 export function legacyDecodeEntityFields(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
   encodedFields: Record<string, unknown>,
 ) {
@@ -40,7 +40,7 @@ export function legacyDecodeEntityFields(
 }
 
 function decodeFieldItemOrList(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
   codecMode: CodecMode,
   fieldValue: unknown,
@@ -85,7 +85,7 @@ function decodeFieldItemOrList(
 }
 
 function decodeComponentField(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   codecMode: CodecMode,
   encodedValue: Component,
 ): Component | null {
@@ -105,7 +105,7 @@ function decodeComponentField(
 }
 
 function decodeRichTextField(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   encodedValue: RichText,
 ): RichText | null {
   const path: ContentValuePath = [];

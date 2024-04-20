@@ -11,7 +11,7 @@ import { schemaAdminToPublished } from './schemaAdminToPublished.js';
 import { schemaUpdate } from './schemaUpdate.js';
 import { schemaValidateAdmin } from './schemaValidateAdmin.js';
 
-export class AdminSchema<
+export class Schema<
   TSpec extends
     | AdminSchemaSpecification
     | AdminSchemaSpecificationWithMigrations = AdminSchemaSpecification,
@@ -20,13 +20,13 @@ export class AdminSchema<
 
   static createAndValidate(
     update: AdminSchemaSpecificationUpdate,
-  ): Result<AdminSchema, typeof ErrorType.BadRequest> {
-    const result = AdminSchemaWithMigrations.createAndValidate(update);
+  ): Result<Schema, typeof ErrorType.BadRequest> {
+    const result = SchemaWithMigrations.createAndValidate(update);
     if (!result.isOk()) return result;
 
     const { migrations, ...specWithoutMigrations } = result.value.spec;
 
-    return ok(new AdminSchema(specWithoutMigrations));
+    return ok(new Schema(specWithoutMigrations));
   }
 
   constructor(spec: TSpec) {
@@ -49,10 +49,10 @@ export class AdminSchema<
   }
 }
 
-export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificationWithMigrations> {
+export class SchemaWithMigrations extends Schema<AdminSchemaSpecificationWithMigrations> {
   static override createAndValidate(
     update: AdminSchemaSpecificationUpdate,
-  ): Result<AdminSchemaWithMigrations, typeof ErrorType.BadRequest> {
+  ): Result<SchemaWithMigrations, typeof ErrorType.BadRequest> {
     const emptySpec: AdminSchemaSpecificationWithMigrations = {
       schemaKind: 'full',
       version: 0,
@@ -62,13 +62,13 @@ export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificat
       indexes: [],
       migrations: [],
     };
-    const empty = new AdminSchemaWithMigrations(emptySpec);
+    const empty = new SchemaWithMigrations(emptySpec);
     return empty.updateAndValidate(update);
   }
 
   updateAndValidate(
     update: AdminSchemaSpecificationUpdate,
-  ): Result<AdminSchemaWithMigrations, typeof ErrorType.BadRequest> {
+  ): Result<SchemaWithMigrations, typeof ErrorType.BadRequest> {
     // Update
     const updatedResult = schemaUpdate(this.spec, update);
     if (updatedResult.isError()) return updatedResult;
@@ -79,7 +79,7 @@ export class AdminSchemaWithMigrations extends AdminSchema<AdminSchemaSpecificat
     }
 
     // Validate
-    const updatedSchema = new AdminSchemaWithMigrations(updatedSpec);
+    const updatedSchema = new SchemaWithMigrations(updatedSpec);
     const validateResult = updatedSchema.validate();
     if (validateResult.isError()) return validateResult;
 

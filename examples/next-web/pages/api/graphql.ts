@@ -1,4 +1,4 @@
-import { AdminSchema, ok } from '@dossierhq/core';
+import { Schema, ok } from '@dossierhq/core';
 import type { SessionGraphQLContext } from '@dossierhq/graphql';
 import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
 import type { ExecutionResult, GraphQLSchema } from 'graphql';
@@ -32,7 +32,7 @@ export default async function graphQlHandler(
     if (!graphQLSchema) {
       const adminSchemaResult = await adminClient.getSchemaSpecification();
       if (adminSchemaResult.isError()) return adminSchemaResult;
-      const adminSchema = new AdminSchema(adminSchemaResult.value);
+      const adminSchema = new Schema(adminSchemaResult.value);
       graphQLSchema = new GraphQLSchemaGenerator({
         adminSchema,
         publishedSchema: adminSchema.toPublishedSchema(),

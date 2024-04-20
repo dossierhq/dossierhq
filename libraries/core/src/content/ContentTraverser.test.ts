@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { AdminEntityStatus, type AdminEntity, type Component } from '../Types.js';
-import { AdminSchema } from '../schema/AdminSchema.js';
+import { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { contentValuePathToString } from './ContentPath.js';
@@ -13,7 +13,7 @@ import {
   createRichTextComponentNode,
 } from './RichTextUtils.js';
 
-const adminSchema = AdminSchema.createAndValidate({
+const adminSchema = Schema.createAndValidate({
   entityTypes: [
     {
       name: 'BooleansEntity',
@@ -90,7 +90,7 @@ const publishedSchema = adminSchema.toPublishedSchema();
 
 type CollectedNode = { type: ContentTraverseNodeType } & Record<string, unknown>;
 
-function collectTraverseNodes<TSchema extends AdminSchema | PublishedSchema>(
+function collectTraverseNodes<TSchema extends Schema | PublishedSchema>(
   generator: Generator<ContentTraverseNode<TSchema>>,
 ) {
   const payload: CollectedNode[] = [];

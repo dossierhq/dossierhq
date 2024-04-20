@@ -1,21 +1,21 @@
 import { describe, expect, test } from 'vitest';
 import { ErrorType } from '../ErrorResult.js';
-import { AdminSchema } from '../schema/AdminSchema.js';
+import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { assertIsDefined } from '../utils/Asserts.js';
 import {
+  normalizeComponent,
   normalizeContentField,
   normalizeEntityFields,
-  normalizeComponent,
 } from './ContentNormalizer.js';
 import {
   createRichText,
-  createRichTextParagraphNode,
   createRichTextComponentNode,
+  createRichTextParagraphNode,
 } from './RichTextUtils.js';
 
-const schema = AdminSchema.createAndValidate({
+const schema = Schema.createAndValidate({
   entityTypes: [
     {
       name: 'Foo',
@@ -38,7 +38,7 @@ const schema = AdminSchema.createAndValidate({
   ],
 }).valueOrThrow();
 
-function getEntityFieldSpec(schema: AdminSchema, entityType: string, fieldName: string) {
+function getEntityFieldSpec(schema: Schema, entityType: string, fieldName: string) {
   const entitySpec = schema.getEntityTypeSpecification(entityType);
   assertIsDefined(entitySpec);
   const fieldSpec = schema.getEntityFieldSpecification(entitySpec, fieldName);

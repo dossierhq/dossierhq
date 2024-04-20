@@ -1,5 +1,5 @@
 import type { Component, EntityLike, RichTextNode } from '../Types.js';
-import type { AdminSchema } from '../schema/AdminSchema.js';
+import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
   AdminComponentTypeSpecification,
@@ -38,7 +38,7 @@ export const ContentTraverseNodeErrorType = {
 export type ContentTraverseNodeErrorType =
   (typeof ContentTraverseNodeErrorType)[keyof typeof ContentTraverseNodeErrorType];
 
-export type ContentTraverseNode<TSchema extends AdminSchema | PublishedSchema> =
+export type ContentTraverseNode<TSchema extends Schema | PublishedSchema> =
   | ContentTraverseNodeComponent<TSchema>
   | ContentTraverseNodeEntity<TSchema>
   | ContentTraverseNodeErrorGeneric
@@ -47,7 +47,7 @@ export type ContentTraverseNode<TSchema extends AdminSchema | PublishedSchema> =
   | ContentTraverseNodeFieldItem<TSchema>
   | ContentTraverseNodeRichTextNode<TSchema>;
 
-interface ContentTraverseNodeEntity<TSchema extends AdminSchema | PublishedSchema> {
+interface ContentTraverseNodeEntity<TSchema extends Schema | PublishedSchema> {
   path: ContentValuePath;
   type: 'entity';
   entitySpec: TSchema['spec']['entityTypes'][number];
@@ -70,35 +70,35 @@ interface ContentTraverseNodeErrorMissingTypeSpec {
   kind: 'entity' | 'component';
 }
 
-interface ContentTraverseNodeField<TSchema extends AdminSchema | PublishedSchema> {
+interface ContentTraverseNodeField<TSchema extends Schema | PublishedSchema> {
   path: ContentValuePath;
   type: 'field';
   fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number];
   value: unknown;
 }
 
-interface ContentTraverseNodeFieldItem<TSchema extends AdminSchema | PublishedSchema> {
+interface ContentTraverseNodeFieldItem<TSchema extends Schema | PublishedSchema> {
   path: ContentValuePath;
   type: 'fieldItem';
   fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number];
   value: unknown;
 }
 
-interface ContentTraverseNodeComponent<TSchema extends AdminSchema | PublishedSchema> {
+interface ContentTraverseNodeComponent<TSchema extends Schema | PublishedSchema> {
   path: ContentValuePath;
   type: 'component';
   componentSpec: TSchema['spec']['componentTypes'][number];
   component: Component;
 }
 
-interface ContentTraverseNodeRichTextNode<TSchema extends AdminSchema | PublishedSchema> {
+interface ContentTraverseNodeRichTextNode<TSchema extends Schema | PublishedSchema> {
   path: ContentValuePath;
   type: 'richTextNode';
   fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number];
   node: RichTextNode;
 }
 
-export function* traverseEntity<TSchema extends AdminSchema | PublishedSchema>(
+export function* traverseEntity<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   entity: EntityLike<string, object>,
@@ -133,7 +133,7 @@ export function* traverseEntity<TSchema extends AdminSchema | PublishedSchema>(
   );
 }
 
-export function* traverseComponent<TSchema extends AdminSchema | PublishedSchema>(
+export function* traverseComponent<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   component: Component,
@@ -173,7 +173,7 @@ export function* traverseComponent<TSchema extends AdminSchema | PublishedSchema
   yield* traverseContentFields(schema, path, componentSpec, component);
 }
 
-function* traverseContentFields<TSchema extends AdminSchema | PublishedSchema>(
+function* traverseContentFields<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   typeSpec:
@@ -191,7 +191,7 @@ function* traverseContentFields<TSchema extends AdminSchema | PublishedSchema>(
   }
 }
 
-export function* traverseContentField<TSchema extends AdminSchema | PublishedSchema>(
+export function* traverseContentField<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
@@ -233,7 +233,7 @@ export function* traverseContentField<TSchema extends AdminSchema | PublishedSch
   }
 }
 
-function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchema>(
+function* traverseContentFieldValue<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],
@@ -287,7 +287,7 @@ function* traverseContentFieldValue<TSchema extends AdminSchema | PublishedSchem
   }
 }
 
-function* traverseRichTextNode<TSchema extends AdminSchema | PublishedSchema>(
+function* traverseRichTextNode<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   fieldSpec: TSchema['spec']['entityTypes' | 'componentTypes'][number]['fields'][number],

@@ -3,7 +3,7 @@ import {
   EventType,
   notOk,
   ok,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type CreatePrincipalSyncEvent,
   type PromiseResult,
   type SyncEvent,
@@ -48,7 +48,7 @@ export async function managementApplyAuthSyncEvent(
 }
 
 export async function managementApplySyncEvent(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -92,7 +92,7 @@ export async function managementApplySyncEvent(
 }
 
 function applyEvent(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

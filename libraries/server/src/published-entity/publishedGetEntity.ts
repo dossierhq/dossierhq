@@ -1,5 +1,5 @@
 import type {
-  AdminSchemaWithMigrations,
+  SchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -14,7 +14,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { validateEntityReference } from '../utils/ValidationUtils.js';
 
 export async function publishedGetEntity(
-  adminSchema: AdminSchemaWithMigrations,
+  adminSchema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

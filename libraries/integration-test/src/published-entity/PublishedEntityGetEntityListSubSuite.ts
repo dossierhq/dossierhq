@@ -1,4 +1,4 @@
-import { AdminSchema, notOk, ok, type ErrorType } from '@dossierhq/core';
+import { Schema, notOk, ok, type ErrorType } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppPublishedEntity } from '../SchemaTypes.js';
@@ -21,7 +21,7 @@ export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestConte
 async function getEntityList_minimal({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
@@ -52,7 +52,7 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
   clientProvider,
 }: PublishedEntityTestContext) {
   const primaryAdminClient = clientProvider.adminClient();
-  const adminSchema = new AdminSchema(
+  const adminSchema = new Schema(
     (await primaryAdminClient.getSchemaSpecification()).valueOrThrow(),
   );
 
@@ -84,7 +84,7 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
 
 async function getEntityList_oneMissingOneExisting({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
-  const adminSchema = new AdminSchema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const { entity } = createResult.valueOrThrow();
 

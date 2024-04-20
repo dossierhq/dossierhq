@@ -1,7 +1,7 @@
 import type {
   AdminEntityQuery,
   AdminEntitySharedQuery,
-  AdminSchema,
+  Schema,
   ErrorType,
   PublishedEntityQuery,
   PublishedEntitySharedQuery,
@@ -66,7 +66,7 @@ export function searchPublishedEntitiesQuery(
 
 export function searchAdminEntitiesQuery(
   databaseAdapter: PostgresDatabaseAdapter,
-  schema: AdminSchema,
+  schema: Schema,
   query: AdminEntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
@@ -78,7 +78,7 @@ function sharedSearchEntitiesQuery<
   TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem,
 >(
   databaseAdapter: PostgresDatabaseAdapter,
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   query: PublishedEntityQuery | AdminEntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
@@ -236,7 +236,7 @@ function addFilterStatusSqlSegment(query: AdminEntitySharedQuery, { sql }: Postg
 }
 
 export function sampleAdminEntitiesQuery(
-  schema: AdminSchema,
+  schema: Schema,
   query: AdminEntitySharedQuery | undefined,
   offset: number,
   limit: number,
@@ -256,7 +256,7 @@ export function samplePublishedEntitiesQuery(
 }
 
 function sampleEntitiesQuery(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
   offset: number,
   limit: number,
@@ -281,7 +281,7 @@ function sampleEntitiesQuery(
 }
 
 export function totalAdminEntitiesQuery(
-  schema: AdminSchema,
+  schema: Schema,
   authKeys: ResolvedAuthKey[],
   query: AdminEntitySharedQuery | undefined,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
@@ -297,7 +297,7 @@ export function totalPublishedEntitiesQuery(
 }
 
 function totalCountQuery(
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   authKeys: ResolvedAuthKey[],
   query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
   published: boolean,
@@ -377,7 +377,7 @@ function addEntityQuerySelectColumn(
 
 function addQueryFilters(
   queryBuilder: PostgresQueryBuilder,
-  schema: AdminSchema | PublishedSchema,
+  schema: Schema | PublishedSchema,
   query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean,
@@ -462,7 +462,7 @@ function addQueryFilters(
 }
 
 function getFilterEntityTypes(
-  schema: PublishedSchema | AdminSchema,
+  schema: PublishedSchema | Schema,
   query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
@@ -477,7 +477,7 @@ function getFilterEntityTypes(
 }
 
 function getFilterComponentTypes(
-  schema: PublishedSchema | AdminSchema,
+  schema: PublishedSchema | Schema,
   query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.componentTypes || query.componentTypes.length === 0) {

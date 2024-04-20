@@ -9,7 +9,7 @@ import {
   convertJsonResult,
   convertJsonSyncEvent,
 } from './JsonUtils.js';
-import { AdminSchemaWithMigrations, EventType, type UpdateSchemaSyncEvent } from '../index.js';
+import { SchemaWithMigrations, EventType, type UpdateSchemaSyncEvent } from '../index.js';
 
 interface CustomEdge extends Edge<{ foo: string }, ErrorType> {
   edgeProperty: string;
@@ -97,7 +97,7 @@ describe('convertJsonResult()', () => {
 
 describe('convertJsonSyncEvent()', () => {
   test('updateSchema', () => {
-    const schema = AdminSchemaWithMigrations.createAndValidate({}).valueOrThrow();
+    const schema = SchemaWithMigrations.createAndValidate({}).valueOrThrow();
 
     const event: UpdateSchemaSyncEvent = {
       id: '4-5-6-7',

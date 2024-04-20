@@ -2,7 +2,7 @@ import {
   ok,
   type AdminEntity,
   type AdminEntityQuery,
-  type AdminSchemaWithMigrations,
+  type SchemaWithMigrations,
   type Connection,
   type Edge,
   type ErrorType,
@@ -17,7 +17,7 @@ import { decodeAdminEntity } from '../EntityCodec.js';
 import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
 
 export async function adminSearchEntities(
-  schema: AdminSchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,

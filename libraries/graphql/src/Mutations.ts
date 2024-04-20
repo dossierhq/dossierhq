@@ -10,7 +10,7 @@ import type {
   AdminEntityUpdatePayload,
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
-  AdminSchema,
+  Schema,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
   AdvisoryLockReleasePayload,
@@ -21,7 +21,7 @@ import { buildResolversForAdminEntity } from './DataLoaders.js';
 import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 
 export async function createEntity<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   entity: Readonly<AdminEntityCreate>,
   options: AdminEntityMutationOptions,
@@ -36,7 +36,7 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function updateEntity<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   entity: Readonly<AdminEntityUpdate>,
   options: AdminEntityMutationOptions,
@@ -51,7 +51,7 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 }
 
 export async function upsertEntity<TContext extends SessionGraphQLContext>(
-  schema: AdminSchema,
+  schema: Schema,
   context: TContext,
   entity: Readonly<AdminEntityUpsert>,
   options: AdminEntityMutationOptions,

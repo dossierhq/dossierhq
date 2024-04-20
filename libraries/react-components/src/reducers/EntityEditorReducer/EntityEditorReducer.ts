@@ -9,7 +9,7 @@ import {
   type AdminEntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminFieldSpecification,
-  type AdminSchema,
+  type Schema,
   type PublishValidationIssue,
   type SaveValidationIssue,
 } from '@dossierhq/core';
@@ -22,7 +22,7 @@ type ValidationIssue = SaveValidationIssue | PublishValidationIssue;
 
 export interface EntityEditorState {
   status: '' | 'changed';
-  schema: AdminSchema | null;
+  schema: Schema | null;
   drafts: EntityEditorDraftState[];
   activeEntityId: string | null;
   activeEntityEditorScrollSignal: number;
@@ -546,8 +546,8 @@ class UpdateEntityAction extends EntityEditorDraftAction {
 }
 
 class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
-  schema: AdminSchema;
-  constructor(schema: AdminSchema) {
+  schema: Schema;
+  constructor(schema: Schema) {
     this.schema = schema;
   }
 
@@ -580,7 +580,7 @@ export const EntityEditorActions = {
 // HELPERS
 
 function validateField(
-  adminSchema: AdminSchema,
+  adminSchema: Schema,
   fieldSpec: AdminFieldSpecification,
   adminOnly: boolean,
   value: unknown,
@@ -606,7 +606,7 @@ function validateField(
 }
 
 function createEditorEntityDraftState(
-  schema: AdminSchema,
+  schema: Schema,
   entitySpec: AdminEntityTypeSpecification,
   entity: AdminEntity | null,
 ): EntityEditorDraftState['draft'] {

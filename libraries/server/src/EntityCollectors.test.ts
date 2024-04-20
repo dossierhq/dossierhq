@@ -1,6 +1,6 @@
 import type { AdminSchemaSpecificationUpdate, EntityLike } from '@dossierhq/core';
 import {
-  AdminSchema,
+  Schema,
   FieldType,
   createRichText,
   createRichTextComponentNode,
@@ -74,9 +74,9 @@ const schemaSpec: AdminSchemaSpecificationUpdate = {
   indexes: [{ name: 'slug', type: 'unique' }],
 };
 
-const schema = AdminSchema.createAndValidate(schemaSpec).valueOrThrow();
+const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();
 
-function collectDataFromEntity(adminSchema: AdminSchema, entity: EntityLike) {
+function collectDataFromEntity(adminSchema: Schema, entity: EntityLike) {
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
   const requestedReferencesCollector = createRequestedReferencesCollector();

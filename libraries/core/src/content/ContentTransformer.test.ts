@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { ErrorType, ok } from '../ErrorResult.js';
 import type { Component } from '../Types.js';
 import { createRichText, createRichTextComponentNode } from '../content/RichTextUtils.js';
-import { AdminSchemaWithMigrations } from '../schema/AdminSchema.js';
+import { SchemaWithMigrations } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
 import { contentValuePathToString } from './ContentPath.js';
@@ -14,7 +14,7 @@ import {
 import { isRichTextComponentNode, isComponentItemField } from './ContentTypeUtils.js';
 import { copyEntity } from './ContentUtils.js';
 
-const ADMIN_SCHEMA = AdminSchemaWithMigrations.createAndValidate({
+const ADMIN_SCHEMA = SchemaWithMigrations.createAndValidate({
   entityTypes: [
     {
       name: 'StringsEntity',
