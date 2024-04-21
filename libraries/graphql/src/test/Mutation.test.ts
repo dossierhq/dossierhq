@@ -154,7 +154,7 @@ type UpsertMutationFooGqlQueryResult = ExecutionResult<{
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification, 'data/mutation.sqlite');
   schema = new GraphQLSchemaGenerator({
-    adminSchema: server.schema,
+    schema: server.schema,
     publishedSchema: null,
   }).buildSchema();
 });

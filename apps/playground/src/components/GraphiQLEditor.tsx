@@ -44,10 +44,10 @@ const DEFAULT_QUERY = `# Welcome to GraphiQL
 }`;
 
 export default function GraphiQLEditor({
-  adminSchema,
+  schema,
   publishedSchema,
 }: {
-  adminSchema: Schema;
+  schema: Schema;
   publishedSchema: PublishedSchema;
 }) {
   const { adminClient } = useContext(AdminDossierContext);
@@ -56,14 +56,11 @@ export default function GraphiQLEditor({
   const [themeIsSet, setThemeIsSet] = useState(false);
 
   const graphQlSchema = useMemo(() => {
-    const generator = new GraphQLSchemaGenerator({
-      adminSchema: adminSchema ?? null,
-      publishedSchema: publishedSchema ?? null,
-    });
+    const generator = new GraphQLSchemaGenerator({ schema, publishedSchema });
     const result = generator.buildSchema();
 
     return result;
-  }, [adminSchema, publishedSchema]);
+  }, [schema, publishedSchema]);
 
   const graphQlSession = useMemo<SessionGraphQLContext>(() => {
     return {

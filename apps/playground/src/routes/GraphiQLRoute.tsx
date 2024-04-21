@@ -7,13 +7,13 @@ import { NavBar } from '../components/NavBar.js';
 const GraphiQLEditor = lazy(() => import('../components/GraphiQLEditor.js'));
 
 export function GraphiQLRoute(): JSX.Element {
-  const { schema: adminSchema } = useContext(AdminDossierContext);
+  const { schema } = useContext(AdminDossierContext);
   const { schema: publishedSchema } = useContext(PublishedDossierContext);
 
   let content;
-  if (!adminSchema || !publishedSchema) {
+  if (!schema || !publishedSchema) {
     content = null;
-  } else if (adminSchema.getEntityTypeCount() === 0) {
+  } else if (schema.getEntityTypeCount() === 0) {
     content = (
       <EmptyStateMessage
         icon="add"
@@ -25,7 +25,7 @@ export function GraphiQLRoute(): JSX.Element {
     content = (
       <ErrorBoundary>
         <Suspense fallback={null}>
-          <GraphiQLEditor {...{ adminSchema, publishedSchema }} />
+          <GraphiQLEditor {...{ schema, publishedSchema }} />
         </Suspense>
       </ErrorBoundary>
     );

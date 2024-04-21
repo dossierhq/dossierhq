@@ -97,18 +97,18 @@ function fieldConfigWithArgs<TSource, TContext, TArgs>(
 }
 
 export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> extends TypeRepository {
-  private readonly adminSchema: Schema | null;
+  private readonly schema: Schema | null;
   private readonly publishedSchema: PublishedSchema | null;
 
   constructor({
-    adminSchema,
+    schema,
     publishedSchema,
   }: {
-    adminSchema: Schema | null;
+    schema: Schema | null;
     publishedSchema: PublishedSchema | null;
   }) {
     super();
-    this.adminSchema = adminSchema;
+    this.schema = schema;
     this.publishedSchema = publishedSchema;
   }
 
@@ -137,7 +137,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
 
     const containsEntityTypes =
-      !!(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0) ||
+      !!(this.schema && this.schema.getEntityTypeCount() > 0) ||
       !!(this.publishedSchema && this.publishedSchema.getEntityTypeCount() > 0);
     if (!containsEntityTypes) {
       return;
@@ -411,8 +411,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addAdminSupportingTypes(adminSchema: Schema): void {
-    if (adminSchema.getEntityTypeCount() === 0) {
+  addAdminSupportingTypes(schema: Schema): void {
+    if (schema.getEntityTypeCount() === 0) {
       return;
     }
 
@@ -420,7 +420,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
     // EntityType
     const entityTypeEnumValues: GraphQLEnumValueConfigMap = {};
-    for (const entitySpec of adminSchema.spec.entityTypes) {
+    for (const entitySpec of schema.spec.entityTypes) {
       entityTypeEnumValues[entitySpec.name] = {};
     }
     this.addType(
@@ -430,10 +430,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    if (adminSchema.getComponentTypeCount() > 0) {
+    if (schema.getComponentTypeCount() > 0) {
       // ComponentType
       const componentTypeEnumValues: GraphQLEnumValueConfigMap = {};
-      for (const componentSpec of adminSchema.spec.componentTypes) {
+      for (const componentSpec of schema.spec.componentTypes) {
         componentTypeEnumValues[componentSpec.name] = {};
       }
       this.addType(
@@ -576,7 +576,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
 
     // UniqueIndex
-    const uniqueIndexNames = adminSchema.spec.indexes
+    const uniqueIndexNames = schema.spec.indexes
       .filter((it) => it.type === 'unique')
       .map((it) => it.name);
     if (uniqueIndexNames.length > 0) {
@@ -641,7 +641,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entityTypes: {
         type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityType'))),
       },
-      ...(adminSchema.getComponentTypeCount() > 0
+      ...(schema.getComponentTypeCount() > 0
         ? {
             componentTypes: {
               type: new GraphQLList(new GraphQLNonNull(this.getEnumType('ComponentType'))),
@@ -686,7 +686,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    if (this.adminSchema && this.adminSchema.getComponentTypeCount() > 0) {
+    if (this.schema && this.schema.getComponentTypeCount() > 0) {
       // Component
       this.addType(
         new GraphQLInterfaceType({
@@ -993,8 +993,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addEntityTypes(adminSchema: Schema): void {
-    for (const entitySpec of adminSchema.spec.entityTypes) {
+  addEntityTypes(schema: Schema): void {
+    for (const entitySpec of schema.spec.entityTypes) {
       this.addEntityType(entitySpec);
     }
   }
@@ -1161,8 +1161,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     );
   }
 
-  addAdminComponentTypes(adminSchema: Schema): void {
-    for (const componentSpec of adminSchema.spec.componentTypes) {
+  addAdminComponentTypes(schema: Schema): void {
+    for (const componentSpec of schema.spec.componentTypes) {
       this.addAdminComponentType(componentSpec);
     }
   }
@@ -1358,8 +1358,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildQueryFieldAdminEntity<TSource>(adminSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
-    if (adminSchema.spec.indexes.length === 0) {
+  buildQueryFieldAdminEntity<TSource>(schema: Schema): GraphQLFieldConfig<TSource, TContext> {
+    if (schema.spec.indexes.length === 0) {
       return fieldConfigWithArgs<TSource, TContext, { id: string; version?: number | null }>({
         type: this.getInterface('Entity'),
         args: {
@@ -1374,7 +1374,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             reference = { id: args.id };
           }
 
-          return await loadAdminEntity(adminSchema, context, reference);
+          return await loadAdminEntity(schema, context, reference);
         },
       });
     }
@@ -1402,27 +1402,25 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           throw new Error('Either (id), (id and version) or (index and value) must be specified');
         }
 
-        return await loadAdminEntity(adminSchema, context, reference);
+        return await loadAdminEntity(schema, context, reference);
       },
     });
   }
 
-  buildQueryFieldAdminEntityList<TSource>(
-    adminSchema: Schema,
-  ): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminEntityList<TSource>(schema: Schema): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
       type: new GraphQLList(this.getInterface('Entity')),
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
       resolve: async (_source, args, context, _info) => {
-        return await loadAdminEntityList(adminSchema, context, args.ids);
+        return await loadAdminEntityList(schema, context, args.ids);
       },
     });
   }
 
   buildQueryFieldAdminEntitiesSample<TSource>(
-    adminSchema: Schema,
+    schema: Schema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
@@ -1442,14 +1440,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, _info) => {
         const { query, seed, count } = args;
         const options = { seed, count };
-        return await loadAdminEntitiesSample(adminSchema, context, query, options);
+        return await loadAdminEntitiesSample(schema, context, query, options);
       },
     });
   }
 
-  buildQueryFieldAdminEntities<TSource>(
-    adminSchema: Schema,
-  ): GraphQLFieldConfig<TSource, TContext> {
+  buildQueryFieldAdminEntities<TSource>(schema: Schema): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
       TSource,
       TContext,
@@ -1472,7 +1468,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       resolve: async (_source, args, context, info) => {
         const { query, first, after, last, before } = args;
         const paging = { first, after, last, before };
-        return await loadAdminEntities(adminSchema, context, query, paging, info);
+        return await loadAdminEntities(schema, context, query, paging, info);
       },
     });
   }
@@ -1576,12 +1572,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
               ),
             }
           : {}),
-        ...(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0
+        ...(this.schema && this.schema.getEntityTypeCount() > 0
           ? {
-              entity: this.buildQueryFieldAdminEntity(this.adminSchema),
-              entityList: this.buildQueryFieldAdminEntityList(this.adminSchema),
-              entities: this.buildQueryFieldAdminEntities(this.adminSchema),
-              entitiesSample: this.buildQueryFieldAdminEntitiesSample(this.adminSchema),
+              entity: this.buildQueryFieldAdminEntity(this.schema),
+              entityList: this.buildQueryFieldAdminEntityList(this.schema),
+              entities: this.buildQueryFieldAdminEntities(this.schema),
+              entitiesSample: this.buildQueryFieldAdminEntitiesSample(this.schema),
               changelogEvents: this.buildQueryFieldChangelogEvents(),
             }
           : {}),
@@ -1590,7 +1586,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildMutationCreateEntity<TSource>(
-    adminSchema: Schema,
+    schema: Schema,
     entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1615,8 +1611,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             .toError();
         }
         entity.info.type = entityName;
-        this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.createEntity(adminSchema, context, entity, {
+        this.resolveJsonInputFields(schema, entity, entityName);
+        return await Mutations.createEntity(schema, context, entity, {
           publish: publish ?? undefined,
         });
       },
@@ -1624,7 +1620,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildMutationUpdateEntity<TSource>(
-    adminSchema: Schema,
+    schema: Schema,
     entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1648,8 +1644,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             )
             .toError();
         }
-        this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.updateEntity(adminSchema, context, entity, {
+        this.resolveJsonInputFields(schema, entity, entityName);
+        return await Mutations.updateEntity(schema, context, entity, {
           publish: publish ?? undefined,
         });
       },
@@ -1657,7 +1653,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   buildMutationUpsertEntity<TSource>(
-    adminSchema: Schema,
+    schema: Schema,
     entityName: string,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<
@@ -1681,8 +1677,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             )
             .toError();
         }
-        this.resolveJsonInputFields(adminSchema, entity, entityName);
-        return await Mutations.upsertEntity(adminSchema, context, entity, {
+        this.resolveJsonInputFields(schema, entity, entityName);
+        return await Mutations.upsertEntity(schema, context, entity, {
           publish: publish ?? undefined,
         });
       },
@@ -1733,7 +1729,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   resolveJsonInputFields(
-    adminSchema: Schema,
+    schema: Schema,
     entity: EntityCreate | EntityUpdate,
     entityTypeName: string,
   ): void {
@@ -1764,13 +1760,13 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         }
 
         const fieldSpec = isEntity
-          ? adminSchema.getEntityFieldSpecification(typeSpec as EntityTypeSpecification, fieldName)
-          : adminSchema.getComponentFieldSpecification(typeSpec, fieldName);
+          ? schema.getEntityFieldSpecification(typeSpec as EntityTypeSpecification, fieldName)
+          : schema.getComponentFieldSpecification(typeSpec, fieldName);
 
         // Traverse into components
         if (fieldSpec && isComponentItemField(fieldSpec, fieldValue) && fieldValue) {
           const type = fieldValue.type;
-          const componentSpec = adminSchema.getComponentTypeSpecification(type);
+          const componentSpec = schema.getComponentTypeSpecification(type);
           if (!componentSpec) {
             throw new Error(`${fieldPrefix}: No such type ${type}`);
           }
@@ -1780,7 +1776,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }
     };
 
-    const entitySpec = adminSchema.getEntityTypeSpecification(entityTypeName);
+    const entitySpec = schema.getEntityTypeSpecification(entityTypeName);
     if (!entitySpec) {
       throw new Error(`No such entity type ${entityTypeName}`);
     }
@@ -1868,8 +1864,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
-  buildMutationType<TSource>(adminSchema: Schema): GraphQLObjectType | null {
-    const includeEntities = adminSchema.getEntityTypeCount() > 0;
+  buildMutationType<TSource>(schema: Schema): GraphQLObjectType | null {
+    const includeEntities = schema.getEntityTypeCount() > 0;
     if (!includeEntities) {
       return null;
     }
@@ -1881,17 +1877,17 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       unarchiveEntity: this.buildMutationUnarchiveEntity(),
     };
 
-    for (const entitySpec of adminSchema.spec.entityTypes) {
+    for (const entitySpec of schema.spec.entityTypes) {
       fields[`create${entitySpec.name}Entity`] = this.buildMutationCreateEntity(
-        adminSchema,
+        schema,
         entitySpec.name,
       );
       fields[`update${entitySpec.name}Entity`] = this.buildMutationUpdateEntity(
-        adminSchema,
+        schema,
         entitySpec.name,
       );
       fields[`upsert${entitySpec.name}Entity`] = this.buildMutationUpsertEntity(
-        adminSchema,
+        schema,
         entitySpec.name,
       );
     }
@@ -1914,16 +1910,16 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       this.addPublishedEntityTypes(this.publishedSchema);
       this.addPublishedComponentTypes(this.publishedSchema);
     }
-    if (this.adminSchema) {
-      this.addAdminSupportingTypes(this.adminSchema);
-      this.addEntityTypes(this.adminSchema);
-      this.addAdminComponentTypes(this.adminSchema);
+    if (this.schema) {
+      this.addAdminSupportingTypes(this.schema);
+      this.addEntityTypes(this.schema);
+      this.addAdminComponentTypes(this.schema);
     }
 
     const queryType = this.buildQueryType<TSource>();
     let mutationType: GraphQLObjectType | null = null;
-    if (this.adminSchema) {
-      mutationType = this.buildMutationType<TSource>(this.adminSchema);
+    if (this.schema) {
+      mutationType = this.buildMutationType<TSource>(this.schema);
     }
 
     return { query: queryType, mutation: mutationType, types: this.getTypes() };

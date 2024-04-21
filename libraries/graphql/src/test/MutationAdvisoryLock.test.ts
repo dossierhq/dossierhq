@@ -19,7 +19,7 @@ beforeAll(async () => {
     'data/advisory-lock.sqlite',
   );
   schema = new GraphQLSchemaGenerator({
-    adminSchema: server.schema,
+    schema: server.schema,
     publishedSchema: null,
   }).buildSchema();
 });

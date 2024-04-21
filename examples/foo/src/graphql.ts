@@ -34,7 +34,7 @@ async function createSessionContext(server: Server, headers: RequestHeaders) {
 
 function startExpressServer(server: Server, schema: Schema, port: number) {
   const gqlSchema = new GraphQLSchemaGenerator({
-    adminSchema: schema,
+    schema,
     publishedSchema: schema.toPublishedSchema(),
   }).buildSchema();
   const app = express();

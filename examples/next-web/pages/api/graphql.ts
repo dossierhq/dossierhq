@@ -1,11 +1,9 @@
 import { Schema, ok } from '@dossierhq/core';
-import type { SessionGraphQLContext } from '@dossierhq/graphql';
-import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
-import type { ExecutionResult, GraphQLSchema } from 'graphql';
-import { graphql } from 'graphql';
+import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
+import { graphql, type ExecutionResult, type GraphQLSchema } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getServerConnection, getSessionContextForRequest } from '../../utils/ServerUtils';
 import { handleRequest, sendMethodNotAllowedError } from '../../utils/HandlerUtils';
+import { getServerConnection, getSessionContextForRequest } from '../../utils/ServerUtils';
 
 let graphQLSchema: GraphQLSchema | null = null;
 
@@ -32,10 +30,10 @@ export default async function graphQlHandler(
     if (!graphQLSchema) {
       const adminSchemaResult = await adminClient.getSchemaSpecification();
       if (adminSchemaResult.isError()) return adminSchemaResult;
-      const adminSchema = new Schema(adminSchemaResult.value);
+      const schema = new Schema(adminSchemaResult.value);
       graphQLSchema = new GraphQLSchemaGenerator({
-        adminSchema,
-        publishedSchema: adminSchema.toPublishedSchema(),
+        schema,
+        publishedSchema: schema.toPublishedSchema(),
       }).buildSchema();
     }
 

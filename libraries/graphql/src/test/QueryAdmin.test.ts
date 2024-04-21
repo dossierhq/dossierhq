@@ -105,7 +105,7 @@ const ADMIN_FOO_EMPTY_FIELDS = {
 beforeAll(async () => {
   server = await setUpServerWithSession(schemaSpecification, 'data/query-admin.sqlite');
   schema = new GraphQLSchemaGenerator({
-    adminSchema: server.schema,
+    schema: server.schema,
     publishedSchema: null,
   }).buildSchema();
 
