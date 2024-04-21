@@ -1,4 +1,4 @@
-import type { AdminEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
+import type { Entity, PublishedEntityQueryOrder } from '@dossierhq/core';
 import { EntityQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, Tag, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
@@ -17,7 +17,7 @@ interface Props {
   searchEntityState: SearchEntityState;
   showAuthKeys: boolean;
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>;
-  onItemClick: (item: AdminEntity) => void;
+  onItemClick: (item: Entity) => void;
 }
 
 export function AdminEntityList({
@@ -97,7 +97,7 @@ export function AdminEntityList({
         ) : (
           entities?.map((entityResult) => {
             if (entityResult.isOk()) {
-              const entity = entityResult.value as AdminEntity;
+              const entity = entityResult.value as Entity;
               return (
                 <EntityListRow
                   key={entity.id}
@@ -125,11 +125,11 @@ function EntityListRow({
   showAuthKeys,
   onItemClick,
 }: {
-  entity: AdminEntity;
+  entity: Entity;
   order: EntityQueryOrder | undefined;
   authKeys: DisplayAuthKey[];
   showAuthKeys: boolean;
-  onItemClick: (item: AdminEntity) => void;
+  onItemClick: (item: Entity) => void;
 }) {
   return (
     <Table.Row clickable onClick={() => onItemClick(entity)}>

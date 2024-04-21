@@ -1,7 +1,7 @@
 import {
   ContentTraverseNodeType,
   isLocationItemField,
-  type AdminEntity,
+  type Entity,
   type Schema,
   type Location,
 } from '@dossierhq/core';
@@ -43,7 +43,7 @@ interface AdminLocationSelectorDialogProps {
   title: string;
   value: Location | null;
   onChange: (location: Location | null) => void;
-  onItemClick?: (item: AdminEntity | EntityEditorDraftState) => void;
+  onItemClick?: (item: Entity | EntityEditorDraftState) => void;
 }
 
 export function AdminLocationSelectorDialog({
@@ -76,7 +76,7 @@ function Content({
 }: {
   value: Location | null;
   onChange: (location: Location | null) => void;
-  onItemClick?: (item: AdminEntity | EntityEditorDraftState) => void;
+  onItemClick?: (item: Entity | EntityEditorDraftState) => void;
 }) {
   const { schema } = useContext(AdminDossierContext);
   const entityEditorState = useContext(EntityEditorStateContext);
@@ -128,7 +128,7 @@ function Content({
     [schema, entityEditorState.drafts],
   );
 
-  const filterEntity = useCallback((entity: AdminEntity) => !draftIds.has(entity.id), [draftIds]);
+  const filterEntity = useCallback((entity: Entity) => !draftIds.has(entity.id), [draftIds]);
 
   return (
     <>
@@ -152,7 +152,7 @@ function Content({
         <IconButton disabled={!value} icon="location" onClick={handleResetClick} />
       </FullscreenContainer.Row>
       <FullscreenContainer.Row fillHeight fullWidth>
-        <EntityMap<AdminEntity>
+        <EntityMap<Entity>
           className={toSizeClassName({ height: '100%' })}
           {...{ schema, searchEntityState, dispatchSearchEntityState }}
           filterEntity={filterEntity}

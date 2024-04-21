@@ -4,7 +4,7 @@ import {
   notOk,
   ok,
   transformEntityFields,
-  type AdminEntity,
+  type Entity,
   type EntityTypeSpecification,
   type SchemaWithMigrations,
   type ContentTransformer,
@@ -26,7 +26,7 @@ export function migrateDecodeAndNormalizeAdminEntityFields(
   entitySpec: EntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
-): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): Result<Entity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return migrateDecodeAndNormalizeEntityFields(
     adminSchema,
     adminSchema,
@@ -41,7 +41,7 @@ export function migrateDecodeAndNormalizePublishedEntityFields(
   entitySpec: PublishedEntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
-): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): Result<Entity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return migrateDecodeAndNormalizeEntityFields(
     adminSchema,
     adminSchema.toPublishedSchema(),
@@ -59,7 +59,7 @@ function migrateDecodeAndNormalizeEntityFields<
   entitySpec: TSchema['spec']['entityTypes'][number],
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
-): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): Result<Entity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const migratedFieldValuesResult = applySchemaMigrationsToFields(
     adminSchema,
     entitySpec.name,

@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest';
-import type { AdminEntity, EntityCreate, RichText, Component } from '../Types.js';
+import type { Entity, EntityCreate, RichText, Component } from '../Types.js';
 import { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './ContentUtils.js';
 
-type AdminFoo = AdminEntity<'Foo', AdminFooFields, ''>;
+type AdminFoo = Entity<'Foo', AdminFooFields, ''>;
 
 interface AdminFooFields {
   string: string | null;

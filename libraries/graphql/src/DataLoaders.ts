@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   ComponentTypeSpecification,
-  AdminEntity,
+  Entity,
   EntityQuery,
   EntitySharedQuery,
   EntityTypeSpecification,
@@ -71,7 +71,7 @@ interface Edge<TContext, T> {
   cursor: string;
 }
 
-type AdminEntityPayload<TContext> = AdminEntity & {
+type AdminEntityPayload<TContext> = Entity & {
   changelogEvents: FieldValueOrResolver<
     TContext,
     Connection<TContext, Edge<TContext, ChangelogEvent>> | null,
@@ -200,7 +200,7 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
   reference: EntityReference | EntityVersionReference | UniqueIndexReference,
-): Promise<AdminEntity> {
+): Promise<Entity> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.getEntity(reference);
   return buildResolversForAdminEntity(schema, result.valueOrThrow());
@@ -210,7 +210,7 @@ export async function loadAdminEntityList<TContext extends SessionGraphQLContext
   schema: Schema,
   context: TContext,
   ids: string[],
-): Promise<FieldValueOrResolver<TContext, AdminEntity | null>[]> {
+): Promise<FieldValueOrResolver<TContext, Entity | null>[]> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const results = await adminClient.getEntityList(ids.map((id) => ({ id })));
   return results
@@ -224,7 +224,7 @@ export async function loadAdminEntityList<TContext extends SessionGraphQLContext
 
 export function buildResolversForAdminEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
-  entity: AdminEntity,
+  entity: Entity,
 ): AdminEntityPayload<TContext> {
   const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
@@ -250,7 +250,7 @@ export async function loadAdminEntitiesSample<TContext extends SessionGraphQLCon
   context: TContext,
   query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
-): Promise<EntitySamplingPayload<AdminEntity>> {
+): Promise<EntitySamplingPayload<Entity>> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
   const result = await adminClient.getEntitiesSample(query, options);
   const payload = result.valueOrThrow();
@@ -267,9 +267,9 @@ export function loadAdminEntities<TContext extends SessionGraphQLContext>(
   query: EntityQuery | undefined,
   paging: Paging,
   info: GraphQLResolveInfo,
-): Promise<ConnectionWithTotalCount<Edge<TContext, AdminEntity>, TContext> | null> {
+): Promise<ConnectionWithTotalCount<Edge<TContext, Entity>, TContext> | null> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;
-  return buildResolversForConnection<TContext, AdminEntity>(
+  return buildResolversForConnection<TContext, Entity>(
     () => adminClient.getEntities(query, paging),
     () => adminClient.getEntitiesTotalCount(query),
     (it) => buildResolversForAdminEntity(schema, it),
@@ -284,7 +284,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
     | PublishedEntityTypeSpecification
     | ComponentTypeSpecification
     | PublishedComponentTypeSpecification,
-  item: Component | PublishedEntity | AdminEntity,
+  item: Component | PublishedEntity | Entity,
   isAdmin: boolean,
 ) {
   const fields = isComponent(item) ? item : item.fields;

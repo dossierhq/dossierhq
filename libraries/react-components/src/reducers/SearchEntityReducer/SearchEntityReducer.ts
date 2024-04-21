@@ -4,7 +4,7 @@ import {
   getPagingInfo,
   ok,
   type EntityQuery,
-  type AdminEntity,
+  type Entity,
   type Connection,
   type Edge,
   type EntityReference,
@@ -45,18 +45,18 @@ export interface SearchEntityState {
   requestedCount: number;
   text: string;
 
-  connection: Connection<Edge<AdminEntity | PublishedEntity, ErrorType>> | null | undefined;
+  connection: Connection<Edge<Entity | PublishedEntity, ErrorType>> | null | undefined;
   connectionError:
     | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
     | undefined;
-  entitySamples: EntitySamplingPayload<AdminEntity | PublishedEntity> | undefined;
+  entitySamples: EntitySamplingPayload<Entity | PublishedEntity> | undefined;
   entitySamplesError:
     | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
     | undefined;
   totalCount: number | null;
 
   // null until first loaded
-  entities: Result<AdminEntity | PublishedEntity, ErrorType>[] | null;
+  entities: Result<Entity | PublishedEntity, ErrorType>[] | null;
   loadingState: '' | 'sample' | 'next-page' | 'prev-page' | 'first-page' | 'last-page';
   entitiesScrollToTopSignal: number;
 }

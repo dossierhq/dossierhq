@@ -4,7 +4,7 @@ import {
   traverseContentField,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type EntityTypeSpecification,
   type EntityUpdate,
@@ -42,7 +42,7 @@ export interface EntityEditorDraftState {
     nameIsLinkedToField: boolean;
     fields: FieldEditorState[];
   } | null;
-  entity: AdminEntity | null;
+  entity: Entity | null;
   entityWillBeUpdatedDueToUpsert: boolean;
 }
 
@@ -471,9 +471,9 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
 }
 
 class UpdateEntityAction extends EntityEditorDraftAction {
-  entity: AdminEntity;
+  entity: Entity;
 
-  constructor(entity: AdminEntity) {
+  constructor(entity: Entity) {
     super(entity.id);
     this.entity = entity;
   }
@@ -608,7 +608,7 @@ function validateField(
 function createEditorEntityDraftState(
   schema: Schema,
   entitySpec: EntityTypeSpecification,
-  entity: AdminEntity | null,
+  entity: Entity | null,
 ): EntityEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;

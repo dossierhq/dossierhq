@@ -1,7 +1,7 @@
 import {
   EventType,
   isFieldValueEqual,
-  type AdminEntity,
+  type Entity,
   type EntityTypeSpecification,
   type ChangelogEventQuery,
   type EntityReference,
@@ -114,8 +114,8 @@ function Content({ reference }: { reference: EntityReference }) {
             {entitySpec && leftEntity && rightEntity ? (
               <DiffEntities
                 entitySpec={entitySpec}
-                leftEntity={leftEntity as AdminEntity}
-                rightEntity={rightEntity as AdminEntity}
+                leftEntity={leftEntity as Entity}
+                rightEntity={rightEntity as Entity}
               />
             ) : null}
           </FullscreenContainer.Item>
@@ -154,8 +154,8 @@ function DiffEntities({
   rightEntity,
 }: {
   entitySpec: EntityTypeSpecification;
-  leftEntity: AdminEntity;
-  rightEntity: AdminEntity;
+  leftEntity: Entity;
+  rightEntity: Entity;
 }) {
   const equalFields: string[] = [];
 

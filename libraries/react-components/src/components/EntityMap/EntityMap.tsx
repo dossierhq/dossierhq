@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   Schema,
   BoundingBox,
   Location,
@@ -31,7 +31,7 @@ export interface EntityMapProps<TEntity> {
   children?: ReactNode;
 }
 
-export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
+export function EntityMap<TEntity extends Entity | PublishedEntity>({
   className,
   schema,
   center,
@@ -85,7 +85,7 @@ export function EntityMap<TEntity extends AdminEntity | PublishedEntity>({
 
 function extractEntityLocations(
   schema: Schema | PublishedSchema,
-  entity: AdminEntity | PublishedEntity,
+  entity: Entity | PublishedEntity,
 ) {
   const locations: Location[] = [];
   for (const node of traverseEntity(schema, ['entity'], entity)) {

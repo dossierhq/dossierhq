@@ -1,6 +1,6 @@
 import {
   copyEntity,
-  type AdminEntity,
+  type Entity,
   type EntityPublishingPayload,
   type EntityQuery,
   type EntitySharedQuery,
@@ -94,7 +94,7 @@ export function updateCacheSchemas(
   }
 }
 
-export function updateCacheEntity<T extends AdminEntity<string, object> = AdminEntity>(
+export function updateCacheEntity<T extends Entity<string, object> = Entity>(
   mutate: ScopedMutator,
   entity: T,
 ) {
@@ -107,7 +107,7 @@ export function updateCacheEntityInfo<TEffect>(
   payload: EntityPublishingPayload<TEffect>,
 ) {
   const key = CACHE_KEYS.adminEntity({ id: payload.id });
-  mutate(key, (entity: AdminEntity | undefined) => {
+  mutate(key, (entity: Entity | undefined) => {
     if (!entity) return entity;
     return copyEntity(entity, { info: { status: payload.status, updatedAt: payload.updatedAt } });
   });

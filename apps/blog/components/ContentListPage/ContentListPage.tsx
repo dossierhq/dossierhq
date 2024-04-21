@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { ContentListScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -17,7 +17,7 @@ export default function ContentListPage(): JSX.Element | null {
     [router],
   );
   const handleEntityOpen = useCallback(
-    (entity: AdminEntity) => router.push(BrowserUrls.editPage([entity.id])),
+    (entity: Entity) => router.push(BrowserUrls.editPage([entity.id])),
     [router],
   );
 

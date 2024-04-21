@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   EntityCreate,
   EntityUpdate,
   Component,
@@ -290,19 +290,17 @@ export function isRichTextListItemNode(
 }
 
 export function isComponent(
-  item: Component | PublishedEntity | AdminEntity | EntityCreate | EntityUpdate | EntityLike,
+  item: Component | PublishedEntity | Entity | EntityCreate | EntityUpdate | EntityLike,
 ): item is Component {
   return 'type' in item;
 }
 
-export function isAdminEntity(
-  item: Component | PublishedEntity | AdminEntity,
-): item is AdminEntity {
+export function isAdminEntity(item: Component | PublishedEntity | Entity): item is Entity {
   return !isComponent(item) && 'version' in item.info;
 }
 
 export function isPublishedEntity(
-  item: Component | PublishedEntity | AdminEntity,
+  item: Component | PublishedEntity | Entity,
 ): item is PublishedEntity {
   return !isComponent(item) && !isAdminEntity(item);
 }

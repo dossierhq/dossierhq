@@ -1,10 +1,10 @@
-import type { AdminEntity, Location } from '@dossierhq/core';
+import type { Entity, Location } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import { MapContainer } from '@dossierhq/leaflet';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
 interface Props {
-  entity: AdminEntity;
+  entity: Entity;
   location: Location;
   onClick?: () => void;
 }

@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   EntityQuery,
-  AdminEntity,
+  Entity,
   BoundingBox,
   Connection,
   Edge,
@@ -125,10 +125,10 @@ export async function getAllEntities(
   client: AdminClient,
   query: EntityQuery,
 ): PromiseResult<
-  AdminEntity[],
+  Entity[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
-  const entities: AdminEntity[] = [];
+  const entities: Entity[] = [];
   for await (const pageResult of getAllPagesForConnection({ first: 100 }, (currentPaging) =>
     client.getEntities(query, currentPaging),
   )) {
@@ -146,7 +146,7 @@ export async function getAllEntities(
   return ok(entities);
 }
 
-export function expectConnectionToMatchSlice<TEntity extends PublishedEntity | AdminEntity>(
+export function expectConnectionToMatchSlice<TEntity extends PublishedEntity | Entity>(
   allEntities: TEntity[],
   connection: Connection<Edge<TEntity, ErrorType>> | null,
   sliceStart: number,

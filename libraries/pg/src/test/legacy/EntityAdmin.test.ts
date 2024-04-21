@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, PublishedClient } from '@dossierhq/core';
+import type { AdminClient, Entity, PublishedClient } from '@dossierhq/core';
 import {
   EntityStatus,
   ErrorType,
@@ -34,7 +34,7 @@ let context: SessionContext;
 let client: AdminClient;
 let adminClientOther: AdminClient;
 let publishedClient: PublishedClient;
-let entitiesOfTypeAdminOnlyEditBeforeNone: AdminEntity[];
+let entitiesOfTypeAdminOnlyEditBeforeNone: Entity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };
 const emptyBazFields = {
@@ -311,8 +311,8 @@ async function createBarWithFooBazReferences(
     entity: { id: barId },
   } = createBarResult.value;
 
-  const fooEntities: AdminEntity[] = [];
-  const bazEntities: AdminEntity[] = [];
+  const fooEntities: Entity[] = [];
+  const bazEntities: Entity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await client.createEntity({
@@ -352,7 +352,7 @@ describe('createEntity()', () => {
       expect(validateUuid(id)).toBeTruthy();
       expect(name).toMatch(/^Foo(#[0-9]+)?$/);
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminFoo',
@@ -528,7 +528,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -575,7 +575,7 @@ describe('createEntity()', () => {
         } = createFooResult.value;
         expect(validateUuid(fooId)).toBeTruthy();
 
-        const expectedFooEntity: AdminEntity = {
+        const expectedFooEntity: Entity = {
           id: fooId,
           info: {
             type: 'EntityAdminFoo',
@@ -670,7 +670,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -711,7 +711,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -760,7 +760,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -824,7 +824,7 @@ describe('createEntity()', () => {
           },
         } = createBazResult.value;
 
-        const expectedEntity: AdminEntity = {
+        const expectedEntity: Entity = {
           id,
           info: {
             type: 'EntityAdminBaz',
@@ -880,7 +880,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -931,7 +931,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -982,7 +982,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -1044,7 +1044,7 @@ describe('createEntity()', () => {
           },
         } = createBazResult.value;
 
-        const expectedEntity: AdminEntity = {
+        const expectedEntity: Entity = {
           id: bazId,
           info: {
             type: 'EntityAdminBaz',
@@ -1130,7 +1130,7 @@ describe('createEntity()', () => {
           },
         } = createBazResult.value;
 
-        const expectedEntity: AdminEntity = {
+        const expectedEntity: Entity = {
           id: bazId,
           info: {
             type: 'EntityAdminBaz',
@@ -1220,7 +1220,7 @@ describe('createEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id: bazId,
         info: {
           type: 'EntityAdminBaz',
@@ -1776,7 +1776,7 @@ describe('updateEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminFoo',
@@ -1885,7 +1885,7 @@ describe('updateEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminFoo',
@@ -1995,7 +1995,7 @@ describe('updateEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminFoo',
@@ -2087,7 +2087,7 @@ describe('updateEntity()', () => {
         },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminFoo',
@@ -2269,7 +2269,7 @@ describe('updateEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const expectedEntity: AdminEntity = {
+      const expectedEntity: Entity = {
         id,
         info: {
           type: 'EntityAdminBaz',
@@ -2327,7 +2327,7 @@ describe('updateEntity()', () => {
       },
     } = createFooResult.value;
 
-    const expectedEntity: AdminEntity = {
+    const expectedEntity: Entity = {
       id: fooId,
       info: {
         type: 'EntityAdminFoo',
@@ -2494,7 +2494,7 @@ describe('updateEntity()', () => {
           },
         } = createBazResult.value;
 
-        const expectedEntity: AdminEntity = {
+        const expectedEntity: Entity = {
           id: bazId,
           info: {
             type: 'EntityAdminBaz',

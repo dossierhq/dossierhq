@@ -168,14 +168,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -188,7 +188,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -234,7 +234,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -314,7 +314,7 @@ type AdminBarFields {
   body: String
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -362,7 +362,7 @@ type AdminFooFields {
   body: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -427,8 +427,8 @@ input AdminValueTwoInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -839,14 +839,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -859,7 +859,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -905,7 +905,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -980,7 +980,7 @@ type AdminBarFields {
   body: String
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -1028,7 +1028,7 @@ type AdminFooFields {
   body: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -1098,8 +1098,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -1288,14 +1288,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -1308,7 +1308,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -1354,7 +1354,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -1434,7 +1434,7 @@ type AdminFooFields {
   body: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -1489,8 +1489,8 @@ input AdminValueOneInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -1884,14 +1884,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -1904,7 +1904,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -1950,7 +1950,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -2025,7 +2025,7 @@ type AdminFooFields {
   body: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -2085,8 +2085,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -2275,14 +2275,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -2295,7 +2295,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -2341,7 +2341,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -2417,7 +2417,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -2460,7 +2460,7 @@ type AdminFooFields {
   nestedValue: AdminNestedValue
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -2563,8 +2563,8 @@ enum _AdminValueListOrValueOne {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -3043,14 +3043,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -3063,7 +3063,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -3109,7 +3109,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -3180,7 +3180,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -3223,7 +3223,7 @@ type AdminFooFields {
   nestedValue: AdminNestedValue
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -3333,8 +3333,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -3565,14 +3565,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -3585,7 +3585,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -3625,7 +3625,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -3701,7 +3701,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -3749,7 +3749,7 @@ type AdminFooFields {
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -3799,8 +3799,8 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -4204,14 +4204,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -4224,7 +4224,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -4264,7 +4264,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -4335,7 +4335,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -4380,7 +4380,7 @@ type AdminFooFields {
   bars: [AdminBar!]
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -4435,8 +4435,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -4623,14 +4623,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -4643,7 +4643,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -4683,7 +4683,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -4759,7 +4759,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -4795,7 +4795,7 @@ type AdminBarUpsertPayload {
   entity: AdminBar!
 }
 
-type AdminBaz implements AdminEntity {
+type AdminBaz implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -4832,14 +4832,14 @@ type AdminBazUpsertPayload {
 }
 
 type AdminFooFields {
-  noMeansAll: AdminEntity
+  noMeansAll: Entity
   bar: AdminBar
   bazBar: _AdminBarOrBaz
   fooBarBaz: _AdminBarOrBazOrFoo
   barBarBar: AdminBar
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -4899,8 +4899,8 @@ enum _AdminBarOrBazOrFoo {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -5323,14 +5323,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -5343,7 +5343,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -5383,7 +5383,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -5454,7 +5454,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -5490,7 +5490,7 @@ type AdminBarUpsertPayload {
   entity: AdminBar!
 }
 
-type AdminBaz implements AdminEntity {
+type AdminBaz implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -5527,14 +5527,14 @@ type AdminBazUpsertPayload {
 }
 
 type AdminFooFields {
-  noMeansAll: AdminEntity
+  noMeansAll: Entity
   bar: AdminBar
   bazBar: _AdminBarOrBaz
   fooBarBaz: _AdminBarOrBazOrFoo
   barBarBar: AdminBar
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -5610,8 +5610,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -5799,14 +5799,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -5819,7 +5819,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -5859,7 +5859,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -5935,7 +5935,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -5972,8 +5972,8 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -6335,14 +6335,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -6355,7 +6355,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -6395,7 +6395,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -6466,7 +6466,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -6508,8 +6508,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -6691,7 +6691,7 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -6702,7 +6702,7 @@ enum AdminUniqueIndex {
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -6715,7 +6715,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -6755,7 +6755,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -6835,7 +6835,7 @@ type AdminFooFields {
   bar: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -6880,8 +6880,8 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -7261,7 +7261,7 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -7272,7 +7272,7 @@ enum AdminUniqueIndex {
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -7285,7 +7285,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -7325,7 +7325,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -7400,7 +7400,7 @@ type AdminFooFields {
   bar: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -7450,8 +7450,8 @@ type Query {
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -7637,14 +7637,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -7657,7 +7657,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -7703,7 +7703,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -7785,7 +7785,7 @@ type AdminFooFields {
   valueOne: AdminValueOne
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -7843,8 +7843,8 @@ input AdminValueOneInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -8254,14 +8254,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -8274,7 +8274,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -8320,7 +8320,7 @@ interface AdminValue {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -8397,7 +8397,7 @@ type AdminFooFields {
   valueOne: AdminValueOne
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -8460,8 +8460,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -8643,14 +8643,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -8663,7 +8663,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -8703,7 +8703,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -8783,7 +8783,7 @@ type AdminFooFields {
   body: AdminRichText
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -8828,8 +8828,8 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -9201,14 +9201,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -9221,7 +9221,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -9261,7 +9261,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -9336,7 +9336,7 @@ type AdminFooFields {
   body: AdminRichText
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -9386,8 +9386,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -9570,14 +9570,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -9590,7 +9590,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -9630,7 +9630,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 """
@@ -9708,7 +9708,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBarFields {
   barField1: String
-  barField2: AdminEntity
+  barField2: Entity
   barField3: Location
   barField4: Boolean
 }
@@ -9716,7 +9716,7 @@ type AdminBarFields {
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -9767,7 +9767,7 @@ type AdminFooFields {
   fooField: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -9812,8 +9812,8 @@ type AdminFooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
@@ -10223,14 +10223,14 @@ enum AdminEntityUpsertEffect {
   none
 }
 
-interface AdminEntity {
+interface Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
 type AdminEntityEdge {
-  node: AdminEntity
+  node: Entity
   cursor: String!
 }
 
@@ -10243,7 +10243,7 @@ type AdminEntityConnection {
 type AdminEntitySamplingPayload {
   seed: Int!
   totalCount: Int!
-  items: [AdminEntity]
+  items: [Entity]
 }
 
 enum EntityQueryOrder {
@@ -10283,7 +10283,7 @@ input EntityVersionReferenceInput {
 
 type AdminRichText {
   root: JSONObject!
-  entities: [AdminEntity]
+  entities: [Entity]
 }
 
 input AdminRichTextInput {
@@ -10356,12 +10356,12 @@ type AdvisoryLockReleasePayload {
 
 type AdminBarFields {
   barField1: String
-  barField2: AdminEntity
+  barField2: Entity
   barField3: Location
   barField4: Boolean
 }
 
-type AdminBar implements AdminEntity {
+type AdminBar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -10412,7 +10412,7 @@ type AdminFooFields {
   fooField: String
 }
 
-type AdminFoo implements AdminEntity {
+type AdminFoo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
@@ -10462,8 +10462,8 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): AdminEntity
-  adminEntityList(ids: [ID!]!): [AdminEntity]
+  adminEntity(id: ID!, version: Int): Entity
+  adminEntityList(ids: [ID!]!): [Entity]
   adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
   adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection

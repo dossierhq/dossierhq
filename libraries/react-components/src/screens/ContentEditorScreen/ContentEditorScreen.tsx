@@ -1,5 +1,5 @@
 'use client';
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import {
   Button2,
   Dialog2,
@@ -63,7 +63,7 @@ export function ContentEditorScreen({
 
   const [showEntitySelector, setShowEntitySelector] = useState(false);
   const handleShowEntitySelector = useCallback(() => setShowEntitySelector(true), []);
-  const handleOpenEntityClick = useCallback((entity: AdminEntity) => {
+  const handleOpenEntityClick = useCallback((entity: Entity) => {
     dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entity.id }));
     setShowEntitySelector(false);
   }, []);
@@ -178,7 +178,7 @@ function EntityRows({
 
   useEffect(() => {
     if (entity) {
-      dispatchEntityEditorState(new EntityEditorActions.UpdateEntity(entity as AdminEntity));
+      dispatchEntityEditorState(new EntityEditorActions.UpdateEntity(entity as Entity));
     }
   }, [dispatchEntityEditorState, entity]);
 

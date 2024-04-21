@@ -6,7 +6,7 @@ import {
   type PromiseResult,
 } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
-import type { AdminEntity, AdvisoryLockOptions, AdvisoryLockPayload, Component } from '../Types.js';
+import type { Entity, AdvisoryLockOptions, AdvisoryLockPayload, Component } from '../Types.js';
 import type { AdminClient } from './AdminClient.js';
 
 interface AdvisoryLockHelperOptions extends AdvisoryLockOptions {
@@ -22,7 +22,7 @@ type AdvisoryLockHelperStatus =
     };
 
 export async function withAdvisoryLock<TOk, TError extends ErrorType>(
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
   name: string,
   options: AdvisoryLockHelperOptions,
   callback: (status: AdvisoryLockHelperStatus) => PromiseResult<TOk, TError>,
@@ -84,7 +84,7 @@ function setStatusError(
 }
 
 async function acquireLockWithRetry(
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
   name: string,
   options: AdvisoryLockOptions,
   acquireInterval: number,

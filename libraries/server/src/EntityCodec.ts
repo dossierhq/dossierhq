@@ -4,7 +4,7 @@ import {
   normalizeEntityFields,
   notOk,
   ok,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type EntityUpdate,
   type Schema,
@@ -80,7 +80,7 @@ export function decodePublishedEntity(
 export function decodeAdminEntity(
   adminSchema: SchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
-): Result<AdminEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+): Result<Entity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const entitySpec = adminSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     return notOk.BadRequest(`No entity spec for type ${values.type}`);
@@ -95,7 +95,7 @@ export function decodeAdminEntity(
   if (decodedResult.isError()) return decodedResult;
   const fields = decodedResult.value;
 
-  const entity: AdminEntity = {
+  const entity: Entity = {
     id: values.id,
     info: {
       type: values.type,
@@ -143,13 +143,13 @@ export function resolveUpdateEntity(
   entityUpdate: EntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
-  { changed: boolean; entity: AdminEntity },
+  { changed: boolean; entity: Entity },
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const status =
     entityInfo.status === EntityStatus.published ? EntityStatus.modified : entityInfo.status;
 
-  const entity: AdminEntity = {
+  const entity: Entity = {
     id: entityUpdate.id,
     info: {
       name: entityUpdate.info?.name ?? entityInfo.name,
@@ -236,7 +236,7 @@ export async function encodeAdminEntity(
   schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  entity: AdminEntity | EntityCreate,
+  entity: Entity | EntityCreate,
 ): PromiseResult<EncodeAdminEntityPayload, typeof ErrorType.Generic> {
   // Collect values and validate entity fields
   const path = ['entity'];

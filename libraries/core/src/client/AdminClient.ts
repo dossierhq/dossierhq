@@ -8,7 +8,7 @@ import {
   type Result,
 } from '../ErrorResult.js';
 import type {
-  AdminEntity,
+  Entity,
   EntityArchivePayload,
   EntityCreate,
   EntityCreatePayload,
@@ -71,7 +71,7 @@ import {
 } from './SharedClient.js';
 
 export interface AdminClient<
-  TAdminEntity extends AdminEntity<string, object> = AdminEntity,
+  TAdminEntity extends Entity<string, object> = Entity,
   TAdminComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
   TExceptionClient extends AdminExceptionClient<
@@ -160,7 +160,7 @@ export interface AdminClient<
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+  createEntity<T extends Entity<string, object> = TAdminEntity>(
     entity: Readonly<EntityCreate<T>>,
     options?: EntityMutationOptions,
   ): PromiseResult<
@@ -171,7 +171,7 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
-  updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+  updateEntity<T extends Entity<string, object> = TAdminEntity>(
     entity: Readonly<EntityUpdate<T>>,
     options?: EntityMutationOptions,
   ): PromiseResult<
@@ -182,7 +182,7 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
-  upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+  upsertEntity<T extends Entity<string, object> = TAdminEntity>(
     entity: Readonly<EntityUpsert<T>>,
     options?: EntityMutationOptions,
   ): PromiseResult<
@@ -280,7 +280,7 @@ export interface AdminClient<
 }
 
 export interface AdminExceptionClient<
-  TAdminEntity extends AdminEntity<string, object> = AdminEntity,
+  TAdminEntity extends Entity<string, object> = Entity,
   TAdminComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
@@ -342,17 +342,17 @@ export interface AdminExceptionClient<
     options?: EntitySamplingOptions,
   ): Promise<EntitySamplingPayload<TAdminEntity>>;
 
-  createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+  createEntity<T extends Entity<string, object> = TAdminEntity>(
     entity: EntityCreate<T>,
     options?: EntityMutationOptions,
   ): Promise<EntityCreatePayload<T>>;
 
-  updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+  updateEntity<T extends Entity<string, object> = TAdminEntity>(
     entity: EntityUpdate<T>,
     options?: EntityMutationOptions,
   ): Promise<EntityUpdatePayload<T>>;
 
-  upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
+  upsertEntity<T extends Entity<string, object> = TAdminEntity>(
     entity: EntityUpsert<T>,
     options?: EntityMutationOptions,
   ): Promise<EntityUpsertPayload<T>>;
@@ -407,7 +407,7 @@ type AdminClientOperationName = keyof typeof AdminClientOperationName;
 
 type MethodParameters<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
 > = Parameters<TClient[TName]>;
 type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
   MethodReturnTypeOk<TName>,
@@ -415,17 +415,17 @@ type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
 >;
 type MethodReturnTypeWithoutPromise<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
 type MethodReturnTypeOk<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
   TName extends keyof AdminClient,
-  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface AdminClientOperationArguments {
@@ -625,7 +625,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     query?: EntitySharedQuery,
     options?: EntitySamplingOptions,
   ): PromiseResult<
-    EntitySamplingPayload<AdminEntity>,
+    EntitySamplingPayload<Entity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
@@ -635,7 +635,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     });
   }
 
-  createEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  createEntity<T extends Entity<string, object> = Entity>(
     entity: EntityCreate<T>,
     options: EntityMutationOptions | undefined,
   ): PromiseResult<
@@ -658,7 +658,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     >;
   }
 
-  updateEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  updateEntity<T extends Entity<string, object> = Entity>(
     entity: EntityUpdate<T>,
     options: EntityMutationOptions | undefined,
   ): PromiseResult<
@@ -681,7 +681,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
     >;
   }
 
-  upsertEntity<T extends AdminEntity<string, object> = AdminEntity>(
+  upsertEntity<T extends Entity<string, object> = Entity>(
     entity: EntityUpsert<T>,
     options: EntityMutationOptions | undefined,
   ): PromiseResult<
@@ -866,7 +866,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
   async getEntity(
     reference: EntityReference | EntityVersionReference | UniqueIndexReference<string>,
-  ): Promise<AdminEntity<string, Record<string, unknown>, string>> {
+  ): Promise<Entity<string, Record<string, unknown>, string>> {
     return (await this.client.getEntity(reference)).valueOrThrow();
   }
 
@@ -874,7 +874,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     references: EntityReference[],
   ): Promise<
     Result<
-      AdminEntity<string, Record<string, unknown>, string>,
+      Entity<string, Record<string, unknown>, string>,
       'BadRequest' | 'NotAuthorized' | 'NotFound' | 'Generic'
     >[]
   > {
@@ -884,9 +884,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   async getEntities(
     query?: EntityQuery<string, string> | undefined,
     paging?: Paging | undefined,
-  ): Promise<Connection<
-    Edge<AdminEntity<string, Record<string, unknown>, string>, ErrorType>
-  > | null> {
+  ): Promise<Connection<Edge<Entity<string, Record<string, unknown>, string>, ErrorType>> | null> {
     return (await this.client.getEntities(query, paging)).valueOrThrow();
   }
 
@@ -899,16 +897,12 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   async getEntitiesSample(
     query?: EntitySharedQuery<string, string> | undefined,
     options?: EntitySamplingOptions | undefined,
-  ): Promise<EntitySamplingPayload<AdminEntity<string, Record<string, unknown>, string>>> {
+  ): Promise<EntitySamplingPayload<Entity<string, Record<string, unknown>, string>>> {
     return (await this.client.getEntitiesSample(query, options)).valueOrThrow();
   }
 
   async createEntity<
-    T extends AdminEntity<string, object, string> = AdminEntity<
-      string,
-      Record<string, unknown>,
-      string
-    >,
+    T extends Entity<string, object, string> = Entity<string, Record<string, unknown>, string>,
   >(
     entity: EntityCreate<T>,
     options?: EntityMutationOptions | undefined,
@@ -917,11 +911,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async updateEntity<
-    T extends AdminEntity<string, object, string> = AdminEntity<
-      string,
-      Record<string, unknown>,
-      string
-    >,
+    T extends Entity<string, object, string> = Entity<string, Record<string, unknown>, string>,
   >(
     entity: EntityUpdate<T>,
     options?: EntityMutationOptions | undefined,
@@ -930,11 +920,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async upsertEntity<
-    T extends AdminEntity<string, object, string> = AdminEntity<
-      string,
-      Record<string, unknown>,
-      string
-    >,
+    T extends Entity<string, object, string> = Entity<string, Record<string, unknown>, string>,
   >(
     entity: EntityUpsert<T>,
     options?: EntityMutationOptions | undefined,
@@ -991,7 +977,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
 export function createBaseAdminClient<
   TContext extends ClientContext,
-  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: AdminClientMiddleware<TContext>[];
@@ -1000,7 +986,7 @@ export function createBaseAdminClient<
 }
 
 export async function executeAdminClientOperationFromJson(
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
   operationName: LooseAutocomplete<AdminClientOperationName>,
   operationArgs: AdminClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
@@ -1115,7 +1101,7 @@ export async function executeAdminClientOperationFromJson(
 
 export function convertJsonAdminClientResult<
   TName extends AdminClientOperationName,
-  TClient extends AdminClient<AdminEntity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
 >(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>,

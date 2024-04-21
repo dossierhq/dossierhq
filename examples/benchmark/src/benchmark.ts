@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntity,
+  Entity,
   EntityCreate,
   EntitySharedQuery,
   EntityUpdate,
@@ -90,7 +90,7 @@ async function randomAdminEntity(
   adminClient: AdminClient,
   query?: EntitySharedQuery,
 ): PromiseResult<
-  AdminEntity,
+  Entity,
   | typeof ErrorType.NotFound
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotAuthorized

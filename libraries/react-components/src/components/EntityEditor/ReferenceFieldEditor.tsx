@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   FieldSpecification,
   EntityReference,
   ReferenceFieldSpecification,
@@ -160,7 +160,7 @@ function AddEntityButton({
   const [showSelector, setShowSelector] = useState(false);
 
   const handleItemClick = useCallback(
-    (item: AdminEntity) => {
+    (item: Entity) => {
       onEntitySelected({ id: item.id });
       setShowSelector(false);
     },

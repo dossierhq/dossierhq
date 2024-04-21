@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { ContentListScreen } from '@dossierhq/react-components';
 import { useCallback } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -19,7 +19,7 @@ export function ContentListRoute() {
     [navigate, serverName]
   );
   const handleEntityOpen = useCallback(
-    (entity: AdminEntity) => navigate(ROUTE.contentEditor.url(serverName, [{ id: entity.id }])),
+    (entity: Entity) => navigate(ROUTE.contentEditor.url(serverName, [{ id: entity.id }])),
     [navigate, serverName]
   );
 

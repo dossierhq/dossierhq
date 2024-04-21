@@ -1,7 +1,7 @@
 import {
   EntityStatus,
   type AdminClient,
-  type AdminEntity,
+  type Entity,
   type EntityTypeSpecification,
   type Component,
   type ErrorType,
@@ -14,7 +14,7 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 
 interface Props {
   disabled?: boolean;
-  entity: AdminEntity | null;
+  entity: Entity | null;
   entitySpec: EntityTypeSpecification;
 }
 
@@ -79,7 +79,7 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
   );
 }
 
-function createPublishActions(entity: AdminEntity | null, entitySpec: EntityTypeSpecification) {
+function createPublishActions(entity: Entity | null, entitySpec: EntityTypeSpecification) {
   if (!entity) {
     return [];
   }
@@ -132,8 +132,8 @@ function createPublishActions(entity: AdminEntity | null, entitySpec: EntityType
 
 async function executeAction(
   action: PublishingActionId,
-  entity: AdminEntity,
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  entity: Entity,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
   showNotification: (notification: NotificationInfo) => void,
 ) {
   const reference = { id: entity.id };

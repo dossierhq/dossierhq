@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   SchemaWithMigrations,
   EntityReference,
   EntityVersionReference,
@@ -21,7 +21,7 @@ export async function adminGetEntity(
   context: SessionContext,
   reference: EntityReference | EntityVersionReference | UniqueIndexReference,
 ): PromiseResult<
-  AdminEntity,
+  Entity,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized

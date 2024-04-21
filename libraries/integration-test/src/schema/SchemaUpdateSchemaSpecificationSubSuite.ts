@@ -4,7 +4,7 @@ import {
   FieldType,
   copyEntity,
   ok,
-  type AdminEntity,
+  type Entity,
   type Component,
   type PublishedEntity,
 } from '@dossierhq/core';
@@ -716,13 +716,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
   // Check that the field is reset
   const entityAfterMigration = (
     await adminClient.getEntity({ id: entity.id })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   assertEquals(entityAfterMigration.fields[fieldName], null);
 
   // And for published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: entity.id })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   assertEquals(publishedEntityAfterMigration.fields[fieldName], null);
 
   // Check that the new field is usable
@@ -731,7 +731,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
       { id: entity.id, fields: { [fieldName]: [{ lat: 1, lng: 2 }] } },
       { publish: true },
     )
-  ).valueOrThrow().entity as AdminEntity;
+  ).valueOrThrow().entity as Entity;
   assertEquals(updatedEntity.fields[fieldName], [{ lat: 1, lng: 2 }]);
 }
 
@@ -1157,14 +1157,14 @@ async function updateSchemaSpecification_renameFieldOnEntity({
   // Check that the field is renamed
   const entityAfterMigration = (
     await adminClient.getEntity({ id: entityId })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   assertEquals(oldFieldName in entityAfterMigration.fields, false);
   assertEquals(entityAfterMigration.fields[newFieldName], 'value');
 
   // And in published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: entityId })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   assertEquals(oldFieldName in publishedEntityAfterMigration.fields, false);
   assertEquals(publishedEntityAfterMigration.fields[newFieldName], 'value');
 
@@ -1174,7 +1174,7 @@ async function updateSchemaSpecification_renameFieldOnEntity({
       { id: entityId, fields: { [newFieldName]: 'updated value' } },
       { publish: true },
     )
-  ).valueOrThrow().entity as AdminEntity;
+  ).valueOrThrow().entity as Entity;
   assertEquals(updatedNewNameEntity.fields[newFieldName], 'updated value');
 
   // Check that the old name is not usable
@@ -1246,14 +1246,14 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
   // Check that the renamed field got the old value and the original field is reset
   const entityAfterMigration = (
     await adminClient.getEntity({ id: entity.id })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   assertEquals(entityAfterMigration.fields[oldFieldName], null);
   assertEquals(entityAfterMigration.fields[newFieldName], 'value');
 
   // And for published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: entity.id })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   assertEquals(publishedEntityAfterMigration.fields[oldFieldName], null);
   assertEquals(publishedEntityAfterMigration.fields[newFieldName], 'value');
 
@@ -1266,7 +1266,7 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
       },
       { publish: true },
     )
-  ).valueOrThrow().entity as AdminEntity;
+  ).valueOrThrow().entity as Entity;
   assertEquals(updatedEntity.fields[oldFieldName], [{ lat: 1, lng: 2 }]);
   assertEquals(updatedEntity.fields[newFieldName], 'updated value');
 }
@@ -1324,7 +1324,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
   // Check that the field is renamed
   const entityAfterMigration = (
     await adminClient.getEntity({ id: entityId })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   const componentAfterMigration = entityAfterMigration.fields.any as Component;
   assertEquals(oldFieldName in componentAfterMigration, false);
   assertEquals(componentAfterMigration[newFieldName], 'value');
@@ -1332,7 +1332,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
   // And in published entity
   const publishedEntityAfterMigration = (
     await publishedClient.getEntity({ id: entityId })
-  ).valueOrThrow() as AdminEntity;
+  ).valueOrThrow() as Entity;
   const publishedComponent = publishedEntityAfterMigration.fields.any as Component;
   assertEquals(oldFieldName in publishedComponent, false);
   assertEquals(publishedComponent[newFieldName], 'value');
@@ -1346,7 +1346,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
       },
       { publish: true },
     )
-  ).valueOrThrow().entity as AdminEntity;
+  ).valueOrThrow().entity as Entity;
   assertEquals((updatedNewNameEntity.fields.any as Component)[newFieldName], 'updated value');
 
   // Check that the old name is not usable
@@ -2169,7 +2169,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
   const reference = result.valueOrThrow();
 
   // Check that the entity has the new type and field
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow() as AdminEntity;
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow() as Entity;
   assertEquals(adminEntity.info.type, newTypeName);
   assertEquals(adminEntity.fields[newFieldName], 'value');
   assertEquals(oldFieldName in adminEntity.fields, false);
@@ -2240,7 +2240,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   const reference = result.valueOrThrow();
 
   // Check that the entity has the new type and field
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow() as AdminEntity;
+  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow() as Entity;
   assertEquals(adminEntity.info.type, newTypeName);
   assertEquals(adminEntity.fields[newFieldName], 'value');
   assertEquals(oldFieldName in adminEntity.fields, false);

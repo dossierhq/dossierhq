@@ -1,10 +1,10 @@
-import type { AdminEntity, PublishedEntity } from '@dossierhq/core';
+import type { Entity, PublishedEntity } from '@dossierhq/core';
 import { assert, expect } from 'vitest';
 
 export function expectSampledEntitiesArePartOfExpected(
   actualResult: { seed: number; totalCount: number; items: { id: string }[] } | undefined,
   seed: number,
-  expectedEntities: (AdminEntity | PublishedEntity)[],
+  expectedEntities: (Entity | PublishedEntity)[],
 ) {
   expect(actualResult).toBeDefined();
   assert(actualResult);

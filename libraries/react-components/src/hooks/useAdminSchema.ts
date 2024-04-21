@@ -1,7 +1,7 @@
 import {
   SchemaWithMigrations,
   type AdminClient,
-  type AdminEntity,
+  type Entity,
   type Component,
   type ErrorResult,
   type ErrorType,
@@ -15,7 +15,7 @@ type FetcherData = SchemaWithMigrations;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminSchema(
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
@@ -32,7 +32,7 @@ export function useAdminSchema(
 }
 
 async function fetchSchema(
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
 ): Promise<FetcherData> {
   const result = await adminClient.getSchemaSpecification({
     includeMigrations: true,

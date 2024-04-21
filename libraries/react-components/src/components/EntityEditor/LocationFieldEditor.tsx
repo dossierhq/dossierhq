@@ -1,4 +1,4 @@
-import type { AdminEntity, Location, LocationFieldSpecification } from '@dossierhq/core';
+import type { Entity, Location, LocationFieldSpecification } from '@dossierhq/core';
 import {
   Button2,
   Delete,
@@ -24,7 +24,7 @@ export function LocationFieldEditor({ value, validationIssues, dragHandle, onCha
 
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const handleItemClick = useCallback(
-    (item: AdminEntity | EntityEditorDraftState) => {
+    (item: Entity | EntityEditorDraftState) => {
       dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: item.id }));
     },
     [dispatchEntityEditorState],

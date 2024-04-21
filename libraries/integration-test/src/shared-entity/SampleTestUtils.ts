@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   EntityReference,
   EntitySamplingPayload,
   ErrorType,
@@ -46,7 +46,7 @@ export function assertSampledEntities<
 }
 
 export function assertSampledEntitiesArePartOfExpected<
-  TEntity extends AdminEntity<string, object> | PublishedEntity<string, object>,
+  TEntity extends Entity<string, object> | PublishedEntity<string, object>,
 >(actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>, expectedEntities: TEntity[]) {
   assertOkResult(actualResult);
 

@@ -4,7 +4,7 @@ import {
   traverseEntity,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type Schema,
   type ContentValuePath,
@@ -35,7 +35,7 @@ import {
 export function validateAdminFieldValuesAndCollectInfo(
   adminSchema: Schema,
   path: ContentValuePath,
-  entity: AdminEntity | EntityCreate,
+  entity: Entity | EntityCreate,
 ): {
   validationIssues: SaveValidationIssue[];
   fullTextSearchText: string;

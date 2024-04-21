@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, Component } from '@dossierhq/core';
+import type { AdminClient, Entity, Component } from '@dossierhq/core';
 import type { NotificationInfo } from '@dossierhq/design';
 import { Button, Field, Input, NotificationContext, Row, Text } from '@dossierhq/design';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
@@ -133,7 +133,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
 async function submitEntity(
   draftState: EntityEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
-  adminClient: AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
   showNotification: (notification: NotificationInfo) => void,
   publish: boolean,

@@ -1,8 +1,8 @@
 import type {
   AdminClient,
-  AdminEntity,
   AdminExceptionClient,
   Component,
+  Entity,
   EntityReference,
   PublishedClient,
   PublishedEntity,
@@ -39,14 +39,14 @@ export interface AdminArticleFields {
   body: RichText | null;
 }
 
-export type AdminArticle = AdminEntity<'Article', AdminArticleFields, ''>;
+export type AdminArticle = Entity<'Article', AdminArticleFields, ''>;
 
-export function isAdminArticle(entity: AdminEntity<string, object>): entity is AdminArticle {
+export function isAdminArticle(entity: Entity<string, object>): entity is AdminArticle {
   return entity.info.type === 'Article';
 }
 
 export function assertIsAdminArticle(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminArticle {
   if (entity.info.type !== 'Article') {
     throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
@@ -57,15 +57,13 @@ export interface AdminAuthorFields {
   name: string | null;
 }
 
-export type AdminAuthor = AdminEntity<'Author', AdminAuthorFields, ''>;
+export type AdminAuthor = Entity<'Author', AdminAuthorFields, ''>;
 
-export function isAdminAuthor(entity: AdminEntity<string, object>): entity is AdminAuthor {
+export function isAdminAuthor(entity: Entity<string, object>): entity is AdminAuthor {
   return entity.info.type === 'Author';
 }
 
-export function assertIsAdminAuthor(
-  entity: AdminEntity<string, object>,
-): asserts entity is AdminAuthor {
+export function assertIsAdminAuthor(entity: Entity<string, object>): asserts entity is AdminAuthor {
   if (entity.info.type !== 'Author') {
     throw new Error('Expected info.type = Author (but was ' + entity.info.type + ')');
   }
@@ -82,14 +80,14 @@ export interface AdminBlogPostFields {
   body: RichText | null;
 }
 
-export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields, ''>;
+export type AdminBlogPost = Entity<'BlogPost', AdminBlogPostFields, ''>;
 
-export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is AdminBlogPost {
+export function isAdminBlogPost(entity: Entity<string, object>): entity is AdminBlogPost {
   return entity.info.type === 'BlogPost';
 }
 
 export function assertIsAdminBlogPost(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminBlogPost {
   if (entity.info.type !== 'BlogPost') {
     throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
@@ -100,14 +98,14 @@ export interface AdminChapterFields {
   items: (AdminArticleTocItem | AdminTocItem)[] | null;
 }
 
-export type AdminChapter = AdminEntity<'Chapter', AdminChapterFields, ''>;
+export type AdminChapter = Entity<'Chapter', AdminChapterFields, ''>;
 
-export function isAdminChapter(entity: AdminEntity<string, object>): entity is AdminChapter {
+export function isAdminChapter(entity: Entity<string, object>): entity is AdminChapter {
   return entity.info.type === 'Chapter';
 }
 
 export function assertIsAdminChapter(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminChapter {
   if (entity.info.type !== 'Chapter') {
     throw new Error('Expected info.type = Chapter (but was ' + entity.info.type + ')');
@@ -120,16 +118,14 @@ export interface AdminGlossaryTermFields {
   description: RichText | null;
 }
 
-export type AdminGlossaryTerm = AdminEntity<'GlossaryTerm', AdminGlossaryTermFields, ''>;
+export type AdminGlossaryTerm = Entity<'GlossaryTerm', AdminGlossaryTermFields, ''>;
 
-export function isAdminGlossaryTerm(
-  entity: AdminEntity<string, object>,
-): entity is AdminGlossaryTerm {
+export function isAdminGlossaryTerm(entity: Entity<string, object>): entity is AdminGlossaryTerm {
   return entity.info.type === 'GlossaryTerm';
 }
 
 export function assertIsAdminGlossaryTerm(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminGlossaryTerm {
   if (entity.info.type !== 'GlossaryTerm') {
     throw new Error('Expected info.type = GlossaryTerm (but was ' + entity.info.type + ')');

@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntity,
+  Entity,
   SchemaSpecificationUpdate,
   Connection,
   Edge,
@@ -141,7 +141,7 @@ async function clearDatabase(connectionString: string) {
   }
 }
 
-export function expectSearchResultEntities<TItem extends AdminEntity | PublishedEntity>(
+export function expectSearchResultEntities<TItem extends Entity | PublishedEntity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

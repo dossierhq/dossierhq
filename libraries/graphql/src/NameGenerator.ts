@@ -1,4 +1,7 @@
 export function toAdminTypeName(name: string, isAdmin = true) {
+  if (isAdmin && name === 'Entity') {
+    return 'Entity';
+  }
   return isAdmin ? `Admin${name}` : toPublishedTypeName(name);
 }
 

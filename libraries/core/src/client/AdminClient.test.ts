@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { assertOkResult, ok, type ErrorType } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type {
-  AdminEntity,
+  Entity,
   EntityCreate,
   EntityCreatePayload,
   EntityUpdate,
@@ -38,7 +38,7 @@ import type { ClientContext } from './SharedClient.js';
 interface FooFields {
   title: string | null;
 }
-type AdminFooEntity = AdminEntity<'FooType', FooFields>;
+type AdminFooEntity = Entity<'FooType', FooFields>;
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient,
@@ -115,7 +115,7 @@ function createDummyEntity(changes: {
   );
 }
 
-describe('Custom AdminEntity types', () => {
+describe('Custom Entity types', () => {
   test('AdminFooEntity creation', async () => {
     const adminClient = createBaseAdminClient({
       context: { logger: NoOpLogger },
@@ -293,7 +293,7 @@ describe('AdminClient forward operation over JSON', () => {
               info: {
                 status: options?.publish ? EntityStatus.published : EntityStatus.draft,
               },
-            }) as unknown as AdminEntity,
+            }) as unknown as Entity,
           }),
         );
         return Promise.resolve();
@@ -527,7 +527,7 @@ describe('AdminClient forward operation over JSON', () => {
       (_context, operation) => {
         const [references] = operation.args;
         operation.resolve(
-          ok(references.map(({ id }) => ok(createDummyEntity({ id }) as unknown as AdminEntity))),
+          ok(references.map(({ id }) => ok(createDummyEntity({ id }) as unknown as Entity))),
         );
         return Promise.resolve();
       },
@@ -629,7 +629,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok(
             createDummyEntity({
               id: 'id' in reference ? reference.id : `${reference.index}/${reference.value}`,
-            }) as unknown as AdminEntity,
+            }) as unknown as Entity,
           ),
         );
         return Promise.resolve();
@@ -1011,7 +1011,7 @@ describe('AdminClient forward operation over JSON', () => {
   });
 
   test('getEntitiesSample', async () => {
-    const entity1: AdminEntity = {
+    const entity1: Entity = {
       id: 'id',
       info: {
         type: 'Foo',
@@ -1085,7 +1085,7 @@ describe('AdminClient forward operation over JSON', () => {
   });
 
   test('getEntities', async () => {
-    const entity1: AdminEntity = {
+    const entity1: Entity = {
       id: 'id',
       info: {
         type: 'Foo',
@@ -1368,7 +1368,7 @@ describe('AdminClient forward operation over JSON', () => {
               info: {
                 status: options?.publish ? EntityStatus.published : EntityStatus.draft,
               },
-            }) as unknown as AdminEntity,
+            }) as unknown as Entity,
           }),
         );
         return Promise.resolve();
@@ -1599,7 +1599,7 @@ describe('AdminClient forward operation over JSON', () => {
               info: {
                 status: options?.publish ? EntityStatus.published : EntityStatus.draft,
               },
-            }) as unknown as AdminEntity,
+            }) as unknown as Entity,
           }),
         );
         return Promise.resolve();

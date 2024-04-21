@@ -1,7 +1,7 @@
 import type { ErrorType, Result } from '../ErrorResult.js';
 import { createErrorResult, ok } from '../ErrorResult.js';
 import type {
-  AdminEntity,
+  Entity,
   EntityCreatePayload,
   EntityInfo,
   EntityPublishingPayload,
@@ -44,7 +44,7 @@ export interface JsonEntityInfo extends Omit<EntityInfo, 'createdAt' | 'updatedA
   updatedAt: string;
 }
 
-export interface JsonEntity extends Omit<AdminEntity, 'info'> {
+export interface JsonEntity extends Omit<Entity, 'info'> {
   info: JsonEntityInfo;
 }
 
@@ -118,7 +118,7 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
   return createErrorResult(jsonResult.error, jsonResult.message);
 }
 
-export function convertJsonAdminEntity(entity: JsonEntity): AdminEntity {
+export function convertJsonAdminEntity(entity: JsonEntity): Entity {
   return {
     ...entity,
     info: {

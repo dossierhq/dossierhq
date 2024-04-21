@@ -1,8 +1,8 @@
 import type {
   AdminClient,
-  AdminEntity,
   AdminExceptionClient,
   Component,
+  Entity,
   EntityReference,
   RichText,
 } from '@dossierhq/core';
@@ -34,14 +34,14 @@ export interface AdminBlogPostFields {
   tags: string[] | null;
 }
 
-export type AdminBlogPost = AdminEntity<'BlogPost', AdminBlogPostFields, ''>;
+export type AdminBlogPost = Entity<'BlogPost', AdminBlogPostFields, ''>;
 
-export function isAdminBlogPost(entity: AdminEntity<string, object>): entity is AdminBlogPost {
+export function isAdminBlogPost(entity: Entity<string, object>): entity is AdminBlogPost {
   return entity.info.type === 'BlogPost';
 }
 
 export function assertIsAdminBlogPost(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminBlogPost {
   if (entity.info.type !== 'BlogPost') {
     throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
@@ -52,15 +52,13 @@ export interface AdminPersonFields {
   title: string | null;
 }
 
-export type AdminPerson = AdminEntity<'Person', AdminPersonFields, ''>;
+export type AdminPerson = Entity<'Person', AdminPersonFields, ''>;
 
-export function isAdminPerson(entity: AdminEntity<string, object>): entity is AdminPerson {
+export function isAdminPerson(entity: Entity<string, object>): entity is AdminPerson {
   return entity.info.type === 'Person';
 }
 
-export function assertIsAdminPerson(
-  entity: AdminEntity<string, object>,
-): asserts entity is AdminPerson {
+export function assertIsAdminPerson(entity: Entity<string, object>): asserts entity is AdminPerson {
   if (entity.info.type !== 'Person') {
     throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');
   }

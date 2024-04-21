@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
 import { ContentListScreen } from '@dossierhq/react-components';
 import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
@@ -26,6 +26,6 @@ function handleCreateEntity(type: string) {
   window.location.assign(`/dossier/content/edit?new=${type}:${crypto.randomUUID()}`);
 }
 
-function handleEntityOpen(entity: AdminEntity) {
+function handleEntityOpen(entity: Entity) {
   window.location.assign(`/dossier/content/edit?id=${entity.id}`);
 }

@@ -159,7 +159,7 @@ export const EntityStatus = {
 } as const;
 export type EntityStatus = (typeof EntityStatus)[keyof typeof EntityStatus];
 
-export interface AdminEntity<
+export interface Entity<
   TType extends string = string,
   TFields extends object = Record<string, unknown>,
   TAuthKey extends string = string,
@@ -207,7 +207,7 @@ export interface EntityMutationOptions {
   publish?: boolean;
 }
 
-export interface EntityCreate<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityCreate<T extends Entity<string, object> = Entity> {
   /** UUID. If not provided a new random id will be created */
   id?: string;
   info: {
@@ -224,12 +224,12 @@ export interface EntityCreate<T extends AdminEntity<string, object> = AdminEntit
   fields: Partial<T['fields']>;
 }
 
-export interface EntityCreatePayload<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityCreatePayload<T extends Entity<string, object> = Entity> {
   effect: 'created' | 'createdAndPublished' | 'none';
   entity: T;
 }
 
-export interface EntityUpdate<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpdate<T extends Entity<string, object> = Entity> {
   id: string;
   info?: {
     name?: string;
@@ -243,12 +243,12 @@ export interface EntityUpdate<T extends AdminEntity<string, object> = AdminEntit
   fields: Partial<T['fields']>;
 }
 
-export interface EntityUpdatePayload<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpdatePayload<T extends Entity<string, object> = Entity> {
   effect: 'updated' | 'updatedAndPublished' | 'published' | 'none';
   entity: T;
 }
 
-export interface EntityUpsert<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpsert<T extends Entity<string, object> = Entity> {
   id: string;
   info: {
     name: string;
@@ -258,7 +258,7 @@ export interface EntityUpsert<T extends AdminEntity<string, object> = AdminEntit
   fields: Partial<T['fields']>;
 }
 
-export interface EntityUpsertPayload<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpsertPayload<T extends Entity<string, object> = Entity> {
   effect:
     | 'created'
     | 'createdAndPublished'

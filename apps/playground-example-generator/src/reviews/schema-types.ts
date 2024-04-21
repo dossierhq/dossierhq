@@ -1,8 +1,8 @@
 import type {
   AdminClient,
-  AdminEntity,
   AdminExceptionClient,
   Component,
+  Entity,
   EntityReference,
   Location,
   RichText,
@@ -30,16 +30,14 @@ export interface AdminPersonalNoteFields {
   placeOfBusiness: EntityReference | null;
 }
 
-export type AdminPersonalNote = AdminEntity<'PersonalNote', AdminPersonalNoteFields, 'subject'>;
+export type AdminPersonalNote = Entity<'PersonalNote', AdminPersonalNoteFields, 'subject'>;
 
-export function isAdminPersonalNote(
-  entity: AdminEntity<string, object>,
-): entity is AdminPersonalNote {
+export function isAdminPersonalNote(entity: Entity<string, object>): entity is AdminPersonalNote {
   return entity.info.type === 'PersonalNote';
 }
 
 export function assertIsAdminPersonalNote(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminPersonalNote {
   if (entity.info.type !== 'PersonalNote') {
     throw new Error('Expected info.type = PersonalNote (but was ' + entity.info.type + ')');
@@ -53,16 +51,16 @@ export interface AdminPlaceOfBusinessFields {
   description: string | null;
 }
 
-export type AdminPlaceOfBusiness = AdminEntity<'PlaceOfBusiness', AdminPlaceOfBusinessFields, ''>;
+export type AdminPlaceOfBusiness = Entity<'PlaceOfBusiness', AdminPlaceOfBusinessFields, ''>;
 
 export function isAdminPlaceOfBusiness(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): entity is AdminPlaceOfBusiness {
   return entity.info.type === 'PlaceOfBusiness';
 }
 
 export function assertIsAdminPlaceOfBusiness(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminPlaceOfBusiness {
   if (entity.info.type !== 'PlaceOfBusiness') {
     throw new Error('Expected info.type = PlaceOfBusiness (but was ' + entity.info.type + ')');
@@ -75,15 +73,13 @@ export interface AdminReviewFields {
   review: string | null;
 }
 
-export type AdminReview = AdminEntity<'Review', AdminReviewFields, ''>;
+export type AdminReview = Entity<'Review', AdminReviewFields, ''>;
 
-export function isAdminReview(entity: AdminEntity<string, object>): entity is AdminReview {
+export function isAdminReview(entity: Entity<string, object>): entity is AdminReview {
   return entity.info.type === 'Review';
 }
 
-export function assertIsAdminReview(
-  entity: AdminEntity<string, object>,
-): asserts entity is AdminReview {
+export function assertIsAdminReview(entity: Entity<string, object>): asserts entity is AdminReview {
   if (entity.info.type !== 'Review') {
     throw new Error('Expected info.type = Review (but was ' + entity.info.type + ')');
   }
@@ -93,14 +89,14 @@ export interface AdminReviewerFields {
   name: string | null;
 }
 
-export type AdminReviewer = AdminEntity<'Reviewer', AdminReviewerFields, ''>;
+export type AdminReviewer = Entity<'Reviewer', AdminReviewerFields, ''>;
 
-export function isAdminReviewer(entity: AdminEntity<string, object>): entity is AdminReviewer {
+export function isAdminReviewer(entity: Entity<string, object>): entity is AdminReviewer {
   return entity.info.type === 'Reviewer';
 }
 
 export function assertIsAdminReviewer(
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
 ): asserts entity is AdminReviewer {
   if (entity.info.type !== 'Reviewer') {
     throw new Error('Expected info.type = Reviewer (but was ' + entity.info.type + ')');

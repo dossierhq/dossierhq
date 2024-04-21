@@ -5,7 +5,7 @@ import {
   notOk,
   ok,
   validateEntityInfoForCreate,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type EntityCreatePayload,
   type EntityMutationOptions,
@@ -169,7 +169,7 @@ async function doCreateEntity(
     if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
     let effect: EntityCreatePayload['effect'] = 'created';
-    const payload: AdminEntity = {
+    const payload: Entity = {
       id,
       info: {
         type: createEntity.info.type,

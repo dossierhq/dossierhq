@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { ContentListScreen } from '@dossierhq/react-components';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ export function ContentListRoute() {
     [navigate]
   );
   const handleEntityOpen = useCallback(
-    (entity: AdminEntity) => navigate(`/edit-content?id=${entity.id}`),
+    (entity: Entity) => navigate(`/edit-content?id=${entity.id}`),
     [navigate]
   );
 

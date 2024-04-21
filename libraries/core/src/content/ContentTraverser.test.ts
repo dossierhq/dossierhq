@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { EntityStatus, type AdminEntity, type Component } from '../Types.js';
+import { EntityStatus, type Entity, type Component } from '../Types.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
@@ -130,7 +130,7 @@ describe('traverseEntity', () => {
   });
 
   test('Generated schema type', () => {
-    type AdminStringsEntity = AdminEntity<'StringsEntity', AdminStringsEntityFields>;
+    type AdminStringsEntity = Entity<'StringsEntity', AdminStringsEntityFields>;
 
     interface AdminStringsEntityFields {
       string: string | null;

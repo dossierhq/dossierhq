@@ -1,4 +1,4 @@
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { EntityStatus, Schema, SchemaWithMigrations, copyEntity, FieldType } from '@dossierhq/core';
 import { assert, describe, expect, test } from 'vitest';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
@@ -685,7 +685,7 @@ describe('EntityEditorReducer scenarios', () => {
 
   test('open existing entity, simulate publish', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const entity: AdminEntity = {
+    const entity: Entity = {
       id,
       info: {
         authKey: '',
@@ -864,7 +864,7 @@ describe('EntityEditorReducer scenarios', () => {
   test('renameField of entity field', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
 
-    const initialEntity: AdminEntity = {
+    const initialEntity: Entity = {
       id,
       info: {
         authKey: '',

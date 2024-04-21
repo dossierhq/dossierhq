@@ -2,7 +2,7 @@ import {
   copyEntity,
   notOk,
   ok,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type EntityProcessDirtyPayload,
   type SchemaSpecificationUpdate,
@@ -51,7 +51,7 @@ export async function createEntityWithInvalidComponent(
   );
 }
 
-async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object> = AdminEntity>(
+async function doCreateInvalidEntity<TEntity extends Entity<string, object> = Entity>(
   adminClient: AppAdminClient,
   schemaUpdate: SchemaSpecificationUpdate,
   entity: EntityCreate<TEntity>,

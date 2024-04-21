@@ -20,7 +20,7 @@ export {
   EntityStatus,
   PublishedEntityQueryOrder,
   RichTextNodeType,
-  type AdminEntity,
+  type Entity,
   type AdvisoryLockOptions,
   type AdvisoryLockPayload,
   type AdvisoryLockReleasePayload,

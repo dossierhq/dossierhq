@@ -1,9 +1,4 @@
-import type {
-  AdminClient,
-  AdminEntity,
-  SchemaSpecificationUpdate,
-  BoundingBox,
-} from '@dossierhq/core';
+import type { AdminClient, Entity, SchemaSpecificationUpdate, BoundingBox } from '@dossierhq/core';
 import {
   EntityStatus,
   EventType,
@@ -35,8 +30,8 @@ const gql = String.raw;
 
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
-let entitiesOfTypeQueryAdminOnlyEditBeforeNone: AdminEntity[];
-let entitiesOfTypeQueryAdminOnlyEditBeforeSubject: AdminEntity[];
+let entitiesOfTypeQueryAdminOnlyEditBeforeNone: Entity[];
+let entitiesOfTypeQueryAdminOnlyEditBeforeSubject: Entity[];
 
 const schemaSpecification: SchemaSpecificationUpdate = {
   entityTypes: [
@@ -168,7 +163,7 @@ async function ensureTestEntitiesExist(adminClient: AdminClient, authKey: string
 
 async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient, authKey: string) {
   const query = { authKeys: [authKey], entityTypes: ['QueryAdminOnlyEditBefore'] };
-  const entities: AdminEntity[] = [];
+  const entities: Entity[] = [];
   for await (const pageResult of getAllPagesForConnection({}, (currentPaging) =>
     adminClient.getEntities(query, currentPaging),
   )) {
@@ -199,7 +194,7 @@ async function createBarWithFooReferences(fooCount: number) {
     entity: { id: barId },
   } = createBarResult.value;
 
-  const fooEntities: AdminEntity[] = [];
+  const fooEntities: Entity[] = [];
 
   for (let i = 0; i < fooCount; i += 1) {
     const createFooResult = await adminClient.createEntity({
@@ -514,7 +509,7 @@ describe('adminEntity()', () => {
       const result = await graphql({
         schema,
         source: gql`
-          query AdminEntity($id: ID!) {
+          query Entity($id: ID!) {
             adminEntity(id: $id) {
               id
               info {
@@ -1028,7 +1023,7 @@ describe('adminEntity()', () => {
     const result = await graphql({
       schema,
       source: gql`
-        query AdminEntity($id: ID!) {
+        query Entity($id: ID!) {
           adminEntity(id: $id) {
             id
           }
@@ -1045,7 +1040,7 @@ describe('adminEntity()', () => {
       `NotFound: No such entity
 
 GraphQL request:3:11
-2 |         query AdminEntity($id: ID!) {
+2 |         query Entity($id: ID!) {
 3 |           adminEntity(id: $id) {
   |           ^
 4 |             id`,
@@ -1056,7 +1051,7 @@ GraphQL request:3:11
     const result = await graphql({
       schema,
       source: gql`
-        query AdminEntity($id: ID!) {
+        query Entity($id: ID!) {
           adminEntity(id: $id) {
             id
           }
@@ -1073,7 +1068,7 @@ GraphQL request:3:11
       `NotAuthenticated: No adminClient
 
 GraphQL request:3:11
-2 |         query AdminEntity($id: ID!) {
+2 |         query Entity($id: ID!) {
 3 |           adminEntity(id: $id) {
   |           ^
 4 |             id`,
@@ -1094,7 +1089,7 @@ GraphQL request:3:11
       const result = await graphql({
         schema,
         source: gql`
-          query AdminEntity($id: ID!) {
+          query Entity($id: ID!) {
             adminEntity(id: $id) {
               id
             }
@@ -1112,7 +1107,7 @@ GraphQL request:3:11
           "NotAuthorized: Wrong authKey provided
 
         GraphQL request:3:13
-        2 |           query AdminEntity($id: ID!) {
+        2 |           query Entity($id: ID!) {
         3 |             adminEntity(id: $id) {
           |             ^
         4 |               id",
@@ -1130,7 +1125,7 @@ GraphQL request:3:11
         "Either (id), (id and version) or (index and value) must be specified
 
       GraphQL request:3:5
-      2 |   query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      2 |   query Entity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
       3 |     adminEntity(id: $id, version: $version, index: $index, value: $value) {
         |     ^
       4 |       __typename",
@@ -1147,7 +1142,7 @@ GraphQL request:3:11
         "Either (id), (id and version) or (index and value) must be specified
 
       GraphQL request:3:5
-      2 |   query AdminEntity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      2 |   query Entity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
       3 |     adminEntity(id: $id, version: $version, index: $index, value: $value) {
         |     ^
       4 |       __typename",

@@ -6,7 +6,7 @@ import {
   ok,
   type AdminClient,
   type AdminClientMiddleware,
-  type AdminEntity,
+  type Entity,
   type EntityProcessDirtyPayload,
   type SchemaSpecificationWithMigrations,
   type Component,
@@ -131,10 +131,7 @@ export interface Server<
   >;
 
   createAdminClient<
-    TClient extends AdminClient<
-      AdminEntity<string, object>,
-      Component<string, object>
-    > = AdminClient,
+    TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[],
@@ -424,10 +421,7 @@ export async function createServer<
     },
 
     createAdminClient: <
-      TClient extends AdminClient<
-        AdminEntity<string, object>,
-        Component<string, object>
-      > = AdminClient,
+      TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: AdminClientMiddleware<SessionContext>[],

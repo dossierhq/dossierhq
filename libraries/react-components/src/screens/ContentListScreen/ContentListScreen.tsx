@@ -1,5 +1,5 @@
 'use client';
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';
@@ -28,7 +28,7 @@ export interface ContentListScreenProps {
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onCreateEntity: (entityType: string) => void;
-  onOpenEntity: (entity: AdminEntity) => void;
+  onOpenEntity: (entity: Entity) => void;
 }
 
 export function ContentListScreen({
@@ -113,7 +113,7 @@ export function ContentListScreen({
       </FullscreenContainer.ScrollableRow>
       {showMap ? (
         <FullscreenContainer.Row fillHeight fullWidth>
-          <EntityMap<AdminEntity>
+          <EntityMap<Entity>
             className={toSizeClassName({ height: '100%' })}
             {...{ schema, searchEntityState, dispatchSearchEntityState }}
             renderEntityMarker={(key, entity, location) => (

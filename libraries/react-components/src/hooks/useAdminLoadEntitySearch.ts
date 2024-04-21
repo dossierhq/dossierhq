@@ -1,7 +1,7 @@
 import type {
   EntityQuery,
   EntitySharedQuery,
-  AdminEntity,
+  Entity,
   Connection,
   Edge,
   EntitySamplingPayload,
@@ -47,7 +47,7 @@ export function useAdminLoadEntitySearch(
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSearchResult(
-        connection as Connection<Edge<AdminEntity, ErrorType>> | null,
+        connection as Connection<Edge<Entity, ErrorType>> | null,
         connectionError,
       ),
     );
@@ -60,7 +60,7 @@ export function useAdminLoadEntitySearch(
   useEffect(() => {
     dispatchSearchEntityState(
       new SearchEntityStateActions.UpdateSampleResult(
-        entitiesSample as EntitySamplingPayload<AdminEntity>,
+        entitiesSample as EntitySamplingPayload<Entity>,
         entitiesSampleError,
       ),
     );

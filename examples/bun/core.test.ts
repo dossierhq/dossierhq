@@ -1,9 +1,9 @@
-import type { AdminEntity } from '@dossierhq/core';
+import type { Entity } from '@dossierhq/core';
 import { EntityStatus, copyEntity } from '@dossierhq/core';
 import { expect, test } from 'bun:test';
 
 test('copyEntity()', () => {
-  const original: AdminEntity = {
+  const original: Entity = {
     id: '123',
     info: {
       type: 'Foo',

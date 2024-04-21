@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntity,
+  Entity,
   EntityReference,
   EntityVersionReference,
   ErrorResult,
@@ -14,7 +14,7 @@ type FetcherKey = Readonly<[string, EntityReference | EntityVersionReference]>;
 type FetcherData<T> = T;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
-export function useAdminEntity<TAdminEntity extends AdminEntity<string, object>>(
+export function useAdminEntity<TAdminEntity extends Entity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   reference: EntityReference | EntityVersionReference | undefined,
 ): {
@@ -35,7 +35,7 @@ export function useAdminEntity<TAdminEntity extends AdminEntity<string, object>>
   return { entity: data, entityError: error };
 }
 
-async function fetchEntity<TAdminEntity extends AdminEntity<string, object>>(
+async function fetchEntity<TAdminEntity extends Entity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   reference: FetcherKey[1],
 ): Promise<FetcherData<TAdminEntity>> {

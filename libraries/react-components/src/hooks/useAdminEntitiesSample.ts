@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   EntitySharedQuery,
-  AdminEntity,
+  Entity,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorResult,
@@ -22,7 +22,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param query If `undefined`, no data is fetched
  * @param options
  */
-export function useAdminEntitiesSample<TAdminEntity extends AdminEntity<string, object>>(
+export function useAdminEntitiesSample<TAdminEntity extends Entity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
@@ -49,7 +49,7 @@ export function useAdminEntitiesSample<TAdminEntity extends AdminEntity<string, 
   return { entitiesSample: data, entitiesSampleError: error };
 }
 
-async function fetchSampleEntities<TAdminEntity extends AdminEntity<string, object>>(
+async function fetchSampleEntities<TAdminEntity extends Entity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: FetcherKey[1],
   options: FetcherKey[2],

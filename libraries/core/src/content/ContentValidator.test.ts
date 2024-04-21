@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import type { AdminEntity, EntityCreate, EntityLike } from '../Types.js';
+import type { Entity, EntityCreate, EntityLike } from '../Types.js';
 import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import {
@@ -108,7 +108,7 @@ const STRINGS_ENTITY_CREATE_DEFAULT: EntityCreate = {
   fields: { required: '-' },
 };
 
-const STRINGS_ENTITY_DEFAULT: AdminEntity = {
+const STRINGS_ENTITY_DEFAULT: Entity = {
   id: '123',
   info: {
     type: 'StringsEntity',

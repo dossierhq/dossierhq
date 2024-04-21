@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntity,
+  Entity,
   SchemaSpecificationUpdate,
   PublishedClient,
   PublishedEntity,
@@ -77,7 +77,7 @@ let server: Server;
 let context: SessionContext;
 let adminClient: AdminClient;
 let publishedClient: PublishedClient;
-let entitiesOfTypePublishedEntityOnlyEditBeforeNone: AdminEntity[];
+let entitiesOfTypePublishedEntityOnlyEditBeforeNone: Entity[];
 
 beforeAll(async () => {
   const result = await createPostgresTestServerAndClient();

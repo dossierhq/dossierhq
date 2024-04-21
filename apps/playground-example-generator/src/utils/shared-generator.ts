@@ -5,7 +5,7 @@ import {
 import type {
   AdminClient,
   AdminClientMiddleware,
-  AdminEntity,
+  Entity,
   SchemaSpecificationUpdate,
   ClientContext,
   Component,
@@ -27,7 +27,7 @@ export async function createNewDatabase(databasePath: string): Promise<Database>
 }
 
 export async function createAdapterAndServer<
-  TAdminClient extends AdminClient<AdminEntity<string, object>, Component<string, object>>,
+  TAdminClient extends AdminClient<Entity<string, object>, Component<string, object>>,
 >(
   database: Database,
   schema: SchemaSpecificationUpdate,

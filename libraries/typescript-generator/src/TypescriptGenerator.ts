@@ -164,7 +164,7 @@ function generateEntityType(
   }
 
   // entity type
-  const parentTypeName = `${adminOrPublished}Entity`;
+  const parentTypeName = adminOrPublished === 'Admin' ? 'Entity' : `${adminOrPublished}Entity`;
   const genericEntityType = `${parentTypeName}<string, object>`;
   const entityTypeName = `${adminOrPublished}${entitySpec.name}`;
   context.coreImports.add(parentTypeName);

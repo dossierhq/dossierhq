@@ -6,7 +6,7 @@ import {
   notOk,
   type AdminClient,
   type ComponentTypeSpecification,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type EntityQuery,
   type EntitySharedQuery,
@@ -80,7 +80,7 @@ import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
   adminClient: Result<
-    AdminClient<AdminEntity> | AdminClient<AdminEntity<string, object>, Component<string, object>>,
+    AdminClient<Entity> | AdminClient<Entity<string, object>, Component<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
   publishedClient: Result<
@@ -554,10 +554,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntity
+    // Entity
     this.addType(
       new GraphQLInterfaceType({
-        name: 'AdminEntity',
+        name: 'Entity',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
@@ -597,7 +597,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: 'AdminEntityEdge',
         fields: {
-          node: { type: this.getOutputType('AdminEntity') },
+          node: { type: this.getOutputType('Entity') },
           cursor: { type: new GraphQLNonNull(GraphQLString) },
         },
       }),
@@ -622,7 +622,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: {
           seed: { type: new GraphQLNonNull(GraphQLInt) },
           totalCount: { type: new GraphQLNonNull(GraphQLInt) },
-          items: { type: new GraphQLList(this.getOutputType('AdminEntity')) },
+          items: { type: new GraphQLList(this.getOutputType('Entity')) },
         },
       }),
     );
@@ -704,7 +704,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminRichText',
         fields: {
           root: { type: new GraphQLNonNull(GraphQLJSONObject) },
-          entities: { type: new GraphQLList(this.getInterface('AdminEntity')) },
+          entities: { type: new GraphQLList(this.getInterface('Entity')) },
         },
       }),
     );
@@ -1005,10 +1005,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}Fields` : null;
     if (fieldsName) {
       this.addType(
-        new GraphQLObjectType<AdminEntity['fields'], TContext>({
+        new GraphQLObjectType<Entity['fields'], TContext>({
           name: fieldsName,
           fields: () => {
-            const fields: GraphQLFieldConfigMap<AdminEntity['fields'], TContext> = {};
+            const fields: GraphQLFieldConfigMap<Entity['fields'], TContext> = {};
             this.addTypeSpecificationOutputFields(entitySpec, fields, true);
             return fields;
           },
@@ -1018,12 +1018,12 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
     // AdminFoo
     this.addType(
-      new GraphQLObjectType<AdminEntity, TContext>({
+      new GraphQLObjectType<Entity, TContext>({
         name: toAdminTypeName(entitySpec.name),
         interfaces: this.getInterfaces(toAdminTypeName('Entity')),
         isTypeOf: (source, _context, _info) => source.info.type === entitySpec.name,
         fields: () => {
-          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
             info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
             changelogEvents: {
@@ -1083,7 +1083,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: toAdminCreatePayloadTypeName(entitySpec.name),
         fields: () => {
-          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityCreateEffect')) },
             entity: {
               type: new GraphQLNonNull(this.getOutputType(toAdminTypeName(entitySpec.name))),
@@ -1116,7 +1116,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: toAdminUpdatePayloadTypeName(entitySpec.name),
         fields: () => {
-          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpdateEffect')) },
             entity: {
               type: new GraphQLNonNull(this.getOutputType(toAdminTypeName(entitySpec.name))),
@@ -1149,7 +1149,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType({
         name: toAdminUpsertPayloadTypeName(entitySpec.name),
         fields: () => {
-          const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
+          const fields: GraphQLFieldConfigMap<Entity, TContext> = {
             effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUpsertEffect')) },
             entity: {
               type: new GraphQLNonNull(this.getOutputType(toAdminTypeName(entitySpec.name))),
@@ -1361,7 +1361,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   buildQueryFieldAdminEntity<TSource>(adminSchema: Schema): GraphQLFieldConfig<TSource, TContext> {
     if (adminSchema.spec.indexes.length === 0) {
       return fieldConfigWithArgs<TSource, TContext, { id: string; version?: number | null }>({
-        type: this.getInterface('AdminEntity'),
+        type: this.getInterface('Entity'),
         args: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           version: { type: GraphQLInt },
@@ -1383,7 +1383,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TContext,
       { id?: string | null; version?: number | null; index?: string | null; value?: string | null }
     >({
-      type: this.getInterface('AdminEntity'),
+      type: this.getInterface('Entity'),
       args: {
         id: { type: GraphQLID },
         version: { type: GraphQLInt },
@@ -1411,7 +1411,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     adminSchema: Schema,
   ): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { ids: string[] }>({
-      type: new GraphQLList(this.getInterface('AdminEntity')),
+      type: new GraphQLList(this.getInterface('Entity')),
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },

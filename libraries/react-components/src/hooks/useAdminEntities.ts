@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   EntityQuery,
-  AdminEntity,
+  Entity,
   Connection,
   Edge,
   ErrorResult,
@@ -22,7 +22,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param paging
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
-export function useAdminEntities<TAdminEntity extends AdminEntity<string, object>>(
+export function useAdminEntities<TAdminEntity extends Entity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: EntityQuery | undefined,
   paging?: Paging,
@@ -49,7 +49,7 @@ export function useAdminEntities<TAdminEntity extends AdminEntity<string, object
   return { connection: data, connectionError: error };
 }
 
-async function fetchGetEntities<TAdminEntity extends AdminEntity<string, object>>(
+async function fetchGetEntities<TAdminEntity extends Entity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
   query: FetcherKey[1],
   paging: FetcherKey[2],

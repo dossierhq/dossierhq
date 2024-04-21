@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   SchemaWithMigrations,
   EntityReference,
   ErrorType,
@@ -24,7 +24,7 @@ export async function adminGetEntityList(
   references: EntityReference[],
 ): PromiseResult<
   Result<
-    AdminEntity,
+    Entity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -40,7 +40,7 @@ export async function adminGetEntityList(
   if (entityInfoResult.isError()) return entityInfoResult;
 
   const result: Result<
-    AdminEntity,
+    Entity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -61,7 +61,7 @@ async function mapItem(
   reference: EntityReference,
   values: DatabaseAdminEntityGetOnePayload | undefined,
 ): PromiseResult<
-  AdminEntity,
+  Entity,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized

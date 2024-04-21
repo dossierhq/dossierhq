@@ -1,5 +1,5 @@
 import type {
-  AdminEntity,
+  Entity,
   EntitySharedQuery,
   SchemaWithMigrations,
   EntitySamplingOptions,
@@ -23,7 +23,7 @@ export async function adminSampleEntities(
   query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): PromiseResult<
-  EntitySamplingPayload<AdminEntity>,
+  EntitySamplingPayload<Entity>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   function getTotal(
@@ -37,7 +37,7 @@ export async function adminSampleEntities(
     limit: number,
     authKeys: ResolvedAuthKey[],
   ): PromiseResult<
-    Result<AdminEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>[],
+    Result<Entity, typeof ErrorType.BadRequest | typeof ErrorType.Generic>[],
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > {
     const sampleResult = await databaseAdapter.adminEntitySampleEntities(

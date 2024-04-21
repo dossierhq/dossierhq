@@ -1,4 +1,4 @@
-import type { AdminEntity, EntityReference } from '@dossierhq/core';
+import type { Entity, EntityReference } from '@dossierhq/core';
 import { Dialog2, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
@@ -23,7 +23,7 @@ interface AdminEntitySelectorDialogProps {
   entityTypes?: string[];
   linksFrom?: EntityReference;
   linksTo?: EntityReference;
-  onItemClick: (item: AdminEntity) => void;
+  onItemClick: (item: Entity) => void;
   onCreateItemClick?: (type: string) => void;
 }
 
@@ -69,7 +69,7 @@ function Content({
   entityTypes: string[] | undefined;
   linksFrom: EntityReference | undefined;
   linksTo: EntityReference | undefined;
-  onItemClick: (item: AdminEntity) => void;
+  onItemClick: (item: Entity) => void;
   onCreateItemClick?: (type: string) => void;
 }) {
   const { schema } = useContext(AdminDossierContext);
@@ -136,7 +136,7 @@ function Content({
       </FullscreenContainer.Row>
       {showMap ? (
         <FullscreenContainer.Row fillHeight fullWidth>
-          <EntityMap<AdminEntity>
+          <EntityMap<Entity>
             className={toSizeClassName({ height: '100%' })}
             {...{ schema, searchEntityState, dispatchSearchEntityState }}
             renderEntityMarker={(key, entity, location) => (

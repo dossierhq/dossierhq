@@ -278,7 +278,7 @@ describe('One empty entity type schema spec', () => {
               name: 'node',
               type: {
                 // Changed from "Example" / "Object"
-                name: 'AdminEntity',
+                name: 'Entity',
                 kind: 'INTERFACE',
                 ofType: null,
               },

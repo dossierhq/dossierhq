@@ -1,4 +1,4 @@
-import type { AdminClient, AdminEntity, AdminExceptionClient, Component, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
+import type { AdminClient, AdminExceptionClient, Component, Entity, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
 
@@ -13,13 +13,13 @@ export interface AdminMessageFields {
   image: AdminCloudinaryImage | null;
 }
 
-export type AdminMessage = AdminEntity<'Message', AdminMessageFields, ''>;
+export type AdminMessage = Entity<'Message', AdminMessageFields, ''>;
 
-export function isAdminMessage(entity: AdminEntity<string, object>): entity is AdminMessage {
+export function isAdminMessage(entity: Entity<string, object>): entity is AdminMessage {
   return entity.info.type === 'Message';
 }
 
-export function assertIsAdminMessage(entity: AdminEntity<string, object>): asserts entity is AdminMessage {
+export function assertIsAdminMessage(entity: Entity<string, object>): asserts entity is AdminMessage {
   if (entity.info.type !== 'Message') {
     throw new Error('Expected info.type = Message (but was ' + entity.info.type + ')');
   }

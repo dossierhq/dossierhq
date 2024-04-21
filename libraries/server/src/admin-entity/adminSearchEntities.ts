@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminEntity,
+  type Entity,
   type EntityQuery,
   type SchemaWithMigrations,
   type Connection,
@@ -24,7 +24,7 @@ export async function adminSearchEntities(
   query: EntityQuery | undefined,
   paging: Paging | undefined,
 ): PromiseResult<
-  Connection<Edge<AdminEntity, ErrorType>> | null,
+  Connection<Edge<Entity, ErrorType>> | null,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const authKeysResult = await authResolveAuthorizationKeys(

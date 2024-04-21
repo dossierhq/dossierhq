@@ -1,4 +1,4 @@
-import type { AdminEntity, EntityCreate, EntityUpdate } from '../Types.js';
+import type { Entity, EntityCreate, EntityUpdate } from '../Types.js';
 import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
@@ -37,7 +37,7 @@ const LINE_BREAK_REGEX = /[\r\n]/;
 export function validateEntityInfo(
   adminSchema: Schema,
   path: ContentValuePath,
-  entity: AdminEntity,
+  entity: Entity,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
   const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity, false);
@@ -118,7 +118,7 @@ export function validateEntityInfoForUpdate(
 function validateTypeAndAuthKey(
   adminSchema: Schema,
   path: ContentValuePath,
-  entity: EntityCreate | AdminEntity,
+  entity: EntityCreate | Entity,
   create: boolean,
 ): SaveValidationIssue | null {
   // info.type

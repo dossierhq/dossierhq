@@ -1,7 +1,7 @@
 import {
   EntityStatus,
   normalizeEntityFields,
-  type AdminEntity,
+  type Entity,
   type EntityCreate,
   type EntityUpsert,
   type Schema,
@@ -247,7 +247,7 @@ export function adminToPublishedEntity<T extends AppAdminEntity>(
 ): AppPublishedEntity {
   assertEquals(entity.info.status, EntityStatus.published);
 
-  const result = normalizeEntityFields(adminSchema.toPublishedSchema(), [], entity as AdminEntity);
+  const result = normalizeEntityFields(adminSchema.toPublishedSchema(), [], entity as Entity);
 
   const {
     id,

@@ -7,7 +7,7 @@ import {
   type AdminClient,
   type AdminClientMiddleware,
   type AdminClientOperation,
-  type AdminEntity,
+  type Entity,
   type EntityInfo,
   type SchemaSpecification,
   type JsonSyncEvent,
@@ -77,7 +77,7 @@ async function updateSchemaSpecification(
 
 async function updateEntityFile(
   backChannelAdminClient: AdminClient,
-  entity: AdminEntity<string, object>,
+  entity: Entity<string, object>,
   dataDir: string,
 ) {
   const adminSchema = new Schema(
@@ -92,7 +92,7 @@ async function updateEntityFile(
   await fs.writeFile(jsonFilePath, JSON.stringify(save, null, 2) + '\n');
 }
 
-function createCleanedUpEntity(adminSchema: Schema, entity: AdminEntity<string, object>) {
+function createCleanedUpEntity(adminSchema: Schema, entity: Entity<string, object>) {
   const copy = structuredClone(entity);
 
   // Remove unnecessary fields
@@ -100,7 +100,7 @@ function createCleanedUpEntity(adminSchema: Schema, entity: AdminEntity<string, 
   delete (copy.info as Partial<EntityInfo>).updatedAt;
   delete (copy.info as Partial<EntityInfo>).version;
 
-  for (const node of traverseEntity(adminSchema, [], copy as AdminEntity)) {
+  for (const node of traverseEntity(adminSchema, [], copy as Entity)) {
     switch (node.type) {
       case 'richTextNode': {
         const richTextNode = node.node;
