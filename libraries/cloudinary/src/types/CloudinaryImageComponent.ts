@@ -1,4 +1,4 @@
-import type { AdminComponentTypeSpecificationUpdate, Component } from '@dossierhq/core';
+import type { ComponentTypeSpecificationUpdate, Component } from '@dossierhq/core';
 import { FieldType } from '@dossierhq/core';
 
 export interface AdminCloudinaryImageFields {
@@ -30,7 +30,7 @@ export function isPublishedCloudinaryImage(
   return component.type === 'CloudinaryImage';
 }
 
-export const CLOUDINARY_IMAGE_COMPONENT_TYPE: AdminComponentTypeSpecificationUpdate = {
+export const CLOUDINARY_IMAGE_COMPONENT_TYPE: ComponentTypeSpecificationUpdate = {
   name: 'CloudinaryImage',
   fields: [
     { name: 'publicId', type: FieldType.String, required: true },

@@ -1,8 +1,8 @@
-import type { RichTextFieldSpecification } from '@dossierhq/core';
+import type { PublishedRichTextFieldSpecification } from '@dossierhq/core';
 import { createContext } from 'react';
 
 interface RichTextDisplayContextValue {
-  fieldSpec: RichTextFieldSpecification;
+  fieldSpec: PublishedRichTextFieldSpecification;
 }
 
 export const RichTextDisplayContext = createContext<RichTextDisplayContextValue>({

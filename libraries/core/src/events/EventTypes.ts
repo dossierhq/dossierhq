@@ -1,7 +1,7 @@
 import type { EntityReference, EntityVersionReference } from '../Types.js';
 import type {
-  AdminSchemaSpecificationWithMigrations,
-  LegacyAdminSchemaSpecificationWithMigrations,
+  SchemaSpecificationWithMigrations,
+  LegacySchemaSpecificationWithMigrations,
 } from '../schema/SchemaSpecification.js';
 
 export const EventType = {
@@ -79,9 +79,7 @@ export interface CreatePrincipalSyncEvent
 }
 
 export interface UpdateSchemaSyncEvent extends SyncEventShared<typeof EventType.updateSchema> {
-  schemaSpecification:
-    | AdminSchemaSpecificationWithMigrations
-    | LegacyAdminSchemaSpecificationWithMigrations;
+  schemaSpecification: SchemaSpecificationWithMigrations | LegacySchemaSpecificationWithMigrations;
 }
 
 export interface CreateEntitySyncEvent<

@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -11,7 +11,7 @@ import { queryNoneOrOne, type Database } from '../QueryFunctions.js';
 export async function schemaGetSpecification(
   database: Database,
   context: TransactionContext,
-): PromiseResult<AdminSchemaSpecificationWithMigrations | null, typeof ErrorType.Generic> {
+): PromiseResult<SchemaSpecificationWithMigrations | null, typeof ErrorType.Generic> {
   const result = await queryNoneOrOne<Pick<SchemaVersionsTable, 'version' | 'specification'>>(
     database,
     context,

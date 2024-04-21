@@ -1,18 +1,15 @@
 import type {
-  AdminComponentTypeSpecification,
-  AdminFieldSpecification,
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationWithMigrations,
+  ComponentTypeSpecification,
+  FieldSpecification,
   PublishedSchemaSpecification,
   SchemaIndexSpecification,
   SchemaPatternSpecification,
+  SchemaSpecification,
+  SchemaSpecificationWithMigrations,
 } from './SchemaSpecification.js';
 
 export class BaseSchema<
-  T extends
-    | AdminSchemaSpecification
-    | AdminSchemaSpecificationWithMigrations
-    | PublishedSchemaSpecification,
+  T extends SchemaSpecification | SchemaSpecificationWithMigrations | PublishedSchemaSpecification,
 > {
   readonly spec: T;
   private cachedPatternRegExps: Record<string, RegExp> = {};
@@ -45,9 +42,9 @@ export class BaseSchema<
   }
 
   getComponentFieldSpecification(
-    componentSpec: AdminComponentTypeSpecification,
+    componentSpec: ComponentTypeSpecification,
     fieldName: string,
-  ): AdminFieldSpecification | null {
+  ): FieldSpecification | null {
     return componentSpec.fields.find((it) => it.name === fieldName) ?? null;
   }
 

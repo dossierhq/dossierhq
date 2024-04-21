@@ -1,24 +1,22 @@
 import {
   FieldType,
   RichTextNodeType,
-  type AdminComponentTypeSpecification,
-  type AdminEntityTypeSpecification,
-  type AdminFieldSpecification,
-  type AdminSchemaMigrationAction,
-  type AdminSchemaSpecificationWithMigrations,
+  type ComponentTypeSpecification,
+  type EntityTypeSpecification,
+  type FieldSpecification,
+  type SchemaMigrationAction,
+  type SchemaSpecificationWithMigrations,
   type ComponentFieldSpecification,
-  type LegacyAdminComponentTypeSpecification,
-  type LegacyAdminEntityTypeSpecification,
-  type LegacyAdminSchemaSpecificationWithMigrations,
+  type LegacyComponentTypeSpecification,
+  type LegacyEntityTypeSpecification,
+  type LegacySchemaSpecificationWithMigrations,
   type RichTextFieldSpecification,
 } from '@dossierhq/core';
 
 export function modernizeSchemaSpecification(
-  specification:
-    | AdminSchemaSpecificationWithMigrations
-    | LegacyAdminSchemaSpecificationWithMigrations,
-): AdminSchemaSpecificationWithMigrations {
-  const payload: AdminSchemaSpecificationWithMigrations = {
+  specification: SchemaSpecificationWithMigrations | LegacySchemaSpecificationWithMigrations,
+): SchemaSpecificationWithMigrations {
+  const payload: SchemaSpecificationWithMigrations = {
     schemaKind: 'full',
     version: specification.version,
     entityTypes: specification.entityTypes.map(modernizeEntityType),
@@ -42,14 +40,14 @@ export function modernizeSchemaSpecification(
   return payload;
 }
 
-type EntityTypeSpec = AdminEntityTypeSpecification | LegacyAdminEntityTypeSpecification;
-type ComponentTypeSpec = AdminComponentTypeSpecification | LegacyAdminComponentTypeSpecification;
-type FieldSpec = AdminFieldSpecification | EntityTypeSpec['fields'][number];
+type EntityTypeSpec = EntityTypeSpecification | LegacyEntityTypeSpecification;
+type ComponentTypeSpec = ComponentTypeSpecification | LegacyComponentTypeSpecification;
+type FieldSpec = FieldSpecification | EntityTypeSpec['fields'][number];
 type ActionSpec =
-  | AdminSchemaMigrationAction
-  | LegacyAdminSchemaSpecificationWithMigrations['migrations'][number]['actions'][number];
+  | SchemaMigrationAction
+  | LegacySchemaSpecificationWithMigrations['migrations'][number]['actions'][number];
 
-function modernizeEntityType(typeSpec: EntityTypeSpec): AdminEntityTypeSpecification {
+function modernizeEntityType(typeSpec: EntityTypeSpec): EntityTypeSpecification {
   // Version 0.2.3: moved isName from field to nameField on entity types, isName is deprecated
   if (typeSpec.nameField === undefined) {
     typeSpec.nameField =
@@ -60,15 +58,15 @@ function modernizeEntityType(typeSpec: EntityTypeSpec): AdminEntityTypeSpecifica
   }
 
   typeSpec.fields = typeSpec.fields.map(modernizeField);
-  return typeSpec as AdminEntityTypeSpecification;
+  return typeSpec as EntityTypeSpecification;
 }
 
-function modernizeComponentType(typeSpec: ComponentTypeSpec): AdminComponentTypeSpecification {
+function modernizeComponentType(typeSpec: ComponentTypeSpec): ComponentTypeSpecification {
   typeSpec.fields = typeSpec.fields.map(modernizeField);
-  return typeSpec as AdminComponentTypeSpecification;
+  return typeSpec as ComponentTypeSpecification;
 }
 
-function modernizeField(fieldSpec: FieldSpec): AdminFieldSpecification {
+function modernizeField(fieldSpec: FieldSpec): FieldSpecification {
   // Version 0.2.3: moved isName from field to nameField on entity types, isName is deprecated
   delete (fieldSpec as { isName?: boolean }).isName;
   // Field types were renamed
@@ -110,13 +108,13 @@ function modernizeField(fieldSpec: FieldSpec): AdminFieldSpecification {
     }
   }
 
-  return fieldSpec as AdminFieldSpecification;
+  return fieldSpec as FieldSpecification;
 }
 
-function modernizeMigrationAction(action: ActionSpec): AdminSchemaMigrationAction {
+function modernizeMigrationAction(action: ActionSpec): SchemaMigrationAction {
   if ('valueType' in action) {
     (action as unknown as { componentType: string }).componentType = action.valueType;
     delete (action as { valueType?: string }).valueType;
   }
-  return action as AdminSchemaMigrationAction;
+  return action as SchemaMigrationAction;
 }

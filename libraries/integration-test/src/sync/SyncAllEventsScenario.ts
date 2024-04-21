@@ -4,7 +4,7 @@ import {
   EventType,
   FieldType,
   type AdminClient,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -126,7 +126,7 @@ async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
   const { sourceAdminClient, targetAdminClient, createdBy, after } = context;
 
-  const expectedSchemaSpecification: AdminSchemaSpecificationWithMigrations = {
+  const expectedSchemaSpecification: SchemaSpecificationWithMigrations = {
     entityTypes: [
       {
         name: 'TitleOnly',

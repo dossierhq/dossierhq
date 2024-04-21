@@ -5,12 +5,12 @@ import {
   isComponentItemField,
   notOk,
   type AdminClient,
-  type AdminComponentTypeSpecification,
+  type ComponentTypeSpecification,
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityQuery,
   type AdminEntitySharedQuery,
-  type AdminEntityTypeSpecification,
+  type EntityTypeSpecification,
   type AdminEntityUpdate,
   type AdminEntityUpsert,
   type Schema,
@@ -999,7 +999,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     }
   }
 
-  addAdminEntityType(entitySpec: AdminEntityTypeSpecification): void {
+  addAdminEntityType(entitySpec: EntityTypeSpecification): void {
     // AdminFooFields
     const fieldsName =
       entitySpec.fields.length > 0 ? `${toAdminTypeName(entitySpec.name)}Fields` : null;
@@ -1167,7 +1167,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     }
   }
 
-  addAdminComponentType(componentSpec: AdminComponentTypeSpecification): void {
+  addAdminComponentType(componentSpec: ComponentTypeSpecification): void {
     // AdminFoo
     this.addType(
       new GraphQLObjectType<Component, TContext>({
@@ -1202,8 +1202,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     typeSpec:
       | PublishedEntityTypeSpecification
       | PublishedComponentTypeSpecification
-      | AdminEntityTypeSpecification
-      | AdminComponentTypeSpecification,
+      | EntityTypeSpecification
+      | ComponentTypeSpecification,
     fields: GraphQLFieldConfigMap<TSource, TContext>,
     isAdmin: boolean,
   ): void {
@@ -1247,7 +1247,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   }
 
   addTypeSpecificationInputFields(
-    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
+    typeSpec: EntityTypeSpecification | ComponentTypeSpecification,
     fields: GraphQLInputFieldConfigMap,
   ): void {
     for (const fieldSpec of typeSpec.fields) {
@@ -1739,7 +1739,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
   ): void {
     const visitItem = (
       item: AdminEntityCreate | AdminEntityUpdate | Component,
-      typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
+      typeSpec: EntityTypeSpecification | ComponentTypeSpecification,
       prefix: string,
       isEntity: boolean,
     ) => {
@@ -1764,10 +1764,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         }
 
         const fieldSpec = isEntity
-          ? adminSchema.getEntityFieldSpecification(
-              typeSpec as AdminEntityTypeSpecification,
-              fieldName,
-            )
+          ? adminSchema.getEntityFieldSpecification(typeSpec as EntityTypeSpecification, fieldName)
           : adminSchema.getComponentFieldSpecification(typeSpec, fieldName);
 
         // Traverse into components

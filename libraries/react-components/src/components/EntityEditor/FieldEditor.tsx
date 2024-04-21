@@ -13,7 +13,6 @@ import {
   isRichTextSingleField,
   isStringListField,
   isStringSingleField,
-  type AdminFieldSpecification,
   type BooleanFieldSpecification,
   type ComponentFieldSpecification,
   type FieldSpecification,
@@ -40,7 +39,7 @@ export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
   TValue = unknown,
 > {
-  fieldSpec: AdminFieldSpecification<TFieldSpec>;
+  fieldSpec: TFieldSpec;
   adminOnly: boolean;
   value: TValue | null;
   dragHandle?: ReactNode;
@@ -62,7 +61,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <BooleanFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<BooleanFieldSpecification>}
+        fieldSpec={fieldSpec as BooleanFieldSpecification}
         value={value}
       />
     );
@@ -70,7 +69,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<BooleanFieldSpecification>}
+        fieldSpec={fieldSpec as BooleanFieldSpecification}
         value={value}
         AddButton={AddBooleanListItemButton}
         Editor={BooleanFieldEditor}
@@ -80,7 +79,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <ReferenceFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<ReferenceFieldSpecification>}
+        fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
       />
     );
@@ -88,7 +87,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<ReferenceFieldSpecification>}
+        fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
         AddButton={AddEntityListItemButton}
         Editor={ReferenceFieldEditor}
@@ -98,7 +97,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <LocationFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<LocationFieldSpecification>}
+        fieldSpec={fieldSpec as LocationFieldSpecification}
         value={value}
       />
     );
@@ -106,7 +105,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<LocationFieldSpecification>}
+        fieldSpec={fieldSpec as LocationFieldSpecification}
         value={value}
         AddButton={AddLocationListItemButton}
         Editor={LocationFieldEditor}
@@ -116,7 +115,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <NumberFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<NumberFieldSpecification>}
+        fieldSpec={fieldSpec as NumberFieldSpecification}
         value={value}
       />
     );
@@ -124,7 +123,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<NumberFieldSpecification>}
+        fieldSpec={fieldSpec as NumberFieldSpecification}
         value={value}
         AddButton={AddNumberListItemButton}
         Editor={NumberFieldEditor}
@@ -134,7 +133,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <RichTextFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<RichTextFieldSpecification>}
+        fieldSpec={fieldSpec as RichTextFieldSpecification}
         value={value}
       />
     );
@@ -142,7 +141,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<RichTextFieldSpecification>}
+        fieldSpec={fieldSpec as RichTextFieldSpecification}
         value={value}
         AddButton={AddRichTextListItemButton}
         Editor={RichTextFieldEditor}
@@ -152,7 +151,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <StringFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<StringFieldSpecification>}
+        fieldSpec={fieldSpec as StringFieldSpecification}
         value={value}
       />
     );
@@ -160,7 +159,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<StringFieldSpecification>}
+        fieldSpec={fieldSpec as StringFieldSpecification}
         value={value}
         AddButton={AddStringListItemButton}
         Editor={StringFieldEditor}
@@ -170,7 +169,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <ComponentFieldEditor
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
+        fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
       />
     );
@@ -178,7 +177,7 @@ export function FieldEditor(props: FieldEditorProps) {
     editor = (
       <FieldListWrapper
         {...props}
-        fieldSpec={fieldSpec as AdminFieldSpecification<ComponentFieldSpecification>}
+        fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
         AddButton={AddComponentListItemButton}
         Editor={ComponentFieldEditor}

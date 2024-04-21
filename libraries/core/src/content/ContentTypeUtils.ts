@@ -7,6 +7,7 @@ import type {
   PublishedEntity,
   RichTextCodeHighlightNode,
   RichTextCodeNode,
+  RichTextComponentNode,
   RichTextElementNode,
   RichTextEntityLinkNode,
   RichTextEntityNode,
@@ -20,10 +21,13 @@ import type {
   RichTextRootNode,
   RichTextTabNode,
   RichTextTextNode,
-  RichTextComponentNode,
 } from '../Types.js';
 import { RichTextNodeType } from '../Types.js';
-import type { FieldSpecification, FieldValueTypeMap } from '../schema/SchemaSpecification.js';
+import type {
+  FieldSpecification,
+  FieldValueTypeMap,
+  PublishedFieldSpecification,
+} from '../schema/SchemaSpecification.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 
 type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType> = Omit<
@@ -33,7 +37,7 @@ type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType
 
 /** Check if `value` with `fieldSpec` is a single boolean field */
 export function isBooleanSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean && !fieldSpec.list;
@@ -41,7 +45,7 @@ export function isBooleanSingleField(
 
 /** Check if `value` with `fieldSpec` is a list boolean field */
 export function isBooleanListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Boolean][] | null {
   return fieldSpec.type === FieldType.Boolean && fieldSpec.list;
@@ -49,7 +53,7 @@ export function isBooleanListField(
 
 /** Check if `value` with `fieldSpec` is either a single boolean field or an item in a list field */
 export function isBooleanItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Boolean] | null {
   return fieldSpec.type === FieldType.Boolean;
@@ -57,7 +61,7 @@ export function isBooleanItemField(
 
 /** Check if `value` with `fieldSpec` is a single Component field */
 export function isComponentSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Component] | null {
   return fieldSpec.type === FieldType.Component && !fieldSpec.list;
@@ -65,7 +69,7 @@ export function isComponentSingleField(
 
 /** Check if `value` with `fieldSpec` is a list Component field */
 export function isComponentListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Component][] | null {
   return fieldSpec.type === FieldType.Component && fieldSpec.list;
@@ -73,7 +77,7 @@ export function isComponentListField(
 
 /** Check if `value` with `fieldSpec` is either a single Component field or an item in a list field */
 export function isComponentItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Component] | null {
   return fieldSpec.type === FieldType.Component;
@@ -81,7 +85,7 @@ export function isComponentItemField(
 
 /** Check if `value` with `fieldSpec` is a single Reference field */
 export function isReferenceSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Reference] | null {
   return fieldSpec.type === FieldType.Reference && !fieldSpec.list;
@@ -89,7 +93,7 @@ export function isReferenceSingleField(
 
 /** Check if `value` with `fieldSpec` is a list Reference field */
 export function isReferenceListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Reference][] | null {
   return fieldSpec.type === FieldType.Reference && fieldSpec.list;
@@ -97,7 +101,7 @@ export function isReferenceListField(
 
 /** Check if `value` with `fieldSpec` is either a single Reference field or an item in a list field */
 export function isReferenceItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Reference] | null {
   return fieldSpec.type === FieldType.Reference;
@@ -105,7 +109,7 @@ export function isReferenceItemField(
 
 /** Check if `value` with `fieldSpec` is a single Location field */
 export function isLocationSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location && !fieldSpec.list;
@@ -113,7 +117,7 @@ export function isLocationSingleField(
 
 /** Check if `value` with `fieldSpec` is a list Location field */
 export function isLocationListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Location][] | null {
   return fieldSpec.type === FieldType.Location && fieldSpec.list;
@@ -121,7 +125,7 @@ export function isLocationListField(
 
 /** Check if `value` with `fieldSpec` is either a single Location field or an item in a list field */
 export function isLocationItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Location] | null {
   return fieldSpec.type === FieldType.Location;
@@ -129,7 +133,7 @@ export function isLocationItemField(
 
 /** Check if `value` with `fieldSpec` is a single number field */
 export function isNumberSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Number] | null {
   return fieldSpec.type === FieldType.Number && !fieldSpec.list;
@@ -137,7 +141,7 @@ export function isNumberSingleField(
 
 /** Check if `value` with `fieldSpec` is a list number field */
 export function isNumberListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Number][] | null {
   return fieldSpec.type === FieldType.Number && fieldSpec.list;
@@ -145,7 +149,7 @@ export function isNumberListField(
 
 /** Check if `value` with `fieldSpec` is either a single number field or an item in a list field */
 export function isNumberItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.Number] | null {
   return fieldSpec.type === FieldType.Number;
@@ -153,7 +157,7 @@ export function isNumberItemField(
 
 /** Check if `value` with `fieldSpec` is a single String field */
 export function isStringSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String && !fieldSpec.list;
@@ -161,7 +165,7 @@ export function isStringSingleField(
 
 /** Check if `value` with `fieldSpec` is a list String field */
 export function isStringListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.String][] | null {
   return fieldSpec.type === FieldType.String && fieldSpec.list;
@@ -169,7 +173,7 @@ export function isStringListField(
 
 /** Check if `value` with `fieldSpec` is either a single String field or an item in a list field */
 export function isStringItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.String] | null {
   return fieldSpec.type === FieldType.String;
@@ -177,7 +181,7 @@ export function isStringItemField(
 
 /** Check if `value` with `fieldSpec` is a single RichText field */
 export function isRichTextSingleField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText && !fieldSpec.list;
@@ -185,7 +189,7 @@ export function isRichTextSingleField(
 
 /** Check if `value` with `fieldSpec` is a list RichText field */
 export function isRichTextListField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText][] | null {
   return fieldSpec.type === FieldType.RichText && fieldSpec.list;
@@ -193,7 +197,7 @@ export function isRichTextListField(
 
 /** Check if `value` with `fieldSpec` is either a single RichText field or an item in a list field */
 export function isRichTextItemField(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): value is FieldValueTypeMap[typeof FieldType.RichText] | null {
   return fieldSpec.type === FieldType.RichText;

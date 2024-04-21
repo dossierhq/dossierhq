@@ -1,7 +1,7 @@
 import type {
   AdminEntityCreate,
   AdminEntityUpsert,
-  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import {
   AdminEntityStatus,
@@ -41,7 +41,7 @@ const emptyFooFields = {
   anyComponents: null,
 };
 
-const schemaSpecification: AdminSchemaSpecificationUpdate = {
+const schemaSpecification: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'MutationFoo',

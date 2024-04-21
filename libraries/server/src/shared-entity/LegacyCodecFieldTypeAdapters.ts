@@ -4,6 +4,7 @@ import {
   type FieldSpecification,
   type FieldValueTypeMap,
   type Location,
+  type PublishedFieldSpecification,
 } from '@dossierhq/core';
 
 export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
@@ -58,7 +59,9 @@ const adapters: Record<FieldType, FieldTypeAdapter<unknown>> = /* @__PURE__ */ (
   [FieldType.String]: stringCodec,
 }))();
 
-export function getAdapter(fieldSpec: FieldSpecification): FieldTypeAdapter {
+export function getAdapter(
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
+): FieldTypeAdapter {
   return getAdapterForType(fieldSpec.type as FieldType);
 }
 

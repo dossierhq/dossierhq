@@ -1,7 +1,7 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import type {
   AdminClient,
-  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdate,
   ErrorType,
   PromiseResult,
   PublishedClient,
@@ -22,14 +22,14 @@ export interface TestServerWithSession {
 }
 
 export async function setUpServerWithSession(
-  schemaSpecification: AdminSchemaSpecificationUpdate,
+  schemaSpecification: SchemaSpecificationUpdate,
   databasePath: string,
 ): Promise<TestServerWithSession> {
   return await setUpRealServerWithSession(schemaSpecification, databasePath);
 }
 
 async function setUpRealServerWithSession(
-  schemaSpecification: AdminSchemaSpecificationUpdate,
+  schemaSpecification: SchemaSpecificationUpdate,
   databasePath: string,
 ): Promise<TestServerWithSession> {
   const serverContext = { logger: NoOpLogger };

@@ -9,7 +9,7 @@ import {
   type AdminClientOperation,
   type AdminEntity,
   type AdminEntityInfo,
-  type AdminSchemaSpecification,
+  type SchemaSpecification,
   type JsonSyncEvent,
   type OkFromResult,
   type RichTextElementNode,
@@ -65,7 +65,7 @@ export function createFilesystemAdminMiddleware(
 }
 
 async function updateSchemaSpecification(
-  schemaSpecification: AdminSchemaSpecification,
+  schemaSpecification: SchemaSpecification,
   dataDir: string,
 ) {
   const { version, ...schemaSpecificationWithoutVersion } = schemaSpecification;

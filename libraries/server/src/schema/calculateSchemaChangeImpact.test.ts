@@ -1,15 +1,8 @@
-import {
-  SchemaWithMigrations,
-  FieldType,
-  type AdminSchemaSpecificationUpdate,
-} from '@dossierhq/core';
+import { SchemaWithMigrations, FieldType, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 
-function build(
-  previousUpdate: AdminSchemaSpecificationUpdate,
-  nextUpdate: AdminSchemaSpecificationUpdate,
-) {
+function build(previousUpdate: SchemaSpecificationUpdate, nextUpdate: SchemaSpecificationUpdate) {
   const previous = SchemaWithMigrations.createAndValidate(previousUpdate).valueOrThrow();
   const next = previous.updateAndValidate(nextUpdate).valueOrThrow();
   return { previous, next, transientMigrations: nextUpdate.transientMigrations ?? null };

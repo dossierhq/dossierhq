@@ -2,7 +2,7 @@ import {
   EventType,
   notOk,
   ok,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ArchiveEntitySyncEvent,
   type CreateEntitySyncEvent,
   type CreatePrincipalSyncEvent,
@@ -235,7 +235,7 @@ function convertEventRowsToPayload(
       continue;
     }
     if (type === EventType.updateSchema) {
-      const schemaSpecification: AdminSchemaSpecificationWithMigrations = {
+      const schemaSpecification: SchemaSpecificationWithMigrations = {
         version: eventRow.version,
         ...eventRow.specification,
       };

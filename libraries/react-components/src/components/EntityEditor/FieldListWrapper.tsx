@@ -1,6 +1,5 @@
 import {
   groupValidationIssuesByTopLevelPath,
-  type AdminFieldSpecification,
   type FieldSpecification,
   type PublishValidationIssue,
   type SaveValidationIssue,
@@ -19,7 +18,7 @@ import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 interface Props<TFieldSpec extends FieldSpecification, TItem>
   extends FieldEditorProps<TFieldSpec, (TItem | null)[]> {
   AddButton: JSXElementConstructor<{
-    fieldSpec: AdminFieldSpecification<TFieldSpec>;
+    fieldSpec: TFieldSpec;
     onAddItem: (value: TItem | null) => void;
   }>;
   Editor: JSXElementConstructor<FieldEditorProps<TFieldSpec, TItem>>;

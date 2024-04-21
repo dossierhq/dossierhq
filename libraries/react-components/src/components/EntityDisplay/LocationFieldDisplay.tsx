@@ -1,4 +1,8 @@
-import type { Location, LocationFieldSpecification, PublishedEntity } from '@dossierhq/core';
+import type {
+  Location,
+  PublishedEntity,
+  PublishedLocationFieldSpecification,
+} from '@dossierhq/core';
 import { Button2, Dialog2 } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
@@ -6,7 +10,7 @@ import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/Entity
 import { PublishedLocationDisplayDialog } from '../PublishedLocationDisplayDialog/PublishedLocationDisplayDialog.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-type Props = FieldDisplayProps<LocationFieldSpecification, Location>;
+type Props = FieldDisplayProps<PublishedLocationFieldSpecification, Location>;
 
 export function LocationFieldDisplay({ value }: Props) {
   const [showSelector, setShowSelector] = useState(false);

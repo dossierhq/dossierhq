@@ -38,9 +38,9 @@ import type {
 } from '../Types.js';
 import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
 import type {
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
-  AdminSchemaSpecificationWithMigrations,
+  SchemaSpecification,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationWithMigrations,
   SchemaSpecificationUpdatePayload,
 } from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
@@ -82,20 +82,20 @@ export interface AdminClient<
 > {
   getSchemaSpecification(options: {
     includeMigrations: true;
-  }): PromiseResult<AdminSchemaSpecificationWithMigrations, typeof ErrorType.Generic>;
+  }): PromiseResult<SchemaSpecificationWithMigrations, typeof ErrorType.Generic>;
   getSchemaSpecification(options?: {
     includeMigrations: boolean;
-  }): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic>;
+  }): PromiseResult<SchemaSpecification, typeof ErrorType.Generic>;
 
   updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options: { includeMigrations: true },
   ): PromiseResult<
-    SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
+    SchemaSpecificationUpdatePayload<SchemaSpecificationWithMigrations>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
   updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options?: { includeMigrations: boolean },
   ): PromiseResult<
     SchemaSpecificationUpdatePayload,
@@ -288,17 +288,15 @@ export interface AdminExceptionClient<
 
   getSchemaSpecification(options: {
     includeMigrations: true;
-  }): Promise<AdminSchemaSpecificationWithMigrations>;
-  getSchemaSpecification(options?: {
-    includeMigrations: boolean;
-  }): Promise<AdminSchemaSpecification>;
+  }): Promise<SchemaSpecificationWithMigrations>;
+  getSchemaSpecification(options?: { includeMigrations: boolean }): Promise<SchemaSpecification>;
 
   updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options: { includeMigrations: true },
-  ): Promise<SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>>;
+  ): Promise<SchemaSpecificationUpdatePayload<SchemaSpecificationWithMigrations>>;
   updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options?: { includeMigrations: boolean },
   ): Promise<SchemaSpecificationUpdatePayload>;
 
@@ -550,10 +548,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 
   getSchemaSpecification(options: {
     includeMigrations: true;
-  }): PromiseResult<AdminSchemaSpecificationWithMigrations, typeof ErrorType.Generic>;
+  }): PromiseResult<SchemaSpecificationWithMigrations, typeof ErrorType.Generic>;
   getSchemaSpecification(options?: {
     includeMigrations: boolean;
-  }): PromiseResult<AdminSchemaSpecification, typeof ErrorType.Generic> {
+  }): PromiseResult<SchemaSpecification, typeof ErrorType.Generic> {
     return this.executeOperation({
       name: AdminClientOperationName.getSchemaSpecification,
       args: [options],
@@ -562,14 +560,14 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options: { includeMigrations: true },
   ): PromiseResult<
-    SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
+    SchemaSpecificationUpdatePayload<SchemaSpecificationWithMigrations>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
   updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options?: { includeMigrations: boolean },
   ): PromiseResult<
     SchemaSpecificationUpdatePayload,
@@ -848,19 +846,19 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
   async getSchemaSpecification(options: {
     includeMigrations: true;
-  }): Promise<AdminSchemaSpecificationWithMigrations>;
+  }): Promise<SchemaSpecificationWithMigrations>;
   async getSchemaSpecification(options?: {
     includeMigrations: boolean;
-  }): Promise<AdminSchemaSpecification> {
+  }): Promise<SchemaSpecification> {
     return (await this.client.getSchemaSpecification(options)).valueOrThrow();
   }
 
   async updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options: { includeMigrations: true },
-  ): Promise<SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>>;
+  ): Promise<SchemaSpecificationUpdatePayload<SchemaSpecificationWithMigrations>>;
   async updateSchemaSpecification(
-    schemaSpec: AdminSchemaSpecificationUpdate,
+    schemaSpec: SchemaSpecificationUpdate,
     options?: { includeMigrations: boolean },
   ): Promise<SchemaSpecificationUpdatePayload> {
     return (await this.client.updateSchemaSpecification(schemaSpec, options)).valueOrThrow();

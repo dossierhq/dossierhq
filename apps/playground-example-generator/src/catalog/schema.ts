@@ -2,15 +2,15 @@ import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
-  type AdminBooleanFieldSpecificationUpdate,
-  type AdminComponentFieldSpecificationUpdate,
-  type AdminEntityTypeSpecificationUpdate,
-  type AdminLocationFieldSpecificationUpdate,
-  type AdminNumberFieldSpecificationUpdate,
-  type AdminReferenceFieldSpecificationUpdate,
-  type AdminRichTextFieldSpecificationUpdate,
-  type AdminSchemaSpecificationUpdate,
-  type AdminStringFieldSpecificationUpdate,
+  type BooleanFieldSpecificationUpdate,
+  type ComponentFieldSpecificationUpdate,
+  type EntityTypeSpecificationUpdate,
+  type LocationFieldSpecificationUpdate,
+  type NumberFieldSpecificationUpdate,
+  type ReferenceFieldSpecificationUpdate,
+  type RichTextFieldSpecificationUpdate,
+  type SchemaSpecificationUpdate,
+  type StringFieldSpecificationUpdate,
 } from '@dossierhq/core';
 
 export const SCHEMA = {
@@ -203,9 +203,9 @@ export const SCHEMA = {
   ],
   patterns: [{ name: 'fooBarBaz', pattern: '^(foo|bar|baz)$' }],
   indexes: [{ name: 'slug', type: 'unique' }],
-} satisfies AdminSchemaSpecificationUpdate;
+} satisfies SchemaSpecificationUpdate;
 
-export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
+export const SCHEMA_WITHOUT_VALIDATIONS: SchemaSpecificationUpdate = {
   ...SCHEMA,
   entityTypes: SCHEMA.entityTypes.map((entityType) => {
     switch (entityType.name) {
@@ -272,15 +272,15 @@ export const SCHEMA_WITHOUT_VALIDATIONS: AdminSchemaSpecificationUpdate = {
 };
 
 function copyEntityType(
-  entityType: AdminEntityTypeSpecificationUpdate,
-  modifier: (entityType: AdminEntityTypeSpecificationUpdate) => void,
-): AdminEntityTypeSpecificationUpdate {
+  entityType: EntityTypeSpecificationUpdate,
+  modifier: (entityType: EntityTypeSpecificationUpdate) => void,
+): EntityTypeSpecificationUpdate {
   const copy = structuredClone(entityType);
   modifier(copy);
   return copy;
 }
 
-function fieldSpec(entityType: AdminEntityTypeSpecificationUpdate, name: string) {
+function fieldSpec(entityType: EntityTypeSpecificationUpdate, name: string) {
   const field = entityType.fields.find((field) => field.name === name);
   if (!field) {
     throw new Error(`Field ${entityType.name}.${name} not found`);
@@ -289,9 +289,9 @@ function fieldSpec(entityType: AdminEntityTypeSpecificationUpdate, name: string)
 }
 
 function booleanFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminBooleanFieldSpecificationUpdate {
+): BooleanFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Boolean) {
     throw new Error(`Field ${entityType.name}.${name} is not boolean (${field.type})`);
@@ -300,9 +300,9 @@ function booleanFieldSpec(
 }
 
 function componentFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminComponentFieldSpecificationUpdate {
+): ComponentFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Component) {
     throw new Error(`Field ${entityType.name}.${name} is not component (${field.type})`);
@@ -311,9 +311,9 @@ function componentFieldSpec(
 }
 
 function referenceFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminReferenceFieldSpecificationUpdate {
+): ReferenceFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Reference) {
     throw new Error(`Field ${entityType.name}.${name} is not entity (${field.type})`);
@@ -322,9 +322,9 @@ function referenceFieldSpec(
 }
 
 function locationFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminLocationFieldSpecificationUpdate {
+): LocationFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Location) {
     throw new Error(`Field ${entityType.name}.${name} is not location (${field.type})`);
@@ -333,9 +333,9 @@ function locationFieldSpec(
 }
 
 function numberFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminNumberFieldSpecificationUpdate {
+): NumberFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.Number) {
     throw new Error(`Field ${entityType.name}.${name} is not number (${field.type})`);
@@ -344,9 +344,9 @@ function numberFieldSpec(
 }
 
 function richTextFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminRichTextFieldSpecificationUpdate {
+): RichTextFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.RichText) {
     throw new Error(`Field ${entityType.name}.${name} is not rich text (${field.type})`);
@@ -355,9 +355,9 @@ function richTextFieldSpec(
 }
 
 function stringFieldSpec(
-  entityType: AdminEntityTypeSpecificationUpdate,
+  entityType: EntityTypeSpecificationUpdate,
   name: string,
-): AdminStringFieldSpecificationUpdate {
+): StringFieldSpecificationUpdate {
   const field = fieldSpec(entityType, name);
   if (field.type !== FieldType.String) {
     throw new Error(`Field ${entityType.name}.${name} is not string (${field.type})`);

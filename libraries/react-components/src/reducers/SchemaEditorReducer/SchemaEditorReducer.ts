@@ -2,15 +2,15 @@ import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
   RichTextNodeType,
-  type AdminComponentTypeSpecification,
-  type AdminComponentTypeSpecificationUpdate,
-  type AdminEntityTypeSpecification,
-  type AdminEntityTypeSpecificationUpdate,
-  type AdminFieldSpecification,
+  type ComponentTypeSpecification,
+  type ComponentTypeSpecificationUpdate,
+  type EntityTypeSpecification,
+  type EntityTypeSpecificationUpdate,
+  type FieldSpecification,
   type Schema,
-  type AdminSchemaSpecificationUpdate,
-  type AdminSchemaTransientMigrationAction,
-  type AdminSchemaVersionMigration,
+  type SchemaSpecificationUpdate,
+  type SchemaTransientMigrationAction,
+  type SchemaVersionMigration,
   type SchemaIndexSpecification,
   type SchemaPatternSpecification,
 } from '@dossierhq/core';
@@ -89,7 +89,7 @@ export interface SchemaFieldDraft {
   // number
   integer?: boolean;
   //
-  existingFieldSpec: AdminFieldSpecification | null;
+  existingFieldSpec: FieldSpecification | null;
 }
 
 export interface SchemaIndexDraft extends SchemaIndexSpecification {
@@ -1525,7 +1525,7 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
 
   convertType<TKind extends 'entity' | 'component'>(
     kind: TKind,
-    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
+    typeSpec: EntityTypeSpecification | ComponentTypeSpecification,
   ): SchemaTypeDraft & { kind: TKind } {
     return {
       kind,
@@ -1670,8 +1670,8 @@ export const SchemaEditorActions = {
 
 export function getSchemaSpecificationUpdateFromEditorState(
   state: SchemaEditorState,
-): AdminSchemaSpecificationUpdate {
-  const update: AdminSchemaSpecificationUpdate = {};
+): SchemaSpecificationUpdate {
+  const update: SchemaSpecificationUpdate = {};
 
   const entityTypes = state.entityTypes
     .filter((it) => it.status !== '')
@@ -1720,7 +1720,7 @@ export function getSchemaSpecificationUpdateFromEditorState(
 
 function getTypeUpdateFromEditorState(
   draftType: SchemaComponentTypeDraft | SchemaEntityTypeDraft,
-): AdminEntityTypeSpecificationUpdate | AdminComponentTypeSpecificationUpdate {
+): EntityTypeSpecificationUpdate | ComponentTypeSpecificationUpdate {
   const fields = draftType.fields.map((draftField) => {
     return {
       name: draftField.name,
@@ -1762,8 +1762,8 @@ function getTypeUpdateFromEditorState(
   return shared;
 }
 
-function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVersionMigration[] {
-  const actions: AdminSchemaVersionMigration['actions'] = [];
+function getMigrationsFromEditorState(state: SchemaEditorState): SchemaVersionMigration[] {
+  const actions: SchemaVersionMigration['actions'] = [];
 
   for (const typeName of state.deletedEntityTypes) {
     actions.push({ action: 'deleteType', entityType: typeName });
@@ -1816,8 +1816,8 @@ function getMigrationsFromEditorState(state: SchemaEditorState): AdminSchemaVers
 
 function getTransientMigrationsFromEditorState(
   state: SchemaEditorState,
-): AdminSchemaTransientMigrationAction[] {
-  const actions: AdminSchemaTransientMigrationAction[] = [];
+): SchemaTransientMigrationAction[] {
+  const actions: SchemaTransientMigrationAction[] = [];
 
   for (const index of state.deletedIndexes) {
     actions.push({ action: 'deleteIndex', index });

@@ -1,4 +1,4 @@
-import { ok, type AdminSchemaSpecificationWithMigrations } from '@dossierhq/core';
+import { ok, type SchemaSpecificationWithMigrations } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
@@ -40,7 +40,7 @@ describe('schemaGetSpecification', () => {
     const databaseAdapter = createMockDatabaseAdapter();
     const context = createMockTransactionContext();
 
-    const schemaSpec: AdminSchemaSpecificationWithMigrations = {
+    const schemaSpec: SchemaSpecificationWithMigrations = {
       schemaKind: 'full',
       version: 1,
       migrations: [],

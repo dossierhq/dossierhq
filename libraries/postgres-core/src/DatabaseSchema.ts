@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationWithMigrations, EventType } from '@dossierhq/core';
+import type { SchemaSpecificationWithMigrations, EventType } from '@dossierhq/core';
 
 export const UniqueConstraints = {
   advisory_locks_name_key: 'advisory_locks_name_key',
@@ -23,7 +23,7 @@ export interface SchemaVersionsTable {
   id: number;
   version: number;
   updated_at: Date;
-  specification: Omit<AdminSchemaSpecificationWithMigrations, 'version'>;
+  specification: Omit<SchemaSpecificationWithMigrations, 'version'>;
 }
 
 export interface SubjectsTable {

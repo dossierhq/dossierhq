@@ -1,13 +1,13 @@
 import type { BaseSchema } from './BaseSchema.js';
 import {
   FieldType,
-  type AdminFieldSpecification,
-  type AdminSchemaSpecification,
+  type FieldSpecification,
   type PublishedFieldSpecification,
   type PublishedSchemaSpecification,
+  type SchemaSpecification,
 } from './SchemaSpecification.js';
 
-export function schemaAdminToPublished(adminSchema: BaseSchema<AdminSchemaSpecification>) {
+export function schemaAdminToPublished(adminSchema: BaseSchema<SchemaSpecification>) {
   const spec: PublishedSchemaSpecification = {
     schemaKind: 'published',
     version: adminSchema.spec.version,
@@ -17,7 +17,7 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<AdminSchemaSpecif
     indexes: [],
   };
 
-  function toPublishedFields(fields: AdminFieldSpecification[]): PublishedFieldSpecification[] {
+  function toPublishedFields(fields: FieldSpecification[]): PublishedFieldSpecification[] {
     return fields
       .filter((it) => !it.adminOnly)
       .map((field) => {

@@ -1,11 +1,10 @@
 import type {
   EntityReference,
-  ReferenceFieldSpecification,
-  RichTextFieldSpecification,
+  PublishedReferenceFieldSpecification,
+  PublishedRichTextFieldSpecification,
 } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
-import type { MouseEvent } from 'react';
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, type MouseEvent } from 'react';
 import { EntityDisplayDispatchContext } from '../../contexts/EntityDisplayDispatchContext.js';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedEntity } from '../../hooks/usePublishedEntity.js';
@@ -14,7 +13,7 @@ import type { FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props
   extends FieldDisplayProps<
-    ReferenceFieldSpecification | RichTextFieldSpecification,
+    PublishedReferenceFieldSpecification | PublishedRichTextFieldSpecification,
     EntityReference
   > {
   className?: string;

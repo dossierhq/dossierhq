@@ -1,5 +1,5 @@
 import type {
-  AdminFieldSpecification,
+  FieldSpecification,
   Component,
   ComponentFieldSpecification,
   PublishValidationIssue,
@@ -131,7 +131,7 @@ export function AddComponentListItemButton({
   fieldSpec,
   onAddItem,
 }: {
-  fieldSpec: AdminFieldSpecification<ComponentFieldSpecification>;
+  fieldSpec: ComponentFieldSpecification;
   onAddItem: (value: Component | null) => void;
 }) {
   const handleComponentTypeSelected = useCallback(
@@ -150,7 +150,7 @@ function AddComponentButton({
   fieldSpec,
   onComponentTypeSelected,
 }: {
-  fieldSpec: AdminFieldSpecification<ComponentFieldSpecification>;
+  fieldSpec: ComponentFieldSpecification;
   onComponentTypeSelected: (type: string) => void;
 }) {
   return (
@@ -173,7 +173,7 @@ function ComponentField({
   onChange,
 }: {
   value: Component;
-  valueFieldSpec: AdminFieldSpecification;
+  valueFieldSpec: FieldSpecification;
   adminOnly: boolean;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   onChange: (value: Component) => void;

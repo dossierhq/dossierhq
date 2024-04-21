@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
+import type { FieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
 import { RichTextNodeType } from '@dossierhq/core';
 import type { IconName } from '@dossierhq/design';
 import {
@@ -67,11 +67,7 @@ const blockTypeToBlockName = {
 
 type BlockTypeName = keyof typeof blockTypeToBlockName;
 
-export function ToolbarPlugin({
-  fieldSpec,
-}: {
-  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
-}) {
+export function ToolbarPlugin({ fieldSpec }: { fieldSpec: RichTextFieldSpecification }) {
   const { schema } = useContext(AdminDossierContext);
   const [editor] = useLexicalComposerContext();
 
@@ -286,7 +282,7 @@ function BlockFormatDropDown({
   blockType: keyof typeof blockTypeToBlockName;
   editor: LexicalEditor;
   disabled: boolean;
-  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  fieldSpec: RichTextFieldSpecification;
 }): JSX.Element {
   const items: { id: BlockTypeName; name: string; icon: IconName }[] = Object.entries(
     blockTypeToBlockName,
@@ -452,7 +448,7 @@ function AddEntityDialog({
   fieldSpec,
   onClose,
 }: {
-  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  fieldSpec: RichTextFieldSpecification;
   onClose: () => void;
 }) {
   const [editor] = useLexicalComposerContext();
@@ -475,7 +471,7 @@ function AddComponentButton({
   fieldSpec,
   onClose,
 }: {
-  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  fieldSpec: RichTextFieldSpecification;
   onClose: () => void;
 }) {
   const [editor] = useLexicalComposerContext();
@@ -502,7 +498,7 @@ function LinkAndEntityLinkButton({
   isLink,
   isEntityLink,
 }: {
-  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  fieldSpec: RichTextFieldSpecification;
   enableLinkNode: boolean;
   enableEntityLinkNode: boolean;
   isLink: boolean;

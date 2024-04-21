@@ -2,9 +2,9 @@ import {
   isFieldValueEqual,
   notOk,
   ok,
-  type AdminComponentTypeSpecification,
-  type AdminEntityTypeSpecification,
-  type AdminSchemaTransientMigrationAction,
+  type ComponentTypeSpecification,
+  type EntityTypeSpecification,
+  type SchemaTransientMigrationAction,
   type SchemaWithMigrations,
   type ErrorType,
   type Result,
@@ -14,7 +14,7 @@ import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/
 export function calculateSchemaChangeImpact(
   previous: SchemaWithMigrations,
   next: SchemaWithMigrations,
-  transientMigrations: AdminSchemaTransientMigrationAction[] | null,
+  transientMigrations: SchemaTransientMigrationAction[] | null,
 ): Result<
   {
     deleteEntityTypes: string[];
@@ -174,9 +174,9 @@ export function calculateSchemaChangeImpact(
 function calculateTypeSelector(
   isEntityType: boolean,
   previous: SchemaWithMigrations,
-  previousType: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
+  previousType: EntityTypeSpecification | ComponentTypeSpecification,
   next: SchemaWithMigrations,
-  nextType: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
+  nextType: EntityTypeSpecification | ComponentTypeSpecification,
 ): Result<{ validate: boolean; index: boolean }, typeof ErrorType.Generic> {
   let validate = false;
   let index = false;
@@ -195,9 +195,9 @@ function calculateTypeSelector(
   if (isEntityType) {
     const patternResult = validateDueToPatternChange(
       previous,
-      (previousType as AdminEntityTypeSpecification).authKeyPattern,
+      (previousType as EntityTypeSpecification).authKeyPattern,
       next,
-      (nextType as AdminEntityTypeSpecification).authKeyPattern,
+      (nextType as EntityTypeSpecification).authKeyPattern,
     );
     if (patternResult.isError()) return patternResult;
     if (patternResult.value) {

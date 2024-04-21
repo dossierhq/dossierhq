@@ -5,7 +5,7 @@ import {
   type AdminEntity,
   type AdminEntityCreate,
   type AdminEntityProcessDirtyPayload,
-  type AdminSchemaSpecificationUpdate,
+  type SchemaSpecificationUpdate,
   type EntityReference,
   type ErrorType,
   type PromiseResult,
@@ -53,7 +53,7 @@ export async function createEntityWithInvalidComponent(
 
 async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object> = AdminEntity>(
   adminClient: AppAdminClient,
-  schemaUpdate: AdminSchemaSpecificationUpdate,
+  schemaUpdate: SchemaSpecificationUpdate,
   entity: AdminEntityCreate<TEntity>,
   options?: Options,
 ): PromiseResult<
@@ -98,7 +98,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
 
 async function withTemporarySchemaChange(
   adminClient: AppAdminClient,
-  schemaUpdate: AdminSchemaSpecificationUpdate,
+  schemaUpdate: SchemaSpecificationUpdate,
   onChangedSchema: () => Promise<EntityReference | undefined>,
   onProcessed: (processed: AdminEntityProcessDirtyPayload) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

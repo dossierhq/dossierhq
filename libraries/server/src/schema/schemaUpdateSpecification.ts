@@ -4,9 +4,9 @@ import {
   isFieldValueEqual,
   notOk,
   ok,
-  type AdminSchemaSpecificationUpdate,
-  type AdminSchemaSpecificationWithMigrations,
-  type AdminSchemaTransientMigrationAction,
+  type SchemaSpecificationUpdate,
+  type SchemaSpecificationWithMigrations,
+  type SchemaTransientMigrationAction,
   type PromiseResult,
   type SchemaSpecificationUpdatePayload,
   type UpdateSchemaSyncEvent,
@@ -20,9 +20,9 @@ import { schemaGetSpecification } from './schemaGetSpecification.js';
 export async function schemaUpdateSpecification(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  update: AdminSchemaSpecificationUpdate,
+  update: SchemaSpecificationUpdate,
 ): PromiseResult<
-  SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
+  SchemaSpecificationUpdatePayload<SchemaSpecificationWithMigrations>,
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const { session } = context;
@@ -31,7 +31,7 @@ export async function schemaUpdateSpecification(
   }
 
   return await context.withTransaction<
-    SchemaSpecificationUpdatePayload<AdminSchemaSpecificationWithMigrations>,
+    SchemaSpecificationUpdatePayload<SchemaSpecificationWithMigrations>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >(async (context) => {
     const previousSpecificationResult = await schemaGetSpecification(
@@ -138,7 +138,7 @@ async function calculateAndUpdateSchemaSpec(
   oldSchema: SchemaWithMigrations,
   newSchema: SchemaWithMigrations,
   specifiedVersion: number | null,
-  transientMigrations: AdminSchemaTransientMigrationAction[] | null,
+  transientMigrations: SchemaTransientMigrationAction[] | null,
   syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const { logger } = context;

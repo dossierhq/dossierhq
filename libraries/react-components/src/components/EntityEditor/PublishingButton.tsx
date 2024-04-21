@@ -2,7 +2,7 @@ import {
   AdminEntityStatus,
   type AdminClient,
   type AdminEntity,
-  type AdminEntityTypeSpecification,
+  type EntityTypeSpecification,
   type Component,
   type ErrorType,
   type Result,
@@ -15,7 +15,7 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 interface Props {
   disabled?: boolean;
   entity: AdminEntity | null;
-  entitySpec: AdminEntityTypeSpecification;
+  entitySpec: EntityTypeSpecification;
 }
 
 type PublishingActionId = 'publish' | 'unpublish' | 'archive' | 'unarchive';
@@ -79,10 +79,7 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
   );
 }
 
-function createPublishActions(
-  entity: AdminEntity | null,
-  entitySpec: AdminEntityTypeSpecification,
-) {
+function createPublishActions(entity: AdminEntity | null, entitySpec: EntityTypeSpecification) {
   if (!entity) {
     return [];
   }

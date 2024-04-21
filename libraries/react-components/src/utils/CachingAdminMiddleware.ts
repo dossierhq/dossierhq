@@ -3,7 +3,7 @@ import {
   SchemaWithMigrations,
   type AdminClient,
   type AdminClientMiddleware,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ClientContext,
   type OkFromResult,
 } from '@dossierhq/core';
@@ -38,7 +38,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
   function handleUpdatedAdminSchema(
     context: TContext,
     mutate: ScopedMutator,
-    adminSchema: AdminSchemaSpecificationWithMigrations,
+    adminSchema: SchemaSpecificationWithMigrations,
   ) {
     let migrationsToApply = 0;
     for (const migration of adminSchema.migrations) {
@@ -84,11 +84,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
             ReturnType<AdminClient['getSchemaSpecification']>
           >;
           if (args[0]?.includeMigrations) {
-            handleUpdatedAdminSchema(
-              context,
-              mutate,
-              payload as AdminSchemaSpecificationWithMigrations,
-            );
+            handleUpdatedAdminSchema(context, mutate, payload as SchemaSpecificationWithMigrations);
           }
           break;
         }
@@ -136,7 +132,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           let adminSchema: SchemaWithMigrations | undefined;
           if (args[1]?.includeMigrations) {
             adminSchema = new SchemaWithMigrations(
-              payload.schemaSpecification as AdminSchemaSpecificationWithMigrations,
+              payload.schemaSpecification as SchemaSpecificationWithMigrations,
             );
           }
           updateCacheSchemas(cache, mutate, adminSchema);

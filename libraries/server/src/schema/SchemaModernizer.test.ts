@@ -1,8 +1,8 @@
 import {
   FieldType,
   RichTextNodeType,
-  type AdminSchemaSpecificationWithMigrations,
-  type LegacyAdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
+  type LegacySchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { modernizeSchemaSpecification } from './SchemaModernizer.js';
@@ -35,10 +35,8 @@ describe('modernizeSchemaSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
-    } as unknown as LegacyAdminSchemaSpecificationWithMigrations;
-    expect(
-      modernizeSchemaSpecification(schemaSpec),
-    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+    } as unknown as LegacySchemaSpecificationWithMigrations;
+    expect(modernizeSchemaSpecification(schemaSpec)).toEqual<SchemaSpecificationWithMigrations>({
       schemaKind: 'full',
       version: 1,
       migrations: [],
@@ -96,10 +94,8 @@ describe('modernizeSchemaSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
-    } as unknown as LegacyAdminSchemaSpecificationWithMigrations;
-    expect(
-      modernizeSchemaSpecification(schemaSpec),
-    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+    } as unknown as LegacySchemaSpecificationWithMigrations;
+    expect(modernizeSchemaSpecification(schemaSpec)).toEqual<SchemaSpecificationWithMigrations>({
       schemaKind: 'full',
       version: 1,
       entityTypes: [
@@ -162,11 +158,9 @@ describe('modernizeSchemaSpecification', () => {
       valueTypes: [],
       patterns: [],
       indexes: [],
-    } as unknown as AdminSchemaSpecificationWithMigrations;
+    } as unknown as SchemaSpecificationWithMigrations;
 
-    expect(
-      modernizeSchemaSpecification(schemaSpec),
-    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+    expect(modernizeSchemaSpecification(schemaSpec)).toEqual<SchemaSpecificationWithMigrations>({
       schemaKind: 'full',
       version: 1,
       migrations: [],
@@ -203,7 +197,7 @@ describe('modernizeSchemaSpecification', () => {
   });
 
   test('Version <=0.4.7 schema', () => {
-    const schemaSpec: LegacyAdminSchemaSpecificationWithMigrations = {
+    const schemaSpec: LegacySchemaSpecificationWithMigrations = {
       version: 2,
       schemaKind: 'full',
       entityTypes: [
@@ -284,9 +278,7 @@ describe('modernizeSchemaSpecification', () => {
       ],
     };
 
-    expect(
-      modernizeSchemaSpecification(schemaSpec),
-    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+    expect(modernizeSchemaSpecification(schemaSpec)).toEqual<SchemaSpecificationWithMigrations>({
       schemaKind: 'full',
       version: 2,
       entityTypes: [
@@ -367,7 +359,7 @@ describe('modernizeSchemaSpecification', () => {
   });
 
   test('Version <=0.7 schema', () => {
-    const schemaSpec: LegacyAdminSchemaSpecificationWithMigrations = {
+    const schemaSpec: LegacySchemaSpecificationWithMigrations = {
       version: 2,
       schemaKind: 'full',
       entityTypes: [
@@ -409,9 +401,7 @@ describe('modernizeSchemaSpecification', () => {
       migrations: [],
     };
 
-    expect(
-      modernizeSchemaSpecification(schemaSpec),
-    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+    expect(modernizeSchemaSpecification(schemaSpec)).toEqual<SchemaSpecificationWithMigrations>({
       schemaKind: 'full',
       version: 2,
       entityTypes: [

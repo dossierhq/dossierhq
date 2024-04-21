@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdate,
   Connection,
   Edge,
   ErrorType,
@@ -175,7 +175,7 @@ export function insecureTestUuidv4(): string {
 
 export async function safelyUpdateSchemaSpecification(
   adminClient: AdminClient,
-  schemaUpdate: AdminSchemaSpecificationUpdate,
+  schemaUpdate: SchemaSpecificationUpdate,
 ): PromiseResult<Schema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withAdvisoryLock(
     adminClient,

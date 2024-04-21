@@ -2,8 +2,8 @@ import type { Component, EntityLike, RichTextNode } from '../Types.js';
 import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
-  AdminComponentTypeSpecification,
-  AdminEntityTypeSpecification,
+  ComponentTypeSpecification,
+  EntityTypeSpecification,
   PublishedComponentTypeSpecification,
   PublishedEntityTypeSpecification,
 } from '../schema/SchemaSpecification.js';
@@ -177,8 +177,8 @@ function* traverseContentFields<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
   path: ContentValuePath,
   typeSpec:
-    | AdminEntityTypeSpecification
-    | AdminComponentTypeSpecification
+    | EntityTypeSpecification
+    | ComponentTypeSpecification
     | PublishedEntityTypeSpecification
     | PublishedComponentTypeSpecification,
   fields: Record<string, unknown>,

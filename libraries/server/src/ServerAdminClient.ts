@@ -9,7 +9,7 @@ import {
   type AdminEntityCreate,
   type AdminEntityUpdate,
   type AdminEntityUpsert,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ContextProvider,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
@@ -328,7 +328,7 @@ export function createServerAdminClient({
 
           if (!includeMigrations) {
             const { migrations: _, ...spec } = result.value.schemaSpecification;
-            result.value.schemaSpecification = spec as AdminSchemaSpecificationWithMigrations;
+            result.value.schemaSpecification = spec as SchemaSpecificationWithMigrations;
           }
         }
         resolve(result);

@@ -5,7 +5,7 @@ import {
   ok,
   transformEntityFields,
   type AdminEntity,
-  type AdminEntityTypeSpecification,
+  type EntityTypeSpecification,
   type SchemaWithMigrations,
   type ContentTransformer,
   type ContentValuePath,
@@ -23,7 +23,7 @@ export const ENCODE_VERSION_AS_IS = 1; // version 0.4.2+: Used to encoding all c
 
 export function migrateDecodeAndNormalizeAdminEntityFields(
   adminSchema: SchemaWithMigrations,
-  entitySpec: AdminEntityTypeSpecification,
+  entitySpec: EntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<AdminEntity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {

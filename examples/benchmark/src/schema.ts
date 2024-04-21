@@ -1,6 +1,6 @@
-import { FieldType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { FieldType, type SchemaSpecificationUpdate } from '@dossierhq/core';
 
-export const schemaSpecification: AdminSchemaSpecificationUpdate = {
+export const schemaSpecification: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Organization',

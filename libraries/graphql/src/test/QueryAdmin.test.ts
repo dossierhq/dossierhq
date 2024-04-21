@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdate,
   BoundingBox,
 } from '@dossierhq/core';
 import {
@@ -38,7 +38,7 @@ let schema: GraphQLSchema;
 let entitiesOfTypeQueryAdminOnlyEditBeforeNone: AdminEntity[];
 let entitiesOfTypeQueryAdminOnlyEditBeforeSubject: AdminEntity[];
 
-const schemaSpecification: AdminSchemaSpecificationUpdate = {
+const schemaSpecification: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'QueryAdminFoo',

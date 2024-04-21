@@ -1,4 +1,4 @@
-import type { AdminSchemaSpecificationUpdate, EntityLike } from '@dossierhq/core';
+import type { SchemaSpecificationUpdate, EntityLike } from '@dossierhq/core';
 import {
   Schema,
   FieldType,
@@ -21,7 +21,7 @@ import {
   createUniqueIndexCollector,
 } from './EntityCollectors.js';
 
-const schemaSpec: AdminSchemaSpecificationUpdate = {
+const schemaSpec: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'EntityCodecFoo',

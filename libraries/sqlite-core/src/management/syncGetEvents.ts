@@ -1,5 +1,5 @@
 import type {
-  AdminSchemaSpecificationWithMigrations,
+  SchemaSpecificationWithMigrations,
   ArchiveEntitySyncEvent,
   CreateEntitySyncEvent,
   CreatePrincipalSyncEvent,
@@ -236,10 +236,10 @@ function convertEventRowsToPayload(
       continue;
     }
     if (type === EventType.updateSchema) {
-      const schemaSpecification: AdminSchemaSpecificationWithMigrations = {
+      const schemaSpecification: SchemaSpecificationWithMigrations = {
         version: eventRow.version,
         ...(JSON.parse(eventRow.specification) as Omit<
-          AdminSchemaSpecificationWithMigrations,
+          SchemaSpecificationWithMigrations,
           'version'
         >),
       };

@@ -3,14 +3,14 @@ import { assertExhaustive } from '../utils/Asserts.js';
 import { isFieldValueEqual } from '../utils/isFieldValueEqual.js';
 import {
   FieldType,
-  type AdminComponentTypeSpecification,
-  type AdminEntityTypeSpecification,
-  type AdminFieldSpecification,
-  type AdminFieldSpecificationUpdate,
-  type AdminSchemaSpecificationUpdate,
-  type AdminSchemaSpecificationWithMigrations,
-  type AdminSchemaTransientMigrationAction,
-  type AdminSchemaVersionMigration,
+  type ComponentTypeSpecification,
+  type EntityTypeSpecification,
+  type FieldSpecification,
+  type FieldSpecificationUpdate,
+  type SchemaSpecificationUpdate,
+  type SchemaSpecificationWithMigrations,
+  type SchemaTransientMigrationAction,
+  type SchemaVersionMigration,
   type ComponentFieldSpecification,
   type NumberFieldSpecification,
   type ReferenceFieldSpecification,
@@ -19,12 +19,12 @@ import {
 } from './SchemaSpecification.js';
 
 export function schemaUpdate(
-  currentSchemaSpec: AdminSchemaSpecificationWithMigrations,
-  update: AdminSchemaSpecificationUpdate,
-): Result<AdminSchemaSpecificationWithMigrations, typeof ErrorType.BadRequest> {
+  currentSchemaSpec: SchemaSpecificationWithMigrations,
+  update: SchemaSpecificationUpdate,
+): Result<SchemaSpecificationWithMigrations, typeof ErrorType.BadRequest> {
   const schemaSpec = JSON.parse(
     JSON.stringify(currentSchemaSpec),
-  ) as AdminSchemaSpecificationWithMigrations;
+  ) as SchemaSpecificationWithMigrations;
 
   const mergeMigrationsResult = mergeMigrations(update, schemaSpec);
   if (mergeMigrationsResult.isError()) return mergeMigrationsResult;
@@ -69,7 +69,7 @@ export function schemaUpdate(
         existingEntitySpec,
       );
       if (collectFieldsResult.isError()) return collectFieldsResult;
-      const entitySpec: AdminEntityTypeSpecification = {
+      const entitySpec: EntityTypeSpecification = {
         name: entitySpecUpdate.name,
         adminOnly,
         authKeyPattern,
@@ -203,10 +203,10 @@ export function schemaUpdate(
 }
 
 function mergeMigrations(
-  update: AdminSchemaSpecificationUpdate,
-  updatedSpec: AdminSchemaSpecificationWithMigrations,
-): Result<AdminSchemaVersionMigration | null, typeof ErrorType.BadRequest> {
-  let currentMigration: AdminSchemaVersionMigration | null = null;
+  update: SchemaSpecificationUpdate,
+  updatedSpec: SchemaSpecificationWithMigrations,
+): Result<SchemaVersionMigration | null, typeof ErrorType.BadRequest> {
+  let currentMigration: SchemaVersionMigration | null = null;
 
   for (const newMigration of update.migrations ?? []) {
     const existingMigration = updatedSpec.migrations.find(
@@ -244,8 +244,8 @@ function mergeMigrations(
 }
 
 function applyMigrationsToSchema(
-  migration: AdminSchemaVersionMigration | null,
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  migration: SchemaVersionMigration | null,
+  schemaSpec: SchemaSpecificationWithMigrations,
 ): Result<void, typeof ErrorType.BadRequest> {
   if (!migration) {
     return ok(undefined);
@@ -326,17 +326,17 @@ function applyMigrationsToSchema(
 }
 
 function applyFieldMigration(
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  schemaSpec: SchemaSpecificationWithMigrations,
   actionSpec:
     | { action: string; entityType: string; field: string }
     | { action: string; componentType: string; field: string },
   apply: (
-    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
-    fieldSpec: AdminFieldSpecification,
+    typeSpec: EntityTypeSpecification | ComponentTypeSpecification,
+    fieldSpec: FieldSpecification,
     fieldIndex: number,
   ) => void,
 ) {
-  let typeSpecs: (AdminEntityTypeSpecification | AdminComponentTypeSpecification)[];
+  let typeSpecs: (EntityTypeSpecification | ComponentTypeSpecification)[];
   let typeName: string;
   if ('entityType' in actionSpec) {
     typeSpecs = schemaSpec.entityTypes;
@@ -366,15 +366,15 @@ function applyFieldMigration(
 }
 
 function applyTypeMigration(
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  schemaSpec: SchemaSpecificationWithMigrations,
   actionSpec: { action: string; entityType: string } | { action: string; componentType: string },
   apply: (
-    typeSpecs: (AdminEntityTypeSpecification | AdminComponentTypeSpecification)[],
-    typeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification,
+    typeSpecs: (EntityTypeSpecification | ComponentTypeSpecification)[],
+    typeSpec: EntityTypeSpecification | ComponentTypeSpecification,
     typeIndex: number,
   ) => void,
 ) {
-  let typeSpecs: (AdminEntityTypeSpecification | AdminComponentTypeSpecification)[];
+  let typeSpecs: (EntityTypeSpecification | ComponentTypeSpecification)[];
   let typeName: string;
   if ('entityType' in actionSpec) {
     typeSpecs = schemaSpec.entityTypes;
@@ -397,7 +397,7 @@ function applyTypeMigration(
 }
 
 function applyTypeMigrationToTypeReferences(
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  schemaSpec: SchemaSpecificationWithMigrations,
   actionSpec: { action: string; entityType: string } | { action: string; componentType: string },
   apply: (references: string[], typeIndex: number) => void,
 ) {
@@ -421,8 +421,8 @@ function applyTypeMigrationToTypeReferences(
 
 function applyTransientMigrationsToSchema(
   version: number | undefined,
-  transientMigrations: AdminSchemaTransientMigrationAction[] | undefined,
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  transientMigrations: SchemaTransientMigrationAction[] | undefined,
+  schemaSpec: SchemaSpecificationWithMigrations,
 ) {
   if (!transientMigrations || transientMigrations.length === 0) return ok(undefined);
 
@@ -465,7 +465,7 @@ function applyTransientMigrationsToSchema(
 }
 
 function applyIndexMigrationToIndexReferences(
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  schemaSpec: SchemaSpecificationWithMigrations,
   actionSpec: { action: string; index: string },
   apply: () => string | null,
 ) {
@@ -483,10 +483,10 @@ function applyIndexMigrationToIndexReferences(
 }
 
 function collectFieldSpecsFromUpdates(
-  fieldUpdates: AdminFieldSpecificationUpdate[],
-  existingTypeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification | null,
-): Result<AdminFieldSpecification[], typeof ErrorType.BadRequest> {
-  const fields: AdminFieldSpecification[] = [];
+  fieldUpdates: FieldSpecificationUpdate[],
+  existingTypeSpec: EntityTypeSpecification | ComponentTypeSpecification | null,
+): Result<FieldSpecification[], typeof ErrorType.BadRequest> {
+  const fields: FieldSpecification[] = [];
   const usedFieldNames = new Set<string>();
   for (const fieldUpdate of fieldUpdates) {
     const fieldResult = mergeAndNormalizeUpdatedFieldSpec(fieldUpdate, existingTypeSpec);
@@ -509,9 +509,9 @@ function collectFieldSpecsFromUpdates(
 }
 
 function mergeAndNormalizeUpdatedFieldSpec(
-  fieldSpecUpdate: AdminFieldSpecificationUpdate,
-  existingTypeSpec: AdminEntityTypeSpecification | AdminComponentTypeSpecification | null,
-): Result<AdminFieldSpecification, typeof ErrorType.BadRequest> {
+  fieldSpecUpdate: FieldSpecificationUpdate,
+  existingTypeSpec: EntityTypeSpecification | ComponentTypeSpecification | null,
+): Result<FieldSpecification, typeof ErrorType.BadRequest> {
   const existingFieldSpec = existingTypeSpec?.fields.find((it) => it.name === fieldSpecUpdate.name);
 
   const { name, type } = fieldSpecUpdate;
@@ -545,9 +545,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
     case FieldType.Boolean:
       return ok({ name, type, list, required, adminOnly });
     case FieldType.Reference: {
-      const existingEntityFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<ReferenceFieldSpecification>
-        | undefined;
+      const existingEntityFieldSpec = existingFieldSpec as ReferenceFieldSpecification | undefined;
       const entityTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
           fieldSpecUpdate.entityTypes,
@@ -567,9 +565,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
     case FieldType.Location:
       return ok({ name, type, list, required, adminOnly });
     case FieldType.Number: {
-      const existingNumberFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<NumberFieldSpecification>
-        | undefined;
+      const existingNumberFieldSpec = existingFieldSpec as NumberFieldSpecification | undefined;
       const integer = valueOrExistingOrDefault(
         fieldSpecUpdate.integer,
         existingNumberFieldSpec?.integer,
@@ -585,9 +581,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
       });
     }
     case FieldType.RichText: {
-      const existingRichTextFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<RichTextFieldSpecification>
-        | undefined;
+      const existingRichTextFieldSpec = existingFieldSpec as RichTextFieldSpecification | undefined;
 
       const richTextNodes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(
@@ -634,9 +628,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
       });
     }
     case FieldType.String: {
-      const existingStringFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<StringFieldSpecification>
-        | undefined;
+      const existingStringFieldSpec = existingFieldSpec as StringFieldSpecification | undefined;
 
       const multiline = valueOrExistingOrDefault(
         fieldSpecUpdate.multiline,
@@ -675,7 +667,7 @@ function mergeAndNormalizeUpdatedFieldSpec(
     }
     case FieldType.Component: {
       const existingComponentFieldSpec = existingFieldSpec as
-        | AdminFieldSpecification<ComponentFieldSpecification>
+        | ComponentFieldSpecification
         | undefined;
       const componentTypes = sortAndRemoveDuplicates(
         valueOrExistingOrDefault(

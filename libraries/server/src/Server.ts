@@ -8,7 +8,7 @@ import {
   type AdminClientMiddleware,
   type AdminEntity,
   type AdminEntityProcessDirtyPayload,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type Component,
   type Connection,
   type ContextProvider,
@@ -219,7 +219,7 @@ export class ServerImpl {
     return this.#publishedSchema;
   }
 
-  setAdminSchema(schemaSpec: AdminSchemaSpecificationWithMigrations): void {
+  setAdminSchema(schemaSpec: SchemaSpecificationWithMigrations): void {
     this.#adminSchema = new SchemaWithMigrations(schemaSpec);
     this.#publishedSchema = this.#adminSchema.toPublishedSchema();
   }

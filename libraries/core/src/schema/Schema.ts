@@ -2,24 +2,22 @@ import { ok, type ErrorType, type Result } from '../ErrorResult.js';
 import { BaseSchema } from './BaseSchema.js';
 import { PublishedSchema } from './PublishedSchema.js';
 import type {
-  AdminSchemaMigrationAction,
-  AdminSchemaSpecification,
-  AdminSchemaSpecificationUpdate,
-  AdminSchemaSpecificationWithMigrations,
+  SchemaMigrationAction,
+  SchemaSpecification,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationWithMigrations,
 } from './SchemaSpecification.js';
 import { schemaAdminToPublished } from './schemaAdminToPublished.js';
 import { schemaUpdate } from './schemaUpdate.js';
 import { schemaValidateAdmin } from './schemaValidateAdmin.js';
 
 export class Schema<
-  TSpec extends
-    | AdminSchemaSpecification
-    | AdminSchemaSpecificationWithMigrations = AdminSchemaSpecification,
+  TSpec extends SchemaSpecification | SchemaSpecificationWithMigrations = SchemaSpecification,
 > extends BaseSchema<TSpec> {
   private cachedPublishedSchema: PublishedSchema | null = null;
 
   static createAndValidate(
-    update: AdminSchemaSpecificationUpdate,
+    update: SchemaSpecificationUpdate,
   ): Result<Schema, typeof ErrorType.BadRequest> {
     const result = SchemaWithMigrations.createAndValidate(update);
     if (!result.isOk()) return result;
@@ -49,11 +47,11 @@ export class Schema<
   }
 }
 
-export class SchemaWithMigrations extends Schema<AdminSchemaSpecificationWithMigrations> {
+export class SchemaWithMigrations extends Schema<SchemaSpecificationWithMigrations> {
   static override createAndValidate(
-    update: AdminSchemaSpecificationUpdate,
+    update: SchemaSpecificationUpdate,
   ): Result<SchemaWithMigrations, typeof ErrorType.BadRequest> {
-    const emptySpec: AdminSchemaSpecificationWithMigrations = {
+    const emptySpec: SchemaSpecificationWithMigrations = {
       schemaKind: 'full',
       version: 0,
       entityTypes: [],
@@ -67,7 +65,7 @@ export class SchemaWithMigrations extends Schema<AdminSchemaSpecificationWithMig
   }
 
   updateAndValidate(
-    update: AdminSchemaSpecificationUpdate,
+    update: SchemaSpecificationUpdate,
   ): Result<SchemaWithMigrations, typeof ErrorType.BadRequest> {
     // Update
     const updatedResult = schemaUpdate(this.spec, update);
@@ -86,7 +84,7 @@ export class SchemaWithMigrations extends Schema<AdminSchemaSpecificationWithMig
     return ok(updatedSchema);
   }
 
-  collectMigrationActionsSinceVersion(oldSchemaVersion: number): AdminSchemaMigrationAction[] {
+  collectMigrationActionsSinceVersion(oldSchemaVersion: number): SchemaMigrationAction[] {
     const migrationsToConsider = this.spec.migrations.filter((it) => it.version > oldSchemaVersion);
     if (migrationsToConsider.length === 0) {
       return [];

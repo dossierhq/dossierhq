@@ -1,8 +1,8 @@
 import {
   FieldType,
-  type AdminComponentTypeSpecification,
-  type AdminEntityTypeSpecification,
-  type AdminFieldSpecification,
+  type ComponentTypeSpecification,
+  type EntityTypeSpecification,
+  type FieldSpecification,
   type Schema,
   type PublishedComponentTypeSpecification,
   type PublishedEntityTypeSpecification,
@@ -104,9 +104,9 @@ function generateUniqueIndexesType(
 
 function generateAllTypesUnion(
   types:
-    | AdminEntityTypeSpecification[]
+    | EntityTypeSpecification[]
     | PublishedEntityTypeSpecification[]
-    | AdminComponentTypeSpecification[]
+    | ComponentTypeSpecification[]
     | PublishedComponentTypeSpecification[],
   adminOrPublished: 'Admin' | 'Published',
   entityOrComponent: 'Entity' | 'Component',
@@ -117,7 +117,7 @@ function generateAllTypesUnion(
 
 function generateAdminEntityType(
   context: GeneratorContext,
-  entitySpec: AdminEntityTypeSpecification,
+  entitySpec: EntityTypeSpecification,
   authKeyPatternTypeMap: Record<string, string>,
 ) {
   return generateEntityType(context, entitySpec, 'Admin', authKeyPatternTypeMap);
@@ -197,7 +197,7 @@ function generateEntityType(
 
 function generateAdminComponentType(
   context: GeneratorContext,
-  componentSpec: AdminComponentTypeSpecification,
+  componentSpec: ComponentTypeSpecification,
 ) {
   return generateComponentType(context, componentSpec, 'Admin');
 }
@@ -263,7 +263,7 @@ function generateComponentType(
 
 function fieldType(
   { coreImports }: GeneratorContext,
-  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   adminOrPublished: 'Admin' | 'Published',
 ) {
   let type: string;

@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminFieldSpecification,
+  FieldSpecification,
   EntityReference,
   ReferenceFieldSpecification,
 } from '@dossierhq/core';
@@ -144,7 +144,7 @@ export function AddEntityListItemButton({
   fieldSpec,
   onAddItem,
 }: {
-  fieldSpec: AdminFieldSpecification<ReferenceFieldSpecification>;
+  fieldSpec: ReferenceFieldSpecification;
   onAddItem: (value: EntityReference | null) => void;
 }) {
   return <AddEntityButton fieldSpec={fieldSpec} onEntitySelected={onAddItem} />;
@@ -154,7 +154,7 @@ function AddEntityButton({
   fieldSpec,
   onEntitySelected,
 }: {
-  fieldSpec: AdminFieldSpecification<ReferenceFieldSpecification>;
+  fieldSpec: ReferenceFieldSpecification;
   onEntitySelected: (entity: EntityReference) => void;
 }) {
   const [showSelector, setShowSelector] = useState(false);

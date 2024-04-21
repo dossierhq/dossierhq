@@ -1,5 +1,5 @@
 #!/usr/bin/env -S bun
-import { Schema, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { Schema, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
@@ -9,7 +9,7 @@ import { SCHEMA as REVIEWS_SCHEMA } from '../src/reviews/schema.js';
 import { SCHEMA as STARWARS_SCHEMA } from '../src/starwars/schema.js';
 
 async function generateTypes(
-  schemaSpec: AdminSchemaSpecificationUpdate,
+  schemaSpec: SchemaSpecificationUpdate,
   filename: string,
   { authKeyPatternTypeMap }: { authKeyPatternTypeMap?: Record<string, string> } = {},
 ) {

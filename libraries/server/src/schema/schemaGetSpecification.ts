@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -11,7 +11,7 @@ export async function schemaGetSpecification(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   initialLoad: boolean,
-): PromiseResult<AdminSchemaSpecificationWithMigrations, typeof ErrorType.Generic> {
+): PromiseResult<SchemaSpecificationWithMigrations, typeof ErrorType.Generic> {
   const { logger } = context;
   if (initialLoad) logger.info('Loading schema');
   const result = await databaseAdapter.schemaGetSpecification(context);

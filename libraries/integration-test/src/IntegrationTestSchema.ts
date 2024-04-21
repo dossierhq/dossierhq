@@ -1,10 +1,10 @@
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
-  type AdminSchemaSpecificationUpdate,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 
-export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
+export const IntegrationTestSchema: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'Locations',
@@ -138,7 +138,7 @@ export const IntegrationTestSchema: AdminSchemaSpecificationUpdate = {
   ],
 };
 
-export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
+export const ChangeValidationsWithoutValidationsUpdate: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'ChangeValidations',
@@ -153,7 +153,7 @@ export const ChangeValidationsWithoutValidationsUpdate: AdminSchemaSpecification
   ],
 };
 
-export const ChangeValidationsComponentWithoutValidationsUpdate: AdminSchemaSpecificationUpdate = {
+export const ChangeValidationsComponentWithoutValidationsUpdate: SchemaSpecificationUpdate = {
   componentTypes: [
     {
       name: 'ChangeValidationsComponent',

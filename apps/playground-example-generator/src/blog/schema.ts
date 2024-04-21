@@ -1,7 +1,7 @@
-import type { AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import type { SchemaSpecificationUpdate } from '@dossierhq/core';
 import { FieldType, REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from '@dossierhq/core';
 
-export const SCHEMA: AdminSchemaSpecificationUpdate = {
+export const SCHEMA: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'BlogPost',

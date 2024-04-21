@@ -3,7 +3,7 @@ import {
   isRichTextComponentNode,
   ok,
   transformEntityFields,
-  type AdminSchemaMigrationAction,
+  type SchemaMigrationAction,
   type SchemaWithMigrations,
   type Component,
   type ErrorType,
@@ -23,8 +23,8 @@ export function applySchemaMigrationsToFields(
     return ok(entityFields.fields);
   }
 
-  const entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[] = [];
-  const componentTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[] = [];
+  const entityTypeActions: Exclude<SchemaMigrationAction, { componentType: string }>[] = [];
+  const componentTypeActions: Exclude<SchemaMigrationAction, { entityType: string }>[] = [];
   for (const action of actions) {
     if ('entityType' in action) {
       entityTypeActions.push(action);
@@ -75,7 +75,7 @@ export function applySchemaMigrationsToFields(
 
 function getStartingEntityType(
   targetEntityType: string,
-  entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[],
+  entityTypeActions: Exclude<SchemaMigrationAction, { componentType: string }>[],
 ) {
   let entityType = targetEntityType;
   for (let i = entityTypeActions.length - 1; i >= 0; i--) {
@@ -90,7 +90,7 @@ function getStartingEntityType(
 function migrateEntityFields(
   startingEntityType: string,
   originalFields: Record<string, unknown>,
-  entityTypeActions: Exclude<AdminSchemaMigrationAction, { componentType: string }>[],
+  entityTypeActions: Exclude<SchemaMigrationAction, { componentType: string }>[],
 ) {
   let changed = false;
   let entityType = startingEntityType;
@@ -125,7 +125,7 @@ function migrateEntityFields(
 
 function migrateComponent(
   originalComponent: Component | null,
-  componentTypeActions: Exclude<AdminSchemaMigrationAction, { entityType: string }>[],
+  componentTypeActions: Exclude<SchemaMigrationAction, { entityType: string }>[],
 ): Component | null {
   if (!originalComponent) return null;
 

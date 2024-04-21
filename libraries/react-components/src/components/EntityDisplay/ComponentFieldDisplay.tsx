@@ -1,17 +1,19 @@
 import {
   FieldType,
   type Component,
-  type ComponentFieldSpecification,
-  type RichTextFieldSpecification,
+  type PublishedComponentFieldSpecification,
+  type PublishedRichTextFieldSpecification,
 } from '@dossierhq/core';
 import { Column, Text } from '@dossierhq/design';
 import { Fragment, useContext } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import type { FieldDisplayProps } from './FieldDisplay.js';
-import { FieldDisplay } from './FieldDisplay.js';
+import { FieldDisplay, type FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props
-  extends FieldDisplayProps<ComponentFieldSpecification | RichTextFieldSpecification, Component> {
+  extends FieldDisplayProps<
+    PublishedComponentFieldSpecification | PublishedRichTextFieldSpecification,
+    Component
+  > {
   className?: string;
 }
 

@@ -1,4 +1,8 @@
-import type { EntityReference, RichText, RichTextFieldSpecification } from '@dossierhq/core';
+import type {
+  EntityReference,
+  PublishedRichTextFieldSpecification,
+  RichText,
+} from '@dossierhq/core';
 import { ClassName, LexicalTheme, toClassName } from '@dossierhq/design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { LinkNode } from '@lexical/link';
@@ -19,7 +23,7 @@ import { PublishedEntityNode } from './PublishedEntityNode.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 interface Props {
-  fieldSpec: RichTextFieldSpecification;
+  fieldSpec: PublishedRichTextFieldSpecification;
   value: RichText | null;
 }
 

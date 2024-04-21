@@ -1,7 +1,7 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdate,
   PublishedClient,
   PublishedEntity,
 } from '@dossierhq/core';
@@ -30,7 +30,7 @@ import {
 
 //TODO consider moving this test back to server or even to core
 
-const SCHEMA: AdminSchemaSpecificationUpdate = {
+const SCHEMA: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'PublishedEntityFoo',

@@ -6,7 +6,7 @@ import type {
   AdminClient,
   AdminClientMiddleware,
   AdminEntity,
-  AdminSchemaSpecificationUpdate,
+  SchemaSpecificationUpdate,
   ClientContext,
   Component,
 } from '@dossierhq/core';
@@ -30,7 +30,7 @@ export async function createAdapterAndServer<
   TAdminClient extends AdminClient<AdminEntity<string, object>, Component<string, object>>,
 >(
   database: Database,
-  schema: AdminSchemaSpecificationUpdate,
+  schema: SchemaSpecificationUpdate,
 ): Promise<{
   adminClient: TAdminClient;
   bobAdminClient: TAdminClient;

@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
   type UpdateSchemaSyncEvent,
@@ -19,7 +19,7 @@ export async function schemaUpdateSpecification(
   database: Database,
   context: TransactionContext,
   session: Session,
-  schemaSpec: AdminSchemaSpecificationWithMigrations,
+  schemaSpec: SchemaSpecificationWithMigrations,
   syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;

@@ -1,4 +1,4 @@
-import type { AdminFieldSpecification, StringFieldSpecification } from '@dossierhq/core';
+import type { FieldSpecification, StringFieldSpecification } from '@dossierhq/core';
 import {
   Button,
   ButtonDropdown,
@@ -94,7 +94,7 @@ export function AddStringListItemButton({
   fieldSpec,
   onAddItem,
 }: {
-  fieldSpec: AdminFieldSpecification<StringFieldSpecification>;
+  fieldSpec: StringFieldSpecification;
   onAddItem: (value: string | null) => void;
 }) {
   if (fieldSpec.values.length > 0) {

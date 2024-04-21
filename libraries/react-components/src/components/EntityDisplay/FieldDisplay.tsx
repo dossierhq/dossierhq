@@ -1,13 +1,3 @@
-import type {
-  BooleanFieldSpecification,
-  ComponentFieldSpecification,
-  LocationFieldSpecification,
-  NumberFieldSpecification,
-  PublishedFieldSpecification,
-  ReferenceFieldSpecification,
-  RichTextFieldSpecification,
-  StringFieldSpecification,
-} from '@dossierhq/core';
 import {
   isBooleanListField,
   isBooleanSingleField,
@@ -23,6 +13,14 @@ import {
   isRichTextSingleField,
   isStringListField,
   isStringSingleField,
+  type PublishedBooleanFieldSpecification,
+  type PublishedComponentFieldSpecification,
+  type PublishedFieldSpecification,
+  type PublishedLocationFieldSpecification,
+  type PublishedNumberFieldSpecification,
+  type PublishedReferenceFieldSpecification,
+  type PublishedRichTextFieldSpecification,
+  type PublishedStringFieldSpecification,
 } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import { useContext } from 'react';
@@ -64,84 +62,105 @@ export function FieldDisplay(props: FieldDisplayProps) {
   let display;
   if (isBooleanSingleField(fieldSpec, value)) {
     display = (
-      <BooleanFieldDisplay fieldSpec={fieldSpec as BooleanFieldSpecification} value={value} />
+      <BooleanFieldDisplay
+        fieldSpec={fieldSpec as PublishedBooleanFieldSpecification}
+        value={value}
+      />
     );
   } else if (isBooleanListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as BooleanFieldSpecification}
+        fieldSpec={fieldSpec as PublishedBooleanFieldSpecification}
         value={value}
         Display={BooleanFieldDisplay}
       />
     );
   } else if (isReferenceSingleField(fieldSpec, value)) {
     display = (
-      <ReferenceFieldDisplay fieldSpec={fieldSpec as ReferenceFieldSpecification} value={value} />
+      <ReferenceFieldDisplay
+        fieldSpec={fieldSpec as PublishedReferenceFieldSpecification}
+        value={value}
+      />
     );
   } else if (isReferenceListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as ReferenceFieldSpecification}
+        fieldSpec={fieldSpec as PublishedReferenceFieldSpecification}
         value={value}
         Display={ReferenceFieldDisplay}
       />
     );
   } else if (isLocationSingleField(fieldSpec, value)) {
     display = (
-      <LocationFieldDisplay fieldSpec={fieldSpec as LocationFieldSpecification} value={value} />
+      <LocationFieldDisplay
+        fieldSpec={fieldSpec as PublishedLocationFieldSpecification}
+        value={value}
+      />
     );
   } else if (isLocationListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as LocationFieldSpecification}
+        fieldSpec={fieldSpec as PublishedLocationFieldSpecification}
         value={value}
         Display={LocationFieldDisplay}
       />
     );
   } else if (isNumberSingleField(fieldSpec, value)) {
     display = (
-      <NumberFieldDisplay fieldSpec={fieldSpec as NumberFieldSpecification} value={value} />
+      <NumberFieldDisplay
+        fieldSpec={fieldSpec as PublishedNumberFieldSpecification}
+        value={value}
+      />
     );
   } else if (isNumberListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as NumberFieldSpecification}
+        fieldSpec={fieldSpec as PublishedNumberFieldSpecification}
         value={value}
         Display={NumberFieldDisplay}
       />
     );
   } else if (isRichTextSingleField(fieldSpec, value)) {
     display = (
-      <RichTextFieldDisplay fieldSpec={fieldSpec as RichTextFieldSpecification} value={value} />
+      <RichTextFieldDisplay
+        fieldSpec={fieldSpec as PublishedRichTextFieldSpecification}
+        value={value}
+      />
     );
   } else if (isRichTextListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as RichTextFieldSpecification}
+        fieldSpec={fieldSpec as PublishedRichTextFieldSpecification}
         value={value}
         Display={RichTextFieldDisplay}
       />
     );
   } else if (isStringSingleField(fieldSpec, value)) {
     display = (
-      <StringFieldDisplay fieldSpec={fieldSpec as StringFieldSpecification} value={value} />
+      <StringFieldDisplay
+        fieldSpec={fieldSpec as PublishedStringFieldSpecification}
+        value={value}
+      />
     );
   } else if (isStringListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as StringFieldSpecification}
+        fieldSpec={fieldSpec as PublishedStringFieldSpecification}
         value={value}
         Display={StringFieldDisplay}
       />
     );
   } else if (isComponentSingleField(fieldSpec, value)) {
     display = (
-      <ComponentFieldDisplay fieldSpec={fieldSpec as ComponentFieldSpecification} value={value} />
+      <ComponentFieldDisplay
+        fieldSpec={fieldSpec as PublishedComponentFieldSpecification}
+        value={value}
+      />
     );
   } else if (isComponentListField(fieldSpec, value)) {
     display = (
       <FieldDisplayListWrapper
-        fieldSpec={fieldSpec as ComponentFieldSpecification}
+        fieldSpec={fieldSpec as PublishedComponentFieldSpecification}
         value={value}
         Display={ComponentFieldDisplay}
       />

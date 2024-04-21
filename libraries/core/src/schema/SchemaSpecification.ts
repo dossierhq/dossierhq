@@ -2,32 +2,32 @@ import type { Component, EntityReference, Location, RichText } from '../Types.js
 import { RichTextNodeType } from '../Types.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 
-export interface AdminEntityTypeSpecification {
+export interface EntityTypeSpecification {
   name: string;
   adminOnly: boolean;
   authKeyPattern: string | null;
   nameField: string | null;
-  fields: AdminFieldSpecification[];
+  fields: FieldSpecification[];
 }
 
-export interface AdminComponentTypeSpecification {
+export interface ComponentTypeSpecification {
   name: string;
   adminOnly: boolean;
-  fields: AdminFieldSpecification[];
+  fields: FieldSpecification[];
 }
 
-export interface AdminEntityTypeSpecificationUpdate {
+export interface EntityTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
   authKeyPattern?: string | null;
   nameField?: string | null;
-  fields: AdminFieldSpecificationUpdate[];
+  fields: FieldSpecificationUpdate[];
 }
 
-export interface AdminComponentTypeSpecificationUpdate {
+export interface ComponentTypeSpecificationUpdate {
   name: string;
   adminOnly?: boolean;
-  fields: AdminFieldSpecificationUpdate[];
+  fields: FieldSpecificationUpdate[];
 }
 
 export interface PublishedEntityTypeSpecification {
@@ -56,6 +56,7 @@ interface SharedFieldSpecification {
   name: string;
   list: boolean;
   required: boolean;
+  adminOnly: boolean;
 }
 
 export interface BooleanFieldSpecification extends SharedFieldSpecification {
@@ -111,52 +112,62 @@ export type FieldSpecification =
   | RichTextFieldSpecification
   | StringFieldSpecification;
 
-export type AdminFieldSpecification<TFieldSpec extends FieldSpecification = FieldSpecification> =
-  TFieldSpec & {
-    adminOnly: boolean;
-  };
-
 type PartialExcept<T, K extends keyof T> = Pick<T, K> & Partial<Omit<T, K>>;
 
-export type AdminBooleanFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<BooleanFieldSpecification>,
+export type BooleanFieldSpecificationUpdate = PartialExcept<
+  BooleanFieldSpecification,
   'name' | 'type'
 >;
-export type AdminComponentFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<ComponentFieldSpecification>,
+export type ComponentFieldSpecificationUpdate = PartialExcept<
+  ComponentFieldSpecification,
   'name' | 'type'
 >;
-export type AdminReferenceFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<ReferenceFieldSpecification>,
+export type ReferenceFieldSpecificationUpdate = PartialExcept<
+  ReferenceFieldSpecification,
   'name' | 'type'
 >;
-export type AdminLocationFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<LocationFieldSpecification>,
+export type LocationFieldSpecificationUpdate = PartialExcept<
+  LocationFieldSpecification,
   'name' | 'type'
 >;
-export type AdminNumberFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<NumberFieldSpecification>,
+export type NumberFieldSpecificationUpdate = PartialExcept<
+  NumberFieldSpecification,
   'name' | 'type'
 >;
-export type AdminRichTextFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<RichTextFieldSpecification>,
+export type RichTextFieldSpecificationUpdate = PartialExcept<
+  RichTextFieldSpecification,
   'name' | 'type'
 >;
-export type AdminStringFieldSpecificationUpdate = PartialExcept<
-  AdminFieldSpecification<StringFieldSpecification>,
+export type StringFieldSpecificationUpdate = PartialExcept<
+  StringFieldSpecification,
   'name' | 'type'
 >;
 
-export type AdminFieldSpecificationUpdate =
-  | AdminBooleanFieldSpecificationUpdate
-  | AdminComponentFieldSpecificationUpdate
-  | AdminLocationFieldSpecificationUpdate
-  | AdminNumberFieldSpecificationUpdate
-  | AdminReferenceFieldSpecificationUpdate
-  | AdminRichTextFieldSpecificationUpdate
-  | AdminStringFieldSpecificationUpdate;
+export type FieldSpecificationUpdate =
+  | BooleanFieldSpecificationUpdate
+  | ComponentFieldSpecificationUpdate
+  | LocationFieldSpecificationUpdate
+  | NumberFieldSpecificationUpdate
+  | ReferenceFieldSpecificationUpdate
+  | RichTextFieldSpecificationUpdate
+  | StringFieldSpecificationUpdate;
 
-export type PublishedFieldSpecification = FieldSpecification;
+export type PublishedBooleanFieldSpecification = Omit<BooleanFieldSpecification, 'adminOnly'>;
+export type PublishedComponentFieldSpecification = Omit<ComponentFieldSpecification, 'adminOnly'>;
+export type PublishedReferenceFieldSpecification = Omit<ReferenceFieldSpecification, 'adminOnly'>;
+export type PublishedLocationFieldSpecification = Omit<LocationFieldSpecification, 'adminOnly'>;
+export type PublishedNumberFieldSpecification = Omit<NumberFieldSpecification, 'adminOnly'>;
+export type PublishedRichTextFieldSpecification = Omit<RichTextFieldSpecification, 'adminOnly'>;
+export type PublishedStringFieldSpecification = Omit<StringFieldSpecification, 'adminOnly'>;
+
+export type PublishedFieldSpecification =
+  | PublishedBooleanFieldSpecification
+  | PublishedComponentFieldSpecification
+  | PublishedReferenceFieldSpecification
+  | PublishedLocationFieldSpecification
+  | PublishedNumberFieldSpecification
+  | PublishedRichTextFieldSpecification
+  | PublishedStringFieldSpecification;
 
 export interface FieldValueTypeMap {
   [FieldType.Boolean]: boolean;
@@ -187,25 +198,25 @@ export interface PublishedSchemaSpecification {
   indexes: SchemaIndexSpecification[];
 }
 
-export interface AdminSchemaSpecification {
+export interface SchemaSpecification {
   schemaKind: 'full';
   version: number;
-  entityTypes: AdminEntityTypeSpecification[];
-  componentTypes: AdminComponentTypeSpecification[];
+  entityTypes: EntityTypeSpecification[];
+  componentTypes: ComponentTypeSpecification[];
   patterns: SchemaPatternSpecification[];
   indexes: SchemaIndexSpecification[];
 }
 
-export interface AdminSchemaSpecificationWithMigrations extends AdminSchemaSpecification {
-  migrations: AdminSchemaVersionMigration[];
+export interface SchemaSpecificationWithMigrations extends SchemaSpecification {
+  migrations: SchemaVersionMigration[];
 }
 
-export interface AdminSchemaVersionMigration {
+export interface SchemaVersionMigration {
   version: number;
-  actions: AdminSchemaMigrationAction[];
+  actions: SchemaMigrationAction[];
 }
 
-export type AdminSchemaMigrationAction =
+export type SchemaMigrationAction =
   | { action: 'renameType'; entityType: string; newName: string }
   | { action: 'renameType'; componentType: string; newName: string }
   | { action: 'renameField'; entityType: string; field: string; newName: string }
@@ -215,40 +226,38 @@ export type AdminSchemaMigrationAction =
   | { action: 'deleteField'; entityType: string; field: string }
   | { action: 'deleteField'; componentType: string; field: string };
 
-export type AdminSchemaTransientMigrationAction =
+export type SchemaTransientMigrationAction =
   | { action: 'renameIndex'; index: string; newName: string }
   | { action: 'deleteIndex'; index: string };
 
-export interface AdminSchemaSpecificationUpdate {
+export interface SchemaSpecificationUpdate {
   version?: number;
-  entityTypes?: AdminEntityTypeSpecificationUpdate[];
-  componentTypes?: AdminComponentTypeSpecificationUpdate[];
+  entityTypes?: EntityTypeSpecificationUpdate[];
+  componentTypes?: ComponentTypeSpecificationUpdate[];
   patterns?: SchemaPatternSpecification[];
   indexes?: SchemaIndexSpecification[];
-  migrations?: AdminSchemaVersionMigration[];
-  transientMigrations?: AdminSchemaTransientMigrationAction[];
+  migrations?: SchemaVersionMigration[];
+  transientMigrations?: SchemaTransientMigrationAction[];
 }
 
 export interface SchemaSpecificationUpdatePayload<
-  TSpec extends
-    | AdminSchemaSpecification
-    | AdminSchemaSpecificationWithMigrations = AdminSchemaSpecification,
+  TSpec extends SchemaSpecification | SchemaSpecificationWithMigrations = SchemaSpecification,
 > {
   effect: 'updated' | 'none';
   schemaSpecification: TSpec;
 }
 
-export type LegacyAdminSchemaSpecificationWithMigrations =
-  | Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations
-  | Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations;
+export type LegacySchemaSpecificationWithMigrations =
+  | Legacy_V0_4_7_SchemaSpecificationWithMigrations
+  | Legacy_V0_6_2_SchemaSpecificationWithMigrations;
 
-export type LegacyAdminEntityTypeSpecification =
-  | Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations['entityTypes'][number]
-  | Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations['entityTypes'][number];
+export type LegacyEntityTypeSpecification =
+  | Legacy_V0_4_7_SchemaSpecificationWithMigrations['entityTypes'][number]
+  | Legacy_V0_6_2_SchemaSpecificationWithMigrations['entityTypes'][number];
 
-export type LegacyAdminComponentTypeSpecification =
-  | Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations['valueTypes'][number]
-  | Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations['componentTypes'][number];
+export type LegacyComponentTypeSpecification =
+  | Legacy_V0_4_7_SchemaSpecificationWithMigrations['valueTypes'][number]
+  | Legacy_V0_6_2_SchemaSpecificationWithMigrations['componentTypes'][number];
 
 /** In version after 0.4.7:
  * - valueTypes was renamed to componentTypes
@@ -256,63 +265,57 @@ export type LegacyAdminComponentTypeSpecification =
  * - field spec validations valueTypes were renamed to componentTypes
  * - migration actions valueType selector was renamed to componentType
  */
-interface Legacy_V0_4_7_AdminSchemaSpecificationWithMigrations
-  extends Omit<
-    AdminSchemaSpecificationWithMigrations,
-    'entityTypes' | 'componentTypes' | 'migrations'
-  > {
-  entityTypes: (Omit<AdminEntityTypeSpecification, 'fields'> & {
-    fields: Legacy_V0_4_7_AdminFieldSpecification[];
+interface Legacy_V0_4_7_SchemaSpecificationWithMigrations
+  extends Omit<SchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes' | 'migrations'> {
+  entityTypes: (Omit<EntityTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_4_7_FieldSpecification[];
   })[];
-  valueTypes: (Omit<AdminComponentTypeSpecification, 'fields'> & {
-    fields: Legacy_V0_4_7_AdminFieldSpecification[];
+  valueTypes: (Omit<ComponentTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_4_7_FieldSpecification[];
   })[];
-  migrations: (Omit<AdminSchemaVersionMigration, 'actions'> & {
-    actions: Legacy_v0_4_7_AdminSchemaMigrationAction[];
+  migrations: (Omit<SchemaVersionMigration, 'actions'> & {
+    actions: Legacy_v0_4_7_SchemaMigrationAction[];
   })[];
 }
 
-type Legacy_V0_4_7_AdminFieldSpecification<
-  T extends AdminFieldSpecification = AdminFieldSpecification,
-> = T extends ComponentFieldSpecification
-  ? Omit<AdminFieldSpecification<ComponentFieldSpecification>, 'type' | 'componentTypes'> & {
-      type: 'ValueItem';
-      valueTypes: string[];
-    }
-  : T extends RichTextFieldSpecification
-    ? Omit<AdminFieldSpecification<RichTextFieldSpecification>, 'componentTypes'> & {
+type Legacy_V0_4_7_FieldSpecification<T extends FieldSpecification = FieldSpecification> =
+  T extends ComponentFieldSpecification
+    ? Omit<ComponentFieldSpecification, 'type' | 'componentTypes'> & {
+        type: 'ValueItem';
         valueTypes: string[];
       }
-    : T;
+    : T extends RichTextFieldSpecification
+      ? Omit<RichTextFieldSpecification, 'componentTypes'> & {
+          valueTypes: string[];
+        }
+      : T;
 
-type Legacy_v0_4_7_AdminSchemaMigrationAction<
-  T extends AdminSchemaMigrationAction = AdminSchemaMigrationAction,
-> = T extends {
-  componentType: string;
-}
-  ? Omit<T, 'componentType'> & { valueType: string }
-  : T;
+type Legacy_v0_4_7_SchemaMigrationAction<T extends SchemaMigrationAction = SchemaMigrationAction> =
+  T extends {
+    componentType: string;
+  }
+    ? Omit<T, 'componentType'> & { valueType: string }
+    : T;
 
 /** In version after 0.6.2:
  * - Entity field type was renamed to Reference
  */
-interface Legacy_V0_6_2_AdminSchemaSpecificationWithMigrations
-  extends Omit<AdminSchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes'> {
-  entityTypes: (Omit<AdminEntityTypeSpecification, 'fields'> & {
-    fields: Legacy_V0_6_2_AdminFieldSpecification[];
+interface Legacy_V0_6_2_SchemaSpecificationWithMigrations
+  extends Omit<SchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes'> {
+  entityTypes: (Omit<EntityTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_6_2_FieldSpecification[];
   })[];
-  componentTypes: (Omit<AdminComponentTypeSpecification, 'fields'> & {
-    fields: Legacy_V0_6_2_AdminFieldSpecification[];
+  componentTypes: (Omit<ComponentTypeSpecification, 'fields'> & {
+    fields: Legacy_V0_6_2_FieldSpecification[];
   })[];
 }
 
-type Legacy_V0_6_2_AdminFieldSpecification<
-  T extends AdminFieldSpecification = AdminFieldSpecification,
-> = T extends ReferenceFieldSpecification
-  ? Omit<AdminFieldSpecification<ReferenceFieldSpecification>, 'type'> & {
-      type: 'Entity';
-    }
-  : T;
+type Legacy_V0_6_2_FieldSpecification<T extends FieldSpecification = FieldSpecification> =
+  T extends ReferenceFieldSpecification
+    ? Omit<ReferenceFieldSpecification, 'type'> & {
+        type: 'Entity';
+      }
+    : T;
 
 export const REQUIRED_RICH_TEXT_NODES = /* @__PURE__ */ (() => [
   RichTextNodeType.root,

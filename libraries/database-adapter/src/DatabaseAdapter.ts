@@ -3,7 +3,7 @@ import type {
   AdminEntitySharedQuery,
   AdminEntityStatus,
   Schema,
-  AdminSchemaSpecificationWithMigrations,
+  SchemaSpecificationWithMigrations,
   ArchiveEntitySyncEvent,
   ChangelogEventQuery,
   CreateEntitySyncEvent,
@@ -13,7 +13,7 @@ import type {
   EntityReference,
   EntityVersionReference,
   ErrorType,
-  LegacyAdminSchemaSpecificationWithMigrations,
+  LegacySchemaSpecificationWithMigrations,
   Location,
   PagingInfo,
   PromiseResult,
@@ -672,7 +672,7 @@ export interface DatabaseAdapter<
   schemaGetSpecification(
     context: TransactionContext,
   ): PromiseResult<
-    AdminSchemaSpecificationWithMigrations | LegacyAdminSchemaSpecificationWithMigrations | null,
+    SchemaSpecificationWithMigrations | LegacySchemaSpecificationWithMigrations | null,
     typeof ErrorType.Generic
   >;
 
@@ -701,7 +701,7 @@ export interface DatabaseAdapter<
   schemaUpdateSpecification(
     context: TransactionContext,
     session: WriteSession,
-    schemaSpec: AdminSchemaSpecificationWithMigrations,
+    schemaSpec: SchemaSpecificationWithMigrations,
     syncEvent: UpdateSchemaSyncEvent | null,
   ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic>;
 }

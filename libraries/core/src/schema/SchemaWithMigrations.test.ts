@@ -6,7 +6,7 @@ import { SchemaWithMigrations } from './Schema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
-  type AdminSchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
   type ComponentFieldSpecification,
   type NumberFieldSpecification,
   type ReferenceFieldSpecification,
@@ -28,7 +28,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
       })
         .updateAndValidate({})
         .valueOrThrow().spec,
-    ).toEqual<AdminSchemaSpecificationWithMigrations>({
+    ).toEqual<SchemaSpecificationWithMigrations>({
       schemaKind: 'full',
       version: 1,
       entityTypes: [],

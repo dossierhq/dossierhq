@@ -1,4 +1,4 @@
-import { ErrorType, type AdminSchemaSpecificationUpdate } from '@dossierhq/core';
+import { ErrorType, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@dossierhq/design';
 import type { Dispatch, SyntheticEvent } from 'react';
 import { useCallback, useContext, useMemo } from 'react';
@@ -74,7 +74,7 @@ export function SaveSchemaDialog({
 function SaveSchemaDialogContent({
   schemaSpecUpdate,
 }: {
-  schemaSpecUpdate: AdminSchemaSpecificationUpdate;
+  schemaSpecUpdate: SchemaSpecificationUpdate;
 }) {
   return (
     <Card>

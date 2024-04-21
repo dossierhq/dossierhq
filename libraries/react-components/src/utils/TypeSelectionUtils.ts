@@ -1,8 +1,4 @@
-import type {
-  AdminComponentTypeSpecification,
-  AdminEntityTypeSpecification,
-  Schema,
-} from '@dossierhq/core';
+import type { ComponentTypeSpecification, EntityTypeSpecification, Schema } from '@dossierhq/core';
 
 export interface TypeSelectionFilter {
   showEntityTypes?: boolean;
@@ -11,7 +7,7 @@ export interface TypeSelectionFilter {
   componentTypes?: string[];
 }
 
-type Item = AdminEntityTypeSpecification | AdminComponentTypeSpecification;
+type Item = EntityTypeSpecification | ComponentTypeSpecification;
 
 export function filterTypeSpecifications(schema: Schema, filter: TypeSelectionFilter): Item[] {
   const items: Item[] = [];

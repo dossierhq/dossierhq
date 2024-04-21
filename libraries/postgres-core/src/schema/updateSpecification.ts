@@ -1,7 +1,7 @@
 import {
   notOk,
   ok,
-  type AdminSchemaSpecification,
+  type SchemaSpecification,
   type ErrorType,
   type PromiseResult,
   type UpdateSchemaSyncEvent,
@@ -21,7 +21,7 @@ export async function schemaUpdateSpecification(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   session: Session,
-  schemaSpec: AdminSchemaSpecification,
+  schemaSpec: SchemaSpecification,
   syncEvent: UpdateSchemaSyncEvent | null,
 ): PromiseResult<void, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const { version, ...schemaSpecWithoutVersion } = schemaSpec;

@@ -2,7 +2,7 @@ import {
   EventType,
   isFieldValueEqual,
   type AdminEntity,
-  type AdminEntityTypeSpecification,
+  type EntityTypeSpecification,
   type ChangelogEventQuery,
   type EntityReference,
 } from '@dossierhq/core';
@@ -153,7 +153,7 @@ function DiffEntities({
   leftEntity,
   rightEntity,
 }: {
-  entitySpec: AdminEntityTypeSpecification;
+  entitySpec: EntityTypeSpecification;
   leftEntity: AdminEntity;
   rightEntity: AdminEntity;
 }) {

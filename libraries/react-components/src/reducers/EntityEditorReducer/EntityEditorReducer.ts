@@ -6,9 +6,9 @@ import {
   validateTraverseNodeForSave,
   type AdminEntity,
   type AdminEntityCreate,
-  type AdminEntityTypeSpecification,
+  type EntityTypeSpecification,
   type AdminEntityUpdate,
-  type AdminFieldSpecification,
+  type FieldSpecification,
   type Schema,
   type PublishValidationIssue,
   type SaveValidationIssue,
@@ -36,7 +36,7 @@ export interface EntityEditorDraftState {
   hasSaveErrors: boolean;
   hasPublishErrors: boolean;
   draft: {
-    entitySpec: AdminEntityTypeSpecification;
+    entitySpec: EntityTypeSpecification;
     authKey: string | null;
     name: string;
     nameIsLinkedToField: boolean;
@@ -48,7 +48,7 @@ export interface EntityEditorDraftState {
 
 export interface FieldEditorState {
   status: '' | 'changed';
-  fieldSpec: AdminFieldSpecification;
+  fieldSpec: FieldSpecification;
   adminOnly: boolean;
   value: unknown;
   normalizedValue: unknown;
@@ -581,7 +581,7 @@ export const EntityEditorActions = {
 
 function validateField(
   adminSchema: Schema,
-  fieldSpec: AdminFieldSpecification,
+  fieldSpec: FieldSpecification,
   adminOnly: boolean,
   value: unknown,
   previousErrors: ValidationIssue[],
@@ -607,7 +607,7 @@ function validateField(
 
 function createEditorEntityDraftState(
   schema: Schema,
-  entitySpec: AdminEntityTypeSpecification,
+  entitySpec: EntityTypeSpecification,
   entity: AdminEntity | null,
 ): EntityEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {

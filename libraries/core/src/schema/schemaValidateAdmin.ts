@@ -2,15 +2,14 @@ import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import { RichTextNodeType } from '../Types.js';
 import type { BaseSchema } from './BaseSchema.js';
 import type {
-  AdminEntityTypeSpecification,
-  AdminFieldSpecification,
-  AdminSchemaSpecification,
   BooleanFieldSpecification,
   ComponentFieldSpecification,
-  ReferenceFieldSpecification,
+  EntityTypeSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
+  ReferenceFieldSpecification,
   RichTextFieldSpecification,
+  SchemaSpecification,
   StringFieldSpecification,
 } from './SchemaSpecification.js';
 import {
@@ -31,13 +30,13 @@ const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
 ] as const;
 
 const ADMIN_FIELD_SPECIFICATION_KEYS: {
-  Boolean: readonly (keyof AdminFieldSpecification<BooleanFieldSpecification>)[];
-  Component: readonly (keyof AdminFieldSpecification<ComponentFieldSpecification>)[];
-  Location: readonly (keyof AdminFieldSpecification<LocationFieldSpecification>)[];
-  Number: readonly (keyof AdminFieldSpecification<NumberFieldSpecification>)[];
-  Reference: readonly (keyof AdminFieldSpecification<ReferenceFieldSpecification>)[];
-  RichText: readonly (keyof AdminFieldSpecification<RichTextFieldSpecification>)[];
-  String: readonly (keyof AdminFieldSpecification<StringFieldSpecification>)[];
+  Boolean: readonly (keyof BooleanFieldSpecification)[];
+  Component: readonly (keyof ComponentFieldSpecification)[];
+  Location: readonly (keyof LocationFieldSpecification)[];
+  Number: readonly (keyof NumberFieldSpecification)[];
+  Reference: readonly (keyof ReferenceFieldSpecification)[];
+  RichText: readonly (keyof RichTextFieldSpecification)[];
+  String: readonly (keyof StringFieldSpecification)[];
 } = /* @__PURE__ */ (() => ({
   [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
   [FieldType.Component]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'componentTypes'],
@@ -61,7 +60,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
 }))();
 
 export function schemaValidateAdmin(
-  adminSchema: BaseSchema<AdminSchemaSpecification>,
+  adminSchema: BaseSchema<SchemaSpecification>,
 ): Result<void, typeof ErrorType.BadRequest> {
   const usedTypeNames = new Set<string>();
   for (const typeSpec of [...adminSchema.spec.entityTypes, ...adminSchema.spec.componentTypes]) {
@@ -78,13 +77,13 @@ export function schemaValidateAdmin(
     usedTypeNames.add(typeSpec.name);
 
     if (!isComponentType) {
-      const authKeyPattern = (typeSpec as AdminEntityTypeSpecification).authKeyPattern;
+      const authKeyPattern = (typeSpec as EntityTypeSpecification).authKeyPattern;
       if (authKeyPattern) {
         if (!adminSchema.getPattern(authKeyPattern)) {
           return notOk.BadRequest(`${typeSpec.name}: Unknown authKeyPattern (${authKeyPattern})`);
         }
       }
-      const nameField = (typeSpec as AdminEntityTypeSpecification).nameField;
+      const nameField = (typeSpec as EntityTypeSpecification).nameField;
       if (nameField) {
         const nameFieldSpec = typeSpec.fields.find((fieldSpec) => fieldSpec.name === nameField);
         if (!nameFieldSpec) {

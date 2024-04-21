@@ -1,16 +1,16 @@
 import { describe, expect, test } from 'vitest';
 import { AdminEntityStatus, type AdminEntity, type Component } from '../Types.js';
-import { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { contentValuePathToString } from './ContentPath.js';
 import type { ContentTraverseNode } from './ContentTraverser.js';
 import { ContentTraverseNodeType, traverseComponent, traverseEntity } from './ContentTraverser.js';
 import {
   createRichText,
+  createRichTextComponentNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
 } from './RichTextUtils.js';
 
 const adminSchema = Schema.createAndValidate({

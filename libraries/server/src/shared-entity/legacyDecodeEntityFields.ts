@@ -3,8 +3,8 @@ import {
   isRichTextComponentNode,
   ok,
   transformRichText,
-  type AdminEntityTypeSpecification,
-  type AdminFieldSpecification,
+  type EntityTypeSpecification,
+  type FieldSpecification,
   type Schema,
   type Component,
   type ContentValuePath,
@@ -25,7 +25,7 @@ type CodecMode = 'optimized' | 'json';
 
 export function legacyDecodeEntityFields(
   schema: Schema | PublishedSchema,
-  entitySpec: AdminEntityTypeSpecification | PublishedEntityTypeSpecification,
+  entitySpec: EntityTypeSpecification | PublishedEntityTypeSpecification,
   encodedFields: Record<string, unknown>,
 ) {
   const decodedFields: Record<string, unknown> = {};
@@ -41,7 +41,7 @@ export function legacyDecodeEntityFields(
 
 function decodeFieldItemOrList(
   schema: Schema | PublishedSchema,
-  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   codecMode: CodecMode,
   fieldValue: unknown,
 ) {

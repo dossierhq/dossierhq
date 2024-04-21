@@ -8,7 +8,7 @@ import {
   createRichTextTextNode,
   notOk,
   ok,
-  type AdminSchemaSpecificationUpdate,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult } from '@dossierhq/core-vitest';
 import type { GraphQLSchema } from 'graphql';
@@ -25,7 +25,7 @@ const gql = String.raw;
 let server: TestServerWithSession;
 let schema: GraphQLSchema;
 
-const schemaSpecification: AdminSchemaSpecificationUpdate = {
+const schemaSpecification: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'QueryFoo',

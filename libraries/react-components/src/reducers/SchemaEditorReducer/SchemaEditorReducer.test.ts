@@ -3,7 +3,7 @@ import {
   SchemaWithMigrations,
   FieldType,
   RichTextNodeType,
-  type AdminEntityTypeSpecificationUpdate,
+  type EntityTypeSpecificationUpdate,
   type NumberFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
@@ -682,7 +682,7 @@ describe('ChangeTypeNameField', () => {
     expect(schemaUpdate).toMatchSnapshot();
 
     expect(state.entityTypes[0].nameField).toBe('title');
-    expect((schemaUpdate?.entityTypes?.[0] as AdminEntityTypeSpecificationUpdate).nameField).toBe(
+    expect((schemaUpdate?.entityTypes?.[0] as EntityTypeSpecificationUpdate).nameField).toBe(
       'title',
     );
   });

@@ -7,7 +7,11 @@ import type {
   RichText,
   RichTextNode,
 } from '../Types.js';
-import { FieldType, type FieldSpecification } from '../schema/SchemaSpecification.js';
+import {
+  FieldType,
+  type FieldSpecification,
+  type PublishedFieldSpecification,
+} from '../schema/SchemaSpecification.js';
 import { assertExhaustive } from '../utils/Asserts.js';
 import type { Mutable } from '../utils/TypeUtils.js';
 import type { ContentValuePath } from './ContentPath.js';
@@ -60,7 +64,7 @@ export function copyEntity<
 }
 
 export function checkFieldTraversable(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): { path: ContentValuePath; message: string } | null {
   if (fieldSpec.list) {
@@ -72,7 +76,7 @@ export function checkFieldTraversable(
 }
 
 export function checkFieldItemTraversable(
-  fieldSpec: FieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: unknown,
 ): { path: ContentValuePath; message: string } | null {
   const { type } = fieldSpec;

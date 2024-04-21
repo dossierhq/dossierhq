@@ -1,5 +1,5 @@
 import type {
-  AdminFieldSpecification,
+  FieldSpecification,
   EntityReference,
   RichText,
   RichTextFieldSpecification,
@@ -35,7 +35,7 @@ import { ToolbarPlugin } from './ToolbarPlugin.js';
 import { ComponentPlugin } from './ComponentPlugin.js';
 
 interface Props {
-  fieldSpec: AdminFieldSpecification<RichTextFieldSpecification>;
+  fieldSpec: RichTextFieldSpecification;
   adminOnly: boolean;
   value: RichText | null;
   onChange: (value: RichText | null) => void;

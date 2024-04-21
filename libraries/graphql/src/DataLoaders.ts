@@ -1,11 +1,11 @@
 import type {
   AdminClient,
-  AdminComponentTypeSpecification,
+  ComponentTypeSpecification,
   AdminEntity,
   AdminEntityQuery,
   AdminEntitySharedQuery,
-  AdminEntityTypeSpecification,
-  AdminFieldSpecification,
+  EntityTypeSpecification,
+  FieldSpecification,
   Schema,
   ChangelogEvent,
   ChangelogEventQuery,
@@ -280,9 +280,9 @@ export function loadAdminEntities<TContext extends SessionGraphQLContext>(
 function resolveFields<TContext extends SessionGraphQLContext>(
   schema: Schema | PublishedSchema,
   spec:
-    | AdminEntityTypeSpecification
+    | EntityTypeSpecification
     | PublishedEntityTypeSpecification
-    | AdminComponentTypeSpecification
+    | ComponentTypeSpecification
     | PublishedComponentTypeSpecification,
   item: Component | PublishedEntity | AdminEntity,
   isAdmin: boolean,
@@ -325,7 +325,7 @@ function resolveFields<TContext extends SessionGraphQLContext>(
 
 function extractEntityIdsForRichTextField(
   schema: Schema | PublishedSchema,
-  fieldSpec: AdminFieldSpecification | PublishedFieldSpecification,
+  fieldSpec: FieldSpecification | PublishedFieldSpecification,
   value: RichText,
 ) {
   const referencesCollector = createReferencesCollector();
