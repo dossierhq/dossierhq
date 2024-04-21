@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Break: Rename AdminEntityQueryOrder to EntityQueryOrder",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

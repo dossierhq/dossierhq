@@ -1,5 +1,5 @@
 import {
-  AdminEntityQueryOrder,
+  EntityQueryOrder,
   AdminEntityStatus,
   copyEntity,
   createRichText,
@@ -192,7 +192,7 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
 
   // Search to get the cursor
   const firstSearchResult = await client.getEntities(
-    { linksFrom: { id: linkId }, order: AdminEntityQueryOrder.name },
+    { linksFrom: { id: linkId }, order: EntityQueryOrder.name },
     { first: 10 },
   );
   assertSearchResultEntities(firstSearchResult, [firstEntity, secondEntity]);
@@ -204,7 +204,7 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
 
   // Search again using the cursor
   const secondSearchResult = await client.getEntities(
-    { linksFrom: { id: linkId }, order: AdminEntityQueryOrder.name },
+    { linksFrom: { id: linkId }, order: EntityQueryOrder.name },
     { first: 10, after: startCursor },
   );
   assertSearchResultEntities(secondSearchResult, [secondEntity]);
@@ -286,14 +286,14 @@ async function getEntities_orderCreatedAt({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await clientProvider.adminClient().getEntities({
     entityTypes: ['ReadOnly'],
-    order: AdminEntityQueryOrder.createdAt,
+    order: EntityQueryOrder.createdAt,
   });
   assertAdminEntityConnectionToMatchSlice(
     expectedEntities,
     result,
     0,
     25,
-    AdminEntityQueryOrder.createdAt,
+    EntityQueryOrder.createdAt,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
@@ -305,7 +305,7 @@ async function getEntities_orderCreatedAtReversed({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await clientProvider.adminClient().getEntities({
     entityTypes: ['ReadOnly'],
-    order: AdminEntityQueryOrder.createdAt,
+    order: EntityQueryOrder.createdAt,
     reverse: true,
   });
   assertAdminEntityConnectionToMatchSlice(
@@ -313,7 +313,7 @@ async function getEntities_orderCreatedAtReversed({
     result,
     0,
     25,
-    AdminEntityQueryOrder.createdAt,
+    EntityQueryOrder.createdAt,
     true,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
@@ -335,7 +335,7 @@ async function getEntities_orderUpdatedAt({
   const adminClient = clientProvider.adminClient();
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
     adminClient.getEntities(
-      { entityTypes: ['ReadOnly'], order: AdminEntityQueryOrder.updatedAt },
+      { entityTypes: ['ReadOnly'], order: EntityQueryOrder.updatedAt },
       currentPaging,
     ),
   )) {
@@ -370,7 +370,7 @@ async function getEntities_orderUpdatedAtReversed({
   const adminClient = clientProvider.adminClient();
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
     adminClient.getEntities(
-      { entityTypes: ['ReadOnly'], order: AdminEntityQueryOrder.updatedAt, reverse: true },
+      { entityTypes: ['ReadOnly'], order: EntityQueryOrder.updatedAt, reverse: true },
       currentPaging,
     ),
   )) {
@@ -396,15 +396,9 @@ async function getEntities_orderName({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await clientProvider.adminClient().getEntities({
     entityTypes: ['ReadOnly'],
-    order: AdminEntityQueryOrder.name,
+    order: EntityQueryOrder.name,
   });
-  assertAdminEntityConnectionToMatchSlice(
-    expectedEntities,
-    result,
-    0,
-    25,
-    AdminEntityQueryOrder.name,
-  );
+  assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 25, EntityQueryOrder.name);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
 }
 
@@ -415,7 +409,7 @@ async function getEntities_orderNameReversed({
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await clientProvider.adminClient().getEntities({
     entityTypes: ['ReadOnly'],
-    order: AdminEntityQueryOrder.name,
+    order: EntityQueryOrder.name,
     reverse: true,
   });
   assertAdminEntityConnectionToMatchSlice(
@@ -423,7 +417,7 @@ async function getEntities_orderNameReversed({
     result,
     0,
     25,
-    AdminEntityQueryOrder.name,
+    EntityQueryOrder.name,
     true,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });

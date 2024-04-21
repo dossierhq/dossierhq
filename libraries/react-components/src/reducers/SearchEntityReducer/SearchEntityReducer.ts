@@ -1,5 +1,5 @@
 import {
-  AdminEntityQueryOrder,
+  EntityQueryOrder,
   PublishedEntityQueryOrder,
   getPagingInfo,
   ok,
@@ -21,7 +21,7 @@ import isEqual from 'lodash/isEqual.js';
 
 const DEFAULT_VALUES = {
   admin: {
-    order: AdminEntityQueryOrder.updatedAt,
+    order: EntityQueryOrder.updatedAt,
     reverse: true,
     requestedCount: 25,
   },

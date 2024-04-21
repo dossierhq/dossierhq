@@ -1,9 +1,9 @@
 import {
-  AdminEntityQueryOrder,
   AdminEntityStatus,
-  Schema,
+  EntityQueryOrder,
   ErrorType,
   PublishedEntityQueryOrder,
+  Schema,
 } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
@@ -305,7 +305,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.createdAt, reverse: true },
+        { order: EntityQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -1036,7 +1036,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.createdAt },
+        { order: EntityQueryOrder.createdAt },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -1063,7 +1063,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.updatedAt },
+        { order: EntityQueryOrder.updatedAt },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -1090,7 +1090,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.name },
+        { order: EntityQueryOrder.name },
         resolvePaging(undefined),
         authKeysDefault,
       ),

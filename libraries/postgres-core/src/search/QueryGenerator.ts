@@ -8,7 +8,7 @@ import type {
   PublishedSchema,
   Result,
 } from '@dossierhq/core';
-import { AdminEntityQueryOrder, PublishedEntityQueryOrder, notOk, ok } from '@dossierhq/core';
+import { EntityQueryOrder, PublishedEntityQueryOrder, notOk, ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   PostgresQueryBuilder,
@@ -125,7 +125,7 @@ function sharedSearchEntitiesQuery<
 
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
   databaseAdapter: PostgresDatabaseAdapter,
-  order: PublishedEntityQueryOrder | AdminEntityQueryOrder | undefined,
+  order: PublishedEntityQueryOrder | EntityQueryOrder | undefined,
   published: boolean,
 ): {
   cursorName: CursorName;
@@ -162,7 +162,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
     }
   }
   switch (order) {
-    case AdminEntityQueryOrder.name: {
+    case EntityQueryOrder.name: {
       const cursorType = 'string';
       const cursorName = 'name';
       return {
@@ -176,7 +176,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           ),
       };
     }
-    case AdminEntityQueryOrder.updatedAt: {
+    case EntityQueryOrder.updatedAt: {
       const cursorType = 'int';
       const cursorName = 'updated';
       return {
@@ -190,7 +190,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           ),
       };
     }
-    case AdminEntityQueryOrder.createdAt:
+    case EntityQueryOrder.createdAt:
     default: {
       const cursorType = 'int';
       const cursorName = 'id';

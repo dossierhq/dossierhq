@@ -1,5 +1,5 @@
 import {
-  AdminEntityQueryOrder,
+  EntityQueryOrder,
   AdminEntityStatus,
   PublishedEntityQueryOrder,
   getAllPagesForConnection,
@@ -26,20 +26,18 @@ import type {
 } from '../SchemaTypes.js';
 
 const adminOrderCompare: Record<
-  AdminEntityQueryOrder,
+  EntityQueryOrder,
   (a: AppAdminEntity, b: AppAdminEntity) => number
 > = {
-  [AdminEntityQueryOrder.createdAt]: (a, b) =>
-    a.info.createdAt.getTime() - b.info.createdAt.getTime(),
-  [AdminEntityQueryOrder.updatedAt]: (a, b) =>
-    a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
-  [AdminEntityQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
+  [EntityQueryOrder.createdAt]: (a, b) => a.info.createdAt.getTime() - b.info.createdAt.getTime(),
+  [EntityQueryOrder.updatedAt]: (a, b) => a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
+  [EntityQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
-const adminOrderExtract: Record<AdminEntityQueryOrder, (it: AppAdminEntity) => unknown> = {
-  [AdminEntityQueryOrder.createdAt]: (it) => it.info.createdAt,
-  [AdminEntityQueryOrder.updatedAt]: (it) => it.info.updatedAt,
-  [AdminEntityQueryOrder.name]: (it) => it.info.name,
+const adminOrderExtract: Record<EntityQueryOrder, (it: AppAdminEntity) => unknown> = {
+  [EntityQueryOrder.createdAt]: (it) => it.info.createdAt,
+  [EntityQueryOrder.updatedAt]: (it) => it.info.updatedAt,
+  [EntityQueryOrder.name]: (it) => it.info.name,
 };
 
 const publishedOrderCompare: Record<
@@ -56,10 +54,10 @@ export function assertAdminEntityConnectionToMatchSlice(
   connectionResult: Result<Connection<Edge<AppAdminEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
-  order?: AdminEntityQueryOrder,
+  order?: EntityQueryOrder,
   reverse?: boolean,
 ): void {
-  const resolvedOrder = order ?? AdminEntityQueryOrder.createdAt;
+  const resolvedOrder = order ?? EntityQueryOrder.createdAt;
   const orderExtractor = adminOrderExtract[resolvedOrder];
 
   assertOkResult(connectionResult);

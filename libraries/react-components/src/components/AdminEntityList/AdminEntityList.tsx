@@ -1,5 +1,5 @@
 import type { AdminEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
-import { AdminEntityQueryOrder } from '@dossierhq/core';
+import { EntityQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, Tag, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import { useContext } from 'react';
@@ -43,14 +43,9 @@ export function AdminEntityList({
       <Table.Head>
         <Table.Row sticky>
           <Table.Header
-            order={order === AdminEntityQueryOrder.name ? direction : ''}
+            order={order === EntityQueryOrder.name ? direction : ''}
             onClick={() =>
-              handleHeaderClick(
-                dispatchSearchEntityState,
-                order,
-                reverse,
-                AdminEntityQueryOrder.name,
-              )
+              handleHeaderClick(dispatchSearchEntityState, order, reverse, EntityQueryOrder.name)
             }
           >
             Name
@@ -60,13 +55,13 @@ export function AdminEntityList({
           {showAuthKeys && <Table.Header narrow>Auth key</Table.Header>}
           <Table.Header
             narrow
-            order={order === AdminEntityQueryOrder.createdAt ? direction : ''}
+            order={order === EntityQueryOrder.createdAt ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminEntityQueryOrder.createdAt,
+                EntityQueryOrder.createdAt,
               )
             }
           >
@@ -74,13 +69,13 @@ export function AdminEntityList({
           </Table.Header>
           <Table.Header
             narrow
-            order={order === AdminEntityQueryOrder.updatedAt ? direction : ''}
+            order={order === EntityQueryOrder.updatedAt ? direction : ''}
             onClick={() =>
               handleHeaderClick(
                 dispatchSearchEntityState,
                 order,
                 reverse,
-                AdminEntityQueryOrder.updatedAt,
+                EntityQueryOrder.updatedAt,
               )
             }
           >
@@ -109,7 +104,7 @@ export function AdminEntityList({
                   {...{
                     entity,
                     authKeys,
-                    order: order as AdminEntityQueryOrder | undefined,
+                    order: order as EntityQueryOrder | undefined,
                     showAuthKeys,
                     onItemClick,
                   }}
@@ -131,7 +126,7 @@ function EntityListRow({
   onItemClick,
 }: {
   entity: AdminEntity;
-  order: AdminEntityQueryOrder | undefined;
+  order: EntityQueryOrder | undefined;
   authKeys: DisplayAuthKey[];
   showAuthKeys: boolean;
   onItemClick: (item: AdminEntity) => void;
@@ -160,7 +155,7 @@ function EntityListRow({
         <DateDisplay date={entity.info.createdAt} />
       </Table.Cell>
       <Table.Cell narrow>
-        {order === AdminEntityQueryOrder.updatedAt ||
+        {order === EntityQueryOrder.updatedAt ||
         entity.info.updatedAt.getTime() !== entity.info.createdAt.getTime() ? (
           <DateDisplay date={entity.info.updatedAt} />
         ) : null}
@@ -171,16 +166,16 @@ function EntityListRow({
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminEntityQueryOrder | PublishedEntityQueryOrder | undefined,
+  order: EntityQueryOrder | PublishedEntityQueryOrder | undefined,
   reverse: boolean | undefined,
-  headerOrder: AdminEntityQueryOrder | PublishedEntityQueryOrder,
+  headerOrder: EntityQueryOrder | PublishedEntityQueryOrder,
 ) {
   let newReverse = false;
   if (order === headerOrder) {
     newReverse = !reverse;
   } else if (
-    headerOrder === AdminEntityQueryOrder.updatedAt ||
-    headerOrder === AdminEntityQueryOrder.createdAt
+    headerOrder === EntityQueryOrder.updatedAt ||
+    headerOrder === EntityQueryOrder.createdAt
   ) {
     // Default to descending order for dates
     newReverse = true;

@@ -8,7 +8,7 @@ import type {
   PublishedSchema,
   Result,
 } from '@dossierhq/core';
-import { AdminEntityQueryOrder, PublishedEntityQueryOrder, notOk, ok } from '@dossierhq/core';
+import { EntityQueryOrder, PublishedEntityQueryOrder, notOk, ok } from '@dossierhq/core';
 import type {
   DatabasePagingInfo,
   ResolvedAuthKey,
@@ -133,7 +133,7 @@ SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM ent
 
 function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublishedEntitiesItem>(
   database: Database,
-  order: PublishedEntityQueryOrder | AdminEntityQueryOrder | undefined,
+  order: PublishedEntityQueryOrder | EntityQueryOrder | undefined,
   published: boolean,
 ): {
   cursorName: CursorName;
@@ -169,7 +169,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
     }
   }
   switch (order) {
-    case AdminEntityQueryOrder.name: {
+    case EntityQueryOrder.name: {
       const cursorType = 'string';
       const cursorName = 'name';
       return {
@@ -179,7 +179,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           toOpaqueCursor(database, cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
       };
     }
-    case AdminEntityQueryOrder.updatedAt: {
+    case EntityQueryOrder.updatedAt: {
       const cursorType = 'int';
       const cursorName = 'updated_seq';
       return {
@@ -189,7 +189,7 @@ function queryOrderToCursor<TItem extends SearchAdminEntitiesItem | SearchPublis
           toOpaqueCursor(database, cursorType, (item as SearchAdminEntitiesItem)[cursorName]),
       };
     }
-    case AdminEntityQueryOrder.createdAt:
+    case EntityQueryOrder.createdAt:
     default: {
       const cursorType = 'int';
       const cursorName = 'id';

@@ -281,12 +281,12 @@ export type AdminEntityUnarchivePayload = AdminEntityPublishingPayload<'unarchiv
 export type AdminEntityPublishPayload = AdminEntityPublishingPayload<'published' | 'none'>;
 export type AdminEntityUnpublishPayload = AdminEntityPublishingPayload<'unpublished' | 'none'>;
 
-export const AdminEntityQueryOrder = {
+export const EntityQueryOrder = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   name: 'name',
 } as const;
-export type AdminEntityQueryOrder = keyof typeof AdminEntityQueryOrder;
+export type EntityQueryOrder = keyof typeof EntityQueryOrder;
 
 export interface AdminEntitySharedQuery<
   TEntityType extends string = string,
@@ -309,7 +309,7 @@ export interface AdminEntityQuery<
   TComponentType extends string = string,
   TAuthKey extends string = string,
 > extends AdminEntitySharedQuery<TEntityType, TComponentType, TAuthKey> {
-  order?: AdminEntityQueryOrder;
+  order?: EntityQueryOrder;
   reverse?: boolean;
 }
 

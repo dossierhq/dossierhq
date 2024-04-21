@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Break: Rename AdminEntityQueryOrder to EntityQueryOrder",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}

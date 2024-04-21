@@ -1,4 +1,4 @@
-import type { AdminEntityQueryOrder, PublishedEntity } from '@dossierhq/core';
+import type { EntityQueryOrder, PublishedEntity } from '@dossierhq/core';
 import { PublishedEntityQueryOrder } from '@dossierhq/core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
 import type { Dispatch } from 'react';
@@ -121,7 +121,7 @@ function EntityListRow({
 
 function handleHeaderClick(
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
-  order: AdminEntityQueryOrder | PublishedEntityQueryOrder | undefined,
+  order: EntityQueryOrder | PublishedEntityQueryOrder | undefined,
   reverse: boolean | undefined,
   headerOrder: PublishedEntityQueryOrder,
 ) {

@@ -1,5 +1,5 @@
 import {
-  AdminEntityQueryOrder,
+  EntityQueryOrder,
   AdminEntityStatus,
   Schema,
   ErrorType,
@@ -317,7 +317,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.createdAt, reverse: true },
+        { order: EntityQueryOrder.createdAt, reverse: true },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -1041,7 +1041,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.createdAt },
+        { order: EntityQueryOrder.createdAt },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -1068,7 +1068,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.updatedAt },
+        { order: EntityQueryOrder.updatedAt },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -1095,7 +1095,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { order: AdminEntityQueryOrder.name },
+        { order: EntityQueryOrder.name },
         resolvePaging(undefined),
         authKeysDefault,
       ),
