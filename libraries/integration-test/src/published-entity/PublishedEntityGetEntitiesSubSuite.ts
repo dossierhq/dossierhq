@@ -1,7 +1,7 @@
 import { Schema, copyEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminComponents } from '../SchemaTypes.js';
+import type { Components } from '../SchemaTypes.js';
 import {
   adminToPublishedEntity,
   LOCATIONS_CREATE,
@@ -421,7 +421,7 @@ async function getEntities_componentTypes({ clientProvider }: PublishedEntityTes
   assertResultValue(matchesBeforeComponent, 0);
 
   (
-    await adminClient.updateEntity<AdminComponents>(
+    await adminClient.updateEntity<Components>(
       {
         id: entity.id,
         fields: { any: { type: 'ReferencesComponent', reference: null } },

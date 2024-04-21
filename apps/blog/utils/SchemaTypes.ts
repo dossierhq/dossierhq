@@ -11,215 +11,198 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes,
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes
 >;
 
-export type AppAdminUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
+export type AppUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
-export type AppAdminEntity =
-  | AdminArticle
-  | AdminAuthor
-  | AdminBlogPost
-  | AdminChapter
-  | AdminGlossaryTerm;
+export type AppEntity = Article | Author | BlogPost | Chapter | GlossaryTerm;
 
-export interface AdminArticleFields {
+export interface ArticleFields {
   title: string | null;
   slug: string | null;
   description: string | null;
   body: RichText | null;
 }
 
-export type AdminArticle = Entity<'Article', AdminArticleFields, ''>;
+export type Article = Entity<'Article', ArticleFields, ''>;
 
-export function isAdminArticle(entity: Entity<string, object>): entity is AdminArticle {
+export function isArticle(entity: Entity<string, object>): entity is Article {
   return entity.info.type === 'Article';
 }
 
-export function assertIsAdminArticle(
-  entity: Entity<string, object>,
-): asserts entity is AdminArticle {
+export function assertIsArticle(entity: Entity<string, object>): asserts entity is Article {
   if (entity.info.type !== 'Article') {
     throw new Error('Expected info.type = Article (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminAuthorFields {
+export interface AuthorFields {
   name: string | null;
 }
 
-export type AdminAuthor = Entity<'Author', AdminAuthorFields, ''>;
+export type Author = Entity<'Author', AuthorFields, ''>;
 
-export function isAdminAuthor(entity: Entity<string, object>): entity is AdminAuthor {
+export function isAuthor(entity: Entity<string, object>): entity is Author {
   return entity.info.type === 'Author';
 }
 
-export function assertIsAdminAuthor(entity: Entity<string, object>): asserts entity is AdminAuthor {
+export function assertIsAuthor(entity: Entity<string, object>): asserts entity is Author {
   if (entity.info.type !== 'Author') {
     throw new Error('Expected info.type = Author (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminBlogPostFields {
+export interface BlogPostFields {
   title: string | null;
   slug: string | null;
   publishedDate: string | null;
   updatedDate: string | null;
   authors: EntityReference[] | null;
-  hero: AdminCloudinaryImage | null;
+  hero: CloudinaryImage | null;
   description: string | null;
   body: RichText | null;
 }
 
-export type AdminBlogPost = Entity<'BlogPost', AdminBlogPostFields, ''>;
+export type BlogPost = Entity<'BlogPost', BlogPostFields, ''>;
 
-export function isAdminBlogPost(entity: Entity<string, object>): entity is AdminBlogPost {
+export function isBlogPost(entity: Entity<string, object>): entity is BlogPost {
   return entity.info.type === 'BlogPost';
 }
 
-export function assertIsAdminBlogPost(
-  entity: Entity<string, object>,
-): asserts entity is AdminBlogPost {
+export function assertIsBlogPost(entity: Entity<string, object>): asserts entity is BlogPost {
   if (entity.info.type !== 'BlogPost') {
     throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminChapterFields {
-  items: (AdminArticleTocItem | AdminTocItem)[] | null;
+export interface ChapterFields {
+  items: (ArticleTocItem | TocItem)[] | null;
 }
 
-export type AdminChapter = Entity<'Chapter', AdminChapterFields, ''>;
+export type Chapter = Entity<'Chapter', ChapterFields, ''>;
 
-export function isAdminChapter(entity: Entity<string, object>): entity is AdminChapter {
+export function isChapter(entity: Entity<string, object>): entity is Chapter {
   return entity.info.type === 'Chapter';
 }
 
-export function assertIsAdminChapter(
-  entity: Entity<string, object>,
-): asserts entity is AdminChapter {
+export function assertIsChapter(entity: Entity<string, object>): asserts entity is Chapter {
   if (entity.info.type !== 'Chapter') {
     throw new Error('Expected info.type = Chapter (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminGlossaryTermFields {
+export interface GlossaryTermFields {
   title: string | null;
   slug: string | null;
   description: RichText | null;
 }
 
-export type AdminGlossaryTerm = Entity<'GlossaryTerm', AdminGlossaryTermFields, ''>;
+export type GlossaryTerm = Entity<'GlossaryTerm', GlossaryTermFields, ''>;
 
-export function isAdminGlossaryTerm(entity: Entity<string, object>): entity is AdminGlossaryTerm {
+export function isGlossaryTerm(entity: Entity<string, object>): entity is GlossaryTerm {
   return entity.info.type === 'GlossaryTerm';
 }
 
-export function assertIsAdminGlossaryTerm(
+export function assertIsGlossaryTerm(
   entity: Entity<string, object>,
-): asserts entity is AdminGlossaryTerm {
+): asserts entity is GlossaryTerm {
   if (entity.info.type !== 'GlossaryTerm') {
     throw new Error('Expected info.type = GlossaryTerm (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent =
-  | AdminArticleTocItem
-  | AdminCloudinaryImage
-  | AdminCodapiSnippet
-  | AdminTocItem;
+export type AppComponent = ArticleTocItem | CloudinaryImage | CodapiSnippet | TocItem;
 
-export interface AdminArticleTocItemFields {
+export interface ArticleTocItemFields {
   title: string | null;
   article: EntityReference | null;
 }
 
-export type AdminArticleTocItem = Component<'ArticleTocItem', AdminArticleTocItemFields>;
+export type ArticleTocItem = Component<'ArticleTocItem', ArticleTocItemFields>;
 
-export function isAdminArticleTocItem(
-  component: Component<string, object> | AdminArticleTocItem,
-): component is AdminArticleTocItem {
+export function isArticleTocItem(
+  component: Component<string, object> | ArticleTocItem,
+): component is ArticleTocItem {
   return component.type === 'ArticleTocItem';
 }
 
-export function assertIsAdminArticleTocItem(
-  component: Component<string, object> | AdminArticleTocItem,
-): asserts component is AdminArticleTocItem {
+export function assertIsArticleTocItem(
+  component: Component<string, object> | ArticleTocItem,
+): asserts component is ArticleTocItem {
   if (component.type !== 'ArticleTocItem') {
     throw new Error('Expected type = ArticleTocItem (but was ' + component.type + ')');
   }
 }
 
-export interface AdminCloudinaryImageFields {
+export interface CloudinaryImageFields {
   publicId: string | null;
   width: number | null;
   height: number | null;
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type CloudinaryImage = Component<'CloudinaryImage', CloudinaryImageFields>;
 
-export function isAdminCloudinaryImage(
-  component: Component<string, object> | AdminCloudinaryImage,
-): component is AdminCloudinaryImage {
+export function isCloudinaryImage(
+  component: Component<string, object> | CloudinaryImage,
+): component is CloudinaryImage {
   return component.type === 'CloudinaryImage';
 }
 
-export function assertIsAdminCloudinaryImage(
-  component: Component<string, object> | AdminCloudinaryImage,
-): asserts component is AdminCloudinaryImage {
+export function assertIsCloudinaryImage(
+  component: Component<string, object> | CloudinaryImage,
+): asserts component is CloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }
 
-export interface AdminCodapiSnippetFields {
+export interface CodapiSnippetFields {
   id: string | null;
   dependsOn: string | null;
   code: string | null;
 }
 
-export type AdminCodapiSnippet = Component<'CodapiSnippet', AdminCodapiSnippetFields>;
+export type CodapiSnippet = Component<'CodapiSnippet', CodapiSnippetFields>;
 
-export function isAdminCodapiSnippet(
-  component: Component<string, object> | AdminCodapiSnippet,
-): component is AdminCodapiSnippet {
+export function isCodapiSnippet(
+  component: Component<string, object> | CodapiSnippet,
+): component is CodapiSnippet {
   return component.type === 'CodapiSnippet';
 }
 
-export function assertIsAdminCodapiSnippet(
-  component: Component<string, object> | AdminCodapiSnippet,
-): asserts component is AdminCodapiSnippet {
+export function assertIsCodapiSnippet(
+  component: Component<string, object> | CodapiSnippet,
+): asserts component is CodapiSnippet {
   if (component.type !== 'CodapiSnippet') {
     throw new Error('Expected type = CodapiSnippet (but was ' + component.type + ')');
   }
 }
 
-export interface AdminTocItemFields {
+export interface TocItemFields {
   title: string | null;
-  items: (AdminArticleTocItem | AdminTocItem)[] | null;
+  items: (ArticleTocItem | TocItem)[] | null;
 }
 
-export type AdminTocItem = Component<'TocItem', AdminTocItemFields>;
+export type TocItem = Component<'TocItem', TocItemFields>;
 
-export function isAdminTocItem(
-  component: Component<string, object> | AdminTocItem,
-): component is AdminTocItem {
+export function isTocItem(component: Component<string, object> | TocItem): component is TocItem {
   return component.type === 'TocItem';
 }
 
-export function assertIsAdminTocItem(
-  component: Component<string, object> | AdminTocItem,
-): asserts component is AdminTocItem {
+export function assertIsTocItem(
+  component: Component<string, object> | TocItem,
+): asserts component is TocItem {
   if (component.type !== 'TocItem') {
     throw new Error('Expected type = TocItem (but was ' + component.type + ')');
   }

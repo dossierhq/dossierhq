@@ -2,8 +2,8 @@ import { EntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminTitleOnly } from '../SchemaTypes.js';
-import { assertIsAdminTitleOnly } from '../SchemaTypes.js';
+import type { TitleOnly } from '../SchemaTypes.js';
+import { assertIsTitleOnly } from '../SchemaTypes.js';
 import {
   SUBJECT_ONLY_CREATE,
   SUBJECT_ONLY_UPSERT,
@@ -29,9 +29,7 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
   const id = uuidv4();
-  const upsertResult = await client.upsertEntity<AdminTitleOnly>(
-    copyEntity(TITLE_ONLY_UPSERT, { id }),
-  );
+  const upsertResult = await client.upsertEntity<TitleOnly>(copyEntity(TITLE_ONLY_UPSERT, { id }));
   assertOkResult(upsertResult);
   const {
     entity: {
@@ -55,7 +53,7 @@ async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestCon
 
   const getResult = await client.getEntity({ id });
   assertOkResult(getResult);
-  assertIsAdminTitleOnly(getResult.value);
+  assertIsTitleOnly(getResult.value);
   assertEquals(getResult.value, expectedEntity);
 }
 

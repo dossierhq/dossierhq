@@ -10,7 +10,7 @@ import {
 } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AdminAdminOnlyComponent, AdminReferences, AdminTitleOnly } from '../SchemaTypes.js';
+import type { AdminOnlyComponent, References, TitleOnly } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
   REFERENCES_CREATE,
@@ -152,7 +152,7 @@ async function publishEntities_twoEntitiesReferencingEachOther({
     entity: { id: id2 },
   } = create2Result.value;
 
-  const update1Result = await client.updateEntity<AdminReferences>({
+  const update1Result = await client.updateEntity<References>({
     id: id1,
     fields: { any: { id: id2 } },
   });
@@ -197,7 +197,7 @@ async function publishEntities_publishAlreadyPublishedEntity({
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await client.updateEntity<AdminTitleOnly>({
+  const updateResult = await client.updateEntity<TitleOnly>({
     id,
     fields: { title: 'Updated title' },
   });
@@ -255,7 +255,7 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyComponent({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const adminOnlyComponent: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
+  const adminOnlyComponent: AdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyComponent } }),
   );
@@ -426,7 +426,7 @@ async function publishEntities_errorWrongAuthKey({ clientProvider }: AdminEntity
 
 async function publishEntities_errorAdminOnlyComponent({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const adminOnlyComponent: AdminAdminOnlyComponent = { type: 'AdminOnlyComponent' };
+  const adminOnlyComponent: AdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyComponent } }),
   );

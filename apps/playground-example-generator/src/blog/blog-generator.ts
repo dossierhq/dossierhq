@@ -13,19 +13,14 @@ import {
   createNewDatabase,
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
-import type {
-  AdminBlogPost,
-  AdminCloudinaryImage,
-  AdminPerson,
-  AppAdminClient,
-} from './schema-types.js';
+import type { BlogPost, CloudinaryImage, Person, AppAdminClient } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
 async function createPerson(adminClient: AppAdminClient) {
   const name = faker.person.fullName();
 
   return (
-    await adminClient.createEntity<AdminPerson>(
+    await adminClient.createEntity<Person>(
       {
         info: { type: 'Person', name },
         fields: { title: name },
@@ -37,13 +32,13 @@ async function createPerson(adminClient: AppAdminClient) {
 
 async function createBlogPost(
   adminClient: AppAdminClient,
-  persons: AdminPerson[],
-  images: AdminCloudinaryImage[],
+  persons: Person[],
+  images: CloudinaryImage[],
 ) {
   const title = faker.company.catchPhrase();
 
   return (
-    await adminClient.createEntity<AdminBlogPost>(
+    await adminClient.createEntity<BlogPost>(
       {
         info: { type: 'BlogPost', name: title },
         fields: {
@@ -74,7 +69,7 @@ async function main() {
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
-  const images = cloudinaryImages.map<AdminCloudinaryImage>((image) => ({
+  const images = cloudinaryImages.map<CloudinaryImage>((image) => ({
     type: 'CloudinaryImage',
     publicId: image.public_id,
     width: image.width,
@@ -82,7 +77,7 @@ async function main() {
     alt: null,
   }));
 
-  const persons: AdminPerson[] = [];
+  const persons: Person[] = [];
   for (const _ of Array(20).keys()) {
     persons.push(await createPerson(adminClient));
   }

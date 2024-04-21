@@ -1,46 +1,46 @@
 import type { AdminClient, AdminExceptionClient, Component, Entity, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminMessage;
+export type AppEntity = Message;
 
-export interface AdminMessageFields {
+export interface MessageFields {
   message: string | null;
-  image: AdminCloudinaryImage | null;
+  image: CloudinaryImage | null;
 }
 
-export type AdminMessage = Entity<'Message', AdminMessageFields, ''>;
+export type Message = Entity<'Message', MessageFields, ''>;
 
-export function isAdminMessage(entity: Entity<string, object>): entity is AdminMessage {
+export function isMessage(entity: Entity<string, object>): entity is Message {
   return entity.info.type === 'Message';
 }
 
-export function assertIsAdminMessage(entity: Entity<string, object>): asserts entity is AdminMessage {
+export function assertIsMessage(entity: Entity<string, object>): asserts entity is Message {
   if (entity.info.type !== 'Message') {
     throw new Error('Expected info.type = Message (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = AdminCloudinaryImage;
+export type AppComponent = CloudinaryImage;
 
-export interface AdminCloudinaryImageFields {
+export interface CloudinaryImageFields {
   publicId: string | null;
   width: number | null;
   height: number | null;
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type CloudinaryImage = Component<'CloudinaryImage', CloudinaryImageFields>;
 
-export function isAdminCloudinaryImage(component: Component<string, object> | AdminCloudinaryImage): component is AdminCloudinaryImage {
+export function isCloudinaryImage(component: Component<string, object> | CloudinaryImage): component is CloudinaryImage {
   return component.type === 'CloudinaryImage';
 }
 
-export function assertIsAdminCloudinaryImage(component: Component<string, object> | AdminCloudinaryImage): asserts component is AdminCloudinaryImage {
+export function assertIsCloudinaryImage(component: Component<string, object> | CloudinaryImage): asserts component is CloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }

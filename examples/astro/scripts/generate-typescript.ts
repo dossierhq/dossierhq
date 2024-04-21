@@ -10,10 +10,10 @@ import { writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { getAuthenticatedAdminClient, getServer } from '../src/dossier/utils/ServerUtils.js';
 
-async function generateTypes(logger: Logger, adminSchema: SchemaWithMigrations, filename: string) {
-  const publishedSchema = adminSchema.toPublishedSchema();
+async function generateTypes(logger: Logger, schema: SchemaWithMigrations, filename: string) {
+  const publishedSchema = schema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({
-    adminSchema,
+    schema,
     publishedSchema,
   });
 

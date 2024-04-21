@@ -6,7 +6,7 @@ describe('generateTypescriptForSchema', () => {
   test('empty', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({}).valueOrThrow(),
+        schema: Schema.createAndValidate({}).valueOrThrow(),
         publishedSchema: null,
       }),
     ).toMatchSnapshot();
@@ -15,7 +15,7 @@ describe('generateTypescriptForSchema', () => {
   test('Foo (no fields)', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
         publishedSchema: null,
@@ -26,7 +26,7 @@ describe('generateTypescriptForSchema', () => {
   test('Booleans', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Booleans',
@@ -45,7 +45,7 @@ describe('generateTypescriptForSchema', () => {
   test('EntityTypes', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'EntityTypes',
@@ -64,7 +64,7 @@ describe('generateTypescriptForSchema', () => {
   test('Locations', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Locations',
@@ -83,7 +83,7 @@ describe('generateTypescriptForSchema', () => {
   test('Numbers', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Numbers',
@@ -104,7 +104,7 @@ describe('generateTypescriptForSchema', () => {
   test('RichTexts', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'RichTexts',
@@ -123,7 +123,7 @@ describe('generateTypescriptForSchema', () => {
   test('Strings', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Strings',
@@ -155,7 +155,7 @@ describe('generateTypescriptForSchema', () => {
   test('Components', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'ComponentTypes',
@@ -210,7 +210,7 @@ describe('generateTypescriptForSchema', () => {
   test('Component (no fields)', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Components',
@@ -227,7 +227,7 @@ describe('generateTypescriptForSchema', () => {
   test('Auth key pattern', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Abc',
@@ -246,7 +246,7 @@ describe('generateTypescriptForSchema', () => {
   test('Unique index', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: Schema.createAndValidate({
+        schema: Schema.createAndValidate({
           entityTypes: [
             {
               name: 'Strings',
@@ -265,7 +265,7 @@ describe('generateTypescriptForSchema published', () => {
   test('empty', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: null,
+        schema: null,
         publishedSchema: Schema.createAndValidate({}).valueOrThrow().toPublishedSchema(),
       }),
     ).toMatchSnapshot();
@@ -274,7 +274,7 @@ describe('generateTypescriptForSchema published', () => {
   test('adminOnly entity type', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: null,
+        schema: null,
         publishedSchema: Schema.createAndValidate({
           entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
         })
@@ -287,7 +287,7 @@ describe('generateTypescriptForSchema published', () => {
   test('adminOnly field', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: null,
+        schema: null,
         publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
@@ -305,7 +305,7 @@ describe('generateTypescriptForSchema published', () => {
   test('required fields', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: null,
+        schema: null,
         publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
@@ -326,7 +326,7 @@ describe('generateTypescriptForSchema published', () => {
   test('Auth key pattern', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: null,
+        schema: null,
         publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {
@@ -347,7 +347,7 @@ describe('generateTypescriptForSchema published', () => {
   test('Unique index', () => {
     expect(
       generateTypescriptForSchema({
-        adminSchema: null,
+        schema: null,
         publishedSchema: Schema.createAndValidate({
           entityTypes: [
             {

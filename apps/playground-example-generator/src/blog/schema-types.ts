@@ -8,82 +8,80 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes,
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes
 >;
 
-export type AppAdminUniqueIndexes = 'slug';
+export type AppUniqueIndexes = 'slug';
 
-export type AppAdminEntity = AdminBlogPost | AdminPerson;
+export type AppEntity = BlogPost | Person;
 
-export interface AdminBlogPostFields {
+export interface BlogPostFields {
   title: string | null;
   slug: string | null;
-  heroImage: AdminCloudinaryImage | null;
+  heroImage: CloudinaryImage | null;
   description: RichText | null;
   body: RichText | null;
   authors: EntityReference[] | null;
   tags: string[] | null;
 }
 
-export type AdminBlogPost = Entity<'BlogPost', AdminBlogPostFields, ''>;
+export type BlogPost = Entity<'BlogPost', BlogPostFields, ''>;
 
-export function isAdminBlogPost(entity: Entity<string, object>): entity is AdminBlogPost {
+export function isBlogPost(entity: Entity<string, object>): entity is BlogPost {
   return entity.info.type === 'BlogPost';
 }
 
-export function assertIsAdminBlogPost(
-  entity: Entity<string, object>,
-): asserts entity is AdminBlogPost {
+export function assertIsBlogPost(entity: Entity<string, object>): asserts entity is BlogPost {
   if (entity.info.type !== 'BlogPost') {
     throw new Error('Expected info.type = BlogPost (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminPersonFields {
+export interface PersonFields {
   title: string | null;
 }
 
-export type AdminPerson = Entity<'Person', AdminPersonFields, ''>;
+export type Person = Entity<'Person', PersonFields, ''>;
 
-export function isAdminPerson(entity: Entity<string, object>): entity is AdminPerson {
+export function isPerson(entity: Entity<string, object>): entity is Person {
   return entity.info.type === 'Person';
 }
 
-export function assertIsAdminPerson(entity: Entity<string, object>): asserts entity is AdminPerson {
+export function assertIsPerson(entity: Entity<string, object>): asserts entity is Person {
   if (entity.info.type !== 'Person') {
     throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = AdminCloudinaryImage;
+export type AppComponent = CloudinaryImage;
 
-export interface AdminCloudinaryImageFields {
+export interface CloudinaryImageFields {
   publicId: string | null;
   width: number | null;
   height: number | null;
   alt: string | null;
 }
 
-export type AdminCloudinaryImage = Component<'CloudinaryImage', AdminCloudinaryImageFields>;
+export type CloudinaryImage = Component<'CloudinaryImage', CloudinaryImageFields>;
 
-export function isAdminCloudinaryImage(
-  component: Component<string, object> | AdminCloudinaryImage,
-): component is AdminCloudinaryImage {
+export function isCloudinaryImage(
+  component: Component<string, object> | CloudinaryImage,
+): component is CloudinaryImage {
   return component.type === 'CloudinaryImage';
 }
 
-export function assertIsAdminCloudinaryImage(
-  component: Component<string, object> | AdminCloudinaryImage,
-): asserts component is AdminCloudinaryImage {
+export function assertIsCloudinaryImage(
+  component: Component<string, object> | CloudinaryImage,
+): asserts component is CloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }

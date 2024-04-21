@@ -8,9 +8,9 @@ import type {
 } from '@dossierhq/core';
 import { EntityStatus } from '@dossierhq/core';
 import { assertEquals, assertOkResult } from '../Asserts.js';
-import type { AppAdminEntity, AppPublishedEntity } from '../SchemaTypes.js';
+import type { AppEntity, AppPublishedEntity } from '../SchemaTypes.js';
 
-export function countEntityStatuses(entities: AppAdminEntity[]): Record<EntityStatus, number> {
+export function countEntityStatuses(entities: AppEntity[]): Record<EntityStatus, number> {
   const result = {
     [EntityStatus.draft]: 0,
     [EntityStatus.published]: 0,
@@ -27,9 +27,9 @@ export function countEntityStatuses(entities: AppAdminEntity[]): Record<EntitySt
 }
 
 export function assertSampledEntities<
-  TEntity extends AppAdminEntity | AppPublishedEntity | EntityReference,
+  TEntity extends AppEntity | AppPublishedEntity | EntityReference,
 >(
-  actualResult: Result<EntitySamplingPayload<AppAdminEntity | AppPublishedEntity>, ErrorType>,
+  actualResult: Result<EntitySamplingPayload<AppEntity | AppPublishedEntity>, ErrorType>,
   expectedSeed: number,
   expectedEntities: TEntity[],
 ) {

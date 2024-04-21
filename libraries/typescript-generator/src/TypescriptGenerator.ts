@@ -16,28 +16,26 @@ interface GeneratorContext {
 }
 
 export function generateTypescriptForSchema({
-  adminSchema,
+  schema,
   publishedSchema,
   authKeyPatternTypeMap,
 }: {
-  adminSchema: Schema | null;
+  schema: Schema | null;
   publishedSchema: PublishedSchema | null;
   authKeyPatternTypeMap?: Record<string, string>;
 }) {
   const context: GeneratorContext = { coreImports: new Set<string>() };
   const paragraphs: string[] = [];
 
-  if (adminSchema) {
+  if (schema) {
     paragraphs.push(...generateAdminClientTypes(context));
-    paragraphs.push(...generateUniqueIndexesType('Admin', adminSchema.spec.indexes));
-    paragraphs.push(...generateAllTypesUnion(adminSchema.spec.entityTypes, 'Admin', 'Entity'));
-    for (const entitySpec of adminSchema.spec.entityTypes) {
+    paragraphs.push(...generateUniqueIndexesType('', schema.spec.indexes));
+    paragraphs.push(...generateAllTypesUnion(schema.spec.entityTypes, '', 'Entity'));
+    for (const entitySpec of schema.spec.entityTypes) {
       paragraphs.push(...generateAdminEntityType(context, entitySpec, authKeyPatternTypeMap ?? {}));
     }
-    paragraphs.push(
-      ...generateAllTypesUnion(adminSchema.spec.componentTypes, 'Admin', 'Component'),
-    );
-    for (const componentSpec of adminSchema.spec.componentTypes) {
+    paragraphs.push(...generateAllTypesUnion(schema.spec.componentTypes, '', 'Component'));
+    for (const componentSpec of schema.spec.componentTypes) {
       paragraphs.push(...generateAdminComponentType(context, componentSpec));
     }
   }
@@ -76,9 +74,9 @@ function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('AdminExceptionClient');
   return [
     '',
-    'export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;',
+    'export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;',
     '',
-    'export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;',
+    'export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;',
   ];
 }
 
@@ -93,13 +91,10 @@ function generatePublishedClientTypes(context: GeneratorContext) {
   ];
 }
 
-function generateUniqueIndexesType(
-  adminOrPublished: 'Admin' | 'Published',
-  indexes: SchemaIndexSpecification[],
-) {
+function generateUniqueIndexesType(prefix: '' | 'Published', indexes: SchemaIndexSpecification[]) {
   const uniqueIndexNames = indexes.filter((it) => it.type === 'unique').map((it) => it.name);
   const uniqueIndexTypeDefinition = stringLiteralsUnionOrNever(uniqueIndexNames);
-  return ['', `export type App${adminOrPublished}UniqueIndexes = ${uniqueIndexTypeDefinition};`];
+  return ['', `export type App${prefix}UniqueIndexes = ${uniqueIndexTypeDefinition};`];
 }
 
 function generateAllTypesUnion(
@@ -108,11 +103,11 @@ function generateAllTypesUnion(
     | PublishedEntityTypeSpecification[]
     | ComponentTypeSpecification[]
     | PublishedComponentTypeSpecification[],
-  adminOrPublished: 'Admin' | 'Published',
+  prefix: '' | 'Published',
   entityOrComponent: 'Entity' | 'Component',
 ) {
-  const typeDefinition = typeUnionOrNever(types.map((it) => `${adminOrPublished}${it.name}`));
-  return ['', `export type App${adminOrPublished}${entityOrComponent} = ${typeDefinition};`];
+  const typeDefinition = typeUnionOrNever(types.map((it) => `${prefix}${it.name}`));
+  return ['', `export type App${prefix}${entityOrComponent} = ${typeDefinition};`];
 }
 
 function generateAdminEntityType(
@@ -120,7 +115,7 @@ function generateAdminEntityType(
   entitySpec: EntityTypeSpecification,
   authKeyPatternTypeMap: Record<string, string>,
 ) {
-  return generateEntityType(context, entitySpec, 'Admin', authKeyPatternTypeMap);
+  return generateEntityType(context, entitySpec, '', authKeyPatternTypeMap);
 }
 
 function generatePublishedEntityType(
@@ -134,19 +129,19 @@ function generatePublishedEntityType(
 function generateEntityType(
   context: GeneratorContext,
   entitySpec: PublishedEntityTypeSpecification,
-  adminOrPublished: 'Admin' | 'Published',
+  prefix: '' | 'Published',
   authKeyPatternTypeMap: Record<string, string>,
 ) {
   const paragraphs: string[] = [''];
 
   // fields type
-  const fieldsName = `${adminOrPublished}${entitySpec.name}Fields`;
+  const fieldsName = `${prefix}${entitySpec.name}Fields`;
   if (entitySpec.fields.length === 0) {
     paragraphs.push(`export type ${fieldsName} = Record<never, never>;`);
   } else {
     paragraphs.push(`export interface ${fieldsName} {`);
     for (const fieldSpec of entitySpec.fields) {
-      paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+      paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, prefix)};`);
     }
     paragraphs.push(`}`);
   }
@@ -164,9 +159,9 @@ function generateEntityType(
   }
 
   // entity type
-  const parentTypeName = adminOrPublished === 'Admin' ? 'Entity' : `${adminOrPublished}Entity`;
+  const parentTypeName = prefix === '' ? 'Entity' : `${prefix}Entity`;
   const genericEntityType = `${parentTypeName}<string, object>`;
-  const entityTypeName = `${adminOrPublished}${entitySpec.name}`;
+  const entityTypeName = `${prefix}${entitySpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
     `export type ${entityTypeName} = ${parentTypeName}<'${entitySpec.name}', ${fieldsName}, ${authKeyType}>;`,
@@ -199,7 +194,7 @@ function generateAdminComponentType(
   context: GeneratorContext,
   componentSpec: ComponentTypeSpecification,
 ) {
-  return generateComponentType(context, componentSpec, 'Admin');
+  return generateComponentType(context, componentSpec, '');
 }
 
 function generatePublishedComponentType(
@@ -212,18 +207,18 @@ function generatePublishedComponentType(
 function generateComponentType(
   context: GeneratorContext,
   componentSpec: PublishedComponentTypeSpecification,
-  adminOrPublished: 'Admin' | 'Published',
+  prefix: '' | 'Published',
 ) {
   const paragraphs: string[] = [''];
 
   // fields type
-  const fieldsName = `${adminOrPublished}${componentSpec.name}Fields`;
+  const fieldsName = `${prefix}${componentSpec.name}Fields`;
   if (componentSpec.fields.length === 0) {
     paragraphs.push(`export type ${fieldsName} = Record<never, never>;`);
   } else {
     paragraphs.push(`export interface ${fieldsName} {`);
     for (const fieldSpec of componentSpec.fields) {
-      paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, adminOrPublished)};`);
+      paragraphs.push(`  ${fieldSpec.name}: ${fieldType(context, fieldSpec, prefix)};`);
     }
     paragraphs.push(`}`);
   }
@@ -232,7 +227,7 @@ function generateComponentType(
   // component type
   const parentTypeName = 'Component';
   const parentTypeInName = 'Component<string, object>';
-  const componentTypeName = `${adminOrPublished}${componentSpec.name}`;
+  const componentTypeName = `${prefix}${componentSpec.name}`;
   context.coreImports.add(parentTypeName);
   paragraphs.push(
     `export type ${componentTypeName} = ${parentTypeName}<'${componentSpec.name}', ${fieldsName}>;`,
@@ -264,7 +259,7 @@ function generateComponentType(
 function fieldType(
   { coreImports }: GeneratorContext,
   fieldSpec: FieldSpecification | PublishedFieldSpecification,
-  adminOrPublished: 'Admin' | 'Published',
+  prefix: '' | 'Published',
 ) {
   let type: string;
   switch (fieldSpec.type) {
@@ -273,9 +268,9 @@ function fieldType(
       break;
     case FieldType.Component:
       if (fieldSpec.componentTypes && fieldSpec.componentTypes.length > 0) {
-        type = fieldSpec.componentTypes.map((it) => `${adminOrPublished}${it}`).join(' | ');
+        type = fieldSpec.componentTypes.map((it) => `${prefix}${it}`).join(' | ');
       } else {
-        type = `App${adminOrPublished}Component`;
+        type = `App${prefix}Component`;
       }
       break;
     case FieldType.Reference:
@@ -301,7 +296,7 @@ function fieldType(
       }
       break;
   }
-  const nullable = adminOrPublished === 'Admin' || !fieldSpec.required;
+  const nullable = prefix === '' || !fieldSpec.required;
   const nullableSuffix = nullable ? ' | null' : '';
   if (!fieldSpec.list) {
     return type + nullableSuffix;

@@ -26,9 +26,9 @@ import {
   assertIsPublishedRichTexts,
   assertIsPublishedStrings,
   assertIsPublishedTitleOnly,
-  type AdminLocationsComponent,
-  type AdminStringsFields,
-  type AdminTitleOnly,
+  type LocationsComponent,
+  type StringsFields,
+  type TitleOnly,
   type AppPublishedUniqueIndexes,
 } from '../SchemaTypes.js';
 import {
@@ -106,7 +106,7 @@ async function getEntity_archivedThenPublished({ clientProvider }: PublishedEnti
 
 async function getEntity_oldVersion({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity<AdminTitleOnly>(
+  const createResult = await adminClient.createEntity<TitleOnly>(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
   );
   const {
@@ -180,7 +180,7 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({
     unique: null,
     uniqueGenericIndex: null,
   });
-  assertEquals((entity.fields as AdminStringsFields).stringAdminOnly, undefined);
+  assertEquals((entity.fields as StringsFields).stringAdminOnly, undefined);
 }
 
 async function getEntity_componentAdminOnlyFieldIsExcluded({
@@ -189,7 +189,7 @@ async function getEntity_componentAdminOnlyFieldIsExcluded({
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const adminLocationsComponent: AdminLocationsComponent = {
+  const adminLocationsComponent: LocationsComponent = {
     type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
     locationAdminOnly: { lat: 56, lng: 78 },
@@ -224,7 +224,7 @@ async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const adminLocationsComponent: AdminLocationsComponent = {
+  const adminLocationsComponent: LocationsComponent = {
     type: 'LocationsComponent',
     location: { lat: 12, lng: 34 },
     locationAdminOnly: { lat: 56, lng: 78 },

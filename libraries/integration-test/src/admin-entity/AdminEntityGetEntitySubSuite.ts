@@ -7,8 +7,8 @@ import {
   assertSame,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AppAdminUniqueIndexes } from '../SchemaTypes.js';
-import { assertIsAdminSubjectOnly } from '../SchemaTypes.js';
+import type { AppUniqueIndexes } from '../SchemaTypes.js';
+import { assertIsSubjectOnly } from '../SchemaTypes.js';
 import {
   STRINGS_CREATE,
   SUBJECT_ONLY_CREATE,
@@ -41,7 +41,7 @@ async function getEntity_withSubjectAuthKey({ clientProvider }: AdminEntityTestC
 
   const getResult = await client.getEntity({ id });
   assertOkResult(getResult);
-  assertIsAdminSubjectOnly(getResult.value);
+  assertIsSubjectOnly(getResult.value);
   assertEquals(getResult.value, createResult.value.entity);
 }
 
@@ -146,7 +146,7 @@ async function getEntity_errorInvalidVersion({ clientProvider }: AdminEntityTest
 async function getEntity_errorInvalidUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
   const result = await client.getEntity({
-    index: 'unknown-index' as AppAdminUniqueIndexes,
+    index: 'unknown-index' as AppUniqueIndexes,
     value: 'unknown-value',
   });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');

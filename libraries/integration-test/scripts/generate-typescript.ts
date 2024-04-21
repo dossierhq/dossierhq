@@ -6,10 +6,10 @@ import { format, resolveConfig } from 'prettier';
 import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
 
 async function generateTypes(schemaSpec: SchemaSpecificationUpdate, filename: string) {
-  const adminSchema = Schema.createAndValidate(schemaSpec).valueOrThrow();
-  const publishedSchema = adminSchema.toPublishedSchema();
+  const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();
+  const publishedSchema = schema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({
-    adminSchema,
+    schema,
     publishedSchema,
     authKeyPatternTypeMap: { subjectOrDefault: "''|'subject'", subject: "'subject'" },
   });

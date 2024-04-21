@@ -25,18 +25,18 @@ import {
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
 import type {
-  AdminBooleansEntity,
-  AdminCloudinaryImage,
-  AdminComponentsEntity,
-  AdminLocationsEntity,
-  AdminNestedComponent,
-  AdminNumbersEntity,
-  AdminReferencesEntity,
-  AdminRichTextsEntity,
-  AdminStringsComponent,
-  AdminStringsEntity,
   AppAdminClient,
-  AppAdminEntity,
+  AppEntity,
+  BooleansEntity,
+  CloudinaryImage,
+  ComponentsEntity,
+  LocationsEntity,
+  NestedComponent,
+  NumbersEntity,
+  ReferencesEntity,
+  RichTextsEntity,
+  StringsComponent,
+  StringsEntity,
 } from './schema-types.js';
 import { SCHEMA, SCHEMA_WITHOUT_VALIDATIONS } from './schema.js';
 
@@ -233,14 +233,14 @@ function id(name: string) {
 }
 
 async function createBooleansEntities(adminClient: AppAdminClient) {
-  const minimal: EntityCreate<AdminBooleansEntity> = {
+  const minimal: EntityCreate<BooleansEntity> = {
     info: { type: 'BooleansEntity', name: 'Booleans minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, { fields: { required: true } });
 
   const results: PromiseResult<
-    EntityCreatePayload<AdminBooleansEntity>,
+    EntityCreatePayload<BooleansEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -284,13 +284,13 @@ async function createEntitiesEntities(
     numbersEntities,
     stringsEntities,
   }: {
-    booleansEntities: AdminBooleansEntity[];
-    locationsEntities: AdminLocationsEntity[];
-    numbersEntities: AdminNumbersEntity[];
-    stringsEntities: AdminStringsEntity[];
+    booleansEntities: BooleansEntity[];
+    locationsEntities: LocationsEntity[];
+    numbersEntities: NumbersEntity[];
+    stringsEntities: StringsEntity[];
   },
 ) {
-  const minimal: EntityCreate<AdminReferencesEntity> = {
+  const minimal: EntityCreate<ReferencesEntity> = {
     info: { type: 'ReferencesEntity', name: 'References minimal' },
     fields: {},
   };
@@ -352,11 +352,11 @@ async function createEntitiesEntities(
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-function entityRef(entity: AppAdminEntity | undefined): EntityReference | null {
+function entityRef(entity: AppEntity | undefined): EntityReference | null {
   return entity ? { id: entity.id } : null;
 }
 
-function entityRefs(entities: AppAdminEntity[]): EntityReference[] {
+function entityRefs(entities: AppEntity[]): EntityReference[] {
   return entities.map(entityRef).filter((it) => it !== null) as EntityReference[];
 }
 
@@ -364,7 +364,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
   const malmo = { lat: 55.60498, lng: 13.003822 };
   const london = { lat: 51.459952, lng: -0.011228 };
 
-  const minimal: EntityCreate<AdminLocationsEntity> = {
+  const minimal: EntityCreate<LocationsEntity> = {
     info: { type: 'LocationsEntity', name: 'Locations minimal' },
     fields: {},
   };
@@ -373,7 +373,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
   });
 
   const results: PromiseResult<
-    EntityCreatePayload<AdminLocationsEntity>,
+    EntityCreatePayload<LocationsEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -411,7 +411,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
 }
 
 async function createNumbersEntities(adminClient: AppAdminClient) {
-  const minimal: EntityCreate<AdminNumbersEntity> = {
+  const minimal: EntityCreate<NumbersEntity> = {
     info: { type: 'NumbersEntity', name: 'Numbers minimal' },
     fields: {},
   };
@@ -420,7 +420,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
   });
 
   const results: PromiseResult<
-    EntityCreatePayload<AdminNumbersEntity>,
+    EntityCreatePayload<NumbersEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -476,14 +476,14 @@ async function createRichTextsEntities(
     stringsEntities,
     cloudinaryImageComponents,
   }: {
-    booleansEntities: AdminBooleansEntity[];
-    locationsEntities: AdminLocationsEntity[];
-    numbersEntities: AdminNumbersEntity[];
-    stringsEntities: AdminStringsEntity[];
-    cloudinaryImageComponents: AdminCloudinaryImage[];
+    booleansEntities: BooleansEntity[];
+    locationsEntities: LocationsEntity[];
+    numbersEntities: NumbersEntity[];
+    stringsEntities: StringsEntity[];
+    cloudinaryImageComponents: CloudinaryImage[];
   },
 ) {
-  const minimal: EntityCreate<AdminRichTextsEntity> = {
+  const minimal: EntityCreate<RichTextsEntity> = {
     info: { type: 'RichTextsEntity', name: 'RichTexts minimal' },
     fields: {},
   };
@@ -548,7 +548,7 @@ async function createRichTextsEntities(
             ]),
           ]),
           nestedComponent: createRichText([
-            createRichTextComponentNode<AdminNestedComponent>({
+            createRichTextComponentNode<NestedComponent>({
               type: 'NestedComponent',
               text: 'root',
               child: { type: 'NestedComponent', text: 'child', child: null },
@@ -571,7 +571,7 @@ async function createRichTextsEntities(
             createRichTextParagraphNode([
               createRichTextTextNode('Required fields are not allowed to be empty:'),
             ]),
-            createRichTextComponentNode<AdminStringsComponent>({
+            createRichTextComponentNode<StringsComponent>({
               type: 'StringsComponent',
               normal: null,
               list: null,
@@ -594,7 +594,7 @@ async function createRichTextsEntities(
                 'We can also add components with empty required fields, but not with invalid fields:',
               ),
             ]),
-            createRichTextComponentNode<AdminStringsComponent>({
+            createRichTextComponentNode<StringsComponent>({
               type: 'StringsComponent',
               normal: null,
               list: null,
@@ -627,7 +627,7 @@ async function createRichTextsEntities(
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
           nestedComponent: createRichText([
-            createRichTextComponentNode<AdminCloudinaryImage>(cloudinaryImageComponents[0]),
+            createRichTextComponentNode<CloudinaryImage>(cloudinaryImageComponents[0]),
             createRichTextHeadingNode('h1', [createRichTextTextNode('Heading')]),
           ]),
         },
@@ -649,7 +649,7 @@ async function createRichTextsEntities(
 }
 
 async function createStringsEntities(adminClient: AppAdminClient) {
-  const minimal: EntityCreate<AdminStringsEntity> = {
+  const minimal: EntityCreate<StringsEntity> = {
     info: { type: 'StringsEntity', name: 'Strings minimal' },
     fields: {},
   };
@@ -662,7 +662,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
   });
 
   const results: PromiseResult<
-    EntityCreatePayload<AdminStringsEntity>,
+    EntityCreatePayload<StringsEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -732,14 +732,14 @@ async function createComponentsEntities(
   {
     cloudinaryImageComponents,
   }: {
-    booleansEntities: AdminBooleansEntity[];
-    locationsEntities: AdminLocationsEntity[];
-    numbersEntities: AdminNumbersEntity[];
-    stringsEntities: AdminStringsEntity[];
-    cloudinaryImageComponents: AdminCloudinaryImage[];
+    booleansEntities: BooleansEntity[];
+    locationsEntities: LocationsEntity[];
+    numbersEntities: NumbersEntity[];
+    stringsEntities: StringsEntity[];
+    cloudinaryImageComponents: CloudinaryImage[];
   },
 ) {
-  const minimal: EntityCreate<AdminComponentsEntity> = {
+  const minimal: EntityCreate<ComponentsEntity> = {
     info: { type: 'ComponentsEntity', name: 'Components minimal' },
     fields: {},
   };
@@ -797,7 +797,7 @@ async function createComponentsEntities(
             type: 'NestedComponent',
             text: 'First',
             child: null,
-          } as unknown as AdminCloudinaryImage,
+          } as unknown as CloudinaryImage,
           normal: { type: 'AdminOnlyComponent', text: 'Admin only' },
         },
       }),
@@ -823,7 +823,7 @@ async function createComponentsEntities(
 async function createCloudinaryImageComponents() {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
-  const images = cloudinaryImages.map<AdminCloudinaryImage>((image) => ({
+  const images = cloudinaryImages.map<CloudinaryImage>((image) => ({
     type: 'CloudinaryImage',
     publicId: image.public_id,
     width: image.width,

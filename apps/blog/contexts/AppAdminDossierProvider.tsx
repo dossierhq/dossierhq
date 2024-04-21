@@ -27,7 +27,7 @@ import { useMemo } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
-import { isAdminCloudinaryImage } from '../utils/SchemaTypes';
+import { isCloudinaryImage } from '../utils/SchemaTypes';
 
 type BackendContext = ClientContext;
 
@@ -40,7 +40,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
       fieldSpec.type === FieldType.Component &&
       isComponentItemField(fieldSpec, value) &&
       value &&
-      isAdminCloudinaryImage(value)
+      isCloudinaryImage(value)
     ) {
       return CloudinaryImageFieldEditor({
         ...props,
@@ -55,7 +55,7 @@ class AdminContextAdapter implements AdminDossierContextAdapter {
 
   renderAdminRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
     const { value, validationIssues, onChange } = props;
-    if (isAdminCloudinaryImage(value)) {
+    if (isCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({
         cloudName: CLOUDINARY_CLOUD_NAME,
         uploadPreset: CLOUDINARY_UPLOAD_PRESET,

@@ -18,14 +18,14 @@ import {
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
-  assertIsAdminChangeValidations,
-  assertIsAdminComponents,
-  assertIsAdminReferences,
-  type AdminChangeValidations,
-  type AdminComponents,
-  type AdminReferences,
-  type AdminSubjectOnly,
-  type AdminTitleOnly,
+  assertIsChangeValidations,
+  assertIsComponents,
+  assertIsReferences,
+  type ChangeValidations,
+  type Components,
+  type References,
+  type SubjectOnly,
+  type TitleOnly,
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
@@ -108,7 +108,7 @@ async function updateEntity_minimal({ clientProvider }: AdminEntityTestContext) 
 
 async function updateEntity_noChange({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
+  const createResult = await client.createEntity<TitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -131,7 +131,7 @@ async function updateEntity_minimalWithSubjectAuthKey({ clientProvider }: AdminE
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await client.updateEntity<AdminSubjectOnly>({
+  const updateResult = await client.updateEntity<SubjectOnly>({
     id,
     info: { authKey: 'subject' },
     fields: { message: 'Updated message' },
@@ -172,7 +172,7 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
     entity: { id },
   } = createResult.valueOrThrow();
 
-  const updateResult = await client.updateEntity<AdminSubjectOnly>({
+  const updateResult = await client.updateEntity<SubjectOnly>({
     id,
     fields: { message: 'Updated message' },
   });
@@ -260,7 +260,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await client.updateEntity<AdminSubjectOnly>(
+  const updateResult = await client.updateEntity<SubjectOnly>(
     { id, info: { authKey: 'subject' }, fields: { message: 'Updated message' } },
     { publish: true },
   );
@@ -389,7 +389,7 @@ async function updateEntity_noChangeAndPublishDraftEntity({
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const createResult = await adminClient.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE);
+  const createResult = await adminClient.createEntity<TitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -430,7 +430,7 @@ async function updateEntity_noChangeAndPublishPublishedEntity({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.adminClient();
-  const createResult = await client.createEntity<AdminTitleOnly>(TITLE_ONLY_CREATE, {
+  const createResult = await client.createEntity<TitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,
   });
   assertOkResult(createResult);
@@ -542,7 +542,7 @@ async function updateEntity_fixInvalidEntity({ clientProvider }: AdminEntityTest
     await createInvalidEntity(adminClient, { matchPattern: 'no match' })
   ).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity<AdminChangeValidations>({
+  const updateResult = await adminClient.updateEntity<ChangeValidations>({
     id: entity.id,
     fields: { matchPattern: 'foo' },
   });
@@ -569,7 +569,7 @@ async function updateEntity_fixInvalidEntity({ clientProvider }: AdminEntityTest
   });
 
   const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
-  assertIsAdminChangeValidations(getEntity);
+  assertIsChangeValidations(getEntity);
   assertEquals(getEntity, expectedEntity);
 }
 
@@ -578,7 +578,7 @@ async function updateEntity_fixInvalidComponent({ clientProvider }: AdminEntityT
 
   const { entity } = (await createEntityWithInvalidComponent(adminClient)).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity<AdminComponents>({
+  const updateResult = await adminClient.updateEntity<Components>({
     id: entity.id,
     fields: { any: { type: 'ChangeValidationsComponent', matchPattern: 'foo' } },
   });
@@ -599,7 +599,7 @@ async function updateEntity_fixInvalidComponent({ clientProvider }: AdminEntityT
   });
 
   const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
-  assertIsAdminComponents(getEntity);
+  assertIsComponents(getEntity);
   assertEquals(getEntity, expectedEntity);
 }
 
@@ -659,7 +659,7 @@ async function updateEntity_withTwoReferences({ clientProvider }: AdminEntityTes
     entity: { id: idTitleOnly2 },
   } = createTitleOnly2Result.value;
 
-  const updateResult = await client.updateEntity<AdminReferences>({
+  const updateResult = await client.updateEntity<References>({
     id,
     fields: { any: { id: idTitleOnly1 }, titleOnly: { id: idTitleOnly2 } },
   });
@@ -692,7 +692,7 @@ async function updateEntity_withTwoReferences({ clientProvider }: AdminEntityTes
 
   const getResult = await client.getEntity({ id });
   assertOkResult(getResult);
-  assertIsAdminReferences(getResult.value);
+  assertIsReferences(getResult.value);
   assertEquals(getResult.value, expectedEntity);
 }
 
@@ -867,7 +867,7 @@ async function updateEntity_errorInvalidField({ clientProvider }: AdminEntityTes
   const updateResult = await client.updateEntity({
     id,
     fields: { invalid: 'hello' },
-  } as EntityUpdate<AdminTitleOnly>);
+  } as EntityUpdate<TitleOnly>);
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,

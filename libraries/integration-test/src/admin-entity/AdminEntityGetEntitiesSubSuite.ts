@@ -13,11 +13,7 @@ import {
 } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type {
-  AdminComponents,
-  AdminLocationsComponent,
-  AdminReferencesComponent,
-} from '../SchemaTypes.js';
+import type { Components, LocationsComponent, ReferencesComponent } from '../SchemaTypes.js';
 import {
   CHANGE_VALIDATIONS_CREATE,
   LOCATIONS_CREATE,
@@ -643,7 +639,7 @@ async function getEntities_componentTypes({ clientProvider }: AdminEntityTestCon
   assertResultValue(matchesBeforeComponent, 0);
 
   (
-    await adminClient.updateEntity<AdminComponents>({
+    await adminClient.updateEntity<Components>({
       id: entity.id,
       fields: { any: { type: 'ReferencesComponent', reference: null } },
     })
@@ -740,7 +736,7 @@ async function getEntities_linksToOneReferenceFromComponentInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
-          createRichTextComponentNode<AdminReferencesComponent>({
+          createRichTextComponentNode<ReferencesComponent>({
             type: 'ReferencesComponent',
             reference: { id: titleOnlyId },
           }),
@@ -887,7 +883,7 @@ async function getEntities_boundingBoxOneInsideFromComponentInRichText({
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
-          createRichTextComponentNode<AdminLocationsComponent>({
+          createRichTextComponentNode<LocationsComponent>({
             type: 'LocationsComponent',
             location: center,
             locationAdminOnly: null,

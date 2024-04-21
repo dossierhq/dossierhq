@@ -13,10 +13,10 @@ async function generateTypes(
   filename: string,
   { authKeyPatternTypeMap }: { authKeyPatternTypeMap?: Record<string, string> } = {},
 ) {
-  const adminSchema = Schema.createAndValidate(schemaSpec).valueOrThrow();
+  const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();
 
   const sourceCode = generateTypescriptForSchema({
-    adminSchema,
+    schema,
     publishedSchema: null,
     authKeyPatternTypeMap,
   });

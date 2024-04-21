@@ -4,27 +4,27 @@ import {
   type Entity,
   type EntityCreate,
   type EntityUpsert,
-  type Schema,
   type PublishedEntity,
+  type Schema,
 } from '@dossierhq/core';
 import { assertEquals } from '../Asserts.js';
 import type {
-  AdminChangeValidations,
-  AdminComponents,
-  AdminLocations,
-  AdminMigrationEntity,
-  AdminReferences,
-  AdminRichTexts,
-  AdminStrings,
-  AdminSubjectOnly,
-  AdminSubjectOrDefaultAuthKey,
-  AdminTitleOnly,
-  AppAdminEntity,
+  AppEntity,
   AppPublishedEntity,
+  ChangeValidations,
+  Components,
+  Locations,
+  MigrationEntity,
   PublishedTitleOnly,
+  References,
+  RichTexts,
+  Strings,
+  SubjectOnly,
+  SubjectOrDefaultAuthKey,
+  TitleOnly,
 } from '../SchemaTypes.js';
 
-export const CHANGE_VALIDATIONS_CREATE: Readonly<EntityCreate<AdminChangeValidations>> = {
+export const CHANGE_VALIDATIONS_CREATE: Readonly<EntityCreate<ChangeValidations>> = {
   info: {
     type: 'ChangeValidations',
     name: 'ChangeValidations name',
@@ -32,7 +32,7 @@ export const CHANGE_VALIDATIONS_CREATE: Readonly<EntityCreate<AdminChangeValidat
   fields: {},
 };
 
-export const LOCATIONS_CREATE: Readonly<EntityCreate<AdminLocations>> = {
+export const LOCATIONS_CREATE: Readonly<EntityCreate<Locations>> = {
   info: {
     type: 'Locations',
     name: 'Locations name',
@@ -40,7 +40,7 @@ export const LOCATIONS_CREATE: Readonly<EntityCreate<AdminLocations>> = {
   fields: {},
 };
 
-export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
+export const LOCATIONS_ADMIN_ENTITY: Readonly<Locations> = {
   id: 'REPLACE',
   info: {
     type: 'Locations',
@@ -56,12 +56,12 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
   fields: { location: null, locationList: null, locationAdminOnly: null },
 };
 
-export const MIGRATIONS_ENTITY_CREATE: Readonly<EntityCreate<AdminMigrationEntity>> = {
+export const MIGRATIONS_ENTITY_CREATE: Readonly<EntityCreate<MigrationEntity>> = {
   info: { name: 'MigrationEntity name', type: 'MigrationEntity' },
   fields: {},
 };
 
-export const REFERENCES_CREATE: Readonly<EntityCreate<AdminReferences>> = {
+export const REFERENCES_CREATE: Readonly<EntityCreate<References>> = {
   info: {
     type: 'References',
     name: 'References name',
@@ -69,7 +69,7 @@ export const REFERENCES_CREATE: Readonly<EntityCreate<AdminReferences>> = {
   fields: {},
 };
 
-export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
+export const REFERENCES_ADMIN_ENTITY: Readonly<References> = {
   id: 'REPLACE',
   info: {
     type: 'References',
@@ -85,7 +85,7 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
   fields: { any: null, anyList: null, anyAdminOnly: null, titleOnly: null },
 };
 
-export const RICH_TEXTS_CREATE: Readonly<EntityCreate<AdminRichTexts>> = {
+export const RICH_TEXTS_CREATE: Readonly<EntityCreate<RichTexts>> = {
   info: {
     type: 'RichTexts',
     name: 'RichTexts name',
@@ -93,7 +93,7 @@ export const RICH_TEXTS_CREATE: Readonly<EntityCreate<AdminRichTexts>> = {
   fields: {},
 };
 
-export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
+export const RICH_TEXTS_ADMIN_ENTITY: Readonly<RichTexts> = {
   id: 'REPLACE',
   info: {
     type: 'RichTexts',
@@ -114,7 +114,7 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
   },
 };
 
-export const STRINGS_CREATE: Readonly<EntityCreate<AdminStrings>> = {
+export const STRINGS_CREATE: Readonly<EntityCreate<Strings>> = {
   info: {
     type: 'Strings',
     name: 'Strings name',
@@ -122,7 +122,7 @@ export const STRINGS_CREATE: Readonly<EntityCreate<AdminStrings>> = {
   fields: { multiline: 'Hello\nWorld' },
 };
 
-export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
+export const STRINGS_ADMIN_ENTITY: Readonly<Strings> = {
   id: 'REPLACE',
   info: {
     type: 'Strings',
@@ -148,7 +148,7 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
   },
 };
 
-export const SUBJECT_ONLY_CREATE: Readonly<EntityCreate<AdminSubjectOnly>> = {
+export const SUBJECT_ONLY_CREATE: Readonly<EntityCreate<SubjectOnly>> = {
   info: {
     type: 'SubjectOnly',
     name: 'SubjectOnly name',
@@ -157,12 +157,12 @@ export const SUBJECT_ONLY_CREATE: Readonly<EntityCreate<AdminSubjectOnly>> = {
   fields: { message: 'Message' },
 };
 
-export const SUBJECT_ONLY_UPSERT: Readonly<EntityUpsert<AdminSubjectOnly>> = {
+export const SUBJECT_ONLY_UPSERT: Readonly<EntityUpsert<SubjectOnly>> = {
   id: 'REPLACE',
   ...SUBJECT_ONLY_CREATE,
 };
 
-export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
+export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<SubjectOnly> = {
   id: 'REPLACE',
   info: {
     type: 'SubjectOnly',
@@ -178,7 +178,7 @@ export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
   fields: { message: 'Message' },
 };
 
-export const SUBJECT_OR_DEFAULT_CREATE: Readonly<EntityCreate<AdminSubjectOrDefaultAuthKey>> = {
+export const SUBJECT_OR_DEFAULT_CREATE: Readonly<EntityCreate<SubjectOrDefaultAuthKey>> = {
   info: {
     type: 'SubjectOrDefaultAuthKey',
     name: 'SubjectOrDefaultAuthKey name',
@@ -187,12 +187,12 @@ export const SUBJECT_OR_DEFAULT_CREATE: Readonly<EntityCreate<AdminSubjectOrDefa
   fields: { message: 'Message' },
 };
 
-export const SUBJECT_OR_DEFAULT_UPSERT: Readonly<EntityUpsert<AdminSubjectOrDefaultAuthKey>> = {
+export const SUBJECT_OR_DEFAULT_UPSERT: Readonly<EntityUpsert<SubjectOrDefaultAuthKey>> = {
   id: 'REPLACE',
   ...SUBJECT_OR_DEFAULT_CREATE,
 };
 
-export const TITLE_ONLY_CREATE: Readonly<EntityCreate<AdminTitleOnly>> = {
+export const TITLE_ONLY_CREATE: Readonly<EntityCreate<TitleOnly>> = {
   info: {
     type: 'TitleOnly',
     name: 'TitleOnly name',
@@ -200,12 +200,12 @@ export const TITLE_ONLY_CREATE: Readonly<EntityCreate<AdminTitleOnly>> = {
   fields: { title: 'Title' },
 };
 
-export const TITLE_ONLY_UPSERT: Readonly<EntityUpsert<AdminTitleOnly>> = {
+export const TITLE_ONLY_UPSERT: Readonly<EntityUpsert<TitleOnly>> = {
   id: 'REPLACE',
   ...TITLE_ONLY_CREATE,
 };
 
-export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {
+export const TITLE_ONLY_ADMIN_ENTITY: Readonly<TitleOnly> = {
   id: 'REPLACE',
   info: {
     type: 'TitleOnly',
@@ -233,7 +233,7 @@ export const TITLE_ONLY_PUBLISHED_ENTITY: Readonly<PublishedTitleOnly> = {
   fields: { title: 'Title' },
 };
 
-export const VALUE_ITEMS_CREATE: Readonly<EntityCreate<AdminComponents>> = {
+export const VALUE_ITEMS_CREATE: Readonly<EntityCreate<Components>> = {
   info: {
     type: 'Components',
     name: 'Components name',
@@ -241,7 +241,7 @@ export const VALUE_ITEMS_CREATE: Readonly<EntityCreate<AdminComponents>> = {
   fields: {},
 };
 
-export function adminToPublishedEntity<T extends AppAdminEntity>(
+export function adminToPublishedEntity<T extends AppEntity>(
   adminSchema: Schema,
   entity: T,
 ): AppPublishedEntity {

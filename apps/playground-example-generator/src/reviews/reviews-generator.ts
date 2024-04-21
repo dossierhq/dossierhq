@@ -1,7 +1,7 @@
 import type { EntityReference, Location } from '@dossierhq/core';
 import {
-  createRichTextParagraphNode,
   createRichText,
+  createRichTextParagraphNode,
   createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,
 } from '@dossierhq/core';
@@ -12,11 +12,11 @@ import {
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
 import type {
-  AdminPersonalNote,
-  AdminPlaceOfBusiness,
-  AdminReview,
-  AdminReviewer,
   AppAdminClient,
+  PersonalNote,
+  PlaceOfBusiness,
+  Review,
+  Reviewer,
 } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
@@ -47,7 +47,7 @@ async function createPlaceOfBusiness(
   const nextValue = locationGenerator.next();
   const location = !nextValue.done ? nextValue.value : null;
   return (
-    await adminClient.createEntity<AdminPlaceOfBusiness>(
+    await adminClient.createEntity<PlaceOfBusiness>(
       {
         info: { type: 'PlaceOfBusiness', name },
         fields: {
@@ -72,7 +72,7 @@ async function createPlaceOfBusiness(
 async function createReviewer(adminClient: AppAdminClient) {
   const name = faker.internet.userName();
   return (
-    await adminClient.createEntity<AdminReviewer>(
+    await adminClient.createEntity<Reviewer>(
       {
         info: { type: 'Reviewer', name },
         fields: { name },
@@ -84,11 +84,11 @@ async function createReviewer(adminClient: AppAdminClient) {
 
 async function createReview(
   adminClient: AppAdminClient,
-  placeOfBusiness: AdminPlaceOfBusiness,
+  placeOfBusiness: PlaceOfBusiness,
   reviewer: EntityReference,
 ) {
   return (
-    await adminClient.createEntity<AdminReview>(
+    await adminClient.createEntity<Review>(
       {
         info: { type: 'Review', name: 'Review' },
         fields: {
@@ -104,11 +104,11 @@ async function createReview(
 
 async function createPersonalNote(
   adminClient: AppAdminClient,
-  placeOfBusiness: AdminPlaceOfBusiness,
+  placeOfBusiness: PlaceOfBusiness,
   userName: string,
 ) {
   return (
-    await adminClient.createEntity<AdminPersonalNote>(
+    await adminClient.createEntity<PersonalNote>(
       {
         info: { type: 'PersonalNote', authKey: 'subject', name: `Note: ${userName}` },
         fields: {
@@ -135,7 +135,7 @@ async function main() {
     SCHEMA,
   );
 
-  const placesOfBusiness: AdminPlaceOfBusiness[] = [];
+  const placesOfBusiness: PlaceOfBusiness[] = [];
   for (const _ of Array(100).keys()) {
     const { entity } = await createPlaceOfBusiness(adminClient, generateLocation());
     placesOfBusiness.push(entity);

@@ -18,12 +18,12 @@ import {
 } from '../Asserts.js';
 import { type UnboundTestFunction } from '../Builder.js';
 import {
-  assertIsAdminComponents,
+  assertIsComponents,
   assertIsPublishedComponents,
-  type AdminComponents,
-  type AppAdminComponent,
-  type AppAdminEntity,
-  type AppAdminUniqueIndexes,
+  type Components,
+  type AppComponent,
+  type AppEntity,
+  type AppUniqueIndexes,
   type AppPublishedComponent,
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
@@ -1008,7 +1008,7 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
   const entityAfterMigration = (
     await adminClient.getEntity({ id: result.value.id })
   ).valueOrThrow();
-  assertIsAdminComponents(entityAfterMigration);
+  assertIsComponents(entityAfterMigration);
   const adminComponent = entityAfterMigration.fields.any as Component;
   assertEquals(adminComponent.type, 'MigrationComponent');
   assertEquals(fieldName in adminComponent, false);
@@ -1454,7 +1454,7 @@ async function updateSchemaSpecification_deleteTypeOnComponent({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: typeName, field: `Hello ${typeName}` } as AppAdminComponent },
+          fields: { any: { type: typeName, field: `Hello ${typeName}` } as AppComponent },
         }),
         { publish: true },
       )
@@ -1476,7 +1476,7 @@ async function updateSchemaSpecification_deleteTypeOnComponent({
 
   // Check that the component is removed
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminComponents(adminEntity);
+  assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, null);
 
   // And in published entity
@@ -1516,7 +1516,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: typeName, field: `Hello ${typeName}` } as AppAdminComponent,
+            any: { type: typeName, field: `Hello ${typeName}` } as AppComponent,
           },
         }),
         { publish: true },
@@ -1542,7 +1542,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
 
   // Check that component type is deleted
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminComponents(adminEntity);
+  assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, null);
 
   // And for published entity
@@ -1552,10 +1552,10 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
 
   // Check that the new type is usable
   const updatedEntity = (
-    await adminClient.updateEntity<AdminComponents>(
+    await adminClient.updateEntity<Components>(
       {
         id: reference.id,
-        fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppAdminComponent },
+        fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppComponent },
       },
       { publish: true },
     )
@@ -1563,7 +1563,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
   assertEquals(updatedEntity.fields.any, {
     type: typeName,
     field: [{ lat: 1, lng: 2 }],
-  } as AppAdminComponent);
+  } as AppComponent);
 }
 
 async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid({
@@ -1585,7 +1585,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: typeName, field: 'this value will become invalid' } as AppAdminComponent,
+            any: { type: typeName, field: 'this value will become invalid' } as AppComponent,
           },
         }),
         { publish: true },
@@ -1661,7 +1661,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: typeName, field: query.text } as AppAdminComponent },
+          fields: { any: { type: typeName, field: query.text } as AppComponent },
         }),
       )
     ).valueOrThrow();
@@ -1722,7 +1722,7 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
       await adminClient.createEntity(
         {
           info: {
-            type: oldTypeName as AppAdminEntity['info']['type'],
+            type: oldTypeName as AppEntity['info']['type'],
             name: oldTypeName,
           },
           fields: { field: 'value' },
@@ -1767,7 +1767,7 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
     await adminClient.createEntity(
       {
         info: {
-          type: newTypeName as AppAdminEntity['info']['type'],
+          type: newTypeName as AppEntity['info']['type'],
           name: `${newTypeName}`,
         },
         fields: { field: 'value' },
@@ -1819,7 +1819,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
       await adminClient.createEntity(
         {
           info: {
-            type: oldTypeName as AppAdminEntity['info']['type'],
+            type: oldTypeName as AppEntity['info']['type'],
             name: oldTypeName,
           },
           fields: { field: 'value' },
@@ -1858,7 +1858,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
     await adminClient.createEntity(
       {
         info: {
-          type: newTypeName as AppAdminEntity['info']['type'],
+          type: newTypeName as AppEntity['info']['type'],
           name: newTypeName,
         },
         fields: { field: 'value' },
@@ -1871,7 +1871,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
     await adminClient.createEntity(
       {
         info: {
-          type: oldTypeName as AppAdminEntity['info']['type'],
+          type: oldTypeName as AppEntity['info']['type'],
           name: oldTypeName,
         },
         fields: { field: [{ lat: 1, lng: 2 }] },
@@ -1902,7 +1902,7 @@ async function updateSchemaSpecification_renameTypeOnComponent({
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminComponent,
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppComponent,
           },
         }),
         { publish: true },
@@ -1925,11 +1925,11 @@ async function updateSchemaSpecification_renameTypeOnComponent({
 
   // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminComponents(adminEntity);
+  assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
-  } as AppAdminComponent);
+  } as AppComponent);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -1971,7 +1971,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminComponent,
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppComponent,
           },
         }),
         { publish: true },
@@ -1997,11 +1997,11 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
 
   // Check that component type is renamed
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminComponents(adminEntity);
+  assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     field: `Hello ${oldTypeName}`,
-  } as AppAdminComponent);
+  } as AppComponent);
 
   // And for published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -2013,12 +2013,12 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
 
   // Check that both types are usable
   const updatedEntity = (
-    await adminClient.updateEntity<AdminComponents>(
+    await adminClient.updateEntity<Components>(
       {
         id: reference.id,
         fields: {
-          any: { type: oldTypeName, field: [{ lat: 1, lng: 2 }] } as AppAdminComponent,
-          anyAdminOnly: { type: newTypeName, field: `Hello ${newTypeName}` } as AppAdminComponent,
+          any: { type: oldTypeName, field: [{ lat: 1, lng: 2 }] } as AppComponent,
+          anyAdminOnly: { type: newTypeName, field: `Hello ${newTypeName}` } as AppComponent,
         },
       },
       { publish: true },
@@ -2027,11 +2027,11 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
   assertEquals(updatedEntity.fields.any, {
     type: oldTypeName,
     field: [{ lat: 1, lng: 2 }],
-  } as AppAdminComponent);
+  } as AppComponent);
   assertEquals(updatedEntity.fields.anyAdminOnly, {
     type: newTypeName,
     field: `Hello ${newTypeName}`,
-  } as AppAdminComponent);
+  } as AppComponent);
 }
 
 async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTypeIndexes({
@@ -2055,7 +2055,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
-            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppAdminComponent,
+            any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppComponent,
           },
         }),
         { publish: true },
@@ -2065,7 +2065,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
     // Check that it's in the index
     const adminCountBeforeUpdateResult = await countSearchResultWithEntity(
       adminClient,
-      { entityTypes: ['Components'], componentTypes: [oldTypeName as AppAdminComponent['type']] },
+      { entityTypes: ['Components'], componentTypes: [oldTypeName as AppComponent['type']] },
       entity.id,
     );
     assertResultValue(adminCountBeforeUpdateResult, 1);
@@ -2099,7 +2099,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
   // Check that it's in the index
   const adminCountAfterUpdateResult = await countSearchResultWithEntity(
     adminClient,
-    { entityTypes: ['Components'], componentTypes: [newTypeName as AppAdminComponent['type']] },
+    { entityTypes: ['Components'], componentTypes: [newTypeName as AppComponent['type']] },
     reference.id,
   );
   assertResultValue(adminCountAfterUpdateResult, 1);
@@ -2137,7 +2137,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
       await adminClient.createEntity(
         {
           info: {
-            type: oldTypeName as AppAdminEntity['info']['type'],
+            type: oldTypeName as AppEntity['info']['type'],
             name: oldTypeName,
           },
           fields: { [oldFieldName]: 'value' },
@@ -2208,7 +2208,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
       await adminClient.createEntity(
         {
           info: {
-            type: oldTypeName as AppAdminEntity['info']['type'],
+            type: oldTypeName as AppEntity['info']['type'],
             name: oldTypeName,
           },
           fields: { [oldFieldName]: 'value' },
@@ -2278,7 +2278,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminComponent },
+          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppComponent },
         }),
         { publish: true },
       )
@@ -2308,11 +2308,11 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
 
   // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminComponents(adminEntity);
+  assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
-  } as AppAdminComponent);
+  } as AppComponent);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -2357,7 +2357,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
     const { entity } = (
       await adminClient.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
-          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppAdminComponent },
+          fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppComponent },
         }),
         { publish: true },
       )
@@ -2387,11 +2387,11 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
 
   // Check that the component has the new type
   const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
-  assertIsAdminComponents(adminEntity);
+  assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
     [newFieldName]: 'value',
-  } as AppAdminComponent);
+  } as AppComponent);
 
   // And in published entity
   const publishedEntity = (await publishedClient.getEntity(reference)).valueOrThrow();
@@ -2462,18 +2462,18 @@ async function updateSchemaSpecification_addingIndexToField({ clientProvider }: 
 
     // Check that the unique values work
     const uniqueA = (
-      await adminClient.getEntity({ index: indexName as AppAdminUniqueIndexes, value: 'uniqueA' })
+      await adminClient.getEntity({ index: indexName as AppUniqueIndexes, value: 'uniqueA' })
     ).valueOrThrow();
     assertEquals(uniqueA.id, entityA.id);
 
     const uniqueB = (
-      await adminClient.getEntity({ index: indexName as AppAdminUniqueIndexes, value: 'uniqueB' })
+      await adminClient.getEntity({ index: indexName as AppUniqueIndexes, value: 'uniqueB' })
     ).valueOrThrow();
     assertEquals(uniqueB.id, entityB.id);
 
     // Check that the shared value only resolves to one entity
     const shared = (
-      await adminClient.getEntity({ index: indexName as AppAdminUniqueIndexes, value: 'shared' })
+      await adminClient.getEntity({ index: indexName as AppUniqueIndexes, value: 'shared' })
     ).valueOrThrow();
     if (shared.id === entityA.id) {
       assertSame(uniqueA.info.valid, true);
@@ -2495,7 +2495,7 @@ async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
-  const indexName = fieldName as AppAdminUniqueIndexes;
+  const indexName = fieldName as AppUniqueIndexes;
   const uniqueValue = 'unique value';
 
   // Lock since the version needs to be consecutive
@@ -2545,8 +2545,8 @@ async function updateSchemaSpecification_deleteIndexMultiple({
   const adminClient = clientProvider.adminClient();
   const fieldName1 = `field${new Date().getTime()}`;
   const fieldName2 = `${fieldName1}2`;
-  const indexName1 = fieldName1 as AppAdminUniqueIndexes;
-  const indexName2 = fieldName2 as AppAdminUniqueIndexes;
+  const indexName1 = fieldName1 as AppUniqueIndexes;
+  const indexName2 = fieldName2 as AppUniqueIndexes;
   const uniqueValue = 'unique value';
 
   // Lock since the version needs to be consecutive
@@ -2608,8 +2608,8 @@ async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
 }: SchemaTestContext) {
   const adminClient = clientProvider.adminClient();
   const fieldName = `field${new Date().getTime()}`;
-  const oldIndexName = fieldName as AppAdminUniqueIndexes;
-  const newIndexName = `${fieldName}New` as AppAdminUniqueIndexes;
+  const oldIndexName = fieldName as AppUniqueIndexes;
+  const newIndexName = `${fieldName}New` as AppUniqueIndexes;
   const uniqueValue = 'unique value';
 
   // Lock since the version needs to be consecutive
@@ -2684,7 +2684,7 @@ async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExisting
     // Create an entity with the type
     assertOkResult(
       await adminClient.createEntity({
-        info: { type: typeName as AppAdminEntity['info']['type'], name: typeName },
+        info: { type: typeName as AppEntity['info']['type'], name: typeName },
         fields: { field: 'value' },
       }),
     );

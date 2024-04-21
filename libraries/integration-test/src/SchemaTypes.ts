@@ -12,175 +12,161 @@ import type {
 } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes,
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes
 >;
 
-export type AppAdminUniqueIndexes = 'genericUnique' | 'stringsUnique';
+export type AppUniqueIndexes = 'genericUnique' | 'stringsUnique';
 
-export type AppAdminEntity =
-  | AdminChangeValidations
-  | AdminComponents
-  | AdminLocations
-  | AdminMigrationEntity
-  | AdminReadOnly
-  | AdminReferences
-  | AdminRichTexts
-  | AdminStrings
-  | AdminSubjectOnly
-  | AdminSubjectOrDefaultAuthKey
-  | AdminTitleOnly;
+export type AppEntity =
+  | ChangeValidations
+  | Components
+  | Locations
+  | MigrationEntity
+  | ReadOnly
+  | References
+  | RichTexts
+  | Strings
+  | SubjectOnly
+  | SubjectOrDefaultAuthKey
+  | TitleOnly;
 
-export interface AdminChangeValidationsFields {
+export interface ChangeValidationsFields {
   required: string | null;
   matchPattern: string | null;
   richText: RichText | null;
-  component: AppAdminComponent | null;
-  componentList: AppAdminComponent[] | null;
+  component: AppComponent | null;
+  componentList: AppComponent[] | null;
 }
 
-export type AdminChangeValidations = Entity<'ChangeValidations', AdminChangeValidationsFields, ''>;
+export type ChangeValidations = Entity<'ChangeValidations', ChangeValidationsFields, ''>;
 
-export function isAdminChangeValidations(
-  entity: Entity<string, object>,
-): entity is AdminChangeValidations {
+export function isChangeValidations(entity: Entity<string, object>): entity is ChangeValidations {
   return entity.info.type === 'ChangeValidations';
 }
 
-export function assertIsAdminChangeValidations(
+export function assertIsChangeValidations(
   entity: Entity<string, object>,
-): asserts entity is AdminChangeValidations {
+): asserts entity is ChangeValidations {
   if (entity.info.type !== 'ChangeValidations') {
     throw new Error('Expected info.type = ChangeValidations (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminComponentsFields {
-  any: AppAdminComponent | null;
-  anyAdminOnly: AppAdminComponent | null;
+export interface ComponentsFields {
+  any: AppComponent | null;
+  anyAdminOnly: AppComponent | null;
 }
 
-export type AdminComponents = Entity<'Components', AdminComponentsFields, ''>;
+export type Components = Entity<'Components', ComponentsFields, ''>;
 
-export function isAdminComponents(entity: Entity<string, object>): entity is AdminComponents {
+export function isComponents(entity: Entity<string, object>): entity is Components {
   return entity.info.type === 'Components';
 }
 
-export function assertIsAdminComponents(
-  entity: Entity<string, object>,
-): asserts entity is AdminComponents {
+export function assertIsComponents(entity: Entity<string, object>): asserts entity is Components {
   if (entity.info.type !== 'Components') {
     throw new Error('Expected info.type = Components (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminLocationsFields {
+export interface LocationsFields {
   location: Location | null;
   locationList: Location[] | null;
   locationAdminOnly: Location | null;
 }
 
-export type AdminLocations = Entity<'Locations', AdminLocationsFields, ''>;
+export type Locations = Entity<'Locations', LocationsFields, ''>;
 
-export function isAdminLocations(entity: Entity<string, object>): entity is AdminLocations {
+export function isLocations(entity: Entity<string, object>): entity is Locations {
   return entity.info.type === 'Locations';
 }
 
-export function assertIsAdminLocations(
-  entity: Entity<string, object>,
-): asserts entity is AdminLocations {
+export function assertIsLocations(entity: Entity<string, object>): asserts entity is Locations {
   if (entity.info.type !== 'Locations') {
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
   }
 }
 
-export type AdminMigrationEntityFields = Record<never, never>;
+export type MigrationEntityFields = Record<never, never>;
 
-export type AdminMigrationEntity = Entity<'MigrationEntity', AdminMigrationEntityFields, ''>;
+export type MigrationEntity = Entity<'MigrationEntity', MigrationEntityFields, ''>;
 
-export function isAdminMigrationEntity(
-  entity: Entity<string, object>,
-): entity is AdminMigrationEntity {
+export function isMigrationEntity(entity: Entity<string, object>): entity is MigrationEntity {
   return entity.info.type === 'MigrationEntity';
 }
 
-export function assertIsAdminMigrationEntity(
+export function assertIsMigrationEntity(
   entity: Entity<string, object>,
-): asserts entity is AdminMigrationEntity {
+): asserts entity is MigrationEntity {
   if (entity.info.type !== 'MigrationEntity') {
     throw new Error('Expected info.type = MigrationEntity (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminReadOnlyFields {
+export interface ReadOnlyFields {
   message: string | null;
 }
 
-export type AdminReadOnly = Entity<'ReadOnly', AdminReadOnlyFields, '' | 'subject'>;
+export type ReadOnly = Entity<'ReadOnly', ReadOnlyFields, '' | 'subject'>;
 
-export function isAdminReadOnly(entity: Entity<string, object>): entity is AdminReadOnly {
+export function isReadOnly(entity: Entity<string, object>): entity is ReadOnly {
   return entity.info.type === 'ReadOnly';
 }
 
-export function assertIsAdminReadOnly(
-  entity: Entity<string, object>,
-): asserts entity is AdminReadOnly {
+export function assertIsReadOnly(entity: Entity<string, object>): asserts entity is ReadOnly {
   if (entity.info.type !== 'ReadOnly') {
     throw new Error('Expected info.type = ReadOnly (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminReferencesFields {
+export interface ReferencesFields {
   any: EntityReference | null;
   anyList: EntityReference[] | null;
   anyAdminOnly: EntityReference | null;
   titleOnly: EntityReference | null;
 }
 
-export type AdminReferences = Entity<'References', AdminReferencesFields, ''>;
+export type References = Entity<'References', ReferencesFields, ''>;
 
-export function isAdminReferences(entity: Entity<string, object>): entity is AdminReferences {
+export function isReferences(entity: Entity<string, object>): entity is References {
   return entity.info.type === 'References';
 }
 
-export function assertIsAdminReferences(
-  entity: Entity<string, object>,
-): asserts entity is AdminReferences {
+export function assertIsReferences(entity: Entity<string, object>): asserts entity is References {
   if (entity.info.type !== 'References') {
     throw new Error('Expected info.type = References (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminRichTextsFields {
+export interface RichTextsFields {
   richText: RichText | null;
   richTextList: RichText[] | null;
   richTextMinimal: RichText | null;
   richTextLimitedTypes: RichText | null;
 }
 
-export type AdminRichTexts = Entity<'RichTexts', AdminRichTextsFields, ''>;
+export type RichTexts = Entity<'RichTexts', RichTextsFields, ''>;
 
-export function isAdminRichTexts(entity: Entity<string, object>): entity is AdminRichTexts {
+export function isRichTexts(entity: Entity<string, object>): entity is RichTexts {
   return entity.info.type === 'RichTexts';
 }
 
-export function assertIsAdminRichTexts(
-  entity: Entity<string, object>,
-): asserts entity is AdminRichTexts {
+export function assertIsRichTexts(entity: Entity<string, object>): asserts entity is RichTexts {
   if (entity.info.type !== 'RichTexts') {
     throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminStringsFields {
+export interface StringsFields {
   multiline: string | null;
   stringAdminOnly: string | null;
   pattern: string | null;
@@ -192,57 +178,53 @@ export interface AdminStringsFields {
   uniqueGenericIndex: string | null;
 }
 
-export type AdminStrings = Entity<'Strings', AdminStringsFields, ''>;
+export type Strings = Entity<'Strings', StringsFields, ''>;
 
-export function isAdminStrings(entity: Entity<string, object>): entity is AdminStrings {
+export function isStrings(entity: Entity<string, object>): entity is Strings {
   return entity.info.type === 'Strings';
 }
 
-export function assertIsAdminStrings(
-  entity: Entity<string, object>,
-): asserts entity is AdminStrings {
+export function assertIsStrings(entity: Entity<string, object>): asserts entity is Strings {
   if (entity.info.type !== 'Strings') {
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminSubjectOnlyFields {
+export interface SubjectOnlyFields {
   message: string | null;
 }
 
-export type AdminSubjectOnly = Entity<'SubjectOnly', AdminSubjectOnlyFields, 'subject'>;
+export type SubjectOnly = Entity<'SubjectOnly', SubjectOnlyFields, 'subject'>;
 
-export function isAdminSubjectOnly(entity: Entity<string, object>): entity is AdminSubjectOnly {
+export function isSubjectOnly(entity: Entity<string, object>): entity is SubjectOnly {
   return entity.info.type === 'SubjectOnly';
 }
 
-export function assertIsAdminSubjectOnly(
-  entity: Entity<string, object>,
-): asserts entity is AdminSubjectOnly {
+export function assertIsSubjectOnly(entity: Entity<string, object>): asserts entity is SubjectOnly {
   if (entity.info.type !== 'SubjectOnly') {
     throw new Error('Expected info.type = SubjectOnly (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminSubjectOrDefaultAuthKeyFields {
+export interface SubjectOrDefaultAuthKeyFields {
   message: string | null;
 }
 
-export type AdminSubjectOrDefaultAuthKey = Entity<
+export type SubjectOrDefaultAuthKey = Entity<
   'SubjectOrDefaultAuthKey',
-  AdminSubjectOrDefaultAuthKeyFields,
+  SubjectOrDefaultAuthKeyFields,
   '' | 'subject'
 >;
 
-export function isAdminSubjectOrDefaultAuthKey(
+export function isSubjectOrDefaultAuthKey(
   entity: Entity<string, object>,
-): entity is AdminSubjectOrDefaultAuthKey {
+): entity is SubjectOrDefaultAuthKey {
   return entity.info.type === 'SubjectOrDefaultAuthKey';
 }
 
-export function assertIsAdminSubjectOrDefaultAuthKey(
+export function assertIsSubjectOrDefaultAuthKey(
   entity: Entity<string, object>,
-): asserts entity is AdminSubjectOrDefaultAuthKey {
+): asserts entity is SubjectOrDefaultAuthKey {
   if (entity.info.type !== 'SubjectOrDefaultAuthKey') {
     throw new Error(
       'Expected info.type = SubjectOrDefaultAuthKey (but was ' + entity.info.type + ')',
@@ -250,138 +232,124 @@ export function assertIsAdminSubjectOrDefaultAuthKey(
   }
 }
 
-export interface AdminTitleOnlyFields {
+export interface TitleOnlyFields {
   title: string | null;
 }
 
-export type AdminTitleOnly = Entity<'TitleOnly', AdminTitleOnlyFields, ''>;
+export type TitleOnly = Entity<'TitleOnly', TitleOnlyFields, ''>;
 
-export function isAdminTitleOnly(entity: Entity<string, object>): entity is AdminTitleOnly {
+export function isTitleOnly(entity: Entity<string, object>): entity is TitleOnly {
   return entity.info.type === 'TitleOnly';
 }
 
-export function assertIsAdminTitleOnly(
-  entity: Entity<string, object>,
-): asserts entity is AdminTitleOnly {
+export function assertIsTitleOnly(entity: Entity<string, object>): asserts entity is TitleOnly {
   if (entity.info.type !== 'TitleOnly') {
     throw new Error('Expected info.type = TitleOnly (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent =
-  | AdminAdminOnlyComponent
-  | AdminChangeValidationsComponent
-  | AdminLocationsComponent
-  | AdminMigrationComponent
-  | AdminReferencesComponent;
+export type AppComponent =
+  | AdminOnlyComponent
+  | ChangeValidationsComponent
+  | LocationsComponent
+  | MigrationComponent
+  | ReferencesComponent;
 
-export type AdminAdminOnlyComponentFields = Record<never, never>;
+export type AdminOnlyComponentFields = Record<never, never>;
 
-export type AdminAdminOnlyComponent = Component<
-  'AdminOnlyComponent',
-  AdminAdminOnlyComponentFields
->;
+export type AdminOnlyComponent = Component<'AdminOnlyComponent', AdminOnlyComponentFields>;
 
-export function isAdminAdminOnlyComponent(
-  component: Component<string, object> | AdminAdminOnlyComponent,
-): component is AdminAdminOnlyComponent {
+export function isAdminOnlyComponent(
+  component: Component<string, object> | AdminOnlyComponent,
+): component is AdminOnlyComponent {
   return component.type === 'AdminOnlyComponent';
 }
 
-export function assertIsAdminAdminOnlyComponent(
-  component: Component<string, object> | AdminAdminOnlyComponent,
-): asserts component is AdminAdminOnlyComponent {
+export function assertIsAdminOnlyComponent(
+  component: Component<string, object> | AdminOnlyComponent,
+): asserts component is AdminOnlyComponent {
   if (component.type !== 'AdminOnlyComponent') {
     throw new Error('Expected type = AdminOnlyComponent (but was ' + component.type + ')');
   }
 }
 
-export interface AdminChangeValidationsComponentFields {
+export interface ChangeValidationsComponentFields {
   matchPattern: string | null;
 }
 
-export type AdminChangeValidationsComponent = Component<
+export type ChangeValidationsComponent = Component<
   'ChangeValidationsComponent',
-  AdminChangeValidationsComponentFields
+  ChangeValidationsComponentFields
 >;
 
-export function isAdminChangeValidationsComponent(
-  component: Component<string, object> | AdminChangeValidationsComponent,
-): component is AdminChangeValidationsComponent {
+export function isChangeValidationsComponent(
+  component: Component<string, object> | ChangeValidationsComponent,
+): component is ChangeValidationsComponent {
   return component.type === 'ChangeValidationsComponent';
 }
 
-export function assertIsAdminChangeValidationsComponent(
-  component: Component<string, object> | AdminChangeValidationsComponent,
-): asserts component is AdminChangeValidationsComponent {
+export function assertIsChangeValidationsComponent(
+  component: Component<string, object> | ChangeValidationsComponent,
+): asserts component is ChangeValidationsComponent {
   if (component.type !== 'ChangeValidationsComponent') {
     throw new Error('Expected type = ChangeValidationsComponent (but was ' + component.type + ')');
   }
 }
 
-export interface AdminLocationsComponentFields {
+export interface LocationsComponentFields {
   location: Location | null;
   locationAdminOnly: Location | null;
 }
 
-export type AdminLocationsComponent = Component<
-  'LocationsComponent',
-  AdminLocationsComponentFields
->;
+export type LocationsComponent = Component<'LocationsComponent', LocationsComponentFields>;
 
-export function isAdminLocationsComponent(
-  component: Component<string, object> | AdminLocationsComponent,
-): component is AdminLocationsComponent {
+export function isLocationsComponent(
+  component: Component<string, object> | LocationsComponent,
+): component is LocationsComponent {
   return component.type === 'LocationsComponent';
 }
 
-export function assertIsAdminLocationsComponent(
-  component: Component<string, object> | AdminLocationsComponent,
-): asserts component is AdminLocationsComponent {
+export function assertIsLocationsComponent(
+  component: Component<string, object> | LocationsComponent,
+): asserts component is LocationsComponent {
   if (component.type !== 'LocationsComponent') {
     throw new Error('Expected type = LocationsComponent (but was ' + component.type + ')');
   }
 }
 
-export type AdminMigrationComponentFields = Record<never, never>;
+export type MigrationComponentFields = Record<never, never>;
 
-export type AdminMigrationComponent = Component<
-  'MigrationComponent',
-  AdminMigrationComponentFields
->;
+export type MigrationComponent = Component<'MigrationComponent', MigrationComponentFields>;
 
-export function isAdminMigrationComponent(
-  component: Component<string, object> | AdminMigrationComponent,
-): component is AdminMigrationComponent {
+export function isMigrationComponent(
+  component: Component<string, object> | MigrationComponent,
+): component is MigrationComponent {
   return component.type === 'MigrationComponent';
 }
 
-export function assertIsAdminMigrationComponent(
-  component: Component<string, object> | AdminMigrationComponent,
-): asserts component is AdminMigrationComponent {
+export function assertIsMigrationComponent(
+  component: Component<string, object> | MigrationComponent,
+): asserts component is MigrationComponent {
   if (component.type !== 'MigrationComponent') {
     throw new Error('Expected type = MigrationComponent (but was ' + component.type + ')');
   }
 }
 
-export interface AdminReferencesComponentFields {
+export interface ReferencesComponentFields {
   reference: EntityReference | null;
 }
 
-export type AdminReferencesComponent = Component<
-  'ReferencesComponent',
-  AdminReferencesComponentFields
->;
+export type ReferencesComponent = Component<'ReferencesComponent', ReferencesComponentFields>;
 
-export function isAdminReferencesComponent(
-  component: Component<string, object> | AdminReferencesComponent,
-): component is AdminReferencesComponent {
+export function isReferencesComponent(
+  component: Component<string, object> | ReferencesComponent,
+): component is ReferencesComponent {
   return component.type === 'ReferencesComponent';
 }
 
-export function assertIsAdminReferencesComponent(
-  component: Component<string, object> | AdminReferencesComponent,
-): asserts component is AdminReferencesComponent {
+export function assertIsReferencesComponent(
+  component: Component<string, object> | ReferencesComponent,
+): asserts component is ReferencesComponent {
   if (component.type !== 'ReferencesComponent') {
     throw new Error('Expected type = ReferencesComponent (but was ' + component.type + ')');
   }

@@ -3,102 +3,102 @@
 exports[`generateTypescriptForSchema > Auth key pattern 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminAbc;
+export type AppEntity = Abc;
 
-export type AdminAbcFields = Record<never, never>;
+export type AbcFields = Record<never, never>;
 
-export type AdminAbc = Entity<'Abc', AdminAbcFields, 'a'|'b'|'c'>;
+export type Abc = Entity<'Abc', AbcFields, 'a'|'b'|'c'>;
 
-export function isAdminAbc(entity: Entity<string, object>): entity is AdminAbc {
+export function isAbc(entity: Entity<string, object>): entity is Abc {
   return entity.info.type === 'Abc';
 }
 
-export function assertIsAdminAbc(entity: Entity<string, object>): asserts entity is AdminAbc {
+export function assertIsAbc(entity: Entity<string, object>): asserts entity is Abc {
   if (entity.info.type !== 'Abc') {
     throw new Error('Expected info.type = Abc (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminBooleans;
+export type AppEntity = Booleans;
 
-export interface AdminBooleansFields {
+export interface BooleansFields {
   boolean: boolean | null;
   booleanList: boolean[] | null;
 }
 
-export type AdminBooleans = Entity<'Booleans', AdminBooleansFields, ''>;
+export type Booleans = Entity<'Booleans', BooleansFields, ''>;
 
-export function isAdminBooleans(entity: Entity<string, object>): entity is AdminBooleans {
+export function isBooleans(entity: Entity<string, object>): entity is Booleans {
   return entity.info.type === 'Booleans';
 }
 
-export function assertIsAdminBooleans(entity: Entity<string, object>): asserts entity is AdminBooleans {
+export function assertIsBooleans(entity: Entity<string, object>): asserts entity is Booleans {
   if (entity.info.type !== 'Booleans') {
     throw new Error('Expected info.type = Booleans (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Component (no fields) 1`] = `
 "import type { AdminClient, AdminExceptionClient, Component, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminComponents;
+export type AppEntity = Components;
 
-export interface AdminComponentsFields {
-  component: AppAdminComponent | null;
+export interface ComponentsFields {
+  component: AppComponent | null;
 }
 
-export type AdminComponents = Entity<'Components', AdminComponentsFields, ''>;
+export type Components = Entity<'Components', ComponentsFields, ''>;
 
-export function isAdminComponents(entity: Entity<string, object>): entity is AdminComponents {
+export function isComponents(entity: Entity<string, object>): entity is Components {
   return entity.info.type === 'Components';
 }
 
-export function assertIsAdminComponents(entity: Entity<string, object>): asserts entity is AdminComponents {
+export function assertIsComponents(entity: Entity<string, object>): asserts entity is Components {
   if (entity.info.type !== 'Components') {
     throw new Error('Expected info.type = Components (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = AdminFoo;
+export type AppComponent = Foo;
 
-export type AdminFooFields = Record<never, never>;
+export type FooFields = Record<never, never>;
 
-export type AdminFoo = Component<'Foo', AdminFooFields>;
+export type Foo = Component<'Foo', FooFields>;
 
-export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
+export function isFoo(component: Component<string, object> | Foo): component is Foo {
   return component.type === 'Foo';
 }
 
-export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
+export function assertIsFoo(component: Component<string, object> | Foo): asserts component is Foo {
   if (component.type !== 'Foo') {
     throw new Error('Expected type = Foo (but was ' + component.type + ')');
   }
@@ -109,64 +109,64 @@ export function assertIsAdminFoo(component: Component<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > Components 1`] = `
 "import type { AdminClient, AdminExceptionClient, Component, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminComponentTypes;
+export type AppEntity = ComponentTypes;
 
-export interface AdminComponentTypesFields {
-  component: AppAdminComponent | null;
-  componentFoo: AdminFoo | null;
-  componentFooBar: AdminBar | AdminFoo | null;
-  componentList: AppAdminComponent[] | null;
-  componentListFoo: AdminFoo[] | null;
-  componentListFooBar: (AdminBar | AdminFoo)[] | null;
+export interface ComponentTypesFields {
+  component: AppComponent | null;
+  componentFoo: Foo | null;
+  componentFooBar: Bar | Foo | null;
+  componentList: AppComponent[] | null;
+  componentListFoo: Foo[] | null;
+  componentListFooBar: (Bar | Foo)[] | null;
 }
 
-export type AdminComponentTypes = Entity<'ComponentTypes', AdminComponentTypesFields, ''>;
+export type ComponentTypes = Entity<'ComponentTypes', ComponentTypesFields, ''>;
 
-export function isAdminComponentTypes(entity: Entity<string, object>): entity is AdminComponentTypes {
+export function isComponentTypes(entity: Entity<string, object>): entity is ComponentTypes {
   return entity.info.type === 'ComponentTypes';
 }
 
-export function assertIsAdminComponentTypes(entity: Entity<string, object>): asserts entity is AdminComponentTypes {
+export function assertIsComponentTypes(entity: Entity<string, object>): asserts entity is ComponentTypes {
   if (entity.info.type !== 'ComponentTypes') {
     throw new Error('Expected info.type = ComponentTypes (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = AdminBar | AdminFoo;
+export type AppComponent = Bar | Foo;
 
-export interface AdminBarFields {
+export interface BarFields {
   string: string | null;
 }
 
-export type AdminBar = Component<'Bar', AdminBarFields>;
+export type Bar = Component<'Bar', BarFields>;
 
-export function isAdminBar(component: Component<string, object> | AdminBar): component is AdminBar {
+export function isBar(component: Component<string, object> | Bar): component is Bar {
   return component.type === 'Bar';
 }
 
-export function assertIsAdminBar(component: Component<string, object> | AdminBar): asserts component is AdminBar {
+export function assertIsBar(component: Component<string, object> | Bar): asserts component is Bar {
   if (component.type !== 'Bar') {
     throw new Error('Expected type = Bar (but was ' + component.type + ')');
   }
 }
 
-export interface AdminFooFields {
+export interface FooFields {
   string: string | null;
 }
 
-export type AdminFoo = Component<'Foo', AdminFooFields>;
+export type Foo = Component<'Foo', FooFields>;
 
-export function isAdminFoo(component: Component<string, object> | AdminFoo): component is AdminFoo {
+export function isFoo(component: Component<string, object> | Foo): component is Foo {
   return component.type === 'Foo';
 }
 
-export function assertIsAdminFoo(component: Component<string, object> | AdminFoo): asserts component is AdminFoo {
+export function assertIsFoo(component: Component<string, object> | Foo): asserts component is Foo {
   if (component.type !== 'Foo') {
     throw new Error('Expected type = Foo (but was ' + component.type + ')');
   }
@@ -177,239 +177,239 @@ export function assertIsAdminFoo(component: Component<string, object> | AdminFoo
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity, EntityReference } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminEntityTypes;
+export type AppEntity = EntityTypes;
 
-export interface AdminEntityTypesFields {
+export interface EntityTypesFields {
   entityType: EntityReference | null;
   entityTypeList: EntityReference[] | null;
 }
 
-export type AdminEntityTypes = Entity<'EntityTypes', AdminEntityTypesFields, ''>;
+export type EntityTypes = Entity<'EntityTypes', EntityTypesFields, ''>;
 
-export function isAdminEntityTypes(entity: Entity<string, object>): entity is AdminEntityTypes {
+export function isEntityTypes(entity: Entity<string, object>): entity is EntityTypes {
   return entity.info.type === 'EntityTypes';
 }
 
-export function assertIsAdminEntityTypes(entity: Entity<string, object>): asserts entity is AdminEntityTypes {
+export function assertIsEntityTypes(entity: Entity<string, object>): asserts entity is EntityTypes {
   if (entity.info.type !== 'EntityTypes') {
     throw new Error('Expected info.type = EntityTypes (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminFoo;
+export type AppEntity = Foo;
 
-export type AdminFooFields = Record<never, never>;
+export type FooFields = Record<never, never>;
 
-export type AdminFoo = Entity<'Foo', AdminFooFields, ''>;
+export type Foo = Entity<'Foo', FooFields, ''>;
 
-export function isAdminFoo(entity: Entity<string, object>): entity is AdminFoo {
+export function isFoo(entity: Entity<string, object>): entity is Foo {
   return entity.info.type === 'Foo';
 }
 
-export function assertIsAdminFoo(entity: Entity<string, object>): asserts entity is AdminFoo {
+export function assertIsFoo(entity: Entity<string, object>): asserts entity is Foo {
   if (entity.info.type !== 'Foo') {
     throw new Error('Expected info.type = Foo (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Locations 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity, Location } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminLocations;
+export type AppEntity = Locations;
 
-export interface AdminLocationsFields {
+export interface LocationsFields {
   location: Location | null;
   locationList: Location[] | null;
 }
 
-export type AdminLocations = Entity<'Locations', AdminLocationsFields, ''>;
+export type Locations = Entity<'Locations', LocationsFields, ''>;
 
-export function isAdminLocations(entity: Entity<string, object>): entity is AdminLocations {
+export function isLocations(entity: Entity<string, object>): entity is Locations {
   return entity.info.type === 'Locations';
 }
 
-export function assertIsAdminLocations(entity: Entity<string, object>): asserts entity is AdminLocations {
+export function assertIsLocations(entity: Entity<string, object>): asserts entity is Locations {
   if (entity.info.type !== 'Locations') {
     throw new Error('Expected info.type = Locations (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Numbers 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminNumbers;
+export type AppEntity = Numbers;
 
-export interface AdminNumbersFields {
+export interface NumbersFields {
   number: number | null;
   numberInteger: number | null;
   numberList: number[] | null;
   numberIntegerList: number[] | null;
 }
 
-export type AdminNumbers = Entity<'Numbers', AdminNumbersFields, ''>;
+export type Numbers = Entity<'Numbers', NumbersFields, ''>;
 
-export function isAdminNumbers(entity: Entity<string, object>): entity is AdminNumbers {
+export function isNumbers(entity: Entity<string, object>): entity is Numbers {
   return entity.info.type === 'Numbers';
 }
 
-export function assertIsAdminNumbers(entity: Entity<string, object>): asserts entity is AdminNumbers {
+export function assertIsNumbers(entity: Entity<string, object>): asserts entity is Numbers {
   if (entity.info.type !== 'Numbers') {
     throw new Error('Expected info.type = Numbers (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity, RichText } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminRichTexts;
+export type AppEntity = RichTexts;
 
-export interface AdminRichTextsFields {
+export interface RichTextsFields {
   richText: RichText | null;
   richTextList: RichText[] | null;
 }
 
-export type AdminRichTexts = Entity<'RichTexts', AdminRichTextsFields, ''>;
+export type RichTexts = Entity<'RichTexts', RichTextsFields, ''>;
 
-export function isAdminRichTexts(entity: Entity<string, object>): entity is AdminRichTexts {
+export function isRichTexts(entity: Entity<string, object>): entity is RichTexts {
   return entity.info.type === 'RichTexts';
 }
 
-export function assertIsAdminRichTexts(entity: Entity<string, object>): asserts entity is AdminRichTexts {
+export function assertIsRichTexts(entity: Entity<string, object>): asserts entity is RichTexts {
   if (entity.info.type !== 'RichTexts') {
     throw new Error('Expected info.type = RichTexts (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Strings 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = AdminStrings;
+export type AppEntity = Strings;
 
-export interface AdminStringsFields {
+export interface StringsFields {
   string: string | null;
   stringList: string[] | null;
   values: 'bar' | 'baz' | 'foo' | null;
   valuesList: ('bar' | 'baz' | 'foo')[] | null;
 }
 
-export type AdminStrings = Entity<'Strings', AdminStringsFields, ''>;
+export type Strings = Entity<'Strings', StringsFields, ''>;
 
-export function isAdminStrings(entity: Entity<string, object>): entity is AdminStrings {
+export function isStrings(entity: Entity<string, object>): entity is Strings {
   return entity.info.type === 'Strings';
 }
 
-export function assertIsAdminStrings(entity: Entity<string, object>): asserts entity is AdminStrings {
+export function assertIsStrings(entity: Entity<string, object>): asserts entity is Strings {
   if (entity.info.type !== 'Strings') {
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > Unique index 1`] = `
 "import type { AdminClient, AdminExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = 'slug';
+export type AppUniqueIndexes = 'slug';
 
-export type AppAdminEntity = AdminStrings;
+export type AppEntity = Strings;
 
-export interface AdminStringsFields {
+export interface StringsFields {
   string: string | null;
 }
 
-export type AdminStrings = Entity<'Strings', AdminStringsFields, ''>;
+export type Strings = Entity<'Strings', StringsFields, ''>;
 
-export function isAdminStrings(entity: Entity<string, object>): entity is AdminStrings {
+export function isStrings(entity: Entity<string, object>): entity is Strings {
   return entity.info.type === 'Strings';
 }
 
-export function assertIsAdminStrings(entity: Entity<string, object>): asserts entity is AdminStrings {
+export function assertIsStrings(entity: Entity<string, object>): asserts entity is Strings {
   if (entity.info.type !== 'Strings') {
     throw new Error('Expected info.type = Strings (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 
 exports[`generateTypescriptForSchema > empty 1`] = `
 "import type { AdminClient, AdminExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppAdminEntity, AppAdminComponent, AppAdminUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity = never;
+export type AppEntity = never;
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
 "
 `;
 

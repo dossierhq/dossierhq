@@ -10,10 +10,10 @@ import {
 import { v5 as uuidv5 } from 'uuid';
 import { assertExhaustive, assertOkResult, assertSame } from '../Asserts.js';
 import {
-  assertIsAdminReadOnly,
-  type AdminReadOnly,
+  assertIsReadOnly,
+  type ReadOnly,
   type AppAdminClient,
-  type AppAdminEntity,
+  type AppEntity,
   type PublishedReadOnly,
 } from '../SchemaTypes.js';
 import type { AdminClientProvider } from './TestClients.js';
@@ -22,21 +22,21 @@ const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
 const ADVISORY_LOCK_NAME = 'integration-test-read-only-entities';
 
-const READONLY_UPSERT: EntityUpsert<AdminReadOnly> = {
+const READONLY_UPSERT: EntityUpsert<ReadOnly> = {
   id: 'REPLACE',
   info: { type: 'ReadOnly', name: `ReadOnly` },
   fields: { message: 'Hello' },
 };
 
 export class ReadOnlyEntityRepository {
-  private readonly mainEntities: AdminReadOnly[];
-  private readonly secondaryEntities: AdminReadOnly[];
-  constructor(main: AdminReadOnly[], secondary: AdminReadOnly[]) {
+  private readonly mainEntities: ReadOnly[];
+  private readonly secondaryEntities: ReadOnly[];
+  constructor(main: ReadOnly[], secondary: ReadOnly[]) {
     this.mainEntities = main;
     this.secondaryEntities = secondary;
   }
 
-  getMainPrincipalAdminEntities(authKeys?: string[]): AdminReadOnly[] {
+  getMainPrincipalAdminEntities(authKeys?: string[]): ReadOnly[] {
     const checkAuthKeys = authKeys ?? [''];
 
     const entities = [
@@ -129,8 +129,8 @@ async function doCreateReadOnlyEntityRepository(
         }
       }
 
-      const mainEntities: AdminReadOnly[] = [];
-      const secondaryEntities: AdminReadOnly[] = [];
+      const mainEntities: ReadOnly[] = [];
+      const secondaryEntities: ReadOnly[] = [];
 
       for (const { principal, authKey, status, index } of entityConfigs) {
         if (!advisoryLock.active) {
@@ -151,10 +151,10 @@ async function doCreateReadOnlyEntityRepository(
 async function createEntity(
   adminClient: AppAdminClient,
   id: string,
-  authKey: AppAdminEntity['info']['authKey'],
+  authKey: AppEntity['info']['authKey'],
   status: EntityStatus,
 ): PromiseResult<
-  AdminReadOnly,
+  ReadOnly,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.NotFound
@@ -167,7 +167,7 @@ async function createEntity(
     getResult.value.info.authKey === authKey &&
     getResult.value.info.status === status
   ) {
-    assertIsAdminReadOnly(getResult.value);
+    assertIsReadOnly(getResult.value);
     return ok(getResult.value);
   }
 
@@ -190,7 +190,7 @@ async function createEntity(
     case EntityStatus.published:
       break;
     case EntityStatus.modified: {
-      const updateResult = await adminClient.updateEntity<AdminReadOnly>({
+      const updateResult = await adminClient.updateEntity<ReadOnly>({
         id,
         fields: { message: 'Updated message' },
       });

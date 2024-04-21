@@ -20,21 +20,18 @@ import {
 } from '../Asserts.js';
 import type {
   AppAdminClient,
-  AppAdminEntity,
+  AppEntity,
   AppPublishedClient,
   AppPublishedEntity,
 } from '../SchemaTypes.js';
 
-const adminOrderCompare: Record<
-  EntityQueryOrder,
-  (a: AppAdminEntity, b: AppAdminEntity) => number
-> = {
+const adminOrderCompare: Record<EntityQueryOrder, (a: AppEntity, b: AppEntity) => number> = {
   [EntityQueryOrder.createdAt]: (a, b) => a.info.createdAt.getTime() - b.info.createdAt.getTime(),
   [EntityQueryOrder.updatedAt]: (a, b) => a.info.updatedAt.getTime() - b.info.updatedAt.getTime(),
   [EntityQueryOrder.name]: (a, b) => a.info.name.localeCompare(b.info.name),
 };
 
-const adminOrderExtract: Record<EntityQueryOrder, (it: AppAdminEntity) => unknown> = {
+const adminOrderExtract: Record<EntityQueryOrder, (it: AppEntity) => unknown> = {
   [EntityQueryOrder.createdAt]: (it) => it.info.createdAt,
   [EntityQueryOrder.updatedAt]: (it) => it.info.updatedAt,
   [EntityQueryOrder.name]: (it) => it.info.name,
@@ -50,8 +47,8 @@ const publishedOrderCompare: Record<
 };
 
 export function assertAdminEntityConnectionToMatchSlice(
-  allEntities: AppAdminEntity[],
-  connectionResult: Result<Connection<Edge<AppAdminEntity, ErrorType>> | null, ErrorType>,
+  allEntities: AppEntity[],
+  connectionResult: Result<Connection<Edge<AppEntity, ErrorType>> | null, ErrorType>,
   sliceStart: number,
   sliceEnd: number | undefined,
   order?: EntityQueryOrder,
@@ -99,7 +96,7 @@ export function assertPublishedEntityConnectionToMatchSlice(
   assertEquals(actualIds, expectedIds);
 }
 
-export function assertSearchResultEntities<TItem extends AppAdminEntity | AppPublishedEntity>(
+export function assertSearchResultEntities<TItem extends AppEntity | AppPublishedEntity>(
   result: Result<
     Connection<Edge<TItem, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
@@ -121,7 +118,7 @@ export function assertSearchResultEntities<TItem extends AppAdminEntity | AppPub
   }
 }
 
-export function assertPageInfoEquals<TEntity extends AppAdminEntity | AppPublishedEntity>(
+export function assertPageInfoEquals<TEntity extends AppEntity | AppPublishedEntity>(
   connectionResult: Result<Connection<Edge<TEntity, ErrorType>> | null, ErrorType>,
   { hasNextPage, hasPreviousPage }: { hasNextPage: boolean; hasPreviousPage: boolean },
 ) {
@@ -169,7 +166,7 @@ export async function collectMatchingSearchResultNodes<
   const matches: Awaited<ReturnType<TClient['getEntity']>>[] = [];
 
   for await (const pageResult of getAllPagesForConnection<
-    Edge<AppAdminEntity | AppPublishedEntity, ErrorType>,
+    Edge<AppEntity | AppPublishedEntity, ErrorType>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
   >({ first: 50 }, (currentPaging) => client.getEntities(query as any, currentPaging))) {

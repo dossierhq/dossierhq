@@ -5,9 +5,9 @@ import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { writeFile } from 'node:fs/promises';
 import { initialize } from './backend/server.js';
 
-async function generateTypes(logger: Logger, adminSchema: Schema, filename: string) {
-  const publishedSchema = adminSchema.toPublishedSchema();
-  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
+async function generateTypes(logger: Logger, schema: Schema, filename: string) {
+  const publishedSchema = schema.toPublishedSchema();
+  const sourceCode = generateTypescriptForSchema({ schema, publishedSchema });
   await writeFile(filename, sourceCode);
   logger.info(`Wrote ${filename}`);
 }

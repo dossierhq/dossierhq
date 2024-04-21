@@ -5,9 +5,9 @@ import { readFile, writeFile } from 'node:fs/promises';
 import prettier from 'prettier';
 
 async function generateTypes(schemaSpec, filename) {
-  const adminSchema = Schema.createAndValidate(schemaSpec).valueOrThrow();
-  const publishedSchema = adminSchema.toPublishedSchema();
-  const sourceCode = generateTypescriptForSchema({ adminSchema, publishedSchema });
+  const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();
+  const publishedSchema = schema.toPublishedSchema();
+  const sourceCode = generateTypescriptForSchema({ schema, publishedSchema });
 
   const prettierConfig = await prettier.resolveConfig(filename);
   const formattedSource = await prettier.format(sourceCode, {

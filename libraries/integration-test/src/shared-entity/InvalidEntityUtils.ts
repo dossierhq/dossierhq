@@ -16,7 +16,7 @@ import {
   ChangeValidationsWithoutValidationsUpdate,
   IntegrationTestSchema,
 } from '../IntegrationTestSchema.js';
-import type { AdminChangeValidations, AdminComponents, AppAdminClient } from '../SchemaTypes.js';
+import type { ChangeValidations, Components, AppAdminClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 import { withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 
@@ -26,10 +26,10 @@ interface Options {
 
 export async function createInvalidEntity(
   adminClient: AppAdminClient,
-  fields: Partial<AdminChangeValidations['fields']>,
+  fields: Partial<ChangeValidations['fields']>,
   options?: Options,
 ) {
-  return doCreateInvalidEntity<AdminChangeValidations>(
+  return doCreateInvalidEntity<ChangeValidations>(
     adminClient,
     ChangeValidationsWithoutValidationsUpdate,
     copyEntity(CHANGE_VALIDATIONS_CREATE, { fields }),
@@ -41,7 +41,7 @@ export async function createEntityWithInvalidComponent(
   adminClient: AppAdminClient,
   options?: Options,
 ) {
-  return doCreateInvalidEntity<AdminComponents>(
+  return doCreateInvalidEntity<Components>(
     adminClient,
     ChangeValidationsComponentWithoutValidationsUpdate,
     copyEntity(VALUE_ITEMS_CREATE, {

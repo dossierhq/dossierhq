@@ -2,23 +2,21 @@ import type { EntitySamplingPayload } from '@dossierhq/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useAdminClient } from './ClientUtils.js';
 import { Navbar } from './Navbar.js';
-import type { AppAdminEntity } from './SchemaTypes.js';
+import type { AppEntity } from './SchemaTypes.js';
 
 export function IndexRoute() {
   const adminClient = useAdminClient();
   const [message, setMessage] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [adminSampleSeed, setAdminSampleSeed] = useState(Math.random);
-  const [adminSample, setAdminSample] = useState<EntitySamplingPayload<AppAdminEntity> | null>(
-    null
-  );
+  const [adminSample, setAdminSample] = useState<EntitySamplingPayload<AppEntity> | null>(null);
 
   useEffect(() => {
     fetch('/api/message')
       .then((res) =>
         res.ok
           ? res.json()
-          : { message: `Failed to fetch message: ${res.status} ${res.statusText}` }
+          : { message: `Failed to fetch message: ${res.status} ${res.statusText}` },
       )
       .then((data) => setMessage(data.message));
   }, []);
@@ -30,7 +28,7 @@ export function IndexRoute() {
         info: { type: 'Message', name: newMessage },
         fields: { message: newMessage },
       },
-      { publish: true }
+      { publish: true },
     );
     if (result.isOk()) {
       setNewMessage('');

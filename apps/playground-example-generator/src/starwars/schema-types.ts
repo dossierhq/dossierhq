@@ -1,30 +1,23 @@
 import type { AdminClient, AdminExceptionClient, Entity, EntityReference } from '@dossierhq/core';
 
 export type AppAdminClient = AdminClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes,
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes,
   AppAdminExceptionClient
 >;
 
 export type AppAdminExceptionClient = AdminExceptionClient<
-  AppAdminEntity,
-  AppAdminComponent,
-  AppAdminUniqueIndexes
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes
 >;
 
-export type AppAdminUniqueIndexes = never;
+export type AppUniqueIndexes = never;
 
-export type AppAdminEntity =
-  | AdminFilm
-  | AdminPerson
-  | AdminPlanet
-  | AdminSpecies
-  | AdminStarship
-  | AdminTransport
-  | AdminVehicle;
+export type AppEntity = Film | Person | Planet | Species | Starship | Transport | Vehicle;
 
-export interface AdminFilmFields {
+export interface FilmFields {
   title: string | null;
   episodeId: number | null;
   director: string | null;
@@ -38,19 +31,19 @@ export interface AdminFilmFields {
   species: EntityReference[] | null;
 }
 
-export type AdminFilm = Entity<'Film', AdminFilmFields, ''>;
+export type Film = Entity<'Film', FilmFields, ''>;
 
-export function isAdminFilm(entity: Entity<string, object>): entity is AdminFilm {
+export function isFilm(entity: Entity<string, object>): entity is Film {
   return entity.info.type === 'Film';
 }
 
-export function assertIsAdminFilm(entity: Entity<string, object>): asserts entity is AdminFilm {
+export function assertIsFilm(entity: Entity<string, object>): asserts entity is Film {
   if (entity.info.type !== 'Film') {
     throw new Error('Expected info.type = Film (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminPersonFields {
+export interface PersonFields {
   name: string | null;
   gender: string | null;
   skinColors: string[] | null;
@@ -62,19 +55,19 @@ export interface AdminPersonFields {
   birthYear: string | null;
 }
 
-export type AdminPerson = Entity<'Person', AdminPersonFields, ''>;
+export type Person = Entity<'Person', PersonFields, ''>;
 
-export function isAdminPerson(entity: Entity<string, object>): entity is AdminPerson {
+export function isPerson(entity: Entity<string, object>): entity is Person {
   return entity.info.type === 'Person';
 }
 
-export function assertIsAdminPerson(entity: Entity<string, object>): asserts entity is AdminPerson {
+export function assertIsPerson(entity: Entity<string, object>): asserts entity is Person {
   if (entity.info.type !== 'Person') {
     throw new Error('Expected info.type = Person (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminPlanetFields {
+export interface PlanetFields {
   name: string | null;
   climate: string[] | null;
   surfaceWater: string | null;
@@ -86,19 +79,19 @@ export interface AdminPlanetFields {
   population: string | null;
 }
 
-export type AdminPlanet = Entity<'Planet', AdminPlanetFields, ''>;
+export type Planet = Entity<'Planet', PlanetFields, ''>;
 
-export function isAdminPlanet(entity: Entity<string, object>): entity is AdminPlanet {
+export function isPlanet(entity: Entity<string, object>): entity is Planet {
   return entity.info.type === 'Planet';
 }
 
-export function assertIsAdminPlanet(entity: Entity<string, object>): asserts entity is AdminPlanet {
+export function assertIsPlanet(entity: Entity<string, object>): asserts entity is Planet {
   if (entity.info.type !== 'Planet') {
     throw new Error('Expected info.type = Planet (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminSpeciesFields {
+export interface SpeciesFields {
   name: string | null;
   classification: string | null;
   designation: string | null;
@@ -112,42 +105,38 @@ export interface AdminSpeciesFields {
   homeworld: EntityReference | null;
 }
 
-export type AdminSpecies = Entity<'Species', AdminSpeciesFields, ''>;
+export type Species = Entity<'Species', SpeciesFields, ''>;
 
-export function isAdminSpecies(entity: Entity<string, object>): entity is AdminSpecies {
+export function isSpecies(entity: Entity<string, object>): entity is Species {
   return entity.info.type === 'Species';
 }
 
-export function assertIsAdminSpecies(
-  entity: Entity<string, object>,
-): asserts entity is AdminSpecies {
+export function assertIsSpecies(entity: Entity<string, object>): asserts entity is Species {
   if (entity.info.type !== 'Species') {
     throw new Error('Expected info.type = Species (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminStarshipFields {
+export interface StarshipFields {
   starshipClass: string | null;
   mglt: string | null;
   hyperdriveRating: string | null;
   pilots: EntityReference[] | null;
 }
 
-export type AdminStarship = Entity<'Starship', AdminStarshipFields, ''>;
+export type Starship = Entity<'Starship', StarshipFields, ''>;
 
-export function isAdminStarship(entity: Entity<string, object>): entity is AdminStarship {
+export function isStarship(entity: Entity<string, object>): entity is Starship {
   return entity.info.type === 'Starship';
 }
 
-export function assertIsAdminStarship(
-  entity: Entity<string, object>,
-): asserts entity is AdminStarship {
+export function assertIsStarship(entity: Entity<string, object>): asserts entity is Starship {
   if (entity.info.type !== 'Starship') {
     throw new Error('Expected info.type = Starship (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminTransportFields {
+export interface TransportFields {
   name: string | null;
   model: string | null;
   manufacturers: string[] | null;
@@ -160,37 +149,33 @@ export interface AdminTransportFields {
   costInCredits: string | null;
 }
 
-export type AdminTransport = Entity<'Transport', AdminTransportFields, ''>;
+export type Transport = Entity<'Transport', TransportFields, ''>;
 
-export function isAdminTransport(entity: Entity<string, object>): entity is AdminTransport {
+export function isTransport(entity: Entity<string, object>): entity is Transport {
   return entity.info.type === 'Transport';
 }
 
-export function assertIsAdminTransport(
-  entity: Entity<string, object>,
-): asserts entity is AdminTransport {
+export function assertIsTransport(entity: Entity<string, object>): asserts entity is Transport {
   if (entity.info.type !== 'Transport') {
     throw new Error('Expected info.type = Transport (but was ' + entity.info.type + ')');
   }
 }
 
-export interface AdminVehicleFields {
+export interface VehicleFields {
   vehicleClass: string | null;
   pilots: EntityReference[] | null;
 }
 
-export type AdminVehicle = Entity<'Vehicle', AdminVehicleFields, ''>;
+export type Vehicle = Entity<'Vehicle', VehicleFields, ''>;
 
-export function isAdminVehicle(entity: Entity<string, object>): entity is AdminVehicle {
+export function isVehicle(entity: Entity<string, object>): entity is Vehicle {
   return entity.info.type === 'Vehicle';
 }
 
-export function assertIsAdminVehicle(
-  entity: Entity<string, object>,
-): asserts entity is AdminVehicle {
+export function assertIsVehicle(entity: Entity<string, object>): asserts entity is Vehicle {
   if (entity.info.type !== 'Vehicle') {
     throw new Error('Expected info.type = Vehicle (but was ' + entity.info.type + ')');
   }
 }
 
-export type AppAdminComponent = never;
+export type AppComponent = never;
