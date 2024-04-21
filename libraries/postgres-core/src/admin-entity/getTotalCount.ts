@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminEntitySharedQuery,
+  type EntitySharedQuery,
   type Schema,
   type ErrorType,
   type PromiseResult,
@@ -14,7 +14,7 @@ export async function adminEntitySearchTotalCount(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: Schema,
   context: TransactionContext,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);

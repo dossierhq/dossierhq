@@ -1,5 +1,5 @@
 import type {
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   EntitySamplingOptions,
   EntitySamplingPayload,
   ErrorType,
@@ -18,7 +18,7 @@ const MAX_SEED = 2147483647;
 const SAMPLING_DEFAULT_COUNT = 25; //TODO move to constants or make configurable?
 
 export async function sharedSampleEntities<
-  TQuery extends AdminEntitySharedQuery | PublishedEntitySharedQuery,
+  TQuery extends EntitySharedQuery | PublishedEntitySharedQuery,
   TEntity,
 >(
   authorizationAdapter: AuthorizationAdapter,

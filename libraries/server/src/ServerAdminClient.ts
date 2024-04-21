@@ -6,9 +6,9 @@ import {
   type AdminClient,
   type AdminClientMiddleware,
   type AdminClientOperation,
-  type AdminEntityCreate,
-  type AdminEntityUpdate,
-  type AdminEntityUpsert,
+  type EntityCreate,
+  type EntityUpdate,
+  type EntityUpsert,
   type SchemaSpecificationWithMigrations,
   type ContextProvider,
 } from '@dossierhq/core';
@@ -84,7 +84,7 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity as AdminEntityCreate,
+            entity as EntityCreate,
             options,
           ),
         );
@@ -308,7 +308,7 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity as AdminEntityUpdate,
+            entity as EntityUpdate,
             options,
           ),
         );
@@ -345,7 +345,7 @@ export function createServerAdminClient({
             authorizationAdapter,
             databaseAdapter,
             context,
-            entity as AdminEntityUpsert,
+            entity as EntityUpsert,
             options,
           ),
         );

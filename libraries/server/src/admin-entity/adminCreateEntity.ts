@@ -6,9 +6,9 @@ import {
   ok,
   validateEntityInfoForCreate,
   type AdminEntity,
-  type AdminEntityCreate,
-  type AdminEntityCreatePayload,
-  type AdminEntityMutationOptions,
+  type EntityCreate,
+  type EntityCreatePayload,
+  type EntityMutationOptions,
   type SchemaWithMigrations,
   type CreateEntitySyncEvent,
   type ErrorType,
@@ -28,10 +28,10 @@ export async function adminCreateEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityCreate,
-  options: AdminEntityMutationOptions | undefined,
+  entity: EntityCreate,
+  options: EntityMutationOptions | undefined,
 ): PromiseResult<
-  AdminEntityCreatePayload,
+  EntityCreatePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.Conflict
   | typeof ErrorType.NotAuthorized
@@ -55,7 +55,7 @@ export async function adminCreateEntitySyncEvent(
   context: SessionContext,
   syncEvent: CreateEntitySyncEvent,
 ): PromiseResult<
-  AdminEntityCreatePayload,
+  EntityCreatePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.Conflict
   | typeof ErrorType.NotAuthorized
@@ -82,11 +82,11 @@ async function doCreateEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityCreate,
+  entity: EntityCreate,
   publish: boolean,
   syncEvent: CreateEntitySyncEvent | null,
 ): PromiseResult<
-  AdminEntityCreatePayload,
+  EntityCreatePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.Conflict
   | typeof ErrorType.NotAuthorized
@@ -168,7 +168,7 @@ async function doCreateEntity(
     );
     if (updateEntityIndexesResult.isError()) return updateEntityIndexesResult;
 
-    let effect: AdminEntityCreatePayload['effect'] = 'created';
+    let effect: EntityCreatePayload['effect'] = 'created';
     const payload: AdminEntity = {
       id,
       info: {

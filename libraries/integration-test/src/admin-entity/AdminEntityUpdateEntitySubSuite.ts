@@ -5,7 +5,7 @@ import {
   EventType,
   copyEntity,
   isEntityNameAsRequested,
-  type AdminEntityUpdate,
+  type EntityUpdate,
 } from '@dossierhq/core';
 import {
   assertEquals,
@@ -867,7 +867,7 @@ async function updateEntity_errorInvalidField({ clientProvider }: AdminEntityTes
   const updateResult = await client.updateEntity({
     id,
     fields: { invalid: 'hello' },
-  } as AdminEntityUpdate<AdminTitleOnly>);
+  } as EntityUpdate<AdminTitleOnly>);
   assertErrorResult(
     updateResult,
     ErrorType.BadRequest,

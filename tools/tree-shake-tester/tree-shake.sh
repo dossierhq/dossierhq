@@ -15,8 +15,8 @@ function bundle_rollup {
   npx rollup "$INFILE" --config rollup.config.js --file "$OUTFILE" --format iife -p @rollup/plugin-node-resolve $ARGS 2>&1
 }
 
-rm test-cases/*-esbuild.js || true
-rm test-cases/*-rollup.js || true
+rm -f test-cases/*-esbuild.js || true
+rm -f test-cases/*-rollup.js || true
 
 bundle_esbuild test-cases/better-sqlite3-empty.js --platform=node
 bundle_esbuild test-cases/core-empty.js

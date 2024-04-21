@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import type { AdminEntity, AdminEntityCreate, EntityLike } from '../Types.js';
+import type { AdminEntity, EntityCreate, EntityLike } from '../Types.js';
 import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import {
@@ -88,22 +88,22 @@ const adminSchema = Schema.createAndValidate({
   ],
 }).valueOrThrow();
 
-const ENTITIES_ENTITY_DEFAULT: AdminEntityCreate = {
+const ENTITIES_ENTITY_DEFAULT: EntityCreate = {
   info: { type: 'ReferencesEntity', name: 'ReferencesEntity' },
   fields: {},
 };
 
-const LOCATIONS_ENTITY_DEFAULT: AdminEntityCreate = {
+const LOCATIONS_ENTITY_DEFAULT: EntityCreate = {
   info: { type: 'LocationsEntity', name: 'LocationsEntity' },
   fields: {},
 };
 
-const NUMBERS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
+const NUMBERS_ENTITY_CREATE_DEFAULT: EntityCreate = {
   info: { type: 'NumbersEntity', name: 'NumbersEntity' },
   fields: {},
 };
 
-const STRINGS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
+const STRINGS_ENTITY_CREATE_DEFAULT: EntityCreate = {
   info: { type: 'StringsEntity', name: 'StringsEntity' },
   fields: { required: '-' },
 };
@@ -124,12 +124,12 @@ const STRINGS_ENTITY_DEFAULT: AdminEntity = {
   fields: {},
 };
 
-const RICH_TEXTS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
+const RICH_TEXTS_ENTITY_CREATE_DEFAULT: EntityCreate = {
   info: { type: 'RichTextsEntity', name: 'RichTextsEntity' },
   fields: {},
 };
 
-const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: AdminEntityCreate = {
+const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: EntityCreate = {
   info: { type: 'ComponentsEntity', name: 'ComponentsEntity' },
   fields: {},
 };

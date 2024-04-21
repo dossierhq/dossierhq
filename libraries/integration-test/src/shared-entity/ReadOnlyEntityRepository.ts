@@ -3,7 +3,7 @@ import {
   copyEntity,
   ok,
   withAdvisoryLock,
-  type AdminEntityUpsert,
+  type EntityUpsert,
   type ErrorType,
   type PromiseResult,
 } from '@dossierhq/core';
@@ -22,7 +22,7 @@ const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
 const ADVISORY_LOCK_NAME = 'integration-test-read-only-entities';
 
-const READONLY_UPSERT: AdminEntityUpsert<AdminReadOnly> = {
+const READONLY_UPSERT: EntityUpsert<AdminReadOnly> = {
   id: 'REPLACE',
   info: { type: 'ReadOnly', name: `ReadOnly` },
   fields: { message: 'Hello' },

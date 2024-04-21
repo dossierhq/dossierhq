@@ -5,8 +5,8 @@ import {
   notOk,
   ok,
   type AdminEntity,
-  type AdminEntityCreate,
-  type AdminEntityUpdate,
+  type EntityCreate,
+  type EntityUpdate,
   type Schema,
   type SchemaWithMigrations,
   type ErrorType,
@@ -116,12 +116,9 @@ export function decodeAdminEntity(
 
 export function resolveCreateEntity(
   schema: Schema,
-  entity: AdminEntityCreate,
-): Result<
-  { createEntity: AdminEntityCreate },
-  typeof ErrorType.BadRequest | typeof ErrorType.Generic
-> {
-  const payload: AdminEntityCreate = {
+  entity: EntityCreate,
+): Result<{ createEntity: EntityCreate }, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
+  const payload: EntityCreate = {
     info: {
       name: entity.info.name,
       type: entity.info.type,
@@ -143,7 +140,7 @@ export function resolveCreateEntity(
 
 export function resolveUpdateEntity(
   adminSchema: SchemaWithMigrations,
-  entityUpdate: AdminEntityUpdate,
+  entityUpdate: EntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
   { changed: boolean; entity: AdminEntity },
@@ -239,7 +236,7 @@ export async function encodeAdminEntity(
   schema: Schema,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
-  entity: AdminEntity | AdminEntityCreate,
+  entity: AdminEntity | EntityCreate,
 ): PromiseResult<EncodeAdminEntityPayload, typeof ErrorType.Generic> {
   // Collect values and validate entity fields
   const path = ['entity'];

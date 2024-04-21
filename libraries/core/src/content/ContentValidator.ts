@@ -1,4 +1,4 @@
-import type { AdminEntity, AdminEntityCreate, AdminEntityUpdate } from '../Types.js';
+import type { AdminEntity, EntityCreate, EntityUpdate } from '../Types.js';
 import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import type {
@@ -53,7 +53,7 @@ export function validateEntityInfo(
 export function validateEntityInfoForCreate(
   adminSchema: Schema,
   path: ContentValuePath,
-  entity: AdminEntityCreate,
+  entity: EntityCreate,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
   const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity, true);
@@ -79,7 +79,7 @@ export function validateEntityInfoForCreate(
 export function validateEntityInfoForUpdate(
   path: ContentValuePath,
   existingEntity: { info: { type: string; authKey: string; version: number } },
-  entity: AdminEntityUpdate,
+  entity: EntityUpdate,
 ): SaveValidationIssue | null {
   if (entity.info?.type && entity.info.type !== existingEntity.info.type) {
     return {
@@ -118,7 +118,7 @@ export function validateEntityInfoForUpdate(
 function validateTypeAndAuthKey(
   adminSchema: Schema,
   path: ContentValuePath,
-  entity: AdminEntityCreate | AdminEntity,
+  entity: EntityCreate | AdminEntity,
   create: boolean,
 ): SaveValidationIssue | null {
   // info.type

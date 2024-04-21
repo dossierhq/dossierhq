@@ -1,4 +1,4 @@
-import type { AdminEntitySharedQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
+import type { EntitySharedQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type { ResolvedAuthKey, TransactionContext } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
@@ -9,7 +9,7 @@ export async function adminEntitySearchTotalCount(
   database: Database,
   schema: Schema,
   context: TransactionContext,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const sqlQuery = totalAdminEntitiesQuery(schema, resolvedAuthKeys, query);

@@ -1,6 +1,6 @@
 import type {
   EntityQuery,
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   Schema,
   ErrorType,
   PublishedEntityQuery,
@@ -224,7 +224,7 @@ function addCursorName(published: boolean, sql: PostgresSqlTemplateTag, cursorNa
   }
 }
 
-function addFilterStatusSqlSegment(query: AdminEntitySharedQuery, { sql }: PostgresQueryBuilder) {
+function addFilterStatusSqlSegment(query: EntitySharedQuery, { sql }: PostgresQueryBuilder) {
   if (!query.status || query.status.length === 0) {
     return;
   }
@@ -237,7 +237,7 @@ function addFilterStatusSqlSegment(query: AdminEntitySharedQuery, { sql }: Postg
 
 export function sampleAdminEntitiesQuery(
   schema: Schema,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -257,7 +257,7 @@ export function samplePublishedEntitiesQuery(
 
 function sampleEntitiesQuery(
   schema: Schema | PublishedSchema,
-  query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
+  query: EntitySharedQuery | PublishedEntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -283,7 +283,7 @@ function sampleEntitiesQuery(
 export function totalAdminEntitiesQuery(
   schema: Schema,
   authKeys: ResolvedAuthKey[],
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, false);
 }
@@ -299,7 +299,7 @@ export function totalPublishedEntitiesQuery(
 function totalCountQuery(
   schema: Schema | PublishedSchema,
   authKeys: ResolvedAuthKey[],
-  query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
+  query: EntitySharedQuery | PublishedEntitySharedQuery | undefined,
   published: boolean,
 ): Result<{ text: string; values: unknown[] }, typeof ErrorType.BadRequest> {
   const queryBuilder = createPostgresSqlQuery();
@@ -344,7 +344,7 @@ function totalCountQuery(
 
 function addEntityQuerySelectColumn(
   { sql }: PostgresQueryBuilder,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
   published: boolean,
 ) {
   if (query?.boundingBox) {
@@ -378,7 +378,7 @@ function addEntityQuerySelectColumn(
 function addQueryFilters(
   queryBuilder: PostgresQueryBuilder,
   schema: Schema | PublishedSchema,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean,
   linkToEntityVersion: boolean,
@@ -463,7 +463,7 @@ function addQueryFilters(
 
 function getFilterEntityTypes(
   schema: PublishedSchema | Schema,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
@@ -478,7 +478,7 @@ function getFilterEntityTypes(
 
 function getFilterComponentTypes(
   schema: PublishedSchema | Schema,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.componentTypes || query.componentTypes.length === 0) {
     return ok([]);

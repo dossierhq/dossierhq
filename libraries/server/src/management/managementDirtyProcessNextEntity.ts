@@ -4,7 +4,7 @@ import {
   notOk,
   ok,
   validateEntityInfo,
-  type AdminEntityProcessDirtyPayload,
+  type EntityProcessDirtyPayload,
   type SchemaWithMigrations,
   type EntityReference,
   type ErrorResult,
@@ -52,7 +52,7 @@ export async function managementDirtyProcessNextEntity(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   filter: EntityReference | undefined,
-): PromiseResult<AdminEntityProcessDirtyPayload | null, typeof ErrorType.Generic> {
+): PromiseResult<EntityProcessDirtyPayload | null, typeof ErrorType.Generic> {
   return context.withTransaction(async (context) => {
     // Fetch info about next dirty entity
     const entityResult = await databaseAdapter.managementDirtyGetNextEntity(context, filter);

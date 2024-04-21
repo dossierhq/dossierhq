@@ -2,11 +2,11 @@ import type { ErrorType, Result } from '../ErrorResult.js';
 import { createErrorResult, ok } from '../ErrorResult.js';
 import type {
   AdminEntity,
-  AdminEntityCreatePayload,
+  EntityCreatePayload,
   EntityInfo,
-  AdminEntityPublishingPayload,
-  AdminEntityUpdatePayload,
-  AdminEntityUpsertPayload,
+  EntityPublishingPayload,
+  EntityUpdatePayload,
+  EntityUpsertPayload,
   Connection,
   Edge,
   PageInfo,
@@ -39,13 +39,13 @@ export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
 
-export interface JsonAdminEntityInfo extends Omit<EntityInfo, 'createdAt' | 'updatedAt'> {
+export interface JsonEntityInfo extends Omit<EntityInfo, 'createdAt' | 'updatedAt'> {
   createdAt: string;
   updatedAt: string;
 }
 
-export interface JsonAdminEntity extends Omit<AdminEntity, 'info'> {
-  info: JsonAdminEntityInfo;
+export interface JsonEntity extends Omit<AdminEntity, 'info'> {
+  info: JsonEntityInfo;
 }
 
 export interface JsonPublishedEntityInfo extends Omit<PublishedEntityInfo, 'createdAt'> {
@@ -56,20 +56,20 @@ export interface JsonPublishedEntity extends Omit<PublishedEntity, 'info'> {
   info: JsonPublishedEntityInfo;
 }
 
-export interface JsonAdminEntityCreatePayload extends Omit<AdminEntityCreatePayload, 'entity'> {
-  entity: JsonAdminEntity;
+export interface JsonEntityCreatePayload extends Omit<EntityCreatePayload, 'entity'> {
+  entity: JsonEntity;
 }
 
-export interface JsonAdminEntityUpdatePayload extends Omit<AdminEntityUpdatePayload, 'entity'> {
-  entity: JsonAdminEntity;
+export interface JsonEntityUpdatePayload extends Omit<EntityUpdatePayload, 'entity'> {
+  entity: JsonEntity;
 }
 
-export interface JsonAdminEntityUpsertPayload extends Omit<AdminEntityUpsertPayload, 'entity'> {
-  entity: JsonAdminEntity;
+export interface JsonEntityUpsertPayload extends Omit<EntityUpsertPayload, 'entity'> {
+  entity: JsonEntity;
 }
 
 export interface JsonPublishingResult<TEffect>
-  extends Omit<AdminEntityPublishingPayload<TEffect>, 'updatedAt'> {
+  extends Omit<EntityPublishingPayload<TEffect>, 'updatedAt'> {
   updatedAt: string;
 }
 
@@ -118,7 +118,7 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
   return createErrorResult(jsonResult.error, jsonResult.message);
 }
 
-export function convertJsonAdminEntity(entity: JsonAdminEntity): AdminEntity {
+export function convertJsonAdminEntity(entity: JsonEntity): AdminEntity {
   return {
     ...entity,
     info: {
@@ -141,7 +141,7 @@ export function convertJsonPublishedEntity(entity: JsonPublishedEntity): Publish
 
 export function convertJsonPublishingResult<TEffect>(
   publishingResult: JsonPublishingResult<TEffect>,
-): AdminEntityPublishingPayload<TEffect> {
+): EntityPublishingPayload<TEffect> {
   return {
     ...publishingResult,
     updatedAt: new Date(publishingResult.updatedAt),

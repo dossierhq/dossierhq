@@ -7,7 +7,7 @@ import {
   type AdminClient,
   type AdminClientMiddleware,
   type AdminEntity,
-  type AdminEntityProcessDirtyPayload,
+  type EntityProcessDirtyPayload,
   type SchemaSpecificationWithMigrations,
   type Component,
   type Connection,
@@ -88,7 +88,7 @@ export interface Server<
 
   processNextDirtyEntity(
     filter?: EntityReference,
-  ): PromiseResult<AdminEntityProcessDirtyPayload | null, typeof ErrorType.Generic>;
+  ): PromiseResult<EntityProcessDirtyPayload | null, typeof ErrorType.Generic>;
 
   getSyncEvents(
     query: SyncEventQuery,

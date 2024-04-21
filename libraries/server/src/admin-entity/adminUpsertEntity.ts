@@ -3,10 +3,10 @@ import {
   isEntityNameAsRequested,
   notOk,
   ok,
-  type AdminEntityMutationOptions,
-  type AdminEntityUpdate,
-  type AdminEntityUpsert,
-  type AdminEntityUpsertPayload,
+  type EntityMutationOptions,
+  type EntityUpdate,
+  type EntityUpsert,
+  type EntityUpsertPayload,
   type SchemaWithMigrations,
   type ErrorResult,
   type PromiseResult,
@@ -22,10 +22,10 @@ export async function adminUpsertEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpsert,
-  options: AdminEntityMutationOptions | undefined,
+  entity: EntityUpsert,
+  options: EntityMutationOptions | undefined,
 ): PromiseResult<
-  AdminEntityUpsertPayload,
+  EntityUpsertPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const nameResult = await databaseAdapter.adminEntityGetEntityName(context, { id: entity.id });
@@ -43,7 +43,7 @@ export async function adminUpsertEntity(
     return nameResult as ErrorResult<unknown, typeof ErrorType.Generic>;
   }
 
-  let entityUpdate: AdminEntityUpdate = entity;
+  let entityUpdate: EntityUpdate = entity;
   if (isEntityNameAsRequested(nameResult.value, entity.info.name)) {
     // Remove name since we don't to change it the current name is the same but with a #number
     entityUpdate = { ...entityUpdate, info: { ...entityUpdate.info, name: undefined } };
@@ -78,10 +78,10 @@ async function createNewEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpsert,
-  options: AdminEntityMutationOptions | undefined,
+  entity: EntityUpsert,
+  options: EntityMutationOptions | undefined,
 ): PromiseResult<
-  AdminEntityUpsertPayload,
+  EntityUpsertPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const createResult = await adminCreateEntity(

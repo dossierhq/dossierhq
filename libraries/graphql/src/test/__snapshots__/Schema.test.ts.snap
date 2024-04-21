@@ -258,7 +258,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -270,7 +270,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -282,7 +282,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -294,7 +294,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -435,10 +435,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -924,7 +924,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -936,7 +936,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -948,7 +948,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -960,7 +960,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -1106,10 +1106,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -1378,7 +1378,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -1390,7 +1390,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -1402,7 +1402,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -1414,7 +1414,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -1497,10 +1497,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -1969,7 +1969,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -1981,7 +1981,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -1993,7 +1993,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -2005,7 +2005,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -2093,10 +2093,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -2365,7 +2365,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -2377,7 +2377,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -2389,7 +2389,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -2401,7 +2401,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -2571,10 +2571,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -3128,7 +3128,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -3140,7 +3140,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -3152,7 +3152,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -3164,7 +3164,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -3341,10 +3341,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -3649,7 +3649,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -3661,7 +3661,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -3673,7 +3673,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -3685,7 +3685,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -3807,10 +3807,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -4283,7 +4283,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -4295,7 +4295,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -4307,7 +4307,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -4319,7 +4319,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -4443,10 +4443,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -4707,7 +4707,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -4719,7 +4719,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -4731,7 +4731,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -4743,7 +4743,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -4907,10 +4907,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -5402,7 +5402,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -5414,7 +5414,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -5426,7 +5426,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -5438,7 +5438,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -5618,10 +5618,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -5883,7 +5883,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -5895,7 +5895,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -5907,7 +5907,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -5919,7 +5919,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -5980,10 +5980,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -6414,7 +6414,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -6426,7 +6426,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -6438,7 +6438,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -6450,7 +6450,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -6516,10 +6516,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -6779,7 +6779,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -6791,7 +6791,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -6803,7 +6803,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -6815,7 +6815,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -6888,10 +6888,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -7344,7 +7344,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -7356,7 +7356,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -7368,7 +7368,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -7380,7 +7380,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -7458,10 +7458,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -7727,7 +7727,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -7739,7 +7739,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -7751,7 +7751,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -7763,7 +7763,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -7851,10 +7851,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -8339,7 +8339,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -8351,7 +8351,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -8363,7 +8363,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -8375,7 +8375,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -8468,10 +8468,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -8727,7 +8727,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -8739,7 +8739,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -8751,7 +8751,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -8763,7 +8763,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -8836,10 +8836,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -9280,7 +9280,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -9292,7 +9292,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -9304,7 +9304,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -9316,7 +9316,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -9394,10 +9394,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
   updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
   upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
@@ -9654,7 +9654,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -9666,7 +9666,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -9678,7 +9678,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -9690,7 +9690,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -9820,10 +9820,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
@@ -10302,7 +10302,7 @@ enum AdminEntityPublishEffect {
   none
 }
 
-type AdminEntityPublishPayload {
+type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityPublishEffect!
@@ -10314,7 +10314,7 @@ enum AdminEntityUnpublishEffect {
   none
 }
 
-type AdminEntityUnpublishPayload {
+type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
@@ -10326,7 +10326,7 @@ enum AdminEntityArchiveEffect {
   none
 }
 
-type AdminEntityArchivePayload {
+type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityArchiveEffect!
@@ -10338,7 +10338,7 @@ enum AdminEntityUnarchiveEffect {
   none
 }
 
-type AdminEntityUnarchivePayload {
+type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
@@ -10470,10 +10470,10 @@ type Query {
 }
 
 type Mutation {
-  publishEntities(references: [EntityVersionReferenceInput!]!): [AdminEntityPublishPayload!]
-  unpublishEntities(references: [EntityReferenceInput!]!): [AdminEntityUnpublishPayload!]
-  archiveEntity(id: ID!): AdminEntityArchivePayload
-  unarchiveEntity(id: ID!): AdminEntityUnarchivePayload
+  publishEntities(references: [EntityVersionReferenceInput!]!): [EntityPublishPayload!]
+  unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
+  archiveEntity(id: ID!): EntityArchivePayload
+  unarchiveEntity(id: ID!): EntityUnarchivePayload
   createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
   updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
   upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload

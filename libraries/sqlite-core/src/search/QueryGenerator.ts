@@ -1,6 +1,6 @@
 import type {
   EntityQuery,
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   Schema,
   ErrorType,
   PublishedEntityQuery,
@@ -223,7 +223,7 @@ function addCursorName(published: boolean, sql: SqliteSqlTemplateTag, cursorName
 }
 
 function addFilterStatusSqlSegment(
-  query: AdminEntitySharedQuery,
+  query: EntitySharedQuery,
   { sql, addValueList }: SqliteQueryBuilder,
 ) {
   if (!query.status || query.status.length === 0) {
@@ -238,7 +238,7 @@ function addFilterStatusSqlSegment(
 
 export function sampleAdminEntitiesQuery(
   schema: Schema,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -258,7 +258,7 @@ export function samplePublishedEntitiesQuery(
 
 function sampleEntitiesQuery(
   schema: Schema | PublishedSchema,
-  query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
+  query: EntitySharedQuery | PublishedEntitySharedQuery | undefined,
   offset: number,
   limit: number,
   authKeys: ResolvedAuthKey[],
@@ -292,7 +292,7 @@ SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM ent
 export function totalAdminEntitiesQuery(
   schema: Schema,
   authKeys: ResolvedAuthKey[],
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
 ): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   return totalCountQuery(schema, authKeys, query, false);
 }
@@ -308,7 +308,7 @@ export function totalPublishedEntitiesQuery(
 function totalCountQuery(
   schema: Schema | PublishedSchema,
   authKeys: ResolvedAuthKey[],
-  query: AdminEntitySharedQuery | PublishedEntitySharedQuery | undefined,
+  query: EntitySharedQuery | PublishedEntitySharedQuery | undefined,
   published: boolean,
 ): Result<{ text: string; values: ColumnValue[] }, typeof ErrorType.BadRequest> {
   const queryBuilder = createSqliteSqlQuery();
@@ -367,7 +367,7 @@ function totalCountQuery(
 
 function addEntityQuerySelectColumn(
   { sql }: SqliteQueryBuilder,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
   published: boolean,
 ) {
   if (query?.boundingBox) {
@@ -418,7 +418,7 @@ function addEntityQuerySelectColumn(
 function addQueryFilters(
   queryBuilder: SqliteQueryBuilder,
   schema: Schema | PublishedSchema,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
   authKeys: ResolvedAuthKey[],
   published: boolean,
 ): Result<void, typeof ErrorType.BadRequest> {
@@ -504,7 +504,7 @@ function addQueryFilters(
 
 function getFilterEntityTypes(
   schema: PublishedSchema | Schema,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
@@ -519,7 +519,7 @@ function getFilterEntityTypes(
 
 function getFilterComponentTypes(
   schema: PublishedSchema | Schema,
-  query: PublishedEntitySharedQuery | AdminEntitySharedQuery | undefined,
+  query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
 ): Result<string[], typeof ErrorType.BadRequest> {
   if (!query?.componentTypes || query.componentTypes.length === 0) {
     return ok([]);

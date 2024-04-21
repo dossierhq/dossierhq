@@ -3,7 +3,7 @@ import {
   EventType,
   notOk,
   ok,
-  type AdminEntityUnarchivePayload,
+  type EntityUnarchivePayload,
   type EntityReference,
   type ErrorType,
   type PromiseResult,
@@ -20,7 +20,7 @@ export function adminUnarchiveEntity(
   context: SessionContext,
   reference: EntityReference,
 ): PromiseResult<
-  AdminEntityUnarchivePayload,
+  EntityUnarchivePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.NotFound
@@ -51,7 +51,7 @@ async function doUnarchiveEntity(
   reference: EntityReference,
   syncEvent: UnarchiveEntitySyncEvent | null,
 ): PromiseResult<
-  AdminEntityUnarchivePayload,
+  EntityUnarchivePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.NotFound
@@ -85,7 +85,7 @@ async function doUnarchiveEntity(
     });
     if (authResult.isError()) return authResult;
 
-    const result: AdminEntityUnarchivePayload = {
+    const result: EntityUnarchivePayload = {
       id: reference.id,
       status,
       effect: 'none',

@@ -7,7 +7,7 @@ import {
   getEntityNameBase,
   notOk,
   ok,
-  type AdminEntityPublishPayload,
+  type EntityPublishPayload,
   type SchemaWithMigrations,
   type CreateEntitySyncEvent,
   type EntityReference,
@@ -65,7 +65,7 @@ export async function adminPublishEntities(
   context: SessionContext,
   references: EntityVersionReference[],
 ): PromiseResult<
-  AdminEntityPublishPayload[],
+  EntityPublishPayload[],
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -108,7 +108,7 @@ export async function adminPublishEntityAfterMutation(
   reference: EntityVersionReference,
   syncEvent: CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<
-  AdminEntityPublishPayload,
+  EntityPublishPayload,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const publishResult = await doPublishEntities(
@@ -143,7 +143,7 @@ async function doPublishEntities(
   createEvents: boolean,
   syncEvent: PublishEntitiesSyncEvent | CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<
-  AdminEntityPublishPayload[],
+  EntityPublishPayload[],
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -410,12 +410,12 @@ async function publishEntitiesAndCollectResult(
   syncEvent: PublishEntitiesSyncEvent | CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<
   {
-    payload: AdminEntityPublishPayload[];
+    payload: EntityPublishPayload[];
     eventReferences: DatabaseAdminEntityCreateEntityEventArg['references'];
   },
   typeof ErrorType.Generic
 > {
-  const payload: AdminEntityPublishPayload[] = [];
+  const payload: EntityPublishPayload[] = [];
   const eventReferences: DatabaseAdminEntityCreateEntityEventArg['references'] = [];
   for (const versionInfo of versionsInfo) {
     const { status } = versionInfo;

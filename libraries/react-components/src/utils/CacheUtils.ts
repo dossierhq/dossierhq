@@ -1,9 +1,9 @@
 import {
   copyEntity,
   type AdminEntity,
-  type AdminEntityPublishingPayload,
+  type EntityPublishingPayload,
   type EntityQuery,
-  type AdminEntitySharedQuery,
+  type EntitySharedQuery,
   type SchemaWithMigrations,
   type ChangelogEventQuery,
   type EntityReference,
@@ -28,7 +28,7 @@ export const CACHE_KEYS = {
     return ['dossierhq/useAdminEntity', reference] as const;
   },
   adminEntitiesSample(
-    query: AdminEntitySharedQuery | undefined,
+    query: EntitySharedQuery | undefined,
     options: EntitySamplingOptions | undefined,
   ) {
     return ['dossierhq/useAdminEntitiesSample', query, options] as const;
@@ -36,7 +36,7 @@ export const CACHE_KEYS = {
   adminEntities(query: EntityQuery | undefined, paging: Paging | undefined) {
     return ['dossierhq/useAdminEntities', query, paging] as const;
   },
-  adminEntitiesTotalCount(query: AdminEntitySharedQuery | undefined) {
+  adminEntitiesTotalCount(query: EntitySharedQuery | undefined) {
     return ['dossierhq/useAdminEntitiesTotalCount', query] as const;
   },
   adminSchema: 'dossierhq/useAdminSchema',
@@ -104,7 +104,7 @@ export function updateCacheEntity<T extends AdminEntity<string, object> = AdminE
 
 export function updateCacheEntityInfo<TEffect>(
   mutate: ScopedMutator,
-  payload: AdminEntityPublishingPayload<TEffect>,
+  payload: EntityPublishingPayload<TEffect>,
 ) {
   const key = CACHE_KEYS.adminEntity({ id: payload.id });
   mutate(key, (entity: AdminEntity | undefined) => {

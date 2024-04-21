@@ -3,8 +3,8 @@ import {
   notOk,
   ok,
   type AdminEntity,
-  type AdminEntityCreate,
-  type AdminEntityProcessDirtyPayload,
+  type EntityCreate,
+  type EntityProcessDirtyPayload,
   type SchemaSpecificationUpdate,
   type EntityReference,
   type ErrorType,
@@ -54,12 +54,12 @@ export async function createEntityWithInvalidComponent(
 async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object> = AdminEntity>(
   adminClient: AppAdminClient,
   schemaUpdate: SchemaSpecificationUpdate,
-  entity: AdminEntityCreate<TEntity>,
+  entity: EntityCreate<TEntity>,
   options?: Options,
 ): PromiseResult<
   {
     entity: TEntity;
-    validations: AdminEntityProcessDirtyPayload[];
+    validations: EntityProcessDirtyPayload[];
   },
   | typeof ErrorType.BadRequest
   | typeof ErrorType.Conflict
@@ -67,7 +67,7 @@ async function doCreateInvalidEntity<TEntity extends AdminEntity<string, object>
   | typeof ErrorType.Generic
 > {
   let result: Result<
-    { entity: TEntity; validations: AdminEntityProcessDirtyPayload[] },
+    { entity: TEntity; validations: EntityProcessDirtyPayload[] },
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -100,7 +100,7 @@ async function withTemporarySchemaChange(
   adminClient: AppAdminClient,
   schemaUpdate: SchemaSpecificationUpdate,
   onChangedSchema: () => Promise<EntityReference | undefined>,
-  onProcessed: (processed: AdminEntityProcessDirtyPayload) => void,
+  onProcessed: (processed: EntityProcessDirtyPayload) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withSchemaAdvisoryLock(adminClient, async () => {
     // remove validations from the schema

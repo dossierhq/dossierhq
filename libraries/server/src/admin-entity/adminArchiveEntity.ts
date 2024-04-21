@@ -1,5 +1,5 @@
 import type {
-  AdminEntityArchivePayload,
+  EntityArchivePayload,
   ArchiveEntitySyncEvent,
   EntityReference,
   ErrorType,
@@ -17,7 +17,7 @@ export function adminArchiveEntity(
   context: SessionContext,
   reference: EntityReference,
 ): PromiseResult<
-  AdminEntityArchivePayload,
+  EntityArchivePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -48,7 +48,7 @@ async function doArchiveEntity(
   reference: EntityReference,
   syncEvent: ArchiveEntitySyncEvent | null,
 ): PromiseResult<
-  AdminEntityArchivePayload,
+  EntityArchivePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -110,7 +110,7 @@ async function doArchiveEntity(
     if (publishingEventResult.isError()) return publishingEventResult;
 
     // Done
-    const value: AdminEntityArchivePayload = {
+    const value: EntityArchivePayload = {
       id: reference.id,
       status: EntityStatus.archived,
       effect: 'archived',

@@ -1,4 +1,4 @@
-import type { AdminEntitySharedQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
+import type { EntitySharedQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityPayload,
@@ -15,7 +15,7 @@ export async function adminEntitySampleEntities(
   database: Database,
   schema: Schema,
   context: TransactionContext,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   offset: number,
   limit: number,
   resolvedAuthKeys: ResolvedAuthKey[],

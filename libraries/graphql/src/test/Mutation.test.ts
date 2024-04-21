@@ -1,8 +1,4 @@
-import type {
-  AdminEntityCreate,
-  AdminEntityUpsert,
-  SchemaSpecificationUpdate,
-} from '@dossierhq/core';
+import type { EntityCreate, EntityUpsert, SchemaSpecificationUpdate } from '@dossierhq/core';
 import {
   EntityStatus,
   FieldType,
@@ -176,7 +172,7 @@ function createContext(): SessionGraphQLContext {
 describe('create*Entity()', () => {
   test('Create', async () => {
     const { adminClient } = server;
-    const entity: AdminEntityCreate = {
+    const entity: EntityCreate = {
       info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
         title: 'Foo title',
@@ -267,7 +263,7 @@ describe('create*Entity()', () => {
 
   test('Create with ID and version=1', async () => {
     const id = insecureTestUuidv4();
-    const entity: AdminEntityCreate = {
+    const entity: EntityCreate = {
       id,
       info: { type: 'MutationFoo', name: 'Foo name', version: 1 },
       fields: {
@@ -319,7 +315,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create and publish', async () => {
-    const entity: AdminEntityCreate = {
+    const entity: EntityCreate = {
       info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
         title: 'Foo title',
@@ -387,7 +383,7 @@ describe('create*Entity()', () => {
         createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
         createRichTextEntityNode({ id: barId }),
       ]);
-      const entity: AdminEntityCreate = {
+      const entity: EntityCreate = {
         info: { type: 'MutationFoo', name: 'Foo name' },
         fields: {
           title: 'Foo title',
@@ -502,7 +498,7 @@ describe('create*Entity()', () => {
         },
       } = createBarResult.value;
 
-      const entity: AdminEntityCreate = {
+      const entity: EntityCreate = {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
@@ -631,7 +627,7 @@ describe('create*Entity()', () => {
         },
       } = createBar2Result.value;
 
-      const entity: AdminEntityCreate = {
+      const entity: EntityCreate = {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
@@ -749,7 +745,7 @@ describe('create*Entity()', () => {
         },
       } = createBarResult.value;
 
-      const entity: AdminEntityCreate = {
+      const entity: EntityCreate = {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
@@ -889,7 +885,7 @@ describe('create*Entity()', () => {
         entity: { id: barId },
       } = createBarResult.value;
 
-      const entity: AdminEntityCreate = {
+      const entity: EntityCreate = {
         info: {
           type: 'MutationFoo',
           name: 'Foo name',
@@ -1020,7 +1016,7 @@ describe('create*Entity()', () => {
 
   test('Create nested component with inner JSON', async () => {
     const { adminClient } = server;
-    const entity: AdminEntityCreate = {
+    const entity: EntityCreate = {
       info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
         nestedValue: {
@@ -1918,7 +1914,7 @@ describe('upsert*Entity()', () => {
   test('Create new entity', async () => {
     const { adminClient } = server;
     const id = insecureTestUuidv4();
-    const entity: AdminEntityUpsert = {
+    const entity: EntityUpsert = {
       id,
       info: { type: 'MutationFoo', name: 'Name' },
       fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
@@ -2116,7 +2112,7 @@ describe('upsert*Entity()', () => {
   test('Create new entity and publish', async () => {
     const { adminClient } = server;
     const id = insecureTestUuidv4();
-    const entity: AdminEntityUpsert = {
+    const entity: EntityUpsert = {
       id,
       info: { type: 'MutationFoo', name: 'Name' },
       fields: { title: 'Title', summary: 'Summary', tags: ['one', 'two', 'three'] },
@@ -2248,7 +2244,7 @@ describe('publishEntities()', () => {
         data: {
           publishEntities: [
             {
-              __typename: 'AdminEntityPublishPayload',
+              __typename: 'EntityPublishPayload',
               id,
               status: EntityStatus.published,
               effect: 'published',
@@ -2355,7 +2351,7 @@ describe('unpublishEntities()', () => {
         data: {
           unpublishEntities: [
             {
-              __typename: 'AdminEntityUnpublishPayload',
+              __typename: 'EntityUnpublishPayload',
               id,
               status: EntityStatus.withdrawn,
               effect: 'unpublished',
@@ -2459,7 +2455,7 @@ describe('archiveEntity()', () => {
       expect(result).toEqual({
         data: {
           archiveEntity: {
-            __typename: 'AdminEntityArchivePayload',
+            __typename: 'EntityArchivePayload',
             id,
             status: EntityStatus.archived,
             effect: 'archived',
@@ -2541,7 +2537,7 @@ describe('unarchiveEntity()', () => {
       expect(result).toEqual({
         data: {
           unarchiveEntity: {
-            __typename: 'AdminEntityUnarchivePayload',
+            __typename: 'EntityUnarchivePayload',
             id,
             status: EntityStatus.draft,
             effect: 'unarchived',

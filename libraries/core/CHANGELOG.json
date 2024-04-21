@@ -992,7 +992,7 @@
             "comment": "upsertEntity() support in AdminClient"
           },
           {
-            "comment": "Make AdminEntityUpsert.fields required"
+            "comment": "Make EntityUpsert.fields required"
           },
           {
             "comment": "Normalize field values. Effect on create/update entity"

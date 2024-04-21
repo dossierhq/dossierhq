@@ -5,9 +5,9 @@ import {
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
   type AdminEntity,
-  type AdminEntityCreate,
+  type EntityCreate,
   type EntityTypeSpecification,
-  type AdminEntityUpdate,
+  type EntityUpdate,
   type FieldSpecification,
   type Schema,
   type PublishValidationIssue,
@@ -657,12 +657,12 @@ export function getEntityCreateFromDraftState(draftState: EntityEditorDraftState
   assertIsDefined(draft);
   assertIsDefined(draft.authKey);
 
-  const fields: AdminEntityCreate['fields'] = {};
+  const fields: EntityCreate['fields'] = {};
   for (const field of draft.fields) {
     fields[field.fieldSpec.name] = field.value;
   }
 
-  const result: AdminEntityCreate = {
+  const result: EntityCreate = {
     id: draftState.id,
     info: {
       type: draft.entitySpec.name,
@@ -680,12 +680,12 @@ export function getEntityUpdateFromDraftState(draftState: EntityEditorDraftState
   assertIsDefined(draft);
   assertIsDefined(entity);
 
-  const fields: AdminEntityCreate['fields'] = {};
+  const fields: EntityCreate['fields'] = {};
   for (const field of draft.fields) {
     fields[field.fieldSpec.name] = field.value;
   }
 
-  const result: AdminEntityUpdate = {
+  const result: EntityUpdate = {
     id: draftState.id,
     info: {
       type: draft.entitySpec.name,

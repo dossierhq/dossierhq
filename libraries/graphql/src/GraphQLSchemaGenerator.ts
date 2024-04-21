@@ -7,12 +7,12 @@ import {
   type AdminClient,
   type ComponentTypeSpecification,
   type AdminEntity,
-  type AdminEntityCreate,
+  type EntityCreate,
   type EntityQuery,
-  type AdminEntitySharedQuery,
+  type EntitySharedQuery,
   type EntityTypeSpecification,
-  type AdminEntityUpdate,
-  type AdminEntityUpsert,
+  type EntityUpdate,
+  type EntityUpsert,
   type Schema,
   type AdvisoryLockOptions,
   type ChangelogEvent,
@@ -743,10 +743,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntityPublishPayload
+    // EntityPublishPayload
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityPublishPayload',
+        name: 'EntityPublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
@@ -767,10 +767,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntityUnpublishPayload
+    // EntityUnpublishPayload
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityUnpublishPayload',
+        name: 'EntityUnpublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
@@ -791,10 +791,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntityArchivePayload
+    // EntityArchivePayload
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityArchivePayload',
+        name: 'EntityArchivePayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
@@ -815,10 +815,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntityUnarchivePayload
+    // EntityUnarchivePayload
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityUnarchivePayload',
+        name: 'EntityUnarchivePayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
@@ -1428,7 +1428,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: AdminEntitySharedQuery;
+        query?: EntitySharedQuery;
         seed?: number;
         count?: number;
       }
@@ -1596,7 +1596,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     return fieldConfigWithArgs<
       TSource,
       TContext,
-      { entity: AdminEntityCreate; publish: boolean | null }
+      { entity: EntityCreate; publish: boolean | null }
     >({
       type: this.getOutputType(toAdminCreatePayloadTypeName(entityName)),
       args: {
@@ -1630,7 +1630,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     return fieldConfigWithArgs<
       TSource,
       TContext,
-      { entity: AdminEntityUpdate; publish: boolean | null }
+      { entity: EntityUpdate; publish: boolean | null }
     >({
       type: this.getOutputType(toAdminUpdatePayloadTypeName(entityName)),
       args: {
@@ -1663,7 +1663,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     return fieldConfigWithArgs<
       TSource,
       TContext,
-      { entity: AdminEntityUpsert; publish: boolean | null }
+      { entity: EntityUpsert; publish: boolean | null }
     >({
       type: this.getOutputType(toAdminUpsertPayloadTypeName(entityName)),
       args: {
@@ -1734,11 +1734,11 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   resolveJsonInputFields(
     adminSchema: Schema,
-    entity: AdminEntityCreate | AdminEntityUpdate,
+    entity: EntityCreate | EntityUpdate,
     entityTypeName: string,
   ): void {
     const visitItem = (
-      item: AdminEntityCreate | AdminEntityUpdate | Component,
+      item: EntityCreate | EntityUpdate | Component,
       typeSpec: EntityTypeSpecification | ComponentTypeSpecification,
       prefix: string,
       isEntity: boolean,
@@ -1810,7 +1810,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationPublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { references: EntityVersionReference[] }>({
-      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityPublishPayload'))),
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityPublishPayload'))),
       args: {
         references: {
           type: new GraphQLNonNull(
@@ -1827,7 +1827,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationUnpublishEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { references: EntityReference[] }>({
-      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('AdminEntityUnpublishPayload'))),
+      type: new GraphQLList(new GraphQLNonNull(this.getOutputType('EntityUnpublishPayload'))),
       args: {
         references: {
           type: new GraphQLNonNull(
@@ -1844,7 +1844,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationArchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('AdminEntityArchivePayload'),
+      type: this.getOutputType('EntityArchivePayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
@@ -1857,7 +1857,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
   buildMutationUnarchiveEntity<TSource>(): GraphQLFieldConfig<TSource, TContext> {
     return fieldConfigWithArgs<TSource, TContext, { id: string }>({
-      type: this.getOutputType('AdminEntityUnarchivePayload'),
+      type: this.getOutputType('EntityUnarchivePayload'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },

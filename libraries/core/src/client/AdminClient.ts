@@ -9,20 +9,20 @@ import {
 } from '../ErrorResult.js';
 import type {
   AdminEntity,
-  AdminEntityArchivePayload,
-  AdminEntityCreate,
-  AdminEntityCreatePayload,
-  AdminEntityMutationOptions,
-  AdminEntityProcessDirtyPayload,
-  AdminEntityPublishPayload,
+  EntityArchivePayload,
+  EntityCreate,
+  EntityCreatePayload,
+  EntityMutationOptions,
+  EntityProcessDirtyPayload,
+  EntityPublishPayload,
   EntityQuery,
-  AdminEntitySharedQuery,
-  AdminEntityUnarchivePayload,
-  AdminEntityUnpublishPayload,
-  AdminEntityUpdate,
-  AdminEntityUpdatePayload,
-  AdminEntityUpsert,
-  AdminEntityUpsertPayload,
+  EntitySharedQuery,
+  EntityUnarchivePayload,
+  EntityUnpublishPayload,
+  EntityUpdate,
+  EntityUpdatePayload,
+  EntityUpsert,
+  EntityUpsertPayload,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
   AdvisoryLockReleasePayload,
@@ -51,10 +51,10 @@ import {
   convertJsonEdge,
   convertJsonPublishingResult,
   convertJsonResult,
-  type JsonAdminEntity,
-  type JsonAdminEntityCreatePayload,
-  type JsonAdminEntityUpdatePayload,
-  type JsonAdminEntityUpsertPayload,
+  type JsonEntity,
+  type JsonEntityCreatePayload,
+  type JsonEntityUpdatePayload,
+  type JsonEntityUpsertPayload,
   type JsonChangelogEvent,
   type JsonConnection,
   type JsonEdge,
@@ -138,7 +138,7 @@ export interface AdminClient<
   >;
 
   getEntitiesTotalCount(
-    query?: AdminEntitySharedQuery<
+    query?: EntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminComponent['type'],
       TAdminEntity['info']['authKey']
@@ -149,7 +149,7 @@ export interface AdminClient<
   >;
 
   getEntitiesSample(
-    query?: AdminEntitySharedQuery<
+    query?: EntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminComponent['type'],
       TAdminEntity['info']['authKey']
@@ -161,10 +161,10 @@ export interface AdminClient<
   >;
 
   createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: Readonly<AdminEntityCreate<T>>,
-    options?: AdminEntityMutationOptions,
+    entity: Readonly<EntityCreate<T>>,
+    options?: EntityMutationOptions,
   ): PromiseResult<
-    AdminEntityCreatePayload<T>,
+    EntityCreatePayload<T>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -172,10 +172,10 @@ export interface AdminClient<
   >;
 
   updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: Readonly<AdminEntityUpdate<T>>,
-    options?: AdminEntityMutationOptions,
+    entity: Readonly<EntityUpdate<T>>,
+    options?: EntityMutationOptions,
   ): PromiseResult<
-    AdminEntityUpdatePayload<T>,
+    EntityUpdatePayload<T>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -183,10 +183,10 @@ export interface AdminClient<
   >;
 
   upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: Readonly<AdminEntityUpsert<T>>,
-    options?: AdminEntityMutationOptions,
+    entity: Readonly<EntityUpsert<T>>,
+    options?: EntityMutationOptions,
   ): PromiseResult<
-    AdminEntityUpsertPayload<T>,
+    EntityUpsertPayload<T>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
@@ -208,7 +208,7 @@ export interface AdminClient<
   publishEntities(
     references: EntityVersionReference[],
   ): PromiseResult<
-    AdminEntityPublishPayload[],
+    EntityPublishPayload[],
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -218,7 +218,7 @@ export interface AdminClient<
   unpublishEntities(
     references: EntityReference[],
   ): PromiseResult<
-    AdminEntityUnpublishPayload[],
+    EntityUnpublishPayload[],
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -228,7 +228,7 @@ export interface AdminClient<
   archiveEntity(
     reference: EntityReference,
   ): PromiseResult<
-    AdminEntityArchivePayload,
+    EntityArchivePayload,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -238,7 +238,7 @@ export interface AdminClient<
   unarchiveEntity(
     reference: EntityReference,
   ): PromiseResult<
-    AdminEntityUnarchivePayload,
+    EntityUnarchivePayload,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -248,7 +248,7 @@ export interface AdminClient<
   processDirtyEntity(
     reference: EntityReference,
   ): PromiseResult<
-    AdminEntityProcessDirtyPayload | null,
+    EntityProcessDirtyPayload | null,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
@@ -326,7 +326,7 @@ export interface AdminExceptionClient<
   ): Promise<Connection<Edge<TAdminEntity, ErrorType>> | null>;
 
   getEntitiesTotalCount(
-    query?: AdminEntitySharedQuery<
+    query?: EntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminComponent['type'],
       TAdminEntity['info']['authKey']
@@ -334,7 +334,7 @@ export interface AdminExceptionClient<
   ): Promise<number>;
 
   getEntitiesSample(
-    query?: AdminEntitySharedQuery<
+    query?: EntitySharedQuery<
       TAdminEntity['info']['type'],
       TAdminComponent['type'],
       TAdminEntity['info']['authKey']
@@ -343,19 +343,19 @@ export interface AdminExceptionClient<
   ): Promise<EntitySamplingPayload<TAdminEntity>>;
 
   createEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: AdminEntityCreate<T>,
-    options?: AdminEntityMutationOptions,
-  ): Promise<AdminEntityCreatePayload<T>>;
+    entity: EntityCreate<T>,
+    options?: EntityMutationOptions,
+  ): Promise<EntityCreatePayload<T>>;
 
   updateEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: AdminEntityUpdate<T>,
-    options?: AdminEntityMutationOptions,
-  ): Promise<AdminEntityUpdatePayload<T>>;
+    entity: EntityUpdate<T>,
+    options?: EntityMutationOptions,
+  ): Promise<EntityUpdatePayload<T>>;
 
   upsertEntity<T extends AdminEntity<string, object> = TAdminEntity>(
-    entity: AdminEntityUpsert<T>,
-    options?: AdminEntityMutationOptions,
-  ): Promise<AdminEntityUpsertPayload<T>>;
+    entity: EntityUpsert<T>,
+    options?: EntityMutationOptions,
+  ): Promise<EntityUpsertPayload<T>>;
 
   getChangelogEvents(
     query?: ChangelogEventQuery,
@@ -364,15 +364,15 @@ export interface AdminExceptionClient<
 
   getChangelogEventsTotalCount(query?: ChangelogEventQuery): Promise<number>;
 
-  publishEntities(references: EntityVersionReference[]): Promise<AdminEntityPublishPayload[]>;
+  publishEntities(references: EntityVersionReference[]): Promise<EntityPublishPayload[]>;
 
-  unpublishEntities(references: EntityReference[]): Promise<AdminEntityUnpublishPayload[]>;
+  unpublishEntities(references: EntityReference[]): Promise<EntityUnpublishPayload[]>;
 
-  archiveEntity(reference: EntityReference): Promise<AdminEntityArchivePayload>;
+  archiveEntity(reference: EntityReference): Promise<EntityArchivePayload>;
 
-  unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload>;
+  unarchiveEntity(reference: EntityReference): Promise<EntityUnarchivePayload>;
 
-  processDirtyEntity(reference: EntityReference): Promise<AdminEntityProcessDirtyPayload | null>;
+  processDirtyEntity(reference: EntityReference): Promise<EntityProcessDirtyPayload | null>;
 
   acquireAdvisoryLock(name: string, options: AdvisoryLockOptions): Promise<AdvisoryLockPayload>;
 
@@ -612,7 +612,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getEntitiesTotalCount(
-    query?: AdminEntitySharedQuery,
+    query?: EntitySharedQuery,
   ): MethodReturnType<typeof AdminClientOperationName.getEntitiesTotalCount> {
     return this.executeOperation({
       name: AdminClientOperationName.getEntitiesTotalCount,
@@ -622,7 +622,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getEntitiesSample(
-    query?: AdminEntitySharedQuery,
+    query?: EntitySharedQuery,
     options?: EntitySamplingOptions,
   ): PromiseResult<
     EntitySamplingPayload<AdminEntity>,
@@ -636,10 +636,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   createEntity<T extends AdminEntity<string, object> = AdminEntity>(
-    entity: AdminEntityCreate<T>,
-    options: AdminEntityMutationOptions | undefined,
+    entity: EntityCreate<T>,
+    options: EntityMutationOptions | undefined,
   ): PromiseResult<
-    AdminEntityCreatePayload<T>,
+    EntityCreatePayload<T>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -650,7 +650,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
       args: [entity, options],
       modifies: true,
     }) as PromiseResult<
-      AdminEntityCreatePayload<T>,
+      EntityCreatePayload<T>,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.Conflict
       | typeof ErrorType.NotAuthorized
@@ -659,10 +659,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   updateEntity<T extends AdminEntity<string, object> = AdminEntity>(
-    entity: AdminEntityUpdate<T>,
-    options: AdminEntityMutationOptions | undefined,
+    entity: EntityUpdate<T>,
+    options: EntityMutationOptions | undefined,
   ): PromiseResult<
-    AdminEntityUpdatePayload<T>,
+    EntityUpdatePayload<T>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -673,7 +673,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
       args: [entity, options],
       modifies: true,
     }) as PromiseResult<
-      AdminEntityUpdatePayload<T>,
+      EntityUpdatePayload<T>,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.NotFound
       | typeof ErrorType.NotAuthorized
@@ -682,10 +682,10 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   upsertEntity<T extends AdminEntity<string, object> = AdminEntity>(
-    entity: AdminEntityUpsert<T>,
-    options: AdminEntityMutationOptions | undefined,
+    entity: EntityUpsert<T>,
+    options: EntityMutationOptions | undefined,
   ): PromiseResult<
-    AdminEntityUpsertPayload<T>,
+    EntityUpsertPayload<T>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
@@ -693,7 +693,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
       args: [entity, options],
       modifies: true,
     }) as PromiseResult<
-      AdminEntityUpsertPayload<T>,
+      EntityUpsertPayload<T>,
       typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
     >;
   }
@@ -891,13 +891,13 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async getEntitiesTotalCount(
-    query?: AdminEntitySharedQuery<string, string> | undefined,
+    query?: EntitySharedQuery<string, string> | undefined,
   ): Promise<number> {
     return (await this.client.getEntitiesTotalCount(query)).valueOrThrow();
   }
 
   async getEntitiesSample(
-    query?: AdminEntitySharedQuery<string, string> | undefined,
+    query?: EntitySharedQuery<string, string> | undefined,
     options?: EntitySamplingOptions | undefined,
   ): Promise<EntitySamplingPayload<AdminEntity<string, Record<string, unknown>, string>>> {
     return (await this.client.getEntitiesSample(query, options)).valueOrThrow();
@@ -910,9 +910,9 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
       string
     >,
   >(
-    entity: AdminEntityCreate<T>,
-    options?: AdminEntityMutationOptions | undefined,
-  ): Promise<AdminEntityCreatePayload<T>> {
+    entity: EntityCreate<T>,
+    options?: EntityMutationOptions | undefined,
+  ): Promise<EntityCreatePayload<T>> {
     return (await this.client.createEntity(entity, options)).valueOrThrow();
   }
 
@@ -923,9 +923,9 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
       string
     >,
   >(
-    entity: AdminEntityUpdate<T>,
-    options?: AdminEntityMutationOptions | undefined,
-  ): Promise<AdminEntityUpdatePayload<T>> {
+    entity: EntityUpdate<T>,
+    options?: EntityMutationOptions | undefined,
+  ): Promise<EntityUpdatePayload<T>> {
     return (await this.client.updateEntity(entity, options)).valueOrThrow();
   }
 
@@ -936,9 +936,9 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
       string
     >,
   >(
-    entity: AdminEntityUpsert<T>,
-    options?: AdminEntityMutationOptions | undefined,
-  ): Promise<AdminEntityUpsertPayload<T>> {
+    entity: EntityUpsert<T>,
+    options?: EntityMutationOptions | undefined,
+  ): Promise<EntityUpsertPayload<T>> {
     return (await this.client.upsertEntity(entity, options)).valueOrThrow();
   }
 
@@ -953,27 +953,23 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
     return (await this.client.getChangelogEventsTotalCount(query)).valueOrThrow();
   }
 
-  async publishEntities(
-    references: EntityVersionReference[],
-  ): Promise<AdminEntityPublishPayload[]> {
+  async publishEntities(references: EntityVersionReference[]): Promise<EntityPublishPayload[]> {
     return (await this.client.publishEntities(references)).valueOrThrow();
   }
 
-  async unpublishEntities(references: EntityReference[]): Promise<AdminEntityUnpublishPayload[]> {
+  async unpublishEntities(references: EntityReference[]): Promise<EntityUnpublishPayload[]> {
     return (await this.client.unpublishEntities(references)).valueOrThrow();
   }
 
-  async archiveEntity(reference: EntityReference): Promise<AdminEntityArchivePayload> {
+  async archiveEntity(reference: EntityReference): Promise<EntityArchivePayload> {
     return (await this.client.archiveEntity(reference)).valueOrThrow();
   }
 
-  async unarchiveEntity(reference: EntityReference): Promise<AdminEntityUnarchivePayload> {
+  async unarchiveEntity(reference: EntityReference): Promise<EntityUnarchivePayload> {
     return (await this.client.unarchiveEntity(reference)).valueOrThrow();
   }
 
-  async processDirtyEntity(
-    reference: EntityReference,
-  ): Promise<AdminEntityProcessDirtyPayload | null> {
+  async processDirtyEntity(reference: EntityReference): Promise<EntityProcessDirtyPayload | null> {
     return (await this.client.processDirtyEntity(reference)).valueOrThrow();
   }
 
@@ -1140,13 +1136,13 @@ export function convertJsonAdminClientResult<
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.archiveEntity> =
         ok(
           convertJsonPublishingResult(
-            value as JsonPublishingResult<AdminEntityArchivePayload['effect']>,
+            value as JsonPublishingResult<EntityArchivePayload['effect']>,
           ),
         );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.createEntity: {
-      const valueTyped = value as JsonAdminEntityCreatePayload;
+      const valueTyped = value as JsonEntityCreatePayload;
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.createEntity> =
         ok({
           ...valueTyped,
@@ -1172,14 +1168,14 @@ export function convertJsonAdminClientResult<
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntities> =
         ok(
           convertJsonConnection(
-            value as JsonConnection<JsonEdge<JsonAdminEntity, ErrorType>> | null,
+            value as JsonConnection<JsonEdge<JsonEntity, ErrorType>> | null,
             convertJsonAdminEntityEdge,
           ),
         );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntitiesSample: {
-      const payload = value as EntitySamplingPayload<JsonAdminEntity>;
+      const payload = value as EntitySamplingPayload<JsonEntity>;
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.getEntitiesSample
       > = ok({
@@ -1193,19 +1189,17 @@ export function convertJsonAdminClientResult<
 
     case AdminClientOperationName.getEntity: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
-        convertJsonAdminEntity(value as JsonAdminEntity),
+        convertJsonAdminEntity(value as JsonEntity),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.getEntityList: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntityList> =
         ok(
-          (value as JsonResult<JsonAdminEntity, typeof ErrorType.NotFound>[]).map(
-            (jsonItemResult) => {
-              const itemResult = convertJsonResult(jsonItemResult);
-              return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
-            },
-          ),
+          (value as JsonResult<JsonEntity, typeof ErrorType.NotFound>[]).map((jsonItemResult) => {
+            const itemResult = convertJsonResult(jsonItemResult);
+            return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
+          }),
         );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1214,14 +1208,14 @@ export function convertJsonAdminClientResult<
     case AdminClientOperationName.processDirtyEntity: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.processDirtyEntity
-      > = ok(value as AdminEntityProcessDirtyPayload);
+      > = ok(value as EntityProcessDirtyPayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.publishEntities: {
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.publishEntities
       > = ok(
-        (value as JsonPublishingResult<AdminEntityPublishPayload['effect']>[]).map(
+        (value as JsonPublishingResult<EntityPublishPayload['effect']>[]).map(
           convertJsonPublishingResult,
         ),
       );
@@ -1244,7 +1238,7 @@ export function convertJsonAdminClientResult<
         typeof AdminClientOperationName.unarchiveEntity
       > = ok(
         convertJsonPublishingResult(
-          value as JsonPublishingResult<AdminEntityUnarchivePayload['effect']>,
+          value as JsonPublishingResult<EntityUnarchivePayload['effect']>,
         ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
@@ -1253,14 +1247,14 @@ export function convertJsonAdminClientResult<
       const result: MethodReturnTypeWithoutPromise<
         typeof AdminClientOperationName.unpublishEntities
       > = ok(
-        (value as JsonPublishingResult<AdminEntityUnpublishPayload['effect']>[]).map(
+        (value as JsonPublishingResult<EntityUnpublishPayload['effect']>[]).map(
           convertJsonPublishingResult,
         ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case AdminClientOperationName.updateEntity: {
-      const valueTyped = value as JsonAdminEntityUpdatePayload;
+      const valueTyped = value as JsonEntityUpdatePayload;
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.updateEntity> =
         ok({
           ...valueTyped,
@@ -1271,7 +1265,7 @@ export function convertJsonAdminClientResult<
     case AdminClientOperationName.updateSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     case AdminClientOperationName.upsertEntity: {
-      const valueTyped = value as JsonAdminEntityUpsertPayload;
+      const valueTyped = value as JsonEntityUpsertPayload;
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.upsertEntity> =
         ok({
           ...valueTyped,
@@ -1289,6 +1283,6 @@ export function convertJsonAdminClientResult<
   }
 }
 
-function convertJsonAdminEntityEdge(edge: JsonEdge<JsonAdminEntity, ErrorType>) {
+function convertJsonAdminEntityEdge(edge: JsonEdge<JsonEntity, ErrorType>) {
   return convertJsonEdge(edge, convertJsonAdminEntity);
 }

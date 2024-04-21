@@ -9,8 +9,8 @@ import {
   createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
-  type AdminEntityCreate,
-  type AdminEntityCreatePayload,
+  type EntityCreate,
+  type EntityCreatePayload,
   type EntityReference,
   type ErrorType,
   type PromiseResult,
@@ -233,14 +233,14 @@ function id(name: string) {
 }
 
 async function createBooleansEntities(adminClient: AppAdminClient) {
-  const minimal: AdminEntityCreate<AdminBooleansEntity> = {
+  const minimal: EntityCreate<AdminBooleansEntity> = {
     info: { type: 'BooleansEntity', name: 'Booleans minimal' },
     fields: {},
   };
   const minimalPublish = copyEntity(minimal, { fields: { required: true } });
 
   const results: PromiseResult<
-    AdminEntityCreatePayload<AdminBooleansEntity>,
+    EntityCreatePayload<AdminBooleansEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -290,7 +290,7 @@ async function createEntitiesEntities(
     stringsEntities: AdminStringsEntity[];
   },
 ) {
-  const minimal: AdminEntityCreate<AdminReferencesEntity> = {
+  const minimal: EntityCreate<AdminReferencesEntity> = {
     info: { type: 'ReferencesEntity', name: 'References minimal' },
     fields: {},
   };
@@ -364,7 +364,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
   const malmo = { lat: 55.60498, lng: 13.003822 };
   const london = { lat: 51.459952, lng: -0.011228 };
 
-  const minimal: AdminEntityCreate<AdminLocationsEntity> = {
+  const minimal: EntityCreate<AdminLocationsEntity> = {
     info: { type: 'LocationsEntity', name: 'Locations minimal' },
     fields: {},
   };
@@ -373,7 +373,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
   });
 
   const results: PromiseResult<
-    AdminEntityCreatePayload<AdminLocationsEntity>,
+    EntityCreatePayload<AdminLocationsEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -411,7 +411,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
 }
 
 async function createNumbersEntities(adminClient: AppAdminClient) {
-  const minimal: AdminEntityCreate<AdminNumbersEntity> = {
+  const minimal: EntityCreate<AdminNumbersEntity> = {
     info: { type: 'NumbersEntity', name: 'Numbers minimal' },
     fields: {},
   };
@@ -420,7 +420,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
   });
 
   const results: PromiseResult<
-    AdminEntityCreatePayload<AdminNumbersEntity>,
+    EntityCreatePayload<AdminNumbersEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -483,7 +483,7 @@ async function createRichTextsEntities(
     cloudinaryImageComponents: AdminCloudinaryImage[];
   },
 ) {
-  const minimal: AdminEntityCreate<AdminRichTextsEntity> = {
+  const minimal: EntityCreate<AdminRichTextsEntity> = {
     info: { type: 'RichTextsEntity', name: 'RichTexts minimal' },
     fields: {},
   };
@@ -649,7 +649,7 @@ async function createRichTextsEntities(
 }
 
 async function createStringsEntities(adminClient: AppAdminClient) {
-  const minimal: AdminEntityCreate<AdminStringsEntity> = {
+  const minimal: EntityCreate<AdminStringsEntity> = {
     info: { type: 'StringsEntity', name: 'Strings minimal' },
     fields: {},
   };
@@ -662,7 +662,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
   });
 
   const results: PromiseResult<
-    AdminEntityCreatePayload<AdminStringsEntity>,
+    EntityCreatePayload<AdminStringsEntity>,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.Conflict
     | typeof ErrorType.NotAuthorized
@@ -739,7 +739,7 @@ async function createComponentsEntities(
     cloudinaryImageComponents: AdminCloudinaryImage[];
   },
 ) {
-  const minimal: AdminEntityCreate<AdminComponentsEntity> = {
+  const minimal: EntityCreate<AdminComponentsEntity> = {
     info: { type: 'ComponentsEntity', name: 'Components minimal' },
     fields: {},
   };

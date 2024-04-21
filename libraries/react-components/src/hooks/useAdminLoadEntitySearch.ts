@@ -1,6 +1,6 @@
 import type {
   EntityQuery,
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   AdminEntity,
   Connection,
   Edge,
@@ -37,9 +37,7 @@ export function useAdminLoadEntitySearch(
   const { totalCount } = useAdminEntitiesTotalCount(adminClient, searchQuery);
 
   // sample
-  const sampleQuery = !searchQuery
-    ? (searchEntityState.query as AdminEntitySharedQuery)
-    : undefined;
+  const sampleQuery = !searchQuery ? (searchEntityState.query as EntitySharedQuery) : undefined;
   const { entitiesSample, entitiesSampleError } = useAdminEntitiesSample(
     adminClient,
     sampleQuery,

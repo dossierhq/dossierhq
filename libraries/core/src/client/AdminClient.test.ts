@@ -3,12 +3,12 @@ import { assertOkResult, ok, type ErrorType } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
 import type {
   AdminEntity,
-  AdminEntityCreate,
-  AdminEntityCreatePayload,
-  AdminEntityUpdate,
-  AdminEntityUpdatePayload,
-  AdminEntityUpsert,
-  AdminEntityUpsertPayload,
+  EntityCreate,
+  EntityCreatePayload,
+  EntityUpdate,
+  EntityUpdatePayload,
+  EntityUpsert,
+  EntityUpsertPayload,
 } from '../Types.js';
 import { EntityStatus } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
@@ -122,14 +122,14 @@ describe('Custom AdminEntity types', () => {
       pipeline: [],
     });
 
-    const fooCreate: AdminEntityCreate<AdminFooEntity> = {
+    const fooCreate: EntityCreate<AdminFooEntity> = {
       info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
     const _returnedPayload = await adminClient.createEntity<AdminFooEntity>(fooCreate);
 
-    const fooCreatePayload: AdminEntityCreatePayload<AdminFooEntity> = {
+    const fooCreatePayload: EntityCreatePayload<AdminFooEntity> = {
       effect: 'created',
       entity: createDummyEntity({}),
     };
@@ -142,7 +142,7 @@ describe('Custom AdminEntity types', () => {
       pipeline: [],
     });
 
-    const fooUpdate: AdminEntityUpdate<AdminFooEntity> = {
+    const fooUpdate: EntityUpdate<AdminFooEntity> = {
       id: '123',
       info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
@@ -150,7 +150,7 @@ describe('Custom AdminEntity types', () => {
 
     const _returnedPayload = await adminClient.updateEntity<AdminFooEntity>(fooUpdate);
 
-    const fooUpdatePayload: AdminEntityUpdatePayload<AdminFooEntity> = {
+    const fooUpdatePayload: EntityUpdatePayload<AdminFooEntity> = {
       effect: 'updated',
       entity: createDummyEntity({}),
     };
@@ -163,7 +163,7 @@ describe('Custom AdminEntity types', () => {
       pipeline: [],
     });
 
-    const fooUpsert: AdminEntityUpsert<AdminFooEntity> = {
+    const fooUpsert: EntityUpsert<AdminFooEntity> = {
       id: '123',
       info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
@@ -171,7 +171,7 @@ describe('Custom AdminEntity types', () => {
 
     const _returnedPayload = await adminClient.upsertEntity<AdminFooEntity>(fooUpsert);
 
-    const fooUpsertPayload: AdminEntityUpsertPayload<AdminFooEntity> = {
+    const fooUpsertPayload: EntityUpsertPayload<AdminFooEntity> = {
       effect: 'updated',
       entity: createDummyEntity({}),
     };

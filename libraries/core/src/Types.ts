@@ -203,11 +203,11 @@ export interface EntityInfo<TType extends string = string, TAuthKey extends stri
   updatedAt: Date;
 }
 
-export interface AdminEntityMutationOptions {
+export interface EntityMutationOptions {
   publish?: boolean;
 }
 
-export interface AdminEntityCreate<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityCreate<T extends AdminEntity<string, object> = AdminEntity> {
   /** UUID. If not provided a new random id will be created */
   id?: string;
   info: {
@@ -224,12 +224,12 @@ export interface AdminEntityCreate<T extends AdminEntity<string, object> = Admin
   fields: Partial<T['fields']>;
 }
 
-export interface AdminEntityCreatePayload<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityCreatePayload<T extends AdminEntity<string, object> = AdminEntity> {
   effect: 'created' | 'createdAndPublished' | 'none';
   entity: T;
 }
 
-export interface AdminEntityUpdate<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpdate<T extends AdminEntity<string, object> = AdminEntity> {
   id: string;
   info?: {
     name?: string;
@@ -243,12 +243,12 @@ export interface AdminEntityUpdate<T extends AdminEntity<string, object> = Admin
   fields: Partial<T['fields']>;
 }
 
-export interface AdminEntityUpdatePayload<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpdatePayload<T extends AdminEntity<string, object> = AdminEntity> {
   effect: 'updated' | 'updatedAndPublished' | 'published' | 'none';
   entity: T;
 }
 
-export interface AdminEntityUpsert<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpsert<T extends AdminEntity<string, object> = AdminEntity> {
   id: string;
   info: {
     name: string;
@@ -258,7 +258,7 @@ export interface AdminEntityUpsert<T extends AdminEntity<string, object> = Admin
   fields: Partial<T['fields']>;
 }
 
-export interface AdminEntityUpsertPayload<T extends AdminEntity<string, object> = AdminEntity> {
+export interface EntityUpsertPayload<T extends AdminEntity<string, object> = AdminEntity> {
   effect:
     | 'created'
     | 'createdAndPublished'
@@ -269,17 +269,17 @@ export interface AdminEntityUpsertPayload<T extends AdminEntity<string, object> 
   entity: T;
 }
 
-export interface AdminEntityPublishingPayload<TEffect> {
+export interface EntityPublishingPayload<TEffect> {
   id: string;
   status: EntityStatus;
   effect: TEffect;
   updatedAt: Date;
 }
 
-export type AdminEntityArchivePayload = AdminEntityPublishingPayload<'archived' | 'none'>;
-export type AdminEntityUnarchivePayload = AdminEntityPublishingPayload<'unarchived' | 'none'>;
-export type AdminEntityPublishPayload = AdminEntityPublishingPayload<'published' | 'none'>;
-export type AdminEntityUnpublishPayload = AdminEntityPublishingPayload<'unpublished' | 'none'>;
+export type EntityArchivePayload = EntityPublishingPayload<'archived' | 'none'>;
+export type EntityUnarchivePayload = EntityPublishingPayload<'unarchived' | 'none'>;
+export type EntityPublishPayload = EntityPublishingPayload<'published' | 'none'>;
+export type EntityUnpublishPayload = EntityPublishingPayload<'unpublished' | 'none'>;
 
 export const EntityQueryOrder = {
   createdAt: 'createdAt',
@@ -288,7 +288,7 @@ export const EntityQueryOrder = {
 } as const;
 export type EntityQueryOrder = keyof typeof EntityQueryOrder;
 
-export interface AdminEntitySharedQuery<
+export interface EntitySharedQuery<
   TEntityType extends string = string,
   TComponentType extends string = string,
   TAuthKey extends string = string,
@@ -308,7 +308,7 @@ export interface EntityQuery<
   TEntityType extends string = string,
   TComponentType extends string = string,
   TAuthKey extends string = string,
-> extends AdminEntitySharedQuery<TEntityType, TComponentType, TAuthKey> {
+> extends EntitySharedQuery<TEntityType, TComponentType, TAuthKey> {
   order?: EntityQueryOrder;
   reverse?: boolean;
 }
@@ -378,7 +378,7 @@ export interface Edge<TOk, TError extends ErrorType> {
   cursor: string;
 }
 
-export interface AdminEntityProcessDirtyPayload {
+export interface EntityProcessDirtyPayload {
   id: string;
   valid: boolean;
   validPublished: boolean | null;

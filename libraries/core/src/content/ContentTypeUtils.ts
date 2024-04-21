@@ -1,7 +1,7 @@
 import type {
   AdminEntity,
-  AdminEntityCreate,
-  AdminEntityUpdate,
+  EntityCreate,
+  EntityUpdate,
   Component,
   EntityLike,
   PublishedEntity,
@@ -290,13 +290,7 @@ export function isRichTextListItemNode(
 }
 
 export function isComponent(
-  item:
-    | Component
-    | PublishedEntity
-    | AdminEntity
-    | AdminEntityCreate
-    | AdminEntityUpdate
-    | EntityLike,
+  item: Component | PublishedEntity | AdminEntity | EntityCreate | EntityUpdate | EntityLike,
 ): item is Component {
   return 'type' in item;
 }

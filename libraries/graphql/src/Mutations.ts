@@ -1,15 +1,15 @@
 import type {
-  AdminEntityArchivePayload,
-  AdminEntityCreate,
-  AdminEntityCreatePayload,
-  AdminEntityMutationOptions,
-  AdminEntityPublishPayload,
-  AdminEntityUnarchivePayload,
-  AdminEntityUnpublishPayload,
-  AdminEntityUpdate,
-  AdminEntityUpdatePayload,
-  AdminEntityUpsert,
-  AdminEntityUpsertPayload,
+  EntityArchivePayload,
+  EntityCreate,
+  EntityCreatePayload,
+  EntityMutationOptions,
+  EntityPublishPayload,
+  EntityUnarchivePayload,
+  EntityUnpublishPayload,
+  EntityUpdate,
+  EntityUpdatePayload,
+  EntityUpsert,
+  EntityUpsertPayload,
   Schema,
   AdvisoryLockOptions,
   AdvisoryLockPayload,
@@ -23,9 +23,9 @@ import type { SessionGraphQLContext } from './GraphQLSchemaGenerator.js';
 export async function createEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
-  entity: Readonly<AdminEntityCreate>,
-  options: AdminEntityMutationOptions,
-): Promise<AdminEntityCreatePayload> {
+  entity: Readonly<EntityCreate>,
+  options: EntityMutationOptions,
+): Promise<EntityCreatePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.createEntity(entity, options);
   const payload = result.valueOrThrow();
@@ -38,9 +38,9 @@ export async function createEntity<TContext extends SessionGraphQLContext>(
 export async function updateEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
-  entity: Readonly<AdminEntityUpdate>,
-  options: AdminEntityMutationOptions,
-): Promise<AdminEntityUpdatePayload> {
+  entity: Readonly<EntityUpdate>,
+  options: EntityMutationOptions,
+): Promise<EntityUpdatePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.updateEntity(entity, options);
   const payload = result.valueOrThrow();
@@ -53,9 +53,9 @@ export async function updateEntity<TContext extends SessionGraphQLContext>(
 export async function upsertEntity<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
-  entity: Readonly<AdminEntityUpsert>,
-  options: AdminEntityMutationOptions,
-): Promise<AdminEntityUpsertPayload> {
+  entity: Readonly<EntityUpsert>,
+  options: EntityMutationOptions,
+): Promise<EntityUpsertPayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.upsertEntity(entity, options);
   const payload = result.valueOrThrow();
@@ -68,7 +68,7 @@ export async function upsertEntity<TContext extends SessionGraphQLContext>(
 export async function publishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   references: EntityVersionReference[],
-): Promise<AdminEntityPublishPayload[]> {
+): Promise<EntityPublishPayload[]> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.publishEntities(references);
   return result.valueOrThrow();
@@ -77,7 +77,7 @@ export async function publishEntities<TContext extends SessionGraphQLContext>(
 export async function unpublishEntities<TContext extends SessionGraphQLContext>(
   context: TContext,
   references: EntityReference[],
-): Promise<AdminEntityUnpublishPayload[]> {
+): Promise<EntityUnpublishPayload[]> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.unpublishEntities(references);
   return result.valueOrThrow();
@@ -86,7 +86,7 @@ export async function unpublishEntities<TContext extends SessionGraphQLContext>(
 export async function archiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   reference: EntityReference,
-): Promise<AdminEntityArchivePayload> {
+): Promise<EntityArchivePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.archiveEntity(reference);
   return result.valueOrThrow();
@@ -95,7 +95,7 @@ export async function archiveEntity<TContext extends SessionGraphQLContext>(
 export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   reference: EntityReference,
-): Promise<AdminEntityUnarchivePayload> {
+): Promise<EntityUnarchivePayload> {
   const adminClient = context.adminClient.valueOrThrow();
   const result = await adminClient.unarchiveEntity(reference);
   return result.valueOrThrow();

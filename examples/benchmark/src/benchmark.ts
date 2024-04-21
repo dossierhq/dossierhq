@@ -1,9 +1,9 @@
 import type {
   AdminClient,
   AdminEntity,
-  AdminEntityCreate,
-  AdminEntitySharedQuery,
-  AdminEntityUpdate,
+  EntityCreate,
+  EntitySharedQuery,
+  EntityUpdate,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -23,8 +23,8 @@ interface CreateEntityOptions {
   publishable?: boolean;
 }
 
-function cleanupEntity(entity: AdminEntityCreate) {
-  const cleanedUpEntity: AdminEntityCreate = copyEntity(entity, { fields: {} });
+function cleanupEntity(entity: EntityCreate) {
+  const cleanedUpEntity: EntityCreate = copyEntity(entity, { fields: {} });
   for (const [key, value] of Object.entries(cleanedUpEntity.fields)) {
     if (value === undefined) {
       delete cleanedUpEntity.fields[key];
@@ -73,7 +73,7 @@ function randomNullUndefined<T>(
 
 async function randomReference(
   adminClient: AdminClient,
-  query?: AdminEntitySharedQuery,
+  query?: EntitySharedQuery,
 ): PromiseResult<
   EntityReference,
   | typeof ErrorType.NotFound
@@ -88,7 +88,7 @@ async function randomReference(
 
 async function randomAdminEntity(
   adminClient: AdminClient,
-  query?: AdminEntitySharedQuery,
+  query?: EntitySharedQuery,
 ): PromiseResult<
   AdminEntity,
   | typeof ErrorType.NotFound
@@ -108,7 +108,7 @@ async function createEntity(
   adminClient: AdminClient,
   type: string,
   options?: CreateEntityOptions,
-): PromiseResult<AdminEntityCreate, ErrorType> {
+): PromiseResult<EntityCreate, ErrorType> {
   if (type === 'Organization') {
     return ok(createOrganization(options));
   }
@@ -122,11 +122,11 @@ async function updateEntity(
   adminClient: AdminClient,
   type: string,
   id: string,
-): PromiseResult<AdminEntityUpdate, ErrorType> {
+): PromiseResult<EntityUpdate, ErrorType> {
   const createResult = await createEntity(adminClient, type);
   if (createResult.isError()) return createResult;
 
-  const result: AdminEntityUpdate = {
+  const result: EntityUpdate = {
     id,
     info: {
       name: createResult.value.info.name,
@@ -136,7 +136,7 @@ async function updateEntity(
   return ok(result);
 }
 
-function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
+function createOrganization(_options?: CreateEntityOptions): EntityCreate {
   const name = faker.company.name();
   return cleanupEntity({
     info: { type: 'Organization', name },
@@ -152,7 +152,7 @@ function createOrganization(_options?: CreateEntityOptions): AdminEntityCreate {
 async function createPerson(
   adminClient: AdminClient,
   options?: CreateEntityOptions,
-): PromiseResult<AdminEntityCreate, ErrorType> {
+): PromiseResult<EntityCreate, ErrorType> {
   const organizationResult = await randomGenerateResult(
     [
       ok(null),

@@ -1,6 +1,6 @@
 import type {
   EntityQuery,
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   EntityStatus,
   Schema,
   SchemaSpecificationWithMigrations,
@@ -434,7 +434,7 @@ export interface DatabaseAdapter<
   adminEntitySampleEntities(
     schema: Schema,
     context: TransactionContext,
-    query: AdminEntitySharedQuery | undefined,
+    query: EntitySharedQuery | undefined,
     offset: number,
     limit: number,
     resolvedAuthKeys: ResolvedAuthKey[],
@@ -457,7 +457,7 @@ export interface DatabaseAdapter<
   adminEntitySearchTotalCount(
     schema: Schema,
     context: TransactionContext,
-    query: AdminEntitySharedQuery | undefined,
+    query: EntitySharedQuery | undefined,
     resolvedAuthKeys: ResolvedAuthKey[],
   ): PromiseResult<number, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 

@@ -1,5 +1,5 @@
 import type {
-  AdminEntityUnpublishPayload,
+  EntityUnpublishPayload,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -38,7 +38,7 @@ export function adminUnpublishEntities(
   context: SessionContext,
   references: EntityReference[],
 ): PromiseResult<
-  AdminEntityUnpublishPayload[],
+  EntityUnpublishPayload[],
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -69,7 +69,7 @@ async function doUnpublishEntities(
   references: EntityReference[],
   syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<
-  AdminEntityUnpublishPayload[],
+  EntityUnpublishPayload[],
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -195,7 +195,7 @@ async function unpublishEntitiesAndCollectResult(
   entitiesInfo: (EntityInfoToBeUnpublished | EntityInfoAlreadyUnpublished)[],
   unpublishEntitiesInfo: EntityInfoToBeUnpublished[],
   syncEvent: UnpublishEntitiesSyncEvent | null,
-): PromiseResult<AdminEntityUnpublishPayload[], typeof ErrorType.Generic> {
+): PromiseResult<EntityUnpublishPayload[], typeof ErrorType.Generic> {
   const unpublishResult = await databaseAdapter.adminEntityUnpublishEntities(
     context,
     EntityStatus.withdrawn,
@@ -205,7 +205,7 @@ async function unpublishEntitiesAndCollectResult(
   if (unpublishResult.isError()) return unpublishResult;
   const unpublishRows = unpublishResult.value;
 
-  const payload: AdminEntityUnpublishPayload[] = [];
+  const payload: EntityUnpublishPayload[] = [];
   for (const entityInfo of entitiesInfo) {
     if (entityInfo.effect === 'unpublished') {
       const updatedAt = unpublishRows.find(

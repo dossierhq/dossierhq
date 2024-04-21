@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   AdminEntity,
   EntitySamplingOptions,
   EntitySamplingPayload,
@@ -12,7 +12,7 @@ import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = Readonly<
-  [string, AdminEntitySharedQuery | undefined, EntitySamplingOptions | undefined]
+  [string, EntitySharedQuery | undefined, EntitySamplingOptions | undefined]
 >;
 type FetcherData<T> = EntitySamplingPayload<T>;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
@@ -24,7 +24,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function useAdminEntitiesSample<TAdminEntity extends AdminEntity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): {
   entitiesSample: FetcherData<TAdminEntity> | undefined;

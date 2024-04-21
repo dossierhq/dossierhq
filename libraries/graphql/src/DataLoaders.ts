@@ -3,7 +3,7 @@ import type {
   ComponentTypeSpecification,
   AdminEntity,
   EntityQuery,
-  AdminEntitySharedQuery,
+  EntitySharedQuery,
   EntityTypeSpecification,
   FieldSpecification,
   Schema,
@@ -248,7 +248,7 @@ export function buildResolversForAdminEntity<TContext extends SessionGraphQLCont
 export async function loadAdminEntitiesSample<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
-  query: AdminEntitySharedQuery | undefined,
+  query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<AdminEntity>> {
   const adminClient = context.adminClient.valueOrThrow() as AdminClient;

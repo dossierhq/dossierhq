@@ -1,6 +1,6 @@
 import type {
   AdminEntity,
-  AdminEntityCreate,
+  EntityCreate,
   EntityLike,
   Location,
   PublishedEntity,
@@ -36,7 +36,7 @@ export function isEntityNameAsRequested(currentName: string, requestedName: stri
 export function copyEntity<
   T extends
     | AdminEntity<string, object>
-    | AdminEntityCreate<AdminEntity<string, object>>
+    | EntityCreate<AdminEntity<string, object>>
     | PublishedEntity<string, object>
     | EntityLike<string, object>,
 >(

@@ -5,9 +5,9 @@ import {
   notOk,
   ok,
   validateEntityInfoForUpdate,
-  type AdminEntityMutationOptions,
-  type AdminEntityUpdate,
-  type AdminEntityUpdatePayload,
+  type EntityMutationOptions,
+  type EntityUpdate,
+  type EntityUpdatePayload,
   type SchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
@@ -27,10 +27,10 @@ export async function adminUpdateEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpdate,
-  options: AdminEntityMutationOptions | undefined,
+  entity: EntityUpdate,
+  options: EntityMutationOptions | undefined,
 ): PromiseResult<
-  AdminEntityUpdatePayload,
+  EntityUpdatePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -76,11 +76,11 @@ async function doUpdateEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  entity: AdminEntityUpdate,
-  options: AdminEntityMutationOptions | undefined,
+  entity: EntityUpdate,
+  options: EntityMutationOptions | undefined,
   syncEvent: UpdateEntitySyncEvent | null,
 ): PromiseResult<
-  AdminEntityUpdatePayload,
+  EntityUpdatePayload,
   | typeof ErrorType.BadRequest
   | typeof ErrorType.NotFound
   | typeof ErrorType.NotAuthorized
@@ -130,7 +130,7 @@ async function doUpdateEntity(
       const { changed, entity: updatedEntity } = resolvedResult.value;
 
       if (!changed) {
-        const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
+        const payload: EntityUpdatePayload = { effect: 'none', entity: updatedEntity };
         if (options?.publish && updatedEntity.info.status !== EntityStatus.published) {
           const publishResult = await adminPublishEntityAfterMutation(
             adminSchema,
@@ -186,7 +186,7 @@ async function doUpdateEntity(
       );
       if (updateResult.isError()) return updateResult;
 
-      let effect: AdminEntityUpdatePayload['effect'] = 'updated';
+      let effect: EntityUpdatePayload['effect'] = 'updated';
       updatedEntity.info.name = updateResult.value.name;
       updatedEntity.info.updatedAt = updateResult.value.updatedAt;
 
