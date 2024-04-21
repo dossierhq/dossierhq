@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Break: Rename admin prefix from Query.admin{Entity,EntityList,Entities,EntitySample}'",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

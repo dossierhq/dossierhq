@@ -12,7 +12,7 @@ type Variables = {
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type Payload = {
-  adminEntity: {
+  entity: {
     changelogEvents: {
       pageInfo: {
         hasNextPage: boolean;
@@ -44,7 +44,7 @@ type Payload = {
 
 const QUERY = gql`
   query ChangelogEvents($id: ID!, $query: ChangelogEventQueryInput) {
-    adminEntity(id: $id) {
+    entity(id: $id) {
       changelogEvents(query: $query) {
         pageInfo {
           hasNextPage

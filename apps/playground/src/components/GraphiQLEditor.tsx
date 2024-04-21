@@ -1,9 +1,7 @@
-import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
+import { ok, type PublishedSchema, type Schema } from '@dossierhq/core';
+import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
 import { AdminDossierContext, PublishedDossierContext } from '@dossierhq/react-components';
-import type { Schema, PublishedSchema } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
-import type { SessionGraphQLContext } from '@dossierhq/graphql';
-import { GraphQLSchemaGenerator } from '@dossierhq/graphql';
+import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 import { graphql } from 'graphql';
@@ -33,7 +31,7 @@ const DEFAULT_QUERY = `# Welcome to GraphiQL
 #
 
 {
-  adminEntitiesSample(count: 10) {
+  entitiesSample(count: 10) {
     totalCount
     items {
       __typename
@@ -85,7 +83,7 @@ export default function GraphiQLEditor({
       });
       return result;
     },
-    [graphQlSchema, graphQlSession]
+    [graphQlSchema, graphQlSession],
   );
 
   useEffect(() => {

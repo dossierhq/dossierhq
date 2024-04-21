@@ -1578,10 +1578,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           : {}),
         ...(this.adminSchema && this.adminSchema.getEntityTypeCount() > 0
           ? {
-              adminEntity: this.buildQueryFieldAdminEntity(this.adminSchema),
-              adminEntityList: this.buildQueryFieldAdminEntityList(this.adminSchema),
-              adminEntities: this.buildQueryFieldAdminEntities(this.adminSchema),
-              adminEntitiesSample: this.buildQueryFieldAdminEntitiesSample(this.adminSchema),
+              entity: this.buildQueryFieldAdminEntity(this.adminSchema),
+              entityList: this.buildQueryFieldAdminEntityList(this.adminSchema),
+              entities: this.buildQueryFieldAdminEntities(this.adminSchema),
+              entitiesSample: this.buildQueryFieldAdminEntitiesSample(this.adminSchema),
               changelogEvents: this.buildQueryFieldChangelogEvents(),
             }
           : {}),

@@ -427,10 +427,10 @@ input ValueTwoInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -1098,10 +1098,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -1489,10 +1489,10 @@ input ValueOneInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -2085,10 +2085,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -2563,10 +2563,10 @@ enum _ValueListOrValueOne {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -3333,10 +3333,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -3799,10 +3799,10 @@ type FooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -4435,10 +4435,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -4899,10 +4899,10 @@ enum _BarOrBazOrFoo {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -5610,10 +5610,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -5972,10 +5972,10 @@ type FooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -6508,10 +6508,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -6880,10 +6880,10 @@ type FooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID, version: Int, index: UniqueIndex, value: String): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID, version: Int, index: UniqueIndex, value: String): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -7450,10 +7450,10 @@ type Query {
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID, version: Int, index: UniqueIndex, value: String): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID, version: Int, index: UniqueIndex, value: String): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -7843,10 +7843,10 @@ input ValueOneInput {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -8460,10 +8460,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -8828,10 +8828,10 @@ type FooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -9386,10 +9386,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -9812,10 +9812,10 @@ type FooUpsertPayload {
 }
 
 type Query {
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -10462,10 +10462,10 @@ type Query {
   publishedEntity(id: ID!): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID!, version: Int): Entity
-  adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
-  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
+  entity(id: ID!, version: Int): Entity
+  entityList(ids: [ID!]!): [Entity]
+  entities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  entitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
