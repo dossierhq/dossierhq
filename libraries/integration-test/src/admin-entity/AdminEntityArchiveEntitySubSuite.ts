@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
+import { EntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
@@ -25,12 +25,12 @@ async function archiveEntity_minimal({ clientProvider }: AdminEntityTestContext)
   assertResultValue(archiveResult, {
     id: entity.id,
     effect: 'archived',
-    status: AdminEntityStatus.archived,
+    status: EntityStatus.archived,
     updatedAt,
   });
 
   const expectedEntity = copyEntity(entity, {
-    info: { status: AdminEntityStatus.archived, updatedAt },
+    info: { status: EntityStatus.archived, updatedAt },
   });
 
   const getResult = await adminClient.getEntity({ id: entity.id });
@@ -49,12 +49,12 @@ async function archiveEntity_archivedEntity({ clientProvider }: AdminEntityTestC
   assertResultValue(secondArchiveResult, {
     id: entity.id,
     effect: 'none',
-    status: AdminEntityStatus.archived,
+    status: EntityStatus.archived,
     updatedAt,
   });
 
   const expectedEntity = copyEntity(entity, {
-    info: { status: AdminEntityStatus.archived, updatedAt },
+    info: { status: EntityStatus.archived, updatedAt },
   });
 
   const getResult = await adminClient.getEntity({ id: entity.id });
@@ -77,7 +77,7 @@ async function archiveEntity_archiveEntityEvent({ clientProvider }: AdminEntityT
   assertResultValue(archiveResult, {
     id,
     effect: 'archived',
-    status: AdminEntityStatus.archived,
+    status: EntityStatus.archived,
     updatedAt,
   });
 

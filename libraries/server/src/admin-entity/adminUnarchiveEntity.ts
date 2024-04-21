@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   EventType,
   notOk,
   ok,
@@ -92,8 +92,8 @@ async function doUnarchiveEntity(
       updatedAt: entityInfoResult.value.updatedAt,
     };
 
-    if (result.status === AdminEntityStatus.archived) {
-      result.status = neverPublished ? AdminEntityStatus.draft : AdminEntityStatus.withdrawn;
+    if (result.status === EntityStatus.archived) {
+      result.status = neverPublished ? EntityStatus.draft : EntityStatus.withdrawn;
       result.effect = 'unarchived';
 
       // Step 3: Update entity status

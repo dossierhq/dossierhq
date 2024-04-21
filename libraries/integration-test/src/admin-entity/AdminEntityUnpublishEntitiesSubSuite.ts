@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
+import { EntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
@@ -39,13 +39,13 @@ async function unpublishEntities_minimal({ clientProvider }: AdminEntityTestCont
     {
       id: entity.id,
       effect: 'unpublished',
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
       updatedAt,
     },
   ]);
 
   const expectedEntity = copyEntity(entity, {
-    info: { status: AdminEntityStatus.withdrawn, updatedAt, validPublished: null },
+    info: { status: EntityStatus.withdrawn, updatedAt, validPublished: null },
   });
 
   const getResult = await adminClient.getEntity({ id: entity.id });
@@ -97,13 +97,13 @@ async function unpublishEntities_unpublishEntitiesEvent({
     {
       id: id1,
       effect: 'unpublished',
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
       updatedAt: unpublishedAt1,
     },
     {
       id: id2,
       effect: 'unpublished',
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
       updatedAt: unpublishedAt2,
     },
   ]);
@@ -173,7 +173,7 @@ async function unpublishEntities_draftEntity({ clientProvider }: AdminEntityTest
       id: entity.id,
       effect: 'none',
       updatedAt: entity.info.updatedAt,
-      status: AdminEntityStatus.draft,
+      status: EntityStatus.draft,
     },
   ]);
 }
@@ -194,7 +194,7 @@ async function unpublishEntities_withdrawnEntity({ clientProvider }: AdminEntity
       id: entity.id,
       effect: 'none',
       updatedAt: firstUnpublishResult.valueOrThrow()[0].updatedAt,
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
     },
   ]);
 }
@@ -213,7 +213,7 @@ async function unpublishEntities_archivedEntity({ clientProvider }: AdminEntityT
       id: entity.id,
       effect: 'none',
       updatedAt: archiveResult.valueOrThrow().updatedAt,
-      status: AdminEntityStatus.archived,
+      status: EntityStatus.archived,
     },
   ]);
 }
@@ -251,13 +251,13 @@ async function unpublishEntities_twoPublishedEntitiesReferencingEachOther({
       id: entity1.id,
       effect: 'unpublished',
       updatedAt: unpublishResult.valueOrThrow()[0].updatedAt,
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
     },
     {
       id: entity2.id,
       effect: 'unpublished',
       updatedAt: unpublishResult.valueOrThrow()[1].updatedAt,
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
     },
   ]);
 }

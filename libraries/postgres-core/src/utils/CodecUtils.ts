@@ -1,20 +1,20 @@
-import { AdminEntityStatus } from '@dossierhq/core';
+import { EntityStatus } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { assertExhaustive } from './AssertUtils.js';
 
-export function resolveEntityStatus(status: EntitiesTable['status']): AdminEntityStatus {
+export function resolveEntityStatus(status: EntitiesTable['status']): EntityStatus {
   switch (status) {
     case 'draft':
-      return AdminEntityStatus.draft;
+      return EntityStatus.draft;
     case 'published':
-      return AdminEntityStatus.published;
+      return EntityStatus.published;
     case 'modified':
-      return AdminEntityStatus.modified;
+      return EntityStatus.modified;
     case 'withdrawn':
-      return AdminEntityStatus.withdrawn;
+      return EntityStatus.withdrawn;
     case 'archived':
-      return AdminEntityStatus.archived;
+      return EntityStatus.archived;
     default:
       assertExhaustive(status);
   }
@@ -56,14 +56,11 @@ export function resolvePublishedEntityInfo(
   };
 }
 
-export function resolveEntityValidity(
-  invalid: EntitiesTable['invalid'],
-  status: AdminEntityStatus,
-) {
+export function resolveEntityValidity(invalid: EntitiesTable['invalid'], status: EntityStatus) {
   return {
     valid: (invalid & 1) === 0,
     validPublished:
-      status === AdminEntityStatus.published || status === AdminEntityStatus.modified
+      status === EntityStatus.published || status === EntityStatus.modified
         ? (invalid & 2) === 0
         : null,
   };

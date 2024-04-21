@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   isFieldValueEqual,
   normalizeEntityFields,
   notOk,
@@ -150,9 +150,7 @@ export function resolveUpdateEntity(
   typeof ErrorType.BadRequest | typeof ErrorType.Generic
 > {
   const status =
-    entityInfo.status === AdminEntityStatus.published
-      ? AdminEntityStatus.modified
-      : entityInfo.status;
+    entityInfo.status === EntityStatus.published ? EntityStatus.modified : entityInfo.status;
 
   const entity: AdminEntity = {
     id: entityUpdate.id,

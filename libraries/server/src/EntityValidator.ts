@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ok,
   traverseEntity,
   validateTraverseNodeForPublish,
@@ -228,8 +228,8 @@ export async function validateReferencedEntitiesArePublishedAndCollectInfo(
         // Shouldn't happen since you can't create an entity with invalid references
         invalidReferences.push(requestedReference);
       } else if (
-        referenceInfo.status !== AdminEntityStatus.published &&
-        referenceInfo.status !== AdminEntityStatus.modified
+        referenceInfo.status !== EntityStatus.published &&
+        referenceInfo.status !== EntityStatus.modified
       ) {
         unpublishedReferences.push(requestedReference);
       } else {

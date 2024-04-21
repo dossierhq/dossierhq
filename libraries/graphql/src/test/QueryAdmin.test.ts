@@ -5,7 +5,7 @@ import type {
   BoundingBox,
 } from '@dossierhq/core';
 import {
-  AdminEntityStatus,
+  EntityStatus,
   EventType,
   FieldType,
   assertOkResult,
@@ -261,7 +261,7 @@ describe('adminEntity()', () => {
             type: 'QueryAdminFoo',
             name,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
           },
@@ -312,7 +312,7 @@ describe('adminEntity()', () => {
               type: 'QueryAdminFoo',
               name,
               authKey: '',
-              status: AdminEntityStatus.draft,
+              status: EntityStatus.draft,
               valid: true,
               validPublished: null,
             },
@@ -360,7 +360,7 @@ describe('adminEntity()', () => {
               name,
               version: 1,
               authKey: '',
-              status: AdminEntityStatus.draft,
+              status: EntityStatus.draft,
               valid: true,
               validPublished: null,
             },
@@ -544,7 +544,7 @@ describe('adminEntity()', () => {
             version: 1,
             name,
             authKey: '',
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
           },
           fields: {
             title: 'First title',
@@ -1229,7 +1229,7 @@ describe('adminEntityList()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: '',
-                status: AdminEntityStatus.draft,
+                status: EntityStatus.draft,
                 name: foo1Name,
               },
             },
@@ -1239,7 +1239,7 @@ describe('adminEntityList()', () => {
               info: {
                 type: 'QueryAdminFoo',
                 authKey: '',
-                status: AdminEntityStatus.draft,
+                status: EntityStatus.draft,
                 name: foo2Name,
               },
             },

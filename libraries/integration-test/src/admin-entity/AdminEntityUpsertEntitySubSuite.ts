@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
+import { EntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
@@ -149,7 +149,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({
   } = upsertResult.value;
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { version: 2, updatedAt, status: AdminEntityStatus.published, validPublished: true },
+    info: { version: 2, updatedAt, status: EntityStatus.published, validPublished: true },
     fields: { message: 'Updated message' },
   });
 

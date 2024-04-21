@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ok,
   type ArchiveEntitySyncEvent,
   type ErrorType,
@@ -19,7 +19,7 @@ import { queryOne } from '../QueryFunctions.js';
 export async function adminEntityUpdateStatus(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  status: AdminEntityStatus,
+  status: EntityStatus,
   reference: DatabaseResolvedEntityReference,
   syncEvent: ArchiveEntitySyncEvent | UnarchiveEntitySyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {
@@ -27,7 +27,7 @@ export async function adminEntityUpdateStatus(
     databaseAdapter,
     context,
     buildPostgresSqlQuery(({ sql }) => {
-      sql`UPDATE entities SET archived = ${status === AdminEntityStatus.archived}`;
+      sql`UPDATE entities SET archived = ${status === EntityStatus.archived}`;
       if (syncEvent) {
         sql`, updated_at = ${syncEvent.createdAt}`;
       } else {

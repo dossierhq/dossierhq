@@ -444,10 +444,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       );
     }
 
-    // AdminEntityStatus
+    // EntityStatus
     this.addType(
       new GraphQLEnumType({
-        name: 'AdminEntityStatus',
+        name: 'EntityStatus',
         values: {
           draft: {},
           published: {},
@@ -467,7 +467,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           name: { type: new GraphQLNonNull(GraphQLString) },
           version: { type: new GraphQLNonNull(GraphQLInt) },
           authKey: { type: new GraphQLNonNull(GraphQLString) },
-          status: { type: new GraphQLNonNull(this.getOutputType('AdminEntityStatus')) },
+          status: { type: new GraphQLNonNull(this.getOutputType('EntityStatus')) },
           valid: { type: new GraphQLNonNull(GraphQLBoolean) },
           validPublished: { type: GraphQLBoolean },
           createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
@@ -648,7 +648,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
             },
           }
         : {}),
-      status: { type: new GraphQLList(new GraphQLNonNull(this.getEnumType('AdminEntityStatus'))) },
+      status: { type: new GraphQLList(new GraphQLNonNull(this.getEnumType('EntityStatus'))) },
       valid: { type: GraphQLBoolean },
       linksTo: { type: this.getInputType('EntityReferenceInput') },
       linksFrom: { type: this.getInputType('EntityReferenceInput') },
@@ -749,7 +749,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminEntityPublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
+          status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityPublishEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
@@ -773,7 +773,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminEntityUnpublishPayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
+          status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUnpublishEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
@@ -797,7 +797,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminEntityArchivePayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
+          status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityArchiveEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },
@@ -821,7 +821,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminEntityUnarchivePayload',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          status: { type: new GraphQLNonNull(this.getEnumType('AdminEntityStatus')) },
+          status: { type: new GraphQLNonNull(this.getEnumType('EntityStatus')) },
           effect: { type: new GraphQLNonNull(this.getEnumType('AdminEntityUnarchiveEffect')) },
           updatedAt: { type: new GraphQLNonNull(DateTimeScalar) },
         },

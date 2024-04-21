@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   Schema,
   ErrorType,
   copyEntity,
@@ -131,7 +131,7 @@ async function getEntity_oldVersion({ clientProvider }: PublishedEntityTestConte
     {
       id,
       effect: 'published',
-      status: AdminEntityStatus.modified,
+      status: EntityStatus.modified,
       updatedAt,
     },
   ]);

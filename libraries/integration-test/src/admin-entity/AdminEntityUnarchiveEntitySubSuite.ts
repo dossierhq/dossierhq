@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
+import { EntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
@@ -28,12 +28,12 @@ async function unarchiveEntity_minimal({ clientProvider }: AdminEntityTestContex
   assertResultValue(unarchiveResult, {
     id: reference.id,
     effect: 'unarchived',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     updatedAt,
   });
 
   const expectedEntity = copyEntity(entity, {
-    info: { status: AdminEntityStatus.draft, updatedAt },
+    info: { status: EntityStatus.draft, updatedAt },
   });
 
   const getResult = await client.getEntity(reference);
@@ -59,7 +59,7 @@ async function unarchiveEntity_unarchiveEntityEvent({ clientProvider }: AdminEnt
   assertResultValue(unarchiveResult, {
     id,
     effect: 'unarchived',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     updatedAt: unarchiveUpdatedAt,
   });
 
@@ -106,7 +106,7 @@ async function unarchiveEntity_previouslyPublished({ clientProvider }: AdminEnti
   assertResultValue(unarchiveResult, {
     id: reference.id,
     effect: 'unarchived',
-    status: AdminEntityStatus.withdrawn, // since it's been published before
+    status: EntityStatus.withdrawn, // since it's been published before
     updatedAt,
   });
 }

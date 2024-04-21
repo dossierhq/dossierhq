@@ -1,6 +1,6 @@
 import {
   EntityQueryOrder,
-  AdminEntityStatus,
+  EntityStatus,
   PublishedEntityQueryOrder,
   getAllPagesForConnection,
   ok,
@@ -189,15 +189,15 @@ export async function countSearchResultStatuses(
   client: AppAdminClient,
   query: Parameters<AppAdminClient['getEntities']>[0],
 ): PromiseResult<
-  Record<AdminEntityStatus | 'valid' | 'invalid', number>,
+  Record<EntityStatus | 'valid' | 'invalid', number>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const result = {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
     valid: 0,
     invalid: 0,
   };

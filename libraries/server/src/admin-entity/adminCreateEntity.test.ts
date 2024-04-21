@@ -1,4 +1,4 @@
-import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
+import { EntityStatus, ErrorType, ok } from '@dossierhq/core';
 import { expectErrorResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
@@ -55,7 +55,7 @@ describe('Admin adminCreateEntity', () => {
           version: 1,
           createdAt: now,
           updatedAt: now,
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
         },

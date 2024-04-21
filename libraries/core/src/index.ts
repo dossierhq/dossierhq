@@ -16,7 +16,7 @@ export {
 } from './ErrorResult.js';
 export { NoOpLogger, createConsoleLogger, type Logger, type LoggerContext } from './Logger.js';
 export {
-  AdminEntityStatus,
+  EntityStatus,
   EntityQueryOrder,
   PublishedEntityQueryOrder,
   RichTextNodeType,

@@ -1,4 +1,4 @@
-import { AdminEntityStatus, copyEntity } from '@dossierhq/core';
+import { EntityStatus, copyEntity } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
@@ -81,10 +81,10 @@ async function getEntitiesTotalCount_statusDraft({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === AdminEntityStatus.draft);
+    .filter((it) => it.info.status === EntityStatus.draft);
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft],
+    status: [EntityStatus.draft],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -95,10 +95,10 @@ async function getEntitiesTotalCount_statusPublished({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === AdminEntityStatus.published);
+    .filter((it) => it.info.status === EntityStatus.published);
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.published],
+    status: [EntityStatus.published],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -109,10 +109,10 @@ async function getEntitiesTotalCount_statusModified({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === AdminEntityStatus.modified);
+    .filter((it) => it.info.status === EntityStatus.modified);
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.modified],
+    status: [EntityStatus.modified],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -123,10 +123,10 @@ async function getEntitiesTotalCount_statusWithdrawn({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === AdminEntityStatus.withdrawn);
+    .filter((it) => it.info.status === EntityStatus.withdrawn);
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.withdrawn],
+    status: [EntityStatus.withdrawn],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -137,10 +137,10 @@ async function getEntitiesTotalCount_statusArchived({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === AdminEntityStatus.archived);
+    .filter((it) => it.info.status === EntityStatus.archived);
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.archived],
+    status: [EntityStatus.archived],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -152,12 +152,11 @@ async function getEntitiesTotalCount_statusDraftArchived({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter(
-      (it) =>
-        it.info.status === AdminEntityStatus.draft || it.info.status === AdminEntityStatus.archived,
+      (it) => it.info.status === EntityStatus.draft || it.info.status === EntityStatus.archived,
     );
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
+    status: [EntityStatus.draft, EntityStatus.archived],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -169,13 +168,11 @@ async function getEntitiesTotalCount_statusModifiedPublished({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter(
-      (it) =>
-        it.info.status === AdminEntityStatus.modified ||
-        it.info.status === AdminEntityStatus.published,
+      (it) => it.info.status === EntityStatus.modified || it.info.status === EntityStatus.published,
     );
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.modified, AdminEntityStatus.published],
+    status: [EntityStatus.modified, EntityStatus.published],
   });
   assertResultValue(result, expectedEntities.length);
 }
@@ -188,11 +185,11 @@ async function getEntitiesTotalCount_statusAll({
   const result = await clientProvider.adminClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [
-      AdminEntityStatus.draft,
-      AdminEntityStatus.modified,
-      AdminEntityStatus.published,
-      AdminEntityStatus.withdrawn,
-      AdminEntityStatus.archived,
+      EntityStatus.draft,
+      EntityStatus.modified,
+      EntityStatus.published,
+      EntityStatus.withdrawn,
+      EntityStatus.archived,
     ],
   });
   assertResultValue(result, expectedEntities.length);

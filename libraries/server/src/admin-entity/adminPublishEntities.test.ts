@@ -1,4 +1,4 @@
-import { AdminEntityStatus, ok } from '@dossierhq/core';
+import { EntityStatus, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
@@ -31,7 +31,7 @@ describe('Admin adminPublishEntities', () => {
           versionIsLatest: true,
           authKey: '',
           resolvedAuthKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           validPublished: null,
           updatedAt: new Date('2021-08-17T07:51:25.56Z'),
           entityFields: {
@@ -61,7 +61,7 @@ describe('Admin adminPublishEntities', () => {
     expectResultValue(result, [
       {
         id: '123',
-        status: AdminEntityStatus.published,
+        status: EntityStatus.published,
         effect: 'published',
         updatedAt: now,
       },

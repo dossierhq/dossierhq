@@ -9,7 +9,7 @@ import type {
   PromiseResult,
   Result,
 } from '@dossierhq/core';
-import { AdminEntityStatus, copyEntity, notOk, ok } from '@dossierhq/core';
+import { EntityStatus, copyEntity, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, Server } from '@dossierhq/server';
 import { faker } from '@faker-js/faker';
 import type { BenchPressOptions, BenchPressResult } from 'benchpress';
@@ -160,7 +160,7 @@ async function createPerson(
         randomAdminEntity(adminClient, {
           entityTypes: ['Organization'],
           status: options?.publishable
-            ? [AdminEntityStatus.published, AdminEntityStatus.modified]
+            ? [EntityStatus.published, EntityStatus.modified]
             : undefined,
         }),
     ],
@@ -281,7 +281,7 @@ async function testArchiveEntity(adminClient: AdminClient, options: BenchPressOp
     while (!entity) {
       const randomResult = await randomAdminEntity(adminClient, {
         entityTypes: ['Organization', 'Person'],
-        status: [AdminEntityStatus.draft, AdminEntityStatus.withdrawn],
+        status: [EntityStatus.draft, EntityStatus.withdrawn],
       });
       if (randomResult.isError()) return false;
 
@@ -292,8 +292,8 @@ async function testArchiveEntity(adminClient: AdminClient, options: BenchPressOp
         if (referencedOrgResult.isError()) return false;
 
         if (
-          referencedOrgResult.value.info.status === AdminEntityStatus.published ||
-          referencedOrgResult.value.info.status === AdminEntityStatus.modified
+          referencedOrgResult.value.info.status === EntityStatus.published ||
+          referencedOrgResult.value.info.status === EntityStatus.modified
         ) {
           // Need to find another Person
           continue;

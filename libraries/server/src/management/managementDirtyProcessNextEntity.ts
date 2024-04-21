@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ErrorType,
   notOk,
   ok,
@@ -73,8 +73,7 @@ export async function managementDirtyProcessNextEntity(
       dirtyIndexPublished,
       status,
     } = entityResult.value;
-    const entityIsPublished =
-      status === AdminEntityStatus.published || status === AdminEntityStatus.modified;
+    const entityIsPublished = status === EntityStatus.published || status === EntityStatus.modified;
 
     // Reuse existing validation results if we won't be validating
     const entityValidity: EntityValidity = {
@@ -115,7 +114,7 @@ export async function managementDirtyProcessNextEntity(
     if ((dirtyValidatePublished || dirtyIndexPublished) && entityIsPublished) {
       // Fetch the correct version of the entity since when modified we got the wrong version
       let entityFields = entityResult.value.entityFields;
-      if (status === AdminEntityStatus.modified) {
+      if (status === EntityStatus.modified) {
         const getPublishedEntityResult = await databaseAdapter.publishedEntityGetOne(
           context,
           reference,

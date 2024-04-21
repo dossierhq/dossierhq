@@ -1,4 +1,4 @@
-import { AdminEntity, AdminEntityStatus, copyEntity } from "@dossierhq/core";
+import { AdminEntity, copyEntity, EntityStatus } from "@dossierhq/core";
 import { assertEquals } from "std/testing/asserts.ts";
 
 Deno.test("copyEntity()", () => {
@@ -9,7 +9,7 @@ Deno.test("copyEntity()", () => {
       name: "Hello",
       version: 1,
       authKey: "",
-      status: AdminEntityStatus.draft,
+      status: EntityStatus.draft,
       valid: true,
       validPublished: null,
       createdAt: new Date(),

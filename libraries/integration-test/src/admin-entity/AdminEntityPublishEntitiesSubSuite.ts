@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ErrorType,
   EventType,
   copyEntity,
@@ -59,13 +59,13 @@ async function publishEntities_minimal({ clientProvider }: AdminEntityTestContex
     {
       id,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt,
     },
   ]);
 
   const expectedEntity = copyEntity(entity, {
-    info: { status: AdminEntityStatus.published, updatedAt, validPublished: true },
+    info: { status: EntityStatus.published, updatedAt, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id });
@@ -90,13 +90,13 @@ async function publishEntities_authKeySubject({ clientProvider }: AdminEntityTes
     {
       id,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt,
     },
   ]);
 
   const expectedEntity = copyEntity(createResult.value.entity, {
-    info: { status: AdminEntityStatus.published, updatedAt, validPublished: true },
+    info: { status: EntityStatus.published, updatedAt, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id });
@@ -121,13 +121,13 @@ async function publishEntities_oldVersion({ clientProvider }: AdminEntityTestCon
     {
       id,
       effect: 'published',
-      status: AdminEntityStatus.modified,
+      status: EntityStatus.modified,
       updatedAt,
     },
   ]);
 
   const expectedEntity = copyEntity(updateResult.value.entity, {
-    info: { status: AdminEntityStatus.modified, updatedAt, validPublished: true },
+    info: { status: EntityStatus.modified, updatedAt, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id });
@@ -168,19 +168,19 @@ async function publishEntities_twoEntitiesReferencingEachOther({
     {
       id: id1,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt: updatedAt1,
     },
     {
       id: id2,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt: updatedAt2,
     },
   ]);
 
   const expected1Entity = copyEntity(update1Result.value.entity, {
-    info: { status: AdminEntityStatus.published, updatedAt: updatedAt1, validPublished: true },
+    info: { status: EntityStatus.published, updatedAt: updatedAt1, validPublished: true },
   });
 
   const getResult = await client.getEntity({ id: id1 });
@@ -215,13 +215,13 @@ async function publishEntities_publishAlreadyPublishedEntity({
     {
       id,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt,
     },
   ]);
 
   const expectedEntity = copyEntity(updateResult.value.entity, {
-    info: { status: AdminEntityStatus.published, updatedAt },
+    info: { status: EntityStatus.published, updatedAt },
   });
 
   const getResult = await client.getEntity({ id });
@@ -302,13 +302,13 @@ async function publishEntities_publishEntitiesEvent({ clientProvider }: AdminEnt
     {
       id: id1,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt: updatedAt1,
     },
     {
       id: id2,
       effect: 'published',
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       updatedAt: updatedAt2,
     },
   ]);

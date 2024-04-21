@@ -1,9 +1,9 @@
-import type { AdminEntityStatus } from '@dossierhq/core';
+import type { EntityStatus } from '@dossierhq/core';
 import { Tag } from '@dossierhq/design';
 
 interface Props {
   className?: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
 }
 
 export function StatusTag({ className, status }: Props) {

@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   EventType,
   contentValuePathToString,
   notOk,
@@ -131,7 +131,7 @@ async function doUpdateEntity(
 
       if (!changed) {
         const payload: AdminEntityUpdatePayload = { effect: 'none', entity: updatedEntity };
-        if (options?.publish && updatedEntity.info.status !== AdminEntityStatus.published) {
+        if (options?.publish && updatedEntity.info.status !== EntityStatus.published) {
           const publishResult = await adminPublishEntityAfterMutation(
             adminSchema,
             authorizationAdapter,

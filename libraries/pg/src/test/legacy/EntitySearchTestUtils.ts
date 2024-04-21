@@ -10,7 +10,7 @@ import type {
   PublishedClient,
   PublishedEntity,
 } from '@dossierhq/core';
-import { AdminEntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
+import { EntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
 import { expect } from 'vitest';
 
 export async function ensureEntityCount(
@@ -53,7 +53,7 @@ export async function ensureEntityWithStatus(
   client: AdminClient,
   entityType: string,
   authKey: string,
-  status: AdminEntityStatus,
+  status: EntityStatus,
   fieldProvider: (random: string) => Record<string, unknown>,
 ): PromiseResult<
   void,
@@ -80,16 +80,16 @@ export async function ensureEntityWithStatus(
   }
   const { entity } = createResult.value;
   switch (status) {
-    case AdminEntityStatus.draft:
+    case EntityStatus.draft:
       break;
-    case AdminEntityStatus.published: {
+    case EntityStatus.published: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
       if (publishResult.isError()) return publishResult;
       break;
     }
-    case AdminEntityStatus.modified: {
+    case EntityStatus.modified: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
@@ -102,7 +102,7 @@ export async function ensureEntityWithStatus(
       if (updateResult.isError()) return updateResult;
       break;
     }
-    case AdminEntityStatus.withdrawn: {
+    case EntityStatus.withdrawn: {
       const publishResult = await client.publishEntities([
         { id: entity.id, version: entity.info.version },
       ]);
@@ -111,7 +111,7 @@ export async function ensureEntityWithStatus(
       if (updateResult.isError()) return updateResult;
       break;
     }
-    case AdminEntityStatus.archived: {
+    case EntityStatus.archived: {
       const archiveResult = await client.archiveEntity({ id: entity.id });
       if (archiveResult.isError()) return archiveResult;
       break;

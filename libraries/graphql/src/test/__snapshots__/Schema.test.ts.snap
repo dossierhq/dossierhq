@@ -106,7 +106,7 @@ enum AdminComponentType {
   ValueTwo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -119,7 +119,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -201,7 +201,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -213,7 +213,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -260,7 +260,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -272,7 +272,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -284,7 +284,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -296,7 +296,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -777,7 +777,7 @@ enum AdminComponentType {
   ValueTwo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -790,7 +790,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -872,7 +872,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -884,7 +884,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -926,7 +926,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -938,7 +938,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -950,7 +950,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -962,7 +962,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -1226,7 +1226,7 @@ enum AdminComponentType {
   ValueOne
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -1239,7 +1239,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -1321,7 +1321,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -1333,7 +1333,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -1380,7 +1380,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -1392,7 +1392,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -1404,7 +1404,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -1416,7 +1416,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -1822,7 +1822,7 @@ enum AdminComponentType {
   ValueOne
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -1835,7 +1835,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -1917,7 +1917,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -1929,7 +1929,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -1971,7 +1971,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -1983,7 +1983,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -1995,7 +1995,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -2007,7 +2007,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -2213,7 +2213,7 @@ enum AdminComponentType {
   ValueOne
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -2226,7 +2226,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -2308,7 +2308,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -2320,7 +2320,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -2367,7 +2367,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -2379,7 +2379,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -2391,7 +2391,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -2403,7 +2403,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -2981,7 +2981,7 @@ enum AdminComponentType {
   ValueOne
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -2994,7 +2994,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -3076,7 +3076,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -3088,7 +3088,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -3130,7 +3130,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -3142,7 +3142,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -3154,7 +3154,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -3166,7 +3166,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -3503,7 +3503,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -3516,7 +3516,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -3597,7 +3597,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -3608,7 +3608,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -3651,7 +3651,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -3663,7 +3663,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -3675,7 +3675,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -3687,7 +3687,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -4142,7 +4142,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -4155,7 +4155,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -4236,7 +4236,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -4247,7 +4247,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -4285,7 +4285,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -4297,7 +4297,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -4309,7 +4309,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -4321,7 +4321,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -4561,7 +4561,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -4574,7 +4574,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -4655,7 +4655,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -4666,7 +4666,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -4709,7 +4709,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -4721,7 +4721,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -4733,7 +4733,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -4745,7 +4745,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -5261,7 +5261,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -5274,7 +5274,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -5355,7 +5355,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -5366,7 +5366,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -5404,7 +5404,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -5416,7 +5416,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -5428,7 +5428,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -5440,7 +5440,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -5737,7 +5737,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -5750,7 +5750,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -5831,7 +5831,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -5842,7 +5842,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -5885,7 +5885,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -5897,7 +5897,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -5909,7 +5909,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -5921,7 +5921,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -6273,7 +6273,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -6286,7 +6286,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -6367,7 +6367,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -6378,7 +6378,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -6416,7 +6416,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -6428,7 +6428,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -6440,7 +6440,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -6452,7 +6452,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -6629,7 +6629,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -6642,7 +6642,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -6727,7 +6727,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -6738,7 +6738,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -6781,7 +6781,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -6793,7 +6793,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -6805,7 +6805,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -6817,7 +6817,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -7199,7 +7199,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -7212,7 +7212,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -7297,7 +7297,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -7308,7 +7308,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -7346,7 +7346,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -7358,7 +7358,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -7370,7 +7370,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -7382,7 +7382,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -7575,7 +7575,7 @@ enum AdminComponentType {
   ValueOne
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -7588,7 +7588,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -7670,7 +7670,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -7682,7 +7682,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -7729,7 +7729,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -7741,7 +7741,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -7753,7 +7753,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -7765,7 +7765,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -8192,7 +8192,7 @@ enum AdminComponentType {
   ValueOne
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -8205,7 +8205,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -8287,7 +8287,7 @@ input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -8299,7 +8299,7 @@ input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
   componentTypes: [AdminComponentType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -8341,7 +8341,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -8353,7 +8353,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -8365,7 +8365,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -8377,7 +8377,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -8581,7 +8581,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -8594,7 +8594,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -8675,7 +8675,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -8686,7 +8686,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -8729,7 +8729,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -8741,7 +8741,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -8753,7 +8753,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -8765,7 +8765,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -9139,7 +9139,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -9152,7 +9152,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -9233,7 +9233,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -9244,7 +9244,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -9282,7 +9282,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -9294,7 +9294,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -9306,7 +9306,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -9318,7 +9318,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -9508,7 +9508,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -9521,7 +9521,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -9602,7 +9602,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -9613,7 +9613,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -9656,7 +9656,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -9668,7 +9668,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -9680,7 +9680,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -9692,7 +9692,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }
@@ -10161,7 +10161,7 @@ enum AdminEntityType {
   Foo
 }
 
-enum AdminEntityStatus {
+enum EntityStatus {
   draft
   published
   modified
@@ -10174,7 +10174,7 @@ type AdminEntityInfo {
   name: String!
   version: Int!
   authKey: String!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   valid: Boolean!
   validPublished: Boolean
   createdAt: DateTime!
@@ -10255,7 +10255,7 @@ enum EntityQueryOrder {
 input AdminEntitiesSharedQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -10266,7 +10266,7 @@ input AdminEntitiesSharedQueryInput {
 input AdminEntitiesQueryInput {
   authKeys: [String!]
   entityTypes: [AdminEntityType!]
-  status: [AdminEntityStatus!]
+  status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
   linksFrom: EntityReferenceInput
@@ -10304,7 +10304,7 @@ enum AdminEntityPublishEffect {
 
 type AdminEntityPublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityPublishEffect!
   updatedAt: DateTime!
 }
@@ -10316,7 +10316,7 @@ enum AdminEntityUnpublishEffect {
 
 type AdminEntityUnpublishPayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnpublishEffect!
   updatedAt: DateTime!
 }
@@ -10328,7 +10328,7 @@ enum AdminEntityArchiveEffect {
 
 type AdminEntityArchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityArchiveEffect!
   updatedAt: DateTime!
 }
@@ -10340,7 +10340,7 @@ enum AdminEntityUnarchiveEffect {
 
 type AdminEntityUnarchivePayload {
   id: ID!
-  status: AdminEntityStatus!
+  status: EntityStatus!
   effect: AdminEntityUnarchiveEffect!
   updatedAt: DateTime!
 }

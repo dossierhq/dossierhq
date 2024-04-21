@@ -1,6 +1,6 @@
 import {
   EntityQueryOrder,
-  AdminEntityStatus,
+  EntityStatus,
   copyEntity,
   createRichText,
   createRichTextComponentNode,
@@ -426,17 +426,17 @@ async function getEntities_orderNameReversed({
 async function getEntities_statusDraft({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft],
+    status: [EntityStatus.draft],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.draft]: draft, valid, ...otherStatuses } = statusesResult.value;
+  const { [EntityStatus.draft]: draft, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(draft > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
     invalid: 0,
   });
 }
@@ -444,21 +444,17 @@ async function getEntities_statusDraft({ clientProvider }: AdminEntityTestContex
 async function getEntities_statusPublished({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.published],
+    status: [EntityStatus.published],
   });
   assertOkResult(statusesResult);
-  const {
-    [AdminEntityStatus.published]: published,
-    valid,
-    ...otherStatuses
-  } = statusesResult.value;
+  const { [EntityStatus.published]: published, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(published > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
     invalid: 0,
   });
 }
@@ -466,17 +462,17 @@ async function getEntities_statusPublished({ clientProvider }: AdminEntityTestCo
 async function getEntities_statusModified({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.modified],
+    status: [EntityStatus.modified],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.modified]: modified, valid, ...otherStatuses } = statusesResult.value;
+  const { [EntityStatus.modified]: modified, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(modified > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
     invalid: 0,
   });
 }
@@ -484,21 +480,17 @@ async function getEntities_statusModified({ clientProvider }: AdminEntityTestCon
 async function getEntities_statusWithdrawn({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.withdrawn],
+    status: [EntityStatus.withdrawn],
   });
   assertOkResult(statusesResult);
-  const {
-    [AdminEntityStatus.withdrawn]: withdrawn,
-    valid,
-    ...otherStatuses
-  } = statusesResult.value;
+  const { [EntityStatus.withdrawn]: withdrawn, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(withdrawn > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.archived]: 0,
     invalid: 0,
   });
 }
@@ -506,17 +498,17 @@ async function getEntities_statusWithdrawn({ clientProvider }: AdminEntityTestCo
 async function getEntities_statusArchived({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.archived],
+    status: [EntityStatus.archived],
   });
   assertOkResult(statusesResult);
-  const { [AdminEntityStatus.archived]: archived, valid, ...otherStatuses } = statusesResult.value;
+  const { [EntityStatus.archived]: archived, valid, ...otherStatuses } = statusesResult.value;
   assertTruthy(archived > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
     invalid: 0,
   });
 }
@@ -524,12 +516,12 @@ async function getEntities_statusArchived({ clientProvider }: AdminEntityTestCon
 async function getEntities_statusDraftArchived({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
+    status: [EntityStatus.draft, EntityStatus.archived],
   });
   assertOkResult(statusesResult);
   const {
-    [AdminEntityStatus.draft]: draft,
-    [AdminEntityStatus.archived]: archived,
+    [EntityStatus.draft]: draft,
+    [EntityStatus.archived]: archived,
     valid,
     ...otherStatuses
   } = statusesResult.value;
@@ -537,9 +529,9 @@ async function getEntities_statusDraftArchived({ clientProvider }: AdminEntityTe
   assertTruthy(archived > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
     invalid: 0,
   });
 }
@@ -547,12 +539,12 @@ async function getEntities_statusDraftArchived({ clientProvider }: AdminEntityTe
 async function getEntities_statusModifiedPublished({ clientProvider }: AdminEntityTestContext) {
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.modified, AdminEntityStatus.published],
+    status: [EntityStatus.modified, EntityStatus.published],
   });
   assertOkResult(statusesResult);
   const {
-    [AdminEntityStatus.modified]: modified,
-    [AdminEntityStatus.published]: published,
+    [EntityStatus.modified]: modified,
+    [EntityStatus.published]: published,
     valid,
     ...otherStatuses
   } = statusesResult.value;
@@ -560,9 +552,9 @@ async function getEntities_statusModifiedPublished({ clientProvider }: AdminEnti
   assertTruthy(published > 0);
   assertTruthy(valid > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
     invalid: 0,
   });
 }
@@ -571,20 +563,20 @@ async function getEntities_statusAll({ clientProvider }: AdminEntityTestContext)
   const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
     entityTypes: ['ReadOnly'],
     status: [
-      AdminEntityStatus.draft,
-      AdminEntityStatus.published,
-      AdminEntityStatus.modified,
-      AdminEntityStatus.archived,
-      AdminEntityStatus.withdrawn,
+      EntityStatus.draft,
+      EntityStatus.published,
+      EntityStatus.modified,
+      EntityStatus.archived,
+      EntityStatus.withdrawn,
     ],
   });
   assertOkResult(statusesResult);
   const {
-    [AdminEntityStatus.draft]: draft,
-    [AdminEntityStatus.archived]: archived,
-    [AdminEntityStatus.published]: published,
-    [AdminEntityStatus.modified]: modified,
-    [AdminEntityStatus.withdrawn]: withdrawn,
+    [EntityStatus.draft]: draft,
+    [EntityStatus.archived]: archived,
+    [EntityStatus.published]: published,
+    [EntityStatus.modified]: modified,
+    [EntityStatus.withdrawn]: withdrawn,
   } = statusesResult.value;
   assertTruthy(draft > 0);
   assertTruthy(archived > 0);

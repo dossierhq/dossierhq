@@ -1,6 +1,6 @@
 import type { AdminClient, AdminEntity, PublishedClient } from '@dossierhq/core';
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ErrorType,
   FieldType,
   assertOkResult,
@@ -269,11 +269,11 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient, au
   ).throwIfError();
 
   for (const status of [
-    AdminEntityStatus.draft,
-    AdminEntityStatus.published,
-    AdminEntityStatus.modified,
-    AdminEntityStatus.withdrawn,
-    AdminEntityStatus.archived,
+    EntityStatus.draft,
+    EntityStatus.published,
+    EntityStatus.modified,
+    EntityStatus.withdrawn,
+    EntityStatus.archived,
   ]) {
     (
       await ensureEntityWithStatus(client, 'AdminOnlyEditBefore', authKey, status, (random) => ({
@@ -359,7 +359,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -379,13 +379,13 @@ describe('createEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
         ]);
 
-        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.status = EntityStatus.published;
         expectedEntity.info.updatedAt = updatedAt;
         expectedEntity.info.validPublished = true;
       }
@@ -434,7 +434,7 @@ describe('createEntity()', () => {
             name,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt,
@@ -452,7 +452,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -488,7 +488,7 @@ describe('createEntity()', () => {
             name,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt,
@@ -535,7 +535,7 @@ describe('createEntity()', () => {
           version: 1,
           name,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -582,7 +582,7 @@ describe('createEntity()', () => {
             name,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt,
@@ -609,19 +609,19 @@ describe('createEntity()', () => {
           expectResultValue(publishResult, [
             {
               id: fooId,
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               effect: 'published',
               updatedAt: fooUpdatedAt,
             },
             {
               id: barId,
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               effect: 'published',
               updatedAt: barUpdatedAt,
             },
           ]);
 
-          expectedFooEntity.info.status = AdminEntityStatus.published;
+          expectedFooEntity.info.status = EntityStatus.published;
           expectedFooEntity.info.updatedAt = fooUpdatedAt;
           expectedFooEntity.info.validPublished = true;
         }
@@ -677,7 +677,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -718,7 +718,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -767,7 +767,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -831,7 +831,7 @@ describe('createEntity()', () => {
             name: name,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt,
@@ -887,7 +887,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -938,7 +938,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -989,7 +989,7 @@ describe('createEntity()', () => {
           name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -1051,7 +1051,7 @@ describe('createEntity()', () => {
             name: bazName,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt,
@@ -1137,7 +1137,7 @@ describe('createEntity()', () => {
             name: bazName,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt,
@@ -1227,7 +1227,7 @@ describe('createEntity()', () => {
           name: bazName,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -1783,7 +1783,7 @@ describe('updateEntity()', () => {
           name: originalName,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -1829,13 +1829,13 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
         ]);
 
-        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.status = EntityStatus.published;
         expectedEntity.info.updatedAt = updatedAt;
         expectedEntity.info.validPublished = true;
       }
@@ -1892,7 +1892,7 @@ describe('updateEntity()', () => {
           name: firstName,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -1915,13 +1915,13 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
         ]);
 
-        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.status = EntityStatus.published;
       }
 
       const updateResult = await client.updateEntity({
@@ -1939,7 +1939,7 @@ describe('updateEntity()', () => {
 
         expectedEntity.info.name = name;
         expectedEntity.info.updatedAt = updateResult.value.entity.info.updatedAt;
-        expectedEntity.info.status = AdminEntityStatus.modified;
+        expectedEntity.info.status = EntityStatus.modified;
         expectedEntity.info.version = 2;
         expectedEntity.info.validPublished = true;
         expectedEntity.fields.title = 'Updated title';
@@ -2002,7 +2002,7 @@ describe('updateEntity()', () => {
           name: createResult.value.entity.info.name,
           version: 2,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -2031,13 +2031,13 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
         ]);
 
-        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.status = EntityStatus.published;
         expectedEntity.info.updatedAt = updatedAt;
         expectedEntity.info.validPublished = true;
       }
@@ -2094,7 +2094,7 @@ describe('updateEntity()', () => {
           name: createResult.value.entity.info.name,
           version: 1,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt,
@@ -2131,13 +2131,13 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
         ]);
 
-        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.status = EntityStatus.published;
         expectedEntity.info.updatedAt = updatedAt;
         expectedEntity.info.validPublished = true;
       }
@@ -2207,7 +2207,7 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
@@ -2276,7 +2276,7 @@ describe('updateEntity()', () => {
           version: 1,
           name: createResult.value.entity.info.name,
           authKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: createResult.value.entity.info.createdAt,
@@ -2334,7 +2334,7 @@ describe('updateEntity()', () => {
         name: createFooResult.value.entity.info.name,
         version: 1,
         authKey: '',
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: null,
         createdAt,
@@ -2384,18 +2384,18 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id: fooId,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt: fooUpdatedAt,
           },
           {
             id: barId,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt: barUpdatedAt,
           },
         ]);
-        expectedEntity.info.status = AdminEntityStatus.published;
+        expectedEntity.info.status = EntityStatus.published;
         expectedEntity.info.updatedAt = fooUpdatedAt;
         expectedEntity.info.validPublished = true;
       }
@@ -2465,13 +2465,13 @@ describe('updateEntity()', () => {
         expectResultValue(publishResult, [
           {
             id: bar1Id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt: updatedAt1,
           },
           {
             id: bar2Id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt: updatedAt2,
           },
@@ -2501,7 +2501,7 @@ describe('updateEntity()', () => {
             name: createBazResult.value.entity.info.name,
             version: 1,
             authKey: '',
-            status: AdminEntityStatus.draft,
+            status: EntityStatus.draft,
             valid: true,
             validPublished: null,
             createdAt: createBazResult.value.entity.info.createdAt,
@@ -2540,12 +2540,12 @@ describe('updateEntity()', () => {
           expectResultValue(publishResult, [
             {
               id: bazId,
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               effect: 'published',
               updatedAt,
             },
           ]);
-          expectedEntity.info.status = AdminEntityStatus.published;
+          expectedEntity.info.status = EntityStatus.published;
           expectedEntity.info.updatedAt = updatedAt;
           expectedEntity.info.validPublished = true;
         }
@@ -2612,7 +2612,7 @@ describe('updateEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          status: AdminEntityStatus.archived,
+          status: EntityStatus.archived,
           effect: 'archived',
           updatedAt,
         });
@@ -2638,7 +2638,7 @@ describe('updateEntity()', () => {
               name,
               version: 2,
               authKey: '',
-              status: AdminEntityStatus.archived,
+              status: EntityStatus.archived,
               valid: true,
               validPublished: null,
               createdAt,
@@ -2679,7 +2679,7 @@ describe('updateEntity()', () => {
           entity: copyEntity(entity, {
             info: {
               authKey: '',
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               updatedAt,
               validPublished: true,
             },
@@ -2820,7 +2820,7 @@ describe('publishEntities()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          status: AdminEntityStatus.archived,
+          status: EntityStatus.archived,
           effect: 'archived',
           updatedAt,
         });
@@ -2832,7 +2832,7 @@ describe('publishEntities()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
@@ -2850,7 +2850,7 @@ describe('publishEntities()', () => {
               name,
               version: 1,
               authKey: '',
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               valid: true,
               validPublished: true,
               createdAt,
@@ -2879,7 +2879,7 @@ describe('publishEntities()', () => {
         expectResultValue(firstPublishResult, [
           {
             id: bazId,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt: firstPublishUpdatedAt,
           },
@@ -2889,7 +2889,7 @@ describe('publishEntities()', () => {
         expectResultValue(secondPublishResult, [
           {
             id: bazId,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'none',
             updatedAt: firstPublishUpdatedAt,
           },
@@ -3049,7 +3049,7 @@ describe('unpublishEntities()', () => {
           expectResultValue(publishResult, [
             {
               id: baz1Id,
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               effect: 'published',
               updatedAt,
             },
@@ -3062,7 +3062,7 @@ describe('unpublishEntities()', () => {
           expectResultValue(unpublishResult, [
             {
               id: baz1Id,
-              status: AdminEntityStatus.withdrawn,
+              status: EntityStatus.withdrawn,
               effect: 'unpublished',
               updatedAt,
             },
@@ -3091,7 +3091,7 @@ describe('unarchiveEntity()', () => {
       if (expectOkResult(unarchiveResult)) {
         expectResultValue(unarchiveResult, {
           id,
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           effect: 'none',
           updatedAt,
         });
@@ -3117,7 +3117,7 @@ describe('unarchiveEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          status: AdminEntityStatus.archived,
+          status: EntityStatus.archived,
           effect: 'archived',
           updatedAt,
         });
@@ -3128,7 +3128,7 @@ describe('unarchiveEntity()', () => {
         const { updatedAt } = unarchiveResult.value;
         expectResultValue(unarchiveResult, {
           id,
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           effect: 'unarchived',
           updatedAt,
         });
@@ -3142,7 +3142,7 @@ describe('unarchiveEntity()', () => {
               type: 'EntityAdminBar',
               version: 1,
               authKey: '',
-              status: AdminEntityStatus.draft,
+              status: EntityStatus.draft,
               valid: true,
               validPublished: null,
               createdAt,
@@ -3174,7 +3174,7 @@ describe('unarchiveEntity()', () => {
         expectResultValue(publishResult, [
           {
             id,
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             effect: 'published',
             updatedAt,
           },
@@ -3187,7 +3187,7 @@ describe('unarchiveEntity()', () => {
         expectResultValue(unpublishResult, [
           {
             id,
-            status: AdminEntityStatus.withdrawn,
+            status: EntityStatus.withdrawn,
             effect: 'unpublished',
             updatedAt,
           },
@@ -3199,7 +3199,7 @@ describe('unarchiveEntity()', () => {
         const { updatedAt } = archiveResult.value;
         expectResultValue(archiveResult, {
           id,
-          status: AdminEntityStatus.archived,
+          status: EntityStatus.archived,
           effect: 'archived',
           updatedAt,
         });
@@ -3210,7 +3210,7 @@ describe('unarchiveEntity()', () => {
         const { updatedAt } = unarchiveResult.value;
         expectResultValue(unarchiveResult, {
           id,
-          status: AdminEntityStatus.withdrawn,
+          status: EntityStatus.withdrawn,
           effect: 'unarchived',
           updatedAt,
         });

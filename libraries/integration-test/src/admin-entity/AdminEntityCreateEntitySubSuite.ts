@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   Schema,
   ErrorType,
   EventType,
@@ -266,7 +266,7 @@ async function createEntity_publishMinimal({ clientProvider }: AdminEntityTestCo
     id,
     info: {
       name,
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       createdAt,
       updatedAt,
       validPublished: true,
@@ -301,7 +301,7 @@ async function createEntity_publishWithSubjectAuthKey({ clientProvider }: AdminE
     id,
     info: {
       name,
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       authKey: 'subject',
       createdAt,
       updatedAt,

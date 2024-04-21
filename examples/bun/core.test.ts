@@ -1,5 +1,5 @@
 import type { AdminEntity } from '@dossierhq/core';
-import { AdminEntityStatus, copyEntity } from '@dossierhq/core';
+import { EntityStatus, copyEntity } from '@dossierhq/core';
 import { expect, test } from 'bun:test';
 
 test('copyEntity()', () => {
@@ -10,7 +10,7 @@ test('copyEntity()', () => {
       name: 'Hello',
       version: 1,
       authKey: '',
-      status: AdminEntityStatus.draft,
+      status: EntityStatus.draft,
       valid: true,
       validPublished: null,
       createdAt: new Date(),

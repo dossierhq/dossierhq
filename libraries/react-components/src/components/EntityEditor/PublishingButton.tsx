@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   type AdminClient,
   type AdminEntity,
   type EntityTypeSpecification,
@@ -87,13 +87,13 @@ function createPublishActions(entity: AdminEntity | null, entitySpec: EntityType
   const { status } = entity.info;
 
   let publishActionsIds: Array<PublishingActionId> = [];
-  if (status === AdminEntityStatus.draft || status === AdminEntityStatus.withdrawn) {
+  if (status === EntityStatus.draft || status === EntityStatus.withdrawn) {
     publishActionsIds = ['publish', 'archive'];
-  } else if (status === AdminEntityStatus.published) {
+  } else if (status === EntityStatus.published) {
     publishActionsIds = ['unpublish'];
-  } else if (status === AdminEntityStatus.modified) {
+  } else if (status === EntityStatus.modified) {
     publishActionsIds = ['publish', 'unpublish'];
-  } else if (status === AdminEntityStatus.archived) {
+  } else if (status === EntityStatus.archived) {
     publishActionsIds = ['unarchive', 'publish'];
   }
 

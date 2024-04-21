@@ -1,4 +1,4 @@
-import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
+import { EntityStatus, ErrorType, ok } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
@@ -35,7 +35,7 @@ function mockAdminEntityGetOneCall(
         authKey: '',
         resolvedAuthKey: '',
         version: version ?? 1,
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: true,
         createdAt: date,

@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ErrorType,
   EventType,
   contentValuePathToString,
@@ -42,7 +42,7 @@ interface VersionInfoToBePublished {
   entityVersionInternalId: unknown;
   name: string;
   publishedName: string | null;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   fullTextSearchText: string;
   references: EntityReference[];
   locations: Location[];
@@ -53,7 +53,7 @@ interface VersionInfoToBePublished {
 interface VersionInfoAlreadyPublished {
   effect: 'none';
   uuid: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   validPublished: boolean;
   updatedAt: Date;
 }
@@ -390,7 +390,7 @@ async function collectVersionsInfo(
         locations,
         componentTypes,
         uniqueIndexValues,
-        status: versionIsLatest ? AdminEntityStatus.published : AdminEntityStatus.modified,
+        status: versionIsLatest ? EntityStatus.published : EntityStatus.modified,
       });
     }
   }

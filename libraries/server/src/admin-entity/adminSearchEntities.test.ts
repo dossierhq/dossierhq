@@ -1,4 +1,4 @@
-import { AdminEntityStatus, ok } from '@dossierhq/core';
+import { EntityStatus, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdminEntitySearchPayloadEntity } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
@@ -321,7 +321,7 @@ function createDatabaseEntity(id = 1): DatabaseAdminEntitySearchPayloadEntity {
     type: 'TitleOnly',
     authKey: '',
     version: 1,
-    status: AdminEntityStatus.modified,
+    status: EntityStatus.modified,
     valid: true,
     validPublished: true,
     createdAt: new Date('2022-03-15T08:51:25.56Z'),

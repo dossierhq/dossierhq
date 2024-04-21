@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { AdminEntityStatus, type AdminEntity, type Component } from '../Types.js';
+import { EntityStatus, type AdminEntity, type Component } from '../Types.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
@@ -143,7 +143,7 @@ describe('traverseEntity', () => {
         type: 'StringsEntity',
         name: 'Name',
         version: 1,
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: true,
         createdAt: new Date('2023-09-11T22:10:56.334Z'),

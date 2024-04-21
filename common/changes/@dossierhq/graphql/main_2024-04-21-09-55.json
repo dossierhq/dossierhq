@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Break: Rename AdminEntityStatus to EntityStatus",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}

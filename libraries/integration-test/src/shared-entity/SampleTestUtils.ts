@@ -6,17 +6,17 @@ import type {
   PublishedEntity,
   Result,
 } from '@dossierhq/core';
-import { AdminEntityStatus } from '@dossierhq/core';
+import { EntityStatus } from '@dossierhq/core';
 import { assertEquals, assertOkResult } from '../Asserts.js';
 import type { AppAdminEntity, AppPublishedEntity } from '../SchemaTypes.js';
 
-export function countEntityStatuses(entities: AppAdminEntity[]): Record<AdminEntityStatus, number> {
+export function countEntityStatuses(entities: AppAdminEntity[]): Record<EntityStatus, number> {
   const result = {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
   };
 
   for (const entity of entities) {

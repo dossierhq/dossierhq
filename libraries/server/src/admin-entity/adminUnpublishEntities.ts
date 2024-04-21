@@ -5,7 +5,7 @@ import type {
   PromiseResult,
   UnpublishEntitiesSyncEvent,
 } from '@dossierhq/core';
-import { AdminEntityStatus, EventType, createErrorResult, notOk, ok } from '@dossierhq/core';
+import { EntityStatus, EventType, createErrorResult, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, WriteSession } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -28,7 +28,7 @@ interface EntityInfoAlreadyUnpublished {
   id: string;
   authKey: string;
   resolvedAuthKey: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   updatedAt: Date;
 }
 
@@ -172,7 +172,7 @@ async function collectEntityInfo(
         resolvedAuthKey: it.resolvedAuthKey,
       };
 
-      if (it.status === AdminEntityStatus.modified || it.status === AdminEntityStatus.published) {
+      if (it.status === EntityStatus.modified || it.status === EntityStatus.published) {
         return {
           effect: 'unpublished',
           entityVersionInternalId: it.entityVersionInternalId,
@@ -198,7 +198,7 @@ async function unpublishEntitiesAndCollectResult(
 ): PromiseResult<AdminEntityUnpublishPayload[], typeof ErrorType.Generic> {
   const unpublishResult = await databaseAdapter.adminEntityUnpublishEntities(
     context,
-    AdminEntityStatus.withdrawn,
+    EntityStatus.withdrawn,
     unpublishEntitiesInfo.map((it) => ({ entityInternalId: it.entityInternalId })),
     syncEvent,
   );
@@ -214,7 +214,7 @@ async function unpublishEntitiesAndCollectResult(
       assertIsDefined(updatedAt);
       payload.push({
         id: entityInfo.id,
-        status: AdminEntityStatus.withdrawn,
+        status: EntityStatus.withdrawn,
         effect: entityInfo.effect,
         updatedAt,
       });

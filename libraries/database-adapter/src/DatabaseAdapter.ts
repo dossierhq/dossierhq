@@ -1,7 +1,7 @@
 import type {
   AdminEntityQuery,
   AdminEntitySharedQuery,
-  AdminEntityStatus,
+  EntityStatus,
   Schema,
   SchemaSpecificationWithMigrations,
   ArchiveEntitySyncEvent,
@@ -58,7 +58,7 @@ export interface DatabaseAdminEntityArchivingEntityInfoPayload
   extends DatabaseResolvedEntityVersionReference {
   authKey: string;
   resolvedAuthKey: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   updatedAt: Date;
   neverPublished: boolean;
 }
@@ -89,7 +89,7 @@ export interface DatabaseAdminEntityPayload {
   name: string;
   version: number;
   authKey: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   valid: boolean;
   validPublished: boolean | null;
   createdAt: Date;
@@ -115,7 +115,7 @@ export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
   extends DatabaseResolvedEntityReference {
   id: string;
   type: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
 }
 
 export interface DatabaseAdminEntityPublishGetVersionInfoPayload
@@ -127,7 +127,7 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   resolvedAuthKey: string;
   name: string;
   publishedName: string | null;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   updatedAt: Date;
   validPublished: boolean | null;
   entityFields: DatabaseEntityFieldsPayload;
@@ -135,7 +135,7 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
 
 export interface DatabaseAdminEntityPublishUpdateEntityArg
   extends DatabaseResolvedEntityVersionReference {
-  status: AdminEntityStatus;
+  status: EntityStatus;
   publishedName: string;
   changePublishedName: boolean;
 }
@@ -186,7 +186,7 @@ export interface DatabaseEntityUpdateGetEntityInfoPayload extends DatabaseResolv
   publishedName: string | null;
   authKey: string;
   resolvedAuthKey: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   valid: boolean;
   validPublished: boolean | null;
   version: number;
@@ -201,7 +201,7 @@ export interface DatabaseEntityUpdateEntityArg extends DatabaseResolvedEntityRef
   version: number;
   type: string;
   publish: boolean;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   session: WriteSession;
   schemaVersion: number;
   encodeVersion: number;
@@ -222,7 +222,7 @@ export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
   id: string;
   authKey: string;
   resolvedAuthKey: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   updatedAt: Date;
 }
 
@@ -489,7 +489,7 @@ export interface DatabaseAdapter<
 
   adminEntityUpdateStatus(
     context: TransactionContext,
-    status: AdminEntityStatus,
+    status: EntityStatus,
     reference: DatabaseResolvedEntityReference,
     syncEvent: ArchiveEntitySyncEvent | UnarchiveEntitySyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic>;
@@ -504,7 +504,7 @@ export interface DatabaseAdapter<
 
   adminEntityUnpublishEntities(
     context: TransactionContext,
-    status: AdminEntityStatus,
+    status: EntityStatus,
     references: DatabaseResolvedEntityReference[],
     syncEvent: UnpublishEntitiesSyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic>;

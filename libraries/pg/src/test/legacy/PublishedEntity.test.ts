@@ -6,7 +6,7 @@ import type {
   PublishedEntity,
 } from '@dossierhq/core';
 import {
-  AdminEntityStatus,
+  EntityStatus,
   FieldType,
   assertOkResult,
   createRichText,
@@ -116,7 +116,7 @@ async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient, 
   const result = await getAllEntities(client, {
     authKeys: [authKey],
     entityTypes: ['PublishedEntityOnlyEditBefore'],
-    status: [AdminEntityStatus.published, AdminEntityStatus.modified],
+    status: [EntityStatus.published, EntityStatus.modified],
   });
   if (result.isError()) {
     throw result.toError();

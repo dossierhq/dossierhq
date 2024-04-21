@@ -1,5 +1,5 @@
 import type {
-  AdminEntityStatus,
+  EntityStatus,
   EntityReference,
   ErrorType,
   PromiseResult,
@@ -78,7 +78,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
 export async function adminEntityUnpublishEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   context: TransactionContext,
-  status: AdminEntityStatus,
+  status: EntityStatus,
   references: DatabaseResolvedEntityReference[],
   syncEvent: UnpublishEntitiesSyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUnpublishUpdateEntityPayload[], typeof ErrorType.Generic> {

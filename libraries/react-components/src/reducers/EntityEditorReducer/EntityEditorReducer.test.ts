@@ -1,11 +1,5 @@
 import type { AdminEntity } from '@dossierhq/core';
-import {
-  AdminEntityStatus,
-  Schema,
-  SchemaWithMigrations,
-  copyEntity,
-  FieldType,
-} from '@dossierhq/core';
+import { EntityStatus, Schema, SchemaWithMigrations, copyEntity, FieldType } from '@dossierhq/core';
 import { assert, describe, expect, test } from 'vitest';
 import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
 import {
@@ -129,7 +123,7 @@ describe('AddDraftAction', () => {
           authKey: '',
           name: 'Foo',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -368,7 +362,7 @@ describe('UpdateEntityAction', () => {
           authKey: '',
           name: 'Foo title#123456',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -411,7 +405,7 @@ describe('UpdateEntityAction', () => {
           authKey: '',
           name: 'Different name',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -477,7 +471,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: "Foo's title#123456",
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -536,7 +530,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: 'Foo name#123456',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -599,7 +593,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: 'Foo name#123456',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -636,7 +630,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: 'Foo title#123456',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -674,7 +668,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: 'New title#123456',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -697,7 +691,7 @@ describe('EntityEditorReducer scenarios', () => {
         authKey: '',
         name: 'Foo name#123456',
         type: 'Foo',
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: null,
         createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -730,7 +724,7 @@ describe('EntityEditorReducer scenarios', () => {
       new EntityEditorActions.UpdateEntity(
         copyEntity(entity, {
           info: {
-            status: AdminEntityStatus.published,
+            status: EntityStatus.published,
             updatedAt: new Date('2022-05-01T07:51:25.56Z'),
             validPublished: true,
           },
@@ -741,7 +735,7 @@ describe('EntityEditorReducer scenarios', () => {
 
     const draftState = state.drafts.find((it) => it.id === id);
     assert(draftState);
-    expect(draftState.entity?.info.status).toBe(AdminEntityStatus.published);
+    expect(draftState.entity?.info.status).toBe(EntityStatus.published);
     expect(draftState.entity?.info.updatedAt).toEqual(new Date('2022-05-01T07:51:25.56Z'));
   });
 
@@ -767,7 +761,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: 'Foo name#123456',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -796,7 +790,7 @@ describe('EntityEditorReducer scenarios', () => {
           authKey: '',
           name: 'Foo 2',
           type: 'Foo',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           createdAt: new Date('2022-04-30T07:51:25.56Z'),
@@ -876,7 +870,7 @@ describe('EntityEditorReducer scenarios', () => {
         authKey: '',
         name: 'Foo',
         type: 'Foo',
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: null,
         createdAt: new Date('2022-04-30T07:51:25.56Z'),

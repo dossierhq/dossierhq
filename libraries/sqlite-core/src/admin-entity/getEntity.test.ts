@@ -1,4 +1,4 @@
-import { AdminEntityStatus } from '@dossierhq/core';
+import { EntityStatus } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import {
@@ -43,7 +43,7 @@ describe('adminGetEntity', () => {
       name: 'Name',
       type: 'TitleOnly',
       version: 2,
-      status: AdminEntityStatus.modified,
+      status: EntityStatus.modified,
       valid: true,
       validPublished: true,
       authKey: 'authKey-123',
@@ -101,7 +101,7 @@ describe('adminGetEntity', () => {
       name: 'Name',
       type: 'TitleOnly',
       version: 5,
-      status: AdminEntityStatus.modified,
+      status: EntityStatus.modified,
       valid: true,
       validPublished: true,
       authKey: 'authKey-123',

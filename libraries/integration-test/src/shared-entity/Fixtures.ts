@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   normalizeEntityFields,
   type AdminEntity,
   type AdminEntityCreate,
@@ -47,7 +47,7 @@ export const LOCATIONS_ADMIN_ENTITY: Readonly<AdminLocations> = {
     name: 'Locations name',
     version: 1,
     authKey: '',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     valid: true,
     validPublished: null,
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -76,7 +76,7 @@ export const REFERENCES_ADMIN_ENTITY: Readonly<AdminReferences> = {
     name: 'References name',
     version: 1,
     authKey: '',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     valid: true,
     validPublished: null,
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -100,7 +100,7 @@ export const RICH_TEXTS_ADMIN_ENTITY: Readonly<AdminRichTexts> = {
     name: 'RichTexts name',
     authKey: '',
     version: 1,
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     valid: true,
     validPublished: null,
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -129,7 +129,7 @@ export const STRINGS_ADMIN_ENTITY: Readonly<AdminStrings> = {
     name: 'Strings name',
     version: 1,
     authKey: '',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     valid: true,
     validPublished: null,
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -169,7 +169,7 @@ export const SUBJECT_ONLY_ADMIN_ENTITY: Readonly<AdminSubjectOnly> = {
     name: 'SubjectOnly name',
     version: 1,
     authKey: 'subject',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     valid: true,
     validPublished: null,
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -214,7 +214,7 @@ export const TITLE_ONLY_ADMIN_ENTITY: Readonly<AdminTitleOnly> = {
     name: 'TitleOnly name',
     version: 1,
     authKey: '',
-    status: AdminEntityStatus.draft,
+    status: EntityStatus.draft,
     valid: true,
     validPublished: null,
     createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -247,7 +247,7 @@ export function adminToPublishedEntity<T extends AppAdminEntity>(
   adminSchema: Schema,
   entity: T,
 ): AppPublishedEntity {
-  assertEquals(entity.info.status, AdminEntityStatus.published);
+  assertEquals(entity.info.status, EntityStatus.published);
 
   const result = normalizeEntityFields(adminSchema.toPublishedSchema(), [], entity as AdminEntity);
 

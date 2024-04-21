@@ -10,7 +10,7 @@ import type {
   AdminEntityUpsert,
   AdminEntityUpsertPayload,
 } from '../Types.js';
-import { AdminEntityStatus } from '../Types.js';
+import { EntityStatus } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
 import {
   EventType,
@@ -103,7 +103,7 @@ function createDummyEntity(changes: {
         type: 'FooType',
         version: 1,
         authKey: '',
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: null,
         createdAt: new Date('2021-08-17T07:51:25.56Z'),
@@ -234,7 +234,7 @@ describe('AdminClient forward operation over JSON', () => {
         operation.resolve(
           ok({
             id: reference.id,
-            status: AdminEntityStatus.archived,
+            status: EntityStatus.archived,
             effect: 'archived',
             updatedAt: new Date('2021-08-17T08:51:25.56Z'),
           }),
@@ -246,7 +246,7 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.archiveEntity({ id: '1234' });
     expectResultValue(result, {
       id: '1234',
-      status: AdminEntityStatus.archived,
+      status: EntityStatus.archived,
       effect: 'archived',
       updatedAt: new Date('2021-08-17T08:51:25.56Z'),
     });
@@ -291,7 +291,7 @@ describe('AdminClient forward operation over JSON', () => {
             entity: createDummyEntity({
               id: entity.id ?? '4321',
               info: {
-                status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
+                status: options?.publish ? EntityStatus.published : EntityStatus.draft,
               },
             }) as unknown as AdminEntity,
           }),
@@ -865,7 +865,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok(
             references.map((it) => ({
               id: it.id,
-              status: AdminEntityStatus.published,
+              status: EntityStatus.published,
               effect: 'published',
               updatedAt: new Date('2021-08-17T08:51:25.56Z'),
             })),
@@ -882,13 +882,13 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, [
       {
         id: '1234',
-        status: AdminEntityStatus.published,
+        status: EntityStatus.published,
         effect: 'published',
         updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
-        status: AdminEntityStatus.published,
+        status: EntityStatus.published,
         effect: 'published',
         updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
@@ -1018,7 +1018,7 @@ describe('AdminClient forward operation over JSON', () => {
         name: 'Name',
         version: 2,
         authKey: '',
-        status: AdminEntityStatus.published,
+        status: EntityStatus.published,
         valid: true,
         validPublished: true,
         createdAt: new Date('2021-08-17T08:51:25.56Z'),
@@ -1092,7 +1092,7 @@ describe('AdminClient forward operation over JSON', () => {
         name: 'Name',
         version: 2,
         authKey: '',
-        status: AdminEntityStatus.published,
+        status: EntityStatus.published,
         valid: true,
         validPublished: true,
         createdAt: new Date('2021-08-17T08:51:25.56Z'),
@@ -1239,7 +1239,7 @@ describe('AdminClient forward operation over JSON', () => {
         operation.resolve(
           ok({
             id: reference.id,
-            status: AdminEntityStatus.withdrawn,
+            status: EntityStatus.withdrawn,
             effect: 'unarchived',
             updatedAt: new Date('2021-08-17T08:51:25.56Z'),
           }),
@@ -1251,7 +1251,7 @@ describe('AdminClient forward operation over JSON', () => {
     const result = await adminClient.unarchiveEntity({ id: '1234' });
     expectResultValue(result, {
       id: '1234',
-      status: AdminEntityStatus.withdrawn,
+      status: EntityStatus.withdrawn,
       effect: 'unarchived',
       updatedAt: new Date('2021-08-17T08:51:25.56Z'),
     });
@@ -1294,7 +1294,7 @@ describe('AdminClient forward operation over JSON', () => {
           ok(
             references.map((it) => ({
               id: it.id,
-              status: AdminEntityStatus.withdrawn,
+              status: EntityStatus.withdrawn,
               effect: 'unpublished',
               updatedAt: new Date('2021-08-17T08:51:25.56Z'),
             })),
@@ -1308,13 +1308,13 @@ describe('AdminClient forward operation over JSON', () => {
     expectResultValue(result, [
       {
         id: '1234',
-        status: AdminEntityStatus.withdrawn,
+        status: EntityStatus.withdrawn,
         effect: 'unpublished',
         updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
       {
         id: '4321',
-        status: AdminEntityStatus.withdrawn,
+        status: EntityStatus.withdrawn,
         effect: 'unpublished',
         updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
@@ -1366,7 +1366,7 @@ describe('AdminClient forward operation over JSON', () => {
             entity: createDummyEntity({
               id: entity.id ?? '4321',
               info: {
-                status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
+                status: options?.publish ? EntityStatus.published : EntityStatus.draft,
               },
             }) as unknown as AdminEntity,
           }),
@@ -1597,7 +1597,7 @@ describe('AdminClient forward operation over JSON', () => {
             entity: createDummyEntity({
               id: entity.id ?? '4321',
               info: {
-                status: options?.publish ? AdminEntityStatus.published : AdminEntityStatus.draft,
+                status: options?.publish ? EntityStatus.published : EntityStatus.draft,
               },
             }) as unknown as AdminEntity,
           }),

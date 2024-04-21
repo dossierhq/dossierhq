@@ -145,7 +145,7 @@ export type Component<
   type: TType;
 } & TFields;
 
-export const AdminEntityStatus = {
+export const EntityStatus = {
   /** The entity has never been published. */
   draft: 'draft',
   /** The entity is currently published and has no pending changes. */
@@ -157,7 +157,7 @@ export const AdminEntityStatus = {
   /** The entity is archived. */
   archived: 'archived',
 } as const;
-export type AdminEntityStatus = (typeof AdminEntityStatus)[keyof typeof AdminEntityStatus];
+export type EntityStatus = (typeof EntityStatus)[keyof typeof EntityStatus];
 
 export interface AdminEntity<
   TType extends string = string,
@@ -179,7 +179,7 @@ export interface AdminEntityInfo<TType extends string = string, TAuthKey extends
    *
    * It is not connected to the requested version so if you get an old version of the entity, the
    * status refer to the latest version. */
-  status: AdminEntityStatus;
+  status: EntityStatus;
   /**
    * The current validation state of the entity. An invalid entity needs to be fixed before it can
    * be saved.
@@ -271,7 +271,7 @@ export interface AdminEntityUpsertPayload<T extends AdminEntity<string, object> 
 
 export interface AdminEntityPublishingPayload<TEffect> {
   id: string;
-  status: AdminEntityStatus;
+  status: EntityStatus;
   effect: TEffect;
   updatedAt: Date;
 }
@@ -296,7 +296,7 @@ export interface AdminEntitySharedQuery<
   authKeys?: TAuthKey[];
   entityTypes?: TEntityType[];
   componentTypes?: TComponentType[];
-  status?: AdminEntityStatus[];
+  status?: EntityStatus[];
   valid?: boolean;
   linksTo?: EntityReference;
   linksFrom?: EntityReference;

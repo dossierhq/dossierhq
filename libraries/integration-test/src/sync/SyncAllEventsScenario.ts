@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   ErrorType,
   EventType,
   FieldType,
@@ -435,7 +435,7 @@ async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) 
   assertResultValue(result, {
     id,
     effect: 'archived',
-    status: AdminEntityStatus.archived,
+    status: EntityStatus.archived,
     updatedAt,
   });
 
@@ -469,7 +469,7 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
   assertResultValue(result, {
     id,
     effect: 'unarchived',
-    status: AdminEntityStatus.withdrawn,
+    status: EntityStatus.withdrawn,
     updatedAt,
   });
 

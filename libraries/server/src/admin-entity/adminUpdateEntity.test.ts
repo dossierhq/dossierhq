@@ -1,4 +1,4 @@
-import { AdminEntityStatus, ErrorType, ok } from '@dossierhq/core';
+import { EntityStatus, ErrorType, ok } from '@dossierhq/core';
 import { expectErrorResult, expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
 import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
@@ -29,7 +29,7 @@ describe('Admin adminUpdateEntity', () => {
           publishedName: 'Old name#123456',
           authKey: '',
           resolvedAuthKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
           version: 1,
@@ -75,7 +75,7 @@ describe('Admin adminUpdateEntity', () => {
           version: 2,
           createdAt: createdAt,
           updatedAt: now,
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: true,
           validPublished: null,
         },
@@ -105,7 +105,7 @@ describe('Admin adminUpdateEntity', () => {
           publishedName: null,
           authKey: '',
           resolvedAuthKey: '',
-          status: AdminEntityStatus.draft,
+          status: EntityStatus.draft,
           valid: false,
           validPublished: null,
           version: 1,

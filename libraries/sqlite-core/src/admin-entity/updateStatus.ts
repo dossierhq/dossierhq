@@ -1,5 +1,5 @@
 import type {
-  AdminEntityStatus,
+  EntityStatus,
   ArchiveEntitySyncEvent,
   ErrorType,
   PromiseResult,
@@ -19,7 +19,7 @@ import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 export async function adminEntityUpdateStatus(
   database: Database,
   context: TransactionContext,
-  status: AdminEntityStatus,
+  status: EntityStatus,
   reference: DatabaseResolvedEntityReference,
   syncEvent: ArchiveEntitySyncEvent | UnarchiveEntitySyncEvent | null,
 ): PromiseResult<DatabaseAdminEntityUpdateStatusPayload, typeof ErrorType.Generic> {

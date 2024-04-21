@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   EventType,
   contentValuePathToString,
   notOk,
@@ -175,7 +175,7 @@ async function doCreateEntity(
         type: createEntity.info.type,
         authKey: resolvedAuthKey.authKey,
         name,
-        status: AdminEntityStatus.draft,
+        status: EntityStatus.draft,
         valid: true,
         validPublished: null,
         version,

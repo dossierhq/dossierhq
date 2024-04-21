@@ -1,5 +1,5 @@
 import type { BoundingBox } from '@dossierhq/core';
-import { AdminEntityStatus, copyEntity } from '@dossierhq/core';
+import { EntityStatus, copyEntity } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
@@ -65,116 +65,114 @@ async function getEntitiesSample_minimal({
 async function getEntitiesSample_statusDraft({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft],
+    status: [EntityStatus.draft],
   });
   assertOkResult(result);
 
-  const { [AdminEntityStatus.draft]: draft, ...otherStatuses } = countEntityStatuses(
-    result.value.items,
-  );
+  const { [EntityStatus.draft]: draft, ...otherStatuses } = countEntityStatuses(result.value.items);
   assertTruthy(draft > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
   });
 }
 
 async function getEntitiesSample_statusPublished({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.published],
+    status: [EntityStatus.published],
   });
   assertOkResult(result);
 
-  const { [AdminEntityStatus.published]: published, ...otherStatuses } = countEntityStatuses(
+  const { [EntityStatus.published]: published, ...otherStatuses } = countEntityStatuses(
     result.value.items,
   );
   assertTruthy(published > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
   });
 }
 
 async function getEntitiesSample_statusModified({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.modified],
+    status: [EntityStatus.modified],
   });
   assertOkResult(result);
 
-  const { [AdminEntityStatus.modified]: modified, ...otherStatuses } = countEntityStatuses(
+  const { [EntityStatus.modified]: modified, ...otherStatuses } = countEntityStatuses(
     result.value.items,
   );
   assertTruthy(modified > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
   });
 }
 
 async function getEntitiesSample_statusWithdrawn({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.withdrawn],
+    status: [EntityStatus.withdrawn],
   });
   assertOkResult(result);
 
-  const { [AdminEntityStatus.withdrawn]: withdrawn, ...otherStatuses } = countEntityStatuses(
+  const { [EntityStatus.withdrawn]: withdrawn, ...otherStatuses } = countEntityStatuses(
     result.value.items,
   );
   assertTruthy(withdrawn > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.archived]: 0,
   });
 }
 
 async function getEntitiesSample_statusArchived({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.archived],
+    status: [EntityStatus.archived],
   });
   assertOkResult(result);
 
-  const { [AdminEntityStatus.archived]: archived, ...otherStatuses } = countEntityStatuses(
+  const { [EntityStatus.archived]: archived, ...otherStatuses } = countEntityStatuses(
     result.value.items,
   );
   assertTruthy(archived > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
   });
 }
 
 async function getEntitiesSample_statusDraftArchived({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.draft, AdminEntityStatus.archived],
+    status: [EntityStatus.draft, EntityStatus.archived],
   });
   assertOkResult(result);
 
   const {
-    [AdminEntityStatus.draft]: draft,
-    [AdminEntityStatus.archived]: archived,
+    [EntityStatus.draft]: draft,
+    [EntityStatus.archived]: archived,
     ...otherStatuses
   } = countEntityStatuses(result.value.items);
   assertTruthy(draft > 0);
   assertTruthy(archived > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.published]: 0,
-    [AdminEntityStatus.modified]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
+    [EntityStatus.published]: 0,
+    [EntityStatus.modified]: 0,
+    [EntityStatus.withdrawn]: 0,
   });
 }
 
@@ -183,21 +181,21 @@ async function getEntitiesSample_statusModifiedPublished({
 }: AdminEntityTestContext) {
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
-    status: [AdminEntityStatus.modified, AdminEntityStatus.published],
+    status: [EntityStatus.modified, EntityStatus.published],
   });
   assertOkResult(result);
 
   const {
-    [AdminEntityStatus.modified]: modified,
-    [AdminEntityStatus.published]: published,
+    [EntityStatus.modified]: modified,
+    [EntityStatus.published]: published,
     ...otherStatuses
   } = countEntityStatuses(result.value.items);
   assertTruthy(modified > 0);
   assertTruthy(published > 0);
   assertEquals(otherStatuses, {
-    [AdminEntityStatus.draft]: 0,
-    [AdminEntityStatus.withdrawn]: 0,
-    [AdminEntityStatus.archived]: 0,
+    [EntityStatus.draft]: 0,
+    [EntityStatus.withdrawn]: 0,
+    [EntityStatus.archived]: 0,
   });
 }
 
@@ -205,21 +203,21 @@ async function getEntitiesSample_statusAll({ clientProvider }: AdminEntityTestCo
   const result = await clientProvider.adminClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [
-      AdminEntityStatus.draft,
-      AdminEntityStatus.published,
-      AdminEntityStatus.modified,
-      AdminEntityStatus.archived,
-      AdminEntityStatus.withdrawn,
+      EntityStatus.draft,
+      EntityStatus.published,
+      EntityStatus.modified,
+      EntityStatus.archived,
+      EntityStatus.withdrawn,
     ],
   });
   assertOkResult(result);
 
   const {
-    [AdminEntityStatus.draft]: draft,
-    [AdminEntityStatus.archived]: archived,
-    [AdminEntityStatus.published]: published,
-    [AdminEntityStatus.modified]: modified,
-    [AdminEntityStatus.withdrawn]: withdrawn,
+    [EntityStatus.draft]: draft,
+    [EntityStatus.archived]: archived,
+    [EntityStatus.published]: published,
+    [EntityStatus.modified]: modified,
+    [EntityStatus.withdrawn]: withdrawn,
   } = countEntityStatuses(result.value.items);
   assertTruthy(draft > 0);
   assertTruthy(archived > 0);

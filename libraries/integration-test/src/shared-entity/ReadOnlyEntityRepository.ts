@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   copyEntity,
   ok,
   withAdvisoryLock,
@@ -52,9 +52,7 @@ export class ReadOnlyEntityRepository {
   getMainPrincipalPublishedEntities(authKeys?: string[]): PublishedReadOnly[] {
     const adminEntities = this.getMainPrincipalAdminEntities(authKeys);
     const publishedOnly = adminEntities.filter(
-      (it) =>
-        it.info.status === AdminEntityStatus.published ||
-        it.info.status === AdminEntityStatus.modified,
+      (it) => it.info.status === EntityStatus.published || it.info.status === EntityStatus.modified,
     );
     //TODO invalid since it always return the latest version
     const publishedEntities: PublishedReadOnly[] = publishedOnly.map((it) => ({
@@ -118,12 +116,12 @@ async function doCreateReadOnlyEntityRepository(
       const entityConfigs: {
         principal: 'main' | 'secondary';
         authKey: '' | 'subject';
-        status: AdminEntityStatus;
+        status: EntityStatus;
         index: number;
       }[] = [];
       for (const principal of ['secondary', 'main'] as const) {
         for (const authKey of ['', 'subject'] as const) {
-          for (const status of Object.values(AdminEntityStatus)) {
+          for (const status of Object.values(EntityStatus)) {
             for (let index = 0; index < ENTITIES_PER_CATEGORY; index++) {
               entityConfigs.push({ principal, authKey, status, index });
             }
@@ -154,7 +152,7 @@ async function createEntity(
   adminClient: AppAdminClient,
   id: string,
   authKey: AppAdminEntity['info']['authKey'],
-  status: AdminEntityStatus,
+  status: EntityStatus,
 ): PromiseResult<
   AdminReadOnly,
   | typeof ErrorType.BadRequest
@@ -178,20 +176,20 @@ async function createEntity(
     copyEntity(READONLY_UPSERT, { id, info: { authKey } }),
     {
       publish:
-        status === AdminEntityStatus.withdrawn ||
-        status === AdminEntityStatus.modified ||
-        status === AdminEntityStatus.published,
+        status === EntityStatus.withdrawn ||
+        status === EntityStatus.modified ||
+        status === EntityStatus.published,
     },
   );
   if (upsertResult.isError()) return upsertResult;
   let { entity } = upsertResult.value;
 
   switch (status) {
-    case AdminEntityStatus.draft:
+    case EntityStatus.draft:
       break;
-    case AdminEntityStatus.published:
+    case EntityStatus.published:
       break;
-    case AdminEntityStatus.modified: {
+    case EntityStatus.modified: {
       const updateResult = await adminClient.updateEntity<AdminReadOnly>({
         id,
         fields: { message: 'Updated message' },
@@ -200,14 +198,14 @@ async function createEntity(
       entity = updateResult.value.entity;
       break;
     }
-    case AdminEntityStatus.withdrawn: {
+    case EntityStatus.withdrawn: {
       const unpublishResult = await adminClient.unpublishEntities([{ id }]);
       if (unpublishResult.isError()) return unpublishResult;
       entity.info.status = unpublishResult.value[0].status;
       entity.info.updatedAt = unpublishResult.value[0].updatedAt;
       break;
     }
-    case AdminEntityStatus.archived: {
+    case EntityStatus.archived: {
       const archiveResult = await adminClient.archiveEntity({ id });
       if (archiveResult.isError()) return archiveResult;
       entity.info.status = archiveResult.value.status;

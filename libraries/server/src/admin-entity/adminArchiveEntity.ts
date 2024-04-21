@@ -5,7 +5,7 @@ import type {
   ErrorType,
   PromiseResult,
 } from '@dossierhq/core';
-import { AdminEntityStatus, EventType, notOk, ok } from '@dossierhq/core';
+import { EntityStatus, EventType, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
@@ -78,13 +78,13 @@ async function doArchiveEntity(
     if (authResult.isError()) return authResult;
 
     // Step 3: Check status
-    if (status === AdminEntityStatus.modified || status === AdminEntityStatus.published) {
+    if (status === EntityStatus.modified || status === EntityStatus.published) {
       return notOk.BadRequest('Entity is published');
     }
-    if (status === AdminEntityStatus.archived) {
+    if (status === EntityStatus.archived) {
       return ok({
         id: reference.id,
-        status: AdminEntityStatus.archived,
+        status: EntityStatus.archived,
         effect: 'none',
         updatedAt: entityInfoResult.value.updatedAt,
       }); // no change
@@ -95,7 +95,7 @@ async function doArchiveEntity(
     // Step 4: Archive entity
     const archiveResult = await databaseAdapter.adminEntityUpdateStatus(
       context,
-      AdminEntityStatus.archived,
+      EntityStatus.archived,
       { entityInternalId },
       syncEvent,
     );
@@ -112,7 +112,7 @@ async function doArchiveEntity(
     // Done
     const value: AdminEntityArchivePayload = {
       id: reference.id,
-      status: AdminEntityStatus.archived,
+      status: EntityStatus.archived,
       effect: 'archived',
       updatedAt: archiveResult.value.updatedAt,
     };

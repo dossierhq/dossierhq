@@ -1,5 +1,5 @@
 import {
-  AdminEntityStatus,
+  EntityStatus,
   Schema,
   ErrorType,
   EventType,
@@ -227,7 +227,7 @@ async function updateEntity_updateAndPublishEntity({ clientProvider }: AdminEnti
       updatedAt,
       version: 2,
       name: updatedName,
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       validPublished: true,
     },
     fields: {
@@ -274,7 +274,7 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
     info: {
       updatedAt,
       version: 2,
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       validPublished: true,
     },
     fields: {
@@ -409,7 +409,7 @@ async function updateEntity_noChangeAndPublishDraftEntity({
   const expectedEntity = copyEntity(createResult.value.entity, {
     info: {
       updatedAt,
-      status: AdminEntityStatus.published,
+      status: EntityStatus.published,
       validPublished: true,
     },
   });

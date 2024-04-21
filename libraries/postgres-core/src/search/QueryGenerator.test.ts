@@ -1,6 +1,6 @@
 import {
   EntityQueryOrder,
-  AdminEntityStatus,
+  EntityStatus,
   Schema,
   ErrorType,
   PublishedEntityQueryOrder,
@@ -582,7 +582,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.draft] },
+        { status: [EntityStatus.draft] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -610,7 +610,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.published] },
+        { status: [EntityStatus.published] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -638,7 +638,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.modified] },
+        { status: [EntityStatus.modified] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -666,7 +666,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.withdrawn] },
+        { status: [EntityStatus.withdrawn] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -694,7 +694,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.archived] },
+        { status: [EntityStatus.archived] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -722,7 +722,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.draft, AdminEntityStatus.published] },
+        { status: [EntityStatus.draft, EntityStatus.published] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -753,7 +753,7 @@ describe('searchAdminEntitiesQuery()', () => {
       searchAdminEntitiesQuery(
         databaseAdapter,
         adminSchema,
-        { status: [AdminEntityStatus.draft, AdminEntityStatus.archived] },
+        { status: [EntityStatus.draft, EntityStatus.archived] },
         resolvePaging(undefined),
         authKeysDefault,
       ),
@@ -786,11 +786,11 @@ describe('searchAdminEntitiesQuery()', () => {
         adminSchema,
         {
           status: [
-            AdminEntityStatus.draft,
-            AdminEntityStatus.published,
-            AdminEntityStatus.modified,
-            AdminEntityStatus.archived,
-            AdminEntityStatus.withdrawn,
+            EntityStatus.draft,
+            EntityStatus.published,
+            EntityStatus.modified,
+            EntityStatus.archived,
+            EntityStatus.withdrawn,
           ],
         },
         resolvePaging(undefined),
@@ -2149,9 +2149,8 @@ describe('totalAdminEntitiesQuery()', () => {
   });
 
   test('query status draft', () => {
-    expect(
-      totalAdminEntitiesQuery(adminSchema, authKeysDefault, { status: [AdminEntityStatus.draft] }),
-    ).toMatchInlineSnapshot(`
+    expect(totalAdminEntitiesQuery(adminSchema, authKeysDefault, { status: [EntityStatus.draft] }))
+      .toMatchInlineSnapshot(`
       OkResult {
         "value": {
           "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.resolved_auth_key = $1 AND status = $2",
@@ -2167,7 +2166,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('query status published', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysDefault, {
-        status: [AdminEntityStatus.published],
+        status: [EntityStatus.published],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -2185,7 +2184,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('query status modified', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysDefault, {
-        status: [AdminEntityStatus.modified],
+        status: [EntityStatus.modified],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -2203,7 +2202,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('query status withdrawn', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysDefault, {
-        status: [AdminEntityStatus.withdrawn],
+        status: [EntityStatus.withdrawn],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
@@ -2221,7 +2220,7 @@ describe('totalAdminEntitiesQuery()', () => {
   test('query status archived', () => {
     expect(
       totalAdminEntitiesQuery(adminSchema, authKeysDefault, {
-        status: [AdminEntityStatus.archived],
+        status: [EntityStatus.archived],
       }),
     ).toMatchInlineSnapshot(`
       OkResult {
