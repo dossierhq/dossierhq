@@ -1,8 +1,5 @@
 export function toAdminTypeName(name: string, isAdmin = true) {
-  if (isAdmin && name === 'Entity') {
-    return 'Entity';
-  }
-  return isAdmin ? `Admin${name}` : toPublishedTypeName(name);
+  return isAdmin ? `${name}` : toPublishedTypeName(name);
 }
 
 export function toPublishedTypeName(name: string) {
@@ -10,31 +7,31 @@ export function toPublishedTypeName(name: string) {
 }
 
 export function toAdminCreateInputTypeName(name: string) {
-  return `Admin${name}CreateInput`;
+  return `${name}CreateInput`;
 }
 
 export function toAdminCreatePayloadTypeName(name: string) {
-  return `Admin${name}CreatePayload`;
+  return `${name}CreatePayload`;
 }
 
 export function toAdminUpdateInputTypeName(name: string) {
-  return `Admin${name}UpdateInput`;
+  return `${name}UpdateInput`;
 }
 
 export function toAdminUpdatePayloadTypeName(name: string) {
-  return `Admin${name}UpdatePayload`;
+  return `${name}UpdatePayload`;
 }
 
 export function toAdminUpsertInputTypeName(name: string) {
-  return `Admin${name}UpsertInput`;
+  return `${name}UpsertInput`;
 }
 
 export function toAdminUpsertPayloadTypeName(name: string) {
-  return `Admin${name}UpsertPayload`;
+  return `${name}UpsertPayload`;
 }
 
 export function toAdminComponentInputTypeName(name: string) {
-  return `Admin${name}Input`;
+  return `${name}Input`;
 }
 
 export function toEnumName(names: string[], isAdmin: boolean) {

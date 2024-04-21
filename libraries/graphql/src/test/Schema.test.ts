@@ -255,7 +255,7 @@ describe('One empty entity type schema spec', () => {
   test('Ensure AdminEntityEdge matches Connection spec', async () => {
     // From https://relay.dev/graphql/connections.htm#sec-Edge-Types.Introspection
     const query = `{
-      __type(name: "AdminEntityEdge") { # Changed from "Example"
+      __type(name: "EntityEdge") { # Changed from "Example"
         fields {
           name
           type {
@@ -307,7 +307,7 @@ describe('One empty entity type schema spec', () => {
   test('Ensure AdminEntityConnection matches Connection spec', async () => {
     // From https://relay.dev/graphql/connections.htm#sec-Connection-Types.Introspection
     const query = `{
-      __type(name: "AdminEntityConnection") { # Changed from ExampleConnection
+      __type(name: "EntityConnection") { # Changed from ExampleConnection
         fields {
           name
           type {
@@ -344,7 +344,7 @@ describe('One empty entity type schema spec', () => {
                 kind: 'LIST',
                 ofType: {
                   // Changed from "ExampleEdge"
-                  name: 'AdminEntityEdge',
+                  name: 'EntityEdge',
                   kind: 'OBJECT',
                 },
               },

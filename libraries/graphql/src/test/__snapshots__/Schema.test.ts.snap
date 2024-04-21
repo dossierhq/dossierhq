@@ -96,12 +96,12 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   ValueOne
   ValueTwo
 }
@@ -115,7 +115,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -126,40 +126,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -174,18 +174,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -197,10 +197,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -209,10 +209,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -228,11 +228,11 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -242,7 +242,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -253,7 +253,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -261,11 +261,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -273,11 +273,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -285,11 +285,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -297,7 +297,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -310,127 +310,127 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBarFields {
+type BarFields {
   body: String
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminBarFields!
+  fields: BarFields!
 }
 
-input AdminBarFieldsInput {
+input BarFieldsInput {
   body: String
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityCreateInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminBarFieldsInput!
+  info: EntityUpdateInfo
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityUpsertInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
+type FooFields {
   body: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   body: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   body: String
 }
 
-type AdminValueTwo implements AdminValue {
-  type: AdminComponentType!
+type ValueTwo implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueTwoInput {
-  type: AdminComponentType!
+input ValueTwoInput {
+  type: ComponentType!
   body: String
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -439,12 +439,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -496,7 +496,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -564,7 +564,7 @@ type PublishedBar implements Node & PublishedEntity {
   fields: PublishedBarFields!
 }
 
-type PublishedValueTwo implements PublishedValue {
+type PublishedValueTwo implements PublishedComponent {
   type: PublishedComponentType!
   body: String
 }
@@ -623,7 +623,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -691,7 +691,7 @@ type PublishedBar implements Node & PublishedEntity {
   fields: PublishedBarFields!
 }
 
-type PublishedValueTwo implements PublishedValue {
+type PublishedValueTwo implements PublishedComponent {
   type: PublishedComponentType!
   body: String
 }
@@ -767,12 +767,12 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   ValueOne
   ValueTwo
 }
@@ -786,7 +786,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -797,40 +797,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -845,18 +845,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -868,10 +868,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -880,10 +880,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -899,16 +899,16 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -919,7 +919,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -927,11 +927,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -939,11 +939,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -951,11 +951,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -963,7 +963,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -976,119 +976,119 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBarFields {
+type BarFields {
   body: String
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminBarFields!
+  fields: BarFields!
 }
 
-input AdminBarFieldsInput {
+input BarFieldsInput {
   body: String
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityCreateInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminBarFieldsInput!
+  info: EntityUpdateInfo
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityUpsertInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
+type FooFields {
   body: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   body: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   body: String
 }
 
-type AdminValueTwo implements AdminValue {
-  type: AdminComponentType!
+type ValueTwo implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueTwoInput {
-  type: AdminComponentType!
+input ValueTwoInput {
+  type: ComponentType!
   body: String
 }
 
@@ -1100,8 +1100,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -1110,12 +1110,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -1218,11 +1218,11 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   ValueOne
 }
 
@@ -1235,7 +1235,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -1246,40 +1246,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -1294,18 +1294,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -1317,10 +1317,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1329,10 +1329,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1348,11 +1348,11 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -1362,7 +1362,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -1373,7 +1373,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -1381,11 +1381,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -1393,11 +1393,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -1405,11 +1405,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -1417,7 +1417,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -1430,69 +1430,69 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
+type FooFields {
   body: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   body: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   body: String
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -1501,9 +1501,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -1555,7 +1555,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -1618,7 +1618,7 @@ type PublishedFoo implements Node & PublishedEntity {
   info: PublishedEntityInfo!
 }
 
-type PublishedValueOne implements PublishedValue {
+type PublishedValueOne implements PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -1676,7 +1676,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -1739,7 +1739,7 @@ type PublishedFoo implements Node & PublishedEntity {
   info: PublishedEntityInfo!
 }
 
-type PublishedValueOne implements PublishedValue {
+type PublishedValueOne implements PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -1814,11 +1814,11 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   ValueOne
 }
 
@@ -1831,7 +1831,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -1842,40 +1842,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -1890,18 +1890,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -1913,10 +1913,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1925,10 +1925,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -1944,16 +1944,16 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -1964,7 +1964,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -1972,11 +1972,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -1984,11 +1984,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -1996,11 +1996,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -2008,7 +2008,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -2021,61 +2021,61 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
+type FooFields {
   body: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   body: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   body: String
 }
 
@@ -2087,8 +2087,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -2097,9 +2097,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -2202,12 +2202,12 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   NestedValue
   ValueList
   ValueOne
@@ -2222,7 +2222,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -2233,40 +2233,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -2281,18 +2281,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -2304,10 +2304,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -2316,10 +2316,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -2335,11 +2335,11 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -2349,7 +2349,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -2360,7 +2360,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -2368,11 +2368,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -2380,11 +2380,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -2392,11 +2392,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -2404,7 +2404,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -2417,115 +2417,115 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
-  valueOne: AdminValueOne
-  unspecifiedValue: AdminValue
-  valueOneOrList: _AdminValueListOrValueOne
-  nestedValue: AdminNestedValue
+type FooFields {
+  valueOne: ValueOne
+  unspecifiedValue: Component
+  valueOneOrList: _ValueListOrValueOne
+  nestedValue: NestedValue
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   valueOneJson: String
-  valueOne: AdminValueOneInput
+  valueOne: ValueOneInput
   unspecifiedValueJson: String
   valueOneOrListJson: String
   nestedValueJson: String
-  nestedValue: AdminNestedValueInput
+  nestedValue: NestedValueInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminNestedValue implements AdminValue {
-  type: AdminComponentType!
+type NestedValue implements Component {
+  type: ComponentType!
   text: String
-  child: AdminNestedValue
+  child: NestedValue
 }
 
-input AdminNestedValueInput {
-  type: AdminComponentType!
+input NestedValueInput {
+  type: ComponentType!
   text: String
   childJson: String
-  child: AdminNestedValueInput
+  child: NestedValueInput
 }
 
-type AdminValueList implements AdminValue {
-  type: AdminComponentType!
+type ValueList implements Component {
+  type: ComponentType!
   one: [String!]
-  two: [AdminBar!]
+  two: [Bar!]
   three: [Location!]
   four: [Boolean!]
 }
@@ -2533,40 +2533,40 @@ type AdminValueList implements AdminValue {
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-input AdminValueListInput {
-  type: AdminComponentType!
+input ValueListInput {
+  type: ComponentType!
   one: [String!]
   two: [EntityReferenceInput!]
   three: [Location!]
   four: [Boolean!]
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   one: String
-  two: AdminBar
+  two: Bar
   three: Location
   four: Boolean
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   one: String
   two: EntityReferenceInput
   three: Location
   four: Boolean
 }
 
-enum _AdminValueListOrValueOne {
-  AdminValueList
-  AdminValueOne
+enum _ValueListOrValueOne {
+  ValueList
+  ValueOne
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -2575,12 +2575,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -2635,7 +2635,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -2700,7 +2700,7 @@ type PublishedBar implements Node & PublishedEntity {
 
 type PublishedFooFields {
   valueOne: PublishedValueOne
-  unspecifiedValue: PublishedValue
+  unspecifiedValue: PublishedComponent
   valueOneOrList: _PublishedValueListOrValueOne
   nestedValue: PublishedNestedValue
 }
@@ -2711,13 +2711,13 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedNestedValue implements PublishedValue {
+type PublishedNestedValue implements PublishedComponent {
   type: PublishedComponentType!
   text: String
   child: PublishedNestedValue
 }
 
-type PublishedValueList implements PublishedValue {
+type PublishedValueList implements PublishedComponent {
   type: PublishedComponentType!
   one: [String!]
   two: [PublishedBar!]
@@ -2728,7 +2728,7 @@ type PublishedValueList implements PublishedValue {
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-type PublishedValueOne implements PublishedValue {
+type PublishedValueOne implements PublishedComponent {
   type: PublishedComponentType!
   one: String
   two: PublishedBar
@@ -2798,7 +2798,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -2863,7 +2863,7 @@ type PublishedBar implements Node & PublishedEntity {
 
 type PublishedFooFields {
   valueOne: PublishedValueOne
-  unspecifiedValue: PublishedValue
+  unspecifiedValue: PublishedComponent
   valueOneOrList: _PublishedValueListOrValueOne
   nestedValue: PublishedNestedValue
 }
@@ -2874,13 +2874,13 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedNestedValue implements PublishedValue {
+type PublishedNestedValue implements PublishedComponent {
   type: PublishedComponentType!
   text: String
   child: PublishedNestedValue
 }
 
-type PublishedValueList implements PublishedValue {
+type PublishedValueList implements PublishedComponent {
   type: PublishedComponentType!
   one: [String!]
   two: [PublishedBar!]
@@ -2891,7 +2891,7 @@ type PublishedValueList implements PublishedValue {
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-type PublishedValueOne implements PublishedValue {
+type PublishedValueOne implements PublishedComponent {
   type: PublishedComponentType!
   one: String
   two: PublishedBar
@@ -2970,12 +2970,12 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   NestedValue
   ValueList
   ValueOne
@@ -2990,7 +2990,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -3001,40 +3001,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -3049,18 +3049,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -3072,10 +3072,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -3084,10 +3084,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -3103,16 +3103,16 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -3123,7 +3123,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -3131,11 +3131,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -3143,11 +3143,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -3155,11 +3155,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -3167,7 +3167,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -3180,137 +3180,137 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
-  valueOne: AdminValueOne
-  unspecifiedValue: AdminValue
-  valueOneOrList: _AdminValueListOrValueOne
-  nestedValue: AdminNestedValue
+type FooFields {
+  valueOne: ValueOne
+  unspecifiedValue: Component
+  valueOneOrList: _ValueListOrValueOne
+  nestedValue: NestedValue
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   valueOneJson: String
-  valueOne: AdminValueOneInput
+  valueOne: ValueOneInput
   unspecifiedValueJson: String
   valueOneOrListJson: String
   nestedValueJson: String
-  nestedValue: AdminNestedValueInput
+  nestedValue: NestedValueInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminNestedValue implements AdminValue {
-  type: AdminComponentType!
+type NestedValue implements Component {
+  type: ComponentType!
   text: String
-  child: AdminNestedValue
+  child: NestedValue
 }
 
-input AdminNestedValueInput {
-  type: AdminComponentType!
+input NestedValueInput {
+  type: ComponentType!
   text: String
   childJson: String
-  child: AdminNestedValueInput
+  child: NestedValueInput
 }
 
-type AdminValueList implements AdminValue {
-  type: AdminComponentType!
+type ValueList implements Component {
+  type: ComponentType!
   one: [String!]
-  two: [AdminBar!]
+  two: [Bar!]
   three: [Location!]
   four: [Boolean!]
 }
 
-input AdminValueListInput {
-  type: AdminComponentType!
+input ValueListInput {
+  type: ComponentType!
   one: [String!]
   two: [EntityReferenceInput!]
   three: [Location!]
   four: [Boolean!]
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   one: String
-  two: AdminBar
+  two: Bar
   three: Location
   four: Boolean
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   one: String
   two: EntityReferenceInput
   three: Location
@@ -3322,9 +3322,9 @@ enum _PublishedValueListOrValueOne {
   PublishedValueOne
 }
 
-enum _AdminValueListOrValueOne {
-  AdminValueList
-  AdminValueOne
+enum _ValueListOrValueOne {
+  ValueList
+  ValueOne
 }
 
 type Query {
@@ -3335,8 +3335,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -3345,12 +3345,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -3498,7 +3498,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
@@ -3512,7 +3512,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -3523,40 +3523,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -3571,18 +3571,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -3594,9 +3594,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -3605,9 +3605,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -3623,7 +3623,7 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -3633,7 +3633,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -3644,7 +3644,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -3652,11 +3652,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -3664,11 +3664,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -3676,11 +3676,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -3688,7 +3688,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -3701,62 +3701,62 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
+type FooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
   floats: [Float!]
   integers: [Int!]
-  bars: [AdminBar!]
+  bars: [Bar!]
 }
 
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
@@ -3765,44 +3765,44 @@ input AdminFooFieldsInput {
   bars: [EntityReferenceInput!]
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -3811,12 +3811,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -4137,7 +4137,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
@@ -4151,7 +4151,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -4162,40 +4162,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -4210,18 +4210,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -4233,9 +4233,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -4244,9 +4244,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -4262,12 +4262,12 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -4278,7 +4278,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -4286,11 +4286,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -4298,11 +4298,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -4310,11 +4310,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -4322,7 +4322,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -4335,59 +4335,59 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
+type FooFields {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
   floats: [Float!]
   integers: [Int!]
-  bars: [AdminBar!]
+  bars: [Bar!]
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   strings: [String!]
   booleans: [Boolean!]
   locations: [Location!]
@@ -4396,37 +4396,37 @@ input AdminFooFieldsInput {
   bars: [EntityReferenceInput!]
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
@@ -4437,8 +4437,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -4447,12 +4447,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -4555,7 +4555,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Baz
   Foo
@@ -4570,7 +4570,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -4581,40 +4581,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -4629,18 +4629,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -4652,9 +4652,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -4663,9 +4663,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -4681,7 +4681,7 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -4691,7 +4691,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -4702,7 +4702,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -4710,11 +4710,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -4722,11 +4722,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -4734,11 +4734,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -4746,7 +4746,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -4759,94 +4759,94 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminBaz implements Entity {
+type Baz implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBazCreateInput {
+input BazCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBazCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBaz!
+type BazCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Baz!
 }
 
-input AdminBazUpdateInput {
+input BazUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBazUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBaz!
+type BazUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Baz!
 }
 
-input AdminBazUpsertInput {
+input BazUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBazUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBaz!
+type BazUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Baz!
 }
 
-type AdminFooFields {
+type FooFields {
   noMeansAll: Entity
-  bar: AdminBar
-  bazBar: _AdminBarOrBaz
-  fooBarBaz: _AdminBarOrBazOrFoo
-  barBarBar: AdminBar
+  bar: Bar
+  bazBar: _BarOrBaz
+  fooBarBaz: _BarOrBazOrFoo
+  barBarBar: Bar
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   noMeansAll: EntityReferenceInput
   bar: EntityReferenceInput
   bazBar: EntityReferenceInput
@@ -4854,55 +4854,55 @@ input AdminFooFieldsInput {
   barBarBar: EntityReferenceInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-enum _AdminBarOrBaz {
-  AdminBar
-  AdminBaz
+enum _BarOrBaz {
+  Bar
+  Baz
 }
 
-enum _AdminBarOrBazOrFoo {
-  AdminBar
-  AdminBaz
-  AdminFoo
+enum _BarOrBazOrFoo {
+  Bar
+  Baz
+  Foo
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -4911,15 +4911,15 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
-  updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
-  upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createBazEntity(entity: BazCreateInput!, publish: Boolean): BazCreatePayload
+  updateBazEntity(entity: BazUpdateInput!, publish: Boolean): BazUpdatePayload
+  upsertBazEntity(entity: BazUpsertInput!, publish: Boolean): BazUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -5255,7 +5255,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Baz
   Foo
@@ -5270,7 +5270,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -5281,40 +5281,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -5329,18 +5329,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -5352,9 +5352,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -5363,9 +5363,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -5381,12 +5381,12 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -5397,7 +5397,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -5405,11 +5405,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -5417,11 +5417,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -5429,11 +5429,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -5441,7 +5441,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -5454,94 +5454,94 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminBaz implements Entity {
+type Baz implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminBazCreateInput {
+input BazCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminBazCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBaz!
+type BazCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Baz!
 }
 
-input AdminBazUpdateInput {
+input BazUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminBazUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBaz!
+type BazUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Baz!
 }
 
-input AdminBazUpsertInput {
+input BazUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminBazUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBaz!
+type BazUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Baz!
 }
 
-type AdminFooFields {
+type FooFields {
   noMeansAll: Entity
-  bar: AdminBar
-  bazBar: _AdminBarOrBaz
-  fooBarBaz: _AdminBarOrBazOrFoo
-  barBarBar: AdminBar
+  bar: Bar
+  bazBar: _BarOrBaz
+  fooBarBaz: _BarOrBazOrFoo
+  barBarBar: Bar
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   noMeansAll: EntityReferenceInput
   bar: EntityReferenceInput
   bazBar: EntityReferenceInput
@@ -5549,37 +5549,37 @@ input AdminFooFieldsInput {
   barBarBar: EntityReferenceInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 enum _PublishedBarOrBaz {
@@ -5593,15 +5593,15 @@ enum _PublishedBarOrBazOrFoo {
   PublishedFoo
 }
 
-enum _AdminBarOrBaz {
-  AdminBar
-  AdminBaz
+enum _BarOrBaz {
+  Bar
+  Baz
 }
 
-enum _AdminBarOrBazOrFoo {
-  AdminBar
-  AdminBaz
-  AdminFoo
+enum _BarOrBazOrFoo {
+  Bar
+  Baz
+  Foo
 }
 
 type Query {
@@ -5612,8 +5612,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -5622,15 +5622,15 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createBazEntity(entity: AdminBazCreateInput!, publish: Boolean): AdminBazCreatePayload
-  updateBazEntity(entity: AdminBazUpdateInput!, publish: Boolean): AdminBazUpdatePayload
-  upsertBazEntity(entity: AdminBazUpsertInput!, publish: Boolean): AdminBazUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createBazEntity(entity: BazCreateInput!, publish: Boolean): BazCreatePayload
+  updateBazEntity(entity: BazUpdateInput!, publish: Boolean): BazUpdatePayload
+  upsertBazEntity(entity: BazUpsertInput!, publish: Boolean): BazUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -5733,7 +5733,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
@@ -5746,7 +5746,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -5757,40 +5757,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -5805,18 +5805,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -5828,9 +5828,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -5839,9 +5839,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -5857,7 +5857,7 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -5867,7 +5867,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -5878,7 +5878,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -5886,11 +5886,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -5898,11 +5898,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -5910,11 +5910,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -5922,7 +5922,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -5935,47 +5935,47 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -5984,9 +5984,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -6269,7 +6269,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
@@ -6282,7 +6282,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -6293,40 +6293,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -6341,18 +6341,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -6364,9 +6364,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6375,9 +6375,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6393,12 +6393,12 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -6409,7 +6409,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -6417,11 +6417,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -6429,11 +6429,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -6441,11 +6441,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -6453,7 +6453,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -6466,40 +6466,40 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
+  info: EntityCreateInfo!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
+  info: EntityUpdateInfo
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
+  info: EntityUpsertInfo!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
@@ -6510,8 +6510,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -6520,9 +6520,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -6625,7 +6625,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
@@ -6638,7 +6638,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -6649,40 +6649,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -6697,22 +6697,22 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-enum AdminUniqueIndex {
+enum UniqueIndex {
   fooUnique
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -6724,9 +6724,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6735,9 +6735,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -6753,7 +6753,7 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -6763,7 +6763,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -6774,7 +6774,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -6782,11 +6782,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -6794,11 +6794,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -6806,11 +6806,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -6818,7 +6818,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -6831,59 +6831,59 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
+type FooFields {
   bar: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   bar: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
-  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): Entity
+  adminEntity(id: ID, version: Int, index: UniqueIndex, value: String): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -6892,9 +6892,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -7195,7 +7195,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
@@ -7208,7 +7208,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -7219,40 +7219,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -7267,22 +7267,22 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-enum AdminUniqueIndex {
+enum UniqueIndex {
   fooUnique
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -7294,9 +7294,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7305,9 +7305,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7323,12 +7323,12 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -7339,7 +7339,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -7347,11 +7347,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -7359,11 +7359,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -7371,11 +7371,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -7383,7 +7383,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -7396,52 +7396,52 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
+type FooFields {
   bar: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   bar: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
@@ -7450,10 +7450,10 @@ type Query {
   publishedEntity(id: ID, index: PublishedUniqueIndex, value: String): PublishedEntity
   publishedEntities(query: PublishedEntitiesQueryInput, first: Int, after: String, last: Int, before: String): PublishedEntityConnection
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
-  adminEntity(id: ID, version: Int, index: AdminUniqueIndex, value: String): Entity
+  adminEntity(id: ID, version: Int, index: UniqueIndex, value: String): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -7462,9 +7462,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -7567,11 +7567,11 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   ValueOne
 }
 
@@ -7584,7 +7584,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -7595,40 +7595,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -7643,18 +7643,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -7666,10 +7666,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7678,10 +7678,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -7697,11 +7697,11 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -7711,7 +7711,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -7722,7 +7722,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -7730,11 +7730,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -7742,11 +7742,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -7754,11 +7754,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -7766,7 +7766,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -7779,74 +7779,74 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
+type FooFields {
   body: String
   tags: [String!]
-  valueOne: AdminValueOne
+  valueOne: ValueOne
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   body: String
   tags: [String!]
   valueOneJson: String
-  valueOne: AdminValueOneInput
+  valueOne: ValueOneInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   body: String
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -7855,9 +7855,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -7909,7 +7909,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -7979,7 +7979,7 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedValueOne implements PublishedValue {
+type PublishedValueOne implements PublishedComponent {
   type: PublishedComponentType!
   body: String!
 }
@@ -8038,7 +8038,7 @@ interface PublishedEntity implements Node {
   info: PublishedEntityInfo!
 }
 
-interface PublishedValue {
+interface PublishedComponent {
   type: PublishedComponentType!
 }
 
@@ -8108,7 +8108,7 @@ type PublishedFoo implements Node & PublishedEntity {
   fields: PublishedFooFields!
 }
 
-type PublishedValueOne implements PublishedValue {
+type PublishedValueOne implements PublishedComponent {
   type: PublishedComponentType!
   body: String!
 }
@@ -8184,11 +8184,11 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
-enum AdminComponentType {
+enum ComponentType {
   ValueOne
 }
 
@@ -8201,7 +8201,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -8212,40 +8212,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -8260,18 +8260,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -8283,10 +8283,10 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -8295,10 +8295,10 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
-  componentTypes: [AdminComponentType!]
+  entityTypes: [EntityType!]
+  componentTypes: [ComponentType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -8314,16 +8314,16 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-interface AdminValue {
-  type: AdminComponentType!
+interface Component {
+  type: ComponentType!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -8334,7 +8334,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -8342,11 +8342,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -8354,11 +8354,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -8366,11 +8366,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -8378,7 +8378,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -8391,66 +8391,66 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
+type FooFields {
   body: String
   tags: [String!]
-  valueOne: AdminValueOne
+  valueOne: ValueOne
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   body: String
   tags: [String!]
   valueOneJson: String
-  valueOne: AdminValueOneInput
+  valueOne: ValueOneInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
-type AdminValueOne implements AdminValue {
-  type: AdminComponentType!
+type ValueOne implements Component {
+  type: ComponentType!
   body: String
 }
 
-input AdminValueOneInput {
-  type: AdminComponentType!
+input ValueOneInput {
+  type: ComponentType!
   body: String
 }
 
@@ -8462,8 +8462,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -8472,9 +8472,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -8577,7 +8577,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
@@ -8590,7 +8590,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -8601,40 +8601,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -8649,18 +8649,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -8672,9 +8672,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -8683,9 +8683,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -8701,7 +8701,7 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -8711,7 +8711,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -8722,7 +8722,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -8730,11 +8730,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -8742,11 +8742,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -8754,11 +8754,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -8766,7 +8766,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -8779,59 +8779,59 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  body: AdminRichText
+type FooFields {
+  body: RichText
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
-  body: AdminRichTextInput
+input FooFieldsInput {
+  body: RichTextInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -8840,9 +8840,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -9135,7 +9135,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Foo
 }
 
@@ -9148,7 +9148,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -9159,40 +9159,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -9207,18 +9207,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -9230,9 +9230,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9241,9 +9241,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9259,12 +9259,12 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -9275,7 +9275,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -9283,11 +9283,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -9295,11 +9295,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -9307,11 +9307,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -9319,7 +9319,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -9332,52 +9332,52 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminFooFields {
-  body: AdminRichText
+type FooFields {
+  body: RichText
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
-  body: AdminRichTextInput
+input FooFieldsInput {
+  body: RichTextInput
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
@@ -9388,8 +9388,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -9398,9 +9398,9 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -9503,7 +9503,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
@@ -9517,7 +9517,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -9528,40 +9528,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -9576,18 +9576,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -9599,9 +9599,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9610,9 +9610,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -9628,7 +9628,7 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
@@ -9638,7 +9638,7 @@ The \`JSONObject\` scalar type represents JSON objects as specified by [ECMA-404
 """
 scalar JSONObject
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -9649,7 +9649,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -9657,11 +9657,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -9669,11 +9669,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -9681,11 +9681,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -9693,7 +9693,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -9706,7 +9706,7 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBarFields {
+type BarFields {
   barField1: String
   barField2: Entity
   barField3: Location
@@ -9716,106 +9716,106 @@ type AdminBarFields {
 """Geographic location using EPSG:4326/WGS 84"""
 scalar Location
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminBarFields!
+  fields: BarFields!
 }
 
-input AdminBarFieldsInput {
+input BarFieldsInput {
   barField1: String
   barField2: EntityReferenceInput
   barField3: Location
   barField4: Boolean
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityCreateInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminBarFieldsInput!
+  info: EntityUpdateInfo
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityUpsertInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
+type FooFields {
   fooField: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   fooField: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -9824,12 +9824,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload
@@ -10156,7 +10156,7 @@ type EntityChangelogEventConnection {
   totalCount: Int!
 }
 
-enum AdminEntityType {
+enum EntityType {
   Bar
   Foo
 }
@@ -10170,7 +10170,7 @@ enum EntityStatus {
 }
 
 type EntityInfo {
-  type: AdminEntityType!
+  type: EntityType!
   name: String!
   version: Int!
   authKey: String!
@@ -10181,40 +10181,40 @@ type EntityInfo {
   updatedAt: DateTime!
 }
 
-input AdminEntityCreateInfo {
-  type: AdminEntityType
+input EntityCreateInfo {
+  type: EntityType
   name: String!
   version: Int
   authKey: String
 }
 
-enum AdminEntityCreateEffect {
+enum EntityCreateEffect {
   created
   createdAndPublished
   none
 }
 
-input AdminEntityUpdateInfo {
-  type: AdminEntityType
+input EntityUpdateInfo {
+  type: EntityType
   name: String
   version: Int
   authKey: String
 }
 
-enum AdminEntityUpdateEffect {
+enum EntityUpdateEffect {
   updated
   updatedAndPublished
   published
   none
 }
 
-input AdminEntityUpsertInfo {
-  type: AdminEntityType!
+input EntityUpsertInfo {
+  type: EntityType!
   name: String!
   authKey: String
 }
 
-enum AdminEntityUpsertEffect {
+enum EntityUpsertEffect {
   created
   createdAndPublished
   updated
@@ -10229,18 +10229,18 @@ interface Entity {
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
-type AdminEntityEdge {
+type EntityEdge {
   node: Entity
   cursor: String!
 }
 
-type AdminEntityConnection {
+type EntityConnection {
   pageInfo: PageInfo!
-  edges: [AdminEntityEdge]
+  edges: [EntityEdge]
   totalCount: Int!
 }
 
-type AdminEntitySamplingPayload {
+type EntitySamplingPayload {
   seed: Int!
   totalCount: Int!
   items: [Entity]
@@ -10252,9 +10252,9 @@ enum EntityQueryOrder {
   name
 }
 
-input AdminEntitiesSharedQueryInput {
+input EntitySharedQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -10263,9 +10263,9 @@ input AdminEntitiesSharedQueryInput {
   text: String
 }
 
-input AdminEntitiesQueryInput {
+input EntityQueryInput {
   authKeys: [String!]
-  entityTypes: [AdminEntityType!]
+  entityTypes: [EntityType!]
   status: [EntityStatus!]
   valid: Boolean
   linksTo: EntityReferenceInput
@@ -10281,12 +10281,12 @@ input EntityVersionReferenceInput {
   version: Int!
 }
 
-type AdminRichText {
+type RichText {
   root: JSONObject!
   entities: [Entity]
 }
 
-input AdminRichTextInput {
+input RichTextInput {
   root: JSONObject!
 }
 
@@ -10297,7 +10297,7 @@ type EntityVersionInfo {
   createdAt: DateTime!
 }
 
-enum AdminEntityPublishEffect {
+enum EntityPublishEffect {
   published
   none
 }
@@ -10305,11 +10305,11 @@ enum AdminEntityPublishEffect {
 type EntityPublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityPublishEffect!
+  effect: EntityPublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnpublishEffect {
+enum EntityUnpublishEffect {
   unpublished
   none
 }
@@ -10317,11 +10317,11 @@ enum AdminEntityUnpublishEffect {
 type EntityUnpublishPayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnpublishEffect!
+  effect: EntityUnpublishEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityArchiveEffect {
+enum EntityArchiveEffect {
   archived
   none
 }
@@ -10329,11 +10329,11 @@ enum AdminEntityArchiveEffect {
 type EntityArchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityArchiveEffect!
+  effect: EntityArchiveEffect!
   updatedAt: DateTime!
 }
 
-enum AdminEntityUnarchiveEffect {
+enum EntityUnarchiveEffect {
   unarchived
   none
 }
@@ -10341,7 +10341,7 @@ enum AdminEntityUnarchiveEffect {
 type EntityUnarchivePayload {
   id: ID!
   status: EntityStatus!
-  effect: AdminEntityUnarchiveEffect!
+  effect: EntityUnarchiveEffect!
   updatedAt: DateTime!
 }
 
@@ -10354,106 +10354,106 @@ type AdvisoryLockReleasePayload {
   name: String!
 }
 
-type AdminBarFields {
+type BarFields {
   barField1: String
   barField2: Entity
   barField3: Location
   barField4: Boolean
 }
 
-type AdminBar implements Entity {
+type Bar implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminBarFields!
+  fields: BarFields!
 }
 
-input AdminBarFieldsInput {
+input BarFieldsInput {
   barField1: String
   barField2: EntityReferenceInput
   barField3: Location
   barField4: Boolean
 }
 
-input AdminBarCreateInput {
+input BarCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityCreateInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminBar!
+type BarCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpdateInput {
+input BarUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminBarFieldsInput!
+  info: EntityUpdateInfo
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminBar!
+type BarUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Bar!
 }
 
-input AdminBarUpsertInput {
+input BarUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminBarFieldsInput!
+  info: EntityUpsertInfo!
+  fields: BarFieldsInput!
 }
 
-type AdminBarUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminBar!
+type BarUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Bar!
 }
 
-type AdminFooFields {
+type FooFields {
   fooField: String
 }
 
-type AdminFoo implements Entity {
+type Foo implements Entity {
   id: ID!
   info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
-  fields: AdminFooFields!
+  fields: FooFields!
 }
 
-input AdminFooFieldsInput {
+input FooFieldsInput {
   fooField: String
 }
 
-input AdminFooCreateInput {
+input FooCreateInput {
   id: ID
-  info: AdminEntityCreateInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityCreateInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooCreatePayload {
-  effect: AdminEntityCreateEffect!
-  entity: AdminFoo!
+type FooCreatePayload {
+  effect: EntityCreateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpdateInput {
+input FooUpdateInput {
   id: ID!
-  info: AdminEntityUpdateInfo
-  fields: AdminFooFieldsInput!
+  info: EntityUpdateInfo
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpdatePayload {
-  effect: AdminEntityUpdateEffect!
-  entity: AdminFoo!
+type FooUpdatePayload {
+  effect: EntityUpdateEffect!
+  entity: Foo!
 }
 
-input AdminFooUpsertInput {
+input FooUpsertInput {
   id: ID!
-  info: AdminEntityUpsertInfo!
-  fields: AdminFooFieldsInput!
+  info: EntityUpsertInfo!
+  fields: FooFieldsInput!
 }
 
-type AdminFooUpsertPayload {
-  effect: AdminEntityUpsertEffect!
-  entity: AdminFoo!
+type FooUpsertPayload {
+  effect: EntityUpsertEffect!
+  entity: Foo!
 }
 
 type Query {
@@ -10464,8 +10464,8 @@ type Query {
   publishedEntitiesSample(query: PublishedQueryInput, seed: Int, count: Int): PublishedEntitySamplingPayload
   adminEntity(id: ID!, version: Int): Entity
   adminEntityList(ids: [ID!]!): [Entity]
-  adminEntities(query: AdminEntitiesQueryInput, first: Int, after: String, last: Int, before: String): AdminEntityConnection
-  adminEntitiesSample(query: AdminEntitiesSharedQueryInput, seed: Int, count: Int): AdminEntitySamplingPayload
+  adminEntities(query: EntityQueryInput, first: Int, after: String, last: Int, before: String): EntityConnection
+  adminEntitiesSample(query: EntitySharedQueryInput, seed: Int, count: Int): EntitySamplingPayload
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): ChangelogEventConnection
 }
 
@@ -10474,12 +10474,12 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
-  createBarEntity(entity: AdminBarCreateInput!, publish: Boolean): AdminBarCreatePayload
-  updateBarEntity(entity: AdminBarUpdateInput!, publish: Boolean): AdminBarUpdatePayload
-  upsertBarEntity(entity: AdminBarUpsertInput!, publish: Boolean): AdminBarUpsertPayload
-  createFooEntity(entity: AdminFooCreateInput!, publish: Boolean): AdminFooCreatePayload
-  updateFooEntity(entity: AdminFooUpdateInput!, publish: Boolean): AdminFooUpdatePayload
-  upsertFooEntity(entity: AdminFooUpsertInput!, publish: Boolean): AdminFooUpsertPayload
+  createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
+  updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
+  upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
+  createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
+  updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
+  upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
   acquireAdvisoryLock(name: String!, leaseDuration: Int!): AdvisoryLockPayload
   renewAdvisoryLock(name: String!, handle: Int!): AdvisoryLockPayload
   releaseAdvisoryLock(name: String!, handle: Int!): AdvisoryLockReleasePayload

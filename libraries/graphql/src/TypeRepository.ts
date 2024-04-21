@@ -105,7 +105,7 @@ export class TypeRepository {
 
   getOrCreateValueUnion(isAdmin: boolean, names: string[]): GraphQLOutputType {
     if (names.length === 0) {
-      return this.getOutputType(toAdminTypeName('Value', isAdmin));
+      return this.getOutputType(toAdminTypeName('Component', isAdmin));
     }
 
     // Remove duplicates, sort alphabetically

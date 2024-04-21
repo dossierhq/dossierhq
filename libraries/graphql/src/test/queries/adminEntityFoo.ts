@@ -15,7 +15,7 @@ type Variables = {
 type Payload = any;
 
 const QUERY = gql`
-  query Entity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+  query Entity($id: ID, $version: Int, $index: UniqueIndex, $value: String) {
     adminEntity(id: $id, version: $version, index: $index, value: $value) {
       __typename
       id
@@ -28,7 +28,7 @@ const QUERY = gql`
         valid
         validPublished
       }
-      ... on AdminQueryAdminFoo {
+      ... on QueryAdminFoo {
         fields {
           title
           slug

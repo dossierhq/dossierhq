@@ -249,7 +249,7 @@ describe('adminEntity()', () => {
     expect(result).toEqual({
       data: {
         adminEntity: {
-          __typename: 'AdminQueryAdminFoo',
+          __typename: 'QueryAdminFoo',
           id,
           info: {
             version: 1,
@@ -300,7 +300,7 @@ describe('adminEntity()', () => {
       expect(result).toEqual({
         data: {
           adminEntity: {
-            __typename: 'AdminQueryAdminFoo',
+            __typename: 'QueryAdminFoo',
             id,
             info: {
               version: 1,
@@ -348,7 +348,7 @@ describe('adminEntity()', () => {
       expect(result).toEqual({
         data: {
           adminEntity: {
-            __typename: 'AdminQueryAdminFoo',
+            __typename: 'QueryAdminFoo',
             id,
             info: {
               type: 'QueryAdminFoo',
@@ -399,7 +399,7 @@ describe('adminEntity()', () => {
               info {
                 version
               }
-              ... on AdminQueryAdminFoo {
+              ... on QueryAdminFoo {
                 fields {
                   title
                   summary
@@ -411,7 +411,7 @@ describe('adminEntity()', () => {
               info {
                 version
               }
-              ... on AdminQueryAdminFoo {
+              ... on QueryAdminFoo {
                 fields {
                   title
                   summary
@@ -423,7 +423,7 @@ describe('adminEntity()', () => {
               info {
                 version
               }
-              ... on AdminQueryAdminFoo {
+              ... on QueryAdminFoo {
                 fields {
                   title
                   summary
@@ -435,7 +435,7 @@ describe('adminEntity()', () => {
               info {
                 version
               }
-              ... on AdminQueryAdminFoo {
+              ... on QueryAdminFoo {
                 fields {
                   title
                   summary
@@ -518,7 +518,7 @@ describe('adminEntity()', () => {
                 authKey
                 status
               }
-              ... on AdminQueryAdminFoo {
+              ... on QueryAdminFoo {
                 fields {
                   title
                   summary
@@ -581,7 +581,7 @@ describe('adminEntity()', () => {
                 name
                 version
               }
-              ... on AdminQueryAdminFoo {
+              ... on QueryAdminFoo {
                 fields {
                   body {
                     root
@@ -602,7 +602,7 @@ describe('adminEntity()', () => {
       expect(result).toEqual({
         data: {
           adminEntity: {
-            __typename: 'AdminQueryAdminFoo',
+            __typename: 'QueryAdminFoo',
             id: fooId,
             info: {
               type: 'QueryAdminFoo',
@@ -676,7 +676,7 @@ describe('adminEntity()', () => {
                   name
                   version
                 }
-                ... on AdminQueryAdminFoo {
+                ... on QueryAdminFoo {
                   fields {
                     body {
                       root
@@ -698,7 +698,7 @@ describe('adminEntity()', () => {
         expect(result).toEqual({
           data: {
             adminEntity: {
-              __typename: 'AdminQueryAdminFoo',
+              __typename: 'QueryAdminFoo',
               id: fooId,
               info: {
                 type: 'QueryAdminFoo',
@@ -759,7 +759,7 @@ describe('adminEntity()', () => {
                   name
                   version
                 }
-                ... on AdminQueryAdminFoo {
+                ... on QueryAdminFoo {
                   fields {
                     title
                     bar {
@@ -784,7 +784,7 @@ describe('adminEntity()', () => {
         expect(result).toEqual({
           data: {
             adminEntity: {
-              __typename: 'AdminQueryAdminFoo',
+              __typename: 'QueryAdminFoo',
               id: fooId,
               info: {
                 type: 'QueryAdminFoo',
@@ -794,7 +794,7 @@ describe('adminEntity()', () => {
               fields: {
                 title: 'Foo title',
                 bar: {
-                  __typename: 'AdminQueryAdminBar',
+                  __typename: 'QueryAdminBar',
                   id: barId,
                   info: {
                     type: 'QueryAdminBar',
@@ -855,7 +855,7 @@ describe('adminEntity()', () => {
               adminEntity(id: $id) {
                 __typename
                 id
-                ... on AdminQueryAdminFoo {
+                ... on QueryAdminFoo {
                   info {
                     name
                   }
@@ -884,20 +884,20 @@ describe('adminEntity()', () => {
         expect(result).toEqual({
           data: {
             adminEntity: {
-              __typename: 'AdminQueryAdminFoo',
+              __typename: 'QueryAdminFoo',
               id: fooId,
               info: { name: fooName },
               fields: {
                 title: 'Foo title',
                 bars: [
                   {
-                    __typename: 'AdminQueryAdminBar',
+                    __typename: 'QueryAdminBar',
                     id: bar1Id,
                     info: { name: bar1Name },
                     fields: { title: 'Bar 1 title' },
                   },
                   {
-                    __typename: 'AdminQueryAdminBar',
+                    __typename: 'QueryAdminBar',
                     id: bar2Id,
                     info: { name: bar2Name },
                     fields: { title: 'Bar 2 title' },
@@ -956,7 +956,7 @@ describe('adminEntity()', () => {
                   name
                   version
                 }
-                ... on AdminQueryAdminFoo {
+                ... on QueryAdminFoo {
                   fields {
                     title
                     stringedBar {
@@ -988,7 +988,7 @@ describe('adminEntity()', () => {
         expect(result).toEqual({
           data: {
             adminEntity: {
-              __typename: 'AdminQueryAdminFoo',
+              __typename: 'QueryAdminFoo',
               id: fooId,
               info: {
                 type: 'QueryAdminFoo',
@@ -998,11 +998,11 @@ describe('adminEntity()', () => {
               fields: {
                 title: 'Foo title',
                 stringedBar: {
-                  __typename: 'AdminQueryAdminStringedBar',
+                  __typename: 'QueryAdminStringedBar',
                   type: 'QueryAdminStringedBar',
                   text: 'Stringed text',
                   bar: {
-                    __typename: 'AdminQueryAdminBar',
+                    __typename: 'QueryAdminBar',
                     id: barId,
                     info: {
                       type: 'QueryAdminBar',
@@ -1125,7 +1125,7 @@ GraphQL request:3:11
         "Either (id), (id and version) or (index and value) must be specified
 
       GraphQL request:3:5
-      2 |   query Entity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      2 |   query Entity($id: ID, $version: Int, $index: UniqueIndex, $value: String) {
       3 |     adminEntity(id: $id, version: $version, index: $index, value: $value) {
         |     ^
       4 |       __typename",
@@ -1142,7 +1142,7 @@ GraphQL request:3:11
         "Either (id), (id and version) or (index and value) must be specified
 
       GraphQL request:3:5
-      2 |   query Entity($id: ID, $version: Int, $index: AdminUniqueIndex, $value: String) {
+      2 |   query Entity($id: ID, $version: Int, $index: UniqueIndex, $value: String) {
       3 |     adminEntity(id: $id, version: $version, index: $index, value: $value) {
         |     ^
       4 |       __typename",
@@ -1219,7 +1219,7 @@ describe('adminEntityList()', () => {
         data: {
           adminEntityList: [
             {
-              __typename: 'AdminQueryAdminFoo',
+              __typename: 'QueryAdminFoo',
               id: foo1Id,
               info: {
                 type: 'QueryAdminFoo',
@@ -1229,7 +1229,7 @@ describe('adminEntityList()', () => {
               },
             },
             {
-              __typename: 'AdminQueryAdminFoo',
+              __typename: 'QueryAdminFoo',
               id: foo2Id,
               info: {
                 type: 'QueryAdminFoo',
@@ -1342,7 +1342,7 @@ describe('searchAdminEntities()', () => {
     const result = (await graphql({
       schema,
       source: gql`
-        query Search($entityTypes: [AdminEntityType!]) {
+        query Search($entityTypes: [EntityType!]) {
           adminEntities(query: { entityTypes: $entityTypes }) {
             edges {
               node {
