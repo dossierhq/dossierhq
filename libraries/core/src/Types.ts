@@ -166,11 +166,11 @@ export interface AdminEntity<
 > {
   /** UUID */
   id: string;
-  info: AdminEntityInfo<TType, TAuthKey>;
+  info: EntityInfo<TType, TAuthKey>;
   fields: TFields;
 }
 
-export interface AdminEntityInfo<TType extends string = string, TAuthKey extends string = string> {
+export interface EntityInfo<TType extends string = string, TAuthKey extends string = string> {
   type: TType;
   name: string;
   version: number;

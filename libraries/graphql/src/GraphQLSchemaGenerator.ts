@@ -458,10 +458,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
-    // AdminEntityInfo
+    // EntityInfo
     this.addType(
       new GraphQLObjectType({
-        name: 'AdminEntityInfo',
+        name: 'EntityInfo',
         fields: {
           type: { type: new GraphQLNonNull(this.getOutputType('AdminEntityType')) },
           name: { type: new GraphQLNonNull(GraphQLString) },
@@ -560,7 +560,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         name: 'AdminEntity',
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
-          info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
+          info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
           changelogEvents: {
             type: this.getOutputType('EntityChangelogEventConnection'),
             args: {
@@ -1025,7 +1025,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
         fields: () => {
           const fields: GraphQLFieldConfigMap<AdminEntity, TContext> = {
             id: { type: new GraphQLNonNull(GraphQLID) },
-            info: { type: new GraphQLNonNull(this.getOutputType('AdminEntityInfo')) },
+            info: { type: new GraphQLNonNull(this.getOutputType('EntityInfo')) },
             changelogEvents: {
               type: this.getOutputType('EntityChangelogEventConnection'),
               args: {

@@ -114,7 +114,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -170,7 +170,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -316,7 +316,7 @@ type AdminBarFields {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
@@ -364,7 +364,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -785,7 +785,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -841,7 +841,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -982,7 +982,7 @@ type AdminBarFields {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
@@ -1030,7 +1030,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -1234,7 +1234,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -1290,7 +1290,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -1436,7 +1436,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -1830,7 +1830,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -1886,7 +1886,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -2027,7 +2027,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -2221,7 +2221,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -2277,7 +2277,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -2419,7 +2419,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -2462,7 +2462,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -2989,7 +2989,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -3045,7 +3045,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -3182,7 +3182,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -3225,7 +3225,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -3511,7 +3511,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -3567,7 +3567,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -3703,7 +3703,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -3751,7 +3751,7 @@ scalar Location
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -4150,7 +4150,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -4206,7 +4206,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -4337,7 +4337,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -4382,7 +4382,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -4569,7 +4569,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -4625,7 +4625,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -4761,7 +4761,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -4797,7 +4797,7 @@ type AdminBarUpsertPayload {
 
 type AdminBaz implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -4841,7 +4841,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -5269,7 +5269,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -5325,7 +5325,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -5456,7 +5456,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -5492,7 +5492,7 @@ type AdminBarUpsertPayload {
 
 type AdminBaz implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -5536,7 +5536,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -5745,7 +5745,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -5801,7 +5801,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -5937,7 +5937,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -6281,7 +6281,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -6337,7 +6337,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -6468,7 +6468,7 @@ type AdvisoryLockReleasePayload {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -6637,7 +6637,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -6693,7 +6693,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -6837,7 +6837,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -7207,7 +7207,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -7263,7 +7263,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -7402,7 +7402,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -7583,7 +7583,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -7639,7 +7639,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -7787,7 +7787,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -8200,7 +8200,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -8256,7 +8256,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -8399,7 +8399,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -8589,7 +8589,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -8645,7 +8645,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -8785,7 +8785,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -9147,7 +9147,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -9203,7 +9203,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -9338,7 +9338,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -9516,7 +9516,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -9572,7 +9572,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -9718,7 +9718,7 @@ scalar Location
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
@@ -9769,7 +9769,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }
@@ -10169,7 +10169,7 @@ enum EntityStatus {
   archived
 }
 
-type AdminEntityInfo {
+type EntityInfo {
   type: AdminEntityType!
   name: String!
   version: Int!
@@ -10225,7 +10225,7 @@ enum AdminEntityUpsertEffect {
 
 interface AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
 }
 
@@ -10363,7 +10363,7 @@ type AdminBarFields {
 
 type AdminBar implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminBarFields!
 }
@@ -10414,7 +10414,7 @@ type AdminFooFields {
 
 type AdminFoo implements AdminEntity {
   id: ID!
-  info: AdminEntityInfo!
+  info: EntityInfo!
   changelogEvents(query: ChangelogEventQueryInput, first: Int, after: String, last: Int, before: String): EntityChangelogEventConnection
   fields: AdminFooFields!
 }

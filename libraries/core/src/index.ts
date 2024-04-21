@@ -16,15 +16,14 @@ export {
 } from './ErrorResult.js';
 export { NoOpLogger, createConsoleLogger, type Logger, type LoggerContext } from './Logger.js';
 export {
-  EntityStatus,
   EntityQueryOrder,
+  EntityStatus,
   PublishedEntityQueryOrder,
   RichTextNodeType,
   type AdminEntity,
   type AdminEntityArchivePayload,
   type AdminEntityCreate,
   type AdminEntityCreatePayload,
-  type AdminEntityInfo,
   type AdminEntityMutationOptions,
   type AdminEntityProcessDirtyPayload,
   type AdminEntityPublishPayload,
@@ -44,6 +43,7 @@ export {
   type Component,
   type Connection,
   type Edge,
+  type EntityInfo,
   type EntityLike,
   type EntityReference,
   type EntitySamplingOptions,

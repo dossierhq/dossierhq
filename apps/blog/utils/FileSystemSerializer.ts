@@ -8,7 +8,7 @@ import {
   type AdminClientMiddleware,
   type AdminClientOperation,
   type AdminEntity,
-  type AdminEntityInfo,
+  type EntityInfo,
   type SchemaSpecification,
   type JsonSyncEvent,
   type OkFromResult,
@@ -96,9 +96,9 @@ function createCleanedUpEntity(adminSchema: Schema, entity: AdminEntity<string, 
   const copy = structuredClone(entity);
 
   // Remove unnecessary fields
-  delete (copy.info as Partial<AdminEntityInfo>).createdAt;
-  delete (copy.info as Partial<AdminEntityInfo>).updatedAt;
-  delete (copy.info as Partial<AdminEntityInfo>).version;
+  delete (copy.info as Partial<EntityInfo>).createdAt;
+  delete (copy.info as Partial<EntityInfo>).updatedAt;
+  delete (copy.info as Partial<EntityInfo>).version;
 
   for (const node of traverseEntity(adminSchema, [], copy as AdminEntity)) {
     switch (node.type) {

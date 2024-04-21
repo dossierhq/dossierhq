@@ -3,7 +3,7 @@ import { createErrorResult, ok } from '../ErrorResult.js';
 import type {
   AdminEntity,
   AdminEntityCreatePayload,
-  AdminEntityInfo,
+  EntityInfo,
   AdminEntityPublishingPayload,
   AdminEntityUpdatePayload,
   AdminEntityUpsertPayload,
@@ -39,7 +39,7 @@ export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
 
-export interface JsonAdminEntityInfo extends Omit<AdminEntityInfo, 'createdAt' | 'updatedAt'> {
+export interface JsonAdminEntityInfo extends Omit<EntityInfo, 'createdAt' | 'updatedAt'> {
   createdAt: string;
   updatedAt: string;
 }

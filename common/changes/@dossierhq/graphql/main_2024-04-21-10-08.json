@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/graphql",
+      "comment": "Rename AdminEntityInfo to EntityInfo",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/graphql"
+}
