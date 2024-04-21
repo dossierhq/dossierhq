@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "Break: Rename Button.Group to ButtonGroup",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}
