@@ -13,7 +13,7 @@ import {
   createRichTextTextNode,
 } from './RichTextUtils.js';
 
-const adminSchema = Schema.createAndValidate({
+const schema = Schema.createAndValidate({
   entityTypes: [
     {
       name: 'BooleansEntity',
@@ -86,7 +86,7 @@ const adminSchema = Schema.createAndValidate({
   ],
 }).valueOrThrow();
 
-const publishedSchema = adminSchema.toPublishedSchema();
+const publishedSchema = schema.toPublishedSchema();
 
 type CollectedNode = { type: ContentTraverseNodeType } & Record<string, unknown>;
 
@@ -124,7 +124,7 @@ function filterErrorTraverseNodes(nodes: CollectedNode[]) {
 describe('traverseEntity', () => {
   test('Empty Foo entity', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], { info: { type: 'Foo' }, fields: {} }),
+      traverseEntity(schema, ['entity'], { info: { type: 'Foo' }, fields: {} }),
     );
     expect(nodes).toMatchSnapshot();
   });
@@ -153,13 +153,13 @@ describe('traverseEntity', () => {
       fields: { string: 'hello', stringList: ['1', '2'] },
     };
 
-    const nodes = collectTraverseNodes(traverseEntity(adminSchema, ['entity'], entity));
+    const nodes = collectTraverseNodes(traverseEntity(schema, ['entity'], entity));
     expect(nodes).toMatchSnapshot();
   });
 
   test('Foo with two strings in list', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: { stringList: ['string1', 'string2'] },
       }),
@@ -169,7 +169,7 @@ describe('traverseEntity', () => {
 
   test('Foo entity with TwoStrings components', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
           string: 'string1',
@@ -183,7 +183,7 @@ describe('traverseEntity', () => {
 
   test('Foo entity with rich text with TwoStrings component', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'Foo' },
         fields: {
           richText: createRichText([
@@ -207,7 +207,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect boolean, get boolean[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'BooleansEntity' },
         fields: {
           boolean: [true, false],
@@ -228,7 +228,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect boolean[], get boolean', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'BooleansEntity' },
         fields: {
           booleanList: true,
@@ -249,7 +249,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect boolean, get string', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'BooleansEntity' },
         fields: {
           boolean: 'string value',
@@ -270,7 +270,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect entity, get entity[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'ReferencesEntity' },
         fields: { entity: [{ id: 'id1' }, { id: 'id2' }] },
       }),
@@ -289,7 +289,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect entity[], get entity', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'ReferencesEntity' },
         fields: { entitiesList: { id: '123' } },
       }),
@@ -300,7 +300,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect entity, get string', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'ReferencesEntity' },
         fields: {
           entity: 'string value',
@@ -321,7 +321,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect location, get location[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'LocationsEntity' },
         fields: { location: [{ lat: 1, lng: 2 }] },
       }),
@@ -340,7 +340,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect location[], get location', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'LocationsEntity' },
         fields: { locationList: { lat: 1, lng: 2 } },
       }),
@@ -359,7 +359,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect location, get other', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'LocationsEntity' },
         fields: { location: 'string value', locationList: [{}, { lat: '123', lng: 123 }] },
       }),
@@ -388,7 +388,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect number, get number[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'NumbersEntity' },
         fields: { number: [1, 2, 3] },
       }),
@@ -407,7 +407,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect number[], get number', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'NumbersEntity' },
         fields: { numberList: 123 },
       }),
@@ -426,7 +426,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect number, get other', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'NumbersEntity' },
         fields: { number: 'string value' },
       }),
@@ -445,7 +445,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect richText, get richText[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'RichTextsEntity' },
         fields: {
           richText: [
@@ -468,7 +468,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect richText[], get richText', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'RichTextsEntity' },
         fields: {
           richTextList: createRichText([
@@ -491,7 +491,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect richText, get other', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'RichTextsEntity' },
         fields: { richText: 'string value' },
       }),
@@ -510,7 +510,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect string, get string[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'StringsEntity' },
         fields: { string: ['string1', 'string2'] },
       }),
@@ -529,7 +529,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect string[], get string', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'StringsEntity' },
         fields: { stringList: 'one string' },
       }),
@@ -548,7 +548,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect string, get other', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'StringsEntity' },
         fields: { string: 1 },
       }),
@@ -567,7 +567,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect component, get component[]', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'ComponentsEntity' },
         fields: { component: [{ type: 'TwoStrings' }] },
       }),
@@ -586,7 +586,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect component[], get component', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'ComponentsEntity' },
         fields: { componentList: { type: 'TwoStrings' } },
       }),
@@ -605,7 +605,7 @@ describe('traverseEntity', () => {
 
   test('traversable: expect component, get other', () => {
     const nodes = collectTraverseNodes(
-      traverseEntity(adminSchema, ['entity'], {
+      traverseEntity(schema, ['entity'], {
         info: { type: 'ComponentsEntity' },
         fields: { component: 'string value', componentList: [{ lat: 1, lng: 2 }] },
       }),
@@ -631,15 +631,13 @@ describe('traverseEntity', () => {
 describe('traverseComponent', () => {
   test('Empty TwoStrings component', () => {
     const nodes = collectTraverseNodes(
-      traverseComponent(adminSchema, ['component'], { type: 'TwoStrings' }),
+      traverseComponent(schema, ['component'], { type: 'TwoStrings' }),
     );
     expect(nodes).toMatchSnapshot();
   });
 
   test('No type', () => {
-    const nodes = collectTraverseNodes(
-      traverseComponent(adminSchema, ['component'], {} as Component),
-    );
+    const nodes = collectTraverseNodes(traverseComponent(schema, ['component'], {} as Component));
     expect(nodes).toMatchSnapshot();
   });
 });

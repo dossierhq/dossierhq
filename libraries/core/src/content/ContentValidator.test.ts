@@ -24,7 +24,7 @@ import {
   createRichTextTextNode,
 } from './RichTextUtils.js';
 
-const adminSchema = Schema.createAndValidate({
+const schema = Schema.createAndValidate({
   entityTypes: [
     { name: 'ReferencesEntity', fields: [{ name: 'normal', type: FieldType.Reference }] },
     {
@@ -137,23 +137,19 @@ const VALUE_ITEMS_ENTITY_CREATE_DEFAULT: EntityCreate = {
 function validateEntity(entity: EntityLike, options?: ContentNormalizerEntityFieldsOptions) {
   const normalizedEntity = {
     ...entity,
-    fields: normalizeEntityFields(adminSchema, ['entity'], entity, options).valueOrThrow(),
+    fields: normalizeEntityFields(schema, ['entity'], entity, options).valueOrThrow(),
   };
 
   const errors: (SaveValidationIssue | PublishValidationIssue)[] = [];
-  for (const node of traverseEntity(adminSchema, ['entity'], normalizedEntity)) {
-    const error = validateTraverseNodeForSave(adminSchema, node);
+  for (const node of traverseEntity(schema, ['entity'], normalizedEntity)) {
+    const error = validateTraverseNodeForSave(schema, node);
     if (error) {
       errors.push(error);
     }
   }
 
-  for (const node of traverseEntity(
-    adminSchema.toPublishedSchema(),
-    ['entity'],
-    normalizedEntity,
-  )) {
-    const error = validateTraverseNodeForPublish(adminSchema, node);
+  for (const node of traverseEntity(schema.toPublishedSchema(), ['entity'], normalizedEntity)) {
+    const error = validateTraverseNodeForPublish(schema, node);
     if (error) {
       errors.push(error);
     }
@@ -166,7 +162,7 @@ describe('validateEntityInfo', () => {
   test('no type', () => {
     expect(
       validateEntityInfo(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: '' } }),
       ),
@@ -176,7 +172,7 @@ describe('validateEntityInfo', () => {
   test('invalid type', () => {
     expect(
       validateEntityInfo(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_DEFAULT, { info: { type: 'InvalidType' } }),
       ),
@@ -186,7 +182,7 @@ describe('validateEntityInfo', () => {
   test('no authKey', () => {
     expect(
       validateEntityInfo(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: null as unknown as string } }),
       ),
@@ -196,7 +192,7 @@ describe('validateEntityInfo', () => {
   test('authKey not matching pattern', () => {
     expect(
       validateEntityInfo(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_DEFAULT, { info: { authKey: 'something else' } }),
       ),
@@ -206,7 +202,7 @@ describe('validateEntityInfo', () => {
   test('no name', () => {
     expect(
       validateEntityInfo(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: '' } }),
       ),
@@ -216,7 +212,7 @@ describe('validateEntityInfo', () => {
   test('name with line break', () => {
     expect(
       validateEntityInfo(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_DEFAULT, { info: { name: 'Hello\nworld' } }),
       ),
@@ -227,7 +223,7 @@ describe('validateEntityInfo', () => {
 describe('validateEntityInfoForCreate', () => {
   test('no type', () => {
     expect(
-      validateEntityInfoForCreate(adminSchema, ['entity'], {
+      validateEntityInfoForCreate(schema, ['entity'], {
         info: { type: '', name: 'No type' },
         fields: {},
       }),
@@ -237,7 +233,7 @@ describe('validateEntityInfoForCreate', () => {
   test('invalid type', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { type: 'InvalidType' } }),
       ),
@@ -247,7 +243,7 @@ describe('validateEntityInfoForCreate', () => {
   test('valid: no authKey (undefined)', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: undefined } }),
       ),
@@ -257,7 +253,7 @@ describe('validateEntityInfoForCreate', () => {
   test('valid: no authKey (null)', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: null } }),
       ),
@@ -267,7 +263,7 @@ describe('validateEntityInfoForCreate', () => {
   test('authKey not matching pattern', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { authKey: 'something else' } }),
       ),
@@ -277,7 +273,7 @@ describe('validateEntityInfoForCreate', () => {
   test('no name', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: '' } }),
       ),
@@ -287,7 +283,7 @@ describe('validateEntityInfoForCreate', () => {
   test('name with line break', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: 'Hello\nworld' } }),
       ),
@@ -297,7 +293,7 @@ describe('validateEntityInfoForCreate', () => {
   test('invalid version', () => {
     expect(
       validateEntityInfoForCreate(
-        adminSchema,
+        schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { version: 0 as 1 } }),
       ),
@@ -400,7 +396,7 @@ describe('validateEntityInfoForUpdate', () => {
 describe('validateTraverseNodeForSave', () => {
   test('error', () => {
     expect(
-      validateTraverseNodeForSave(adminSchema, {
+      validateTraverseNodeForSave(schema, {
         type: 'error',
         path: ['entity', 'foo'],
         errorType: ContentTraverseNodeErrorType.generic,

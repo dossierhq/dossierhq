@@ -14,7 +14,7 @@ import {
 import { isRichTextComponentNode, isComponentItemField } from './ContentTypeUtils.js';
 import { copyEntity } from './ContentUtils.js';
 
-const ADMIN_SCHEMA = SchemaWithMigrations.createAndValidate({
+const SCHEMA = SchemaWithMigrations.createAndValidate({
   entityTypes: [
     {
       name: 'StringsEntity',
@@ -72,7 +72,7 @@ const COMPONENTS_ENTITY_1 = Object.freeze({
 describe('transformEntity', () => {
   test('identity', () => {
     const calls: unknown[][] = [];
-    const transformed = transformEntityFields(ADMIN_SCHEMA, [], COMPONENTS_ENTITY_1, {
+    const transformed = transformEntityFields(SCHEMA, [], COMPONENTS_ENTITY_1, {
       transformField: (_schema, path, _fieldSpec, value) => {
         calls.push(['transformField', contentValuePathToString(path)]);
         return ok(value);
@@ -91,7 +91,7 @@ describe('transformEntity', () => {
   });
 
   test('delete all components', () => {
-    const transformed = transformEntityFields(ADMIN_SCHEMA, [], COMPONENTS_ENTITY_1, {
+    const transformed = transformEntityFields(SCHEMA, [], COMPONENTS_ENTITY_1, {
       transformField: (_schema, _path, _fieldSpec, value) => ok(value),
       transformFieldItem: (_schema, _path, fieldSpec, value) => {
         if (isComponentItemField(fieldSpec, value)) return ok(null);
@@ -105,7 +105,7 @@ describe('transformEntity', () => {
 
   test('normalize entity fields: extra', () => {
     const transformed = transformEntityFields(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['entity'],
       copyEntity(STRINGS_ENTITY_1, {
         fields: { extra: 'hello' } as unknown as typeof STRINGS_ENTITY_1.fields,
@@ -117,7 +117,7 @@ describe('transformEntity', () => {
 
   test('normalize entity fields: extra with keepExtraFields', () => {
     const transformed = transformEntityFields(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['entity'],
       copyEntity(STRINGS_ENTITY_1, {
         fields: { extra: 'hello' } as unknown as typeof STRINGS_ENTITY_1.fields,
@@ -130,7 +130,7 @@ describe('transformEntity', () => {
 
   test('normalize list: empty', () => {
     const transformed = transformEntityFields(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['entity'],
       copyEntity(STRINGS_ENTITY_1, { fields: { stringList: [] } }),
       IDENTITY_TRANSFORMER,
@@ -140,7 +140,7 @@ describe('transformEntity', () => {
 
   test('normalize string: empty', () => {
     const transformed = transformEntityFields(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['entity'],
       copyEntity(STRINGS_ENTITY_1, { fields: { string: '' } }),
       IDENTITY_TRANSFORMER,
@@ -158,7 +158,7 @@ describe('transformEntity', () => {
       },
     });
     const transformed = transformEntityFields(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['entity'],
       copy,
       IDENTITY_TRANSFORMER,
@@ -175,13 +175,9 @@ describe('transformEntity', () => {
         } as unknown as typeof COMPONENTS_ENTITY_1.fields.component,
       },
     });
-    const transformed = transformEntityFields(
-      ADMIN_SCHEMA,
-      ['entity'],
-      copy,
-      IDENTITY_TRANSFORMER,
-      { keepExtraFields: true },
-    ).valueOrThrow();
+    const transformed = transformEntityFields(SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER, {
+      keepExtraFields: true,
+    }).valueOrThrow();
     expect(transformed.component).toEqual({
       type: 'NestedComponent',
       child: null,
@@ -192,7 +188,7 @@ describe('transformEntity', () => {
 
   test('error: invalid entity type name', () => {
     const result = transformEntityFields(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['entity'],
       copyEntity(STRINGS_ENTITY_1, { info: { type: 'Invalid' } }),
       IDENTITY_TRANSFORMER,
@@ -210,7 +206,7 @@ describe('transformEntity', () => {
         component: {} as unknown as typeof COMPONENTS_ENTITY_1.fields.component,
       },
     });
-    const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
+    const result = transformEntityFields(SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
     expectErrorResult(
       result,
       ErrorType.BadRequest,
@@ -224,7 +220,7 @@ describe('transformEntity', () => {
         string: ['one', 'two'] as unknown as typeof STRINGS_ENTITY_1.fields.string,
       },
     });
-    const result = transformEntityFields(ADMIN_SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
+    const result = transformEntityFields(SCHEMA, ['entity'], copy, IDENTITY_TRANSFORMER);
     expectErrorResult(
       result,
       ErrorType.BadRequest,
@@ -236,7 +232,7 @@ describe('transformEntity', () => {
 describe('transformComponent', () => {
   test('normalize component: extra field', () => {
     const transformed = transformComponent(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['component'],
       { type: 'NestedComponent', child: null, string: null, extra: 'hello' },
       IDENTITY_TRANSFORMER,
@@ -246,7 +242,7 @@ describe('transformComponent', () => {
 
   test('normalize component: extra field with keepExtraFields', () => {
     const transformed = transformComponent(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['component'],
       { type: 'NestedComponent', child: null, string: null, extra: 'hello' },
       IDENTITY_TRANSFORMER,
@@ -262,7 +258,7 @@ describe('transformComponent', () => {
 
   test('error: invalid type name', () => {
     const transformed = transformComponent(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['component'],
       { type: 'Invalid' },
       IDENTITY_TRANSFORMER,
@@ -276,7 +272,7 @@ describe('transformComponent', () => {
 
   test('error: missing type', () => {
     const transformed = transformComponent(
-      ADMIN_SCHEMA,
+      SCHEMA,
       ['component'],
       {} as Component,
       IDENTITY_TRANSFORMER,

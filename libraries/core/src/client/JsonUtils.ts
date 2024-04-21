@@ -118,7 +118,7 @@ export function convertJsonResult<TOk, TError extends ErrorType>(
   return createErrorResult(jsonResult.error, jsonResult.message);
 }
 
-export function convertJsonAdminEntity(entity: JsonEntity): Entity {
+export function convertJsonEntity(entity: JsonEntity): Entity {
   return {
     ...entity,
     info: {

@@ -45,7 +45,7 @@ import type {
 } from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import {
-  convertJsonAdminEntity,
+  convertJsonEntity,
   convertJsonChangelogEventEdge,
   convertJsonConnection,
   convertJsonEdge,
@@ -1132,7 +1132,7 @@ export function convertJsonAdminClientResult<
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.createEntity> =
         ok({
           ...valueTyped,
-          entity: convertJsonAdminEntity(valueTyped.entity),
+          entity: convertJsonEntity(valueTyped.entity),
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1166,7 +1166,7 @@ export function convertJsonAdminClientResult<
         typeof AdminClientOperationName.getEntitiesSample
       > = ok({
         ...payload,
-        items: payload.items.map((it) => convertJsonAdminEntity(it)),
+        items: payload.items.map((it) => convertJsonEntity(it)),
       });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1175,7 +1175,7 @@ export function convertJsonAdminClientResult<
 
     case AdminClientOperationName.getEntity: {
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
-        convertJsonAdminEntity(value as JsonEntity),
+        convertJsonEntity(value as JsonEntity),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1184,7 +1184,7 @@ export function convertJsonAdminClientResult<
         ok(
           (value as JsonResult<JsonEntity, typeof ErrorType.NotFound>[]).map((jsonItemResult) => {
             const itemResult = convertJsonResult(jsonItemResult);
-            return itemResult.isOk() ? itemResult.map(convertJsonAdminEntity) : itemResult;
+            return itemResult.isOk() ? itemResult.map(convertJsonEntity) : itemResult;
           }),
         );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
@@ -1244,7 +1244,7 @@ export function convertJsonAdminClientResult<
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.updateEntity> =
         ok({
           ...valueTyped,
-          entity: convertJsonAdminEntity(valueTyped.entity),
+          entity: convertJsonEntity(valueTyped.entity),
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1255,7 +1255,7 @@ export function convertJsonAdminClientResult<
       const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.upsertEntity> =
         ok({
           ...valueTyped,
-          entity: convertJsonAdminEntity(valueTyped.entity),
+          entity: convertJsonEntity(valueTyped.entity),
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1270,5 +1270,5 @@ export function convertJsonAdminClientResult<
 }
 
 function convertJsonAdminEntityEdge(edge: JsonEdge<JsonEntity, ErrorType>) {
-  return convertJsonEdge(edge, convertJsonAdminEntity);
+  return convertJsonEdge(edge, convertJsonEntity);
 }
