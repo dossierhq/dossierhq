@@ -1,10 +1,4 @@
 import type {
-  Entity,
-  EntityCreate,
-  EntityUpdate,
-  Component,
-  EntityLike,
-  PublishedEntity,
   RichTextCodeHighlightNode,
   RichTextCodeNode,
   RichTextComponentNode,
@@ -287,20 +281,4 @@ export function isRichTextListItemNode(
   node: RichTextNode,
 ): node is WithRichTextType<RichTextListItemNode, 'listitem'> {
   return node.type === RichTextNodeType.listitem;
-}
-
-export function isComponent(
-  item: Component | PublishedEntity | Entity | EntityCreate | EntityUpdate | EntityLike,
-): item is Component {
-  return 'type' in item;
-}
-
-export function isAdminEntity(item: Component | PublishedEntity | Entity): item is Entity {
-  return !isComponent(item) && 'version' in item.info;
-}
-
-export function isPublishedEntity(
-  item: Component | PublishedEntity | Entity,
-): item is PublishedEntity {
-  return !isComponent(item) && !isAdminEntity(item);
 }

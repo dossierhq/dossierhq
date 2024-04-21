@@ -144,11 +144,9 @@ export {
   type ContentTraverseNode,
 } from './content/ContentTraverser.js';
 export {
-  isAdminEntity,
   isBooleanItemField,
   isBooleanListField,
   isBooleanSingleField,
-  isComponent,
   isComponentItemField,
   isComponentListField,
   isComponentSingleField,
@@ -158,7 +156,6 @@ export {
   isNumberItemField,
   isNumberListField,
   isNumberSingleField,
-  isPublishedEntity,
   isReferenceItemField,
   isReferenceListField,
   isReferenceSingleField,
