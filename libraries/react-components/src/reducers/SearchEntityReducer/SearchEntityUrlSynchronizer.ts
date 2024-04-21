@@ -1,7 +1,7 @@
 import {
   decodeURLSearchParamsParam,
   encodeObjectToURLSearchParams,
-  type AdminEntityQuery,
+  type EntityQuery,
   type EntitySamplingOptions,
   type Paging,
 } from '@dossierhq/core';
@@ -15,7 +15,7 @@ import {
 } from './SearchEntityReducer.js';
 
 interface Params {
-  query: AdminEntityQuery;
+  query: EntityQuery;
   sampling: EntitySamplingOptions | undefined;
   paging: Paging | undefined;
 }

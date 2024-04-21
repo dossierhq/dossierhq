@@ -304,7 +304,7 @@ export interface AdminEntitySharedQuery<
   text?: string;
 }
 
-export interface AdminEntityQuery<
+export interface EntityQuery<
   TEntityType extends string = string,
   TComponentType extends string = string,
   TAuthKey extends string = string,

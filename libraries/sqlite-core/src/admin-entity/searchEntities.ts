@@ -1,4 +1,4 @@
-import type { AdminEntityQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
+import type { EntityQuery, Schema, ErrorType, PromiseResult } from '@dossierhq/core';
 import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
@@ -17,7 +17,7 @@ export async function adminEntitySearchEntities(
   database: Database,
   schema: Schema,
   context: TransactionContext,
-  query: AdminEntityQuery | undefined,
+  query: EntityQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<

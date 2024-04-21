@@ -3,7 +3,7 @@ import {
   PublishedEntityQueryOrder,
   getPagingInfo,
   ok,
-  type AdminEntityQuery,
+  type EntityQuery,
   type AdminEntity,
   type Connection,
   type Edge,
@@ -39,7 +39,7 @@ export interface SearchEntityState {
   restrictLinksFrom: EntityReference | null;
   restrictLinksTo: EntityReference | null;
 
-  query: AdminEntityQuery | PublishedEntityQuery;
+  query: EntityQuery | PublishedEntityQuery;
   paging: Paging | undefined;
   sampling: EntitySamplingOptions | undefined;
   requestedCount: number;
@@ -187,12 +187,12 @@ class SetSamplingAction implements SearchEntityStateAction {
 }
 
 class SetQueryAction implements SearchEntityStateAction {
-  readonly value: AdminEntityQuery | PublishedEntityQuery;
+  readonly value: EntityQuery | PublishedEntityQuery;
   readonly partial: boolean;
   readonly resetPagingIfModifying: boolean;
 
   constructor(
-    value: AdminEntityQuery | PublishedEntityQuery,
+    value: EntityQuery | PublishedEntityQuery,
     { partial, resetPagingIfModifying }: { partial: boolean; resetPagingIfModifying: boolean },
   ) {
     this.value = value;
@@ -201,7 +201,7 @@ class SetQueryAction implements SearchEntityStateAction {
   }
 
   reduce(state: Readonly<SearchEntityState>): Readonly<SearchEntityState> {
-    const query: AdminEntityQuery | PublishedEntityQuery = this.partial
+    const query: EntityQuery | PublishedEntityQuery = this.partial
       ? { ...state.query, ...this.value }
       : { ...this.value };
 
@@ -378,8 +378,8 @@ export const SearchEntityStateActions = {
 
 export function getQueryWithoutDefaults(
   mode: 'admin' | 'published',
-  query: AdminEntityQuery | PublishedEntityQuery,
-): AdminEntityQuery | PublishedEntityQuery {
+  query: EntityQuery | PublishedEntityQuery,
+): EntityQuery | PublishedEntityQuery {
   let changed = false;
   const newQuery = { ...query };
   const defaultValues = DEFAULT_VALUES[mode];

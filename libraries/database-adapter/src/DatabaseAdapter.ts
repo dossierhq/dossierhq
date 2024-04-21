@@ -1,5 +1,5 @@
 import type {
-  AdminEntityQuery,
+  EntityQuery,
   AdminEntitySharedQuery,
   EntityStatus,
   Schema,
@@ -446,7 +446,7 @@ export interface DatabaseAdapter<
   adminEntitySearchEntities(
     schema: Schema,
     context: TransactionContext,
-    query: AdminEntityQuery | undefined,
+    query: EntityQuery | undefined,
     paging: DatabasePagingInfo,
     resolvedAuthKeys: ResolvedAuthKey[],
   ): PromiseResult<

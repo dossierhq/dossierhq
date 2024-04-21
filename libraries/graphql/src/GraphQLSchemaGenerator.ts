@@ -8,7 +8,7 @@ import {
   type ComponentTypeSpecification,
   type AdminEntity,
   type AdminEntityCreate,
-  type AdminEntityQuery,
+  type EntityQuery,
   type AdminEntitySharedQuery,
   type EntityTypeSpecification,
   type AdminEntityUpdate,
@@ -1454,7 +1454,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       TSource,
       TContext,
       {
-        query?: AdminEntityQuery;
+        query?: EntityQuery;
         first?: number;
         after?: string;
         last?: number;

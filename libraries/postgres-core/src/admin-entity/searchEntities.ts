@@ -1,6 +1,6 @@
 import {
   ok,
-  type AdminEntityQuery,
+  type EntityQuery,
   type Schema,
   type ErrorType,
   type PromiseResult,
@@ -22,7 +22,7 @@ export async function adminEntitySearchEntities(
   databaseAdapter: PostgresDatabaseAdapter,
   schema: Schema,
   context: TransactionContext,
-  query: AdminEntityQuery | undefined,
+  query: EntityQuery | undefined,
   paging: DatabasePagingInfo,
   resolvedAuthKeys: ResolvedAuthKey[],
 ): PromiseResult<

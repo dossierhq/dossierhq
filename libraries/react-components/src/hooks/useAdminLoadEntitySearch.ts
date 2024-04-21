@@ -1,5 +1,5 @@
 import type {
-  AdminEntityQuery,
+  EntityQuery,
   AdminEntitySharedQuery,
   AdminEntity,
   Connection,
@@ -27,7 +27,7 @@ export function useAdminLoadEntitySearch(
 
   // search
   const searchQuery = searchEntityState.paging
-    ? (searchEntityState.query as AdminEntityQuery)
+    ? (searchEntityState.query as EntityQuery)
     : undefined;
   const { connection, connectionError } = useAdminEntities(
     adminClient,

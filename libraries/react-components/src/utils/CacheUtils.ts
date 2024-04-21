@@ -2,7 +2,7 @@ import {
   copyEntity,
   type AdminEntity,
   type AdminEntityPublishingPayload,
-  type AdminEntityQuery,
+  type EntityQuery,
   type AdminEntitySharedQuery,
   type SchemaWithMigrations,
   type ChangelogEventQuery,
@@ -33,7 +33,7 @@ export const CACHE_KEYS = {
   ) {
     return ['dossierhq/useAdminEntitiesSample', query, options] as const;
   },
-  adminEntities(query: AdminEntityQuery | undefined, paging: Paging | undefined) {
+  adminEntities(query: EntityQuery | undefined, paging: Paging | undefined) {
     return ['dossierhq/useAdminEntities', query, paging] as const;
   },
   adminEntitiesTotalCount(query: AdminEntitySharedQuery | undefined) {

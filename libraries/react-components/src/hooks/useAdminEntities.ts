@@ -1,6 +1,6 @@
 import type {
   AdminClient,
-  AdminEntityQuery,
+  EntityQuery,
   AdminEntity,
   Connection,
   Edge,
@@ -12,7 +12,7 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
-type FetcherKey = Readonly<[string, AdminEntityQuery | undefined, Paging | undefined]>;
+type FetcherKey = Readonly<[string, EntityQuery | undefined, Paging | undefined]>;
 type FetcherData<T> = Connection<Edge<T, ErrorType>> | null;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
@@ -24,7 +24,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  */
 export function useAdminEntities<TAdminEntity extends AdminEntity<string, object>>(
   adminClient: AdminClient<TAdminEntity>,
-  query: AdminEntityQuery | undefined,
+  query: EntityQuery | undefined,
   paging?: Paging,
 ): {
   connection: FetcherData<TAdminEntity> | undefined;

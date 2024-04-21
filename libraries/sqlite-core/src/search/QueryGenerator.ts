@@ -1,5 +1,5 @@
 import type {
-  AdminEntityQuery,
+  EntityQuery,
   AdminEntitySharedQuery,
   Schema,
   ErrorType,
@@ -68,7 +68,7 @@ export function searchPublishedEntitiesQuery(
 export function searchAdminEntitiesQuery(
   database: Database,
   schema: Schema,
-  query: AdminEntityQuery | undefined,
+  query: EntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
 ): Result<SharedEntitiesQuery<SearchAdminEntitiesItem>, typeof ErrorType.BadRequest> {
@@ -80,7 +80,7 @@ function sharedSearchEntitiesQuery<
 >(
   database: Database,
   schema: Schema | PublishedSchema,
-  query: PublishedEntityQuery | AdminEntityQuery | undefined,
+  query: PublishedEntityQuery | EntityQuery | undefined,
   paging: DatabasePagingInfo,
   authKeys: ResolvedAuthKey[],
   published: boolean,

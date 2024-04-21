@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Break: Rename AdminEntityQuery to EntityQuery",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}

@@ -2,7 +2,7 @@ import type {
   AdminClient,
   ComponentTypeSpecification,
   AdminEntity,
-  AdminEntityQuery,
+  EntityQuery,
   AdminEntitySharedQuery,
   EntityTypeSpecification,
   FieldSpecification,
@@ -264,7 +264,7 @@ export async function loadAdminEntitiesSample<TContext extends SessionGraphQLCon
 export function loadAdminEntities<TContext extends SessionGraphQLContext>(
   schema: Schema,
   context: TContext,
-  query: AdminEntityQuery | undefined,
+  query: EntityQuery | undefined,
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, AdminEntity>, TContext> | null> {

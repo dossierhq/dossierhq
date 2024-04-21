@@ -15,7 +15,7 @@ import type {
   AdminEntityMutationOptions,
   AdminEntityProcessDirtyPayload,
   AdminEntityPublishPayload,
-  AdminEntityQuery,
+  EntityQuery,
   AdminEntitySharedQuery,
   AdminEntityUnarchivePayload,
   AdminEntityUnpublishPayload,
@@ -126,7 +126,7 @@ export interface AdminClient<
   >;
 
   getEntities(
-    query?: AdminEntityQuery<
+    query?: EntityQuery<
       TAdminEntity['info']['type'],
       TAdminComponent['type'],
       TAdminEntity['info']['authKey']
@@ -317,7 +317,7 @@ export interface AdminExceptionClient<
   >;
 
   getEntities(
-    query?: AdminEntityQuery<
+    query?: EntityQuery<
       TAdminEntity['info']['type'],
       TAdminComponent['type'],
       TAdminEntity['info']['authKey']
@@ -601,7 +601,7 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
   }
 
   getEntities(
-    query?: AdminEntityQuery,
+    query?: EntityQuery,
     paging?: Paging,
   ): MethodReturnType<typeof AdminClientOperationName.getEntities> {
     return this.executeOperation({
@@ -882,7 +882,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
   }
 
   async getEntities(
-    query?: AdminEntityQuery<string, string> | undefined,
+    query?: EntityQuery<string, string> | undefined,
     paging?: Paging | undefined,
   ): Promise<Connection<
     Edge<AdminEntity<string, Record<string, unknown>, string>, ErrorType>
