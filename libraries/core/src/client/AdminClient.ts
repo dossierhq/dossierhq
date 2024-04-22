@@ -72,13 +72,13 @@ import {
 
 export interface AdminClient<
   TEntity extends Entity<string, object> = Entity,
-  TAdminComponent extends Component<string, object> = Component,
+  TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
   TExceptionClient extends AdminExceptionClient<
     TEntity,
-    TAdminComponent,
+    TComponent,
     TUniqueIndex
-  > = AdminExceptionClient<TEntity, TAdminComponent, TUniqueIndex>,
+  > = AdminExceptionClient<TEntity, TComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -126,11 +126,7 @@ export interface AdminClient<
   >;
 
   getEntities(
-    query?: EntityQuery<
-      TEntity['info']['type'],
-      TAdminComponent['type'],
-      TEntity['info']['authKey']
-    >,
+    query?: EntityQuery<TEntity['info']['type'], TComponent['type'], TEntity['info']['authKey']>,
     paging?: Paging,
   ): PromiseResult<
     Connection<Edge<TEntity, ErrorType>> | null,
@@ -140,7 +136,7 @@ export interface AdminClient<
   getEntitiesTotalCount(
     query?: EntitySharedQuery<
       TEntity['info']['type'],
-      TAdminComponent['type'],
+      TComponent['type'],
       TEntity['info']['authKey']
     >,
   ): PromiseResult<
@@ -151,7 +147,7 @@ export interface AdminClient<
   getEntitiesSample(
     query?: EntitySharedQuery<
       TEntity['info']['type'],
-      TAdminComponent['type'],
+      TComponent['type'],
       TEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
@@ -281,10 +277,10 @@ export interface AdminClient<
 
 export interface AdminExceptionClient<
   TEntity extends Entity<string, object> = Entity,
-  TAdminComponent extends Component<string, object> = Component,
+  TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
-  client: Readonly<AdminClient<TEntity, TAdminComponent, TUniqueIndex>>;
+  client: Readonly<AdminClient<TEntity, TComponent, TUniqueIndex>>;
 
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -317,18 +313,14 @@ export interface AdminExceptionClient<
   >;
 
   getEntities(
-    query?: EntityQuery<
-      TEntity['info']['type'],
-      TAdminComponent['type'],
-      TEntity['info']['authKey']
-    >,
+    query?: EntityQuery<TEntity['info']['type'], TComponent['type'], TEntity['info']['authKey']>,
     paging?: Paging,
   ): Promise<Connection<Edge<TEntity, ErrorType>> | null>;
 
   getEntitiesTotalCount(
     query?: EntitySharedQuery<
       TEntity['info']['type'],
-      TAdminComponent['type'],
+      TComponent['type'],
       TEntity['info']['authKey']
     >,
   ): Promise<number>;
@@ -336,7 +328,7 @@ export interface AdminExceptionClient<
   getEntitiesSample(
     query?: EntitySharedQuery<
       TEntity['info']['type'],
-      TAdminComponent['type'],
+      TComponent['type'],
       TEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
