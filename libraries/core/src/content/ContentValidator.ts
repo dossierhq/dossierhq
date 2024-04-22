@@ -378,8 +378,8 @@ export function validateTraverseNodeForPublish(
         node.errorType === ContentTraverseNodeErrorType.missingTypeSpec &&
         node.kind === 'component'
       ) {
-        const adminTypeSpec = schema.getComponentTypeSpecification(node.typeName);
-        if (adminTypeSpec?.adminOnly) {
+        const fullTypeSpec = schema.getComponentTypeSpecification(node.typeName);
+        if (fullTypeSpec?.adminOnly) {
           return {
             type: 'publish',
             path: node.path,

@@ -21,15 +21,9 @@ import {
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;
 const PASCAL_CASE_PATTERN = /^[A-Z][a-zA-Z0-9_]*$/;
 
-const ADMIN_SHARED_FIELD_SPECIFICATION_KEYS = [
-  'name',
-  'list',
-  'required',
-  'adminOnly',
-  'type',
-] as const;
+const SHARED_FIELD_SPECIFICATION_KEYS = ['name', 'list', 'required', 'adminOnly', 'type'] as const;
 
-const ADMIN_FIELD_SPECIFICATION_KEYS: {
+const FIELD_SPECIFICATION_KEYS: {
   Boolean: readonly (keyof BooleanFieldSpecification)[];
   Component: readonly (keyof ComponentFieldSpecification)[];
   Location: readonly (keyof LocationFieldSpecification)[];
@@ -38,20 +32,20 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   RichText: readonly (keyof RichTextFieldSpecification)[];
   String: readonly (keyof StringFieldSpecification)[];
 } = /* @__PURE__ */ (() => ({
-  [FieldType.Boolean]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
-  [FieldType.Component]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'componentTypes'],
-  [FieldType.Location]: ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
-  [FieldType.Number]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'integer'],
-  [FieldType.Reference]: [...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
+  [FieldType.Boolean]: SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.Component]: [...SHARED_FIELD_SPECIFICATION_KEYS, 'componentTypes'],
+  [FieldType.Location]: SHARED_FIELD_SPECIFICATION_KEYS,
+  [FieldType.Number]: [...SHARED_FIELD_SPECIFICATION_KEYS, 'integer'],
+  [FieldType.Reference]: [...SHARED_FIELD_SPECIFICATION_KEYS, 'entityTypes'],
   [FieldType.RichText]: [
-    ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+    ...SHARED_FIELD_SPECIFICATION_KEYS,
     'entityTypes',
     'linkEntityTypes',
     'componentTypes',
     'richTextNodes',
   ],
   [FieldType.String]: [
-    ...ADMIN_SHARED_FIELD_SPECIFICATION_KEYS,
+    ...SHARED_FIELD_SPECIFICATION_KEYS,
     'multiline',
     'matchPattern',
     'values',
@@ -59,7 +53,7 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
   ],
 }))();
 
-export function schemaValidateAdmin(
+export function schemaValidate(
   schema: BaseSchema<SchemaSpecification>,
 ): Result<void, typeof ErrorType.BadRequest> {
   const usedTypeNames = new Set<string>();
@@ -123,7 +117,7 @@ export function schemaValidateAdmin(
       }
 
       for (const key of Object.keys(fieldSpec)) {
-        if (!(ADMIN_FIELD_SPECIFICATION_KEYS[fieldSpec.type] as string[]).includes(key)) {
+        if (!(FIELD_SPECIFICATION_KEYS[fieldSpec.type] as string[]).includes(key)) {
           return notOk.BadRequest(
             `${typeSpec.name}.${fieldSpec.name}: Field with type ${fieldSpec.type} shouldn’t specify ${key}`,
           );

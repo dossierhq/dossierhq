@@ -38,7 +38,7 @@ import type { ClientContext } from './SharedClient.js';
 interface FooFields {
   title: string | null;
 }
-type AdminFooEntity = Entity<'FooType', FooFields>;
+type FooEntity = Entity<'FooType', FooFields>;
 
 function createForwardingMiddleware<TContext extends ClientContext>(
   adminClient: AdminClient,
@@ -92,10 +92,10 @@ function createJsonConvertingAdminClientsForOperation<
 
 function createDummyEntity(changes: {
   id?: string;
-  info?: Partial<AdminFooEntity['info']>;
-  fields?: Partial<AdminFooEntity['fields']>;
-}): AdminFooEntity {
-  return copyEntity<AdminFooEntity>(
+  info?: Partial<FooEntity['info']>;
+  fields?: Partial<FooEntity['fields']>;
+}): FooEntity {
+  return copyEntity<FooEntity>(
     {
       id: '123',
       info: {
@@ -122,18 +122,18 @@ describe('Custom Entity types', () => {
       pipeline: [],
     });
 
-    const fooCreate: EntityCreate<AdminFooEntity> = {
+    const fooCreate: EntityCreate<FooEntity> = {
       info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
-    const _returnedPayload = await adminClient.createEntity<AdminFooEntity>(fooCreate);
+    const _returnedPayload = await adminClient.createEntity<FooEntity>(fooCreate);
 
-    const fooCreatePayload: EntityCreatePayload<AdminFooEntity> = {
+    const fooCreatePayload: EntityCreatePayload<FooEntity> = {
       effect: 'created',
       entity: createDummyEntity({}),
     };
-    const _fooEntity: AdminFooEntity = fooCreatePayload.entity;
+    const _fooEntity: FooEntity = fooCreatePayload.entity;
   });
 
   test('AdminFooEntity update', async () => {
@@ -142,19 +142,19 @@ describe('Custom Entity types', () => {
       pipeline: [],
     });
 
-    const fooUpdate: EntityUpdate<AdminFooEntity> = {
+    const fooUpdate: EntityUpdate<FooEntity> = {
       id: '123',
       info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
-    const _returnedPayload = await adminClient.updateEntity<AdminFooEntity>(fooUpdate);
+    const _returnedPayload = await adminClient.updateEntity<FooEntity>(fooUpdate);
 
-    const fooUpdatePayload: EntityUpdatePayload<AdminFooEntity> = {
+    const fooUpdatePayload: EntityUpdatePayload<FooEntity> = {
       effect: 'updated',
       entity: createDummyEntity({}),
     };
-    const _fooEntity: AdminFooEntity = fooUpdatePayload.entity;
+    const _fooEntity: FooEntity = fooUpdatePayload.entity;
   });
 
   test('AdminFooEntity upsert', async () => {
@@ -163,19 +163,19 @@ describe('Custom Entity types', () => {
       pipeline: [],
     });
 
-    const fooUpsert: EntityUpsert<AdminFooEntity> = {
+    const fooUpsert: EntityUpsert<FooEntity> = {
       id: '123',
       info: { type: 'FooType', name: 'Foo name' },
       fields: { title: 'bar value' },
     };
 
-    const _returnedPayload = await adminClient.upsertEntity<AdminFooEntity>(fooUpsert);
+    const _returnedPayload = await adminClient.upsertEntity<FooEntity>(fooUpsert);
 
-    const fooUpsertPayload: EntityUpsertPayload<AdminFooEntity> = {
+    const fooUpsertPayload: EntityUpsertPayload<FooEntity> = {
       effect: 'updated',
       entity: createDummyEntity({}),
     };
-    const _fooEntity: AdminFooEntity = fooUpsertPayload.entity;
+    const _fooEntity: FooEntity = fooUpsertPayload.entity;
   });
 });
 

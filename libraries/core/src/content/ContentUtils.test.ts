@@ -2,29 +2,29 @@ import { describe, expect, test } from 'vitest';
 import type { Entity, EntityCreate, RichText, Component } from '../Types.js';
 import { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './ContentUtils.js';
 
-type AdminFoo = Entity<'Foo', AdminFooFields, ''>;
+type Foo = Entity<'Foo', FooFields, ''>;
 
-interface AdminFooFields {
+interface FooFields {
   string: string | null;
   stringList: string[] | null;
-  twoStrings: AdminTwoStrings | null;
+  twoStrings: TwoStrings | null;
   richText: RichText | null;
 }
 
-type AdminTwoStrings = Component<'TwoStrings', AdminTwoStringsFields>;
+type TwoStrings = Component<'TwoStrings', TwoStringsFields>;
 
-interface AdminTwoStringsFields {
+interface TwoStringsFields {
   string1: string | null;
   string2: string | null;
 }
 
 describe('copyEntity', () => {
   test('EntityCreate with app type', () => {
-    const entity: EntityCreate<AdminFoo> = {
+    const entity: EntityCreate<Foo> = {
       info: { type: 'Foo', name: 'Name', authKey: '' },
       fields: { string: 'hello' },
     };
-    const copy: EntityCreate<AdminFoo> = copyEntity(entity, {
+    const copy: EntityCreate<Foo> = copyEntity(entity, {
       fields: { stringList: ['world'] },
     });
     expect(copy).toEqual({

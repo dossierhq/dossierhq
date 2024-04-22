@@ -130,14 +130,14 @@ describe('traverseEntity', () => {
   });
 
   test('Generated schema type', () => {
-    type AdminStringsEntity = Entity<'StringsEntity', AdminStringsEntityFields>;
+    type StringsEntity = Entity<'StringsEntity', StringsEntityFields>;
 
-    interface AdminStringsEntityFields {
+    interface StringsEntityFields {
       string: string | null;
       stringList: string[] | null;
     }
 
-    const entity: AdminStringsEntity = {
+    const entity: StringsEntity = {
       id: '123',
       info: {
         type: 'StringsEntity',

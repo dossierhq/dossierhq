@@ -7,9 +7,9 @@ import type {
   SchemaSpecificationUpdate,
   SchemaSpecificationWithMigrations,
 } from './SchemaSpecification.js';
-import { schemaAdminToPublished } from './schemaAdminToPublished.js';
+import { schemaToPublished } from './schemaToPublished.js';
 import { schemaUpdate } from './schemaUpdate.js';
-import { schemaValidateAdmin } from './schemaValidateAdmin.js';
+import { schemaValidate } from './schemaValidate.js';
 
 export class Schema<
   TSpec extends SchemaSpecification | SchemaSpecificationWithMigrations = SchemaSpecification,
@@ -32,7 +32,7 @@ export class Schema<
   }
 
   validate(): Result<void, typeof ErrorType.BadRequest> {
-    return schemaValidateAdmin(this);
+    return schemaValidate(this);
   }
 
   toPublishedSchema(): PublishedSchema {
@@ -40,7 +40,7 @@ export class Schema<
       return this.cachedPublishedSchema;
     }
 
-    const publishedSpec = schemaAdminToPublished(this);
+    const publishedSpec = schemaToPublished(this);
 
     this.cachedPublishedSchema = new PublishedSchema(publishedSpec);
     return this.cachedPublishedSchema;
