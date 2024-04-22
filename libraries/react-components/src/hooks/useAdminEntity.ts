@@ -14,18 +14,18 @@ type FetcherKey = Readonly<[string, EntityReference | EntityVersionReference]>;
 type FetcherData<T> = T;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
-export function useAdminEntity<TAdminEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TAdminEntity>,
+export function useAdminEntity<TEntity extends Entity<string, object>>(
+  adminClient: AdminClient<TEntity>,
   reference: EntityReference | EntityVersionReference | undefined,
 ): {
-  entity: FetcherData<TAdminEntity> | undefined;
+  entity: FetcherData<TEntity> | undefined;
   entityError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
     ([_action, reference]: FetcherKey) => fetchEntity(adminClient, reference),
     [adminClient],
   );
-  const { data, error } = useSWR<FetcherData<TAdminEntity>, FetcherError, FetcherKey | null>(
+  const { data, error } = useSWR<FetcherData<TEntity>, FetcherError, FetcherKey | null>(
     reference ? CACHE_KEYS.adminEntity(reference) : null,
     fetcher,
   );
@@ -35,10 +35,10 @@ export function useAdminEntity<TAdminEntity extends Entity<string, object>>(
   return { entity: data, entityError: error };
 }
 
-async function fetchEntity<TAdminEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TAdminEntity>,
+async function fetchEntity<TEntity extends Entity<string, object>>(
+  adminClient: AdminClient<TEntity>,
   reference: FetcherKey[1],
-): Promise<FetcherData<TAdminEntity>> {
+): Promise<FetcherData<TEntity>> {
   const result = await adminClient.getEntity(reference);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error

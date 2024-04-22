@@ -71,14 +71,14 @@ import {
 } from './SharedClient.js';
 
 export interface AdminClient<
-  TAdminEntity extends Entity<string, object> = Entity,
+  TEntity extends Entity<string, object> = Entity,
   TAdminComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
   TExceptionClient extends AdminExceptionClient<
-    TAdminEntity,
+    TEntity,
     TAdminComponent,
     TUniqueIndex
-  > = AdminExceptionClient<TAdminEntity, TAdminComponent, TUniqueIndex>,
+  > = AdminExceptionClient<TEntity, TAdminComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -105,7 +105,7 @@ export interface AdminClient<
   getEntity(
     reference: EntityReference | EntityVersionReference | UniqueIndexReference<TUniqueIndex>,
   ): PromiseResult<
-    TAdminEntity,
+    TEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -116,7 +116,7 @@ export interface AdminClient<
     references: EntityReference[],
   ): PromiseResult<
     Result<
-      TAdminEntity,
+      TEntity,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.NotFound
       | typeof ErrorType.NotAuthorized
@@ -127,21 +127,21 @@ export interface AdminClient<
 
   getEntities(
     query?: EntityQuery<
-      TAdminEntity['info']['type'],
+      TEntity['info']['type'],
       TAdminComponent['type'],
-      TAdminEntity['info']['authKey']
+      TEntity['info']['authKey']
     >,
     paging?: Paging,
   ): PromiseResult<
-    Connection<Edge<TAdminEntity, ErrorType>> | null,
+    Connection<Edge<TEntity, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   getEntitiesTotalCount(
     query?: EntitySharedQuery<
-      TAdminEntity['info']['type'],
+      TEntity['info']['type'],
       TAdminComponent['type'],
-      TAdminEntity['info']['authKey']
+      TEntity['info']['authKey']
     >,
   ): PromiseResult<
     number,
@@ -150,17 +150,17 @@ export interface AdminClient<
 
   getEntitiesSample(
     query?: EntitySharedQuery<
-      TAdminEntity['info']['type'],
+      TEntity['info']['type'],
       TAdminComponent['type'],
-      TAdminEntity['info']['authKey']
+      TEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
   ): PromiseResult<
-    EntitySamplingPayload<TAdminEntity>,
+    EntitySamplingPayload<TEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
-  createEntity<T extends Entity<string, object> = TAdminEntity>(
+  createEntity<T extends Entity<string, object> = TEntity>(
     entity: Readonly<EntityCreate<T>>,
     options?: EntityMutationOptions,
   ): PromiseResult<
@@ -171,7 +171,7 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
-  updateEntity<T extends Entity<string, object> = TAdminEntity>(
+  updateEntity<T extends Entity<string, object> = TEntity>(
     entity: Readonly<EntityUpdate<T>>,
     options?: EntityMutationOptions,
   ): PromiseResult<
@@ -182,7 +182,7 @@ export interface AdminClient<
     | typeof ErrorType.Generic
   >;
 
-  upsertEntity<T extends Entity<string, object> = TAdminEntity>(
+  upsertEntity<T extends Entity<string, object> = TEntity>(
     entity: Readonly<EntityUpsert<T>>,
     options?: EntityMutationOptions,
   ): PromiseResult<
@@ -280,11 +280,11 @@ export interface AdminClient<
 }
 
 export interface AdminExceptionClient<
-  TAdminEntity extends Entity<string, object> = Entity,
+  TEntity extends Entity<string, object> = Entity,
   TAdminComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
-  client: Readonly<AdminClient<TAdminEntity, TAdminComponent, TUniqueIndex>>;
+  client: Readonly<AdminClient<TEntity, TAdminComponent, TUniqueIndex>>;
 
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -302,13 +302,13 @@ export interface AdminExceptionClient<
 
   getEntity(
     reference: EntityReference | EntityVersionReference | UniqueIndexReference<TUniqueIndex>,
-  ): Promise<TAdminEntity>;
+  ): Promise<TEntity>;
 
   getEntityList(
     references: EntityReference[],
   ): Promise<
     Result<
-      TAdminEntity,
+      TEntity,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.NotFound
       | typeof ErrorType.NotAuthorized
@@ -318,41 +318,41 @@ export interface AdminExceptionClient<
 
   getEntities(
     query?: EntityQuery<
-      TAdminEntity['info']['type'],
+      TEntity['info']['type'],
       TAdminComponent['type'],
-      TAdminEntity['info']['authKey']
+      TEntity['info']['authKey']
     >,
     paging?: Paging,
-  ): Promise<Connection<Edge<TAdminEntity, ErrorType>> | null>;
+  ): Promise<Connection<Edge<TEntity, ErrorType>> | null>;
 
   getEntitiesTotalCount(
     query?: EntitySharedQuery<
-      TAdminEntity['info']['type'],
+      TEntity['info']['type'],
       TAdminComponent['type'],
-      TAdminEntity['info']['authKey']
+      TEntity['info']['authKey']
     >,
   ): Promise<number>;
 
   getEntitiesSample(
     query?: EntitySharedQuery<
-      TAdminEntity['info']['type'],
+      TEntity['info']['type'],
       TAdminComponent['type'],
-      TAdminEntity['info']['authKey']
+      TEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
-  ): Promise<EntitySamplingPayload<TAdminEntity>>;
+  ): Promise<EntitySamplingPayload<TEntity>>;
 
-  createEntity<T extends Entity<string, object> = TAdminEntity>(
+  createEntity<T extends Entity<string, object> = TEntity>(
     entity: EntityCreate<T>,
     options?: EntityMutationOptions,
   ): Promise<EntityCreatePayload<T>>;
 
-  updateEntity<T extends Entity<string, object> = TAdminEntity>(
+  updateEntity<T extends Entity<string, object> = TEntity>(
     entity: EntityUpdate<T>,
     options?: EntityMutationOptions,
   ): Promise<EntityUpdatePayload<T>>;
 
-  upsertEntity<T extends Entity<string, object> = TAdminEntity>(
+  upsertEntity<T extends Entity<string, object> = TEntity>(
     entity: EntityUpsert<T>,
     options?: EntityMutationOptions,
   ): Promise<EntityUpsertPayload<T>>;
