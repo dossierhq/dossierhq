@@ -153,7 +153,7 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   // Since the name is converted to base64 encoded cursors, use unicode in the name
   // to ensure the encode/decode is proper
@@ -163,16 +163,13 @@ async function getEntities_pagingFirstAfterNameWithUnicode({
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Endash – and emoji 😅' } }),
     { publish: true },
   );
-  const firstEntity = adminToPublishedEntity(adminSchema, firstEntityResult.valueOrThrow().entity);
+  const firstEntity = adminToPublishedEntity(schema, firstEntityResult.valueOrThrow().entity);
 
   const secondEntityResult = await adminClient.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Ö, Endash – and emoji 😅' } }),
     { publish: true },
   );
-  const secondEntity = adminToPublishedEntity(
-    adminSchema,
-    secondEntityResult.valueOrThrow().entity,
-  );
+  const secondEntity = adminToPublishedEntity(schema, secondEntityResult.valueOrThrow().entity);
 
   // Create entity with links to the unicode entities to create a scoped query
   const linkEntityResult = await adminClient.createEntity(
@@ -441,7 +438,7 @@ async function getEntities_componentTypes({ clientProvider }: PublishedEntityTes
 async function getEntities_linksToOneReference({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -457,7 +454,7 @@ async function getEntities_linksToOneReference({ clientProvider }: PublishedEnti
   const { entity: referenceEntity } = referenceResult.value;
 
   const searchResult = await publishedClient.getEntities({ linksTo: { id: titleOnlyId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, referenceEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(schema, referenceEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
@@ -480,7 +477,7 @@ async function getEntities_linksToTwoReferencesFromOneEntity({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -498,7 +495,7 @@ async function getEntities_linksToTwoReferencesFromOneEntity({
   const { entity: referenceEntity } = referenceResult.value;
 
   const searchResult = await publishedClient.getEntities({ linksTo: { id: titleOnlyId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, referenceEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(schema, referenceEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
@@ -507,7 +504,7 @@ async function getEntities_linksToExcludedAfterUnpublish({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -525,7 +522,7 @@ async function getEntities_linksToExcludedAfterUnpublish({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchBeforeUnpublishResult, [
-    adminToPublishedEntity(adminSchema, referenceEntity),
+    adminToPublishedEntity(schema, referenceEntity),
   ]);
 
   assertOkResult(await adminClient.unpublishEntities([{ id: referenceEntity.id }]));
@@ -541,7 +538,7 @@ async function getEntities_linksToExcludedAfterUpdateWithNoReference({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -559,7 +556,7 @@ async function getEntities_linksToExcludedAfterUpdateWithNoReference({
     linksTo: { id: titleOnlyId },
   });
   assertSearchResultEntities(searchBeforeUpdateResult, [
-    adminToPublishedEntity(adminSchema, referenceEntity),
+    adminToPublishedEntity(schema, referenceEntity),
   ]);
 
   assertOkResult(
@@ -598,7 +595,7 @@ async function getEntities_linksToExcludedForAdminOnlyField({
 async function getEntities_linksFromOneReference({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -614,7 +611,7 @@ async function getEntities_linksFromOneReference({ clientProvider }: PublishedEn
   } = referenceResult.value;
 
   const searchResult = await publishedClient.getEntities({ linksFrom: { id: referenceId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(schema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
@@ -637,7 +634,7 @@ async function getEntities_linksFromTwoReferencesFromOneEntity({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -655,7 +652,7 @@ async function getEntities_linksFromTwoReferencesFromOneEntity({
   } = referenceResult.value;
 
   const searchResult = await publishedClient.getEntities({ linksFrom: { id: referenceId } });
-  assertSearchResultEntities(searchResult, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
+  assertSearchResultEntities(searchResult, [adminToPublishedEntity(schema, titleOnlyEntity)]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 

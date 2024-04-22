@@ -39,7 +39,7 @@ export const CACHE_KEYS = {
   adminEntitiesTotalCount(query: EntitySharedQuery | undefined) {
     return ['dossierhq/useAdminEntitiesTotalCount', query] as const;
   },
-  adminSchema: 'dossierhq/useAdminSchema',
+  schema: 'dossierhq/useAdminSchema',
   publishedEntity(reference: EntityReference) {
     return ['dossierhq/usePublishedEntity', reference] as const;
   },
@@ -79,16 +79,16 @@ export function clearCacheDueToSchemaMigrations(mutate: ScopedMutator) {
 export function updateCacheSchemas(
   cache: Cache,
   mutate: ScopedMutator,
-  adminSchema: SchemaWithMigrations | undefined,
+  schema: SchemaWithMigrations | undefined,
 ) {
-  const hasAdmin = !!cache.get(CACHE_KEYS.adminSchema);
+  const hasAdmin = !!cache.get(CACHE_KEYS.schema);
   const hasPublished = !!cache.get(CACHE_KEYS.publishedSchema);
   if (hasAdmin || hasPublished) {
     if (hasAdmin) {
-      mutate(CACHE_KEYS.adminSchema, adminSchema);
+      mutate(CACHE_KEYS.schema, schema);
     }
     if (hasPublished) {
-      const publishedSchema = adminSchema?.toPublishedSchema();
+      const publishedSchema = schema?.toPublishedSchema();
       mutate(CACHE_KEYS.publishedSchema, publishedSchema);
     }
   }

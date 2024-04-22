@@ -48,7 +48,7 @@ const EMPTY_ENTITY_INFO: Omit<EntityValidityAndInfoPayload, 'valid'> = {
 };
 
 export async function managementDirtyProcessNextEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   filter: EntityReference | undefined,
@@ -89,7 +89,7 @@ export async function managementDirtyProcessNextEntity(
     if (dirtyValidateLatest || dirtyIndexLatest) {
       // Validate latest
       const validationLatestResult = await validateAndCollectInfoFromAdminEntity(
-        adminSchema,
+        schema,
         databaseAdapter,
         context,
         entityResult.value,
@@ -127,7 +127,7 @@ export async function managementDirtyProcessNextEntity(
 
       // Validate published
       const validationPublishedResult = await validateAndCollectInfoFromPublishedEntity(
-        adminSchema,
+        schema,
         databaseAdapter,
         context,
         reference,
@@ -180,7 +180,7 @@ export async function managementDirtyProcessNextEntity(
 }
 
 async function validateAndCollectInfoFromAdminEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   entityData: DatabaseAdminEntityPayload,
@@ -188,7 +188,7 @@ async function validateAndCollectInfoFromAdminEntity(
   const path = ['entity'];
 
   // Decode
-  const decodeResult = decodeAdminEntity(adminSchema, entityData);
+  const decodeResult = decodeAdminEntity(schema, entityData);
   if (decodeResult.isError()) {
     return convertErrorResultForValidation(
       context,
@@ -200,10 +200,10 @@ async function validateAndCollectInfoFromAdminEntity(
   const entity = decodeResult.value;
 
   // Validate entity info
-  const validEntityInfo = !validateEntityInfo(adminSchema, path, entity);
+  const validEntityInfo = !validateEntityInfo(schema, path, entity);
 
   // Validate fields
-  const fieldValidation = validateAdminFieldValuesAndCollectInfo(adminSchema, path, entity);
+  const fieldValidation = validateAdminFieldValuesAndCollectInfo(schema, path, entity);
 
   // Validate references
   const referencesResult = await validateReferencedEntitiesForSaveAndCollectInfo(
@@ -229,7 +229,7 @@ async function validateAndCollectInfoFromAdminEntity(
 }
 
 async function validateAndCollectInfoFromPublishedEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   reference: EntityReference,
@@ -238,7 +238,7 @@ async function validateAndCollectInfoFromPublishedEntity(
 ): PromiseResult<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
   const path = ['entity'];
 
-  const entitySpec = adminSchema.getEntityTypeSpecification(type);
+  const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
     return convertErrorResultForValidation(
       context,
@@ -259,7 +259,7 @@ async function validateAndCollectInfoFromPublishedEntity(
 
   // In order to validate the published entity we need the admin entity fields
   const decodeResult = migrateDecodeAndNormalizeAdminEntityFields(
-    adminSchema,
+    schema,
     entitySpec,
     [...path, 'fields'],
     entityFields,
@@ -275,7 +275,7 @@ async function validateAndCollectInfoFromPublishedEntity(
   const decodedEntityFields = decodeResult.value;
 
   const validateFields = validatePublishedFieldValuesAndCollectInfo(
-    adminSchema,
+    schema,
     path,
     type,
     decodedEntityFields,

@@ -38,10 +38,10 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
   function handleUpdatedAdminSchema(
     context: TContext,
     mutate: ScopedMutator,
-    adminSchema: SchemaSpecificationWithMigrations,
+    schema: SchemaSpecificationWithMigrations,
   ) {
     let migrationsToApply = 0;
-    for (const migration of adminSchema.migrations) {
+    for (const migration of schema.migrations) {
       if (migration.version > lastSchemaVersion) {
         migrationsToApply++;
       }
@@ -51,13 +51,13 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
       context.logger.info(
         'Clearing cache since there are new schema migrations (previous version=%d, new version=%d, versions with migrations=%d)',
         lastSchemaVersion,
-        adminSchema.version,
+        schema.version,
         migrationsToApply,
       );
       clearCacheDueToSchemaMigrations(mutate);
     }
 
-    lastSchemaVersion = adminSchema.version;
+    lastSchemaVersion = schema.version;
   }
 
   const middleware: AdminClientMiddleware<TContext> = async (context, operation) => {
@@ -129,13 +129,13 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           const payload = result.value as OkFromResult<
             ReturnType<AdminClient['updateSchemaSpecification']>
           >;
-          let adminSchema: SchemaWithMigrations | undefined;
+          let schema: SchemaWithMigrations | undefined;
           if (args[1]?.includeMigrations) {
-            adminSchema = new SchemaWithMigrations(
+            schema = new SchemaWithMigrations(
               payload.schemaSpecification as SchemaSpecificationWithMigrations,
             );
           }
-          updateCacheSchemas(cache, mutate, adminSchema);
+          updateCacheSchemas(cache, mutate, schema);
           invalidateChangelogEvents(mutate);
           break;
         }

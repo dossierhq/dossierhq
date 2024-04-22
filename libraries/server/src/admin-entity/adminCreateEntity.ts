@@ -24,7 +24,7 @@ import { adminPublishEntityAfterMutation } from './adminPublishEntities.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminCreateEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -38,7 +38,7 @@ export async function adminCreateEntity(
   | typeof ErrorType.Generic
 > {
   return doCreateEntity(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -49,7 +49,7 @@ export async function adminCreateEntity(
 }
 
 export async function adminCreateEntitySyncEvent(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -61,13 +61,13 @@ export async function adminCreateEntitySyncEvent(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  if (adminSchema.spec.version !== syncEvent.entity.info.schemaVersion) {
+  if (schema.spec.version !== syncEvent.entity.info.schemaVersion) {
     return notOk.BadRequest(
-      `Schema version mismatch: expected ${adminSchema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,
+      `Schema version mismatch: expected ${schema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,
     );
   }
   return doCreateEntity(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -78,7 +78,7 @@ export async function adminCreateEntitySyncEvent(
 }
 
 async function doCreateEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -98,7 +98,7 @@ async function doCreateEntity(
   const { session } = context;
 
   // validate
-  const validationIssue = validateEntityInfoForCreate(adminSchema, ['entity'], entity);
+  const validationIssue = validateEntityInfoForCreate(schema, ['entity'], entity);
   if (validationIssue) {
     return notOk.BadRequest(
       `${contentValuePathToString(validationIssue.path)}: ${validationIssue.message}`,
@@ -106,7 +106,7 @@ async function doCreateEntity(
   }
 
   // entity
-  const resolvedResult = resolveCreateEntity(adminSchema, entity);
+  const resolvedResult = resolveCreateEntity(schema, entity);
   if (resolvedResult.isError()) return resolvedResult;
   const { createEntity } = resolvedResult.value;
 
@@ -126,7 +126,7 @@ async function doCreateEntity(
   }
 
   // encode fields
-  const encodeResult = await encodeAdminEntity(adminSchema, databaseAdapter, context, createEntity);
+  const encodeResult = await encodeAdminEntity(schema, databaseAdapter, context, createEntity);
   if (encodeResult.isError()) return encodeResult;
   const encodeEntityPayload = encodeResult.value;
 
@@ -151,7 +151,7 @@ async function doCreateEntity(
         session,
         resolvedAuthKey,
         publish,
-        schemaVersion: adminSchema.spec.version,
+        schemaVersion: schema.spec.version,
         encodeVersion: encodeEntityPayload.encodeVersion,
         fields: encodeEntityPayload.fields,
       },
@@ -207,7 +207,7 @@ async function doCreateEntity(
 
     if (publish) {
       const publishResult = await adminPublishEntityAfterMutation(
-        adminSchema,
+        schema,
         authorizationAdapter,
         databaseAdapter,
         context,

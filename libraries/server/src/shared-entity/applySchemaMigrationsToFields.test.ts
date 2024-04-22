@@ -36,7 +36,7 @@ const ADMIN_SCHEMA_BASE = SchemaWithMigrations.createAndValidate({
 
 describe('applySchemaMigrationsToFields renameField', () => {
   test('nested component', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -58,7 +58,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -95,7 +95,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
   });
 
   test('component in rich text', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -117,7 +117,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -149,7 +149,7 @@ describe('applySchemaMigrationsToFields renameField', () => {
 
 describe('applySchemaMigrationsToFields deleteField', () => {
   test('nested component', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -158,7 +158,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -186,7 +186,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
   });
 
   test('component in rich text', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -195,7 +195,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -231,7 +231,7 @@ describe('applySchemaMigrationsToFields deleteField', () => {
 
 describe('applySchemaMigrationsToFields renameType', () => {
   test('nested component', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -240,7 +240,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -277,7 +277,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
   });
 
   test('component list', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -286,7 +286,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -309,7 +309,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
   });
 
   test('component in rich text', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -318,7 +318,7 @@ describe('applySchemaMigrationsToFields renameType', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -350,11 +350,11 @@ describe('applySchemaMigrationsToFields renameType', () => {
 
 describe('applySchemaMigrationsToFields deleteType', () => {
   test('nested component', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Component' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -373,11 +373,11 @@ describe('applySchemaMigrationsToFields deleteType', () => {
   });
 
   test('component list', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Component' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -388,11 +388,11 @@ describe('applySchemaMigrationsToFields deleteType', () => {
   });
 
   test('component in rich text', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [{ version: 2, actions: [{ action: 'deleteType', componentType: 'Component' }] }],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {
@@ -412,7 +412,7 @@ describe('applySchemaMigrationsToFields deleteType', () => {
 
 describe('applySchemaMigrationsToFields combos', () => {
   test('rename type and field', () => {
-    const adminSchema = ADMIN_SCHEMA_BASE.updateAndValidate({
+    const schema = ADMIN_SCHEMA_BASE.updateAndValidate({
       migrations: [
         {
           version: 2,
@@ -429,7 +429,7 @@ describe('applySchemaMigrationsToFields combos', () => {
       ],
     }).valueOrThrow();
 
-    const fieldValues = applySchemaMigrationsToFields(adminSchema, 'Entity', {
+    const fieldValues = applySchemaMigrationsToFields(schema, 'Entity', {
       schemaVersion: 1,
       encodeVersion: ENCODE_VERSION_AS_IS,
       fields: {

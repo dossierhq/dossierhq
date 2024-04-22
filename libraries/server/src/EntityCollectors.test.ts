@@ -76,15 +76,15 @@ const schemaSpec: SchemaSpecificationUpdate = {
 
 const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();
 
-function collectDataFromEntity(adminSchema: Schema, entity: EntityLike) {
+function collectDataFromEntity(schema: Schema, entity: EntityLike) {
   const ftsCollector = createFullTextSearchCollector();
   const referencesCollector = createReferencesCollector();
   const requestedReferencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
-  const uniqueIndexCollector = createUniqueIndexCollector(adminSchema.toPublishedSchema());
+  const uniqueIndexCollector = createUniqueIndexCollector(schema.toPublishedSchema());
   const componentTypesCollector = createComponentTypesCollector();
 
-  for (const node of traverseEntity(adminSchema, ['entity'], entity)) {
+  for (const node of traverseEntity(schema, ['entity'], entity)) {
     ftsCollector.collect(node);
     referencesCollector.collect(node);
     requestedReferencesCollector.collect(node);

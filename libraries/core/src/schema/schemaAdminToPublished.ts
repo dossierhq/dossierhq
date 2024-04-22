@@ -7,10 +7,10 @@ import {
   type SchemaSpecification,
 } from './SchemaSpecification.js';
 
-export function schemaAdminToPublished(adminSchema: BaseSchema<SchemaSpecification>) {
+export function schemaAdminToPublished(schema: BaseSchema<SchemaSpecification>) {
   const spec: PublishedSchemaSpecification = {
     schemaKind: 'published',
-    version: adminSchema.spec.version,
+    version: schema.spec.version,
     entityTypes: [],
     componentTypes: [],
     patterns: [],
@@ -27,7 +27,7 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<SchemaSpecificati
   }
 
   const usedPatternNames = new Set();
-  for (const entitySpec of adminSchema.spec.entityTypes) {
+  for (const entitySpec of schema.spec.entityTypes) {
     if (entitySpec.adminOnly) {
       continue;
     }
@@ -41,7 +41,7 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<SchemaSpecificati
     }
   }
 
-  for (const componentSpec of adminSchema.spec.componentTypes) {
+  for (const componentSpec of schema.spec.componentTypes) {
     if (componentSpec.adminOnly) {
       continue;
     }
@@ -65,14 +65,14 @@ export function schemaAdminToPublished(adminSchema: BaseSchema<SchemaSpecificati
   }
 
   for (const patternName of [...usedPatternNames].sort()) {
-    const pattern = adminSchema.spec.patterns.find((it) => it.name === patternName);
+    const pattern = schema.spec.patterns.find((it) => it.name === patternName);
     if (pattern) {
       spec.patterns.push(pattern);
     }
   }
 
   for (const indexName of [...usedIndexNames].sort()) {
-    const index = adminSchema.spec.indexes.find((it) => it.name === indexName);
+    const index = schema.spec.indexes.find((it) => it.name === indexName);
     if (index) {
       spec.indexes.push(index);
     }

@@ -13,11 +13,11 @@ import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import { assertExhaustive } from '../utils/AssertUtils.js';
 
 export function applySchemaMigrationsToFields(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   targetEntityType: string,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<Record<string, unknown>, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const actions = adminSchema.collectMigrationActionsSinceVersion(entityFields.schemaVersion);
+  const actions = schema.collectMigrationActionsSinceVersion(entityFields.schemaVersion);
 
   if (actions.length === 0) {
     return ok(entityFields.fields);
@@ -45,7 +45,7 @@ export function applySchemaMigrationsToFields(
     Record<string, unknown>,
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > = transformEntityFields(
-    adminSchema,
+    schema,
     [],
     { info: { type: targetEntityType }, fields: migratedFieldValues },
     {

@@ -23,7 +23,7 @@ import { adminPublishEntityAfterMutation } from './adminPublishEntities.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
 
 export async function adminUpdateEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -37,7 +37,7 @@ export async function adminUpdateEntity(
   | typeof ErrorType.Generic
 > {
   return doUpdateEntity(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -48,20 +48,20 @@ export async function adminUpdateEntity(
 }
 
 export async function adminUpdateEntitySyncEvent(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: UpdateEntitySyncEvent,
 ) {
-  if (adminSchema.spec.version !== syncEvent.entity.info.schemaVersion) {
+  if (schema.spec.version !== syncEvent.entity.info.schemaVersion) {
     return notOk.BadRequest(
-      `Schema version mismatch: expected ${adminSchema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,
+      `Schema version mismatch: expected ${schema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,
     );
   }
 
   return doUpdateEntity(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -72,7 +72,7 @@ export async function adminUpdateEntitySyncEvent(
 }
 
 async function doUpdateEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -125,7 +125,7 @@ async function doUpdateEntity(
       });
       if (authResult.isError()) return authResult;
 
-      const resolvedResult = resolveUpdateEntity(adminSchema, entity, entityInfoResult.value);
+      const resolvedResult = resolveUpdateEntity(schema, entity, entityInfoResult.value);
       if (resolvedResult.isError()) return resolvedResult;
       const { changed, entity: updatedEntity } = resolvedResult.value;
 
@@ -133,7 +133,7 @@ async function doUpdateEntity(
         const payload: EntityUpdatePayload = { effect: 'none', entity: updatedEntity };
         if (options?.publish && updatedEntity.info.status !== EntityStatus.published) {
           const publishResult = await adminPublishEntityAfterMutation(
-            adminSchema,
+            schema,
             authorizationAdapter,
             databaseAdapter,
             context,
@@ -150,12 +150,7 @@ async function doUpdateEntity(
         return ok(payload);
       }
 
-      const encodeResult = await encodeAdminEntity(
-        adminSchema,
-        databaseAdapter,
-        context,
-        updatedEntity,
-      );
+      const encodeResult = await encodeAdminEntity(schema, databaseAdapter, context, updatedEntity);
       if (encodeResult.isError()) return encodeResult;
       if (encodeResult.value.validationIssues.length > 0) {
         const firstValidationIssue = encodeResult.value.validationIssues[0];
@@ -178,7 +173,7 @@ async function doUpdateEntity(
           session,
           version: updatedEntity.info.version,
           status: updatedEntity.info.status,
-          schemaVersion: adminSchema.spec.version,
+          schemaVersion: schema.spec.version,
           encodeVersion,
           fields,
         },
@@ -220,7 +215,7 @@ async function doUpdateEntity(
 
       if (options?.publish) {
         const publishResult = await adminPublishEntityAfterMutation(
-          adminSchema,
+          schema,
           authorizationAdapter,
           databaseAdapter,
           context,

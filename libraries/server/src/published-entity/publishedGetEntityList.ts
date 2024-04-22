@@ -26,7 +26,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
  */
 
 export async function publishedGetEntityList(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -56,14 +56,14 @@ export async function publishedGetEntityList(
   >[] = [];
   for (const reference of references) {
     const entityMain = entitiesInfoResult.value.find((it) => it.id === reference.id);
-    payload.push(await mapItem(adminSchema, authorizationAdapter, context, reference, entityMain));
+    payload.push(await mapItem(schema, authorizationAdapter, context, reference, entityMain));
   }
 
   return ok(payload);
 }
 
 async function mapItem(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   reference: EntityReference,
@@ -85,5 +85,5 @@ async function mapItem(
   });
   if (authResult.isError()) return authResult;
 
-  return decodePublishedEntity(adminSchema, values);
+  return decodePublishedEntity(schema, values);
 }

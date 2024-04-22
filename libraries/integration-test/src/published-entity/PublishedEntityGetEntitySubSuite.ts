@@ -66,7 +66,7 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
 async function getEntity_withSubjectAuthKey({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const createResult = await adminClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
@@ -75,7 +75,7 @@ async function getEntity_withSubjectAuthKey({ clientProvider }: PublishedEntityT
   } = createResult.value;
 
   const getResult = await publishedClient.getEntity({ id });
-  assertResultValue(getResult, adminToPublishedEntity(adminSchema, createResult.value.entity));
+  assertResultValue(getResult, adminToPublishedEntity(schema, createResult.value.entity));
 }
 
 async function getEntity_archivedThenPublished({ clientProvider }: PublishedEntityTestContext) {
@@ -261,7 +261,7 @@ async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
 
 async function getEntity_usingUniqueIndex({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity(
@@ -279,7 +279,7 @@ async function getEntity_usingUniqueIndex({ clientProvider }: PublishedEntityTes
   assertEquals(
     getResult.value,
     adminToPublishedEntity(
-      adminSchema,
+      schema,
       copyEntity(createResult.value.entity, { info: { status: 'published' } }),
     ),
   );

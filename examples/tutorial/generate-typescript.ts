@@ -23,9 +23,9 @@ async function main() {
   const logger = createConsoleLogger(console);
   const { server } = (await initialize(logger)).valueOrThrow();
 
-  const adminSchema = await getAdminSchema(server);
+  const schema = await getAdminSchema(server);
 
-  await generateTypes(logger, adminSchema, './src/SchemaTypes.ts');
+  await generateTypes(logger, schema, './src/SchemaTypes.ts');
   await server.shutdown();
 }
 

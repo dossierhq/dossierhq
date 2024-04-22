@@ -22,29 +22,23 @@ export const ENCODE_VERSION_LEGACY = 0;
 export const ENCODE_VERSION_AS_IS = 1; // version 0.4.2+: Used to encoding all content, old content is still encoded with version 0
 
 export function migrateDecodeAndNormalizeAdminEntityFields(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   entitySpec: EntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<Entity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return migrateDecodeAndNormalizeEntityFields(
-    adminSchema,
-    adminSchema,
-    entitySpec,
-    path,
-    entityFields,
-  );
+  return migrateDecodeAndNormalizeEntityFields(schema, schema, entitySpec, path, entityFields);
 }
 
 export function migrateDecodeAndNormalizePublishedEntityFields(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   entitySpec: PublishedEntityTypeSpecification,
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<Entity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return migrateDecodeAndNormalizeEntityFields(
-    adminSchema,
-    adminSchema.toPublishedSchema(),
+    schema,
+    schema.toPublishedSchema(),
     entitySpec,
     path,
     entityFields,
@@ -54,14 +48,14 @@ export function migrateDecodeAndNormalizePublishedEntityFields(
 function migrateDecodeAndNormalizeEntityFields<
   TSchema extends SchemaWithMigrations | PublishedSchema,
 >(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   decodeSchema: TSchema,
   entitySpec: TSchema['spec']['entityTypes'][number],
   path: ContentValuePath,
   entityFields: DatabaseEntityFieldsPayload,
 ): Result<Entity['fields'], typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   const migratedFieldValuesResult = applySchemaMigrationsToFields(
-    adminSchema,
+    schema,
     entitySpec.name,
     entityFields,
   );

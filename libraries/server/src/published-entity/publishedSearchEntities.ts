@@ -18,7 +18,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { fetchAndDecodeConnection } from '../utils/fetchAndDecodeConnection.js';
 
 export async function publishedSearchEntities(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -52,6 +52,6 @@ export async function publishedSearchEntities(
         pagingInfo,
         authKeys,
       ),
-    (edge) => decodePublishedEntity(adminSchema, edge),
+    (edge) => decodePublishedEntity(schema, edge),
   );
 }

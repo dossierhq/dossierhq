@@ -59,7 +59,7 @@ interface VersionInfoAlreadyPublished {
 }
 
 export async function adminPublishEntities(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -72,7 +72,7 @@ export async function adminPublishEntities(
   | typeof ErrorType.Generic
 > {
   return doPublishEntities(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -83,14 +83,14 @@ export async function adminPublishEntities(
 }
 
 export function adminPublishEntitiesSyncEvent(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: PublishEntitiesSyncEvent,
 ) {
   return doPublishEntities(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -101,7 +101,7 @@ export function adminPublishEntitiesSyncEvent(
 }
 
 export async function adminPublishEntityAfterMutation(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -112,7 +112,7 @@ export async function adminPublishEntityAfterMutation(
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const publishResult = await doPublishEntities(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -135,7 +135,7 @@ export async function adminPublishEntityAfterMutation(
 }
 
 async function doPublishEntities(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -160,7 +160,7 @@ async function doPublishEntities(
   return context.withTransaction(async (context) => {
     // Step 1: Get version info for each entity
     const versionsInfoResult = await collectVersionsInfo(
-      adminSchema,
+      schema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -285,7 +285,7 @@ async function doPublishEntities(
 }
 
 async function collectVersionsInfo(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -339,7 +339,7 @@ async function collectVersionsInfo(
       return createErrorResult(authResult.error, `entity(${reference.id}): ${authResult.message}`);
     }
 
-    const entitySpec = adminSchema.getEntityTypeSpecification(type);
+    const entitySpec = schema.getEntityTypeSpecification(type);
     if (!entitySpec) return notOk.Generic(`No entity spec for type ${type}`);
 
     if (entitySpec.adminOnly) {
@@ -356,7 +356,7 @@ async function collectVersionsInfo(
       const path = [`entity(${reference.id})`];
       // In order to validate the published entity we need the admin entity fields
       const entityFieldsResult = migrateDecodeAndNormalizeAdminEntityFields(
-        adminSchema,
+        schema,
         entitySpec,
         [...path, 'fields'],
         entityFields,
@@ -364,7 +364,7 @@ async function collectVersionsInfo(
       if (entityFieldsResult.isError()) return entityFieldsResult;
 
       const validateFields = validatePublishedFieldValuesAndCollectInfo(
-        adminSchema,
+        schema,
         path,
         type,
         entityFieldsResult.value,

@@ -14,7 +14,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { validateEntityReference } from '../utils/ValidationUtils.js';
 
 export async function publishedGetEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -40,5 +40,5 @@ export async function publishedGetEntity(
   });
   if (authResult.isError()) return authResult;
 
-  return decodePublishedEntity(adminSchema, result.value);
+  return decodePublishedEntity(schema, result.value);
 }

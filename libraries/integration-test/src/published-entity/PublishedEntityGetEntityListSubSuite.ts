@@ -21,7 +21,7 @@ export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestConte
 async function getEntityList_minimal({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
@@ -39,8 +39,8 @@ async function getEntityList_minimal({ clientProvider }: PublishedEntityTestCont
   const [get1Result, get2Result] = getResult.value;
   assertOkResult(get1Result);
   assertOkResult(get2Result);
-  assertEquals(get1Result.value, adminToPublishedEntity(adminSchema, create1Result.value.entity));
-  assertEquals(get2Result.value, adminToPublishedEntity(adminSchema, create2Result.value.entity));
+  assertEquals(get1Result.value, adminToPublishedEntity(schema, create1Result.value.entity));
+  assertEquals(get2Result.value, adminToPublishedEntity(schema, create2Result.value.entity));
 }
 
 async function getEntityList_none({ clientProvider }: PublishedEntityTestContext) {
@@ -52,9 +52,7 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
   clientProvider,
 }: PublishedEntityTestContext) {
   const primaryAdminClient = clientProvider.adminClient();
-  const adminSchema = new Schema(
-    (await primaryAdminClient.getSchemaSpecification()).valueOrThrow(),
-  );
+  const schema = new Schema((await primaryAdminClient.getSchemaSpecification()).valueOrThrow());
 
   const create1Result = await clientProvider
     .adminClient('secondary')
@@ -77,14 +75,14 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<AppPublishedEntity, typeof ErrorType.Generic>(
-      adminToPublishedEntity(adminSchema, create2Result.value.entity),
+      adminToPublishedEntity(schema, create2Result.value.entity),
     ),
   ]);
 }
 
 async function getEntityList_oneMissingOneExisting({ clientProvider }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
   const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const { entity } = createResult.valueOrThrow();
 
@@ -93,7 +91,7 @@ async function getEntityList_oneMissingOneExisting({ clientProvider }: Published
     .getEntityList([{ id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' }, { id: entity.id }]);
   assertResultValue(getResult, [
     notOk.NotFound('No such entity'),
-    ok<AppPublishedEntity, typeof ErrorType.Generic>(adminToPublishedEntity(adminSchema, entity)),
+    ok<AppPublishedEntity, typeof ErrorType.Generic>(adminToPublishedEntity(schema, entity)),
   ]);
 }
 

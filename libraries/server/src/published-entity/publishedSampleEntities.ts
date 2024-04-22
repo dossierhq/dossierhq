@@ -17,7 +17,7 @@ import { decodePublishedEntity } from '../EntityCodec.js';
 import { sharedSampleEntities } from '../shared-entity/sharedSampleEntities.js';
 
 export async function publishedSampleEntities(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   publishedSchema: PublishedSchema,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
@@ -57,7 +57,7 @@ export async function publishedSampleEntities(
     );
     if (sampleResult.isError()) return sampleResult;
 
-    const entities = sampleResult.value.map((it) => decodePublishedEntity(adminSchema, it));
+    const entities = sampleResult.value.map((it) => decodePublishedEntity(schema, it));
     return ok(entities);
   }
 

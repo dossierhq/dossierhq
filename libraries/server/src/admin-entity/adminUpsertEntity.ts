@@ -18,7 +18,7 @@ import { adminCreateEntity } from './adminCreateEntity.js';
 import { adminUpdateEntity } from './adminUpdateEntity.js';
 
 export async function adminUpsertEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -32,7 +32,7 @@ export async function adminUpsertEntity(
 
   if (nameResult.isError() && nameResult.isErrorType(ErrorType.NotFound)) {
     return await createNewEntity(
-      adminSchema,
+      schema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -54,7 +54,7 @@ export async function adminUpsertEntity(
   }
 
   const updateResult = await adminUpdateEntity(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -74,7 +74,7 @@ export async function adminUpsertEntity(
 }
 
 async function createNewEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -85,7 +85,7 @@ async function createNewEntity(
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
 > {
   const createResult = await adminCreateEntity(
-    adminSchema,
+    schema,
     authorizationAdapter,
     databaseAdapter,
     context,
@@ -96,7 +96,7 @@ async function createNewEntity(
     return createResult.map((value) => value);
   } else if (createResult.isErrorType(ErrorType.Conflict)) {
     return adminUpsertEntity(
-      adminSchema,
+      schema,
       authorizationAdapter,
       databaseAdapter,
       context,

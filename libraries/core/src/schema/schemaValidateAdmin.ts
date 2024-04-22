@@ -60,11 +60,11 @@ const ADMIN_FIELD_SPECIFICATION_KEYS: {
 }))();
 
 export function schemaValidateAdmin(
-  adminSchema: BaseSchema<SchemaSpecification>,
+  schema: BaseSchema<SchemaSpecification>,
 ): Result<void, typeof ErrorType.BadRequest> {
   const usedTypeNames = new Set<string>();
-  for (const typeSpec of [...adminSchema.spec.entityTypes, ...adminSchema.spec.componentTypes]) {
-    const isComponentType = adminSchema.spec.componentTypes.includes(typeSpec);
+  for (const typeSpec of [...schema.spec.entityTypes, ...schema.spec.componentTypes]) {
+    const isComponentType = schema.spec.componentTypes.includes(typeSpec);
 
     if (!PASCAL_CASE_PATTERN.test(typeSpec.name)) {
       return notOk.BadRequest(
@@ -79,7 +79,7 @@ export function schemaValidateAdmin(
     if (!isComponentType) {
       const authKeyPattern = (typeSpec as EntityTypeSpecification).authKeyPattern;
       if (authKeyPattern) {
-        if (!adminSchema.getPattern(authKeyPattern)) {
+        if (!schema.getPattern(authKeyPattern)) {
           return notOk.BadRequest(`${typeSpec.name}: Unknown authKeyPattern (${authKeyPattern})`);
         }
       }
@@ -136,7 +136,7 @@ export function schemaValidateAdmin(
         fieldSpec.entityTypes.length > 0
       ) {
         for (const referencedTypeName of fieldSpec.entityTypes) {
-          const referencedEntityType = adminSchema.getEntityTypeSpecification(referencedTypeName);
+          const referencedEntityType = schema.getEntityTypeSpecification(referencedTypeName);
           if (!referencedEntityType) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`,
@@ -156,7 +156,7 @@ export function schemaValidateAdmin(
         fieldSpec.linkEntityTypes.length > 0
       ) {
         for (const referencedTypeName of fieldSpec.linkEntityTypes) {
-          const referencedEntityType = adminSchema.getEntityTypeSpecification(referencedTypeName);
+          const referencedEntityType = schema.getEntityTypeSpecification(referencedTypeName);
           if (!referencedEntityType) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes ${referencedTypeName} doesn’t exist`,
@@ -176,8 +176,7 @@ export function schemaValidateAdmin(
         fieldSpec.componentTypes.length > 0
       ) {
         for (const referencedTypeName of fieldSpec.componentTypes) {
-          const referencedComponentType =
-            adminSchema.getComponentTypeSpecification(referencedTypeName);
+          const referencedComponentType = schema.getComponentTypeSpecification(referencedTypeName);
           if (!referencedComponentType) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: Component type in componentTypes ${referencedTypeName} doesn’t exist`,
@@ -270,7 +269,7 @@ export function schemaValidateAdmin(
       }
 
       if (fieldSpec.type === FieldType.String && fieldSpec.matchPattern) {
-        const pattern = adminSchema.getPattern(fieldSpec.matchPattern);
+        const pattern = schema.getPattern(fieldSpec.matchPattern);
         if (!pattern) {
           return notOk.BadRequest(
             `${typeSpec.name}.${fieldSpec.name}: Unknown matchPattern (${fieldSpec.matchPattern})`,
@@ -289,7 +288,7 @@ export function schemaValidateAdmin(
       }
 
       if (fieldSpec.type === FieldType.String && fieldSpec.index) {
-        const index = adminSchema.getIndex(fieldSpec.index);
+        const index = schema.getIndex(fieldSpec.index);
         if (!index) {
           return notOk.BadRequest(
             `${typeSpec.name}.${fieldSpec.name}: Unknown index (${fieldSpec.index})`,
@@ -300,7 +299,7 @@ export function schemaValidateAdmin(
   }
 
   const usedPatterns = new Set<string>();
-  for (const patternSpec of adminSchema.spec.patterns) {
+  for (const patternSpec of schema.spec.patterns) {
     if (usedPatterns.has(patternSpec.name)) {
       return notOk.BadRequest(`${patternSpec.name}: Duplicate pattern name`);
     }
@@ -319,7 +318,7 @@ export function schemaValidateAdmin(
   }
 
   const usedIndexes = new Set<string>();
-  for (const indexSpec of adminSchema.spec.indexes) {
+  for (const indexSpec of schema.spec.indexes) {
     if (usedIndexes.has(indexSpec.name)) {
       return notOk.BadRequest(`${indexSpec.name}: Duplicate index name`);
     }

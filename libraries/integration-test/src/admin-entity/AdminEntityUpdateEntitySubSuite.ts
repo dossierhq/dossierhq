@@ -296,7 +296,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
 }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const createResult = await adminClient.createEntity(STRINGS_CREATE);
   const {
@@ -317,10 +317,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
     index: 'stringsUnique',
     value: unique,
   });
-  assertResultValue(
-    getPublishedResult,
-    adminToPublishedEntity(adminSchema, updateResult.value.entity),
-  );
+  assertResultValue(getPublishedResult, adminToPublishedEntity(schema, updateResult.value.entity));
 }
 
 async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({

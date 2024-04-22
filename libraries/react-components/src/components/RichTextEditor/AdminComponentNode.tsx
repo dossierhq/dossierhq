@@ -60,9 +60,9 @@ function AdminComponentComponent({
   data: Component;
 }) {
   const [editor] = useLexicalComposerContext();
-  const { adapter, schema: adminSchema } = useContext(AdminDossierContext);
+  const { adapter, schema: schema } = useContext(AdminDossierContext);
   const { adminOnly: richTextAdminOnly } = useContext(RichTextEditorContext);
-  const componentSpec = adminSchema?.getComponentTypeSpecification(data.type);
+  const componentSpec = schema?.getComponentTypeSpecification(data.type);
   const adminOnly = richTextAdminOnly || !!componentSpec?.adminOnly;
 
   const setValue = useCallback(
@@ -78,8 +78,8 @@ function AdminComponentComponent({
   );
 
   const validationIssues = useMemo(() => {
-    return validateComponent(adminSchema, adminOnly, data);
-  }, [adminSchema, adminOnly, data]);
+    return validateComponent(schema, adminOnly, data);
+  }, [schema, adminOnly, data]);
 
   const overriddenEditor = adapter.renderAdminRichTextComponentEditor({
     value: data,
@@ -108,24 +108,24 @@ function AdminComponentComponent({
 // (as opposed to the serialized nodes which lack the node key)
 // Hopefully we can get rid on RichTextEditorContext and `adminOnly` parameters to the field editors
 function validateComponent(
-  adminSchema: Schema | undefined,
+  schema: Schema | undefined,
   adminOnly: boolean,
   value: Component,
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
-  if (adminSchema) {
-    const normalizeResult = normalizeComponent(adminSchema, [], value);
+  if (schema) {
+    const normalizeResult = normalizeComponent(schema, [], value);
     const valueToValidate = normalizeResult.isOk() ? normalizeResult.value : value;
-    for (const node of traverseComponent(adminSchema, [], valueToValidate)) {
-      const error = validateTraverseNodeForSave(adminSchema, node);
+    for (const node of traverseComponent(schema, [], valueToValidate)) {
+      const error = validateTraverseNodeForSave(schema, node);
       if (error) {
         errors.push(error);
       }
     }
     if (!adminOnly) {
-      const publishedSchema = adminSchema.toPublishedSchema();
+      const publishedSchema = schema.toPublishedSchema();
       for (const node of traverseComponent(publishedSchema, [], valueToValidate)) {
-        const error = validateTraverseNodeForPublish(adminSchema, node);
+        const error = validateTraverseNodeForPublish(schema, node);
         if (error) {
           errors.push(error);
         }

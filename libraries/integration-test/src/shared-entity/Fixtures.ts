@@ -242,12 +242,12 @@ export const VALUE_ITEMS_CREATE: Readonly<EntityCreate<Components>> = {
 };
 
 export function adminToPublishedEntity<T extends AppEntity>(
-  adminSchema: Schema,
+  schema: Schema,
   entity: T,
 ): AppPublishedEntity {
   assertEquals(entity.info.status, EntityStatus.published);
 
-  const result = normalizeEntityFields(adminSchema.toPublishedSchema(), [], entity as Entity);
+  const result = normalizeEntityFields(schema.toPublishedSchema(), [], entity as Entity);
 
   const {
     id,

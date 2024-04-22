@@ -76,7 +76,7 @@ async function getEntitiesSample_linksToOneReference({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -95,7 +95,7 @@ async function getEntitiesSample_linksToOneReference({
     { linksTo: { id: titleOnlyId } },
     { seed: 505 },
   );
-  assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(adminSchema, referenceEntity)]);
+  assertSampledEntities(sampleResult, 505, [adminToPublishedEntity(schema, referenceEntity)]);
 }
 
 async function getEntitiesSample_linksToNoReferences({
@@ -119,7 +119,7 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -140,7 +140,7 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
     { linksTo: { id: titleOnlyId } },
     { seed: 765 },
   );
-  assertSampledEntities(sampleResult, 765, [adminToPublishedEntity(adminSchema, referenceEntity)]);
+  assertSampledEntities(sampleResult, 765, [adminToPublishedEntity(schema, referenceEntity)]);
 }
 
 async function getEntitiesSample_linksFromOneReference({
@@ -148,7 +148,7 @@ async function getEntitiesSample_linksFromOneReference({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -167,7 +167,7 @@ async function getEntitiesSample_linksFromOneReference({
     { linksFrom: { id: referenceId } },
     { seed: 432 },
   );
-  assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
+  assertSampledEntities(sampleResult, 432, [adminToPublishedEntity(schema, titleOnlyEntity)]);
 }
 
 async function getEntitiesSample_linksFromNoReferences({
@@ -194,7 +194,7 @@ async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
 }: PublishedEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
@@ -215,5 +215,5 @@ async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
     { linksFrom: { id: referenceId } },
     { seed: 555 },
   );
-  assertSampledEntities(sampleResult, 555, [adminToPublishedEntity(adminSchema, titleOnlyEntity)]);
+  assertSampledEntities(sampleResult, 555, [adminToPublishedEntity(schema, titleOnlyEntity)]);
 }

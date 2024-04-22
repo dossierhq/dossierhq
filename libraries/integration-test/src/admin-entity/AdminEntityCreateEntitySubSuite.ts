@@ -323,7 +323,7 @@ async function createEntity_publishWithUniqueIndexValue({
 }: AdminEntityTestContext) {
   const adminClient = clientProvider.adminClient();
   const publishedClient = clientProvider.publishedClient();
-  const adminSchema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
 
   const unique = Math.random().toString();
   const createResult = await adminClient.createEntity<Strings>(
@@ -334,7 +334,7 @@ async function createEntity_publishWithUniqueIndexValue({
 
   const getResult = await publishedClient.getEntity({ index: 'stringsUnique', value: unique });
   assertOkResult(getResult);
-  assertEquals(getResult.value, adminToPublishedEntity(adminSchema, createResult.value.entity));
+  assertEquals(getResult.value, adminToPublishedEntity(schema, createResult.value.entity));
 }
 
 async function createEntity_publishConflictingPublishedName({

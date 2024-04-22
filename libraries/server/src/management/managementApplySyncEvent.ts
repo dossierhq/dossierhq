@@ -48,7 +48,7 @@ export async function managementApplyAuthSyncEvent(
 }
 
 export async function managementApplySyncEvent(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -72,7 +72,7 @@ export async function managementApplySyncEvent(
     }
 
     const applyResult = await applyEvent(
-      adminSchema,
+      schema,
       authorizationAdapter,
       databaseAdapter,
       context,
@@ -92,7 +92,7 @@ export async function managementApplySyncEvent(
 }
 
 function applyEvent(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
@@ -105,7 +105,7 @@ function applyEvent(
     case EventType.createEntity:
     case EventType.createAndPublishEntity:
       return adminCreateEntitySyncEvent(
-        adminSchema,
+        schema,
         authorizationAdapter,
         databaseAdapter,
         context,
@@ -113,7 +113,7 @@ function applyEvent(
       );
     case EventType.publishEntities:
       return adminPublishEntitiesSyncEvent(
-        adminSchema,
+        schema,
         authorizationAdapter,
         databaseAdapter,
         context,
@@ -122,7 +122,7 @@ function applyEvent(
     case EventType.updateEntity:
     case EventType.updateAndPublishEntity:
       return adminUpdateEntitySyncEvent(
-        adminSchema,
+        schema,
         authorizationAdapter,
         databaseAdapter,
         context,

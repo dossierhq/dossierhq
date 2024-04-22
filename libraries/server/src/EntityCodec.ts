@@ -45,17 +45,17 @@ export interface EncodeAdminEntityPayload {
 }
 
 export function decodePublishedEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   values: DatabasePublishedEntityPayload,
 ): Result<PublishedEntity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const publishedSchema = adminSchema.toPublishedSchema();
+  const publishedSchema = schema.toPublishedSchema();
   const entitySpec = publishedSchema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     return notOk.BadRequest(`No entity spec for type ${values.type} (id: ${values.id})`);
   }
 
   const decodeResult = migrateDecodeAndNormalizePublishedEntityFields(
-    adminSchema,
+    schema,
     entitySpec,
     ['entity', 'fields'],
     values.entityFields,
@@ -78,16 +78,16 @@ export function decodePublishedEntity(
 }
 
 export function decodeAdminEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   values: DatabaseAdminEntityPayload,
 ): Result<Entity, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const entitySpec = adminSchema.getEntityTypeSpecification(values.type);
+  const entitySpec = schema.getEntityTypeSpecification(values.type);
   if (!entitySpec) {
     return notOk.BadRequest(`No entity spec for type ${values.type}`);
   }
 
   const decodedResult = migrateDecodeAndNormalizeAdminEntityFields(
-    adminSchema,
+    schema,
     entitySpec,
     ['entity', 'fields'],
     values.entityFields,
@@ -139,7 +139,7 @@ export function resolveCreateEntity(
 }
 
 export function resolveUpdateEntity(
-  adminSchema: SchemaWithMigrations,
+  schema: SchemaWithMigrations,
   entityUpdate: EntityUpdate,
   entityInfo: DatabaseEntityUpdateGetEntityInfoPayload,
 ): Result<
@@ -165,13 +165,13 @@ export function resolveUpdateEntity(
     fields: {},
   };
 
-  const entitySpec = adminSchema.getEntityTypeSpecification(entity.info.type);
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
   if (!entitySpec) {
     return notOk.BadRequest(`Entity type ${entity.info.type} doesn’t exist`);
   }
 
   const decodeResult = migrateDecodeAndNormalizeAdminEntityFields(
-    adminSchema,
+    schema,
     entitySpec,
     ['entity', 'fields'],
     entityInfo.entityFields,
@@ -181,7 +181,7 @@ export function resolveUpdateEntity(
 
   // Keep extra fields so we can fail on validation
   const normalizedUpdateFieldsResult = normalizeEntityFields(
-    adminSchema,
+    schema,
     ['entity'],
     { ...entityUpdate, info: { type: entity.info.type } },
     { excludeOmittedEntityFields: true, keepExtraFields: true },

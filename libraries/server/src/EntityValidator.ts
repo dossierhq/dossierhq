@@ -33,7 +33,7 @@ import {
 } from './EntityCollectors.js';
 
 export function validateAdminFieldValuesAndCollectInfo(
-  adminSchema: Schema,
+  schema: Schema,
   path: ContentValuePath,
   entity: Entity | EntityCreate,
 ): {
@@ -49,10 +49,10 @@ export function validateAdminFieldValuesAndCollectInfo(
   const referencesCollector = createRequestedReferencesCollector();
   const locationsCollector = createLocationsCollector();
   const componentTypesCollector = createComponentTypesCollector();
-  const uniqueIndexCollector = createUniqueIndexCollector(adminSchema);
+  const uniqueIndexCollector = createUniqueIndexCollector(schema);
 
-  for (const node of traverseEntity(adminSchema, path, entity)) {
-    const validationIssue = validateTraverseNodeForSave(adminSchema, node);
+  for (const node of traverseEntity(schema, path, entity)) {
+    const validationIssue = validateTraverseNodeForSave(schema, node);
     if (validationIssue) {
       validationIssues.push(validationIssue);
     }
@@ -136,7 +136,7 @@ export async function validateReferencedEntitiesForSaveAndCollectInfo(
 }
 
 export function validatePublishedFieldValuesAndCollectInfo(
-  adminSchema: Schema,
+  schema: Schema,
   path: ContentValuePath,
   type: string,
   entityFields: Record<string, unknown>,
@@ -148,7 +148,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
   componentTypes: string[];
   uniqueIndexValues: UniqueIndexValueCollection;
 } {
-  const publishedSchema = adminSchema.toPublishedSchema();
+  const publishedSchema = schema.toPublishedSchema();
   const entity: EntityLike = {
     info: { type },
     fields: entityFields,
@@ -163,7 +163,7 @@ export function validatePublishedFieldValuesAndCollectInfo(
 
   for (const node of traverseEntity(publishedSchema, path, entity)) {
     // validate for publish uses admin schema since it provides better error messages for adminOnly
-    const publishIssue = validateTraverseNodeForPublish(adminSchema, node);
+    const publishIssue = validateTraverseNodeForPublish(schema, node);
     if (publishIssue) {
       validationIssues.push(publishIssue);
     }

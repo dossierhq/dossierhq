@@ -580,21 +580,21 @@ export const EntityEditorActions = {
 // HELPERS
 
 function validateField(
-  adminSchema: Schema,
+  schema: Schema,
   fieldSpec: FieldSpecification,
   adminOnly: boolean,
   value: unknown,
   previousErrors: ValidationIssue[],
 ): ValidationIssue[] {
   const errors: ValidationIssue[] = [];
-  for (const node of traverseContentField(adminSchema, [], fieldSpec, value)) {
-    const error = validateTraverseNodeForSave(adminSchema, node);
+  for (const node of traverseContentField(schema, [], fieldSpec, value)) {
+    const error = validateTraverseNodeForSave(schema, node);
     if (error) errors.push(error);
   }
   if (!adminOnly) {
-    const publishedSchema = adminSchema.toPublishedSchema();
+    const publishedSchema = schema.toPublishedSchema();
     for (const node of traverseContentField(publishedSchema, [], fieldSpec, value)) {
-      const error = validateTraverseNodeForPublish(adminSchema, node);
+      const error = validateTraverseNodeForPublish(schema, node);
       if (error) errors.push(error);
     }
   }

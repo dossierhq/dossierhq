@@ -21,10 +21,7 @@ export function useAdminSchema(
   schemaError: FetcherError | undefined;
 } {
   const fetcher = useCallback((_action: FetcherKey) => fetchSchema(adminClient), [adminClient]);
-  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(
-    CACHE_KEYS.adminSchema,
-    fetcher,
-  );
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(CACHE_KEYS.schema, fetcher);
 
   // useDebugLogChangedValues('useAdminSchema changed values', { data, error });
 

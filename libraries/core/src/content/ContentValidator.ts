@@ -35,12 +35,12 @@ export interface PublishValidationIssue {
 const LINE_BREAK_REGEX = /[\r\n]/;
 
 export function validateEntityInfo(
-  adminSchema: Schema,
+  schema: Schema,
   path: ContentValuePath,
   entity: Entity,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
-  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity, false);
+  const typeAuthKeyValidation = validateTypeAndAuthKey(schema, path, entity, false);
   if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
@@ -51,12 +51,12 @@ export function validateEntityInfo(
 }
 
 export function validateEntityInfoForCreate(
-  adminSchema: Schema,
+  schema: Schema,
   path: ContentValuePath,
   entity: EntityCreate,
 ): SaveValidationIssue | null {
   // info.type, info.authKey
-  const typeAuthKeyValidation = validateTypeAndAuthKey(adminSchema, path, entity, true);
+  const typeAuthKeyValidation = validateTypeAndAuthKey(schema, path, entity, true);
   if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
@@ -116,7 +116,7 @@ export function validateEntityInfoForUpdate(
 }
 
 function validateTypeAndAuthKey(
-  adminSchema: Schema,
+  schema: Schema,
   path: ContentValuePath,
   entity: EntityCreate | Entity,
   create: boolean,
@@ -127,7 +127,7 @@ function validateTypeAndAuthKey(
     return { type: 'save', path: [...path, 'info', 'type'], message: 'Type is required' };
   }
 
-  const entitySpec = adminSchema.getEntityTypeSpecification(type);
+  const entitySpec = schema.getEntityTypeSpecification(type);
   if (!entitySpec) {
     return {
       type: 'save',
@@ -151,7 +151,7 @@ function validateTypeAndAuthKey(
   }
 
   if (entitySpec.authKeyPattern) {
-    const authKeyRegExp = adminSchema.getPatternRegExp(entitySpec.authKeyPattern);
+    const authKeyRegExp = schema.getPatternRegExp(entitySpec.authKeyPattern);
     if (!authKeyRegExp) {
       return {
         type: 'save',
@@ -360,7 +360,7 @@ export function validateTraverseNodeForSave<TSchema extends Schema | PublishedSc
 }
 
 export function validateTraverseNodeForPublish(
-  adminSchema: Schema,
+  schema: Schema,
   node: ContentTraverseNode<PublishedSchema>,
 ): PublishValidationIssue | null {
   switch (node.type) {
@@ -378,7 +378,7 @@ export function validateTraverseNodeForPublish(
         node.errorType === ContentTraverseNodeErrorType.missingTypeSpec &&
         node.kind === 'component'
       ) {
-        const adminTypeSpec = adminSchema.getComponentTypeSpecification(node.typeName);
+        const adminTypeSpec = schema.getComponentTypeSpecification(node.typeName);
         if (adminTypeSpec?.adminOnly) {
           return {
             type: 'publish',
