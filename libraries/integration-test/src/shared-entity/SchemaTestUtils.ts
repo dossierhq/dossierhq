@@ -1,8 +1,8 @@
 import { withAdvisoryLock, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import type { AppAdminClient } from '../SchemaTypes.js';
+import type { AppDossierClient } from '../SchemaTypes.js';
 
 export async function withSchemaAdvisoryLock<TOk, TError extends ErrorType>(
-  client: AppAdminClient,
+  client: AppDossierClient,
   callback: () => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   return await withAdvisoryLock(

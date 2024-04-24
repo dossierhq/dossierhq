@@ -13,10 +13,10 @@ import {
   createNewDatabase,
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
-import type { BlogPost, CloudinaryImage, Person, AppAdminClient } from './schema-types.js';
+import type { BlogPost, CloudinaryImage, Person, AppDossierClient } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
-async function createPerson(client: AppAdminClient) {
+async function createPerson(client: AppDossierClient) {
   const name = faker.person.fullName();
 
   return (
@@ -31,7 +31,7 @@ async function createPerson(client: AppAdminClient) {
 }
 
 async function createBlogPost(
-  client: AppAdminClient,
+  client: AppDossierClient,
   persons: Person[],
   images: CloudinaryImage[],
 ) {
@@ -65,7 +65,7 @@ async function createBlogPost(
 
 async function main() {
   const database = await createNewDatabase('dist/blog.sqlite');
-  const { client, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
+  const { client, server } = await createAdapterAndServer<AppDossierClient>(database, SCHEMA);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);

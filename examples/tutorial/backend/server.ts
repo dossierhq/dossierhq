@@ -7,7 +7,7 @@ import { FieldType, notOk, ok, type Logger } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { Request } from 'express-jwt';
-import type { AppAdminClient, AppPublishedClient } from '../src/SchemaTypes.js';
+import type { AppDossierClient, AppPublishedClient } from '../src/SchemaTypes.js';
 
 async function initializeDatabase(logger: Logger) {
   let database: Database;
@@ -50,7 +50,7 @@ async function createSessionForRequest(server: Server, req: Request) {
 
 export function getAdminClientForRequest(server: Server, req: Request) {
   const session = createSessionForRequest(server, req);
-  return server.createDossierClient<AppAdminClient>(() => session);
+  return server.createDossierClient<AppDossierClient>(() => session);
 }
 
 export function getPublishedClientForRequest(server: Server, req: Request) {
@@ -58,7 +58,7 @@ export function getPublishedClientForRequest(server: Server, req: Request) {
   return server.createPublishedClient<AppPublishedClient>(() => session);
 }
 
-async function updateSchema(client: AppAdminClient) {
+async function updateSchema(client: AppDossierClient) {
   const schemaResult = await client.updateSchemaSpecification({
     entityTypes: [
       {
@@ -75,7 +75,7 @@ async function updateSchema(client: AppAdminClient) {
   return schemaResult;
 }
 
-async function createMessages(logger: Logger, client: AppAdminClient) {
+async function createMessages(logger: Logger, client: AppDossierClient) {
   const totalMessageCountResult = await client.getEntitiesTotalCount({
     entityTypes: ['Message'],
   });
@@ -89,7 +89,7 @@ async function createMessages(logger: Logger, client: AppAdminClient) {
         info: { type: 'Message', name: message },
         fields: { message },
       },
-      { publish: true }
+      { publish: true },
     );
     if (createResult.isError()) return createResult;
     const entity = createResult.value.entity;
@@ -112,7 +112,7 @@ export async function initialize(logger: Logger) {
     provider: 'sys',
     identifier: 'init',
   });
-  const client = server.createDossierClient<AppAdminClient>(() => initSession);
+  const client = server.createDossierClient<AppDossierClient>(() => initSession);
 
   const schemaResult = await updateSchema(client);
   if (schemaResult.isError()) return schemaResult;

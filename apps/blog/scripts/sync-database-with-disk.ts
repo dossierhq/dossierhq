@@ -10,7 +10,7 @@ import { readFile } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { getCurrentSyncEventFiles, updateSyncEventsOnDisk } from '../utils/FileSystemSerializer.js';
-import type { AppAdminClient } from '../utils/SchemaTypes';
+import type { AppDossierClient } from '../utils/SchemaTypes';
 import { initializeServer } from '../utils/SharedServerUtils.js';
 
 const DATA_DIR = new URL('../data', import.meta.url).pathname;
@@ -19,7 +19,7 @@ const DATA_DIR = new URL('../data', import.meta.url).pathname;
 config({ path: '.env.local' });
 config({ path: '.env' });
 
-async function getUnappliedEvents(client: AppAdminClient) {
+async function getUnappliedEvents(client: AppDossierClient) {
   // Get file events
   const files = await getCurrentSyncEventFiles(DATA_DIR);
   const diskEventIds = files.map((it) => it.id);
@@ -70,7 +70,7 @@ async function main(filename: string, args: typeof parsedArgs) {
   const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
-    const client = server.createDossierClient<AppAdminClient>(async () => authResult);
+    const client = server.createDossierClient<AppDossierClient>(async () => authResult);
 
     const { unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(client);
 

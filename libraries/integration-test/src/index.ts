@@ -1,5 +1,5 @@
 export { IntegrationTestSchema } from './IntegrationTestSchema.js';
-export type { AppAdminClient, AppPublishedClient } from './SchemaTypes.js';
+export type { AppDossierClient, AppPublishedClient } from './SchemaTypes.js';
 export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter.js';
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite.js';
 export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite.js';

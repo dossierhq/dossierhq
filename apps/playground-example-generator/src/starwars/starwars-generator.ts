@@ -6,7 +6,7 @@ import {
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
 import type {
-  AppAdminClient,
+  AppDossierClient,
   Film,
   Person,
   Planet,
@@ -155,7 +155,7 @@ function splitCsv(value: string) {
   return value.trim().split(/\s*,\s*/);
 }
 
-async function createFilms(client: AppAdminClient) {
+async function createFilms(client: AppDossierClient) {
   const filmsData = await downloadFile<StarwarsFilms>('films.json');
   for (const film of filmsData) {
     (
@@ -183,7 +183,7 @@ async function createFilms(client: AppAdminClient) {
   }
 }
 
-async function createPeople(client: AppAdminClient) {
+async function createPeople(client: AppDossierClient) {
   const peopleData = await downloadFile<StarwarsPeople>('people.json');
   for (const person of peopleData) {
     (
@@ -209,7 +209,7 @@ async function createPeople(client: AppAdminClient) {
   }
 }
 
-async function createPlanets(client: AppAdminClient) {
+async function createPlanets(client: AppDossierClient) {
   const planetsData = await downloadFile<StarwarsPlanets>('planets.json');
   for (const planet of planetsData) {
     (
@@ -235,7 +235,7 @@ async function createPlanets(client: AppAdminClient) {
   }
 }
 
-async function createSpecies(client: AppAdminClient) {
+async function createSpecies(client: AppDossierClient) {
   const speciesData = await downloadFile<StarwarsSpecies>('species.json');
   for (const species of speciesData) {
     (
@@ -265,7 +265,7 @@ async function createSpecies(client: AppAdminClient) {
   }
 }
 
-async function createStarships(client: AppAdminClient) {
+async function createStarships(client: AppDossierClient) {
   const starshipsData = await downloadFile<StarwarsStarships>('starships.json');
   for (const starship of starshipsData) {
     (
@@ -286,7 +286,7 @@ async function createStarships(client: AppAdminClient) {
   }
 }
 
-async function createTransports(client: AppAdminClient) {
+async function createTransports(client: AppDossierClient) {
   const transportsData = await downloadFile<StarwarsTransport>('transport.json');
   for (const transport of transportsData) {
     (
@@ -313,7 +313,7 @@ async function createTransports(client: AppAdminClient) {
   }
 }
 
-async function createVehicles(client: AppAdminClient) {
+async function createVehicles(client: AppDossierClient) {
   const vehiclesData = await downloadFile<StarwarsVehicles>('vehicles.json');
   for (const vehicle of vehiclesData) {
     (
@@ -334,7 +334,7 @@ async function createVehicles(client: AppAdminClient) {
 
 async function main() {
   const database = await createNewDatabase('dist/starwars.sqlite');
-  const { client, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
+  const { client, server } = await createAdapterAndServer<AppDossierClient>(database, SCHEMA);
 
   // order is due to references between entities
   await createPlanets(client);

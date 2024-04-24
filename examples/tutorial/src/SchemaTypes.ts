@@ -1,8 +1,8 @@
 import type { Component, DossierClient, DossierExceptionClient, Entity, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 

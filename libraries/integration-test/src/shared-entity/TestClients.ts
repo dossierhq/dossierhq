@@ -1,10 +1,13 @@
 import type { Server } from '@dossierhq/server';
-import type { AppAdminClient, AppPublishedClient } from '../SchemaTypes.js';
+import type { AppDossierClient, AppPublishedClient } from '../SchemaTypes.js';
 
 export type TestPrincipal = 'main' | 'secondary' | 'random';
 
 export interface DossierClientProvider {
-  dossierClient: (principal?: TestPrincipal, sessionType?: 'readonly' | 'write') => AppAdminClient;
+  dossierClient: (
+    principal?: TestPrincipal,
+    sessionType?: 'readonly' | 'write',
+  ) => AppDossierClient;
 }
 
 export interface PublishedClientProvider {

@@ -12,7 +12,7 @@ import {
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
 import type {
-  AppAdminClient,
+  AppDossierClient,
   PersonalNote,
   PlaceOfBusiness,
   Review,
@@ -36,7 +36,7 @@ function* generateLocation(): Generator<Location, void> {
 }
 
 async function createPlaceOfBusiness(
-  client: AppAdminClient,
+  client: AppDossierClient,
   locationGenerator: Generator<Location, void>,
 ) {
   const name = faker.company.name();
@@ -69,7 +69,7 @@ async function createPlaceOfBusiness(
   ).valueOrThrow();
 }
 
-async function createReviewer(client: AppAdminClient) {
+async function createReviewer(client: AppDossierClient) {
   const name = faker.internet.userName();
   return (
     await client.createEntity<Reviewer>(
@@ -83,7 +83,7 @@ async function createReviewer(client: AppAdminClient) {
 }
 
 async function createReview(
-  client: AppAdminClient,
+  client: AppDossierClient,
   placeOfBusiness: PlaceOfBusiness,
   reviewer: EntityReference,
 ) {
@@ -103,7 +103,7 @@ async function createReview(
 }
 
 async function createPersonalNote(
-  client: AppAdminClient,
+  client: AppDossierClient,
   placeOfBusiness: PlaceOfBusiness,
   userName: string,
 ) {
@@ -130,7 +130,7 @@ async function createPersonalNote(
 
 async function main() {
   const database = await createNewDatabase('dist/reviews.sqlite');
-  const { client, bobAdminClient, server } = await createAdapterAndServer<AppAdminClient>(
+  const { client, bobAdminClient, server } = await createAdapterAndServer<AppDossierClient>(
     database,
     SCHEMA,
   );

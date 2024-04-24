@@ -11,14 +11,14 @@ import type {
   RichText,
 } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<
+export type AppDossierClient = DossierClient<
   AppEntity,
   AppComponent,
   AppUniqueIndexes,
-  AppAdminExceptionClient
+  AppDossierExceptionClient
 >;
 
-export type AppAdminExceptionClient = DossierExceptionClient<
+export type AppDossierExceptionClient = DossierExceptionClient<
   AppEntity,
   AppComponent,
   AppUniqueIndexes

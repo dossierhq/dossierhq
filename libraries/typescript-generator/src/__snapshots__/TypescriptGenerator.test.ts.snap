@@ -3,9 +3,9 @@
 exports[`generateTypescriptForSchema > Auth key pattern 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -32,9 +32,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Booleans 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -64,9 +64,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Component (no fields) 1`] = `
 "import type { Component, DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -109,9 +109,9 @@ export function assertIsFoo(component: Component<string, object> | Foo): asserts
 exports[`generateTypescriptForSchema > Components 1`] = `
 "import type { Component, DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -177,9 +177,9 @@ export function assertIsFoo(component: Component<string, object> | Foo): asserts
 exports[`generateTypescriptForSchema > EntityTypes 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity, EntityReference } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -209,9 +209,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Foo (no fields) 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -238,9 +238,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Locations 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity, Location } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -270,9 +270,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Numbers 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -304,9 +304,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > RichTexts 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity, RichText } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -336,9 +336,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Strings 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 
@@ -370,9 +370,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > Unique index 1`] = `
 "import type { DossierClient, DossierExceptionClient, Entity } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = 'slug';
 
@@ -401,9 +401,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema > empty 1`] = `
 "import type { DossierClient, DossierExceptionClient } from '@dossierhq/core';
 
-export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
-export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
 
 export type AppUniqueIndexes = never;
 

@@ -74,9 +74,9 @@ function generateAdminClientTypes(context: GeneratorContext) {
   context.coreImports.add('DossierExceptionClient');
   return [
     '',
-    'export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;',
+    'export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;',
     '',
-    'export type AppAdminExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;',
+    'export type AppDossierExceptionClient = DossierExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;',
   ];
 }
 

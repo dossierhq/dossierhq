@@ -25,7 +25,7 @@ import {
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
 import type {
-  AppAdminClient,
+  AppDossierClient,
   AppEntity,
   BooleansEntity,
   CloudinaryImage,
@@ -232,7 +232,7 @@ function id(name: string) {
   return uuidv5(name, UUID_NAMESPACE);
 }
 
-async function createBooleansEntities(client: AppAdminClient) {
+async function createBooleansEntities(client: AppDossierClient) {
   const minimal: EntityCreate<BooleansEntity> = {
     info: { type: 'BooleansEntity', name: 'Booleans minimal' },
     fields: {},
@@ -277,7 +277,7 @@ async function createBooleansEntities(client: AppAdminClient) {
 }
 
 async function createEntitiesEntities(
-  client: AppAdminClient,
+  client: AppDossierClient,
   {
     booleansEntities,
     locationsEntities,
@@ -360,7 +360,7 @@ function entityRefs(entities: AppEntity[]): EntityReference[] {
   return entities.map(entityRef).filter((it) => it !== null) as EntityReference[];
 }
 
-async function createLocationsEntities(client: AppAdminClient) {
+async function createLocationsEntities(client: AppDossierClient) {
   const malmo = { lat: 55.60498, lng: 13.003822 };
   const london = { lat: 51.459952, lng: -0.011228 };
 
@@ -410,7 +410,7 @@ async function createLocationsEntities(client: AppAdminClient) {
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-async function createNumbersEntities(client: AppAdminClient) {
+async function createNumbersEntities(client: AppDossierClient) {
   const minimal: EntityCreate<NumbersEntity> = {
     info: { type: 'NumbersEntity', name: 'Numbers minimal' },
     fields: {},
@@ -470,7 +470,7 @@ async function createNumbersEntities(client: AppAdminClient) {
 }
 
 async function createRichTextsEntities(
-  client: AppAdminClient,
+  client: AppDossierClient,
   {
     numbersEntities,
     stringsEntities,
@@ -648,7 +648,7 @@ async function createRichTextsEntities(
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-async function createStringsEntities(client: AppAdminClient) {
+async function createStringsEntities(client: AppDossierClient) {
   const minimal: EntityCreate<StringsEntity> = {
     info: { type: 'StringsEntity', name: 'Strings minimal' },
     fields: {},
@@ -728,7 +728,7 @@ async function createStringsEntities(client: AppAdminClient) {
 }
 
 async function createComponentsEntities(
-  client: AppAdminClient,
+  client: AppDossierClient,
   {
     cloudinaryImageComponents,
   }: {
@@ -836,7 +836,7 @@ async function createCloudinaryImageComponents() {
 
 async function main() {
   const database = await createNewDatabase('dist/catalog.sqlite');
-  const { client, server } = await createAdapterAndServer<AppAdminClient>(
+  const { client, server } = await createAdapterAndServer<AppDossierClient>(
     database,
     SCHEMA_WITHOUT_VALIDATIONS,
   );

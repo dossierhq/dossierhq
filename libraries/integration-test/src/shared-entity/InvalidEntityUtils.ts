@@ -16,7 +16,7 @@ import {
   ChangeValidationsWithoutValidationsUpdate,
   IntegrationTestSchema,
 } from '../IntegrationTestSchema.js';
-import type { ChangeValidations, Components, AppAdminClient } from '../SchemaTypes.js';
+import type { ChangeValidations, Components, AppDossierClient } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 import { withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 
@@ -25,7 +25,7 @@ interface Options {
 }
 
 export async function createInvalidEntity(
-  client: AppAdminClient,
+  client: AppDossierClient,
   fields: Partial<ChangeValidations['fields']>,
   options?: Options,
 ) {
@@ -37,7 +37,10 @@ export async function createInvalidEntity(
   );
 }
 
-export async function createEntityWithInvalidComponent(client: AppAdminClient, options?: Options) {
+export async function createEntityWithInvalidComponent(
+  client: AppDossierClient,
+  options?: Options,
+) {
   return doCreateInvalidEntity<Components>(
     client,
     ChangeValidationsComponentWithoutValidationsUpdate,
@@ -49,7 +52,7 @@ export async function createEntityWithInvalidComponent(client: AppAdminClient, o
 }
 
 async function doCreateInvalidEntity<TEntity extends Entity<string, object> = Entity>(
-  client: AppAdminClient,
+  client: AppDossierClient,
   schemaUpdate: SchemaSpecificationUpdate,
   entity: EntityCreate<TEntity>,
   options?: Options,
@@ -94,7 +97,7 @@ async function doCreateInvalidEntity<TEntity extends Entity<string, object> = En
 }
 
 async function withTemporarySchemaChange(
-  client: AppAdminClient,
+  client: AppDossierClient,
   schemaUpdate: SchemaSpecificationUpdate,
   onChangedSchema: () => Promise<EntityReference | undefined>,
   onProcessed: (processed: EntityProcessDirtyPayload) => void,

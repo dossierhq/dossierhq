@@ -19,7 +19,7 @@ import {
   assertTruthy,
 } from '../Asserts.js';
 import type {
-  AppAdminClient,
+  AppDossierClient,
   AppEntity,
   AppPublishedClient,
   AppPublishedEntity,
@@ -135,7 +135,7 @@ export function assertPageInfoEquals<TEntity extends AppEntity | AppPublishedEnt
 }
 
 export async function countSearchResultWithEntity<
-  TClient extends AppAdminClient | AppPublishedClient,
+  TClient extends AppDossierClient | AppPublishedClient,
 >(
   client: TClient,
   query: Parameters<TClient['getEntities']>[0],
@@ -154,7 +154,7 @@ export async function countSearchResultWithEntity<
 }
 
 export async function collectMatchingSearchResultNodes<
-  TClient extends AppAdminClient | AppPublishedClient,
+  TClient extends AppDossierClient | AppPublishedClient,
 >(
   client: TClient,
   query: Parameters<TClient['getEntities']>[0],
@@ -183,8 +183,8 @@ export async function collectMatchingSearchResultNodes<
 }
 
 export async function countSearchResultStatuses(
-  client: AppAdminClient,
-  query: Parameters<AppAdminClient['getEntities']>[0],
+  client: AppDossierClient,
+  query: Parameters<AppDossierClient['getEntities']>[0],
 ): PromiseResult<
   Record<EntityStatus | 'valid' | 'invalid', number>,
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

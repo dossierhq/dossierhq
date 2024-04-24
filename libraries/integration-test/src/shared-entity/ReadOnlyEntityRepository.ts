@@ -12,7 +12,7 @@ import { assertExhaustive, assertOkResult, assertSame } from '../Asserts.js';
 import {
   assertIsReadOnly,
   type ReadOnly,
-  type AppAdminClient,
+  type AppDossierClient,
   type AppEntity,
   type PublishedReadOnly,
 } from '../SchemaTypes.js';
@@ -149,7 +149,7 @@ async function doCreateReadOnlyEntityRepository(
 }
 
 async function createEntity(
-  client: AppAdminClient,
+  client: AppDossierClient,
   id: string,
   authKey: AppEntity['info']['authKey'],
   status: EntityStatus,
