@@ -86,7 +86,7 @@ export {
   type AdminClientJsonOperationArgs,
   type AdminClientMiddleware,
   type AdminClientOperation,
-  type AdminExceptionClient,
+  type DossierExceptionClient,
 } from './client/DossierClient.js';
 export {
   convertJsonConnection,

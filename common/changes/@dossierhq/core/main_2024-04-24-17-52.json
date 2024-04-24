@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": "Break: Rename AdminExceptionClient to DossierExceptionClient",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}

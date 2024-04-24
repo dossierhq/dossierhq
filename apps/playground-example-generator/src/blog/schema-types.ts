@@ -1,7 +1,7 @@
 import type {
-  AdminExceptionClient,
   Component,
   DossierClient,
+  DossierExceptionClient,
   Entity,
   EntityReference,
   RichText,
@@ -14,7 +14,7 @@ export type AppAdminClient = DossierClient<
   AppAdminExceptionClient
 >;
 
-export type AppAdminExceptionClient = AdminExceptionClient<
+export type AppAdminExceptionClient = DossierExceptionClient<
   AppEntity,
   AppComponent,
   AppUniqueIndexes

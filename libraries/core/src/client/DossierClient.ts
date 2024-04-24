@@ -74,11 +74,11 @@ export interface DossierClient<
   TEntity extends Entity<string, object> = Entity,
   TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
-  TExceptionClient extends AdminExceptionClient<
+  TExceptionClient extends DossierExceptionClient<
     TEntity,
     TComponent,
     TUniqueIndex
-  > = AdminExceptionClient<TEntity, TComponent, TUniqueIndex>,
+  > = DossierExceptionClient<TEntity, TComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -275,7 +275,7 @@ export interface DossierClient<
   toExceptionClient(): TExceptionClient;
 }
 
-export interface AdminExceptionClient<
+export interface DossierExceptionClient<
   TEntity extends Entity<string, object> = Entity,
   TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
@@ -803,7 +803,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     });
   }
 
-  toExceptionClient(): AdminExceptionClient {
+  toExceptionClient(): DossierExceptionClient {
     return new AdminExceptionClientWrapper(this);
   }
 
@@ -829,7 +829,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
   }
 }
 
-class AdminExceptionClientWrapper implements AdminExceptionClient {
+class AdminExceptionClientWrapper implements DossierExceptionClient {
   readonly client: DossierClient;
 
   constructor(client: DossierClient) {
