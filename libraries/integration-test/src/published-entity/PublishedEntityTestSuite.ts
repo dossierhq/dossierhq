@@ -1,6 +1,6 @@
 import { buildSuite } from '../Builder.js';
 import type {
-  AdminClientProvider,
+  DossierClientProvider,
   PublishedClientProvider,
   TestFunctionInitializer,
   TestSuite,
@@ -13,7 +13,7 @@ import { GetEntityListSubSuite } from './PublishedEntityGetEntityListSubSuite.js
 import { GetEntitySubSuite } from './PublishedEntityGetEntitySubSuite.js';
 
 export interface PublishedEntityTestContext {
-  clientProvider: AdminClientProvider & PublishedClientProvider;
+  clientProvider: DossierClientProvider & PublishedClientProvider;
   readOnlyEntityRepository: ReadOnlyEntityRepository;
 }
 

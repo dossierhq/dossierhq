@@ -10,7 +10,7 @@ export const ProcessDirtyEntitySubSuite: UnboundTestFunction<AdminEntityTestCont
 //TODO add some more tests
 
 async function processDirtyEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient('main', 'readonly');
-  const result = await adminClient.processDirtyEntity({ id: 'test' });
+  const client = clientProvider.dossierClient('main', 'readonly');
+  const result = await client.processDirtyEntity({ id: 'test' });
   assertErrorResult(result, ErrorType.BadRequest, 'Readonly session used to process dirty entity');
 }

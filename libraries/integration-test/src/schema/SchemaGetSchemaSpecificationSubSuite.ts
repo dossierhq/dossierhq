@@ -8,8 +8,8 @@ export const SchemaGetSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTes
 ];
 
 async function getSchemaSpecification_normal({ clientProvider }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const result = await adminClient.getSchemaSpecification();
+  const client = clientProvider.dossierClient();
+  const result = await client.getSchemaSpecification();
   assertOkResult(result);
   const schema = new Schema(result.value);
   assertOkResult(schema.validate());

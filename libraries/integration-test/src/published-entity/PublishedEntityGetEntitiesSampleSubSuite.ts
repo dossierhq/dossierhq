@@ -74,17 +74,17 @@ async function getEntitiesSample_authKeyNoneAndSubject({
 async function getEntitiesSample_linksToOneReference({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
     { publish: true },
   );
@@ -101,10 +101,10 @@ async function getEntitiesSample_linksToOneReference({
 async function getEntitiesSample_linksToNoReferences({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
   const {
     entity: { id },
@@ -117,17 +117,17 @@ async function getEntitiesSample_linksToNoReferences({
 async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
@@ -146,15 +146,15 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
 async function getEntitiesSample_linksFromOneReference({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
     { publish: true },
   );
@@ -173,10 +173,10 @@ async function getEntitiesSample_linksFromOneReference({
 async function getEntitiesSample_linksFromNoReferences({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE, { publish: true });
+  const referenceResult = await client.createEntity(REFERENCES_CREATE, { publish: true });
   assertOkResult(referenceResult);
   const {
     entity: { id },
@@ -192,15 +192,15 @@ async function getEntitiesSample_linksFromNoReferences({
 async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(titleOnlyResult);
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
     }),

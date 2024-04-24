@@ -35,8 +35,8 @@ export async function updateSchema(server: Server) {
     identifier: 'schemaloader',
   });
 
-  const adminClient = server.createDossierClient(() => sessionResult);
+  const client = server.createDossierClient(() => sessionResult);
 
-  const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
+  const schemaResult = await client.updateSchemaSpecification(schemaSpecification);
   return new Schema(schemaResult.valueOrThrow().schemaSpecification);
 }

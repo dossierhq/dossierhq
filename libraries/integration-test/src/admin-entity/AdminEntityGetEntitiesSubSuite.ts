@@ -96,7 +96,7 @@ async function getEntities_minimal({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
   });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
@@ -109,7 +109,7 @@ async function getEntities_pagingFirst({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await clientProvider
-    .adminClient()
+    .dossierClient()
     .getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 10);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
@@ -117,7 +117,7 @@ async function getEntities_pagingFirst({
 
 async function getEntities_pagingFirst0({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider
-    .adminClient()
+    .dossierClient()
     .getEntities({ entityTypes: ['ReadOnly'] }, { first: 0 });
   assertResultValue(result, null);
 }
@@ -128,7 +128,7 @@ async function getEntities_pagingLast({
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const result = await clientProvider
-    .adminClient()
+    .dossierClient()
     .getEntities({ entityTypes: ['ReadOnly'] }, { last: 10 });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, -10, undefined);
   assertPageInfoEquals(result, { hasPreviousPage: true, hasNextPage: false });
@@ -136,7 +136,7 @@ async function getEntities_pagingLast({
 
 async function getEntities_pagingLast0({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider
-    .adminClient()
+    .dossierClient()
     .getEntities({ entityTypes: ['ReadOnly'] }, { last: 0 });
   assertResultValue(result, null);
 }
@@ -145,7 +145,7 @@ async function getEntities_pagingFirstAfter({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 10 });
   assertOkResult(firstResult);
@@ -160,7 +160,7 @@ async function getEntities_pagingFirstAfter({
 async function getEntities_pagingFirstAfterNameWithUnicode({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   // Since the name is converted to base64 encoded cursors, use unicode in the name
   // to ensure the encode/decode is proper
@@ -211,7 +211,7 @@ async function getEntities_pagingLastBefore({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { last: 10 });
   assertOkResult(firstResult);
@@ -227,7 +227,7 @@ async function getEntities_pagingFirstBetween({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
   assertOkResult(firstResult);
@@ -253,7 +253,7 @@ async function getEntities_pagingLastBetween({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
   const firstResult = await client.getEntities({ entityTypes: ['ReadOnly'] }, { first: 20 });
   assertOkResult(firstResult);
@@ -280,7 +280,7 @@ async function getEntities_orderCreatedAt({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: EntityQueryOrder.createdAt,
   });
@@ -299,7 +299,7 @@ async function getEntities_orderCreatedAtReversed({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: EntityQueryOrder.createdAt,
     reverse: true,
@@ -328,9 +328,9 @@ async function getEntities_orderUpdatedAt({
   let count = 0;
   let previousUpdatedAt: Date | null = null;
 
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
-    adminClient.getEntities(
+    client.getEntities(
       { entityTypes: ['ReadOnly'], order: EntityQueryOrder.updatedAt },
       currentPaging,
     ),
@@ -363,9 +363,9 @@ async function getEntities_orderUpdatedAtReversed({
   let count = 0;
   let previousUpdatedAt: Date | null = null;
 
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   for await (const node of getAllNodesForConnection({ first: 50 }, (currentPaging) =>
-    adminClient.getEntities(
+    client.getEntities(
       { entityTypes: ['ReadOnly'], order: EntityQueryOrder.updatedAt, reverse: true },
       currentPaging,
     ),
@@ -390,7 +390,7 @@ async function getEntities_orderName({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: EntityQueryOrder.name,
   });
@@ -403,7 +403,7 @@ async function getEntities_orderNameReversed({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     order: EntityQueryOrder.name,
     reverse: true,
@@ -420,7 +420,7 @@ async function getEntities_orderNameReversed({
 }
 
 async function getEntities_statusDraft({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft],
   });
@@ -438,7 +438,7 @@ async function getEntities_statusDraft({ clientProvider }: AdminEntityTestContex
 }
 
 async function getEntities_statusPublished({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.published],
   });
@@ -456,7 +456,7 @@ async function getEntities_statusPublished({ clientProvider }: AdminEntityTestCo
 }
 
 async function getEntities_statusModified({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified],
   });
@@ -474,7 +474,7 @@ async function getEntities_statusModified({ clientProvider }: AdminEntityTestCon
 }
 
 async function getEntities_statusWithdrawn({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.withdrawn],
   });
@@ -492,7 +492,7 @@ async function getEntities_statusWithdrawn({ clientProvider }: AdminEntityTestCo
 }
 
 async function getEntities_statusArchived({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.archived],
   });
@@ -510,7 +510,7 @@ async function getEntities_statusArchived({ clientProvider }: AdminEntityTestCon
 }
 
 async function getEntities_statusDraftArchived({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft, EntityStatus.archived],
   });
@@ -533,7 +533,7 @@ async function getEntities_statusDraftArchived({ clientProvider }: AdminEntityTe
 }
 
 async function getEntities_statusModifiedPublished({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified, EntityStatus.published],
   });
@@ -556,7 +556,7 @@ async function getEntities_statusModifiedPublished({ clientProvider }: AdminEnti
 }
 
 async function getEntities_statusAll({ clientProvider }: AdminEntityTestContext) {
-  const statusesResult = await countSearchResultStatuses(clientProvider.adminClient(), {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
     entityTypes: ['ReadOnly'],
     status: [
       EntityStatus.draft,
@@ -582,20 +582,20 @@ async function getEntities_statusAll({ clientProvider }: AdminEntityTestContext)
 }
 
 async function getEntities_invalidOnly({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const { entity } = (
-    await createInvalidEntity(adminClient, { matchPattern: 'no match' })
+    await createInvalidEntity(client, { matchPattern: 'no match' })
   ).valueOrThrow();
 
   const matches = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { entityTypes: ['ChangeValidations'], valid: false },
     entity.id,
   );
   assertResultValue(matches, 1);
 
   const { valid, invalid } = (
-    await countSearchResultStatuses(clientProvider.adminClient(), {
+    await countSearchResultStatuses(clientProvider.dossierClient(), {
       entityTypes: ['ChangeValidations'],
       valid: false,
     })
@@ -606,18 +606,18 @@ async function getEntities_invalidOnly({ clientProvider }: AdminEntityTestContex
 }
 
 async function getEntities_validOnly({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const { entity } = (await adminClient.createEntity(CHANGE_VALIDATIONS_CREATE)).valueOrThrow();
+  const client = clientProvider.dossierClient();
+  const { entity } = (await client.createEntity(CHANGE_VALIDATIONS_CREATE)).valueOrThrow();
 
   const matches = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { entityTypes: ['ChangeValidations'], valid: true },
     entity.id,
   );
   assertResultValue(matches, 1);
 
   const { valid, invalid } = (
-    await countSearchResultStatuses(clientProvider.adminClient(), {
+    await countSearchResultStatuses(clientProvider.dossierClient(), {
       entityTypes: ['ChangeValidations'],
       valid: true,
     })
@@ -628,25 +628,25 @@ async function getEntities_validOnly({ clientProvider }: AdminEntityTestContext)
 }
 
 async function getEntities_componentTypes({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const { entity } = (await adminClient.createEntity(VALUE_ITEMS_CREATE)).valueOrThrow();
+  const client = clientProvider.dossierClient();
+  const { entity } = (await client.createEntity(VALUE_ITEMS_CREATE)).valueOrThrow();
 
   const matchesBeforeComponent = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
   assertResultValue(matchesBeforeComponent, 0);
 
   (
-    await adminClient.updateEntity<Components>({
+    await client.updateEntity<Components>({
       id: entity.id,
       fields: { any: { type: 'ReferencesComponent', reference: null } },
     })
   ).throwIfError();
 
   const matchesAfterComponent = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { entityTypes: ['Components'], componentTypes: ['ReferencesComponent'] },
     entity.id,
   );
@@ -654,19 +654,19 @@ async function getEntities_componentTypes({ clientProvider }: AdminEntityTestCon
 }
 
 async function getEntities_linksToOneReference({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
@@ -674,21 +674,21 @@ async function getEntities_linksToOneReference({ clientProvider }: AdminEntityTe
 async function getEntities_linksToOneReferenceFromRichText({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: { richText: createRichText([createRichTextEntityNode({ id: titleOnlyId })]) },
     }),
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
@@ -696,13 +696,13 @@ async function getEntities_linksToOneReferenceFromRichText({
 async function getEntities_linksToOneReferenceFromLinkRichText({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.valueOrThrow();
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
@@ -717,7 +717,7 @@ async function getEntities_linksToOneReferenceFromLinkRichText({
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
@@ -725,14 +725,14 @@ async function getEntities_linksToOneReferenceFromLinkRichText({
 async function getEntities_linksToOneReferenceFromComponentInRichText({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
@@ -746,70 +746,70 @@ async function getEntities_linksToOneReferenceFromComponentInRichText({
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function getEntities_linksToFromAdminOnlyField({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const {
     entity: { id: titleOnlyId },
-  } = (await adminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
-  const referenceCreateResult = await adminClient.createEntity(
+  const referenceCreateResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyAdminOnly: { id: titleOnlyId } } }),
     { publish: true },
   );
   assertOkResult(referenceCreateResult);
 
   // Is included when searching with admin client even though the field is admin only.
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceCreateResult.value.entity]);
 }
 
 async function getEntities_linksToNoReferences({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, []);
 }
 
 async function getEntities_linksToTwoReferencesFromOneEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
   );
   assertOkResult(referenceResult);
 
-  const searchResult = await adminClient.getEntities({ linksTo: { id: titleOnlyId } });
+  const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function getEntities_linksFromOneReference({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
   );
   assertOkResult(referenceResult);
@@ -817,32 +817,32 @@ async function getEntities_linksFromOneReference({ clientProvider }: AdminEntity
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const searchResult = await adminClient.getEntities({ linksFrom: { id: referenceId } });
+  const searchResult = await client.getEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [titleOnlyEntity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function getEntities_linksFromNoReferences({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
+  const client = clientProvider.dossierClient();
+  const referenceResult = await client.createEntity(REFERENCES_CREATE);
   assertOkResult(referenceResult);
   const {
     entity: { id },
   } = referenceResult.value;
 
-  const searchResult = await adminClient.getEntities({ linksFrom: { id } });
+  const searchResult = await client.getEntities({ linksFrom: { id } });
   assertSearchResultEntities(searchResult, []);
 }
 
 async function getEntities_linksFromTwoReferencesFromOneEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
     }),
@@ -852,16 +852,16 @@ async function getEntities_linksFromTwoReferencesFromOneEntity({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const searchResult = await adminClient.getEntities({ linksFrom: { id: referenceId } });
+  const searchResult = await client.getEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [titleOnlyEntity]);
   assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }
 
 async function getEntities_boundingBoxOneInside({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
@@ -869,17 +869,17 @@ async function getEntities_boundingBoxOneInside({ clientProvider }: AdminEntityT
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  const matches = await countSearchResultWithEntity(client, { boundingBox }, id);
   assertResultValue(matches, 1);
 }
 
 async function getEntities_boundingBoxOneInsideFromComponentInRichText({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([
@@ -897,18 +897,18 @@ async function getEntities_boundingBoxOneInsideFromComponentInRichText({
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  const matches = await countSearchResultWithEntity(client, { boundingBox }, id);
   assertResultValue(matches, 1);
 }
 
 async function getEntities_boundingBoxOneEntityTwoLocationsInside({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
   const inside = boundingBoxBelowCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } }),
   );
   assertOkResult(createResult);
@@ -916,17 +916,17 @@ async function getEntities_boundingBoxOneEntityTwoLocationsInside({
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  const matches = await countSearchResultWithEntity(client, { boundingBox }, id);
   assertResultValue(matches, 1);
 }
 
 async function getEntities_boundingBoxOneInsideFromAdminOnlyField({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { locationAdminOnly: center } }),
   );
   assertOkResult(createResult);
@@ -934,18 +934,18 @@ async function getEntities_boundingBoxOneInsideFromAdminOnlyField({
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  const matches = await countSearchResultWithEntity(client, { boundingBox }, id);
   assertResultValue(matches, 1);
 }
 
 async function getEntities_boundingBoxOneOutside({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const outside = {
     lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
     lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
   };
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: outside } }),
   );
   assertOkResult(createResult);
@@ -953,17 +953,17 @@ async function getEntities_boundingBoxOneOutside({ clientProvider }: AdminEntity
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  const matches = await countSearchResultWithEntity(client, { boundingBox }, id);
   assertResultValue(matches, 0);
 }
 
 async function getEntities_boundingBoxWrappingMaxMinLongitude({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
   const center = boundingBoxCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
@@ -971,7 +971,7 @@ async function getEntities_boundingBoxWrappingMaxMinLongitude({
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { boundingBox }, id);
+  const matches = await countSearchResultWithEntity(client, { boundingBox }, id);
   assertResultValue(matches, 1);
 }
 
@@ -980,7 +980,7 @@ async function getEntities_authKeySubject({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -994,15 +994,15 @@ async function getEntities_authKeySubject({
 async function getEntities_authKeySubjectFromReadonlyRandom({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient('random', 'readonly');
+  const client = clientProvider.dossierClient('random', 'readonly');
 
-  const result = await adminClient.getEntities({ authKeys: ['subject'] });
+  const result = await client.getEntities({ authKeys: ['subject'] });
   assertResultValue(result, null);
 }
 
 async function getEntities_textIncludedAfterCreation({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       fields: { title: 'this is a serious title with the best insights' },
     }),
@@ -1012,15 +1012,15 @@ async function getEntities_textIncludedAfterCreation({ clientProvider }: AdminEn
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { text: 'serious insights' }, id);
+  const matches = await countSearchResultWithEntity(client, { text: 'serious insights' }, id);
   assertResultValue(matches, 1);
 }
 
 async function getEntities_textIncludedInAdminOnlyFieldAfterCreation({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, {
       fields: {
         stringAdminOnly:
@@ -1033,42 +1033,38 @@ async function getEntities_textIncludedInAdminOnlyFieldAfterCreation({
     entity: { id },
   } = createResult.value;
 
-  const matches = await countSearchResultWithEntity(adminClient, { text: 'broccoli' }, id);
+  const matches = await countSearchResultWithEntity(client, { text: 'broccoli' }, id);
   assertResultValue(matches, 1);
 }
 
 async function getEntities_textIncludedAfterUpdate({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
   const matchesBeforeUpdate = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { text: 'fox jumping' },
     id,
   );
   assertResultValue(matchesBeforeUpdate, 0);
 
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await client.updateEntity({
     id,
     fields: { title: "who's jumping? It it the fox" },
   });
   assertOkResult(updateResult);
 
-  const matchesAfterUpdate = await countSearchResultWithEntity(
-    adminClient,
-    { text: 'fox jumping' },
-    id,
-  );
+  const matchesAfterUpdate = await countSearchResultWithEntity(client, { text: 'fox jumping' }, id);
   assertResultValue(matchesAfterUpdate, 1);
 }
 
 async function getEntities_textExcludedAfterUpdate({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's jumping? It it the fox" } }),
   );
   assertOkResult(createResult);
@@ -1077,23 +1073,19 @@ async function getEntities_textExcludedAfterUpdate({ clientProvider }: AdminEnti
   } = createResult.value;
 
   const matchesBeforeUpdate = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { text: 'fox jumping' },
     id,
   );
   assertResultValue(matchesBeforeUpdate, 1);
 
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await client.updateEntity({
     id,
     fields: { title: 'Random title' },
   });
   assertOkResult(updateResult);
 
-  const matchesAfterUpdate = await countSearchResultWithEntity(
-    adminClient,
-    { text: 'fox jumping' },
-    id,
-  );
+  const matchesAfterUpdate = await countSearchResultWithEntity(client, { text: 'fox jumping' }, id);
   assertResultValue(matchesAfterUpdate, 0);
 }
 
@@ -1102,7 +1094,7 @@ async function getEntities_authKeyNoneAndSubject({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
-  const result = await clientProvider.adminClient().getEntities({
+  const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['', 'subject'],
   });

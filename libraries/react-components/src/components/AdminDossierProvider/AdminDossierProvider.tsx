@@ -11,7 +11,7 @@ import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
 interface Props {
   adapter: AdminDossierContextAdapter;
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>;
+  client: DossierClient<Entity<string, object>, Component<string, object>>;
   logger?: Logger;
   authKeys?: DisplayAuthKey[];
   children: ReactNode;
@@ -19,22 +19,22 @@ interface Props {
 
 export function AdminDossierProvider({
   adapter,
-  adminClient,
+  client,
   logger,
   authKeys,
   children,
 }: Props): JSX.Element | null {
-  const { schema, schemaError } = useAdminSchema(adminClient);
+  const { schema, schemaError } = useAdminSchema(client);
   const value: AdminDossierContextValue = useMemo(() => {
     return {
       adapter,
-      adminClient,
+      client,
       logger: logger ?? NoOpLogger,
       schema,
       schemaError,
       authKeys: authKeys ?? [{ authKey: '', displayName: 'Default' }],
     };
-  }, [adapter, adminClient, logger, schema, schemaError, authKeys]);
+  }, [adapter, client, logger, schema, schemaError, authKeys]);
 
   return <AdminDossierContext.Provider value={value}>{children}</AdminDossierContext.Provider>;
 }

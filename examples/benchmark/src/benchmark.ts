@@ -72,7 +72,7 @@ function randomNullUndefined<T>(
 }
 
 async function randomReference(
-  adminClient: DossierClient,
+  client: DossierClient,
   query?: EntitySharedQuery,
 ): PromiseResult<
   EntityReference,
@@ -81,13 +81,13 @@ async function randomReference(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  const result = await randomAdminEntity(adminClient, query);
+  const result = await randomAdminEntity(client, query);
   if (result.isError()) return result;
   return ok({ id: result.value.id });
 }
 
 async function randomAdminEntity(
-  adminClient: DossierClient,
+  client: DossierClient,
   query?: EntitySharedQuery,
 ): PromiseResult<
   Entity,
@@ -96,7 +96,7 @@ async function randomAdminEntity(
   | typeof ErrorType.NotAuthorized
   | typeof ErrorType.Generic
 > {
-  const result = await adminClient.getEntitiesSample(query, { count: 1 });
+  const result = await client.getEntitiesSample(query, { count: 1 });
   if (result.isError()) return result;
   if (result.value.items.length === 0) {
     return notOk.NotFound('No such entity');
@@ -105,7 +105,7 @@ async function randomAdminEntity(
 }
 
 async function createEntity(
-  adminClient: DossierClient,
+  client: DossierClient,
   type: string,
   options?: CreateEntityOptions,
 ): PromiseResult<EntityCreate, ErrorType> {
@@ -113,17 +113,17 @@ async function createEntity(
     return ok(createOrganization(options));
   }
   if (type === 'Person') {
-    return await createPerson(adminClient, options);
+    return await createPerson(client, options);
   }
   return notOk.BadRequest(`Type ${type} not supported`);
 }
 
 async function updateEntity(
-  adminClient: DossierClient,
+  client: DossierClient,
   type: string,
   id: string,
 ): PromiseResult<EntityUpdate, ErrorType> {
-  const createResult = await createEntity(adminClient, type);
+  const createResult = await createEntity(client, type);
   if (createResult.isError()) return createResult;
 
   const result: EntityUpdate = {
@@ -150,14 +150,14 @@ function createOrganization(_options?: CreateEntityOptions): EntityCreate {
 }
 
 async function createPerson(
-  adminClient: DossierClient,
+  client: DossierClient,
   options?: CreateEntityOptions,
 ): PromiseResult<EntityCreate, ErrorType> {
   const organizationResult = await randomGenerateResult(
     [
       ok(null),
       () =>
-        randomAdminEntity(adminClient, {
+        randomAdminEntity(client, {
           entityTypes: ['Organization'],
           status: options?.publishable
             ? [EntityStatus.published, EntityStatus.modified]
@@ -191,16 +191,13 @@ function createPostalAddress() {
   };
 }
 
-async function testCreateOrganizationEntities(
-  adminClient: DossierClient,
-  options: BenchPressOptions,
-) {
+async function testCreateOrganizationEntities(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     const entity = createOrganization();
 
     clock.start();
 
-    const result = await adminClient.createEntity(entity);
+    const result = await client.createEntity(entity);
 
     clock.stop();
 
@@ -208,14 +205,14 @@ async function testCreateOrganizationEntities(
   }, options);
 }
 
-async function testCreatePersonEntities(adminClient: DossierClient, options: BenchPressOptions) {
+async function testCreatePersonEntities(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
-    const entityResult = await createPerson(adminClient);
+    const entityResult = await createPerson(client);
     if (entityResult.isError()) return false;
 
     clock.start();
 
-    const result = await adminClient.createEntity(entityResult.value);
+    const result = await client.createEntity(entityResult.value);
 
     clock.stop();
 
@@ -223,15 +220,15 @@ async function testCreatePersonEntities(adminClient: DossierClient, options: Ben
   }, options);
 }
 
-async function testCreateEntities(adminClient: DossierClient, options: BenchPressOptions) {
+async function testCreateEntities(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     const type = randomWeightedSelect(['Organization', 'Person'], [30, 70]);
-    const entityResult = await createEntity(adminClient, type);
+    const entityResult = await createEntity(client, type);
     if (entityResult.isError()) return false;
 
     clock.start();
 
-    const result = await adminClient.createEntity(entityResult.value);
+    const result = await client.createEntity(entityResult.value);
 
     clock.stop();
 
@@ -239,15 +236,15 @@ async function testCreateEntities(adminClient: DossierClient, options: BenchPres
   }, options);
 }
 
-async function testCreateAndPublishEntity(adminClient: DossierClient, options: BenchPressOptions) {
+async function testCreateAndPublishEntity(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     const type = randomWeightedSelect(['Organization', 'Person'], [30, 70]);
-    const entityResult = await createEntity(adminClient, type, { publishable: true });
+    const entityResult = await createEntity(client, type, { publishable: true });
     if (entityResult.isError()) return false;
 
     clock.start();
 
-    const result = await adminClient.createEntity(entityResult.value, { publish: true });
+    const result = await client.createEntity(entityResult.value, { publish: true });
 
     clock.stop();
 
@@ -255,19 +252,19 @@ async function testCreateAndPublishEntity(adminClient: DossierClient, options: B
   }, options);
 }
 
-async function testEditEntity(adminClient: DossierClient, options: BenchPressOptions) {
+async function testEditEntity(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
-    const randomResult = await randomAdminEntity(adminClient, {
+    const randomResult = await randomAdminEntity(client, {
       entityTypes: ['Organization', 'Person'],
     });
     if (randomResult.isError()) return false;
     const entity = randomResult.value;
-    const entityUpdateResult = await updateEntity(adminClient, entity.info.type, entity.id);
+    const entityUpdateResult = await updateEntity(client, entity.info.type, entity.id);
     if (entityUpdateResult.isError()) return false;
 
     clock.start();
 
-    const updateResult = await adminClient.updateEntity(entityUpdateResult.value);
+    const updateResult = await client.updateEntity(entityUpdateResult.value);
 
     clock.stop();
 
@@ -275,18 +272,18 @@ async function testEditEntity(adminClient: DossierClient, options: BenchPressOpt
   }, options);
 }
 
-async function testArchiveEntity(adminClient: DossierClient, options: BenchPressOptions) {
+async function testArchiveEntity(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
     let entity = null;
     while (!entity) {
-      const randomResult = await randomAdminEntity(adminClient, {
+      const randomResult = await randomAdminEntity(client, {
         entityTypes: ['Organization', 'Person'],
         status: [EntityStatus.draft, EntityStatus.withdrawn],
       });
       if (randomResult.isError()) return false;
 
       if (randomResult.value.info.type === 'Person' && randomResult.value.fields.organization) {
-        const referencedOrgResult = await adminClient.getEntity(
+        const referencedOrgResult = await client.getEntity(
           randomResult.value.fields.organization as EntityReference,
         );
         if (referencedOrgResult.isError()) return false;
@@ -304,7 +301,7 @@ async function testArchiveEntity(adminClient: DossierClient, options: BenchPress
 
     clock.start();
 
-    const archiveResult = await adminClient.archiveEntity(entity);
+    const archiveResult = await client.archiveEntity(entity);
 
     clock.stop();
 
@@ -312,16 +309,16 @@ async function testArchiveEntity(adminClient: DossierClient, options: BenchPress
   }, options);
 }
 
-async function testGetAdminEntity(adminClient: DossierClient, options: BenchPressOptions) {
+async function testGetAdminEntity(client: DossierClient, options: BenchPressOptions) {
   return await runTest(async (clock) => {
-    const referenceResult = await randomReference(adminClient);
+    const referenceResult = await randomReference(client);
     if (referenceResult.isError()) {
       return false;
     }
 
     clock.start();
 
-    const entityResult = await adminClient.getEntity(referenceResult.value);
+    const entityResult = await client.getEntity(referenceResult.value);
 
     clock.stop();
 
@@ -330,13 +327,13 @@ async function testGetAdminEntity(adminClient: DossierClient, options: BenchPres
 }
 
 async function testSearchAdminEntitiesAnyFirst50(
-  adminClient: DossierClient,
+  client: DossierClient,
   options: BenchPressOptions,
 ) {
   return await runTest(async (clock) => {
     clock.start();
 
-    const result = await adminClient.getEntities({}, { first: 50 });
+    const result = await client.getEntities({}, { first: 50 });
 
     clock.stop();
 
@@ -365,7 +362,7 @@ async function runTests(
   variant: string,
   tsvFilename: string,
   server: Server,
-  adminClient: DossierClient,
+  client: DossierClient,
 ) {
   const warmup = 30;
   const iterations = 1_000;
@@ -373,7 +370,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testCreateEntities(adminClient, {
+    testCreateEntities(client, {
       testName: 'create entity',
       variant,
       runName,
@@ -387,7 +384,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testCreateOrganizationEntities(adminClient, {
+    testCreateOrganizationEntities(client, {
       testName: 'create entity organization',
       variant,
       runName,
@@ -401,7 +398,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testCreatePersonEntities(adminClient, {
+    testCreatePersonEntities(client, {
       testName: 'create entity person',
       variant,
       runName,
@@ -415,7 +412,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testCreateAndPublishEntity(adminClient, {
+    testCreateAndPublishEntity(client, {
       testName: 'create and publish entity',
       variant,
       runName,
@@ -429,7 +426,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testEditEntity(adminClient, {
+    testEditEntity(client, {
       testName: 'edit entity',
       variant,
       runName,
@@ -443,7 +440,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testArchiveEntity(adminClient, {
+    testArchiveEntity(client, {
       testName: 'archive entity',
       variant,
       runName,
@@ -457,7 +454,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testGetAdminEntity(adminClient, {
+    testGetAdminEntity(client, {
       testName: 'get admin entity',
       variant,
       runName,
@@ -471,7 +468,7 @@ async function runTests(
   (await server.optimizeDatabase({ all: true })).throwIfError();
 
   await report(
-    testSearchAdminEntitiesAnyFirst50(adminClient, {
+    testSearchAdminEntitiesAnyFirst50(client, {
       testName: 'search admin entities (any, first 50)',
       variant,
       runName,
@@ -513,10 +510,10 @@ export async function initializeAndRunTests({
     });
     if (sessionResult.isError()) return sessionResult;
 
-    const adminClient = server.createDossierClient(sessionResult.value.context);
+    const client = server.createDossierClient(sessionResult.value.context);
 
     const tsvFilename = isCI ? 'ci-benchmark.tsv' : 'local-benchmark.tsv';
-    await runTests(runName, variant, tsvFilename, server, adminClient);
+    await runTests(runName, variant, tsvFilename, server, client);
   } finally {
     await server.shutdown();
   }

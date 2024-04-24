@@ -52,7 +52,7 @@ async function getEntitiesSample_minimal({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
   });
   assertOkResult(result);
@@ -63,7 +63,7 @@ async function getEntitiesSample_minimal({
 }
 
 async function getEntitiesSample_statusDraft({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft],
   });
@@ -80,7 +80,7 @@ async function getEntitiesSample_statusDraft({ clientProvider }: AdminEntityTest
 }
 
 async function getEntitiesSample_statusPublished({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.published],
   });
@@ -99,7 +99,7 @@ async function getEntitiesSample_statusPublished({ clientProvider }: AdminEntity
 }
 
 async function getEntitiesSample_statusModified({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified],
   });
@@ -118,7 +118,7 @@ async function getEntitiesSample_statusModified({ clientProvider }: AdminEntityT
 }
 
 async function getEntitiesSample_statusWithdrawn({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.withdrawn],
   });
@@ -137,7 +137,7 @@ async function getEntitiesSample_statusWithdrawn({ clientProvider }: AdminEntity
 }
 
 async function getEntitiesSample_statusArchived({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.archived],
   });
@@ -156,7 +156,7 @@ async function getEntitiesSample_statusArchived({ clientProvider }: AdminEntityT
 }
 
 async function getEntitiesSample_statusDraftArchived({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft, EntityStatus.archived],
   });
@@ -179,7 +179,7 @@ async function getEntitiesSample_statusDraftArchived({ clientProvider }: AdminEn
 async function getEntitiesSample_statusModifiedPublished({
   clientProvider,
 }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified, EntityStatus.published],
   });
@@ -200,7 +200,7 @@ async function getEntitiesSample_statusModifiedPublished({
 }
 
 async function getEntitiesSample_statusAll({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     status: [
       EntityStatus.draft,
@@ -227,19 +227,19 @@ async function getEntitiesSample_statusAll({ clientProvider }: AdminEntityTestCo
 }
 
 async function getEntitiesSample_linksToOneReference({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { linksTo: { id: titleOnlyId } },
     { seed: 123 },
   );
@@ -247,14 +247,14 @@ async function getEntitiesSample_linksToOneReference({ clientProvider }: AdminEn
 }
 
 async function getEntitiesSample_linksToNoReferences({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { linksTo: { id: titleOnlyId } },
     { seed: 456 },
   );
@@ -264,21 +264,21 @@ async function getEntitiesSample_linksToNoReferences({ clientProvider }: AdminEn
 async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
   );
   assertOkResult(referenceResult);
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { linksTo: { id: titleOnlyId } },
     { seed: 789 },
   );
@@ -286,12 +286,12 @@ async function getEntitiesSample_linksToTwoReferencesFromOneEntity({
 }
 
 async function getEntitiesSample_linksFromOneReference({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const { entity: titleEntity } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleEntity.id } } }),
   );
   assertOkResult(referenceResult);
@@ -299,7 +299,7 @@ async function getEntitiesSample_linksFromOneReference({ clientProvider }: Admin
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { linksFrom: { id: referenceId } },
     { seed: 123 },
   );
@@ -307,26 +307,26 @@ async function getEntitiesSample_linksFromOneReference({ clientProvider }: Admin
 }
 
 async function getEntitiesSample_linksFromNoReferences({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
+  const client = clientProvider.dossierClient();
+  const referenceResult = await client.createEntity(REFERENCES_CREATE);
   assertOkResult(referenceResult);
   const {
     entity: { id },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample({ linksFrom: { id } }, { seed: 456 });
+  const sampleResult = await client.getEntitiesSample({ linksFrom: { id } }, { seed: 456 });
   assertSampledEntities(sampleResult, 456, []);
 }
 
 async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const { entity: titleOnlyEntity } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyEntity.id }, titleOnly: { id: titleOnlyEntity.id } },
     }),
@@ -336,7 +336,7 @@ async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { linksFrom: { id: referenceId } },
     { seed: 789 },
   );
@@ -344,17 +344,17 @@ async function getEntitiesSample_linksFromTwoReferencesFromOneEntity({
 }
 
 async function getEntitiesSample_boundingBoxOneInside({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
 
   const center = boundingBoxCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
   const { entity: locationsEntity } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } }),
   );
   assertOkResult(referenceResult);
@@ -362,7 +362,7 @@ async function getEntitiesSample_boundingBoxOneInside({ clientProvider }: AdminE
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     {
       boundingBox,
       linksFrom: { id: referenceId },
@@ -375,11 +375,11 @@ async function getEntitiesSample_boundingBoxOneInside({ clientProvider }: AdminE
 async function getEntitiesSample_boundingBoxOneEntityTwoLocationsInside({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const center = boundingBoxCenter(boundingBox);
   const inside = boundingBoxBelowCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center, locationList: [inside] } }),
   );
   assertOkResult(createResult);
@@ -387,7 +387,7 @@ async function getEntitiesSample_boundingBoxOneEntityTwoLocationsInside({
     entity: { id },
   } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
@@ -395,7 +395,7 @@ async function getEntitiesSample_boundingBoxOneEntityTwoLocationsInside({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { boundingBox, linksFrom: { id: referenceId } },
     { seed: 321 },
   );
@@ -403,13 +403,13 @@ async function getEntitiesSample_boundingBoxOneEntityTwoLocationsInside({
 }
 
 async function getEntitiesSample_boundingBoxOneOutside({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const outside = {
     lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
     lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
   };
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: outside } }),
   );
   assertOkResult(createResult);
@@ -417,7 +417,7 @@ async function getEntitiesSample_boundingBoxOneOutside({ clientProvider }: Admin
     entity: { id },
   } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
@@ -425,7 +425,7 @@ async function getEntitiesSample_boundingBoxOneOutside({ clientProvider }: Admin
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     {
       boundingBox,
       linksFrom: { id: referenceId },
@@ -438,16 +438,16 @@ async function getEntitiesSample_boundingBoxOneOutside({ clientProvider }: Admin
 async function getEntitiesSample_boundingBoxWrappingMaxMinLongitude({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox: BoundingBox = { minLat: -50, maxLat: -49, minLng: 179, maxLng: -179 };
   const center = boundingBoxCenter(boundingBox);
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
   const { entity: locationsEntity } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: locationsEntity.id }] } }),
   );
   assertOkResult(referenceResult);
@@ -455,7 +455,7 @@ async function getEntitiesSample_boundingBoxWrappingMaxMinLongitude({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { boundingBox, linksFrom: { id: referenceId } },
     { seed: 321 },
   );
@@ -467,7 +467,7 @@ async function getEntitiesSample_authKeySubject({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -477,17 +477,17 @@ async function getEntitiesSample_authKeySubject({
 async function getEntitiesSample_authKeySubjectFromReadonlyRandom({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient('random', 'readonly');
+  const client = clientProvider.dossierClient('random', 'readonly');
 
-  const result = await adminClient.getEntitiesSample({ authKeys: ['subject'] });
+  const result = await client.getEntitiesSample({ authKeys: ['subject'] });
   assertSampledEntitiesArePartOfExpected(result, []);
 }
 
 async function getEntitiesSample_textIncludedAfterCreation({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, {
       fields: { title: 'this is a serious title with the best storytelling' },
     }),
@@ -495,7 +495,7 @@ async function getEntitiesSample_textIncludedAfterCreation({
   assertOkResult(createResult);
   const { entity: titleOnlyEntity } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id: titleOnlyEntity.id }] } }),
   );
   assertOkResult(referenceResult);
@@ -503,7 +503,7 @@ async function getEntitiesSample_textIncludedAfterCreation({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const sampleResult = await adminClient.getEntitiesSample(
+  const sampleResult = await client.getEntitiesSample(
     { text: 'serious storytelling', linksFrom: { id: referenceId } },
     { seed: 111 },
   );
@@ -513,14 +513,14 @@ async function getEntitiesSample_textIncludedAfterCreation({
 async function getEntitiesSample_textIncludedAfterUpdate({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
@@ -529,7 +529,7 @@ async function getEntitiesSample_textIncludedAfterUpdate({
   } = referenceResult.value;
 
   assertSampledEntities(
-    await adminClient.getEntitiesSample(
+    await client.getEntitiesSample(
       { text: 'lightning strikes', linksFrom: { id: referenceId } },
       { seed: 123 },
     ),
@@ -537,14 +537,14 @@ async function getEntitiesSample_textIncludedAfterUpdate({
     [],
   );
 
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await client.updateEntity({
     id,
     fields: { title: 'the lightning only strikes once' },
   });
   assertOkResult(updateResult);
 
   assertSampledEntities(
-    await adminClient.getEntitiesSample(
+    await client.getEntitiesSample(
       { text: 'lightning strikes', linksFrom: { id: referenceId } },
       { seed: 123 },
     ),
@@ -556,8 +556,8 @@ async function getEntitiesSample_textIncludedAfterUpdate({
 async function getEntitiesSample_textExcludedAfterUpdate({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: "who's eating? It is the bear" } }),
   );
   assertOkResult(createResult);
@@ -565,7 +565,7 @@ async function getEntitiesSample_textExcludedAfterUpdate({
     entity: { id },
   } = createResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { anyList: [{ id }] } }),
   );
   assertOkResult(referenceResult);
@@ -574,7 +574,7 @@ async function getEntitiesSample_textExcludedAfterUpdate({
   } = referenceResult.value;
 
   assertSampledEntities(
-    await adminClient.getEntitiesSample(
+    await client.getEntitiesSample(
       { text: 'bear eating', linksFrom: { id: referenceId } },
       { seed: 123 },
     ),
@@ -582,14 +582,14 @@ async function getEntitiesSample_textExcludedAfterUpdate({
     [{ id }],
   );
 
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await client.updateEntity({
     id,
     fields: { title: 'Random title' },
   });
   assertOkResult(updateResult);
 
   assertSampledEntities(
-    await adminClient.getEntitiesSample(
+    await client.getEntitiesSample(
       { text: 'bear eating', linksFrom: { id: referenceId } },
       { seed: 123 },
     ),
@@ -603,7 +603,7 @@ async function getEntitiesSample_authKeyNoneAndSubject({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
-  const result = await clientProvider.adminClient().getEntitiesSample({
+  const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['', 'subject'],
   });

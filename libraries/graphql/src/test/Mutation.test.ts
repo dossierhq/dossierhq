@@ -164,14 +164,14 @@ afterAll(async () => {
 
 function createContext(): SessionGraphQLContext {
   return {
-    adminClient: ok(server.adminClient),
+    client: ok(server.client),
     publishedClient: ok(server.publishedClient),
   };
 }
 
 describe('create*Entity()', () => {
   test('Create', async () => {
-    const { adminClient } = server;
+    const { client } = server;
     const entity: EntityCreate = {
       info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
@@ -233,7 +233,7 @@ describe('create*Entity()', () => {
       },
     });
 
-    const getResult = await adminClient.getEntity({ id });
+    const getResult = await client.getEntity({ id });
     expectResultValue(getResult, {
       id,
       info: {
@@ -369,8 +369,8 @@ describe('create*Entity()', () => {
   });
 
   test('Create with rich text with reference', async () => {
-    const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
+    const { client } = server;
+    const createBarResult = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
       fields: {},
     });
@@ -457,7 +457,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id: fooId });
+      const getResult = await client.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         info: {
@@ -485,8 +485,8 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference', async () => {
-    const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
+    const { client } = server;
+    const createBarResult = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
       fields: {},
     });
@@ -579,7 +579,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id: fooId });
+      const getResult = await client.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         info: {
@@ -604,12 +604,12 @@ describe('create*Entity()', () => {
   });
 
   test('Create with reference list', async () => {
-    const { adminClient } = server;
-    const createBar1Result = await adminClient.createEntity({
+    const { client } = server;
+    const createBar1Result = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar 1' },
       fields: {},
     });
-    const createBar2Result = await adminClient.createEntity({
+    const createBar2Result = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar 2' },
       fields: {},
     });
@@ -707,7 +707,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id: fooId });
+      const getResult = await client.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         info: {
@@ -732,8 +732,8 @@ describe('create*Entity()', () => {
   });
 
   test('Create with component with reference', async () => {
-    const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
+    const { client } = server;
+    const createBarResult = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar' },
       fields: {},
     });
@@ -845,7 +845,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id: fooId });
+      const getResult = await client.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         info: {
@@ -874,8 +874,8 @@ describe('create*Entity()', () => {
   });
 
   test('Create with value JSON', async () => {
-    const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
+    const { client } = server;
+    const createBarResult = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar', authKey: '' },
       fields: {},
     });
@@ -981,7 +981,7 @@ describe('create*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id: fooId });
+      const getResult = await client.getEntity({ id: fooId });
       expectResultValue(getResult, {
         id: fooId,
         info: {
@@ -1015,7 +1015,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create nested component with inner JSON', async () => {
-    const { adminClient } = server;
+    const { client } = server;
     const entity: EntityCreate = {
       info: { type: 'MutationFoo', name: 'Foo name' },
       fields: {
@@ -1113,7 +1113,7 @@ describe('create*Entity()', () => {
       },
     });
 
-    const getResult = await adminClient.getEntity({ id: fooId });
+    const getResult = await client.getEntity({ id: fooId });
     expectResultValue(getResult, {
       id: fooId,
       info: {
@@ -1273,8 +1273,8 @@ describe('create*Entity()', () => {
 
 describe('update*Entity()', () => {
   test('Update minimal', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'First name' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
@@ -1350,7 +1350,7 @@ describe('update*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id });
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         info: {
@@ -1375,8 +1375,8 @@ describe('update*Entity()', () => {
   });
 
   test('Update with version', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'First name' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
@@ -1449,12 +1449,12 @@ describe('update*Entity()', () => {
   });
 
   test('Update with all values including references', async () => {
-    const { adminClient } = server;
-    const createBar1Result = await adminClient.createEntity({
+    const { client } = server;
+    const createBar1Result = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar 1' },
       fields: {},
     });
-    const createBar2Result = await adminClient.createEntity({
+    const createBar2Result = await client.createEntity({
       info: { type: 'MutationBar', name: 'Bar 2' },
       fields: {},
     });
@@ -1472,7 +1472,7 @@ describe('update*Entity()', () => {
         },
       } = createBar2Result.value;
 
-      const createFooResult = await adminClient.createEntity({
+      const createFooResult = await client.createEntity({
         info: { type: 'MutationFoo', name: 'First name' },
         fields: {
           title: 'First title',
@@ -1663,7 +1663,7 @@ describe('update*Entity()', () => {
           },
         });
 
-        const getResult = await adminClient.getEntity({ id: fooId });
+        const getResult = await client.getEntity({ id: fooId });
         expectResultValue(getResult, {
           id: fooId,
           info: {
@@ -1708,8 +1708,8 @@ describe('update*Entity()', () => {
   });
 
   test('Update and publish', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'First name' },
       fields: { title: 'First title', summary: 'First summary', tags: ['one', 'two', 'three'] },
     });
@@ -1785,7 +1785,7 @@ describe('update*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id });
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         info: {
@@ -1810,8 +1810,8 @@ describe('update*Entity()', () => {
   });
 
   test('Error: Update with the wrong type', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Name' },
       fields: {},
     });
@@ -1860,8 +1860,8 @@ describe('update*Entity()', () => {
   });
 
   test('Error: Update with the wrong authKey', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Name', authKey: 'subject' },
       fields: {},
     });
@@ -1912,7 +1912,7 @@ describe('update*Entity()', () => {
 
 describe('upsert*Entity()', () => {
   test('Create new entity', async () => {
-    const { adminClient } = server;
+    const { client } = server;
     const id = insecureTestUuidv4();
     const entity: EntityUpsert = {
       id,
@@ -1956,7 +1956,7 @@ describe('upsert*Entity()', () => {
       },
     });
 
-    const getResult = await adminClient.getEntity({ id });
+    const getResult = await client.getEntity({ id });
     expectResultValue(getResult, {
       id,
       info: {
@@ -1980,9 +1980,9 @@ describe('upsert*Entity()', () => {
   });
 
   test('Update entity', async () => {
-    const { adminClient } = server;
+    const { client } = server;
 
-    const createResult = await adminClient.createEntity({
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Foo' },
       fields: { title: 'Title' },
     });
@@ -2031,7 +2031,7 @@ describe('upsert*Entity()', () => {
         },
       });
 
-      const getResult = await adminClient.getEntity({ id });
+      const getResult = await client.getEntity({ id });
       expectResultValue(getResult, {
         id,
         info: {
@@ -2056,9 +2056,9 @@ describe('upsert*Entity()', () => {
   });
 
   test('Update entity (no change)', async () => {
-    const { adminClient } = server;
+    const { client } = server;
 
-    const createResult = await adminClient.createEntity({
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Foo' },
       fields: { title: 'Title' },
     });
@@ -2110,7 +2110,7 @@ describe('upsert*Entity()', () => {
   });
 
   test('Create new entity and publish', async () => {
-    const { adminClient } = server;
+    const { client } = server;
     const id = insecureTestUuidv4();
     const entity: EntityUpsert = {
       id,
@@ -2155,7 +2155,7 @@ describe('upsert*Entity()', () => {
       },
     });
 
-    const getResult = await adminClient.getEntity({ id });
+    const getResult = await client.getEntity({ id });
     expectResultValue(getResult, {
       id,
       info: {
@@ -2213,8 +2213,8 @@ describe('upsert*Entity()', () => {
 
 describe('publishEntities()', () => {
   test('Publish', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2318,8 +2318,8 @@ describe('publishEntities()', () => {
 
 describe('unpublishEntities()', () => {
   test('Unpublish', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2328,7 +2328,7 @@ describe('unpublishEntities()', () => {
         entity: { id },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
+      expectOkResult(await client.publishEntities([{ id, version: 1 }]));
 
       const result = (await graphql({
         schema,
@@ -2425,8 +2425,8 @@ describe('unpublishEntities()', () => {
 
 describe('archiveEntity()', () => {
   test('Archive', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2505,8 +2505,8 @@ describe('archiveEntity()', () => {
 
 describe('unarchiveEntity()', () => {
   test('Unarchive', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2515,7 +2515,7 @@ describe('unarchiveEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      expectOkResult(await adminClient.archiveEntity({ id }));
+      expectOkResult(await client.archiveEntity({ id }));
 
       const result = (await graphql({
         schema,
@@ -2613,8 +2613,8 @@ describe('unarchiveEntity()', () => {
 
 describe('Multiple', () => {
   test('Update and publish', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });

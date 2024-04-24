@@ -12,9 +12,9 @@ export {
   type ReadOnlyEntityRepository,
 } from './shared-entity/ReadOnlyEntityRepository.js';
 export {
-  createAdminClientProvider,
+  createDossierClientProvider,
   createSharedClientProvider,
-  type AdminClientProvider,
+  type DossierClientProvider,
   type PublishedClientProvider,
   type TestPrincipal,
 } from './shared-entity/TestClients.js';

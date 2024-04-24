@@ -14,7 +14,7 @@ import {
   assertTruthy,
 } from '../Asserts.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
-import { createAdminClientProvider } from '../shared-entity/TestClients.js';
+import { createDossierClientProvider } from '../shared-entity/TestClients.js';
 import type { SyncTestContext } from './SyncTestSuite.js';
 
 interface ScenarioContext extends SyncTestContext {
@@ -69,7 +69,9 @@ async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) 
   const { sourceServer, targetServer } = context;
 
   // Setup source admin client
-  const sourceAdminClient = createAdminClientProvider(sourceServer).adminClient() as DossierClient;
+  const sourceAdminClient = createDossierClientProvider(
+    sourceServer,
+  ).dossierClient() as DossierClient;
   // Use source admin client to force lazy creation of the main principal
   assertErrorResult(
     await sourceAdminClient.getEntity({ id: TITLE_ONLY_ENTITY_ID_1 }),
@@ -110,7 +112,9 @@ async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) 
   assertEquals(targetPrincipals, sourcePrincipals);
 
   // Create target admin client after the principals have been created
-  const targetAdminClient = createAdminClientProvider(targetServer).adminClient() as DossierClient;
+  const targetAdminClient = createDossierClientProvider(
+    targetServer,
+  ).dossierClient() as DossierClient;
 
   const scenarioContext: ScenarioContext = {
     ...context,

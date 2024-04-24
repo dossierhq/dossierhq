@@ -232,7 +232,7 @@ function id(name: string) {
   return uuidv5(name, UUID_NAMESPACE);
 }
 
-async function createBooleansEntities(adminClient: AppAdminClient) {
+async function createBooleansEntities(client: AppAdminClient) {
   const minimal: EntityCreate<BooleansEntity> = {
     info: { type: 'BooleansEntity', name: 'Booleans minimal' },
     fields: {},
@@ -246,9 +246,9 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
     | typeof ErrorType.NotAuthorized
     | typeof ErrorType.Generic
   >[] = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('booleans-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('booleans-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('booleans-published-minimal'),
         info: { name: 'Booleans published minimal' },
@@ -256,7 +256,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('booleans-filled'),
         info: { name: 'Booleans filled' },
@@ -264,7 +264,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('booleans-published-invalid'),
         info: { name: 'Booleans published invalid' },
@@ -277,7 +277,7 @@ async function createBooleansEntities(adminClient: AppAdminClient) {
 }
 
 async function createEntitiesEntities(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   {
     booleansEntities,
     locationsEntities,
@@ -299,9 +299,9 @@ async function createEntitiesEntities(
   });
 
   const results = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('references-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('references-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('references-published-minimal'),
         info: { name: 'References published minimal' },
@@ -309,7 +309,7 @@ async function createEntitiesEntities(
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('references-filled'),
         info: { name: 'References filled' },
@@ -327,7 +327,7 @@ async function createEntitiesEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimal, {
         id: id('references-invalid'),
         info: { name: 'References invalid' },
@@ -340,7 +340,7 @@ async function createEntitiesEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('references-published-invalid'),
         info: { name: 'References published invalid' },
@@ -360,7 +360,7 @@ function entityRefs(entities: AppEntity[]): EntityReference[] {
   return entities.map(entityRef).filter((it) => it !== null) as EntityReference[];
 }
 
-async function createLocationsEntities(adminClient: AppAdminClient) {
+async function createLocationsEntities(client: AppAdminClient) {
   const malmo = { lat: 55.60498, lng: 13.003822 };
   const london = { lat: 51.459952, lng: -0.011228 };
 
@@ -379,9 +379,9 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
     | typeof ErrorType.NotAuthorized
     | typeof ErrorType.Generic
   >[] = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('locations-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('locations-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('locations-published-minimal'),
         info: { name: 'Locations published minimal' },
@@ -389,7 +389,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('locations-filled'),
         info: { name: 'Locations filled' },
@@ -397,7 +397,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('locations-published-invalid'),
         info: { name: 'Locations published invalid' },
@@ -410,7 +410,7 @@ async function createLocationsEntities(adminClient: AppAdminClient) {
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-async function createNumbersEntities(adminClient: AppAdminClient) {
+async function createNumbersEntities(client: AppAdminClient) {
   const minimal: EntityCreate<NumbersEntity> = {
     info: { type: 'NumbersEntity', name: 'Numbers minimal' },
     fields: {},
@@ -426,9 +426,9 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
     | typeof ErrorType.NotAuthorized
     | typeof ErrorType.Generic
   >[] = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('numbers-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('numbers-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('numbers-published-minimal'),
         info: { name: 'Numbers published minimal' },
@@ -436,7 +436,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('numbers-filled'),
         info: { name: 'Numbers filled' },
@@ -448,7 +448,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('numbers-published-invalid'),
         info: { name: 'Numbers published invalid' },
@@ -457,7 +457,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimal, {
         id: id('numbers-invalid'),
         info: { name: 'Numbers invalid' },
@@ -470,7 +470,7 @@ async function createNumbersEntities(adminClient: AppAdminClient) {
 }
 
 async function createRichTextsEntities(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   {
     numbersEntities,
     stringsEntities,
@@ -499,9 +499,9 @@ async function createRichTextsEntities(
   });
 
   const results = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('rich-texts-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('rich-texts-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('rich-texts-published-minimal'),
         info: { name: 'RichTexts published minimal' },
@@ -509,7 +509,7 @@ async function createRichTextsEntities(
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('rich-texts-filled'),
         info: { name: 'RichTexts filled' },
@@ -561,7 +561,7 @@ async function createRichTextsEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimal, {
         id: id('rich-texts-validation-of-components'),
         info: { name: 'RichTexts validation of components' },
@@ -608,7 +608,7 @@ async function createRichTextsEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimal, {
         id: id('rich-texts-invalid'),
         info: { name: 'RichTexts invalid' },
@@ -634,7 +634,7 @@ async function createRichTextsEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('rich-texts-published-invalid'),
         info: { name: 'RichTexts published invalid' },
@@ -648,7 +648,7 @@ async function createRichTextsEntities(
   return await Promise.all(results.map((it) => it.then((it) => it.valueOrThrow().entity)));
 }
 
-async function createStringsEntities(adminClient: AppAdminClient) {
+async function createStringsEntities(client: AppAdminClient) {
   const minimal: EntityCreate<StringsEntity> = {
     info: { type: 'StringsEntity', name: 'Strings minimal' },
     fields: {},
@@ -668,9 +668,9 @@ async function createStringsEntities(adminClient: AppAdminClient) {
     | typeof ErrorType.NotAuthorized
     | typeof ErrorType.Generic
   >[] = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('strings-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('strings-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('strings-published-minimal'),
         info: { name: 'Strings published minimal' },
@@ -678,7 +678,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('strings-filled'),
         info: { name: 'Strings filled' },
@@ -696,7 +696,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimal, {
         id: id('strings-invalid'),
         info: { name: 'Strings invalid' },
@@ -710,7 +710,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('strings-published-invalid'),
         info: { name: 'Strings published invalid' },
@@ -728,7 +728,7 @@ async function createStringsEntities(adminClient: AppAdminClient) {
 }
 
 async function createComponentsEntities(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   {
     cloudinaryImageComponents,
   }: {
@@ -754,9 +754,9 @@ async function createComponentsEntities(
   });
 
   const results = [
-    adminClient.createEntity(copyEntity(minimal, { id: id('components-minimal') })),
+    client.createEntity(copyEntity(minimal, { id: id('components-minimal') })),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('components-published-minimal'),
         info: { name: 'Components published minimal' },
@@ -764,7 +764,7 @@ async function createComponentsEntities(
       { publish: true },
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('components-filled'),
         info: { name: 'Components filled' },
@@ -788,7 +788,7 @@ async function createComponentsEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimal, {
         id: id('components-invalid'),
         info: { name: 'Components invalid' },
@@ -803,7 +803,7 @@ async function createComponentsEntities(
       }),
     ),
 
-    adminClient.createEntity(
+    client.createEntity(
       copyEntity(minimalPublish, {
         id: id('components-published-invalid'),
         info: { name: 'Components published invalid' },
@@ -836,32 +836,32 @@ async function createCloudinaryImageComponents() {
 
 async function main() {
   const database = await createNewDatabase('dist/catalog.sqlite');
-  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(
+  const { client, server } = await createAdapterAndServer<AppAdminClient>(
     database,
     SCHEMA_WITHOUT_VALIDATIONS,
   );
 
   const cloudinaryImageComponents = await createCloudinaryImageComponents();
 
-  const booleansEntities = await createBooleansEntities(adminClient);
-  const locationsEntities = await createLocationsEntities(adminClient);
-  const numbersEntities = await createNumbersEntities(adminClient);
-  const stringsEntities = await createStringsEntities(adminClient);
+  const booleansEntities = await createBooleansEntities(client);
+  const locationsEntities = await createLocationsEntities(client);
+  const numbersEntities = await createNumbersEntities(client);
+  const stringsEntities = await createStringsEntities(client);
 
-  await createEntitiesEntities(adminClient, {
+  await createEntitiesEntities(client, {
     booleansEntities,
     locationsEntities,
     numbersEntities,
     stringsEntities,
   });
-  await createRichTextsEntities(adminClient, {
+  await createRichTextsEntities(client, {
     booleansEntities,
     locationsEntities,
     numbersEntities,
     stringsEntities,
     cloudinaryImageComponents,
   });
-  await createComponentsEntities(adminClient, {
+  await createComponentsEntities(client, {
     booleansEntities,
     locationsEntities,
     numbersEntities,
@@ -869,7 +869,7 @@ async function main() {
     cloudinaryImageComponents,
   });
 
-  (await adminClient.updateSchemaSpecification(SCHEMA)).throwIfError();
+  (await client.updateSchemaSpecification(SCHEMA)).throwIfError();
 
   await optimizeAndCloseDatabase(server);
 }

@@ -33,7 +33,7 @@
             "data": {
               "id": null,
               "dependsOn": "init",
-              "code": "const schemaSpecification = await adminClient.getSchemaSpecification();\nconsole.log('Schema:', schemaSpecification.valueOrThrow());\n",
+              "code": "const schemaSpecification = await client.getSchemaSpecification();\nconsole.log('Schema:', schemaSpecification.valueOrThrow());\n",
               "type": "CodapiSnippet"
             },
             "format": "",
@@ -52,7 +52,7 @@
             "data": {
               "id": "init",
               "dependsOn": null,
-              "code": "const dossierCore = await import(\"https://esm.sh/@dossierhq/core@0.5.15\");\nconst dossierServer = await import(\"https://esm.sh/@dossierhq/server@0.5.15\");\nconst dossierSqlJs = await import(\"https://esm.sh/@dossierhq/sql.js@0.5.15\");\nconst { default: initSqlJs } = await import(\"https://esm.sh/sql.js@1.10.2\");\nconst logger = dossierCore.createConsoleLogger(console);\nlogger.info(\"Initializing Dossier...\");\nconst SQL = await initSqlJs({ locateFile: file => `https://sql.js.org/dist/${file}` });\nconst database = new SQL.Database();\nconst databaseAdapterResult = await dossierSqlJs.createSqlJsAdapter({ logger }, database, {\n    migrate: true,\n    fts: { version: 'fts4' },\n    journalMode: 'memory',\n});\nconst serverResult = await dossierServer.createServer({ logger, databaseAdapter: databaseAdapterResult.valueOrThrow() });\nconst server = serverResult.valueOrThrow();\n\nconst sessionResult = await server.createSession({ provider: 'sys', identifier: 'user', defaultAuthKeys: ['none', 'subject'], logger, databasePerformance: null});\nconst session = sessionResult.valueOrThrow();\nconst adminClient = server.createAdminClient(session);",
+              "code": "const dossierCore = await import(\"https://esm.sh/@dossierhq/core@0.5.15\");\nconst dossierServer = await import(\"https://esm.sh/@dossierhq/server@0.5.15\");\nconst dossierSqlJs = await import(\"https://esm.sh/@dossierhq/sql.js@0.5.15\");\nconst { default: initSqlJs } = await import(\"https://esm.sh/sql.js@1.10.2\");\nconst logger = dossierCore.createConsoleLogger(console);\nlogger.info(\"Initializing Dossier...\");\nconst SQL = await initSqlJs({ locateFile: file => `https://sql.js.org/dist/${file}` });\nconst database = new SQL.Database();\nconst databaseAdapterResult = await dossierSqlJs.createSqlJsAdapter({ logger }, database, {\n    migrate: true,\n    fts: { version: 'fts4' },\n    journalMode: 'memory',\n});\nconst serverResult = await dossierServer.createServer({ logger, databaseAdapter: databaseAdapterResult.valueOrThrow() });\nconst server = serverResult.valueOrThrow();\n\nconst sessionResult = await server.createSession({ provider: 'sys', identifier: 'user', defaultAuthKeys: ['none', 'subject'], logger, databasePerformance: null});\nconst session = sessionResult.valueOrThrow();\nconst client = server.createAdminClient(session);",
               "type": "CodapiSnippet"
             },
             "format": "",

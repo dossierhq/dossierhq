@@ -20,15 +20,15 @@ export default async function graphQlHandler(
     const { server } = await getServerConnection();
     const authResult = await getSessionContextForRequest(server, req);
     if (authResult.isError()) return authResult;
-    const { adminClient, publishedClient } = authResult.value;
+    const { client, publishedClient } = authResult.value;
 
     const context: SessionGraphQLContext = {
-      adminClient: ok(adminClient),
+      client: ok(client),
       publishedClient: ok(publishedClient),
     };
 
     if (!graphQLSchema) {
-      const adminSchemaResult = await adminClient.getSchemaSpecification();
+      const adminSchemaResult = await client.getSchemaSpecification();
       if (adminSchemaResult.isError()) return adminSchemaResult;
       const schema = new Schema(adminSchemaResult.value);
       graphQLSchema = new GraphQLSchemaGenerator({

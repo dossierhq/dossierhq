@@ -27,13 +27,13 @@ export const UnpublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestConte
 ];
 
 async function unpublishEntities_minimal({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity } = (
-    await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })
+    await client.createEntity(TITLE_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
-  const unpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  const unpublishResult = await client.unpublishEntities([{ id: entity.id }]);
   const [{ updatedAt }] = unpublishResult.valueOrThrow();
   assertResultValue(unpublishResult, [
     {
@@ -48,18 +48,18 @@ async function unpublishEntities_minimal({ clientProvider }: AdminEntityTestCont
     info: { status: EntityStatus.withdrawn, updatedAt, validPublished: null },
   });
 
-  const getResult = await adminClient.getEntity({ id: entity.id });
+  const getResult = await client.getEntity({ id: entity.id });
   assertResultValue(getResult, expectedEntity);
 }
 
 async function unpublishEntities_unpublishEntitiesEvent({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   // Create two published entities
 
-  const createResult1 = await adminClient.createEntity(
+  const createResult1 = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 1' } }),
     { publish: true },
   );
@@ -70,7 +70,7 @@ async function unpublishEntities_unpublishEntitiesEvent({
     },
   } = createResult1.valueOrThrow();
 
-  const createResult2 = await adminClient.createEntity(
+  const createResult2 = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 2' } }),
     { publish: true },
   );
@@ -86,10 +86,10 @@ async function unpublishEntities_unpublishEntitiesEvent({
     entity: {
       info: { updatedAt: updatedAt1 },
     },
-  } = (await adminClient.updateEntity({ id: id1, fields: { title: 'Updated' } })).valueOrThrow();
+  } = (await client.updateEntity({ id: id1, fields: { title: 'Updated' } })).valueOrThrow();
 
   // Unpublish
-  const unpublishResult = await adminClient.unpublishEntities([{ id: id1 }, { id: id2 }]);
+  const unpublishResult = await client.unpublishEntities([{ id: id1 }, { id: id2 }]);
   const [{ updatedAt: unpublishedAt1 }, { updatedAt: unpublishedAt2 }] =
     unpublishResult.valueOrThrow();
 
@@ -109,7 +109,7 @@ async function unpublishEntities_unpublishEntitiesEvent({
   ]);
 
   // Check events
-  const connectionResult = await adminClient.getChangelogEvents({ entity: { id: id1 } });
+  const connectionResult = await client.getChangelogEvents({ entity: { id: id1 } });
   assertChangelogEventsConnection(connectionResult, [
     {
       type: EventType.createAndPublishEntity,
@@ -139,20 +139,20 @@ async function unpublishEntities_unpublishEntitiesEvent({
 }
 
 async function unpublishEntities_releasesName({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity: firstEntity } = (
-    await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })
+    await client.createEntity(TITLE_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
   assertOkResult(
-    await adminClient.updateEntity({ id: firstEntity.id, info: { name: 'Renamed' }, fields: {} }),
+    await client.updateEntity({ id: firstEntity.id, info: { name: 'Renamed' }, fields: {} }),
   );
 
-  assertOkResult(await adminClient.unpublishEntities([{ id: firstEntity.id }]));
+  assertOkResult(await client.unpublishEntities([{ id: firstEntity.id }]));
 
   const { entity: secondEntity } = (
-    await adminClient.createEntity(
+    await client.createEntity(
       copyEntity(TITLE_ONLY_CREATE, { info: { name: firstEntity.info.name } }),
       { publish: true },
     )
@@ -163,11 +163,11 @@ async function unpublishEntities_releasesName({ clientProvider }: AdminEntityTes
 }
 
 async function unpublishEntities_draftEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const { entity } = (await adminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  const { entity } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
-  const unpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  const unpublishResult = await client.unpublishEntities([{ id: entity.id }]);
   assertResultValue(unpublishResult, [
     {
       id: entity.id,
@@ -179,16 +179,16 @@ async function unpublishEntities_draftEntity({ clientProvider }: AdminEntityTest
 }
 
 async function unpublishEntities_withdrawnEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity } = (
-    await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true })
+    await client.createEntity(TITLE_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
-  const firstUnpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  const firstUnpublishResult = await client.unpublishEntities([{ id: entity.id }]);
   assertOkResult(firstUnpublishResult);
 
-  const secondUnpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  const secondUnpublishResult = await client.unpublishEntities([{ id: entity.id }]);
   assertResultValue(secondUnpublishResult, [
     {
       id: entity.id,
@@ -200,14 +200,14 @@ async function unpublishEntities_withdrawnEntity({ clientProvider }: AdminEntity
 }
 
 async function unpublishEntities_archivedEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const { entity } = (await adminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  const { entity } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
-  const archiveResult = await adminClient.archiveEntity({ id: entity.id });
+  const archiveResult = await client.archiveEntity({ id: entity.id });
   assertOkResult(archiveResult);
 
-  const unpublishResult = await adminClient.unpublishEntities([{ id: entity.id }]);
+  const unpublishResult = await client.unpublishEntities([{ id: entity.id }]);
   assertResultValue(unpublishResult, [
     {
       id: entity.id,
@@ -221,14 +221,14 @@ async function unpublishEntities_archivedEntity({ clientProvider }: AdminEntityT
 async function unpublishEntities_twoPublishedEntitiesReferencingEachOther({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   // Create entity1 and entity2, where entity2 --> entity1
   const { entity: entity1 } = (
-    await adminClient.createEntity(REFERENCES_CREATE, { publish: true })
+    await client.createEntity(REFERENCES_CREATE, { publish: true })
   ).valueOrThrow();
   const { entity: entity2 } = (
-    await adminClient.createEntity(
+    await client.createEntity(
       copyEntity(REFERENCES_CREATE, { fields: { any: { id: entity1.id } } }),
       { publish: true },
     )
@@ -236,16 +236,13 @@ async function unpublishEntities_twoPublishedEntitiesReferencingEachOther({
 
   // Update entity1 --> entity2
   assertOkResult(
-    await adminClient.updateEntity(
+    await client.updateEntity(
       { id: entity1.id, fields: { any: { id: entity2.id } } },
       { publish: true },
     ),
   );
 
-  const unpublishResult = await adminClient.unpublishEntities([
-    { id: entity1.id },
-    { id: entity2.id },
-  ]);
+  const unpublishResult = await client.unpublishEntities([{ id: entity1.id }, { id: entity2.id }]);
   assertResultValue(unpublishResult, [
     {
       id: entity1.id,
@@ -264,7 +261,7 @@ async function unpublishEntities_twoPublishedEntitiesReferencingEachOther({
 
 async function unpublishEntities_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
   const unpublishResult = await clientProvider
-    .adminClient()
+    .dossierClient()
     .unpublishEntities([{ id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' }]);
   assertErrorResult(
     unpublishResult,
@@ -275,7 +272,7 @@ async function unpublishEntities_errorInvalidId({ clientProvider }: AdminEntityT
 
 async function unpublishEntities_errorDuplicateIds({ clientProvider }: AdminEntityTestContext) {
   const unpublishResult = await clientProvider
-    .adminClient()
+    .dossierClient()
     .unpublishEntities([
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' },
       { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290' },
@@ -288,14 +285,14 @@ async function unpublishEntities_errorDuplicateIds({ clientProvider }: AdminEnti
 }
 
 async function unpublishEntities_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE, {
+  const createResult = await clientProvider.dossierClient().createEntity(SUBJECT_ONLY_CREATE, {
     publish: true,
   });
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
-  const publishResult = await clientProvider.adminClient('secondary').unpublishEntities([{ id }]);
+  const publishResult = await clientProvider.dossierClient('secondary').unpublishEntities([{ id }]);
   assertErrorResult(
     publishResult,
     ErrorType.NotAuthorized,
@@ -304,11 +301,11 @@ async function unpublishEntities_errorWrongAuthKey({ clientProvider }: AdminEnti
 }
 
 async function unpublishEntities_errorUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const unique = Math.random().toString();
 
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
     { publish: true },
   );
@@ -320,9 +317,7 @@ async function unpublishEntities_errorUniqueIndexValue({ clientProvider }: Admin
   });
   assertOkResult(firstPublishedGetResult);
 
-  const unpublishResult = await adminClient.unpublishEntities([
-    { id: createResult.value.entity.id },
-  ]);
+  const unpublishResult = await client.unpublishEntities([{ id: createResult.value.entity.id }]);
   assertOkResult(unpublishResult);
 
   const secondPublishedGetResult = await publishedClient.getEntity({
@@ -334,14 +329,14 @@ async function unpublishEntities_errorUniqueIndexValue({ clientProvider }: Admin
 
 async function unpublishEntities_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
   const createResult = await clientProvider
-    .adminClient()
+    .dossierClient()
     .createEntity(TITLE_ONLY_CREATE, { publish: true });
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
   const unpublishResult = await clientProvider
-    .adminClient('main', 'readonly')
+    .dossierClient('main', 'readonly')
     .unpublishEntities([{ id }]);
   assertErrorResult(
     unpublishResult,
@@ -353,20 +348,20 @@ async function unpublishEntities_errorReadonlySession({ clientProvider }: AdminE
 async function unpublishEntities_errorReferencedByPublishedEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   // Create entity1 and entity2, where entity2 --> entity1
   const { entity: entity1 } = (
-    await adminClient.createEntity(REFERENCES_CREATE, { publish: true })
+    await client.createEntity(REFERENCES_CREATE, { publish: true })
   ).valueOrThrow();
   const { entity: entity2 } = (
-    await adminClient.createEntity(
+    await client.createEntity(
       copyEntity(REFERENCES_CREATE, { fields: { any: { id: entity1.id } } }),
       { publish: true },
     )
   ).valueOrThrow();
 
-  const unpublishResult = await adminClient.unpublishEntities([{ id: entity1.id }]);
+  const unpublishResult = await client.unpublishEntities([{ id: entity1.id }]);
   assertErrorResult(
     unpublishResult,
     ErrorType.BadRequest,

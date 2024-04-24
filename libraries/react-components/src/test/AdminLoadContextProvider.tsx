@@ -22,7 +22,7 @@ export function AdminLoadContextProvider({
 }: Props): JSX.Element | null {
   const cachingMiddleware = useCachingAdminMiddleware();
 
-  const adminClient = useMemo(
+  const client = useMemo(
     () => createBackendAdminClient([...(adminClientMiddleware ?? []), cachingMiddleware]),
     [adminClientMiddleware, cachingMiddleware],
   );
@@ -30,7 +30,7 @@ export function AdminLoadContextProvider({
   return (
     <AdminDossierProvider
       adapter={adapter || new TestContextAdapter()}
-      adminClient={adminClient}
+      client={client}
       authKeys={DISPLAY_AUTH_KEYS}
     >
       {children}

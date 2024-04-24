@@ -27,7 +27,7 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 ];
 
 async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const id = uuidv4();
   const upsertResult = await client.upsertEntity<TitleOnly>(copyEntity(TITLE_ONLY_UPSERT, { id }));
   assertOkResult(upsertResult);
@@ -58,7 +58,7 @@ async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestCon
 }
 
 async function upsertEntity_minimalUpdate({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -90,7 +90,7 @@ async function upsertEntity_minimalUpdate({ clientProvider }: AdminEntityTestCon
 }
 
 async function upsertEntity_createNoAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const id = uuidv4();
   const { entity } = (
     await client.upsertEntity({
@@ -104,7 +104,7 @@ async function upsertEntity_createNoAuthKey({ clientProvider }: AdminEntityTestC
 }
 
 async function upsertEntity_updateWithoutChange({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const { entity } = createResult.value;
@@ -124,7 +124,7 @@ async function upsertEntity_updateWithoutChange({ clientProvider }: AdminEntityT
 async function upsertEntity_updateAndPublishWithSubjectAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -163,7 +163,7 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({
 async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const id = uuidv4();
   const upsertResult = await client.upsertEntity(
     copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: '' as 'subject' } }),
@@ -181,7 +181,7 @@ async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
 async function upsertEntity_errorUpdateTryingToChangeAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -208,7 +208,7 @@ async function upsertEntity_errorUpdateTryingToChangeAuthKey({
 async function upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -233,14 +233,14 @@ async function upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey({
 }
 
 async function upsertEntity_errorCreateReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient('main', 'readonly');
+  const client = clientProvider.dossierClient('main', 'readonly');
   const upsertResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id: uuidv4() }));
   assertErrorResult(upsertResult, ErrorType.BadRequest, 'Readonly session used to create entity');
 }
 
 async function upsertEntity_errorUpdateReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.adminClient();
-  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+  const normalAdminClient = clientProvider.dossierClient();
+  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
 
   const {
     entity: { id },

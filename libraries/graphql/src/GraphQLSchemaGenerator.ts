@@ -79,7 +79,7 @@ import { assertExhaustive } from './utils/AssertUtils.js';
 import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
-  adminClient: Result<
+  client: Result<
     DossierClient<Entity> | DossierClient<Entity<string, object>, Component<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;

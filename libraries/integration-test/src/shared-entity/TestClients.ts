@@ -3,8 +3,8 @@ import type { AppAdminClient, AppPublishedClient } from '../SchemaTypes.js';
 
 export type TestPrincipal = 'main' | 'secondary' | 'random';
 
-export interface AdminClientProvider {
-  adminClient: (principal?: TestPrincipal, sessionType?: 'readonly' | 'write') => AppAdminClient;
+export interface DossierClientProvider {
+  dossierClient: (principal?: TestPrincipal, sessionType?: 'readonly' | 'write') => AppAdminClient;
 }
 
 export interface PublishedClientProvider {
@@ -50,9 +50,9 @@ async function sessionForPrincipal(
   });
 }
 
-export function createAdminClientProvider(server: Server): AdminClientProvider {
+export function createDossierClientProvider(server: Server): DossierClientProvider {
   return {
-    adminClient(principal, sessionType) {
+    dossierClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);
       return server.createDossierClient(() => sessionResult);
     },
@@ -61,9 +61,9 @@ export function createAdminClientProvider(server: Server): AdminClientProvider {
 
 export function createSharedClientProvider(
   server: Server,
-): AdminClientProvider & PublishedClientProvider {
+): DossierClientProvider & PublishedClientProvider {
   return {
-    adminClient(principal, sessionType) {
+    dossierClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);
       return server.createDossierClient(() => sessionResult);
     },

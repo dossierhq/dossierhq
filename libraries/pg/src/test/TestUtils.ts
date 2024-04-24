@@ -174,15 +174,15 @@ export function insecureTestUuidv4(): string {
 }
 
 export async function safelyUpdateSchemaSpecification(
-  adminClient: DossierClient,
+  client: DossierClient,
   schemaUpdate: SchemaSpecificationUpdate,
 ): PromiseResult<Schema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withAdvisoryLock(
-    adminClient,
+    client,
     'schema-update', // same name as used in withSchemaAdvisoryLock() in integration test
     { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 1_000 },
     async (_advisoryLock) => {
-      const result = await adminClient.updateSchemaSpecification(schemaUpdate);
+      const result = await client.updateSchemaSpecification(schemaUpdate);
       if (result.isError()) return result;
       return ok(new Schema(result.value.schemaSpecification));
     },

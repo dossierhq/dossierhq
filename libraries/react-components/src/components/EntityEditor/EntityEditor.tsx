@@ -23,7 +23,7 @@ interface Props {
 }
 
 export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const { showNotification } = useContext(NotificationContext);
   const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -41,22 +41,22 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
     submitEntity(
       draftState,
       setSubmitLoading,
-      adminClient,
+      client,
       dispatchEntityEditorState,
       showNotification,
       false,
     );
-  }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
+  }, [client, dispatchEntityEditorState, draftState, showNotification]);
   const handleSubmitAndPublishClick = useCallback(() => {
     submitEntity(
       draftState,
       setSubmitLoading,
-      adminClient,
+      client,
       dispatchEntityEditorState,
       showNotification,
       true,
     );
-  }, [adminClient, dispatchEntityEditorState, draftState, showNotification]);
+  }, [client, dispatchEntityEditorState, draftState, showNotification]);
 
   if (!draftState.draft) {
     return null;
@@ -133,7 +133,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
 async function submitEntity(
   draftState: EntityEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
   showNotification: (notification: NotificationInfo) => void,
   publish: boolean,
@@ -147,10 +147,10 @@ async function submitEntity(
   let result;
   if (isCreate) {
     const entityCreate = getEntityCreateFromDraftState(draftState);
-    result = await adminClient.createEntity(entityCreate, { publish });
+    result = await client.createEntity(entityCreate, { publish });
   } else {
     const entityUpdate = getEntityUpdateFromDraftState(draftState);
-    result = await adminClient.updateEntity(entityUpdate, { publish });
+    result = await client.updateEntity(entityUpdate, { publish });
   }
   if (result.isOk()) {
     const message = isCreate

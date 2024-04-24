@@ -32,7 +32,7 @@ export async function createAdapterAndServer<
   database: Database,
   schema: SchemaSpecificationUpdate,
 ): Promise<{
-  adminClient: TAdminClient;
+  client: TAdminClient;
   bobAdminClient: TAdminClient;
   server: Server<SqliteDatabaseOptimizationOptions>;
 }> {
@@ -60,10 +60,10 @@ export async function createAdapterAndServer<
     })
   ).valueOrThrow();
 
-  const adminClient = server.createDossierClient<TAdminClient>(aliceSession.context, [
+  const client = server.createDossierClient<TAdminClient>(aliceSession.context, [
     LoggingClientMiddleware as DossierClientMiddleware<ClientContext>,
   ]);
-  (await adminClient.updateSchemaSpecification(schema)).valueOrThrow();
+  (await client.updateSchemaSpecification(schema)).valueOrThrow();
 
   const bobSession = server.createSession({
     provider: 'sys',
@@ -75,7 +75,7 @@ export async function createAdapterAndServer<
     [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>],
   );
 
-  return { adminClient, bobAdminClient, server };
+  return { client, bobAdminClient, server };
 }
 
 export async function optimizeAndCloseDatabase(server: Server) {

@@ -19,12 +19,12 @@ export const GetEntityListSubSuite: UnboundTestFunction<PublishedEntityTestConte
 ];
 
 async function getEntityList_minimal({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const create1Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
-  const create2Result = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const create1Result = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const create2Result = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(create1Result);
   assertOkResult(create2Result);
   const {
@@ -51,11 +51,11 @@ async function getEntityList_none({ clientProvider }: PublishedEntityTestContext
 async function getEntityList_authKeySubjectOneCorrectOneWrong({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const primaryAdminClient = clientProvider.adminClient();
+  const primaryAdminClient = clientProvider.dossierClient();
   const schema = new Schema((await primaryAdminClient.getSchemaSpecification()).valueOrThrow());
 
   const create1Result = await clientProvider
-    .adminClient('secondary')
+    .dossierClient('secondary')
     .createEntity(SUBJECT_ONLY_CREATE, { publish: true });
   const create2Result = await primaryAdminClient.createEntity(SUBJECT_ONLY_CREATE, {
     publish: true,
@@ -81,9 +81,9 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
 }
 
 async function getEntityList_oneMissingOneExisting({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE, { publish: true });
+  const client = clientProvider.dossierClient();
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   const { entity } = createResult.valueOrThrow();
 
   const getResult = await clientProvider
@@ -96,16 +96,16 @@ async function getEntityList_oneMissingOneExisting({ clientProvider }: Published
 }
 
 async function getEntityList_errorArchivedEntity({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
-  const archiveResult = await adminClient.archiveEntity({ id });
+  const archiveResult = await client.archiveEntity({ id });
   assertOkResult(archiveResult);
 
   const result = await publishedClient.getEntityList([{ id }]);
@@ -115,7 +115,7 @@ async function getEntityList_errorArchivedEntity({ clientProvider }: PublishedEn
 async function getEntityList_errorWrongAuthKeyFromReadonlyRandom({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const primaryAdminClient = clientProvider.adminClient();
+  const primaryAdminClient = clientProvider.dossierClient();
 
   const { entity } = (
     await primaryAdminClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true })

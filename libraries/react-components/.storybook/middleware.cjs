@@ -58,17 +58,14 @@ const expressMiddleWare = (router) => {
         identifier: 'storybook',
         defaultAuthKeys,
       });
-      const adminClient = server.createDossierClient(
-        () => sessionResult,
-        [LoggingClientMiddleware],
-      );
+      const client = server.createDossierClient(() => sessionResult, [LoggingClientMiddleware]);
       const modifies = DossierClientModifyingOperations.has(name);
       if (req.method === 'GET' && modifies) {
         return notOk.BadRequest('GET not allowed for modifying operations');
       } else if (req.method === 'PUT' && !modifies) {
         return notOk.BadRequest('PUT only allowed for modifying operations');
       }
-      return await executeDossierClientOperationFromJson(adminClient, name, operation);
+      return await executeDossierClientOperationFromJson(client, name, operation);
     });
   });
   router.use('/api/published/:operationName', (req, res) => {
@@ -79,11 +76,8 @@ const expressMiddleWare = (router) => {
         identifier: 'storybook',
         defaultAuthKeys,
       });
-      const adminClient = server.createPublishedClient(
-        () => sessionResult,
-        [LoggingClientMiddleware],
-      );
-      return await executePublishedClientOperationFromJson(adminClient, name, operation);
+      const client = server.createPublishedClient(() => sessionResult, [LoggingClientMiddleware]);
+      return await executePublishedClientOperationFromJson(client, name, operation);
     });
   });
 };

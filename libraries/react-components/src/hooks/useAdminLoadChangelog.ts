@@ -13,15 +13,15 @@ export function useAdminLoadChangelog(
   changelogState: ChangelogState,
   dispatchChangelogState: Dispatch<ChangelogStateAction>,
 ) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
 
   // get events
   const { connection, connectionError } = useAdminChangelogEvents(
-    adminClient,
+    client,
     changelogState.query,
     changelogState.paging,
   );
-  const { totalCount } = useAdminChangelogEventsTotalCount(adminClient, changelogState.query);
+  const { totalCount } = useAdminChangelogEventsTotalCount(client, changelogState.query);
 
   useEffect(() => {
     dispatchChangelogState(

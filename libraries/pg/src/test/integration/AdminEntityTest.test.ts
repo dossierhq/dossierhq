@@ -1,5 +1,5 @@
 import {
-  createAdminClientProvider,
+  createDossierClientProvider,
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
@@ -15,7 +15,7 @@ let readOnlyEntityRepository: ReadOnlyEntityRepository;
 beforeAll(async () => {
   serverInit = (await initializeIntegrationTestServer()).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(createAdminClientProvider(serverInit.server))
+    await createReadOnlyEntityRepository(createDossierClientProvider(serverInit.server))
   ).valueOrThrow();
 }, 100000);
 afterAll(async () => {

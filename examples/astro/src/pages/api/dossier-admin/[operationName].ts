@@ -52,12 +52,8 @@ async function executeAdminOperation(
 
   const adminClientResult = await getAuthenticatedAdminClient(import.meta.env.DOSSIER_PRINCIPAL_ID);
   if (adminClientResult.isError()) return adminClientResult;
-  const adminClient = adminClientResult.value;
+  const client = adminClientResult.value;
 
-  const result = await executeDossierClientOperationFromJson(
-    adminClient,
-    operationName,
-    operationArgs,
-  );
+  const result = await executeDossierClientOperationFromJson(client, operationName, operationArgs);
   return result;
 }

@@ -16,7 +16,7 @@ export const GetEntityListSubSuite: UnboundTestFunction<AdminEntityTestContext>[
 ];
 
 async function getEntityList_minimal({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const create1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const create2Result = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(create1Result);
@@ -36,22 +36,22 @@ async function getEntityList_minimal({ clientProvider }: AdminEntityTestContext)
 }
 
 async function getEntityList_none({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().getEntityList([]);
+  const result = await clientProvider.dossierClient().getEntityList([]);
   assertResultValue(result, []);
 }
 
 async function getEntityList_getLatestVersion({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
-  const updateResult = await adminClient.updateEntity({ id, fields: { title: 'Updated title' } });
+  const updateResult = await client.updateEntity({ id, fields: { title: 'Updated title' } });
   assertOkResult(updateResult);
 
-  const result = await adminClient.getEntityList([{ id }]);
+  const result = await client.getEntityList([{ id }]);
   assertOkResult(result);
   assertResultValue(result, [ok<AppEntity, typeof ErrorType.Generic>(updateResult.value.entity)]);
 }
@@ -59,9 +59,9 @@ async function getEntityList_getLatestVersion({ clientProvider }: AdminEntityTes
 async function getEntityList_authKeySubjectOneCorrectOneWrong({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClientMain = clientProvider.adminClient();
+  const adminClientMain = clientProvider.dossierClient();
   const create1Result = await clientProvider
-    .adminClient('secondary')
+    .dossierClient('secondary')
     .createEntity(SUBJECT_ONLY_CREATE);
   const create2Result = await adminClientMain.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(create1Result);
@@ -83,24 +83,24 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
 async function getEntityList_errorAuthKeySubjectFromReadonlyRandom({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClientMain = clientProvider.adminClient();
+  const adminClientMain = clientProvider.dossierClient();
   const { entity } = (await adminClientMain.createEntity(SUBJECT_ONLY_CREATE)).valueOrThrow();
 
   const getResult = await clientProvider
-    .adminClient('random', 'readonly')
+    .dossierClient('random', 'readonly')
     .getEntityList([{ id: entity.id }]);
   assertResultValue(getResult, [notOk.NotAuthorized('Wrong authKey provided')]);
 }
 
 async function getEntityList_oneMissingOneExisting({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
-  const getResult = await adminClient.getEntityList([
+  const getResult = await client.getEntityList([
     { id: 'f09fdd62-4a1e-4320-afba-8dd0781799df' },
     { id },
   ]);

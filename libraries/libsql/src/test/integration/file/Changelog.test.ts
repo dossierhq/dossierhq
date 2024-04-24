@@ -1,4 +1,4 @@
-import { createAdminClientProvider, createChangelogTestSuite } from '@dossierhq/integration-test';
+import { createDossierClientProvider, createChangelogTestSuite } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import type { ServerInit } from '../../LibSqlTestUtils.js';
 import { initializeServer } from '../../LibSqlTestUtils.js';
@@ -26,7 +26,7 @@ registerTestSuite(
     before: () => {
       assert(serverInit);
       return Promise.resolve([
-        { clientProvider: createAdminClientProvider(serverInit.server) },
+        { clientProvider: createDossierClientProvider(serverInit.server) },
         undefined,
       ]);
     },

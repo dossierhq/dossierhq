@@ -17,13 +17,13 @@ type FetcherData<T> = Connection<Edge<T, ErrorType>> | null;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 /**
- * @param adminClient
+ * @param client
  * @param query If `undefined`, no data is fetched
  * @param paging
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
 export function useAdminEntities<TEntity extends Entity<string, object>>(
-  adminClient: DossierClient<TEntity>,
+  client: DossierClient<TEntity>,
   query: EntityQuery | undefined,
   paging?: Paging,
 ): {
@@ -31,8 +31,8 @@ export function useAdminEntities<TEntity extends Entity<string, object>>(
   connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query, paging]: FetcherKey) => fetchGetEntities(adminClient, query, paging),
-    [adminClient],
+    ([_action, query, paging]: FetcherKey) => fetchGetEntities(client, query, paging),
+    [client],
   );
   const { data, error } = useSWR<FetcherData<TEntity>, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.adminEntities(query, paging) : null,
@@ -40,7 +40,7 @@ export function useAdminEntities<TEntity extends Entity<string, object>>(
   );
 
   // useDebugLogChangedValues('useAdminEntities updated values', {
-  //   adminClient,
+  //   client,
   //   query,
   //   paging,
   //   data,
@@ -50,11 +50,11 @@ export function useAdminEntities<TEntity extends Entity<string, object>>(
 }
 
 async function fetchGetEntities<TEntity extends Entity<string, object>>(
-  adminClient: DossierClient<TEntity>,
+  client: DossierClient<TEntity>,
   query: FetcherKey[1],
   paging: FetcherKey[2],
 ): Promise<FetcherData<TEntity>> {
-  const result = await adminClient.getEntities(query, paging);
+  const result = await client.getEntities(query, paging);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

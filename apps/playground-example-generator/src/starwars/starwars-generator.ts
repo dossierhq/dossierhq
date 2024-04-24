@@ -155,11 +155,11 @@ function splitCsv(value: string) {
   return value.trim().split(/\s*,\s*/);
 }
 
-async function createFilms(adminClient: AppAdminClient) {
+async function createFilms(client: AppAdminClient) {
   const filmsData = await downloadFile<StarwarsFilms>('films.json');
   for (const film of filmsData) {
     (
-      await adminClient.createEntity<Film>(
+      await client.createEntity<Film>(
         {
           id: uuidForEntity('film', film.pk),
           info: { type: 'Film', name: film.fields.title },
@@ -183,11 +183,11 @@ async function createFilms(adminClient: AppAdminClient) {
   }
 }
 
-async function createPeople(adminClient: AppAdminClient) {
+async function createPeople(client: AppAdminClient) {
   const peopleData = await downloadFile<StarwarsPeople>('people.json');
   for (const person of peopleData) {
     (
-      await adminClient.createEntity<Person>(
+      await client.createEntity<Person>(
         {
           id: uuidForEntity('person', person.pk),
           info: { type: 'Person', name: person.fields.name },
@@ -209,11 +209,11 @@ async function createPeople(adminClient: AppAdminClient) {
   }
 }
 
-async function createPlanets(adminClient: AppAdminClient) {
+async function createPlanets(client: AppAdminClient) {
   const planetsData = await downloadFile<StarwarsPlanets>('planets.json');
   for (const planet of planetsData) {
     (
-      await adminClient.createEntity<Planet>(
+      await client.createEntity<Planet>(
         {
           id: uuidForEntity('planet', planet.pk),
           info: { type: 'Planet', name: planet.fields.name },
@@ -235,11 +235,11 @@ async function createPlanets(adminClient: AppAdminClient) {
   }
 }
 
-async function createSpecies(adminClient: AppAdminClient) {
+async function createSpecies(client: AppAdminClient) {
   const speciesData = await downloadFile<StarwarsSpecies>('species.json');
   for (const species of speciesData) {
     (
-      await adminClient.createEntity<Species>(
+      await client.createEntity<Species>(
         {
           id: uuidForEntity('species', species.pk),
           info: { type: 'Species', name: species.fields.name },
@@ -265,11 +265,11 @@ async function createSpecies(adminClient: AppAdminClient) {
   }
 }
 
-async function createStarships(adminClient: AppAdminClient) {
+async function createStarships(client: AppAdminClient) {
   const starshipsData = await downloadFile<StarwarsStarships>('starships.json');
   for (const starship of starshipsData) {
     (
-      await adminClient.createEntity<Starship>(
+      await client.createEntity<Starship>(
         {
           id: uuidForEntity('starship', starship.pk),
           info: { type: 'Starship', name: starship.fields.starship_class },
@@ -286,11 +286,11 @@ async function createStarships(adminClient: AppAdminClient) {
   }
 }
 
-async function createTransports(adminClient: AppAdminClient) {
+async function createTransports(client: AppAdminClient) {
   const transportsData = await downloadFile<StarwarsTransport>('transport.json');
   for (const transport of transportsData) {
     (
-      await adminClient.createEntity<Transport>(
+      await client.createEntity<Transport>(
         {
           id: uuidForEntity('transport', transport.pk),
           info: { type: 'Transport', name: transport.fields.name },
@@ -313,11 +313,11 @@ async function createTransports(adminClient: AppAdminClient) {
   }
 }
 
-async function createVehicles(adminClient: AppAdminClient) {
+async function createVehicles(client: AppAdminClient) {
   const vehiclesData = await downloadFile<StarwarsVehicles>('vehicles.json');
   for (const vehicle of vehiclesData) {
     (
-      await adminClient.createEntity<Vehicle>(
+      await client.createEntity<Vehicle>(
         {
           id: uuidForEntity('vehicle', vehicle.pk),
           info: { type: 'Vehicle', name: vehicle.fields.vehicle_class },
@@ -334,16 +334,16 @@ async function createVehicles(adminClient: AppAdminClient) {
 
 async function main() {
   const database = await createNewDatabase('dist/starwars.sqlite');
-  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
+  const { client, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
 
   // order is due to references between entities
-  await createPlanets(adminClient);
-  await createPeople(adminClient);
-  await createSpecies(adminClient);
-  await createTransports(adminClient);
-  await createStarships(adminClient);
-  await createVehicles(adminClient);
-  await createFilms(adminClient);
+  await createPlanets(client);
+  await createPeople(client);
+  await createSpecies(client);
+  await createTransports(client);
+  await createStarships(client);
+  await createVehicles(client);
+  await createFilms(client);
 
   await optimizeAndCloseDatabase(server);
 }

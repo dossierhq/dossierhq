@@ -27,8 +27,8 @@ async function generateTypes(logger: Logger, schema: SchemaWithMigrations, filen
   logger.info(`Wrote ${filename}`);
 }
 
-async function getAdminSchema(logger: Logger, adminClient: DossierClient) {
-  const schemaResult = await adminClient.getSchemaSpecification({
+async function getAdminSchema(logger: Logger, client: DossierClient) {
+  const schemaResult = await client.getSchemaSpecification({
     includeMigrations: true,
   });
   let schema = new SchemaWithMigrations(schemaResult.valueOrThrow());
@@ -46,8 +46,8 @@ async function getAdminSchema(logger: Logger, adminClient: DossierClient) {
 async function main() {
   const logger = createConsoleLogger(console);
   const server = (await getServer()).valueOrThrow();
-  const adminClient = (await getAuthenticatedAdminClient('editor')).valueOrThrow();
-  const schema = await getAdminSchema(logger, adminClient);
+  const client = (await getAuthenticatedAdminClient('editor')).valueOrThrow();
+  const schema = await getAdminSchema(logger, client);
 
   await generateTypes(logger, schema, './src/generated/SchemaTypes.ts');
 

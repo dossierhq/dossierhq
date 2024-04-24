@@ -173,8 +173,8 @@ function EntityRows({
   draftState: EntityEditorDraftState;
   dispatchEntityEditorState: Dispatch<EntityEditorStateAction>;
 }) {
-  const { adminClient } = useContext(AdminDossierContext);
-  const { entity, entityError: _unused } = useAdminEntity(adminClient, { id: draftState.id });
+  const { client } = useContext(AdminDossierContext);
+  const { entity, entityError: _unused } = useAdminEntity(client, { id: draftState.id });
 
   useEffect(() => {
     if (entity) {

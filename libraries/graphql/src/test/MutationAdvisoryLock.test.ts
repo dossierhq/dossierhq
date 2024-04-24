@@ -29,7 +29,7 @@ afterAll(async () => {
 
 function createContext(): SessionGraphQLContext {
   return {
-    adminClient: ok(server.adminClient),
+    client: ok(server.client),
     publishedClient: ok(server.publishedClient),
   };
 }
@@ -74,7 +74,7 @@ type ReleaseAdvisoryLockResult = ExecutionResult<{
 
 describe('acquireAdvisoryLock()', () => {
   test('Acquire', async () => {
-    const { adminClient } = server;
+    const { client } = server;
 
     const result = (await graphql({
       schema,
@@ -89,14 +89,14 @@ describe('acquireAdvisoryLock()', () => {
     expect(name).toEqual('Acquire');
     expect(typeof handle).toEqual('number');
 
-    const releaseResult = await adminClient.releaseAdvisoryLock(name, handle);
+    const releaseResult = await client.releaseAdvisoryLock(name, handle);
     expectResultValue(releaseResult, { name });
   });
 
   test('Error: already locked', async () => {
-    const { adminClient } = server;
+    const { client } = server;
 
-    const acquireResult = await adminClient.acquireAdvisoryLock('Already locked', {
+    const acquireResult = await client.acquireAdvisoryLock('Already locked', {
       leaseDuration: 500,
     });
     if (expectOkResult(acquireResult)) {
@@ -123,8 +123,8 @@ describe('acquireAdvisoryLock()', () => {
 
 describe('renewAdvisoryLock()', () => {
   test('Renew', async () => {
-    const { adminClient } = server;
-    const acquireResult = await adminClient.acquireAdvisoryLock('Renew', { leaseDuration: 500 });
+    const { client } = server;
+    const acquireResult = await client.acquireAdvisoryLock('Renew', { leaseDuration: 500 });
     if (expectOkResult(acquireResult)) {
       const { name, handle } = acquireResult.value;
 
@@ -164,8 +164,8 @@ describe('renewAdvisoryLock()', () => {
 
 describe('releaseAdvisoryLock()', () => {
   test('Release', async () => {
-    const { adminClient } = server;
-    const acquireResult = await adminClient.acquireAdvisoryLock('Release', { leaseDuration: 500 });
+    const { client } = server;
+    const acquireResult = await client.acquireAdvisoryLock('Release', { leaseDuration: 500 });
     if (expectOkResult(acquireResult)) {
       const { name, handle } = acquireResult.value;
 

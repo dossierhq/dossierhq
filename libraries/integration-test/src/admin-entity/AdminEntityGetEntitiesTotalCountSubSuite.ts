@@ -36,7 +36,7 @@ async function getEntitiesTotalCount_minimal({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
   });
   assertResultValue(result, expectedEntities.length);
@@ -47,7 +47,7 @@ async function getEntitiesTotalCount_authKeySubject({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
   });
@@ -57,9 +57,9 @@ async function getEntitiesTotalCount_authKeySubject({
 async function getEntitiesTotalCount_authKeySubjectFromReadonlyRandom({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient('random', 'readonly');
+  const client = clientProvider.dossierClient('random', 'readonly');
 
-  const result = await adminClient.getEntitiesTotalCount({ authKeys: ['subject'] });
+  const result = await client.getEntitiesTotalCount({ authKeys: ['subject'] });
   assertResultValue(result, 0);
 }
 
@@ -68,7 +68,7 @@ async function getEntitiesTotalCount_authKeyNoneAndSubject({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['', 'subject'],
   });
@@ -82,7 +82,7 @@ async function getEntitiesTotalCount_statusDraft({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === EntityStatus.draft);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft],
   });
@@ -96,7 +96,7 @@ async function getEntitiesTotalCount_statusPublished({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === EntityStatus.published);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.published],
   });
@@ -110,7 +110,7 @@ async function getEntitiesTotalCount_statusModified({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === EntityStatus.modified);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified],
   });
@@ -124,7 +124,7 @@ async function getEntitiesTotalCount_statusWithdrawn({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === EntityStatus.withdrawn);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.withdrawn],
   });
@@ -138,7 +138,7 @@ async function getEntitiesTotalCount_statusArchived({
   const expectedEntities = readOnlyEntityRepository
     .getMainPrincipalAdminEntities()
     .filter((it) => it.info.status === EntityStatus.archived);
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.archived],
   });
@@ -154,7 +154,7 @@ async function getEntitiesTotalCount_statusDraftArchived({
     .filter(
       (it) => it.info.status === EntityStatus.draft || it.info.status === EntityStatus.archived,
     );
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft, EntityStatus.archived],
   });
@@ -170,7 +170,7 @@ async function getEntitiesTotalCount_statusModifiedPublished({
     .filter(
       (it) => it.info.status === EntityStatus.modified || it.info.status === EntityStatus.published,
     );
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified, EntityStatus.published],
   });
@@ -182,7 +182,7 @@ async function getEntitiesTotalCount_statusAll({
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
   const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
-  const result = await clientProvider.adminClient().getEntitiesTotalCount({
+  const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [
       EntityStatus.draft,
@@ -198,68 +198,68 @@ async function getEntitiesTotalCount_statusAll({
 async function getEntitiesTotalCount_linksToOneReference({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
+  const totalResult = await client.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 1);
 }
 
 async function getEntitiesTotalCount_linksToNoReferences({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
+  const totalResult = await client.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 0);
 }
 
 async function getEntitiesTotalCount_linksToTwoReferencesFromOneEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
   );
   assertOkResult(referenceResult);
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
+  const totalResult = await client.getEntitiesTotalCount({ linksTo: { id: titleOnlyId } });
   assertResultValue(totalResult, 1);
 }
 
 async function getEntitiesTotalCount_linksFromOneReference({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
   );
   assertOkResult(referenceResult);
@@ -267,35 +267,35 @@ async function getEntitiesTotalCount_linksFromOneReference({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ linksFrom: { id: referenceId } });
+  const totalResult = await client.getEntitiesTotalCount({ linksFrom: { id: referenceId } });
   assertResultValue(totalResult, 1);
 }
 
 async function getEntitiesTotalCount_linksFromNoReferences({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const referenceResult = await adminClient.createEntity(REFERENCES_CREATE);
+  const client = clientProvider.dossierClient();
+  const referenceResult = await client.createEntity(REFERENCES_CREATE);
   assertOkResult(referenceResult);
   const {
     entity: { id },
   } = referenceResult.value;
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ linksFrom: { id } });
+  const totalResult = await client.getEntitiesTotalCount({ linksFrom: { id } });
   assertResultValue(totalResult, 0);
 }
 
 async function getEntitiesTotalCount_linksFromTwoReferencesFromOneEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const titleOnlyResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(titleOnlyResult);
   const {
     entity: { id: titleOnlyId },
   } = titleOnlyResult.value;
 
-  const referenceResult = await adminClient.createEntity(
+  const referenceResult = await client.createEntity(
     copyEntity(REFERENCES_CREATE, {
       fields: { any: { id: titleOnlyId }, titleOnly: { id: titleOnlyId } },
     }),
@@ -305,29 +305,29 @@ async function getEntitiesTotalCount_linksFromTwoReferencesFromOneEntity({
     entity: { id: referenceId },
   } = referenceResult.value;
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ linksFrom: { id: referenceId } });
+  const totalResult = await client.getEntitiesTotalCount({ linksFrom: { id: referenceId } });
   assertResultValue(totalResult, 1);
 }
 
 async function getEntitiesTotalCount_boundingBoxOneInside({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const boundingBox = randomBoundingBox();
   const center = {
     lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
     lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
   };
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(LOCATIONS_CREATE, { fields: { location: center } }),
   );
   assertOkResult(createResult);
 
-  const searchResult = await adminClient.getEntities({ boundingBox }, { first: 100 });
+  const searchResult = await client.getEntities({ boundingBox }, { first: 100 });
   assertOkResult(searchResult);
   const searchCount = searchResult.value?.edges.length;
   assertTruthy(searchCount);
 
-  const totalResult = await adminClient.getEntitiesTotalCount({ boundingBox });
+  const totalResult = await client.getEntitiesTotalCount({ boundingBox });
   assertResultValue(totalResult, searchCount);
 }

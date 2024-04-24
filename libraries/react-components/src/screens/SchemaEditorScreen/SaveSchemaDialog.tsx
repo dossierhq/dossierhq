@@ -23,7 +23,7 @@ export function SaveSchemaDialog({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onClose: () => void;
 }) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const { showNotification } = useContext(NotificationContext);
 
   const schemaSpecUpdate = useMemo(
@@ -38,7 +38,7 @@ export function SaveSchemaDialog({
           new SchemaEditorActions.SetNextUpdateSchemaSpecificationIsDueToSave(true),
         );
 
-        const result = await adminClient.updateSchemaSpecification(schemaSpecUpdate, {
+        const result = await client.updateSchemaSpecification(schemaSpecUpdate, {
           includeMigrations: true,
         });
         if (result.isOk()) {
@@ -59,7 +59,7 @@ export function SaveSchemaDialog({
       }
       onClose();
     },
-    [adminClient, dispatchSchemaEditorState, onClose, schemaSpecUpdate, showNotification],
+    [client, dispatchSchemaEditorState, onClose, schemaSpecUpdate, showNotification],
   );
 
   return (

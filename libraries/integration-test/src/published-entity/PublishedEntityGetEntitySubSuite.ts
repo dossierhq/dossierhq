@@ -64,11 +64,11 @@ export const GetEntitySubSuite: UnboundTestFunction<PublishedEntityTestContext>[
 ];
 
 async function getEntity_withSubjectAuthKey({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const createResult = await adminClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true });
+  const createResult = await client.createEntity(SUBJECT_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
     entity: { id },
@@ -79,8 +79,8 @@ async function getEntity_withSubjectAuthKey({ clientProvider }: PublishedEntityT
 }
 
 async function getEntity_archivedThenPublished({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -89,10 +89,10 @@ async function getEntity_archivedThenPublished({ clientProvider }: PublishedEnti
     },
   } = createResult.value;
 
-  const archiveResult = await adminClient.archiveEntity({ id });
+  const archiveResult = await client.archiveEntity({ id });
   assertOkResult(archiveResult);
 
-  const publishResult = await adminClient.publishEntities([{ id, version }]);
+  const publishResult = await client.publishEntities([{ id, version }]);
   assertOkResult(publishResult);
 
   const getResult = await clientProvider.publishedClient().getEntity({ id });
@@ -105,8 +105,8 @@ async function getEntity_archivedThenPublished({ clientProvider }: PublishedEnti
 }
 
 async function getEntity_oldVersion({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity<TitleOnly>(
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity<TitleOnly>(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
   );
   const {
@@ -117,14 +117,14 @@ async function getEntity_oldVersion({ clientProvider }: PublishedEntityTestConte
     },
   } = createResult.valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await client.updateEntity({
     id,
     info: { name: 'Updated name' },
     fields: { title: 'Updated title' },
   });
   assertOkResult(updateResult);
 
-  const publishResult = await adminClient.publishEntities([{ id, version: 1 }]);
+  const publishResult = await client.publishEntities([{ id, version: 1 }]);
   assertOkResult(publishResult);
   const [{ updatedAt }] = publishResult.value;
   assertResultValue(publishResult, [
@@ -152,10 +152,10 @@ async function getEntity_oldVersion({ clientProvider }: PublishedEntityTestConte
 async function getEntity_entityAdminOnlyFieldIsExcluded({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, {
       fields: {
         multiline: 'multiline\nmultiline',
@@ -186,7 +186,7 @@ async function getEntity_entityAdminOnlyFieldIsExcluded({
 async function getEntity_componentAdminOnlyFieldIsExcluded({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const adminLocationsComponent: LocationsComponent = {
@@ -195,7 +195,7 @@ async function getEntity_componentAdminOnlyFieldIsExcluded({
     locationAdminOnly: { lat: 56, lng: 78 },
   };
 
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, {
       fields: { any: adminLocationsComponent },
     }),
@@ -221,7 +221,7 @@ async function getEntity_componentAdminOnlyFieldIsExcluded({
 async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const adminLocationsComponent: LocationsComponent = {
@@ -230,7 +230,7 @@ async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
     locationAdminOnly: { lat: 56, lng: 78 },
   };
 
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       fields: {
         richText: createRichText([createRichTextComponentNode(adminLocationsComponent)]),
@@ -260,11 +260,11 @@ async function getEntity_componentAdminOnlyFieldInRichTextIsExcluded({
 }
 
 async function getEntity_usingUniqueIndex({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const client = clientProvider.dossierClient();
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
   const unique = Math.random().toString();
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { fields: { unique } }),
     { publish: true },
   );
@@ -286,11 +286,11 @@ async function getEntity_usingUniqueIndex({ clientProvider }: PublishedEntityTes
 }
 
 async function getEntity_invalidEntity({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
-    await createInvalidEntity(adminClient, { matchPattern: 'no match' }, { publish: true })
+    await createInvalidEntity(client, { matchPattern: 'no match' }, { publish: true })
   ).valueOrThrow();
 
   const result = await publishedClient.getEntity({ id: entity.id });
@@ -301,12 +301,12 @@ async function getEntity_invalidEntity({ clientProvider }: PublishedEntityTestCo
 async function getEntity_invalidEntityAdminOnlyComponent({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
     await createInvalidEntity(
-      adminClient,
+      client,
       { component: { type: 'AdminOnlyComponent' } },
       { publish: true },
     )
@@ -321,12 +321,12 @@ async function getEntity_invalidEntityAdminOnlyComponent({
 async function getEntity_invalidEntityAdminOnlyComponentList({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
     await createInvalidEntity(
-      adminClient,
+      client,
       { componentList: [{ type: 'AdminOnlyComponent' }] },
       { publish: true },
     )
@@ -341,12 +341,12 @@ async function getEntity_invalidEntityAdminOnlyComponentList({
 async function getEntity_invalidEntityAdminOnlyComponentInRichText({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity } = (
     await createInvalidEntity(
-      adminClient,
+      client,
       {
         richText: createRichText([
           createRichTextComponentNode({ type: 'AdminOnlyComponent' }),
@@ -386,11 +386,11 @@ async function getEntity_errorInvalidUniqueIndexValue({
 async function getEntity_errorUniqueIndexValueFromAdminOnlyField({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const unique = Math.random().toString();
 
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, {
       fields: { uniqueAdminOnly: unique },
     }),
@@ -404,7 +404,7 @@ async function getEntity_errorUniqueIndexValueFromAdminOnlyField({
 
 async function getEntity_errorWrongAuthKey({ clientProvider }: PublishedEntityTestContext) {
   const createResult = await clientProvider
-    .adminClient()
+    .dossierClient()
     .createEntity(SUBJECT_ONLY_CREATE, { publish: true });
 
   assertOkResult(createResult);
@@ -420,7 +420,7 @@ async function getEntity_errorWrongAuthKeyFromReadonlyRandom({
   clientProvider,
 }: PublishedEntityTestContext) {
   const { entity } = (
-    await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE, { publish: true })
+    await clientProvider.dossierClient().createEntity(SUBJECT_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
   const getResult = await clientProvider
@@ -430,16 +430,16 @@ async function getEntity_errorWrongAuthKeyFromReadonlyRandom({
 }
 
 async function getEntity_errorArchivedEntity({ clientProvider }: PublishedEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: { id },
   } = createResult.value;
 
-  const archiveResult = await adminClient.archiveEntity({ id });
+  const archiveResult = await client.archiveEntity({ id });
   assertOkResult(archiveResult);
 
   const result = await publishedClient.getEntity({ id });

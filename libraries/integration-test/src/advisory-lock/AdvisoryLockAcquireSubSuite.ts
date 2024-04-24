@@ -10,8 +10,8 @@ export const AdvisoryLockAcquireSubSuite: UnboundTestFunction<AdvisoryLockTestCo
 ];
 
 async function acquireLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const result = await adminClient.acquireAdvisoryLock('acquireLock_minimal', { leaseDuration: 1 });
+  const client = clientProvider.dossierClient();
+  const result = await client.acquireAdvisoryLock('acquireLock_minimal', { leaseDuration: 1 });
   assertOkResult(result);
   const { name, handle } = result.value;
   assertEquals(name, 'acquireLock_minimal');
@@ -21,14 +21,14 @@ async function acquireLock_minimal({ clientProvider }: AdvisoryLockTestContext) 
 async function acquireLock_errorConflictIfAlreadyAcquired({
   clientProvider,
 }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const firstResult = await adminClient.acquireAdvisoryLock(
+  const client = clientProvider.dossierClient();
+  const firstResult = await client.acquireAdvisoryLock(
     'acquireLock_errorConflictIfAlreadyAcquired',
     { leaseDuration: 500 },
   );
   assertOkResult(firstResult);
 
-  const secondResult = await adminClient.acquireAdvisoryLock(
+  const secondResult = await client.acquireAdvisoryLock(
     'acquireLock_errorConflictIfAlreadyAcquired',
     { leaseDuration: 500 },
   );
@@ -40,8 +40,8 @@ async function acquireLock_errorConflictIfAlreadyAcquired({
 }
 
 async function acquireLock_errorReadonlySession({ clientProvider }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient('main', 'readonly');
-  const result = await adminClient.acquireAdvisoryLock('acquireLock_errorReadonlySession', {
+  const client = clientProvider.dossierClient('main', 'readonly');
+  const result = await client.acquireAdvisoryLock('acquireLock_errorReadonlySession', {
     leaseDuration: 1,
   });
   assertErrorResult(result, ErrorType.BadRequest, 'Readonly session used to acquire advisory lock');

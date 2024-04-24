@@ -50,7 +50,7 @@ export default function GraphiQLEditor({
   schema: Schema;
   publishedSchema: PublishedSchema;
 }) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const { publishedClient } = useContext(PublishedDossierContext);
 
   const [themeIsSet, setThemeIsSet] = useState(false);
@@ -64,10 +64,10 @@ export default function GraphiQLEditor({
 
   const graphQlSession = useMemo<SessionGraphQLContext>(() => {
     return {
-      adminClient: ok(adminClient),
+      client: ok(client),
       publishedClient: ok(publishedClient),
     };
-  }, [adminClient, publishedClient]);
+  }, [client, publishedClient]);
 
   const fetcher = useCallback(
     async (graphQLParams: FetcherParams, _opts?: FetcherOpts) => {

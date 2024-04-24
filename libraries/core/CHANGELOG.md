@@ -82,7 +82,7 @@ Sat, 13 Jan 2024 20:41:15 GMT
 
 ### Updates
 
-- Add adminClient.processDirtyEntity()
+- Add client.processDirtyEntity()
 
 ## 0.5.7
 
@@ -749,7 +749,7 @@ Sun, 13 Feb 2022 21:58:15 GMT
 - Export transpiled JavaScript
 - Fix export configuration
 - Allow string in schema field specification
-- Enable easier JSON serialization of adminClient
+- Enable easier JSON serialization of client
 - Support boolean type
 - upsertEntity() support in AdminClient
 - Make EntityUpsert.fields required

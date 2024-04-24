@@ -19,14 +19,14 @@ const DATA_DIR = new URL('../data', import.meta.url).pathname;
 config({ path: '.env.local' });
 config({ path: '.env' });
 
-async function getUnappliedEvents(adminClient: AppAdminClient) {
+async function getUnappliedEvents(client: AppAdminClient) {
   // Get file events
   const files = await getCurrentSyncEventFiles(DATA_DIR);
   const diskEventIds = files.map((it) => it.id);
 
   const databaseEventIds: string[] = [];
   for await (const node of getAllNodesForConnection({ first: 100 }, (paging) =>
-    adminClient.getChangelogEvents({}, paging),
+    client.getChangelogEvents({}, paging),
   )) {
     databaseEventIds.push(node.valueOrThrow().id);
   }
@@ -70,9 +70,9 @@ async function main(filename: string, args: typeof parsedArgs) {
   const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
-    const adminClient = server.createDossierClient<AppAdminClient>(async () => authResult);
+    const client = server.createDossierClient<AppAdminClient>(async () => authResult);
 
-    const { unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(adminClient);
+    const { unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(client);
 
     if (!args.values['update-db-only']) {
       if (unappliedDatabaseEvents.length > 0) {

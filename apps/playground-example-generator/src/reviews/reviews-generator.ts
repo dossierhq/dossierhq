@@ -36,7 +36,7 @@ function* generateLocation(): Generator<Location, void> {
 }
 
 async function createPlaceOfBusiness(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   locationGenerator: Generator<Location, void>,
 ) {
   const name = faker.company.name();
@@ -47,7 +47,7 @@ async function createPlaceOfBusiness(
   const nextValue = locationGenerator.next();
   const location = !nextValue.done ? nextValue.value : null;
   return (
-    await adminClient.createEntity<PlaceOfBusiness>(
+    await client.createEntity<PlaceOfBusiness>(
       {
         info: { type: 'PlaceOfBusiness', name },
         fields: {
@@ -69,10 +69,10 @@ async function createPlaceOfBusiness(
   ).valueOrThrow();
 }
 
-async function createReviewer(adminClient: AppAdminClient) {
+async function createReviewer(client: AppAdminClient) {
   const name = faker.internet.userName();
   return (
-    await adminClient.createEntity<Reviewer>(
+    await client.createEntity<Reviewer>(
       {
         info: { type: 'Reviewer', name },
         fields: { name },
@@ -83,12 +83,12 @@ async function createReviewer(adminClient: AppAdminClient) {
 }
 
 async function createReview(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   placeOfBusiness: PlaceOfBusiness,
   reviewer: EntityReference,
 ) {
   return (
-    await adminClient.createEntity<Review>(
+    await client.createEntity<Review>(
       {
         info: { type: 'Review', name: 'Review' },
         fields: {
@@ -103,12 +103,12 @@ async function createReview(
 }
 
 async function createPersonalNote(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   placeOfBusiness: PlaceOfBusiness,
   userName: string,
 ) {
   return (
-    await adminClient.createEntity<PersonalNote>(
+    await client.createEntity<PersonalNote>(
       {
         info: { type: 'PersonalNote', authKey: 'subject', name: `Note: ${userName}` },
         fields: {
@@ -130,33 +130,33 @@ async function createPersonalNote(
 
 async function main() {
   const database = await createNewDatabase('dist/reviews.sqlite');
-  const { adminClient, bobAdminClient, server } = await createAdapterAndServer<AppAdminClient>(
+  const { client, bobAdminClient, server } = await createAdapterAndServer<AppAdminClient>(
     database,
     SCHEMA,
   );
 
   const placesOfBusiness: PlaceOfBusiness[] = [];
   for (const _ of Array(100).keys()) {
-    const { entity } = await createPlaceOfBusiness(adminClient, generateLocation());
+    const { entity } = await createPlaceOfBusiness(client, generateLocation());
     placesOfBusiness.push(entity);
   }
   const reviewers: EntityReference[] = [];
   for (const _ of Array(100).keys()) {
     const {
       entity: { id },
-    } = await createReviewer(adminClient);
+    } = await createReviewer(client);
     reviewers.push({ id });
   }
   for (const _ of Array(100).keys()) {
     await createReview(
-      adminClient,
+      client,
       faker.helpers.arrayElement(placesOfBusiness),
       faker.helpers.arrayElement(reviewers),
     );
   }
 
   for (const _ of Array(5).keys()) {
-    await createPersonalNote(adminClient, faker.helpers.arrayElement(placesOfBusiness), 'Alice');
+    await createPersonalNote(client, faker.helpers.arrayElement(placesOfBusiness), 'Alice');
   }
   for (const _ of Array(2).keys()) {
     await createPersonalNote(bobAdminClient, faker.helpers.arrayElement(placesOfBusiness), 'Bob');

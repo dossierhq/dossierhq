@@ -39,18 +39,18 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
 
   const args = useMemo(
     () => ({
-      adminClient: createBackendAdminClient(cachingMiddleware),
+      client: createBackendAdminClient(cachingMiddleware),
       adapter: new AdminContextAdapter(),
     }),
     [cachingMiddleware],
   );
 
-  const { adminClient } = args;
-  if (!adminClient) {
+  const { client } = args;
+  if (!client) {
     return null;
   }
   return (
-    <AdminDossierProvider {...args} adminClient={adminClient}>
+    <AdminDossierProvider {...args} client={client}>
       {children}
     </AdminDossierProvider>
   );

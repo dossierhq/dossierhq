@@ -16,11 +16,11 @@ import {
 import type { BlogPost, CloudinaryImage, Person, AppAdminClient } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
-async function createPerson(adminClient: AppAdminClient) {
+async function createPerson(client: AppAdminClient) {
   const name = faker.person.fullName();
 
   return (
-    await adminClient.createEntity<Person>(
+    await client.createEntity<Person>(
       {
         info: { type: 'Person', name },
         fields: { title: name },
@@ -31,14 +31,14 @@ async function createPerson(adminClient: AppAdminClient) {
 }
 
 async function createBlogPost(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   persons: Person[],
   images: CloudinaryImage[],
 ) {
   const title = faker.company.catchPhrase();
 
   return (
-    await adminClient.createEntity<BlogPost>(
+    await client.createEntity<BlogPost>(
       {
         info: { type: 'BlogPost', name: title },
         fields: {
@@ -65,7 +65,7 @@ async function createBlogPost(
 
 async function main() {
   const database = await createNewDatabase('dist/blog.sqlite');
-  const { adminClient, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
+  const { client, server } = await createAdapterAndServer<AppAdminClient>(database, SCHEMA);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
@@ -79,11 +79,11 @@ async function main() {
 
   const persons: Person[] = [];
   for (const _ of Array(20).keys()) {
-    persons.push(await createPerson(adminClient));
+    persons.push(await createPerson(client));
   }
 
   for (const _ of Array(100).keys()) {
-    await createBlogPost(adminClient, persons, images);
+    await createBlogPost(client, persons, images);
   }
 
   await optimizeAndCloseDatabase(server);

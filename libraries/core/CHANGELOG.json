@@ -98,7 +98,7 @@
       "comments": {
         "none": [
           {
-            "comment": "Add adminClient.processDirtyEntity()"
+            "comment": "Add client.processDirtyEntity()"
           }
         ]
       }
@@ -983,7 +983,7 @@
             "comment": "Allow string in schema field specification"
           },
           {
-            "comment": "Enable easier JSON serialization of adminClient"
+            "comment": "Enable easier JSON serialization of client"
           },
           {
             "comment": "Support boolean type"

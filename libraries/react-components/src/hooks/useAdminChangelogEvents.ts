@@ -19,7 +19,7 @@ type FetcherData = Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | 
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminChangelogEvents(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   query: ChangelogEventQuery | undefined,
   paging: Paging | undefined,
 ): {
@@ -27,8 +27,8 @@ export function useAdminChangelogEvents(
   connectionError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query, paging]: FetcherKey) => fetchChangelogEvents(adminClient, query, paging),
-    [adminClient],
+    ([_action, query, paging]: FetcherKey) => fetchChangelogEvents(client, query, paging),
+    [client],
   );
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.adminChangelogEvents(query, paging) : null,
@@ -41,11 +41,11 @@ export function useAdminChangelogEvents(
 }
 
 async function fetchChangelogEvents(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
   paging: FetcherKey[2],
 ): Promise<FetcherData> {
-  const result = await adminClient.getChangelogEvents(query, paging);
+  const result = await client.getChangelogEvents(query, paging);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

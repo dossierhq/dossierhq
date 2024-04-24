@@ -71,22 +71,22 @@ afterAll(async () => {
 
 function createContext(): SessionGraphQLContext {
   return {
-    adminClient: ok(server.adminClient),
+    client: ok(server.client),
     publishedClient: ok(server.publishedClient),
   };
 }
 
 function createNotAuthenticatedContext(): SessionGraphQLContext {
   return {
-    adminClient: notOk.NotAuthenticated('No adminClient'),
+    client: notOk.NotAuthenticated('No client'),
     publishedClient: notOk.NotAuthenticated('No publishedClient'),
   };
 }
 
 describe('node()', () => {
   test('Query all fields of created entity', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name' },
       fields: {
         title: 'Howdy title',
@@ -107,7 +107,7 @@ describe('node()', () => {
         },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
+      expectOkResult(await client.publishEntities([{ id, version: 1 }]));
 
       const result = await graphql({
         schema,
@@ -159,8 +159,8 @@ describe('node()', () => {
   });
 
   test('Query null fields of created entity', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity({
+    const { client } = server;
+    const createResult = await client.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name' },
       fields: {},
     });
@@ -172,7 +172,7 @@ describe('node()', () => {
         },
       } = createResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id, version: 1 }]));
+      expectOkResult(await client.publishEntities([{ id, version: 1 }]));
 
       const result = await graphql({
         schema,
@@ -233,11 +233,11 @@ describe('node()', () => {
   });
 
   test('Query rich text', async () => {
-    const { adminClient } = server;
+    const { client } = server;
     const body = createRichText([
       createRichTextParagraphNode([createRichTextTextNode('Hello world')]),
     ]);
-    const createFooResult = await adminClient.createEntity({
+    const createFooResult = await client.createEntity({
       info: { type: 'QueryFoo', name: 'Foo name' },
       fields: { body },
     });
@@ -249,7 +249,7 @@ describe('node()', () => {
         },
       } = createFooResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
+      expectOkResult(await client.publishEntities([{ id: fooId, version: 1 }]));
 
       const result = await graphql({
         schema,
@@ -294,7 +294,7 @@ describe('node()', () => {
   });
 
   test('Query rich text with reference', async () => {
-    const { adminClient } = server;
+    const { client } = server;
 
     const {
       entity: {
@@ -302,7 +302,7 @@ describe('node()', () => {
         info: { name: bar1Name },
       },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: { type: 'QueryBar', name: 'Bar 1 name' },
           fields: { title: 'Bar title' },
@@ -317,7 +317,7 @@ describe('node()', () => {
         info: { name: bar2Name },
       },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: { type: 'QueryBar', name: 'Bar 2 name' },
           fields: { title: 'Bar title' },
@@ -338,7 +338,7 @@ describe('node()', () => {
         info: { name: fooName },
       },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: { type: 'QueryFoo', name: 'Foo name' },
           fields: {
@@ -400,8 +400,8 @@ describe('node()', () => {
   });
 
   test('Query referenced entity', async () => {
-    const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
+    const { client } = server;
+    const createBarResult = await client.createEntity({
       info: { type: 'QueryBar', name: 'Bar name' },
       fields: { title: 'Bar title' },
     });
@@ -413,9 +413,9 @@ describe('node()', () => {
         },
       } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
+      expectOkResult(await client.publishEntities([{ id: barId, version: 1 }]));
 
-      const createFooResult = await adminClient.createEntity({
+      const createFooResult = await client.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name' },
         fields: { title: 'Foo title', bar: { id: barId } },
       });
@@ -427,7 +427,7 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
+        expectOkResult(await client.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
@@ -487,12 +487,12 @@ describe('node()', () => {
   });
 
   test('Query referenced entity list', async () => {
-    const { adminClient } = server;
-    const createBar1Result = await adminClient.createEntity({
+    const { client } = server;
+    const createBar1Result = await client.createEntity({
       info: { type: 'QueryBar', name: 'Bar 1 name' },
       fields: { title: 'Bar 1 title' },
     });
-    const createBar2Result = await adminClient.createEntity({
+    const createBar2Result = await client.createEntity({
       info: { type: 'QueryBar', name: 'Bar 2 name' },
       fields: { title: 'Bar 2 title' },
     });
@@ -511,13 +511,13 @@ describe('node()', () => {
       } = createBar2Result.value;
 
       expectOkResult(
-        await adminClient.publishEntities([
+        await client.publishEntities([
           { id: bar1Id, version: 1 },
           { id: bar2Id, version: 1 },
         ]),
       );
 
-      const createFooResult = await adminClient.createEntity({
+      const createFooResult = await client.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name' },
         fields: { title: 'Foo title', bars: [{ id: bar1Id }, { id: bar2Id }] },
       });
@@ -529,7 +529,7 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
+        expectOkResult(await client.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
@@ -595,8 +595,8 @@ describe('node()', () => {
   });
 
   test('Query component type', async () => {
-    const { adminClient } = server;
-    const createBarResult = await adminClient.createEntity({
+    const { client } = server;
+    const createBarResult = await client.createEntity({
       info: { type: 'QueryBar', name: 'Bar name' },
       fields: { title: 'Bar title' },
     });
@@ -608,9 +608,9 @@ describe('node()', () => {
         },
       } = createBarResult.value;
 
-      expectOkResult(await adminClient.publishEntities([{ id: barId, version: 1 }]));
+      expectOkResult(await client.publishEntities([{ id: barId, version: 1 }]));
 
-      const createFooResult = await adminClient.createEntity({
+      const createFooResult = await client.createEntity({
         info: { type: 'QueryFoo', name: 'Foo name' },
         fields: {
           title: 'Foo title',
@@ -625,7 +625,7 @@ describe('node()', () => {
           },
         } = createFooResult.value;
 
-        expectOkResult(await adminClient.publishEntities([{ id: fooId, version: 1 }]));
+        expectOkResult(await client.publishEntities([{ id: fooId, version: 1 }]));
 
         const result = await graphql({
           schema,
@@ -751,12 +751,12 @@ GraphQL request:3:11
 
 describe('nodes()', () => {
   test('Query 2 entities', async () => {
-    const { adminClient } = server;
-    const createFoo1Result = await adminClient.createEntity({
+    const { client } = server;
+    const createFoo1Result = await client.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name 1' },
       fields: {},
     });
-    const createFoo2Result = await adminClient.createEntity({
+    const createFoo2Result = await client.createEntity({
       info: { type: 'QueryFoo', name: 'Howdy name 2' },
       fields: {},
     });
@@ -775,7 +775,7 @@ describe('nodes()', () => {
       } = createFoo2Result.value;
 
       expectOkResult(
-        await adminClient.publishEntities([
+        await client.publishEntities([
           { id: foo1Id, version: 1 },
           { id: foo2Id, version: 1 },
         ]),
@@ -858,9 +858,9 @@ describe('nodes()', () => {
 
 describe('publishedEntity()', () => {
   test('unique index', async () => {
-    const { adminClient } = server;
+    const { client } = server;
     const slug = Math.random().toString();
-    const createResult = await adminClient.createEntity(
+    const createResult = await client.createEntity(
       {
         info: { type: 'QueryFoo', name: 'Howdy name' },
         fields: {
@@ -903,8 +903,8 @@ describe('publishedEntity()', () => {
   });
 
   test('Query all fields of created entity', async () => {
-    const { adminClient } = server;
-    const createResult = await adminClient.createEntity(
+    const { client } = server;
+    const createResult = await client.createEntity(
       {
         info: { type: 'QueryFoo', name: 'Howdy name' },
         fields: {

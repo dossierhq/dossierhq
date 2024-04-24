@@ -200,8 +200,8 @@ export async function loadAdminEntity<TContext extends SessionGraphQLContext>(
   context: TContext,
   reference: EntityReference | EntityVersionReference | UniqueIndexReference,
 ): Promise<Entity> {
-  const adminClient = context.adminClient.valueOrThrow() as DossierClient;
-  const result = await adminClient.getEntity(reference);
+  const client = context.client.valueOrThrow() as DossierClient;
+  const result = await client.getEntity(reference);
   return buildResolversForAdminEntity(schema, result.valueOrThrow());
 }
 
@@ -210,8 +210,8 @@ export async function loadAdminEntityList<TContext extends SessionGraphQLContext
   context: TContext,
   ids: string[],
 ): Promise<FieldValueOrResolver<TContext, Entity | null>[]> {
-  const adminClient = context.adminClient.valueOrThrow() as DossierClient;
-  const results = await adminClient.getEntityList(ids.map((id) => ({ id })));
+  const client = context.client.valueOrThrow() as DossierClient;
+  const results = await client.getEntityList(ids.map((id) => ({ id })));
   return results
     .valueOrThrow()
     .map((result) =>
@@ -250,8 +250,8 @@ export async function loadAdminEntitiesSample<TContext extends SessionGraphQLCon
   query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<Entity>> {
-  const adminClient = context.adminClient.valueOrThrow() as DossierClient;
-  const result = await adminClient.getEntitiesSample(query, options);
+  const client = context.client.valueOrThrow() as DossierClient;
+  const result = await client.getEntitiesSample(query, options);
   const payload = result.valueOrThrow();
 
   return {
@@ -267,10 +267,10 @@ export function loadAdminEntities<TContext extends SessionGraphQLContext>(
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, Entity>, TContext> | null> {
-  const adminClient = context.adminClient.valueOrThrow() as DossierClient;
+  const client = context.client.valueOrThrow() as DossierClient;
   return buildResolversForConnection<TContext, Entity>(
-    () => adminClient.getEntities(query, paging),
-    () => adminClient.getEntitiesTotalCount(query),
+    () => client.getEntities(query, paging),
+    () => client.getEntitiesTotalCount(query),
     (it) => buildResolversForAdminEntity(schema, it),
     info,
   );
@@ -380,10 +380,10 @@ export async function loadChangelogEvents<TContext extends SessionGraphQLContext
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<Connection<TContext, Edge<TContext, ChangelogEvent>> | null> {
-  const adminClient = context.adminClient.valueOrThrow();
+  const client = context.client.valueOrThrow();
   return buildResolversForConnection<TContext, ChangelogEvent>(
-    () => adminClient.getChangelogEvents(query, paging),
-    () => adminClient.getChangelogEventsTotalCount(query),
+    () => client.getChangelogEvents(query, paging),
+    () => client.getChangelogEventsTotalCount(query),
     (it) => it,
     info,
   );

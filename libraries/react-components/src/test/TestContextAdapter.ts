@@ -168,15 +168,15 @@ export class TestContextAdapter
 }
 
 export async function ensureManyBarEntities(
-  adminClient: DossierClient,
+  client: DossierClient,
   entityCount: number,
 ): PromiseResult<void, ErrorType> {
-  const totalCountResult = await adminClient.getEntitiesTotalCount({ entityTypes: ['Bar'] });
+  const totalCountResult = await client.getEntitiesTotalCount({ entityTypes: ['Bar'] });
   if (totalCountResult.isError()) return totalCountResult;
 
   for (let i = totalCountResult.value; i <= entityCount; i += 1) {
     const id = uuidv5(`bar-${i}`, GENERATE_ENTITIES_UUID_NAMESPACE);
-    const result = await adminClient.createEntity({
+    const result = await client.createEntity({
       id,
       info: { type: 'Bar', name: `Generated bar ${i}` },
       fields: { title: `Generated bar ${i}` },

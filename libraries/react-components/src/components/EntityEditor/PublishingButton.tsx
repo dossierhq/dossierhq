@@ -40,7 +40,7 @@ const errorMessages: Record<PublishingActionId, string> = {
 };
 
 export function PublishingButton({ disabled, entity, entitySpec }: Props) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const { showNotification } = useContext(NotificationContext);
 
   const [buttonAction, ...dropdownActions] = useMemo(
@@ -58,7 +58,7 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
         disabled={disabled || !buttonAction}
         onClick={
           entity
-            ? () => executeAction(buttonAction.id, entity, adminClient, showNotification)
+            ? () => executeAction(buttonAction.id, entity, client, showNotification)
             : undefined
         }
       >
@@ -71,7 +71,7 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
           items={dropdownActions}
           renderItem={(it) => it.name}
           onItemClick={
-            entity ? (it) => executeAction(it.id, entity, adminClient, showNotification) : undefined
+            entity ? (it) => executeAction(it.id, entity, client, showNotification) : undefined
           }
         />
       ) : null}
@@ -133,23 +133,23 @@ function createPublishActions(entity: Entity | null, entitySpec: EntityTypeSpeci
 async function executeAction(
   action: PublishingActionId,
   entity: Entity,
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   showNotification: (notification: NotificationInfo) => void,
 ) {
   const reference = { id: entity.id };
   let result: Result<unknown, ErrorType>;
   switch (action) {
     case 'archive':
-      result = await adminClient.archiveEntity(reference);
+      result = await client.archiveEntity(reference);
       break;
     case 'publish':
-      result = await adminClient.publishEntities([{ ...reference, version: entity.info.version }]);
+      result = await client.publishEntities([{ ...reference, version: entity.info.version }]);
       break;
     case 'unarchive':
-      result = await adminClient.unarchiveEntity(reference);
+      result = await client.unarchiveEntity(reference);
       break;
     case 'unpublish':
-      result = await adminClient.unpublishEntities([reference]);
+      result = await client.unpublishEntities([reference]);
       break;
   }
 

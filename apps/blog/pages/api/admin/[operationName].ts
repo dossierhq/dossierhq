@@ -55,7 +55,7 @@ async function executeAdminOperation(req: NextApiRequest, res: NextApiResponse) 
   const { server } = await getServerConnection();
   const authResult = await getSessionContextForRequest(server, req, databasePerformance);
   if (authResult.isError()) return authResult;
-  const { adminClient } = authResult.value;
+  const { client } = authResult.value;
 
   const operationModifies = DossierClientModifyingOperations.has(operationName);
   if (req.method === 'GET' && operationModifies) {
@@ -65,7 +65,7 @@ async function executeAdminOperation(req: NextApiRequest, res: NextApiResponse) 
   }
 
   const result = await executeDossierClientOperationFromJson(
-    adminClient,
+    client,
     operationName,
     operationResult.value,
   );

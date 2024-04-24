@@ -58,8 +58,8 @@ export function getPublishedClientForRequest(server: Server, req: Request) {
   return server.createPublishedClient<AppPublishedClient>(() => session);
 }
 
-async function updateSchema(adminClient: AppAdminClient) {
-  const schemaResult = await adminClient.updateSchemaSpecification({
+async function updateSchema(client: AppAdminClient) {
+  const schemaResult = await client.updateSchemaSpecification({
     entityTypes: [
       {
         name: 'Message',
@@ -75,8 +75,8 @@ async function updateSchema(adminClient: AppAdminClient) {
   return schemaResult;
 }
 
-async function createMessages(logger: Logger, adminClient: AppAdminClient) {
-  const totalMessageCountResult = await adminClient.getEntitiesTotalCount({
+async function createMessages(logger: Logger, client: AppAdminClient) {
+  const totalMessageCountResult = await client.getEntitiesTotalCount({
     entityTypes: ['Message'],
   });
   if (totalMessageCountResult.isError()) return totalMessageCountResult;
@@ -84,7 +84,7 @@ async function createMessages(logger: Logger, adminClient: AppAdminClient) {
   const desiredMessageCount = 10;
   for (let i = totalMessageCountResult.value; i < desiredMessageCount; i++) {
     const message = `Message ${i}!`;
-    const createResult = await adminClient.createEntity(
+    const createResult = await client.createEntity(
       {
         info: { type: 'Message', name: message },
         fields: { message },
@@ -112,12 +112,12 @@ export async function initialize(logger: Logger) {
     provider: 'sys',
     identifier: 'init',
   });
-  const adminClient = server.createDossierClient<AppAdminClient>(() => initSession);
+  const client = server.createDossierClient<AppAdminClient>(() => initSession);
 
-  const schemaResult = await updateSchema(adminClient);
+  const schemaResult = await updateSchema(client);
   if (schemaResult.isError()) return schemaResult;
 
-  const messageCreateResult = await createMessages(logger, adminClient);
+  const messageCreateResult = await createMessages(logger, client);
   if (messageCreateResult.isError()) return messageCreateResult;
 
   return ok({ server });

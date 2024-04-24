@@ -88,16 +88,16 @@ export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<Schema
 async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     const schemaSpec = (
-      await adminClient.getSchemaSpecification({ includeMigrations: true })
+      await client.getSchemaSpecification({ includeMigrations: true })
     ).valueOrThrow();
 
     const migrationEntitySpec = schemaSpec.entityTypes.find((it) => it.name === 'MigrationEntity');
     if (migrationEntitySpec && migrationEntitySpec.fields.length > 0) {
-      const updateResult = await adminClient.updateSchemaSpecification({
+      const updateResult = await client.updateSchemaSpecification({
         migrations: [
           {
             version: schemaSpec.version + 1,
@@ -119,18 +119,18 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationEntity({
 async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     const schemaSpec = (
-      await adminClient.getSchemaSpecification({ includeMigrations: true })
+      await client.getSchemaSpecification({ includeMigrations: true })
     ).valueOrThrow();
 
     const migrationValueSpec = schemaSpec.componentTypes.find(
       (it) => it.name === 'MigrationComponent',
     );
     if (migrationValueSpec && migrationValueSpec.fields.length > 0) {
-      const updateResult = await adminClient.updateSchemaSpecification({
+      const updateResult = await client.updateSchemaSpecification({
         migrations: [
           {
             version: schemaSpec.version + 1,
@@ -152,18 +152,18 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
 async function updateSchemaSpecification_removeAllTemporaryComponentTypes({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     const schemaSpec = (
-      await adminClient.getSchemaSpecification({ includeMigrations: true })
+      await client.getSchemaSpecification({ includeMigrations: true })
     ).valueOrThrow();
 
     const valueSpecs = schemaSpec.componentTypes.filter(
       (it) => it.name.startsWith('MigrationComponent') && it.name !== 'MigrationComponent',
     );
     if (valueSpecs.length > 0) {
-      const updateResult = await adminClient.updateSchemaSpecification({
+      const updateResult = await client.updateSchemaSpecification({
         migrations: [
           {
             version: schemaSpec.version + 1,
@@ -179,11 +179,11 @@ async function updateSchemaSpecification_removeAllTemporaryComponentTypes({
 }
 
 async function updateSchemaSpecification_updateSchemaEvent({ clientProvider }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
 
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
-    return await adminClient.updateSchemaSpecification({
+  const result = await withSchemaAdvisoryLock(client, async () => {
+    return await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -191,7 +191,7 @@ async function updateSchemaSpecification_updateSchemaEvent({ clientProvider }: S
   });
   const { version } = result.valueOrThrow().schemaSpecification;
 
-  const connectionResult = await adminClient.getChangelogEvents({
+  const connectionResult = await client.getChangelogEvents({
     types: [EventType.updateSchema],
     reverse: true,
   });
@@ -207,24 +207,24 @@ async function updateSchemaSpecification_updateSchemaEvent({ clientProvider }: S
 }
 
 async function updateSchemaSpecification_concurrentUpdates({ clientProvider }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName1 = `field${new Date().getTime()}`;
   const fieldName2 = `${fieldName1}2`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     const schemaSpec = (
-      await adminClient.getSchemaSpecification({ includeMigrations: true })
+      await client.getSchemaSpecification({ includeMigrations: true })
     ).valueOrThrow();
     const newVersion = schemaSpec.version + 1;
 
-    const updateOnePromise = adminClient.updateSchemaSpecification({
+    const updateOnePromise = client.updateSchemaSpecification({
       version: newVersion,
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName1, type: FieldType.Boolean }] },
       ],
     });
-    const updateTwoPromise = adminClient.updateSchemaSpecification({
+    const updateTwoPromise = client.updateSchemaSpecification({
       version: newVersion,
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName2, type: FieldType.String }] },
@@ -260,7 +260,7 @@ async function updateSchemaSpecification_concurrentUpdates({ clientProvider }: S
 async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
@@ -268,12 +268,12 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
   };
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // Create entity
     const {
       entity: { id: entityId },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(CHANGE_VALIDATIONS_CREATE, { fields: { required: query.text } }),
         { publish: true },
       )
@@ -282,13 +282,13 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
 
     // Make the entity type adminOnly
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [{ name: 'ChangeValidations', adminOnly: true, fields: [] }],
       }),
     );
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity(reference), {
+    assertResultValue(await client.processDirtyEntity(reference), {
       id: entityId,
       valid: true,
       validPublished: false,
@@ -297,7 +297,7 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
     });
 
     // Check that the entity is invalid
-    const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+    const adminEntity = (await client.getEntity(reference)).valueOrThrow();
     assertEquals(adminEntity.info.valid, true);
     assertEquals(adminEntity.info.validPublished, false);
 
@@ -320,7 +320,7 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
 
     // Make the entity type normal
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [{ name: 'ChangeValidations', adminOnly: false, fields: [] }],
       }),
     );
@@ -333,16 +333,16 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
 async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEntityInvalid({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // Create entity
     const {
       entity: { id: entityId },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: 'ChangeValidationsComponent', matchPattern: null } },
         }),
@@ -352,13 +352,13 @@ async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEnt
 
     // Make the component adminOnly
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: true, fields: [] }],
       }),
     );
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+    assertResultValue(await client.processDirtyEntity({ id: entityId }), {
       id: entityId,
       valid: true,
       validPublished: false,
@@ -372,7 +372,7 @@ async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEnt
 
     // Make the component normal
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: false, fields: [] }],
       }),
     );
@@ -385,7 +385,7 @@ async function updateSchemaSpecification_adminOnlyComponentTypeMakesPublishedEnt
 async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const query: Parameters<(typeof publishedClient)['getEntities']>[0] = {
@@ -394,12 +394,12 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
   };
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // Create entity
     const {
       entity: { id: entityId },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
             any: { type: 'ChangeValidationsComponent', matchPattern: query.text! },
@@ -417,13 +417,13 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
 
     // Make the component adminOnly
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: true, fields: [] }],
       }),
     );
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+    assertResultValue(await client.processDirtyEntity({ id: entityId }), {
       id: entityId,
       valid: true,
       validPublished: false,
@@ -439,7 +439,7 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
 
     // Make the component normal
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         componentTypes: [{ name: 'ChangeValidationsComponent', adminOnly: false, fields: [] }],
       }),
     );
@@ -452,15 +452,15 @@ async function updateSchemaSpecification_adminOnlyComponentTypeRemovesFromIndex(
 async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const entityResult = await withSchemaAdvisoryLock(adminClient, async () => {
+  const entityResult = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
         ],
@@ -470,13 +470,11 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     // Create entity without the new field
     const {
       entity: { id: entityId },
-    } = (
-      await adminClient.createEntity(MIGRATIONS_ENTITY_CREATE, { publish: true })
-    ).valueOrThrow();
+    } = (await client.createEntity(MIGRATIONS_ENTITY_CREATE, { publish: true })).valueOrThrow();
 
     // Make it required
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -487,7 +485,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     );
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+    assertResultValue(await client.processDirtyEntity({ id: entityId }), {
       id: entityId,
       valid: true,
       validPublished: false,
@@ -501,7 +499,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
 
     // Make the field adminOnly
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -512,7 +510,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
     );
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+    assertResultValue(await client.processDirtyEntity({ id: entityId }), {
       id: entityId,
       valid: true,
       validPublished: true,
@@ -533,7 +531,7 @@ async function updateSchemaSpecification_adminOnlyFieldMakesPublishedEntityValid
 async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
@@ -543,10 +541,10 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
   };
 
   // Lock since the version needs to be consecutive
-  const entityResult = await withSchemaAdvisoryLock(adminClient, async () => {
+  const entityResult = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
         ],
@@ -557,7 +555,7 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
     const {
       entity: { id: entityId },
     } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: query.text } }),
         { publish: true },
       )
@@ -571,7 +569,7 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
 
     // Make the field adminOnly
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -582,7 +580,7 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
     );
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entityId }), {
+    assertResultValue(await client.processDirtyEntity({ id: entityId }), {
       id: entityId,
       valid: true,
       validPublished: true,
@@ -604,14 +602,14 @@ async function updateSchemaSpecification_adminOnlyFieldRemovesFromIndex({
 async function updateSchemaSpecification_deleteFieldOnEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -620,14 +618,14 @@ async function updateSchemaSpecification_deleteFieldOnEntity({
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: 'value' } }),
         { publish: true },
       )
     ).valueOrThrow();
 
     // Delete the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -641,9 +639,7 @@ async function updateSchemaSpecification_deleteFieldOnEntity({
   assertOkResult(result);
 
   // Check that the field is removed
-  const entityAfterMigration = (
-    await adminClient.getEntity({ id: result.value.id })
-  ).valueOrThrow();
+  const entityAfterMigration = (await client.getEntity({ id: result.value.id })).valueOrThrow();
   assertEquals(fieldName in entityAfterMigration.fields, false);
 
   // And in published entity
@@ -653,7 +649,7 @@ async function updateSchemaSpecification_deleteFieldOnEntity({
   assertEquals(fieldName in publishedEntityAfterMigration.fields, false);
 
   // Ensure it's not possible to use the field
-  const updateResult = await adminClient.updateEntity(
+  const updateResult = await client.updateEntity(
     {
       id: result.value.id,
       fields: { [fieldName]: 'new value' },
@@ -670,14 +666,14 @@ async function updateSchemaSpecification_deleteFieldOnEntity({
 async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnotherField({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -686,14 +682,14 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: 'value' } }),
         { publish: true },
       )
     ).valueOrThrow();
 
     // Delete/replace the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -714,9 +710,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
   const entity = result.value;
 
   // Check that the field is reset
-  const entityAfterMigration = (
-    await adminClient.getEntity({ id: entity.id })
-  ).valueOrThrow() as Entity;
+  const entityAfterMigration = (await client.getEntity({ id: entity.id })).valueOrThrow() as Entity;
   assertEquals(entityAfterMigration.fields[fieldName], null);
 
   // And for published entity
@@ -727,7 +721,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
 
   // Check that the new field is usable
   const updatedEntity = (
-    await adminClient.updateEntity(
+    await client.updateEntity(
       { id: entity.id, fields: { [fieldName]: [{ lat: 1, lng: 2 }] } },
       { publish: true },
     )
@@ -738,13 +732,13 @@ async function updateSchemaSpecification_deleteFieldOnEntityAndReplaceWithAnothe
 async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -753,7 +747,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, {
           fields: { [fieldName]: 'this value will become invalid' },
         }),
@@ -762,7 +756,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     ).valueOrThrow();
 
     // Change validations to make the field invalid
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -773,7 +767,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     const { schemaSpecification } = secondUpdateResult.valueOrThrow();
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: entity.id,
       valid: false,
       validPublished: false,
@@ -782,7 +776,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     });
 
     // Delete the field
-    const thirdUpdateResult = await adminClient.updateSchemaSpecification({
+    const thirdUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -793,7 +787,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
     assertOkResult(thirdUpdateResult);
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: entity.id,
       valid: true,
       validPublished: true,
@@ -809,18 +803,18 @@ async function updateSchemaSpecification_deleteFieldOnEntityInvalidBecomesValid(
 async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
 
-  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
+  const query: Parameters<(typeof client)['getEntities']>[0] = {
     entityTypes: ['MigrationEntity'],
     text: 'Supercalifragilisticexpialidocious',
   };
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -829,19 +823,19 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: query.text } }),
       )
     ).valueOrThrow();
 
     // Check that it's in the index
     const countBeforeSchemaUpdate = (
-      await countSearchResultWithEntity(adminClient, query, entity.id)
+      await countSearchResultWithEntity(client, query, entity.id)
     ).valueOrThrow();
     assertEquals(countBeforeSchemaUpdate, 1);
 
     // Delete the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -852,7 +846,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: entity.id,
       valid: true,
       validPublished: null,
@@ -866,7 +860,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityIndexesUpdated({
 
   // Check that it's no longer in the index
   const countAfterSchemaUpdate = (
-    await countSearchResultWithEntity(adminClient, query, result.value.id)
+    await countSearchResultWithEntity(client, query, result.value.id)
   ).valueOrThrow();
   assertEquals(countAfterSchemaUpdate, 0);
 }
@@ -876,19 +870,19 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
 }: SchemaTestContext) {
   // The reason why we test this is that we want to ensure that we update indexes even when an entity
   // becomes invalid.
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldToDeleteName = `field${new Date().getTime()}Delete`;
   const fieldToBecomeInvalidName = `field${new Date().getTime()}Invalid`;
 
-  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
+  const query: Parameters<(typeof client)['getEntities']>[0] = {
     entityTypes: ['MigrationEntity'],
     text: 'Kaboom',
   };
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add the fields
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -903,7 +897,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
 
     // Create entity with the new fields set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, {
           fields: { [fieldToDeleteName]: query.text, [fieldToBecomeInvalidName]: 'invalid' },
         }),
@@ -912,12 +906,12 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
 
     // Check that it's in the index
     const countBeforeSchemaUpdate = (
-      await countSearchResultWithEntity(adminClient, query, entity.id)
+      await countSearchResultWithEntity(client, query, entity.id)
     ).valueOrThrow();
     assertEquals(countBeforeSchemaUpdate, 1);
 
     // Delete the field and change the other field to be invalid
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -942,7 +936,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: entity.id,
       valid: false,
       validPublished: null,
@@ -956,7 +950,7 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
 
   // Check that it's no longer in the index
   const countAfterSchemaUpdate = (
-    await countSearchResultWithEntity(adminClient, query, result.value.id)
+    await countSearchResultWithEntity(client, query, result.value.id)
   ).valueOrThrow();
   assertEquals(countAfterSchemaUpdate, 0);
 }
@@ -964,14 +958,14 @@ async function updateSchemaSpecification_deleteFieldOnEntityUpdatesFtsIndexEvenW
 async function updateSchemaSpecification_deleteFieldOnComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const fieldName = `field${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: 'MigrationComponent', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -980,7 +974,7 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: 'MigrationComponent', [fieldName]: 'value' } },
         }),
@@ -989,7 +983,7 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
     ).valueOrThrow();
 
     // Delete the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1005,9 +999,7 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
   assertOkResult(result);
 
   // Check that the field is removed
-  const entityAfterMigration = (
-    await adminClient.getEntity({ id: result.value.id })
-  ).valueOrThrow();
+  const entityAfterMigration = (await client.getEntity({ id: result.value.id })).valueOrThrow();
   assertIsComponents(entityAfterMigration);
   const adminComponent = entityAfterMigration.fields.any as Component;
   assertEquals(adminComponent.type, 'MigrationComponent');
@@ -1023,7 +1015,7 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
   assertEquals(fieldName in publishedComponent, false);
 
   // Ensure it's not possible to use the field
-  const updateResult = await adminClient.updateEntity(
+  const updateResult = await client.updateEntity(
     {
       id: result.value.id,
       fields: { any: { type: 'MigrationComponent', [fieldName]: 'new value' } },
@@ -1040,18 +1032,18 @@ async function updateSchemaSpecification_deleteFieldOnComponent({
 async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
 
-  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
+  const query: Parameters<(typeof client)['getEntities']>[0] = {
     entityTypes: ['Components'],
     text: 'Copyrightable',
   };
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: 'MigrationComponent', fields: [{ name: fieldName, type: FieldType.String }] },
       ],
@@ -1060,7 +1052,7 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: 'MigrationComponent', [fieldName]: query.text } },
         }),
@@ -1069,12 +1061,12 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
 
     // Check that it's in the index
     const countBeforeSchemaUpdate = (
-      await countSearchResultWithEntity(adminClient, query, entity.id)
+      await countSearchResultWithEntity(client, query, entity.id)
     ).valueOrThrow();
     assertEquals(countBeforeSchemaUpdate, 1);
 
     // Delete the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1087,7 +1079,7 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: entity.id,
       valid: true,
       validPublished: null,
@@ -1101,7 +1093,7 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
 
   // Check that it's no longer in the index
   const countAfterSchemaUpdate = (
-    await countSearchResultWithEntity(adminClient, query, result.value.id)
+    await countSearchResultWithEntity(client, query, result.value.id)
   ).valueOrThrow();
   assertEquals(countAfterSchemaUpdate, 0);
 }
@@ -1109,15 +1101,15 @@ async function updateSchemaSpecification_deleteFieldOnComponentIndexesUpdated({
 async function updateSchemaSpecification_renameFieldOnEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldFieldName = `field${new Date().getTime()}`;
   const newFieldName = `${oldFieldName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -1126,14 +1118,14 @@ async function updateSchemaSpecification_renameFieldOnEntity({
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [oldFieldName]: 'value' } }),
         { publish: true },
       )
     ).valueOrThrow();
 
     // Rename the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1155,9 +1147,7 @@ async function updateSchemaSpecification_renameFieldOnEntity({
   const entityId = result.value.id;
 
   // Check that the field is renamed
-  const entityAfterMigration = (
-    await adminClient.getEntity({ id: entityId })
-  ).valueOrThrow() as Entity;
+  const entityAfterMigration = (await client.getEntity({ id: entityId })).valueOrThrow() as Entity;
   assertEquals(oldFieldName in entityAfterMigration.fields, false);
   assertEquals(entityAfterMigration.fields[newFieldName], 'value');
 
@@ -1170,7 +1160,7 @@ async function updateSchemaSpecification_renameFieldOnEntity({
 
   // Check that the new name is usable
   const updatedNewNameEntity = (
-    await adminClient.updateEntity(
+    await client.updateEntity(
       { id: entityId, fields: { [newFieldName]: 'updated value' } },
       { publish: true },
     )
@@ -1178,7 +1168,7 @@ async function updateSchemaSpecification_renameFieldOnEntity({
   assertEquals(updatedNewNameEntity.fields[newFieldName], 'updated value');
 
   // Check that the old name is not usable
-  const updatedOldNameResult = await adminClient.updateEntity(
+  const updatedOldNameResult = await client.updateEntity(
     { id: entityId, fields: { [oldFieldName]: 'updated value' } },
     { publish: true },
   );
@@ -1192,15 +1182,15 @@ async function updateSchemaSpecification_renameFieldOnEntity({
 async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnotherField({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldFieldName = `field${new Date().getTime()}`;
   const newFieldName = `${oldFieldName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: 'MigrationEntity', fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -1209,14 +1199,14 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [oldFieldName]: 'value' } }),
         { publish: true },
       )
     ).valueOrThrow();
 
     // Rename/replace the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -1244,9 +1234,7 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
   const entity = result.value;
 
   // Check that the renamed field got the old value and the original field is reset
-  const entityAfterMigration = (
-    await adminClient.getEntity({ id: entity.id })
-  ).valueOrThrow() as Entity;
+  const entityAfterMigration = (await client.getEntity({ id: entity.id })).valueOrThrow() as Entity;
   assertEquals(entityAfterMigration.fields[oldFieldName], null);
   assertEquals(entityAfterMigration.fields[newFieldName], 'value');
 
@@ -1259,7 +1247,7 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
 
   // Check that both fields are usable
   const updatedEntity = (
-    await adminClient.updateEntity(
+    await client.updateEntity(
       {
         id: entity.id,
         fields: { [oldFieldName]: [{ lat: 1, lng: 2 }], [newFieldName]: 'updated value' },
@@ -1274,15 +1262,15 @@ async function updateSchemaSpecification_renameFieldOnEntityAndReplaceWithAnothe
 async function updateSchemaSpecification_renameFieldOnComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldFieldName = `field${new Date().getTime()}`;
   const newFieldName = `${oldFieldName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: 'MigrationComponent', fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -1291,7 +1279,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
 
     // Create entity with the new field set
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: 'MigrationComponent', [oldFieldName]: 'value' } },
         }),
@@ -1300,7 +1288,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
     ).valueOrThrow();
 
     // Rename the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1322,9 +1310,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
   const entityId = result.value.id;
 
   // Check that the field is renamed
-  const entityAfterMigration = (
-    await adminClient.getEntity({ id: entityId })
-  ).valueOrThrow() as Entity;
+  const entityAfterMigration = (await client.getEntity({ id: entityId })).valueOrThrow() as Entity;
   const componentAfterMigration = entityAfterMigration.fields.any as Component;
   assertEquals(oldFieldName in componentAfterMigration, false);
   assertEquals(componentAfterMigration[newFieldName], 'value');
@@ -1339,7 +1325,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
 
   // Check that the new name is usable
   const updatedNewNameEntity = (
-    await adminClient.updateEntity(
+    await client.updateEntity(
       {
         id: entityId,
         fields: { any: { type: 'MigrationComponent', [newFieldName]: 'updated value' } },
@@ -1350,7 +1336,7 @@ async function updateSchemaSpecification_renameFieldOnComponent({
   assertEquals((updatedNewNameEntity.fields.any as Component)[newFieldName], 'updated value');
 
   // Check that the old name is not usable
-  const updatedOldNameResult = await adminClient.updateEntity(
+  const updatedOldNameResult = await client.updateEntity(
     {
       id: entityId,
       fields: { any: { type: 'MigrationComponent', [oldFieldName]: 'updated value' } },
@@ -1367,19 +1353,19 @@ async function updateSchemaSpecification_renameFieldOnComponent({
 async function updateSchemaSpecification_deleteTypeOnEntityType({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const typeName = `MigrationEntity${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Delete the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1398,14 +1384,14 @@ async function updateSchemaSpecification_deleteTypeOnEntityType({
 async function updateSchemaSpecification_deleteTypeOnTwoEntityTypes({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const typeName1 = `MigrationEntity${new Date().getTime()}`;
   const typeName2 = `${typeName1}2`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new types
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: typeName1, fields: [{ name: 'field', type: FieldType.String }] },
         { name: typeName2, fields: [{ name: 'field', type: FieldType.String }] },
@@ -1414,7 +1400,7 @@ async function updateSchemaSpecification_deleteTypeOnTwoEntityTypes({
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Delete the types
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1438,21 +1424,21 @@ async function updateSchemaSpecification_deleteTypeOnTwoEntityTypes({
 async function updateSchemaSpecification_deleteTypeOnComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new component type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the new component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: typeName, field: `Hello ${typeName}` } as AppComponent },
         }),
@@ -1461,7 +1447,7 @@ async function updateSchemaSpecification_deleteTypeOnComponent({
     ).valueOrThrow();
 
     // Delete the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1475,7 +1461,7 @@ async function updateSchemaSpecification_deleteTypeOnComponent({
   const reference = result.valueOrThrow();
 
   // Check that the component is removed
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, null);
 
@@ -1485,7 +1471,7 @@ async function updateSchemaSpecification_deleteTypeOnComponent({
   assertEquals(publishedEntity.fields.any, null);
 
   // Check that we can't create new components with the name
-  const updateResult = await adminClient.updateEntity({
+  const updateResult = await client.updateEntity({
     id: reference.id,
     fields: { any: { type: typeName, field: 'updated value' } },
   });
@@ -1499,21 +1485,21 @@ async function updateSchemaSpecification_deleteTypeOnComponent({
 async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnotherType({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
             any: { type: typeName, field: `Hello ${typeName}` } as AppComponent,
@@ -1524,7 +1510,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
     ).valueOrThrow();
 
     // Delete/replace the component type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: typeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
       ],
@@ -1541,7 +1527,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
   const reference = result.valueOrThrow();
 
   // Check that component type is deleted
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, null);
 
@@ -1552,7 +1538,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
 
   // Check that the new type is usable
   const updatedEntity = (
-    await adminClient.updateEntity<Components>(
+    await client.updateEntity<Components>(
       {
         id: reference.id,
         fields: { any: { type: typeName, field: [{ lat: 1, lng: 2 }] } as AppComponent },
@@ -1569,20 +1555,20 @@ async function updateSchemaSpecification_deleteTypeOnComponentAndReplaceWithAnot
 async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesValid({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     assertOkResult(firstUpdateResult);
 
     // Create entity with the new type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
             any: { type: typeName, field: 'this value will become invalid' } as AppComponent,
@@ -1594,7 +1580,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
     const reference = { id: entity.id };
 
     // Change validations to make the field invalid
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         {
           name: typeName,
@@ -1605,7 +1591,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
     const { schemaSpecification } = secondUpdateResult.valueOrThrow();
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity(reference), {
+    assertResultValue(await client.processDirtyEntity(reference), {
       id: reference.id,
       valid: false,
       validPublished: false,
@@ -1614,7 +1600,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
     });
 
     // Delete the component type
-    const thirdUpdateResult = await adminClient.updateSchemaSpecification({
+    const thirdUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1625,7 +1611,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
     assertOkResult(thirdUpdateResult);
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: reference.id,
       valid: true,
       validPublished: true,
@@ -1641,25 +1627,25 @@ async function updateSchemaSpecification_deleteTypeOnComponentInvalidBecomesVali
 async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const typeName = `MigrationComponent${new Date().getTime()}`;
 
-  const query: Parameters<(typeof adminClient)['getEntities']>[0] = {
+  const query: Parameters<(typeof client)['getEntities']>[0] = {
     entityTypes: ['Components'],
     text: 'wingspan hero',
   };
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the new type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: typeName, field: query.text } as AppComponent },
         }),
@@ -1668,12 +1654,12 @@ async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
 
     // Check that it's in the index
     const countBeforeSchemaUpdate = (
-      await countSearchResultWithEntity(adminClient, query, entity.id)
+      await countSearchResultWithEntity(client, query, entity.id)
     ).valueOrThrow();
     assertEquals(countBeforeSchemaUpdate, 1);
 
     // Delete the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1684,7 +1670,7 @@ async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
     assertOkResult(secondUpdateResult);
 
     // Process the entity
-    assertResultValue(await adminClient.processDirtyEntity({ id: entity.id }), {
+    assertResultValue(await client.processDirtyEntity({ id: entity.id }), {
       id: entity.id,
       valid: true,
       validPublished: null,
@@ -1698,28 +1684,28 @@ async function updateSchemaSpecification_deleteTypeOnComponentIndexesUpdated({
 
   // Check that it's no longer in the index
   const countAfterSchemaUpdate = (
-    await countSearchResultWithEntity(adminClient, query, reference.id)
+    await countSearchResultWithEntity(client, query, reference.id)
   ).valueOrThrow();
   assertEquals(countAfterSchemaUpdate, 0);
 }
 
 async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the new type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: {
             type: oldTypeName as AppEntity['info']['type'],
@@ -1732,7 +1718,7 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
     ).valueOrThrow();
 
     // Rename the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1746,7 +1732,7 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
   const reference = result.valueOrThrow();
 
   // Check that the entity has the new type
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertEquals(adminEntity.info.type, newTypeName);
 
   // And in published entity
@@ -1758,13 +1744,11 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
     entity: {
       info: { updatedAt },
     },
-  } = (
-    await adminClient.updateEntity({ ...reference, fields: { field: 'value2' } })
-  ).valueOrThrow();
+  } = (await client.updateEntity({ ...reference, fields: { field: 'value2' } })).valueOrThrow();
 
   // Check that we can create new entities with the name
   assertOkResult(
-    await adminClient.createEntity(
+    await client.createEntity(
       {
         info: {
           type: newTypeName as AppEntity['info']['type'],
@@ -1777,7 +1761,7 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
   );
 
   // Check the changelog events for the first entity
-  const connectionResult = await adminClient.getChangelogEvents({ entity: reference });
+  const connectionResult = await client.getChangelogEvents({ entity: reference });
   assertChangelogEventsConnection(connectionResult, [
     {
       type: EventType.createAndPublishEntity,
@@ -1801,22 +1785,22 @@ async function updateSchemaSpecification_renameTypeOnEntity({ clientProvider }: 
 async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnotherType({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: {
             type: oldTypeName as AppEntity['info']['type'],
@@ -1829,7 +1813,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
     ).valueOrThrow();
 
     // Rename/replace the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: oldTypeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
       ],
@@ -1846,7 +1830,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
   const reference = result.valueOrThrow();
 
   // Check that entity type is renamed
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertEquals(adminEntity.info.type, newTypeName);
 
   // And for published entity
@@ -1855,7 +1839,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
 
   // Check that both types are usable
   assertOkResult(
-    await adminClient.createEntity(
+    await client.createEntity(
       {
         info: {
           type: newTypeName as AppEntity['info']['type'],
@@ -1868,7 +1852,7 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
   );
 
   assertOkResult(
-    await adminClient.createEntity(
+    await client.createEntity(
       {
         info: {
           type: oldTypeName as AppEntity['info']['type'],
@@ -1884,22 +1868,22 @@ async function updateSchemaSpecification_renameTypeOnEntityAndReplaceWithAnother
 async function updateSchemaSpecification_renameTypeOnComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new component type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the new component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
             any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppComponent,
@@ -1910,7 +1894,7 @@ async function updateSchemaSpecification_renameTypeOnComponent({
     ).valueOrThrow();
 
     // Rename the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -1924,7 +1908,7 @@ async function updateSchemaSpecification_renameTypeOnComponent({
   const reference = result.valueOrThrow();
 
   // Check that the component has the new type
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
@@ -1940,7 +1924,7 @@ async function updateSchemaSpecification_renameTypeOnComponent({
   } as AppPublishedComponent);
 
   // Check that we can create new components with the name
-  const updateResult = await adminClient.updateEntity(
+  const updateResult = await client.updateEntity(
     {
       id: reference.id,
       fields: { any: { type: newTypeName, field: 'updated value' } },
@@ -1953,22 +1937,22 @@ async function updateSchemaSpecification_renameTypeOnComponent({
 async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnotherType({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
             any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppComponent,
@@ -1979,7 +1963,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
     ).valueOrThrow();
 
     // Rename/replace the component type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: oldTypeName, fields: [{ name: 'field', type: FieldType.Location, list: true }] },
       ],
@@ -1996,7 +1980,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
   const reference = result.valueOrThrow();
 
   // Check that component type is renamed
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
@@ -2013,7 +1997,7 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
 
   // Check that both types are usable
   const updatedEntity = (
-    await adminClient.updateEntity<Components>(
+    await client.updateEntity<Components>(
       {
         id: reference.id,
         fields: {
@@ -2037,22 +2021,22 @@ async function updateSchemaSpecification_renameTypeOnComponentAndReplaceWithAnot
 async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTypeIndexes({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new component type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [{ name: oldTypeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create entity with the new component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: {
             any: { type: oldTypeName, field: `Hello ${oldTypeName}` } as AppComponent,
@@ -2064,7 +2048,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
 
     // Check that it's in the index
     const adminCountBeforeUpdateResult = await countSearchResultWithEntity(
-      adminClient,
+      client,
       { entityTypes: ['Components'], componentTypes: [oldTypeName as AppComponent['type']] },
       entity.id,
     );
@@ -2081,7 +2065,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
     assertResultValue(publishedCountBeforeUpdateResult, 1);
 
     // Rename the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -2098,7 +2082,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
 
   // Check that it's in the index
   const adminCountAfterUpdateResult = await countSearchResultWithEntity(
-    adminClient,
+    client,
     { entityTypes: ['Components'], componentTypes: [newTypeName as AppComponent['type']] },
     reference.id,
   );
@@ -2115,7 +2099,7 @@ async function updateSchemaSpecification_renameTypeOnComponentUpdatesComponentTy
 async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
@@ -2123,9 +2107,9 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
   const newFieldName = 'newField';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -2134,7 +2118,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
 
     // Create entity with the new type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: {
             type: oldTypeName as AppEntity['info']['type'],
@@ -2147,7 +2131,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
     ).valueOrThrow();
 
     // Rename the field and the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -2169,7 +2153,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
   const reference = result.valueOrThrow();
 
   // Check that the entity has the new type and field
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow() as Entity;
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow() as Entity;
   assertEquals(adminEntity.info.type, newTypeName);
   assertEquals(adminEntity.fields[newFieldName], 'value');
   assertEquals(oldFieldName in adminEntity.fields, false);
@@ -2186,7 +2170,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnEntity({
 async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationEntity${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
@@ -2194,9 +2178,9 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   const newFieldName = 'newField';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -2205,7 +2189,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
 
     // Create entity with the new type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         {
           info: {
             type: oldTypeName as AppEntity['info']['type'],
@@ -2218,7 +2202,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
     ).valueOrThrow();
 
     // Rename the field and the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -2240,7 +2224,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
   const reference = result.valueOrThrow();
 
   // Check that the entity has the new type and field
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow() as Entity;
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow() as Entity;
   assertEquals(adminEntity.info.type, newTypeName);
   assertEquals(adminEntity.fields[newFieldName], 'value');
   assertEquals(oldFieldName in adminEntity.fields, false);
@@ -2257,7 +2241,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnEntity({
 async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
@@ -2265,9 +2249,9 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
   const newFieldName = 'newField';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new component type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -2276,7 +2260,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
 
     // Create entity with the new component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppComponent },
         }),
@@ -2285,7 +2269,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
     ).valueOrThrow();
 
     // Rename the field and type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -2307,7 +2291,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
   const reference = result.valueOrThrow();
 
   // Check that the component has the new type
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
@@ -2323,7 +2307,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
   } as AppPublishedComponent);
 
   // Check that we can create new components with the name
-  const updateResult = await adminClient.updateEntity(
+  const updateResult = await client.updateEntity(
     {
       id: reference.id,
       fields: { any: { type: newTypeName, [newFieldName]: 'updated value' } },
@@ -2336,7 +2320,7 @@ async function updateSchemaSpecification_renameFieldAndRenameTypeOnComponent({
 async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
   const oldTypeName = `MigrationComponent${new Date().getTime()}`;
   const newTypeName = `${oldTypeName}New`;
@@ -2344,9 +2328,9 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   const newFieldName = 'newField';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new component type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       componentTypes: [
         { name: oldTypeName, fields: [{ name: oldFieldName, type: FieldType.String }] },
       ],
@@ -2355,7 +2339,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
 
     // Create entity with the new component type
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(VALUE_ITEMS_CREATE, {
           fields: { any: { type: oldTypeName, [oldFieldName]: 'value' } as AppComponent },
         }),
@@ -2364,7 +2348,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
     ).valueOrThrow();
 
     // Rename the field and type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -2386,7 +2370,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   const reference = result.valueOrThrow();
 
   // Check that the component has the new type
-  const adminEntity = (await adminClient.getEntity(reference)).valueOrThrow();
+  const adminEntity = (await client.getEntity(reference)).valueOrThrow();
   assertIsComponents(adminEntity);
   assertEquals(adminEntity.fields.any, {
     type: newTypeName,
@@ -2402,7 +2386,7 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
   } as AppPublishedComponent);
 
   // Check that we can create new components with the name
-  const updateResult = await adminClient.updateEntity(
+  const updateResult = await client.updateEntity(
     {
       id: reference.id,
       fields: { any: { type: newTypeName, [newFieldName]: 'updated value' } },
@@ -2413,15 +2397,15 @@ async function updateSchemaSpecification_renameTypeAndRenameFieldOnComponent({
 }
 
 async function updateSchemaSpecification_addingIndexToField({ clientProvider }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
   const indexName = fieldName;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -2433,19 +2417,19 @@ async function updateSchemaSpecification_addingIndexToField({ clientProvider }: 
 
     // Create two entities with both unique and shared values=
     const { entity: entityA } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: ['shared', 'uniqueA'] } }),
       )
     ).valueOrThrow();
 
     const { entity: entityB } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: ['shared', 'uniqueB'] } }),
       )
     ).valueOrThrow();
 
     // Add unique index to the field
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'MigrationEntity',
@@ -2457,23 +2441,23 @@ async function updateSchemaSpecification_addingIndexToField({ clientProvider }: 
     assertOkResult(secondUpdateResult);
 
     // Process the entities
-    assertOkResult(await adminClient.processDirtyEntity({ id: entityA.id }));
-    assertOkResult(await adminClient.processDirtyEntity({ id: entityB.id }));
+    assertOkResult(await client.processDirtyEntity({ id: entityA.id }));
+    assertOkResult(await client.processDirtyEntity({ id: entityB.id }));
 
     // Check that the unique values work
     const uniqueA = (
-      await adminClient.getEntity({ index: indexName as AppUniqueIndexes, value: 'uniqueA' })
+      await client.getEntity({ index: indexName as AppUniqueIndexes, value: 'uniqueA' })
     ).valueOrThrow();
     assertEquals(uniqueA.id, entityA.id);
 
     const uniqueB = (
-      await adminClient.getEntity({ index: indexName as AppUniqueIndexes, value: 'uniqueB' })
+      await client.getEntity({ index: indexName as AppUniqueIndexes, value: 'uniqueB' })
     ).valueOrThrow();
     assertEquals(uniqueB.id, entityB.id);
 
     // Check that the shared value only resolves to one entity
     const shared = (
-      await adminClient.getEntity({ index: indexName as AppUniqueIndexes, value: 'shared' })
+      await client.getEntity({ index: indexName as AppUniqueIndexes, value: 'shared' })
     ).valueOrThrow();
     if (shared.id === entityA.id) {
       assertSame(uniqueA.info.valid, true);
@@ -2493,16 +2477,16 @@ async function updateSchemaSpecification_addingIndexToField({ clientProvider }: 
 async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
   const indexName = fieldName as AppUniqueIndexes;
   const uniqueValue = 'unique value';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
     const { schemaSpecification } = (
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -2515,14 +2499,14 @@ async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
 
     // Create entity with unique value
     assertOkResult(
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: uniqueValue } }),
       ),
     );
 
     // Delete unique index and add another index with the same name
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         version: schemaSpecification.version + 1,
         transientMigrations: [{ action: 'deleteIndex', index: indexName }],
       }),
@@ -2535,14 +2519,14 @@ async function updateSchemaSpecification_deleteIndexClearsIndexDirectly({
   assertOkResult(result);
 
   // Check that we can't fetch the old entity with the unique index
-  const firstGetResult = await adminClient.getEntity({ index: indexName, value: uniqueValue });
+  const firstGetResult = await client.getEntity({ index: indexName, value: uniqueValue });
   assertErrorResult(firstGetResult, ErrorType.NotFound, 'No such entity');
 }
 
 async function updateSchemaSpecification_deleteIndexMultiple({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName1 = `field${new Date().getTime()}`;
   const fieldName2 = `${fieldName1}2`;
   const indexName1 = fieldName1 as AppUniqueIndexes;
@@ -2550,10 +2534,10 @@ async function updateSchemaSpecification_deleteIndexMultiple({
   const uniqueValue = 'unique value';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
     const { schemaSpecification } = (
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -2572,7 +2556,7 @@ async function updateSchemaSpecification_deleteIndexMultiple({
 
     // Create entity with unique value
     assertOkResult(
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, {
           fields: { [fieldName1]: uniqueValue, [fieldName2]: uniqueValue },
         }),
@@ -2581,7 +2565,7 @@ async function updateSchemaSpecification_deleteIndexMultiple({
 
     // Delete both unique indexes
     assertOkResult(
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         version: schemaSpecification.version + 1,
         transientMigrations: [
           { action: 'deleteIndex', index: indexName1 },
@@ -2597,26 +2581,26 @@ async function updateSchemaSpecification_deleteIndexMultiple({
   assertOkResult(result);
 
   // Check that we can't fetch the old entity with the unique index
-  const firstGetResult = await adminClient.getEntity({ index: indexName1, value: uniqueValue });
+  const firstGetResult = await client.getEntity({ index: indexName1, value: uniqueValue });
   assertErrorResult(firstGetResult, ErrorType.NotFound, 'No such entity');
-  const secondGetResult = await adminClient.getEntity({ index: indexName2, value: uniqueValue });
+  const secondGetResult = await client.getEntity({ index: indexName2, value: uniqueValue });
   assertErrorResult(secondGetResult, ErrorType.NotFound, 'No such entity');
 }
 
 async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const fieldName = `field${new Date().getTime()}`;
   const oldIndexName = fieldName as AppUniqueIndexes;
   const newIndexName = `${fieldName}New` as AppUniqueIndexes;
   const uniqueValue = 'unique value';
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new field
     const { schemaSpecification } = (
-      await adminClient.updateSchemaSpecification({
+      await client.updateSchemaSpecification({
         entityTypes: [
           {
             name: 'MigrationEntity',
@@ -2629,13 +2613,13 @@ async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
 
     // Create entity with unique value
     const { entity } = (
-      await adminClient.createEntity(
+      await client.createEntity(
         copyEntity(MIGRATIONS_ENTITY_CREATE, { fields: { [fieldName]: uniqueValue } }),
       )
     ).valueOrThrow();
 
     // Rename unique index
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       version: schemaSpecification.version + 1,
       transientMigrations: [{ action: 'renameIndex', index: oldIndexName, newName: newIndexName }],
     });
@@ -2649,17 +2633,17 @@ async function updateSchemaSpecification_renameIndexMaintainsLinkDirectly({
 
   // Check that the unique index works
   const entity = (
-    await adminClient.getEntity({ index: newIndexName, value: uniqueValue })
+    await client.getEntity({ index: newIndexName, value: uniqueValue })
   ).valueOrThrow();
 
   assertEquals(entity.id, reference.id);
 }
 
 async function updateSchemaSpecification_errorWrongVersion({ clientProvider }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const schemaSpec = (await adminClient.getSchemaSpecification()).valueOrThrow();
+  const client = clientProvider.dossierClient();
+  const schemaSpec = (await client.getSchemaSpecification()).valueOrThrow();
   const version = schemaSpec.version;
-  const result = await adminClient.updateSchemaSpecification({ version });
+  const result = await client.updateSchemaSpecification({ version });
   assertErrorResult(
     result,
     ErrorType.BadRequest,
@@ -2670,27 +2654,27 @@ async function updateSchemaSpecification_errorWrongVersion({ clientProvider }: S
 async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExistingEntities({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const typeName = `MigrationEntity${new Date().getTime()}`;
 
   // Lock since the version needs to be consecutive
-  const result = await withSchemaAdvisoryLock(adminClient, async () => {
+  const result = await withSchemaAdvisoryLock(client, async () => {
     // First add new type
-    const firstUpdateResult = await adminClient.updateSchemaSpecification({
+    const firstUpdateResult = await client.updateSchemaSpecification({
       entityTypes: [{ name: typeName, fields: [{ name: 'field', type: FieldType.String }] }],
     });
     const { schemaSpecification } = firstUpdateResult.valueOrThrow();
 
     // Create an entity with the type
     assertOkResult(
-      await adminClient.createEntity({
+      await client.createEntity({
         info: { type: typeName as AppEntity['info']['type'], name: typeName },
         fields: { field: 'value' },
       }),
     );
 
     // Try to delete the type
-    const secondUpdateResult = await adminClient.updateSchemaSpecification({
+    const secondUpdateResult = await client.updateSchemaSpecification({
       migrations: [
         {
           version: schemaSpecification.version + 1,
@@ -2712,8 +2696,8 @@ async function updateSchemaSpecification_errorDeleteTypeOnEntityTypeWithExisting
 async function updateSchemaSpecification_errorReadonlySession({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient('main', 'readonly');
-  const result = await adminClient.updateSchemaSpecification({});
+  const client = clientProvider.dossierClient('main', 'readonly');
+  const result = await client.updateSchemaSpecification({});
   assertErrorResult(
     result,
     ErrorType.BadRequest,

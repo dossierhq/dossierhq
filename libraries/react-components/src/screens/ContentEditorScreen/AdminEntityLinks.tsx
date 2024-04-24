@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function AdminEntityLinks({ entityReference }: Props) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
 
   const [showDialog, setShowDialog] = useState<'linksTo' | 'linksFrom' | ''>('');
@@ -20,10 +20,10 @@ export function AdminEntityLinks({ entityReference }: Props) {
     if (!isOpen) setShowDialog('');
   }, []);
 
-  const { totalCount: linksToTotal } = useAdminEntitiesTotalCount(adminClient, {
+  const { totalCount: linksToTotal } = useAdminEntitiesTotalCount(client, {
     linksTo: entityReference,
   });
-  const { totalCount: linksFromTotal } = useAdminEntitiesTotalCount(adminClient, {
+  const { totalCount: linksFromTotal } = useAdminEntitiesTotalCount(client, {
     linksFrom: entityReference,
   });
 

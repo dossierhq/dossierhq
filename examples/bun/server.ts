@@ -23,10 +23,10 @@ try {
     logger,
   });
   if (sessionResult.isError()) throw sessionResult.toError();
-  const adminClient = server.createDossierClient(sessionResult.value.context);
+  const client = server.createDossierClient(sessionResult.value.context);
 
   (
-    await adminClient.updateSchemaSpecification({
+    await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'TitleOnly',
@@ -36,7 +36,7 @@ try {
     })
   ).throwIfError();
 
-  const createResult = await adminClient.createEntity(
+  const createResult = await client.createEntity(
     {
       info: { type: 'TitleOnly', name: 'Bun test' },
       fields: { title: 'Bun test' },

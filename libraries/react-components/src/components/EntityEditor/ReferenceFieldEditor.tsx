@@ -33,9 +33,9 @@ export function ReferenceFieldEditor({
   dragHandle,
   onChange,
 }: Props) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
-  const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
+  const { entity, entityError: _error } = useAdminEntity(client, value ?? undefined);
 
   const handleEntityClick = useCallback(
     (event: MouseEvent) => {
@@ -99,9 +99,9 @@ export function ReferenceFieldEditorWithoutClear({
   className?: string;
   value: EntityReference;
 }) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
-  const { entity, entityError: _error } = useAdminEntity(adminClient, value ?? undefined);
+  const { entity, entityError: _error } = useAdminEntity(client, value ?? undefined);
 
   const handleEntityClick = useCallback(
     (event: MouseEvent) => {

@@ -44,7 +44,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
 ];
 
 async function publishEntities_minimal({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
   const {
@@ -73,7 +73,7 @@ async function publishEntities_minimal({ clientProvider }: AdminEntityTestContex
 }
 
 async function publishEntities_authKeySubject({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -104,7 +104,7 @@ async function publishEntities_authKeySubject({ clientProvider }: AdminEntityTes
 }
 
 async function publishEntities_oldVersion({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -137,7 +137,7 @@ async function publishEntities_oldVersion({ clientProvider }: AdminEntityTestCon
 async function publishEntities_twoEntitiesReferencingEachOther({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const create1Result = await client.createEntity(REFERENCES_CREATE);
   assertOkResult(create1Result);
   const {
@@ -190,7 +190,7 @@ async function publishEntities_twoEntitiesReferencingEachOther({
 async function publishEntities_publishAlreadyPublishedEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE, { publish: true });
   assertOkResult(createResult);
   const {
@@ -231,7 +231,7 @@ async function publishEntities_publishAlreadyPublishedEntity({
 async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const {
     entity: { id: draftId },
   } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
@@ -254,7 +254,7 @@ async function publishEntities_publishWithAdminOnlyFieldReferencingDraftEntity({
 async function publishEntities_adminOnlyFieldWithAdminOnlyComponent({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const adminOnlyComponent: AdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { anyAdminOnly: adminOnlyComponent } }),
@@ -271,7 +271,7 @@ async function publishEntities_adminOnlyFieldWithAdminOnlyComponent({
 }
 
 async function publishEntities_publishEntitiesEvent({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const createResult1 = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Name 1' } }),
@@ -338,22 +338,20 @@ async function publishEntities_publishEntitiesEvent({ clientProvider }: AdminEnt
 async function publishEntities_fixInvalidEntityByPublishing({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const {
     entity: { id: entityId },
-  } = (
-    await createInvalidEntity(adminClient, { required: null }, { publish: true })
-  ).valueOrThrow();
+  } = (await createInvalidEntity(client, { required: null }, { publish: true })).valueOrThrow();
 
-  const entity = (await adminClient.getEntity({ id: entityId })).valueOrThrow();
+  const entity = (await client.getEntity({ id: entityId })).valueOrThrow();
   assertSame(entity.info.valid, true);
   assertSame(entity.info.validPublished, false);
 
   const { entity: updatedEntity } = (
-    await adminClient.updateEntity({ id: entity.id, fields: { required: 'Required' } })
+    await client.updateEntity({ id: entity.id, fields: { required: 'Required' } })
   ).valueOrThrow();
 
-  const publishResult = await adminClient.publishEntities([
+  const publishResult = await client.publishEntities([
     { id: entity.id, version: updatedEntity.info.version },
   ]);
   assertOkResult(publishResult);
@@ -361,7 +359,7 @@ async function publishEntities_fixInvalidEntityByPublishing({
 
 async function publishEntities_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
   const publishResult = await clientProvider
-    .adminClient()
+    .dossierClient()
     .publishEntities([{ id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 }]);
   assertErrorResult(
     publishResult,
@@ -371,7 +369,7 @@ async function publishEntities_errorInvalidId({ clientProvider }: AdminEntityTes
 }
 
 async function publishEntities_errorDuplicateIds({ clientProvider }: AdminEntityTestContext) {
-  const publishResult = await clientProvider.adminClient().publishEntities([
+  const publishResult = await clientProvider.dossierClient().publishEntities([
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
     { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
   ]);
@@ -385,7 +383,7 @@ async function publishEntities_errorDuplicateIds({ clientProvider }: AdminEntity
 async function publishEntities_errorMissingRequiredTitle({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { fields: { title: null } }),
   );
@@ -406,7 +404,7 @@ async function publishEntities_errorMissingRequiredTitle({
 }
 
 async function publishEntities_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
+  const createResult = await clientProvider.dossierClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: {
       id,
@@ -415,7 +413,7 @@ async function publishEntities_errorWrongAuthKey({ clientProvider }: AdminEntity
   } = createResult.valueOrThrow();
 
   const publishResult = await clientProvider
-    .adminClient('secondary')
+    .dossierClient('secondary')
     .publishEntities([{ id, version }]);
   assertErrorResult(
     publishResult,
@@ -425,7 +423,7 @@ async function publishEntities_errorWrongAuthKey({ clientProvider }: AdminEntity
 }
 
 async function publishEntities_errorAdminOnlyComponent({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const adminOnlyComponent: AdminOnlyComponent = { type: 'AdminOnlyComponent' };
   const createResult = await client.createEntity(
     copyEntity(VALUE_ITEMS_CREATE, { fields: { any: adminOnlyComponent } }),
@@ -449,7 +447,7 @@ async function publishEntities_errorAdminOnlyComponent({ clientProvider }: Admin
 async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntityLinkNode({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const {
     entity: { id: titleOnlyId },
   } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
@@ -485,9 +483,9 @@ async function publishEntities_errorReferencingUnpublishedEntityInRichTextEntity
 async function publishEntities_errorPublishInvalidEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const { entity } = (
-    await createInvalidEntity(adminClient, {
+    await createInvalidEntity(client, {
       required: 'Required',
       matchPattern: 'no match',
     })
@@ -495,12 +493,12 @@ async function publishEntities_errorPublishInvalidEntity({
 
   // Even though the entity has been made valid in later version, the old version will still fail to publish
   const { entity: updatedEntity } = (
-    await adminClient.updateEntity({ id: entity.id, fields: { matchPattern: 'foo' } })
+    await client.updateEntity({ id: entity.id, fields: { matchPattern: 'foo' } })
   ).valueOrThrow();
   assertSame(updatedEntity.info.valid, true);
   assertSame(updatedEntity.info.validPublished, null);
 
-  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 1 }]);
+  const publishResult = await client.publishEntities([{ id: entity.id, version: 1 }]);
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
@@ -511,12 +509,12 @@ async function publishEntities_errorPublishInvalidEntity({
 async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const { entity } = (
-    await createInvalidEntity(adminClient, { required: null }, { publish: true })
+    await createInvalidEntity(client, { required: null }, { publish: true })
   ).valueOrThrow();
 
-  const publishResult = await adminClient.publishEntities([{ id: entity.id, version: 1 }]);
+  const publishResult = await client.publishEntities([{ id: entity.id, version: 1 }]);
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,
@@ -525,8 +523,8 @@ async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
 }
 
 async function publishEntities_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.adminClient('main', 'write');
-  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+  const normalAdminClient = clientProvider.dossierClient('main', 'write');
+  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
   const { entity } = (await normalAdminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
   const publishResult = await readonlyAdminClient.publishEntities([{ id: entity.id, version: 1 }]);

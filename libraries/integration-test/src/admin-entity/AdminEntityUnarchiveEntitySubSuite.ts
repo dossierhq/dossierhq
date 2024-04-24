@@ -15,7 +15,7 @@ export const UnarchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext
 ];
 
 async function unarchiveEntity_minimal({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   const { entity } = createResult.valueOrThrow();
   const reference = { id: entity.id };
@@ -41,7 +41,7 @@ async function unarchiveEntity_minimal({ clientProvider }: AdminEntityTestContex
 }
 
 async function unarchiveEntity_unarchiveEntityEvent({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   const {
     entity: {
@@ -90,7 +90,7 @@ async function unarchiveEntity_unarchiveEntityEvent({ clientProvider }: AdminEnt
 }
 
 async function unarchiveEntity_previouslyPublished({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const { entity } = (
     await client.createEntity(TITLE_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
@@ -112,30 +112,30 @@ async function unarchiveEntity_previouslyPublished({ clientProvider }: AdminEnti
 }
 
 async function unarchiveEntity_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().unarchiveEntity({
+  const result = await clientProvider.dossierClient().unarchiveEntity({
     id: '5b14e69f-6612-4ddb-bb42-7be273104486',
   });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
 async function unarchiveEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
+  const createResult = await clientProvider.dossierClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
-  const unarchiveResult = await clientProvider.adminClient('secondary').unarchiveEntity({ id });
+  const unarchiveResult = await clientProvider.dossierClient('secondary').unarchiveEntity({ id });
   assertErrorResult(unarchiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }
 
 async function unarchiveEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(TITLE_ONLY_CREATE);
+  const createResult = await clientProvider.dossierClient().createEntity(TITLE_ONLY_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
   const unarchiveResult = await clientProvider
-    .adminClient('main', 'readonly')
+    .dossierClient('main', 'readonly')
     .unarchiveEntity({ id });
   assertErrorResult(
     unarchiveResult,

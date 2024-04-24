@@ -73,7 +73,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 ];
 
 async function updateEntity_minimal({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -107,7 +107,7 @@ async function updateEntity_minimal({ clientProvider }: AdminEntityTestContext) 
 }
 
 async function updateEntity_noChange({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity<TitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -124,7 +124,7 @@ async function updateEntity_noChange({ clientProvider }: AdminEntityTestContext)
 }
 
 async function updateEntity_minimalWithSubjectAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -165,7 +165,7 @@ async function updateEntity_minimalWithSubjectAuthKey({ clientProvider }: AdminE
 async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -203,16 +203,14 @@ async function updateEntity_minimalWithoutProvidingSubjectAuthKey({
 }
 
 async function updateEntity_updateAndPublishEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   const { entity: originalEntity } = (
-    await adminClient.createEntity(
-      copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
-    )
+    await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }))
   ).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity(
+  const updateResult = await client.updateEntity(
     { id: originalEntity.id, info: { name: 'Updated name' }, fields: { title: 'Updated title' } },
     { publish: true },
   );
@@ -240,7 +238,7 @@ async function updateEntity_updateAndPublishEntity({ clientProvider }: AdminEnti
     entity: expectedEntity,
   });
 
-  const getAdminResult = await adminClient.getEntity({ id: originalEntity.id });
+  const getAdminResult = await client.getEntity({ id: originalEntity.id });
   assertResultValue(getAdminResult, expectedEntity);
 
   const publishedEntity = (
@@ -253,7 +251,7 @@ async function updateEntity_updateAndPublishEntity({ clientProvider }: AdminEnti
 async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -294,23 +292,20 @@ async function updateEntity_updateAndPublishEntityWithSubjectAuthKey({
 async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
-  const schema = new Schema((await adminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await client.getSchemaSpecification()).valueOrThrow());
 
-  const createResult = await adminClient.createEntity(STRINGS_CREATE);
+  const createResult = await client.createEntity(STRINGS_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
   const unique = Math.random().toString();
-  const updateResult = await adminClient.updateEntity(
-    { id, fields: { unique } },
-    { publish: true },
-  );
+  const updateResult = await client.updateEntity({ id, fields: { unique } }, { publish: true });
   assertOkResult(updateResult);
 
-  const getAdminResult = await adminClient.getEntity({ index: 'stringsUnique', value: unique });
+  const getAdminResult = await client.getEntity({ index: 'stringsUnique', value: unique });
   assertResultValue(getAdminResult, updateResult.value.entity);
 
   const getPublishedResult = await publishedClient.getEntity({
@@ -323,7 +318,7 @@ async function updateEntity_updateAndPublishEntityWithUniqueIndexValue({
 async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
   // Create/publish first entity
@@ -333,15 +328,14 @@ async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({
       info: { name: firstOriginalName },
     },
   } = (
-    await adminClient.createEntity(
-      copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }),
-      { publish: true },
-    )
+    await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: 'Original name' } }), {
+      publish: true,
+    })
   ).valueOrThrow();
 
   // Update name (without publishing), that way we only conflict on the published name
   assertOkResult(
-    await adminClient.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
+    await client.updateEntity({ id: firstId, info: { name: 'New name' }, fields: {} }),
   );
 
   // Create second entity with same name (should be ok since we don't publish)
@@ -351,9 +345,7 @@ async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({
       info: { name: secondOriginalName },
     },
   } = (
-    await adminClient.createEntity(
-      copyEntity(TITLE_ONLY_CREATE, { info: { name: firstOriginalName } }),
-    )
+    await client.createEntity(copyEntity(TITLE_ONLY_CREATE, { info: { name: firstOriginalName } }))
   ).valueOrThrow();
 
   assertSame(firstOriginalName, secondOriginalName);
@@ -364,7 +356,7 @@ async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({
       info: { name: secondUpdatedName },
     },
   } = (
-    await adminClient.updateEntity(
+    await client.updateEntity(
       { id: secondId, fields: { title: 'Updated title' } },
       { publish: true },
     )
@@ -383,10 +375,10 @@ async function updateEntity_updateAndPublishEntityWithConflictingPublishedName({
 async function updateEntity_noChangeAndPublishDraftEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const publishedClient = clientProvider.publishedClient();
 
-  const createResult = await adminClient.createEntity<TitleOnly>(TITLE_ONLY_CREATE);
+  const createResult = await client.createEntity<TitleOnly>(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -395,7 +387,7 @@ async function updateEntity_noChangeAndPublishDraftEntity({
     },
   } = createResult.value;
 
-  const updateResult = await adminClient.updateEntity({ id, fields: { title } }, { publish: true });
+  const updateResult = await client.updateEntity({ id, fields: { title } }, { publish: true });
   assertOkResult(updateResult);
   const {
     entity: {
@@ -416,7 +408,7 @@ async function updateEntity_noChangeAndPublishDraftEntity({
     entity: expectedEntity,
   });
 
-  const getAdminResult = await adminClient.getEntity({ id });
+  const getAdminResult = await client.getEntity({ id });
   assertResultValue(getAdminResult, expectedEntity);
 
   const publishedEntity = (await publishedClient.getEntity({ id })).valueOrThrow();
@@ -426,7 +418,7 @@ async function updateEntity_noChangeAndPublishDraftEntity({
 async function updateEntity_noChangeAndPublishPublishedEntity({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity<TitleOnly>(TITLE_ONLY_CREATE, {
     publish: true,
   });
@@ -446,7 +438,7 @@ async function updateEntity_noChangeAndPublishPublishedEntity({
 }
 
 async function updateEntity_updateEntityEvent({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -489,7 +481,7 @@ async function updateEntity_updateEntityEvent({ clientProvider }: AdminEntityTes
 async function updateEntity_updateAndPublishEntityEvent({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -533,13 +525,13 @@ async function updateEntity_updateAndPublishEntityEvent({
 }
 
 async function updateEntity_fixInvalidEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity } = (
-    await createInvalidEntity(adminClient, { matchPattern: 'no match' })
+    await createInvalidEntity(client, { matchPattern: 'no match' })
   ).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity<ChangeValidations>({
+  const updateResult = await client.updateEntity<ChangeValidations>({
     id: entity.id,
     fields: { matchPattern: 'foo' },
   });
@@ -565,17 +557,17 @@ async function updateEntity_fixInvalidEntity({ clientProvider }: AdminEntityTest
     entity: expectedEntity,
   });
 
-  const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
+  const getEntity = (await client.getEntity({ id: entity.id })).valueOrThrow();
   assertIsChangeValidations(getEntity);
   assertEquals(getEntity, expectedEntity);
 }
 
 async function updateEntity_fixInvalidComponent({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const { entity } = (await createEntityWithInvalidComponent(adminClient)).valueOrThrow();
+  const { entity } = (await createEntityWithInvalidComponent(client)).valueOrThrow();
 
-  const updateResult = await adminClient.updateEntity<Components>({
+  const updateResult = await client.updateEntity<Components>({
     id: entity.id,
     fields: { any: { type: 'ChangeValidationsComponent', matchPattern: 'foo' } },
   });
@@ -595,13 +587,13 @@ async function updateEntity_fixInvalidComponent({ clientProvider }: AdminEntityT
     entity: expectedEntity,
   });
 
-  const getEntity = (await adminClient.getEntity({ id: entity.id })).valueOrThrow();
+  const getEntity = (await client.getEntity({ id: entity.id })).valueOrThrow();
   assertIsComponents(getEntity);
   assertEquals(getEntity, expectedEntity);
 }
 
 async function updateEntity_withMultilineField({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(STRINGS_CREATE);
   assertOkResult(createResult);
   const {
@@ -635,7 +627,7 @@ async function updateEntity_withMultilineField({ clientProvider }: AdminEntityTe
 }
 
 async function updateEntity_withTwoReferences({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(REFERENCES_CREATE);
   const createTitleOnly1Result = await client.createEntity(TITLE_ONLY_CREATE);
   const createTitleOnly2Result = await client.createEntity(TITLE_ONLY_CREATE);
@@ -694,7 +686,7 @@ async function updateEntity_withTwoReferences({ clientProvider }: AdminEntityTes
 }
 
 async function updateEntity_withMultipleLocations({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(LOCATIONS_CREATE);
 
   assertOkResult(createResult);
@@ -742,7 +734,7 @@ async function updateEntity_withMultipleLocations({ clientProvider }: AdminEntit
 async function updateEntity_removingUniqueIndexValueReleasesOwnership({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const unique = Math.random().toString();
 
   const createResult = await client.createEntity(
@@ -761,7 +753,7 @@ async function updateEntity_removingUniqueIndexValueReleasesOwnership({
 }
 
 async function updateEntity_errorInvalidId({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const result = await client.updateEntity({
     id: 'f773ac54-37db-42df-9b55-b6da8de344c3',
     info: { name: 'Updated name' },
@@ -771,7 +763,7 @@ async function updateEntity_errorInvalidId({ clientProvider }: AdminEntityTestCo
 }
 
 async function updateEntity_errorDifferentType({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -786,7 +778,7 @@ async function updateEntity_errorDifferentType({ clientProvider }: AdminEntityTe
 }
 
 async function updateEntity_errorTryingToChangeAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -811,7 +803,7 @@ async function updateEntity_errorTryingToChangeAuthKey({ clientProvider }: Admin
 async function updateEntity_errorMultilineStringInTitle({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -832,7 +824,7 @@ async function updateEntity_errorMultilineStringInTitle({
 async function updateEntity_errorPublishWithoutRequiredTitle({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -854,7 +846,7 @@ async function updateEntity_errorPublishWithoutRequiredTitle({
 }
 
 async function updateEntity_errorInvalidField({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
@@ -878,7 +870,7 @@ async function updateEntity_errorInvalidField({ clientProvider }: AdminEntityTes
 async function updateEntity_errorDuplicateUniqueIndexValue({
   clientProvider,
 }: AdminEntityTestContext) {
-  const client = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
   const unique = Math.random().toString();
 
   const otherResult = await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique } }));
@@ -899,8 +891,8 @@ async function updateEntity_errorDuplicateUniqueIndexValue({
 }
 
 async function updateEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.adminClient();
-  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+  const normalAdminClient = clientProvider.dossierClient();
+  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
 
   const createResult = await normalAdminClient.createEntity(TITLE_ONLY_CREATE);
   const {

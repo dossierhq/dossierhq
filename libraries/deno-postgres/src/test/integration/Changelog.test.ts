@@ -1,6 +1,6 @@
 import {
-  createAdminClientProvider,
   createChangelogTestSuite,
+  createDossierClientProvider,
 } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
@@ -15,7 +15,7 @@ registerTestSuite(
         await initializeIntegrationTestServer()
       ).valueOrThrow();
       return [
-        { clientProvider: createAdminClientProvider(server) },
+        { clientProvider: createDossierClientProvider(server) },
         { server },
       ];
     },

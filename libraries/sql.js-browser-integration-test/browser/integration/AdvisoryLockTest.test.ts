@@ -1,5 +1,5 @@
 import {
-  createAdminClientProvider,
+  createDossierClientProvider,
   createAdvisoryLockTestSuite,
 } from '@dossierhq/integration-test';
 import { registerTestSuite } from '../TestUtils.js';
@@ -10,7 +10,7 @@ registerTestSuite(
   createAdvisoryLockTestSuite({
     before: async () => {
       const serverInit = (await initializeSqlJsServer()).valueOrThrow();
-      return [{ clientProvider: createAdminClientProvider(serverInit.server) }, serverInit];
+      return [{ clientProvider: createDossierClientProvider(serverInit.server) }, serverInit];
     },
     after: async (serverInit) => {
       await serverInit.server.shutdown();

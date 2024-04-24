@@ -1,6 +1,6 @@
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
-  createAdminClientProvider,
+  createDossierClientProvider,
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
@@ -21,7 +21,7 @@ beforeAll(async () => {
     await initializeServer({ url: sqldProcess.url }, { journalMode: undefined })
   ).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(createAdminClientProvider(serverInit.server))
+    await createReadOnlyEntityRepository(createDossierClientProvider(serverInit.server))
   ).valueOrThrow();
 }, 30_000);
 afterAll(async () => {

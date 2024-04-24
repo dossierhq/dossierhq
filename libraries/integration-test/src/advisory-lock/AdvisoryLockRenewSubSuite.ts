@@ -11,14 +11,14 @@ export const AdvisoryLockRenewSubSuite: UnboundTestFunction<AdvisoryLockTestCont
 ];
 
 async function renewLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const acquireResult = await adminClient.acquireAdvisoryLock('renewLock_minimal', {
+  const acquireResult = await client.acquireAdvisoryLock('renewLock_minimal', {
     leaseDuration: 500,
   });
   assertOkResult(acquireResult);
 
-  const renewResult = await adminClient.renewAdvisoryLock(
+  const renewResult = await client.renewAdvisoryLock(
     'renewLock_minimal',
     acquireResult.value.handle,
   );
@@ -30,9 +30,9 @@ async function renewLock_minimal({ clientProvider }: AdvisoryLockTestContext) {
 }
 
 async function renewLock_errorInvalidName({ clientProvider }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const renewResult = await adminClient.renewAdvisoryLock('renewLock_errorInvalidName', 123);
+  const renewResult = await client.renewAdvisoryLock('renewLock_errorInvalidName', 123);
   assertErrorResult(
     renewResult,
     ErrorType.NotFound,
@@ -41,14 +41,14 @@ async function renewLock_errorInvalidName({ clientProvider }: AdvisoryLockTestCo
 }
 
 async function renewLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const acquireResult = await adminClient.acquireAdvisoryLock('renewLock_errorInvalidHandle', {
+  const acquireResult = await client.acquireAdvisoryLock('renewLock_errorInvalidHandle', {
     leaseDuration: 500,
   });
   assertOkResult(acquireResult);
 
-  const renewResult = await adminClient.renewAdvisoryLock(
+  const renewResult = await client.renewAdvisoryLock(
     'renewLock_errorInvalidHandle',
     acquireResult.value.handle + 1,
   );
@@ -60,7 +60,7 @@ async function renewLock_errorInvalidHandle({ clientProvider }: AdvisoryLockTest
 }
 
 async function renewLock_errorReadonlySession({ clientProvider }: AdvisoryLockTestContext) {
-  const adminClient = clientProvider.adminClient('main', 'readonly');
-  const result = await adminClient.renewAdvisoryLock('renewLock_errorReadonlySession', 123);
+  const client = clientProvider.dossierClient('main', 'readonly');
+  const result = await client.renewAdvisoryLock('renewLock_errorReadonlySession', 123);
   assertErrorResult(result, ErrorType.BadRequest, 'Readonly session used to renew advisory lock');
 }

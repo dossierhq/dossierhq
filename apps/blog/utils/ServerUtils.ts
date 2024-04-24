@@ -13,7 +13,7 @@ export async function getSessionContextForRequest(
   _req: NextApiRequest,
   databasePerformance: DatabasePerformanceCallbacks,
 ): PromiseResult<
-  { adminClient: DossierClient; publishedClient: PublishedClient },
+  { client: DossierClient; publishedClient: PublishedClient },
   typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate
@@ -29,11 +29,11 @@ export async function getSessionContextForRequest(
     );
   }
   const { context } = sessionResult.value;
-  const adminClient = server.createDossierClient(context, [
+  const client = server.createDossierClient(context, [
     createFilesystemAdminMiddleware(server, server.createDossierClient(context), 'data'),
   ]);
   const publishedClient = server.createPublishedClient(context);
-  return ok({ adminClient, publishedClient });
+  return ok({ client, publishedClient });
 }
 
 export async function getServerConnection(): Promise<{ server: Server }> {

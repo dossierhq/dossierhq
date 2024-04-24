@@ -16,7 +16,7 @@ import {
   type AppEntity,
   type PublishedReadOnly,
 } from '../SchemaTypes.js';
-import type { AdminClientProvider } from './TestClients.js';
+import type { DossierClientProvider } from './TestClients.js';
 
 const UUID_NAMESPACE = '10db07d4-3666-48e9-8080-12db0365ab81';
 const ENTITIES_PER_CATEGORY = 5;
@@ -80,7 +80,7 @@ const createEntitiesPromises: Record<
 > = {};
 
 export async function createReadOnlyEntityRepository(
-  clientProvider: AdminClientProvider,
+  clientProvider: DossierClientProvider,
   databaseName?: string,
 ): PromiseResult<
   ReadOnlyEntityRepository,
@@ -99,13 +99,13 @@ export async function createReadOnlyEntityRepository(
 }
 
 async function doCreateReadOnlyEntityRepository(
-  clientProvider: AdminClientProvider,
+  clientProvider: DossierClientProvider,
 ): PromiseResult<
   ReadOnlyEntityRepository,
   typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const adminClientMain = clientProvider.adminClient('main');
-  const adminClientSecondary = clientProvider.adminClient('secondary');
+  const adminClientMain = clientProvider.dossierClient('main');
+  const adminClientSecondary = clientProvider.dossierClient('secondary');
 
   return await withAdvisoryLock(
     adminClientMain,
@@ -136,9 +136,9 @@ async function doCreateReadOnlyEntityRepository(
         if (!advisoryLock.active) {
           return advisoryLock.renewError;
         }
-        const adminClient = principal === 'main' ? adminClientMain : adminClientSecondary;
+        const client = principal === 'main' ? adminClientMain : adminClientSecondary;
         const id = uuidv5(`${principal}-${authKey}-${status}-${index}`, UUID_NAMESPACE);
-        const result = await createEntity(adminClient, id, authKey, status);
+        const result = await createEntity(client, id, authKey, status);
         assertOkResult(result);
         (principal === 'main' ? mainEntities : secondaryEntities).push(result.value);
       }
@@ -149,7 +149,7 @@ async function doCreateReadOnlyEntityRepository(
 }
 
 async function createEntity(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   id: string,
   authKey: AppEntity['info']['authKey'],
   status: EntityStatus,
@@ -161,7 +161,7 @@ async function createEntity(
   | typeof ErrorType.Generic
 > {
   // Check if it already exists (to save some time)
-  const getResult = await adminClient.getEntity({ id });
+  const getResult = await client.getEntity({ id });
   if (
     getResult.isOk() &&
     getResult.value.info.authKey === authKey &&
@@ -172,7 +172,7 @@ async function createEntity(
   }
 
   // Create/upsert entity
-  const upsertResult = await adminClient.upsertEntity(
+  const upsertResult = await client.upsertEntity(
     copyEntity(READONLY_UPSERT, { id, info: { authKey } }),
     {
       publish:
@@ -190,7 +190,7 @@ async function createEntity(
     case EntityStatus.published:
       break;
     case EntityStatus.modified: {
-      const updateResult = await adminClient.updateEntity<ReadOnly>({
+      const updateResult = await client.updateEntity<ReadOnly>({
         id,
         fields: { message: 'Updated message' },
       });
@@ -199,14 +199,14 @@ async function createEntity(
       break;
     }
     case EntityStatus.withdrawn: {
-      const unpublishResult = await adminClient.unpublishEntities([{ id }]);
+      const unpublishResult = await client.unpublishEntities([{ id }]);
       if (unpublishResult.isError()) return unpublishResult;
       entity.info.status = unpublishResult.value[0].status;
       entity.info.updatedAt = unpublishResult.value[0].updatedAt;
       break;
     }
     case EntityStatus.archived: {
-      const archiveResult = await adminClient.archiveEntity({ id });
+      const archiveResult = await client.archiveEntity({ id });
       if (archiveResult.isError()) return archiveResult;
       entity.info.status = archiveResult.value.status;
       entity.info.updatedAt = archiveResult.value.updatedAt;

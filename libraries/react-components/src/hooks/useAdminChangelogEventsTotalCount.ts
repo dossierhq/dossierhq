@@ -15,15 +15,15 @@ type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 export function useAdminChangelogEventsTotalCount(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   query: ChangelogEventQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
   totalCountError: FetcherError | undefined;
 } {
   const fetcher = useCallback(
-    ([_action, query]: FetcherKey) => fetchChangelogEventsTotalCount(adminClient, query),
-    [adminClient],
+    ([_action, query]: FetcherKey) => fetchChangelogEventsTotalCount(client, query),
+    [client],
   );
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
     query ? CACHE_KEYS.adminChangelogEventsTotalCount(query) : null,
@@ -36,10 +36,10 @@ export function useAdminChangelogEventsTotalCount(
 }
 
 async function fetchChangelogEventsTotalCount(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
-  const result = await adminClient.getChangelogEventsTotalCount(query);
+  const result = await client.getChangelogEventsTotalCount(query);
   if (result.isError()) {
     throw result; // throw result, don't convert to Error
   }

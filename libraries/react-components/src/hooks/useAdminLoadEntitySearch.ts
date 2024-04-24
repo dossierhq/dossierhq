@@ -23,23 +23,23 @@ export function useAdminLoadEntitySearch(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
-  const { adminClient } = useContext(AdminDossierContext);
+  const { client } = useContext(AdminDossierContext);
 
   // search
   const searchQuery = searchEntityState.paging
     ? (searchEntityState.query as EntityQuery)
     : undefined;
   const { connection, connectionError } = useAdminEntities(
-    adminClient,
+    client,
     searchQuery,
     searchEntityState.paging,
   );
-  const { totalCount } = useAdminEntitiesTotalCount(adminClient, searchQuery);
+  const { totalCount } = useAdminEntitiesTotalCount(client, searchQuery);
 
   // sample
   const sampleQuery = !searchQuery ? (searchEntityState.query as EntitySharedQuery) : undefined;
   const { entitiesSample, entitiesSampleError } = useAdminEntitiesSample(
-    adminClient,
+    client,
     sampleQuery,
     searchEntityState.sampling,
   );

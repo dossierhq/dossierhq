@@ -5,7 +5,7 @@ import { Navbar } from './Navbar.js';
 import type { AppEntity } from './SchemaTypes.js';
 
 export function IndexRoute() {
-  const adminClient = useAdminClient();
+  const client = useAdminClient();
   const [message, setMessage] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [adminSampleSeed, setAdminSampleSeed] = useState(Math.random);
@@ -22,8 +22,8 @@ export function IndexRoute() {
   }, []);
 
   const handleSendMessageClick = useCallback(async () => {
-    if (!adminClient) return;
-    const result = await adminClient.createEntity(
+    if (!client) return;
+    const result = await client.createEntity(
       {
         info: { type: 'Message', name: newMessage },
         fields: { message: newMessage },
@@ -35,15 +35,15 @@ export function IndexRoute() {
     } else {
       alert(`Failed to create message: ${result.error}: ${result.message}`);
     }
-  }, [adminClient, newMessage]);
+  }, [client, newMessage]);
 
   useEffect(() => {
-    if (adminClient) {
-      adminClient.getEntitiesSample({}, { seed: adminSampleSeed, count: 5 }).then((result) => {
+    if (client) {
+      client.getEntitiesSample({}, { seed: adminSampleSeed, count: 5 }).then((result) => {
         if (result.isOk()) setAdminSample(result.value);
       });
     }
-  }, [adminClient, adminSampleSeed]);
+  }, [client, adminSampleSeed]);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import {
-  createAdminClientProvider,
+  createDossierClientProvider,
   createAdvisoryLockTestSuite,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
@@ -28,7 +28,7 @@ registerTestSuite(
       assert(serverInit);
 
       return Promise.resolve([
-        { clientProvider: createAdminClientProvider(serverInit.server) },
+        { clientProvider: createDossierClientProvider(serverInit.server) },
         undefined,
       ]);
     },

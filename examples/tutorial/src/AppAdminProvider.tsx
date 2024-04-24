@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function AppAdminProvider({ children }: Props) {
-  const adminClient = useAdminClient();
+  const client = useAdminClient();
   const args = useMemo(
     () => ({
       adapter: new AdminAdapter(),
@@ -27,10 +27,10 @@ export function AppAdminProvider({ children }: Props) {
     [],
   );
 
-  if (!adminClient) return null;
+  if (!client) return null;
 
   return (
-    <AdminDossierProvider {...args} adminClient={adminClient}>
+    <AdminDossierProvider {...args} client={client}>
       {children}
     </AdminDossierProvider>
   );

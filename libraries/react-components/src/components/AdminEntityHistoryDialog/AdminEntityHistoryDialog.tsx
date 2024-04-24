@@ -48,7 +48,7 @@ export function AdminEntityHistoryDialog({ reference }: AdminEntityHistoryDialog
 }
 
 function Content({ reference }: { reference: EntityReference }) {
-  const { adminClient, schema } = useContext(AdminDossierContext);
+  const { client, schema } = useContext(AdminDossierContext);
   const [
     { leftVersion, leftVersionItems, rightVersion, rightVersionItems },
     dispatchVersionSelectionState,
@@ -75,14 +75,14 @@ function Content({ reference }: { reference: EntityReference }) {
     };
   }, [reference.id]);
 
-  const { connection, connectionError: _ } = useAdminChangelogEvents(adminClient, query, undefined);
+  const { connection, connectionError: _ } = useAdminChangelogEvents(client, query, undefined);
 
   const { entity: leftEntity } = useAdminEntity(
-    adminClient,
+    client,
     leftVersion !== null ? { id: reference.id, version: leftVersion } : undefined,
   );
   const { entity: rightEntity } = useAdminEntity(
-    adminClient,
+    client,
     rightVersion !== null ? { id: reference.id, version: rightVersion } : undefined,
   );
 

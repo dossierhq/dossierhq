@@ -1,6 +1,6 @@
 import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
-  createAdminClientProvider,
+  createDossierClientProvider,
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
@@ -20,7 +20,7 @@ beforeAll(async () => {
   ).valueOrThrow();
 
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(createAdminClientProvider(serverInit.server))
+    await createReadOnlyEntityRepository(createDossierClientProvider(serverInit.server))
   ).valueOrThrow();
 });
 afterAll(async () => {

@@ -15,12 +15,12 @@ type FetcherData = SchemaWithMigrations;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminSchema(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
 } {
-  const fetcher = useCallback((_action: FetcherKey) => fetchSchema(adminClient), [adminClient]);
+  const fetcher = useCallback((_action: FetcherKey) => fetchSchema(client), [client]);
   const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(CACHE_KEYS.schema, fetcher);
 
   // useDebugLogChangedValues('useAdminSchema changed values', { data, error });
@@ -29,9 +29,9 @@ export function useAdminSchema(
 }
 
 async function fetchSchema(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
 ): Promise<FetcherData> {
-  const result = await adminClient.getSchemaSpecification({
+  const result = await client.getSchemaSpecification({
     includeMigrations: true,
   });
   if (result.isError()) {

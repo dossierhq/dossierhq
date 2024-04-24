@@ -25,24 +25,21 @@ interface Options {
 }
 
 export async function createInvalidEntity(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   fields: Partial<ChangeValidations['fields']>,
   options?: Options,
 ) {
   return doCreateInvalidEntity<ChangeValidations>(
-    adminClient,
+    client,
     ChangeValidationsWithoutValidationsUpdate,
     copyEntity(CHANGE_VALIDATIONS_CREATE, { fields }),
     options,
   );
 }
 
-export async function createEntityWithInvalidComponent(
-  adminClient: AppAdminClient,
-  options?: Options,
-) {
+export async function createEntityWithInvalidComponent(client: AppAdminClient, options?: Options) {
   return doCreateInvalidEntity<Components>(
-    adminClient,
+    client,
     ChangeValidationsComponentWithoutValidationsUpdate,
     copyEntity(VALUE_ITEMS_CREATE, {
       fields: { any: { type: 'ChangeValidationsComponent', matchPattern: 'no match' } },
@@ -52,7 +49,7 @@ export async function createEntityWithInvalidComponent(
 }
 
 async function doCreateInvalidEntity<TEntity extends Entity<string, object> = Entity>(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   schemaUpdate: SchemaSpecificationUpdate,
   entity: EntityCreate<TEntity>,
   options?: Options,
@@ -74,10 +71,10 @@ async function doCreateInvalidEntity<TEntity extends Entity<string, object> = En
     | typeof ErrorType.Generic
   > = notOk.Generic('not set');
   const schemaResult = await withTemporarySchemaChange(
-    adminClient,
+    client,
     schemaUpdate,
     async () => {
-      const createResult = await adminClient.createEntity<TEntity>(entity, {
+      const createResult = await client.createEntity<TEntity>(entity, {
         publish: options?.publish,
       });
       result = createResult.isError()
@@ -97,25 +94,25 @@ async function doCreateInvalidEntity<TEntity extends Entity<string, object> = En
 }
 
 async function withTemporarySchemaChange(
-  adminClient: AppAdminClient,
+  client: AppAdminClient,
   schemaUpdate: SchemaSpecificationUpdate,
   onChangedSchema: () => Promise<EntityReference | undefined>,
   onProcessed: (processed: EntityProcessDirtyPayload) => void,
 ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  return await withSchemaAdvisoryLock(adminClient, async () => {
+  return await withSchemaAdvisoryLock(client, async () => {
     // remove validations from the schema
-    const removeValidationsResult = await adminClient.updateSchemaSpecification(schemaUpdate);
+    const removeValidationsResult = await client.updateSchemaSpecification(schemaUpdate);
     if (removeValidationsResult.isError()) return removeValidationsResult;
 
     const filter = await onChangedSchema();
 
     // restore validations to the schema
-    const restoreSchemaResult = await adminClient.updateSchemaSpecification(IntegrationTestSchema);
+    const restoreSchemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
     if (restoreSchemaResult.isError()) return restoreSchemaResult;
 
     // process dirty
     if (filter) {
-      const processResult = await adminClient.processDirtyEntity(filter);
+      const processResult = await client.processDirtyEntity(filter);
       if (processResult.isError()) return processResult;
 
       if (processResult.value) {

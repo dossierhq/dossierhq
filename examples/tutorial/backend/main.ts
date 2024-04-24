@@ -72,7 +72,7 @@ app.get(
 app.get(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
-    const adminClient = getAdminClientForRequest(server, req);
+    const client = getAdminClientForRequest(server, req);
     const { operationName } = req.params;
     const operationArgs = decodeURLSearchParamsParam<DossierClientJsonOperationArgs>(
       req.query as Record<string, string>,
@@ -86,7 +86,7 @@ app.get(
     } else {
       sendResult(
         res,
-        await executeDossierClientOperationFromJson(adminClient, operationName, operationArgs),
+        await executeDossierClientOperationFromJson(client, operationName, operationArgs),
       );
     }
   }),
@@ -95,7 +95,7 @@ app.get(
 app.put(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
-    const adminClient = getAdminClientForRequest(server, req);
+    const client = getAdminClientForRequest(server, req);
     const { operationName } = req.params;
     const operationArgs = req.body as DossierClientJsonOperationArgs;
     const operationModifies = DossierClientModifyingOperations.has(operationName);
@@ -104,7 +104,7 @@ app.put(
     } else {
       sendResult(
         res,
-        await executeDossierClientOperationFromJson(adminClient, operationName, operationArgs),
+        await executeDossierClientOperationFromJson(client, operationName, operationArgs),
       );
     }
   }),

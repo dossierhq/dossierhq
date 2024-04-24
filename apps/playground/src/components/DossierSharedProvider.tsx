@@ -84,7 +84,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
     const adapter = new ContextAdapter();
     const adminArgs = {
-      adminClient: server.createDossierClient(
+      client: server.createDossierClient(
         () => Promise.resolve(sessionResultRef.current),
         [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>, cachingAdminMiddleware],
       ),

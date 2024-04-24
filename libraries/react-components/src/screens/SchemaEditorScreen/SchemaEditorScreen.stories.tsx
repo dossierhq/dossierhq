@@ -51,8 +51,8 @@ export const SchemaDebug: Story = {
 };
 
 function SchemaDebugFooter() {
-  const { adminClient } = useContext(AdminDossierContext);
-  const { schema } = useAdminSchema(adminClient);
+  const { client } = useContext(AdminDossierContext);
+  const { schema } = useAdminSchema(client);
 
   function typeToString(type: EntityTypeSpecification | ComponentTypeSpecification) {
     return `${type.name} (${type.fields.map((it) => it.name).join(', ')})`;

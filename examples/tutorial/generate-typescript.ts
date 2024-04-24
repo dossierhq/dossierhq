@@ -14,8 +14,8 @@ async function generateTypes(logger: Logger, schema: Schema, filename: string) {
 
 async function getAdminSchema(server: Server) {
   const initSession = server.createSession({ provider: 'sys', identifier: 'init' });
-  const adminClient = server.createDossierClient(() => initSession);
-  const schemaResult = await adminClient.getSchemaSpecification();
+  const client = server.createDossierClient(() => initSession);
+  const schemaResult = await client.getSchemaSpecification();
   return new Schema(schemaResult.valueOrThrow());
 }
 

@@ -44,12 +44,12 @@ function startExpressServer(server: Server, schema: Schema, port: number) {
       schema: gqlSchema,
       async context(request): Promise<OperationContext> {
         const context: SessionGraphQLContext = {
-          adminClient: notOk.NotAuthenticated('No session'),
+          client: notOk.NotAuthenticated('No session'),
           publishedClient: notOk.NotAuthenticated('No session'),
         };
         const sessionResult = await createSessionContext(server, request.headers);
         if (sessionResult.isOk()) {
-          context.adminClient = ok(server.createDossierClient(sessionResult.value.context));
+          context.client = ok(server.createDossierClient(sessionResult.value.context));
           context.publishedClient = ok(server.createPublishedClient(sessionResult.value.context));
         }
         return context as unknown as OperationContext;

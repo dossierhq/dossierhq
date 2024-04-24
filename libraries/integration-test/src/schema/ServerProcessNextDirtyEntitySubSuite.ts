@@ -15,10 +15,10 @@ export const ServerProcessNextDirtyEntitySubSuite: UnboundTestFunction<SchemaTes
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity, validations } = (
-    await createInvalidEntity(adminClient, { matchPattern: 'no match' })
+    await createInvalidEntity(client, { matchPattern: 'no match' })
   ).valueOrThrow();
 
   assertEquals(validations, [
@@ -35,10 +35,10 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidEntity
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublishedEntity({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
   const { entity, validations } = (
-    await createInvalidEntity(adminClient, { required: null }, { publish: true })
+    await createInvalidEntity(client, { required: null }, { publish: true })
   ).valueOrThrow();
 
   assertEquals(validations, [
@@ -55,11 +55,9 @@ async function serverProcessNextDirtyEntity_changingValidationsWithInvalidPublis
 async function serverProcessNextDirtyEntity_changingValidationsWithInvalidComponent({
   clientProvider,
 }: SchemaTestContext) {
-  const adminClient = clientProvider.adminClient();
+  const client = clientProvider.dossierClient();
 
-  const { entity, validations } = (
-    await createEntityWithInvalidComponent(adminClient)
-  ).valueOrThrow();
+  const { entity, validations } = (await createEntityWithInvalidComponent(client)).valueOrThrow();
 
   assertEquals(validations, [
     {

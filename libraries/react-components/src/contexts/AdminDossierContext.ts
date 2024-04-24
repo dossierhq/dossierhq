@@ -26,7 +26,7 @@ export interface AdminDossierContextAdapter {
 
 export interface AdminDossierContextValue {
   adapter: AdminDossierContextAdapter;
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>;
+  client: DossierClient<Entity<string, object>, Component<string, object>>;
   logger: Logger;
   schema: Schema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

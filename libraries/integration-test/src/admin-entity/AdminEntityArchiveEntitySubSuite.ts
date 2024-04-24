@@ -16,11 +16,11 @@ export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[
 ];
 
 async function archiveEntity_minimal({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   const { entity } = createResult.valueOrThrow();
 
-  const archiveResult = await adminClient.archiveEntity({ id: entity.id });
+  const archiveResult = await client.archiveEntity({ id: entity.id });
   const { updatedAt } = archiveResult.valueOrThrow();
   assertResultValue(archiveResult, {
     id: entity.id,
@@ -33,19 +33,19 @@ async function archiveEntity_minimal({ clientProvider }: AdminEntityTestContext)
     info: { status: EntityStatus.archived, updatedAt },
   });
 
-  const getResult = await adminClient.getEntity({ id: entity.id });
+  const getResult = await client.getEntity({ id: entity.id });
   assertResultValue(getResult, expectedEntity);
 }
 
 async function archiveEntity_archivedEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   const { entity } = createResult.valueOrThrow();
 
-  const firstArchiveResult = await adminClient.archiveEntity({ id: entity.id });
+  const firstArchiveResult = await client.archiveEntity({ id: entity.id });
   const { updatedAt } = firstArchiveResult.valueOrThrow();
 
-  const secondArchiveResult = await adminClient.archiveEntity({ id: entity.id });
+  const secondArchiveResult = await client.archiveEntity({ id: entity.id });
   assertResultValue(secondArchiveResult, {
     id: entity.id,
     effect: 'none',
@@ -57,13 +57,13 @@ async function archiveEntity_archivedEntity({ clientProvider }: AdminEntityTestC
     info: { status: EntityStatus.archived, updatedAt },
   });
 
-  const getResult = await adminClient.getEntity({ id: entity.id });
+  const getResult = await client.getEntity({ id: entity.id });
   assertResultValue(getResult, expectedEntity);
 }
 
 async function archiveEntity_archiveEntityEvent({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE);
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   assertOkResult(createResult);
   const {
     entity: {
@@ -72,7 +72,7 @@ async function archiveEntity_archiveEntityEvent({ clientProvider }: AdminEntityT
     },
   } = createResult.value;
 
-  const archiveResult = await adminClient.archiveEntity({ id });
+  const archiveResult = await client.archiveEntity({ id });
   const { updatedAt } = archiveResult.valueOrThrow();
   assertResultValue(archiveResult, {
     id,
@@ -81,7 +81,7 @@ async function archiveEntity_archiveEntityEvent({ clientProvider }: AdminEntityT
     updatedAt,
   });
 
-  const connectionResult = await adminClient.getChangelogEvents({ entity: { id } });
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
   assertChangelogEventsConnection(connectionResult, [
     {
       type: EventType.createEntity,
@@ -101,25 +101,25 @@ async function archiveEntity_archiveEntityEvent({ clientProvider }: AdminEntityT
 }
 
 async function archiveEntity_errorInvalidError({ clientProvider }: AdminEntityTestContext) {
-  const result = await clientProvider.adminClient().archiveEntity({
+  const result = await clientProvider.dossierClient().archiveEntity({
     id: '5b14e69f-6612-4ddb-bb42-7be273104486',
   });
   assertErrorResult(result, ErrorType.NotFound, 'No such entity');
 }
 
 async function archiveEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
-  const createResult = await clientProvider.adminClient().createEntity(SUBJECT_ONLY_CREATE);
+  const createResult = await clientProvider.dossierClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
-  const archiveResult = await clientProvider.adminClient('secondary').archiveEntity({ id });
+  const archiveResult = await clientProvider.dossierClient('secondary').archiveEntity({ id });
   assertErrorResult(archiveResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }
 
 async function archiveEntity_errorPublishedEntity({ clientProvider }: AdminEntityTestContext) {
-  const adminClient = clientProvider.adminClient();
-  const createResult = await adminClient.createEntity(TITLE_ONLY_CREATE, {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE, {
     publish: true,
   });
   assertOkResult(createResult);
@@ -127,13 +127,13 @@ async function archiveEntity_errorPublishedEntity({ clientProvider }: AdminEntit
     entity: { id },
   } = createResult.value;
 
-  const archiveResult = await adminClient.archiveEntity({ id });
+  const archiveResult = await client.archiveEntity({ id });
   assertErrorResult(archiveResult, ErrorType.BadRequest, 'Entity is published');
 }
 
 async function archiveEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.adminClient('main', 'write');
-  const readonlyAdminClient = clientProvider.adminClient('main', 'readonly');
+  const normalAdminClient = clientProvider.dossierClient('main', 'write');
+  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
   const createResult = await normalAdminClient.createEntity(TITLE_ONLY_CREATE);
   const {
     entity: { id },

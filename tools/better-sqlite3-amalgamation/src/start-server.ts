@@ -25,9 +25,9 @@ async function main() {
     });
     const session = sessionResult.valueOrThrow();
 
-    const adminClient = server.createDossierClient(session.context).toExceptionClient();
+    const client = server.createDossierClient(session.context).toExceptionClient();
 
-    await adminClient.updateSchemaSpecification({
+    await client.updateSchemaSpecification({
       entityTypes: [
         {
           name: 'TitleOnly',
@@ -37,7 +37,7 @@ async function main() {
       ],
     });
 
-    await adminClient.createEntity({
+    await client.createEntity({
       info: { type: 'TitleOnly', name: 'Hello' },
       fields: { title: 'Hello, World!' },
     });

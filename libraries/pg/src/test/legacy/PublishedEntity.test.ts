@@ -75,7 +75,7 @@ const SCHEMA: SchemaSpecificationUpdate = {
 
 let server: Server;
 let context: SessionContext;
-let adminClient: DossierClient;
+let client: DossierClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: Entity[];
 
@@ -84,13 +84,13 @@ beforeAll(async () => {
   assertOkResult(result);
   server = result.value.server;
   context = result.value.context;
-  adminClient = server.createDossierClient(context);
+  client = server.createDossierClient(context);
   publishedClient = server.createPublishedClient(context);
 
-  (await safelyUpdateSchemaSpecification(adminClient, SCHEMA)).throwIfError();
-  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(adminClient, '');
+  (await safelyUpdateSchemaSpecification(client, SCHEMA)).throwIfError();
+  await ensureEntitiesExistForPublishedEntityOnlyEditBefore(client, '');
   entitiesOfTypePublishedEntityOnlyEditBeforeNone =
-    await getEntitiesForPublishedEntityOnlyEditBefore(adminClient, '');
+    await getEntitiesForPublishedEntityOnlyEditBefore(client, '');
 });
 afterAll(async () => {
   await server.shutdown();
@@ -125,7 +125,7 @@ async function getEntitiesForPublishedEntityOnlyEditBefore(client: DossierClient
 }
 
 async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1) {
-  const createBarResult = await adminClient.createEntity(
+  const createBarResult = await client.createEntity(
     {
       info: { type: 'PublishedEntityBar', name: 'Bar' },
       fields: { title: 'Bar' },
@@ -144,7 +144,7 @@ async function createBarWithFooReferences(fooCount: number, referencesPerFoo = 1
 
   for (let i = 0; i < fooCount; i += 1) {
     const bars = [...new Array<undefined>(referencesPerFoo - 1)].map(() => ({ id: barId }));
-    const createFooResult = await adminClient.createEntity(
+    const createFooResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo: ' + i },
         fields: { bar: { id: barId }, bars },
@@ -213,7 +213,7 @@ describe('getEntities() linksTo', () => {
   test('Two references, filter on entityType', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
 
-    const anotherBarCreateResult = await adminClient.createEntity(
+    const anotherBarCreateResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityBar', name: 'Another Bar' },
         fields: { entity: { id: barId } },
@@ -232,7 +232,7 @@ describe('getEntities() linksTo', () => {
   test('One reference, unpublished', async () => {
     const { barId, fooEntities } = await createBarWithFooReferences(1);
 
-    const unpublishResult = await adminClient.unpublishEntities([{ id: fooEntities[0].id }]);
+    const unpublishResult = await client.unpublishEntities([{ id: fooEntities[0].id }]);
     expectOkResult(unpublishResult);
 
     const searchResult = await publishedClient.getEntities({
@@ -249,7 +249,7 @@ describe('getEntities() boundingBox', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
-    const createAndPublishResult = await adminClient.createEntity(
+    const createAndPublishResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { location: center },
@@ -273,7 +273,7 @@ describe('getEntities() boundingBox', () => {
       lat: (boundingBox.minLat + boundingBox.maxLat) / 2,
       lng: boundingBox.minLng > 0 ? boundingBox.minLng - 1 : boundingBox.maxLng + 1,
     };
-    const createAndPublishResult = await adminClient.createEntity(
+    const createAndPublishResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo', authKey: '' },
         fields: { location: outside },
@@ -301,7 +301,7 @@ describe('getEntities() boundingBox', () => {
       lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
-    const createAndPublishResult = await adminClient.createEntity(
+    const createAndPublishResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { locations: [center, inside] },
@@ -325,7 +325,7 @@ describe('getEntities() boundingBox', () => {
       lng: (boundingBox.minLng + boundingBox.maxLng) / 2,
     };
 
-    const createAndPublishResult = await adminClient.createEntity(
+    const createAndPublishResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: {
@@ -353,7 +353,7 @@ describe('getEntities() boundingBox', () => {
 
 describe('getEntities() text', () => {
   test('Query based on text (after creation and updating)', async () => {
-    const createResult = await adminClient.createEntity(
+    const createResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { title: 'this is some serious summary with the best conclusion' },
@@ -396,7 +396,7 @@ describe('getEntitiesTotalCount', () => {
   test('Query based on linksTo and entityTypes, one reference', async () => {
     const { barId } = await createBarWithFooReferences(1, 1);
 
-    const anotherBarCreateResult = await adminClient.createEntity(
+    const anotherBarCreateResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityBar', name: 'Another Bar' },
         fields: { entity: { id: barId } },
@@ -430,7 +430,7 @@ describe('getEntitiesTotalCount', () => {
       lng: (center.lng + boundingBox.maxLng) / 2,
     };
 
-    const createResult = await adminClient.createEntity(
+    const createResult = await client.createEntity(
       {
         info: { type: 'PublishedEntityFoo', name: 'Foo' },
         fields: { locations: [center, inside] },
@@ -457,7 +457,7 @@ describe('getEntitiesTotalCount', () => {
     });
     if (expectOkResult(resultBefore)) {
       expectOkResult(
-        await adminClient.createEntity(
+        await client.createEntity(
           {
             info: { type: 'PublishedEntityFoo', name: 'Foo' },
             fields: { title: 'That was indeed a fierce firefighter' },
