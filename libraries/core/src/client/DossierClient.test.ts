@@ -20,18 +20,16 @@ import {
 } from '../events/EventTypes.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { assertIsDefined } from '../utils/Asserts.js';
-import type {
-  AdminClient,
-  AdminClientJsonOperationArgs,
-  AdminClientMiddleware,
-  AdminClientOperation,
-} from './AdminClient.js';
 import {
   AdminClientOperationName,
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-} from './AdminClient.js';
+  type AdminClient,
+  type AdminClientJsonOperationArgs,
+  type AdminClientMiddleware,
+  type AdminClientOperation,
+} from './DossierClient.js';
 import { convertJsonResult } from './JsonUtils.js';
 import type { ClientContext } from './SharedClient.js';
 

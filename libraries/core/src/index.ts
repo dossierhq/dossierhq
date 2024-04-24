@@ -20,7 +20,6 @@ export {
   EntityStatus,
   PublishedEntityQueryOrder,
   RichTextNodeType,
-  type Entity,
   type AdvisoryLockOptions,
   type AdvisoryLockPayload,
   type AdvisoryLockReleasePayload,
@@ -28,6 +27,7 @@ export {
   type Component,
   type Connection,
   type Edge,
+  type Entity,
   type EntityArchivePayload,
   type EntityCreate,
   type EntityCreatePayload,
@@ -75,6 +75,7 @@ export {
   type RichTextTextNode,
   type UniqueIndexReference,
 } from './Types.js';
+export { withAdvisoryLock } from './client/AdvisoryLockUtils.js';
 export {
   AdminClientModifyingOperations,
   AdminClientOperationName,
@@ -86,8 +87,7 @@ export {
   type AdminClientMiddleware,
   type AdminClientOperation,
   type AdminExceptionClient,
-} from './client/AdminClient.js';
-export { withAdvisoryLock } from './client/AdvisoryLockUtils.js';
+} from './client/DossierClient.js';
 export {
   convertJsonConnection,
   convertJsonEdge,

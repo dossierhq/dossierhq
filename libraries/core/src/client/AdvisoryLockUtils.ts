@@ -6,8 +6,8 @@ import {
   type PromiseResult,
 } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
-import type { Entity, AdvisoryLockOptions, AdvisoryLockPayload, Component } from '../Types.js';
-import type { AdminClient } from './AdminClient.js';
+import type { AdvisoryLockOptions, AdvisoryLockPayload, Component, Entity } from '../Types.js';
+import type { AdminClient } from './DossierClient.js';
 
 interface AdvisoryLockHelperOptions extends AdvisoryLockOptions {
   acquireInterval: number;
