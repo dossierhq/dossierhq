@@ -114,7 +114,7 @@ export {
   type PublishedClientMiddleware,
   type PublishedClientOperation,
   type PublishedExceptionClient,
-} from './client/PublishedClient.js';
+} from './client/PublishedDossierClient.js';
 export {
   LoggingClientMiddleware,
   type ClientContext,

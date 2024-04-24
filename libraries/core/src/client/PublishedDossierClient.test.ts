@@ -4,18 +4,16 @@ import { NoOpLogger } from '../Logger.js';
 import type { PublishedEntity } from '../Types.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { convertJsonResult } from './JsonUtils.js';
-import type {
-  PublishedClient,
-  PublishedClientJsonOperationArgs,
-  PublishedClientMiddleware,
-  PublishedClientOperation,
-} from './PublishedClient.js';
 import {
   PublishedClientOperationName,
   convertJsonPublishedClientResult,
   createBasePublishedClient,
   executePublishedClientOperationFromJson,
-} from './PublishedClient.js';
+  type PublishedClient,
+  type PublishedClientJsonOperationArgs,
+  type PublishedClientMiddleware,
+  type PublishedClientOperation,
+} from './PublishedDossierClient.js';
 import type { ClientContext } from './SharedClient.js';
 
 function createForwardingMiddleware<TContext extends ClientContext>(
