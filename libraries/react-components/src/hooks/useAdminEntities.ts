@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   EntityQuery,
   Entity,
   Connection,
@@ -23,7 +23,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
 export function useAdminEntities<TEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TEntity>,
+  adminClient: DossierClient<TEntity>,
   query: EntityQuery | undefined,
   paging?: Paging,
 ): {
@@ -50,7 +50,7 @@ export function useAdminEntities<TEntity extends Entity<string, object>>(
 }
 
 async function fetchGetEntities<TEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TEntity>,
+  adminClient: DossierClient<TEntity>,
   query: FetcherKey[1],
   paging: FetcherKey[2],
 ): Promise<FetcherData<TEntity>> {

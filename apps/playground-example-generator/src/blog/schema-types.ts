@@ -1,13 +1,13 @@
 import type {
-  AdminClient,
   AdminExceptionClient,
   Component,
+  DossierClient,
   Entity,
   EntityReference,
   RichText,
 } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<
+export type AppAdminClient = DossierClient<
   AppEntity,
   AppComponent,
   AppUniqueIndexes,

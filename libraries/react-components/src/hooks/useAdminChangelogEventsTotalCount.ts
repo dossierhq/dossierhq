@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   Entity,
   ChangelogEventQuery,
   Component,
@@ -15,7 +15,7 @@ type FetcherData = number;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>;
 
 export function useAdminChangelogEventsTotalCount(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   query: ChangelogEventQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
@@ -36,7 +36,7 @@ export function useAdminChangelogEventsTotalCount(
 }
 
 async function fetchChangelogEventsTotalCount(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getChangelogEventsTotalCount(query);

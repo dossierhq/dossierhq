@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   Entity,
   SchemaSpecificationUpdate,
   Connection,
@@ -174,7 +174,7 @@ export function insecureTestUuidv4(): string {
 }
 
 export async function safelyUpdateSchemaSpecification(
-  adminClient: AdminClient,
+  adminClient: DossierClient,
   schemaUpdate: SchemaSpecificationUpdate,
 ): PromiseResult<Schema, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   return await withAdvisoryLock(

@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   EntitySharedQuery,
   Entity,
   EntitySamplingOptions,
@@ -23,7 +23,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @param options
  */
 export function useAdminEntitiesSample<TEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TEntity>,
+  adminClient: DossierClient<TEntity>,
   query: EntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): {
@@ -50,7 +50,7 @@ export function useAdminEntitiesSample<TEntity extends Entity<string, object>>(
 }
 
 async function fetchSampleEntities<TEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TEntity>,
+  adminClient: DossierClient<TEntity>,
   query: FetcherKey[1],
   options: FetcherKey[2],
 ): Promise<FetcherData<TEntity>> {

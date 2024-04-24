@@ -4,7 +4,7 @@ import {
   NoOpLogger,
   notOk,
   ok,
-  type AdminClient,
+  type DossierClient,
   type AdminClientMiddleware,
   type Entity,
   type EntityProcessDirtyPayload,
@@ -131,7 +131,10 @@ export interface Server<
   >;
 
   createAdminClient<
-    TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+    TClient extends DossierClient<
+      Entity<string, object>,
+      Component<string, object>
+    > = DossierClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: AdminClientMiddleware<SessionContext>[],
@@ -421,7 +424,10 @@ export async function createServer<
     },
 
     createAdminClient: <
-      TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+      TClient extends DossierClient<
+        Entity<string, object>,
+        Component<string, object>
+      > = DossierClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: AdminClientMiddleware<SessionContext>[],

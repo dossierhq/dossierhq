@@ -1,6 +1,6 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import type {
-  AdminClient,
+  DossierClient,
   SchemaSpecificationUpdate,
   ErrorType,
   PromiseResult,
@@ -14,8 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export interface TestServerWithSession {
   schema: Schema;
-  adminClient: AdminClient;
-  adminClientOther: AdminClient;
+  adminClient: DossierClient;
+  adminClientOther: DossierClient;
   publishedClient: PublishedClient;
   subjectId: string;
   tearDown: () => PromiseResult<void, typeof ErrorType.Generic>;

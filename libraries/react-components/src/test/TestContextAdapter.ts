@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   AdminClientMiddleware,
   AdminClientOperation,
   ClientContext,
@@ -49,7 +49,7 @@ const AUTH_KEYS_HEADER = {
 
 export function createBackendAdminClient(
   pipeline: AdminClientMiddleware<BackendContext>[] = [],
-): AdminClient {
+): DossierClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
   return createBaseAdminClient<BackendContext>({
     context,
@@ -168,7 +168,7 @@ export class TestContextAdapter
 }
 
 export async function ensureManyBarEntities(
-  adminClient: AdminClient,
+  adminClient: DossierClient,
   entityCount: number,
 ): PromiseResult<void, ErrorType> {
   const totalCountResult = await adminClient.getEntitiesTotalCount({ entityTypes: ['Bar'] });

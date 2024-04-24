@@ -17,7 +17,7 @@ afterAll(async () => {
   await server.shutdown();
 });
 
-describe('AdminClient createServerPublishedClient()', () => {
+describe('DossierClient createServerPublishedClient()', () => {
   test('context provided as value', async () => {
     const client = server.createPublishedClient(context);
     const result = await client.getEntity({ id: insecureTestUuidv4() });

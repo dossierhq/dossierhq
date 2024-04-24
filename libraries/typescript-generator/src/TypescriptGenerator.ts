@@ -70,11 +70,11 @@ export function generateTypescriptForSchema({
 }
 
 function generateAdminClientTypes(context: GeneratorContext) {
-  context.coreImports.add('AdminClient');
+  context.coreImports.add('DossierClient');
   context.coreImports.add('AdminExceptionClient');
   return [
     '',
-    'export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;',
+    'export type AppAdminClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;',
     '',
     'export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;',
   ];

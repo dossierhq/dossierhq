@@ -1,6 +1,6 @@
 import {
   EntityStatus,
-  type AdminClient,
+  type DossierClient,
   type Entity,
   type EntityTypeSpecification,
   type Component,
@@ -133,7 +133,7 @@ function createPublishActions(entity: Entity | null, entitySpec: EntityTypeSpeci
 async function executeAction(
   action: PublishingActionId,
   entity: Entity,
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   showNotification: (notification: NotificationInfo) => void,
 ) {
   const reference = { id: entity.id };

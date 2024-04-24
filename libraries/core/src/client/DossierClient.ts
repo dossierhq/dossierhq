@@ -70,7 +70,7 @@ import {
   type OperationWithoutCallbacks,
 } from './SharedClient.js';
 
-export interface AdminClient<
+export interface DossierClient<
   TEntity extends Entity<string, object> = Entity,
   TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
@@ -280,7 +280,7 @@ export interface AdminExceptionClient<
   TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
-  client: Readonly<AdminClient<TEntity, TComponent, TUniqueIndex>>;
+  client: Readonly<DossierClient<TEntity, TComponent, TUniqueIndex>>;
 
   getSchemaSpecification(options: {
     includeMigrations: true;
@@ -398,26 +398,26 @@ export const AdminClientOperationName = {
 type AdminClientOperationName = keyof typeof AdminClientOperationName;
 
 type MethodParameters<
-  TName extends keyof AdminClient,
-  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+  TName extends keyof DossierClient,
+  TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 > = Parameters<TClient[TName]>;
-type MethodReturnType<TName extends keyof AdminClient> = PromiseResult<
+type MethodReturnType<TName extends keyof DossierClient> = PromiseResult<
   MethodReturnTypeOk<TName>,
   MethodReturnTypeError<TName>
 >;
 type MethodReturnTypeWithoutPromise<
-  TName extends keyof AdminClient,
-  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+  TName extends keyof DossierClient,
+  TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
 type MethodReturnTypeOk<
-  TName extends keyof AdminClient,
-  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+  TName extends keyof DossierClient,
+  TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
-  TName extends keyof AdminClient,
-  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+  TName extends keyof DossierClient,
+  TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
 interface AdminClientOperationArguments {
@@ -523,7 +523,7 @@ export const AdminClientModifyingOperations: Readonly<Set<string>> = /* @__PURE_
     AdminClientOperationName.upsertEntity,
   ] satisfies AdminClientOperationName[]))();
 
-class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
+class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
   private readonly context: TContext | ContextProvider<TContext>;
   private readonly pipeline: AdminClientMiddleware<TContext>[];
 
@@ -830,9 +830,9 @@ class BaseAdminClient<TContext extends ClientContext> implements AdminClient {
 }
 
 class AdminExceptionClientWrapper implements AdminExceptionClient {
-  readonly client: AdminClient;
+  readonly client: DossierClient;
 
-  constructor(client: AdminClient) {
+  constructor(client: DossierClient) {
     this.client = client;
   }
 
@@ -969,7 +969,7 @@ class AdminExceptionClientWrapper implements AdminExceptionClient {
 
 export function createBaseAdminClient<
   TContext extends ClientContext,
-  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
   pipeline: AdminClientMiddleware<TContext>[];
@@ -978,7 +978,7 @@ export function createBaseAdminClient<
 }
 
 export async function executeAdminClientOperationFromJson(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   operationName: LooseAutocomplete<AdminClientOperationName>,
   operationArgs: AdminClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
@@ -1093,7 +1093,7 @@ export async function executeAdminClientOperationFromJson(
 
 export function convertJsonAdminClientResult<
   TName extends AdminClientOperationName,
-  TClient extends AdminClient<Entity<string, object>, Component<string, object>> = AdminClient,
+  TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 >(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>,

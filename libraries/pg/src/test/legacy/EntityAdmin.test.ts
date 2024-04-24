@@ -1,4 +1,4 @@
-import type { AdminClient, Entity, PublishedClient } from '@dossierhq/core';
+import type { DossierClient, Entity, PublishedClient } from '@dossierhq/core';
 import {
   EntityStatus,
   ErrorType,
@@ -31,8 +31,8 @@ import {
 
 let server: Server;
 let context: SessionContext;
-let client: AdminClient;
-let adminClientOther: AdminClient;
+let client: DossierClient;
+let adminClientOther: DossierClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypeAdminOnlyEditBeforeNone: Entity[];
 
@@ -261,7 +261,7 @@ afterAll(async () => {
   await server.shutdown();
 });
 
-async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient, authKey: string) {
+async function ensureEntitiesExistForAdminOnlyEditBefore(client: DossierClient, authKey: string) {
   (
     await ensureEntityCount(client, 50, 'AdminOnlyEditBefore', authKey, (random) => ({
       message: `Hey ${random}`,
@@ -283,7 +283,7 @@ async function ensureEntitiesExistForAdminOnlyEditBefore(client: AdminClient, au
   }
 }
 
-async function getEntitiesForAdminOnlyEditBefore(client: AdminClient, authKey: string) {
+async function getEntitiesForAdminOnlyEditBefore(client: DossierClient, authKey: string) {
   const result = await getAllEntities(client, {
     authKeys: [authKey],
     entityTypes: ['AdminOnlyEditBefore'],

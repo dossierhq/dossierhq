@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   Entity,
   ChangelogEvent,
   ChangelogEventQuery,
@@ -19,7 +19,7 @@ type FetcherData = Connection<Edge<ChangelogEvent, typeof ErrorType.Generic>> | 
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminChangelogEvents(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   query: ChangelogEventQuery | undefined,
   paging: Paging | undefined,
 ): {
@@ -41,7 +41,7 @@ export function useAdminChangelogEvents(
 }
 
 async function fetchChangelogEvents(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
   paging: FetcherKey[2],
 ): Promise<FetcherData> {

@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   EntityQuery,
   Entity,
   BoundingBox,
@@ -14,7 +14,7 @@ import { EntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
 import { expect } from 'vitest';
 
 export async function ensureEntityCount(
-  client: AdminClient,
+  client: DossierClient,
   requestedCount: number,
   entityType: string,
   authKey: string,
@@ -50,7 +50,7 @@ export async function ensureEntityCount(
 }
 
 export async function ensureEntityWithStatus(
-  client: AdminClient,
+  client: DossierClient,
   entityType: string,
   authKey: string,
   status: EntityStatus,
@@ -122,7 +122,7 @@ export async function ensureEntityWithStatus(
 }
 
 export async function getAllEntities(
-  client: AdminClient,
+  client: DossierClient,
   query: EntityQuery,
 ): PromiseResult<
   Entity[],
@@ -180,7 +180,7 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
   return { minLat, maxLat, minLng, maxLng };
 }
 
-export async function countSearchResultWithEntity<TClient extends AdminClient | PublishedClient>(
+export async function countSearchResultWithEntity<TClient extends DossierClient | PublishedClient>(
   client: TClient,
   query: Parameters<TClient['getEntities']>[0],
   entityId: string,

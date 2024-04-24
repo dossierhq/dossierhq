@@ -82,7 +82,7 @@ export {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-  type AdminClient,
+  type DossierClient,
   type AdminClientJsonOperationArgs,
   type AdminClientMiddleware,
   type AdminClientOperation,

@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   Entity,
   SchemaSpecificationUpdate,
   PublishedClient,
@@ -75,7 +75,7 @@ const SCHEMA: SchemaSpecificationUpdate = {
 
 let server: Server;
 let context: SessionContext;
-let adminClient: AdminClient;
+let adminClient: DossierClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: Entity[];
 
@@ -97,7 +97,7 @@ afterAll(async () => {
 });
 
 async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(
-  client: AdminClient,
+  client: DossierClient,
   authKey: string,
 ) {
   const result = await ensureEntityCount(
@@ -112,7 +112,7 @@ async function ensureEntitiesExistForPublishedEntityOnlyEditBefore(
   result.throwIfError();
 }
 
-async function getEntitiesForPublishedEntityOnlyEditBefore(client: AdminClient, authKey: string) {
+async function getEntitiesForPublishedEntityOnlyEditBefore(client: DossierClient, authKey: string) {
   const result = await getAllEntities(client, {
     authKeys: [authKey],
     entityTypes: ['PublishedEntityOnlyEditBefore'],

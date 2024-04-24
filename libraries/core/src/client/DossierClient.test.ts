@@ -25,7 +25,7 @@ import {
   convertJsonAdminClientResult,
   createBaseAdminClient,
   executeAdminClientOperationFromJson,
-  type AdminClient,
+  type DossierClient,
   type AdminClientJsonOperationArgs,
   type AdminClientMiddleware,
   type AdminClientOperation,
@@ -39,7 +39,7 @@ interface FooFields {
 type FooEntity = Entity<'FooType', FooFields>;
 
 function createForwardingMiddleware<TContext extends ClientContext>(
-  adminClient: AdminClient,
+  adminClient: DossierClient,
 ): AdminClientMiddleware<TContext> {
   return async function (_context, operation) {
     const operationArgsJson = JSON.parse(
@@ -177,7 +177,7 @@ describe('Custom Entity types', () => {
   });
 });
 
-describe('AdminClient forward operation over JSON', () => {
+describe('DossierClient forward operation over JSON', () => {
   test('acquireAdvisoryLock', async () => {
     const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
       { logger: NoOpLogger },

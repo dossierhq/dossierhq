@@ -3,7 +3,7 @@ import {
   createBaseAdminClient,
   notOk,
   ok,
-  type AdminClient,
+  type DossierClient,
   type AdminClientMiddleware,
   type AdminClientOperation,
   type EntityCreate,
@@ -49,7 +49,7 @@ export function createServerAdminClient({
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
   middleware: AdminClientMiddleware<SessionContext>[];
-}): AdminClient {
+}): DossierClient {
   async function terminatingMiddleware(
     context: SessionContext,
     operation: AdminClientOperation,

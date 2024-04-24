@@ -1,6 +1,6 @@
-import type { AdminClient, AdminExceptionClient, Entity, EntityReference } from '@dossierhq/core';
+import type { AdminExceptionClient, DossierClient, Entity, EntityReference } from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<
+export type AppAdminClient = DossierClient<
   AppEntity,
   AppComponent,
   AppUniqueIndexes,

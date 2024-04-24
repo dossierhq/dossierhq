@@ -4,7 +4,7 @@ import {
   isRichTextElementNode,
   notOk,
   traverseEntity,
-  type AdminClient,
+  type DossierClient,
   type AdminClientMiddleware,
   type AdminClientOperation,
   type Entity,
@@ -21,7 +21,7 @@ import path from 'node:path';
 
 export function createFilesystemAdminMiddleware(
   server: Server,
-  backChannelAdminClient: AdminClient,
+  backChannelAdminClient: DossierClient,
   dataDir: string,
 ): AdminClientMiddleware<SessionContext> {
   return async (context: SessionContext, operation: AdminClientOperation) => {
@@ -30,24 +30,24 @@ export function createFilesystemAdminMiddleware(
       try {
         switch (operation.name) {
           case AdminClientOperationName.createEntity: {
-            const payload = result.value as OkFromResult<ReturnType<AdminClient['createEntity']>>;
+            const payload = result.value as OkFromResult<ReturnType<DossierClient['createEntity']>>;
             await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
             break;
           }
           case AdminClientOperationName.updateEntity: {
-            const payload = result.value as OkFromResult<ReturnType<AdminClient['updateEntity']>>;
+            const payload = result.value as OkFromResult<ReturnType<DossierClient['updateEntity']>>;
             await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
             break;
           }
           case AdminClientOperationName.updateSchemaSpecification: {
             const payload = result.value as OkFromResult<
-              ReturnType<AdminClient['updateSchemaSpecification']>
+              ReturnType<DossierClient['updateSchemaSpecification']>
             >;
             await updateSchemaSpecification(payload.schemaSpecification, dataDir);
             break;
           }
           case AdminClientOperationName.upsertEntity: {
-            const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
+            const payload = result.value as OkFromResult<ReturnType<DossierClient['upsertEntity']>>;
             await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
             break;
           }
@@ -76,7 +76,7 @@ async function updateSchemaSpecification(
 }
 
 async function updateEntityFile(
-  backChannelAdminClient: AdminClient,
+  backChannelAdminClient: DossierClient,
   entity: Entity<string, object>,
   dataDir: string,
 ) {

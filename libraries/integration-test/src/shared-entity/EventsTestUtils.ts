@@ -57,7 +57,7 @@ export function assertChangelogEventsConnection(
       const { id, ...actualEvent } = actualNodeResult.valueOrThrow();
 
       const createdBy: string = actualEvent.createdBy;
-      //TODO currently we can't predict the createdBy value, so we just set it to the expected value, probably need a way to get the current subject from AdminClient
+      //TODO currently we can't predict the createdBy value, so we just set it to the expected value, probably need a way to get the current subject from DossierClient
       const expectedEvent =
         expectedNode.createdBy === '' ? { ...expectedNode, createdBy } : expectedNode;
 

@@ -1,8 +1,25 @@
-import type { AdminClient, AdminExceptionClient, Component, Entity, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
+import type {
+  DossierClient,
+  AdminExceptionClient,
+  Component,
+  Entity,
+  PublishedClient,
+  PublishedEntity,
+  PublishedExceptionClient,
+} from '@dossierhq/core';
 
-export type AppAdminClient = AdminClient<AppEntity, AppComponent, AppUniqueIndexes, AppAdminExceptionClient>;
+export type AppAdminClient = DossierClient<
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes,
+  AppAdminExceptionClient
+>;
 
-export type AppAdminExceptionClient = AdminExceptionClient<AppEntity, AppComponent, AppUniqueIndexes>;
+export type AppAdminExceptionClient = AdminExceptionClient<
+  AppEntity,
+  AppComponent,
+  AppUniqueIndexes
+>;
 
 export type AppUniqueIndexes = never;
 
@@ -36,19 +53,32 @@ export interface CloudinaryImageFields {
 
 export type CloudinaryImage = Component<'CloudinaryImage', CloudinaryImageFields>;
 
-export function isCloudinaryImage(component: Component<string, object> | CloudinaryImage): component is CloudinaryImage {
+export function isCloudinaryImage(
+  component: Component<string, object> | CloudinaryImage,
+): component is CloudinaryImage {
   return component.type === 'CloudinaryImage';
 }
 
-export function assertIsCloudinaryImage(component: Component<string, object> | CloudinaryImage): asserts component is CloudinaryImage {
+export function assertIsCloudinaryImage(
+  component: Component<string, object> | CloudinaryImage,
+): asserts component is CloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }
 }
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedClient<
+  AppPublishedEntity,
+  AppPublishedComponent,
+  AppPublishedUniqueIndexes,
+  AppPublishedExceptionClient
+>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedExceptionClient<
+  AppPublishedEntity,
+  AppPublishedComponent,
+  AppPublishedUniqueIndexes
+>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -61,11 +91,15 @@ export interface PublishedMessageFields {
 
 export type PublishedMessage = PublishedEntity<'Message', PublishedMessageFields, ''>;
 
-export function isPublishedMessage(entity: PublishedEntity<string, object>): entity is PublishedMessage {
+export function isPublishedMessage(
+  entity: PublishedEntity<string, object>,
+): entity is PublishedMessage {
   return entity.info.type === 'Message';
 }
 
-export function assertIsPublishedMessage(entity: PublishedEntity<string, object>): asserts entity is PublishedMessage {
+export function assertIsPublishedMessage(
+  entity: PublishedEntity<string, object>,
+): asserts entity is PublishedMessage {
   if (entity.info.type !== 'Message') {
     throw new Error('Expected info.type = Message (but was ' + entity.info.type + ')');
   }
@@ -82,11 +116,15 @@ export interface PublishedCloudinaryImageFields {
 
 export type PublishedCloudinaryImage = Component<'CloudinaryImage', PublishedCloudinaryImageFields>;
 
-export function isPublishedCloudinaryImage(component: Component<string, object> | PublishedCloudinaryImage): component is PublishedCloudinaryImage {
+export function isPublishedCloudinaryImage(
+  component: Component<string, object> | PublishedCloudinaryImage,
+): component is PublishedCloudinaryImage {
   return component.type === 'CloudinaryImage';
 }
 
-export function assertIsPublishedCloudinaryImage(component: Component<string, object> | PublishedCloudinaryImage): asserts component is PublishedCloudinaryImage {
+export function assertIsPublishedCloudinaryImage(
+  component: Component<string, object> | PublishedCloudinaryImage,
+): asserts component is PublishedCloudinaryImage {
   if (component.type !== 'CloudinaryImage') {
     throw new Error('Expected type = CloudinaryImage (but was ' + component.type + ')');
   }

@@ -1,4 +1,9 @@
-import type { AdminClient, Entity, SchemaSpecificationUpdate, BoundingBox } from '@dossierhq/core';
+import type {
+  DossierClient,
+  Entity,
+  SchemaSpecificationUpdate,
+  BoundingBox,
+} from '@dossierhq/core';
 import {
   EntityStatus,
   EventType,
@@ -142,7 +147,7 @@ function createNotAuthenticatedContext(): SessionGraphQLContext {
   };
 }
 
-async function ensureTestEntitiesExist(adminClient: AdminClient, authKey: string) {
+async function ensureTestEntitiesExist(adminClient: DossierClient, authKey: string) {
   const requestedCount = 50;
   const entitiesOfTypeCount = await adminClient.getEntitiesTotalCount({
     authKeys: [authKey],
@@ -161,7 +166,7 @@ async function ensureTestEntitiesExist(adminClient: AdminClient, authKey: string
   }
 }
 
-async function getEntitiesForAdminOnlyEditBefore(adminClient: AdminClient, authKey: string) {
+async function getEntitiesForAdminOnlyEditBefore(adminClient: DossierClient, authKey: string) {
   const query = { authKeys: [authKey], entityTypes: ['QueryAdminOnlyEditBefore'] };
   const entities: Entity[] = [];
   for await (const pageResult of getAllPagesForConnection({}, (currentPaging) =>

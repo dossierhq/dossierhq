@@ -1,6 +1,6 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import type {
-  AdminClient,
+  DossierClient,
   ErrorType,
   Logger,
   PromiseResult,
@@ -19,7 +19,7 @@ export async function getSessionContextForRequest(
   server: Server,
   _req: NextApiRequest,
 ): PromiseResult<
-  { adminClient: AdminClient; publishedClient: PublishedClient },
+  { adminClient: DossierClient; publishedClient: PublishedClient },
   typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate

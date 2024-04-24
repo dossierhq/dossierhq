@@ -1,7 +1,7 @@
 import {
   AdminClientOperationName,
   SchemaWithMigrations,
-  type AdminClient,
+  type DossierClient,
   type AdminClientMiddleware,
   type SchemaSpecificationWithMigrations,
   type ClientContext,
@@ -67,21 +67,21 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
       const { cache, mutate } = swrConfig.current;
       switch (operation.name) {
         case AdminClientOperationName.archiveEntity: {
-          const payload = result.value as OkFromResult<ReturnType<AdminClient['archiveEntity']>>;
+          const payload = result.value as OkFromResult<ReturnType<DossierClient['archiveEntity']>>;
           updateCacheEntityInfo(mutate, payload);
           invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.createEntity: {
-          const payload = result.value as OkFromResult<ReturnType<AdminClient['createEntity']>>;
+          const payload = result.value as OkFromResult<ReturnType<DossierClient['createEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.getSchemaSpecification: {
-          const args = operation.args as Parameters<AdminClient['getSchemaSpecification']>;
+          const args = operation.args as Parameters<DossierClient['getSchemaSpecification']>;
           const payload = result.value as OkFromResult<
-            ReturnType<AdminClient['getSchemaSpecification']>
+            ReturnType<DossierClient['getSchemaSpecification']>
           >;
           if (args[0]?.includeMigrations) {
             handleUpdatedAdminSchema(context, mutate, payload as SchemaSpecificationWithMigrations);
@@ -89,7 +89,9 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           break;
         }
         case AdminClientOperationName.publishEntities: {
-          const payload = result.value as OkFromResult<ReturnType<AdminClient['publishEntities']>>;
+          const payload = result.value as OkFromResult<
+            ReturnType<DossierClient['publishEntities']>
+          >;
           payload.forEach((it) => {
             updateCacheEntityInfo(mutate, it);
             invalidateChangelogEvents(mutate);
@@ -97,14 +99,16 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           break;
         }
         case AdminClientOperationName.unarchiveEntity: {
-          const payload = result.value as OkFromResult<ReturnType<AdminClient['unarchiveEntity']>>;
+          const payload = result.value as OkFromResult<
+            ReturnType<DossierClient['unarchiveEntity']>
+          >;
           updateCacheEntityInfo(mutate, payload);
           invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.unpublishEntities: {
           const payload = result.value as OkFromResult<
-            ReturnType<AdminClient['unpublishEntities']>
+            ReturnType<DossierClient['unpublishEntities']>
           >;
           payload.forEach((it) => {
             updateCacheEntityInfo(mutate, it);
@@ -113,21 +117,21 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           break;
         }
         case AdminClientOperationName.updateEntity: {
-          const payload = result.value as OkFromResult<ReturnType<AdminClient['updateEntity']>>;
+          const payload = result.value as OkFromResult<ReturnType<DossierClient['updateEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.upsertEntity: {
-          const payload = result.value as OkFromResult<ReturnType<AdminClient['upsertEntity']>>;
+          const payload = result.value as OkFromResult<ReturnType<DossierClient['upsertEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           invalidateChangelogEvents(mutate);
           break;
         }
         case AdminClientOperationName.updateSchemaSpecification: {
-          const args = operation.args as Parameters<AdminClient['updateSchemaSpecification']>;
+          const args = operation.args as Parameters<DossierClient['updateSchemaSpecification']>;
           const payload = result.value as OkFromResult<
-            ReturnType<AdminClient['updateSchemaSpecification']>
+            ReturnType<DossierClient['updateSchemaSpecification']>
           >;
           let schema: SchemaWithMigrations | undefined;
           if (args[1]?.includeMigrations) {

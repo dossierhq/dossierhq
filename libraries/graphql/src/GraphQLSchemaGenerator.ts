@@ -3,7 +3,7 @@ import {
   FieldType,
   isComponentItemField,
   notOk,
-  type AdminClient,
+  type DossierClient,
   type AdvisoryLockOptions,
   type ChangelogEvent,
   type ChangelogEventQuery,
@@ -80,7 +80,7 @@ import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 
 export interface SessionGraphQLContext {
   adminClient: Result<
-    AdminClient<Entity> | AdminClient<Entity<string, object>, Component<string, object>>,
+    DossierClient<Entity> | DossierClient<Entity<string, object>, Component<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
   publishedClient: Result<

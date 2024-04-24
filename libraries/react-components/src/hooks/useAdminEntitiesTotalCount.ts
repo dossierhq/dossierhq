@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   Entity,
   EntitySharedQuery,
   Component,
@@ -20,7 +20,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function useAdminEntitiesTotalCount(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   query: EntitySharedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
@@ -42,7 +42,7 @@ export function useAdminEntitiesTotalCount(
 }
 
 async function fetchEntitiesTotalCount(
-  adminClient: AdminClient<Entity<string, object>, Component<string, object>>,
+  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await adminClient.getEntitiesTotalCount(query);

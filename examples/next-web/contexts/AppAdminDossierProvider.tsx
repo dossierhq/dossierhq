@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   AdminClientMiddleware,
   AdminClientOperation,
   ClientContext,
@@ -59,7 +59,7 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
 
 function createBackendAdminClient(
   cachingMiddleware: AdminClientMiddleware<BackendContext>,
-): AdminClient {
+): DossierClient {
   const context: BackendContext = { logger };
   return createBaseAdminClient({
     context,

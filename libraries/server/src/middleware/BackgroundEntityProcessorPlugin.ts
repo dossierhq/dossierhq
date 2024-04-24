@@ -1,6 +1,6 @@
 import {
   AdminClientOperationName,
-  type AdminClient,
+  type DossierClient,
   type AdminClientMiddleware,
   type AdminClientOperation,
   type Logger,
@@ -63,7 +63,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
     const result = await operation.next();
     if (operation.name === AdminClientOperationName.updateSchemaSpecification && result.isOk()) {
       const payload = result.value as OkFromResult<
-        ReturnType<AdminClient['updateSchemaSpecification']>
+        ReturnType<DossierClient['updateSchemaSpecification']>
       >;
       if (payload.effect === 'updated') {
         this.processing = true;

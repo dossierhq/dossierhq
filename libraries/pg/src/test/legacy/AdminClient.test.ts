@@ -19,7 +19,7 @@ afterAll(async () => {
   await server.shutdown();
 });
 
-describe('AdminClient createAdminClient()', () => {
+describe('DossierClient createAdminClient()', () => {
   test('context provided as value', async () => {
     const client = server.createAdminClient(context);
     const result = await client.getEntity({ id: insecureTestUuidv4() });

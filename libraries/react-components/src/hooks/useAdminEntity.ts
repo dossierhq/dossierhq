@@ -1,5 +1,5 @@
 import type {
-  AdminClient,
+  DossierClient,
   Entity,
   EntityReference,
   EntityVersionReference,
@@ -15,7 +15,7 @@ type FetcherData<T> = T;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function useAdminEntity<TEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TEntity>,
+  adminClient: DossierClient<TEntity>,
   reference: EntityReference | EntityVersionReference | undefined,
 ): {
   entity: FetcherData<TEntity> | undefined;
@@ -36,7 +36,7 @@ export function useAdminEntity<TEntity extends Entity<string, object>>(
 }
 
 async function fetchEntity<TEntity extends Entity<string, object>>(
-  adminClient: AdminClient<TEntity>,
+  adminClient: DossierClient<TEntity>,
   reference: FetcherKey[1],
 ): Promise<FetcherData<TEntity>> {
   const result = await adminClient.getEntity(reference);

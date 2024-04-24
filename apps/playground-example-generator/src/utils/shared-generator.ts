@@ -3,7 +3,7 @@ import {
   type SqliteDatabaseOptimizationOptions,
 } from '@dossierhq/better-sqlite3';
 import type {
-  AdminClient,
+  DossierClient,
   AdminClientMiddleware,
   Entity,
   SchemaSpecificationUpdate,
@@ -27,7 +27,7 @@ export async function createNewDatabase(databasePath: string): Promise<Database>
 }
 
 export async function createAdapterAndServer<
-  TAdminClient extends AdminClient<Entity<string, object>, Component<string, object>>,
+  TAdminClient extends DossierClient<Entity<string, object>, Component<string, object>>,
 >(
   database: Database,
   schema: SchemaSpecificationUpdate,

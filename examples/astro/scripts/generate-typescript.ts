@@ -2,7 +2,7 @@
 import {
   SchemaWithMigrations,
   createConsoleLogger,
-  type AdminClient,
+  type DossierClient,
   type Logger,
 } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
@@ -27,7 +27,7 @@ async function generateTypes(logger: Logger, schema: SchemaWithMigrations, filen
   logger.info(`Wrote ${filename}`);
 }
 
-async function getAdminSchema(logger: Logger, adminClient: AdminClient) {
+async function getAdminSchema(logger: Logger, adminClient: DossierClient) {
   const schemaResult = await adminClient.getSchemaSpecification({
     includeMigrations: true,
   });
