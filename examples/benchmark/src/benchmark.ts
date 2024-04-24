@@ -513,7 +513,7 @@ export async function initializeAndRunTests({
     });
     if (sessionResult.isError()) return sessionResult;
 
-    const adminClient = server.createAdminClient(sessionResult.value.context);
+    const adminClient = server.createDossierClient(sessionResult.value.context);
 
     const tsvFilename = isCI ? 'ci-benchmark.tsv' : 'local-benchmark.tsv';
     await runTests(runName, variant, tsvFilename, server, adminClient);

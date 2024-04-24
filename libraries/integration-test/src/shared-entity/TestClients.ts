@@ -54,7 +54,7 @@ export function createAdminClientProvider(server: Server): AdminClientProvider {
   return {
     adminClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);
-      return server.createAdminClient(() => sessionResult);
+      return server.createDossierClient(() => sessionResult);
     },
   };
 }
@@ -65,7 +65,7 @@ export function createSharedClientProvider(
   return {
     adminClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);
-      return server.createAdminClient(() => sessionResult);
+      return server.createDossierClient(() => sessionResult);
     },
     publishedClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);

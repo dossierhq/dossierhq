@@ -50,7 +50,7 @@ async function createSessionForRequest(server: Server, req: Request) {
 
 export function getAdminClientForRequest(server: Server, req: Request) {
   const session = createSessionForRequest(server, req);
-  return server.createAdminClient<AppAdminClient>(() => session);
+  return server.createDossierClient<AppAdminClient>(() => session);
 }
 
 export function getPublishedClientForRequest(server: Server, req: Request) {
@@ -112,7 +112,7 @@ export async function initialize(logger: Logger) {
     provider: 'sys',
     identifier: 'init',
   });
-  const adminClient = server.createAdminClient<AppAdminClient>(() => initSession);
+  const adminClient = server.createDossierClient<AppAdminClient>(() => initSession);
 
   const schemaResult = await updateSchema(adminClient);
   if (schemaResult.isError()) return schemaResult;

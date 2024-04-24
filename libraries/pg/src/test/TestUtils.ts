@@ -93,7 +93,7 @@ export async function initializeIntegrationTestServer({
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;
 
-  const client = server.createAdminClient(() =>
+  const client = server.createDossierClient(() =>
     server.createSession({
       provider: 'test',
       identifier: 'schema-loader',

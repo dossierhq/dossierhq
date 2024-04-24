@@ -65,14 +65,14 @@ beforeAll(async () => {
   if (result.isError()) throw result.toError();
   server = result.value.server;
   context = result.value.context;
-  client = server.createAdminClient(context);
+  client = server.createDossierClient(context);
 
   const sessionOtherResult = server.createSession({
     provider: 'test',
     identifier: 'other',
     defaultAuthKeys: [''],
   });
-  adminClientOther = server.createAdminClient(() => sessionOtherResult);
+  adminClientOther = server.createDossierClient(() => sessionOtherResult);
 
   publishedClient = server.createPublishedClient(context);
 

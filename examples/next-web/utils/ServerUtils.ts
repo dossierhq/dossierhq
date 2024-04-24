@@ -33,7 +33,7 @@ export async function getSessionContextForRequest(
     );
   }
   const { context } = sessionResult.value;
-  const adminClient = server.createAdminClient(context);
+  const adminClient = server.createDossierClient(context);
   const publishedClient = server.createPublishedClient(context);
   return ok({ adminClient, publishedClient });
 }
@@ -54,7 +54,7 @@ export async function getServerConnection(): Promise<{ server: Server }> {
           identifier: 'schemaloader',
         })
       ).valueOrThrow();
-      const client = server.createAdminClient(context);
+      const client = server.createDossierClient(context);
       (await client.updateSchemaSpecification(schemaSpecification)).throwIfError();
       return { server };
     })();

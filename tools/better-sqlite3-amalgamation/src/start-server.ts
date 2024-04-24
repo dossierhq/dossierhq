@@ -25,7 +25,7 @@ async function main() {
     });
     const session = sessionResult.valueOrThrow();
 
-    const adminClient = server.createAdminClient(session.context).toExceptionClient();
+    const adminClient = server.createDossierClient(session.context).toExceptionClient();
 
     await adminClient.updateSchemaSpecification({
       entityTypes: [

@@ -70,7 +70,7 @@ async function main(filename: string, args: typeof parsedArgs) {
   const { server } = (await initializeServer(filename)).valueOrThrow();
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
-    const adminClient = server.createAdminClient<AppAdminClient>(async () => authResult);
+    const adminClient = server.createDossierClient<AppAdminClient>(async () => authResult);
 
     const { unappliedDiskFiles, unappliedDatabaseEvents } = await getUnappliedEvents(adminClient);
 

@@ -13,7 +13,7 @@ export async function initializeServer(databaseAdapter: DatabaseAdapter) {
   });
   if (sessionResult.isError()) return sessionResult;
 
-  const adminClient = server.createAdminClient(sessionResult.value.context);
+  const adminClient = server.createDossierClient(sessionResult.value.context);
   const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);
   if (schemaResult.isError()) return schemaResult;
 

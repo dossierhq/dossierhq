@@ -2831,7 +2831,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "createAdminClient",
+                  "text": "createDossierClient",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"

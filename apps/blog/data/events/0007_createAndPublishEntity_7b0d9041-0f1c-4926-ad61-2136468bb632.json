@@ -645,7 +645,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "createAdminClient",
+                  "text": "createDossierClient",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -5010,7 +5010,7 @@
                   "format": 16,
                   "mode": "normal",
                   "style": "",
-                  "text": "server.createAdminClient()",
+                  "text": "server.createDossierClient()",
                   "type": "text",
                   "version": 1
                 },

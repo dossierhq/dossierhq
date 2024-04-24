@@ -45,7 +45,7 @@ import {
   type InternalContext,
   type SessionContext,
 } from './Context.js';
-import { createServerAdminClient } from './ServerAdminClient.js';
+import { createServerAdminClient } from './ServerDossierClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { autGetPrincipals } from './auth/authGetPrincipals.js';
 import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
@@ -130,7 +130,7 @@ export interface Server<
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >;
 
-  createAdminClient<
+  createDossierClient<
     TClient extends DossierClient<
       Entity<string, object>,
       Component<string, object>
@@ -423,7 +423,7 @@ export async function createServer<
       });
     },
 
-    createAdminClient: <
+    createDossierClient: <
       TClient extends DossierClient<
         Entity<string, object>,
         Component<string, object>

@@ -33,7 +33,7 @@ export async function initializeSqlite3Server(
     provider: 'test',
     identifier: 'schema-loader',
   });
-  const client = server.createAdminClient(() => sessionResult);
+  const client = server.createDossierClient(() => sessionResult);
 
   const schemaResult = await client.updateSchemaSpecification(IntegrationTestSchema);
   if (schemaResult.isError()) return schemaResult;

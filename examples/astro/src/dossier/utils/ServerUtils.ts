@@ -77,7 +77,7 @@ export async function getAuthenticatedAdminClient(principalId?: PrincipalIdentif
   if (result.isError()) return result;
   const { server, sessionContext } = result.value;
 
-  return ok(server.createAdminClient(sessionContext));
+  return ok(server.createDossierClient(sessionContext));
 }
 
 export async function getAuthenticatedPublishedClient() {

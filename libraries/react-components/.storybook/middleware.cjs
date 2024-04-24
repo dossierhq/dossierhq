@@ -58,7 +58,10 @@ const expressMiddleWare = (router) => {
         identifier: 'storybook',
         defaultAuthKeys,
       });
-      const adminClient = server.createAdminClient(() => sessionResult, [LoggingClientMiddleware]);
+      const adminClient = server.createDossierClient(
+        () => sessionResult,
+        [LoggingClientMiddleware],
+      );
       const modifies = DossierClientModifyingOperations.has(name);
       if (req.method === 'GET' && modifies) {
         return notOk.BadRequest('GET not allowed for modifying operations');

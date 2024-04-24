@@ -84,7 +84,7 @@ beforeAll(async () => {
   assertOkResult(result);
   server = result.value.server;
   context = result.value.context;
-  adminClient = server.createAdminClient(context);
+  adminClient = server.createDossierClient(context);
   publishedClient = server.createPublishedClient(context);
 
   (await safelyUpdateSchemaSpecification(adminClient, SCHEMA)).throwIfError();

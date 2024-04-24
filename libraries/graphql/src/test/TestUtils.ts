@@ -55,13 +55,13 @@ async function setUpRealServerWithSession(
   const { context } = sessionResult.value;
   const subjectId = context.session.subjectId;
 
-  const adminClient = server.createAdminClient(context);
+  const adminClient = server.createDossierClient(context);
 
   const sessionOtherResult = server.createSession({
     provider: 'test',
     identifier: 'other',
   });
-  const adminClientOther = server.createAdminClient(() => sessionOtherResult);
+  const adminClientOther = server.createDossierClient(() => sessionOtherResult);
   const publishedClient = server.createPublishedClient(context);
 
   const schemaResult = await adminClient.updateSchemaSpecification(schemaSpecification);

@@ -23,7 +23,7 @@ try {
     logger,
   });
   if (sessionResult.isError()) throw sessionResult.toError();
-  const adminClient = server.createAdminClient(sessionResult.value.context);
+  const adminClient = server.createDossierClient(sessionResult.value.context);
 
   (
     await adminClient.updateSchemaSpecification({

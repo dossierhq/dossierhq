@@ -60,7 +60,7 @@ export async function createAdapterAndServer<
     })
   ).valueOrThrow();
 
-  const adminClient = server.createAdminClient<TAdminClient>(aliceSession.context, [
+  const adminClient = server.createDossierClient<TAdminClient>(aliceSession.context, [
     LoggingClientMiddleware as DossierClientMiddleware<ClientContext>,
   ]);
   (await adminClient.updateSchemaSpecification(schema)).valueOrThrow();
@@ -70,7 +70,7 @@ export async function createAdapterAndServer<
     identifier: 'bob',
     logger: createConsoleLogger(console),
   });
-  const bobAdminClient = server.createAdminClient<TAdminClient>(
+  const bobAdminClient = server.createDossierClient<TAdminClient>(
     () => bobSession,
     [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>],
   );
