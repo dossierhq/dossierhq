@@ -11,7 +11,7 @@
   "fields": {
     "title": "Tutorial – Admin REST API",
     "slug": "tutorial-admin-rest-api",
-    "description": "Learn how to set up a REST API for the admin client in the backend and use it in the frontend to create a new entity.",
+    "description": "Learn how to set up a REST API for the Dossier client in the backend and use it in the frontend to create a new entity.",
     "body": {
       "root": {
         "direction": "ltr",
@@ -41,7 +41,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " Add a REST API to the backend for admin client and use it in the frontend to fetch and create new Message entities.",
+                "text": " Add a REST API to the backend for Dossier client and use it in the frontend to fetch and create new Message entities.",
                 "type": "text",
                 "version": 1
               }
@@ -275,7 +275,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "First, we need to create an admin client in the backend for a request. In ",
+                "text": "First, we need to create a Dossier client in the backend for a request. In ",
                 "type": "text",
                 "version": 1
               },
@@ -815,7 +815,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " which takes the JSON representation of an operation and executes it on an admin client. We use ",
+                "text": " which takes the JSON representation of an operation and executes it on a Dossier client. We use ",
                 "type": "text",
                 "version": 1
               },
@@ -4960,7 +4960,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "In the frontend we want to use an admin client to talk to the backend. But since we don't have direct access to the ",
+                "text": "In the frontend we want to use a Dossier client to talk to the backend. But since we don't have direct access to the ",
                 "type": "text",
                 "version": 1
               },
@@ -4996,7 +4996,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " to create the admin client (in the backend we used ",
+                "text": " to create the Dossier client (in the backend we used ",
                 "type": "text",
                 "version": 1
               },
@@ -9337,7 +9337,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Finally we can use the admin client in the frontend to both create and fetch entities. In ",
+                "text": "Finally we can use the Dossier client in the frontend to both create and fetch entities. In ",
                 "type": "text",
                 "version": 1
               },

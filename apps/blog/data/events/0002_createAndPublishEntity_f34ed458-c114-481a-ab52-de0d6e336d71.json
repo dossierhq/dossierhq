@@ -46,7 +46,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " Use the admin client to create and publish Message entities during startup of the backend and use the published client to deliver a random Message entity to the frontend.",
+                  "text": " Use the Dossier client to create and publish Message entities during startup of the backend and use the published client to deliver a random Message entity to the frontend.",
                   "type": "text",
                   "version": 1
                 }

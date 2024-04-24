@@ -228,7 +228,7 @@ Sat, 24 Jun 2023 22:27:41 GMT
 
 ### Updates
 
-- Make PublishedSchema share utilities with AdminSchema. Enable validating using PublishedSchema. Simplify error type for withAdvisoryLock. Support using app admin client for advisory lock. Support valueTypes in search queries.
+- Make PublishedSchema share utilities with AdminSchema. Enable validating using PublishedSchema. Simplify error type for withAdvisoryLock. Support using app Dossier client for advisory lock. Support valueTypes in search queries.
 
 ## 0.2.19
 

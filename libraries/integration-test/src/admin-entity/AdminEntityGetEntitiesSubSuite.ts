@@ -764,7 +764,7 @@ async function getEntities_linksToFromAdminOnlyField({ clientProvider }: AdminEn
   );
   assertOkResult(referenceCreateResult);
 
-  // Is included when searching with admin client even though the field is admin only.
+  // Is included when searching with Dossier client even though the field is admin only.
   const searchResult = await client.getEntities({ linksTo: { id: titleOnlyId } });
   assertSearchResultEntities(searchResult, [referenceCreateResult.value.entity]);
 }

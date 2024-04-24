@@ -57,7 +57,7 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
 
   assertResultValue(await targetServer.getPrincipals(), null);
 
-  // Create principal and create admin clients
+  // Create principal and create clients
   let scenarioContext = await sync_allEventsScenario_createPrincipal(context);
 
   for (const step of STEPS) {
@@ -68,9 +68,9 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
 async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) {
   const { sourceServer, targetServer } = context;
 
-  // Setup source admin client
+  // Setup source Dossier client
   const sourceClient = createDossierClientProvider(sourceServer).dossierClient() as DossierClient;
-  // Use source admin client to force lazy creation of the main principal
+  // Use source Dossier client to force lazy creation of the main principal
   assertErrorResult(
     await sourceClient.getEntity({ id: TITLE_ONLY_ENTITY_ID_1 }),
     ErrorType.NotFound,
@@ -109,7 +109,7 @@ async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) 
   const targetPrincipals = targetPrincipalConnection.edges.map((it) => it.node.valueOrThrow());
   assertEquals(targetPrincipals, sourcePrincipals);
 
-  // Create target admin client after the principals have been created
+  // Create target Dossier client after the principals have been created
   const targetClient = createDossierClientProvider(targetServer).dossierClient() as DossierClient;
 
   const scenarioContext: ScenarioContext = {

@@ -167,7 +167,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "To prepare for talking to the server we also initialize an admin client for an ",
+                  "text": "To prepare for talking to the server we also initialize a Dossier client for an ",
                   "type": "text",
                   "version": 1
                 },

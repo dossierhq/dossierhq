@@ -77,7 +77,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " after creating the server. Using the admin client we create a schema with one entity type, which in turn has a string field.",
+                "text": " after creating the server. Using the Dossier client we create a schema with one entity type, which in turn has a string field.",
                 "type": "text",
                 "version": 1
               }

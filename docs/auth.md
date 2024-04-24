@@ -14,7 +14,7 @@ The actual authentication is left up to the **Application**. When the user has b
 
 ## Authorization
 
-Basic authorization is provided by the **Application**. Since all operations to the **Server** comes through the **Application**, the **Application** can deny access to a specific **Subject**. The **Application** can also deny access to a certain **Client**, e.g. only expose the **Admin Client** to specific **Subjects**.
+Basic authorization is provided by the **Application**. Since all operations to the **Server** comes through the **Application**, the **Application** can deny access to a specific **Subject**. The **Application** can also deny access to a certain **Client**, e.g. only expose the **Dossier Client** to specific **Subjects**.
 
 All **Entities** are associated with a **Resolved Authorization Key**. If a **Subject** doesn't have have access to a **Entity's** **Resolved Authorization Key**, they won't be able to access the **Entity**.
 

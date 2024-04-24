@@ -296,7 +296,7 @@
       "comments": {
         "none": [
           {
-            "comment": "Make PublishedSchema share utilities with AdminSchema. Enable validating using PublishedSchema. Simplify error type for  withAdvisoryLock. Support using app admin client for advisory lock. Support valueTypes in search queries."
+            "comment": "Make PublishedSchema share utilities with AdminSchema. Enable validating using PublishedSchema. Simplify error type for  withAdvisoryLock. Support using app Dossier client for advisory lock. Support valueTypes in search queries."
           }
         ]
       }

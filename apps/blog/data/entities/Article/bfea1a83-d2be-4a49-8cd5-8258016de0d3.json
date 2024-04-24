@@ -5903,7 +5903,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "We also want to tweak the creation of the admin client and use a caching middleware in ",
+                "text": "We also want to tweak the creation of the Dossier client and use a caching middleware in ",
                 "type": "text",
                 "version": 1
               },
