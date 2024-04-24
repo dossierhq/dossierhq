@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Break: Rename ServerPlugin.onCreateAdminClient to .onCreateDossierClient'",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}

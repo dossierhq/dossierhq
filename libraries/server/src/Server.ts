@@ -152,7 +152,7 @@ export interface Server<
 }
 
 export interface ServerPlugin {
-  onCreateAdminClient(
+  onCreateDossierClient(
     pipeline: DossierClientMiddleware<SessionContext>[],
   ): DossierClientMiddleware<SessionContext>[];
 
@@ -257,7 +257,7 @@ export class ServerImpl {
 
   resolveDossierClientMiddleware(middleware: DossierClientMiddleware<SessionContext>[]) {
     for (const plugin of this.#plugins) {
-      middleware = plugin.onCreateAdminClient(middleware);
+      middleware = plugin.onCreateDossierClient(middleware);
     }
     return middleware;
   }
