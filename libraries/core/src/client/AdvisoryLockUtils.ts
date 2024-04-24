@@ -22,19 +22,14 @@ type AdvisoryLockHelperStatus =
     };
 
 export async function withAdvisoryLock<TOk, TError extends ErrorType>(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   name: string,
   options: AdvisoryLockHelperOptions,
   callback: (status: AdvisoryLockHelperStatus) => PromiseResult<TOk, TError>,
 ): PromiseResult<TOk, TError | typeof ErrorType.Generic> {
   // Acquire lock
   const { acquireInterval, renewInterval, ...acquireOptions } = options;
-  const acquireResult = await acquireLockWithRetry(
-    adminClient,
-    name,
-    acquireOptions,
-    acquireInterval,
-  );
+  const acquireResult = await acquireLockWithRetry(client, name, acquireOptions, acquireInterval);
   if (acquireResult.isError()) return notOk.Generic(acquireResult.message); // BadRequest -> Generic
   const { handle } = acquireResult.value;
 
@@ -44,7 +39,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
   const intervalHandle = setInterval(() => {
     void (async () => {
       try {
-        const renewResult = await adminClient.renewAdvisoryLock(name, handle);
+        const renewResult = await client.renewAdvisoryLock(name, handle);
         if (renewResult.isError()) {
           setStatusError(status, notOk.Generic(renewResult.message)); // NotFound -> Generic
         }
@@ -69,7 +64,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
   clearInterval(intervalHandle);
   if (status.active) {
     setStatusError(status, notOk.Generic('Somehow accessed status after returning from callback'));
-    await adminClient.releaseAdvisoryLock(name, handle); // ignore potential error of releasing
+    await client.releaseAdvisoryLock(name, handle); // ignore potential error of releasing
   }
 
   return realRenewError ? realRenewError : result;
@@ -84,14 +79,14 @@ function setStatusError(
 }
 
 async function acquireLockWithRetry(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
   name: string,
   options: AdvisoryLockOptions,
   acquireInterval: number,
 ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const result = await adminClient.acquireAdvisoryLock(name, options);
+    const result = await client.acquireAdvisoryLock(name, options);
     if (result.isOk()) return result.map((it) => it);
 
     const errorType = result.error;

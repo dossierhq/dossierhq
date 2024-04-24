@@ -39,7 +39,7 @@ interface FooFields {
 type FooEntity = Entity<'FooType', FooFields>;
 
 function createForwardingMiddleware<TContext extends ClientContext>(
-  adminClient: DossierClient,
+  client: DossierClient,
 ): DossierClientMiddleware<TContext> {
   return async function (_context, operation) {
     const operationArgsJson = JSON.parse(
@@ -47,7 +47,7 @@ function createForwardingMiddleware<TContext extends ClientContext>(
     ) as DossierClientJsonOperationArgs;
     // normally sent over HTTP
     const resultJson = await executeDossierClientOperationFromJson(
-      adminClient,
+      client,
       operation.name,
       operationArgsJson,
     );
@@ -59,7 +59,7 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   };
 }
 
-function createJsonConvertingAdminClientsForOperation<
+function createJsonConvertingDossierClientsForOperation<
   TContext extends ClientContext,
   TName extends (typeof DossierClientOperationName)[keyof typeof DossierClientOperationName],
 >(
@@ -77,15 +77,15 @@ function createJsonConvertingAdminClientsForOperation<
     expect(operation.name).toBe(operationName);
     await operationHandlerMock(context, operation as unknown as DossierClientOperation<TName>);
   };
-  const innerAdminClient = createBaseDossierClient<TContext>({
+  const innerClient = createBaseDossierClient<TContext>({
     context,
     pipeline: [innerMiddleware],
   });
-  const outerAdminClient = createBaseDossierClient<TContext>({
+  const outerClient = createBaseDossierClient<TContext>({
     context,
-    pipeline: [createForwardingMiddleware(innerAdminClient)],
+    pipeline: [createForwardingMiddleware(innerClient)],
   });
-  return { adminClient: outerAdminClient, operationHandlerMock };
+  return { client: outerClient, operationHandlerMock };
 }
 
 function createDummyEntity(changes: {
@@ -114,8 +114,8 @@ function createDummyEntity(changes: {
 }
 
 describe('Custom Entity types', () => {
-  test('AdminFooEntity creation', async () => {
-    const adminClient = createBaseDossierClient({
+  test('FooEntity creation', async () => {
+    const client = createBaseDossierClient({
       context: { logger: NoOpLogger },
       pipeline: [],
     });
@@ -125,7 +125,7 @@ describe('Custom Entity types', () => {
       fields: { title: 'bar value' },
     };
 
-    const _returnedPayload = await adminClient.createEntity<FooEntity>(fooCreate);
+    const _returnedPayload = await client.createEntity<FooEntity>(fooCreate);
 
     const fooCreatePayload: EntityCreatePayload<FooEntity> = {
       effect: 'created',
@@ -134,8 +134,8 @@ describe('Custom Entity types', () => {
     const _fooEntity: FooEntity = fooCreatePayload.entity;
   });
 
-  test('AdminFooEntity update', async () => {
-    const adminClient = createBaseDossierClient({
+  test('FooEntity update', async () => {
+    const client = createBaseDossierClient({
       context: { logger: NoOpLogger },
       pipeline: [],
     });
@@ -146,7 +146,7 @@ describe('Custom Entity types', () => {
       fields: { title: 'bar value' },
     };
 
-    const _returnedPayload = await adminClient.updateEntity<FooEntity>(fooUpdate);
+    const _returnedPayload = await client.updateEntity<FooEntity>(fooUpdate);
 
     const fooUpdatePayload: EntityUpdatePayload<FooEntity> = {
       effect: 'updated',
@@ -155,8 +155,8 @@ describe('Custom Entity types', () => {
     const _fooEntity: FooEntity = fooUpdatePayload.entity;
   });
 
-  test('AdminFooEntity upsert', async () => {
-    const adminClient = createBaseDossierClient({
+  test('FooEntity upsert', async () => {
+    const client = createBaseDossierClient({
       context: { logger: NoOpLogger },
       pipeline: [],
     });
@@ -167,7 +167,7 @@ describe('Custom Entity types', () => {
       fields: { title: 'bar value' },
     };
 
-    const _returnedPayload = await adminClient.upsertEntity<FooEntity>(fooUpsert);
+    const _returnedPayload = await client.upsertEntity<FooEntity>(fooUpsert);
 
     const fooUpsertPayload: EntityUpsertPayload<FooEntity> = {
       effect: 'updated',
@@ -179,7 +179,7 @@ describe('Custom Entity types', () => {
 
 describe('DossierClient forward operation over JSON', () => {
   test('acquireAdvisoryLock', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.acquireAdvisoryLock,
       (_context, operation) => {
@@ -189,7 +189,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.acquireAdvisoryLock('lock-name', { leaseDuration: 100 });
+    const result = await client.acquireAdvisoryLock('lock-name', { leaseDuration: 100 });
     expectResultValue(result, {
       name: 'lock-name',
       handle: 123,
@@ -224,7 +224,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('archiveEntity', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.archiveEntity,
       (_context, operation) => {
@@ -241,7 +241,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.archiveEntity({ id: '1234' });
+    const result = await client.archiveEntity({ id: '1234' });
     expectResultValue(result, {
       id: '1234',
       status: EntityStatus.archived,
@@ -278,7 +278,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('createEntity', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.createEntity,
       (_context, operation) => {
@@ -298,7 +298,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.createEntity(
+    const result = await client.createEntity(
       {
         id: '1234',
         info: { name: 'Name', type: 'FooType', authKey: '' },
@@ -387,7 +387,7 @@ describe('DossierClient forward operation over JSON', () => {
       unauthorizedEntityCount: 1,
     };
 
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getChangelogEvents,
       (_context, operation) => {
@@ -410,7 +410,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getChangelogEvents(
+    const result = await client.getChangelogEvents(
       { types: [EventType.updateSchema, EventType.createEntity], reverse: true },
       { first: 10, after: 'cursor' },
     );
@@ -471,7 +471,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getChangelogEventsTotalCount', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getChangelogEventsTotalCount,
       (_context, operation) => {
@@ -481,7 +481,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getChangelogEventsTotalCount({
+    const result = await client.getChangelogEventsTotalCount({
       types: [EventType.archiveEntity],
       reverse: true,
     });
@@ -519,7 +519,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getEntityList', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getEntityList,
       (_context, operation) => {
@@ -531,7 +531,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntityList([{ id: '1234' }, { id: '5678' }]);
+    const result = await client.getEntityList([{ id: '1234' }, { id: '5678' }]);
     if (expectOkResult(result)) {
       expect(result.value[0].isOk()).toBeTruthy();
       expect(result.value[1].isOk()).toBeTruthy();
@@ -618,7 +618,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getEntity', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getEntity,
       (_context, operation) => {
@@ -634,7 +634,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntity({ id: '1234' });
+    const result = await client.getEntity({ id: '1234' });
     if (expectOkResult(result)) {
       expect(result.value.info.createdAt).toBeInstanceOf(Date);
       expect(result.value.info.updatedAt).toBeInstanceOf(Date);
@@ -688,7 +688,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getSchemaSpecification', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getSchemaSpecification,
       (_context, operation) => {
@@ -706,7 +706,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getSchemaSpecification();
+    const result = await client.getSchemaSpecification();
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
         {
@@ -745,7 +745,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getSchemaSpecification includeMigrations', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getSchemaSpecification,
       (_context, operation) => {
@@ -764,7 +764,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getSchemaSpecification({ includeMigrations: true });
+    const result = await client.getSchemaSpecification({ includeMigrations: true });
     expectOkResult(result) &&
       expect(result.value).toMatchInlineSnapshot(`
         {
@@ -806,7 +806,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getEntitiesTotalCount', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getEntitiesTotalCount,
       (_context, operation) => {
@@ -816,7 +816,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntitiesTotalCount({
+    const result = await client.getEntitiesTotalCount({
       boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 },
     });
     expectResultValue(result, 123);
@@ -854,7 +854,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('publishEntities', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.publishEntities,
       (_context, operation) => {
@@ -873,7 +873,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.publishEntities([
+    const result = await client.publishEntities([
       { id: '1234', version: 1 },
       { id: '4321', version: 1 },
     ]);
@@ -929,7 +929,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('releaseAdvisoryLock', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.releaseAdvisoryLock,
       (_context, operation) => {
@@ -939,7 +939,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.releaseAdvisoryLock('lock-name', 123);
+    const result = await client.releaseAdvisoryLock('lock-name', 123);
     expectResultValue(result, { name: 'lock-name' });
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -969,7 +969,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('renewAdvisoryLock', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.renewAdvisoryLock,
       (_context, operation) => {
@@ -979,7 +979,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.renewAdvisoryLock('lock-name', 123);
+    const result = await client.renewAdvisoryLock('lock-name', 123);
     expectResultValue(result, { name: 'lock-name', handle: 123 });
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -1025,7 +1025,7 @@ describe('DossierClient forward operation over JSON', () => {
       fields: { foo: 'Hello' },
     };
 
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getEntitiesSample,
       (_context, operation) => {
@@ -1035,7 +1035,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntitiesSample(
+    const result = await client.getEntitiesSample(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { seed: 1234, count: 10 },
     );
@@ -1099,7 +1099,7 @@ describe('DossierClient forward operation over JSON', () => {
       fields: { foo: 'Hello' },
     };
 
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getEntities,
       (_context, operation) => {
@@ -1124,7 +1124,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntities(
+    const result = await client.getEntities(
       { boundingBox: { minLat: 0, maxLat: 1, minLng: 20, maxLng: 21 } },
       { first: 100, after: 'cursor' },
     );
@@ -1189,7 +1189,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('getEntities (null)', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.getEntities,
       (_context, operation) => {
@@ -1199,7 +1199,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.getEntities();
+    const result = await client.getEntities();
     expectResultValue(result, null);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
@@ -1229,7 +1229,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('unarchiveEntity', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.unarchiveEntity,
       (_context, operation) => {
@@ -1246,7 +1246,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.unarchiveEntity({ id: '1234' });
+    const result = await client.unarchiveEntity({ id: '1234' });
     expectResultValue(result, {
       id: '1234',
       status: EntityStatus.withdrawn,
@@ -1283,7 +1283,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('unpublishEntities', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.unpublishEntities,
       (_context, operation) => {
@@ -1302,7 +1302,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.unpublishEntities([{ id: '1234' }, { id: '4321' }]);
+    const result = await client.unpublishEntities([{ id: '1234' }, { id: '4321' }]);
     expectResultValue(result, [
       {
         id: '1234',
@@ -1353,7 +1353,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('updateEntity', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.updateEntity,
       (_context, operation) => {
@@ -1373,7 +1373,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.updateEntity(
+    const result = await client.updateEntity(
       {
         id: '1234',
         fields: {},
@@ -1440,7 +1440,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('updateSchemaSpecification', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.updateSchemaSpecification,
       (_context, operation) => {
@@ -1461,7 +1461,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.updateSchemaSpecification({
+    const result = await client.updateSchemaSpecification({
       entityTypes: [],
       componentTypes: [],
     });
@@ -1510,7 +1510,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('updateSchemaSpecification includeMigrations', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.updateSchemaSpecification,
       (_context, operation) => {
@@ -1532,7 +1532,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.updateSchemaSpecification(
+    const result = await client.updateSchemaSpecification(
       { entityTypes: [], componentTypes: [] },
       { includeMigrations: true },
     );
@@ -1584,7 +1584,7 @@ describe('DossierClient forward operation over JSON', () => {
   });
 
   test('upsertEntity', async () => {
-    const { adminClient, operationHandlerMock } = createJsonConvertingAdminClientsForOperation(
+    const { client, operationHandlerMock } = createJsonConvertingDossierClientsForOperation(
       { logger: NoOpLogger },
       DossierClientOperationName.upsertEntity,
       (_context, operation) => {
@@ -1604,7 +1604,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await adminClient.upsertEntity(
+    const result = await client.upsertEntity(
       {
         id: '1234',
         info: { name: 'Name', type: 'FooType', authKey: '' },
