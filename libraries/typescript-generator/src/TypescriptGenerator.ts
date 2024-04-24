@@ -28,7 +28,7 @@ export function generateTypescriptForSchema({
   const paragraphs: string[] = [];
 
   if (schema) {
-    paragraphs.push(...generateAdminClientTypes(context));
+    paragraphs.push(...generateDossierClientTypes(context));
     paragraphs.push(...generateUniqueIndexesType('', schema.spec.indexes));
     paragraphs.push(...generateAllTypesUnion(schema.spec.entityTypes, '', 'Entity'));
     for (const entitySpec of schema.spec.entityTypes) {
@@ -69,7 +69,7 @@ export function generateTypescriptForSchema({
   return paragraphs.join('\n');
 }
 
-function generateAdminClientTypes(context: GeneratorContext) {
+function generateDossierClientTypes(context: GeneratorContext) {
   context.coreImports.add('DossierClient');
   context.coreImports.add('DossierExceptionClient');
   return [

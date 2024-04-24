@@ -67,7 +67,7 @@ async function createDatabaseAdapter(logger: Logger) {
   return databaseAdapterResult;
 }
 
-export async function getAuthenticatedAdminClient(principalId?: PrincipalIdentifier) {
+export async function getAuthenticatedDossierClient(principalId?: PrincipalIdentifier) {
   const principalConfig = getPrincipalConfig(principalId ?? import.meta.env.DOSSIER_PRINCIPAL_ID);
   if (!principalConfig.enableAdmin) {
     return notOk.NotAuthorized('Admin access is disabled for this principal');

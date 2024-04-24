@@ -45,7 +45,7 @@ import {
   type InternalContext,
   type SessionContext,
 } from './Context.js';
-import { createServerAdminClient } from './ServerDossierClient.js';
+import { createServerDossierClient } from './ServerDossierClient.js';
 import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { autGetPrincipals } from './auth/authGetPrincipals.js';
 import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
@@ -432,7 +432,7 @@ export async function createServer<
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: DossierClientMiddleware<SessionContext>[],
     ) =>
-      createServerAdminClient({
+      createServerDossierClient({
         context,
         authorizationAdapter: resolvedAuthorizationAdapter,
         databaseAdapter,

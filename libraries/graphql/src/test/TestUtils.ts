@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 export interface TestServerWithSession {
   schema: Schema;
   client: DossierClient;
-  adminClientOther: DossierClient;
+  clientOther: DossierClient;
   publishedClient: PublishedClient;
   subjectId: string;
   tearDown: () => PromiseResult<void, typeof ErrorType.Generic>;
@@ -61,7 +61,7 @@ async function setUpRealServerWithSession(
     provider: 'test',
     identifier: 'other',
   });
-  const adminClientOther = server.createDossierClient(() => sessionOtherResult);
+  const clientOther = server.createDossierClient(() => sessionOtherResult);
   const publishedClient = server.createPublishedClient(context);
 
   const schemaResult = await client.updateSchemaSpecification(schemaSpecification);
@@ -70,7 +70,7 @@ async function setUpRealServerWithSession(
   return {
     schema: new Schema(schemaResult.value.schemaSpecification),
     client,
-    adminClientOther,
+    clientOther,
     publishedClient,
     subjectId,
     tearDown: () => server.shutdown(),

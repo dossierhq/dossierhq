@@ -1078,8 +1078,8 @@ GraphQL request:3:11
   });
 
   test('Error: Query using the wrong authKey', async () => {
-    const { adminClientOther } = server;
-    const createResult = await adminClientOther.createEntity({
+    const { clientOther } = server;
+    const createResult = await clientOther.createEntity({
       info: { type: 'QueryAdminFoo', name: 'First name', authKey: 'subject' },
       fields: { title: 'First title', summary: 'First summary' },
     });

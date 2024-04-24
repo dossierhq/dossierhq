@@ -37,7 +37,7 @@ import { managementDirtyProcessNextEntity } from './management/managementDirtyPr
 import { schemaUpdateSpecification } from './schema/schemaUpdateSpecification.js';
 import { assertExhaustive } from './utils/AssertUtils.js';
 
-export function createServerAdminClient({
+export function createServerDossierClient({
   context,
   authorizationAdapter,
   databaseAdapter,

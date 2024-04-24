@@ -130,7 +130,7 @@ async function createPersonalNote(
 
 async function main() {
   const database = await createNewDatabase('dist/reviews.sqlite');
-  const { client, bobAdminClient, server } = await createAdapterAndServer<AppDossierClient>(
+  const { client, bobDossierClient, server } = await createAdapterAndServer<AppDossierClient>(
     database,
     SCHEMA,
   );
@@ -159,7 +159,7 @@ async function main() {
     await createPersonalNote(client, faker.helpers.arrayElement(placesOfBusiness), 'Alice');
   }
   for (const _ of Array(2).keys()) {
-    await createPersonalNote(bobAdminClient, faker.helpers.arrayElement(placesOfBusiness), 'Bob');
+    await createPersonalNote(bobDossierClient, faker.helpers.arrayElement(placesOfBusiness), 'Bob');
   }
 
   await optimizeAndCloseDatabase(server);

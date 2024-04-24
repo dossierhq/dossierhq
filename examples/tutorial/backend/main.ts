@@ -15,7 +15,7 @@ import { config } from 'dotenv';
 import express, { type RequestHandler, type Response } from 'express';
 import { expressjwt, type GetVerificationKey } from 'express-jwt';
 import { expressJwtSecret } from 'jwks-rsa';
-import { getAdminClientForRequest, getPublishedClientForRequest, initialize } from './server.js';
+import { getDossierClientForRequest, getPublishedClientForRequest, initialize } from './server.js';
 
 // prefer .env.local file if exists, over .env file
 config({ path: '.env.local' });
@@ -72,7 +72,7 @@ app.get(
 app.get(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
-    const client = getAdminClientForRequest(server, req);
+    const client = getDossierClientForRequest(server, req);
     const { operationName } = req.params;
     const operationArgs = decodeURLSearchParamsParam<DossierClientJsonOperationArgs>(
       req.query as Record<string, string>,
@@ -95,7 +95,7 @@ app.get(
 app.put(
   '/api/admin/:operationName',
   asyncHandler(async (req, res) => {
-    const client = getAdminClientForRequest(server, req);
+    const client = getDossierClientForRequest(server, req);
     const { operationName } = req.params;
     const operationArgs = req.body as DossierClientJsonOperationArgs;
     const operationModifies = DossierClientModifyingOperations.has(operationName);

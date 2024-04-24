@@ -27,13 +27,13 @@ export async function createNewDatabase(databasePath: string): Promise<Database>
 }
 
 export async function createAdapterAndServer<
-  TAdminClient extends DossierClient<Entity<string, object>, Component<string, object>>,
+  TDossierClient extends DossierClient<Entity<string, object>, Component<string, object>>,
 >(
   database: Database,
   schema: SchemaSpecificationUpdate,
 ): Promise<{
-  client: TAdminClient;
-  bobAdminClient: TAdminClient;
+  client: TDossierClient;
+  bobDossierClient: TDossierClient;
   server: Server<SqliteDatabaseOptimizationOptions>;
 }> {
   const databaseAdapter = (
@@ -60,7 +60,7 @@ export async function createAdapterAndServer<
     })
   ).valueOrThrow();
 
-  const client = server.createDossierClient<TAdminClient>(aliceSession.context, [
+  const client = server.createDossierClient<TDossierClient>(aliceSession.context, [
     LoggingClientMiddleware as DossierClientMiddleware<ClientContext>,
   ]);
   (await client.updateSchemaSpecification(schema)).valueOrThrow();
@@ -70,12 +70,12 @@ export async function createAdapterAndServer<
     identifier: 'bob',
     logger: createConsoleLogger(console),
   });
-  const bobAdminClient = server.createDossierClient<TAdminClient>(
+  const bobDossierClient = server.createDossierClient<TDossierClient>(
     () => bobSession,
     [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>],
   );
 
-  return { client, bobAdminClient, server };
+  return { client, bobDossierClient, server };
 }
 
 export async function optimizeAndCloseDatabase(server: Server) {

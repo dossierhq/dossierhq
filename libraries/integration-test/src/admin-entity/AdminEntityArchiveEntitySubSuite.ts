@@ -132,13 +132,13 @@ async function archiveEntity_errorPublishedEntity({ clientProvider }: AdminEntit
 }
 
 async function archiveEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.dossierClient('main', 'write');
-  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
-  const createResult = await normalAdminClient.createEntity(TITLE_ONLY_CREATE);
+  const normalClient = clientProvider.dossierClient('main', 'write');
+  const readonlyClient = clientProvider.dossierClient('main', 'readonly');
+  const createResult = await normalClient.createEntity(TITLE_ONLY_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
-  const archiveResult = await readonlyAdminClient.archiveEntity({ id });
+  const archiveResult = await readonlyClient.archiveEntity({ id });
   assertErrorResult(archiveResult, ErrorType.BadRequest, 'Readonly session used to archive entity');
 }

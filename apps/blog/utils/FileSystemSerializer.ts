@@ -21,7 +21,7 @@ import path from 'node:path';
 
 export function createFilesystemAdminMiddleware(
   server: Server,
-  backChannelAdminClient: DossierClient,
+  backChannelClient: DossierClient,
   dataDir: string,
 ): DossierClientMiddleware<SessionContext> {
   return async (context: SessionContext, operation: DossierClientOperation) => {
@@ -31,12 +31,12 @@ export function createFilesystemAdminMiddleware(
         switch (operation.name) {
           case DossierClientOperationName.createEntity: {
             const payload = result.value as OkFromResult<ReturnType<DossierClient['createEntity']>>;
-            await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
+            await updateEntityFile(backChannelClient, payload.entity, dataDir);
             break;
           }
           case DossierClientOperationName.updateEntity: {
             const payload = result.value as OkFromResult<ReturnType<DossierClient['updateEntity']>>;
-            await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
+            await updateEntityFile(backChannelClient, payload.entity, dataDir);
             break;
           }
           case DossierClientOperationName.updateSchemaSpecification: {
@@ -48,7 +48,7 @@ export function createFilesystemAdminMiddleware(
           }
           case DossierClientOperationName.upsertEntity: {
             const payload = result.value as OkFromResult<ReturnType<DossierClient['upsertEntity']>>;
-            await updateEntityFile(backChannelAdminClient, payload.entity, dataDir);
+            await updateEntityFile(backChannelClient, payload.entity, dataDir);
             break;
           }
         }
@@ -76,11 +76,11 @@ async function updateSchemaSpecification(
 }
 
 async function updateEntityFile(
-  backChannelAdminClient: DossierClient,
+  backChannelClient: DossierClient,
   entity: Entity<string, object>,
   dataDir: string,
 ) {
-  const schema = new Schema((await backChannelAdminClient.getSchemaSpecification()).valueOrThrow());
+  const schema = new Schema((await backChannelClient.getSchemaSpecification()).valueOrThrow());
 
   const save = createCleanedUpEntity(schema, entity);
 

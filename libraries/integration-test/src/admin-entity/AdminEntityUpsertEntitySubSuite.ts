@@ -239,15 +239,13 @@ async function upsertEntity_errorCreateReadonlySession({ clientProvider }: Admin
 }
 
 async function upsertEntity_errorUpdateReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.dossierClient();
-  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
+  const normalClient = clientProvider.dossierClient();
+  const readonlyClient = clientProvider.dossierClient('main', 'readonly');
 
   const {
     entity: { id },
-  } = (await normalAdminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  } = (await normalClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
-  const upsertResult = await readonlyAdminClient.upsertEntity(
-    copyEntity(TITLE_ONLY_UPSERT, { id }),
-  );
+  const upsertResult = await readonlyClient.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id }));
   assertErrorResult(upsertResult, ErrorType.BadRequest, 'Readonly session used to update entity');
 }

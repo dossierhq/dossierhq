@@ -891,15 +891,15 @@ async function updateEntity_errorDuplicateUniqueIndexValue({
 }
 
 async function updateEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.dossierClient();
-  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
+  const normalClient = clientProvider.dossierClient();
+  const readonlyClient = clientProvider.dossierClient('main', 'readonly');
 
-  const createResult = await normalAdminClient.createEntity(TITLE_ONLY_CREATE);
+  const createResult = await normalClient.createEntity(TITLE_ONLY_CREATE);
   const {
     entity: { id },
   } = createResult.valueOrThrow();
 
-  const updateResult = await readonlyAdminClient.updateEntity({
+  const updateResult = await readonlyClient.updateEntity({
     id,
     info: { name: 'Updated name' },
     fields: {},

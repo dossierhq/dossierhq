@@ -2284,8 +2284,8 @@ describe('publishEntities()', () => {
   });
 
   test('Error: using the wrong authKey', async () => {
-    const { adminClientOther } = server;
-    const createResult = await adminClientOther.createEntity({
+    const { clientOther } = server;
+    const createResult = await clientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2391,8 +2391,8 @@ describe('unpublishEntities()', () => {
   });
 
   test('Error: using the wrong authKey', async () => {
-    const { adminClientOther } = server;
-    const createResult = await adminClientOther.createEntity({
+    const { clientOther } = server;
+    const createResult = await clientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2467,8 +2467,8 @@ describe('archiveEntity()', () => {
   });
 
   test('Error: Wrong authKey', async () => {
-    const { adminClientOther } = server;
-    const createResult = await adminClientOther.createEntity({
+    const { clientOther } = server;
+    const createResult = await clientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2575,8 +2575,8 @@ describe('unarchiveEntity()', () => {
   });
 
   test('Error: Wrong authKey', async () => {
-    const { adminClientOther } = server;
-    const createResult = await adminClientOther.createEntity({
+    const { clientOther } = server;
+    const createResult = await clientOther.createEntity({
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });

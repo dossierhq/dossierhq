@@ -523,11 +523,11 @@ async function publishEntities_errorPublishAlreadyPublishedInvalidEntity({
 }
 
 async function publishEntities_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
-  const normalAdminClient = clientProvider.dossierClient('main', 'write');
-  const readonlyAdminClient = clientProvider.dossierClient('main', 'readonly');
-  const { entity } = (await normalAdminClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  const normalClient = clientProvider.dossierClient('main', 'write');
+  const readonlyClient = clientProvider.dossierClient('main', 'readonly');
+  const { entity } = (await normalClient.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
-  const publishResult = await readonlyAdminClient.publishEntities([{ id: entity.id, version: 1 }]);
+  const publishResult = await readonlyClient.publishEntities([{ id: entity.id, version: 1 }]);
   assertErrorResult(
     publishResult,
     ErrorType.BadRequest,

@@ -32,7 +32,7 @@ import {
 let server: Server;
 let context: SessionContext;
 let client: DossierClient;
-let adminClientOther: DossierClient;
+let clientOther: DossierClient;
 let publishedClient: PublishedClient;
 let entitiesOfTypeAdminOnlyEditBeforeNone: Entity[];
 
@@ -72,7 +72,7 @@ beforeAll(async () => {
     identifier: 'other',
     defaultAuthKeys: [''],
   });
-  adminClientOther = server.createDossierClient(() => sessionOtherResult);
+  clientOther = server.createDossierClient(() => sessionOtherResult);
 
   publishedClient = server.createPublishedClient(context);
 
@@ -2744,7 +2744,7 @@ describe('updateEntity()', () => {
         entity: { id },
       } = createResult.value;
 
-      const updateResult = await adminClientOther.updateEntity({
+      const updateResult = await clientOther.updateEntity({
         id,
         fields: {},
       });

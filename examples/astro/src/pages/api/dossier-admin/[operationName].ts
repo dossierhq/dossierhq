@@ -7,7 +7,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 import type { APIContext } from 'astro';
-import { getAuthenticatedAdminClient } from '../../../dossier/utils/ServerUtils.ts';
+import { getAuthenticatedDossierClient } from '../../../dossier/utils/ServerUtils.ts';
 
 export const prerender = false;
 
@@ -50,9 +50,9 @@ async function executeAdminOperation(
     return notOk.BadRequest('Operation does not modify data, but PUT was used');
   }
 
-  const adminClientResult = await getAuthenticatedAdminClient(import.meta.env.DOSSIER_PRINCIPAL_ID);
-  if (adminClientResult.isError()) return adminClientResult;
-  const client = adminClientResult.value;
+  const clientResult = await getAuthenticatedDossierClient(import.meta.env.DOSSIER_PRINCIPAL_ID);
+  if (clientResult.isError()) return clientResult;
+  const client = clientResult.value;
 
   const result = await executeDossierClientOperationFromJson(client, operationName, operationArgs);
   return result;

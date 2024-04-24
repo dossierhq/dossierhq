@@ -48,7 +48,7 @@ async function createSessionForRequest(server: Server, req: Request) {
   return await server.createSession({ provider, identifier });
 }
 
-export function getAdminClientForRequest(server: Server, req: Request) {
+export function getDossierClientForRequest(server: Server, req: Request) {
   const session = createSessionForRequest(server, req);
   return server.createDossierClient<AppDossierClient>(() => session);
 }

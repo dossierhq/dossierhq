@@ -6,7 +6,7 @@ import { useCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 import {
   DISPLAY_AUTH_KEYS,
   TestContextAdapter,
-  createBackendAdminClient,
+  createBackendDossierClient,
 } from './TestContextAdapter.js';
 
 interface Props {
@@ -23,7 +23,7 @@ export function AdminLoadContextProvider({
   const cachingMiddleware = useCachingAdminMiddleware();
 
   const client = useMemo(
-    () => createBackendAdminClient([...(adminClientMiddleware ?? []), cachingMiddleware]),
+    () => createBackendDossierClient([...(adminClientMiddleware ?? []), cachingMiddleware]),
     [adminClientMiddleware, cachingMiddleware],
   );
 
