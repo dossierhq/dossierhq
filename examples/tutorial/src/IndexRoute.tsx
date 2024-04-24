@@ -1,11 +1,11 @@
 import type { EntitySamplingPayload } from '@dossierhq/core';
 import { useCallback, useEffect, useState } from 'react';
-import { useAdminClient } from './ClientUtils.js';
+import { useDossierClient } from './ClientUtils.js';
 import { Navbar } from './Navbar.js';
 import type { AppEntity } from './SchemaTypes.js';
 
 export function IndexRoute() {
-  const client = useAdminClient();
+  const client = useDossierClient();
   const [message, setMessage] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [adminSampleSeed, setAdminSampleSeed] = useState(Math.random);

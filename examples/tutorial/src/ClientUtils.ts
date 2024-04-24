@@ -18,7 +18,7 @@ import type { AppDossierClient, AppPublishedClient } from './SchemaTypes.js';
 
 const logger = createConsoleLogger(console);
 
-export function useAdminClient(): AppDossierClient | null {
+export function useDossierClient(): AppDossierClient | null {
   const cachingAdminMiddleware = useCachingAdminMiddleware();
   const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
 

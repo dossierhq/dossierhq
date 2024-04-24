@@ -10,7 +10,7 @@ import {
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import { useAdminClient } from './ClientUtils.js';
+import { useDossierClient } from './ClientUtils.js';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 import { isCloudinaryImage } from './SchemaTypes.js';
 
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function AppAdminProvider({ children }: Props) {
-  const client = useAdminClient();
+  const client = useDossierClient();
   const args = useMemo(
     () => ({
       adapter: new AdminAdapter(),

@@ -1541,7 +1541,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " useAdminClient ",
+                  "text": " useDossierClient ",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -1933,7 +1933,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "useAdminClient",
+                  "text": "useDossierClient",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"
@@ -6074,7 +6074,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "useAdminClient",
+                  "text": "useDossierClient",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"
