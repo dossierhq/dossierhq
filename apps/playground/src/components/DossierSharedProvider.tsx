@@ -1,5 +1,5 @@
 import type {
-  AdminClientMiddleware,
+  DossierClientMiddleware,
   ClientContext,
   ErrorType,
   PromiseResult,
@@ -51,7 +51,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
   const login = useCallback(
     async (
-      userId: string
+      userId: string,
     ): PromiseResult<void, typeof ErrorType.BadRequest | typeof ErrorType.Generic> => {
       assertIsDefined(server);
       const user = users.find((it) => it.id === userId);
@@ -61,7 +61,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
         server,
         userId,
         swrConfigRef.current.cache,
-        swrConfigRef.current.mutate
+        swrConfigRef.current.mutate,
       );
       if (result.isError()) return result;
 
@@ -70,7 +70,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       showNotification({ color: 'success', message: `Logged in as ${user.name}` });
       return ok(undefined);
     },
-    [server, setCurrentUserId, showNotification, users]
+    [server, setCurrentUserId, showNotification, users],
   );
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
     const adminArgs = {
       adminClient: server.createAdminClient(
         () => Promise.resolve(sessionResultRef.current),
-        [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>, cachingAdminMiddleware]
+        [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>, cachingAdminMiddleware],
       ),
       adapter,
       authKeys: DISPLAY_AUTH_KEYS,
@@ -96,7 +96,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       adapter,
       publishedClient: server.createPublishedClient(
         () => Promise.resolve(sessionResultRef.current),
-        [LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>]
+        [LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>],
       ),
       authKeys: DISPLAY_AUTH_KEYS,
     };

@@ -1,4 +1,4 @@
-import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
+import type { DossierClientMiddleware, ClientContext } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
@@ -12,7 +12,7 @@ type StoryProps = Omit<ContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'>
   initialUrlSearchParams?: URLSearchParams;
   showUrl: boolean;
   ownCache: boolean;
-  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
+  adminClientMiddleware?: DossierClientMiddleware<ClientContext>[];
 };
 
 const meta = {

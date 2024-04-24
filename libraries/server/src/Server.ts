@@ -5,7 +5,7 @@ import {
   notOk,
   ok,
   type DossierClient,
-  type AdminClientMiddleware,
+  type DossierClientMiddleware,
   type Entity,
   type EntityProcessDirtyPayload,
   type SchemaSpecificationWithMigrations,
@@ -137,7 +137,7 @@ export interface Server<
     > = DossierClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
-    middleware?: AdminClientMiddleware<SessionContext>[],
+    middleware?: DossierClientMiddleware<SessionContext>[],
   ): TClient;
 
   createPublishedClient<
@@ -153,8 +153,8 @@ export interface Server<
 
 export interface ServerPlugin {
   onCreateAdminClient(
-    pipeline: AdminClientMiddleware<SessionContext>[],
-  ): AdminClientMiddleware<SessionContext>[];
+    pipeline: DossierClientMiddleware<SessionContext>[],
+  ): DossierClientMiddleware<SessionContext>[];
 
   onCreatePublishedClient(
     pipeline: PublishedClientMiddleware<SessionContext>[],
@@ -255,7 +255,7 @@ export class ServerImpl {
     );
   }
 
-  resolveAdminClientMiddleware(middleware: AdminClientMiddleware<SessionContext>[]) {
+  resolveAdminClientMiddleware(middleware: DossierClientMiddleware<SessionContext>[]) {
     for (const plugin of this.#plugins) {
       middleware = plugin.onCreateAdminClient(middleware);
     }
@@ -430,7 +430,7 @@ export async function createServer<
       > = DossierClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
-      middleware?: AdminClientMiddleware<SessionContext>[],
+      middleware?: DossierClientMiddleware<SessionContext>[],
     ) =>
       createServerAdminClient({
         context,

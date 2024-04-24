@@ -77,15 +77,15 @@ export {
 } from './Types.js';
 export { withAdvisoryLock } from './client/AdvisoryLockUtils.js';
 export {
-  AdminClientModifyingOperations,
-  AdminClientOperationName,
-  convertJsonAdminClientResult,
-  createBaseAdminClient,
-  executeAdminClientOperationFromJson,
+  DossierClientModifyingOperations,
+  DossierClientOperationName,
+  convertJsonDossierClientResult,
+  createBaseDossierClient,
+  executeDossierClientOperationFromJson,
   type DossierClient,
-  type AdminClientJsonOperationArgs,
-  type AdminClientMiddleware,
-  type AdminClientOperation,
+  type DossierClientJsonOperationArgs,
+  type DossierClientMiddleware,
+  type DossierClientOperation,
   type DossierExceptionClient,
 } from './client/DossierClient.js';
 export {

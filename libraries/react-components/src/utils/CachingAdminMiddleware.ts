@@ -1,8 +1,8 @@
 import {
-  AdminClientOperationName,
+  DossierClientOperationName,
   SchemaWithMigrations,
   type DossierClient,
-  type AdminClientMiddleware,
+  type DossierClientMiddleware,
   type SchemaSpecificationWithMigrations,
   type ClientContext,
   type OkFromResult,
@@ -60,25 +60,25 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
     lastSchemaVersion = schema.version;
   }
 
-  const middleware: AdminClientMiddleware<TContext> = async (context, operation) => {
+  const middleware: DossierClientMiddleware<TContext> = async (context, operation) => {
     const result = await operation.next();
     if (result.isOk()) {
       assertIsDefined(swrConfig.current);
       const { cache, mutate } = swrConfig.current;
       switch (operation.name) {
-        case AdminClientOperationName.archiveEntity: {
+        case DossierClientOperationName.archiveEntity: {
           const payload = result.value as OkFromResult<ReturnType<DossierClient['archiveEntity']>>;
           updateCacheEntityInfo(mutate, payload);
           invalidateChangelogEvents(mutate);
           break;
         }
-        case AdminClientOperationName.createEntity: {
+        case DossierClientOperationName.createEntity: {
           const payload = result.value as OkFromResult<ReturnType<DossierClient['createEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           invalidateChangelogEvents(mutate);
           break;
         }
-        case AdminClientOperationName.getSchemaSpecification: {
+        case DossierClientOperationName.getSchemaSpecification: {
           const args = operation.args as Parameters<DossierClient['getSchemaSpecification']>;
           const payload = result.value as OkFromResult<
             ReturnType<DossierClient['getSchemaSpecification']>
@@ -88,7 +88,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           }
           break;
         }
-        case AdminClientOperationName.publishEntities: {
+        case DossierClientOperationName.publishEntities: {
           const payload = result.value as OkFromResult<
             ReturnType<DossierClient['publishEntities']>
           >;
@@ -98,7 +98,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           });
           break;
         }
-        case AdminClientOperationName.unarchiveEntity: {
+        case DossierClientOperationName.unarchiveEntity: {
           const payload = result.value as OkFromResult<
             ReturnType<DossierClient['unarchiveEntity']>
           >;
@@ -106,7 +106,7 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           invalidateChangelogEvents(mutate);
           break;
         }
-        case AdminClientOperationName.unpublishEntities: {
+        case DossierClientOperationName.unpublishEntities: {
           const payload = result.value as OkFromResult<
             ReturnType<DossierClient['unpublishEntities']>
           >;
@@ -116,19 +116,19 @@ function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig:
           });
           break;
         }
-        case AdminClientOperationName.updateEntity: {
+        case DossierClientOperationName.updateEntity: {
           const payload = result.value as OkFromResult<ReturnType<DossierClient['updateEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           invalidateChangelogEvents(mutate);
           break;
         }
-        case AdminClientOperationName.upsertEntity: {
+        case DossierClientOperationName.upsertEntity: {
           const payload = result.value as OkFromResult<ReturnType<DossierClient['upsertEntity']>>;
           updateCacheEntity(mutate, payload.entity);
           invalidateChangelogEvents(mutate);
           break;
         }
-        case AdminClientOperationName.updateSchemaSpecification: {
+        case DossierClientOperationName.updateSchemaSpecification: {
           const args = operation.args as Parameters<DossierClient['updateSchemaSpecification']>;
           const payload = result.value as OkFromResult<
             ReturnType<DossierClient['updateSchemaSpecification']>

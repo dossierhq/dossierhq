@@ -1,7 +1,7 @@
 import type {
   DossierClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
+  DossierClientMiddleware,
+  DossierClientOperation,
   ClientContext,
   ErrorType,
   Logger,
@@ -11,9 +11,9 @@ import type {
   PublishedClientOperation,
 } from '@dossierhq/core';
 import {
-  convertJsonAdminClientResult,
+  convertJsonDossierClientResult,
   convertJsonPublishedClientResult,
-  createBaseAdminClient,
+  createBaseDossierClient,
   createBasePublishedClient,
   createConsoleLogger,
   encodeObjectToURLSearchParams,
@@ -48,14 +48,14 @@ const AUTH_KEYS_HEADER = {
 };
 
 export function createBackendAdminClient(
-  pipeline: AdminClientMiddleware<BackendContext>[] = [],
+  pipeline: DossierClientMiddleware<BackendContext>[] = [],
 ): DossierClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
-  return createBaseAdminClient<BackendContext>({
+  return createBaseDossierClient<BackendContext>({
     context,
     pipeline: [
       ...pipeline,
-      LoggingClientMiddleware as AdminClientMiddleware<BackendContext>,
+      LoggingClientMiddleware as DossierClientMiddleware<BackendContext>,
       terminatingAdminMiddleware,
     ],
   });
@@ -77,7 +77,7 @@ export function createBackendPublishedClient(
 
 async function terminatingAdminMiddleware(
   _context: BackendContext,
-  operation: AdminClientOperation,
+  operation: DossierClientOperation,
 ): Promise<void> {
   let response: Response;
   if (operation.modifies) {
@@ -97,7 +97,7 @@ async function terminatingAdminMiddleware(
   }
 
   const result = await getBodyAsJsonResult(response);
-  operation.resolve(convertJsonAdminClientResult(operation.name, result));
+  operation.resolve(convertJsonDossierClientResult(operation.name, result));
 }
 
 async function terminatingPublishedMiddleware(
@@ -134,7 +134,7 @@ async function getBodyAsJsonResult(response: Response) {
   }
 }
 
-export function createSlowAdminMiddleware(): AdminClientMiddleware<ClientContext> {
+export function createSlowAdminMiddleware(): DossierClientMiddleware<ClientContext> {
   return async (_context, operation) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     operation.resolve(await operation.next());

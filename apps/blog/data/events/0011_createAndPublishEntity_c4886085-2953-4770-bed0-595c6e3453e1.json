@@ -7939,7 +7939,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "createBaseAdminClient",
+                  "text": "createBaseDossierClient",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"
@@ -8768,7 +8768,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminClientOperation",
+                  "text": " DossierClientOperation",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -10887,7 +10887,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "convertJsonAdminClientResult",
+                  "text": "convertJsonDossierClientResult",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"

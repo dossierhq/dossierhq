@@ -1,14 +1,14 @@
 import type {
   DossierClient,
-  AdminClientMiddleware,
-  AdminClientOperation,
+  DossierClientMiddleware,
+  DossierClientOperation,
   ClientContext,
   ErrorType,
   Result,
 } from '@dossierhq/core';
 import {
-  convertJsonAdminClientResult,
-  createBaseAdminClient,
+  convertJsonDossierClientResult,
+  createBaseDossierClient,
   createConsoleLogger,
 } from '@dossierhq/core';
 import type {
@@ -58,10 +58,10 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
 }
 
 function createBackendAdminClient(
-  cachingMiddleware: AdminClientMiddleware<BackendContext>,
+  cachingMiddleware: DossierClientMiddleware<BackendContext>,
 ): DossierClient {
   const context: BackendContext = { logger };
-  return createBaseAdminClient({
+  return createBaseDossierClient({
     context,
     pipeline: [cachingMiddleware, terminatingAdminMiddleware],
   });
@@ -69,7 +69,7 @@ function createBackendAdminClient(
 
 async function terminatingAdminMiddleware(
   context: BackendContext,
-  operation: AdminClientOperation,
+  operation: DossierClientOperation,
 ): Promise<void> {
   let result: Result<unknown, ErrorType>;
   if (operation.modifies) {
@@ -81,5 +81,5 @@ async function terminatingAdminMiddleware(
   } else {
     result = await fetchJsonResult(context, BackendUrls.admin(operation.name, operation.args));
   }
-  operation.resolve(convertJsonAdminClientResult(operation.name, result));
+  operation.resolve(convertJsonDossierClientResult(operation.name, result));
 }

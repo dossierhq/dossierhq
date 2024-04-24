@@ -1,11 +1,11 @@
 import {
-  AdminClientModifyingOperations,
+  DossierClientModifyingOperations,
   createConsoleLogger,
   decodeURLSearchParamsParam,
-  executeAdminClientOperationFromJson,
+  executeDossierClientOperationFromJson,
   executePublishedClientOperationFromJson,
   notOk,
-  type AdminClientJsonOperationArgs,
+  type DossierClientJsonOperationArgs,
   type ErrorType,
   type PublishedClientJsonOperationArgs,
   type Result,
@@ -54,7 +54,7 @@ app.use(
     issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256'],
     credentialsRequired: false,
-  })
+  }),
 );
 
 app.get(
@@ -66,7 +66,7 @@ app.get(
     ).valueOrThrow();
     const message = samples.items[0];
     res.send({ message: message.fields.message });
-  })
+  }),
 );
 
 app.get(
@@ -74,11 +74,11 @@ app.get(
   asyncHandler(async (req, res) => {
     const adminClient = getAdminClientForRequest(server, req);
     const { operationName } = req.params;
-    const operationArgs = decodeURLSearchParamsParam<AdminClientJsonOperationArgs>(
+    const operationArgs = decodeURLSearchParamsParam<DossierClientJsonOperationArgs>(
       req.query as Record<string, string>,
-      'args'
+      'args',
     );
-    const operationModifies = AdminClientModifyingOperations.has(operationName);
+    const operationModifies = DossierClientModifyingOperations.has(operationName);
     if (operationModifies) {
       sendResult(res, notOk.BadRequest('Operation modifies data, but GET was used'));
     } else if (!operationArgs) {
@@ -86,10 +86,10 @@ app.get(
     } else {
       sendResult(
         res,
-        await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
+        await executeDossierClientOperationFromJson(adminClient, operationName, operationArgs),
       );
     }
-  })
+  }),
 );
 
 app.put(
@@ -97,17 +97,17 @@ app.put(
   asyncHandler(async (req, res) => {
     const adminClient = getAdminClientForRequest(server, req);
     const { operationName } = req.params;
-    const operationArgs = req.body as AdminClientJsonOperationArgs;
-    const operationModifies = AdminClientModifyingOperations.has(operationName);
+    const operationArgs = req.body as DossierClientJsonOperationArgs;
+    const operationModifies = DossierClientModifyingOperations.has(operationName);
     if (!operationModifies) {
       sendResult(res, notOk.BadRequest('Operation does not modify data, but PUT was used'));
     } else {
       sendResult(
         res,
-        await executeAdminClientOperationFromJson(adminClient, operationName, operationArgs)
+        await executeDossierClientOperationFromJson(adminClient, operationName, operationArgs),
       );
     }
-  })
+  }),
 );
 
 app.get(
@@ -117,17 +117,21 @@ app.get(
     const { operationName } = req.params;
     const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
       req.query as Record<string, string>,
-      'args'
+      'args',
     );
     if (!operationArgs) {
       sendResult(res, notOk.BadRequest('Missing args'));
     } else {
       sendResult(
         res,
-        await executePublishedClientOperationFromJson(publishedClient, operationName, operationArgs)
+        await executePublishedClientOperationFromJson(
+          publishedClient,
+          operationName,
+          operationArgs,
+        ),
       );
     }
-  })
+  }),
 );
 
 const httpServer = app.listen(port, () => {
@@ -147,7 +151,7 @@ async function shutdown(signal: NodeJS.Signals) {
     logger.error(
       'Error while shutting down: %s (%s)',
       shutdownResult.error,
-      shutdownResult.message
+      shutdownResult.message,
     );
   }
 

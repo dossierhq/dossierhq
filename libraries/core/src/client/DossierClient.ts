@@ -373,7 +373,7 @@ export interface DossierExceptionClient<
   releaseAdvisoryLock(name: string, handle: number): Promise<AdvisoryLockReleasePayload>;
 }
 
-export const AdminClientOperationName = {
+export const DossierClientOperationName = {
   acquireAdvisoryLock: 'acquireAdvisoryLock',
   archiveEntity: 'archiveEntity',
   createEntity: 'createEntity',
@@ -395,7 +395,7 @@ export const AdminClientOperationName = {
   updateSchemaSpecification: 'updateSchemaSpecification',
   upsertEntity: 'upsertEntity',
 } as const;
-type AdminClientOperationName = keyof typeof AdminClientOperationName;
+type DossierClientOperationName = keyof typeof DossierClientOperationName;
 
 type MethodParameters<
   TName extends keyof DossierClient,
@@ -420,119 +420,119 @@ type MethodReturnTypeError<
   TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
-interface AdminClientOperationArguments {
-  [AdminClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
-  [AdminClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
-  [AdminClientOperationName.createEntity]: MethodParameters<'createEntity'>;
-  [AdminClientOperationName.getChangelogEvents]: MethodParameters<'getChangelogEvents'>;
-  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodParameters<'getChangelogEventsTotalCount'>;
-  [AdminClientOperationName.getEntities]: MethodParameters<'getEntities'>;
-  [AdminClientOperationName.getEntitiesSample]: MethodParameters<'getEntitiesSample'>;
-  [AdminClientOperationName.getEntitiesTotalCount]: MethodParameters<'getEntitiesTotalCount'>;
-  [AdminClientOperationName.getEntity]: MethodParameters<'getEntity'>;
-  [AdminClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
-  [AdminClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
-  [AdminClientOperationName.processDirtyEntity]: MethodParameters<'processDirtyEntity'>;
-  [AdminClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
-  [AdminClientOperationName.releaseAdvisoryLock]: MethodParameters<'releaseAdvisoryLock'>;
-  [AdminClientOperationName.renewAdvisoryLock]: MethodParameters<'renewAdvisoryLock'>;
-  [AdminClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
-  [AdminClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
-  [AdminClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
-  [AdminClientOperationName.updateSchemaSpecification]: MethodParameters<'updateSchemaSpecification'>;
-  [AdminClientOperationName.upsertEntity]: MethodParameters<'upsertEntity'>;
+interface DossierClientOperationArguments {
+  [DossierClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
+  [DossierClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
+  [DossierClientOperationName.createEntity]: MethodParameters<'createEntity'>;
+  [DossierClientOperationName.getChangelogEvents]: MethodParameters<'getChangelogEvents'>;
+  [DossierClientOperationName.getChangelogEventsTotalCount]: MethodParameters<'getChangelogEventsTotalCount'>;
+  [DossierClientOperationName.getEntities]: MethodParameters<'getEntities'>;
+  [DossierClientOperationName.getEntitiesSample]: MethodParameters<'getEntitiesSample'>;
+  [DossierClientOperationName.getEntitiesTotalCount]: MethodParameters<'getEntitiesTotalCount'>;
+  [DossierClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [DossierClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
+  [DossierClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
+  [DossierClientOperationName.processDirtyEntity]: MethodParameters<'processDirtyEntity'>;
+  [DossierClientOperationName.publishEntities]: MethodParameters<'publishEntities'>;
+  [DossierClientOperationName.releaseAdvisoryLock]: MethodParameters<'releaseAdvisoryLock'>;
+  [DossierClientOperationName.renewAdvisoryLock]: MethodParameters<'renewAdvisoryLock'>;
+  [DossierClientOperationName.unarchiveEntity]: MethodParameters<'unarchiveEntity'>;
+  [DossierClientOperationName.unpublishEntities]: MethodParameters<'unpublishEntities'>;
+  [DossierClientOperationName.updateEntity]: MethodParameters<'updateEntity'>;
+  [DossierClientOperationName.updateSchemaSpecification]: MethodParameters<'updateSchemaSpecification'>;
+  [DossierClientOperationName.upsertEntity]: MethodParameters<'upsertEntity'>;
 }
 
-interface AdminClientOperationReturnOk {
-  [AdminClientOperationName.acquireAdvisoryLock]: MethodReturnTypeOk<'acquireAdvisoryLock'>;
-  [AdminClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
-  [AdminClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
-  [AdminClientOperationName.getChangelogEvents]: MethodReturnTypeOk<'getChangelogEvents'>;
-  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeOk<'getChangelogEventsTotalCount'>;
-  [AdminClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
-  [AdminClientOperationName.getEntitiesSample]: MethodReturnTypeOk<'getEntitiesSample'>;
-  [AdminClientOperationName.getEntitiesTotalCount]: MethodReturnTypeOk<'getEntitiesTotalCount'>;
-  [AdminClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
-  [AdminClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
-  [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
-  [AdminClientOperationName.processDirtyEntity]: MethodReturnTypeOk<'processDirtyEntity'>;
-  [AdminClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
-  [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeOk<'releaseAdvisoryLock'>;
-  [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeOk<'renewAdvisoryLock'>;
-  [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeOk<'unarchiveEntity'>;
-  [AdminClientOperationName.unpublishEntities]: MethodReturnTypeOk<'unpublishEntities'>;
-  [AdminClientOperationName.updateEntity]: MethodReturnTypeOk<'updateEntity'>;
-  [AdminClientOperationName.updateSchemaSpecification]: MethodReturnTypeOk<'updateSchemaSpecification'>;
-  [AdminClientOperationName.upsertEntity]: MethodReturnTypeOk<'upsertEntity'>;
+interface DossierClientOperationReturnOk {
+  [DossierClientOperationName.acquireAdvisoryLock]: MethodReturnTypeOk<'acquireAdvisoryLock'>;
+  [DossierClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
+  [DossierClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
+  [DossierClientOperationName.getChangelogEvents]: MethodReturnTypeOk<'getChangelogEvents'>;
+  [DossierClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeOk<'getChangelogEventsTotalCount'>;
+  [DossierClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
+  [DossierClientOperationName.getEntitiesSample]: MethodReturnTypeOk<'getEntitiesSample'>;
+  [DossierClientOperationName.getEntitiesTotalCount]: MethodReturnTypeOk<'getEntitiesTotalCount'>;
+  [DossierClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [DossierClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
+  [DossierClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
+  [DossierClientOperationName.processDirtyEntity]: MethodReturnTypeOk<'processDirtyEntity'>;
+  [DossierClientOperationName.publishEntities]: MethodReturnTypeOk<'publishEntities'>;
+  [DossierClientOperationName.releaseAdvisoryLock]: MethodReturnTypeOk<'releaseAdvisoryLock'>;
+  [DossierClientOperationName.renewAdvisoryLock]: MethodReturnTypeOk<'renewAdvisoryLock'>;
+  [DossierClientOperationName.unarchiveEntity]: MethodReturnTypeOk<'unarchiveEntity'>;
+  [DossierClientOperationName.unpublishEntities]: MethodReturnTypeOk<'unpublishEntities'>;
+  [DossierClientOperationName.updateEntity]: MethodReturnTypeOk<'updateEntity'>;
+  [DossierClientOperationName.updateSchemaSpecification]: MethodReturnTypeOk<'updateSchemaSpecification'>;
+  [DossierClientOperationName.upsertEntity]: MethodReturnTypeOk<'upsertEntity'>;
 }
 
-interface AdminClientOperationReturnError {
-  [AdminClientOperationName.acquireAdvisoryLock]: MethodReturnTypeError<'acquireAdvisoryLock'>;
-  [AdminClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
-  [AdminClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
-  [AdminClientOperationName.getChangelogEvents]: MethodReturnTypeError<'getChangelogEvents'>;
-  [AdminClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeError<'getChangelogEventsTotalCount'>;
-  [AdminClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
-  [AdminClientOperationName.getEntitiesSample]: MethodReturnTypeError<'getEntitiesSample'>;
-  [AdminClientOperationName.getEntitiesTotalCount]: MethodReturnTypeError<'getEntitiesTotalCount'>;
-  [AdminClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
-  [AdminClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
-  [AdminClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
-  [AdminClientOperationName.processDirtyEntity]: MethodReturnTypeError<'processDirtyEntity'>;
-  [AdminClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
-  [AdminClientOperationName.releaseAdvisoryLock]: MethodReturnTypeError<'releaseAdvisoryLock'>;
-  [AdminClientOperationName.renewAdvisoryLock]: MethodReturnTypeError<'renewAdvisoryLock'>;
-  [AdminClientOperationName.unarchiveEntity]: MethodReturnTypeError<'unarchiveEntity'>;
-  [AdminClientOperationName.unpublishEntities]: MethodReturnTypeError<'unpublishEntities'>;
-  [AdminClientOperationName.updateEntity]: MethodReturnTypeError<'updateEntity'>;
-  [AdminClientOperationName.updateSchemaSpecification]: MethodReturnTypeError<'updateSchemaSpecification'>;
-  [AdminClientOperationName.upsertEntity]: MethodReturnTypeError<'upsertEntity'>;
+interface DossierClientOperationReturnError {
+  [DossierClientOperationName.acquireAdvisoryLock]: MethodReturnTypeError<'acquireAdvisoryLock'>;
+  [DossierClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
+  [DossierClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
+  [DossierClientOperationName.getChangelogEvents]: MethodReturnTypeError<'getChangelogEvents'>;
+  [DossierClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeError<'getChangelogEventsTotalCount'>;
+  [DossierClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
+  [DossierClientOperationName.getEntitiesSample]: MethodReturnTypeError<'getEntitiesSample'>;
+  [DossierClientOperationName.getEntitiesTotalCount]: MethodReturnTypeError<'getEntitiesTotalCount'>;
+  [DossierClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [DossierClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
+  [DossierClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
+  [DossierClientOperationName.processDirtyEntity]: MethodReturnTypeError<'processDirtyEntity'>;
+  [DossierClientOperationName.publishEntities]: MethodReturnTypeError<'publishEntities'>;
+  [DossierClientOperationName.releaseAdvisoryLock]: MethodReturnTypeError<'releaseAdvisoryLock'>;
+  [DossierClientOperationName.renewAdvisoryLock]: MethodReturnTypeError<'renewAdvisoryLock'>;
+  [DossierClientOperationName.unarchiveEntity]: MethodReturnTypeError<'unarchiveEntity'>;
+  [DossierClientOperationName.unpublishEntities]: MethodReturnTypeError<'unpublishEntities'>;
+  [DossierClientOperationName.updateEntity]: MethodReturnTypeError<'updateEntity'>;
+  [DossierClientOperationName.updateSchemaSpecification]: MethodReturnTypeError<'updateSchemaSpecification'>;
+  [DossierClientOperationName.upsertEntity]: MethodReturnTypeError<'upsertEntity'>;
 }
 
-export type AdminClientOperation<
-  TName extends AdminClientOperationName = AdminClientOperationName,
+export type DossierClientOperation<
+  TName extends DossierClientOperationName = DossierClientOperationName,
 > = Operation<
   TName,
-  AdminClientOperationArguments[TName],
-  AdminClientOperationReturnOk[TName],
-  AdminClientOperationReturnError[TName]
+  DossierClientOperationArguments[TName],
+  DossierClientOperationReturnOk[TName],
+  DossierClientOperationReturnError[TName]
 >;
 
-export type AdminClientMiddleware<TContext extends ClientContext> = Middleware<
+export type DossierClientMiddleware<TContext extends ClientContext> = Middleware<
   TContext,
-  AdminClientOperation
+  DossierClientOperation
 >;
 
-export type AdminClientJsonOperationArgs<
-  TName extends AdminClientOperationName = AdminClientOperationName,
-> = AdminClientOperationArguments[TName];
+export type DossierClientJsonOperationArgs<
+  TName extends DossierClientOperationName = DossierClientOperationName,
+> = DossierClientOperationArguments[TName];
 
-export const AdminClientModifyingOperations: Readonly<Set<string>> = /* @__PURE__ */ (() =>
+export const DossierClientModifyingOperations: Readonly<Set<string>> = /* @__PURE__ */ (() =>
   new Set([
-    AdminClientOperationName.acquireAdvisoryLock,
-    AdminClientOperationName.archiveEntity,
-    AdminClientOperationName.createEntity,
-    AdminClientOperationName.processDirtyEntity,
-    AdminClientOperationName.publishEntities,
-    AdminClientOperationName.releaseAdvisoryLock,
-    AdminClientOperationName.renewAdvisoryLock,
-    AdminClientOperationName.unarchiveEntity,
-    AdminClientOperationName.unpublishEntities,
-    AdminClientOperationName.updateEntity,
-    AdminClientOperationName.updateSchemaSpecification,
-    AdminClientOperationName.upsertEntity,
-  ] satisfies AdminClientOperationName[]))();
+    DossierClientOperationName.acquireAdvisoryLock,
+    DossierClientOperationName.archiveEntity,
+    DossierClientOperationName.createEntity,
+    DossierClientOperationName.processDirtyEntity,
+    DossierClientOperationName.publishEntities,
+    DossierClientOperationName.releaseAdvisoryLock,
+    DossierClientOperationName.renewAdvisoryLock,
+    DossierClientOperationName.unarchiveEntity,
+    DossierClientOperationName.unpublishEntities,
+    DossierClientOperationName.updateEntity,
+    DossierClientOperationName.updateSchemaSpecification,
+    DossierClientOperationName.upsertEntity,
+  ] satisfies DossierClientOperationName[]))();
 
-class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
+class BaseDossierClient<TContext extends ClientContext> implements DossierClient {
   private readonly context: TContext | ContextProvider<TContext>;
-  private readonly pipeline: AdminClientMiddleware<TContext>[];
+  private readonly pipeline: DossierClientMiddleware<TContext>[];
 
   constructor({
     context,
     pipeline,
   }: {
     context: TContext | ContextProvider<TContext>;
-    pipeline: AdminClientMiddleware<TContext>[];
+    pipeline: DossierClientMiddleware<TContext>[];
   }) {
     this.context = context;
     this.pipeline = pipeline;
@@ -545,7 +545,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     includeMigrations: boolean;
   }): PromiseResult<SchemaSpecification, typeof ErrorType.Generic> {
     return this.executeOperation({
-      name: AdminClientOperationName.getSchemaSpecification,
+      name: DossierClientOperationName.getSchemaSpecification,
       args: [options],
       modifies: false,
     });
@@ -566,7 +566,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.updateSchemaSpecification,
+      name: DossierClientOperationName.updateSchemaSpecification,
       args: [schemaSpec, options],
       modifies: true,
     });
@@ -574,9 +574,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   getEntity(
     reference: EntityReference | EntityVersionReference,
-  ): MethodReturnType<typeof AdminClientOperationName.getEntity> {
+  ): MethodReturnType<typeof DossierClientOperationName.getEntity> {
     return this.executeOperation({
-      name: AdminClientOperationName.getEntity,
+      name: DossierClientOperationName.getEntity,
       args: [reference],
       modifies: false,
     });
@@ -584,9 +584,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   getEntityList(
     references: EntityReference[],
-  ): MethodReturnType<typeof AdminClientOperationName.getEntityList> {
+  ): MethodReturnType<typeof DossierClientOperationName.getEntityList> {
     return this.executeOperation({
-      name: AdminClientOperationName.getEntityList,
+      name: DossierClientOperationName.getEntityList,
       args: [references],
       modifies: false,
     });
@@ -595,9 +595,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
   getEntities(
     query?: EntityQuery,
     paging?: Paging,
-  ): MethodReturnType<typeof AdminClientOperationName.getEntities> {
+  ): MethodReturnType<typeof DossierClientOperationName.getEntities> {
     return this.executeOperation({
-      name: AdminClientOperationName.getEntities,
+      name: DossierClientOperationName.getEntities,
       args: [query, paging],
       modifies: false,
     });
@@ -605,9 +605,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   getEntitiesTotalCount(
     query?: EntitySharedQuery,
-  ): MethodReturnType<typeof AdminClientOperationName.getEntitiesTotalCount> {
+  ): MethodReturnType<typeof DossierClientOperationName.getEntitiesTotalCount> {
     return this.executeOperation({
-      name: AdminClientOperationName.getEntitiesTotalCount,
+      name: DossierClientOperationName.getEntitiesTotalCount,
       args: [query],
       modifies: false,
     });
@@ -621,7 +621,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.getEntitiesSample,
+      name: DossierClientOperationName.getEntitiesSample,
       args: [query, options],
       modifies: false,
     });
@@ -638,7 +638,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.createEntity,
+      name: DossierClientOperationName.createEntity,
       args: [entity, options],
       modifies: true,
     }) as PromiseResult<
@@ -661,7 +661,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.updateEntity,
+      name: DossierClientOperationName.updateEntity,
       args: [entity, options],
       modifies: true,
     }) as PromiseResult<
@@ -681,7 +681,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.upsertEntity,
+      name: DossierClientOperationName.upsertEntity,
       args: [entity, options],
       modifies: true,
     }) as PromiseResult<
@@ -693,9 +693,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
   getChangelogEvents(
     query?: ChangelogEventQuery,
     paging?: Paging,
-  ): MethodReturnType<typeof AdminClientOperationName.getChangelogEvents> {
+  ): MethodReturnType<typeof DossierClientOperationName.getChangelogEvents> {
     return this.executeOperation({
-      name: AdminClientOperationName.getChangelogEvents,
+      name: DossierClientOperationName.getChangelogEvents,
       args: [query, paging],
       modifies: false,
     });
@@ -703,9 +703,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   getChangelogEventsTotalCount(
     query?: ChangelogEventQuery,
-  ): MethodReturnType<typeof AdminClientOperationName.getChangelogEventsTotalCount> {
+  ): MethodReturnType<typeof DossierClientOperationName.getChangelogEventsTotalCount> {
     return this.executeOperation({
-      name: AdminClientOperationName.getChangelogEventsTotalCount,
+      name: DossierClientOperationName.getChangelogEventsTotalCount,
       args: [query],
       modifies: false,
     });
@@ -713,9 +713,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   publishEntities(
     references: EntityVersionReference[],
-  ): MethodReturnType<typeof AdminClientOperationName.publishEntities> {
+  ): MethodReturnType<typeof DossierClientOperationName.publishEntities> {
     return this.executeOperation({
-      name: AdminClientOperationName.publishEntities,
+      name: DossierClientOperationName.publishEntities,
       args: [references],
       modifies: true,
     });
@@ -723,9 +723,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   unpublishEntities(
     references: EntityReference[],
-  ): MethodReturnType<typeof AdminClientOperationName.unpublishEntities> {
+  ): MethodReturnType<typeof DossierClientOperationName.unpublishEntities> {
     return this.executeOperation({
-      name: AdminClientOperationName.unpublishEntities,
+      name: DossierClientOperationName.unpublishEntities,
       args: [references],
       modifies: true,
     });
@@ -733,9 +733,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   archiveEntity(
     reference: EntityReference,
-  ): MethodReturnType<typeof AdminClientOperationName.archiveEntity> {
+  ): MethodReturnType<typeof DossierClientOperationName.archiveEntity> {
     return this.executeOperation({
-      name: AdminClientOperationName.archiveEntity,
+      name: DossierClientOperationName.archiveEntity,
       args: [reference],
       modifies: true,
     });
@@ -743,9 +743,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   unarchiveEntity(
     reference: EntityReference,
-  ): MethodReturnType<typeof AdminClientOperationName.unarchiveEntity> {
+  ): MethodReturnType<typeof DossierClientOperationName.unarchiveEntity> {
     return this.executeOperation({
-      name: AdminClientOperationName.unarchiveEntity,
+      name: DossierClientOperationName.unarchiveEntity,
       args: [reference],
       modifies: true,
     });
@@ -753,9 +753,9 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
 
   processDirtyEntity(
     reference: EntityReference,
-  ): MethodReturnType<typeof AdminClientOperationName.processDirtyEntity> {
+  ): MethodReturnType<typeof DossierClientOperationName.processDirtyEntity> {
     return this.executeOperation({
-      name: AdminClientOperationName.processDirtyEntity,
+      name: DossierClientOperationName.processDirtyEntity,
       args: [reference],
       modifies: true,
     });
@@ -769,7 +769,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     typeof ErrorType.BadRequest | typeof ErrorType.Conflict | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.acquireAdvisoryLock,
+      name: DossierClientOperationName.acquireAdvisoryLock,
       args: [name, options],
       modifies: true,
     });
@@ -783,7 +783,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.renewAdvisoryLock,
+      name: DossierClientOperationName.renewAdvisoryLock,
       args: [name, handle],
       modifies: true,
     });
@@ -797,19 +797,22 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
     typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: AdminClientOperationName.releaseAdvisoryLock,
+      name: DossierClientOperationName.releaseAdvisoryLock,
       args: [name, handle],
       modifies: true,
     });
   }
 
   toExceptionClient(): DossierExceptionClient {
-    return new AdminExceptionClientWrapper(this);
+    return new DossierExceptionClientWrapper(this);
   }
 
-  private async executeOperation<TName extends AdminClientOperationName>(
-    operation: OperationWithoutCallbacks<AdminClientOperation<TName>>,
-  ): PromiseResult<AdminClientOperationReturnOk[TName], AdminClientOperationReturnError[TName]> {
+  private async executeOperation<TName extends DossierClientOperationName>(
+    operation: OperationWithoutCallbacks<DossierClientOperation<TName>>,
+  ): PromiseResult<
+    DossierClientOperationReturnOk[TName],
+    DossierClientOperationReturnError[TName]
+  > {
     let context: TContext;
     if (typeof this.context === 'function') {
       const contextResult = await this.context();
@@ -829,7 +832,7 @@ class BaseAdminClient<TContext extends ClientContext> implements DossierClient {
   }
 }
 
-class AdminExceptionClientWrapper implements DossierExceptionClient {
+class DossierExceptionClientWrapper implements DossierExceptionClient {
   readonly client: DossierClient;
 
   constructor(client: DossierClient) {
@@ -967,122 +970,122 @@ class AdminExceptionClientWrapper implements DossierExceptionClient {
   }
 }
 
-export function createBaseAdminClient<
+export function createBaseDossierClient<
   TContext extends ClientContext,
   TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
-  pipeline: AdminClientMiddleware<TContext>[];
+  pipeline: DossierClientMiddleware<TContext>[];
 }): TClient {
-  return new BaseAdminClient(option) as unknown as TClient;
+  return new BaseDossierClient(option) as unknown as TClient;
 }
 
-export async function executeAdminClientOperationFromJson(
-  adminClient: DossierClient<Entity<string, object>, Component<string, object>>,
-  operationName: LooseAutocomplete<AdminClientOperationName>,
-  operationArgs: AdminClientJsonOperationArgs,
+export async function executeDossierClientOperationFromJson(
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
+  operationName: LooseAutocomplete<DossierClientOperationName>,
+  operationArgs: DossierClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
-  const name = operationName as AdminClientOperationName;
+  const name = operationName as DossierClientOperationName;
   switch (name) {
-    case AdminClientOperationName.acquireAdvisoryLock: {
+    case DossierClientOperationName.acquireAdvisoryLock: {
       const [name, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.acquireAdvisoryLock];
-      return await adminClient.acquireAdvisoryLock(name, options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.acquireAdvisoryLock];
+      return await client.acquireAdvisoryLock(name, options);
     }
-    case AdminClientOperationName.archiveEntity: {
+    case DossierClientOperationName.archiveEntity: {
       const [reference] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.archiveEntity];
-      return await adminClient.archiveEntity(reference);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.archiveEntity];
+      return await client.archiveEntity(reference);
     }
-    case AdminClientOperationName.createEntity: {
+    case DossierClientOperationName.createEntity: {
       const [entity, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.createEntity];
-      return await adminClient.createEntity(entity, options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.createEntity];
+      return await client.createEntity(entity, options);
     }
-    case AdminClientOperationName.getChangelogEvents: {
+    case DossierClientOperationName.getChangelogEvents: {
       const [query, paging] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogEvents];
-      return await adminClient.getChangelogEvents(query, paging);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getChangelogEvents];
+      return await client.getChangelogEvents(query, paging);
     }
-    case AdminClientOperationName.getChangelogEventsTotalCount: {
+    case DossierClientOperationName.getChangelogEventsTotalCount: {
       const [query] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getChangelogEventsTotalCount];
-      return await adminClient.getChangelogEventsTotalCount(query);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getChangelogEventsTotalCount];
+      return await client.getChangelogEventsTotalCount(query);
     }
-    case AdminClientOperationName.getEntities: {
+    case DossierClientOperationName.getEntities: {
       const [query, paging] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntities];
-      return await adminClient.getEntities(query, paging);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getEntities];
+      return await client.getEntities(query, paging);
     }
-    case AdminClientOperationName.getEntitiesSample: {
+    case DossierClientOperationName.getEntitiesSample: {
       const [query, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntitiesSample];
-      return await adminClient.getEntitiesSample(query, options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getEntitiesSample];
+      return await client.getEntitiesSample(query, options);
     }
-    case AdminClientOperationName.getEntitiesTotalCount: {
+    case DossierClientOperationName.getEntitiesTotalCount: {
       const [query] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntitiesTotalCount];
-      return await adminClient.getEntitiesTotalCount(query);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getEntitiesTotalCount];
+      return await client.getEntitiesTotalCount(query);
     }
-    case AdminClientOperationName.getEntity: {
+    case DossierClientOperationName.getEntity: {
       const [reference] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntity];
-      return await adminClient.getEntity(reference);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getEntity];
+      return await client.getEntity(reference);
     }
-    case AdminClientOperationName.getEntityList: {
+    case DossierClientOperationName.getEntityList: {
       const [references] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getEntityList];
-      return await adminClient.getEntityList(references);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getEntityList];
+      return await client.getEntityList(references);
     }
-    case AdminClientOperationName.getSchemaSpecification: {
+    case DossierClientOperationName.getSchemaSpecification: {
       const [options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.getSchemaSpecification];
-      return await adminClient.getSchemaSpecification(options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.getSchemaSpecification];
+      return await client.getSchemaSpecification(options);
     }
-    case AdminClientOperationName.processDirtyEntity: {
+    case DossierClientOperationName.processDirtyEntity: {
       const [reference] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.processDirtyEntity];
-      return await adminClient.processDirtyEntity(reference);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.processDirtyEntity];
+      return await client.processDirtyEntity(reference);
     }
-    case AdminClientOperationName.publishEntities: {
+    case DossierClientOperationName.publishEntities: {
       const [references] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.publishEntities];
-      return await adminClient.publishEntities(references);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.publishEntities];
+      return await client.publishEntities(references);
     }
-    case AdminClientOperationName.releaseAdvisoryLock: {
+    case DossierClientOperationName.releaseAdvisoryLock: {
       const [name, handle] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.releaseAdvisoryLock];
-      return await adminClient.releaseAdvisoryLock(name, handle);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.releaseAdvisoryLock];
+      return await client.releaseAdvisoryLock(name, handle);
     }
-    case AdminClientOperationName.renewAdvisoryLock: {
+    case DossierClientOperationName.renewAdvisoryLock: {
       const [name, handle] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.renewAdvisoryLock];
-      return await adminClient.renewAdvisoryLock(name, handle);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.renewAdvisoryLock];
+      return await client.renewAdvisoryLock(name, handle);
     }
-    case AdminClientOperationName.unarchiveEntity: {
+    case DossierClientOperationName.unarchiveEntity: {
       const [reference] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.unarchiveEntity];
-      return await adminClient.unarchiveEntity(reference);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.unarchiveEntity];
+      return await client.unarchiveEntity(reference);
     }
-    case AdminClientOperationName.unpublishEntities: {
+    case DossierClientOperationName.unpublishEntities: {
       const [references] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.unpublishEntities];
-      return await adminClient.unpublishEntities(references);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.unpublishEntities];
+      return await client.unpublishEntities(references);
     }
-    case AdminClientOperationName.updateEntity: {
+    case DossierClientOperationName.updateEntity: {
       const [entity, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.updateEntity];
-      return await adminClient.updateEntity(entity, options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.updateEntity];
+      return await client.updateEntity(entity, options);
     }
-    case AdminClientOperationName.updateSchemaSpecification: {
+    case DossierClientOperationName.updateSchemaSpecification: {
       const [schemaSpec, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.updateSchemaSpecification];
-      return await adminClient.updateSchemaSpecification(schemaSpec, options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.updateSchemaSpecification];
+      return await client.updateSchemaSpecification(schemaSpec, options);
     }
-    case AdminClientOperationName.upsertEntity: {
+    case DossierClientOperationName.upsertEntity: {
       const [entity, options] =
-        operationArgs as AdminClientOperationArguments[typeof AdminClientOperationName.upsertEntity];
-      return await adminClient.upsertEntity(entity, options);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.upsertEntity];
+      return await client.upsertEntity(entity, options);
     }
     default: {
       name satisfies never;
@@ -1091,8 +1094,8 @@ export async function executeAdminClientOperationFromJson(
   }
 }
 
-export function convertJsonAdminClientResult<
-  TName extends AdminClientOperationName,
+export function convertJsonDossierClientResult<
+  TName extends DossierClientOperationName,
   TClient extends DossierClient<Entity<string, object>, Component<string, object>> = DossierClient,
 >(
   operationName: TName,
@@ -1104,33 +1107,32 @@ export function convertJsonAdminClientResult<
   }
   const { value } = jsonResult;
   switch (operationName) {
-    case AdminClientOperationName.acquireAdvisoryLock: {
+    case DossierClientOperationName.acquireAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.acquireAdvisoryLock
+        typeof DossierClientOperationName.acquireAdvisoryLock
       > = ok(value as AdvisoryLockPayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.archiveEntity: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.archiveEntity> =
-        ok(
-          convertJsonPublishingResult(
-            value as JsonPublishingResult<EntityArchivePayload['effect']>,
-          ),
-        );
+    case DossierClientOperationName.archiveEntity: {
+      const result: MethodReturnTypeWithoutPromise<
+        typeof DossierClientOperationName.archiveEntity
+      > = ok(
+        convertJsonPublishingResult(value as JsonPublishingResult<EntityArchivePayload['effect']>),
+      );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.createEntity: {
+    case DossierClientOperationName.createEntity: {
       const valueTyped = value as JsonEntityCreatePayload;
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.createEntity> =
+      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.createEntity> =
         ok({
           ...valueTyped,
           entity: convertJsonEntity(valueTyped.entity),
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getChangelogEvents: {
+    case DossierClientOperationName.getChangelogEvents: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.getChangelogEvents
+        typeof DossierClientOperationName.getChangelogEvents
       > = ok(
         convertJsonConnection(
           value as JsonConnection<JsonEdge<JsonChangelogEvent, typeof ErrorType.Generic>> | null,
@@ -1139,59 +1141,59 @@ export function convertJsonAdminClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getChangelogEventsTotalCount: {
+    case DossierClientOperationName.getChangelogEventsTotalCount: {
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getEntities: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntities> =
+    case DossierClientOperationName.getEntities: {
+      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.getEntities> =
         ok(
           convertJsonConnection(
             value as JsonConnection<JsonEdge<JsonEntity, ErrorType>> | null,
-            convertJsonAdminEntityEdge,
+            convertJsonEntityEdge,
           ),
         );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getEntitiesSample: {
+    case DossierClientOperationName.getEntitiesSample: {
       const payload = value as EntitySamplingPayload<JsonEntity>;
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.getEntitiesSample
+        typeof DossierClientOperationName.getEntitiesSample
       > = ok({
         ...payload,
         items: payload.items.map((it) => convertJsonEntity(it)),
       });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getEntitiesTotalCount:
+    case DossierClientOperationName.getEntitiesTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
 
-    case AdminClientOperationName.getEntity: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntity> = ok(
-        convertJsonEntity(value as JsonEntity),
+    case DossierClientOperationName.getEntity: {
+      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.getEntity> =
+        ok(convertJsonEntity(value as JsonEntity));
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
+    case DossierClientOperationName.getEntityList: {
+      const result: MethodReturnTypeWithoutPromise<
+        typeof DossierClientOperationName.getEntityList
+      > = ok(
+        (value as JsonResult<JsonEntity, typeof ErrorType.NotFound>[]).map((jsonItemResult) => {
+          const itemResult = convertJsonResult(jsonItemResult);
+          return itemResult.isOk() ? itemResult.map(convertJsonEntity) : itemResult;
+        }),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.getEntityList: {
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.getEntityList> =
-        ok(
-          (value as JsonResult<JsonEntity, typeof ErrorType.NotFound>[]).map((jsonItemResult) => {
-            const itemResult = convertJsonResult(jsonItemResult);
-            return itemResult.isOk() ? itemResult.map(convertJsonEntity) : itemResult;
-          }),
-        );
-      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
-    }
-    case AdminClientOperationName.getSchemaSpecification:
+    case DossierClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
-    case AdminClientOperationName.processDirtyEntity: {
+    case DossierClientOperationName.processDirtyEntity: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.processDirtyEntity
+        typeof DossierClientOperationName.processDirtyEntity
       > = ok(value as EntityProcessDirtyPayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.publishEntities: {
+    case DossierClientOperationName.publishEntities: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.publishEntities
+        typeof DossierClientOperationName.publishEntities
       > = ok(
         (value as JsonPublishingResult<EntityPublishPayload['effect']>[]).map(
           convertJsonPublishingResult,
@@ -1199,21 +1201,21 @@ export function convertJsonAdminClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.releaseAdvisoryLock: {
+    case DossierClientOperationName.releaseAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.releaseAdvisoryLock
+        typeof DossierClientOperationName.releaseAdvisoryLock
       > = ok(value as AdvisoryLockReleasePayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.renewAdvisoryLock: {
+    case DossierClientOperationName.renewAdvisoryLock: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.renewAdvisoryLock
+        typeof DossierClientOperationName.renewAdvisoryLock
       > = ok(value as AdvisoryLockPayload);
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.unarchiveEntity: {
+    case DossierClientOperationName.unarchiveEntity: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.unarchiveEntity
+        typeof DossierClientOperationName.unarchiveEntity
       > = ok(
         convertJsonPublishingResult(
           value as JsonPublishingResult<EntityUnarchivePayload['effect']>,
@@ -1221,9 +1223,9 @@ export function convertJsonAdminClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.unpublishEntities: {
+    case DossierClientOperationName.unpublishEntities: {
       const result: MethodReturnTypeWithoutPromise<
-        typeof AdminClientOperationName.unpublishEntities
+        typeof DossierClientOperationName.unpublishEntities
       > = ok(
         (value as JsonPublishingResult<EntityUnpublishPayload['effect']>[]).map(
           convertJsonPublishingResult,
@@ -1231,20 +1233,20 @@ export function convertJsonAdminClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.updateEntity: {
+    case DossierClientOperationName.updateEntity: {
       const valueTyped = value as JsonEntityUpdatePayload;
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.updateEntity> =
+      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.updateEntity> =
         ok({
           ...valueTyped,
           entity: convertJsonEntity(valueTyped.entity),
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case AdminClientOperationName.updateSchemaSpecification:
+    case DossierClientOperationName.updateSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
-    case AdminClientOperationName.upsertEntity: {
+    case DossierClientOperationName.upsertEntity: {
       const valueTyped = value as JsonEntityUpsertPayload;
-      const result: MethodReturnTypeWithoutPromise<typeof AdminClientOperationName.upsertEntity> =
+      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.upsertEntity> =
         ok({
           ...valueTyped,
           entity: convertJsonEntity(valueTyped.entity),
@@ -1261,6 +1263,6 @@ export function convertJsonAdminClientResult<
   }
 }
 
-function convertJsonAdminEntityEdge(edge: JsonEdge<JsonEntity, ErrorType>) {
+function convertJsonEntityEdge(edge: JsonEdge<JsonEntity, ErrorType>) {
   return convertJsonEdge(edge, convertJsonEntity);
 }

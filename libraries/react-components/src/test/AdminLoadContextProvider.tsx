@@ -1,4 +1,4 @@
-import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
+import type { DossierClientMiddleware, ClientContext } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import { AdminDossierProvider } from '../components/AdminDossierProvider/AdminDossierProvider.js';
 import type { AdminDossierContextAdapter } from '../contexts/AdminDossierContext.js';
@@ -11,7 +11,7 @@ import {
 
 interface Props {
   adapter?: AdminDossierContextAdapter;
-  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
+  adminClientMiddleware?: DossierClientMiddleware<ClientContext>[];
   children: ReactNode;
 }
 

@@ -1,11 +1,11 @@
 import {
-  AdminClientOperationName,
-  createBaseAdminClient,
+  DossierClientOperationName,
+  createBaseDossierClient,
   notOk,
   ok,
   type DossierClient,
-  type AdminClientMiddleware,
-  type AdminClientOperation,
+  type DossierClientMiddleware,
+  type DossierClientOperation,
   type EntityCreate,
   type EntityUpdate,
   type EntityUpsert,
@@ -48,36 +48,38 @@ export function createServerAdminClient({
   authorizationAdapter: AuthorizationAdapter;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
-  middleware: AdminClientMiddleware<SessionContext>[];
+  middleware: DossierClientMiddleware<SessionContext>[];
 }): DossierClient {
   async function terminatingMiddleware(
     context: SessionContext,
-    operation: AdminClientOperation,
+    operation: DossierClientOperation,
   ): Promise<void> {
     switch (operation.name) {
-      case AdminClientOperationName.acquireAdvisoryLock: {
+      case DossierClientOperationName.acquireAdvisoryLock: {
         const {
           args: [name, options],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.acquireAdvisoryLock>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.acquireAdvisoryLock
+        >;
         resolve(await acquireAdvisoryLock(databaseAdapter, context, name, options));
         break;
       }
-      case AdminClientOperationName.archiveEntity: {
+      case DossierClientOperationName.archiveEntity: {
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.archiveEntity>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.archiveEntity>;
         resolve(
           await adminArchiveEntity(databaseAdapter, authorizationAdapter, context, reference),
         );
         break;
       }
-      case AdminClientOperationName.createEntity: {
+      case DossierClientOperationName.createEntity: {
         const {
           args: [entity, options],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.createEntity>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.createEntity>;
         resolve(
           await adminCreateEntity(
             serverImpl.getAdminSchema(),
@@ -90,11 +92,13 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getChangelogEvents: {
+      case DossierClientOperationName.getChangelogEvents: {
         const {
           args: [query, paging],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getChangelogEvents>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.getChangelogEvents
+        >;
         resolve(
           await eventGetChangelogEvents(
             authorizationAdapter,
@@ -106,12 +110,12 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getChangelogEventsTotalCount: {
+      case DossierClientOperationName.getChangelogEventsTotalCount: {
         const {
           args: [query],
           resolve,
-        } = operation as AdminClientOperation<
-          typeof AdminClientOperationName.getChangelogEventsTotalCount
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.getChangelogEventsTotalCount
         >;
         resolve(
           await eventGetChangelogEventsTotalCount(
@@ -123,11 +127,11 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntities: {
+      case DossierClientOperationName.getEntities: {
         const {
           args: [query, paging],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntities>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.getEntities>;
         resolve(
           await adminSearchEntities(
             serverImpl.getAdminSchema(),
@@ -140,11 +144,13 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntitiesSample: {
+      case DossierClientOperationName.getEntitiesSample: {
         const {
           args: [query, options],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntitiesSample>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.getEntitiesSample
+        >;
         resolve(
           await adminSampleEntities(
             serverImpl.getAdminSchema(),
@@ -157,12 +163,12 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntitiesTotalCount: {
+      case DossierClientOperationName.getEntitiesTotalCount: {
         const {
           args: [query],
           resolve,
-        } = operation as AdminClientOperation<
-          typeof AdminClientOperationName.getEntitiesTotalCount
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.getEntitiesTotalCount
         >;
         resolve(
           await adminGetTotalCount(
@@ -175,11 +181,11 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntity: {
+      case DossierClientOperationName.getEntity: {
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntity>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.getEntity>;
         resolve(
           await adminGetEntity(
             serverImpl.getAdminSchema(),
@@ -191,11 +197,11 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getEntityList: {
+      case DossierClientOperationName.getEntityList: {
         const {
           args: [references],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.getEntityList>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.getEntityList>;
         resolve(
           await adminGetEntityList(
             serverImpl.getAdminSchema(),
@@ -207,12 +213,12 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.getSchemaSpecification: {
+      case DossierClientOperationName.getSchemaSpecification: {
         const {
           args: [options],
           resolve,
-        } = operation as AdminClientOperation<
-          typeof AdminClientOperationName.getSchemaSpecification
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.getSchemaSpecification
         >;
         const schema = serverImpl.getAdminSchema();
         const includeMigrations = options?.includeMigrations ?? false;
@@ -224,11 +230,13 @@ export function createServerAdminClient({
         }
         break;
       }
-      case AdminClientOperationName.processDirtyEntity: {
+      case DossierClientOperationName.processDirtyEntity: {
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.processDirtyEntity>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.processDirtyEntity
+        >;
         if (context.session.type === 'readonly') {
           resolve(notOk.BadRequest('Readonly session used to process dirty entity'));
         } else if (!reference || typeof reference.id !== 'string') {
@@ -245,11 +253,11 @@ export function createServerAdminClient({
         }
         break;
       }
-      case AdminClientOperationName.publishEntities: {
+      case DossierClientOperationName.publishEntities: {
         const {
           args: [references],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.publishEntities>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.publishEntities>;
         resolve(
           await adminPublishEntities(
             serverImpl.getAdminSchema(),
@@ -261,47 +269,53 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.releaseAdvisoryLock: {
+      case DossierClientOperationName.releaseAdvisoryLock: {
         const {
           args: [name, handle],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.releaseAdvisoryLock>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.releaseAdvisoryLock
+        >;
         resolve(await releaseAdvisoryLock(databaseAdapter, context, name, handle));
         break;
       }
-      case AdminClientOperationName.renewAdvisoryLock: {
+      case DossierClientOperationName.renewAdvisoryLock: {
         const {
           args: [name, handle],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.renewAdvisoryLock>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.renewAdvisoryLock
+        >;
         resolve(await renewAdvisoryLock(databaseAdapter, context, name, handle));
         break;
       }
-      case AdminClientOperationName.unarchiveEntity: {
+      case DossierClientOperationName.unarchiveEntity: {
         const {
           args: [reference],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.unarchiveEntity>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.unarchiveEntity>;
         resolve(
           await adminUnarchiveEntity(databaseAdapter, authorizationAdapter, context, reference),
         );
         break;
       }
-      case AdminClientOperationName.unpublishEntities: {
+      case DossierClientOperationName.unpublishEntities: {
         const {
           args: [references],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.unpublishEntities>;
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.unpublishEntities
+        >;
         resolve(
           await adminUnpublishEntities(databaseAdapter, authorizationAdapter, context, references),
         );
         break;
       }
-      case AdminClientOperationName.updateEntity: {
+      case DossierClientOperationName.updateEntity: {
         const {
           args: [entity, options],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.updateEntity>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.updateEntity>;
         resolve(
           await adminUpdateEntity(
             serverImpl.getAdminSchema(),
@@ -314,12 +328,12 @@ export function createServerAdminClient({
         );
         break;
       }
-      case AdminClientOperationName.updateSchemaSpecification: {
+      case DossierClientOperationName.updateSchemaSpecification: {
         const {
           args: [schemaSpec, options],
           resolve,
-        } = operation as AdminClientOperation<
-          typeof AdminClientOperationName.updateSchemaSpecification
+        } = operation as DossierClientOperation<
+          typeof DossierClientOperationName.updateSchemaSpecification
         >;
         const includeMigrations = options?.includeMigrations ?? false;
         const result = await schemaUpdateSpecification(databaseAdapter, context, schemaSpec);
@@ -334,11 +348,11 @@ export function createServerAdminClient({
         resolve(result);
         break;
       }
-      case AdminClientOperationName.upsertEntity: {
+      case DossierClientOperationName.upsertEntity: {
         const {
           args: [entity, options],
           resolve,
-        } = operation as AdminClientOperation<typeof AdminClientOperationName.upsertEntity>;
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.upsertEntity>;
         resolve(
           await adminUpsertEntity(
             serverImpl.getAdminSchema(),
@@ -356,7 +370,7 @@ export function createServerAdminClient({
     }
   }
 
-  return createBaseAdminClient<SessionContext>({
+  return createBaseDossierClient<SessionContext>({
     context,
     pipeline: [...middleware, terminatingMiddleware],
   });

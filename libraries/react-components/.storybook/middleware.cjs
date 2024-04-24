@@ -1,9 +1,9 @@
 // @ts-check
 const {
-  AdminClientModifyingOperations,
+  DossierClientModifyingOperations,
   createConsoleLogger,
   decodeURLSearchParamsParam,
-  executeAdminClientOperationFromJson,
+  executeDossierClientOperationFromJson,
   executePublishedClientOperationFromJson,
   LoggingClientMiddleware,
   notOk,
@@ -59,13 +59,13 @@ const expressMiddleWare = (router) => {
         defaultAuthKeys,
       });
       const adminClient = server.createAdminClient(() => sessionResult, [LoggingClientMiddleware]);
-      const modifies = AdminClientModifyingOperations.has(name);
+      const modifies = DossierClientModifyingOperations.has(name);
       if (req.method === 'GET' && modifies) {
         return notOk.BadRequest('GET not allowed for modifying operations');
       } else if (req.method === 'PUT' && !modifies) {
         return notOk.BadRequest('PUT only allowed for modifying operations');
       }
-      return await executeAdminClientOperationFromJson(adminClient, name, operation);
+      return await executeDossierClientOperationFromJson(adminClient, name, operation);
     });
   });
   router.use('/api/published/:operationName', (req, res) => {

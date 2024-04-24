@@ -1,14 +1,14 @@
 import { useAuth0, type Auth0ContextInterface } from '@auth0/auth0-react';
 import {
-  convertJsonAdminClientResult,
+  convertJsonDossierClientResult,
   convertJsonPublishedClientResult,
-  createBaseAdminClient,
+  createBaseDossierClient,
   createBasePublishedClient,
   createConsoleLogger,
   encodeObjectToURLSearchParams,
   notOk,
   ok,
-  type AdminClientOperation,
+  type DossierClientOperation,
   type ClientContext,
   type PublishedClientOperation,
 } from '@dossierhq/core';
@@ -26,22 +26,22 @@ export function useAdminClient(): AppAdminClient | null {
     () =>
       isLoading
         ? null
-        : createBaseAdminClient<ClientContext, AppAdminClient>({
+        : createBaseDossierClient<ClientContext, AppAdminClient>({
             context: { logger },
             pipeline: [
               cachingAdminMiddleware,
               createAdminBackendMiddleware(isAuthenticated, getAccessTokenSilently),
             ],
           }),
-    [isLoading, isAuthenticated, getAccessTokenSilently, cachingAdminMiddleware]
+    [isLoading, isAuthenticated, getAccessTokenSilently, cachingAdminMiddleware],
   );
 }
 
 function createAdminBackendMiddleware(
   isAuthenticated: boolean,
-  getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently']
+  getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently'],
 ) {
-  return async (context: ClientContext, operation: AdminClientOperation): Promise<void> => {
+  return async (context: ClientContext, operation: DossierClientOperation): Promise<void> => {
     const authHeader: { Authorization?: string } = {};
     if (isAuthenticated) {
       const accessToken = await getAccessTokenSilently();
@@ -59,14 +59,14 @@ function createAdminBackendMiddleware(
       response = await fetch(
         `/api/admin/${operation.name}?${encodeObjectToURLSearchParams(
           { args: operation.args },
-          { keepEmptyObjects: true }
+          { keepEmptyObjects: true },
         )}`,
-        { headers: authHeader }
+        { headers: authHeader },
       );
     }
 
     const result = await getBodyAsJsonResult(response);
-    operation.resolve(convertJsonAdminClientResult(operation.name, result));
+    operation.resolve(convertJsonDossierClientResult(operation.name, result));
   };
 }
 
@@ -81,13 +81,13 @@ export function usePublishedClient(): AppPublishedClient | null {
             context: { logger },
             pipeline: [createPublishedBackendMiddleware(isAuthenticated, getAccessTokenSilently)],
           }),
-    [isLoading, isAuthenticated, getAccessTokenSilently]
+    [isLoading, isAuthenticated, getAccessTokenSilently],
   );
 }
 
 function createPublishedBackendMiddleware(
   isAuthenticated: boolean,
-  getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently']
+  getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently'],
 ) {
   return async (context: ClientContext, operation: PublishedClientOperation): Promise<void> => {
     const authHeader: { Authorization?: string } = {};
@@ -99,9 +99,9 @@ function createPublishedBackendMiddleware(
     const response = await fetch(
       `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
         { args: operation.args },
-        { keepEmptyObjects: true }
+        { keepEmptyObjects: true },
       )}`,
-      { headers: authHeader }
+      { headers: authHeader },
     );
     const result = await getBodyAsJsonResult(response);
     operation.resolve(convertJsonPublishedClientResult(operation.name, result));

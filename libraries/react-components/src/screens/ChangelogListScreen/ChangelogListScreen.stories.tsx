@@ -1,4 +1,4 @@
-import type { AdminClientMiddleware, ClientContext } from '@dossierhq/core';
+import type { DossierClientMiddleware, ClientContext } from '@dossierhq/core';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';
@@ -9,7 +9,7 @@ import { ChangelogListScreen, type ChangelogListScreenProps } from './ChangelogL
 type StoryProps = Omit<ChangelogListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlSearchParams?: URLSearchParams;
   ownCache: boolean;
-  adminClientMiddleware?: AdminClientMiddleware<ClientContext>[];
+  adminClientMiddleware?: DossierClientMiddleware<ClientContext>[];
 };
 
 const meta = {

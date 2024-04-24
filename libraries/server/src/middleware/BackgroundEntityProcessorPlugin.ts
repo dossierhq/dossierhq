@@ -1,8 +1,8 @@
 import {
-  AdminClientOperationName,
+  DossierClientOperationName,
   type DossierClient,
-  type AdminClientMiddleware,
-  type AdminClientOperation,
+  type DossierClientMiddleware,
+  type DossierClientOperation,
   type Logger,
   type OkFromResult,
   type PublishedClientMiddleware,
@@ -46,8 +46,8 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
   }
 
   onCreateAdminClient(
-    pipeline: AdminClientMiddleware<SessionContext>[],
-  ): AdminClientMiddleware<SessionContext>[] {
+    pipeline: DossierClientMiddleware<SessionContext>[],
+  ): DossierClientMiddleware<SessionContext>[] {
     return [this.adminMiddleware, ...pipeline];
   }
 
@@ -57,11 +57,11 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
     return [this.publishedMiddleware, ...pipeline];
   }
 
-  private adminMiddleware = async (_context: SessionContext, operation: AdminClientOperation) => {
+  private adminMiddleware = async (_context: SessionContext, operation: DossierClientOperation) => {
     this.lastOperationTimestamp = Date.now();
 
     const result = await operation.next();
-    if (operation.name === AdminClientOperationName.updateSchemaSpecification && result.isOk()) {
+    if (operation.name === DossierClientOperationName.updateSchemaSpecification && result.isOk()) {
       const payload = result.value as OkFromResult<
         ReturnType<DossierClient['updateSchemaSpecification']>
       >;

@@ -811,7 +811,7 @@
                   "format": 16,
                   "mode": "normal",
                   "style": "",
-                  "text": "executeAdminClientOperationFromJson()",
+                  "text": "executeDossierClientOperationFromJson()",
                   "type": "text",
                   "version": 1
                 },
@@ -926,7 +926,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "  AdminClientModifyingOperations",
+                  "text": "  DossierClientModifyingOperations",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -972,7 +972,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "  executeAdminClientOperationFromJson",
+                  "text": "  executeDossierClientOperationFromJson",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -1046,7 +1046,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminClientJsonOperationArgs",
+                  "text": "DossierClientJsonOperationArgs",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "class-name"
@@ -2607,7 +2607,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminClientJsonOperationArgs",
+                  "text": "DossierClientJsonOperationArgs",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "generic"
@@ -2855,7 +2855,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminClientModifyingOperations",
+                  "text": " DossierClientModifyingOperations",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -3542,7 +3542,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "executeAdminClientOperationFromJson",
+                  "text": "executeDossierClientOperationFromJson",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"
@@ -4267,7 +4267,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminClientJsonOperationArgs",
+                  "text": " DossierClientJsonOperationArgs",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -4328,7 +4328,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminClientModifyingOperations",
+                  "text": " DossierClientModifyingOperations",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -4766,7 +4766,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "executeAdminClientOperationFromJson",
+                  "text": "executeDossierClientOperationFromJson",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"
@@ -4992,7 +4992,7 @@
                   "format": 16,
                   "mode": "normal",
                   "style": "",
-                  "text": "createBaseAdminClient()",
+                  "text": "createBaseDossierClient()",
                   "type": "text",
                   "version": 1
                 },
@@ -5089,7 +5089,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "  convertJsonAdminClientResult",
+                  "text": "  convertJsonDossierClientResult",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -5112,7 +5112,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "  createBaseAdminClient",
+                  "text": "  createBaseDossierClient",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -5255,7 +5255,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminClientOperation",
+                  "text": "DossierClientOperation",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "class-name"
@@ -5945,7 +5945,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "createBaseAdminClient",
+                  "text": "createBaseDossierClient",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"
@@ -6505,7 +6505,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": " AdminClientOperation",
+                  "text": " DossierClientOperation",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -7994,7 +7994,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "convertJsonAdminClientResult",
+                  "text": "convertJsonDossierClientResult",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "function"

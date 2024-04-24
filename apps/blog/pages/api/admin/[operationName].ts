@@ -1,8 +1,8 @@
-import type { AdminClientJsonOperationArgs, ErrorType, Result } from '@dossierhq/core';
+import type { DossierClientJsonOperationArgs, ErrorType, Result } from '@dossierhq/core';
 import {
-  AdminClientModifyingOperations,
+  DossierClientModifyingOperations,
   decodeURLSearchParamsParam,
-  executeAdminClientOperationFromJson,
+  executeDossierClientOperationFromJson,
   notOk,
   ok,
 } from '@dossierhq/core';
@@ -30,8 +30,8 @@ export default async function adminOperationHandler(
 
 function getOperationArgs(
   req: NextApiRequest,
-): Result<AdminClientJsonOperationArgs, typeof ErrorType.BadRequest> {
-  let operationArgs: AdminClientJsonOperationArgs | undefined;
+): Result<DossierClientJsonOperationArgs, typeof ErrorType.BadRequest> {
+  let operationArgs: DossierClientJsonOperationArgs | undefined;
   if (req.method === 'GET') {
     operationArgs = decodeURLSearchParamsParam(req.query, 'args');
   } else {
@@ -57,14 +57,14 @@ async function executeAdminOperation(req: NextApiRequest, res: NextApiResponse) 
   if (authResult.isError()) return authResult;
   const { adminClient } = authResult.value;
 
-  const operationModifies = AdminClientModifyingOperations.has(operationName);
+  const operationModifies = DossierClientModifyingOperations.has(operationName);
   if (req.method === 'GET' && operationModifies) {
     return notOk.BadRequest('Operation modifies data, but GET was used');
   } else if (req.method === 'PUT' && !operationModifies) {
     return notOk.BadRequest('Operation does not modify data, but PUT was used');
   }
 
-  const result = await executeAdminClientOperationFromJson(
+  const result = await executeDossierClientOperationFromJson(
     adminClient,
     operationName,
     operationResult.value,

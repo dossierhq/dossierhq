@@ -1,6 +1,6 @@
 import type {
-  AdminClientJsonOperationArgs,
-  AdminClientOperationName,
+  DossierClientJsonOperationArgs,
+  DossierClientOperationName,
   PublishedClientJsonOperationArgs,
   PublishedClientOperationName,
 } from '@dossierhq/core';
@@ -10,8 +10,8 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const BackendUrls = {
   admin: (
-    operationName: keyof typeof AdminClientOperationName,
-    args?: AdminClientJsonOperationArgs,
+    operationName: keyof typeof DossierClientOperationName,
+    args?: DossierClientJsonOperationArgs,
   ): string =>
     `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
       { args },

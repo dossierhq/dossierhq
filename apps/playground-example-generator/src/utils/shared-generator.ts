@@ -4,7 +4,7 @@ import {
 } from '@dossierhq/better-sqlite3';
 import type {
   DossierClient,
-  AdminClientMiddleware,
+  DossierClientMiddleware,
   Entity,
   SchemaSpecificationUpdate,
   ClientContext,
@@ -61,7 +61,7 @@ export async function createAdapterAndServer<
   ).valueOrThrow();
 
   const adminClient = server.createAdminClient<TAdminClient>(aliceSession.context, [
-    LoggingClientMiddleware as AdminClientMiddleware<ClientContext>,
+    LoggingClientMiddleware as DossierClientMiddleware<ClientContext>,
   ]);
   (await adminClient.updateSchemaSpecification(schema)).valueOrThrow();
 
@@ -72,7 +72,7 @@ export async function createAdapterAndServer<
   });
   const bobAdminClient = server.createAdminClient<TAdminClient>(
     () => bobSession,
-    [LoggingClientMiddleware as AdminClientMiddleware<ClientContext>],
+    [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>],
   );
 
   return { adminClient, bobAdminClient, server };

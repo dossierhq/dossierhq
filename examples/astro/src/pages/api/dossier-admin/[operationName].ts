@@ -1,7 +1,7 @@
 import {
-  AdminClientModifyingOperations,
+  DossierClientModifyingOperations,
   decodeURLSearchParamsParam,
-  executeAdminClientOperationFromJson,
+  executeDossierClientOperationFromJson,
   notOk,
   type ErrorType,
   type Result,
@@ -43,7 +43,7 @@ async function executeAdminOperation(
   operationName: string,
   operationArgs: any,
 ) {
-  const operationModifies = AdminClientModifyingOperations.has(operationName);
+  const operationModifies = DossierClientModifyingOperations.has(operationName);
   if (method === 'GET' && operationModifies) {
     return notOk.BadRequest('Operation modifies data, but GET was used');
   } else if (method === 'PUT' && !operationModifies) {
@@ -54,7 +54,7 @@ async function executeAdminOperation(
   if (adminClientResult.isError()) return adminClientResult;
   const adminClient = adminClientResult.value;
 
-  const result = await executeAdminClientOperationFromJson(
+  const result = await executeDossierClientOperationFromJson(
     adminClient,
     operationName,
     operationArgs,
