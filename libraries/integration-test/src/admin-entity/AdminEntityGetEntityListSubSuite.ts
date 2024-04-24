@@ -59,11 +59,11 @@ async function getEntityList_getLatestVersion({ clientProvider }: AdminEntityTes
 async function getEntityList_authKeySubjectOneCorrectOneWrong({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClientMain = clientProvider.dossierClient();
+  const clientMain = clientProvider.dossierClient();
   const create1Result = await clientProvider
     .dossierClient('secondary')
     .createEntity(SUBJECT_ONLY_CREATE);
-  const create2Result = await adminClientMain.createEntity(SUBJECT_ONLY_CREATE);
+  const create2Result = await clientMain.createEntity(SUBJECT_ONLY_CREATE);
   assertOkResult(create1Result);
   assertOkResult(create2Result);
   const {
@@ -73,7 +73,7 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
     entity: { id: id2 },
   } = create2Result.value;
 
-  const getResult = await adminClientMain.getEntityList([{ id: id1 }, { id: id2 }]);
+  const getResult = await clientMain.getEntityList([{ id: id1 }, { id: id2 }]);
   assertResultValue(getResult, [
     notOk.NotAuthorized('Wrong authKey provided'),
     ok<AppEntity, typeof ErrorType.Generic>(create2Result.value.entity),
@@ -83,8 +83,8 @@ async function getEntityList_authKeySubjectOneCorrectOneWrong({
 async function getEntityList_errorAuthKeySubjectFromReadonlyRandom({
   clientProvider,
 }: AdminEntityTestContext) {
-  const adminClientMain = clientProvider.dossierClient();
-  const { entity } = (await adminClientMain.createEntity(SUBJECT_ONLY_CREATE)).valueOrThrow();
+  const clientMain = clientProvider.dossierClient();
+  const { entity } = (await clientMain.createEntity(SUBJECT_ONLY_CREATE)).valueOrThrow();
 
   const getResult = await clientProvider
     .dossierClient('random', 'readonly')

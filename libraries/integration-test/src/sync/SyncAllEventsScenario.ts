@@ -19,7 +19,7 @@ import type { SyncTestContext } from './SyncTestSuite.js';
 
 interface ScenarioContext extends SyncTestContext {
   sourceAdminClient: DossierClient;
-  targetAdminClient: DossierClient;
+  sourceClient: DossierClient;
   after: string | null;
   createdBy: string;
 }
@@ -112,14 +112,12 @@ async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) 
   assertEquals(targetPrincipals, sourcePrincipals);
 
   // Create target admin client after the principals have been created
-  const targetAdminClient = createDossierClientProvider(
-    targetServer,
-  ).dossierClient() as DossierClient;
+  const sourceClient = createDossierClientProvider(targetServer).dossierClient() as DossierClient;
 
   const scenarioContext: ScenarioContext = {
     ...context,
     sourceAdminClient,
-    targetAdminClient,
+    sourceClient,
     createdBy,
     after: nextContext.after,
   };
@@ -128,7 +126,7 @@ async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) 
 }
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, createdBy, after } = context;
+  const { sourceAdminClient, sourceClient, createdBy, after } = context;
 
   const expectedSchemaSpecification: SchemaSpecificationWithMigrations = {
     entityTypes: [
@@ -192,7 +190,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
 
   // Check that the target schema is identical
   const targetSchemaSpecification = (
-    await targetAdminClient.getSchemaSpecification({ includeMigrations: true })
+    await sourceClient.getSchemaSpecification({ includeMigrations: true })
   ).valueOrThrow();
 
   assertEquals(targetSchemaSpecification, sourceSchemaSpecification);
@@ -201,7 +199,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
 }
 
 async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -238,14 +236,14 @@ async function sync_allEventsScenario_2_createEntity(context: ScenarioContext) {
   ]);
 
   // Check that the target entity is identical
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_3_createAndPublishEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_2;
 
@@ -285,14 +283,14 @@ async function sync_allEventsScenario_3_createAndPublishEntity(context: Scenario
   ]);
 
   // Check that the target entity is identical
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -322,14 +320,14 @@ async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
   ]);
 
   // Check that the target entity is identical
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_5_updateAndPublishedEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_2;
 
@@ -362,14 +360,14 @@ async function sync_allEventsScenario_5_updateAndPublishedEntity(context: Scenar
   ]);
 
   // Check that the target entity is identical
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -391,14 +389,14 @@ async function sync_allEventsScenario_6_publishEntities(context: ScenarioContext
 
   // Check that the target entity is identical
   const sourceEntity = (await sourceAdminClient.getEntity({ id })).valueOrThrow();
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -422,14 +420,14 @@ async function sync_allEventsScenario_7_unpublishEntities(context: ScenarioConte
 
   // Check that the target entity is identical
   const sourceEntity = (await sourceAdminClient.getEntity({ id })).valueOrThrow();
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -456,14 +454,14 @@ async function sync_allEventsScenario_8_archiveEntity(context: ScenarioContext) 
 
   // Check that the target entity is identical
   const sourceEntity = (await sourceAdminClient.getEntity({ id })).valueOrThrow();
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
 }
 
 async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext) {
-  const { sourceAdminClient, targetAdminClient, after, createdBy } = context;
+  const { sourceAdminClient, sourceClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
@@ -490,7 +488,7 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
 
   // Check that the target entity is identical
   const sourceEntity = (await sourceAdminClient.getEntity({ id })).valueOrThrow();
-  const targetEntity = (await targetAdminClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;

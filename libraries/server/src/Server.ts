@@ -255,7 +255,7 @@ export class ServerImpl {
     );
   }
 
-  resolveAdminClientMiddleware(middleware: DossierClientMiddleware<SessionContext>[]) {
+  resolveDossierClientMiddleware(middleware: DossierClientMiddleware<SessionContext>[]) {
     for (const plugin of this.#plugins) {
       middleware = plugin.onCreateAdminClient(middleware);
     }
@@ -437,7 +437,7 @@ export async function createServer<
         authorizationAdapter: resolvedAuthorizationAdapter,
         databaseAdapter,
         serverImpl,
-        middleware: serverImpl.resolveAdminClientMiddleware(middleware ?? []),
+        middleware: serverImpl.resolveDossierClientMiddleware(middleware ?? []),
       }) as TClient,
 
     createPublishedClient: <

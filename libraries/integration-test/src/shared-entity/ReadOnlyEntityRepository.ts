@@ -104,11 +104,11 @@ async function doCreateReadOnlyEntityRepository(
   ReadOnlyEntityRepository,
   typeof ErrorType.BadRequest | typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
-  const adminClientMain = clientProvider.dossierClient('main');
-  const adminClientSecondary = clientProvider.dossierClient('secondary');
+  const clientMain = clientProvider.dossierClient('main');
+  const clientSecondary = clientProvider.dossierClient('secondary');
 
   return await withAdvisoryLock(
-    adminClientMain,
+    clientMain,
     ADVISORY_LOCK_NAME,
     { acquireInterval: 500, leaseDuration: 2_000, renewInterval: 1_000 },
     async (advisoryLock) => {
@@ -136,7 +136,7 @@ async function doCreateReadOnlyEntityRepository(
         if (!advisoryLock.active) {
           return advisoryLock.renewError;
         }
-        const client = principal === 'main' ? adminClientMain : adminClientSecondary;
+        const client = principal === 'main' ? clientMain : clientSecondary;
         const id = uuidv5(`${principal}-${authKey}-${status}-${index}`, UUID_NAMESPACE);
         const result = await createEntity(client, id, authKey, status);
         assertOkResult(result);

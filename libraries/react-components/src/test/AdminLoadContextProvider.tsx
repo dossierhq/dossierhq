@@ -11,20 +11,20 @@ import {
 
 interface Props {
   adapter?: AdminDossierContextAdapter;
-  adminClientMiddleware?: DossierClientMiddleware<ClientContext>[];
+  dossierClientMiddleware?: DossierClientMiddleware<ClientContext>[];
   children: ReactNode;
 }
 
 export function AdminLoadContextProvider({
   adapter,
-  adminClientMiddleware,
+  dossierClientMiddleware,
   children,
 }: Props): JSX.Element | null {
   const cachingMiddleware = useCachingAdminMiddleware();
 
   const client = useMemo(
-    () => createBackendDossierClient([...(adminClientMiddleware ?? []), cachingMiddleware]),
-    [adminClientMiddleware, cachingMiddleware],
+    () => createBackendDossierClient([...(dossierClientMiddleware ?? []), cachingMiddleware]),
+    [dossierClientMiddleware, cachingMiddleware],
   );
 
   return (

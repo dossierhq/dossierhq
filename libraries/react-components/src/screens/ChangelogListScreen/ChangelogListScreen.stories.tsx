@@ -9,7 +9,7 @@ import { ChangelogListScreen, type ChangelogListScreenProps } from './ChangelogL
 type StoryProps = Omit<ChangelogListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlSearchParams?: URLSearchParams;
   ownCache: boolean;
-  adminClientMiddleware?: DossierClientMiddleware<ClientContext>[];
+  dossierClientMiddleware?: DossierClientMiddleware<ClientContext>[];
 };
 
 const meta = {
@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 function Wrapper({
   initialUrlSearchParams,
   ownCache,
-  adminClientMiddleware,
+  dossierClientMiddleware,
   ...props
 }: StoryProps) {
   const [urlSearchParams, setUrlSearchParams] = useState<URLSearchParams>(
@@ -35,7 +35,7 @@ function Wrapper({
   );
   return (
     <CacheConfig ownCache={ownCache}>
-      <AdminLoadContextProvider adminClientMiddleware={adminClientMiddleware}>
+      <AdminLoadContextProvider dossierClientMiddleware={dossierClientMiddleware}>
         <ChangelogListScreen
           {...props}
           urlSearchParams={urlSearchParams}
@@ -63,13 +63,13 @@ export const InitialQuery: Story = {
 
 export const Slow: Story = {
   args: {
-    adminClientMiddleware: [createSlowAdminMiddleware()],
+    dossierClientMiddleware: [createSlowAdminMiddleware()],
   },
 };
 
 export const SlowUsingSharedCache: Story = {
   args: {
     ownCache: false,
-    adminClientMiddleware: [createSlowAdminMiddleware()],
+    dossierClientMiddleware: [createSlowAdminMiddleware()],
   },
 };

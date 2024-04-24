@@ -12,7 +12,7 @@ type StoryProps = Omit<ContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'>
   initialUrlSearchParams?: URLSearchParams;
   showUrl: boolean;
   ownCache: boolean;
-  adminClientMiddleware?: DossierClientMiddleware<ClientContext>[];
+  dossierClientMiddleware?: DossierClientMiddleware<ClientContext>[];
 };
 
 const meta = {
@@ -41,7 +41,7 @@ function Wrapper({
   ownCache,
   showUrl,
   header,
-  adminClientMiddleware,
+  dossierClientMiddleware,
   ...props
 }: StoryProps) {
   const [urlSearchParams, setUrlSearchParams] = useState<URLSearchParams>(
@@ -49,7 +49,7 @@ function Wrapper({
   );
   return (
     <CacheConfig ownCache={ownCache}>
-      <AdminLoadContextProvider adminClientMiddleware={adminClientMiddleware}>
+      <AdminLoadContextProvider dossierClientMiddleware={dossierClientMiddleware}>
         <ContentListScreen
           {...props}
           header={
@@ -94,20 +94,20 @@ export const InitialBoundingBoxQuery: Story = {
 
 export const Slow: Story = {
   args: {
-    adminClientMiddleware: [createSlowAdminMiddleware()],
+    dossierClientMiddleware: [createSlowAdminMiddleware()],
   },
 };
 
 export const SlowUsingSharedCache: Story = {
   args: {
     ownCache: false,
-    adminClientMiddleware: [createSlowAdminMiddleware()],
+    dossierClientMiddleware: [createSlowAdminMiddleware()],
   },
 };
 
 export const SlowInitialTextNoMatch: Story = {
   args: {
-    adminClientMiddleware: [createSlowAdminMiddleware()],
+    dossierClientMiddleware: [createSlowAdminMiddleware()],
     initialUrlSearchParams: new URLSearchParams({
       query: '{"text":"xyz"}',
     }),

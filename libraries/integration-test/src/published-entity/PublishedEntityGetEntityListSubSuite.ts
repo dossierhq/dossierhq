@@ -51,13 +51,13 @@ async function getEntityList_none({ clientProvider }: PublishedEntityTestContext
 async function getEntityList_authKeySubjectOneCorrectOneWrong({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const primaryAdminClient = clientProvider.dossierClient();
-  const schema = new Schema((await primaryAdminClient.getSchemaSpecification()).valueOrThrow());
+  const primaryClient = clientProvider.dossierClient();
+  const schema = new Schema((await primaryClient.getSchemaSpecification()).valueOrThrow());
 
   const create1Result = await clientProvider
     .dossierClient('secondary')
     .createEntity(SUBJECT_ONLY_CREATE, { publish: true });
-  const create2Result = await primaryAdminClient.createEntity(SUBJECT_ONLY_CREATE, {
+  const create2Result = await primaryClient.createEntity(SUBJECT_ONLY_CREATE, {
     publish: true,
   });
   assertOkResult(create1Result);
@@ -115,10 +115,10 @@ async function getEntityList_errorArchivedEntity({ clientProvider }: PublishedEn
 async function getEntityList_errorWrongAuthKeyFromReadonlyRandom({
   clientProvider,
 }: PublishedEntityTestContext) {
-  const primaryAdminClient = clientProvider.dossierClient();
+  const primaryClient = clientProvider.dossierClient();
 
   const { entity } = (
-    await primaryAdminClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true })
+    await primaryClient.createEntity(SUBJECT_ONLY_CREATE, { publish: true })
   ).valueOrThrow();
 
   const getResult = await clientProvider
