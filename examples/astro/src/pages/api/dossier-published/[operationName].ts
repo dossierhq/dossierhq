@@ -1,6 +1,6 @@
 import {
   decodeURLSearchParamsParam,
-  executePublishedDossierClientOperationFromJson,
+  executeJsonPublishedDossierClientOperation,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
@@ -33,7 +33,7 @@ async function executePublishedOperation(operationName: string, operationArgs: a
   if (publishedClientResult.isError()) return publishedClientResult;
   const publishedClient = publishedClientResult.value;
 
-  const result = await executePublishedDossierClientOperationFromJson(
+  const result = await executeJsonPublishedDossierClientOperation(
     publishedClient,
     operationName,
     operationArgs,

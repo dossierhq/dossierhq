@@ -261,7 +261,7 @@ export type PublishedDossierClientMiddleware<TContext extends ClientContext> = M
   PublishedDossierClientOperation
 >;
 
-export type PublishedDossierClientJsonOperationArgs<
+export type JsonPublishedDossierClientOperationArgs<
   TName extends PublishedDossierClientOperationName = PublishedDossierClientOperationName,
 > = PublishedDossierClientOperationArguments[TName];
 
@@ -446,13 +446,13 @@ export function createBasePublishedDossierClient<
   return new BasePublishedDossierClient(option) as unknown as TClient;
 }
 
-export async function executePublishedDossierClientOperationFromJson(
+export async function executeJsonPublishedDossierClientOperation(
   publishedClient: PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
   >,
   operationName: LooseAutocomplete<PublishedDossierClientOperationName>,
-  operationArgs: PublishedDossierClientJsonOperationArgs,
+  operationArgs: JsonPublishedDossierClientOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
   const name = operationName as PublishedDossierClientOperationName;
   switch (name) {

@@ -1,8 +1,8 @@
-import type { DossierClientJsonOperationArgs, ErrorType, Result } from '@dossierhq/core';
+import type { JsonDossierClientOperationArgs, ErrorType, Result } from '@dossierhq/core';
 import {
   DossierClientModifyingOperations,
   decodeURLSearchParamsParam,
-  executeDossierClientOperationFromJson,
+  executeJsonDossierClientOperation,
   notOk,
   ok,
 } from '@dossierhq/core';
@@ -29,8 +29,8 @@ export default async function adminOperationHandler(
 
 function getOperationArgs(
   req: NextApiRequest,
-): Result<DossierClientJsonOperationArgs, typeof ErrorType.BadRequest> {
-  let operationArgs: DossierClientJsonOperationArgs | undefined;
+): Result<JsonDossierClientOperationArgs, typeof ErrorType.BadRequest> {
+  let operationArgs: JsonDossierClientOperationArgs | undefined;
   if (req.method === 'GET') {
     operationArgs = decodeURLSearchParamsParam(req.query, 'args');
   } else {
@@ -61,7 +61,7 @@ async function executeAdminOperation(req: NextApiRequest) {
     return notOk.BadRequest('Operation does not modify data, but PUT was used');
   }
 
-  const result = await executeDossierClientOperationFromJson(
+  const result = await executeJsonDossierClientOperation(
     client,
     operationName,
     operationResult.value,

@@ -3,8 +3,8 @@ const {
   DossierClientModifyingOperations,
   createConsoleLogger,
   decodeURLSearchParamsParam,
-  executeDossierClientOperationFromJson,
-  executePublishedDossierClientOperationFromJson,
+  executeJsonDossierClientOperation,
+  executeJsonPublishedDossierClientOperation,
   LoggingClientMiddleware,
   notOk,
 } = require('@dossierhq/core');
@@ -65,7 +65,7 @@ const expressMiddleWare = (router) => {
       } else if (req.method === 'PUT' && !modifies) {
         return notOk.BadRequest('PUT only allowed for modifying operations');
       }
-      return await executeDossierClientOperationFromJson(client, name, operation);
+      return await executeJsonDossierClientOperation(client, name, operation);
     });
   });
   router.use('/api/published/:operationName', (req, res) => {
@@ -77,7 +77,7 @@ const expressMiddleWare = (router) => {
         defaultAuthKeys,
       });
       const client = server.createPublishedClient(() => sessionResult, [LoggingClientMiddleware]);
-      return await executePublishedDossierClientOperationFromJson(client, name, operation);
+      return await executeJsonPublishedDossierClientOperation(client, name, operation);
     });
   });
 };

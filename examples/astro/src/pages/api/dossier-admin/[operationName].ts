@@ -1,7 +1,7 @@
 import {
   DossierClientModifyingOperations,
   decodeURLSearchParamsParam,
-  executeDossierClientOperationFromJson,
+  executeJsonDossierClientOperation,
   notOk,
   type ErrorType,
   type Result,
@@ -54,6 +54,6 @@ async function executeAdminOperation(
   if (clientResult.isError()) return clientResult;
   const client = clientResult.value;
 
-  const result = await executeDossierClientOperationFromJson(client, operationName, operationArgs);
+  const result = await executeJsonDossierClientOperation(client, operationName, operationArgs);
   return result;
 }

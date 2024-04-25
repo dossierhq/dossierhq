@@ -24,9 +24,9 @@ import {
   DossierClientOperationName,
   convertJsonDossierClientResult,
   createBaseDossierClient,
-  executeDossierClientOperationFromJson,
+  executeJsonDossierClientOperation,
   type DossierClient,
-  type DossierClientJsonOperationArgs,
+  type JsonDossierClientOperationArgs,
   type DossierClientMiddleware,
   type DossierClientOperation,
 } from './DossierClient.js';
@@ -44,9 +44,9 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   return async function (_context, operation) {
     const operationArgsJson = JSON.parse(
       JSON.stringify(operation.args),
-    ) as DossierClientJsonOperationArgs;
+    ) as JsonDossierClientOperationArgs;
     // normally sent over HTTP
-    const resultJson = await executeDossierClientOperationFromJson(
+    const resultJson = await executeJsonDossierClientOperation(
       client,
       operation.name,
       operationArgsJson,

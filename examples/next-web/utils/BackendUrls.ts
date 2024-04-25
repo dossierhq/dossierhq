@@ -1,7 +1,7 @@
 import type {
-  DossierClientJsonOperationArgs,
+  JsonDossierClientOperationArgs,
   DossierClientOperationName,
-  PublishedDossierClientJsonOperationArgs,
+  JsonPublishedDossierClientOperationArgs,
   PublishedDossierClientOperationName,
 } from '@dossierhq/core';
 import { encodeObjectToURLSearchParams } from '@dossierhq/core';
@@ -11,7 +11,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const BackendUrls = {
   admin: (
     operationName: (typeof DossierClientOperationName)[keyof typeof DossierClientOperationName],
-    args?: DossierClientJsonOperationArgs,
+    args?: JsonDossierClientOperationArgs,
   ): string =>
     `${baseUrl}/admin/${operationName}?${encodeObjectToURLSearchParams(
       { args },
@@ -19,7 +19,7 @@ export const BackendUrls = {
     )}`,
   published: (
     operationName: (typeof PublishedDossierClientOperationName)[keyof typeof PublishedDossierClientOperationName],
-    args?: PublishedDossierClientJsonOperationArgs,
+    args?: JsonPublishedDossierClientOperationArgs,
   ): string =>
     `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
       { args },

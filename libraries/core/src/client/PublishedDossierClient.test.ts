@@ -8,9 +8,9 @@ import {
   PublishedDossierClientOperationName,
   convertJsonPublishedDossierClientResult,
   createBasePublishedDossierClient,
-  executePublishedDossierClientOperationFromJson,
+  executeJsonPublishedDossierClientOperation,
   type PublishedDossierClient,
-  type PublishedDossierClientJsonOperationArgs,
+  type JsonPublishedDossierClientOperationArgs,
   type PublishedDossierClientMiddleware,
   type PublishedDossierClientOperation,
 } from './PublishedDossierClient.js';
@@ -22,9 +22,9 @@ function createForwardingMiddleware<TContext extends ClientContext>(
   return async function (_context, operation) {
     const convertedOperationArgs = JSON.parse(
       JSON.stringify(operation.args),
-    ) as PublishedDossierClientJsonOperationArgs;
+    ) as JsonPublishedDossierClientOperationArgs;
     // normally sent over HTTP
-    const resultJson = await executePublishedDossierClientOperationFromJson(
+    const resultJson = await executeJsonPublishedDossierClientOperation(
       publishedClient,
       operation.name,
       convertedOperationArgs,

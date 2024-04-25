@@ -2,12 +2,12 @@ import {
   DossierClientModifyingOperations,
   createConsoleLogger,
   decodeURLSearchParamsParam,
-  executeDossierClientOperationFromJson,
-  executePublishedDossierClientOperationFromJson,
+  executeJsonDossierClientOperation,
+  executeJsonPublishedDossierClientOperation,
   notOk,
-  type DossierClientJsonOperationArgs,
+  type JsonDossierClientOperationArgs,
   type ErrorType,
-  type PublishedDossierClientJsonOperationArgs,
+  type JsonPublishedDossierClientOperationArgs,
   type Result,
 } from '@dossierhq/core';
 import bodyParser from 'body-parser';
@@ -74,7 +74,7 @@ app.get(
   asyncHandler(async (req, res) => {
     const client = getDossierClientForRequest(server, req);
     const { operationName } = req.params;
-    const operationArgs = decodeURLSearchParamsParam<DossierClientJsonOperationArgs>(
+    const operationArgs = decodeURLSearchParamsParam<JsonDossierClientOperationArgs>(
       req.query as Record<string, string>,
       'args',
     );
@@ -86,7 +86,7 @@ app.get(
     } else {
       sendResult(
         res,
-        await executeDossierClientOperationFromJson(client, operationName, operationArgs),
+        await executeJsonDossierClientOperation(client, operationName, operationArgs),
       );
     }
   }),
@@ -97,14 +97,14 @@ app.put(
   asyncHandler(async (req, res) => {
     const client = getDossierClientForRequest(server, req);
     const { operationName } = req.params;
-    const operationArgs = req.body as DossierClientJsonOperationArgs;
+    const operationArgs = req.body as JsonDossierClientOperationArgs;
     const operationModifies = DossierClientModifyingOperations.has(operationName);
     if (!operationModifies) {
       sendResult(res, notOk.BadRequest('Operation does not modify data, but PUT was used'));
     } else {
       sendResult(
         res,
-        await executeDossierClientOperationFromJson(client, operationName, operationArgs),
+        await executeJsonDossierClientOperation(client, operationName, operationArgs),
       );
     }
   }),
@@ -115,7 +115,7 @@ app.get(
   asyncHandler(async (req, res) => {
     const publishedClient = getPublishedClientForRequest(server, req);
     const { operationName } = req.params;
-    const operationArgs = decodeURLSearchParamsParam<PublishedDossierClientJsonOperationArgs>(
+    const operationArgs = decodeURLSearchParamsParam<JsonPublishedDossierClientOperationArgs>(
       req.query as Record<string, string>,
       'args',
     );
@@ -124,7 +124,7 @@ app.get(
     } else {
       sendResult(
         res,
-        await executePublishedDossierClientOperationFromJson(
+        await executeJsonPublishedDossierClientOperation(
           publishedClient,
           operationName,
           operationArgs,

@@ -503,7 +503,7 @@ export type DossierClientMiddleware<TContext extends ClientContext> = Middleware
   DossierClientOperation
 >;
 
-export type DossierClientJsonOperationArgs<
+export type JsonDossierClientOperationArgs<
   TName extends DossierClientOperationName = DossierClientOperationName,
 > = DossierClientOperationArguments[TName];
 
@@ -980,10 +980,10 @@ export function createBaseDossierClient<
   return new BaseDossierClient(option) as unknown as TClient;
 }
 
-export async function executeDossierClientOperationFromJson(
+export async function executeJsonDossierClientOperation(
   client: DossierClient<Entity<string, object>, Component<string, object>>,
   operationName: LooseAutocomplete<DossierClientOperationName>,
-  operationArgs: DossierClientJsonOperationArgs,
+  operationArgs: JsonDossierClientOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
   const name = operationName as DossierClientOperationName;
   switch (name) {
