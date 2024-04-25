@@ -2,7 +2,7 @@ import type {
   EntityReference,
   ErrorResult,
   ErrorType,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
 } from '@dossierhq/core';
 import { useCallback } from 'react';
@@ -14,7 +14,7 @@ type FetcherData<T> = T;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.NotFound | typeof ErrorType.Generic>;
 
 export function usePublishedEntity<TPublishedEntity extends PublishedEntity<string, object>>(
-  publishedClient: PublishedClient<TPublishedEntity>,
+  publishedClient: PublishedDossierClient<TPublishedEntity>,
   reference: EntityReference | undefined,
 ): {
   entity: FetcherData<TPublishedEntity> | undefined;
@@ -33,7 +33,7 @@ export function usePublishedEntity<TPublishedEntity extends PublishedEntity<stri
 }
 
 async function fetchEntity<TPublishedEntity extends PublishedEntity<string, object>>(
-  publishedClient: PublishedClient<TPublishedEntity>,
+  publishedClient: PublishedDossierClient<TPublishedEntity>,
   reference: FetcherKey[1],
 ): Promise<FetcherData<TPublishedEntity>> {
   const result = await publishedClient.getEntity(reference);

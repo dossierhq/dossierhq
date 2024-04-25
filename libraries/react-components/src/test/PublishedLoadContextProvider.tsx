@@ -1,4 +1,4 @@
-import type { ClientContext, PublishedClientMiddleware } from '@dossierhq/core';
+import type { ClientContext, PublishedDossierClientMiddleware } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import {
   DISPLAY_AUTH_KEYS,
@@ -8,7 +8,7 @@ import {
 import { PublishedDossierProvider } from '../components/PublishedDossierProvider/PublishedDossierProvider.js';
 
 interface Props {
-  publishedClientMiddleware?: PublishedClientMiddleware<ClientContext>[];
+  publishedClientMiddleware?: PublishedDossierClientMiddleware<ClientContext>[];
   children: ReactNode;
 }
 

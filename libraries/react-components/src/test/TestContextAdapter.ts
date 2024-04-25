@@ -6,15 +6,15 @@ import type {
   ErrorType,
   Logger,
   PromiseResult,
-  PublishedClient,
-  PublishedClientMiddleware,
-  PublishedClientOperation,
+  PublishedDossierClient,
+  PublishedDossierClientMiddleware,
+  PublishedDossierClientOperation,
 } from '@dossierhq/core';
 import {
   convertJsonDossierClientResult,
-  convertJsonPublishedClientResult,
+  convertJsonPublishedDossierClientResult,
   createBaseDossierClient,
-  createBasePublishedClient,
+  createBasePublishedDossierClient,
   createConsoleLogger,
   encodeObjectToURLSearchParams,
   LoggingClientMiddleware,
@@ -62,14 +62,14 @@ export function createBackendDossierClient(
 }
 
 export function createBackendPublishedClient(
-  pipeline: PublishedClientMiddleware<BackendContext>[] = [],
-): PublishedClient {
+  pipeline: PublishedDossierClientMiddleware<BackendContext>[] = [],
+): PublishedDossierClient {
   const context: BackendContext = { logger: createConsoleLogger(console) };
-  return createBasePublishedClient<BackendContext>({
+  return createBasePublishedDossierClient<BackendContext>({
     context,
     pipeline: [
       ...pipeline,
-      LoggingClientMiddleware as PublishedClientMiddleware<BackendContext>,
+      LoggingClientMiddleware as PublishedDossierClientMiddleware<BackendContext>,
       terminatingPublishedMiddleware,
     ],
   });
@@ -102,7 +102,7 @@ async function terminatingAdminMiddleware(
 
 async function terminatingPublishedMiddleware(
   _context: BackendContext,
-  operation: PublishedClientOperation,
+  operation: PublishedDossierClientOperation,
 ): Promise<void> {
   const response = await fetch(
     `/api/published/${operation.name}?${encodeObjectToURLSearchParams(
@@ -113,7 +113,7 @@ async function terminatingPublishedMiddleware(
   );
 
   const result = await getBodyAsJsonResult(response);
-  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+  operation.resolve(convertJsonPublishedDossierClientResult(operation.name, result));
 }
 
 async function getBodyAsJsonResult(response: Response) {
@@ -141,7 +141,7 @@ export function createSlowAdminMiddleware(): DossierClientMiddleware<ClientConte
   };
 }
 
-export function createSlowPublishedMiddleware(): PublishedClientMiddleware<ClientContext> {
+export function createSlowPublishedMiddleware(): PublishedDossierClientMiddleware<ClientContext> {
   return async (_context, operation) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     operation.resolve(await operation.next());

@@ -2,7 +2,7 @@ import type {
   DossierClient,
   Entity,
   SchemaSpecificationUpdate,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
 } from '@dossierhq/core';
 import {
@@ -76,7 +76,7 @@ const SCHEMA: SchemaSpecificationUpdate = {
 let server: Server;
 let context: SessionContext;
 let client: DossierClient;
-let publishedClient: PublishedClient;
+let publishedClient: PublishedDossierClient;
 let entitiesOfTypePublishedEntityOnlyEditBeforeNone: Entity[];
 
 beforeAll(async () => {

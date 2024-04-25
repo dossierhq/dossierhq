@@ -5,8 +5,8 @@ import {
   type DossierClientOperation,
   type Logger,
   type OkFromResult,
-  type PublishedClientMiddleware,
-  type PublishedClientOperation,
+  type PublishedDossierClientMiddleware,
+  type PublishedDossierClientOperation,
 } from '@dossierhq/core';
 import type { SessionContext } from '../Context.js';
 import type { Server, ServerPlugin } from '../Server.js';
@@ -52,8 +52,8 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
   }
 
   onCreatePublishedClient(
-    pipeline: PublishedClientMiddleware<SessionContext>[],
-  ): PublishedClientMiddleware<SessionContext>[] {
+    pipeline: PublishedDossierClientMiddleware<SessionContext>[],
+  ): PublishedDossierClientMiddleware<SessionContext>[] {
     return [this.publishedMiddleware, ...pipeline];
   }
 
@@ -80,7 +80,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
 
   private publishedMiddleware = async (
     _context: SessionContext,
-    operation: PublishedClientOperation,
+    operation: PublishedDossierClientOperation,
   ) => {
     this.lastOperationTimestamp = Date.now();
 

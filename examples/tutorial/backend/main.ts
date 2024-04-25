@@ -3,11 +3,11 @@ import {
   createConsoleLogger,
   decodeURLSearchParamsParam,
   executeDossierClientOperationFromJson,
-  executePublishedClientOperationFromJson,
+  executePublishedDossierClientOperationFromJson,
   notOk,
   type DossierClientJsonOperationArgs,
   type ErrorType,
-  type PublishedClientJsonOperationArgs,
+  type PublishedDossierClientJsonOperationArgs,
   type Result,
 } from '@dossierhq/core';
 import bodyParser from 'body-parser';
@@ -115,7 +115,7 @@ app.get(
   asyncHandler(async (req, res) => {
     const publishedClient = getPublishedClientForRequest(server, req);
     const { operationName } = req.params;
-    const operationArgs = decodeURLSearchParamsParam<PublishedClientJsonOperationArgs>(
+    const operationArgs = decodeURLSearchParamsParam<PublishedDossierClientJsonOperationArgs>(
       req.query as Record<string, string>,
       'args',
     );
@@ -124,7 +124,7 @@ app.get(
     } else {
       sendResult(
         res,
-        await executePublishedClientOperationFromJson(
+        await executePublishedDossierClientOperationFromJson(
           publishedClient,
           operationName,
           operationArgs,

@@ -4,7 +4,7 @@ import type {
   SchemaSpecificationUpdate,
   ErrorType,
   PromiseResult,
-  PublishedClient,
+  PublishedDossierClient,
 } from '@dossierhq/core';
 import { Schema, NoOpLogger, assertOkResult } from '@dossierhq/core';
 import type { AuthorizationAdapter } from '@dossierhq/server';
@@ -16,7 +16,7 @@ export interface TestServerWithSession {
   schema: Schema;
   client: DossierClient;
   clientOther: DossierClient;
-  publishedClient: PublishedClient;
+  publishedClient: PublishedDossierClient;
   subjectId: string;
   tearDown: () => PromiseResult<void, typeof ErrorType.Generic>;
 }

@@ -3,7 +3,7 @@ import type {
   EntitySamplingPayload,
   ErrorResult,
   ErrorType,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
   PublishedEntitySharedQuery,
 } from '@dossierhq/core';
@@ -25,7 +25,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
 export function usePublishedEntitiesSample<
   TPublishedEntity extends PublishedEntity<string, object>,
 >(
-  publishedClient: PublishedClient<TPublishedEntity>,
+  publishedClient: PublishedDossierClient<TPublishedEntity>,
   query: PublishedEntitySharedQuery | undefined,
   options?: EntitySamplingOptions,
 ): {
@@ -46,7 +46,7 @@ export function usePublishedEntitiesSample<
 }
 
 async function fetchEntitiesSample<TPublishedEntity extends PublishedEntity<string, object>>(
-  publishedClient: PublishedClient<TPublishedEntity>,
+  publishedClient: PublishedDossierClient<TPublishedEntity>,
   query: FetcherKey[1],
   options: FetcherKey[2],
 ): Promise<FetcherData<TPublishedEntity>> {

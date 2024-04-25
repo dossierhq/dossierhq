@@ -2,7 +2,7 @@ import type {
   Component,
   ErrorResult,
   ErrorType,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
   PublishedEntitySharedQuery,
 } from '@dossierhq/core';
@@ -20,7 +20,10 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`.
  */
 export function usePublishedEntitiesTotalCount(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >,
   query: PublishedEntitySharedQuery | undefined,
 ): {
   totalCount: FetcherData | undefined;
@@ -42,7 +45,10 @@ export function usePublishedEntitiesTotalCount(
 }
 
 async function fetchEntitiesTotalCount(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >,
   query: FetcherKey[1],
 ): Promise<FetcherData> {
   const result = await publishedClient.getEntitiesTotalCount(query);

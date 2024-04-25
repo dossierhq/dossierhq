@@ -1,4 +1,4 @@
-import type { DossierClient, Entity, PublishedClient } from '@dossierhq/core';
+import type { DossierClient, Entity, PublishedDossierClient } from '@dossierhq/core';
 import {
   EntityStatus,
   ErrorType,
@@ -33,7 +33,7 @@ let server: Server;
 let context: SessionContext;
 let client: DossierClient;
 let clientOther: DossierClient;
-let publishedClient: PublishedClient;
+let publishedClient: PublishedDossierClient;
 let entitiesOfTypeAdminOnlyEditBeforeNone: Entity[];
 
 const emptyFooFields = { bar: null, summary: null, title: null };

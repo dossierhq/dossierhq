@@ -105,15 +105,15 @@ export {
   type PagingInfo,
 } from './client/PagingUtils.js';
 export {
-  PublishedClientOperationName,
-  convertJsonPublishedClientResult,
-  createBasePublishedClient,
-  executePublishedClientOperationFromJson,
-  type PublishedClient,
-  type PublishedClientJsonOperationArgs,
-  type PublishedClientMiddleware,
-  type PublishedClientOperation,
-  type PublishedExceptionClient,
+  PublishedDossierClientOperationName,
+  convertJsonPublishedDossierClientResult,
+  createBasePublishedDossierClient,
+  executePublishedDossierClientOperationFromJson,
+  type PublishedDossierClient,
+  type PublishedDossierClientJsonOperationArgs,
+  type PublishedDossierClientMiddleware,
+  type PublishedDossierClientOperation,
+  type PublishedDossierExceptionClient,
 } from './client/PublishedDossierClient.js';
 export {
   LoggingClientMiddleware,

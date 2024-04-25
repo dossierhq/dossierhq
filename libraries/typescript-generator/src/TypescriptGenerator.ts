@@ -81,13 +81,13 @@ function generateDossierClientTypes(context: GeneratorContext) {
 }
 
 function generatePublishedClientTypes(context: GeneratorContext) {
-  context.coreImports.add('PublishedClient');
-  context.coreImports.add('PublishedExceptionClient');
+  context.coreImports.add('PublishedDossierClient');
+  context.coreImports.add('PublishedDossierExceptionClient');
   return [
     '',
-    'export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
+    'export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
     '',
-    'export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;',
+    'export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;',
   ];
 }
 

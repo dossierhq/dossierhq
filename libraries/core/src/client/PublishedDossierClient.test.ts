@@ -5,26 +5,26 @@ import type { PublishedEntity } from '../Types.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { convertJsonResult } from './JsonUtils.js';
 import {
-  PublishedClientOperationName,
-  convertJsonPublishedClientResult,
-  createBasePublishedClient,
-  executePublishedClientOperationFromJson,
-  type PublishedClient,
-  type PublishedClientJsonOperationArgs,
-  type PublishedClientMiddleware,
-  type PublishedClientOperation,
+  PublishedDossierClientOperationName,
+  convertJsonPublishedDossierClientResult,
+  createBasePublishedDossierClient,
+  executePublishedDossierClientOperationFromJson,
+  type PublishedDossierClient,
+  type PublishedDossierClientJsonOperationArgs,
+  type PublishedDossierClientMiddleware,
+  type PublishedDossierClientOperation,
 } from './PublishedDossierClient.js';
 import type { ClientContext } from './SharedClient.js';
 
 function createForwardingMiddleware<TContext extends ClientContext>(
-  publishedClient: PublishedClient,
-): PublishedClientMiddleware<TContext> {
+  publishedClient: PublishedDossierClient,
+): PublishedDossierClientMiddleware<TContext> {
   return async function (_context, operation) {
     const convertedOperationArgs = JSON.parse(
       JSON.stringify(operation.args),
-    ) as PublishedClientJsonOperationArgs;
+    ) as PublishedDossierClientJsonOperationArgs;
     // normally sent over HTTP
-    const resultJson = await executePublishedClientOperationFromJson(
+    const resultJson = await executePublishedDossierClientOperationFromJson(
       publishedClient,
       operation.name,
       convertedOperationArgs,
@@ -33,33 +33,43 @@ function createForwardingMiddleware<TContext extends ClientContext>(
     const convertedResultJson = convertJsonResult(
       JSON.parse(JSON.stringify(resultJson)) as typeof resultJson,
     );
-    operation.resolve(convertJsonPublishedClientResult(operation.name, convertedResultJson));
+    operation.resolve(convertJsonPublishedDossierClientResult(operation.name, convertedResultJson));
   };
 }
 
 function createJsonConvertingPublishedClientsForOperation<
   TContext extends ClientContext,
-  TName extends (typeof PublishedClientOperationName)[keyof typeof PublishedClientOperationName],
+  TName extends
+    (typeof PublishedDossierClientOperationName)[keyof typeof PublishedDossierClientOperationName],
 >(
   context: TContext,
   operationName: TName,
   operationHandlerMockImplementation: (
     context: TContext,
-    operation: PublishedClientOperation<TName>,
+    operation: PublishedDossierClientOperation<TName>,
   ) => Promise<void>,
 ) {
-  const operationHandlerMock = vi.fn<[TContext, PublishedClientOperation<TName>], Promise<void>>();
+  const operationHandlerMock = vi.fn<
+    [TContext, PublishedDossierClientOperation<TName>],
+    Promise<void>
+  >();
   operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
 
-  const innerMiddleware: PublishedClientMiddleware<TContext> = async (context, operation) => {
+  const innerMiddleware: PublishedDossierClientMiddleware<TContext> = async (
+    context,
+    operation,
+  ) => {
     expect(operation.name).toBe(operationName);
-    await operationHandlerMock(context, operation as unknown as PublishedClientOperation<TName>);
+    await operationHandlerMock(
+      context,
+      operation as unknown as PublishedDossierClientOperation<TName>,
+    );
   };
-  const innerPublishedClient = createBasePublishedClient<TContext>({
+  const innerPublishedClient = createBasePublishedDossierClient<TContext>({
     context,
     pipeline: [innerMiddleware],
   });
-  const outerPublishedClient = createBasePublishedClient<TContext>({
+  const outerPublishedClient = createBasePublishedDossierClient<TContext>({
     context,
     pipeline: [createForwardingMiddleware(innerPublishedClient)],
   });
@@ -80,12 +90,12 @@ function createDummyEntity({ id }: { id: string }): PublishedEntity {
   };
 }
 
-describe('PublishedClient forward operation over JSON', () => {
+describe('PublishedDossierClient forward operation over JSON', () => {
   test('getEntityList', async () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntityList,
+        PublishedDossierClientOperationName.getEntityList,
         (_context, operation) => {
           const [references] = operation.args;
           operation.resolve(ok(references.map(({ id }) => ok(createDummyEntity({ id })))));
@@ -170,7 +180,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntity,
+        PublishedDossierClientOperationName.getEntity,
         (_context, operation) => {
           const [reference] = operation.args;
           operation.resolve(
@@ -233,7 +243,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getSchemaSpecification,
+        PublishedDossierClientOperationName.getSchemaSpecification,
         (_context, operation) => {
           operation.resolve(
             ok({
@@ -289,7 +299,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntitiesTotalCount,
+        PublishedDossierClientOperationName.getEntitiesTotalCount,
         (_context, operation) => {
           const [_query] = operation.args;
           operation.resolve(ok(123));
@@ -350,7 +360,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntitiesSample,
+        PublishedDossierClientOperationName.getEntitiesSample,
         (_context, operation) => {
           const [_query, _options] = operation.args;
           operation.resolve(ok({ seed: 123, totalCount: 1, items: [entity1] }));
@@ -417,7 +427,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntities,
+        PublishedDossierClientOperationName.getEntities,
         (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(
@@ -504,7 +514,7 @@ describe('PublishedClient forward operation over JSON', () => {
     const { publishedClient, operationHandlerMock } =
       createJsonConvertingPublishedClientsForOperation(
         { logger: NoOpLogger },
-        PublishedClientOperationName.getEntities,
+        PublishedDossierClientOperationName.getEntities,
         (_context, operation) => {
           const [_query, _paging] = operation.args;
           operation.resolve(ok(null));

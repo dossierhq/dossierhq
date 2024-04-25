@@ -1,11 +1,11 @@
 import {
-  convertJsonPublishedClientResult,
-  createBasePublishedClient,
+  convertJsonPublishedDossierClientResult,
+  createBasePublishedDossierClient,
   createConsoleLogger,
   encodeObjectToURLSearchParams,
   type ClientContext,
-  type PublishedClient,
-  type PublishedClientOperation,
+  type PublishedDossierClient,
+  type PublishedDossierClientOperation,
 } from '@dossierhq/core';
 import {
   PublishedDossierProvider,
@@ -52,17 +52,17 @@ export function AppPublishedDossierProvider({ children }: { children: React.Reac
   );
 }
 
-function createBackendPublishedClient(): PublishedClient {
+function createBackendPublishedClient(): PublishedDossierClient {
   const context: BackendContext = { logger };
-  return createBasePublishedClient({ context, pipeline: [terminatingPublishedMiddleware] });
+  return createBasePublishedDossierClient({ context, pipeline: [terminatingPublishedMiddleware] });
 }
 
 async function terminatingPublishedMiddleware(
   context: BackendContext,
-  operation: PublishedClientOperation,
+  operation: PublishedDossierClientOperation,
 ): Promise<void> {
   const result = await fetchJsonResult(context, operationToUrl(operation.name, operation.args));
-  operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+  operation.resolve(convertJsonPublishedDossierClientResult(operation.name, result));
 }
 
 function operationToUrl(operationName: string, args: unknown): RequestInfo {

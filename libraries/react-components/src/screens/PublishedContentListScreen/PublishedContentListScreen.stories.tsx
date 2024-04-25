@@ -1,4 +1,4 @@
-import type { ClientContext, PublishedClientMiddleware } from '@dossierhq/core';
+import type { ClientContext, PublishedDossierClientMiddleware } from '@dossierhq/core';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
@@ -10,7 +10,7 @@ import { PublishedContentListScreen } from './PublishedContentListScreen';
 type StoryProps = Omit<PublishedContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlSearchParams?: URLSearchParams;
   ownCache: boolean;
-  publishedClientMiddleware?: PublishedClientMiddleware<ClientContext>[];
+  publishedClientMiddleware?: PublishedDossierClientMiddleware<ClientContext>[];
 };
 
 const meta = {

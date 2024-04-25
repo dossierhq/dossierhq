@@ -3,7 +3,7 @@ import type {
   ErrorResult,
   ErrorType,
   Logger,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
   PublishedSchema,
 } from '@dossierhq/core';
@@ -22,7 +22,10 @@ export interface PublishedDossierContextAdapter {
 
 export interface PublishedDossierContextValue {
   adapter: PublishedDossierContextAdapter;
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>;
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >;
   logger: Logger;
   schema: PublishedSchema | undefined;
   schemaError: ErrorResult<unknown, typeof ErrorType.Generic> | undefined;

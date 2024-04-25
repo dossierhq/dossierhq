@@ -1,4 +1,4 @@
-import type { Component, DossierClient, DossierExceptionClient, Entity, PublishedClient, PublishedEntity, PublishedExceptionClient } from '@dossierhq/core';
+import type { Component, DossierClient, DossierExceptionClient, Entity, PublishedDossierClient, PublishedDossierExceptionClient, PublishedEntity } from '@dossierhq/core';
 
 export type AppDossierClient = DossierClient<AppEntity, AppComponent, AppUniqueIndexes, AppDossierExceptionClient>;
 
@@ -46,9 +46,9 @@ export function assertIsCloudinaryImage(component: Component<string, object> | C
   }
 }
 
-export type AppPublishedClient = PublishedClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 

@@ -1,8 +1,8 @@
 import type {
   DossierClientJsonOperationArgs,
   DossierClientOperationName,
-  PublishedClientJsonOperationArgs,
-  PublishedClientOperationName,
+  PublishedDossierClientJsonOperationArgs,
+  PublishedDossierClientOperationName,
 } from '@dossierhq/core';
 import { encodeObjectToURLSearchParams } from '@dossierhq/core';
 
@@ -18,8 +18,8 @@ export const BackendUrls = {
       { keepEmptyObjects: true },
     )}`,
   published: (
-    operationName: keyof typeof PublishedClientOperationName,
-    args: PublishedClientJsonOperationArgs,
+    operationName: keyof typeof PublishedDossierClientOperationName,
+    args: PublishedDossierClientJsonOperationArgs,
   ): string =>
     `${baseUrl}/published/${operationName}?${encodeObjectToURLSearchParams(
       { args },

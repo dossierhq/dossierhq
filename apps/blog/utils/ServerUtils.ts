@@ -1,4 +1,9 @@
-import type { DossierClient, ErrorType, PromiseResult, PublishedClient } from '@dossierhq/core';
+import type {
+  DossierClient,
+  ErrorType,
+  PromiseResult,
+  PublishedDossierClient,
+} from '@dossierhq/core';
 import { notOk, ok } from '@dossierhq/core';
 import type { DatabasePerformanceCallbacks, Server } from '@dossierhq/server';
 import type { NextApiRequest } from 'next';
@@ -13,7 +18,7 @@ export async function getSessionContextForRequest(
   _req: NextApiRequest,
   databasePerformance: DatabasePerformanceCallbacks,
 ): PromiseResult<
-  { client: DossierClient; publishedClient: PublishedClient },
+  { client: DossierClient; publishedClient: PublishedDossierClient },
   typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate

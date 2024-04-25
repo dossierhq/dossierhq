@@ -1,4 +1,4 @@
-import type { Component, Logger, PublishedClient, PublishedEntity } from '@dossierhq/core';
+import type { Component, Logger, PublishedDossierClient, PublishedEntity } from '@dossierhq/core';
 import { NoOpLogger } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import type {
@@ -11,7 +11,10 @@ import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
 interface Props {
   adapter: PublishedDossierContextAdapter;
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>;
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >;
   authKeys?: DisplayAuthKey[];
   logger?: Logger;
   children: ReactNode;

@@ -2,7 +2,7 @@ import type {
   Component,
   ErrorResult,
   ErrorType,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
 } from '@dossierhq/core';
 import { PublishedSchema } from '@dossierhq/core';
@@ -15,7 +15,10 @@ type FetcherData = PublishedSchema;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
 export function usePublishedSchema(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >,
 ): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
@@ -35,7 +38,10 @@ export function usePublishedSchema(
 }
 
 async function fetchSchema(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >,
 ): Promise<FetcherData> {
   const result = await publishedClient.getSchemaSpecification();
   if (result.isError()) {

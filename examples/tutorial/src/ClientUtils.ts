@@ -1,16 +1,16 @@
 import { useAuth0, type Auth0ContextInterface } from '@auth0/auth0-react';
 import {
   convertJsonDossierClientResult,
-  convertJsonPublishedClientResult,
+  convertJsonPublishedDossierClientResult,
   createBaseDossierClient,
-  createBasePublishedClient,
+  createBasePublishedDossierClient,
   createConsoleLogger,
   encodeObjectToURLSearchParams,
   notOk,
   ok,
   type DossierClientOperation,
   type ClientContext,
-  type PublishedClientOperation,
+  type PublishedDossierClientOperation,
 } from '@dossierhq/core';
 import { useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
@@ -77,7 +77,7 @@ export function usePublishedClient(): AppPublishedClient | null {
     () =>
       isLoading
         ? null
-        : createBasePublishedClient<ClientContext, AppPublishedClient>({
+        : createBasePublishedDossierClient<ClientContext, AppPublishedClient>({
             context: { logger },
             pipeline: [createPublishedBackendMiddleware(isAuthenticated, getAccessTokenSilently)],
           }),
@@ -89,7 +89,10 @@ function createPublishedBackendMiddleware(
   isAuthenticated: boolean,
   getAccessTokenSilently: Auth0ContextInterface['getAccessTokenSilently'],
 ) {
-  return async (context: ClientContext, operation: PublishedClientOperation): Promise<void> => {
+  return async (
+    context: ClientContext,
+    operation: PublishedDossierClientOperation,
+  ): Promise<void> => {
     const authHeader: { Authorization?: string } = {};
     if (isAuthenticated) {
       const accessToken = await getAccessTokenSilently();
@@ -104,7 +107,7 @@ function createPublishedBackendMiddleware(
       { headers: authHeader },
     );
     const result = await getBodyAsJsonResult(response);
-    operation.resolve(convertJsonPublishedClientResult(operation.name, result));
+    operation.resolve(convertJsonPublishedDossierClientResult(operation.name, result));
   };
 }
 

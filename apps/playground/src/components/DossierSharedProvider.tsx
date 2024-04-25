@@ -3,7 +3,7 @@ import type {
   ClientContext,
   ErrorType,
   PromiseResult,
-  PublishedClientMiddleware,
+  PublishedDossierClientMiddleware,
   Result,
 } from '@dossierhq/core';
 import { LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
@@ -96,7 +96,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       adapter,
       publishedClient: server.createPublishedClient(
         () => Promise.resolve(sessionResultRef.current),
-        [LoggingClientMiddleware as PublishedClientMiddleware<ClientContext>],
+        [LoggingClientMiddleware as PublishedDossierClientMiddleware<ClientContext>],
       ),
       authKeys: DISPLAY_AUTH_KEYS,
     };

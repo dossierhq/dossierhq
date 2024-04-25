@@ -1,11 +1,11 @@
 import {
-  PublishedClientOperationName,
-  createBasePublishedClient,
+  PublishedDossierClientOperationName,
+  createBasePublishedDossierClient,
   ok,
   type ContextProvider,
-  type PublishedClient,
-  type PublishedClientMiddleware,
-  type PublishedClientOperation,
+  type PublishedDossierClient,
+  type PublishedDossierClientMiddleware,
+  type PublishedDossierClientOperation,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
@@ -29,18 +29,20 @@ export function createServerPublishedClient({
   authorizationAdapter: AuthorizationAdapter;
   databaseAdapter: DatabaseAdapter;
   serverImpl: ServerImpl;
-  middleware: PublishedClientMiddleware<SessionContext>[];
-}): PublishedClient {
+  middleware: PublishedDossierClientMiddleware<SessionContext>[];
+}): PublishedDossierClient {
   async function terminatingMiddleware(
     context: SessionContext,
-    operation: PublishedClientOperation,
+    operation: PublishedDossierClientOperation,
   ): Promise<void> {
     switch (operation.name) {
-      case PublishedClientOperationName.getEntity: {
+      case PublishedDossierClientOperationName.getEntity: {
         const {
           args: [reference],
           resolve,
-        } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntity>;
+        } = operation as PublishedDossierClientOperation<
+          typeof PublishedDossierClientOperationName.getEntity
+        >;
         resolve(
           await publishedGetEntity(
             serverImpl.getAdminSchema(),
@@ -52,12 +54,12 @@ export function createServerPublishedClient({
         );
         break;
       }
-      case PublishedClientOperationName.getEntityList: {
+      case PublishedDossierClientOperationName.getEntityList: {
         const {
           args: [references],
           resolve,
-        } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.getEntityList
+        } = operation as PublishedDossierClientOperation<
+          typeof PublishedDossierClientOperationName.getEntityList
         >;
         resolve(
           await publishedGetEntityList(
@@ -70,20 +72,20 @@ export function createServerPublishedClient({
         );
         break;
       }
-      case PublishedClientOperationName.getSchemaSpecification: {
-        const { resolve } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.getSchemaSpecification
+      case PublishedDossierClientOperationName.getSchemaSpecification: {
+        const { resolve } = operation as PublishedDossierClientOperation<
+          typeof PublishedDossierClientOperationName.getSchemaSpecification
         >;
         const schema = serverImpl.getPublishedSchema();
         resolve(ok(schema.spec));
         break;
       }
-      case PublishedClientOperationName.getEntitiesTotalCount: {
+      case PublishedDossierClientOperationName.getEntitiesTotalCount: {
         const {
           args: [query],
           resolve,
-        } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.getEntitiesTotalCount
+        } = operation as PublishedDossierClientOperation<
+          typeof PublishedDossierClientOperationName.getEntitiesTotalCount
         >;
         resolve(
           await publishedGetTotalCount(
@@ -96,12 +98,12 @@ export function createServerPublishedClient({
         );
         break;
       }
-      case PublishedClientOperationName.getEntitiesSample: {
+      case PublishedDossierClientOperationName.getEntitiesSample: {
         const {
           args: [query, options],
           resolve,
-        } = operation as PublishedClientOperation<
-          typeof PublishedClientOperationName.getEntitiesSample
+        } = operation as PublishedDossierClientOperation<
+          typeof PublishedDossierClientOperationName.getEntitiesSample
         >;
         resolve(
           await publishedSampleEntities(
@@ -116,11 +118,13 @@ export function createServerPublishedClient({
         );
         break;
       }
-      case PublishedClientOperationName.getEntities: {
+      case PublishedDossierClientOperationName.getEntities: {
         const {
           args: [query, paging],
           resolve,
-        } = operation as PublishedClientOperation<typeof PublishedClientOperationName.getEntities>;
+        } = operation as PublishedDossierClientOperation<
+          typeof PublishedDossierClientOperationName.getEntities
+        >;
         resolve(
           await publishedSearchEntities(
             serverImpl.getAdminSchema(),
@@ -139,7 +143,7 @@ export function createServerPublishedClient({
     }
   }
 
-  return createBasePublishedClient<SessionContext>({
+  return createBasePublishedDossierClient<SessionContext>({
     context,
     pipeline: [...middleware, terminatingMiddleware],
   });

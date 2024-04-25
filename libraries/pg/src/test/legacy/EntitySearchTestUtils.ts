@@ -7,7 +7,7 @@ import type {
   Edge,
   ErrorType,
   PromiseResult,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
 } from '@dossierhq/core';
 import { EntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
@@ -180,7 +180,9 @@ export function randomBoundingBox(heightLat = 1.0, widthLng = 1.0): BoundingBox 
   return { minLat, maxLat, minLng, maxLng };
 }
 
-export async function countSearchResultWithEntity<TClient extends DossierClient | PublishedClient>(
+export async function countSearchResultWithEntity<
+  TClient extends DossierClient | PublishedDossierClient,
+>(
   client: TClient,
   query: Parameters<TClient['getEntities']>[0],
   entityId: string,

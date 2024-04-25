@@ -4,7 +4,7 @@ import type {
   ErrorResult,
   ErrorType,
   Paging,
-  PublishedClient,
+  PublishedDossierClient,
   PublishedEntity,
   PublishedEntityQuery,
 } from '@dossierhq/core';
@@ -23,7 +23,7 @@ type FetcherError = ErrorResult<unknown, typeof ErrorType.BadRequest | typeof Er
  * @returns If no result, `connection` is `undefined`. If there are no matches, `connection` is `null`
  */
 export function usePublishedEntities<TPublishedEntity extends PublishedEntity<string, object>>(
-  publishedClient: PublishedClient<TPublishedEntity>,
+  publishedClient: PublishedDossierClient<TPublishedEntity>,
   query: PublishedEntityQuery | undefined,
   paging?: Paging,
 ): {
@@ -44,7 +44,7 @@ export function usePublishedEntities<TPublishedEntity extends PublishedEntity<st
 }
 
 async function fetchEntities<TPublishedEntity extends PublishedEntity<string, object>>(
-  publishedClient: PublishedClient<TPublishedEntity>,
+  publishedClient: PublishedDossierClient<TPublishedEntity>,
   query: FetcherKey[1],
   paging: FetcherKey[2],
 ): Promise<FetcherData<TPublishedEntity>> {

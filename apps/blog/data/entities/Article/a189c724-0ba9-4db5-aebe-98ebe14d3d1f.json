@@ -11531,7 +11531,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "createBasePublishedClient",
+                "text": "createBasePublishedDossierClient",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"
@@ -12282,7 +12282,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " PublishedClientOperation",
+                "text": " PublishedDossierClientOperation",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -13631,7 +13631,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "convertJsonPublishedClientResult",
+                "text": "convertJsonPublishedDossierClientResult",
                 "type": "code-highlight",
                 "version": 1,
                 "highlightType": "function"

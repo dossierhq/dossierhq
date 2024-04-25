@@ -4,7 +4,7 @@ const {
   createConsoleLogger,
   decodeURLSearchParamsParam,
   executeDossierClientOperationFromJson,
-  executePublishedClientOperationFromJson,
+  executePublishedDossierClientOperationFromJson,
   LoggingClientMiddleware,
   notOk,
 } = require('@dossierhq/core');
@@ -77,7 +77,7 @@ const expressMiddleWare = (router) => {
         defaultAuthKeys,
       });
       const client = server.createPublishedClient(() => sessionResult, [LoggingClientMiddleware]);
-      return await executePublishedClientOperationFromJson(client, name, operation);
+      return await executePublishedDossierClientOperationFromJson(client, name, operation);
     });
   });
 };

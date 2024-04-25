@@ -18,8 +18,8 @@ import {
   type Logger,
   type Paging,
   type PromiseResult,
-  type PublishedClient,
-  type PublishedClientMiddleware,
+  type PublishedDossierClient,
+  type PublishedDossierClientMiddleware,
   type PublishedEntity,
   type PublishedSchema,
   type Result,
@@ -141,13 +141,13 @@ export interface Server<
   ): TClient;
 
   createPublishedClient<
-    TClient extends PublishedClient<
+    TClient extends PublishedDossierClient<
       PublishedEntity<string, object>,
       Component<string, object>
-    > = PublishedClient,
+    > = PublishedDossierClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
-    middleware?: PublishedClientMiddleware<SessionContext>[],
+    middleware?: PublishedDossierClientMiddleware<SessionContext>[],
   ): TClient;
 }
 
@@ -157,8 +157,8 @@ export interface ServerPlugin {
   ): DossierClientMiddleware<SessionContext>[];
 
   onCreatePublishedClient(
-    pipeline: PublishedClientMiddleware<SessionContext>[],
-  ): PublishedClientMiddleware<SessionContext>[];
+    pipeline: PublishedDossierClientMiddleware<SessionContext>[],
+  ): PublishedDossierClientMiddleware<SessionContext>[];
 
   onServerShutdown(): void;
 }
@@ -262,7 +262,7 @@ export class ServerImpl {
     return middleware;
   }
 
-  resolvePublishedClientMiddleware(middleware: PublishedClientMiddleware<SessionContext>[]) {
+  resolvePublishedClientMiddleware(middleware: PublishedDossierClientMiddleware<SessionContext>[]) {
     for (const plugin of this.#plugins) {
       middleware = plugin.onCreatePublishedClient(middleware);
     }
@@ -441,13 +441,13 @@ export async function createServer<
       }) as TClient,
 
     createPublishedClient: <
-      TClient extends PublishedClient<
+      TClient extends PublishedDossierClient<
         PublishedEntity<string, object>,
         Component<string, object>
-      > = PublishedClient,
+      > = PublishedDossierClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
-      middleware?: PublishedClientMiddleware<SessionContext>[],
+      middleware?: PublishedDossierClientMiddleware<SessionContext>[],
     ) =>
       createServerPublishedClient({
         context,

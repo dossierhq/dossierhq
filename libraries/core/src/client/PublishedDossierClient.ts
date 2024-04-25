@@ -1,5 +1,12 @@
-import type { ErrorFromResult, OkFromResult, PromiseResult, Result } from '../ErrorResult.js';
-import { ErrorType, notOk, ok } from '../ErrorResult.js';
+import {
+  ErrorType,
+  notOk,
+  ok,
+  type ErrorFromResult,
+  type OkFromResult,
+  type PromiseResult,
+  type Result,
+} from '../ErrorResult.js';
 import type {
   Component,
   Connection,
@@ -15,38 +22,41 @@ import type {
 } from '../Types.js';
 import type { PublishedSchemaSpecification } from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
-import type { JsonConnection, JsonEdge, JsonPublishedEntity, JsonResult } from './JsonUtils.js';
 import {
   convertJsonConnection,
   convertJsonEdge,
   convertJsonPublishedEntity,
   convertJsonResult,
+  type JsonConnection,
+  type JsonEdge,
+  type JsonPublishedEntity,
+  type JsonResult,
 } from './JsonUtils.js';
-import type {
-  ClientContext,
-  ContextProvider,
-  Middleware,
-  Operation,
-  OperationWithoutCallbacks,
+import {
+  executeOperationPipeline,
+  type ClientContext,
+  type ContextProvider,
+  type Middleware,
+  type Operation,
+  type OperationWithoutCallbacks,
 } from './SharedClient.js';
-import { executeOperationPipeline } from './SharedClient.js';
 
-export interface PublishedClient<
-  TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
-  TPublishedComponent extends Component<string, object> = Component,
+export interface PublishedDossierClient<
+  TEntity extends PublishedEntity<string, object> = PublishedEntity,
+  TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
-  TExceptionClient extends PublishedExceptionClient<
-    TPublishedEntity,
-    TPublishedComponent,
+  TExceptionClient extends PublishedDossierExceptionClient<
+    TEntity,
+    TComponent,
     TUniqueIndex
-  > = PublishedExceptionClient<TPublishedEntity, TPublishedComponent, TUniqueIndex>,
+  > = PublishedDossierExceptionClient<TEntity, TComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 
   getEntity(
     reference: EntityReference | UniqueIndexReference<TUniqueIndex>,
   ): PromiseResult<
-    TPublishedEntity,
+    TEntity,
     | typeof ErrorType.BadRequest
     | typeof ErrorType.NotFound
     | typeof ErrorType.NotAuthorized
@@ -57,7 +67,7 @@ export interface PublishedClient<
     references: EntityReference[],
   ): PromiseResult<
     Result<
-      TPublishedEntity,
+      TEntity,
       | typeof ErrorType.BadRequest
       | typeof ErrorType.NotFound
       | typeof ErrorType.NotAuthorized
@@ -68,21 +78,21 @@ export interface PublishedClient<
 
   getEntities(
     query?: PublishedEntityQuery<
-      TPublishedEntity['info']['type'],
-      TPublishedComponent['type'],
-      TPublishedEntity['info']['authKey']
+      TEntity['info']['type'],
+      TComponent['type'],
+      TEntity['info']['authKey']
     >,
     paging?: Paging,
   ): PromiseResult<
-    Connection<Edge<TPublishedEntity, ErrorType>> | null,
+    Connection<Edge<TEntity, ErrorType>> | null,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   getEntitiesTotalCount(
     query?: PublishedEntitySharedQuery<
-      TPublishedEntity['info']['type'],
-      TPublishedComponent['type'],
-      TPublishedEntity['info']['authKey']
+      TEntity['info']['type'],
+      TComponent['type'],
+      TEntity['info']['authKey']
     >,
   ): PromiseResult<
     number,
@@ -91,25 +101,25 @@ export interface PublishedClient<
 
   getEntitiesSample(
     query?: PublishedEntitySharedQuery<
-      TPublishedEntity['info']['type'],
-      TPublishedComponent['type'],
-      TPublishedEntity['info']['authKey']
+      TEntity['info']['type'],
+      TComponent['type'],
+      TEntity['info']['authKey']
     >,
     options?: EntitySamplingOptions,
   ): PromiseResult<
-    EntitySamplingPayload<TPublishedEntity>,
+    EntitySamplingPayload<TEntity>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   >;
 
   toExceptionClient(): TExceptionClient;
 }
 
-export interface PublishedExceptionClient<
+export interface PublishedDossierExceptionClient<
   TPublishedEntity extends PublishedEntity<string, object> = PublishedEntity,
   TPublishedComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
 > {
-  client: Readonly<PublishedClient<TPublishedEntity, TPublishedComponent, TUniqueIndex>>;
+  client: Readonly<PublishedDossierClient<TPublishedEntity, TPublishedComponent, TUniqueIndex>>;
 
   getSchemaSpecification(): Promise<PublishedSchemaSpecification>;
 
@@ -156,7 +166,7 @@ export interface PublishedExceptionClient<
   ): Promise<EntitySamplingPayload<TPublishedEntity>>;
 }
 
-export const PublishedClientOperationName = {
+export const PublishedDossierClientOperationName = {
   getEntities: 'getEntities',
   getEntitiesSample: 'getEntitiesSample',
   getEntitiesTotalCount: 'getEntitiesTotalCount',
@@ -164,115 +174,117 @@ export const PublishedClientOperationName = {
   getEntityList: 'getEntityList',
   getSchemaSpecification: 'getSchemaSpecification',
 } as const;
-type PublishedClientOperationName = keyof typeof PublishedClientOperationName;
+type PublishedDossierClientOperationName = keyof typeof PublishedDossierClientOperationName;
 
 type MethodParameters<
-  TName extends keyof PublishedClient,
-  TClient extends PublishedClient<
+  TName extends keyof PublishedDossierClient,
+  TClient extends PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
-  > = PublishedClient,
+  > = PublishedDossierClient,
 > = Parameters<TClient[TName]>;
-type MethodReturnType<T extends keyof PublishedClient> = Awaited<ReturnType<PublishedClient[T]>>;
+type MethodReturnType<T extends keyof PublishedDossierClient> = Awaited<
+  ReturnType<PublishedDossierClient[T]>
+>;
 type MethodReturnTypeWithoutPromise<
-  TName extends keyof PublishedClient,
-  TClient extends PublishedClient<
+  TName extends keyof PublishedDossierClient,
+  TClient extends PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
-  > = PublishedClient,
+  > = PublishedDossierClient,
 > = Awaited<
   PromiseResult<MethodReturnTypeOk<TName, TClient>, MethodReturnTypeError<TName, TClient>>
 >;
 type MethodReturnTypeOk<
-  TName extends keyof PublishedClient,
-  TClient extends PublishedClient<
+  TName extends keyof PublishedDossierClient,
+  TClient extends PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
-  > = PublishedClient,
+  > = PublishedDossierClient,
 > = OkFromResult<ReturnType<TClient[TName]>>;
 type MethodReturnTypeError<
-  TName extends keyof PublishedClient,
-  TClient extends PublishedClient<
+  TName extends keyof PublishedDossierClient,
+  TClient extends PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
-  > = PublishedClient,
+  > = PublishedDossierClient,
 > = ErrorFromResult<ReturnType<TClient[TName]>>;
 
-interface PublishedClientOperationArguments {
-  [PublishedClientOperationName.getEntities]: MethodParameters<'getEntities'>;
-  [PublishedClientOperationName.getEntitiesSample]: MethodParameters<'getEntitiesSample'>;
-  [PublishedClientOperationName.getEntitiesTotalCount]: MethodParameters<'getEntitiesTotalCount'>;
-  [PublishedClientOperationName.getEntity]: MethodParameters<'getEntity'>;
-  [PublishedClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
-  [PublishedClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
+interface PublishedDossierClientOperationArguments {
+  [PublishedDossierClientOperationName.getEntities]: MethodParameters<'getEntities'>;
+  [PublishedDossierClientOperationName.getEntitiesSample]: MethodParameters<'getEntitiesSample'>;
+  [PublishedDossierClientOperationName.getEntitiesTotalCount]: MethodParameters<'getEntitiesTotalCount'>;
+  [PublishedDossierClientOperationName.getEntity]: MethodParameters<'getEntity'>;
+  [PublishedDossierClientOperationName.getEntityList]: MethodParameters<'getEntityList'>;
+  [PublishedDossierClientOperationName.getSchemaSpecification]: MethodParameters<'getSchemaSpecification'>;
 }
 
-interface PublishedClientOperationReturn {
-  [PublishedClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
-  [PublishedClientOperationName.getEntitiesSample]: MethodReturnType<'getEntitiesSample'>;
-  [PublishedClientOperationName.getEntitiesTotalCount]: MethodReturnType<'getEntitiesTotalCount'>;
-  [PublishedClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
-  [PublishedClientOperationName.getEntityList]: MethodReturnType<'getEntityList'>;
-  [PublishedClientOperationName.getSchemaSpecification]: MethodReturnType<'getSchemaSpecification'>;
+interface PublishedDossierClientOperationReturn {
+  [PublishedDossierClientOperationName.getEntities]: MethodReturnType<'getEntities'>;
+  [PublishedDossierClientOperationName.getEntitiesSample]: MethodReturnType<'getEntitiesSample'>;
+  [PublishedDossierClientOperationName.getEntitiesTotalCount]: MethodReturnType<'getEntitiesTotalCount'>;
+  [PublishedDossierClientOperationName.getEntity]: MethodReturnType<'getEntity'>;
+  [PublishedDossierClientOperationName.getEntityList]: MethodReturnType<'getEntityList'>;
+  [PublishedDossierClientOperationName.getSchemaSpecification]: MethodReturnType<'getSchemaSpecification'>;
 }
 
-interface PublishedClientOperationReturnOk {
-  [PublishedClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
-  [PublishedClientOperationName.getEntitiesSample]: MethodReturnTypeOk<'getEntitiesSample'>;
-  [PublishedClientOperationName.getEntitiesTotalCount]: MethodReturnTypeOk<'getEntitiesTotalCount'>;
-  [PublishedClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
-  [PublishedClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
-  [PublishedClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
+interface PublishedDossierClientOperationReturnOk {
+  [PublishedDossierClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
+  [PublishedDossierClientOperationName.getEntitiesSample]: MethodReturnTypeOk<'getEntitiesSample'>;
+  [PublishedDossierClientOperationName.getEntitiesTotalCount]: MethodReturnTypeOk<'getEntitiesTotalCount'>;
+  [PublishedDossierClientOperationName.getEntity]: MethodReturnTypeOk<'getEntity'>;
+  [PublishedDossierClientOperationName.getEntityList]: MethodReturnTypeOk<'getEntityList'>;
+  [PublishedDossierClientOperationName.getSchemaSpecification]: MethodReturnTypeOk<'getSchemaSpecification'>;
 }
 
-interface PublishedClientOperationReturnError {
-  [PublishedClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
-  [PublishedClientOperationName.getEntitiesSample]: MethodReturnTypeError<'getEntitiesSample'>;
-  [PublishedClientOperationName.getEntitiesTotalCount]: MethodReturnTypeError<'getEntitiesTotalCount'>;
-  [PublishedClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
-  [PublishedClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
-  [PublishedClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
+interface PublishedDossierClientOperationReturnError {
+  [PublishedDossierClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
+  [PublishedDossierClientOperationName.getEntitiesSample]: MethodReturnTypeError<'getEntitiesSample'>;
+  [PublishedDossierClientOperationName.getEntitiesTotalCount]: MethodReturnTypeError<'getEntitiesTotalCount'>;
+  [PublishedDossierClientOperationName.getEntity]: MethodReturnTypeError<'getEntity'>;
+  [PublishedDossierClientOperationName.getEntityList]: MethodReturnTypeError<'getEntityList'>;
+  [PublishedDossierClientOperationName.getSchemaSpecification]: MethodReturnTypeError<'getSchemaSpecification'>;
 }
 
-export type PublishedClientOperation<
-  TName extends PublishedClientOperationName = PublishedClientOperationName,
+export type PublishedDossierClientOperation<
+  TName extends PublishedDossierClientOperationName = PublishedDossierClientOperationName,
 > = Operation<
   TName,
-  PublishedClientOperationArguments[TName],
-  PublishedClientOperationReturnOk[TName],
-  PublishedClientOperationReturnError[TName],
+  PublishedDossierClientOperationArguments[TName],
+  PublishedDossierClientOperationReturnOk[TName],
+  PublishedDossierClientOperationReturnError[TName],
   false
 >;
 
-export type PublishedClientMiddleware<TContext extends ClientContext> = Middleware<
+export type PublishedDossierClientMiddleware<TContext extends ClientContext> = Middleware<
   TContext,
-  PublishedClientOperation
+  PublishedDossierClientOperation
 >;
 
-export type PublishedClientJsonOperationArgs<
-  TName extends PublishedClientOperationName = PublishedClientOperationName,
-> = PublishedClientOperationArguments[TName];
+export type PublishedDossierClientJsonOperationArgs<
+  TName extends PublishedDossierClientOperationName = PublishedDossierClientOperationName,
+> = PublishedDossierClientOperationArguments[TName];
 
-class BasePublishedClient<TContext extends ClientContext> implements PublishedClient {
+class BasePublishedDossierClient<TContext extends ClientContext> implements PublishedDossierClient {
   private readonly context: TContext | ContextProvider<TContext>;
-  private readonly pipeline: PublishedClientMiddleware<TContext>[];
+  private readonly pipeline: PublishedDossierClientMiddleware<TContext>[];
 
   constructor({
     context,
     pipeline,
   }: {
     context: TContext | ContextProvider<TContext>;
-    pipeline: PublishedClientMiddleware<TContext>[];
+    pipeline: PublishedDossierClientMiddleware<TContext>[];
   }) {
     this.context = context;
     this.pipeline = pipeline;
   }
 
   getSchemaSpecification(): Promise<
-    PublishedClientOperationReturn[typeof PublishedClientOperationName.getSchemaSpecification]
+    PublishedDossierClientOperationReturn[typeof PublishedDossierClientOperationName.getSchemaSpecification]
   > {
     return this.executeOperation({
-      name: PublishedClientOperationName.getSchemaSpecification,
+      name: PublishedDossierClientOperationName.getSchemaSpecification,
       args: [],
       modifies: false,
     });
@@ -280,9 +292,11 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   getEntity(
     reference: EntityReference,
-  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntity]> {
+  ): Promise<
+    PublishedDossierClientOperationReturn[typeof PublishedDossierClientOperationName.getEntity]
+  > {
     return this.executeOperation({
-      name: PublishedClientOperationName.getEntity,
+      name: PublishedDossierClientOperationName.getEntity,
       args: [reference],
       modifies: false,
     });
@@ -290,9 +304,11 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
 
   getEntityList(
     references: EntityReference[],
-  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntityList]> {
+  ): Promise<
+    PublishedDossierClientOperationReturn[typeof PublishedDossierClientOperationName.getEntityList]
+  > {
     return this.executeOperation({
-      name: PublishedClientOperationName.getEntityList,
+      name: PublishedDossierClientOperationName.getEntityList,
       args: [references],
       modifies: false,
     });
@@ -301,9 +317,11 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   getEntities(
     query?: PublishedEntityQuery,
     paging?: Paging,
-  ): Promise<PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntities]> {
+  ): Promise<
+    PublishedDossierClientOperationReturn[typeof PublishedDossierClientOperationName.getEntities]
+  > {
     return this.executeOperation({
-      name: PublishedClientOperationName.getEntities,
+      name: PublishedDossierClientOperationName.getEntities,
       args: [query, paging],
       modifies: false,
     });
@@ -312,10 +330,10 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   getEntitiesTotalCount(
     query?: PublishedEntitySharedQuery,
   ): Promise<
-    PublishedClientOperationReturn[typeof PublishedClientOperationName.getEntitiesTotalCount]
+    PublishedDossierClientOperationReturn[typeof PublishedDossierClientOperationName.getEntitiesTotalCount]
   > {
     return this.executeOperation({
-      name: PublishedClientOperationName.getEntitiesTotalCount,
+      name: PublishedDossierClientOperationName.getEntitiesTotalCount,
       args: [query],
       modifies: false,
     });
@@ -329,21 +347,21 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
   > {
     return this.executeOperation({
-      name: PublishedClientOperationName.getEntitiesSample,
+      name: PublishedDossierClientOperationName.getEntitiesSample,
       args: [query, options],
       modifies: false,
     });
   }
 
-  toExceptionClient(): PublishedExceptionClient {
+  toExceptionClient(): PublishedDossierExceptionClient {
     return new PublishedExceptionClientWrapper(this);
   }
 
-  private async executeOperation<TName extends PublishedClientOperationName>(
-    operation: OperationWithoutCallbacks<PublishedClientOperation<TName>>,
+  private async executeOperation<TName extends PublishedDossierClientOperationName>(
+    operation: OperationWithoutCallbacks<PublishedDossierClientOperation<TName>>,
   ): PromiseResult<
-    PublishedClientOperationReturnOk[TName],
-    PublishedClientOperationReturnError[TName]
+    PublishedDossierClientOperationReturnOk[TName],
+    PublishedDossierClientOperationReturnError[TName]
   > {
     let context: TContext;
     if (typeof this.context === 'function') {
@@ -364,10 +382,10 @@ class BasePublishedClient<TContext extends ClientContext> implements PublishedCl
   }
 }
 
-class PublishedExceptionClientWrapper implements PublishedExceptionClient {
-  readonly client: PublishedClient;
+class PublishedExceptionClientWrapper implements PublishedDossierExceptionClient {
+  readonly client: PublishedDossierClient;
 
-  constructor(client: PublishedClient) {
+  constructor(client: PublishedDossierClient) {
     this.client = client;
   }
 
@@ -415,52 +433,55 @@ class PublishedExceptionClientWrapper implements PublishedExceptionClient {
   }
 }
 
-export function createBasePublishedClient<
+export function createBasePublishedDossierClient<
   TContext extends ClientContext,
-  TClient extends PublishedClient<
+  TClient extends PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
-  > = PublishedClient,
+  > = PublishedDossierClient,
 >(option: {
   context: TContext | ContextProvider<TContext>;
-  pipeline: PublishedClientMiddleware<TContext>[];
+  pipeline: PublishedDossierClientMiddleware<TContext>[];
 }): TClient {
-  return new BasePublishedClient(option) as unknown as TClient;
+  return new BasePublishedDossierClient(option) as unknown as TClient;
 }
 
-export async function executePublishedClientOperationFromJson(
-  publishedClient: PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
-  operationName: LooseAutocomplete<PublishedClientOperationName>,
-  operationArgs: PublishedClientJsonOperationArgs,
+export async function executePublishedDossierClientOperationFromJson(
+  publishedClient: PublishedDossierClient<
+    PublishedEntity<string, object>,
+    Component<string, object>
+  >,
+  operationName: LooseAutocomplete<PublishedDossierClientOperationName>,
+  operationArgs: PublishedDossierClientJsonOperationArgs,
 ): PromiseResult<unknown, ErrorType> {
-  const name = operationName as PublishedClientOperationName;
+  const name = operationName as PublishedDossierClientOperationName;
   switch (name) {
-    case PublishedClientOperationName.getEntities: {
+    case PublishedDossierClientOperationName.getEntities: {
       const [query, paging] =
-        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntities];
+        operationArgs as PublishedDossierClientOperationArguments[typeof PublishedDossierClientOperationName.getEntities];
       return await publishedClient.getEntities(query, paging);
     }
-    case PublishedClientOperationName.getEntitiesSample: {
+    case PublishedDossierClientOperationName.getEntitiesSample: {
       const [query, options] =
-        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntitiesSample];
+        operationArgs as PublishedDossierClientOperationArguments[typeof PublishedDossierClientOperationName.getEntitiesSample];
       return await publishedClient.getEntitiesSample(query, options);
     }
-    case PublishedClientOperationName.getEntitiesTotalCount: {
+    case PublishedDossierClientOperationName.getEntitiesTotalCount: {
       const [query] =
-        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntitiesTotalCount];
+        operationArgs as PublishedDossierClientOperationArguments[typeof PublishedDossierClientOperationName.getEntitiesTotalCount];
       return await publishedClient.getEntitiesTotalCount(query);
     }
-    case PublishedClientOperationName.getEntity: {
+    case PublishedDossierClientOperationName.getEntity: {
       const [reference] =
-        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntity];
+        operationArgs as PublishedDossierClientOperationArguments[typeof PublishedDossierClientOperationName.getEntity];
       return await publishedClient.getEntity(reference);
     }
-    case PublishedClientOperationName.getEntityList: {
+    case PublishedDossierClientOperationName.getEntityList: {
       const [references] =
-        operationArgs as PublishedClientOperationArguments[typeof PublishedClientOperationName.getEntityList];
+        operationArgs as PublishedDossierClientOperationArguments[typeof PublishedDossierClientOperationName.getEntityList];
       return await publishedClient.getEntityList(references);
     }
-    case PublishedClientOperationName.getSchemaSpecification: {
+    case PublishedDossierClientOperationName.getSchemaSpecification: {
       return await publishedClient.getSchemaSpecification();
     }
     default: {
@@ -470,12 +491,12 @@ export async function executePublishedClientOperationFromJson(
   }
 }
 
-export function convertJsonPublishedClientResult<
-  TName extends PublishedClientOperationName,
-  TClient extends PublishedClient<
+export function convertJsonPublishedDossierClientResult<
+  TName extends PublishedDossierClientOperationName,
+  TClient extends PublishedDossierClient<
     PublishedEntity<string, object>,
     Component<string, object>
-  > = PublishedClient,
+  > = PublishedDossierClient,
 >(
   operationName: TName,
   jsonResult: Result<unknown, ErrorType>,
@@ -486,7 +507,7 @@ export function convertJsonPublishedClientResult<
   }
   const { value } = jsonResult;
   switch (operationName) {
-    case PublishedClientOperationName.getEntities: {
+    case PublishedDossierClientOperationName.getEntities: {
       const result: MethodReturnTypeWithoutPromise<'getEntities'> = ok(
         convertJsonConnection(
           value as JsonConnection<JsonEdge<JsonPublishedEntity, ErrorType>> | null,
@@ -495,7 +516,7 @@ export function convertJsonPublishedClientResult<
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case PublishedClientOperationName.getEntitiesSample: {
+    case PublishedDossierClientOperationName.getEntitiesSample: {
       const payload = value as EntitySamplingPayload<JsonPublishedEntity>;
       const result: MethodReturnTypeWithoutPromise<'getEntitiesSample'> = ok({
         ...payload,
@@ -503,15 +524,15 @@ export function convertJsonPublishedClientResult<
       });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case PublishedClientOperationName.getEntitiesTotalCount:
+    case PublishedDossierClientOperationName.getEntitiesTotalCount:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
-    case PublishedClientOperationName.getEntity: {
+    case PublishedDossierClientOperationName.getEntity: {
       const result: MethodReturnTypeWithoutPromise<'getEntity'> = ok(
         convertJsonPublishedEntity(value as JsonPublishedEntity),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case PublishedClientOperationName.getEntityList: {
+    case PublishedDossierClientOperationName.getEntityList: {
       const result: MethodReturnTypeWithoutPromise<'getEntityList'> = ok(
         (value as JsonResult<JsonPublishedEntity, typeof ErrorType.NotFound>[]).map(
           (jsonItemResult) => {
@@ -523,7 +544,7 @@ export function convertJsonPublishedClientResult<
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
 
-    case PublishedClientOperationName.getSchemaSpecification:
+    case PublishedDossierClientOperationName.getSchemaSpecification:
       return ok(value) as MethodReturnTypeWithoutPromise<TName, TClient>;
     default: {
       operationName satisfies never;

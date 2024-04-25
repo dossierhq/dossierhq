@@ -4,7 +4,7 @@ import type {
   ErrorType,
   Logger,
   PromiseResult,
-  PublishedClient,
+  PublishedDossierClient,
 } from '@dossierhq/core';
 import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
@@ -19,7 +19,7 @@ export async function getSessionContextForRequest(
   server: Server,
   _req: NextApiRequest,
 ): PromiseResult<
-  { client: DossierClient; publishedClient: PublishedClient },
+  { client: DossierClient; publishedClient: PublishedDossierClient },
   typeof ErrorType.NotAuthenticated
 > {
   //TODO actually authenticate

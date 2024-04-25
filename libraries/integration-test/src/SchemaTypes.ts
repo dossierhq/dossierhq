@@ -5,9 +5,9 @@ import type {
   Entity,
   EntityReference,
   Location,
-  PublishedClient,
+  PublishedDossierClient,
+  PublishedDossierExceptionClient,
   PublishedEntity,
-  PublishedExceptionClient,
   RichText,
 } from '@dossierhq/core';
 
@@ -355,14 +355,14 @@ export function assertIsReferencesComponent(
   }
 }
 
-export type AppPublishedClient = PublishedClient<
+export type AppPublishedClient = PublishedDossierClient<
   AppPublishedEntity,
   AppPublishedComponent,
   AppPublishedUniqueIndexes,
   AppPublishedExceptionClient
 >;
 
-export type AppPublishedExceptionClient = PublishedExceptionClient<
+export type AppPublishedExceptionClient = PublishedDossierExceptionClient<
   AppPublishedEntity,
   AppPublishedComponent,
   AppPublishedUniqueIndexes

@@ -19,7 +19,7 @@ import {
   type EntityUpsert,
   type EntityVersionReference,
   type ErrorType,
-  type PublishedClient,
+  type PublishedDossierClient,
   type PublishedComponentTypeSpecification,
   type PublishedEntity,
   type PublishedEntityQuery,
@@ -84,8 +84,8 @@ export interface SessionGraphQLContext {
     typeof ErrorType.NotAuthenticated
   >;
   publishedClient: Result<
-    | PublishedClient<PublishedEntity>
-    | PublishedClient<PublishedEntity<string, object>, Component<string, object>>,
+    | PublishedDossierClient<PublishedEntity>
+    | PublishedDossierClient<PublishedEntity<string, object>, Component<string, object>>,
     typeof ErrorType.NotAuthenticated
   >;
 }

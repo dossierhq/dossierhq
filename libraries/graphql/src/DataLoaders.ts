@@ -33,7 +33,7 @@ import {
   type PageInfo,
   type Paging,
   type PromiseResult,
-  type PublishedClient,
+  type PublishedDossierClient,
   type PublishedComponentTypeSpecification,
   type PublishedEntity,
   type PublishedEntityQuery,
@@ -89,7 +89,7 @@ export async function loadPublishedEntity<TContext extends SessionGraphQLContext
   context: TContext,
   reference: EntityReference | UniqueIndexReference,
 ): Promise<PublishedEntity> {
-  const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
+  const publishedClient = context.publishedClient.valueOrThrow() as PublishedDossierClient;
   const result = await publishedClient.getEntity(reference);
   return buildResolversForPublishedEntity(schema, result.valueOrThrow());
 }
@@ -99,7 +99,7 @@ export async function loadPublishedEntityList<TContext extends SessionGraphQLCon
   context: TContext,
   ids: string[],
 ): Promise<FieldValueOrResolver<TContext, PublishedEntity | null>[]> {
-  const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
+  const publishedClient = context.publishedClient.valueOrThrow() as PublishedDossierClient;
   const results = await publishedClient.getEntityList(ids.map((id) => ({ id })));
   return results
     .valueOrThrow()
@@ -120,7 +120,7 @@ export async function loadPublishedEntitiesSample<TContext extends SessionGraphQ
   query: PublishedEntitySharedQuery | undefined,
   options: EntitySamplingOptions | undefined,
 ): Promise<EntitySamplingPayload<PublishedEntity>> {
-  const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
+  const publishedClient = context.publishedClient.valueOrThrow() as PublishedDossierClient;
   const result = await publishedClient.getEntitiesSample(query, options);
   if (result.isError()) {
     throw result.toError();
@@ -139,7 +139,7 @@ export async function loadPublishedEntities<TContext extends SessionGraphQLConte
   paging: Paging,
   info: GraphQLResolveInfo,
 ): Promise<ConnectionWithTotalCount<Edge<TContext, PublishedEntity>, TContext> | null> {
-  const publishedClient = context.publishedClient.valueOrThrow() as PublishedClient;
+  const publishedClient = context.publishedClient.valueOrThrow() as PublishedDossierClient;
   return buildResolversForConnection<TContext, PublishedEntity>(
     () => publishedClient.getEntities(query, paging),
     () => publishedClient.getEntitiesTotalCount(query),
