@@ -17,6 +17,6 @@
     "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-node-resolve": "~15.2.3",
     "esbuild": "~0.20.2",
-    "rollup": "~4.14.3"
+    "rollup": "~4.16.4"
   }
 }

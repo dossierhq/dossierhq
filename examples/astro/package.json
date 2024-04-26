@@ -17,7 +17,7 @@
   "dependencies": {
     "@astrojs/check": "~0.5.10",
     "@astrojs/node": "~8.2.5",
-    "@astrojs/react": "~3.3.0",
+    "@astrojs/react": "~3.3.1",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
@@ -30,16 +30,16 @@
     "astro": "~4.7.0",
     "better-sqlite3": "~9.6.0",
     "leaflet": "~1.9.4",
-    "react": "~18.2.0",
-    "react-dom": "~18.2.0"
+    "react": "~18.3.0",
+    "react-dom": "~18.3.0"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@types/better-sqlite3": "~7.6.8",
+    "@types/better-sqlite3": "~7.6.10",
     "@types/react": "18.3.0",
     "prettier": "3.2.5",
     "rollup-plugin-visualizer": "~5.12.0",
-    "tsx": "~4.7.2",
+    "tsx": "~4.7.3",
     "typescript": "~5.4.5"
   }
 }
