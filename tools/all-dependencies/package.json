@@ -34,7 +34,7 @@
     "@typescript-eslint/eslint-plugin": "~7.7.0",
     "@typescript-eslint/parser": "~7.7.0",
     "astro": "~4.6.3",
-    "better-sqlite3": "~9.5.0",
+    "better-sqlite3": "~9.6.0",
     "body-parser": "~1.20.2",
     "cloudinary": "~2.2.0",
     "codejar": "~4.2.0",

@@ -29,7 +29,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~9.5.0",
+    "better-sqlite3": "~9.6.0",
     "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.14.3",
