@@ -295,11 +295,11 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@sentry/astro':
-        specifier: ~7.111.0
-        version: 7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
+        specifier: ~7.112.2
+        version: 7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
       '@spotlightjs/astro':
         specifier: ~1.0.20
-        version: 1.0.20(@sentry/astro@7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)))(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
+        version: 1.0.20(@sentry/astro@7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)))(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
       astro:
         specifier: ~4.6.3
         version: 4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)
@@ -1875,11 +1875,11 @@ importers:
         specifier: ~1.10.2
         version: 1.10.2
       '@sentry/astro':
-        specifier: ~7.111.0
-        version: 7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
+        specifier: ~7.112.2
+        version: 7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
       '@spotlightjs/astro':
         specifier: ~1.0.20
-        version: 1.0.20(@sentry/astro@7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)))(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
+        version: 1.0.20(@sentry/astro@7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)))(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
       '@typescript-eslint/eslint-plugin':
         specifier: ~7.7.0
         version: 7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -5061,26 +5061,26 @@ packages:
   '@rushstack/ts-command-line@4.19.2':
     resolution: {integrity: sha512-cqmXXmBEBlzo9WtyUrHtF9e6kl0LvBY7aTSVX4jfnBfXWZQWnPq9JTFPlQZ+L/ZwjZ4HrNwQsOVvhe9oOucZkw==}
 
-  '@sentry-internal/feedback@7.111.0':
-    resolution: {integrity: sha512-xaKgPPDEirOan7c9HwzYA1KK87kRp/qfIx9ZKLOEtxwy6nqoMuSByGqSwm1Oqfcjpbd7y6/y+7Bw+69ZKNVLDQ==}
+  '@sentry-internal/feedback@7.112.2':
+    resolution: {integrity: sha512-z+XP8BwB8B3pa+i8xqbrPsbtDWUFUS6wo+FJbmOYUqOusJJbVFDAhBoEdKoo5ZjOcsAZG7XR6cA9zrhJynIWBA==}
     engines: {node: '>=12'}
 
-  '@sentry-internal/replay-canvas@7.111.0':
-    resolution: {integrity: sha512-3KPBIpiegTYmuVw9gA2aKuliAQONS3Ny1kJc9x5kz6XQGuLFxqlh6KzoCVaKfQJeq2WJqRNeR4KFFuNGuB3H8w==}
+  '@sentry-internal/replay-canvas@7.112.2':
+    resolution: {integrity: sha512-BCCCxrZ1wJvN6La5gg1JJbKitAhJI5MATCnhtklsZbUcHkHB9iZoj19J65+P56gwssvHz5xh63AjNiITaetIRg==}
     engines: {node: '>=12'}
 
-  '@sentry-internal/tracing@7.111.0':
-    resolution: {integrity: sha512-CgXly8rsdu4loWVKi2RqpInH3C2cVBuaYsx4ZP5IJpzSinsUAMyyr3Pc0PZzCyoVpBBXGBGj/4HhFsY3q6Z0Vg==}
+  '@sentry-internal/tracing@7.112.2':
+    resolution: {integrity: sha512-fT1Y46J4lfXZkgFkb03YMNeIEs2xS6jdKMoukMFQfRfVvL9fSWEbTgZpHPd/YTT8r2i082XzjtAoQNgklm/0Hw==}
     engines: {node: '>=8'}
 
-  '@sentry/astro@7.111.0':
-    resolution: {integrity: sha512-AivLxOL00uDRZ9vB1YL/MIwp24xWSNAd1qOyWcuK6kqq0SunrIi4XSN3CSBWNI+BJUPOTBARikYHMJe2fSCQ6A==}
+  '@sentry/astro@7.112.2':
+    resolution: {integrity: sha512-pGtCdf5cVGs3Addyly50QBYdh94tPM97OA3jpU78iGohGc4hUpBKbbRs8F5l1QkvgASnGYEWDPboto/k7jvHWw==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       astro: '>=3.x || >=4.0.0-beta'
 
-  '@sentry/browser@7.111.0':
-    resolution: {integrity: sha512-x7S9XoJh+TbMnur4eBhPpCVo+p7udABBV2gQk+Iw6LP9e8EFKmGmNyl76vSsT6GeFJ7mwxDEKfuwbVoLBjIvHw==}
+  '@sentry/browser@7.112.2':
+    resolution: {integrity: sha512-wULwavCch84+d0bueAdFm6CDm1u0TfOjN91VgY+sj/vxUV2vesvDgI8zRZfmbZEor3MYA90zerkZT3ehZQKbYw==}
     engines: {node: '>=8'}
 
   '@sentry/bundler-plugin-core@2.10.3':
@@ -5133,24 +5133,28 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
-  '@sentry/core@7.111.0':
-    resolution: {integrity: sha512-/ljeMjZu8CSrLGrseBi/7S2zRIFsqMcvfyG6Nwgfc07J9nbHt8/MqouE1bXZfiaILqDBpK7BK9MLAAph4mkAWg==}
+  '@sentry/core@7.112.2':
+    resolution: {integrity: sha512-gHPCcJobbMkk0VR18J65WYQTt3ED4qC6X9lHKp27Ddt63E+MDGkG6lvYBU1LS8cV7CdyBGC1XXDCfor61GvLsA==}
     engines: {node: '>=8'}
 
-  '@sentry/node@7.111.0':
-    resolution: {integrity: sha512-bTLZNETT7W89HEk04rwsch02KSpu++Yec/BEyM3AxUNY+ZQ9ZLL/lrNZuCwbe7fURpKoZrvGAhxpPjgs5UcB9w==}
+  '@sentry/integrations@7.112.2':
+    resolution: {integrity: sha512-ioC2yyU6DqtLkdmWnm87oNvdn2+9oKctJeA4t+jkS6JaJ10DcezjCwiLscX4rhB9aWJV3IWF7Op0O6K3w0t2Hg==}
     engines: {node: '>=8'}
 
-  '@sentry/replay@7.111.0':
-    resolution: {integrity: sha512-cSbI4A4hrO0sZ0ynvLQauPg8YyaDOQkhGkyvbws8W9WgfxR8X827bY9S0f1TPfgaFiVcKb0iRaAwyXHg3pyzOg==}
+  '@sentry/node@7.112.2':
+    resolution: {integrity: sha512-MNzkqER8jc2xOS3ArkCLH5hakzu15tcjeC7qjU7rQ1Ms4WuV+MG0docSRESux0/p23Qjzf9tZOc8C5Eq+Sxduw==}
+    engines: {node: '>=8'}
+
+  '@sentry/replay@7.112.2':
+    resolution: {integrity: sha512-7Ns/8D54WPsht1nlVj93Inf6rXyve2AZoibYN0YfcM2w3lI4NO51gPPHJU0lFEfMwzwK4ZBJWzOeW9098a+uEg==}
     engines: {node: '>=12'}
 
-  '@sentry/types@7.111.0':
-    resolution: {integrity: sha512-Oti4pgQ55+FBHKKcHGu51ZUxO1u52G5iVNK4mbtAN+5ArSCy/2s1H8IDJiOMswn3acfUnCR0oB/QsbEgAPZ26g==}
+  '@sentry/types@7.112.2':
+    resolution: {integrity: sha512-kCMLt7yhY5OkWE9MeowlTNmox9pqDxcpvqguMo4BDNZM5+v9SEb1AauAdR78E1a1V8TyCzjBD7JDfXWhvpYBcQ==}
     engines: {node: '>=8'}
 
-  '@sentry/utils@7.111.0':
-    resolution: {integrity: sha512-CB5rz1EgCSwj3xoXogsCZ5pQtfERrURc/ItcCuoaijUhkD0iMq5MCNWMHW3mBsBrqx/Oba+XGvDu0t/5+SWwBg==}
+  '@sentry/utils@7.112.2':
+    resolution: {integrity: sha512-OjLh0hx0t1EcL4ZIjf+4svlmmP+tHUDGcr5qpFWH78tjmkPW4+cqPuZCZfHSuWcDdeiaXi8TnYoVRqDcJKK/eQ==}
     engines: {node: '>=8'}
 
   '@sentry/vite-plugin@2.10.3':
@@ -5658,9 +5662,6 @@ packages:
   '@types/react-transition-group@4.4.10':
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
 
-  '@types/react@18.2.58':
-    resolution: {integrity: sha512-TaGvMNhxvG2Q0K0aYxiKfNDS5m5ZsoIBBbtfUorxdH4NGSXIlYvZxLJI+9Dd3KjeB3780bciLyAb7ylO8pLhPw==}
-
   '@types/react@18.2.79':
     resolution: {integrity: sha512-RwGAGXPl9kSXwdNTafkOEuFrTBD5SA2B3iEB96xi8+xu5ddUa/cpvyVCSNn+asgLCTHkb5ZxN8gbuibYJi4s1w==}
 
@@ -5669,9 +5670,6 @@ packages:
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
-
-  '@types/scheduler@0.16.8':
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -8303,6 +8301,9 @@ packages:
     cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
+  lie@3.1.1:
+    resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
+
   lie@3.3.0:
     resolution: {integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==}
 
@@ -8326,6 +8327,9 @@ packages:
   local-pkg@0.5.0:
     resolution: {integrity: sha512-ok6z3qlYyCDS4ZEU27HaU6x/xZa9Whf8jD4ptH5UZTQYZVYeb9bnZ3ojVhiJNLiXK1Hfc0GNbLXcmZ5plLDDBg==}
     engines: {node: '>=14'}
+
+  localforage@1.10.0:
+    resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
 
   locate-path@3.0.0:
     resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
@@ -12953,10 +12957,10 @@ snapshots:
   '@libsql/win32-x64-msvc@0.3.10':
     optional: true
 
-  '@mdx-js/react@3.0.1(@types/react@18.2.58)(react@18.2.0)':
+  '@mdx-js/react@3.0.1(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
       '@types/mdx': 2.0.11
-      '@types/react': 18.2.58
+      '@types/react': 18.2.79
       react: 18.2.0
 
   '@microsoft/rush-lib@5.120.6(@types/node@20.12.7)':
@@ -13326,13 +13330,6 @@ snapshots:
       '@types/react': 18.2.79
       '@types/react-dom': 18.2.25
 
-  '@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.58)(react@18.2.0)':
-    dependencies:
-      '@babel/runtime': 7.23.9
-      react: 18.2.0
-    optionalDependencies:
-      '@types/react': 18.2.58
-
   '@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.23.9
@@ -13528,14 +13525,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.2.79
       '@types/react-dom': 18.2.25
-
-  '@radix-ui/react-slot@1.0.2(@types/react@18.2.58)(react@18.2.0)':
-    dependencies:
-      '@babel/runtime': 7.23.9
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.58)(react@18.2.0)
-      react: 18.2.0
-    optionalDependencies:
-      '@types/react': 18.2.58
 
   '@radix-ui/react-slot@1.0.2(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
@@ -14726,53 +14715,54 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@sentry-internal/feedback@7.111.0':
+  '@sentry-internal/feedback@7.112.2':
     dependencies:
-      '@sentry/core': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/core': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
 
-  '@sentry-internal/replay-canvas@7.111.0':
+  '@sentry-internal/replay-canvas@7.112.2':
     dependencies:
-      '@sentry/core': 7.111.0
-      '@sentry/replay': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/core': 7.112.2
+      '@sentry/replay': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
 
-  '@sentry-internal/tracing@7.111.0':
+  '@sentry-internal/tracing@7.112.2':
     dependencies:
-      '@sentry/core': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/core': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
 
-  '@sentry/astro@7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))':
+  '@sentry/astro@7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))':
     dependencies:
-      '@sentry/browser': 7.111.0
-      '@sentry/core': 7.111.0
-      '@sentry/node': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/browser': 7.112.2
+      '@sentry/core': 7.112.2
+      '@sentry/node': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
       '@sentry/vite-plugin': 2.10.3
       astro: 4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  '@sentry/browser@7.111.0':
+  '@sentry/browser@7.112.2':
     dependencies:
-      '@sentry-internal/feedback': 7.111.0
-      '@sentry-internal/replay-canvas': 7.111.0
-      '@sentry-internal/tracing': 7.111.0
-      '@sentry/core': 7.111.0
-      '@sentry/replay': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry-internal/feedback': 7.112.2
+      '@sentry-internal/replay-canvas': 7.112.2
+      '@sentry-internal/tracing': 7.112.2
+      '@sentry/core': 7.112.2
+      '@sentry/integrations': 7.112.2
+      '@sentry/replay': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
 
   '@sentry/bundler-plugin-core@2.10.3':
     dependencies:
       '@sentry/cli': 2.27.0
-      '@sentry/node': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/node': 7.112.2
+      '@sentry/utils': 7.112.2
       dotenv: 16.4.5
       find-up: 5.0.0
       glob: 9.3.2
@@ -14822,30 +14812,38 @@ snapshots:
       - encoding
       - supports-color
 
-  '@sentry/core@7.111.0':
+  '@sentry/core@7.112.2':
     dependencies:
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
 
-  '@sentry/node@7.111.0':
+  '@sentry/integrations@7.112.2':
     dependencies:
-      '@sentry-internal/tracing': 7.111.0
-      '@sentry/core': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry/core': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
+      localforage: 1.10.0
 
-  '@sentry/replay@7.111.0':
+  '@sentry/node@7.112.2':
     dependencies:
-      '@sentry-internal/tracing': 7.111.0
-      '@sentry/core': 7.111.0
-      '@sentry/types': 7.111.0
-      '@sentry/utils': 7.111.0
+      '@sentry-internal/tracing': 7.112.2
+      '@sentry/core': 7.112.2
+      '@sentry/integrations': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
 
-  '@sentry/types@7.111.0': {}
-
-  '@sentry/utils@7.111.0':
+  '@sentry/replay@7.112.2':
     dependencies:
-      '@sentry/types': 7.111.0
+      '@sentry-internal/tracing': 7.112.2
+      '@sentry/core': 7.112.2
+      '@sentry/types': 7.112.2
+      '@sentry/utils': 7.112.2
+
+  '@sentry/types@7.112.2': {}
+
+  '@sentry/utils@7.112.2':
+    dependencies:
+      '@sentry/types': 7.112.2
 
   '@sentry/vite-plugin@2.10.3':
     dependencies:
@@ -14861,9 +14859,9 @@ snapshots:
 
   '@sindresorhus/is@0.14.0': {}
 
-  '@spotlightjs/astro@1.0.20(@sentry/astro@7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)))(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))':
+  '@spotlightjs/astro@1.0.20(@sentry/astro@7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)))(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))':
     dependencies:
-      '@sentry/astro': 7.111.0(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
+      '@sentry/astro': 7.112.2(astro@4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5))
       '@spotlightjs/overlay': 1.8.3
       '@spotlightjs/sidecar': 1.4.0
       astro: 4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)
@@ -14903,10 +14901,10 @@ snapshots:
   '@storybook/addon-docs@8.0.8':
     dependencies:
       '@babel/core': 7.24.3
-      '@mdx-js/react': 3.0.1(@types/react@18.2.58)(react@18.2.0)
-      '@storybook/blocks': 8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@mdx-js/react': 3.0.1(@types/react@18.2.79)(react@18.2.0)
+      '@storybook/blocks': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/csf-plugin': 8.0.8
       '@storybook/csf-tools': 8.0.8
       '@storybook/global': 5.0.0
@@ -14915,7 +14913,7 @@ snapshots:
       '@storybook/react-dom-shim': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/types': 8.0.8
-      '@types/react': 18.2.58
+      '@types/react': 18.2.79
       fs-extra: 11.2.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -14976,40 +14974,6 @@ snapshots:
   '@storybook/addon-viewport@8.0.8':
     dependencies:
       memoizerific: 1.11.3
-
-  '@storybook/blocks@8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@storybook/channels': 8.0.8
-      '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/core-events': 8.0.8
-      '@storybook/csf': 0.1.2
-      '@storybook/docs-tools': 8.0.8
-      '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/manager-api': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/preview-api': 8.0.8
-      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/types': 8.0.8
-      '@types/lodash': 4.17.0
-      color-convert: 2.0.1
-      dequal: 2.0.3
-      lodash: 4.17.21
-      markdown-to-jsx: 7.3.2(react@18.2.0)
-      memoizerific: 1.11.3
-      polished: 4.2.2
-      react-colorful: 5.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      telejson: 7.2.0
-      tocbot: 4.25.0
-      ts-dedent: 2.2.0
-      util-deprecate: 1.0.2
-    optionalDependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - '@types/react'
-      - encoding
-      - supports-color
 
   '@storybook/blocks@8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -15169,22 +15133,6 @@ snapshots:
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
       - supports-color
-
-  '@storybook/components@8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.58)(react@18.2.0)
-      '@storybook/client-logger': 8.0.8
-      '@storybook/csf': 0.1.2
-      '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/types': 8.0.8
-      memoizerific: 1.11.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      util-deprecate: 1.0.2
-    transitivePeerDependencies:
-      - '@types/react'
 
   '@storybook/components@8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -15761,17 +15709,11 @@ snapshots:
 
   '@types/react-dom@18.2.25':
     dependencies:
-      '@types/react': 18.2.58
+      '@types/react': 18.2.79
 
   '@types/react-transition-group@4.4.10':
     dependencies:
-      '@types/react': 18.2.58
-
-  '@types/react@18.2.58':
-    dependencies:
-      '@types/prop-types': 15.7.11
-      '@types/scheduler': 0.16.8
-      csstype: 3.1.3
+      '@types/react': 18.2.79
 
   '@types/react@18.2.79':
     dependencies:
@@ -15781,8 +15723,6 @@ snapshots:
   '@types/resolve@1.20.2': {}
 
   '@types/resolve@1.20.6': {}
-
-  '@types/scheduler@0.16.8': {}
 
   '@types/semver@7.5.8': {}
 
@@ -19099,6 +19039,10 @@ snapshots:
       '@libsql/linux-x64-musl': 0.3.10
       '@libsql/win32-x64-msvc': 0.3.10
 
+  lie@3.1.1:
+    dependencies:
+      immediate: 3.0.6
+
   lie@3.3.0:
     dependencies:
       immediate: 3.0.6
@@ -19129,6 +19073,10 @@ snapshots:
     dependencies:
       mlly: 1.5.0
       pkg-types: 1.0.3
+
+  localforage@1.10.0:
+    dependencies:
+      lie: 3.1.1
 
   locate-path@3.0.0:
     dependencies:
