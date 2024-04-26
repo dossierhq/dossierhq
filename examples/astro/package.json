@@ -28,7 +28,7 @@
     "@sentry/astro": "~7.111.0",
     "@spotlightjs/astro": "~1.0.20",
     "astro": "~4.6.3",
-    "better-sqlite3": "~9.5.0",
+    "better-sqlite3": "~9.6.0",
     "leaflet": "~1.9.4",
     "react": "~18.2.0",
     "react-dom": "~18.2.0"

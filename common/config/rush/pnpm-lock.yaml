@@ -40,8 +40,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       codejar:
         specifier: ~4.2.0
         version: 4.2.0
@@ -250,8 +250,8 @@ importers:
         specifier: ~9.0.7
         version: 9.0.8
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -304,8 +304,8 @@ importers:
         specifier: ~4.6.3
         version: 4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -371,8 +371,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/benchpress
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       dotenv:
         specifier: ~16.4.5
         version: 16.4.5
@@ -478,8 +478,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       express:
         specifier: ~4.19.2
         version: 4.19.2
@@ -539,8 +539,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       graphql:
         specifier: ~16.8.1
         version: 16.8.1
@@ -609,8 +609,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       body-parser:
         specifier: ~1.20.2
         version: 1.20.2
@@ -738,8 +738,8 @@ importers:
         specifier: ~7.6.8
         version: 7.6.9
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1102,8 +1102,8 @@ importers:
         specifier: ~1.5.0
         version: 1.5.0(vitest@1.5.0(@types/node@20.12.7)(sass@1.75.0))
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1890,8 +1890,8 @@ importers:
         specifier: ~4.6.3
         version: 4.6.3(@types/node@20.12.7)(sass@1.75.0)(typescript@5.4.5)
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
       body-parser:
         specifier: ~1.20.2
         version: 1.20.2
@@ -2161,8 +2161,8 @@ importers:
   ../../tools/better-sqlite3-amalgamation:
     dependencies:
       better-sqlite3:
-        specifier: ~9.5.0
-        version: 9.5.0
+        specifier: ~9.6.0
+        version: 9.6.0
     devDependencies:
       '@types/better-sqlite3':
         specifier: ~7.6.8
@@ -5658,9 +5658,6 @@ packages:
   '@types/react-transition-group@4.4.10':
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
 
-  '@types/react@18.2.58':
-    resolution: {integrity: sha512-TaGvMNhxvG2Q0K0aYxiKfNDS5m5ZsoIBBbtfUorxdH4NGSXIlYvZxLJI+9Dd3KjeB3780bciLyAb7ylO8pLhPw==}
-
   '@types/react@18.2.79':
     resolution: {integrity: sha512-RwGAGXPl9kSXwdNTafkOEuFrTBD5SA2B3iEB96xi8+xu5ddUa/cpvyVCSNn+asgLCTHkb5ZxN8gbuibYJi4s1w==}
 
@@ -5669,9 +5666,6 @@ packages:
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
-
-  '@types/scheduler@0.16.8':
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -6193,8 +6187,8 @@ packages:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
 
-  better-sqlite3@9.5.0:
-    resolution: {integrity: sha512-01qVcM4gPNwE+PX7ARNiHINwzVuD6nx0gdldaAAcu+MrzyIAukQ31ZDKEpzRO/CNA9sHpxoTZ8rdjoyAin4dyg==}
+  better-sqlite3@9.6.0:
+    resolution: {integrity: sha512-yR5HATnqeYNVnkaUTf4bOP2dJSnyhP4puJN/QPRyx4YkBEEUxib422n2XzPqDEHjQQqazoYoADdAm5vE15+dAQ==}
 
   big-integer@1.6.52:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
@@ -12953,10 +12947,10 @@ snapshots:
   '@libsql/win32-x64-msvc@0.3.10':
     optional: true
 
-  '@mdx-js/react@3.0.1(@types/react@18.2.58)(react@18.2.0)':
+  '@mdx-js/react@3.0.1(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
       '@types/mdx': 2.0.11
-      '@types/react': 18.2.58
+      '@types/react': 18.2.79
       react: 18.2.0
 
   '@microsoft/rush-lib@5.120.6(@types/node@20.12.7)':
@@ -13326,13 +13320,6 @@ snapshots:
       '@types/react': 18.2.79
       '@types/react-dom': 18.2.25
 
-  '@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.58)(react@18.2.0)':
-    dependencies:
-      '@babel/runtime': 7.23.9
-      react: 18.2.0
-    optionalDependencies:
-      '@types/react': 18.2.58
-
   '@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.23.9
@@ -13528,14 +13515,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.2.79
       '@types/react-dom': 18.2.25
-
-  '@radix-ui/react-slot@1.0.2(@types/react@18.2.58)(react@18.2.0)':
-    dependencies:
-      '@babel/runtime': 7.23.9
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.58)(react@18.2.0)
-      react: 18.2.0
-    optionalDependencies:
-      '@types/react': 18.2.58
 
   '@radix-ui/react-slot@1.0.2(@types/react@18.2.79)(react@18.2.0)':
     dependencies:
@@ -14903,10 +14882,10 @@ snapshots:
   '@storybook/addon-docs@8.0.8':
     dependencies:
       '@babel/core': 7.24.3
-      '@mdx-js/react': 3.0.1(@types/react@18.2.58)(react@18.2.0)
-      '@storybook/blocks': 8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@mdx-js/react': 3.0.1(@types/react@18.2.79)(react@18.2.0)
+      '@storybook/blocks': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@storybook/components': 8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/csf-plugin': 8.0.8
       '@storybook/csf-tools': 8.0.8
       '@storybook/global': 5.0.0
@@ -14915,7 +14894,7 @@ snapshots:
       '@storybook/react-dom-shim': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/types': 8.0.8
-      '@types/react': 18.2.58
+      '@types/react': 18.2.79
       fs-extra: 11.2.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -14976,40 +14955,6 @@ snapshots:
   '@storybook/addon-viewport@8.0.8':
     dependencies:
       memoizerific: 1.11.3
-
-  '@storybook/blocks@8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@storybook/channels': 8.0.8
-      '@storybook/client-logger': 8.0.8
-      '@storybook/components': 8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/core-events': 8.0.8
-      '@storybook/csf': 0.1.2
-      '@storybook/docs-tools': 8.0.8
-      '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/manager-api': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/preview-api': 8.0.8
-      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/types': 8.0.8
-      '@types/lodash': 4.17.0
-      color-convert: 2.0.1
-      dequal: 2.0.3
-      lodash: 4.17.21
-      markdown-to-jsx: 7.3.2(react@18.2.0)
-      memoizerific: 1.11.3
-      polished: 4.2.2
-      react-colorful: 5.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      telejson: 7.2.0
-      tocbot: 4.25.0
-      ts-dedent: 2.2.0
-      util-deprecate: 1.0.2
-    optionalDependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - '@types/react'
-      - encoding
-      - supports-color
 
   '@storybook/blocks@8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -15169,22 +15114,6 @@ snapshots:
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
       - supports-color
-
-  '@storybook/components@8.0.8(@types/react@18.2.58)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.58)(react@18.2.0)
-      '@storybook/client-logger': 8.0.8
-      '@storybook/csf': 0.1.2
-      '@storybook/global': 5.0.0
-      '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/theming': 8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@storybook/types': 8.0.8
-      memoizerific: 1.11.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      util-deprecate: 1.0.2
-    transitivePeerDependencies:
-      - '@types/react'
 
   '@storybook/components@8.0.8(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -15761,17 +15690,11 @@ snapshots:
 
   '@types/react-dom@18.2.25':
     dependencies:
-      '@types/react': 18.2.58
+      '@types/react': 18.2.79
 
   '@types/react-transition-group@4.4.10':
     dependencies:
-      '@types/react': 18.2.58
-
-  '@types/react@18.2.58':
-    dependencies:
-      '@types/prop-types': 15.7.11
-      '@types/scheduler': 0.16.8
-      csstype: 3.1.3
+      '@types/react': 18.2.79
 
   '@types/react@18.2.79':
     dependencies:
@@ -15781,8 +15704,6 @@ snapshots:
   '@types/resolve@1.20.2': {}
 
   '@types/resolve@1.20.6': {}
-
-  '@types/scheduler@0.16.8': {}
 
   '@types/semver@7.5.8': {}
 
@@ -16546,7 +16467,7 @@ snapshots:
     dependencies:
       is-windows: 1.0.2
 
-  better-sqlite3@9.5.0:
+  better-sqlite3@9.6.0:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.1
