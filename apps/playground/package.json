@@ -35,7 +35,7 @@
     "@dossierhq/eslint-config-react": "workspace:*",
     "@graphiql/toolkit": "~0.9.1",
     "@types/react-dom": "~18.2.25",
-    "@types/react": "18.2.79",
+    "@types/react": "18.3.0",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react-swc": "~3.6.0",
     "eslint": "~8.57.0",
