@@ -130,7 +130,7 @@ async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
     entityTypes: [
       {
         name: 'TitleOnly',
-        adminOnly: false,
+        publishable: true,
         authKeyPattern: null,
         nameField: 'title',
         fields: [

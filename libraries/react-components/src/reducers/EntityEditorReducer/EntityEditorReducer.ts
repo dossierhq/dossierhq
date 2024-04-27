@@ -612,7 +612,7 @@ function createEditorEntityDraftState(
 ): EntityEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
-    const adminOnly = entitySpec.adminOnly || fieldSpec.adminOnly;
+    const adminOnly = !entitySpec.publishable || fieldSpec.adminOnly;
     const normalizationResult = normalizeContentField(schema, [], fieldSpec, value);
     const normalizedValue = normalizationResult.isOk() ? normalizationResult.value : value;
     const validationIssues = validateField(schema, fieldSpec, adminOnly, normalizedValue, []);

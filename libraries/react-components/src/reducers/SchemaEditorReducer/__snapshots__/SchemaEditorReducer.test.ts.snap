@@ -161,16 +161,15 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "title",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -197,6 +196,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -211,7 +211,6 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -237,6 +236,7 @@ exports[`AddFieldAction > add field to existing entity type (with existing field
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -254,14 +254,13 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -276,6 +275,7 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -290,7 +290,6 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -306,6 +305,7 @@ exports[`AddFieldAction > add field to existing entity type (without any fields)
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -504,18 +504,18 @@ exports[`AddTypeAction > add entity type to empty schema 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -530,11 +530,11 @@ exports[`AddTypeAction > add entity type to empty schema 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -555,33 +555,33 @@ exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -596,11 +596,11 @@ exports[`AddTypeAction > add entity type to schema with existing type 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -682,33 +682,33 @@ exports[`AddTypeAction > add two entity types (orders) 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Anaconda",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "ZooKeeper",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -723,18 +723,18 @@ exports[`AddTypeAction > add two entity types (orders) 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Anaconda",
       "nameField": null,
+      "publishable": true,
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "ZooKeeper",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -752,16 +752,15 @@ exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "field",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": true,
@@ -775,6 +774,7 @@ exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -789,7 +789,6 @@ exports[`ChangeFieldAdminOnlyAction > make existing field admin only 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -801,6 +800,7 @@ exports[`ChangeFieldAdminOnlyAction > make existing field admin only 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -818,14 +818,13 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": true,
@@ -840,6 +839,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -854,7 +854,6 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -870,6 +869,7 @@ exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing enti
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1017,14 +1017,13 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1041,6 +1040,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1055,7 +1055,6 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1070,6 +1069,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new enti
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1087,16 +1087,15 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "entity",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1113,6 +1112,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1127,7 +1127,6 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1142,6 +1141,7 @@ exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing e
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1159,14 +1159,13 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1184,6 +1183,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1198,7 +1198,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1216,6 +1215,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1233,16 +1233,15 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "foo",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1263,6 +1262,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1277,7 +1277,6 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1295,6 +1294,7 @@ exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of e
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1312,14 +1312,13 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1340,6 +1339,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1354,7 +1354,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1379,6 +1378,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1396,16 +1396,15 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "rt",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1431,6 +1430,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1445,7 +1445,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1469,6 +1468,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1486,16 +1486,15 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "rt",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1521,6 +1520,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1535,7 +1535,6 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1558,6 +1557,7 @@ exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entit
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1578,16 +1578,15 @@ exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "existing",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1605,6 +1604,7 @@ exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1625,7 +1625,6 @@ exports[`ChangeFieldIndexAction > set index on existing string field 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1641,6 +1640,7 @@ exports[`ChangeFieldIndexAction > set index on existing string field 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -1664,16 +1664,15 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "existing",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1701,6 +1700,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1721,7 +1721,6 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1747,6 +1746,7 @@ exports[`ChangeFieldIndexAction > set index on new string field in existing enti
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1764,16 +1764,15 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] =
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1788,6 +1787,7 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] =
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1802,7 +1802,6 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 2`] =
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1815,6 +1814,7 @@ exports[`ChangeFieldIntegerAction > make existing integer field into float 2`] =
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1832,14 +1832,13 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1854,6 +1853,7 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1868,7 +1868,6 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1881,6 +1880,7 @@ exports[`ChangeFieldIntegerAction > make new integer field in existing entity ty
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -1901,16 +1901,15 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -1928,6 +1927,7 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] =
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -1958,7 +1958,6 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 2`] =
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1974,6 +1973,7 @@ exports[`ChangeFieldMatchPattern > change pattern on existing string field 2`] =
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "patterns": [
@@ -2000,14 +2000,13 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2023,6 +2022,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2044,7 +2044,6 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2060,6 +2059,7 @@ exports[`ChangeFieldMatchPattern > set pattern on new string field in existing e
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "patterns": [
@@ -2083,16 +2083,15 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2110,6 +2109,7 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2124,7 +2124,6 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2140,6 +2139,7 @@ exports[`ChangeFieldMultilineAction > change multiline in existing string field 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2157,14 +2157,13 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2179,6 +2178,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2193,7 +2193,6 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2209,6 +2208,7 @@ exports[`ChangeFieldMultilineAction > make new multiline field in existing entit
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2226,16 +2226,15 @@ exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2253,6 +2252,7 @@ exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2267,7 +2267,6 @@ exports[`ChangeFieldRequiredAction > make existing field required 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2283,6 +2282,7 @@ exports[`ChangeFieldRequiredAction > make existing field required 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2300,14 +2300,13 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2322,6 +2321,7 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2336,7 +2336,6 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2352,6 +2351,7 @@ exports[`ChangeFieldRequiredAction > make new field required in existing entity 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2369,14 +2369,13 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2391,6 +2390,7 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2405,7 +2405,6 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2418,6 +2417,7 @@ exports[`ChangeFieldTypeAction > from string to entity (new field of existing en
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2494,14 +2494,13 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2515,6 +2514,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2529,7 +2529,6 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2542,6 +2541,7 @@ exports[`ChangeFieldTypeAction > from string to location list (new field of exis
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2619,14 +2619,13 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2641,6 +2640,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2655,7 +2655,6 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2668,6 +2667,7 @@ exports[`ChangeFieldTypeAction > from string to value (new field of existing ent
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2685,16 +2685,15 @@ exports[`ChangeFieldValues > set values on existing string field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2719,6 +2718,7 @@ exports[`ChangeFieldValues > set values on existing string field 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2733,7 +2733,6 @@ exports[`ChangeFieldValues > set values on existing string field 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2756,6 +2755,7 @@ exports[`ChangeFieldValues > set values on existing string field 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2773,14 +2773,13 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2806,6 +2805,7 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -2820,7 +2820,6 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2846,6 +2845,7 @@ exports[`ChangeFieldValues > set values on new string field in existing entity t
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -2863,16 +2863,15 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -2890,6 +2889,7 @@ exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -3014,18 +3014,18 @@ exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 1`] = 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": true,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": false,
       "status": "changed",
     },
   ],
@@ -3040,14 +3040,59 @@ exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 2`] = 
 {
   "entityTypes": [
     {
-      "adminOnly": true,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": false,
     },
   ],
   "version": 2,
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new component type admin only 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new component type admin only 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 1,
 }
 `;
 
@@ -3065,18 +3110,18 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": true,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -3091,11 +3136,11 @@ exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": true,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -3113,18 +3158,18 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity typ
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": "aPattern",
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3149,11 +3194,11 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity typ
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -3174,18 +3219,18 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`]
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "my-pattern",
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -3207,11 +3252,11 @@ exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 2`]
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "my-pattern",
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "patterns": [
@@ -3238,14 +3283,13 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3260,6 +3304,7 @@ exports[`ChangeTypeNameField > make new string the name field in new type 1`] = 
       "kind": "entity",
       "name": "TitleOnly",
       "nameField": "title",
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -3274,7 +3319,6 @@ exports[`ChangeTypeNameField > make new string the name field in new type 2`] = 
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -3290,6 +3334,7 @@ exports[`ChangeTypeNameField > make new string the name field in new type 2`] = 
       ],
       "name": "TitleOnly",
       "nameField": "title",
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -3307,16 +3352,15 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "title",
       ],
       "existingName": "TitleOnly",
       "existingNameField": "title",
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3343,6 +3387,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
       "kind": "entity",
       "name": "TitleOnly",
       "nameField": "other",
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3357,7 +3402,6 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -3383,6 +3427,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 2`] = `
       ],
       "name": "TitleOnly",
       "nameField": "other",
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -3400,16 +3445,15 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "title",
       ],
       "existingName": "TitleOnly",
       "existingNameField": "title",
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3436,6 +3480,7 @@ exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
       "kind": "entity",
       "name": "TitleOnly",
       "nameField": "title",
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3457,16 +3502,15 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "title",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3484,6 +3528,7 @@ exports[`DeleteFieldAction > add and delete field 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -3505,18 +3550,18 @@ exports[`DeleteFieldAction > add field, set as name field and delete field 1`] =
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -3594,20 +3639,20 @@ exports[`DeleteFieldAction > delete existing entity name field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [
         "title",
       ],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": "title",
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3622,11 +3667,11 @@ exports[`DeleteFieldAction > delete existing entity name field 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "migrations": [
@@ -3685,16 +3730,15 @@ exports[`DeleteIndexAction > delete index used 1`] = `
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "fieldA",
       ],
       "existingName": "EntityType",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3712,6 +3756,7 @@ exports[`DeleteIndexAction > delete index used 1`] = `
       "kind": "entity",
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3744,7 +3789,6 @@ exports[`DeleteIndexAction > delete index used 2`] = `
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -3760,6 +3804,7 @@ exports[`DeleteIndexAction > delete index used 2`] = `
       ],
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "transientMigrations": [
@@ -3783,16 +3828,15 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": "patternA",
       "existingFieldOrder": [
         "fieldA",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3810,6 +3854,7 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3824,7 +3869,6 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -3840,6 +3884,7 @@ exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPa
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -3895,10 +3940,8 @@ exports[`DeleteTypeAction > delete existing component type referenced by another
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "richText",
@@ -3906,6 +3949,7 @@ exports[`DeleteTypeAction > delete existing component type referenced by another
       ],
       "existingName": "Referencing",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -3933,6 +3977,7 @@ exports[`DeleteTypeAction > delete existing component type referenced by another
       "kind": "entity",
       "name": "Referencing",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -3947,7 +3992,6 @@ exports[`DeleteTypeAction > delete existing component type referenced by another
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -3970,6 +4014,7 @@ exports[`DeleteTypeAction > delete existing component type referenced by another
       ],
       "name": "Referencing",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "migrations": [
@@ -4150,10 +4195,8 @@ exports[`DeleteTypeAction > delete newly added component type referenced by anot
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "richText",
@@ -4161,6 +4204,7 @@ exports[`DeleteTypeAction > delete newly added component type referenced by anot
       ],
       "existingName": "Existing",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4188,6 +4232,7 @@ exports[`DeleteTypeAction > delete newly added component type referenced by anot
       "kind": "entity",
       "name": "Existing",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -4226,10 +4271,8 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "entity",
@@ -4237,6 +4280,7 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
       ],
       "existingName": "Existing",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4264,6 +4308,7 @@ exports[`DeleteTypeAction > delete newly added entity type referenced by another
       "kind": "entity",
       "name": "Existing",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -4289,16 +4334,15 @@ exports[`RenameFieldAction > add and rename field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "title",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4325,6 +4369,7 @@ exports[`RenameFieldAction > add and rename field 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -4339,7 +4384,6 @@ exports[`RenameFieldAction > add and rename field 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -4365,6 +4409,7 @@ exports[`RenameFieldAction > add and rename field 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -4386,14 +4431,13 @@ exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4408,6 +4452,7 @@ exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": "baz",
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -4422,7 +4467,6 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -4438,6 +4482,7 @@ exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
       ],
       "name": "Foo",
       "nameField": "baz",
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -4544,16 +4589,15 @@ exports[`RenameFieldAction > rename existing entity name field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "newName",
       ],
       "existingName": "Foo",
       "existingNameField": "newName",
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4571,6 +4615,7 @@ exports[`RenameFieldAction > rename existing entity name field 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": "newName",
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -4585,7 +4630,6 @@ exports[`RenameFieldAction > rename existing entity name field 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -4601,6 +4645,7 @@ exports[`RenameFieldAction > rename existing entity name field 2`] = `
       ],
       "name": "Foo",
       "nameField": "newName",
+      "publishable": true,
     },
   ],
   "migrations": [
@@ -4634,16 +4679,15 @@ exports[`RenameIndexAction > rename existing index 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "fieldA",
       ],
       "existingName": "EntityType",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4661,6 +4705,7 @@ exports[`RenameIndexAction > rename existing index 1`] = `
       "kind": "entity",
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -4681,7 +4726,6 @@ exports[`RenameIndexAction > rename existing index 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -4697,6 +4741,7 @@ exports[`RenameIndexAction > rename existing index 2`] = `
       ],
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -4730,10 +4775,8 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "patternC",
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": "patternA",
       "existingFieldOrder": [
         "fieldA",
@@ -4741,6 +4784,7 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4770,6 +4814,7 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -4803,7 +4848,6 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "patternC",
       "fields": [
         {
@@ -4829,6 +4873,7 @@ exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPa
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "patterns": [
@@ -4922,14 +4967,13 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -4947,6 +4991,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       "kind": "entity",
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -4961,7 +5006,6 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -4976,6 +5020,7 @@ exports[`RenameTypeAction > add and rename entity type with fields referring to 
       ],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -4996,14 +5041,13 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -5022,6 +5066,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
       "kind": "entity",
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -5036,7 +5081,6 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -5054,6 +5098,7 @@ exports[`RenameTypeAction > add and rename entity type with link fields referrin
       ],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -5074,18 +5119,18 @@ exports[`RenameTypeAction > add and rename type 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": null,
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
       "status": "new",
     },
   ],
@@ -5100,11 +5145,11 @@ exports[`RenameTypeAction > add and rename type 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 1,
@@ -5208,16 +5253,15 @@ exports[`RenameTypeAction > rename existing component type with fields referring
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "field",
       ],
       "existingName": "Baz",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -5234,6 +5278,7 @@ exports[`RenameTypeAction > rename existing component type with fields referring
       "kind": "entity",
       "name": "Baz",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -5265,7 +5310,6 @@ exports[`RenameTypeAction > rename existing component type with fields referring
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -5280,6 +5324,7 @@ exports[`RenameTypeAction > rename existing component type with fields referring
       ],
       "name": "Baz",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "migrations": [
@@ -5312,18 +5357,18 @@ exports[`RenameTypeAction > rename existing entity type 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "OldName",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "NewName",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -5338,11 +5383,11 @@ exports[`RenameTypeAction > rename existing entity type 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "NewName",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "migrations": [
@@ -5402,16 +5447,15 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "self",
       ],
       "existingName": "OldName",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -5429,6 +5473,7 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
       "kind": "entity",
       "name": "NewName",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -5460,7 +5505,6 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -5475,6 +5519,7 @@ exports[`RenameTypeAction > rename existing entity type with fields referring to
       ],
       "name": "NewName",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "migrations": [
@@ -5504,10 +5549,8 @@ exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "fieldA",
@@ -5516,6 +5559,7 @@ exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -5545,6 +5589,7 @@ exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -5559,7 +5604,6 @@ exports[`ReorderFieldsAction > three fields, move first to middle 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -5583,6 +5627,7 @@ exports[`ReorderFieldsAction > three fields, move first to middle 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -5600,10 +5645,8 @@ exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "fieldA",
@@ -5611,6 +5654,7 @@ exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -5632,6 +5676,7 @@ exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "changed",
     },
   ],
@@ -5646,7 +5691,6 @@ exports[`ReorderFieldsAction > two fields, move last to first 2`] = `
 {
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -5664,6 +5708,7 @@ exports[`ReorderFieldsAction > two fields, move last to first 2`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "version": 2,
@@ -5684,18 +5729,18 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "NewType",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "NewType",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -5708,11 +5753,11 @@ exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [],
           "name": "NewType",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -5907,18 +5952,18 @@ exports[`SetActiveSelectorAction > set to type 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -5943,18 +5988,18 @@ exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6041,16 +6086,15 @@ exports[`UpdateSchemaSpecificationAction > component type field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "component",
       ],
       "existingName": "EntityWithComponent",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6077,6 +6121,7 @@ exports[`UpdateSchemaSpecificationAction > component type field 1`] = `
       "kind": "entity",
       "name": "EntityWithComponent",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6106,7 +6151,6 @@ exports[`UpdateSchemaSpecificationAction > component type field 1`] = `
       ],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6122,6 +6166,7 @@ exports[`UpdateSchemaSpecificationAction > component type field 1`] = `
           ],
           "name": "EntityWithComponent",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -6182,16 +6227,15 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "reference",
       ],
       "existingName": "EntityReference",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6218,6 +6262,7 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
       "kind": "entity",
       "name": "EntityReference",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6247,7 +6292,6 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
       ],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6263,6 +6307,7 @@ exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
           ],
           "name": "EntityReference",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -6287,18 +6332,18 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "patternOne",
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": "patternOne",
       "existingFieldOrder": [],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [],
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6321,11 +6366,11 @@ exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`]
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": "patternOne",
           "fields": [],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -6355,16 +6400,15 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "bar",
       ],
       "existingName": "Foo",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6393,6 +6437,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
       "kind": "entity",
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6415,7 +6460,6 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6432,6 +6476,7 @@ exports[`UpdateSchemaSpecificationAction > entity type with index and one index 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [
@@ -6546,16 +6591,15 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "title",
       ],
       "existingName": "TitleOnly",
       "existingNameField": "title",
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6584,6 +6628,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
       "kind": "entity",
       "name": "TitleOnly",
       "nameField": "title",
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6596,7 +6641,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6613,6 +6657,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
           ],
           "name": "TitleOnly",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -6637,10 +6682,8 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "float",
@@ -6650,6 +6693,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
       ],
       "existingName": "Numbers",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6723,6 +6767,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
       "kind": "entity",
       "name": "Numbers",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6735,7 +6780,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6773,6 +6817,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`
           ],
           "name": "Numbers",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -6797,16 +6842,15 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "richText",
       ],
       "existingName": "TitleOnly",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6853,6 +6897,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
       "kind": "entity",
       "name": "TitleOnly",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6865,7 +6910,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6891,6 +6935,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 
           ],
           "name": "TitleOnly",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -6915,16 +6960,15 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
   "deletedIndexes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "deletedFields": [],
-      "existingAdminOnly": false,
       "existingAuthKeyPattern": null,
       "existingFieldOrder": [
         "string",
       ],
       "existingName": "String",
       "existingNameField": null,
+      "existingPublishable": true,
       "fields": [
         {
           "adminOnly": false,
@@ -6953,6 +6997,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
       "kind": "entity",
       "name": "String",
       "nameField": null,
+      "publishable": true,
       "status": "",
     },
   ],
@@ -6975,7 +7020,6 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -6992,6 +7036,7 @@ exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`]
           ],
           "name": "String",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],

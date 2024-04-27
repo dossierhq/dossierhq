@@ -57,6 +57,12 @@ function modernizeEntityType(typeSpec: EntityTypeSpec): EntityTypeSpecification 
     }
   }
 
+  // Version 0.7: renamed adminOnly to publishable (inverted meaning)
+  if ('adminOnly' in typeSpec) {
+    (typeSpec as unknown as EntityTypeSpecification).publishable = !typeSpec.adminOnly;
+    delete (typeSpec as { adminOnly?: boolean }).adminOnly;
+  }
+
   typeSpec.fields = typeSpec.fields.map(modernizeField);
   return typeSpec as EntityTypeSpecification;
 }

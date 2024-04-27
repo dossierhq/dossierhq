@@ -32,7 +32,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -83,7 +83,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -99,7 +99,7 @@ describe('Schema.validate()', () => {
           },
           {
             name: 'AdminOnly',
-            adminOnly: true,
+            publishable: false,
             authKeyPattern: null,
             nameField: null,
             fields: [],
@@ -120,7 +120,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -149,7 +149,7 @@ describe('Schema.validate()', () => {
         schemaKind: 'full',
         version: 1,
         entityTypes: [
-          { name: 'foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'foo', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
         ],
         componentTypes: [],
         patterns: [],
@@ -181,8 +181,8 @@ describe('Schema.validate()', () => {
         schemaKind: 'full',
         version: 1,
         entityTypes: [
-          { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
-          { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Foo', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Foo', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
         ],
         componentTypes: [],
         patterns: [],
@@ -199,7 +199,7 @@ describe('Schema.validate()', () => {
         schemaKind: 'full',
         version: 1,
         entityTypes: [
-          { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Foo', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
         ],
         componentTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
         patterns: [],
@@ -218,7 +218,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: 'missing',
             fields: [],
@@ -241,7 +241,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: 'booleanField',
             fields: [
@@ -338,7 +338,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             nameField: null,
             authKeyPattern: null,
             fields: [
@@ -377,7 +377,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -409,7 +409,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -441,7 +441,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -476,7 +476,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -490,7 +490,7 @@ describe('Schema.validate()', () => {
               } as BooleanFieldSpecification,
             ],
           },
-          { name: 'Bar', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Bar', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
         ],
         componentTypes: [],
         patterns: [],
@@ -509,7 +509,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -541,7 +541,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -555,7 +555,7 @@ describe('Schema.validate()', () => {
               } as BooleanFieldSpecification,
             ],
           },
-          { name: 'Bar', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Bar', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
         ],
         componentTypes: [],
         patterns: [],
@@ -574,7 +574,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -588,7 +588,7 @@ describe('Schema.validate()', () => {
               } as BooleanFieldSpecification,
             ],
           },
-          { name: 'Bar', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+          { name: 'Bar', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
         ],
         componentTypes: [],
         patterns: [],
@@ -607,7 +607,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -639,7 +639,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -674,7 +674,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -709,7 +709,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -746,7 +746,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -783,7 +783,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -820,7 +820,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -855,7 +855,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -890,7 +890,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -925,7 +925,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -960,7 +960,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -995,7 +995,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1030,7 +1030,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1065,7 +1065,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1100,7 +1100,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1116,7 +1116,7 @@ describe('Schema.validate()', () => {
           },
           {
             name: 'Bar',
-            adminOnly: true,
+            publishable: false,
             authKeyPattern: null,
             nameField: null,
             fields: [],
@@ -1127,7 +1127,7 @@ describe('Schema.validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in entityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly',
+      'Foo.bar: Referenced entity type in entityTypes (Bar) is not publishable, but neither Foo nor bar are adminOnly',
     );
   });
 
@@ -1139,7 +1139,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1158,7 +1158,7 @@ describe('Schema.validate()', () => {
           },
           {
             name: 'Bar',
-            adminOnly: true,
+            publishable: false,
             authKeyPattern: null,
             nameField: null,
             fields: [],
@@ -1169,7 +1169,7 @@ describe('Schema.validate()', () => {
         indexes: [],
       }).validate(),
       ErrorType.BadRequest,
-      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is adminOnly, but neither Foo nor bar are adminOnly',
+      'Foo.bar: Referenced entity type in linkEntityTypes (Bar) is not publishable, but neither Foo nor bar are adminOnly',
     );
   });
 
@@ -1216,7 +1216,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1248,7 +1248,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1314,7 +1314,13 @@ describe('Schema.validate()', () => {
         schemaKind: 'full',
         version: 1,
         entityTypes: [
-          { name: 'Foo', adminOnly: false, authKeyPattern: 'missing', nameField: null, fields: [] },
+          {
+            name: 'Foo',
+            publishable: true,
+            authKeyPattern: 'missing',
+            nameField: null,
+            fields: [],
+          },
         ],
         componentTypes: [],
         patterns: [],
@@ -1348,7 +1354,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1380,7 +1386,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1415,7 +1421,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1447,7 +1453,7 @@ describe('Schema.validate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             authKeyPattern: null,
             nameField: null,
             fields: [
@@ -1653,7 +1659,7 @@ describe('Schema.toPublishedSchema()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: true,
+            publishable: false,
             fields: [{ name: 'field1', type: FieldType.String }],
           },
         ],

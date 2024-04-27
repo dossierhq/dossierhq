@@ -46,7 +46,7 @@ describe('Empty schema spec', () => {
 
 describe('One empty entity type schema spec', () => {
   const schema = Schema.createAndValidate({
-    entityTypes: [{ name: 'Foo', adminOnly: false, fields: [] }],
+    entityTypes: [{ name: 'Foo', publishable: true, fields: [] }],
   }).valueOrThrow();
 
   test('Generated QL schema', () => {
@@ -365,10 +365,10 @@ describe('One empty entity type schema spec', () => {
 describe('Two entity types with reference schema spec', () => {
   const schema = Schema.createAndValidate({
     entityTypes: [
-      { name: 'Foo', adminOnly: false, fields: [{ name: 'fooField', type: FieldType.String }] },
+      { name: 'Foo', publishable: true, fields: [{ name: 'fooField', type: FieldType.String }] },
       {
         name: 'Bar',
-        adminOnly: false,
+        publishable: true,
         fields: [
           { name: 'barField1', type: FieldType.String },
           { name: 'barField2', type: FieldType.Reference },
@@ -400,7 +400,7 @@ describe('Multiple references with entityTypes schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [
           { name: 'noMeansAll', type: FieldType.Reference, entityTypes: [] },
           { name: 'bar', type: FieldType.Reference, entityTypes: ['Bar'] },
@@ -417,8 +417,8 @@ describe('Multiple references with entityTypes schema spec', () => {
           },
         ],
       },
-      { name: 'Bar', adminOnly: false, fields: [] },
-      { name: 'Baz', adminOnly: false, fields: [] },
+      { name: 'Bar', publishable: true, fields: [] },
+      { name: 'Baz', publishable: true, fields: [] },
     ],
   }).valueOrThrow();
 
@@ -443,7 +443,7 @@ describe('List of strings, booleans, locations, numbers and references schema sp
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [
           { name: 'strings', type: FieldType.String, list: true },
           { name: 'booleans', type: FieldType.Boolean, list: true },
@@ -453,7 +453,7 @@ describe('List of strings, booleans, locations, numbers and references schema sp
           { name: 'bars', type: FieldType.Reference, list: true, entityTypes: ['Bar'] },
         ],
       },
-      { name: 'Bar', adminOnly: false, fields: [] },
+      { name: 'Bar', publishable: true, fields: [] },
     ],
   }).valueOrThrow();
 
@@ -478,7 +478,7 @@ describe('Component type schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [
           { name: 'valueOne', type: FieldType.Component, componentTypes: ['ValueOne'] },
           { name: 'unspecifiedValue', type: FieldType.Component },
@@ -490,7 +490,7 @@ describe('Component type schema spec', () => {
           { name: 'nestedValue', type: FieldType.Component, componentTypes: ['NestedValue'] },
         ],
       },
-      { name: 'Bar', adminOnly: false, fields: [] },
+      { name: 'Bar', publishable: true, fields: [] },
     ],
     componentTypes: [
       {
@@ -545,7 +545,7 @@ describe('Rich text schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [{ name: 'body', type: FieldType.RichText }],
       },
     ],
@@ -572,12 +572,12 @@ describe('Admin only entity and value schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: true,
+        publishable: false,
         fields: [{ name: 'body', type: FieldType.String }],
       },
       {
         name: 'Bar',
-        adminOnly: false,
+        publishable: true,
         fields: [{ name: 'body', type: FieldType.String }],
       },
     ],
@@ -616,7 +616,7 @@ describe('Admin only field in entity and value schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [{ name: 'body', type: FieldType.String, adminOnly: true }],
       },
     ],
@@ -650,7 +650,7 @@ describe('Required fields schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [
           { name: 'body', type: FieldType.String, required: true },
           { name: 'tags', type: FieldType.String, list: true, required: true },
@@ -693,7 +693,7 @@ describe('One entity type with unique index schema spec', () => {
     entityTypes: [
       {
         name: 'Foo',
-        adminOnly: false,
+        publishable: true,
         fields: [{ name: 'bar', type: FieldType.String, index: 'fooUnique' }],
       },
     ],

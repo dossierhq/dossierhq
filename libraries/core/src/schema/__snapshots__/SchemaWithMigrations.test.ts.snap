@@ -5,7 +5,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > change index 1`] = `
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -22,6 +21,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > change index 1`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -48,7 +48,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > duplicate values 1`] = `
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -118,6 +117,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > duplicate values 1`] = `
       ],
       "name": "Entity",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -133,11 +133,11 @@ exports[`SchemaWithMigrations.updateAndValidate() > empty->entity with pattern 1
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "aPattern",
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -158,7 +158,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > field with index 1`] = `
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -175,6 +174,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > field with index 1`] = `
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -195,7 +195,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > field with matchPattern 1`] 
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -212,6 +211,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > field with matchPattern 1`] 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -232,7 +232,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > fields not updated are kept 
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -264,6 +263,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > fields not updated are kept 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -279,11 +279,11 @@ exports[`SchemaWithMigrations.updateAndValidate() > unused pattern is removed 1`
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -299,11 +299,11 @@ exports[`SchemaWithMigrations.updateAndValidate() > update pattern 1`] = `
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": "aPattern",
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -342,7 +342,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly value
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -355,6 +354,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly value
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -370,7 +370,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly, auth
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": true,
       "authKeyPattern": "aPattern",
       "fields": [
         {
@@ -387,6 +386,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing adminOnly, auth
       ],
       "name": "Foo",
       "nameField": "title",
+      "publishable": false,
     },
   ],
   "indexes": [],
@@ -413,7 +413,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing componentTypes 
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -429,6 +428,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing componentTypes 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -444,7 +444,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing entityTypes val
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -460,6 +459,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing entityTypes val
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -481,7 +481,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing entityTypes, li
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -513,6 +512,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing entityTypes, li
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -528,7 +528,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing index, multilin
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -545,6 +544,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing index, multilin
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -570,7 +570,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing integer value i
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -584,6 +583,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing integer value i
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -599,7 +599,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing list value if n
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -616,6 +615,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing list value if n
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -631,7 +631,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing required value 
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -644,6 +643,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing required value 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -659,7 +659,6 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing values value if
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -680,6 +679,7 @@ exports[`SchemaWithMigrations.updateAndValidate() > use existing values value if
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -724,11 +724,11 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity field (mi
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -755,7 +755,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity field, re
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -768,6 +767,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity field, re
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -794,7 +794,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity name fiel
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -811,6 +810,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteField > entity name fiel
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -855,7 +855,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteIndex > unique index 1`]
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -872,6 +871,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteIndex > unique index 1`]
       ],
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -905,7 +905,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteIndex > unique index, re
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -933,6 +932,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteIndex > unique index, re
       ],
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -1005,7 +1005,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > component type re
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1034,6 +1033,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > component type re
       ],
       "name": "Baz",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1113,7 +1113,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type refer
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1144,6 +1143,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type refer
       ],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1169,7 +1169,6 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type, repl
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1200,9 +1199,9 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type, repl
       ],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1215,6 +1214,7 @@ exports[`SchemaWithMigrations.updateAndValidate() deleteType > entity type, repl
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1240,11 +1240,11 @@ exports[`SchemaWithMigrations.updateAndValidate() migrations > include migration
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1323,7 +1323,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity field (mi
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1340,6 +1339,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity field (mi
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1367,7 +1367,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity field wit
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1399,6 +1398,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity field wit
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1426,7 +1426,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity name fiel
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1458,6 +1457,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity name fiel
       ],
       "name": "Foo",
       "nameField": "newField",
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1491,7 +1491,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity rich text
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1523,6 +1522,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameField > entity rich text
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1568,7 +1568,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index 1`]
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1585,6 +1584,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index 1`]
       ],
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -1623,7 +1623,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index and
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1651,6 +1650,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index and
       ],
       "name": "EntityType",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -1671,7 +1671,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index, ad
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1699,6 +1698,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameIndex > unique index, ad
       ],
       "name": "OneEntity",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [
@@ -1812,7 +1812,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > component type re
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1843,6 +1842,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > component type re
       ],
       "name": "Baz",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1869,7 +1869,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type 1`] =
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1886,6 +1885,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type 1`] =
       ],
       "name": "Foo2",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -1947,7 +1947,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type refer
   ],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1981,9 +1980,9 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type refer
       ],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -1999,6 +1998,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type refer
       ],
       "name": "Foo2",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],
@@ -2025,7 +2025,6 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type, add 
   "componentTypes": [],
   "entityTypes": [
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2059,9 +2058,9 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type, add 
       ],
       "name": "Bar",
       "nameField": null,
+      "publishable": true,
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2074,9 +2073,9 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type, add 
       ],
       "name": "Foo",
       "nameField": null,
+      "publishable": true,
     },
     {
-      "adminOnly": false,
       "authKeyPattern": null,
       "fields": [
         {
@@ -2092,6 +2091,7 @@ exports[`SchemaWithMigrations.updateAndValidate() renameType > entity type, add 
       ],
       "name": "Foo2",
       "nameField": null,
+      "publishable": true,
     },
   ],
   "indexes": [],

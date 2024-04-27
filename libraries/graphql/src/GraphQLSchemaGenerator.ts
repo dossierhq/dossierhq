@@ -3,12 +3,12 @@ import {
   FieldType,
   isComponentItemField,
   notOk,
-  type DossierClient,
   type AdvisoryLockOptions,
   type ChangelogEvent,
   type ChangelogEventQuery,
   type Component,
   type ComponentTypeSpecification,
+  type DossierClient,
   type Entity,
   type EntityCreate,
   type EntityQuery,
@@ -19,8 +19,8 @@ import {
   type EntityUpsert,
   type EntityVersionReference,
   type ErrorType,
-  type PublishedDossierClient,
   type PublishedComponentTypeSpecification,
+  type PublishedDossierClient,
   type PublishedEntity,
   type PublishedEntityQuery,
   type PublishedEntitySharedQuery,
@@ -1761,7 +1761,10 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
 
         const fieldSpec = isEntity
           ? schema.getEntityFieldSpecification(typeSpec as EntityTypeSpecification, fieldName)
-          : schema.getComponentFieldSpecification(typeSpec, fieldName);
+          : schema.getComponentFieldSpecification(
+              typeSpec as ComponentTypeSpecification,
+              fieldName,
+            );
 
         // Traverse into components
         if (fieldSpec && isComponentItemField(fieldSpec, fieldValue) && fieldValue) {

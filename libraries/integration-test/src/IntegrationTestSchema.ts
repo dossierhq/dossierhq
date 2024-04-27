@@ -21,7 +21,7 @@ export const IntegrationTestSchema: SchemaSpecificationUpdate = {
     },
     {
       name: 'ChangeValidations',
-      adminOnly: false,
+      publishable: true,
       fields: [
         { name: 'required', type: FieldType.String, required: true },
         { name: 'matchPattern', type: FieldType.String, matchPattern: 'fooBarBaz' },

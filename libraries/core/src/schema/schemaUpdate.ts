@@ -48,10 +48,10 @@ export function schemaUpdate(
       );
       const existingEntitySpec = existingIndex >= 0 ? schemaSpec.entityTypes[existingIndex] : null;
 
-      const adminOnly = valueOrExistingOrDefault(
-        entitySpecUpdate.adminOnly,
-        existingEntitySpec?.adminOnly,
-        false,
+      const publishable = valueOrExistingOrDefault(
+        entitySpecUpdate.publishable,
+        existingEntitySpec?.publishable,
+        true,
       );
       const authKeyPattern = valueOrExistingOrDefault(
         entitySpecUpdate.authKeyPattern,
@@ -71,7 +71,7 @@ export function schemaUpdate(
       if (collectFieldsResult.isError()) return collectFieldsResult;
       const entitySpec: EntityTypeSpecification = {
         name: entitySpecUpdate.name,
-        adminOnly,
+        publishable,
         authKeyPattern,
         nameField,
         fields: collectFieldsResult.value,

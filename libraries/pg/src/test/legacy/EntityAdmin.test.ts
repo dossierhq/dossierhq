@@ -173,7 +173,7 @@ beforeAll(async () => {
       },
       {
         name: 'EntityAdminQux',
-        adminOnly: true,
+        publishable: false,
         fields: [{ name: 'title', type: FieldType.String }],
       },
       {

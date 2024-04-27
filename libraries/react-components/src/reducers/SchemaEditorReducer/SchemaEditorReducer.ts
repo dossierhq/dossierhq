@@ -46,8 +46,6 @@ export interface SchemaTypeDraft {
   name: string;
   existingName: string | null;
   status: 'new' | '' | 'changed';
-  adminOnly: boolean;
-  existingAdminOnly: boolean;
   fields: readonly SchemaFieldDraft[];
   deletedFields: readonly string[];
   existingFieldOrder: string[];
@@ -59,10 +57,14 @@ export interface SchemaEntityTypeDraft extends SchemaTypeDraft {
   existingAuthKeyPattern: string | null;
   nameField: string | null;
   existingNameField: string | null;
+  publishable: boolean;
+  existingPublishable: boolean;
 }
 
 export interface SchemaComponentTypeDraft extends SchemaTypeDraft {
   kind: 'component';
+  adminOnly: boolean;
+  existingAdminOnly: boolean;
 }
 
 export interface SchemaFieldDraft {
@@ -201,11 +203,15 @@ function resolveTypeStatus(
 ): SchemaTypeDraft['status'] {
   if (state.status === 'new') return state.status;
   if (state.name !== state.existingName) return 'changed';
-  if (state.adminOnly !== state.existingAdminOnly) return 'changed';
+
   if (state.kind === 'entity') {
+    if (state.publishable !== state.existingPublishable) return 'changed';
     if (state.nameField !== state.existingNameField) return 'changed';
     if (state.authKeyPattern !== state.existingAuthKeyPattern) return 'changed';
+  } else {
+    if (state.adminOnly !== state.existingAdminOnly) return 'changed';
   }
+
   if (state.deletedFields.length > 0) return 'changed';
   for (const field of state.fields) {
     if (field.status !== '') return 'changed';
@@ -532,8 +538,6 @@ class AddTypeAction implements SchemaEditorStateAction {
       status: 'new',
       name: this.name,
       existingName: null,
-      adminOnly: false,
-      existingAdminOnly: false,
       deletedFields: [],
       fields: [],
     } as const;
@@ -551,6 +555,8 @@ class AddTypeAction implements SchemaEditorStateAction {
           kind: 'entity',
           authKeyPattern: null,
           existingAuthKeyPattern: null,
+          publishable: true,
+          existingPublishable: true,
           nameField: null,
           existingNameField: null,
           existingFieldOrder: [],
@@ -560,7 +566,13 @@ class AddTypeAction implements SchemaEditorStateAction {
     } else {
       newState.componentTypes = [
         ...newState.componentTypes,
-        { ...typeDraft, kind: 'component', existingFieldOrder: [] },
+        {
+          ...typeDraft,
+          kind: 'component',
+          adminOnly: false,
+          existingAdminOnly: false,
+          existingFieldOrder: [],
+        },
       ];
       newState.componentTypes.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -924,19 +936,27 @@ class ChangePatternPatternAction extends PatternAction {
   }
 }
 
-class ChangeTypeAdminOnlyAction extends TypeAction {
-  adminOnly: boolean;
+class ChangeTypeAdminOnlyOrPublishableAction extends TypeAction {
+  value: boolean;
 
-  constructor(typeSelector: SchemaTypeSelector, adminOnly: boolean) {
+  constructor(typeSelector: SchemaTypeSelector, value: boolean) {
     super(typeSelector);
-    this.adminOnly = adminOnly;
+    this.value = value;
   }
 
-  reduceType(typeDraft: Readonly<SchemaEntityTypeDraft>): Readonly<SchemaEntityTypeDraft> {
-    if (typeDraft.adminOnly === this.adminOnly) {
+  reduceType(
+    typeDraft: Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft>,
+  ): Readonly<SchemaEntityTypeDraft> | Readonly<SchemaComponentTypeDraft> {
+    if (typeDraft.kind === 'entity') {
+      if (typeDraft.publishable === this.value) {
+        return typeDraft;
+      }
+      return { ...typeDraft, publishable: this.value };
+    }
+    if (typeDraft.adminOnly === this.value) {
       return typeDraft;
     }
-    return { ...typeDraft, adminOnly: this.adminOnly };
+    return { ...typeDraft, adminOnly: this.value };
   }
 }
 
@@ -1488,11 +1508,15 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       existingAuthKeyPattern: entityTypeSpec.authKeyPattern,
       nameField: entityTypeSpec.nameField,
       existingNameField: entityTypeSpec.nameField,
+      publishable: entityTypeSpec.publishable,
+      existingPublishable: entityTypeSpec.publishable,
     }));
 
-    const componentTypes = this.schema.spec.componentTypes.map((componentTypeSpec) =>
-      this.convertType('component', componentTypeSpec),
-    );
+    const componentTypes = this.schema.spec.componentTypes.map((componentTypeSpec) => ({
+      ...this.convertType('component', componentTypeSpec),
+      adminOnly: componentTypeSpec.adminOnly,
+      existingAdminOnly: componentTypeSpec.adminOnly,
+    }));
 
     const indexes = this.schema.spec.indexes.map<SchemaIndexDraft>((indexSpec) => ({
       ...indexSpec,
@@ -1532,8 +1556,6 @@ class UpdateSchemaSpecificationAction implements SchemaEditorStateAction {
       name: typeSpec.name,
       existingName: typeSpec.name,
       status: '',
-      adminOnly: typeSpec.adminOnly,
-      existingAdminOnly: typeSpec.adminOnly,
       deletedFields: [],
       fields: typeSpec.fields.map<SchemaFieldDraft>((fieldSpec) => {
         const fieldDraft: SchemaFieldDraft = {
@@ -1649,7 +1671,7 @@ export const SchemaEditorActions = {
   ChangeFieldType: ChangeFieldTypeAction,
   ChangeFieldValues: ChangeFieldValuesAction,
   ChangePatternPattern: ChangePatternPatternAction,
-  ChangeTypeAdminOnly: ChangeTypeAdminOnlyAction,
+  ChangeTypeAdminOnly: ChangeTypeAdminOnlyOrPublishableAction,
   ChangeTypeAuthKeyPattern: ChangeTypeAuthKeyPatternAction,
   ChangeTypeNameField: ChangeTypeNameFieldAction,
   DeleteField: DeleteFieldAction,
@@ -1754,12 +1776,17 @@ function getTypeUpdateFromEditorState(
     };
   });
 
-  const shared = { name: draftType.name, adminOnly: draftType.adminOnly, fields };
+  const shared = { name: draftType.name, fields };
   if (draftType.kind === 'entity') {
-    return { ...shared, authKeyPattern: draftType.authKeyPattern, nameField: draftType.nameField };
+    return {
+      ...shared,
+      authKeyPattern: draftType.authKeyPattern,
+      nameField: draftType.nameField,
+      publishable: draftType.publishable,
+    };
+  } else {
+    return { ...shared, adminOnly: draftType.adminOnly };
   }
-
-  return shared;
 }
 
 function getMigrationsFromEditorState(state: SchemaEditorState): SchemaVersionMigration[] {

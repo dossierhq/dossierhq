@@ -342,7 +342,7 @@ async function collectVersionsInfo(
     const entitySpec = schema.getEntityTypeSpecification(type);
     if (!entitySpec) return notOk.Generic(`No entity spec for type ${type}`);
 
-    if (entitySpec.adminOnly) {
+    if (!entitySpec.publishable) {
       adminOnlyEntityIds.push(reference.id);
     } else if (versionIsPublished) {
       versionsInfo.push({

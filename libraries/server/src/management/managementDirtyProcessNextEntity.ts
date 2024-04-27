@@ -248,12 +248,12 @@ async function validateAndCollectInfoFromPublishedEntity(
     );
   }
 
-  if (entitySpec.adminOnly) {
+  if (!entitySpec.publishable) {
     return convertErrorResultForValidation(
       context,
       reference,
-      'Entity type is admin only',
-      notOk.BadRequest(`Entity type ${type} is admin only`),
+      'Entity type is not publishable',
+      notOk.BadRequest(`Entity type ${type} is not publishable`),
     );
   }
 

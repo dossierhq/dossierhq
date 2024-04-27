@@ -1122,10 +1122,24 @@ describe('ChangeTypeAdminOnlyAction', () => {
           entityTypes: [{ name: 'Foo', fields: [] }],
         }).valueOrThrow(),
       ),
-      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, true),
+      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'entity', typeName: 'Foo' }, false),
     );
     expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
     expect(state.entityTypes[0].status).toEqual('changed');
+
+    expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
+  });
+
+  test('make new component type admin only', () => {
+    const state = reduceSchemaEditorStateActions(
+      initializeSchemaEditorState(),
+      new SchemaEditorActions.UpdateSchemaSpecification(
+        Schema.createAndValidate({}).valueOrThrow(),
+      ),
+      new SchemaEditorActions.AddType('component', 'Foo'),
+      new SchemaEditorActions.ChangeTypeAdminOnly({ kind: 'component', typeName: 'Foo' }, false),
+    );
+    expect(stateWithoutExistingSchema(state)).toMatchSnapshot();
 
     expect(getSchemaSpecificationUpdateFromEditorState(state)).toMatchSnapshot();
   });

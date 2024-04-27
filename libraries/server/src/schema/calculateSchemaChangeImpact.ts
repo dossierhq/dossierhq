@@ -186,7 +186,18 @@ function calculateTypeSelector(
     validate = true;
   }
 
-  if (!!previousType.adminOnly !== !!nextType.adminOnly) {
+  if (
+    isEntityType &&
+    !!(previousType as EntityTypeSpecification).publishable !==
+      !!(nextType as EntityTypeSpecification).publishable
+  ) {
+    validate = true;
+    index = true;
+  } else if (
+    !isEntityType &&
+    !!(previousType as ComponentTypeSpecification).adminOnly !==
+      !!(nextType as ComponentTypeSpecification).adminOnly
+  ) {
     validate = true;
     index = true;
   }

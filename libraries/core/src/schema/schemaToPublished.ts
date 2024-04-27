@@ -28,7 +28,7 @@ export function schemaToPublished(schema: BaseSchema<SchemaSpecification>) {
 
   const usedPatternNames = new Set();
   for (const entitySpec of schema.spec.entityTypes) {
-    if (entitySpec.adminOnly) {
+    if (!entitySpec.publishable) {
       continue;
     }
     spec.entityTypes.push({

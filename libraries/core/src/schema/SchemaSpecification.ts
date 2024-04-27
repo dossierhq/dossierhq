@@ -4,7 +4,7 @@ import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 
 export interface EntityTypeSpecification {
   name: string;
-  adminOnly: boolean;
+  publishable: boolean;
   authKeyPattern: string | null;
   nameField: string | null;
   fields: FieldSpecification[];
@@ -18,7 +18,7 @@ export interface ComponentTypeSpecification {
 
 export interface EntityTypeSpecificationUpdate {
   name: string;
-  adminOnly?: boolean;
+  publishable?: boolean;
   authKeyPattern?: string | null;
   nameField?: string | null;
   fields: FieldSpecificationUpdate[];
@@ -267,7 +267,8 @@ export type LegacyComponentTypeSpecification =
  */
 interface Legacy_V0_4_7_SchemaSpecificationWithMigrations
   extends Omit<SchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes' | 'migrations'> {
-  entityTypes: (Omit<EntityTypeSpecification, 'fields'> & {
+  entityTypes: (Omit<EntityTypeSpecification, 'publishable' | 'fields'> & {
+    adminOnly: boolean;
     fields: Legacy_V0_4_7_FieldSpecification[];
   })[];
   valueTypes: (Omit<ComponentTypeSpecification, 'fields'> & {
@@ -299,10 +300,12 @@ type Legacy_v0_4_7_SchemaMigrationAction<T extends SchemaMigrationAction = Schem
 
 /** In version after 0.6.2:
  * - Entity field type was renamed to Reference
+ * - adminOnly in EntityTypeSpecification was renamed to publishable (and inverted)
  */
 interface Legacy_V0_6_2_SchemaSpecificationWithMigrations
   extends Omit<SchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes'> {
-  entityTypes: (Omit<EntityTypeSpecification, 'fields'> & {
+  entityTypes: (Omit<EntityTypeSpecification, 'publishable' | 'fields'> & {
+    adminOnly: boolean;
     fields: Legacy_V0_6_2_FieldSpecification[];
   })[];
   componentTypes: (Omit<ComponentTypeSpecification, 'fields'> & {

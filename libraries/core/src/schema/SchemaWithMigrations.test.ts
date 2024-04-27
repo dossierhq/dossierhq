@@ -44,7 +44,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: true,
+          publishable: false,
           authKeyPattern: 'aPattern',
           nameField: 'title',
           fields: [{ name: 'title', type: FieldType.String }],
@@ -59,7 +59,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
       .valueOrThrow();
 
     expect(result.spec).toMatchSnapshot();
-    expect(result.spec.entityTypes[0].adminOnly).toBe(true);
+    expect(result.spec.entityTypes[0].publishable).toBe(false);
     expect(result.spec.entityTypes[0].authKeyPattern).toBe('aPattern');
     expect(result.spec.entityTypes[0].nameField).toBe('title');
   });
@@ -383,7 +383,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
     })
       .valueOrThrow()
       .updateAndValidate({
-        entityTypes: [{ name: 'Foo', adminOnly: false, authKeyPattern: null, fields: [] }],
+        entityTypes: [{ name: 'Foo', publishable: true, authKeyPattern: null, fields: [] }],
       })
       .valueOrThrow();
 
@@ -398,7 +398,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             fields: [{ name: 'title', type: FieldType.String, matchPattern: 'aPattern' }],
           },
         ],
@@ -417,7 +417,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
         entityTypes: [
           {
             name: 'Foo',
-            adminOnly: false,
+            publishable: true,
             fields: [{ name: 'title', type: FieldType.String, index: 'uniqueIndex' }],
           },
         ],
@@ -436,7 +436,7 @@ describe('SchemaWithMigrations.updateAndValidate()', () => {
         entityTypes: [
           {
             name: 'Entity',
-            adminOnly: false,
+            publishable: true,
             fields: [
               { name: 'entity', type: FieldType.Reference, entityTypes: ['Entity', 'Entity'] },
               {

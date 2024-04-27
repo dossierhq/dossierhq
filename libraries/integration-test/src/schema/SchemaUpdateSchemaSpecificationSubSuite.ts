@@ -280,10 +280,10 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
     ).valueOrThrow();
     const reference = { id: entityId };
 
-    // Make the entity type adminOnly
+    // Make the entity type not publishable
     assertOkResult(
       await client.updateSchemaSpecification({
-        entityTypes: [{ name: 'ChangeValidations', adminOnly: true, fields: [] }],
+        entityTypes: [{ name: 'ChangeValidations', publishable: false, fields: [] }],
       }),
     );
 
@@ -321,7 +321,7 @@ async function updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInva
     // Make the entity type normal
     assertOkResult(
       await client.updateSchemaSpecification({
-        entityTypes: [{ name: 'ChangeValidations', adminOnly: false, fields: [] }],
+        entityTypes: [{ name: 'ChangeValidations', publishable: true, fields: [] }],
       }),
     );
 

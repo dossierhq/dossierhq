@@ -4,7 +4,6 @@ import type { BaseSchema } from './BaseSchema.js';
 import type {
   BooleanFieldSpecification,
   ComponentFieldSpecification,
-  EntityTypeSpecification,
   LocationFieldSpecification,
   NumberFieldSpecification,
   ReferenceFieldSpecification,
@@ -57,8 +56,11 @@ export function schemaValidate(
   schema: BaseSchema<SchemaSpecification>,
 ): Result<void, typeof ErrorType.BadRequest> {
   const usedTypeNames = new Set<string>();
-  for (const typeSpec of [...schema.spec.entityTypes, ...schema.spec.componentTypes]) {
-    const isComponentType = schema.spec.componentTypes.includes(typeSpec);
+  for (const [isEntitySpec, typeSpec] of [
+    ...schema.spec.entityTypes.map((it) => [true, it] as const),
+    ...schema.spec.componentTypes.map((it) => [false, it] as const),
+  ]) {
+    const typeCanBePublished = isEntitySpec ? typeSpec.publishable : !typeSpec.adminOnly;
 
     if (!PASCAL_CASE_PATTERN.test(typeSpec.name)) {
       return notOk.BadRequest(
@@ -70,14 +72,14 @@ export function schemaValidate(
     }
     usedTypeNames.add(typeSpec.name);
 
-    if (!isComponentType) {
-      const authKeyPattern = (typeSpec as EntityTypeSpecification).authKeyPattern;
+    if (isEntitySpec) {
+      const authKeyPattern = typeSpec.authKeyPattern;
       if (authKeyPattern) {
         if (!schema.getPattern(authKeyPattern)) {
           return notOk.BadRequest(`${typeSpec.name}: Unknown authKeyPattern (${authKeyPattern})`);
         }
       }
-      const nameField = (typeSpec as EntityTypeSpecification).nameField;
+      const nameField = typeSpec.nameField;
       if (nameField) {
         const nameFieldSpec = typeSpec.fields.find((fieldSpec) => fieldSpec.name === nameField);
         if (!nameFieldSpec) {
@@ -100,7 +102,7 @@ export function schemaValidate(
           `${typeSpec.name}.${fieldSpec.name}: The field name has to start with a lower-case letter (a-z) and can only contain letters (a-z, A-Z), numbers and underscore (_), such as myField_123`,
         );
       }
-      if (isComponentType && fieldSpec.name === 'type') {
+      if (!isEntitySpec && fieldSpec.name === 'type') {
         return notOk.BadRequest(
           `${typeSpec.name}.${fieldSpec.name}: Invalid field name for a component type`,
         );
@@ -136,9 +138,9 @@ export function schemaValidate(
               `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes ${referencedTypeName} doesn’t exist`,
             );
           }
-          if (referencedEntityType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
+          if (!referencedEntityType.publishable && typeCanBePublished && !fieldSpec.adminOnly) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
+              `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in entityTypes (${referencedTypeName}) is not publishable, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
             );
           }
         }
@@ -156,9 +158,9 @@ export function schemaValidate(
               `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes ${referencedTypeName} doesn’t exist`,
             );
           }
-          if (referencedEntityType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
+          if (!referencedEntityType.publishable && typeCanBePublished && !fieldSpec.adminOnly) {
             return notOk.BadRequest(
-              `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
+              `${typeSpec.name}.${fieldSpec.name}: Referenced entity type in linkEntityTypes (${referencedTypeName}) is not publishable, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
             );
           }
         }
@@ -176,7 +178,7 @@ export function schemaValidate(
               `${typeSpec.name}.${fieldSpec.name}: Component type in componentTypes ${referencedTypeName} doesn’t exist`,
             );
           }
-          if (referencedComponentType.adminOnly && !typeSpec.adminOnly && !fieldSpec.adminOnly) {
+          if (referencedComponentType.adminOnly && typeCanBePublished && !fieldSpec.adminOnly) {
             return notOk.BadRequest(
               `${typeSpec.name}.${fieldSpec.name}: Referenced component type in componentTypes (${referencedTypeName}) is adminOnly, but neither ${typeSpec.name} nor ${fieldSpec.name} are adminOnly`,
             );

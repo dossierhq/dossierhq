@@ -161,8 +161,8 @@ describe('calculateSchemaChangeImpact authKeyPattern', () => {
 describe('calculateSchemaChangeImpact type.adminOnly', () => {
   test('change: from true to false entity type', () => {
     const { previous, next } = build(
-      { entityTypes: [{ name: 'OneType', adminOnly: true, fields: [] }] },
-      { entityTypes: [{ name: 'OneType', adminOnly: false, fields: [] }] },
+      { entityTypes: [{ name: 'OneType', publishable: false, fields: [] }] },
+      { entityTypes: [{ name: 'OneType', publishable: true, fields: [] }] },
     );
     expect(calculateSchemaChangeImpact(previous, next, null).valueOrThrow()).toMatchInlineSnapshot(`
       {

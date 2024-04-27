@@ -97,7 +97,7 @@ function createPublishActions(entity: Entity | null, entitySpec: EntityTypeSpeci
     publishActionsIds = ['unarchive', 'publish'];
   }
 
-  if (entitySpec.adminOnly) {
+  if (!entitySpec.publishable) {
     publishActionsIds = publishActionsIds.filter((it) => it !== 'publish');
   }
 

@@ -43,7 +43,7 @@ describe('modernizeSchemaSpecification', () => {
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: false,
+          publishable: true,
           authKeyPattern: null,
           nameField: 'title',
           fields: [
@@ -101,7 +101,7 @@ describe('modernizeSchemaSpecification', () => {
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: false,
+          publishable: true,
           authKeyPattern: null,
           nameField: 'title',
           fields: [
@@ -167,7 +167,7 @@ describe('modernizeSchemaSpecification', () => {
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: false,
+          publishable: true,
           authKeyPattern: null,
           nameField: null,
           fields: [
@@ -284,7 +284,7 @@ describe('modernizeSchemaSpecification', () => {
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: false,
+          publishable: true,
           authKeyPattern: null,
           nameField: null,
           fields: [
@@ -407,7 +407,7 @@ describe('modernizeSchemaSpecification', () => {
       entityTypes: [
         {
           name: 'Foo',
-          adminOnly: false,
+          publishable: true,
           authKeyPattern: null,
           nameField: null,
           fields: [

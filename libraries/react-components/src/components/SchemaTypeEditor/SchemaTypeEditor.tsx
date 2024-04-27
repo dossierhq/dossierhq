@@ -59,14 +59,14 @@ export function SchemaTypeEditor({
         <Field.LabelColumn />
         <Field.BodyColumn>
           <Checkbox
-            checked={typeDraft.adminOnly}
+            checked={typeDraft.kind === 'entity' ? typeDraft.publishable : typeDraft.adminOnly}
             onChange={(event) =>
               dispatchSchemaEditorState(
                 new SchemaEditorActions.ChangeTypeAdminOnly(typeSelector, event.target.checked),
               )
             }
           >
-            Admin only
+            {typeDraft.kind === 'entity' ? 'Publishable' : 'Admin only'}
           </Checkbox>
         </Field.BodyColumn>
       </Field>

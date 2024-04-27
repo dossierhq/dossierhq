@@ -271,12 +271,12 @@ describe('generateTypescriptForSchema published', () => {
     ).toMatchSnapshot();
   });
 
-  test('adminOnly entity type', () => {
+  test('not publishable entity type', () => {
     expect(
       generateTypescriptForSchema({
         schema: null,
         publishedSchema: Schema.createAndValidate({
-          entityTypes: [{ name: 'Foo', adminOnly: true, fields: [] }],
+          entityTypes: [{ name: 'Foo', publishable: false, fields: [] }],
         })
           .valueOrThrow()
           .toPublishedSchema(),

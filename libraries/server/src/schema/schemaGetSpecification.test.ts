@@ -45,7 +45,7 @@ describe('schemaGetSpecification', () => {
       version: 1,
       migrations: [],
       entityTypes: [
-        { name: 'Foo', adminOnly: false, authKeyPattern: null, nameField: null, fields: [] },
+        { name: 'Foo', publishable: true, authKeyPattern: null, nameField: null, fields: [] },
       ],
       componentTypes: [{ name: 'Bar', adminOnly: false, fields: [] }],
       patterns: [],

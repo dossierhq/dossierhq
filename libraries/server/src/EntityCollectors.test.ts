@@ -25,7 +25,7 @@ const schemaSpec: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'EntityCodecFoo',
-      adminOnly: false,
+      publishable: true,
       authKeyPattern: null,
       fields: [
         { name: 'slug', type: FieldType.String, index: 'slug' },
@@ -46,7 +46,7 @@ const schemaSpec: SchemaSpecificationUpdate = {
     },
     {
       name: 'EntityCodecBar',
-      adminOnly: false,
+      publishable: true,
       authKeyPattern: null,
       fields: [],
     },

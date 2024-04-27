@@ -104,7 +104,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
         <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
           {isNewEntity ? 'Create' : 'Save'}
         </Button>
-        {!draftState.draft.entitySpec.adminOnly ? (
+        {draftState.draft.entitySpec.publishable ? (
           <Button disabled={!isSubmittable || !isPublishable} onClick={handleSubmitAndPublishClick}>
             {isNewEntity ? 'Create & publish' : 'Save & publish'}
           </Button>

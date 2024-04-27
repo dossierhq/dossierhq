@@ -10,7 +10,6 @@ exports[`AddDraftAction > add already open Foo 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -27,6 +26,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -110,7 +110,6 @@ exports[`AddDraftAction > add already open Foo 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -127,6 +126,7 @@ exports[`AddDraftAction > add already open Foo 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -149,7 +149,6 @@ exports[`AddDraftAction > add new Foo 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -166,6 +165,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -233,7 +233,6 @@ exports[`AddDraftAction > add new Foo 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -250,6 +249,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -303,7 +303,6 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -320,6 +319,7 @@ exports[`DeleteDraftAction > add/delete Foo 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -342,7 +342,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -359,6 +358,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -426,7 +426,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -443,6 +442,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -465,7 +465,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -482,6 +481,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -549,7 +549,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -566,6 +565,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -588,7 +588,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -605,6 +604,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -672,7 +672,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -689,6 +688,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -725,7 +725,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -742,6 +741,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -809,7 +809,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -826,6 +825,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -848,7 +848,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -865,6 +864,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -948,7 +948,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -965,6 +964,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -987,7 +987,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1004,6 +1003,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -1071,7 +1071,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1088,6 +1087,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1110,7 +1110,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1127,6 +1126,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -1194,7 +1194,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1211,6 +1210,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1233,7 +1233,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1250,6 +1249,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -1317,7 +1317,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1334,6 +1333,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1356,7 +1356,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1373,6 +1372,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -1440,7 +1440,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1457,6 +1456,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1493,7 +1493,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1510,6 +1509,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -1577,7 +1577,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1594,6 +1593,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1616,7 +1616,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1633,6 +1632,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -1716,7 +1716,6 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1733,6 +1732,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1755,7 +1755,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1772,6 +1771,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -1855,7 +1855,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1872,6 +1871,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -1894,7 +1894,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -1911,6 +1910,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -1994,7 +1994,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2011,6 +2010,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2046,7 +2046,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2063,6 +2062,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -2146,7 +2146,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2163,6 +2162,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2185,7 +2185,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2202,6 +2201,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -2285,7 +2285,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2302,6 +2301,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2324,7 +2324,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2341,6 +2340,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -2424,7 +2424,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2441,6 +2440,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2463,7 +2463,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2480,6 +2479,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -2563,7 +2563,6 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2580,6 +2579,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2634,7 +2634,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2651,6 +2650,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2673,7 +2673,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2690,6 +2689,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -2773,7 +2773,6 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2790,6 +2789,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2812,7 +2812,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2826,6 +2825,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -2909,7 +2909,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2923,6 +2922,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -2945,7 +2945,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -2959,6 +2958,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3051,7 +3051,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3065,6 +3064,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -3087,7 +3087,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3101,6 +3100,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3155,7 +3155,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3169,6 +3168,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3246,7 +3246,6 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3260,6 +3259,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -3282,7 +3282,6 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3299,6 +3298,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3382,7 +3382,6 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3399,6 +3398,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -3434,7 +3434,6 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3451,6 +3450,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3534,7 +3534,6 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3551,6 +3550,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -3586,7 +3586,6 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3608,6 +3607,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3718,7 +3718,6 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
       ],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3740,6 +3739,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -3762,7 +3762,6 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3784,6 +3783,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -3900,7 +3900,6 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
       ],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3922,6 +3921,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -3944,7 +3944,6 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -3966,6 +3965,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -4096,7 +4096,6 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
       ],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4118,6 +4117,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4140,11 +4140,11 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [],
         "name": "",
@@ -4161,11 +4161,11 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [],
           "name": "Bar",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [],
         "name": "",
@@ -4187,18 +4187,18 @@ exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [],
           "name": "Bar",
           "nameField": null,
+          "publishable": true,
         },
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4221,7 +4221,6 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
       "draft": {
         "authKey": "subject",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4238,6 +4237,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -4305,7 +4305,6 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4322,6 +4321,7 @@ exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4344,7 +4344,6 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4361,6 +4360,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -4441,7 +4441,6 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4458,6 +4457,7 @@ exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4485,7 +4485,6 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4502,6 +4501,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -4569,7 +4569,6 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4586,6 +4585,7 @@ exports[`SetFieldAction > set title field of new draft 1`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4608,7 +4608,6 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4625,6 +4624,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -4692,7 +4692,6 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4709,6 +4708,7 @@ exports[`SetFieldAction > set title field of new draft after name has been set 1
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4731,7 +4731,6 @@ exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4748,6 +4747,7 @@ exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -4815,7 +4815,6 @@ exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4832,6 +4831,7 @@ exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4854,7 +4854,6 @@ exports[`SetNameAction > set name of new draft 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4871,6 +4870,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
         "fields": [
           {
@@ -4938,7 +4938,6 @@ exports[`SetNameAction > set name of new draft 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4955,6 +4954,7 @@ exports[`SetNameAction > set name of new draft 1`] = `
           ],
           "name": "Foo",
           "nameField": null,
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -4977,7 +4977,6 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -4994,6 +4993,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -5077,7 +5077,6 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -5094,6 +5093,7 @@ exports[`UpdateEntityAction > add draft, update entity 1`] = `
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
@@ -5128,7 +5128,6 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
       "draft": {
         "authKey": "",
         "entitySpec": {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -5145,6 +5144,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
         "fields": [
           {
@@ -5228,7 +5228,6 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
       "componentTypes": [],
       "entityTypes": [
         {
-          "adminOnly": false,
           "authKeyPattern": null,
           "fields": [
             {
@@ -5245,6 +5244,7 @@ exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = 
           ],
           "name": "Foo",
           "nameField": "title",
+          "publishable": true,
         },
       ],
       "indexes": [],
