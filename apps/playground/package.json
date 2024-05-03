@@ -42,7 +42,7 @@
     "graphql-config": "~5.0.3",
     "graphql-ws": "~5.16.0",
     "rollup-plugin-visualizer": "~5.12.0",
-    "tsx": "~4.7.3",
+    "tsx": "~4.9.0",
     "typescript": "~5.4.5",
     "vite": "~5.2.10"
   }
