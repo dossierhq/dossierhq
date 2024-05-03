@@ -50,7 +50,7 @@
     "eslint-config-next": "~14.2.3",
     "prettier": "3.2.5",
     "schema-dts": "~1.1.2",
-    "tsx": "~4.7.3",
+    "tsx": "~4.9.0",
     "typescript": "~5.4.5",
     "vitest": "~1.5.2"
   }
