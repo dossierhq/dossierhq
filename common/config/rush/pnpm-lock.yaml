@@ -70,6 +70,9 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ~4.2.1
+        version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -3458,6 +3461,15 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.2':
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
+
+  '@ianvs/prettier-plugin-sort-imports@4.2.1':
+    resolution: {integrity: sha512-NKN1LVFWUDGDGr3vt+6Ey3qPeN/163uR1pOPAlkWpgvAqgxQ6kSdUf1F0it8aHUtKRUzEGcK38Wxd07O61d7+Q==}
+    peerDependencies:
+      '@vue/compiler-sfc': 2.7.x || 3.x
+      prettier: 2 || 3
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
 
   '@img/sharp-darwin-arm64@0.33.3':
     resolution: {integrity: sha512-FaNiGX1MrOuJ3hxuNzWgsT/mg5OHG/Izh59WW2mk1UwYHUwtfbhk5QNKYZgxf0pLOhx9ctGiGa2OykD71vOnSw==}
@@ -12536,6 +12548,20 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.2': {}
 
+  '@ianvs/prettier-plugin-sort-imports@4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)':
+    dependencies:
+      '@babel/core': 7.24.4
+      '@babel/generator': 7.24.4
+      '@babel/parser': 7.24.4
+      '@babel/traverse': 7.24.1
+      '@babel/types': 7.24.0
+      prettier: 3.2.5
+      semver: 7.6.0
+    optionalDependencies:
+      '@vue/compiler-sfc': 3.4.15
+    transitivePeerDependencies:
+      - supports-color
+
   '@img/sharp-darwin-arm64@0.33.3':
     optionalDependencies:
       '@img/sharp-libvips-darwin-arm64': 1.0.2
@@ -17031,7 +17057,7 @@ snapshots:
 
   depcheck@1.4.7:
     dependencies:
-      '@babel/parser': 7.24.1
+      '@babel/parser': 7.24.4
       '@babel/traverse': 7.24.1
       '@vue/compiler-sfc': 3.4.15
       callsite: 1.0.0

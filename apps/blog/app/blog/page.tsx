@@ -3,8 +3,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link.js';
 import { CloudinaryImage } from '../../components/CloudinaryImage/CloudinaryImage';
 import { BrowserUrls } from '../../utils/BrowserUrls';
-import type { PublishedAuthor, PublishedBlogPost } from '../../utils/SchemaTypes';
-import { assertIsPublishedAuthor, assertIsPublishedBlogPost } from '../../utils/SchemaTypes';
+import {
+  assertIsPublishedAuthor,
+  assertIsPublishedBlogPost,
+  type PublishedAuthor,
+  type PublishedBlogPost,
+} from '../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../utils/ServerComponentUtils';
 
 export const metadata: Metadata = {

@@ -1,23 +1,23 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import {
   DossierClientOperationName,
-  Schema,
   isRichTextElementNode,
   notOk,
+  Schema,
   traverseEntity,
   type DossierClient,
   type DossierClientMiddleware,
   type DossierClientOperation,
   type Entity,
   type EntityInfo,
-  type SchemaSpecification,
   type JsonSyncEvent,
   type OkFromResult,
   type RichTextElementNode,
+  type SchemaSpecification,
   type SyncEvent,
 } from '@dossierhq/core';
 import type { Server, SessionContext } from '@dossierhq/server';
-import fs from 'node:fs/promises';
-import path from 'node:path';
 
 export function createFilesystemAdminMiddleware(
   server: Server,

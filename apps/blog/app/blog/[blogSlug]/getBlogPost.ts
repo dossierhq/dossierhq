@@ -1,5 +1,9 @@
-import type { AppPublishedClient, PublishedAuthor } from '../../../utils/SchemaTypes';
-import { assertIsPublishedAuthor, assertIsPublishedBlogPost } from '../../../utils/SchemaTypes';
+import {
+  assertIsPublishedAuthor,
+  assertIsPublishedBlogPost,
+  type AppPublishedClient,
+  type PublishedAuthor,
+} from '../../../utils/SchemaTypes';
 
 export async function getBlogPost(publishedClient: AppPublishedClient, slug: string) {
   const blogPost = (

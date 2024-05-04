@@ -1,10 +1,11 @@
-import type {
-  DossierClient,
-  ErrorType,
-  PromiseResult,
-  PublishedDossierClient,
+import {
+  notOk,
+  ok,
+  type DossierClient,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedDossierClient,
 } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
 import type { DatabasePerformanceCallbacks, Server } from '@dossierhq/server';
 import type { NextApiRequest } from 'next';
 import { SYSTEM_USERS } from '../config/SystemUsers';

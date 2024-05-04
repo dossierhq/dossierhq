@@ -1,10 +1,12 @@
-import type { JsonDossierClientOperationArgs, ErrorType, Result } from '@dossierhq/core';
 import {
-  DossierClientModifyingOperations,
   decodeURLSearchParamsParam,
+  DossierClientModifyingOperations,
   executeJsonDossierClientOperation,
   notOk,
   ok,
+  type ErrorType,
+  type JsonDossierClientOperationArgs,
+  type Result,
 } from '@dossierhq/core';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ENABLE_WEB_INTERFACE } from '../../../config/WebInterfaceConfig';

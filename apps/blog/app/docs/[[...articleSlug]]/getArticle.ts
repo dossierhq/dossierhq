@@ -1,5 +1,4 @@
-import type { AppPublishedClient } from '../../../utils/SchemaTypes';
-import { assertIsPublishedArticle } from '../../../utils/SchemaTypes';
+import { assertIsPublishedArticle, type AppPublishedClient } from '../../../utils/SchemaTypes';
 
 export async function getArticle(publishedClient: AppPublishedClient, slug: string[] | undefined) {
   const articleSlug = slug && slug.length > 0 ? slug[0] : 'overview';

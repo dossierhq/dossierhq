@@ -1,7 +1,8 @@
 #!/usr/bin/env -S npx tsx
 /* eslint-disable @next/next/no-img-element */
+import assert from 'node:assert/strict';
+import { writeFile } from 'node:fs/promises';
 import { Cloudinary } from '@cloudinary/url-gen';
-import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
 import {
   getAllPagesForConnection,
   isRichTextCodeHighlightNode,
@@ -18,29 +19,28 @@ import {
   isRichTextRootNode,
   isRichTextTextNode,
   richTextTextNodeHasFormat,
+  type RichText,
+  type RichTextElementNode,
+  type RichTextNode,
 } from '@dossierhq/core';
 import { config } from 'dotenv';
-import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
 import type { Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';
 import { getResponsiveImageUrlsForLimitFit } from '../utils/CloudinaryUtils.js';
-import type {
-  AppPublishedClient,
-  AppPublishedEntity,
-  AppPublishedExceptionClient,
-  PublishedAuthor,
-  PublishedBlogPost,
-  PublishedCloudinaryImage,
-} from '../utils/SchemaTypes.js';
 import {
   assertIsPublishedAuthor,
   assertIsPublishedBlogPost,
   isPublishedArticle,
   isPublishedCloudinaryImage,
   isPublishedGlossaryTerm,
+  type AppPublishedClient,
+  type AppPublishedEntity,
+  type AppPublishedExceptionClient,
+  type PublishedAuthor,
+  type PublishedBlogPost,
+  type PublishedCloudinaryImage,
 } from '../utils/SchemaTypes.js';
 import { initializeServer } from '../utils/SharedServerUtils.js';
 

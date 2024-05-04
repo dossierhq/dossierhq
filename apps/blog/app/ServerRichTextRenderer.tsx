@@ -1,4 +1,3 @@
-import type { RichText, RichTextElementNode, RichTextNode } from '@dossierhq/core';
 import {
   isRichTextCodeHighlightNode,
   isRichTextCodeNode,
@@ -14,6 +13,9 @@ import {
   isRichTextRootNode,
   isRichTextTextNode,
   richTextTextNodeHasFormat,
+  type RichText,
+  type RichTextElementNode,
+  type RichTextNode,
 } from '@dossierhq/core';
 import { ClassName, LexicalTheme } from '@dossierhq/design';
 import type { EditorThemeClasses } from 'lexical';
@@ -22,12 +24,12 @@ import { Fragment, type Key, type ReactNode } from 'react';
 import { CloudinaryImage } from '../components/CloudinaryImage/CloudinaryImage';
 import { CodapiSnippet } from '../components/CodapiSnippet/CodapiSnippet';
 import { BrowserUrls } from '../utils/BrowserUrls';
-import type { AppPublishedClient } from '../utils/SchemaTypes';
 import {
   isPublishedArticle,
   isPublishedCloudinaryImage,
   isPublishedCodapiSnippet,
   isPublishedGlossaryTerm,
+  type AppPublishedClient,
 } from '../utils/SchemaTypes';
 
 interface Props {

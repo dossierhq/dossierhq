@@ -1,5 +1,6 @@
 'use client';
-import { Icon, Navbar as DesignNavbar } from '@dossierhq/design';
+
+import { Navbar as DesignNavbar, Icon } from '@dossierhq/design';
 import Image from 'next/image.js';
 import Link from 'next/link';
 import { useState } from 'react';

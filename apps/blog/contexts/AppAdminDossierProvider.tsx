@@ -2,27 +2,26 @@ import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
 } from '@dossierhq/cloudinary';
-import type {
-  DossierClient,
-  DossierClientMiddleware,
-  DossierClientOperation,
-  ClientContext,
-  ErrorType,
-  Result,
-} from '@dossierhq/core';
 import {
-  FieldType,
   convertJsonDossierClientResult,
   createBaseDossierClient,
   createConsoleLogger,
+  FieldType,
   isComponentItemField,
+  type ClientContext,
+  type DossierClient,
+  type DossierClientMiddleware,
+  type DossierClientOperation,
+  type ErrorType,
+  type Result,
 } from '@dossierhq/core';
-import type {
-  AdminDossierContextAdapter,
-  FieldEditorProps,
-  RichTextComponentEditorProps,
+import {
+  AdminDossierProvider,
+  useCachingAdminMiddleware,
+  type AdminDossierContextAdapter,
+  type FieldEditorProps,
+  type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
-import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';

@@ -1,4 +1,6 @@
 #!/usr/bin/env -S npx tsx
+import { readFile } from 'node:fs/promises';
+import { parseArgs } from 'node:util';
 import {
   convertJsonSyncEvent,
   getAllNodesForConnection,
@@ -6,8 +8,6 @@ import {
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { config } from 'dotenv';
-import { readFile } from 'node:fs/promises';
-import { parseArgs } from 'node:util';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { getCurrentSyncEventFiles, updateSyncEventsOnDisk } from '../utils/FileSystemSerializer.js';
 import type { AppDossierClient } from '../utils/SchemaTypes';

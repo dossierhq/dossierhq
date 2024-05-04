@@ -1,21 +1,19 @@
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
-import type {
-  ClientContext,
-  PublishedDossierClient,
-  PublishedDossierClientOperation,
-} from '@dossierhq/core';
 import {
   convertJsonPublishedDossierClientResult,
   createBasePublishedDossierClient,
   createConsoleLogger,
   isComponentItemField,
+  type ClientContext,
+  type PublishedDossierClient,
+  type PublishedDossierClientOperation,
 } from '@dossierhq/core';
-import type {
-  FieldDisplayProps,
-  PublishedDossierContextAdapter,
-  RichTextComponentDisplayProps,
+import {
+  PublishedDossierProvider,
+  type FieldDisplayProps,
+  type PublishedDossierContextAdapter,
+  type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
-import { PublishedDossierProvider } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';

@@ -1,7 +1,10 @@
 import { getAllPagesForConnection } from '@dossierhq/core';
 import { BrowserUrls, canonicalUrl } from '../../utils/BrowserUrls';
-import type { AppPublishedClient } from '../../utils/SchemaTypes';
-import { assertIsPublishedArticle, assertIsPublishedBlogPost } from '../../utils/SchemaTypes';
+import {
+  assertIsPublishedArticle,
+  assertIsPublishedBlogPost,
+  type AppPublishedClient,
+} from '../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../utils/ServerComponentUtils';
 
 export async function GET(_request: Request) {

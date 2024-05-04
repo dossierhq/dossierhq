@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+import { readFile, writeFile } from 'node:fs/promises';
 import { Schema } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
-import { readFile, writeFile } from 'node:fs/promises';
 import prettier from 'prettier';
 
 async function generateTypes(schemaSpec, filename) {

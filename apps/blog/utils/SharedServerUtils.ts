@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
 import { createConsoleLogger, ok } from '@dossierhq/core';
 import {
@@ -6,7 +7,6 @@ import {
   type DatabaseAdapter,
 } from '@dossierhq/server';
 import Database from 'better-sqlite3';
-import assert from 'node:assert/strict';
 
 const logger = createConsoleLogger(console);
 
