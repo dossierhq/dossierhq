@@ -1,4 +1,4 @@
-import { Schema, ok } from '@dossierhq/core';
+import { ok, Schema } from '@dossierhq/core';
 import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
 import { graphql, type ExecutionResult, type GraphQLSchema } from 'graphql';
 import type { NextApiRequest, NextApiResponse } from 'next';

@@ -1,12 +1,14 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
-import type {
-  DossierClient,
-  ErrorType,
-  Logger,
-  PromiseResult,
-  PublishedDossierClient,
+import {
+  createConsoleLogger,
+  notOk,
+  ok,
+  type DossierClient,
+  type ErrorType,
+  type Logger,
+  type PromiseResult,
+  type PublishedDossierClient,
 } from '@dossierhq/core';
-import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { NextApiRequest } from 'next';

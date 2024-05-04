@@ -1,5 +1,10 @@
-import type { ErrorResult, ErrorType, PromiseResult } from '@dossierhq/core';
-import { createConsoleLogger, notOk } from '@dossierhq/core';
+import {
+  createConsoleLogger,
+  notOk,
+  type ErrorResult,
+  type ErrorType,
+  type PromiseResult,
+} from '@dossierhq/core';
 import type { NextApiResponse } from 'next';
 
 const logger = createConsoleLogger(console);

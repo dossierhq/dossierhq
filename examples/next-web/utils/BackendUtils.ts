@@ -1,5 +1,4 @@
-import type { ErrorType, Logger, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type Logger, type PromiseResult } from '@dossierhq/core';
 
 export async function fetchJsonResult<TOk>(
   context: { logger: Logger },

@@ -1,22 +1,21 @@
-import type {
-  DossierClient,
-  DossierClientMiddleware,
-  DossierClientOperation,
-  ClientContext,
-  ErrorType,
-  Result,
-} from '@dossierhq/core';
 import {
   convertJsonDossierClientResult,
   createBaseDossierClient,
   createConsoleLogger,
+  type ClientContext,
+  type DossierClient,
+  type DossierClientMiddleware,
+  type DossierClientOperation,
+  type ErrorType,
+  type Result,
 } from '@dossierhq/core';
-import type {
-  AdminDossierContextAdapter,
-  FieldEditorProps,
-  RichTextComponentEditorProps,
+import {
+  AdminDossierProvider,
+  useCachingAdminMiddleware,
+  type AdminDossierContextAdapter,
+  type FieldEditorProps,
+  type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
-import { AdminDossierProvider, useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';

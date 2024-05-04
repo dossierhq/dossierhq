@@ -1,10 +1,10 @@
-import type {
-  JsonDossierClientOperationArgs,
-  DossierClientOperationName,
-  JsonPublishedDossierClientOperationArgs,
-  PublishedDossierClientOperationName,
+import {
+  encodeObjectToURLSearchParams,
+  type DossierClientOperationName,
+  type JsonDossierClientOperationArgs,
+  type JsonPublishedDossierClientOperationArgs,
+  type PublishedDossierClientOperationName,
 } from '@dossierhq/core';
-import { encodeObjectToURLSearchParams } from '@dossierhq/core';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
