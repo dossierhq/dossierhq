@@ -1,12 +1,13 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { NoOpLogger, ok } from '@dossierhq/core';
-import type { TestSuite } from '@dossierhq/integration-test';
-import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
-import type { Server } from '@dossierhq/server';
-import { createServer } from '@dossierhq/server';
+import { unlink } from 'fs/promises';
+import { NoOpLogger, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import {
+  createTestAuthorizationAdapter,
+  IntegrationTestSchema,
+  type TestSuite,
+} from '@dossierhq/integration-test';
+import { createServer, type Server } from '@dossierhq/server';
 import { Database } from 'bun:sqlite';
 import { describe, it } from 'bun:test';
-import { unlink } from 'fs/promises';
 import { createBunSqliteAdapter } from '../BunSqliteAdapter.js';
 
 export interface ServerInit {

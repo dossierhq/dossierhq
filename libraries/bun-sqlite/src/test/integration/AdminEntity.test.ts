@@ -1,13 +1,16 @@
-import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
+import assert from 'node:assert/strict';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
+  type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
-import assert from 'node:assert/strict';
-import type { ServerInit } from '../TestUtils.js';
-import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
+import {
+  initializeIntegrationTestServer,
+  registerTestSuite,
+  type ServerInit,
+} from '../TestUtils.js';
 
 let serverInit: ServerInit | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;

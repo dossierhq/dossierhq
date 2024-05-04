@@ -1,11 +1,14 @@
+import assert from 'node:assert/strict';
 import {
-  createDossierClientProvider,
   createAdvisoryLockTestSuite,
+  createDossierClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
-import assert from 'node:assert/strict';
-import type { ServerInit } from '../TestUtils.js';
-import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
+import {
+  initializeIntegrationTestServer,
+  registerTestSuite,
+  type ServerInit,
+} from '../TestUtils.js';
 
 let serverInit: ServerInit | null = null;
 
