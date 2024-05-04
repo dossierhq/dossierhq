@@ -1,5 +1,4 @@
-import type { ComponentTypeSpecificationUpdate, Component } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
+import { FieldType, type Component, type ComponentTypeSpecificationUpdate } from '@dossierhq/core';
 
 export interface AdminCloudinaryImageFields {
   publicId: string | null;

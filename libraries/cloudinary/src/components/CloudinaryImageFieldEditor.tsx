@@ -1,11 +1,11 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
-import type {
-  ComponentFieldSpecification,
-  PublishValidationIssue,
-  SaveValidationIssue,
+import {
+  groupValidationIssuesByTopLevelPath,
+  type ComponentFieldSpecification,
+  type PublishValidationIssue,
+  type SaveValidationIssue,
 } from '@dossierhq/core';
-import { groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import {
   Button,
   Column,
