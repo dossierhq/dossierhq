@@ -2,7 +2,7 @@ import { ErrorType, ok } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils.js';
+import { createPostgresTestServerAndClient, randomUUID } from '../TestUtils.js';
 
 //TODO consider moving this test back to server or even to core
 
@@ -22,7 +22,7 @@ afterAll(async () => {
 describe('DossierClient createDossierClient()', () => {
   test('context provided as value', async () => {
     const client = server.createDossierClient(context);
-    const result = await client.getEntity({ id: insecureTestUuidv4() });
+    const result = await client.getEntity({ id: randomUUID() });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 
@@ -30,10 +30,10 @@ describe('DossierClient createDossierClient()', () => {
     const factory = vi.fn(() => Promise.resolve(ok({ context })));
     const client = server.createDossierClient(factory);
 
-    const firstResult = await client.getEntity({ id: insecureTestUuidv4() });
+    const firstResult = await client.getEntity({ id: randomUUID() });
     expectErrorResult(firstResult, ErrorType.NotFound, 'No such entity');
 
-    const secondResult = await client.getEntity({ id: insecureTestUuidv4() });
+    const secondResult = await client.getEntity({ id: randomUUID() });
     expectErrorResult(secondResult, ErrorType.NotFound, 'No such entity');
 
     expect(factory.mock.calls).toMatchInlineSnapshot(`

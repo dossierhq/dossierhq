@@ -55,13 +55,11 @@
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@rushstack/heft": "0.66.3",
     "@types/better-sqlite3": "~7.6.10",
-    "@types/uuid": "~9.0.7",
     "@vitest/coverage-v8": "~1.5.2",
     "better-sqlite3": "~9.6.0",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.4.5",
-    "uuid": "~9.0.1",
     "vitest": "~1.5.2"
   }
 }

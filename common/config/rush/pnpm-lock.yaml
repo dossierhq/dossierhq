@@ -1155,9 +1155,6 @@ importers:
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
-      '@types/uuid':
-        specifier: ~9.0.7
-        version: 9.0.8
       '@vitest/coverage-v8':
         specifier: ~1.5.2
         version: 1.5.2(vitest@1.5.2(@types/node@20.12.7)(sass@1.76.0))
@@ -1173,9 +1170,6 @@ importers:
       typescript:
         specifier: ~5.4.5
         version: 5.4.5
-      uuid:
-        specifier: ~9.0.1
-        version: 9.0.1
       vitest:
         specifier: ~1.5.2
         version: 1.5.2(@types/node@20.12.7)(sass@1.76.0)

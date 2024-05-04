@@ -1,5 +1,4 @@
 import { copyEntity, EntityStatus, ErrorType } from '@dossierhq/core';
-import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertIsTitleOnly, type TitleOnly } from '../SchemaTypes.js';
@@ -27,7 +26,7 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
 
 async function upsertEntity_minimalCreate({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const upsertResult = await client.upsertEntity<TitleOnly>(copyEntity(TITLE_ONLY_UPSERT, { id }));
   assertOkResult(upsertResult);
   const {
@@ -90,7 +89,7 @@ async function upsertEntity_minimalUpdate({ clientProvider }: AdminEntityTestCon
 
 async function upsertEntity_createNoAuthKey({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const { entity } = (
     await client.upsertEntity({
       id,
@@ -163,7 +162,7 @@ async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const upsertResult = await client.upsertEntity(
     copyEntity(SUBJECT_ONLY_UPSERT, { id, info: { authKey: '' as 'subject' } }),
   );
@@ -233,7 +232,9 @@ async function upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey({
 
 async function upsertEntity_errorCreateReadonlySession({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient('main', 'readonly');
-  const upsertResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id: uuidv4() }));
+  const upsertResult = await client.upsertEntity(
+    copyEntity(TITLE_ONLY_UPSERT, { id: crypto.randomUUID() }),
+  );
   assertErrorResult(upsertResult, ErrorType.BadRequest, 'Readonly session used to create entity');
 }
 

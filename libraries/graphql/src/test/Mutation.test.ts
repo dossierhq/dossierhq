@@ -14,11 +14,7 @@ import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import { graphql, type ExecutionResult, type GraphQLSchema } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
-import {
-  insecureTestUuidv4,
-  setUpServerWithSession,
-  type TestServerWithSession,
-} from './TestUtils.js';
+import { createUuid, setUpServerWithSession, type TestServerWithSession } from './TestUtils.js';
 
 const gql = String.raw;
 
@@ -265,7 +261,7 @@ describe('create*Entity()', () => {
   });
 
   test('Create with ID and version=1', async () => {
-    const id = insecureTestUuidv4();
+    const id = createUuid();
     const entity: EntityCreate = {
       id,
       info: { type: 'MutationFoo', name: 'Foo name', version: 1 },
@@ -1916,7 +1912,7 @@ describe('update*Entity()', () => {
 describe('upsert*Entity()', () => {
   test('Create new entity', async () => {
     const { client } = server;
-    const id = insecureTestUuidv4();
+    const id = createUuid();
     const entity: EntityUpsert = {
       id,
       info: { type: 'MutationFoo', name: 'Name' },
@@ -2114,7 +2110,7 @@ describe('upsert*Entity()', () => {
 
   test('Create new entity and publish', async () => {
     const { client } = server;
-    const id = insecureTestUuidv4();
+    const id = createUuid();
     const entity: EntityUpsert = {
       id,
       info: { type: 'MutationFoo', name: 'Name' },
@@ -2188,7 +2184,7 @@ describe('upsert*Entity()', () => {
       contextValue: createContext(),
       variableValues: {
         entity: {
-          id: insecureTestUuidv4(),
+          id: createUuid(),
           info: {
             type: 'MutationBar', // should be Foo
             name: 'Foo name',

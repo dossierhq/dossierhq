@@ -2,7 +2,7 @@ import { ErrorType } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';
 import { afterAll, beforeAll, describe, test } from 'vitest';
-import { createPostgresTestServerAndClient, insecureTestUuidv4 } from '../TestUtils.js';
+import { createPostgresTestServerAndClient, randomUUID } from '../TestUtils.js';
 
 let server: Server;
 let context: SessionContext;
@@ -20,7 +20,7 @@ afterAll(async () => {
 describe('DossierClient createServerPublishedClient()', () => {
   test('context provided as value', async () => {
     const client = server.createPublishedClient(context);
-    const result = await client.getEntity({ id: insecureTestUuidv4() });
+    const result = await client.getEntity({ id: randomUUID() });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });
 });

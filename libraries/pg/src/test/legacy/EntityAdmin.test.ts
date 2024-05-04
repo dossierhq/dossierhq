@@ -20,7 +20,7 @@ import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import {
   createPostgresTestServerAndClient,
   expectSearchResultEntities,
-  insecureTestUuidv4,
+  randomUUID,
   safelyUpdateSchemaSpecification,
 } from '../TestUtils.js';
 import {
@@ -469,7 +469,7 @@ describe('createEntity()', () => {
   });
 
   test('Create EntityAdminFoo with id', async () => {
-    const id = insecureTestUuidv4();
+    const id = randomUUID();
     const createResult = await client.createEntity({
       id,
       info: { type: 'EntityAdminFoo', name: 'Draft' },
@@ -2765,7 +2765,7 @@ describe('upsertEntity()', () => {
       }),
     );
 
-    const id = insecureTestUuidv4();
+    const id = randomUUID();
     const upsertEntity = {
       id,
       info: { type: 'EntityAdminBaz', name: 'Non-unique name' },
@@ -2786,7 +2786,7 @@ describe('upsertEntity()', () => {
 
   test('Error: Using authKey where adapter returns error', async () => {
     const result = await client.upsertEntity({
-      id: insecureTestUuidv4(),
+      id: randomUUID(),
       info: {
         type: 'EntityAdminFoo',
         name: 'Foo',

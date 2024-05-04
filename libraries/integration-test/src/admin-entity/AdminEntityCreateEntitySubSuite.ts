@@ -11,7 +11,6 @@ import {
   EventType,
   Schema,
 } from '@dossierhq/core';
-import { v4 as uuidv4 } from 'uuid';
 import {
   assertEquals,
   assertErrorResult,
@@ -126,7 +125,7 @@ async function createEntity_minimal({ clientProvider }: AdminEntityTestContext) 
 
 async function createEntity_withId({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity<TitleOnly>(copyEntity(TITLE_ONLY_CREATE, { id }));
   assertOkResult(createResult);
   const {
@@ -921,7 +920,7 @@ async function createEntity_errorAuthKeyNotMatchingPattern({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(SUBJECT_ONLY_CREATE, { id, info: { authKey: '' as 'subject' } }),
   );
@@ -939,7 +938,7 @@ async function createEntity_errorMultilineStringInTitle({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Hello\nWorld\n' } }),
   );
@@ -957,7 +956,7 @@ async function createEntity_errorStringNotMatchingMatchPattern({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { id, fields: { pattern: 'not matching' } }),
   );
@@ -991,7 +990,7 @@ async function createEntity_errorStringListNotMatchingMatchPattern({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { id, fields: { patternList: ['foo', 'not matching'] } }),
   );
@@ -1006,7 +1005,7 @@ async function createEntity_errorStringListNotMatchingValues({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(STRINGS_CREATE, { id, fields: { valuesList: ['foo', 'not matching' as 'bar'] } }),
   );
@@ -1021,8 +1020,8 @@ async function createEntity_errorRichTextWithUnsupportedEntityNode({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
-  const referenceId = uuidv4();
+  const id = crypto.randomUUID();
+  const referenceId = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       id,
@@ -1047,7 +1046,7 @@ async function createEntity_errorRichTextWithUnsupportedLinkEntityType({
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
   const referenceId = readOnlyEntityRepository.getMainPrincipalAdminEntities()[0].id;
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(RICH_TEXTS_CREATE, {
       id,
@@ -1072,7 +1071,7 @@ async function createEntity_errorPublishWithoutRequiredTitle({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   const createResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: null } }),
     { publish: true },

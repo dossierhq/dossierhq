@@ -12,14 +12,11 @@ import {
   type DossierClient,
   type DossierClientMiddleware,
   type DossierClientOperation,
-  type ErrorType,
   type Logger,
-  type PromiseResult,
   type PublishedDossierClient,
   type PublishedDossierClientMiddleware,
   type PublishedDossierClientOperation,
 } from '@dossierhq/core';
-import { v5 as uuidv5 } from 'uuid';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {
@@ -34,8 +31,6 @@ import type {
 interface BackendContext {
   logger: Logger;
 }
-
-const GENERATE_ENTITIES_UUID_NAMESPACE = '96597f34-8654-4f66-b98d-3e9f5bb7cc9a';
 
 export const DISPLAY_AUTH_KEYS = [
   { authKey: '', displayName: 'Default' },
@@ -163,25 +158,4 @@ export class TestContextAdapter
   renderAdminRichTextComponentEditor(_props: RichTextComponentEditorProps): JSX.Element | null {
     return null;
   }
-}
-
-export async function ensureManyBarEntities(
-  client: DossierClient,
-  entityCount: number,
-): PromiseResult<void, ErrorType> {
-  const totalCountResult = await client.getEntitiesTotalCount({ entityTypes: ['Bar'] });
-  if (totalCountResult.isError()) return totalCountResult;
-
-  for (let i = totalCountResult.value; i <= entityCount; i += 1) {
-    const id = uuidv5(`bar-${i}`, GENERATE_ENTITIES_UUID_NAMESPACE);
-    const result = await client.createEntity({
-      id,
-      info: { type: 'Bar', name: `Generated bar ${i}` },
-      fields: { title: `Generated bar ${i}` },
-    });
-    if (result.isError()) {
-      return result;
-    }
-  }
-  return ok(undefined);
 }
