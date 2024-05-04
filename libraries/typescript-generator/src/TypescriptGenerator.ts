@@ -3,11 +3,11 @@ import {
   type ComponentTypeSpecification,
   type EntityTypeSpecification,
   type FieldSpecification,
-  type Schema,
   type PublishedComponentTypeSpecification,
   type PublishedEntityTypeSpecification,
   type PublishedFieldSpecification,
   type PublishedSchema,
+  type Schema,
   type SchemaIndexSpecification,
 } from '@dossierhq/core';
 

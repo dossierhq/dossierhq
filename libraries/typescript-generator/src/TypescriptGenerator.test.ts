@@ -1,4 +1,4 @@
-import { Schema, FieldType } from '@dossierhq/core';
+import { FieldType, Schema } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { generateTypescriptForSchema } from './TypescriptGenerator.js';
 
