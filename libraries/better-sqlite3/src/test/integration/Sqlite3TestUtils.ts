@@ -1,12 +1,12 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { NoOpLogger, ok } from '@dossierhq/core';
-import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
-import type { Server } from '@dossierhq/server';
-import { createServer } from '@dossierhq/server';
-import Database from 'better-sqlite3';
 import { unlink } from 'node:fs/promises';
-import type { BetterSqlite3DatabaseAdapter } from '../../BetterSqlite3Adapter.js';
-import { createBetterSqlite3Adapter } from '../../BetterSqlite3Adapter.js';
+import { NoOpLogger, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
+import { createServer, type Server } from '@dossierhq/server';
+import Database from 'better-sqlite3';
+import {
+  createBetterSqlite3Adapter,
+  type BetterSqlite3DatabaseAdapter,
+} from '../../BetterSqlite3Adapter.js';
 
 export interface ServerInit {
   server: Server;

@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import type { ErrorType, LoggerContext, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
@@ -10,7 +11,6 @@ import {
   type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
 import type { Database } from 'better-sqlite3';
-import { randomUUID } from 'node:crypto';
 
 export type BetterSqlite3DatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 

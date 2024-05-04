@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import Database from 'better-sqlite3';
 import { writeFileSync } from 'fs';
+import Database from 'better-sqlite3';
 
 const DATABASE_PATH = 'databases/integration-test-admin-entity.sqlite';
 const SCHEMA_PATH = 'docs/schema.sql';

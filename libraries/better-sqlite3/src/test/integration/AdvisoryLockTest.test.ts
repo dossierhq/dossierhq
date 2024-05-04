@@ -1,11 +1,10 @@
 import {
-  createDossierClientProvider,
   createAdvisoryLockTestSuite,
+  createDossierClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
-import type { ServerInit } from './Sqlite3TestUtils.js';
-import { initializeSqlite3Server } from './Sqlite3TestUtils.js';
+import { initializeSqlite3Server, type ServerInit } from './Sqlite3TestUtils.js';
 
 let serverInit: ServerInit | null = null;
 
