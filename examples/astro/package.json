@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
+    "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@types/better-sqlite3": "~7.6.10",
     "@types/react": "18.3.1",
     "prettier": "3.2.5",

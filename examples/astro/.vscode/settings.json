@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["astro", "astrojs", "dossierhq", "spotlightjs", "tsconfigs"],
+  "cSpell.words": ["astro", "astrojs", "dossierhq", "ianvs", "spotlightjs", "tsconfigs"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"

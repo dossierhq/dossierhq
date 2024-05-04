@@ -3,10 +3,10 @@ import {
   createBaseDossierClient,
   createConsoleLogger,
   encodeObjectToURLSearchParams,
+  type ClientContext,
   type DossierClient,
   type DossierClientMiddleware,
   type DossierClientOperation,
-  type ClientContext,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';

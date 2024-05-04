@@ -1,12 +1,12 @@
 #!/usr/bin/env -S npx tsx
+import { writeFile } from 'node:fs/promises';
 import {
-  SchemaWithMigrations,
   createConsoleLogger,
+  SchemaWithMigrations,
   type DossierClient,
   type Logger,
 } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
-import { writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { getAuthenticatedDossierClient, getServer } from '../src/dossier/utils/ServerUtils.js';
 
