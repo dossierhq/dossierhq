@@ -1,6 +1,5 @@
 import {
   ok,
-  type SchemaWithMigrations,
   type Connection,
   type Edge,
   type ErrorType,
@@ -9,6 +8,7 @@ import {
   type PublishedEntity,
   type PublishedEntityQuery,
   type PublishedSchema,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';

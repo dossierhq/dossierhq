@@ -49,6 +49,7 @@
     "@dossierhq/core-vitest": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
+    "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@rushstack/heft": "0.66.3",
     "@vitest/coverage-v8": "~1.5.2",
     "eslint": "~8.57.0",

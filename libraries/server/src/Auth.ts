@@ -1,10 +1,10 @@
 import {
   notOk,
   ok,
+  type CreatePrincipalSyncEvent,
   type ErrorType,
   type PromiseResult,
   type Result,
-  type CreatePrincipalSyncEvent,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,

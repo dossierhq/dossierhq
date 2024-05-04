@@ -1,10 +1,10 @@
 import type {
   Entity,
-  SchemaWithMigrations,
   EntityReference,
   EntityVersionReference,
   ErrorType,
   PromiseResult,
+  SchemaWithMigrations,
   UniqueIndexReference,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';

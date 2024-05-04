@@ -1,9 +1,9 @@
 import {
   ok,
   type EntitySharedQuery,
-  type Schema,
   type ErrorType,
   type PromiseResult,
+  type Schema,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKeys } from '../Auth.js';

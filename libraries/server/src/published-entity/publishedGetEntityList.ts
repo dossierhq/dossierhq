@@ -1,12 +1,13 @@
-import type {
-  SchemaWithMigrations,
-  EntityReference,
-  ErrorType,
-  PromiseResult,
-  PublishedEntity,
-  Result,
+import {
+  notOk,
+  ok,
+  type EntityReference,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedEntity,
+  type Result,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabasePublishedEntityGetOnePayload,

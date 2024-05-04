@@ -5,11 +5,11 @@ import {
   ok,
   validateEntityInfo,
   type EntityProcessDirtyPayload,
-  type SchemaWithMigrations,
   type EntityReference,
   type ErrorResult,
   type PromiseResult,
   type Result,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -19,6 +19,7 @@ import type {
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
+import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
 import { decodeAdminEntity } from '../EntityCodec.js';
 import type { UniqueIndexValueCollection } from '../EntityCollectors.js';
 import {
@@ -27,7 +28,6 @@ import {
   validateReferencedEntitiesArePublishedAndCollectInfo,
   validateReferencedEntitiesForSaveAndCollectInfo,
 } from '../EntityValidator.js';
-import { updateUniqueIndexesForEntity } from '../admin-entity/updateUniqueIndexesForEntity.js';
 import { migrateDecodeAndNormalizeAdminEntityFields } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import { assertIsDefined } from '../utils/AssertUtils.js';
 

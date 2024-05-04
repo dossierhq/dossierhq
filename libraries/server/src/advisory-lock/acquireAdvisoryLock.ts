@@ -1,10 +1,11 @@
-import type {
-  AdvisoryLockOptions,
-  AdvisoryLockPayload,
-  ErrorType,
-  PromiseResult,
+import {
+  notOk,
+  ok,
+  type AdvisoryLockOptions,
+  type AdvisoryLockPayload,
+  type ErrorType,
+  type PromiseResult,
 } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
 

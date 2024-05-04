@@ -3,11 +3,11 @@ import {
   isRichTextComponentNode,
   ok,
   transformEntityFields,
-  type SchemaMigrationAction,
-  type SchemaWithMigrations,
   type Component,
   type ErrorType,
   type Result,
+  type SchemaMigrationAction,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import { assertExhaustive } from '../utils/AssertUtils.js';

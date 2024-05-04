@@ -1,21 +1,21 @@
 import {
-  SchemaWithMigrations,
   ErrorType,
   isFieldValueEqual,
   notOk,
   ok,
+  SchemaWithMigrations,
+  type PromiseResult,
   type SchemaSpecificationUpdate,
+  type SchemaSpecificationUpdatePayload,
   type SchemaSpecificationWithMigrations,
   type SchemaTransientMigrationAction,
-  type PromiseResult,
-  type SchemaSpecificationUpdatePayload,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import type { DatabaseAdapter, WriteSession } from '@dossierhq/database-adapter';
 import type { SessionContext } from '../Context.js';
-import { modernizeSchemaSpecification } from './SchemaModernizer.js';
 import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 import { schemaGetSpecification } from './schemaGetSpecification.js';
+import { modernizeSchemaSpecification } from './SchemaModernizer.js';
 
 export async function schemaUpdateSpecification(
   databaseAdapter: DatabaseAdapter,

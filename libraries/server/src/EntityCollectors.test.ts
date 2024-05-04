@@ -1,7 +1,4 @@
-import type { SchemaSpecificationUpdate, EntityLike } from '@dossierhq/core';
 import {
-  Schema,
-  FieldType,
   createRichText,
   createRichTextComponentNode,
   createRichTextEntityLinkNode,
@@ -9,7 +6,11 @@ import {
   createRichTextHeadingNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  FieldType,
+  Schema,
   traverseEntity,
+  type EntityLike,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import {

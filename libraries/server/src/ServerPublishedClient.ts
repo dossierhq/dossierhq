@@ -1,7 +1,7 @@
 import {
-  PublishedDossierClientOperationName,
   createBasePublishedDossierClient,
   ok,
+  PublishedDossierClientOperationName,
   type ContextProvider,
   type PublishedDossierClient,
   type PublishedDossierClientMiddleware,
@@ -10,12 +10,12 @@ import {
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from './AuthorizationAdapter.js';
 import type { SessionContext } from './Context.js';
-import type { ServerImpl } from './Server.js';
 import { publishedGetEntity } from './published-entity/publishedGetEntity.js';
 import { publishedGetEntityList } from './published-entity/publishedGetEntityList.js';
 import { publishedGetTotalCount } from './published-entity/publishedGetTotalCount.js';
 import { publishedSampleEntities } from './published-entity/publishedSampleEntities.js';
 import { publishedSearchEntities } from './published-entity/publishedSearchEntities.js';
+import type { ServerImpl } from './Server.js';
 import { assertExhaustive } from './utils/AssertUtils.js';
 
 export function createServerPublishedClient({

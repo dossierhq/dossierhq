@@ -1,4 +1,4 @@
-import { ok, type ErrorType, type ContentValuePath, type PromiseResult } from '@dossierhq/core';
+import { ok, type ContentValuePath, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
   DatabaseAdminEntityUniqueIndexReference,

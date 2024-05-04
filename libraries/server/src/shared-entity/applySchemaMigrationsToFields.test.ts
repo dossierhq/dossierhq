@@ -1,10 +1,10 @@
 import {
-  SchemaWithMigrations,
-  FieldType,
   createRichText,
+  createRichTextComponentNode,
   createRichTextHeadingNode,
   createRichTextTextNode,
-  createRichTextComponentNode,
+  FieldType,
+  SchemaWithMigrations,
   type RichText,
   type RichTextComponentNode,
 } from '@dossierhq/core';

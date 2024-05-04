@@ -1,18 +1,18 @@
 import {
+  contentValuePathToString,
   EntityStatus,
   EventType,
-  contentValuePathToString,
   notOk,
   ok,
   validateEntityInfoForCreate,
+  type CreateEntitySyncEvent,
   type Entity,
   type EntityCreate,
   type EntityCreatePayload,
   type EntityMutationOptions,
-  type SchemaWithMigrations,
-  type CreateEntitySyncEvent,
   type ErrorType,
   type PromiseResult,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKey } from '../Auth.js';

@@ -1,4 +1,4 @@
-import { SchemaWithMigrations, FieldType } from '@dossierhq/core';
+import { FieldType, SchemaWithMigrations } from '@dossierhq/core';
 
 export const adminTestSchema = SchemaWithMigrations.createAndValidate({
   entityTypes: [

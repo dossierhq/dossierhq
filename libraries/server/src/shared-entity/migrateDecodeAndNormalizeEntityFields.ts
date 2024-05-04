@@ -4,15 +4,15 @@ import {
   notOk,
   ok,
   transformEntityFields,
-  type Entity,
-  type EntityTypeSpecification,
-  type SchemaWithMigrations,
   type ContentTransformer,
   type ContentValuePath,
+  type Entity,
+  type EntityTypeSpecification,
   type ErrorType,
   type PublishedEntityTypeSpecification,
   type PublishedSchema,
   type Result,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import { applySchemaMigrationsToFields } from './applySchemaMigrationsToFields.js';

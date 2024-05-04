@@ -3,16 +3,16 @@ import {
   isRichTextComponentNode,
   ok,
   transformRichText,
-  type EntityTypeSpecification,
-  type FieldSpecification,
-  type Schema,
   type Component,
   type ContentValuePath,
+  type EntityTypeSpecification,
+  type FieldSpecification,
   type PublishedEntityTypeSpecification,
   type PublishedFieldSpecification,
   type PublishedSchema,
   type RichText,
   type RichTextComponentNode,
+  type Schema,
 } from '@dossierhq/core';
 import * as LegacyCodecFieldTypeAdapters from './LegacyCodecFieldTypeAdapters.js';
 

@@ -1,14 +1,13 @@
 import {
   ContentTraverseNodeType,
   isComponentItemField,
-  isReferenceItemField,
   isLocationItemField,
+  isReferenceItemField,
   isRichTextComponentNode,
   isRichTextEntityLinkNode,
   isRichTextEntityNode,
   isRichTextTextNode,
   isStringItemField,
-  type Schema,
   type ContentTraverseNode,
   type ContentValuePath,
   type EntityReference,
@@ -16,6 +15,7 @@ import {
   type PublishedSchema,
   type ReferenceFieldSpecification,
   type RichTextFieldSpecification,
+  type Schema,
 } from '@dossierhq/core';
 import { assertIsDefined } from './utils/AssertUtils.js';
 

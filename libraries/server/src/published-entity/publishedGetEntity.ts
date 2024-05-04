@@ -1,9 +1,9 @@
 import type {
-  SchemaWithMigrations,
   EntityReference,
   ErrorType,
   PromiseResult,
   PublishedEntity,
+  SchemaWithMigrations,
   UniqueIndexReference,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';

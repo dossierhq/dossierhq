@@ -6,8 +6,8 @@ import {
   type ErrorType,
   type Paging,
   type PagingInfo,
-  type Result,
   type PromiseResult,
+  type Result,
 } from '@dossierhq/core';
 import type { DatabaseConnectionPayload, DatabasePagingInfo } from '@dossierhq/database-adapter';
 

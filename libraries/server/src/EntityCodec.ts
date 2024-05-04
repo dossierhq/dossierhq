@@ -7,13 +7,13 @@ import {
   type Entity,
   type EntityCreate,
   type EntityUpdate,
-  type Schema,
-  type SchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
   type PublishedEntity,
   type Result,
   type SaveValidationIssue,
+  type Schema,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -30,8 +30,8 @@ import {
 } from './EntityValidator.js';
 import { encodeEntityFields } from './shared-entity/encodeEntityFields.js';
 import {
-  migrateDecodeAndNormalizePublishedEntityFields,
   migrateDecodeAndNormalizeAdminEntityFields,
+  migrateDecodeAndNormalizePublishedEntityFields,
 } from './shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 export interface EncodeAdminEntityPayload {

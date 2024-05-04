@@ -1,4 +1,4 @@
-import { SchemaWithMigrations, FieldType, type SchemaSpecificationUpdate } from '@dossierhq/core';
+import { FieldType, SchemaWithMigrations, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { calculateSchemaChangeImpact } from './calculateSchemaChangeImpact.js';
 

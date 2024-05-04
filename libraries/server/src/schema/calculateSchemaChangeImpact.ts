@@ -4,10 +4,10 @@ import {
   ok,
   type ComponentTypeSpecification,
   type EntityTypeSpecification,
-  type SchemaTransientMigrationAction,
-  type SchemaWithMigrations,
   type ErrorType,
   type Result,
+  type SchemaTransientMigrationAction,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { DatabaseManagementMarkEntitiesDirtySelectorArg } from '@dossierhq/database-adapter';
 

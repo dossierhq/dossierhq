@@ -1,16 +1,16 @@
 import {
+  contentValuePathToString,
   EntityStatus,
   EventType,
-  contentValuePathToString,
   notOk,
   ok,
   validateEntityInfoForUpdate,
   type EntityMutationOptions,
   type EntityUpdate,
   type EntityUpdatePayload,
-  type SchemaWithMigrations,
   type ErrorType,
   type PromiseResult,
+  type SchemaWithMigrations,
   type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';

@@ -2,6 +2,7 @@ import { EntityStatus, ok } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdminEntitySearchPayloadEntity } from '@dossierhq/database-adapter';
 import { describe, expect, test } from 'vitest';
+import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import {
   createMockAuthorizationAdapter,
   createMockDatabaseAdapter,
@@ -10,7 +11,6 @@ import {
 } from '../test/AdditionalTestUtils.js';
 import { adminTestSchema } from '../test/TestSchema.js';
 import { adminSearchEntities } from './adminSearchEntities.js';
-import { ENCODE_VERSION_AS_IS } from '../shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 
 describe('Admin adminSearchEntities', () => {
   test('Minimal (no results)', async () => {

@@ -1,16 +1,16 @@
 import {
   FieldType,
   RichTextNodeType,
+  type ComponentFieldSpecification,
   type ComponentTypeSpecification,
   type EntityTypeSpecification,
   type FieldSpecification,
-  type SchemaMigrationAction,
-  type SchemaSpecificationWithMigrations,
-  type ComponentFieldSpecification,
   type LegacyComponentTypeSpecification,
   type LegacyEntityTypeSpecification,
   type LegacySchemaSpecificationWithMigrations,
   type RichTextFieldSpecification,
+  type SchemaMigrationAction,
+  type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
 
 export function modernizeSchemaSpecification(

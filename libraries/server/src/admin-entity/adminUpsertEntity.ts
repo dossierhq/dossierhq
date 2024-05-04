@@ -7,9 +7,9 @@ import {
   type EntityUpdate,
   type EntityUpsert,
   type EntityUpsertPayload,
-  type SchemaWithMigrations,
   type ErrorResult,
   type PromiseResult,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';

@@ -1588,6 +1588,9 @@ importers:
       '@dossierhq/heft-node-rig':
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ~4.2.1
+        version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
         specifier: 0.66.3
         version: 0.66.3(@types/node@20.12.7)

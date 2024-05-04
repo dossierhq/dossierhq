@@ -1,8 +1,8 @@
 import {
   FieldType,
   RichTextNodeType,
-  type SchemaSpecificationWithMigrations,
   type LegacySchemaSpecificationWithMigrations,
+  type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import { modernizeSchemaSpecification } from './SchemaModernizer.js';

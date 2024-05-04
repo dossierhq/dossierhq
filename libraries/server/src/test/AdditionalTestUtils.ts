@@ -1,11 +1,8 @@
-import type { Logger } from '@dossierhq/core';
-import { NoOpLogger, ok } from '@dossierhq/core';
+import { NoOpLogger, ok, type Logger } from '@dossierhq/core';
 import type { DatabaseAdapter, Session, TransactionContext } from '@dossierhq/database-adapter';
-import type { MockInstance } from 'vitest';
-import { vi } from 'vitest';
+import { vi, type MockInstance } from 'vitest';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
-import type { SessionContext } from '../Context.js';
-import { SessionContextImpl } from '../Context.js';
+import { SessionContextImpl, type SessionContext } from '../Context.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<

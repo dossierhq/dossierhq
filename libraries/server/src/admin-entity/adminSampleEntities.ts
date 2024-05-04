@@ -1,14 +1,14 @@
-import type {
-  Entity,
-  EntitySharedQuery,
-  SchemaWithMigrations,
-  EntitySamplingOptions,
-  EntitySamplingPayload,
-  ErrorType,
-  PromiseResult,
-  Result,
+import {
+  ok,
+  type Entity,
+  type EntitySamplingOptions,
+  type EntitySamplingPayload,
+  type EntitySharedQuery,
+  type ErrorType,
+  type PromiseResult,
+  type Result,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type { DatabaseAdapter, ResolvedAuthKey } from '@dossierhq/database-adapter';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';

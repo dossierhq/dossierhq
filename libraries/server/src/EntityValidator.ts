@@ -4,10 +4,9 @@ import {
   traverseEntity,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
+  type ContentValuePath,
   type Entity,
   type EntityCreate,
-  type Schema,
-  type ContentValuePath,
   type EntityLike,
   type EntityReference,
   type ErrorType,
@@ -15,6 +14,7 @@ import {
   type PromiseResult,
   type PublishValidationIssue,
   type SaveValidationIssue,
+  type Schema,
 } from '@dossierhq/core';
 import type {
   DatabaseAdapter,
@@ -22,12 +22,12 @@ import type {
   TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
+  createComponentTypesCollector,
   createFullTextSearchCollector,
   createLocationsCollector,
   createReferencesCollector,
   createRequestedReferencesCollector,
   createUniqueIndexCollector,
-  createComponentTypesCollector,
   type RequestedReference,
   type UniqueIndexValueCollection,
 } from './EntityCollectors.js';

@@ -1,18 +1,17 @@
 import {
-  SchemaWithMigrations,
   EventType,
   NoOpLogger,
   notOk,
   ok,
-  type DossierClient,
-  type DossierClientMiddleware,
-  type Entity,
-  type EntityProcessDirtyPayload,
-  type SchemaSpecificationWithMigrations,
+  SchemaWithMigrations,
   type Component,
   type Connection,
   type ContextProvider,
+  type DossierClient,
+  type DossierClientMiddleware,
   type Edge,
+  type Entity,
+  type EntityProcessDirtyPayload,
   type EntityReference,
   type ErrorType,
   type Logger,
@@ -23,6 +22,7 @@ import {
   type PublishedEntity,
   type PublishedSchema,
   type Result,
+  type SchemaSpecificationWithMigrations,
   type SyncEvent,
 } from '@dossierhq/core';
 import type {
@@ -38,6 +38,8 @@ import {
   authCreateSyncSessionForSubject,
   verifyAuthKeysFormat,
 } from './Auth.js';
+import { autGetPrincipals } from './auth/authGetPrincipals.js';
+import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
 import { DefaultAuthorizationAdapter, type AuthorizationAdapter } from './AuthorizationAdapter.js';
 import {
   InternalContextImpl,
@@ -45,10 +47,6 @@ import {
   type InternalContext,
   type SessionContext,
 } from './Context.js';
-import { createServerDossierClient } from './ServerDossierClient.js';
-import { createServerPublishedClient } from './ServerPublishedClient.js';
-import { autGetPrincipals } from './auth/authGetPrincipals.js';
-import { autGetPrincipalsTotalCount } from './auth/authGetPrincipalsTotalCount.js';
 import {
   managementApplyAuthSyncEvent,
   managementApplySyncEvent,
@@ -60,6 +58,8 @@ import {
   type SyncEventsPayload,
 } from './management/managementGetSyncEvents.js';
 import { schemaGetSpecification } from './schema/schemaGetSpecification.js';
+import { createServerDossierClient } from './ServerDossierClient.js';
+import { createServerPublishedClient } from './ServerPublishedClient.js';
 import { assertIsDefined } from './utils/AssertUtils.js';
 
 export interface CreateSessionPayload<TSession extends Session = Session> {
