@@ -1,35 +1,30 @@
-import type {
-  DossierClient,
-  Entity,
-  SchemaSpecificationUpdate,
-  BoundingBox,
-} from '@dossierhq/core';
 import {
-  EntityStatus,
-  EventType,
-  FieldType,
   assertOkResult,
   createRichText,
   createRichTextComponentNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  EntityStatus,
+  EventType,
+  FieldType,
   getAllPagesForConnection,
   notOk,
   ok,
+  type BoundingBox,
+  type DossierClient,
+  type Entity,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult } from '@dossierhq/core-vitest';
-import type { ExecutionResult, GraphQLSchema } from 'graphql';
-import { graphql } from 'graphql';
+import { graphql, type ExecutionResult, type GraphQLSchema } from 'graphql';
 import { afterAll, assert, beforeAll, describe, expect, test } from 'vitest';
-import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
-import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
-import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils.js';
-import type { TestServerWithSession } from './TestUtils.js';
-import { setUpServerWithSession } from './TestUtils.js';
+import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
 import { adminEntityChangelogEvents } from './queries/adminEntityChangelogEvents.js';
 import { adminEntityFoo } from './queries/adminEntityFoo.js';
 import { globalChangelogEvents } from './queries/globalChangelogEvents.js';
+import { expectSampledEntitiesArePartOfExpected } from './SampleTestUtils.js';
+import { setUpServerWithSession, type TestServerWithSession } from './TestUtils.js';
 
 const gql = String.raw;
 

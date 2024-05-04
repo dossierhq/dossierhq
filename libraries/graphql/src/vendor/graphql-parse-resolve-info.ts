@@ -6,27 +6,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import type {
-  ASTNode,
-  FieldNode,
-  FragmentSpreadNode,
-  GraphQLCompositeType,
-  GraphQLField,
-  GraphQLInterfaceType,
-  GraphQLNamedType,
-  GraphQLResolveInfo,
-  GraphQLType,
-  InlineFragmentNode,
-  NamedTypeNode,
-  SelectionNode,
-} from 'graphql';
 import {
-  GraphQLObjectType,
-  GraphQLUnionType,
-  Kind,
   getArgumentValues,
   getNamedType,
+  GraphQLObjectType,
+  GraphQLUnionType,
   isCompositeType,
+  Kind,
+  type ASTNode,
+  type FieldNode,
+  type FragmentSpreadNode,
+  type GraphQLCompositeType,
+  type GraphQLField,
+  type GraphQLInterfaceType,
+  type GraphQLNamedType,
+  type GraphQLResolveInfo,
+  type GraphQLType,
+  type InlineFragmentNode,
+  type NamedTypeNode,
+  type SelectionNode,
 } from 'graphql';
 
 // From https://github.com/graphile/graphile-engine/blob/v4/packages/graphql-parse-resolve-info/src/index.ts

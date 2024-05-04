@@ -1,24 +1,21 @@
 import {
-  FieldType,
   assertOkResult,
   createRichText,
   createRichTextEntityLinkNode,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  FieldType,
   notOk,
   ok,
   type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult } from '@dossierhq/core-vitest';
-import type { GraphQLSchema } from 'graphql';
-import { graphql } from 'graphql';
+import { graphql, type GraphQLSchema } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
-import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
-import type { TestServerWithSession } from './TestUtils.js';
-import { setUpServerWithSession } from './TestUtils.js';
+import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
 import { publishedEntityFoo } from './queries/publishedEntityFoo.js';
+import { setUpServerWithSession, type TestServerWithSession } from './TestUtils.js';
 
 const gql = String.raw;
 

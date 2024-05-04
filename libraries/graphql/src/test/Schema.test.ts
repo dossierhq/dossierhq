@@ -1,4 +1,4 @@
-import { Schema, FieldType } from '@dossierhq/core';
+import { FieldType, Schema } from '@dossierhq/core';
 import { graphql, printSchema } from 'graphql';
 import { describe, expect, test } from 'vitest';
 import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';

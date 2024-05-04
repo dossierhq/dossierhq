@@ -1,21 +1,24 @@
-import type { EntityCreate, EntityUpsert, SchemaSpecificationUpdate } from '@dossierhq/core';
 import {
-  EntityStatus,
-  FieldType,
   createRichText,
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  EntityStatus,
+  FieldType,
   ok,
+  type EntityCreate,
+  type EntityUpsert,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
-import type { ExecutionResult, GraphQLSchema } from 'graphql';
-import { graphql } from 'graphql';
+import { graphql, type ExecutionResult, type GraphQLSchema } from 'graphql';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import type { SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
-import { GraphQLSchemaGenerator } from '../GraphQLSchemaGenerator.js';
-import type { TestServerWithSession } from './TestUtils.js';
-import { insecureTestUuidv4, setUpServerWithSession } from './TestUtils.js';
+import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '../GraphQLSchemaGenerator.js';
+import {
+  insecureTestUuidv4,
+  setUpServerWithSession,
+  type TestServerWithSession,
+} from './TestUtils.js';
 
 const gql = String.raw;
 

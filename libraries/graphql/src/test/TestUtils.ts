@@ -1,14 +1,19 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
-import type {
-  DossierClient,
-  SchemaSpecificationUpdate,
-  ErrorType,
-  PromiseResult,
-  PublishedDossierClient,
+import {
+  assertOkResult,
+  NoOpLogger,
+  Schema,
+  type DossierClient,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedDossierClient,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
-import { Schema, NoOpLogger, assertOkResult } from '@dossierhq/core';
-import type { AuthorizationAdapter } from '@dossierhq/server';
-import { SubjectAuthorizationAdapter, createServer } from '@dossierhq/server';
+import {
+  createServer,
+  SubjectAuthorizationAdapter,
+  type AuthorizationAdapter,
+} from '@dossierhq/server';
 import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 

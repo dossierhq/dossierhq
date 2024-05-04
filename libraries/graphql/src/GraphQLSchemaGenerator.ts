@@ -72,9 +72,9 @@ import {
   toAdminUpsertPayloadTypeName,
   toPublishedTypeName,
 } from './NameGenerator.js';
-import { TypeRepository } from './TypeRepository.js';
 import { DateTimeScalar } from './scalars/DateTimeScalar.js';
 import { LocationScalar } from './scalars/LocationScalar.js';
+import { TypeRepository } from './TypeRepository.js';
 import { assertExhaustive } from './utils/AssertUtils.js';
 import { GraphQLJSONObject } from './vendor/GraphQLJsonScalar.js';
 

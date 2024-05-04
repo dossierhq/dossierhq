@@ -10,7 +10,7 @@ import {
   type GraphQLNamedType,
   type GraphQLOutputType,
 } from 'graphql';
-import { toAdminTypeName, toAdminComponentInputTypeName, toEnumName } from './NameGenerator.js';
+import { toAdminComponentInputTypeName, toAdminTypeName, toEnumName } from './NameGenerator.js';
 
 export class TypeRepository {
   #types: GraphQLNamedType[] = [];
