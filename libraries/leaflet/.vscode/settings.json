@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["Bengtsson", "dossierhq", "EPSG", "locatecontrol", "rushstack"],
+  "cSpell.words": ["Bengtsson", "dossierhq", "EPSG", "ianvs", "locatecontrol", "rushstack"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.rulers": [100],

@@ -1,8 +1,6 @@
-import type { Map } from 'leaflet';
-import { control } from 'leaflet';
+import { control, type Map } from 'leaflet';
 import 'leaflet.locatecontrol';
-import type { CSSProperties, FunctionComponent } from 'react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, type CSSProperties, type FunctionComponent } from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
@@ -11,10 +9,8 @@ import {
   useMap,
   useMapEvents,
 } from 'react-leaflet';
-import type { BoundingBox, Location } from './CoreTypes.js';
-import { toLatLngLiteral } from './CoreTypes.js';
-import type { MarkerColor } from './MarkerUtils.js';
-import { getMarkerIcon } from './MarkerUtils.js';
+import { toLatLngLiteral, type BoundingBox, type Location } from './CoreTypes.js';
+import { getMarkerIcon, type MarkerColor } from './MarkerUtils.js';
 import type { ZoomMetrics } from './Types.js';
 
 const defaultZoom = 13;

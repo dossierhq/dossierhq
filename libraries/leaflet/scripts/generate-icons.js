@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* eslint-env node */
-import svgToDataUri from 'mini-svg-data-uri';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import svgToDataUri from 'mini-svg-data-uri';
 import { format, resolveConfig } from 'prettier';
 import { optimize } from 'svgo';
 
