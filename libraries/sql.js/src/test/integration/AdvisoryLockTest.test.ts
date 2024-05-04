@@ -1,11 +1,10 @@
 import {
-  createDossierClientProvider,
   createAdvisoryLockTestSuite,
+  createDossierClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
-import type { ServerInit } from './SqlJsTestUtils.js';
-import { initializeSqlJsServer } from './SqlJsTestUtils.js';
+import { initializeSqlJsServer, type ServerInit } from './SqlJsTestUtils.js';
 
 let serverInit: ServerInit | null = null;
 

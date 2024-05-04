@@ -1,11 +1,9 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { NoOpLogger } from '@dossierhq/core';
+import { NoOpLogger, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type { TestSuite } from '@dossierhq/integration-test';
 import * as base64 from 'base-64';
 import * as SqlJs from 'sql.js';
 import { describe, test } from 'vitest';
-import type { SqlJsDatabaseAdapter } from '../SqlJsAdapter.js';
-import { createSqlJsAdapter } from '../SqlJsAdapter.js';
+import { createSqlJsAdapter, type SqlJsDatabaseAdapter } from '../SqlJsAdapter.js';
 
 export async function createSqlJsTestAdapter(): PromiseResult<
   SqlJsDatabaseAdapter,
