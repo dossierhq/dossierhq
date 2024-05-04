@@ -2,12 +2,9 @@ import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
-import type { DropdownItem } from '../Dropdown/Dropdown.js';
-import { Dropdown } from '../Dropdown/Dropdown.js';
-import type { IconName } from '../Icon/Icon.js';
-import { Icon } from '../Icon/Icon.js';
-import type { TagProps } from '../Tag/Tag.js';
-import { Tag } from '../Tag/Tag.js';
+import { Dropdown, type DropdownItem } from '../Dropdown/Dropdown.js';
+import { Icon, type IconName } from '../Icon/Icon.js';
+import { Tag, type TagProps } from '../Tag/Tag.js';
 import { Text } from '../Text/Text.js';
 
 export interface CardProps {

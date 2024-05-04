@@ -1,9 +1,12 @@
 import type { CSSProperties, FunctionComponent, ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
-import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
-import type { SpacingProps } from '../../utils/LayoutPropsUtils.js';
-import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
+import {
+  toFlexContainerClassName,
+  toFlexItemClassName,
+  type FlexContainerProps,
+  type FlexItemProps,
+} from '../../utils/FlexboxUtils.js';
+import { toSpacingClassName, type SpacingProps } from '../../utils/LayoutPropsUtils.js';
 
 export interface ColumnProps extends Omit<FlexContainerProps, 'flexDirection'>, SpacingProps {
   className?: string;

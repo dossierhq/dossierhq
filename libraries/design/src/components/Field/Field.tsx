@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
-import type { Color } from '../../config/Colors.js';
-import { toColorClassName } from '../../config/Colors.js';
+import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface FieldProps {

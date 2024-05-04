@@ -6,8 +6,7 @@ import { Card } from '../Card/Card.js';
 import { FullscreenContainer } from '../FullscreenContainer/FullscreenContainer.js';
 import { IconButton } from '../IconButton/IconButton.js';
 import { Text } from '../Text/Text.js';
-import type { DialogProps } from './Dialog.js';
-import { Dialog } from './Dialog.js';
+import { Dialog, type DialogProps } from './Dialog.js';
 
 type StoryProps = Omit<DialogProps, 'show'>;
 

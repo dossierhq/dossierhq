@@ -2,8 +2,7 @@ import type { FunctionComponent, MouseEventHandler } from 'react';
 import type { Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { Button } from '../Button/Button.js';
-import type { IconName, IconProps } from '../Icon/Icon.js';
-import { Icon } from '../Icon/Icon.js';
+import { Icon, type IconName, type IconProps } from '../Icon/Icon.js';
 
 export interface IconButtonProps {
   className?: string;

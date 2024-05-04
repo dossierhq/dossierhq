@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import type { TabContainerProps } from './TabContainer.js';
-import { TabContainer } from './TabContainer.js';
+import { TabContainer, type TabContainerProps } from './TabContainer.js';
 
 interface StoryProps extends Omit<TabContainerProps, 'children'> {
   items: { id: string; title: string }[];

@@ -1,17 +1,19 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { FlexContainerProps, FlexItemProps } from '../../utils/FlexboxUtils.js';
-import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
-import type {
-  GapProps,
-  MarginProps,
-  PaddingProps,
-  SizeProps,
-} from '../../utils/LayoutPropsUtils.js';
+import {
+  toFlexContainerClassName,
+  toFlexItemClassName,
+  type FlexContainerProps,
+  type FlexItemProps,
+} from '../../utils/FlexboxUtils.js';
 import {
   extractLayoutProps,
   toSizeClassName,
   toSpacingClassName,
+  type GapProps,
+  type MarginProps,
+  type PaddingProps,
+  type SizeProps,
 } from '../../utils/LayoutPropsUtils.js';
 import { Scrollable } from '../Scrollable/Scrollable.js';
 

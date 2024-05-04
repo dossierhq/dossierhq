@@ -1,7 +1,14 @@
 'use client';
+
 import * as ReactAriaOverlays from '@react-aria/overlays';
-import type { FunctionComponent, MouseEventHandler, ReactNode, RefObject } from 'react';
-import { useEffect, useRef } from 'react';
+import {
+  useEffect,
+  useRef,
+  type FunctionComponent,
+  type MouseEventHandler,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { Portal } from '../Portal/Portal.js';
 

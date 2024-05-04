@@ -1,14 +1,15 @@
-import type { Dispatch } from 'react';
-import React from 'react';
-import type { DropdownSelectorProps } from '../../components/DropdownSelector/DropdownSelector.js';
-import { DropdownSelector } from '../../components/DropdownSelector/DropdownSelector.js';
-import type {
-  MultipleSelectorItem,
-  MultipleSelectorReducer,
-  MultipleSelectorState,
-  MultipleSelectorStateAction,
+import React, { type Dispatch } from 'react';
+import {
+  DropdownSelector,
+  type DropdownSelectorProps,
+} from '../../components/DropdownSelector/DropdownSelector.js';
+import {
+  initializeMultipleSelectorState,
+  type MultipleSelectorItem,
+  type MultipleSelectorReducer,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
 } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
-import { initializeMultipleSelectorState } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Tag } from '../../components/Tag/Tag.js';
 import type { StatusColor } from '../../config/Colors.js';
 

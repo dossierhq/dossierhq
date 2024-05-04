@@ -1,5 +1,4 @@
-import type { Context } from 'react';
-import { createContext } from 'react';
+import { createContext, type Context } from 'react';
 
 export function createClientContext<T>(defaultValue: T | undefined): Context<T> {
   // When on server, return undefined since we can't use contexts on e.g. Next.js server components

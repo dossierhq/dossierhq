@@ -1,5 +1,4 @@
-import type { RefCallback } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type RefCallback } from 'react';
 
 let observerInstance: IntersectionObserver | null = null;
 

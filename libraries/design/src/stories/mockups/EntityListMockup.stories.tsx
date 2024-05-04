@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import type { MouseEvent } from 'react';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, type MouseEvent } from 'react';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
 import { reduceMultipleSelectorState } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Field } from '../../components/Field/Field.js';
@@ -11,27 +10,30 @@ import { Navbar } from '../../components/Navbar/Navbar.js';
 import { Table } from '../../components/Table/Table.js';
 import { Tag } from '../../components/Tag/Tag.js';
 import { TagSelector } from '../../components/TagSelector/TagSelector.js';
-import type {
-  AuthKeySelectorDispatch,
-  AuthKeySelectorInitArgs,
-  AuthKeySelectorReducer,
-  AuthKeySelectorState,
+import {
+  AuthKeySelector,
+  initializeAuthKeySelectorState,
+  type AuthKeySelectorDispatch,
+  type AuthKeySelectorInitArgs,
+  type AuthKeySelectorReducer,
+  type AuthKeySelectorState,
 } from './AuthKeySelector.js';
-import { AuthKeySelector, initializeAuthKeySelectorState } from './AuthKeySelector.js';
 import { AuthKeyTagList } from './AuthKeyTagList.js';
-import type { EntityTypeSelectorDispatch, EntityTypeSelectorState } from './EntityTypeSelector.js';
 import {
   EntityTypeSelector,
   initializeEntityTypeSelectorState,
   reduceEntityTypeSelectorState,
+  type EntityTypeSelectorDispatch,
+  type EntityTypeSelectorState,
 } from './EntityTypeSelector.js';
-import type {
-  StatusSelectorDispatch,
-  StatusSelectorInitArgs,
-  StatusSelectorReducer,
-  StatusSelectorState,
+import {
+  initializeStatusSelectorState,
+  StatusSelector,
+  type StatusSelectorDispatch,
+  type StatusSelectorInitArgs,
+  type StatusSelectorReducer,
+  type StatusSelectorState,
 } from './StatusSelector.js';
-import { initializeStatusSelectorState, StatusSelector } from './StatusSelector.js';
 import { StatusTagList } from './StatusTagList';
 
 interface ScreenProps {

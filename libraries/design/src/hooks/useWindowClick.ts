@@ -1,5 +1,4 @@
-import type { RefObject } from 'react';
-import { useCallback } from 'react';
+import { useCallback, type RefObject } from 'react';
 import { findAscendantElement } from '../utils/DOMUtils.js';
 import { isEventTargetNode } from '../utils/EventUtils.js';
 import { useWindowEventListener } from './useWindowEventListener.js';

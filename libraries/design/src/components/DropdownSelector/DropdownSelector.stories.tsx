@@ -1,14 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useReducer } from 'react';
-import type { DropdownSelectorProps } from './DropdownSelector.js';
-import { DropdownSelector } from './DropdownSelector.js';
-import type {
-  MultipleSelectorReducer,
-  MultipleSelectorStateInitializerArgs,
-} from './MultipleSelectorReducer.js';
+import { DropdownSelector, type DropdownSelectorProps } from './DropdownSelector.js';
 import {
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
+  type MultipleSelectorReducer,
+  type MultipleSelectorStateInitializerArgs,
 } from './MultipleSelectorReducer.js';
 
 interface StoryItem {

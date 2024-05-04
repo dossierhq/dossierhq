@@ -1,18 +1,18 @@
 'use client';
-import type { Dispatch, ReactNode } from 'react';
-import { useCallback, useRef, useState } from 'react';
+
+import { useCallback, useRef, useState, type Dispatch, type ReactNode } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
 import { Badge } from '../Badge/Badge.js';
 import { Button } from '../Button/Button.js';
 import { DropdownDisplay } from '../DropdownDisplay/DropdownDisplay.js';
 import type { IconName } from '../Icon/Icon.js';
-import type {
-  MultipleSelectorItem,
-  MultipleSelectorState,
-  MultipleSelectorStateAction,
+import {
+  MultipleSelectorStateActions,
+  type MultipleSelectorItem,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
 } from './MultipleSelectorReducer.js';
-import { MultipleSelectorStateActions } from './MultipleSelectorReducer.js';
 
 export interface DropdownSelectorProps<TItem extends MultipleSelectorItem> {
   iconLeft?: IconName;

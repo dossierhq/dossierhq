@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row } from '../components/Row/Row.js';
 import { Text } from '../components/Text/Text.js';
-import type { SpacingValue } from '../utils/LayoutPropsUtils.js';
-import { SpacingValues, toSpacingClassName } from '../utils/LayoutPropsUtils.js';
+import { SpacingValues, toSpacingClassName, type SpacingValue } from '../utils/LayoutPropsUtils.js';
 
 interface Props {
   size: SpacingValue;

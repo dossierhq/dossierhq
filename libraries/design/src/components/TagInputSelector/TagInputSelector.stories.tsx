@@ -1,16 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useReducer } from 'react';
-import type {
-  MultipleSelectorReducer,
-  MultipleSelectorStateInitializerArgs,
-} from '../DropdownSelector/MultipleSelectorReducer.js';
 import {
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
+  type MultipleSelectorReducer,
+  type MultipleSelectorStateInitializerArgs,
 } from '../DropdownSelector/MultipleSelectorReducer.js';
 import type { TagProps } from '../Tag/Tag.js';
-import type { TagInputSelectorProps } from './TagInputSelector.js';
-import { TagInputSelector } from './TagInputSelector.js';
+import { TagInputSelector, type TagInputSelectorProps } from './TagInputSelector.js';
 
 interface StoryItem {
   id: string;

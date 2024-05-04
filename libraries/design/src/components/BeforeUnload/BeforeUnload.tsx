@@ -1,4 +1,5 @@
 'use client';
+
 import { useRef } from 'react';
 import { useWindowEventListener } from '../../hooks/useWindowEventListener.js';
 

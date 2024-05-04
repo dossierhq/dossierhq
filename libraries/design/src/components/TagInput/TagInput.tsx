@@ -1,5 +1,4 @@
-import type { MouseEvent, ReactNode, Ref } from 'react';
-import { forwardRef } from 'react';
+import { forwardRef, type MouseEvent, type ReactNode, type Ref } from 'react';
 import { Tag } from '../Tag/Tag.js';
 
 export interface TagInputProps {

@@ -1,8 +1,6 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
-import type { DropdownItem } from '../Dropdown/Dropdown.js';
-import { Dropdown } from '../Dropdown/Dropdown.js';
-import type { IconName } from '../Icon/Icon.js';
-import { Icon } from '../Icon/Icon.js';
+import { Dropdown, type DropdownItem } from '../Dropdown/Dropdown.js';
+import { Icon, type IconName } from '../Icon/Icon.js';
 
 export interface CardProps {
   children: ReactNode;

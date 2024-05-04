@@ -1,6 +1,5 @@
 import { Column } from '../Column/Column.js';
-import type { IconName } from '../Icon/Icon.js';
-import { Icon } from '../Icon/Icon.js';
+import { Icon, type IconName } from '../Icon/Icon.js';
 import { Text } from '../Text/Text.js';
 
 export interface EmptyStateMessageProps {

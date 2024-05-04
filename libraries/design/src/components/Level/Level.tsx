@@ -1,9 +1,7 @@
 import type { FunctionComponent, ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { PaddingProps } from '../../utils/LayoutPropsUtils.js';
-import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
-import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
-import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
+import { toSpacingClassName, type PaddingProps } from '../../utils/LayoutPropsUtils.js';
+import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
 
 export interface LevelProps extends PaddingProps {
   sticky?: boolean;

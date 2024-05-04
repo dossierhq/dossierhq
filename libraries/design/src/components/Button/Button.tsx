@@ -1,10 +1,13 @@
-import type { CSSProperties, MouseEventHandler, ReactNode, Ref } from 'react';
-import { forwardRef } from 'react';
-import type { Color } from '../../config/Colors.js';
-import { toColorClassName } from '../../config/Colors.js';
+import {
+  forwardRef,
+  type CSSProperties,
+  type MouseEventHandler,
+  type ReactNode,
+  type Ref,
+} from 'react';
+import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { IconName } from '../Icon/Icon.js';
-import { Icon } from '../Icon/Icon.js';
+import { Icon, type IconName } from '../Icon/Icon.js';
 
 export type ButtonProps = {
   ref?: Ref<HTMLAnchorElement | HTMLButtonElement>;

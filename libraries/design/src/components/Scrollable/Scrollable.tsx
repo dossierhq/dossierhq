@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import { useIsClippedObserver } from '../../hooks/useIsClippedObserver.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';

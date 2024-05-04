@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import type { MouseEvent } from 'react';
-import React, { useState } from 'react';
-import type { TableProps } from './Table.js';
-import { Table } from './Table.js';
+import React, { useState, type MouseEvent } from 'react';
+import { Table, type TableProps } from './Table.js';
 
 type ColumnName = 'one' | 'two' | 'three';
 

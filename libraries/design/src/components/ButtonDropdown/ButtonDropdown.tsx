@@ -1,6 +1,5 @@
 import { Button } from '../Button/Button.js';
-import type { DropdownItem, DropdownProps } from '../Dropdown/Dropdown.js';
-import { Dropdown } from '../Dropdown/Dropdown.js';
+import { Dropdown, type DropdownItem, type DropdownProps } from '../Dropdown/Dropdown.js';
 import type { IconName } from '../Icon/Icon.js';
 
 export interface ButtonDropdownProps<TItem extends DropdownItem = DropdownItem>

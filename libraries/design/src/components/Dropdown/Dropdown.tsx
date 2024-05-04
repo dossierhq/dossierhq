@@ -1,6 +1,6 @@
 'use client';
-import type { ReactNode, Ref } from 'react';
-import { useCallback, useRef, useState } from 'react';
+
+import { useCallback, useRef, useState, type ReactNode, type Ref } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
 import { DropdownDisplay } from '../DropdownDisplay/DropdownDisplay.js';

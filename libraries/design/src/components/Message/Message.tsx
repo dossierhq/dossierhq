@@ -1,11 +1,8 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import type { Color } from '../../config/Colors.js';
-import { toColorClassName } from '../../config/Colors.js';
+import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { FlexContainerProps } from '../../utils/FlexboxUtils.js';
-import { toFlexContainerClassName } from '../../utils/FlexboxUtils.js';
-import type { SpacingProps } from '../../utils/LayoutPropsUtils.js';
-import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';
+import { toFlexContainerClassName, type FlexContainerProps } from '../../utils/FlexboxUtils.js';
+import { toSpacingClassName, type SpacingProps } from '../../utils/LayoutPropsUtils.js';
 
 export interface MessageProps {
   className?: string;

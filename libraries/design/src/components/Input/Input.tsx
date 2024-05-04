@@ -1,11 +1,8 @@
 import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
-import type { Color } from '../../config/Colors.js';
-import { toColorClassName } from '../../config/Colors.js';
+import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
-import type { TextStyle } from '../../utils/TextStylePropsUtils.js';
-import { toTextStyleClassName } from '../../utils/TextStylePropsUtils.js';
-import type { IconName } from '../Icon/Icon.js';
-import { Icon } from '../Icon/Icon.js';
+import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
+import { Icon, type IconName } from '../Icon/Icon.js';
 
 export interface InputProps {
   className?: string;

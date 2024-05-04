@@ -1,5 +1,5 @@
-import type { Reducer } from 'react';
 import isEqual from 'lodash/isEqual.js';
+import type { Reducer } from 'react';
 import { assertIsDefined } from '../../utils/AssertUtils.js';
 
 export interface MultipleSelectorItem<TId extends string = string> {

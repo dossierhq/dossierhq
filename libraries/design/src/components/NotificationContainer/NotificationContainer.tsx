@@ -1,8 +1,7 @@
 'use client';
-import type { ReactNode } from 'react';
-import { useCallback, useRef, useState } from 'react';
-import type { NotificationInfo } from '../../contexts/NotificationContext.js';
-import { NotificationContext } from '../../contexts/NotificationContext.js';
+
+import { useCallback, useRef, useState, type ReactNode } from 'react';
+import { NotificationContext, type NotificationInfo } from '../../contexts/NotificationContext.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
 export interface NotificationContainerProps {

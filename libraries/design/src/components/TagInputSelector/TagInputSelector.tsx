@@ -1,14 +1,12 @@
-import type { Dispatch } from 'react';
-import { useCallback } from 'react';
+import { useCallback, type Dispatch } from 'react';
 import { Dropdown } from '../Dropdown/Dropdown.js';
-import type {
-  MultipleSelectorItem,
-  MultipleSelectorState,
-  MultipleSelectorStateAction,
+import {
+  MultipleSelectorStateActions,
+  type MultipleSelectorItem,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
 } from '../DropdownSelector/MultipleSelectorReducer.js';
-import { MultipleSelectorStateActions } from '../DropdownSelector/MultipleSelectorReducer.js';
-import type { TagProps } from '../Tag/Tag.js';
-import { Tag } from '../Tag/Tag.js';
+import { Tag, type TagProps } from '../Tag/Tag.js';
 import { TagInput } from '../TagInput/TagInput.js';
 
 export interface TagInputSelectorProps<TItem extends MultipleSelectorItem> {

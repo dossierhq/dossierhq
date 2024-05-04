@@ -1,12 +1,11 @@
 import type { Dispatch } from 'react';
-import type {
-  MultipleSelectorItem,
-  MultipleSelectorState,
-  MultipleSelectorStateAction,
+import {
+  MultipleSelectorStateActions,
+  type MultipleSelectorItem,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
 } from '../DropdownSelector/MultipleSelectorReducer.js';
-import { MultipleSelectorStateActions } from '../DropdownSelector/MultipleSelectorReducer.js';
-import type { TagProps } from '../Tag/Tag.js';
-import { Tag } from '../Tag/Tag.js';
+import { Tag, type TagProps } from '../Tag/Tag.js';
 
 export interface TagSelectorProps<TItem extends MultipleSelectorItem> {
   clearLabel: string;

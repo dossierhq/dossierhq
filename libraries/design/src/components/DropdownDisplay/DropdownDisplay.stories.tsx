@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useRef, useState } from 'react';
 import { Button } from '../Button/Button.js';
-import type { DropdownDisplayProps } from './DropdownDisplay.js';
-import { DropdownDisplay } from './DropdownDisplay.js';
+import { DropdownDisplay, type DropdownDisplayProps } from './DropdownDisplay.js';
 
 type WrapperProps = Omit<DropdownDisplayProps, 'trigger' | 'triggerRef'>;
 
