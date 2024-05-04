@@ -1,8 +1,8 @@
 import { ok, type ChangelogEventQuery, type ErrorType, type Result } from '@dossierhq/core';
-import type { DatabaseResolvedEntityReference } from '@dossierhq/database-adapter';
 import {
   createPostgresSqlQuery,
   type DatabasePagingInfo,
+  type DatabaseResolvedEntityReference,
   type PostgresQueryBuilder,
 } from '@dossierhq/database-adapter';
 import type { EventsTable, SchemaVersionsTable, SubjectsTable } from '../DatabaseSchema.js';

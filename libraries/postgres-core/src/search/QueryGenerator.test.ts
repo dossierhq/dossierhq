@@ -1,9 +1,9 @@
 import {
   EntityQueryOrder,
   EntityStatus,
-  Schema,
   ErrorType,
   PublishedEntityQueryOrder,
+  Schema,
 } from '@dossierhq/core';
 import { expectErrorResult } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';

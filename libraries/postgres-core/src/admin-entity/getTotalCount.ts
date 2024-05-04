@@ -1,9 +1,9 @@
 import {
   ok,
   type EntitySharedQuery,
-  type Schema,
   type ErrorType,
   type PromiseResult,
+  type Schema,
 } from '@dossierhq/core';
 import type { ResolvedAuthKey, TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';

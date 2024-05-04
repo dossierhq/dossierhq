@@ -1,9 +1,9 @@
 import {
   ok,
   type EntityQuery,
-  type Schema,
   type ErrorType,
   type PromiseResult,
+  type Schema,
 } from '@dossierhq/core';
 import type {
   DatabaseAdminEntitySearchPayload,
@@ -13,8 +13,10 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
-import type { SearchAdminEntitiesItem } from '../search/QueryGenerator.js';
-import { searchAdminEntitiesQuery } from '../search/QueryGenerator.js';
+import {
+  searchAdminEntitiesQuery,
+  type SearchAdminEntitiesItem,
+} from '../search/QueryGenerator.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 

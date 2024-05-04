@@ -7,9 +7,9 @@ import {
   type PromiseResult,
 } from '@dossierhq/core';
 import {
-  DEFAULT,
   buildPostgresSqlQuery,
   createPostgresSqlQuery,
+  DEFAULT,
   type DatabaseAdminEntityCreateEntityArg,
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,

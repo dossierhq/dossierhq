@@ -12,8 +12,10 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
-import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
-import { samplePublishedEntitiesQuery } from '../search/QueryGenerator.js';
+import {
+  samplePublishedEntitiesQuery,
+  type SearchPublishedEntitiesItem,
+} from '../search/QueryGenerator.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntitySampleEntities(

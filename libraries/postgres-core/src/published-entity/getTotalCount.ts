@@ -1,10 +1,10 @@
-import type {
-  ErrorType,
-  PromiseResult,
-  PublishedEntitySharedQuery,
-  PublishedSchema,
+import {
+  ok,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedEntitySharedQuery,
+  type PublishedSchema,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type { ResolvedAuthKey, TransactionContext } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';

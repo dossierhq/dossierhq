@@ -1,9 +1,7 @@
-import type { ErrorType, Result } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import { ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabasePagingInfo } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
-import type { CursorNativeType } from './OpaqueCursor.js';
-import { fromOpaqueCursor } from './OpaqueCursor.js';
+import { fromOpaqueCursor, type CursorNativeType } from './OpaqueCursor.js';
 
 export interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;

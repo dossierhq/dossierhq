@@ -1,4 +1,4 @@
-import type { SchemaSpecificationWithMigrations, EventType } from '@dossierhq/core';
+import type { EventType, SchemaSpecificationWithMigrations } from '@dossierhq/core';
 
 export const UniqueConstraints = {
   advisory_locks_name_key: 'advisory_locks_name_key',

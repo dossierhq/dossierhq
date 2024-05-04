@@ -1,9 +1,6 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
-import type { TransactionContext } from '@dossierhq/database-adapter';
-import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
-import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
-import { UniqueConstraints } from '../DatabaseSchema.js';
+import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { buildPostgresSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
+import { UniqueConstraints, type AdvisoryLocksTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryOne } from '../QueryFunctions.js';
 

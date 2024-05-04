@@ -13,8 +13,10 @@ import type {
 } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
-import type { SearchPublishedEntitiesItem } from '../search/QueryGenerator.js';
-import { searchPublishedEntitiesQuery } from '../search/QueryGenerator.js';
+import {
+  searchPublishedEntitiesQuery,
+  type SearchPublishedEntitiesItem,
+} from '../search/QueryGenerator.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 

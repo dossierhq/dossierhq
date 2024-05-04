@@ -1,6 +1,4 @@
 import type { DatabaseAdapter, DatabaseOptimizationOptions } from '@dossierhq/database-adapter';
-import type { PostgresTransaction } from './PostgresTransaction.js';
-import { withNestedTransaction, withRootTransaction } from './PostgresTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
@@ -45,6 +43,11 @@ import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
 import { managementOptimize } from './management/optimize.js';
 import { managementSyncGetEvents } from './management/syncGetEvents.js';
 import { managementSyncGetHeadEventId } from './management/syncGetHeadEventId.js';
+import {
+  withNestedTransaction,
+  withRootTransaction,
+  type PostgresTransaction,
+} from './PostgresTransaction.js';
 import { publishedEntityGetEntities } from './published-entity/getEntities.js';
 import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';

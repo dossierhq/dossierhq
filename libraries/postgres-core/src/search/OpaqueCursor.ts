@@ -1,5 +1,4 @@
-import type { ErrorType, Result } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { assertExhaustive } from '../utils/AssertUtils.js';
 

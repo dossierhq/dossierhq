@@ -1,10 +1,10 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import type {
-  DatabaseAdminEntityUniqueIndexValue,
-  DatabaseResolvedEntityReference,
-  TransactionContext,
+import {
+  buildPostgresSqlQuery,
+  type DatabaseAdminEntityUniqueIndexValue,
+  type DatabaseResolvedEntityReference,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { buildPostgresSqlQuery } from '@dossierhq/database-adapter';
 import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';

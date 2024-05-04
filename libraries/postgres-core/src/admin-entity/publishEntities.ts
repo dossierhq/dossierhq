@@ -1,12 +1,13 @@
-import type {
-  CreateEntitySyncEvent,
-  EntityVersionReference,
-  ErrorType,
-  PromiseResult,
-  PublishEntitiesSyncEvent,
-  UpdateEntitySyncEvent,
+import {
+  notOk,
+  ok,
+  type CreateEntitySyncEvent,
+  type EntityVersionReference,
+  type ErrorType,
+  type PromiseResult,
+  type PublishEntitiesSyncEvent,
+  type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
 import {
   buildPostgresSqlQuery,
   type DatabaseAdminEntityPublishGetVersionInfoPayload,

@@ -1,8 +1,8 @@
 import {
   ok,
-  type SchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
+  type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
 import type { SchemaVersionsTable } from '../DatabaseSchema.js';

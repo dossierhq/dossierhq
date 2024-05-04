@@ -1,5 +1,4 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import { ok, type EntityReference, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabasePublishedEntityGetOnePayload,
   TransactionContext,

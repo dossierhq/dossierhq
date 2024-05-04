@@ -1,14 +1,14 @@
 import {
   notOk,
   ok,
-  type SchemaSpecification,
   type ErrorType,
   type PromiseResult,
+  type SchemaSpecification,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
-  DEFAULT,
   buildPostgresSqlQuery,
+  DEFAULT,
   type Session,
   type TransactionContext,
 } from '@dossierhq/database-adapter';

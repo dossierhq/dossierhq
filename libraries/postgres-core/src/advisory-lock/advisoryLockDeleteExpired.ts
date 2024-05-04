@@ -1,7 +1,7 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
 import type { TransactionContext } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 
 const QUERY =

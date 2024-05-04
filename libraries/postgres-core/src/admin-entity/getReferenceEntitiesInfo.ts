@@ -1,11 +1,10 @@
-import type { EntityReference, ErrorType, PromiseResult } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import { ok, type EntityReference, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityGetReferenceEntityInfoPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import type { EntitiesTable } from '../DatabaseSchema.js';
+import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 
 export async function adminEntityGetReferenceEntitiesInfo(

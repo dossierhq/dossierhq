@@ -8,8 +8,8 @@ import {
   type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
 import {
-  DEFAULT,
   buildPostgresSqlQuery,
+  DEFAULT,
   type DatabaseEntityUpdateEntityArg,
   type DatabaseEntityUpdateEntityPayload,
   type DatabaseEntityUpdateGetEntityInfoPayload,

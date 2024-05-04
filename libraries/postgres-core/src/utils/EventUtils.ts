@@ -9,8 +9,8 @@ import {
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
-  DEFAULT,
   buildPostgresSqlQuery,
+  DEFAULT,
   type Session,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
