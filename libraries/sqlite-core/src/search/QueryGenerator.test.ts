@@ -1,6 +1,6 @@
 import {
-  EntityStatus,
   EntityQueryOrder,
+  EntityStatus,
   ErrorType,
   PublishedEntityQueryOrder,
   Schema,

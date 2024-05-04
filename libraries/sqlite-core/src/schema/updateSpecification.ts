@@ -1,8 +1,8 @@
 import {
   ok,
-  type SchemaSpecificationWithMigrations,
   type ErrorType,
   type PromiseResult,
+  type SchemaSpecificationWithMigrations,
   type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {

@@ -1,10 +1,7 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
-import type { TransactionContext } from '@dossierhq/database-adapter';
-import { createSqliteSqlQuery } from '@dossierhq/database-adapter';
+import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { createSqliteSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
 import type { SequencesTable } from '../DatabaseSchema.js';
-import type { Database } from '../QueryFunctions.js';
-import { queryOne } from '../QueryFunctions.js';
+import { queryOne, type Database } from '../QueryFunctions.js';
 
 export async function getEntitiesUpdatedSeq(
   database: Database,

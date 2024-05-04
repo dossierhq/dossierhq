@@ -12,11 +12,12 @@ import {
   type DatabaseAdminEntityCreatePayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
   EntitiesUniqueNameConstraint,
   EntitiesUniquePublishedNameConstraint,
   EntitiesUniqueUuidConstraint,
+  type EntitiesTable,
+  type EntityVersionsTable,
 } from '../DatabaseSchema.js';
 import { queryOne, queryRun, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';

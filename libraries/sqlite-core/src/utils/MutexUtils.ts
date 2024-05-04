@@ -1,4 +1,4 @@
-import { notOk, type ErrorType, type PromiseResult, type LoggerContext } from '@dossierhq/core';
+import { notOk, type ErrorType, type LoggerContext, type PromiseResult } from '@dossierhq/core';
 
 export class Mutex {
   #locking: Promise<void>;

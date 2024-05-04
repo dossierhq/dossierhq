@@ -1,22 +1,20 @@
-import type {
-  SchemaSpecificationWithMigrations,
-  ArchiveEntitySyncEvent,
-  CreateEntitySyncEvent,
-  CreatePrincipalSyncEvent,
-  PublishEntitiesSyncEvent,
-  UnarchiveEntitySyncEvent,
-  UnpublishEntitiesSyncEvent,
-  UpdateEntitySyncEvent,
-  UpdateSchemaSyncEvent,
-} from '@dossierhq/core';
 import {
   EventType,
   notOk,
   ok,
+  type ArchiveEntitySyncEvent,
+  type CreateEntitySyncEvent,
+  type CreatePrincipalSyncEvent,
   type ErrorType,
   type PromiseResult,
+  type PublishEntitiesSyncEvent,
   type Result,
+  type SchemaSpecificationWithMigrations,
   type SyncEvent,
+  type UnarchiveEntitySyncEvent,
+  type UnpublishEntitiesSyncEvent,
+  type UpdateEntitySyncEvent,
+  type UpdateSchemaSyncEvent,
 } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,

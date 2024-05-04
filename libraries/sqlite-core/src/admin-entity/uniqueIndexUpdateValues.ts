@@ -1,16 +1,14 @@
 import { ErrorType, notOk, ok, type PromiseResult } from '@dossierhq/core';
-import type {
-  DatabaseAdminEntityUniqueIndexArg,
-  DatabaseAdminEntityUniqueIndexPayload,
-  DatabaseAdminEntityUniqueIndexValue,
-  DatabaseResolvedEntityReference,
-  TransactionContext,
+import {
+  buildSqliteSqlQuery,
+  type DatabaseAdminEntityUniqueIndexArg,
+  type DatabaseAdminEntityUniqueIndexPayload,
+  type DatabaseAdminEntityUniqueIndexValue,
+  type DatabaseResolvedEntityReference,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
-import type { UniqueIndexValuesTable } from '../DatabaseSchema.js';
-import { UniqueIndexValueConstraint } from '../DatabaseSchema.js';
-import type { Database } from '../QueryFunctions.js';
-import { queryOne, queryRun } from '../QueryFunctions.js';
+import { UniqueIndexValueConstraint, type UniqueIndexValuesTable } from '../DatabaseSchema.js';
+import { queryOne, queryRun, type Database } from '../QueryFunctions.js';
 
 export async function adminEntityUniqueIndexUpdateValues(
   database: Database,

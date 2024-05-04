@@ -1,10 +1,8 @@
-import type { ErrorType, Result } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
+import { ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabasePagingInfo } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
-import type { CursorNativeType } from './OpaqueCursor.js';
-import { fromOpaqueCursor } from './OpaqueCursor.js';
+import { fromOpaqueCursor, type CursorNativeType } from './OpaqueCursor.js';
 
 export interface ResolvedPagingCursors<TCursor extends ColumnValue> {
   before: TCursor | null;

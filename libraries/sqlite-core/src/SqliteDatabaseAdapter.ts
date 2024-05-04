@@ -4,16 +4,6 @@ import type {
   DatabaseOptimizationOptions,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { UniqueConstraint } from './DatabaseSchema.js';
-import { createInitializationContext } from './InitializationContext.js';
-import { queryNoneOrOne, queryOne, queryRun, type Database } from './QueryFunctions.js';
-import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
-import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
-import {
-  withNestedTransaction,
-  withRootTransaction,
-  type SqliteTransactionContext,
-} from './SqliteTransaction.js';
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
@@ -49,9 +39,11 @@ import { advisoryLockRenew } from './advisory-lock/advisoryLockRenew.js';
 import { authCreateSession, authCreateSyncSessionForSubject } from './auth/createSession.js';
 import { authGetPrincipals } from './auth/getPrincipals.js';
 import { authGetPrincipalsTotalCount } from './auth/getPrincipalsTotalCount.js';
+import type { UniqueConstraint } from './DatabaseSchema.js';
 import { eventGetChangelogEvents } from './event/getChangelogEvents.js';
 import { eventGetChangelogEventsEntityInfo } from './event/getChangelogEventsEntityInfo.js';
 import { eventGetChangelogEventsTotalCount } from './event/getChangelogEventsTotalCount.js';
+import { createInitializationContext } from './InitializationContext.js';
 import { managementDirtyGetNextEntity } from './management/dirtyGetNextEntity.js';
 import { managementDirtyMarkEntities } from './management/dirtyMarkEntities.js';
 import { managementDirtyUpdateEntity } from './management/dirtyUpdateEntity.js';
@@ -63,12 +55,20 @@ import { publishedEntityGetOne } from './published-entity/getEntity.js';
 import { publishedEntitySearchTotalCount } from './published-entity/getTotalCount.js';
 import { publishedEntitySampleEntities } from './published-entity/sampleEntities.js';
 import { publishedEntitySearchEntities } from './published-entity/searchEntities.js';
+import { queryNoneOrOne, queryOne, queryRun, type Database } from './QueryFunctions.js';
 import { schemaGetSpecification } from './schema/getSpecification.js';
 import { schemaUpdateCountEntitiesWithTypes } from './schema/updateCountEntitiesWithTypes.js';
 import { schemaUpdateDeleteComponentTypesFromIndexes } from './schema/updateDeleteComponentTypesFromIndexes.js';
 import { schemaUpdateModifyIndexes } from './schema/updateModifyIndexes.js';
 import { schemaUpdateRenameTypes } from './schema/updateRenameTypes.js';
 import { schemaUpdateSpecification } from './schema/updateSpecification.js';
+import { checkMigrationStatus, migrateDatabaseIfNecessary } from './SchemaDefinition.js';
+import { isSemVerEqualOrGreaterThan, parseSemVer } from './SemVer.js';
+import {
+  withNestedTransaction,
+  withRootTransaction,
+  type SqliteTransactionContext,
+} from './SqliteTransaction.js';
 import { Mutex } from './utils/MutexUtils.js';
 
 export type ColumnValue = number | string | Uint8Array | null;

@@ -1,11 +1,11 @@
 import type { Logger } from '@dossierhq/core';
-import type {
-  DatabaseAdapter,
-  DatabasePerformanceCallbacks,
-  Transaction,
-  TransactionContext,
+import {
+  TransactionContextImpl,
+  type DatabaseAdapter,
+  type DatabasePerformanceCallbacks,
+  type Transaction,
+  type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { TransactionContextImpl } from '@dossierhq/database-adapter';
 
 class InitializationContext extends TransactionContextImpl<InitializationContext> {
   constructor(

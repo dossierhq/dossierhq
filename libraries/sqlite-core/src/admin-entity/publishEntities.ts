@@ -1,12 +1,13 @@
-import type {
-  CreateEntitySyncEvent,
-  EntityVersionReference,
-  ErrorType,
-  PromiseResult,
-  PublishEntitiesSyncEvent,
-  UpdateEntitySyncEvent,
+import {
+  notOk,
+  ok,
+  type CreateEntitySyncEvent,
+  type EntityVersionReference,
+  type ErrorType,
+  type PromiseResult,
+  type PublishEntitiesSyncEvent,
+  type UpdateEntitySyncEvent,
 } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type DatabaseAdminEntityPublishGetVersionInfoPayload,
@@ -15,14 +16,13 @@ import {
   type TransactionContext,
 } from '@dossierhq/database-adapter';
 import {
+  EntitiesUniquePublishedNameConstraint,
   ENTITY_DIRTY_FLAG_INDEX_PUBLISHED,
   ENTITY_DIRTY_FLAG_VALIDATE_PUBLISHED,
-  EntitiesUniquePublishedNameConstraint,
   type EntitiesTable,
   type EntityVersionsTable,
 } from '../DatabaseSchema.js';
-import type { Database } from '../QueryFunctions.js';
-import { queryNoneOrOne, queryRun } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryRun, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import {
   resolveEntityFields,

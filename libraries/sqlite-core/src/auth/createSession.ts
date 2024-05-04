@@ -12,8 +12,11 @@ import {
   type TransactionContext,
   type WriteSession,
 } from '@dossierhq/database-adapter';
-import type { PrincipalsTable, SubjectsTable } from '../DatabaseSchema.js';
-import { PrincipalsUniqueProviderIdentifierConstraint } from '../DatabaseSchema.js';
+import {
+  PrincipalsUniqueProviderIdentifierConstraint,
+  type PrincipalsTable,
+  type SubjectsTable,
+} from '../DatabaseSchema.js';
 import { queryNoneOrOne, queryOne, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { createCreatePrincipalEvent } from '../utils/EventUtils.js';

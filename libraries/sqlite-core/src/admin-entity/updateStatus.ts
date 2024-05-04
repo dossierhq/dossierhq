@@ -1,18 +1,17 @@
-import type {
-  EntityStatus,
-  ArchiveEntitySyncEvent,
-  ErrorType,
-  PromiseResult,
-  UnarchiveEntitySyncEvent,
+import {
+  ok,
+  type ArchiveEntitySyncEvent,
+  type EntityStatus,
+  type ErrorType,
+  type PromiseResult,
+  type UnarchiveEntitySyncEvent,
 } from '@dossierhq/core';
-import { ok } from '@dossierhq/core';
 import type {
   DatabaseAdminEntityUpdateStatusPayload,
   DatabaseResolvedEntityReference,
   TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { Database } from '../QueryFunctions.js';
-import { queryRun } from '../QueryFunctions.js';
+import { queryRun, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { getEntitiesUpdatedSeq } from './getEntitiesUpdatedSeq.js';
 

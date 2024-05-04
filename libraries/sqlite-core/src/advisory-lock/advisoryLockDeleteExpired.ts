@@ -1,9 +1,7 @@
 import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import type { TransactionContext } from '@dossierhq/database-adapter';
-import { buildSqliteSqlQuery } from '@dossierhq/database-adapter';
+import { buildSqliteSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';
-import type { Database } from '../QueryFunctions.js';
-import { queryMany } from '../QueryFunctions.js';
+import { queryMany, type Database } from '../QueryFunctions.js';
 
 export async function advisoryLockDeleteExpired(
   database: Database,

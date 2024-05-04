@@ -1,4 +1,4 @@
-import { ok, ErrorType, type PromiseResult, notOk } from '@dossierhq/core';
+import { ErrorType, notOk, ok, type PromiseResult } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type DatabaseEntityIndexesArg,

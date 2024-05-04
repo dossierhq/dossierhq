@@ -14,15 +14,15 @@ import {
   type DatabaseEntityUpdateGetEntityInfoPayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import {
-  ENTITY_DIRTY_FLAG_INDEX_LATEST,
-  ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
   EntitiesUniqueNameConstraint,
   EntitiesUniquePublishedNameConstraint,
+  ENTITY_DIRTY_FLAG_INDEX_LATEST,
+  ENTITY_DIRTY_FLAG_VALIDATE_LATEST,
+  type EntitiesTable,
+  type EntityVersionsTable,
 } from '../DatabaseSchema.js';
-import type { Database } from '../QueryFunctions.js';
-import { queryNoneOrOne, queryOne, queryRun } from '../QueryFunctions.js';
+import { queryNoneOrOne, queryOne, queryRun, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { createEntityEvent } from '../utils/EventUtils.js';

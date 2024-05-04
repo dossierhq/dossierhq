@@ -1,8 +1,9 @@
+import { randomUUID } from 'node:crypto';
 import {
-  Schema,
-  NoOpLogger,
   getPagingInfo,
+  NoOpLogger,
   ok,
+  Schema,
   type ErrorType,
   type Logger,
   type Paging,
@@ -16,7 +17,6 @@ import {
   type Transaction,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { randomUUID } from 'node:crypto';
 import { vi, type MockInstance } from 'vitest';
 import { REQUIRED_SCHEMA_VERSION } from '../SchemaDefinition.js';
 import {
