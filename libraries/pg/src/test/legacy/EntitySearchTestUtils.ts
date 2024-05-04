@@ -1,16 +1,18 @@
-import type {
-  DossierClient,
-  EntityQuery,
-  Entity,
-  BoundingBox,
-  Connection,
-  Edge,
-  ErrorType,
-  PromiseResult,
-  PublishedDossierClient,
-  PublishedEntity,
+import {
+  EntityStatus,
+  getAllPagesForConnection,
+  ok,
+  type BoundingBox,
+  type Connection,
+  type DossierClient,
+  type Edge,
+  type Entity,
+  type EntityQuery,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedDossierClient,
+  type PublishedEntity,
 } from '@dossierhq/core';
-import { EntityStatus, getAllPagesForConnection, ok } from '@dossierhq/core';
 import { expect } from 'vitest';
 
 export async function ensureEntityCount(

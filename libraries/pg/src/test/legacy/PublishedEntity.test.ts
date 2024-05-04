@@ -1,16 +1,14 @@
-import type {
-  DossierClient,
-  Entity,
-  SchemaSpecificationUpdate,
-  PublishedDossierClient,
-  PublishedEntity,
-} from '@dossierhq/core';
 import {
-  EntityStatus,
-  FieldType,
   assertOkResult,
   createRichText,
   createRichTextComponentNode,
+  EntityStatus,
+  FieldType,
+  type DossierClient,
+  type Entity,
+  type PublishedDossierClient,
+  type PublishedEntity,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import { expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { Server, SessionContext } from '@dossierhq/server';

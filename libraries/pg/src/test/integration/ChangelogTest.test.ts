@@ -1,7 +1,10 @@
-import { createDossierClientProvider, createChangelogTestSuite } from '@dossierhq/integration-test';
+import { createChangelogTestSuite, createDossierClientProvider } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
-import type { IntegrationTestServerInit } from '../TestUtils.js';
-import { initializeIntegrationTestServer, registerTestSuite } from '../TestUtils.js';
+import {
+  initializeIntegrationTestServer,
+  registerTestSuite,
+  type IntegrationTestServerInit,
+} from '../TestUtils.js';
 
 let serverInit: IntegrationTestServerInit | null = null;
 

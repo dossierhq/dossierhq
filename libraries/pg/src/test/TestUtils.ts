@@ -1,24 +1,25 @@
-import type {
-  DossierClient,
-  Entity,
-  SchemaSpecificationUpdate,
-  Connection,
-  Edge,
-  ErrorType,
-  PromiseResult,
-  PublishedEntity,
-  Result,
+import {
+  ok,
+  Schema,
+  withAdvisoryLock,
+  type Connection,
+  type DossierClient,
+  type Edge,
+  type Entity,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedEntity,
+  type Result,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
-import { Schema, ok, withAdvisoryLock } from '@dossierhq/core';
 import { createMockLogger, expectOkResult, expectResultValue } from '@dossierhq/core-vitest';
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import {
-  IntegrationTestSchema,
   createTestAuthorizationAdapter,
+  IntegrationTestSchema,
   type TestSuite,
 } from '@dossierhq/integration-test';
-import type { Server, SessionContext } from '@dossierhq/server';
-import { createServer } from '@dossierhq/server';
+import { createServer, type Server, type SessionContext } from '@dossierhq/server';
 import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import { assert, describe, expect, test } from 'vitest';
