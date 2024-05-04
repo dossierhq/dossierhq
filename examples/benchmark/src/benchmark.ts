@@ -1,20 +1,28 @@
-import type {
-  DossierClient,
-  Entity,
-  EntityCreate,
-  EntitySharedQuery,
-  EntityUpdate,
-  EntityReference,
-  ErrorType,
-  PromiseResult,
-  Result,
+import assert from 'node:assert/strict';
+import {
+  copyEntity,
+  EntityStatus,
+  notOk,
+  ok,
+  type DossierClient,
+  type Entity,
+  type EntityCreate,
+  type EntityReference,
+  type EntitySharedQuery,
+  type EntityUpdate,
+  type ErrorType,
+  type PromiseResult,
+  type Result,
 } from '@dossierhq/core';
-import { EntityStatus, copyEntity, notOk, ok } from '@dossierhq/core';
 import type { DatabaseAdapter, Server } from '@dossierhq/server';
 import { faker } from '@faker-js/faker';
-import type { BenchPressOptions, BenchPressResult } from 'benchpress';
-import { fileTimestamp, reportResult, runTest } from 'benchpress';
-import assert from 'node:assert/strict';
+import {
+  fileTimestamp,
+  reportResult,
+  runTest,
+  type BenchPressOptions,
+  type BenchPressResult,
+} from 'benchpress';
 import { initializeServer } from './server.js';
 
 const outputFolder = 'output';

@@ -1,7 +1,7 @@
 import { ok } from '@dossierhq/core';
 import { createPostgresAdapter } from '@dossierhq/deno-postgres';
-import { load } from 'std/dotenv/mod.ts';
 import { Pool } from 'postgres';
+import { load } from 'std/dotenv/mod.ts';
 import { initializeAndRunTests } from '../lib/benchmark.js';
 
 async function createPostgresDatabaseAdapter(connectionString: string) {

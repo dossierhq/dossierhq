@@ -1,5 +1,4 @@
-import type { DatabaseAdapter } from '@dossierhq/server';
-import { createServer } from '@dossierhq/server';
+import { createServer, type DatabaseAdapter } from '@dossierhq/server';
 import { schemaSpecification } from './schema.js';
 
 export async function initializeServer(databaseAdapter: DatabaseAdapter) {

@@ -1,7 +1,7 @@
-import { NoOpLogger } from '@dossierhq/core';
-import { createBunSqliteAdapter } from '@dossierhq/bun-sqlite';
-import { Database } from 'bun:sqlite';
 import * as fs from 'node:fs/promises';
+import { createBunSqliteAdapter } from '@dossierhq/bun-sqlite';
+import { NoOpLogger } from '@dossierhq/core';
+import { Database } from 'bun:sqlite';
 import { initializeAndRunTests } from './benchmark.js';
 
 async function createSqliteDatabaseAdapter(databasePath: string) {
