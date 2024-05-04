@@ -19,11 +19,11 @@ import {
 } from '../components/AuthKeySelector/AuthKeySelector.js';
 import type { TypeItem } from '../components/TypeSelector/TypeSelector.js';
 import { PublishedDossierContext } from '../contexts/PublishedDossierContext.js';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 export function usePublishedEntitySearchFilters(
   searchEntityState: SearchEntityState,

@@ -1,15 +1,14 @@
 import { FieldType, RichTextNodeType } from '@dossierhq/core';
 import { Card, Checkbox, Field, GridListDragHandle, Input, SelectDisplay } from '@dossierhq/design';
-import type { ChangeEvent, Dispatch } from 'react';
-import { useCallback } from 'react';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaFieldDraft,
-  SchemaFieldSelector,
-  SchemaTypeSelector,
+import { useCallback, type ChangeEvent, type Dispatch } from 'react';
+import {
+  SchemaEditorActions,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaFieldDraft,
+  type SchemaFieldSelector,
+  type SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { FieldComponentTypeSelector } from './FieldComponentTypeSelector.js';
 import { FieldEntityTypeSelector } from './FieldEntityTypeSelector.js';
 import { IndexSelector } from './IndexSelector.js';

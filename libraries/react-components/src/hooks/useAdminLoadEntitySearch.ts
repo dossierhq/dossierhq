@@ -1,20 +1,19 @@
 import type {
-  EntityQuery,
-  EntitySharedQuery,
-  Entity,
   Connection,
   Edge,
+  Entity,
+  EntityQuery,
   EntitySamplingPayload,
+  EntitySharedQuery,
   ErrorType,
 } from '@dossierhq/core';
-import type { Dispatch } from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, type Dispatch } from 'react';
 import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { useAdminEntities } from './useAdminEntities.js';
 import { useAdminEntitiesSample } from './useAdminEntitiesSample.js';
 import { useAdminEntitiesTotalCount } from './useAdminEntitiesTotalCount.js';

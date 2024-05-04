@@ -11,9 +11,9 @@ import { useCallback, useContext, useReducer, useState } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { usePublishedLoadEntitySearch } from '../../hooks/usePublishedLoadEntitySearch.js';
 import {
-  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
+  SearchEntityStateActions,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { EntityMap } from '../EntityMap/EntityMap.js';
 import { PublishedEntityMapMarker } from '../PublishedEntityMapMarker/PublishedEntityMapMarker.js';

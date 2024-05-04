@@ -1,20 +1,21 @@
-import type {
-  Entity,
-  Schema,
-  BoundingBox,
-  Location,
-  PublishedEntity,
-  PublishedSchema,
+import {
+  ContentTraverseNodeType,
+  isLocationItemField,
+  traverseEntity,
+  type BoundingBox,
+  type Entity,
+  type Location,
+  type PublishedEntity,
+  type PublishedSchema,
+  type Schema,
 } from '@dossierhq/core';
-import { isLocationItemField, ContentTraverseNodeType, traverseEntity } from '@dossierhq/core';
 import { MapContainer } from '@dossierhq/leaflet';
-import type { Dispatch, ReactNode } from 'react';
-import { useCallback } from 'react';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import { useCallback, type Dispatch, type ReactNode } from 'react';
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 //TODO make configurable through a context. also max bounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;

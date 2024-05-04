@@ -1,9 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import type { EntityDisplayState, EntityDisplayStateAction } from './EntityDisplayReducer.js';
 import {
   EntityDisplayActions,
   initializeEntityDisplayState,
   reduceEntityDisplayState,
+  type EntityDisplayState,
+  type EntityDisplayStateAction,
 } from './EntityDisplayReducer.js';
 
 function reduceEntityDisplayStateActions(

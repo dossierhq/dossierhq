@@ -8,11 +8,11 @@ import {
   type EntityTypeSpecificationUpdate,
   type FieldSpecification,
   type Schema,
+  type SchemaIndexSpecification,
+  type SchemaPatternSpecification,
   type SchemaSpecificationUpdate,
   type SchemaTransientMigrationAction,
   type SchemaVersionMigration,
-  type SchemaIndexSpecification,
-  type SchemaPatternSpecification,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 import { assertIsDefined } from '../../utils/AssertUtils.js';

@@ -1,5 +1,4 @@
-import type { Dispatch } from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, type Dispatch } from 'react';
 import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
 import {
   ChangelogStateActions,

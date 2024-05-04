@@ -1,4 +1,5 @@
 'use client';
+
 import {
   Button,
   ButtonDropdown,
@@ -25,23 +26,21 @@ import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaInde
 import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import type {
-  SchemaComponentTypeDraft,
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaEntityTypeDraft,
-  SchemaFieldSelector,
-  SchemaIndexDraft,
-  SchemaIndexSelector,
-  SchemaPatternDraft,
-  SchemaPatternSelector,
-  SchemaTypeSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getElementIdForSelector,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
   SchemaEditorActions,
+  type SchemaComponentTypeDraft,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaEntityTypeDraft,
+  type SchemaFieldSelector,
+  type SchemaIndexDraft,
+  type SchemaIndexSelector,
+  type SchemaPatternDraft,
+  type SchemaPatternSelector,
+  type SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { AddOrRenameFieldDialog } from './AddOrRenameFieldDialog.js';
 import { AddOrRenameIndexDialog } from './AddOrRenameIndexDialog.js';

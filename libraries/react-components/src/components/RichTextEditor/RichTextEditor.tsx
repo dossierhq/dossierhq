@@ -1,6 +1,6 @@
 import type {
-  FieldSpecification,
   EntityReference,
+  FieldSpecification,
   RichText,
   RichTextFieldSpecification,
 } from '@dossierhq/core';
@@ -24,15 +24,15 @@ import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { AdminClickableLinkPlugin } from './AdminClickableLinkPlugin.js';
+import { AdminComponentNode } from './AdminComponentNode.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
-import { AdminComponentNode } from './AdminComponentNode.js';
 import { CodeHighlightPlugin } from './CodeHighlightPlugin.js';
+import { ComponentPlugin } from './ComponentPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 import { ToolbarPlugin } from './ToolbarPlugin.js';
-import { ComponentPlugin } from './ComponentPlugin.js';
 
 interface Props {
   fieldSpec: RichTextFieldSpecification;

@@ -1,4 +1,5 @@
 'use client';
+
 import type { Entity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
@@ -14,8 +15,8 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import {
-  SearchEntityStateActions,
   reduceSearchEntityState,
+  SearchEntityStateActions,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import {
   initializeSearchEntityStateFromUrlQuery,

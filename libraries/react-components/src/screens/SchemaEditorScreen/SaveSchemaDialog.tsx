@@ -1,15 +1,12 @@
 import { ErrorType, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@dossierhq/design';
-import type { Dispatch, SyntheticEvent } from 'react';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, type Dispatch, type SyntheticEvent } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   SchemaEditorActions,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 export function SaveSchemaDialog({

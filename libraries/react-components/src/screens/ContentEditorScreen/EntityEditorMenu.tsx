@@ -1,12 +1,11 @@
 import { ClassName, Delete, HoverRevealContainer, Menu, Text } from '@dossierhq/design';
-import type { Dispatch, MouseEvent } from 'react';
-import { useCallback } from 'react';
-import type {
-  EntityEditorDraftState,
-  EntityEditorState,
-  EntityEditorStateAction,
+import { useCallback, type Dispatch, type MouseEvent } from 'react';
+import {
+  EntityEditorActions,
+  type EntityEditorDraftState,
+  type EntityEditorState,
+  type EntityEditorStateAction,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
-import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 interface Props {
   entityEditorState: Readonly<EntityEditorState>;

@@ -1,11 +1,18 @@
-import type { ChangelogEvent, Connection, Edge, ErrorType } from '@dossierhq/core';
-import { EventType, ok } from '@dossierhq/core';
+import {
+  EventType,
+  ok,
+  type ChangelogEvent,
+  type Connection,
+  type Edge,
+  type ErrorType,
+} from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
-import type { ChangelogState, ChangelogStateAction } from './ChangelogReducer.js';
 import {
   ChangelogStateActions,
   initializeChangelogState,
   reduceChangelogState,
+  type ChangelogState,
+  type ChangelogStateAction,
 } from './ChangelogReducer.js';
 
 function createNode(): ChangelogEvent {

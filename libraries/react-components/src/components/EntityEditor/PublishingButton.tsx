@@ -1,14 +1,19 @@
 import {
   EntityStatus,
+  type Component,
   type DossierClient,
   type Entity,
   type EntityTypeSpecification,
-  type Component,
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
-import type { NotificationInfo } from '@dossierhq/design';
-import { Button, ButtonDropdown, NotificationContext, Row } from '@dossierhq/design';
+import {
+  Button,
+  ButtonDropdown,
+  NotificationContext,
+  Row,
+  type NotificationInfo,
+} from '@dossierhq/design';
 import { useContext, useMemo } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 

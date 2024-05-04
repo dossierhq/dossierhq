@@ -1,19 +1,28 @@
 'use client';
+
 import type { Entity } from '@dossierhq/core';
 import {
   Button2,
   Dialog2,
   EmptyStateMessage,
+  findAscendantHTMLElement,
   FullscreenContainer,
   Level,
   Row,
   Tag,
   Text,
-  findAscendantHTMLElement,
   useWindowEventListener,
 } from '@dossierhq/design';
-import type { Dispatch, MouseEvent, ReactNode } from 'react';
-import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+  type Dispatch,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
 import { AdminTypePicker } from '../../components/AdminTypePicker/AdminTypePicker.js';
 import { EntityEditor } from '../../components/EntityEditor/EntityEditor.js';
@@ -21,14 +30,12 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorStateContext } from '../../contexts/EntityEditorStateContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
-import type {
-  EntityEditorDraftState,
-  EntityEditorState,
-  EntityEditorStateAction,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
   EntityEditorActions,
   reduceEntityEditorState,
+  type EntityEditorDraftState,
+  type EntityEditorState,
+  type EntityEditorStateAction,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
   initializeEditorEntityStateFromUrlQuery,

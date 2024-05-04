@@ -1,15 +1,15 @@
 import { FieldType } from '@dossierhq/core';
 import { Button, Checkbox, Field, GridList, GridListItem, useDragAndDrop } from '@dossierhq/design';
 import type { Dispatch } from 'react';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaEntityTypeDraft,
-  SchemaFieldSelector,
-  SchemaTypeSelector,
-  SchemaComponentTypeDraft,
+import {
+  SchemaEditorActions,
+  type SchemaComponentTypeDraft,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaEntityTypeDraft,
+  type SchemaFieldSelector,
+  type SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 import { NameFieldSelector } from './NameFieldSelector.js';
 import { PatternSelector } from './PatternSelector.js';
 import { SchemaFieldEditor } from './SchemaFieldEditor.js';

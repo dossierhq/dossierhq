@@ -3,8 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React, { useMemo, useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
-import type { ContentEditorScreenProps } from './ContentEditorScreen.js';
-import { ContentEditorScreen } from './ContentEditorScreen.js';
+import { ContentEditorScreen, type ContentEditorScreenProps } from './ContentEditorScreen.js';
 
 type StoryProps = Omit<ContentEditorScreenProps, 'urlSearchParams' | 'onUrlSearchParamsChange'> & {
   initialUrlSearchParams?: URLSearchParams;

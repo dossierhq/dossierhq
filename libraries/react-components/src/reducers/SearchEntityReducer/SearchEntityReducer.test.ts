@@ -1,17 +1,19 @@
-import type {
-  Connection,
-  Edge,
-  EntitySamplingPayload,
-  ErrorType,
-  PublishedEntity,
-} from '@dossierhq/core';
-import { EntityQueryOrder, ok } from '@dossierhq/core';
-import { describe, expect, test } from 'vitest';
-import type { SearchEntityState, SearchEntityStateAction } from './SearchEntityReducer.js';
 import {
-  SearchEntityStateActions,
+  EntityQueryOrder,
+  ok,
+  type Connection,
+  type Edge,
+  type EntitySamplingPayload,
+  type ErrorType,
+  type PublishedEntity,
+} from '@dossierhq/core';
+import { describe, expect, test } from 'vitest';
+import {
   initializeSearchEntityState,
   reduceSearchEntityState,
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from './SearchEntityReducer.js';
 
 function createPublishedEntity(id: string): PublishedEntity {

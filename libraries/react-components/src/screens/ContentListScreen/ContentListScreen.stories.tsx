@@ -1,12 +1,11 @@
-import type { DossierClientMiddleware, ClientContext } from '@dossierhq/core';
+import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
-import type { ContentListScreenProps } from './ContentListScreen';
-import { ContentListScreen } from './ContentListScreen';
+import { ContentListScreen, type ContentListScreenProps } from './ContentListScreen';
 
 type StoryProps = Omit<ContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlSearchParams?: URLSearchParams;

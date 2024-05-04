@@ -1,4 +1,4 @@
-import type { DossierClientMiddleware, ClientContext } from '@dossierhq/core';
+import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';

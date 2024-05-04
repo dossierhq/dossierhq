@@ -1,8 +1,8 @@
 import type {
-  DossierClient,
-  Entity,
   ChangelogEventQuery,
   Component,
+  DossierClient,
+  Entity,
   ErrorResult,
   ErrorType,
 } from '@dossierhq/core';

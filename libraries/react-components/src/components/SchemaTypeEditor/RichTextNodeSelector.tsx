@@ -5,8 +5,7 @@ import {
   reduceMultipleSelectorState,
   TagInputSelector,
 } from '@dossierhq/design';
-import type { Dispatch } from 'react';
-import { useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer, type Dispatch } from 'react';
 import {
   REQUIRED_NODES_PLACEHOLDER,
   RichTextNodePlaceholders,

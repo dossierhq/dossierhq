@@ -1,4 +1,5 @@
 'use client';
+
 import type { PublishedEntity } from '@dossierhq/core';
 import {
   Button2,

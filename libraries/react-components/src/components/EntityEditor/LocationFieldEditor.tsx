@@ -10,8 +10,10 @@ import {
 } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
-import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
-import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
+import {
+  EntityEditorActions,
+  type EntityEditorDraftState,
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { AdminLocationSelectorDialog } from '../AdminLocationSelectorDialog/AdminLocationSelectorDialog.js';
 import type { FieldEditorProps } from './FieldEditor.js';
 

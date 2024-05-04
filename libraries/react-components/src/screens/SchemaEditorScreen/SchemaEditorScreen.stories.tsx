@@ -1,4 +1,4 @@
-import type { EntityTypeSpecification, ComponentTypeSpecification } from '@dossierhq/core';
+import type { ComponentTypeSpecification, EntityTypeSpecification } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useContext } from 'react';

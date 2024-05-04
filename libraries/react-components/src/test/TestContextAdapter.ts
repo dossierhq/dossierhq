@@ -1,15 +1,3 @@
-import type {
-  DossierClient,
-  DossierClientMiddleware,
-  DossierClientOperation,
-  ClientContext,
-  ErrorType,
-  Logger,
-  PromiseResult,
-  PublishedDossierClient,
-  PublishedDossierClientMiddleware,
-  PublishedDossierClientOperation,
-} from '@dossierhq/core';
 import {
   convertJsonDossierClientResult,
   convertJsonPublishedDossierClientResult,
@@ -20,6 +8,16 @@ import {
   LoggingClientMiddleware,
   notOk,
   ok,
+  type ClientContext,
+  type DossierClient,
+  type DossierClientMiddleware,
+  type DossierClientOperation,
+  type ErrorType,
+  type Logger,
+  type PromiseResult,
+  type PublishedDossierClient,
+  type PublishedDossierClientMiddleware,
+  type PublishedDossierClientOperation,
 } from '@dossierhq/core';
 import { v5 as uuidv5 } from 'uuid';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';

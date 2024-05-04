@@ -1,11 +1,12 @@
-import type {
-  FieldSpecification,
-  Component,
-  ComponentFieldSpecification,
-  PublishValidationIssue,
-  SaveValidationIssue,
+import {
+  FieldType,
+  groupValidationIssuesByTopLevelPath,
+  type Component,
+  type ComponentFieldSpecification,
+  type FieldSpecification,
+  type PublishValidationIssue,
+  type SaveValidationIssue,
 } from '@dossierhq/core';
-import { FieldType, groupValidationIssuesByTopLevelPath } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text, toFlexItemClassName } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo, type ReactNode } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';

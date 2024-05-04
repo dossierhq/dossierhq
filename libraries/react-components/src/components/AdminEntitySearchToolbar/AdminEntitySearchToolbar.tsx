@@ -10,8 +10,7 @@ import type {
   SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
-import type { AuthKeyItem } from '../AuthKeySelector/AuthKeySelector.js';
-import { AuthKeySelector } from '../AuthKeySelector/AuthKeySelector.js';
+import { AuthKeySelector, type AuthKeyItem } from '../AuthKeySelector/AuthKeySelector.js';
 import { SearchEntitySearchInput } from '../SearchEntitySearchInput/SearchEntitySearchInput.js';
 import { StatusSelector, type StatusItem } from '../StatusSelector/StatusSelector.js';
 import {

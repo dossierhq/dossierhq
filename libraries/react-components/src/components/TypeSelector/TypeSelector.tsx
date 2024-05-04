@@ -1,8 +1,8 @@
-import type { Schema, PublishedSchema } from '@dossierhq/core';
+import type { PublishedSchema, Schema } from '@dossierhq/core';
 import {
   DropdownSelector,
-  MultipleSelectorStateActions,
   initializeMultipleSelectorState,
+  MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   type DropdownSelectorProps,
   type MultipleSelectorItem,

@@ -1,18 +1,17 @@
-import type { MultipleSelectorItem } from '@dossierhq/design';
 import {
   initializeMultipleSelectorState,
   MultipleSelectorStateActions,
   reduceMultipleSelectorState,
   TagInputSelector,
+  type MultipleSelectorItem,
 } from '@dossierhq/design';
-import type { Dispatch } from 'react';
-import { useEffect, useReducer } from 'react';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaFieldSelector,
+import { useEffect, useReducer, type Dispatch } from 'react';
+import {
+  SchemaEditorActions,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaFieldSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 function useSynchronizeMultipleSelectorState<TItem extends MultipleSelectorItem>(
   fieldSelector: SchemaFieldSelector,

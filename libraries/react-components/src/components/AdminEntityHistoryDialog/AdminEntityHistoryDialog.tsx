@@ -1,10 +1,10 @@
 import {
   EventType,
   isFieldValueEqual,
-  type Entity,
-  type EntityTypeSpecification,
   type ChangelogEventQuery,
+  type Entity,
   type EntityReference,
+  type EntityTypeSpecification,
 } from '@dossierhq/core';
 import {
   Card2,
@@ -19,9 +19,9 @@ import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminChangelogEvents } from '../../hooks/useAdminChangelogEvents.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import {
-  VersionSelectionAction,
   initializeVersionSelectionState,
   reduceVersionSelectionState,
+  VersionSelectionAction,
   type VersionItem,
 } from './VersionSelectionReducer.js';
 

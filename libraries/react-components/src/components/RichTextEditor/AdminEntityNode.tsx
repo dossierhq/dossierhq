@@ -1,16 +1,20 @@
-import type { EntityReference, RichTextEntityNode } from '@dossierhq/core';
-import { RichTextNodeType, createRichTextEntityNode } from '@dossierhq/core';
+import {
+  createRichTextEntityNode,
+  RichTextNodeType,
+  type EntityReference,
+  type RichTextEntityNode,
+} from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
-import type {
-  EditorConfig,
-  ElementFormatType,
-  LexicalCommand,
-  LexicalEditor,
-  LexicalNode,
-  NodeKey,
+import {
+  createCommand,
+  type EditorConfig,
+  type ElementFormatType,
+  type LexicalCommand,
+  type LexicalEditor,
+  type LexicalNode,
+  type NodeKey,
 } from 'lexical';
-import { createCommand } from 'lexical';
 import { ReferenceFieldEditorWithoutClear } from '../EntityEditor/ReferenceFieldEditor.js';
 
 export type SerializedAdminEntityNode = RichTextEntityNode;

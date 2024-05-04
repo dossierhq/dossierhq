@@ -1,10 +1,10 @@
 import type { Paging } from '@dossierhq/core';
 import { useCallback, type Dispatch } from 'react';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { ConnectionPagingButtons } from '../ConnectionPagingButtons/ConnectionPagingButtons.js';
 
 interface Props {

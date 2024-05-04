@@ -1,6 +1,9 @@
 import type { EntityQuery } from '@dossierhq/core';
-import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
-import { initializeMultipleSelectorState } from '@dossierhq/design';
+import {
+  initializeMultipleSelectorState,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
+} from '@dossierhq/design';
 import isEqual from 'lodash/isEqual.js';
 import {
   useCallback,
@@ -21,11 +24,11 @@ import {
 } from '../components/StatusSelector/StatusSelector.js';
 import type { TypeItem } from '../components/TypeSelector/TypeSelector.js';
 import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 export function useAdminEntitySearchFilters(
   searchEntityState: SearchEntityState,

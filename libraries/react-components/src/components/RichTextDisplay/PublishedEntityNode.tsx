@@ -1,5 +1,9 @@
-import type { EntityReference, RichTextEntityNode } from '@dossierhq/core';
-import { RichTextNodeType, createRichTextEntityNode } from '@dossierhq/core';
+import {
+  createRichTextEntityNode,
+  RichTextNodeType,
+  type EntityReference,
+  type RichTextEntityNode,
+} from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';

@@ -1,5 +1,4 @@
-import type { Schema, ContentTraverseNode } from '@dossierhq/core';
-import { traverseContentField } from '@dossierhq/core';
+import { traverseContentField, type ContentTraverseNode, type Schema } from '@dossierhq/core';
 import type { EntityEditorDraftState } from './EntityEditorReducer.js';
 
 export function* traverseEntityEditorDraft(

@@ -1,8 +1,8 @@
 import type {
+  Component,
   DossierClient,
   Entity,
   EntitySharedQuery,
-  Component,
   ErrorResult,
   ErrorType,
 } from '@dossierhq/core';

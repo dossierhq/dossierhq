@@ -1,19 +1,19 @@
 import {
-  Schema,
-  SchemaWithMigrations,
   FieldType,
   RichTextNodeType,
+  Schema,
+  SchemaWithMigrations,
   type EntityTypeSpecificationUpdate,
   type NumberFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import { describe, expect, test } from 'vitest';
 import {
-  REQUIRED_NODES_PLACEHOLDER,
-  SchemaEditorActions,
   getSchemaSpecificationUpdateFromEditorState,
   initializeSchemaEditorState,
   reduceSchemaEditorState,
+  REQUIRED_NODES_PLACEHOLDER,
+  SchemaEditorActions,
   type SchemaEditorState,
   type SchemaEditorStateAction,
   type SchemaTypeDraft,

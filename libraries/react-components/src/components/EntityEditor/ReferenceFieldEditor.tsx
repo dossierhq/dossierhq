@@ -1,7 +1,7 @@
 import type {
   Entity,
-  FieldSpecification,
   EntityReference,
+  FieldSpecification,
   ReferenceFieldSpecification,
 } from '@dossierhq/core';
 import {
@@ -14,8 +14,7 @@ import {
   Text,
   toFlexItemClassName,
 } from '@dossierhq/design';
-import type { MouseEvent } from 'react';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useState, type MouseEvent } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';

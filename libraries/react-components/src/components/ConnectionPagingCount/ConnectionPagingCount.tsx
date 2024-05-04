@@ -1,5 +1,10 @@
-import type { Connection, Edge, ErrorType, Paging } from '@dossierhq/core';
-import { getPagingInfo } from '@dossierhq/core';
+import {
+  getPagingInfo,
+  type Connection,
+  type Edge,
+  type ErrorType,
+  type Paging,
+} from '@dossierhq/core';
 import { ButtonDropdown } from '@dossierhq/design';
 import { numberWithThousandsSeparator } from '../../utils/NumberDisplayUtils.js';
 

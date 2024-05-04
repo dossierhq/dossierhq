@@ -1,15 +1,15 @@
 import {
-  RichTextNodeType,
   createRichTextComponentNode,
   normalizeComponent,
+  RichTextNodeType,
   traverseComponent,
   validateTraverseNodeForPublish,
   validateTraverseNodeForSave,
-  type Schema,
   type Component,
   type PublishValidationIssue,
   type RichTextComponentNode,
   type SaveValidationIssue,
+  type Schema,
 } from '@dossierhq/core';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';

@@ -1,14 +1,12 @@
-import type {
-  DropdownSelectorProps,
-  MultipleSelectorItem,
-  MultipleSelectorReducer,
-  MultipleSelectorState,
-  MultipleSelectorStateAction,
-} from '@dossierhq/design';
 import {
   DropdownSelector,
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
+  type DropdownSelectorProps,
+  type MultipleSelectorItem,
+  type MultipleSelectorReducer,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
 } from '@dossierhq/design';
 import type { Dispatch } from 'react';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';

@@ -1,13 +1,20 @@
-import type { EntityReference, RichTextEntityLinkNode } from '@dossierhq/core';
-import { RichTextNodeType } from '@dossierhq/core';
+import {
+  RichTextNodeType,
+  type EntityReference,
+  type RichTextEntityLinkNode,
+} from '@dossierhq/core';
 import { addClassNamesToElement } from '@lexical/utils';
-import type { EditorConfig, LexicalCommand, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
 import {
   $getSelection,
   $isElementNode,
   $isRangeSelection,
   createCommand,
   ElementNode,
+  type EditorConfig,
+  type LexicalCommand,
+  type LexicalEditor,
+  type LexicalNode,
+  type NodeKey,
 } from 'lexical';
 
 export type SerializedAdminEntityLinkNode = RichTextEntityLinkNode;

@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-import React, { useMemo } from 'react';
+import React, { useMemo, type ReactNode } from 'react';
 import { SWRConfig } from 'swr';
 
 interface Props {

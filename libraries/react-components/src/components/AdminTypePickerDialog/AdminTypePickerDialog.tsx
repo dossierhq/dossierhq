@@ -1,8 +1,10 @@
 import { Card2, Dialog2, Table } from '@dossierhq/design';
 import { useContext } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import type { TypeSelectionFilter } from '../../utils/TypeSelectionUtils.js';
-import { filterTypeSpecifications } from '../../utils/TypeSelectionUtils.js';
+import {
+  filterTypeSpecifications,
+  type TypeSelectionFilter,
+} from '../../utils/TypeSelectionUtils.js';
 
 export interface AdminTypePickerDialogProps extends TypeSelectionFilter {
   title: string;

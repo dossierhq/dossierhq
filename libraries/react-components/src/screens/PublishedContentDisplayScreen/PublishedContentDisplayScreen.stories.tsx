@@ -2,8 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider.js';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
-import type { PublishedContentDisplayScreenProps } from './PublishedContentDisplayScreen.js';
-import { PublishedContentDisplayScreen } from './PublishedContentDisplayScreen.js';
+import {
+  PublishedContentDisplayScreen,
+  type PublishedContentDisplayScreenProps,
+} from './PublishedContentDisplayScreen.js';
 
 type StoryProps = Omit<PublishedContentDisplayScreenProps, 'urlSearchParams'> & {
   initialUrlSearchParams?: URLSearchParams;

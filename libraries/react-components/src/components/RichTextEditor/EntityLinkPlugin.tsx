@@ -3,8 +3,8 @@ import { COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
 import {
   AdminEntityLinkNode,
-  toggleEntityLink,
   TOGGLE_ADMIN_ENTITY_LINK_COMMAND,
+  toggleEntityLink,
 } from './AdminEntityLinkNode.js';
 
 export function EntityLinkPlugin(): null {

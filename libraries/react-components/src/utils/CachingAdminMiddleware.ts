@@ -1,24 +1,22 @@
 import {
   DossierClientOperationName,
   SchemaWithMigrations,
+  type ClientContext,
   type DossierClient,
   type DossierClientMiddleware,
-  type SchemaSpecificationWithMigrations,
-  type ClientContext,
   type OkFromResult,
+  type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
-import type { RefObject } from 'react';
-import { useMemo, useRef } from 'react';
-import type { Cache } from 'swr';
-import { useSWRConfig } from 'swr';
+import { useMemo, useRef, type RefObject } from 'react';
+import { useSWRConfig, type Cache } from 'swr';
 import { assertIsDefined } from './AssertUtils.js';
-import type { ScopedMutator } from './CacheUtils.js';
 import {
   clearCacheDueToSchemaMigrations,
   invalidateChangelogEvents,
   updateCacheEntity,
   updateCacheEntityInfo,
   updateCacheSchemas,
+  type ScopedMutator,
 } from './CacheUtils.js';
 
 type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;

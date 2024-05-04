@@ -1,6 +1,8 @@
-import type { FieldSpecification, RichTextFieldSpecification } from '@dossierhq/core';
-import { RichTextNodeType } from '@dossierhq/core';
-import type { IconName } from '@dossierhq/design';
+import {
+  RichTextNodeType,
+  type FieldSpecification,
+  type RichTextFieldSpecification,
+} from '@dossierhq/core';
 import {
   ButtonDropdown,
   Dialog2,
@@ -8,6 +10,7 @@ import {
   IconButton,
   Row,
   toSpacingClassName,
+  type IconName,
 } from '@dossierhq/design';
 import {
   $createCodeNode,
@@ -25,11 +28,9 @@ import {
   ListNode,
 } from '@lexical/list';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
-import type { HeadingTagType } from '@lexical/rich-text';
-import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text';
+import { $createHeadingNode, $isHeadingNode, type HeadingTagType } from '@lexical/rich-text';
 import { $setBlocksType } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
-import type { LexicalEditor, NodeKey } from 'lexical';
 import {
   $createParagraphNode,
   $getNodeByKey,
@@ -39,6 +40,8 @@ import {
   COMMAND_PRIORITY_CRITICAL,
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
+  type LexicalEditor,
+  type NodeKey,
 } from 'lexical';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';

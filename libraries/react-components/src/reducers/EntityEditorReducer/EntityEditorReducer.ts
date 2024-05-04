@@ -9,9 +9,9 @@ import {
   type EntityTypeSpecification,
   type EntityUpdate,
   type FieldSpecification,
-  type Schema,
   type PublishValidationIssue,
   type SaveValidationIssue,
+  type Schema,
 } from '@dossierhq/core';
 import isEqual from 'lodash/isEqual.js';
 import { assertIsDefined } from '../../utils/AssertUtils.js';

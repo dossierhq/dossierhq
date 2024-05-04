@@ -1,14 +1,15 @@
-import type { MultipleSelectorState, MultipleSelectorStateAction } from '@dossierhq/design';
-import { IconButton } from '@dossierhq/design';
-import type { Dispatch, MouseEventHandler } from 'react';
-import { useContext } from 'react';
+import {
+  IconButton,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
+} from '@dossierhq/design';
+import { useContext, type Dispatch, type MouseEventHandler } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import type { AuthKeyItem } from '../AuthKeySelector/AuthKeySelector.js';
-import { AuthKeySelector } from '../AuthKeySelector/AuthKeySelector.js';
+import { AuthKeySelector, type AuthKeyItem } from '../AuthKeySelector/AuthKeySelector.js';
 import { SearchEntitySearchInput } from '../SearchEntitySearchInput/SearchEntitySearchInput.js';
 import {
   TypeSelector,

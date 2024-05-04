@@ -1,11 +1,10 @@
 import { ButtonDropdown } from '@dossierhq/design';
-import type { Dispatch } from 'react';
-import { useCallback } from 'react';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import { useCallback, type Dispatch } from 'react';
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface Item {
   id: string;

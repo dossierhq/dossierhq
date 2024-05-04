@@ -1,12 +1,12 @@
-import type { DossierClientMiddleware, ClientContext } from '@dossierhq/core';
+import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import { AdminDossierProvider } from '../components/AdminDossierProvider/AdminDossierProvider.js';
 import type { AdminDossierContextAdapter } from '../contexts/AdminDossierContext.js';
 import { useCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 import {
+  createBackendDossierClient,
   DISPLAY_AUTH_KEYS,
   TestContextAdapter,
-  createBackendDossierClient,
 } from './TestContextAdapter.js';
 
 interface Props {

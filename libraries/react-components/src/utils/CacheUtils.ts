@@ -1,17 +1,17 @@
 import {
   copyEntity,
+  type ChangelogEventQuery,
   type Entity,
   type EntityPublishingPayload,
   type EntityQuery,
-  type EntitySharedQuery,
-  type SchemaWithMigrations,
-  type ChangelogEventQuery,
   type EntityReference,
   type EntitySamplingOptions,
+  type EntitySharedQuery,
   type EntityVersionReference,
   type Paging,
   type PublishedEntityQuery,
   type PublishedEntitySharedQuery,
+  type SchemaWithMigrations,
 } from '@dossierhq/core';
 import type { Arguments, Cache, useSWRConfig } from 'swr';
 

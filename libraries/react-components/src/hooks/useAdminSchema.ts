@@ -1,8 +1,8 @@
 import {
   SchemaWithMigrations,
+  type Component,
   type DossierClient,
   type Entity,
-  type Component,
   type ErrorResult,
   type ErrorType,
 } from '@dossierhq/core';

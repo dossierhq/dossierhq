@@ -1,5 +1,4 @@
-import type { Dispatch } from 'react';
-import { createContext } from 'react';
+import { createContext, type Dispatch } from 'react';
 import type { EntityEditorStateAction } from '../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 export const EntityEditorDispatchContext = createContext<Dispatch<EntityEditorStateAction>>({

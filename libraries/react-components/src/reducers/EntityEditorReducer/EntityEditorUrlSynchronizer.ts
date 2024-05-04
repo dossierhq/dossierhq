@@ -1,7 +1,10 @@
-import type { Dispatch } from 'react';
-import { useEffect } from 'react';
-import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
-import { EntityEditorActions, initializeEntityEditorState } from './EntityEditorReducer.js';
+import { useEffect, type Dispatch } from 'react';
+import {
+  EntityEditorActions,
+  initializeEntityEditorState,
+  type EntityEditorState,
+  type EntityEditorStateAction,
+} from './EntityEditorReducer.js';
 
 export function initializeEditorEntityStateFromUrlQuery(
   urlSearchParams: Readonly<URLSearchParams> | undefined,

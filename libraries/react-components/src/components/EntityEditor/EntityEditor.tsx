@@ -1,17 +1,28 @@
-import type { DossierClient, Entity, Component } from '@dossierhq/core';
-import type { NotificationInfo } from '@dossierhq/design';
-import { Button, Field, Input, NotificationContext, Row, Text } from '@dossierhq/design';
-import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { useCallback, useContext, useState } from 'react';
+import type { Component, DossierClient, Entity } from '@dossierhq/core';
+import {
+  Button,
+  Field,
+  Input,
+  NotificationContext,
+  Row,
+  Text,
+  type NotificationInfo,
+} from '@dossierhq/design';
+import {
+  useCallback,
+  useContext,
+  useState,
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
-import type {
-  EntityEditorDraftState,
-  EntityEditorStateAction,
-} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
   EntityEditorActions,
   getEntityCreateFromDraftState,
   getEntityUpdateFromDraftState,
+  type EntityEditorDraftState,
+  type EntityEditorStateAction,
 } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { AuthKeyPicker } from './AuthKeyPicker.js';
 import { EntityFieldEditor } from './EntityFieldEditor.js';

@@ -1,13 +1,20 @@
-import type { Entity } from '@dossierhq/core';
-import { EntityStatus, Schema, SchemaWithMigrations, copyEntity, FieldType } from '@dossierhq/core';
+import {
+  copyEntity,
+  EntityStatus,
+  FieldType,
+  Schema,
+  SchemaWithMigrations,
+  type Entity,
+} from '@dossierhq/core';
 import { assert, describe, expect, test } from 'vitest';
-import type { EntityEditorState, EntityEditorStateAction } from './EntityEditorReducer.js';
 import {
   EntityEditorActions,
   getEntityCreateFromDraftState,
   getEntityUpdateFromDraftState,
   initializeEntityEditorState,
   reduceEntityEditorState,
+  type EntityEditorState,
+  type EntityEditorStateAction,
 } from './EntityEditorReducer.js';
 
 function reduceEntityEditorStateActions(

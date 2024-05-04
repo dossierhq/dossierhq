@@ -1,9 +1,9 @@
 import type {
   DossierClient,
-  EntitySharedQuery,
   Entity,
   EntitySamplingOptions,
   EntitySamplingPayload,
+  EntitySharedQuery,
   ErrorResult,
   ErrorType,
 } from '@dossierhq/core';

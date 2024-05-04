@@ -7,9 +7,9 @@ import {
 } from '@dossierhq/core';
 import { useEffect, type Dispatch } from 'react';
 import {
-  SearchEntityStateActions,
   getQueryWithoutDefaults,
   initializeSearchEntityState,
+  SearchEntityStateActions,
   type SearchEntityState,
   type SearchEntityStateAction,
 } from './SearchEntityReducer.js';

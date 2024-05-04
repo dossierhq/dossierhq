@@ -1,11 +1,16 @@
-import type { DossierClient, Entity, Component, Logger } from '@dossierhq/core';
-import { NoOpLogger } from '@dossierhq/core';
+import {
+  NoOpLogger,
+  type Component,
+  type DossierClient,
+  type Entity,
+  type Logger,
+} from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
-import type {
-  AdminDossierContextAdapter,
-  AdminDossierContextValue,
+import {
+  AdminDossierContext,
+  type AdminDossierContextAdapter,
+  type AdminDossierContextValue,
 } from '../../contexts/AdminDossierContext.js';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
 import { useAdminSchema } from '../../hooks/useAdminSchema.js';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 

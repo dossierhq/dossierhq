@@ -1,13 +1,13 @@
 import type {
+  Component,
   DossierClient,
   Entity,
-  Schema,
-  Component,
   ErrorResult,
   ErrorType,
   Logger,
   PublishValidationIssue,
   SaveValidationIssue,
+  Schema,
 } from '@dossierhq/core';
 import { createContext } from 'react';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';

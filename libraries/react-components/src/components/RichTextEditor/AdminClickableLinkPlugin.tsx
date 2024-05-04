@@ -1,8 +1,12 @@
 import type { EntityReference } from '@dossierhq/core';
 import { $isLinkNode } from '@lexical/link';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
-import type { LexicalEditor } from 'lexical';
-import { $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection } from 'lexical';
+import {
+  $getNearestNodeFromDOMNode,
+  $getSelection,
+  $isRangeSelection,
+  type LexicalEditor,
+} from 'lexical';
 import { useEffect } from 'react';
 import { $isAdminEntityLinkNode } from './AdminEntityLinkNode.js';
 

@@ -2,8 +2,8 @@ import {
   ContentTraverseNodeType,
   isLocationItemField,
   type Entity,
-  type Schema,
   type Location,
+  type Schema,
 } from '@dossierhq/core';
 import {
   Dialog2,
@@ -30,9 +30,9 @@ import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.j
 import { traverseEntityEditorDraft } from '../../reducers/EntityEditorReducer/EntityDraftTraverser.js';
 import type { EntityEditorDraftState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import {
-  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
+  SearchEntityStateActions,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { EntityMap } from '../EntityMap/EntityMap.js';

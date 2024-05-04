@@ -1,7 +1,10 @@
-import type { Dispatch } from 'react';
-import { useEffect } from 'react';
-import type { EntityDisplayState, EntityDisplayStateAction } from './EntityDisplayReducer.js';
-import { EntityDisplayActions, initializeEntityDisplayState } from './EntityDisplayReducer.js';
+import { useEffect, type Dispatch } from 'react';
+import {
+  EntityDisplayActions,
+  initializeEntityDisplayState,
+  type EntityDisplayState,
+  type EntityDisplayStateAction,
+} from './EntityDisplayReducer.js';
 
 export function initializeEntityDisplayStateFromUrlQuery(
   urlSearchParams: Readonly<URLSearchParams> | undefined,

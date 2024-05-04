@@ -1,14 +1,11 @@
 import { ClassName, Menu } from '@dossierhq/design';
-import type { Dispatch, MouseEvent, ReactNode } from 'react';
-import { useCallback } from 'react';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaSelector,
-} from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
+import { useCallback, type Dispatch, type MouseEvent, type ReactNode } from 'react';
 import {
-  SchemaEditorActions,
   getElementIdForSelector,
+  SchemaEditorActions,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 export function SchemaMenu({

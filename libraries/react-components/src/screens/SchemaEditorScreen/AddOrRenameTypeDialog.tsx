@@ -1,18 +1,20 @@
 import { Card, Dialog, Field, Input, Radio } from '@dossierhq/design';
-import type {
-  ChangeEvent,
-  ChangeEventHandler,
-  Dispatch,
-  KeyboardEvent,
-  SyntheticEvent,
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type ChangeEventHandler,
+  type Dispatch,
+  type KeyboardEvent,
+  type SyntheticEvent,
 } from 'react';
-import { useCallback, useEffect, useState } from 'react';
-import type {
-  SchemaEditorState,
-  SchemaEditorStateAction,
-  SchemaTypeSelector,
+import {
+  SchemaEditorActions,
+  type SchemaEditorState,
+  type SchemaEditorStateAction,
+  type SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   selector: SchemaTypeSelector | 'add' | null;

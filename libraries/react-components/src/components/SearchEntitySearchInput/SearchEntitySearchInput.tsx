@@ -1,12 +1,11 @@
 import { Input } from '@dossierhq/design';
 import debounce from 'lodash/debounce.js';
-import type { Dispatch } from 'react';
-import { useMemo, useState } from 'react';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import { useMemo, useState, type Dispatch } from 'react';
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 
 interface Props {
   searchEntityState: SearchEntityState;

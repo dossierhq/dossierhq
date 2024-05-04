@@ -1,6 +1,5 @@
 import { ButtonDropdown, Input } from '@dossierhq/design';
-import type { ReactNode } from 'react';
-import { useCallback } from 'react';
+import { useCallback, type ReactNode } from 'react';
 import type { SchemaEditorState } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {

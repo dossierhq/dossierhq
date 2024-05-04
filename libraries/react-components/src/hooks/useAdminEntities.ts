@@ -1,9 +1,9 @@
 import type {
-  DossierClient,
-  EntityQuery,
-  Entity,
   Connection,
+  DossierClient,
   Edge,
+  Entity,
+  EntityQuery,
   ErrorResult,
   ErrorType,
   Paging,

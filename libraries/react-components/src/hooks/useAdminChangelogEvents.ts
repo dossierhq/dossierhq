@@ -1,11 +1,11 @@
 import type {
-  DossierClient,
-  Entity,
   ChangelogEvent,
   ChangelogEventQuery,
   Component,
   Connection,
+  DossierClient,
   Edge,
+  Entity,
   ErrorResult,
   ErrorType,
   Paging,

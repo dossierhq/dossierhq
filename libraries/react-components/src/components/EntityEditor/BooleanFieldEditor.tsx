@@ -7,8 +7,7 @@ import {
   Text,
   toFlexItemClassName,
 } from '@dossierhq/design';
-import type { ChangeEvent } from 'react';
-import { useCallback } from 'react';
+import { useCallback, type ChangeEvent } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 
 type Props = FieldEditorProps<BooleanFieldSpecification, boolean>;

@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
 import { createSlowPublishedMiddleware } from '../../test/TestContextAdapter';
-import type { PublishedContentListScreenProps } from './PublishedContentListScreen';
-import { PublishedContentListScreen } from './PublishedContentListScreen';
+import {
+  PublishedContentListScreen,
+  type PublishedContentListScreenProps,
+} from './PublishedContentListScreen';
 
 type StoryProps = Omit<PublishedContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'> & {
   initialUrlSearchParams?: URLSearchParams;

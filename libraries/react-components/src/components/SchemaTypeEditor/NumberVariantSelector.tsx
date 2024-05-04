@@ -1,11 +1,10 @@
 import { Radio } from '@dossierhq/design';
-import type { Dispatch } from 'react';
-import { useId } from 'react';
-import type {
-  SchemaEditorStateAction,
-  SchemaFieldSelector,
+import { useId, type Dispatch } from 'react';
+import {
+  SchemaEditorActions,
+  type SchemaEditorStateAction,
+  type SchemaFieldSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   fieldSelector: SchemaFieldSelector;

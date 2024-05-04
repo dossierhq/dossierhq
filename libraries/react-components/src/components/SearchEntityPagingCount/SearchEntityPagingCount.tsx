@@ -1,11 +1,10 @@
 import type { Paging } from '@dossierhq/core';
-import type { Dispatch } from 'react';
-import { useCallback } from 'react';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import { useCallback, type Dispatch } from 'react';
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { ConnectionPagingCount } from '../ConnectionPagingCount/ConnectionPagingCount.js';
 
 export function SearchEntityPagingCount({

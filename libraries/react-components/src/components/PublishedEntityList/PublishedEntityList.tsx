@@ -1,14 +1,16 @@
-import type { EntityQueryOrder, PublishedEntity } from '@dossierhq/core';
-import { PublishedEntityQueryOrder } from '@dossierhq/core';
+import {
+  PublishedEntityQueryOrder,
+  type EntityQueryOrder,
+  type PublishedEntity,
+} from '@dossierhq/core';
 import { EmptyStateMessage, Table, toSizeClassName } from '@dossierhq/design';
-import type { Dispatch } from 'react';
-import { useContext } from 'react';
+import { useContext, type Dispatch } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
-import type {
-  SearchEntityState,
-  SearchEntityStateAction,
+import {
+  SearchEntityStateActions,
+  type SearchEntityState,
+  type SearchEntityStateAction,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
-import { SearchEntityStateActions } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag.js';
 

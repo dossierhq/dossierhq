@@ -5,9 +5,9 @@ import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.
 import { usePublishedEntitySearchFilters } from '../../hooks/usePublishedEntitySearchFilters.js';
 import { usePublishedLoadEntitySearch } from '../../hooks/usePublishedLoadEntitySearch.js';
 import {
-  SearchEntityStateActions,
   initializeSearchEntityState,
   reduceSearchEntityState,
+  SearchEntityStateActions,
 } from '../../reducers/SearchEntityReducer/SearchEntityReducer.js';
 import { AuthKeyTagSelector } from '../AuthKeyTagSelector/AuthKeyTagSelector.js';
 import { EntityMap } from '../EntityMap/EntityMap.js';

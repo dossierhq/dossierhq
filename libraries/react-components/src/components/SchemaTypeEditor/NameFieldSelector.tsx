@@ -1,11 +1,10 @@
 import { ButtonDropdown } from '@dossierhq/design';
-import type { Dispatch, ReactNode } from 'react';
-import { useCallback } from 'react';
-import type {
-  SchemaEditorStateAction,
-  SchemaTypeSelector,
+import { useCallback, type Dispatch, type ReactNode } from 'react';
+import {
+  SchemaEditorActions,
+  type SchemaEditorStateAction,
+  type SchemaTypeSelector,
 } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
-import { SchemaEditorActions } from '../../reducers/SchemaEditorReducer/SchemaEditorReducer.js';
 
 interface Props {
   potentialNameFields: string[];
