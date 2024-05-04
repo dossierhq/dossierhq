@@ -1,11 +1,11 @@
 import {
+  copyEntity,
   ErrorType,
   EventType,
   FieldType,
-  copyEntity,
   ok,
-  type Entity,
   type Component,
+  type Entity,
   type PublishedEntity,
 } from '@dossierhq/core';
 import {
@@ -20,11 +20,11 @@ import { type UnboundTestFunction } from '../Builder.js';
 import {
   assertIsComponents,
   assertIsPublishedComponents,
-  type Components,
   type AppComponent,
   type AppEntity,
-  type AppUniqueIndexes,
   type AppPublishedComponent,
+  type AppUniqueIndexes,
+  type Components,
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {

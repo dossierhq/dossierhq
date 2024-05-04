@@ -1,10 +1,10 @@
-import { Schema, copyEntity } from '@dossierhq/core';
+import { copyEntity, Schema } from '@dossierhq/core';
 import { assertOkResult } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
+  adminToPublishedEntity,
   REFERENCES_CREATE,
   TITLE_ONLY_CREATE,
-  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import {
   assertSampledEntities,

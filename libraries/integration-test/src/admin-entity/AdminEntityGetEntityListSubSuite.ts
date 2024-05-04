@@ -1,5 +1,4 @@
-import type { ErrorType } from '@dossierhq/core';
-import { notOk, ok } from '@dossierhq/core';
+import { notOk, ok, type ErrorType } from '@dossierhq/core';
 import { assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppEntity } from '../SchemaTypes.js';

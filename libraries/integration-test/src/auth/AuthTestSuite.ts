@@ -1,8 +1,8 @@
 import { ErrorType } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
-import type { TestFunctionInitializer, TestSuite } from '../index.js';
 import { assertErrorResult, assertOkResult, assertSame } from '../Asserts.js';
 import { buildSuite } from '../Builder.js';
+import type { TestFunctionInitializer, TestSuite } from '../index.js';
 
 interface AuthTestContext {
   server: Server;

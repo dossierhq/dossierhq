@@ -1,13 +1,13 @@
 import {
-  EntityStatus,
-  Schema,
-  ErrorType,
   copyEntity,
   createRichText,
   createRichTextComponentNode,
   createRichTextHeadingNode,
   createRichTextTextNode,
+  EntityStatus,
+  ErrorType,
   isEntityNameAsRequested,
+  Schema,
   type RichTextComponentNode,
 } from '@dossierhq/core';
 import {
@@ -26,19 +26,19 @@ import {
   assertIsPublishedRichTexts,
   assertIsPublishedStrings,
   assertIsPublishedTitleOnly,
+  type AppPublishedUniqueIndexes,
   type LocationsComponent,
   type StringsFields,
   type TitleOnly,
-  type AppPublishedUniqueIndexes,
 } from '../SchemaTypes.js';
 import {
+  adminToPublishedEntity,
   RICH_TEXTS_CREATE,
   STRINGS_CREATE,
   SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
   TITLE_ONLY_PUBLISHED_ENTITY,
   VALUE_ITEMS_CREATE,
-  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import { createInvalidEntity } from '../shared-entity/InvalidEntityUtils.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';

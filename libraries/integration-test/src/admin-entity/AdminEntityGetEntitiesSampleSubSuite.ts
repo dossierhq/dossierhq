@@ -1,5 +1,4 @@
-import type { BoundingBox } from '@dossierhq/core';
-import { EntityStatus, copyEntity } from '@dossierhq/core';
+import { copyEntity, EntityStatus, type BoundingBox } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {

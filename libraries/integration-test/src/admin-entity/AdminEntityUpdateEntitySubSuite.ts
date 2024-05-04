@@ -1,10 +1,10 @@
 import {
+  copyEntity,
   EntityStatus,
-  Schema,
   ErrorType,
   EventType,
-  copyEntity,
   isEntityNameAsRequested,
+  Schema,
   type EntityUpdate,
 } from '@dossierhq/core';
 import {
@@ -29,13 +29,13 @@ import {
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
+  adminToPublishedEntity,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
   REFERENCES_CREATE,
   STRINGS_CREATE,
   SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
-  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import {
   createEntityWithInvalidComponent,

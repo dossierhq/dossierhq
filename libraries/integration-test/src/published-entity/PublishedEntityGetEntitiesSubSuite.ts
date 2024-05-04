@@ -1,4 +1,4 @@
-import { Schema, copyEntity, PublishedEntityQueryOrder } from '@dossierhq/core';
+import { copyEntity, PublishedEntityQueryOrder, Schema } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { Components } from '../SchemaTypes.js';

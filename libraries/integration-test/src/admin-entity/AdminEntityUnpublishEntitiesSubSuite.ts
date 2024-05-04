@@ -1,4 +1,4 @@
-import { EntityStatus, copyEntity, ErrorType, EventType } from '@dossierhq/core';
+import { copyEntity, EntityStatus, ErrorType, EventType } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';

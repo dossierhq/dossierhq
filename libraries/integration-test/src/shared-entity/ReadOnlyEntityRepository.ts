@@ -1,6 +1,6 @@
 import {
-  EntityStatus,
   copyEntity,
+  EntityStatus,
   ok,
   withAdvisoryLock,
   type EntityUpsert,
@@ -11,10 +11,10 @@ import { v5 as uuidv5 } from 'uuid';
 import { assertExhaustive, assertOkResult, assertSame } from '../Asserts.js';
 import {
   assertIsReadOnly,
-  type ReadOnly,
   type AppDossierClient,
   type AppEntity,
   type PublishedReadOnly,
+  type ReadOnly,
 } from '../SchemaTypes.js';
 import type { DossierClientProvider } from './TestClients.js';
 

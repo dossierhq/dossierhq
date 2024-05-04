@@ -1,4 +1,4 @@
-import { EntityStatus, copyEntity } from '@dossierhq/core';
+import { copyEntity, EntityStatus } from '@dossierhq/core';
 import { assertOkResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {

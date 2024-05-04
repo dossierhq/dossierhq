@@ -1,12 +1,12 @@
 import {
-  EntityStatus,
-  ErrorType,
-  EventType,
   copyEntity,
   createRichText,
   createRichTextEntityLinkNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  EntityStatus,
+  ErrorType,
+  EventType,
 } from '@dossierhq/core';
 import { assertErrorResult, assertOkResult, assertResultValue, assertSame } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';

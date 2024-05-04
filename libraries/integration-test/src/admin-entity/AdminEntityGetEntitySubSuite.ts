@@ -7,8 +7,7 @@ import {
   assertSame,
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { AppUniqueIndexes } from '../SchemaTypes.js';
-import { assertIsSubjectOnly } from '../SchemaTypes.js';
+import { assertIsSubjectOnly, type AppUniqueIndexes } from '../SchemaTypes.js';
 import {
   STRINGS_CREATE,
   SUBJECT_ONLY_CREATE,

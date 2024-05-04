@@ -1,6 +1,4 @@
 import {
-  EntityQueryOrder,
-  EntityStatus,
   copyEntity,
   createRichText,
   createRichTextComponentNode,
@@ -8,6 +6,8 @@ import {
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  EntityQueryOrder,
+  EntityStatus,
   getAllNodesForConnection,
   type BoundingBox,
 } from '@dossierhq/core';

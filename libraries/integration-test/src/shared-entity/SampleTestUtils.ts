@@ -1,12 +1,12 @@
-import type {
-  Entity,
-  EntityReference,
-  EntitySamplingPayload,
-  ErrorType,
-  PublishedEntity,
-  Result,
+import {
+  EntityStatus,
+  type Entity,
+  type EntityReference,
+  type EntitySamplingPayload,
+  type ErrorType,
+  type PublishedEntity,
+  type Result,
 } from '@dossierhq/core';
-import { EntityStatus } from '@dossierhq/core';
 import { assertEquals, assertOkResult } from '../Asserts.js';
 import type { AppEntity, AppPublishedEntity } from '../SchemaTypes.js';
 

@@ -5,18 +5,18 @@ import {
   type Entity,
   type EntityCreate,
   type EntityProcessDirtyPayload,
-  type SchemaSpecificationUpdate,
   type EntityReference,
   type ErrorType,
   type PromiseResult,
   type Result,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
 import {
   ChangeValidationsComponentWithoutValidationsUpdate,
   ChangeValidationsWithoutValidationsUpdate,
   IntegrationTestSchema,
 } from '../IntegrationTestSchema.js';
-import type { ChangeValidations, Components, AppDossierClient } from '../SchemaTypes.js';
+import type { AppDossierClient, ChangeValidations, Components } from '../SchemaTypes.js';
 import { CHANGE_VALIDATIONS_CREATE, VALUE_ITEMS_CREATE } from './Fixtures.js';
 import { withSchemaAdvisoryLock } from './SchemaTestUtils.js';
 

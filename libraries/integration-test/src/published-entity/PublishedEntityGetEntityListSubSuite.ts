@@ -1,11 +1,11 @@
-import { Schema, notOk, ok, type ErrorType } from '@dossierhq/core';
+import { notOk, ok, Schema, type ErrorType } from '@dossierhq/core';
 import { assertEquals, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import type { AppPublishedEntity } from '../SchemaTypes.js';
 import {
+  adminToPublishedEntity,
   SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
-  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import type { PublishedEntityTestContext } from './PublishedEntityTestSuite.js';
 

@@ -1,8 +1,4 @@
 import {
-  EntityStatus,
-  ErrorType,
-  EventType,
-  Schema,
   copyEntity,
   createRichText,
   createRichTextComponentNode,
@@ -10,6 +6,10 @@ import {
   createRichTextEntityNode,
   createRichTextParagraphNode,
   createRichTextTextNode,
+  EntityStatus,
+  ErrorType,
+  EventType,
+  Schema,
 } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -39,6 +39,7 @@ import {
 } from '../SchemaTypes.js';
 import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
+  adminToPublishedEntity,
   LOCATIONS_ADMIN_ENTITY,
   LOCATIONS_CREATE,
   REFERENCES_ADMIN_ENTITY,
@@ -51,7 +52,6 @@ import {
   SUBJECT_ONLY_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
-  adminToPublishedEntity,
 } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 

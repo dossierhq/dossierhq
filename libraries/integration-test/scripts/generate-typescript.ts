@@ -1,7 +1,7 @@
 #!/usr/bin/env -S bun
+import { writeFile } from 'node:fs/promises';
 import { Schema, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
-import { writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
 

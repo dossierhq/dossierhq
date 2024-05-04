@@ -1,9 +1,8 @@
-import { EntityStatus, copyEntity, ErrorType } from '@dossierhq/core';
+import { copyEntity, EntityStatus, ErrorType } from '@dossierhq/core';
 import { v4 as uuidv4 } from 'uuid';
 import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import type { TitleOnly } from '../SchemaTypes.js';
-import { assertIsTitleOnly } from '../SchemaTypes.js';
+import { assertIsTitleOnly, type TitleOnly } from '../SchemaTypes.js';
 import {
   SUBJECT_ONLY_CREATE,
   SUBJECT_ONLY_UPSERT,
