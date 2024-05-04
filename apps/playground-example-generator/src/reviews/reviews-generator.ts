@@ -1,9 +1,10 @@
-import type { EntityReference, Location } from '@dossierhq/core';
 import {
   createRichText,
   createRichTextParagraphNode,
   createRichTextTextAndWhitespaceNodes,
   createRichTextTextNode,
+  type EntityReference,
+  type Location,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
 import {

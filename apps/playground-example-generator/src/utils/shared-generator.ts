@@ -1,19 +1,21 @@
+import { unlink } from 'fs/promises';
 import {
   createBetterSqlite3Adapter,
   type SqliteDatabaseOptimizationOptions,
 } from '@dossierhq/better-sqlite3';
-import type {
-  DossierClient,
-  DossierClientMiddleware,
-  Entity,
-  SchemaSpecificationUpdate,
-  ClientContext,
-  Component,
+import {
+  createConsoleLogger,
+  LoggingClientMiddleware,
+  NoOpLogger,
+  type ClientContext,
+  type Component,
+  type DossierClient,
+  type DossierClientMiddleware,
+  type Entity,
+  type SchemaSpecificationUpdate,
 } from '@dossierhq/core';
-import { createConsoleLogger, LoggingClientMiddleware, NoOpLogger } from '@dossierhq/core';
 import { createServer, SubjectAuthorizationAdapter, type Server } from '@dossierhq/server';
 import BetterSqlite3, { type Database } from 'better-sqlite3';
-import { unlink } from 'fs/promises';
 
 export async function createNewDatabase(databasePath: string): Promise<Database> {
   try {

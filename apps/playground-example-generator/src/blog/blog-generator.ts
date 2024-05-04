@@ -1,10 +1,10 @@
 import 'dotenv/config';
 //
 import {
-  createRichTextParagraphNode,
   createRichText,
-  createRichTextTextNode,
   createRichTextComponentNode,
+  createRichTextParagraphNode,
+  createRichTextTextNode,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
 import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
@@ -13,7 +13,7 @@ import {
   createNewDatabase,
   optimizeAndCloseDatabase,
 } from '../utils/shared-generator.js';
-import type { BlogPost, CloudinaryImage, Person, AppDossierClient } from './schema-types.js';
+import type { AppDossierClient, BlogPost, CloudinaryImage, Person } from './schema-types.js';
 import { SCHEMA } from './schema.js';
 
 async function createPerson(client: AppDossierClient) {

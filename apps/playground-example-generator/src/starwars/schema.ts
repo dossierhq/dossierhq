@@ -1,5 +1,4 @@
-import type { SchemaSpecificationUpdate } from '@dossierhq/core';
-import { FieldType } from '@dossierhq/core';
+import { FieldType, type SchemaSpecificationUpdate } from '@dossierhq/core';
 
 export const SCHEMA: SchemaSpecificationUpdate = {
   entityTypes: [

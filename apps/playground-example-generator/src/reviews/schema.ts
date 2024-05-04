@@ -1,5 +1,9 @@
-import type { SchemaSpecificationUpdate } from '@dossierhq/core';
-import { FieldType, REQUIRED_RICH_TEXT_NODES, RichTextNodeType } from '@dossierhq/core';
+import {
+  FieldType,
+  REQUIRED_RICH_TEXT_NODES,
+  RichTextNodeType,
+  type SchemaSpecificationUpdate,
+} from '@dossierhq/core';
 
 export const SCHEMA: SchemaSpecificationUpdate = {
   entityTypes: [
