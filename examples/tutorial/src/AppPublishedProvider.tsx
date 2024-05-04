@@ -21,7 +21,7 @@ export function AppPublishedProvider({ children }: Props) {
     () => ({
       adapter: new PublishedAdapter(),
     }),
-    []
+    [],
   );
 
   if (!publishedClient) return null;

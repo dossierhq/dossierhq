@@ -669,6 +669,9 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ~4.2.1
+        version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -693,6 +696,9 @@ importers:
       nodemon:
         specifier: ~3.1.0
         version: 3.1.0
+      prettier:
+        specifier: 3.2.5
+        version: 3.2.5
       tsx:
         specifier: ~4.9.0
         version: 4.9.0

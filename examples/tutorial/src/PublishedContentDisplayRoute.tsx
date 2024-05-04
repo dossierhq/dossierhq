@@ -8,7 +8,7 @@ export function PublishedContentDisplayRoute() {
 
   const handleSearchParamsChange = useCallback(
     (searchParams: URLSearchParams) => setSearchParams(searchParams, { replace: true }),
-    [setSearchParams]
+    [setSearchParams],
   );
 
   return (

@@ -10,7 +10,7 @@ export function PublishedContentListRoute() {
 
   const handleEntityOpen = useCallback(
     (entity: PublishedEntity) => navigate(`/published-content/display?id=${entity.id}`),
-    [navigate]
+    [navigate],
   );
 
   return (

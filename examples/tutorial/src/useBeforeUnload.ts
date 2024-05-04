@@ -8,7 +8,7 @@ export function useBeforeUnload(message: string | null) {
         event.returnValue = message;
       }
     },
-    [message]
+    [message],
   );
 
   useWindowEventListener('beforeunload', handleBeforeUnload);

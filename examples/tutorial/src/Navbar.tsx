@@ -19,7 +19,7 @@ export function Navbar({ current }: Props) {
         event.preventDefault();
       }
     },
-    [screenChangesMessage]
+    [screenChangesMessage],
   );
 
   useBeforeUnload(screenChangesMessage);
