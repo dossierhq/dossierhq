@@ -1,8 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { execFile, NoSuchCommand } from './compat/ChildProcessUtils.js';
-import type { BenchPressProcessedResult } from './Process.js';
-import { processResults } from './Process.js';
+import { processResults, type BenchPressProcessedResult } from './Process.js';
 import type { BenchPressResult } from './Runner.js';
 import { ms_to_hz } from './Units.js';
 

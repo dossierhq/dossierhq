@@ -23,17 +23,18 @@
     "prettier:fix": "prettier --write .",
     "test": "npm run examples:timer-benchmark:bun && npm run examples:timer-benchmark:deno && npm run examples:timer-benchmark:node"
   },
+  "dependencies": {
+    "tslib": "~2.6.2"
+  },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
+    "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@rushstack/heft": "0.66.3",
     "@types/bun": "~1.1.0",
     "@types/node": "~20.12.7",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.4.5"
-  },
-  "dependencies": {
-    "tslib": "~2.6.2"
   }
 }
