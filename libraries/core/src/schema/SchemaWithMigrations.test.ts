@@ -1,16 +1,16 @@
 import { describe, expect, test } from 'vitest';
 import { ErrorType } from '../ErrorResult.js';
-import { RichTextNodeType } from '../Types.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
+import { RichTextNodeType } from '../Types.js';
 import { SchemaWithMigrations } from './Schema.js';
 import {
   FieldType,
   REQUIRED_RICH_TEXT_NODES,
-  type SchemaSpecificationWithMigrations,
   type ComponentFieldSpecification,
   type NumberFieldSpecification,
   type ReferenceFieldSpecification,
   type RichTextFieldSpecification,
+  type SchemaSpecificationWithMigrations,
   type StringFieldSpecification,
 } from './SchemaSpecification.js';
 

@@ -1,17 +1,17 @@
 import { describe, expect, test } from 'vitest';
-import { ErrorType, ok } from '../ErrorResult.js';
-import type { Component } from '../Types.js';
 import { createRichText, createRichTextComponentNode } from '../content/RichTextUtils.js';
+import { ErrorType, ok } from '../ErrorResult.js';
 import { SchemaWithMigrations } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
+import type { Component } from '../Types.js';
 import { contentValuePathToString } from './ContentPath.js';
 import {
   IDENTITY_TRANSFORMER,
-  transformEntityFields,
   transformComponent,
+  transformEntityFields,
 } from './ContentTransformer.js';
-import { isRichTextComponentNode, isComponentItemField } from './ContentTypeUtils.js';
+import { isComponentItemField, isRichTextComponentNode } from './ContentTypeUtils.js';
 import { copyEntity } from './ContentUtils.js';
 
 const SCHEMA = SchemaWithMigrations.createAndValidate({

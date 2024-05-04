@@ -1,11 +1,15 @@
 import { describe, expect, test } from 'vitest';
-import { EntityStatus, type Entity, type Component } from '../Types.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
 import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
+import { EntityStatus, type Component, type Entity } from '../Types.js';
 import { contentValuePathToString } from './ContentPath.js';
-import type { ContentTraverseNode } from './ContentTraverser.js';
-import { ContentTraverseNodeType, traverseComponent, traverseEntity } from './ContentTraverser.js';
+import {
+  ContentTraverseNodeType,
+  traverseComponent,
+  traverseEntity,
+  type ContentTraverseNode,
+} from './ContentTraverser.js';
 import {
   createRichText,
   createRichTextComponentNode,

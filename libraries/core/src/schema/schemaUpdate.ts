@@ -3,18 +3,18 @@ import { assertExhaustive } from '../utils/Asserts.js';
 import { isFieldValueEqual } from '../utils/isFieldValueEqual.js';
 import {
   FieldType,
+  type ComponentFieldSpecification,
   type ComponentTypeSpecification,
   type EntityTypeSpecification,
   type FieldSpecification,
   type FieldSpecificationUpdate,
+  type NumberFieldSpecification,
+  type ReferenceFieldSpecification,
+  type RichTextFieldSpecification,
   type SchemaSpecificationUpdate,
   type SchemaSpecificationWithMigrations,
   type SchemaTransientMigrationAction,
   type SchemaVersionMigration,
-  type ComponentFieldSpecification,
-  type NumberFieldSpecification,
-  type ReferenceFieldSpecification,
-  type RichTextFieldSpecification,
   type StringFieldSpecification,
 } from './SchemaSpecification.js';
 

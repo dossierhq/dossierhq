@@ -7,6 +7,7 @@ import {
   type PromiseResult,
   type Result,
 } from '../ErrorResult.js';
+import type { PublishedSchemaSpecification } from '../schema/SchemaSpecification.js';
 import type {
   Component,
   Connection,
@@ -20,7 +21,6 @@ import type {
   PublishedEntitySharedQuery,
   UniqueIndexReference,
 } from '../Types.js';
-import type { PublishedSchemaSpecification } from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import {
   convertJsonConnection,

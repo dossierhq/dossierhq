@@ -1,8 +1,8 @@
-import type { EntityReference, EntityVersionReference } from '../Types.js';
 import type {
-  SchemaSpecificationWithMigrations,
   LegacySchemaSpecificationWithMigrations,
+  SchemaSpecificationWithMigrations,
 } from '../schema/SchemaSpecification.js';
+import type { EntityReference, EntityVersionReference } from '../Types.js';
 
 export const EventType = {
   createPrincipal: 'createPrincipal',

@@ -1,7 +1,7 @@
 import type { ErrorType, Result } from '../ErrorResult.js';
-import type { Component, EntityLike } from '../Types.js';
-import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import type { Schema } from '../schema/Schema.js';
+import type { Component, EntityLike } from '../Types.js';
 import type { ContentValuePath } from './ContentPath.js';
 import {
   IDENTITY_TRANSFORMER,

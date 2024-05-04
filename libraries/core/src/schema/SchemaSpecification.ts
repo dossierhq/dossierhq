@@ -1,5 +1,10 @@
-import type { Component, EntityReference, Location, RichText } from '../Types.js';
-import { RichTextNodeType } from '../Types.js';
+import {
+  RichTextNodeType,
+  type Component,
+  type EntityReference,
+  type Location,
+  type RichText,
+} from '../Types.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 
 export interface EntityTypeSpecification {

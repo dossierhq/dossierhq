@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import type { Result } from './ErrorResult.js';
 import {
-  ErrorType,
   createErrorResult,
   createErrorResultFromError,
+  ErrorType,
   notOk,
   ok,
+  type Result,
 } from './ErrorResult.js';
 import { expectErrorResult, expectOkResult } from './test/CoreTestUtils.js';
 import { createMockLogger } from './test/MockLogger.js';

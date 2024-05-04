@@ -1,28 +1,28 @@
-import type {
-  RichTextCodeHighlightNode,
-  RichTextCodeNode,
-  RichTextComponentNode,
-  RichTextElementNode,
-  RichTextEntityLinkNode,
-  RichTextEntityNode,
-  RichTextHeadingNode,
-  RichTextLineBreakNode,
-  RichTextLinkNode,
-  RichTextListItemNode,
-  RichTextListNode,
-  RichTextNode,
-  RichTextParagraphNode,
-  RichTextRootNode,
-  RichTextTabNode,
-  RichTextTextNode,
-} from '../Types.js';
-import { RichTextNodeType } from '../Types.js';
-import type {
-  FieldSpecification,
-  FieldValueTypeMap,
-  PublishedFieldSpecification,
+import {
+  FieldType,
+  type FieldSpecification,
+  type FieldValueTypeMap,
+  type PublishedFieldSpecification,
 } from '../schema/SchemaSpecification.js';
-import { FieldType } from '../schema/SchemaSpecification.js';
+import {
+  RichTextNodeType,
+  type RichTextCodeHighlightNode,
+  type RichTextCodeNode,
+  type RichTextComponentNode,
+  type RichTextElementNode,
+  type RichTextEntityLinkNode,
+  type RichTextEntityNode,
+  type RichTextHeadingNode,
+  type RichTextLineBreakNode,
+  type RichTextLinkNode,
+  type RichTextListItemNode,
+  type RichTextListNode,
+  type RichTextNode,
+  type RichTextParagraphNode,
+  type RichTextRootNode,
+  type RichTextTabNode,
+  type RichTextTextNode,
+} from '../Types.js';
 
 type WithRichTextType<TNode extends RichTextNode, TType extends RichTextNodeType> = Omit<
   TNode,

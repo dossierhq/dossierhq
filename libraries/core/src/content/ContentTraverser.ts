@@ -1,18 +1,18 @@
-import type { Component, EntityLike, RichTextNode } from '../Types.js';
-import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import type { Schema } from '../schema/Schema.js';
 import type {
   ComponentTypeSpecification,
   EntityTypeSpecification,
   PublishedComponentTypeSpecification,
   PublishedEntityTypeSpecification,
 } from '../schema/SchemaSpecification.js';
+import type { Component, EntityLike, RichTextNode } from '../Types.js';
 import type { ContentValuePath } from './ContentPath.js';
 import {
   isComponentItemField,
+  isRichTextComponentNode,
   isRichTextElementNode,
   isRichTextItemField,
-  isRichTextComponentNode,
 } from './ContentTypeUtils.js';
 import {
   checkFieldItemTraversable,

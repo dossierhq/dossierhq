@@ -1,14 +1,14 @@
 import { describe, test } from 'vitest';
-import { expectErrorResult, expectResultValue } from '../test/CoreTestUtils.js';
 import { ErrorType, ok } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
-import type {
-  ClientContext,
-  Middleware,
-  Operation,
-  OperationWithoutCallbacks,
+import { expectErrorResult, expectResultValue } from '../test/CoreTestUtils.js';
+import {
+  executeOperationPipeline,
+  type ClientContext,
+  type Middleware,
+  type Operation,
+  type OperationWithoutCallbacks,
 } from './SharedClient.js';
-import { executeOperationPipeline } from './SharedClient.js';
 
 const TestClientOperationName = {
   foo: 'foo',

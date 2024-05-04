@@ -7,7 +7,20 @@ import {
   type PromiseResult,
   type Result,
 } from '../ErrorResult.js';
+import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
 import type {
+  SchemaSpecification,
+  SchemaSpecificationUpdate,
+  SchemaSpecificationUpdatePayload,
+  SchemaSpecificationWithMigrations,
+} from '../schema/SchemaSpecification.js';
+import type {
+  AdvisoryLockOptions,
+  AdvisoryLockPayload,
+  AdvisoryLockReleasePayload,
+  Component,
+  Connection,
+  Edge,
   Entity,
   EntityArchivePayload,
   EntityCreate,
@@ -16,6 +29,9 @@ import type {
   EntityProcessDirtyPayload,
   EntityPublishPayload,
   EntityQuery,
+  EntityReference,
+  EntitySamplingOptions,
+  EntitySamplingPayload,
   EntitySharedQuery,
   EntityUnarchivePayload,
   EntityUnpublishPayload,
@@ -23,41 +39,25 @@ import type {
   EntityUpdatePayload,
   EntityUpsert,
   EntityUpsertPayload,
-  AdvisoryLockOptions,
-  AdvisoryLockPayload,
-  AdvisoryLockReleasePayload,
-  Component,
-  Connection,
-  Edge,
-  EntityReference,
-  EntitySamplingOptions,
-  EntitySamplingPayload,
   EntityVersionReference,
   Paging,
   UniqueIndexReference,
 } from '../Types.js';
-import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
-import type {
-  SchemaSpecification,
-  SchemaSpecificationUpdate,
-  SchemaSpecificationWithMigrations,
-  SchemaSpecificationUpdatePayload,
-} from '../schema/SchemaSpecification.js';
 import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import {
-  convertJsonEntity,
   convertJsonChangelogEventEdge,
   convertJsonConnection,
   convertJsonEdge,
+  convertJsonEntity,
   convertJsonPublishingResult,
   convertJsonResult,
+  type JsonChangelogEvent,
+  type JsonConnection,
+  type JsonEdge,
   type JsonEntity,
   type JsonEntityCreatePayload,
   type JsonEntityUpdatePayload,
   type JsonEntityUpsertPayload,
-  type JsonChangelogEvent,
-  type JsonConnection,
-  type JsonEdge,
   type JsonPublishingResult,
   type JsonResult,
 } from './JsonUtils.js';

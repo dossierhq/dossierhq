@@ -1,18 +1,4 @@
-import type { ErrorType, Result } from '../ErrorResult.js';
-import { createErrorResult, ok } from '../ErrorResult.js';
-import type {
-  Entity,
-  EntityCreatePayload,
-  EntityInfo,
-  EntityPublishingPayload,
-  EntityUpdatePayload,
-  EntityUpsertPayload,
-  Connection,
-  Edge,
-  PageInfo,
-  PublishedEntity,
-  PublishedEntityInfo,
-} from '../Types.js';
+import { createErrorResult, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import type {
   ArchiveEntitySyncEvent,
   ChangelogEvent,
@@ -24,6 +10,19 @@ import type {
   UpdateEntitySyncEvent,
   UpdateSchemaSyncEvent,
 } from '../events/EventTypes.js';
+import type {
+  Connection,
+  Edge,
+  Entity,
+  EntityCreatePayload,
+  EntityInfo,
+  EntityPublishingPayload,
+  EntityUpdatePayload,
+  EntityUpsertPayload,
+  PageInfo,
+  PublishedEntity,
+  PublishedEntityInfo,
+} from '../Types.js';
 
 export interface JsonConnection<T extends JsonEdge<unknown, ErrorType>> {
   pageInfo: PageInfo;

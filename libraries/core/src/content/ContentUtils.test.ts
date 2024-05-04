@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import type { Entity, EntityCreate, RichText, Component } from '../Types.js';
+import type { Component, Entity, EntityCreate, RichText } from '../Types.js';
 import { copyEntity, getEntityNameBase, isEntityNameAsRequested } from './ContentUtils.js';
 
 type Foo = Entity<'Foo', FooFields, ''>;

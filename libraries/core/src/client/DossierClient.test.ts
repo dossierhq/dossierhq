@@ -1,34 +1,34 @@
 import { describe, expect, test, vi } from 'vitest';
-import { assertOkResult, ok, type ErrorType } from '../ErrorResult.js';
-import { NoOpLogger } from '../Logger.js';
-import type {
-  Entity,
-  EntityCreate,
-  EntityCreatePayload,
-  EntityUpdate,
-  EntityUpdatePayload,
-  EntityUpsert,
-  EntityUpsertPayload,
-} from '../Types.js';
-import { EntityStatus } from '../Types.js';
 import { copyEntity } from '../content/ContentUtils.js';
+import { assertOkResult, ok, type ErrorType } from '../ErrorResult.js';
 import {
   EventType,
   type ChangelogEvent,
   type EntityChangelogEvent,
   type SchemaChangelogEvent,
 } from '../events/EventTypes.js';
+import { NoOpLogger } from '../Logger.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
+import {
+  EntityStatus,
+  type Entity,
+  type EntityCreate,
+  type EntityCreatePayload,
+  type EntityUpdate,
+  type EntityUpdatePayload,
+  type EntityUpsert,
+  type EntityUpsertPayload,
+} from '../Types.js';
 import { assertIsDefined } from '../utils/Asserts.js';
 import {
-  DossierClientOperationName,
   convertJsonDossierClientResult,
   createBaseDossierClient,
+  DossierClientOperationName,
   executeJsonDossierClientOperation,
   type DossierClient,
-  type JsonDossierClientOperationArgs,
   type DossierClientMiddleware,
   type DossierClientOperation,
+  type JsonDossierClientOperationArgs,
 } from './DossierClient.js';
 import { convertJsonResult } from './JsonUtils.js';
 import type { ClientContext } from './SharedClient.js';

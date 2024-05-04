@@ -1,3 +1,8 @@
+import {
+  FieldType,
+  type FieldSpecification,
+  type PublishedFieldSpecification,
+} from '../schema/SchemaSpecification.js';
 import type {
   Entity,
   EntityCreate,
@@ -7,11 +12,6 @@ import type {
   RichText,
   RichTextNode,
 } from '../Types.js';
-import {
-  FieldType,
-  type FieldSpecification,
-  type PublishedFieldSpecification,
-} from '../schema/SchemaSpecification.js';
 import { assertExhaustive } from '../utils/Asserts.js';
 import type { Mutable } from '../utils/TypeUtils.js';
 import type { ContentValuePath } from './ContentPath.js';

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { ErrorType } from '../ErrorResult.js';
-import { RichTextNodeType } from '../Types.js';
 import { expectErrorResult, expectOkResult } from '../test/CoreTestUtils.js';
+import { RichTextNodeType } from '../Types.js';
 import { Schema } from './Schema.js';
 import {
   FieldType,

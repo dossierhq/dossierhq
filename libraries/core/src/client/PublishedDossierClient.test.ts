@@ -1,16 +1,16 @@
 import { describe, expect, test, vi } from 'vitest';
 import { ok } from '../ErrorResult.js';
 import { NoOpLogger } from '../Logger.js';
-import type { PublishedEntity } from '../Types.js';
 import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
+import type { PublishedEntity } from '../Types.js';
 import { convertJsonResult } from './JsonUtils.js';
 import {
-  PublishedDossierClientOperationName,
   convertJsonPublishedDossierClientResult,
   createBasePublishedDossierClient,
   executeJsonPublishedDossierClientOperation,
-  type PublishedDossierClient,
+  PublishedDossierClientOperationName,
   type JsonPublishedDossierClientOperationArgs,
+  type PublishedDossierClient,
   type PublishedDossierClientMiddleware,
   type PublishedDossierClientOperation,
 } from './PublishedDossierClient.js';

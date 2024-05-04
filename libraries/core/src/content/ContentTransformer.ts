@@ -1,7 +1,7 @@
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
-import type { Component, EntityLike, RichTextNode } from '../Types.js';
-import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import type { Schema } from '../schema/Schema.js';
+import type { Component, EntityLike, RichTextNode } from '../Types.js';
 import { contentValuePathToString, type ContentValuePath } from './ContentPath.js';
 import {
   isComponentItemField,

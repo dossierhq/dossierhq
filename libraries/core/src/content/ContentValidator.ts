@@ -1,16 +1,19 @@
-import type { Entity, EntityCreate, EntityUpdate } from '../Types.js';
-import type { Schema } from '../schema/Schema.js';
 import type { PublishedSchema } from '../schema/PublishedSchema.js';
+import type { Schema } from '../schema/Schema.js';
 import type {
   ComponentFieldSpecification,
   NumberFieldSpecification,
   RichTextFieldSpecification,
   StringFieldSpecification,
 } from '../schema/SchemaSpecification.js';
+import type { Entity, EntityCreate, EntityUpdate } from '../Types.js';
 import { assertExhaustive, assertIsDefined } from '../utils/Asserts.js';
 import type { ContentValuePath } from './ContentPath.js';
-import type { ContentTraverseNode } from './ContentTraverser.js';
-import { ContentTraverseNodeErrorType, ContentTraverseNodeType } from './ContentTraverser.js';
+import {
+  ContentTraverseNodeErrorType,
+  ContentTraverseNodeType,
+  type ContentTraverseNode,
+} from './ContentTraverser.js';
 import {
   isComponentItemField,
   isLocationItemField,

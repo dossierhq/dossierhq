@@ -1,7 +1,6 @@
-import { assertIsDefined } from '../utils/Asserts.js';
-import type { ErrorType, PromiseResult, Result } from '../ErrorResult.js';
-import { notOk } from '../ErrorResult.js';
+import { notOk, type ErrorType, type PromiseResult, type Result } from '../ErrorResult.js';
 import type { Logger } from '../Logger.js';
+import { assertIsDefined } from '../utils/Asserts.js';
 
 export interface ClientContext {
   logger: Logger;

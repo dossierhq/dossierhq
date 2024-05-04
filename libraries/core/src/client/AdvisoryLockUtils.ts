@@ -1,6 +1,6 @@
 import {
-  ErrorType,
   createErrorResult,
+  ErrorType,
   notOk,
   type ErrorResult,
   type PromiseResult,

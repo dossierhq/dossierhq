@@ -1,20 +1,18 @@
 import { notOk, ok, type ErrorType, type Result } from '../ErrorResult.js';
 import { RichTextNodeType } from '../Types.js';
 import type { BaseSchema } from './BaseSchema.js';
-import type {
-  BooleanFieldSpecification,
-  ComponentFieldSpecification,
-  LocationFieldSpecification,
-  NumberFieldSpecification,
-  ReferenceFieldSpecification,
-  RichTextFieldSpecification,
-  SchemaSpecification,
-  StringFieldSpecification,
-} from './SchemaSpecification.js';
 import {
   FieldType,
   GROUPED_RICH_TEXT_NODE_TYPES,
   REQUIRED_RICH_TEXT_NODES,
+  type BooleanFieldSpecification,
+  type ComponentFieldSpecification,
+  type LocationFieldSpecification,
+  type NumberFieldSpecification,
+  type ReferenceFieldSpecification,
+  type RichTextFieldSpecification,
+  type SchemaSpecification,
+  type StringFieldSpecification,
 } from './SchemaSpecification.js';
 
 const CAMEL_CASE_PATTERN = /^[a-z][a-zA-Z0-9_]*$/;

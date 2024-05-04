@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import type { Entity, EntityCreate, EntityLike } from '../Types.js';
 import { Schema } from '../schema/Schema.js';
 import { FieldType } from '../schema/SchemaSpecification.js';
+import type { Entity, EntityCreate, EntityLike } from '../Types.js';
 import {
   normalizeEntityFields,
   type ContentNormalizerEntityFieldsOptions,

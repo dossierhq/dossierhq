@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { ErrorType, ok } from '../ErrorResult.js';
-import { RichTextNodeType } from '../Types.js';
 import { expectErrorResult } from '../test/CoreTestUtils.js';
+import { RichTextNodeType } from '../Types.js';
 import { transformRichText } from './RichTextTransformer.js';
 import {
   createRichText,

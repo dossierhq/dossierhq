@@ -1,5 +1,4 @@
-import type { MockInstance } from 'vitest';
-import { vi } from 'vitest';
+import { vi, type MockInstance } from 'vitest';
 import type { Logger } from '../Logger.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
