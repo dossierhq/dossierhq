@@ -50,6 +50,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
+    "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@libsql/client": "~0.6.0",
     "@rushstack/heft": "0.66.3",
     "eslint": "~8.57.0",

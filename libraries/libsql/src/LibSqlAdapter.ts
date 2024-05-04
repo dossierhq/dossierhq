@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import type { ErrorType, LoggerContext, PromiseResult } from '@dossierhq/core';
 import {
   createSqliteDatabaseAdapterAdapter,
@@ -11,7 +12,6 @@ import {
   type UniqueConstraint,
 } from '@dossierhq/sqlite-core';
 import { LibsqlError, type Client, type Transaction } from '@libsql/client';
-import { randomUUID } from 'node:crypto';
 
 export type LibSqlDatabaseAdapter = DatabaseAdapter<SqliteDatabaseOptimizationOptions>;
 

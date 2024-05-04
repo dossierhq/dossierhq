@@ -1,13 +1,12 @@
-import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
-  createDossierClientProvider,
   createAdminEntityTestSuite,
+  createDossierClientProvider,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
+  type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
-import type { ServerInit } from '../../LibSqlTestUtils.js';
-import { initializeServer } from '../../LibSqlTestUtils.js';
+import { initializeServer, type ServerInit } from '../../LibSqlTestUtils.js';
 import { registerTestSuite } from '../../TestUtils.js';
 import { createSqldProcess, type SqldProcess } from './SqldRunner.js';
 

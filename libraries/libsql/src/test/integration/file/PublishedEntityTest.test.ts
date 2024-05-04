@@ -1,9 +1,9 @@
-import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createDossierClientProvider,
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
+  type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
 import { afterAll, assert, beforeAll } from 'vitest';

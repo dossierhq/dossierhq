@@ -1,14 +1,12 @@
-import type { ErrorType, PromiseResult } from '@dossierhq/core';
-import { NoOpLogger, ok } from '@dossierhq/core';
-import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
-import { createServer, type Server } from '@dossierhq/server';
-import type { SqliteDatabaseOptions } from '@dossierhq/sqlite-core';
-import { createClient, type Config } from '@libsql/client';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { unlink } from 'node:fs/promises';
-import type { LibSqlDatabaseAdapter } from '../LibSqlAdapter.js';
-import { createLibSqlAdapter } from '../LibSqlAdapter.js';
+import { NoOpLogger, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
+import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
+import { createServer, type Server } from '@dossierhq/server';
+import type { SqliteDatabaseOptions } from '@dossierhq/sqlite-core';
+import { createClient, type Config } from '@libsql/client';
+import { createLibSqlAdapter, type LibSqlDatabaseAdapter } from '../LibSqlAdapter.js';
 
 export interface ServerInit {
   server: Server;
