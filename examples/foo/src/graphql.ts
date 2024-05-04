@@ -1,5 +1,11 @@
-import type { Schema, ErrorType, Result } from '@dossierhq/core';
-import { createConsoleLogger, notOk, ok } from '@dossierhq/core';
+import {
+  createConsoleLogger,
+  notOk,
+  ok,
+  type ErrorType,
+  type Result,
+  type Schema,
+} from '@dossierhq/core';
 import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
 import type { Server } from '@dossierhq/server';
 import express from 'express';

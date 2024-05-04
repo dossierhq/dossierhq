@@ -1,8 +1,6 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
-import type { Logger } from '@dossierhq/core';
-import { Schema, ok } from '@dossierhq/core';
-import type { Server } from '@dossierhq/server';
-import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
+import { ok, Schema, type Logger } from '@dossierhq/core';
+import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
 import Database from 'better-sqlite3';
 import { schemaSpecification } from './schema.js';
 
