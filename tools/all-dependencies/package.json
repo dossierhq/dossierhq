@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "@graphiql/toolkit": "~0.9.1",
+    "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@libsql/client": "~0.6.0",
     "@playwright/test": "~1.43.1",
     "@rollup/plugin-commonjs": "~25.0.7",
