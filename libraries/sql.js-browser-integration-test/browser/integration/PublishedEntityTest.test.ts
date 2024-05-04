@@ -1,13 +1,12 @@
-import type { ReadOnlyEntityRepository } from '@dossierhq/integration-test';
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
   createSharedClientProvider,
+  type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import test from '@playwright/test';
 import { assertIsDefined, registerTestSuite } from '../TestUtils.js';
-import type { ServerInit } from './SqlJsTestUtils.js';
-import { initializeSqlJsServer } from './SqlJsTestUtils.js';
+import { initializeSqlJsServer, type ServerInit } from './SqlJsTestUtils.js';
 
 let serverInit: ServerInit | null = null;
 let readOnlyEntityRepository: ReadOnlyEntityRepository;

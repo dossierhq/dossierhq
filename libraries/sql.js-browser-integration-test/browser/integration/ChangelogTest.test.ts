@@ -1,8 +1,7 @@
-import { createDossierClientProvider, createChangelogTestSuite } from '@dossierhq/integration-test';
+import { createChangelogTestSuite, createDossierClientProvider } from '@dossierhq/integration-test';
 import test from '@playwright/test';
 import { assertIsDefined, registerTestSuite } from '../TestUtils.js';
-import type { ServerInit } from './SqlJsTestUtils.js';
-import { initializeSqlJsServer } from './SqlJsTestUtils.js';
+import { initializeSqlJsServer, type ServerInit } from './SqlJsTestUtils.js';
 
 let serverInit: ServerInit | null = null;
 

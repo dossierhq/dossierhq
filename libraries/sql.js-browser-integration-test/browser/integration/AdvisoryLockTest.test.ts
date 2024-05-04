@@ -1,6 +1,6 @@
 import {
-  createDossierClientProvider,
   createAdvisoryLockTestSuite,
+  createDossierClientProvider,
 } from '@dossierhq/integration-test';
 import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlJsServer } from './SqlJsTestUtils.js';

@@ -1,5 +1,5 @@
 import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
-import { IntegrationTestSchema, createTestAuthorizationAdapter } from '@dossierhq/integration-test';
+import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
 import { createServer, type Server } from '@dossierhq/server';
 import { createSqlJsTestAdapter } from '../TestUtils.js';
 
