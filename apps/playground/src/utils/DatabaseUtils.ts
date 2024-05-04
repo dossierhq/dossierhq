@@ -13,7 +13,7 @@ export function queryDatabaseSize(database: Database) {
 
 export async function createNewDatabase(
   createDatabase: (data: Uint8Array | null) => Promise<void>,
-  showNotification: (notification: NotificationInfo) => void
+  showNotification: (notification: NotificationInfo) => void,
 ) {
   await createDatabase(null);
   showNotification({ color: 'success', message: 'Created new database' });
@@ -22,7 +22,7 @@ export async function createNewDatabase(
 export function resetDatabase(
   clearDatabase: (this: void) => void,
   showNotification: (notification: NotificationInfo) => void,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
 ) {
   if (!window.confirm('Are you sure you want to delete the current database?')) {
     return;
@@ -36,7 +36,7 @@ export function resetDatabase(
 export async function loadDatabaseFromUrl(
   url: string,
   createDatabase: (data: Uint8Array | null) => Promise<void>,
-  showNotification: (notification: NotificationInfo) => void
+  showNotification: (notification: NotificationInfo) => void,
 ) {
   // Cleanup url when running in dev mode
   if (url.startsWith('/../')) {
@@ -58,7 +58,7 @@ export function uploadDatabase(
   file: File,
   createDatabase: (data: Uint8Array | null) => Promise<void>,
   showNotification: (notification: NotificationInfo) => void,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
 ) {
   const reader = new FileReader();
   reader.onload = () => {

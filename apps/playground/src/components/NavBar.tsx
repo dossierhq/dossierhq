@@ -30,7 +30,7 @@ export function NavBar({ current }: Props) {
         event.preventDefault();
       }
     },
-    [screenChangesMessage]
+    [screenChangesMessage],
   );
 
   useBeforeUnload(screenChangesMessage);
@@ -63,7 +63,7 @@ export function NavBar({ current }: Props) {
                 {NavItemRender(
                   'Published content',
                   ROUTE.publishedContentList.url(serverName),
-                  handleLinkClick
+                  handleLinkClick,
                 )}
               </DesignNavbar.Item>
               <DesignNavbar.Item active={current === 'schema'}>

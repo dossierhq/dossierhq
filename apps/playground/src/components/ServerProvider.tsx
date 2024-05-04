@@ -1,8 +1,8 @@
 import { notOk, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import {
   BackgroundEntityProcessorPlugin,
-  SubjectAuthorizationAdapter,
   createServer,
+  SubjectAuthorizationAdapter,
   type Server,
 } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
@@ -41,7 +41,7 @@ export function ServerProvider({ children }: Props) {
 }
 
 async function initializeServer(
-  database: Database
+  database: Database,
 ): PromiseResult<Server, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
   try {
     const adapterResult = await createSqlJsAdapter({ logger: SERVER_LOGGER }, database, {

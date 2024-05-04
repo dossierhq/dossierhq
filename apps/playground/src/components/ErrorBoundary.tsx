@@ -1,6 +1,5 @@
 import { Message } from '@dossierhq/design';
-import type { ErrorInfo, ReactNode } from 'react';
-import { Component } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;

@@ -1,6 +1,6 @@
-import { AdminDossierContext, PublishedDossierContext } from '@dossierhq/react-components';
 import { EmptyStateMessage, FullscreenContainer } from '@dossierhq/design';
-import { useContext, lazy, Suspense } from 'react';
+import { AdminDossierContext, PublishedDossierContext } from '@dossierhq/react-components';
+import { lazy, Suspense, useContext } from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary.js';
 import { NavBar } from '../components/NavBar.js';
 

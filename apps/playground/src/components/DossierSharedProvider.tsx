@@ -1,12 +1,14 @@
-import type {
-  DossierClientMiddleware,
-  ClientContext,
-  ErrorType,
-  PromiseResult,
-  PublishedDossierClientMiddleware,
-  Result,
+import {
+  LoggingClientMiddleware,
+  notOk,
+  ok,
+  type ClientContext,
+  type DossierClientMiddleware,
+  type ErrorType,
+  type PromiseResult,
+  type PublishedDossierClientMiddleware,
+  type Result,
 } from '@dossierhq/core';
-import { LoggingClientMiddleware, notOk, ok } from '@dossierhq/core';
 import { NotificationContext } from '@dossierhq/design';
 import {
   AdminDossierProvider,
@@ -15,8 +17,7 @@ import {
 } from '@dossierhq/react-components';
 import { type CreateSessionPayload, type Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import type { Cache } from 'swr';
-import { useSWRConfig } from 'swr';
+import { useSWRConfig, type Cache } from 'swr';
 import { DISPLAY_AUTH_KEYS } from '../config/AuthConfig.js';
 import { ContextAdapter } from '../config/ContextAdapter.js';
 import { SESSION_LOGGER } from '../config/LoggerConfig.js';

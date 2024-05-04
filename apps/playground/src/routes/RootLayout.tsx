@@ -2,8 +2,7 @@ import { NotificationContainer } from '@dossierhq/design';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { DatabaseProvider } from '../components/DatabaseProvider.js';
-import type { User } from '../contexts/UserContext.js';
-import { UserContext } from '../contexts/UserContext.js';
+import { UserContext, type User } from '../contexts/UserContext.js';
 
 const users: User[] = [
   { id: 'alice', name: 'Alice' },

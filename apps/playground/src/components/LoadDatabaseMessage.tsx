@@ -6,8 +6,7 @@ import {
   Text,
   toSpacingClassName,
 } from '@dossierhq/design';
-import type { ChangeEvent } from 'react';
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DatabaseContext } from '../contexts/DatabaseContext.js';
 import { uploadDatabase } from '../utils/DatabaseUtils.js';
@@ -30,7 +29,7 @@ export function LoadDatabaseMessage({ className }: Props) {
         event.target.files = null;
       }
     },
-    [createDatabase, navigate, showNotification]
+    [createDatabase, navigate, showNotification],
   );
 
   return (

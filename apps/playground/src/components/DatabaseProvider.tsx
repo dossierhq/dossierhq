@@ -1,6 +1,13 @@
 import { BeforeUnload, NotificationContext } from '@dossierhq/design';
-import type { ReactNode } from 'react';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { Database, SqlJsStatic } from 'sql.js';
 import initSqlJs from 'sql.js/dist/sql-wasm';
@@ -61,7 +68,7 @@ export function DatabaseProvider({ children }: Props) {
 
   const value = useMemo(
     () => ({ database, createDatabase, clearDatabase }),
-    [database, createDatabase, clearDatabase]
+    [database, createDatabase, clearDatabase],
   );
 
   return (

@@ -16,11 +16,11 @@ export function ContentListRoute() {
   const handleCreateEntity = useCallback(
     (type: string) =>
       navigate(ROUTE.contentEditor.url(serverName, [{ newType: type, id: crypto.randomUUID() }])),
-    [navigate, serverName]
+    [navigate, serverName],
   );
   const handleEntityOpen = useCallback(
     (entity: Entity) => navigate(ROUTE.contentEditor.url(serverName, [{ id: entity.id }])),
-    [navigate, serverName]
+    [navigate, serverName],
   );
 
   return (
