@@ -1,5 +1,4 @@
-import type { Entity } from '@dossierhq/core';
-import { EntityStatus, copyEntity } from '@dossierhq/core';
+import { copyEntity, EntityStatus, type Entity } from '@dossierhq/core';
 import { expect, test } from 'bun:test';
 
 test('copyEntity()', () => {
