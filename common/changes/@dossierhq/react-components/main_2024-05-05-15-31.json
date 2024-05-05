@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Break: Rename DossierContextAdapter.renderAdminFieldEditor -> renderFieldEditor, DossierContextAdapter.renderAdminRichTextComponentEditor -> renderRichTextComponentEditor",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}
