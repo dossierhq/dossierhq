@@ -76,7 +76,7 @@ beforeAll(async () => {
   });
   clientOther = server.createDossierClient(() => sessionOtherResult);
 
-  publishedClient = server.createPublishedClient(context);
+  publishedClient = server.createPublishedDossierClient(context);
 
   const schemaUpdateResult = await safelyUpdateSchemaSpecification(client, {
     entityTypes: [

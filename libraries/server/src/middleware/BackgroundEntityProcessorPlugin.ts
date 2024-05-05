@@ -51,7 +51,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
     return [this.adminMiddleware, ...pipeline];
   }
 
-  onCreatePublishedClient(
+  onCreatePublishedDossierClient(
     pipeline: PublishedDossierClientMiddleware<SessionContext>[],
   ): PublishedDossierClientMiddleware<SessionContext>[] {
     return [this.publishedMiddleware, ...pipeline];

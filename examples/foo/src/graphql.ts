@@ -56,7 +56,9 @@ function startExpressServer(server: Server, schema: Schema, port: number) {
         const sessionResult = await createSessionContext(server, request.headers);
         if (sessionResult.isOk()) {
           context.client = ok(server.createDossierClient(sessionResult.value.context));
-          context.publishedClient = ok(server.createPublishedClient(sessionResult.value.context));
+          context.publishedClient = ok(
+            server.createPublishedDossierClient(sessionResult.value.context),
+          );
         }
         return context as unknown as OperationContext;
       },

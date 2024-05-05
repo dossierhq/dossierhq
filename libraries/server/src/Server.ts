@@ -140,7 +140,7 @@ export interface Server<
     middleware?: DossierClientMiddleware<SessionContext>[],
   ): TClient;
 
-  createPublishedClient<
+  createPublishedDossierClient<
     TClient extends PublishedDossierClient<
       PublishedEntity<string, object>,
       Component<string, object>
@@ -156,7 +156,7 @@ export interface ServerPlugin {
     pipeline: DossierClientMiddleware<SessionContext>[],
   ): DossierClientMiddleware<SessionContext>[];
 
-  onCreatePublishedClient(
+  onCreatePublishedDossierClient(
     pipeline: PublishedDossierClientMiddleware<SessionContext>[],
   ): PublishedDossierClientMiddleware<SessionContext>[];
 
@@ -264,7 +264,7 @@ export class ServerImpl {
 
   resolvePublishedClientMiddleware(middleware: PublishedDossierClientMiddleware<SessionContext>[]) {
     for (const plugin of this.#plugins) {
-      middleware = plugin.onCreatePublishedClient(middleware);
+      middleware = plugin.onCreatePublishedDossierClient(middleware);
     }
     return middleware;
   }
@@ -440,7 +440,7 @@ export async function createServer<
         middleware: serverImpl.resolveDossierClientMiddleware(middleware ?? []),
       }) as TClient,
 
-    createPublishedClient: <
+    createPublishedDossierClient: <
       TClient extends PublishedDossierClient<
         PublishedEntity<string, object>,
         Component<string, object>

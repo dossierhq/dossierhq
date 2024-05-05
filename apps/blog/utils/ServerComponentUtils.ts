@@ -9,7 +9,7 @@ export function getPublishedClientForServerComponent(): Promise<AppPublishedDoss
     publishedClientPromise = (async () => {
       const { server } = await getServerConnection();
       const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
-      return server.createPublishedClient<AppPublishedDossierClient>(
+      return server.createPublishedDossierClient<AppPublishedDossierClient>(
         authResult.valueOrThrow().context,
       );
     })();

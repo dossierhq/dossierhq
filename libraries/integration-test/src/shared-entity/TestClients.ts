@@ -72,7 +72,7 @@ export function createSharedDossierClientProvider(
     },
     publishedClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);
-      return server.createPublishedClient(() => sessionResult);
+      return server.createPublishedDossierClient(() => sessionResult);
     },
   };
 }

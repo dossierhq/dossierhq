@@ -312,7 +312,7 @@ async function main() {
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
     const publishedClient = server
-      .createPublishedClient<AppPublishedDossierClient>(async () => authResult)
+      .createPublishedDossierClient<AppPublishedDossierClient>(async () => authResult)
       .toExceptionClient();
 
     const atomFeed = await generateAtomFeed(publishedClient);

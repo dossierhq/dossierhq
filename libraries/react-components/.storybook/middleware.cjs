@@ -76,7 +76,10 @@ const expressMiddleWare = (router) => {
         identifier: 'storybook',
         defaultAuthKeys,
       });
-      const client = server.createPublishedClient(() => sessionResult, [LoggingClientMiddleware]);
+      const client = server.createPublishedDossierClient(
+        () => sessionResult,
+        [LoggingClientMiddleware],
+      );
       return await executeJsonPublishedDossierClientOperation(client, name, operation);
     });
   });

@@ -35,7 +35,9 @@ export async function getServer(): Promise<
       const databaseAdapterResult = await createDatabaseAdapter(logger);
       if (databaseAdapterResult.isError()) return databaseAdapterResult;
 
-      const serverResult = await createServer({ databaseAdapter: databaseAdapterResult.value });
+      const serverResult = await createServer({
+        databaseAdapter: databaseAdapterResult.value,
+      });
       if (serverResult.isError()) return serverResult;
       const server = serverResult.value;
 
@@ -87,7 +89,7 @@ export async function getAuthenticatedPublishedClient() {
   if (result.isError()) return result;
   const { server, sessionContext } = result.value;
 
-  return ok(server.createPublishedClient(sessionContext));
+  return ok(server.createPublishedDossierClient(sessionContext));
 }
 
 async function createSessionForPrincipal(

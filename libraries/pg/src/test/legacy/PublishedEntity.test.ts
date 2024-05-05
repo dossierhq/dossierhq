@@ -83,7 +83,7 @@ beforeAll(async () => {
   server = result.value.server;
   context = result.value.context;
   client = server.createDossierClient(context);
-  publishedClient = server.createPublishedClient(context);
+  publishedClient = server.createPublishedDossierClient(context);
 
   (await safelyUpdateSchemaSpecification(client, SCHEMA)).throwIfError();
   await ensureEntitiesExistForPublishedEntityOnlyEditBefore(client, '');

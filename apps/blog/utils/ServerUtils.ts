@@ -38,7 +38,7 @@ export async function getSessionContextForRequest(
   const client = server.createDossierClient(context, [
     createFilesystemAdminMiddleware(server, server.createDossierClient(context), 'data'),
   ]);
-  const publishedClient = server.createPublishedClient(context);
+  const publishedClient = server.createPublishedDossierClient(context);
   return ok({ client, publishedClient });
 }
 

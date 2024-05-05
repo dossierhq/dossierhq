@@ -19,7 +19,7 @@ afterAll(async () => {
 
 describe('DossierClient createServerPublishedClient()', () => {
   test('context provided as value', async () => {
-    const client = server.createPublishedClient(context);
+    const client = server.createPublishedDossierClient(context);
     const result = await client.getEntity({ id: randomUUID() });
     expectErrorResult(result, ErrorType.NotFound, 'No such entity');
   });

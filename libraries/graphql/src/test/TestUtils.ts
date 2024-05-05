@@ -66,7 +66,7 @@ async function setUpRealServerWithSession(
     identifier: 'other',
   });
   const clientOther = server.createDossierClient(() => sessionOtherResult);
-  const publishedClient = server.createPublishedClient(context);
+  const publishedClient = server.createPublishedDossierClient(context);
 
   const schemaResult = await client.updateSchemaSpecification(schemaSpecification);
   assertOkResult(schemaResult);

@@ -36,7 +36,7 @@ export async function getSessionContextForRequest(
   }
   const { context } = sessionResult.value;
   const client = server.createDossierClient(context);
-  const publishedClient = server.createPublishedClient(context);
+  const publishedClient = server.createPublishedDossierClient(context);
   return ok({ client, publishedClient });
 }
 

@@ -95,7 +95,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
     const publishedArgs = {
       adapter,
-      publishedClient: server.createPublishedClient(
+      publishedClient: server.createPublishedDossierClient(
         () => Promise.resolve(sessionResultRef.current),
         [LoggingClientMiddleware as PublishedDossierClientMiddleware<ClientContext>],
       ),

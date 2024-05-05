@@ -55,7 +55,7 @@ export function getDossierClientForRequest(server: Server, req: Request) {
 
 export function getPublishedClientForRequest(server: Server, req: Request) {
   const session = createSessionForRequest(server, req);
-  return server.createPublishedClient<AppPublishedDossierClient>(() => session);
+  return server.createPublishedDossierClient<AppPublishedDossierClient>(() => session);
 }
 
 async function updateSchema(client: AppDossierClient) {
