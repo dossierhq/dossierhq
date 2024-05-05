@@ -154,7 +154,9 @@ function generateEntityType(
     if (authKeyPatternType) {
       authKeyType = authKeyPatternType;
     } else {
-      throw new Error(`No type found for auth key pattern ${entitySpec.authKeyPattern}`);
+      throw new Error(
+        `No type found in authKeyPatternTypeMap for auth key pattern '${entitySpec.authKeyPattern}'`,
+      );
     }
   }
 
