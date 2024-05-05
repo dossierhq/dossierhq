@@ -36,7 +36,7 @@ export class ContextAdapter implements DossierContextAdapter, PublishedDossierCo
     return null;
   }
 
-  renderAdminRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
+  renderRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
     const { value, validationIssues, onChange } = props;
     if (isAdminCloudinaryImage(value)) {
       return CloudinaryImageFieldEditorWithoutClear({

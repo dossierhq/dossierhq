@@ -81,7 +81,7 @@ function AdminComponentComponent({
     return validateComponent(schema, adminOnly, data);
   }, [schema, adminOnly, data]);
 
-  const overriddenEditor = adapter.renderAdminRichTextComponentEditor({
+  const overriddenEditor = adapter.renderRichTextComponentEditor({
     value: data,
     validationIssues,
     onChange: setValue,
