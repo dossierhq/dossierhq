@@ -37,7 +37,7 @@ export function AppAdminProvider({ children }: Props) {
 }
 
 class AdminAdapter implements DossierContextAdapter {
-  renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&

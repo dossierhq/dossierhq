@@ -17,7 +17,7 @@ import type {
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
 export class ContextAdapter implements DossierContextAdapter, PublishedDossierContextAdapter {
-  renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&

@@ -150,7 +150,7 @@ export class TestContextAdapter implements DossierContextAdapter, PublishedDossi
   ): JSX.Element | null {
     return null;
   }
-  renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
   renderAdminRichTextComponentEditor(_props: RichTextComponentEditorProps): JSX.Element | null {

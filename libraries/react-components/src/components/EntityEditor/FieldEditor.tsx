@@ -51,7 +51,7 @@ export function FieldEditor(props: FieldEditorProps) {
   const { fieldSpec, value } = props;
   const { adapter } = useContext(DossierContext);
 
-  const overriddenEditor = adapter.renderAdminFieldEditor(props);
+  const overriddenEditor = adapter.renderFieldEditor(props);
   if (overriddenEditor) {
     return overriddenEditor;
   }

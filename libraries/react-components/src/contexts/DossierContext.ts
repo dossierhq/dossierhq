@@ -20,7 +20,7 @@ export interface RichTextComponentEditorProps {
 }
 
 export interface DossierContextAdapter {
-  renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null;
+  renderFieldEditor(props: FieldEditorProps): JSX.Element | null;
   renderAdminRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null;
 }
 

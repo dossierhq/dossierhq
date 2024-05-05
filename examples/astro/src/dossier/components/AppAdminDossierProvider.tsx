@@ -25,7 +25,7 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class AdminContextAdapter implements DossierContextAdapter {
-  renderAdminFieldEditor(_props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(_props: FieldEditorProps): JSX.Element | null {
     return null;
   }
 

@@ -33,7 +33,7 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class AdminContextAdapter implements DossierContextAdapter {
-  renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&
