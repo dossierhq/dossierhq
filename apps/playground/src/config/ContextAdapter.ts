@@ -7,7 +7,7 @@ import {
 } from '@dossierhq/cloudinary';
 import { FieldType, isComponentItemField } from '@dossierhq/core';
 import type {
-  AdminDossierContextAdapter,
+  DossierContextAdapter,
   FieldDisplayProps,
   FieldEditorProps,
   PublishedDossierContextAdapter,
@@ -16,7 +16,7 @@ import type {
 } from '@dossierhq/react-components';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
-export class ContextAdapter implements AdminDossierContextAdapter, PublishedDossierContextAdapter {
+export class ContextAdapter implements DossierContextAdapter, PublishedDossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (

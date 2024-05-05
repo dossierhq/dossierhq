@@ -8,14 +8,14 @@ import {
 import { useMemo, type ReactNode } from 'react';
 import {
   DossierContext,
-  type AdminDossierContextAdapter,
   type AdminDossierContextValue,
+  type DossierContextAdapter,
 } from '../../contexts/DossierContext.js';
 import { useAdminSchema } from '../../hooks/useAdminSchema.js';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
 interface Props {
-  adapter: AdminDossierContextAdapter;
+  adapter: DossierContextAdapter;
   client: DossierClient<Entity<string, object>, Component<string, object>>;
   logger?: Logger;
   authKeys?: DisplayAuthKey[];

@@ -2714,7 +2714,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminDossierContextAdapter",
+                  "text": "DossierContextAdapter",
                   "type": "code-highlight",
                   "version": 1,
                   "highlightType": "class-name"

@@ -18,7 +18,7 @@ import {
 import {
   DossierProvider,
   useCachingAdminMiddleware,
-  type AdminDossierContextAdapter,
+  type DossierContextAdapter,
   type FieldEditorProps,
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
@@ -32,7 +32,7 @@ type BackendContext = ClientContext;
 
 const logger = createConsoleLogger(console);
 
-class AdminContextAdapter implements AdminDossierContextAdapter {
+class AdminContextAdapter implements DossierContextAdapter {
   renderAdminFieldEditor(props: FieldEditorProps): JSX.Element | null {
     const { fieldSpec, value } = props;
     if (

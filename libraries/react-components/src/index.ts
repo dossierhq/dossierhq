@@ -4,7 +4,7 @@ export type { FieldEditorProps } from './components/EntityEditor/FieldEditor.js'
 export { DossierContext } from './contexts/DossierContext.js';
 export { PublishedDossierProvider } from './components/PublishedDossierProvider/PublishedDossierProvider.js';
 export type {
-  AdminDossierContextAdapter,
+  DossierContextAdapter,
   RichTextComponentEditorProps,
 } from './contexts/DossierContext.js';
 export { PublishedDossierContext } from './contexts/PublishedDossierContext.js';

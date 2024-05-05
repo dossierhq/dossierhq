@@ -20,7 +20,7 @@ import {
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {
-  AdminDossierContextAdapter,
+  DossierContextAdapter,
   RichTextComponentEditorProps,
 } from '../contexts/DossierContext.js';
 import type {
@@ -141,9 +141,7 @@ export function createSlowPublishedMiddleware(): PublishedDossierClientMiddlewar
   };
 }
 
-export class TestContextAdapter
-  implements AdminDossierContextAdapter, PublishedDossierContextAdapter
-{
+export class TestContextAdapter implements DossierContextAdapter, PublishedDossierContextAdapter {
   renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
     return null;
   }
