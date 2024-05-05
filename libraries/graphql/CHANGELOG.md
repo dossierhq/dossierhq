@@ -1,6 +1,20 @@
 # Change Log - @dossierhq/graphql
 
-This log was last generated on Sun, 31 Mar 2024 22:07:35 GMT and should not be manually modified.
+This log was last generated on Sun, 05 May 2024 12:27:29 GMT and should not be manually modified.
+
+## 0.7.0
+Sun, 05 May 2024 12:27:29 GMT
+
+### Updates
+
+- Break: Rename AdminEntityQueryOrder to EntityQueryOrder
+- Break: Rename AdminEntityStatus to EntityStatus
+- Rename AdminEntityInfo to EntityInfo
+- Break: Remove Admin prefix from EntityCreate/Update/Upsert/Payload*
+- Break: Rename AdminEntity to Entity
+- Break: Rename Value type to Component. Remove Admin prefix from types
+- Break: Rename admin prefix from Query.admin{Entity,EntityList,Entities,EntitySample}'
+- Break: Rename new GraphQLSchemaGenerator({adminSchema}) to ({schema})
 
 ## 0.6.2
 Sun, 31 Mar 2024 22:07:35 GMT

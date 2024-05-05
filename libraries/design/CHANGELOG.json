@@ -2,6 +2,18 @@
   "name": "@dossierhq/design",
   "entries": [
     {
+      "version": "0.7.0",
+      "tag": "@dossierhq/design_v0.7.0",
+      "date": "Sun, 05 May 2024 12:27:29 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Rename Button.Group to ButtonGroup"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.6.2",
       "tag": "@dossierhq/design_v0.6.2",
       "date": "Sun, 31 Mar 2024 22:07:35 GMT",

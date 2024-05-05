@@ -2,6 +2,39 @@
   "name": "@dossierhq/graphql",
   "entries": [
     {
+      "version": "0.7.0",
+      "tag": "@dossierhq/graphql_v0.7.0",
+      "date": "Sun, 05 May 2024 12:27:29 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break: Rename AdminEntityQueryOrder to EntityQueryOrder"
+          },
+          {
+            "comment": "Break: Rename AdminEntityStatus to EntityStatus"
+          },
+          {
+            "comment": "Rename AdminEntityInfo to EntityInfo"
+          },
+          {
+            "comment": "Break: Remove Admin prefix from EntityCreate/Update/Upsert/Payload*"
+          },
+          {
+            "comment": "Break: Rename AdminEntity to Entity"
+          },
+          {
+            "comment": "Break: Rename Value type to Component. Remove Admin prefix from types"
+          },
+          {
+            "comment": "Break: Rename admin prefix from Query.admin{Entity,EntityList,Entities,EntitySample}'"
+          },
+          {
+            "comment": "Break: Rename new GraphQLSchemaGenerator({adminSchema}) to ({schema})"
+          }
+        ]
+      }
+    },
+    {
       "version": "0.6.2",
       "tag": "@dossierhq/graphql_v0.6.2",
       "date": "Sun, 31 Mar 2024 22:07:35 GMT",

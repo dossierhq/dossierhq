@@ -1,6 +1,14 @@
 # Change Log - @dossierhq/typescript-generator
 
-This log was last generated on Sun, 31 Mar 2024 22:07:35 GMT and should not be manually modified.
+This log was last generated on Sun, 05 May 2024 12:27:29 GMT and should not be manually modified.
+
+## 0.7.0
+Sun, 05 May 2024 12:27:29 GMT
+
+### Updates
+
+- Break: Rename generateTypescriptForSchema({adminSchema}) to ({schema}) and remove Admin prefix from generated types
+- Break: Rename AppAdmin[Exception]Client to AppDossier[Exception]Client
 
 ## 0.6.2
 Sun, 31 Mar 2024 22:07:35 GMT
