@@ -1,4 +1,4 @@
-export { AdminDossierProvider } from './components/AdminDossierProvider/AdminDossierProvider.js';
+export { DossierProvider } from './components/DossierProvider/DossierProvider.js';
 export type { FieldDisplayProps } from './components/EntityDisplay/FieldDisplay.js';
 export type { FieldEditorProps } from './components/EntityEditor/FieldEditor.js';
 export { PublishedDossierProvider } from './components/PublishedDossierProvider/PublishedDossierProvider.js';

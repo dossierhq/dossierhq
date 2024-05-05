@@ -11,7 +11,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 import {
-  AdminDossierProvider,
+  DossierProvider,
   useCachingAdminMiddleware,
   type AdminDossierContextAdapter,
   type FieldEditorProps,
@@ -50,9 +50,9 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
     return null;
   }
   return (
-    <AdminDossierProvider {...args} client={client}>
+    <DossierProvider {...args} client={client}>
       {children}
-    </AdminDossierProvider>
+    </DossierProvider>
   );
 }
 

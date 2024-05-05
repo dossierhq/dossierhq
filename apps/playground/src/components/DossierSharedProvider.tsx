@@ -11,7 +11,7 @@ import {
 } from '@dossierhq/core';
 import { NotificationContext } from '@dossierhq/design';
 import {
-  AdminDossierProvider,
+  DossierProvider,
   PublishedDossierProvider,
   useCachingAdminMiddleware,
 } from '@dossierhq/react-components';
@@ -109,9 +109,9 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   }
   return (
     <LoginContext.Provider value={login}>
-      <AdminDossierProvider {...args.adminArgs}>
+      <DossierProvider {...args.adminArgs}>
         <PublishedDossierProvider {...args.publishedArgs}>{children}</PublishedDossierProvider>
-      </AdminDossierProvider>
+      </DossierProvider>
     </LoginContext.Provider>
   );
 }

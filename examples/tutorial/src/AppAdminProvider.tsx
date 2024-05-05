@@ -4,7 +4,7 @@ import {
 } from '@dossierhq/cloudinary';
 import { FieldType, isComponentItemField } from '@dossierhq/core';
 import {
-  AdminDossierProvider,
+  DossierProvider,
   type AdminDossierContextAdapter,
   type FieldEditorProps,
   type RichTextComponentEditorProps,
@@ -30,9 +30,9 @@ export function AppAdminProvider({ children }: Props) {
   if (!client) return null;
 
   return (
-    <AdminDossierProvider {...args} client={client}>
+    <DossierProvider {...args} client={client}>
       {children}
-    </AdminDossierProvider>
+    </DossierProvider>
   );
 }
 

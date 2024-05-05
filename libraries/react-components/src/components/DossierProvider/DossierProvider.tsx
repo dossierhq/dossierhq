@@ -22,7 +22,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function AdminDossierProvider({
+export function DossierProvider({
   adapter,
   client,
   logger,

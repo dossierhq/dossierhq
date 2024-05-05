@@ -1065,7 +1065,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "  AdminDossierProvider",
+                  "text": "  DossierProvider",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -2591,7 +2591,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminDossierProvider ",
+                  "text": "DossierProvider ",
                   "type": "code-highlight",
                   "version": 1
                 },
@@ -2772,7 +2772,7 @@
                   "format": 0,
                   "mode": "normal",
                   "style": "",
-                  "text": "AdminDossierProvider",
+                  "text": "DossierProvider",
                   "type": "code-highlight",
                   "version": 1
                 },
