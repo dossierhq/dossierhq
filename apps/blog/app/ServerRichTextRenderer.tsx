@@ -29,19 +29,19 @@ import {
   isPublishedCloudinaryImage,
   isPublishedCodapiSnippet,
   isPublishedGlossaryTerm,
-  type AppPublishedClient,
+  type AppPublishedDossierClient,
 } from '../utils/SchemaTypes';
 
 interface Props {
   richText: RichText;
-  publishedClient: AppPublishedClient;
+  publishedClient: AppPublishedDossierClient;
   theme?: EditorThemeClasses;
   isGlossaryPage?: boolean;
   headingOffset?: number;
 }
 
 interface RenderContext {
-  publishedClient: AppPublishedClient;
+  publishedClient: AppPublishedDossierClient;
   theme: EditorThemeClasses;
   isGlossaryPage: boolean;
   headingOffset: number;

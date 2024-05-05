@@ -1,7 +1,7 @@
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
   type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import test from '@playwright/test';
@@ -15,7 +15,7 @@ test.beforeAll(async () => {
   serverInit = (await initializeSqlJsServer()).valueOrThrow();
   readOnlyEntityRepository = (
     await createReadOnlyEntityRepository(
-      createSharedClientProvider(serverInit.server),
+      createSharedDossierClientProvider(serverInit.server),
       'AdminEntityTest',
     )
   ).valueOrThrow();
@@ -35,7 +35,7 @@ registerTestSuite(
       const { server } = serverInit;
       return Promise.resolve([
         {
-          clientProvider: createSharedClientProvider(server),
+          clientProvider: createSharedDossierClientProvider(server),
           server,
           readOnlyEntityRepository,
         },

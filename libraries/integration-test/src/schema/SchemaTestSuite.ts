@@ -1,7 +1,7 @@
 import { buildSuite } from '../Builder.js';
 import type {
   DossierClientProvider,
-  PublishedClientProvider,
+  PublishedDossierClientProvider,
   TestFunctionInitializer,
   TestSuite,
 } from '../index.js';
@@ -10,7 +10,7 @@ import { SchemaUpdateSchemaSpecificationSubSuite } from './SchemaUpdateSchemaSpe
 import { ServerProcessNextDirtyEntitySubSuite } from './ServerProcessNextDirtyEntitySubSuite.js';
 
 export interface SchemaTestContext {
-  clientProvider: DossierClientProvider & PublishedClientProvider;
+  clientProvider: DossierClientProvider & PublishedDossierClientProvider;
 }
 
 export function createSchemaTestSuite<TCleanup>(

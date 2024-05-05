@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { createSchemaTestSuite, createSharedClientProvider } from '@dossierhq/integration-test';
+import {
+  createSchemaTestSuite,
+  createSharedDossierClientProvider,
+} from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
 import {
   initializeIntegrationTestServer,
@@ -28,7 +31,7 @@ registerTestSuite(
       assert(serverInit);
       const { server } = serverInit;
       return Promise.resolve([
-        { server, clientProvider: createSharedClientProvider(server) },
+        { server, clientProvider: createSharedDossierClientProvider(server) },
         undefined,
       ]);
     },

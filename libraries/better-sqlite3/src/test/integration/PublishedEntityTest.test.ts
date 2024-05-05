@@ -1,7 +1,7 @@
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
   type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import type { Server } from '@dossierhq/server';
@@ -19,7 +19,7 @@ beforeAll(async () => {
   ).valueOrThrow();
 
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(createSharedClientProvider(serverInit.server))
+    await createReadOnlyEntityRepository(createSharedDossierClientProvider(serverInit.server))
   ).valueOrThrow();
 });
 afterAll(async () => {
@@ -38,7 +38,7 @@ registerTestSuite(
       return Promise.resolve([
         {
           server: serverInit.server,
-          clientProvider: createSharedClientProvider(serverInit.server),
+          clientProvider: createSharedDossierClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
         undefined,

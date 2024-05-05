@@ -7,7 +7,7 @@ import { FieldType, notOk, ok, type Logger } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
 import BetterSqlite, { type Database } from 'better-sqlite3';
 import type { Request } from 'express-jwt';
-import type { AppDossierClient, AppPublishedClient } from '../src/SchemaTypes.js';
+import type { AppDossierClient, AppPublishedDossierClient } from '../src/SchemaTypes.js';
 
 async function initializeDatabase(logger: Logger) {
   let database: Database;
@@ -55,7 +55,7 @@ export function getDossierClientForRequest(server: Server, req: Request) {
 
 export function getPublishedClientForRequest(server: Server, req: Request) {
   const session = createSessionForRequest(server, req);
-  return server.createPublishedClient<AppPublishedClient>(() => session);
+  return server.createPublishedClient<AppPublishedDossierClient>(() => session);
 }
 
 async function updateSchema(client: AppDossierClient) {

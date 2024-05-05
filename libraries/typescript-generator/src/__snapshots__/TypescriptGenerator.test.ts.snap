@@ -416,9 +416,9 @@ export type AppComponent = never;
 exports[`generateTypescriptForSchema published > Auth key pattern 1`] = `
 "import type { PublishedDossierClient, PublishedDossierExceptionClient, PublishedEntity } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -445,9 +445,9 @@ export type AppPublishedComponent = never;
 exports[`generateTypescriptForSchema published > Unique index 1`] = `
 "import type { PublishedDossierClient, PublishedDossierExceptionClient, PublishedEntity } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = 'slug';
 
@@ -476,9 +476,9 @@ export type AppPublishedComponent = never;
 exports[`generateTypescriptForSchema published > adminOnly field 1`] = `
 "import type { PublishedDossierClient, PublishedDossierExceptionClient, PublishedEntity } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -505,9 +505,9 @@ export type AppPublishedComponent = never;
 exports[`generateTypescriptForSchema published > empty 1`] = `
 "import type { PublishedDossierClient, PublishedDossierExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -520,9 +520,9 @@ export type AppPublishedComponent = never;
 exports[`generateTypescriptForSchema published > not publishable entity type 1`] = `
 "import type { PublishedDossierClient, PublishedDossierExceptionClient } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 
@@ -535,9 +535,9 @@ export type AppPublishedComponent = never;
 exports[`generateTypescriptForSchema published > required fields 1`] = `
 "import type { PublishedDossierClient, PublishedDossierExceptionClient, PublishedEntity } from '@dossierhq/core';
 
-export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;
+export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;
 
 export type AppPublishedUniqueIndexes = never;
 

@@ -1,5 +1,5 @@
 import type { Server } from '@dossierhq/server';
-import type { AppDossierClient, AppPublishedClient } from '../SchemaTypes.js';
+import type { AppDossierClient, AppPublishedDossierClient } from '../SchemaTypes.js';
 
 export type TestPrincipal = 'main' | 'secondary' | 'random';
 
@@ -10,11 +10,11 @@ export interface DossierClientProvider {
   ) => AppDossierClient;
 }
 
-export interface PublishedClientProvider {
+export interface PublishedDossierClientProvider {
   publishedClient: (
     principal?: TestPrincipal,
     sessionType?: 'readonly' | 'write',
-  ) => AppPublishedClient;
+  ) => AppPublishedDossierClient;
 }
 
 const principals = {
@@ -62,9 +62,9 @@ export function createDossierClientProvider(server: Server): DossierClientProvid
   };
 }
 
-export function createSharedClientProvider(
+export function createSharedDossierClientProvider(
   server: Server,
-): DossierClientProvider & PublishedClientProvider {
+): DossierClientProvider & PublishedDossierClientProvider {
   return {
     dossierClient(principal, sessionType) {
       const sessionResult = sessionForPrincipal(server, principal, sessionType);

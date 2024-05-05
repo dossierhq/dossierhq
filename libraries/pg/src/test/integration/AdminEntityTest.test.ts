@@ -2,7 +2,7 @@ import {
   createAdminEntityTestSuite,
   createDossierClientProvider,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
   type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
@@ -36,7 +36,7 @@ registerTestSuite(
       const { server } = serverInit;
       return Promise.resolve([
         {
-          clientProvider: createSharedClientProvider(server),
+          clientProvider: createSharedDossierClientProvider(server),
           server,
           readOnlyEntityRepository,
         },

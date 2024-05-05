@@ -1,4 +1,7 @@
-import { createSchemaTestSuite, createSharedClientProvider } from '@dossierhq/integration-test';
+import {
+  createSchemaTestSuite,
+  createSharedDossierClientProvider,
+} from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import { registerTestSuite } from '../TestUtils.js';
 import { initializeSqlite3Server, type ServerInit } from './Sqlite3TestUtils.js';
@@ -24,7 +27,7 @@ registerTestSuite(
       assert(serverInit);
       const { server } = serverInit;
       return Promise.resolve([
-        { server, clientProvider: createSharedClientProvider(server) },
+        { server, clientProvider: createSharedDossierClientProvider(server) },
         undefined,
       ]);
     },

@@ -1,6 +1,6 @@
 import {
   createSchemaTestSuite,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
 } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
@@ -16,7 +16,7 @@ registerTestSuite(
       ).valueOrThrow();
       const { server } = serverInit;
       return [
-        { server, clientProvider: createSharedClientProvider(server) },
+        { server, clientProvider: createSharedDossierClientProvider(server) },
         serverInit,
       ];
     },

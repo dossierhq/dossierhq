@@ -1,7 +1,7 @@
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
 } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
@@ -16,7 +16,7 @@ registerTestSuite(
         await initializeIntegrationTestServer()
       ).valueOrThrow();
 
-      const clientProvider = createSharedClientProvider(server);
+      const clientProvider = createSharedDossierClientProvider(server);
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(clientProvider, "published-entity")
       ).valueOrThrow();

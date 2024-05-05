@@ -1,5 +1,5 @@
 export { IntegrationTestSchema } from './IntegrationTestSchema.js';
-export type { AppDossierClient, AppPublishedClient } from './SchemaTypes.js';
+export type { AppDossierClient, AppPublishedDossierClient } from './SchemaTypes.js';
 export { createTestAuthorizationAdapter } from './TestAuthorizationAdapter.js';
 export { createAdminEntityTestSuite } from './admin-entity/AdminEntityTestSuite.js';
 export { createAdvisoryLockTestSuite } from './advisory-lock/AdvisoryLockTestSuite.js';
@@ -13,9 +13,9 @@ export {
 } from './shared-entity/ReadOnlyEntityRepository.js';
 export {
   createDossierClientProvider,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
   type DossierClientProvider,
-  type PublishedClientProvider,
+  type PublishedDossierClientProvider,
   type TestPrincipal,
 } from './shared-entity/TestClients.js';
 export { createSyncTestSuite } from './sync/SyncTestSuite.js';

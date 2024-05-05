@@ -1,4 +1,7 @@
-import { createSchemaTestSuite, createSharedClientProvider } from '@dossierhq/integration-test';
+import {
+  createSchemaTestSuite,
+  createSharedDossierClientProvider,
+} from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import { initializeServer, type ServerInit } from '../../LibSqlTestUtils.js';
 import { registerTestSuite } from '../../TestUtils.js';
@@ -7,7 +10,9 @@ let serverInit: ServerInit | null = null;
 
 beforeAll(async () => {
   serverInit = (
-    await initializeServer({ url: 'file:databases/integration-test-schema.sqlite' })
+    await initializeServer({
+      url: 'file:databases/integration-test-schema.sqlite',
+    })
   ).valueOrThrow();
 });
 afterAll(async () => {
@@ -24,7 +29,7 @@ registerTestSuite(
       assert(serverInit);
       const { server } = serverInit;
       return Promise.resolve([
-        { server, clientProvider: createSharedClientProvider(server) },
+        { server, clientProvider: createSharedDossierClientProvider(server) },
         undefined,
       ]);
     },

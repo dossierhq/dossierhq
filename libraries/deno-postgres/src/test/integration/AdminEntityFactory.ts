@@ -1,7 +1,7 @@
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
 } from "@dossierhq/integration-test";
 import type { Server } from "@dossierhq/server";
 import {
@@ -18,7 +18,7 @@ export function registerAdminEntityTestSuite(suitePage: {
       const { server } = (
         await initializeIntegrationTestServer()
       ).valueOrThrow();
-      const clientProvider = createSharedClientProvider(server);
+      const clientProvider = createSharedDossierClientProvider(server);
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(clientProvider)
       ).valueOrThrow();

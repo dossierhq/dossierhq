@@ -21,7 +21,7 @@ import {
 import type {
   AppDossierClient,
   AppEntity,
-  AppPublishedClient,
+  AppPublishedDossierClient,
   AppPublishedEntity,
 } from '../SchemaTypes.js';
 
@@ -135,7 +135,7 @@ export function assertPageInfoEquals<TEntity extends AppEntity | AppPublishedEnt
 }
 
 export async function countSearchResultWithEntity<
-  TClient extends AppDossierClient | AppPublishedClient,
+  TClient extends AppDossierClient | AppPublishedDossierClient,
 >(
   client: TClient,
   query: Parameters<TClient['getEntities']>[0],
@@ -154,7 +154,7 @@ export async function countSearchResultWithEntity<
 }
 
 export async function collectMatchingSearchResultNodes<
-  TClient extends AppDossierClient | AppPublishedClient,
+  TClient extends AppDossierClient | AppPublishedDossierClient,
 >(
   client: TClient,
   query: Parameters<TClient['getEntities']>[0],

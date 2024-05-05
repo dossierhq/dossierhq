@@ -1,7 +1,7 @@
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
   type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
@@ -16,7 +16,7 @@ beforeAll(async () => {
     await initializeSqlite3Server('databases/integration-test-admin-entity.sqlite')
   ).valueOrThrow();
   readOnlyEntityRepository = (
-    await createReadOnlyEntityRepository(createSharedClientProvider(serverInit.server))
+    await createReadOnlyEntityRepository(createSharedDossierClientProvider(serverInit.server))
   ).valueOrThrow();
 });
 afterAll(async () => {
@@ -34,7 +34,7 @@ registerTestSuite(
       return Promise.resolve([
         {
           server: serverInit.server,
-          clientProvider: createSharedClientProvider(serverInit.server),
+          clientProvider: createSharedDossierClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
         undefined,

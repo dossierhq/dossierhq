@@ -11112,7 +11112,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " AppPublishedClient ",
+                "text": " AppPublishedDossierClient ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -11570,7 +11570,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " AppPublishedClient",
+                "text": " AppPublishedDossierClient",
                 "type": "code-highlight",
                 "version": 1
               },

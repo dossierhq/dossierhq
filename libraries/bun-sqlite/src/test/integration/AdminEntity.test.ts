@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {
   createAdminEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
   type ReadOnlyEntityRepository,
 } from '@dossierhq/integration-test';
 import { afterAll, beforeAll } from 'bun:test';
@@ -21,7 +21,7 @@ beforeAll(async () => {
   ).valueOrThrow();
   readOnlyEntityRepository = (
     await createReadOnlyEntityRepository(
-      createSharedClientProvider(serverInit.server),
+      createSharedDossierClientProvider(serverInit.server),
       'admin-entity',
     )
   ).valueOrThrow();
@@ -41,7 +41,7 @@ registerTestSuite(
       return Promise.resolve([
         {
           server: serverInit.server,
-          clientProvider: createSharedClientProvider(serverInit.server),
+          clientProvider: createSharedDossierClientProvider(serverInit.server),
           readOnlyEntityRepository,
         },
         undefined,

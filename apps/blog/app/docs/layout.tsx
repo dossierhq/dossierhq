@@ -10,7 +10,7 @@ import {
   assertIsPublishedArticle,
   assertIsPublishedChapter,
   isPublishedArticleTocItem,
-  type AppPublishedExceptionClient,
+  type AppPublishedDossierExceptionClient,
   type PublishedArticleTocItem,
   type PublishedTocItem,
 } from '../../utils/SchemaTypes';
@@ -75,7 +75,7 @@ function ChapterItem({
   publishedClient,
 }: {
   item: PublishedTocItem;
-  publishedClient: AppPublishedExceptionClient;
+  publishedClient: AppPublishedDossierExceptionClient;
 }) {
   return (
     <>
@@ -98,7 +98,7 @@ async function ArticleItem({
   publishedClient,
 }: {
   item: PublishedArticleTocItem;
-  publishedClient: AppPublishedExceptionClient;
+  publishedClient: AppPublishedDossierExceptionClient;
 }) {
   const entity = await publishedClient.getEntity(item.article);
   assertIsPublishedArticle(entity);

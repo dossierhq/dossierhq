@@ -1,7 +1,7 @@
 import {
   createPublishedEntityTestSuite,
   createReadOnlyEntityRepository,
-  createSharedClientProvider,
+  createSharedDossierClientProvider,
 } from '@dossierhq/integration-test';
 import { afterAll, assert, beforeAll } from 'vitest';
 import {
@@ -29,7 +29,7 @@ registerTestSuite(
       assert(serverInit);
       const { server } = serverInit;
 
-      const clientProvider = createSharedClientProvider(server);
+      const clientProvider = createSharedDossierClientProvider(server);
       const readOnlyEntityRepository = (
         await createReadOnlyEntityRepository(clientProvider)
       ).valueOrThrow();

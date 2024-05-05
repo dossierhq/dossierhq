@@ -1,11 +1,11 @@
 import {
   assertIsPublishedAuthor,
   assertIsPublishedBlogPost,
-  type AppPublishedClient,
+  type AppPublishedDossierClient,
   type PublishedAuthor,
 } from '../../../utils/SchemaTypes';
 
-export async function getBlogPost(publishedClient: AppPublishedClient, slug: string) {
+export async function getBlogPost(publishedClient: AppPublishedDossierClient, slug: string) {
   const blogPost = (
     await publishedClient.getEntity({ index: 'blogSlug', value: slug })
   ).valueOrThrow();

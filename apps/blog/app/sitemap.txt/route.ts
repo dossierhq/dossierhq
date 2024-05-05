@@ -3,7 +3,7 @@ import { BrowserUrls, canonicalUrl } from '../../utils/BrowserUrls';
 import {
   assertIsPublishedArticle,
   assertIsPublishedBlogPost,
-  type AppPublishedClient,
+  type AppPublishedDossierClient,
 } from '../../utils/SchemaTypes';
 import { getPublishedClientForServerComponent } from '../../utils/ServerComponentUtils';
 
@@ -16,7 +16,7 @@ export async function GET(_request: Request) {
   });
 }
 
-async function collectUrls(publishedClient: AppPublishedClient) {
+async function collectUrls(publishedClient: AppPublishedDossierClient) {
   const urls: string[] = [];
   urls.push(canonicalUrl(BrowserUrls.home));
 
@@ -30,7 +30,7 @@ async function collectUrls(publishedClient: AppPublishedClient) {
   return urls;
 }
 
-async function articleUrls(publishedClient: AppPublishedClient) {
+async function articleUrls(publishedClient: AppPublishedDossierClient) {
   const result: string[] = [];
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
     publishedClient.getEntities({ entityTypes: ['Article'] }, paging),
@@ -48,7 +48,7 @@ async function articleUrls(publishedClient: AppPublishedClient) {
   return result;
 }
 
-async function blogUrls(publishedClient: AppPublishedClient) {
+async function blogUrls(publishedClient: AppPublishedDossierClient) {
   const result: string[] = [];
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
     publishedClient.getEntities({ entityTypes: ['BlogPost'] }, paging),

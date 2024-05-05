@@ -35,9 +35,9 @@ import {
   isPublishedArticle,
   isPublishedCloudinaryImage,
   isPublishedGlossaryTerm,
-  type AppPublishedClient,
+  type AppPublishedDossierClient,
+  type AppPublishedDossierExceptionClient,
   type AppPublishedEntity,
-  type AppPublishedExceptionClient,
   type PublishedAuthor,
   type PublishedBlogPost,
   type PublishedCloudinaryImage,
@@ -50,7 +50,7 @@ config({ path: '.env' });
 
 export {};
 
-async function generateAtomFeed(publishedClient: AppPublishedExceptionClient) {
+async function generateAtomFeed(publishedClient: AppPublishedDossierExceptionClient) {
   const hostname = 'https://www.dossierhq.dev';
   const feed = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="${hostname}/">
@@ -67,7 +67,10 @@ ${(await generateBlogEntries(hostname, publishedClient)).join('\n')}
   return feed;
 }
 
-async function generateBlogEntries(hostname: string, publishedClient: AppPublishedExceptionClient) {
+async function generateBlogEntries(
+  hostname: string,
+  publishedClient: AppPublishedDossierExceptionClient,
+) {
   const blogPosts: PublishedBlogPost[] = [];
 
   for await (const page of getAllPagesForConnection({ first: 100 }, (paging) =>
@@ -108,7 +111,7 @@ async function generateBlogEntries(hostname: string, publishedClient: AppPublish
 
 async function generateBlogEntry(
   hostname: string,
-  publishedClient: AppPublishedExceptionClient,
+  publishedClient: AppPublishedDossierExceptionClient,
   blogPost: PublishedBlogPost,
   authors: PublishedAuthor[],
 ) {
@@ -309,7 +312,7 @@ async function main() {
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
     const publishedClient = server
-      .createPublishedClient<AppPublishedClient>(async () => authResult)
+      .createPublishedClient<AppPublishedDossierClient>(async () => authResult)
       .toExceptionClient();
 
     const atomFeed = await generateAtomFeed(publishedClient);

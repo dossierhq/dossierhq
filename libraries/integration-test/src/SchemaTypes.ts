@@ -355,14 +355,14 @@ export function assertIsReferencesComponent(
   }
 }
 
-export type AppPublishedClient = PublishedDossierClient<
+export type AppPublishedDossierClient = PublishedDossierClient<
   AppPublishedEntity,
   AppPublishedComponent,
   AppPublishedUniqueIndexes,
-  AppPublishedExceptionClient
+  AppPublishedDossierExceptionClient
 >;
 
-export type AppPublishedExceptionClient = PublishedDossierExceptionClient<
+export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<
   AppPublishedEntity,
   AppPublishedComponent,
   AppPublishedUniqueIndexes

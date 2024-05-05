@@ -14,7 +14,7 @@ import {
 } from '@dossierhq/core';
 import { useCachingAdminMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
-import type { AppDossierClient, AppPublishedClient } from './SchemaTypes.js';
+import type { AppDossierClient, AppPublishedDossierClient } from './SchemaTypes.js';
 
 const logger = createConsoleLogger(console);
 
@@ -70,14 +70,14 @@ function createAdminBackendMiddleware(
   };
 }
 
-export function usePublishedClient(): AppPublishedClient | null {
+export function usePublishedClient(): AppPublishedDossierClient | null {
   const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   return useMemo(
     () =>
       isLoading
         ? null
-        : createBasePublishedDossierClient<ClientContext, AppPublishedClient>({
+        : createBasePublishedDossierClient<ClientContext, AppPublishedDossierClient>({
             context: { logger },
             pipeline: [createPublishedBackendMiddleware(isAuthenticated, getAccessTokenSilently)],
           }),

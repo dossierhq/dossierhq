@@ -85,9 +85,9 @@ function generatePublishedClientTypes(context: GeneratorContext) {
   context.coreImports.add('PublishedDossierExceptionClient');
   return [
     '',
-    'export type AppPublishedClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedExceptionClient>;',
+    'export type AppPublishedDossierClient = PublishedDossierClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes, AppPublishedDossierExceptionClient>;',
     '',
-    'export type AppPublishedExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;',
+    'export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient<AppPublishedEntity, AppPublishedComponent, AppPublishedUniqueIndexes>;',
   ];
 }
 

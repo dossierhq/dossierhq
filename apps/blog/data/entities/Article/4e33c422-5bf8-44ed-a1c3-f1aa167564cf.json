@@ -6361,7 +6361,7 @@
                 "format": 16,
                 "mode": "normal",
                 "style": "",
-                "text": "AppPublishedClient",
+                "text": "AppPublishedDossierClient",
                 "type": "text",
                 "version": 1
               },
