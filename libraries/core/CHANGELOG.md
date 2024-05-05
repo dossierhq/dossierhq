@@ -1,6 +1,11 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Sun, 05 May 2024 15:39:06 GMT and should not be manually modified.
+This log was last generated on Sun, 05 May 2024 16:56:55 GMT and should not be manually modified.
+
+## 0.7.4
+Sun, 05 May 2024 16:56:55 GMT
+
+_Version update only_
 
 ## 0.7.3
 Sun, 05 May 2024 15:39:06 GMT
