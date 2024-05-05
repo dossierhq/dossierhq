@@ -2,7 +2,7 @@ import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import { DossierProvider } from '../components/DossierProvider/DossierProvider.js';
 import type { DossierContextAdapter } from '../contexts/DossierContext.js';
-import { useCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
+import { useCachingDossierMiddleware } from '../utils/CachingAdminMiddleware.js';
 import {
   createBackendDossierClient,
   DISPLAY_AUTH_KEYS,
@@ -20,7 +20,7 @@ export function AdminLoadContextProvider({
   dossierClientMiddleware,
   children,
 }: Props): JSX.Element | null {
-  const cachingMiddleware = useCachingAdminMiddleware();
+  const cachingMiddleware = useCachingDossierMiddleware();
 
   const client = useMemo(
     () => createBackendDossierClient([...(dossierClientMiddleware ?? []), cachingMiddleware]),

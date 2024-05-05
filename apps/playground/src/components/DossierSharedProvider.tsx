@@ -13,7 +13,7 @@ import { NotificationContext } from '@dossierhq/design';
 import {
   DossierProvider,
   PublishedDossierProvider,
-  useCachingAdminMiddleware,
+  useCachingDossierMiddleware,
 } from '@dossierhq/react-components';
 import { type CreateSessionPayload, type Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
@@ -44,7 +44,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   const sessionResultRef = useRef<SessionResult>(sessionResult);
   sessionResultRef.current = sessionResult;
 
-  const cachingAdminMiddleware = useCachingAdminMiddleware();
+  const cachingAdminMiddleware = useCachingDossierMiddleware();
 
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });

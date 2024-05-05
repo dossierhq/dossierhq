@@ -9,7 +9,7 @@ import {
 } from '@dossierhq/core';
 import { useMemo, useRef, type RefObject } from 'react';
 import { useSWRConfig, type Cache } from 'swr';
-import { assertIsDefined } from './AssertUtils.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import {
   clearCacheDueToSchemaMigrations,
   invalidateChangelogEvents,
@@ -17,20 +17,20 @@ import {
   updateCacheEntityInfo,
   updateCacheSchemas,
   type ScopedMutator,
-} from './CacheUtils.js';
+} from '../utils/CacheUtils.js';
 
 type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
 
-export function useCachingAdminMiddleware() {
+export function useCachingDossierMiddleware() {
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
   swrConfigRef.current = { cache, mutate };
-  const middleware = useMemo(() => createCachingAdminMiddleware(swrConfigRef), []);
+  const middleware = useMemo(() => createCachingDossierMiddleware(swrConfigRef), []);
 
   return middleware;
 }
 
-function createCachingAdminMiddleware<TContext extends ClientContext>(swrConfig: SwrConfigRef) {
+function createCachingDossierMiddleware<TContext extends ClientContext>(swrConfig: SwrConfigRef) {
   let lastSchemaVersion = 0;
 
   function handleUpdatedAdminSchema(

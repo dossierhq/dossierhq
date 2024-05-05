@@ -17,7 +17,7 @@ import {
 } from '@dossierhq/core';
 import {
   DossierProvider,
-  useCachingAdminMiddleware,
+  useCachingDossierMiddleware,
   type DossierContextAdapter,
   type FieldEditorProps,
   type RichTextComponentEditorProps,
@@ -68,7 +68,7 @@ class AdminContextAdapter implements DossierContextAdapter {
 }
 
 export function AppAdminDossierProvider({ children }: { children: React.ReactNode }) {
-  const cachingMiddleware = useCachingAdminMiddleware();
+  const cachingMiddleware = useCachingDossierMiddleware();
 
   const args = useMemo(
     () => ({

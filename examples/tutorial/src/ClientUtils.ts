@@ -12,14 +12,14 @@ import {
   type DossierClientOperation,
   type PublishedDossierClientOperation,
 } from '@dossierhq/core';
-import { useCachingAdminMiddleware } from '@dossierhq/react-components';
+import { useCachingDossierMiddleware } from '@dossierhq/react-components';
 import { useMemo } from 'react';
 import type { AppDossierClient, AppPublishedDossierClient } from './SchemaTypes.js';
 
 const logger = createConsoleLogger(console);
 
 export function useDossierClient(): AppDossierClient | null {
-  const cachingAdminMiddleware = useCachingAdminMiddleware();
+  const cachingAdminMiddleware = useCachingDossierMiddleware();
   const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   return useMemo(
