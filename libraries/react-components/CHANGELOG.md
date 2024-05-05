@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Sun, 05 May 2024 15:16:43 GMT and should not be manually modified.
+This log was last generated on Sun, 05 May 2024 15:39:06 GMT and should not be manually modified.
+
+## 0.7.3
+Sun, 05 May 2024 15:39:06 GMT
+
+### Updates
+
+- Break: Rename DossierContextAdapter.renderAdminFieldEditor -> renderFieldEditor, DossierContextAdapter.renderAdminRichTextComponentEditor -> renderRichTextComponentEditor
 
 ## 0.7.2
 Sun, 05 May 2024 15:16:43 GMT
