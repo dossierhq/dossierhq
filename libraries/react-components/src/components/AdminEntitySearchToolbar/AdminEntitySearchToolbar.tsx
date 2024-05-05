@@ -4,7 +4,7 @@ import {
   type MultipleSelectorStateAction,
 } from '@dossierhq/design';
 import { useContext, type Dispatch, type MouseEventHandler } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import type {
   SearchEntityState,
   SearchEntityStateAction,
@@ -48,7 +48,7 @@ export function AdminEntitySearchToolbar({
   onToggleMapClick,
   onCreateEntity,
 }: Props) {
-  const { authKeys, schema } = useContext(AdminDossierContext);
+  const { authKeys, schema } = useContext(DossierContext);
   return (
     <>
       <SearchEntitySearchInput {...{ searchEntityState, dispatchSearchEntityState }} />

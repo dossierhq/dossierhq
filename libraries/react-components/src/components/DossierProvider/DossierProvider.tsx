@@ -7,10 +7,10 @@ import {
 } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import {
-  AdminDossierContext,
+  DossierContext,
   type AdminDossierContextAdapter,
   type AdminDossierContextValue,
-} from '../../contexts/AdminDossierContext.js';
+} from '../../contexts/DossierContext.js';
 import { useAdminSchema } from '../../hooks/useAdminSchema.js';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 
@@ -41,5 +41,5 @@ export function DossierProvider({
     };
   }, [adapter, client, logger, schema, schemaError, authKeys]);
 
-  return <AdminDossierContext.Provider value={value}>{children}</AdminDossierContext.Provider>;
+  return <DossierContext.Provider value={value}>{children}</DossierContext.Provider>;
 }

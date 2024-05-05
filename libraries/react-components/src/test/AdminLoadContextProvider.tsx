@@ -1,7 +1,7 @@
 import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
 import { DossierProvider } from '../components/DossierProvider/DossierProvider.js';
-import type { AdminDossierContextAdapter } from '../contexts/AdminDossierContext.js';
+import type { AdminDossierContextAdapter } from '../contexts/DossierContext.js';
 import { useCachingAdminMiddleware } from '../utils/CachingAdminMiddleware.js';
 import {
   createBackendDossierClient,

@@ -15,7 +15,7 @@ import {
   Text,
 } from '@dossierhq/design';
 import { useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { useAdminChangelogEvents } from '../../hooks/useAdminChangelogEvents.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import {
@@ -48,7 +48,7 @@ export function AdminEntityHistoryDialog({ reference }: AdminEntityHistoryDialog
 }
 
 function Content({ reference }: { reference: EntityReference }) {
-  const { client, schema } = useContext(AdminDossierContext);
+  const { client, schema } = useContext(DossierContext);
   const [
     { leftVersion, leftVersionItems, rightVersion, rightVersionItems },
     dispatchVersionSelectionState,

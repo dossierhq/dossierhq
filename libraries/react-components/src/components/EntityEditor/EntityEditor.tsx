@@ -16,7 +16,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   EntityEditorActions,
   getEntityCreateFromDraftState,
@@ -34,7 +34,7 @@ interface Props {
 }
 
 export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const { showNotification } = useContext(NotificationContext);
   const [submitLoading, setSubmitLoading] = useState(false);
 

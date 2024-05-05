@@ -15,7 +15,7 @@ import {
   type NotificationInfo,
 } from '@dossierhq/design';
 import { useContext, useMemo } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 
 interface Props {
   disabled?: boolean;
@@ -45,7 +45,7 @@ const errorMessages: Record<PublishingActionId, string> = {
 };
 
 export function PublishingButton({ disabled, entity, entitySpec }: Props) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const { showNotification } = useContext(NotificationContext);
 
   const [buttonAction, ...dropdownActions] = useMemo(

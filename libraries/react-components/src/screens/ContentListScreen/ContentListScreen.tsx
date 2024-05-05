@@ -11,7 +11,7 @@ import { EntityMap } from '../../components/EntityMap/EntityMap.js';
 import { SearchOrSampleEntitiesButtons } from '../../components/SearchOrSampleEntitiesButtons/SearchOrSampleEntitiesButtons.js';
 import { StatusTagSelector } from '../../components/StatusTagSelector/StatusTagSelector.js';
 import { TypeTagSelector } from '../../components/TypeTagSelector/TypeTagSelector.js';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import {
@@ -40,7 +40,7 @@ export function ContentListScreen({
   onCreateEntity,
   onOpenEntity,
 }: ContentListScreenProps): JSX.Element | null {
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,
     { mode: 'admin', urlSearchParams },

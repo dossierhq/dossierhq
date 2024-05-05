@@ -15,7 +15,7 @@ import {
   toFlexItemClassName,
 } from '@dossierhq/design';
 import { useCallback, useContext, useState, type MouseEvent } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { useAdminEntity } from '../../hooks/useAdminEntity.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -32,7 +32,7 @@ export function ReferenceFieldEditor({
   dragHandle,
   onChange,
 }: Props) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(client, value ?? undefined);
 
@@ -98,7 +98,7 @@ export function ReferenceFieldEditorWithoutClear({
   className?: string;
   value: EntityReference;
 }) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const { entity, entityError: _error } = useAdminEntity(client, value ?? undefined);
 

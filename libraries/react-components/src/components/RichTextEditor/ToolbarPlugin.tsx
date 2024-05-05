@@ -44,7 +44,7 @@ import {
   type NodeKey,
 } from 'lexical';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { assertExhaustive } from '../../utils/AssertUtils.js';
 import { AdminEntitySelectorDialog } from '../AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
@@ -71,7 +71,7 @@ const blockTypeToBlockName = {
 type BlockTypeName = keyof typeof blockTypeToBlockName;
 
 export function ToolbarPlugin({ fieldSpec }: { fieldSpec: RichTextFieldSpecification }) {
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
   const [editor] = useLexicalComposerContext();
 
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');

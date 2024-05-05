@@ -2,7 +2,7 @@ import type { ComponentTypeSpecification, EntityTypeSpecification } from '@dossi
 import { NotificationContainer } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useContext } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext';
+import { DossierContext } from '../../contexts/DossierContext';
 import { useAdminSchema } from '../../hooks/useAdminSchema';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { SchemaEditorScreen } from './SchemaEditorScreen';
@@ -51,7 +51,7 @@ export const SchemaDebug: Story = {
 };
 
 function SchemaDebugFooter() {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const { schema } = useAdminSchema(client);
 
   function typeToString(type: EntityTypeSpecification | ComponentTypeSpecification) {

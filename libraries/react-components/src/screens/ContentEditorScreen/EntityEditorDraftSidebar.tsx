@@ -4,7 +4,7 @@ import { AdminEntityHistoryDialog } from '../../components/AdminEntityHistoryDia
 import { AuthKeyTag } from '../../components/AuthKeyTag/AuthKeyTag.js';
 import { EntityChangelogList } from '../../components/EntityChangelogList/EntityChangelogList.js';
 import { StatusTag } from '../../components/StatusTag/StatusTag.js';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import type { EntityEditorState } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 import { assertIsDefined } from '../../utils/AssertUtils.js';
 import { AdminEntityLinks } from './AdminEntityLinks.js';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function EntityEditorDraftSidebar({ entityEditorState }: Props) {
-  const { authKeys } = useContext(AdminDossierContext);
+  const { authKeys } = useContext(DossierContext);
   const { activeEntityId } = entityEditorState;
 
   const [historyIsOpen, setHistoryIsOpen] = useState(false);

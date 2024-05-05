@@ -25,7 +25,7 @@ import {
   type NodeKey,
 } from 'lexical';
 import { useCallback, useContext, useMemo } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { ComponentFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 
@@ -60,7 +60,7 @@ function AdminComponentComponent({
   data: Component;
 }) {
   const [editor] = useLexicalComposerContext();
-  const { adapter, schema: schema } = useContext(AdminDossierContext);
+  const { adapter, schema: schema } = useContext(DossierContext);
   const { adminOnly: richTextAdminOnly } = useContext(RichTextEditorContext);
   const componentSpec = schema?.getComponentTypeSpecification(data.type);
   const adminOnly = richTextAdminOnly || !!componentSpec?.adminOnly;

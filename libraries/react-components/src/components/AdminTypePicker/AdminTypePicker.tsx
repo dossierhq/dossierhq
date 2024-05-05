@@ -1,6 +1,6 @@
 import { ButtonDropdown, type IconName } from '@dossierhq/design';
 import { useContext, type ReactNode } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   filterTypeSpecifications,
   type TypeSelectionFilter,
@@ -25,7 +25,7 @@ export function AdminTypePicker({
   children,
   ...filter
 }: AdminTypePickerProps): JSX.Element {
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
 
   let items: Item[] = [];
   if (schema) {

@@ -8,7 +8,7 @@ import type {
   ErrorType,
 } from '@dossierhq/core';
 import { useContext, useEffect, type Dispatch } from 'react';
-import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
+import { DossierContext } from '../contexts/DossierContext.js';
 import {
   SearchEntityStateActions,
   type SearchEntityState,
@@ -22,7 +22,7 @@ export function useAdminLoadEntitySearch(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
 
   // search
   const searchQuery = searchEntityState.paging

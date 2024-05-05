@@ -1,7 +1,7 @@
 import type { Entity, EntityReference } from '@dossierhq/core';
 import { Dialog2, FullscreenContainer, IconButton, Text, toSizeClassName } from '@dossierhq/design';
 import { useCallback, useContext, useReducer, useState } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { useAdminEntitySearchFilters } from '../../hooks/useAdminEntitySearchFilters.js';
 import { useAdminLoadEntitySearch } from '../../hooks/useAdminLoadEntitySearch.js';
 import {
@@ -72,7 +72,7 @@ function Content({
   onItemClick: (item: Entity) => void;
   onCreateItemClick?: (type: string) => void;
 }) {
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
 
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceSearchEntityState,

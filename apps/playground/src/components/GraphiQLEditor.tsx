@@ -1,6 +1,6 @@
 import { ok, type PublishedSchema, type Schema } from '@dossierhq/core';
 import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
-import { AdminDossierContext, PublishedDossierContext } from '@dossierhq/react-components';
+import { DossierContext, PublishedDossierContext } from '@dossierhq/react-components';
 import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
@@ -50,7 +50,7 @@ export default function GraphiQLEditor({
   schema: Schema;
   publishedSchema: PublishedSchema;
 }) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const { publishedClient } = useContext(PublishedDossierContext);
 
   const [themeIsSet, setThemeIsSet] = useState(false);

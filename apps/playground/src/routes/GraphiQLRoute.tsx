@@ -1,5 +1,5 @@
 import { EmptyStateMessage, FullscreenContainer } from '@dossierhq/design';
-import { AdminDossierContext, PublishedDossierContext } from '@dossierhq/react-components';
+import { DossierContext, PublishedDossierContext } from '@dossierhq/react-components';
 import { lazy, Suspense, useContext } from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary.js';
 import { NavBar } from '../components/NavBar.js';
@@ -7,7 +7,7 @@ import { NavBar } from '../components/NavBar.js';
 const GraphiQLEditor = lazy(() => import('../components/GraphiQLEditor.js'));
 
 export function GraphiQLRoute(): JSX.Element {
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
   const { schema: publishedSchema } = useContext(PublishedDossierContext);
 
   let content;

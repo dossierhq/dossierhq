@@ -25,7 +25,7 @@ import {
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import { useContext, type ReactNode } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 import { FieldListWrapper } from './FieldListWrapper.js';
@@ -49,7 +49,7 @@ export interface FieldEditorProps<
 
 export function FieldEditor(props: FieldEditorProps) {
   const { fieldSpec, value } = props;
-  const { adapter } = useContext(AdminDossierContext);
+  const { adapter } = useContext(DossierContext);
 
   const overriddenEditor = adapter.renderAdminFieldEditor(props);
   if (overriddenEditor) {

@@ -1,7 +1,7 @@
 import { ErrorType, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { Card, Dialog, NotificationContext, Text, TextArea } from '@dossierhq/design';
 import { useCallback, useContext, useMemo, type Dispatch, type SyntheticEvent } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   getSchemaSpecificationUpdateFromEditorState,
   SchemaEditorActions,
@@ -20,7 +20,7 @@ export function SaveSchemaDialog({
   dispatchSchemaEditorState: Dispatch<SchemaEditorStateAction>;
   onClose: () => void;
 }) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const { showNotification } = useContext(NotificationContext);
 
   const schemaSpecUpdate = useMemo(

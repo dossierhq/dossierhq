@@ -9,7 +9,7 @@ import {
 } from '@dossierhq/core';
 import { Column, Delete, HoverRevealStack, Text, toFlexItemClassName } from '@dossierhq/design';
 import { Fragment, useCallback, useContext, useMemo, type ReactNode } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { AdminTypePicker } from '../AdminTypePicker/AdminTypePicker.js';
 import { FieldEditor, type FieldEditorProps } from './FieldEditor.js';
 
@@ -77,7 +77,7 @@ export function ComponentFieldEditorWithoutClear({
     [validationIssues],
   );
 
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
   if (!schema) {
     return null;
   }

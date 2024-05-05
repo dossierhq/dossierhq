@@ -22,7 +22,7 @@ import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js
 import type {
   AdminDossierContextAdapter,
   RichTextComponentEditorProps,
-} from '../contexts/AdminDossierContext.js';
+} from '../contexts/DossierContext.js';
 import type {
   PublishedDossierContextAdapter,
   RichTextComponentDisplayProps,

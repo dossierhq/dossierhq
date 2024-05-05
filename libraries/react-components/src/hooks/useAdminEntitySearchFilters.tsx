@@ -23,7 +23,7 @@ import {
   reduceStatusSelectorState,
 } from '../components/StatusSelector/StatusSelector.js';
 import type { TypeItem } from '../components/TypeSelector/TypeSelector.js';
-import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
+import { DossierContext } from '../contexts/DossierContext.js';
 import {
   SearchEntityStateActions,
   type SearchEntityState,
@@ -34,7 +34,7 @@ export function useAdminEntitySearchFilters(
   searchEntityState: SearchEntityState,
   dispatchSearchEntityState: Dispatch<SearchEntityStateAction>,
 ) {
-  const { authKeys } = useContext(AdminDossierContext);
+  const { authKeys } = useContext(DossierContext);
 
   const [typeFilterState, dispatchTypeFilterState] = useSearchStateToTypeSelectorAdapter(
     searchEntityState,

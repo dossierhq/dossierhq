@@ -1,5 +1,5 @@
 import { useContext, useEffect, type Dispatch } from 'react';
-import { AdminDossierContext } from '../contexts/AdminDossierContext.js';
+import { DossierContext } from '../contexts/DossierContext.js';
 import {
   ChangelogStateActions,
   type ChangelogState,
@@ -12,7 +12,7 @@ export function useAdminLoadChangelog(
   changelogState: ChangelogState,
   dispatchChangelogState: Dispatch<ChangelogStateAction>,
 ) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
 
   // get events
   const { connection, connectionError } = useAdminChangelogEvents(

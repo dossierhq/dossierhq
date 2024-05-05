@@ -25,7 +25,7 @@ import {
 import { SchemaIndexEditor } from '../../components/SchemaIndexEditor/SchemaIndexEditor.js';
 import { SchemaPatternEditor } from '../../components/SchemaPatternEditor/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../../components/SchemaTypeEditor/SchemaTypeEditor.js';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   getElementIdForSelector,
   initializeSchemaEditorState,
@@ -62,7 +62,7 @@ export function SchemaEditorScreen({
   footer,
   onEditorHasChangesChange,
 }: SchemaEditorScreenProps) {
-  const { schema } = useContext(AdminDossierContext);
+  const { schema } = useContext(DossierContext);
   const [schemaEditorState, dispatchSchemaEditorState] = useReducer(
     reduceSchemaEditorState,
     undefined,

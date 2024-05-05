@@ -2,7 +2,7 @@ import type { EntityReference } from '@dossierhq/core';
 import { Button, ButtonGroup, Dialog2, Field } from '@dossierhq/design';
 import { useCallback, useContext, useState } from 'react';
 import { AdminEntitySelectorDialog } from '../../components/AdminEntitySelectorDialog/AdminEntitySelectorDialog.js';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
 import { useAdminEntitiesTotalCount } from '../../hooks/useAdminEntitiesTotalCount.js';
 import { EntityEditorActions } from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function AdminEntityLinks({ entityReference }: Props) {
-  const { client } = useContext(AdminDossierContext);
+  const { client } = useContext(DossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
 
   const [showDialog, setShowDialog] = useState<'linksTo' | 'linksFrom' | ''>('');

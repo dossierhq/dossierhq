@@ -1,7 +1,7 @@
 import { EntityQueryOrder, type Entity, type PublishedEntityQueryOrder } from '@dossierhq/core';
 import { DateDisplay, EmptyStateMessage, Table, Tag, toSizeClassName } from '@dossierhq/design';
 import { useContext, type Dispatch } from 'react';
-import { AdminDossierContext } from '../../contexts/AdminDossierContext.js';
+import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   SearchEntityStateActions,
   type SearchEntityState,
@@ -28,7 +28,7 @@ export function AdminEntityList({
     entities,
     query: { order, reverse },
   } = searchEntityState;
-  const { authKeys } = useContext(AdminDossierContext);
+  const { authKeys } = useContext(DossierContext);
 
   const direction = reverse ? 'desc' : 'asc';
   const isEmpty = searchEntityState.entities?.length === 0;
