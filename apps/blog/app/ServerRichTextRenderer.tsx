@@ -120,6 +120,13 @@ async function renderNode(
         </strong>
       );
     }
+    if (richTextTextNodeHasFormat(node, 'italic')) {
+      formattedText = (
+        <em key={key} className={theme.text?.italic}>
+          {formattedText}
+        </em>
+      );
+    }
     if (richTextTextNodeHasFormat(node, 'code')) {
       formattedText = (
         <code key={key} className={theme.text?.code}>
