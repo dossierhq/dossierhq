@@ -105,9 +105,10 @@ async function renderNode(
     );
   }
   if (isRichTextParagraphNode(node)) {
+    const pChildren = await renderChildren(context, node);
     return (
       <p key={key} className={theme.paragraph}>
-        {await renderChildren(context, node)}
+        {pChildren.length > 0 ? pChildren : '\u00A0'}
       </p>
     );
   }
