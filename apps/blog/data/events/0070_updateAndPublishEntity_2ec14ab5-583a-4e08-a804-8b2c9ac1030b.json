@@ -1,0 +1,569 @@
+{
+  "id": "2ec14ab5-583a-4e08-a804-8b2c9ac1030b",
+  "parentId": "4e2a893a-2704-4acf-a6b9-a22b8c0cbe6c",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2024-05-06T18:47:34.904Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "f3125418-8a32-40ba-ac50-c53a211b48dc",
+    "info": {
+      "name": "Dossier API – createEntity",
+      "version": 2,
+      "schemaVersion": 4
+    },
+    "fields": {
+      "title": "Dossier API – createEntity",
+      "slug": "create-entity",
+      "description": "Learn how to use createEntity to create an entity with the Dossier API",
+      "body": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 16,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "createEntity",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " is used to create a new entity.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "interface",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "keyword"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "DossierClient",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "class-name"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "{",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "createEntity",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "function"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "(",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    entity",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " EntityCreate",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "<",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "Entity",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ">",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ",",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    options",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " EntityMutationOptions",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ",",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ")",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " PromiseResult",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "<",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    EntityCreatePayload",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ",",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"BadRequest\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "|",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"Conflict\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "|",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"NotAuthorized\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "|",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"Generic\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ">",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "}",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "code",
+              "version": 1,
+              "language": "typescript"
+            },
+            {
+              "type": "component",
+              "data": {
+                "id": null,
+                "dependsOn": "init",
+                "code": "const result = await client.createEntity({\n  info: { type: \"Message\", name: \"Hello\" },\n  fields: { text: \"World\" },\n});\nif (result.isOk()) {\n  console.log(\"Entity created:\");\n  console.log(JSON.stringify(result.value.entity, null, 2));\n} else {\n  console.error(result.error, result.message);\n}",
+                "type": "CodapiSnippet"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [],
+              "direction": null,
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "type": "component",
+              "data": {
+                "id": "init",
+                "dependsOn": null,
+                "code": "const dossierCore = await import(\"https://esm.sh/@dossierhq/core@0.7.4\");\nconst dossierServer = await import(\"https://esm.sh/@dossierhq/server@0.7.4\");\nconst dossierSqlJs = await import(\"https://esm.sh/@dossierhq/sql.js@00.7.4\");\nconst { default: initSqlJs } = await import(\"https://esm.sh/sql.js@1.10.3\");\n\nconst logger = dossierCore.NoOpLogger;\n\nconst SQL = await initSqlJs({\n  locateFile: (file) => `https://sql.js.org/dist/${file}`,\n});\nconst database = new SQL.Database();\nconst databaseAdapterResult = await dossierSqlJs.createSqlJsAdapter(\n  { logger },\n  database,\n  {\n    migrate: true,\n    fts: { version: \"fts4\" },\n    journalMode: \"memory\",\n  },\n);\nconst databaseAdapter = databaseAdapterResult.valueOrThrow();\n\nconst serverResult = await dossierServer.createServer({ databaseAdapter });\nconst server = serverResult.valueOrThrow();\n\nconst sessionResult = await server.createSession({\n  provider: \"sys\",\n  identifier: \"user\",\n});\nconst session = sessionResult.valueOrThrow();\nconst client = server.createDossierClient(session.context);\n\nconst schemaResult = await client.updateSchemaSpecification({\n  entityTypes: [\n    {\n      name: \"Message\",\n      nameField: \"text\",\n      fields: [{ name: \"text\", type: \"String\" }],\n    },\n  ],\n});\nschemaResult.throwIfError();",
+                "type": "CodapiSnippet"
+              },
+              "format": "",
+              "version": 1
+            },
+            {
+              "children": [],
+              "direction": null,
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}
