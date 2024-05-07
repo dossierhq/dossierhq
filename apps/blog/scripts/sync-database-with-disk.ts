@@ -67,7 +67,9 @@ async function applyDiskEvents(server: Server, unappliedDiskFiles: { path: strin
 }
 
 async function main(filename: string, args: typeof parsedArgs) {
-  const { server } = (await initializeServer(filename)).valueOrThrow();
+  const { server } = (
+    await initializeServer({ filename, ftsVersion: args.values['fts-4'] ? 'fts4' : 'fts5' })
+  ).valueOrThrow();
   try {
     const authResult = await server.createSession(SYSTEM_USERS.serverRenderer);
     const client = server.createDossierClient<AppDossierClient>(async () => authResult);
@@ -91,6 +93,6 @@ async function main(filename: string, args: typeof parsedArgs) {
 }
 
 const parsedArgs = parseArgs({
-  options: { ['update-db-only']: { type: 'boolean' } },
+  options: { ['update-db-only']: { type: 'boolean' }, ['fts-4']: { type: 'boolean' } },
 });
 await main(process.env.DATABASE_SQLITE_FILE!, parsedArgs);

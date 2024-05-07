@@ -10,8 +10,13 @@ import Database from 'better-sqlite3';
 
 const logger = createConsoleLogger(console);
 
-export async function initializeServer(filename?: string) {
-  const adapterResult = await createDatabaseAdapter(filename);
+interface DatabaseOptions {
+  filename?: string;
+  ftsVersion?: 'fts4' | 'fts5';
+}
+
+export async function initializeServer(options: DatabaseOptions = {}) {
+  const adapterResult = await createDatabaseAdapter(options);
   if (adapterResult.isError()) return adapterResult;
 
   return await createBlogServer(adapterResult.value);
@@ -32,15 +37,13 @@ async function createBlogServer(databaseAdapter: DatabaseAdapter) {
   return ok({ server });
 }
 
-async function createDatabaseAdapter(filename?: string) {
-  if (!filename) {
-    filename = process.env.DATABASE_SQLITE_FILE;
-  }
+async function createDatabaseAdapter(options: DatabaseOptions) {
+  const filename = options.filename ?? process.env.DATABASE_SQLITE_FILE;
   assert.ok(filename);
   const database = new Database(filename);
   const databaseAdapterResult = await createBetterSqlite3Adapter({ logger }, database, {
     migrate: true,
-    fts: { version: 'fts5' },
+    fts: { version: options.ftsVersion ?? 'fts5' },
     journalMode: 'wal',
   });
   return databaseAdapterResult;
