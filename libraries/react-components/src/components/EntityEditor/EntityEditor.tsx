@@ -75,10 +75,7 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
 
   const isNewEntity = !draftState.entity;
   const isSubmittable =
-    !submitLoading &&
-    draftState.status === 'changed' &&
-    !draftState.hasSaveErrors &&
-    draftState.draft.authKey !== null;
+    !submitLoading && (isNewEntity || draftState.status === 'changed') && !draftState.hasSaveErrors;
   const isPublishable = !draftState.hasPublishErrors;
 
   return (
