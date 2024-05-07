@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider.js';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
+import { PublishedLoadContextProvider } from '../../test/PublishedLoadContextProvider.js';
 import {
   PublishedContentDisplayScreen,
   type PublishedContentDisplayScreenProps,

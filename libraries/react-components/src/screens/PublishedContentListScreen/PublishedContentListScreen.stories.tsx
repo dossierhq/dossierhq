@@ -1,8 +1,8 @@
 import type { ClientContext, PublishedDossierClientMiddleware } from '@dossierhq/core';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import { PublishedLoadContextProvider } from '../../published/test/PublishedLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
+import { PublishedLoadContextProvider } from '../../test/PublishedLoadContextProvider';
 import { createSlowPublishedMiddleware } from '../../test/TestContextAdapter';
 import {
   PublishedContentListScreen,
