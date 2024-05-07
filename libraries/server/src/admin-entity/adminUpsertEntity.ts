@@ -44,7 +44,10 @@ export async function adminUpsertEntity(
   }
 
   let entityUpdate: EntityUpdate = entity;
-  if (isEntityNameAsRequested(nameResult.value, entity.info.name)) {
+  if (
+    entity.info.name !== undefined &&
+    isEntityNameAsRequested(nameResult.value, entity.info.name)
+  ) {
     // Remove name since we don't to change it the current name is the same but with a #number
     entityUpdate = { ...entityUpdate, info: { ...entityUpdate.info, name: undefined } };
   }

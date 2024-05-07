@@ -23,6 +23,7 @@ import type {
   DatabasePublishedEntityPayload,
   TransactionContext,
 } from '@dossierhq/database-adapter';
+import { randomNameGenerator } from './admin-entity/AdminEntityMutationUtils.js';
 import { type UniqueIndexValueCollection } from './EntityCollectors.js';
 import {
   validateAdminFieldValuesAndCollectInfo,
@@ -244,11 +245,16 @@ export async function encodeAdminEntity(
 
   const encodedPayload = encodeEntityFields(entity.fields);
 
+  let name = entity.info.name;
+  if (!name) {
+    name = randomNameGenerator(entity.info.type);
+  }
+
   const payload: EncodeAdminEntityPayload = {
     ...encodedPayload,
     validationIssues: validation.validationIssues,
     type: entity.info.type,
-    name: entity.info.name,
+    name,
     entityIndexes: {
       referenceIds: [],
       locations: validation.locations,

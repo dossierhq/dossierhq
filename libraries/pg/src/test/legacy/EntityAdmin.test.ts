@@ -1288,15 +1288,6 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Error: Create without name', async () => {
-    const result = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: '' },
-      fields: { title: 'title' },
-    });
-
-    expectErrorResult(result, ErrorType.BadRequest, 'entity.info.name: Name is required');
-  });
-
   test('Error: Create with invalid version', async () => {
     const result = await client.createEntity({
       info: {

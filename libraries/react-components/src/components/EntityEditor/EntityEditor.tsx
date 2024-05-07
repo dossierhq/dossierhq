@@ -78,7 +78,6 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
     !submitLoading &&
     draftState.status === 'changed' &&
     !draftState.hasSaveErrors &&
-    draftState.draft.name &&
     draftState.draft.authKey !== null;
   const isPublishable = !draftState.hasPublishErrors;
 
@@ -94,7 +93,6 @@ export function EntityEditor({ draftState, dispatchEntityEditorState }: Props) {
             </Text>
           ) : null}
         </Field.Control>
-        {!draftState.draft.name ? <Field.Help color="danger">Name is required</Field.Help> : null}
       </Field>
       {!draftState.entity && draftState.draft.entitySpec.authKeyPattern ? (
         <Field>

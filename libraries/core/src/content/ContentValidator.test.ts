@@ -270,14 +270,24 @@ describe('validateEntityInfoForCreate', () => {
     ).toMatchSnapshot();
   });
 
-  test('no name', () => {
+  test('valid: empty name', () => {
     expect(
       validateEntityInfoForCreate(
         schema,
         ['entity'],
         copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: { name: '' } }),
       ),
-    ).toMatchSnapshot();
+    ).toBeNull();
+  });
+
+  test('valid: no name', () => {
+    expect(
+      validateEntityInfoForCreate(
+        schema,
+        ['entity'],
+        copyEntity(STRINGS_ENTITY_CREATE_DEFAULT, { info: {} }),
+      ),
+    ).toBeNull();
   });
 
   test('name with line break', () => {

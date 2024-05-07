@@ -47,7 +47,7 @@ export function validateEntityInfo(
   if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
-  const saveValidation = validateName(path, entity.info.name);
+  const saveValidation = validateName(path, entity.info.name, false);
   if (saveValidation) return saveValidation;
 
   return null;
@@ -63,7 +63,7 @@ export function validateEntityInfoForCreate(
   if (typeAuthKeyValidation) return typeAuthKeyValidation;
 
   // info.name
-  const saveValidation = validateName(path, entity.info.name);
+  const saveValidation = validateName(path, entity.info.name, true);
   if (saveValidation) return saveValidation;
 
   // info.version
@@ -102,7 +102,7 @@ export function validateEntityInfoForUpdate(
   }
 
   if (entity.info?.name) {
-    const saveValidation = validateName(path, entity.info.name);
+    const saveValidation = validateName(path, entity.info.name, false);
     if (saveValidation) return saveValidation;
   }
 
@@ -182,11 +182,15 @@ function validateTypeAndAuthKey(
   return null;
 }
 
-function validateName(path: ContentValuePath, name: string): SaveValidationIssue | null {
-  if (!name) {
+function validateName(
+  path: ContentValuePath,
+  name: string | undefined,
+  create: boolean,
+): SaveValidationIssue | null {
+  if (!create && !name) {
     return { type: 'save', path: [...path, 'info', 'name'], message: 'Name is required' };
   }
-  if (LINE_BREAK_REGEX.test(name)) {
+  if (name && LINE_BREAK_REGEX.test(name)) {
     return {
       type: 'save',
       path: [...path, 'info', 'name'],

@@ -9,6 +9,7 @@ import {
   EntityStatus,
   ErrorType,
   EventType,
+  isEntityNameAsRequested,
   Schema,
 } from '@dossierhq/core';
 import {
@@ -60,6 +61,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_duplicateName,
   createEntity_canUsePublishedNameOfOtherEntity,
   createEntity_fiveInParallelWithSameName,
+  createEntity_noName,
   createEntity_noAuthKeyUndefined,
   createEntity_noAuthKeyNull,
   createEntity_publishMinimal,
@@ -217,6 +219,20 @@ async function createEntity_fiveInParallelWithSameName({ clientProvider }: Admin
   for (const result of results) {
     assertOkResult(result);
   }
+}
+
+async function createEntity_noName({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity<TitleOnly>(
+    copyEntity(TITLE_ONLY_CREATE, { info: { name: undefined } }),
+  );
+  const {
+    entity: {
+      info: { name },
+    },
+  } = createResult.valueOrThrow();
+
+  assertTruthy(isEntityNameAsRequested(name, 'TitleOnly'));
 }
 
 async function createEntity_noAuthKeyUndefined({ clientProvider }: AdminEntityTestContext) {

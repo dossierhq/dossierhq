@@ -1,5 +1,11 @@
-import { copyEntity, EntityStatus, ErrorType } from '@dossierhq/core';
-import { assertEquals, assertErrorResult, assertOkResult, assertResultValue } from '../Asserts.js';
+import { copyEntity, EntityStatus, ErrorType, isEntityNameAsRequested } from '@dossierhq/core';
+import {
+  assertEquals,
+  assertErrorResult,
+  assertOkResult,
+  assertResultValue,
+  assertTruthy,
+} from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertIsTitleOnly, type TitleOnly } from '../SchemaTypes.js';
 import {
@@ -14,6 +20,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   upsertEntity_minimalCreate,
   upsertEntity_minimalUpdate,
+  upsertEntity_createNoName,
   upsertEntity_createNoAuthKey,
   upsertEntity_updateWithoutChange,
   upsertEntity_updateAndPublishWithSubjectAuthKey,
@@ -85,6 +92,16 @@ async function upsertEntity_minimalUpdate({ clientProvider }: AdminEntityTestCon
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function upsertEntity_createNoName({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+  const { entity } = (
+    await client.upsertEntity({ id, info: { type: 'TitleOnly' }, fields: {} })
+  ).valueOrThrow();
+
+  assertTruthy(isEntityNameAsRequested(entity.info.name, 'TitleOnly'));
 }
 
 async function upsertEntity_createNoAuthKey({ clientProvider }: AdminEntityTestContext) {
