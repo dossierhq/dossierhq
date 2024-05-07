@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/react-components
 
-This log was last generated on Sun, 05 May 2024 16:56:55 GMT and should not be manually modified.
+This log was last generated on Tue, 07 May 2024 22:07:47 GMT and should not be manually modified.
+
+## 0.7.5
+Tue, 07 May 2024 22:07:47 GMT
+
+### Updates
+
+- Make name optional in create/upsertEntity. Enable creating entity without authKey set.
 
 ## 0.7.4
 Sun, 05 May 2024 16:56:55 GMT
