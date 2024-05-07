@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/typescript-generator",
+      "comment": "Improve error message",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/typescript-generator"
+}
