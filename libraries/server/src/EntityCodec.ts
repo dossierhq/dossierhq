@@ -34,6 +34,7 @@ import {
   migrateDecodeAndNormalizeAdminEntityFields,
   migrateDecodeAndNormalizePublishedEntityFields,
 } from './shared-entity/migrateDecodeAndNormalizeEntityFields.js';
+import { assertIsDefined } from './utils/AssertUtils.js';
 
 export interface EncodeAdminEntityPayload {
   validationIssues: SaveValidationIssue[];
@@ -247,7 +248,7 @@ export async function encodeAdminEntity(
 
   let name = entity.info.name;
   if (!name) {
-    name = randomNameGenerator(entity.info.type);
+    name = createDefaultName(schema, entity);
   }
 
   const payload: EncodeAdminEntityPayload = {
@@ -275,4 +276,19 @@ export async function encodeAdminEntity(
   payload.entityIndexes.referenceIds.push(...referencesResult.value.references);
 
   return ok(payload);
+}
+
+function createDefaultName(schema: Schema, entity: Entity | EntityCreate): string {
+  const entitySpec = schema.getEntityTypeSpecification(entity.info.type);
+  assertIsDefined(entitySpec);
+  if (entitySpec.nameField) {
+    let fieldName = entity.fields[entitySpec.nameField] as string | null;
+    if (fieldName && typeof fieldName === 'string') {
+      fieldName = fieldName.trim();
+      if (fieldName.length > 0) {
+        return fieldName;
+      }
+    }
+  }
+  return randomNameGenerator(entity.info.type);
 }

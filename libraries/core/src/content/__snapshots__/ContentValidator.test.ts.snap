@@ -317,18 +317,6 @@ exports[`validateEntityInfoForCreate > name with line break 1`] = `
 }
 `;
 
-exports[`validateEntityInfoForCreate > no name 1`] = `
-{
-  "message": "Name is required",
-  "path": [
-    "entity",
-    "info",
-    "name",
-  ],
-  "type": "save",
-}
-`;
-
 exports[`validateEntityInfoForCreate > no type 1`] = `
 {
   "message": "Type is required",

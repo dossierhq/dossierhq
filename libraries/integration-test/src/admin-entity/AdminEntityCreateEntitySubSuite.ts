@@ -61,7 +61,8 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_duplicateName,
   createEntity_canUsePublishedNameOfOtherEntity,
   createEntity_fiveInParallelWithSameName,
-  createEntity_noName,
+  createEntity_noNameUsingTitleField,
+  createEntity_noNameUsingTypeName,
   createEntity_noAuthKeyUndefined,
   createEntity_noAuthKeyNull,
   createEntity_publishMinimal,
@@ -221,18 +222,34 @@ async function createEntity_fiveInParallelWithSameName({ clientProvider }: Admin
   }
 }
 
-async function createEntity_noName({ clientProvider }: AdminEntityTestContext) {
+async function createEntity_noNameUsingTitleField({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
-  const createResult = await client.createEntity<TitleOnly>(
-    copyEntity(TITLE_ONLY_CREATE, { info: { name: undefined } }),
-  );
+  const createResult = await client.createEntity<TitleOnly>({
+    info: { type: 'TitleOnly' },
+    fields: { title: 'The name set by title field' },
+  });
   const {
     entity: {
       info: { name },
     },
   } = createResult.valueOrThrow();
 
-  assertTruthy(isEntityNameAsRequested(name, 'TitleOnly'));
+  assertTruthy(isEntityNameAsRequested(name, 'The name set by title field'));
+}
+
+async function createEntity_noNameUsingTypeName({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity<Strings>({
+    info: { type: 'Strings' },
+    fields: {},
+  });
+  const {
+    entity: {
+      info: { name },
+    },
+  } = createResult.valueOrThrow();
+
+  assertTruthy(isEntityNameAsRequested(name, 'Strings'));
 }
 
 async function createEntity_noAuthKeyUndefined({ clientProvider }: AdminEntityTestContext) {
