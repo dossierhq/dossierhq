@@ -1,3 +1,4 @@
 /.heft/
 /playwright-report/
+/test-results/
 *.sqlite

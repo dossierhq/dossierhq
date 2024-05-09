@@ -50,15 +50,15 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.3",
+    "@rushstack/heft": "0.66.5",
     "@types/leaflet": "~1.9.12",
-    "@types/leaflet.locatecontrol": "~0.74.4",
+    "@types/leaflet.locatecontrol": "~0.74.5",
     "@types/react": "18.3.1",
     "eslint": "~8.57.0",
     "mini-svg-data-uri": "~1.4.4",
     "prettier": "3.2.5",
-    "react": "~18.3.0",
-    "svgo": "~3.2.0",
+    "react": "~18.3.1",
+    "svgo": "~3.3.1",
     "typescript": "~5.4.5"
   }
 }
