@@ -94,6 +94,7 @@ export interface DatabaseAdminEntityPayload {
   validPublished: boolean | null;
   createdAt: Date;
   updatedAt: Date;
+  updatedBy?: string;
   entityFields: DatabaseEntityFieldsPayload;
 }
 

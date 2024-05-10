@@ -59,7 +59,7 @@ describe('adminGetEntity', () => {
     expect(getRunAndQueryCalls(innerAdapter)).toMatchInlineSnapshot(`
       [
         [
-          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities e, entity_versions ev WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id",
+          "SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields, s.uuid AS subjects_uuid FROM entities e, entity_versions ev, subjects s WHERE e.uuid = ?1 AND e.latest_entity_versions_id = ev.id AND ev.created_by = s.id",
           "123",
         ],
       ]

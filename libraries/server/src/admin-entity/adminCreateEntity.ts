@@ -267,7 +267,10 @@ async function handleConflictWhenEntityIdIsProvided(
   if (decodeResult.isError()) return originalError;
   const existingEntity = decodeResult.value;
 
-  //TODO check creator
+  // Ensure entity is created by the same subject
+  if (getResult.value.updatedBy && getResult.value.updatedBy !== context.session.subjectId) {
+    return originalError;
+  }
 
   //  Ensure it hasn't been updated
   if (existingEntity.info.version !== 1) {

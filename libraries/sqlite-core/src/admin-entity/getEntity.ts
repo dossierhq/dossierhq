@@ -28,10 +28,7 @@ export async function adminGetEntity(
     'version' in reference
       ? await getEntityWithVersion(database, context, reference)
       : await getEntityWithLatestVersion(database, context, reference);
-  if (result.isError()) {
-    return result;
-  }
-
+  if (result.isError()) return result;
   const row = result.value;
 
   return ok({
@@ -48,13 +45,13 @@ async function getEntityWithLatestVersion(
   reference: EntityReference | UniqueIndexReference,
 ) {
   const { sql, query } = createSqliteSqlQuery();
-  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields`;
+  sql`SELECT e.uuid, e.type, e.name, e.auth_key, e.resolved_auth_key, e.created_at, e.updated_at, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.fields, s.uuid AS subjects_uuid`;
   if ('id' in reference) {
-    sql`FROM entities e, entity_versions ev WHERE e.uuid = ${reference.id}`;
+    sql`FROM entities e, entity_versions ev, subjects s WHERE e.uuid = ${reference.id}`;
   } else {
-    sql`FROM entities e, entity_versions ev, unique_index_values uiv WHERE uiv.index_name = ${reference.index} AND uiv.value = ${reference.value} AND uiv.latest AND uiv.entities_id = e.id`;
+    sql`FROM entities e, entity_versions ev, unique_index_values uiv, subjects s WHERE uiv.index_name = ${reference.index} AND uiv.value = ${reference.value} AND uiv.latest AND uiv.entities_id = e.id`;
   }
-  sql`AND e.latest_entity_versions_id = ev.id`;
+  sql`AND e.latest_entity_versions_id = ev.id AND ev.created_by = s.id`;
 
   const result = await queryNoneOrOne<
     Pick<
@@ -69,7 +66,9 @@ async function getEntityWithLatestVersion(
       | 'status'
       | 'invalid'
     > &
-      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'>
+      Pick<EntityVersionsTable, 'version' | 'schema_version' | 'encode_version' | 'fields'> & {
+        subjects_uuid: string;
+      }
   >(database, context, query);
   if (result.isError()) return result;
   if (!result.value) {

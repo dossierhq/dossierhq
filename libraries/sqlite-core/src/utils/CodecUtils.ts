@@ -25,7 +25,7 @@ export function resolveAdminEntityInfo(
     EntitiesTable,
     'auth_key' | 'created_at' | 'invalid' | 'name' | 'status' | 'type' | 'updated_at'
   > &
-    Pick<EntityVersionsTable, 'version'>,
+    Pick<EntityVersionsTable, 'version'> & { subjects_uuid?: string },
 ) {
   const status = resolveEntityStatus(row.status);
   return {
@@ -36,6 +36,7 @@ export function resolveAdminEntityInfo(
     status,
     type: row.type,
     updatedAt: new Date(row.updated_at),
+    updatedBy: row.subjects_uuid,
     version: row.version,
   };
 }

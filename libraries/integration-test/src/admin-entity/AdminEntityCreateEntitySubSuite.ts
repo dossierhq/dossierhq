@@ -89,6 +89,7 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
   createEntity_errorConflictAttemptingToCreateUpdatedEntity,
+  createEntity_errorConflictAttemptingToCreateDifferentSubjects,
   createEntity_errorConflictAttemptingToCreateDifferentType,
   createEntity_errorConflictAttemptingToCreateDifferentAuthKey,
   createEntity_errorConflictAttemptingToCreateDifferentName,
@@ -1037,6 +1038,26 @@ async function createEntity_errorConflictAttemptingToCreateUpdatedEntity({
   const secondCreateResult = await client.createEntity(
     copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Updated title' } }),
   );
+  assertErrorResult(
+    secondCreateResult,
+    ErrorType.Conflict,
+    `Entity with id (${id}) already exists`,
+  );
+}
+
+async function createEntity_errorConflictAttemptingToCreateDifferentSubjects({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const mainClient = clientProvider.dossierClient();
+  const secondaryClient = clientProvider.dossierClient('secondary');
+  const id = crypto.randomUUID();
+
+  const entityCreate = copyEntity(TITLE_ONLY_CREATE, { id });
+
+  assertOkResult(await mainClient.createEntity(entityCreate));
+
+  const secondCreateResult = await secondaryClient.createEntity(entityCreate);
+
   assertErrorResult(
     secondCreateResult,
     ErrorType.Conflict,
