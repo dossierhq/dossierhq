@@ -53,7 +53,7 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.5",
+    "@rushstack/heft": "0.66.6",
     "@types/better-sqlite3": "~7.6.10",
     "@vitest/coverage-v8": "~1.6.0",
     "better-sqlite3": "~9.6.0",
