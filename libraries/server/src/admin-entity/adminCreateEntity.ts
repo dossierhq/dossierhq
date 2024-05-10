@@ -268,7 +268,11 @@ async function handleConflictWhenEntityIdIsProvided(
   const existingEntity = decodeResult.value;
 
   // Ensure entity is created by the same subject
-  if (getResult.value.updatedBy && getResult.value.updatedBy !== context.session.subjectId) {
+  if (!getResult.value.updatedBy) {
+    //TODO remove when we always have updatedBy
+    return originalError;
+  }
+  if (getResult.value.updatedBy !== context.session.subjectId) {
     return originalError;
   }
 
