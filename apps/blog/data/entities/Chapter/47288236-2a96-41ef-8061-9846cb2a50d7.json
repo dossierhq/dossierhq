@@ -147,6 +147,26 @@
             }
           }
         ]
+      },
+      {
+        "type": "TocItem",
+        "title": "Dossier API",
+        "items": [
+          {
+            "type": "ArticleTocItem",
+            "title": "createEntity",
+            "article": {
+              "id": "f3125418-8a32-40ba-ac50-c53a211b48dc"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "updateEntity",
+            "article": {
+              "id": "11047baa-8c2c-46f9-9a0e-7e6dc04fa6d9"
+            }
+          }
+        ]
       }
     ]
   }
