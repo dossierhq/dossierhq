@@ -116,7 +116,7 @@ async function createEntityRow(
         } else if (
           databaseAdapter.isUniqueViolationOfConstraint(error, UniqueConstraints.entities_uuid_key)
         ) {
-          return notOk.Conflict(`Entity with id (${entity.id}) already exist`);
+          return notOk.Conflict(`Entity with id (${entity.id}) already exists`);
         }
         return notOk.GenericUnexpectedException(context, error);
       });

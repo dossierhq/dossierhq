@@ -1283,7 +1283,7 @@ describe('createEntity()', () => {
       expectErrorResult(
         secondCreateResult,
         ErrorType.Conflict,
-        `Entity with id (${id}) already exist`,
+        `Entity with id (${id}) already exists`,
       );
     }
   });

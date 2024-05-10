@@ -1,7 +1,10 @@
 import {
   contentValuePathToString,
   EntityStatus,
+  ErrorType,
   EventType,
+  getEntityNameBase,
+  isFieldValueEqual,
   notOk,
   ok,
   validateEntityInfoForCreate,
@@ -10,15 +13,14 @@ import {
   type EntityCreate,
   type EntityCreatePayload,
   type EntityMutationOptions,
-  type ErrorType,
   type PromiseResult,
   type SchemaWithMigrations,
 } from '@dossierhq/core';
-import type { DatabaseAdapter } from '@dossierhq/database-adapter';
+import type { DatabaseAdapter, ResolvedAuthKey } from '@dossierhq/database-adapter';
 import { authResolveAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
-import { encodeAdminEntity, resolveCreateEntity } from '../EntityCodec.js';
+import { decodeAdminEntity, encodeAdminEntity, resolveCreateEntity } from '../EntityCodec.js';
 import { randomNameGenerator } from './AdminEntityMutationUtils.js';
 import { adminPublishEntityAfterMutation } from './adminPublishEntities.js';
 import { updateUniqueIndexesForEntity } from './updateUniqueIndexesForEntity.js';
@@ -139,7 +141,13 @@ async function doCreateEntity(
 
   const version = 1;
 
-  return await context.withTransaction(async (context) => {
+  const result = await context.withTransaction<
+    EntityCreatePayload,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.Conflict
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  >(async (context) => {
     const createResult = await databaseAdapter.adminEntityCreate(
       context,
       randomNameGenerator,
@@ -224,4 +232,75 @@ async function doCreateEntity(
 
     return ok({ effect, entity: payload });
   });
+
+  if (result.isError() && result.isErrorType(ErrorType.Conflict) && entity.id) {
+    return handleConflictWhenEntityIdIsProvided(
+      schema,
+      databaseAdapter,
+      context,
+      entity.id,
+      resolvedAuthKey,
+      createEntity, // contains normalized fields
+      publish,
+      result,
+    );
+  }
+
+  return result;
+}
+
+async function handleConflictWhenEntityIdIsProvided(
+  schema: SchemaWithMigrations,
+  databaseAdapter: DatabaseAdapter,
+  context: SessionContext,
+  entityId: string,
+  resolvedAuthKey: ResolvedAuthKey,
+  entityCreate: EntityCreate,
+  publish: boolean,
+  originalError: Awaited<ReturnType<typeof doCreateEntity>>,
+): ReturnType<typeof doCreateEntity> {
+  // Fetch existing entity
+  const getResult = await databaseAdapter.adminEntityGetOne(context, { id: entityId });
+  if (getResult.isError()) return originalError;
+
+  const decodeResult = decodeAdminEntity(schema, getResult.value);
+  if (decodeResult.isError()) return originalError;
+  const existingEntity = decodeResult.value;
+
+  //TODO check creator
+
+  //  Ensure it hasn't been updated
+  if (existingEntity.info.version !== 1) {
+    return originalError;
+  }
+
+  // Ensure authKey is as expected
+  if (
+    resolvedAuthKey.authKey !== getResult.value.authKey ||
+    resolvedAuthKey.resolvedAuthKey !== getResult.value.resolvedAuthKey
+  ) {
+    return originalError;
+  }
+
+  // Ensure entity info is as expected
+  if (entityCreate.info.type !== existingEntity.info.type) {
+    return originalError;
+  }
+
+  if (
+    entityCreate.info.name &&
+    getEntityNameBase(entityCreate.info.name) !== getEntityNameBase(existingEntity.info.name)
+  ) {
+    return originalError;
+  }
+
+  const expectedStatus = publish ? 'published' : 'draft';
+  if (expectedStatus !== existingEntity.info.status) return originalError;
+
+  // Ensure fields are as expected
+  if (!isFieldValueEqual(entityCreate.fields, existingEntity.fields)) {
+    return originalError;
+  }
+
+  return ok({ effect: 'none', entity: existingEntity });
 }

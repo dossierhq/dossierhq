@@ -50,6 +50,7 @@ import {
   STRINGS_CREATE,
   SUBJECT_ONLY_ADMIN_ENTITY,
   SUBJECT_ONLY_CREATE,
+  SUBJECT_OR_DEFAULT_CREATE,
   TITLE_ONLY_ADMIN_ENTITY,
   TITLE_ONLY_CREATE,
 } from '../shared-entity/Fixtures.js';
@@ -58,6 +59,9 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   createEntity_minimal,
   createEntity_withId,
+  createEntity_withIdTwice,
+  createEntity_withIdTwicePublished,
+  createEntity_withIdTwiceNormalizeFields,
   createEntity_duplicateName,
   createEntity_canUsePublishedNameOfOtherEntity,
   createEntity_fiveInParallelWithSameName,
@@ -84,6 +88,11 @@ export const CreateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   createEntity_withRichTextFieldWithComponent,
   createEntity_withTwoReferences,
   createEntity_withMultipleLocations,
+  createEntity_errorConflictAttemptingToCreateUpdatedEntity,
+  createEntity_errorConflictAttemptingToCreateDifferentAuthKey,
+  createEntity_errorConflictAttemptingToCreateDifferentName,
+  createEntity_errorConflictAttemptingToCreateDifferentStatus,
+  createEntity_errorConflictAttemptingToCreateDifferentFields,
   createEntity_errorAuthKeyNotMatchingPattern,
   createEntity_errorMultilineStringInTitle,
   createEntity_errorStringNotMatchingMatchPattern,
@@ -155,6 +164,66 @@ async function createEntity_withId({ clientProvider }: AdminEntityTestContext) {
   assertOkResult(getResult);
   assertIsTitleOnly(getResult.value);
   assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_withIdTwice({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+  const entityCreate = copyEntity(TITLE_ONLY_CREATE, { id });
+  const firstResult = await client.createEntity<TitleOnly>(entityCreate);
+  assertOkResult(firstResult);
+
+  const secondResult = await client.createEntity<TitleOnly>(entityCreate);
+  assertOkResult(secondResult);
+
+  assertResultValue(secondResult, {
+    effect: 'none',
+    entity: firstResult.value.entity,
+  });
+
+  assertEquals(firstResult.value.entity, secondResult.value.entity);
+}
+
+async function createEntity_withIdTwicePublished({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+  const entityCreate = copyEntity(TITLE_ONLY_CREATE, { id });
+  const firstResult = await client.createEntity<TitleOnly>(entityCreate, { publish: true });
+  assertOkResult(firstResult);
+
+  const secondResult = await client.createEntity<TitleOnly>(entityCreate, { publish: true });
+  assertOkResult(secondResult);
+
+  assertResultValue(secondResult, {
+    effect: 'none',
+    entity: firstResult.value.entity,
+  });
+
+  assertEquals(firstResult.value.entity, secondResult.value.entity);
+}
+
+async function createEntity_withIdTwiceNormalizeFields({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+  const entityCreate = copyEntity(STRINGS_CREATE, { id });
+  const firstResult = await client.createEntity(
+    copyEntity(entityCreate, { fields: { valuesList: null } }),
+  );
+  assertOkResult(firstResult);
+
+  // since empty list is normalized to null we check that the quality check on fields are done on normalized values
+  const secondResult = await client.createEntity(
+    copyEntity(entityCreate, { fields: { valuesList: [] } }),
+  );
+  assertOkResult(secondResult);
+  assertSame(secondResult.value.entity.fields.valuesList, null);
+
+  assertResultValue(secondResult, {
+    effect: 'none',
+    entity: firstResult.value.entity,
+  });
+
+  assertEquals(firstResult.value.entity, secondResult.value.entity);
 }
 
 async function createEntity_duplicateName({ clientProvider }: AdminEntityTestContext) {
@@ -947,6 +1016,109 @@ async function createEntity_withMultipleLocations({ clientProvider }: AdminEntit
   assertOkResult(getResult);
   assertIsLocations(getResult.value);
   assertEquals(getResult.value, expectedEntity);
+}
+
+async function createEntity_errorConflictAttemptingToCreateUpdatedEntity({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+
+  // Create and update entity (so its version becomes 2)
+  const firstCreateResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Original title' } }),
+  );
+  assertOkResult(firstCreateResult);
+
+  assertOkResult(await client.updateEntity({ id, fields: { title: 'Updated title' } }));
+
+  // Attempt to create entity with same ID
+  const secondCreateResult = await client.createEntity(
+    copyEntity(TITLE_ONLY_CREATE, { id, fields: { title: 'Updated title' } }),
+  );
+  assertErrorResult(
+    secondCreateResult,
+    ErrorType.Conflict,
+    `Entity with id (${id}) already exists`,
+  );
+}
+
+async function createEntity_errorConflictAttemptingToCreateDifferentAuthKey({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+
+  const entityCreate = copyEntity(SUBJECT_OR_DEFAULT_CREATE, { id, info: { authKey: 'subject' } });
+
+  assertOkResult(await client.createEntity(entityCreate));
+
+  const secondCreateResult = await client.createEntity(
+    copyEntity(entityCreate, { info: { authKey: '' } }),
+  );
+  assertErrorResult(
+    secondCreateResult,
+    ErrorType.Conflict,
+    `Entity with id (${id}) already exists`,
+  );
+}
+
+async function createEntity_errorConflictAttemptingToCreateDifferentName({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+
+  const entityCreate = copyEntity(TITLE_ONLY_CREATE, { id, info: { name: 'First name' } });
+
+  assertOkResult(await client.createEntity(entityCreate));
+
+  const secondCreateResult = await client.createEntity(
+    copyEntity(entityCreate, { info: { name: 'Another name' } }),
+  );
+  assertErrorResult(
+    secondCreateResult,
+    ErrorType.Conflict,
+    `Entity with id (${id}) already exists`,
+  );
+}
+
+async function createEntity_errorConflictAttemptingToCreateDifferentStatus({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+
+  const entityCreate = copyEntity(TITLE_ONLY_CREATE, { id });
+
+  assertOkResult(await client.createEntity(entityCreate));
+
+  const secondCreateResult = await client.createEntity(entityCreate, { publish: true });
+  assertErrorResult(
+    secondCreateResult,
+    ErrorType.Conflict,
+    `Entity with id (${id}) already exists`,
+  );
+}
+
+async function createEntity_errorConflictAttemptingToCreateDifferentFields({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+
+  const entityCreate = copyEntity(TITLE_ONLY_CREATE, { id });
+
+  assertOkResult(await client.createEntity(entityCreate));
+
+  const secondCreateResult = await client.createEntity(
+    copyEntity(entityCreate, { fields: { title: 'Another title' } }),
+  );
+  assertErrorResult(
+    secondCreateResult,
+    ErrorType.Conflict,
+    `Entity with id (${id}) already exists`,
+  );
 }
 
 async function createEntity_errorAuthKeyNotMatchingPattern({
