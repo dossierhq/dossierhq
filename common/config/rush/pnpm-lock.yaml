@@ -253,8 +253,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -411,8 +411,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -521,8 +521,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -725,8 +725,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/bun':
         specifier: ~1.1.1
         version: 1.1.1
@@ -771,8 +771,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -817,8 +817,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/bun':
         specifier: ~1.1.1
         version: 1.1.1
@@ -860,8 +860,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/react':
         specifier: 18.3.1
         version: 18.3.1
@@ -894,8 +894,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@vitest/coverage-v8':
         specifier: ~1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.12.11)(sass@1.77.0))
@@ -931,8 +931,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -965,8 +965,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1029,8 +1029,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@storybook/addon-actions':
         specifier: ~8.0.10
         version: 8.0.10
@@ -1150,8 +1150,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/better-sqlite3':
         specifier: ~7.6.10
         version: 7.6.10
@@ -1202,8 +1202,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/node':
         specifier: ~20.12.11
         version: 20.12.11
@@ -1245,8 +1245,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/leaflet':
         specifier: ~1.9.12
         version: 1.9.12
@@ -1306,8 +1306,8 @@ importers:
         specifier: ~0.6.0
         version: 0.6.0
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1358,8 +1358,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/pg':
         specifier: ~8.11.6
         version: 8.11.6
@@ -1413,8 +1413,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1498,8 +1498,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@storybook/addon-actions':
         specifier: ~8.0.10
         version: 8.0.10
@@ -1607,8 +1607,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@vitest/coverage-v8':
         specifier: ~1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.12.11)(sass@1.77.0))
@@ -1653,8 +1653,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -1751,8 +1751,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1785,8 +1785,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@vitest/coverage-v8':
         specifier: ~1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.12.11)(sass@1.77.0))
@@ -1813,14 +1813,14 @@ importers:
         version: 5.4.5
     devDependencies:
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.3.26
-        version: 0.3.26(@rushstack/heft@0.66.5(@types/node@20.12.11))(@types/node@20.12.11)
+        version: 0.3.26(@rushstack/heft@0.66.6(@types/node@20.12.11))(@types/node@20.12.11)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.5.3
-        version: 0.5.3(@rushstack/heft@0.66.5(@types/node@20.12.11))(@types/node@20.12.11)
+        version: 0.5.3(@rushstack/heft@0.66.6(@types/node@20.12.11))(@types/node@20.12.11)
 
   ../../stack/eslint-config-generic:
     dependencies:
@@ -1865,8 +1865,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1896,8 +1896,8 @@ importers:
         specifier: ~4.2.1
         version: 4.2.1(@vue/compiler-sfc@3.4.15)(prettier@3.2.5)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2104,14 +2104,14 @@ importers:
         specifier: ~15.2.3
         version: 15.2.3(rollup@4.17.2)
       '@rushstack/heft':
-        specifier: 0.66.5
-        version: 0.66.5(@types/node@20.12.11)
+        specifier: 0.66.6
+        version: 0.66.6(@types/node@20.12.11)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.3.26
-        version: 0.3.26(@rushstack/heft@0.66.5(@types/node@20.12.11))(@types/node@20.12.11)
+        version: 0.3.26(@rushstack/heft@0.66.6(@types/node@20.12.11))(@types/node@20.12.11)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.5.3
-        version: 0.5.3(@rushstack/heft@0.66.5(@types/node@20.12.11))(@types/node@20.12.11)
+        version: 0.5.3(@rushstack/heft@0.66.6(@types/node@20.12.11))(@types/node@20.12.11)
       '@storybook/addon-actions':
         specifier: ~8.0.10
         version: 8.0.10
@@ -5253,6 +5253,10 @@ packages:
     resolution: {integrity: sha512-79iyZ4UimMXO28SKSQb9bVqxhQ/nAfKUB/XkF0FJfcLe6jxa3vUA3lhHPlq3GPR5h4i9ZxOwa61yCvS4E1+UAQ==}
     engines: {node: '>=10.13.0'}
 
+  '@rushstack/heft-config-file@0.14.17':
+    resolution: {integrity: sha512-3wmzGPj6tphMwQEMLztv4PU2aPHdPkfzJNnMpOBsexvRIcCtat/LxXZhJskp7iQb9VVQOpQQIB/lvAOrpO+rtw==}
+    engines: {node: '>=10.13.0'}
+
   '@rushstack/heft-lint-plugin@0.3.26':
     resolution: {integrity: sha512-oy5EbToByGgLqBNXp0VfYG2TbsCPZqRAHtfn/pv1NLJ4vQR1370rdXiOMG8YJ5E2BHIfCgaoWRrqS0jSGB0jrg==}
     peerDependencies:
@@ -5263,8 +5267,8 @@ packages:
     peerDependencies:
       '@rushstack/heft': 0.66.5
 
-  '@rushstack/heft@0.66.5':
-    resolution: {integrity: sha512-Ix2PkY+CdsF/P7lWydWg4eQQSK/EfAJTuA9FexzIennq5+Oc5rcEmNQF4FKGhJSPPYfpv0x7dg7q/laesNmrFA==}
+  '@rushstack/heft@0.66.6':
+    resolution: {integrity: sha512-ii1hcRcaToDi74LCDKCwq4zz1t/jJfe++bTCKBYNu4fN9c+8MLZitv1OMfeTfvyDxV6G8XgdmRvnTKbdR5zW4w==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
@@ -5276,8 +5280,16 @@ packages:
       '@types/node':
         optional: true
 
-  '@rushstack/operation-graph@0.2.16':
-    resolution: {integrity: sha512-Ip+DmQLvsdFSP49HGYfxKYbDbLgnFDRevbdxYJJ2x9sCkJLTkg9gW9AfWi3fN2SqkNSLPxPEIKUlvFZOrlbeYw==}
+  '@rushstack/node-core-library@4.2.1':
+    resolution: {integrity: sha512-jO8tR7ySxwy2c34QXSQDT9C22EfyisQruKT39FpipPOJAwKejug86eM+FL0QmkqbWGwpmfzkp3pyV71I5ZD9FA==}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
+  '@rushstack/operation-graph@0.2.17':
+    resolution: {integrity: sha512-0leJuIFv/Lrvzt6p+y9xqZ+NETkbFq7APhMKlKsXyiPoHVZ1upt2yOVvCxy9ZO2YAjiZg0P8/Zase3bMF+PIAA==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
@@ -5316,8 +5328,19 @@ packages:
       '@types/node':
         optional: true
 
+  '@rushstack/terminal@0.10.3':
+    resolution: {integrity: sha512-4wEPvn9bTD4cixW+FQxlCtZmVIp73gUEAFutPXDo7Nik5bqmbP+fkZcd3Zjr+hOQyyu85d6+1R1DOPcchJX5ww==}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+
   '@rushstack/ts-command-line@4.19.4':
     resolution: {integrity: sha512-OH7SPCTjEus/KNDBZ2RbsbVQZ9/H/TJI+TcuiiQjxZ3beMTcQLGaPt5BuXk/c0AS0FQbOGT+2+AJmTZZq6Fhtw==}
+
+  '@rushstack/ts-command-line@4.19.5':
+    resolution: {integrity: sha512-0baDWdyMeB2LFHn1T8PKmy2rGclJoDruOjxwARrM4Oe66YjO9GfVZYwpM8ePdzJprWhkCnYLSxGUKJiWmUpapg==}
 
   '@sentry-internal/feedback@7.114.0':
     resolution: {integrity: sha512-kUiLRUDZuh10QE9JbSVVLgqxFoD9eDPOzT0MmzlPuas8JlTmJuV4FtSANNcqctd5mBuLt2ebNXH0MhRMwyae4A==}
@@ -14986,17 +15009,26 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/heft-lint-plugin@0.3.26(@rushstack/heft@0.66.5(@types/node@20.12.11))(@types/node@20.12.11)':
+  '@rushstack/heft-config-file@0.14.17(@types/node@20.12.11)':
     dependencies:
-      '@rushstack/heft': 0.66.5(@types/node@20.12.11)
+      '@rushstack/node-core-library': 4.2.1(@types/node@20.12.11)
+      '@rushstack/rig-package': 0.5.2
+      '@rushstack/terminal': 0.10.3(@types/node@20.12.11)
+      jsonpath-plus: 4.0.0
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@rushstack/heft-lint-plugin@0.3.26(@rushstack/heft@0.66.6(@types/node@20.12.11))(@types/node@20.12.11)':
+    dependencies:
+      '@rushstack/heft': 0.66.6(@types/node@20.12.11)
       '@rushstack/node-core-library': 4.2.0(@types/node@20.12.11)
       semver: 7.5.4
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/heft-typescript-plugin@0.5.3(@rushstack/heft@0.66.5(@types/node@20.12.11))(@types/node@20.12.11)':
+  '@rushstack/heft-typescript-plugin@0.5.3(@rushstack/heft@0.66.6(@types/node@20.12.11))(@types/node@20.12.11)':
     dependencies:
-      '@rushstack/heft': 0.66.5(@types/node@20.12.11)
+      '@rushstack/heft': 0.66.6(@types/node@20.12.11)
       '@rushstack/heft-config-file': 0.14.16(@types/node@20.12.11)
       '@rushstack/node-core-library': 4.2.0(@types/node@20.12.11)
       '@types/tapable': 1.0.6
@@ -15005,14 +15037,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/heft@0.66.5(@types/node@20.12.11)':
+  '@rushstack/heft@0.66.6(@types/node@20.12.11)':
     dependencies:
-      '@rushstack/heft-config-file': 0.14.16(@types/node@20.12.11)
-      '@rushstack/node-core-library': 4.2.0(@types/node@20.12.11)
-      '@rushstack/operation-graph': 0.2.16(@types/node@20.12.11)
+      '@rushstack/heft-config-file': 0.14.17(@types/node@20.12.11)
+      '@rushstack/node-core-library': 4.2.1(@types/node@20.12.11)
+      '@rushstack/operation-graph': 0.2.17(@types/node@20.12.11)
       '@rushstack/rig-package': 0.5.2
-      '@rushstack/terminal': 0.10.2(@types/node@20.12.11)
-      '@rushstack/ts-command-line': 4.19.4(@types/node@20.12.11)
+      '@rushstack/terminal': 0.10.3(@types/node@20.12.11)
+      '@rushstack/ts-command-line': 4.19.5(@types/node@20.12.11)
       '@types/tapable': 1.0.6
       fast-glob: 3.3.2
       git-repo-info: 2.1.1
@@ -15034,10 +15066,21 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.12.11
 
-  '@rushstack/operation-graph@0.2.16(@types/node@20.12.11)':
+  '@rushstack/node-core-library@4.2.1(@types/node@20.12.11)':
     dependencies:
-      '@rushstack/node-core-library': 4.2.0(@types/node@20.12.11)
-      '@rushstack/terminal': 0.10.2(@types/node@20.12.11)
+      fs-extra: 7.0.1
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.22.8
+      semver: 7.5.4
+      z-schema: 5.0.5
+    optionalDependencies:
+      '@types/node': 20.12.11
+
+  '@rushstack/operation-graph@0.2.17(@types/node@20.12.11)':
+    dependencies:
+      '@rushstack/node-core-library': 4.2.1(@types/node@20.12.11)
+      '@rushstack/terminal': 0.10.3(@types/node@20.12.11)
     optionalDependencies:
       '@types/node': 20.12.11
 
@@ -15123,9 +15166,25 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.12.11
 
+  '@rushstack/terminal@0.10.3(@types/node@20.12.11)':
+    dependencies:
+      '@rushstack/node-core-library': 4.2.1(@types/node@20.12.11)
+      supports-color: 8.1.1
+    optionalDependencies:
+      '@types/node': 20.12.11
+
   '@rushstack/ts-command-line@4.19.4(@types/node@20.12.11)':
     dependencies:
       '@rushstack/terminal': 0.10.2(@types/node@20.12.11)
+      '@types/argparse': 1.0.38
+      argparse: 1.0.10
+      string-argv: 0.3.2
+    transitivePeerDependencies:
+      - '@types/node'
+
+  '@rushstack/ts-command-line@4.19.5(@types/node@20.12.11)':
+    dependencies:
+      '@rushstack/terminal': 0.10.3(@types/node@20.12.11)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
