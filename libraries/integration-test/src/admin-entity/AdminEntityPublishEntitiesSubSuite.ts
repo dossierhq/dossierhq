@@ -33,6 +33,7 @@ export const PublishEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext
   publishEntities_publishEntitiesEvent,
   publishEntities_fixInvalidEntityByPublishing,
   publishEntities_errorInvalidId,
+  publishEntities_errorInvalidVersion,
   publishEntities_errorDuplicateIds,
   publishEntities_errorMissingRequiredTitle,
   publishEntities_errorWrongAuthKey,
@@ -366,6 +367,15 @@ async function publishEntities_errorInvalidId({ clientProvider }: AdminEntityTes
     ErrorType.NotFound,
     'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
   );
+}
+
+async function publishEntities_errorInvalidVersion({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const { entity } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  const publishResult = await client.publishEntities([{ id: entity.id, version: 100 }]);
+  assertErrorResult(publishResult, ErrorType.NotFound, `No such entities: ${entity.id}`);
 }
 
 async function publishEntities_errorDuplicateIds({ clientProvider }: AdminEntityTestContext) {

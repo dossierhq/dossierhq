@@ -1263,31 +1263,6 @@ describe('createEntity()', () => {
     }
   });
 
-  test('Error: Create with already existing', async () => {
-    const firstCreateResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo' },
-      fields: { title: 'First' },
-    });
-
-    if (expectOkResult(firstCreateResult)) {
-      const {
-        entity: { id },
-      } = firstCreateResult.value;
-
-      const secondCreateResult = await client.createEntity({
-        id,
-        info: { type: 'EntityAdminBar', name: 'Bar' },
-        fields: { title: 'Second' },
-      });
-
-      expectErrorResult(
-        secondCreateResult,
-        ErrorType.Conflict,
-        `Entity with id (${id}) already exists`,
-      );
-    }
-  });
-
   test('Error: Create with invalid version', async () => {
     const result = await client.createEntity({
       info: {
@@ -2986,31 +2961,6 @@ describe('publishEntities()', () => {
         ErrorType.BadRequest,
         `entity(${bazId}).fields.body[0].data.one: Required field is empty`,
       );
-    }
-  });
-
-  test('Error: Published unknown entity', async () => {
-    const publishResult = await client.publishEntities([
-      { id: 'b1bdcb61-e6aa-47ff-98d8-4cfe8197b290', version: 1 },
-    ]);
-    expectErrorResult(
-      publishResult,
-      ErrorType.NotFound,
-      'No such entities: b1bdcb61-e6aa-47ff-98d8-4cfe8197b290',
-    );
-  });
-
-  test('Error: Published unknown version', async () => {
-    const createFooResult = await client.createEntity({
-      info: { type: 'EntityAdminFoo', name: 'Foo name' },
-      fields: { title: 'Foo title' },
-    });
-    if (expectOkResult(createFooResult)) {
-      const {
-        entity: { id: fooId },
-      } = createFooResult.value;
-      const publishResult = await client.publishEntities([{ id: fooId, version: 100 }]);
-      expectErrorResult(publishResult, ErrorType.NotFound, `No such entities: ${fooId}`);
     }
   });
 });
