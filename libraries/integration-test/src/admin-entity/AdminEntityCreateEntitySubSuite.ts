@@ -1050,8 +1050,6 @@ async function createEntity_errorConflictAttemptingToCreateDifferentType({
   const client = clientProvider.dossierClient();
   const id = crypto.randomUUID();
 
-  const entityCreate = copyEntity(SUBJECT_OR_DEFAULT_CREATE, { id, info: { authKey: 'subject' } });
-
   assertOkResult(
     await client.createEntity({
       id,
