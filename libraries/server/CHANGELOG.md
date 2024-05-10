@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/server
 
-This log was last generated on Tue, 07 May 2024 22:07:47 GMT and should not be manually modified.
+This log was last generated on Fri, 10 May 2024 12:33:35 GMT and should not be manually modified.
+
+## 0.7.6
+Fri, 10 May 2024 12:33:35 GMT
+
+### Updates
+
+- Use nameField to create default name. Return effect=none instead of Conflict if creating identity existing entity
 
 ## 0.7.5
 Tue, 07 May 2024 22:07:47 GMT
