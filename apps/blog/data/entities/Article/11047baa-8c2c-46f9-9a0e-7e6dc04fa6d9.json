@@ -1,9 +1,9 @@
 {
   "id": "11047baa-8c2c-46f9-9a0e-7e6dc04fa6d9",
   "info": {
+    "name": "Dossier API – updateEntity",
     "type": "Article",
     "authKey": "",
-    "name": "Dossier API – updateEntity",
     "status": "published",
     "valid": true,
     "validPublished": true
@@ -41,7 +41,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " is used to update an existing entity. You can also publish the entity, in one atomic operation, by providing ",
+                "text": " is used to update an existing entity. You can also publish the entity, in one atomic operation, by setting options to ",
                 "type": "text",
                 "version": 1
               },
@@ -59,7 +59,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " to the options.",
+                "text": ".",
                 "type": "text",
                 "version": 1
               }
@@ -71,7 +71,7 @@
             "indent": 0,
             "type": "code",
             "version": 1,
-            "language": "javascript",
+            "language": "typescript",
             "children": [
               {
                 "detail": 0,
@@ -163,19 +163,9 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "    ",
+                "text": "    entity",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "entity",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "literal-property"
               },
               {
                 "detail": 0,
@@ -611,19 +601,9 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  ",
+                "text": "  id",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "id",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "literal-property"
               },
               {
                 "detail": 0,
@@ -640,9 +620,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " string",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -744,9 +734,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " string",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -796,9 +796,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " string",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -848,9 +858,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " number",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "number",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -900,7 +920,26 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " string ",
+                "text": " ",
+                "type": "code-highlight",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "string",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
               },
@@ -985,19 +1024,9 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  ",
+                "text": "  fields",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "fields",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "literal-property"
               },
               {
                 "detail": 0,
@@ -1035,7 +1064,8 @@
                 "style": "",
                 "text": "string",
                 "type": "code-highlight",
-                "version": 1
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -1052,9 +1082,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " unknown",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "unknown",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -1184,9 +1224,19 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " boolean",
+                "text": " ",
                 "type": "code-highlight",
                 "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "boolean",
+                "type": "code-highlight",
+                "version": 1,
+                "highlightType": "builtin"
               },
               {
                 "detail": 0,
@@ -1277,19 +1327,9 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  ",
+                "text": "  effect",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "effect",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "literal-property"
               },
               {
                 "detail": 0,
@@ -1453,19 +1493,9 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "  ",
+                "text": "  entity",
                 "type": "code-highlight",
                 "version": 1
-              },
-              {
-                "detail": 0,
-                "format": 0,
-                "mode": "normal",
-                "style": "",
-                "text": "entity",
-                "type": "code-highlight",
-                "version": 1,
-                "highlightType": "literal-property"
               },
               {
                 "detail": 0,
@@ -1560,7 +1590,43 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " sync event.",
+                "text": " sync event. If the entity is published, due to no change to the entity and options set to ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "{ publish: true }",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " , a ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "text": "publishEntities",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " sync event is generated.",
                 "type": "text",
                 "version": 1
               }
