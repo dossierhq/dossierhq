@@ -56,6 +56,7 @@ export const UpdateEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   updateEntity_noChangeAndPublishPublishedEntity,
   updateEntity_updateEntityEvent,
   updateEntity_updateAndPublishEntityEvent,
+  updateEntity_publishEntitiesEventDueToNoChangeAndPublish,
   updateEntity_fixInvalidEntity,
   updateEntity_fixInvalidComponent,
   updateEntity_withMultilineField,
@@ -519,6 +520,46 @@ async function updateEntity_updateAndPublishEntityEvent({
       createdAt: updatedAt,
       createdBy: '',
       entities: [{ id, name: updatedName, version: 2, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function updateEntity_publishEntitiesEventDueToNoChangeAndPublish({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt },
+    },
+  } = createResult.valueOrThrow();
+
+  const updateResult = await client.updateEntity({ id, fields: {} }, { publish: true });
+  const {
+    effect: updateEffect,
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.valueOrThrow();
+  assertEquals(updateEffect, 'published');
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.publishEntities,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name, version: 1, type: 'TitleOnly' }],
       unauthorizedEntityCount: 0,
     },
   ]);

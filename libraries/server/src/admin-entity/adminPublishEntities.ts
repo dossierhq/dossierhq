@@ -106,6 +106,7 @@ export async function adminPublishEntityAfterMutation(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   reference: EntityVersionReference,
+  createEvents: boolean,
   syncEvent: CreateEntitySyncEvent | UpdateEntitySyncEvent | null,
 ): PromiseResult<
   EntityPublishPayload,
@@ -117,7 +118,7 @@ export async function adminPublishEntityAfterMutation(
     databaseAdapter,
     context,
     [reference],
-    false,
+    createEvents,
     syncEvent,
   );
   if (publishResult.isError()) {

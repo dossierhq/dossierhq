@@ -220,6 +220,7 @@ async function doCreateEntity(
         databaseAdapter,
         context,
         { id, version: payload.info.version },
+        false,
         syncEvent,
       );
       if (publishResult.isError()) return publishResult;

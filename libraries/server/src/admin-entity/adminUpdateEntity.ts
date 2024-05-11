@@ -138,6 +138,7 @@ async function doUpdateEntity(
             databaseAdapter,
             context,
             { id: updatedEntity.id, version: updatedEntity.info.version },
+            true,
             syncEvent,
           );
           if (publishResult.isError()) return publishResult;
@@ -220,6 +221,7 @@ async function doUpdateEntity(
           databaseAdapter,
           context,
           { id: updatedEntity.id, version: updatedEntity.info.version },
+          false,
           syncEvent,
         );
         if (publishResult.isError()) return publishResult;
