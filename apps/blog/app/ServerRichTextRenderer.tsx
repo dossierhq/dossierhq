@@ -26,6 +26,7 @@ import { CodapiSnippet } from '../components/CodapiSnippet/CodapiSnippet';
 import { BrowserUrls } from '../utils/BrowserUrls';
 import {
   isPublishedArticle,
+  isPublishedBlogPost,
   isPublishedCloudinaryImage,
   isPublishedCodapiSnippet,
   isPublishedGlossaryTerm,
@@ -158,6 +159,12 @@ async function renderNode(
       } else if (isPublishedArticle(entity)) {
         return (
           <Link key={key} href={BrowserUrls.article(entity.fields.slug)}>
+            {await renderChildren(context, node)}
+          </Link>
+        );
+      } else if (isPublishedBlogPost(entity)) {
+        return (
+          <Link key={key} href={BrowserUrls.blogPost(entity.fields.slug)}>
             {await renderChildren(context, node)}
           </Link>
         );

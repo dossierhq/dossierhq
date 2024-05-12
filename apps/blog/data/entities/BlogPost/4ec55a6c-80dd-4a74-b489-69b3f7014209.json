@@ -1,0 +1,268 @@
+{
+  "id": "4ec55a6c-80dd-4a74-b489-69b3f7014209",
+  "info": {
+    "name": "Interactive code examples using codapi",
+    "type": "BlogPost",
+    "authKey": "",
+    "status": "published",
+    "valid": true,
+    "validPublished": true
+  },
+  "fields": {
+    "title": "Interactive code examples using codapi",
+    "slug": "interactive-code-examples",
+    "publishedDate": "2024-05-12T22:15Z",
+    "updatedDate": null,
+    "authors": [
+      {
+        "id": "cdba0419-454f-479f-b97b-c1baeef0f1c1"
+      }
+    ],
+    "hero": {
+      "type": "CloudinaryImage",
+      "publicId": "Blog/xqdmzf8iydpg6fmvti5r",
+      "width": 3882,
+      "height": 2584,
+      "alt": "A laptop with code editor opened"
+    },
+    "description": "Dossier documentation now includes interactive code examples",
+    "body": {
+      "root": {
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "I've been wanting to include interactive code examples in the documentation for Dossier for a while now. I really ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "c65a8738-64b3-44d8-8b1a-bb2f3c72ef12"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "enjoyed using Observable notebooks",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ", but want something more integrated for the documentation. In addition, the fact that Observable is reactive requires a bit of a mental shift for the reader. A much simpler alternative is ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noreferrer",
+                "target": null,
+                "title": null,
+                "url": "https://codapi.org/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "codapi",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ", which is now integrated into the Dossier documentation.",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Getting Dossier to run in codapi was straightforward, since Dossier can already run entirely in the browser. In order to get a simple code editor with syntax highlighting, I'm using ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noreferrer",
+                "target": null,
+                "title": null,
+                "url": "https://medv.io/codejar/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "CodeJar",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " and ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noreferrer",
+                "target": null,
+                "title": null,
+                "url": "https://prismjs.com/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "PrismJS",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": ". There are still some improvements to be made, but I'm happy with the current state of the integration.",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "type": "linebreak",
+                "version": 1
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "For now there are a few examples to the documentation (see e.g. Dossier API ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "2ced03dc-d385-4dd6-b0d1-7e71be364825"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "getEntity()",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " and ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "entityLink",
+                "version": 1,
+                "reference": {
+                  "id": "f3125418-8a32-40ba-ac50-c53a211b48dc"
+                },
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "createEntity()",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " articles). Please have a look, modify the code, and click on the \"Run\" buttons to see the results. I hope this will make it easier for users to understand how to use Dossier.",
+                "type": "text",
+                "version": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

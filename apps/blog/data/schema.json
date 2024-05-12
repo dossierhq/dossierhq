@@ -3,7 +3,7 @@
   "entityTypes": [
     {
       "name": "Article",
-      "adminOnly": false,
+      "publishable": true,
       "authKeyPattern": null,
       "nameField": "title",
       "fields": [
@@ -75,7 +75,7 @@
     },
     {
       "name": "Author",
-      "adminOnly": false,
+      "publishable": true,
       "authKeyPattern": null,
       "nameField": "name",
       "fields": [
@@ -94,7 +94,7 @@
     },
     {
       "name": "BlogPost",
-      "adminOnly": false,
+      "publishable": true,
       "authKeyPattern": null,
       "nameField": "title",
       "fields": [
@@ -195,7 +195,8 @@
           ],
           "entityTypes": [],
           "linkEntityTypes": [
-            "Article"
+            "Article",
+            "BlogPost"
           ],
           "componentTypes": [
             "CloudinaryImage"
@@ -205,7 +206,7 @@
     },
     {
       "name": "Chapter",
-      "adminOnly": false,
+      "publishable": true,
       "authKeyPattern": null,
       "nameField": null,
       "fields": [
@@ -224,7 +225,7 @@
     },
     {
       "name": "GlossaryTerm",
-      "adminOnly": false,
+      "publishable": true,
       "authKeyPattern": null,
       "nameField": "title",
       "fields": [
