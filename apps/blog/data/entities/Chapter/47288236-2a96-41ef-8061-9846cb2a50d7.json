@@ -154,6 +154,20 @@
         "items": [
           {
             "type": "ArticleTocItem",
+            "article": {
+              "id": "2ced03dc-d385-4dd6-b0d1-7e71be364825"
+            },
+            "title": "getEntity"
+          },
+          {
+            "type": "ArticleTocItem",
+            "title": "getEntityList",
+            "article": {
+              "id": "68663590-cc4b-410a-89fe-d182fd164a9f"
+            }
+          },
+          {
+            "type": "ArticleTocItem",
             "title": "createEntity",
             "article": {
               "id": "f3125418-8a32-40ba-ac50-c53a211b48dc"
@@ -165,6 +179,13 @@
             "article": {
               "id": "11047baa-8c2c-46f9-9a0e-7e6dc04fa6d9"
             }
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "692bbb72-9b59-4560-a1da-ae46313ec2d8"
+            },
+            "title": "upsertEntity"
           }
         ]
       }
