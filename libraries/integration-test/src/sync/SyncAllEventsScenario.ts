@@ -1,35 +1,24 @@
 import {
   EntityStatus,
-  ErrorType,
   EventType,
   FieldType,
-  type DossierClient,
   type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
-import {
-  assertEquals,
-  assertErrorResult,
-  assertOkResult,
-  assertResultValue,
-  assertTruthy,
-} from '../Asserts.js';
+import { assertEquals, assertResultValue } from '../Asserts.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
-import { createDossierClientProvider } from '../shared-entity/TestClients.js';
-import type { SyncTestContext } from './SyncTestSuite.js';
-
-interface ScenarioContext extends SyncTestContext {
-  sourceClient: DossierClient;
-  targetClient: DossierClient;
-  after: string | null;
-  createdBy: string;
-}
+import {
+  applyEventsOnTargetAndResolveNextContext,
+  createPrincipalSyncAndInitializeScenarioContext,
+  ensureServerIsEmpty,
+} from './SyncScenarioUtils.js';
+import type { ScenarioContext, SyncTestContext } from './SyncTestSuite.js';
 
 const STEPS: ((context: ScenarioContext) => Promise<ScenarioContext>)[] = [
   sync_allEventsScenario_1_updateSchema,
   sync_allEventsScenario_2_createEntity,
   sync_allEventsScenario_3_createAndPublishEntity,
   sync_allEventsScenario_4_updateEntity,
-  sync_allEventsScenario_5_updateAndPublishedEntity,
+  sync_allEventsScenario_5_updateAndPublishEntity,
   sync_allEventsScenario_6_publishEntities,
   sync_allEventsScenario_7_unpublishEntities,
   sync_allEventsScenario_8_archiveEntity,
@@ -42,85 +31,14 @@ const TITLE_ONLY_ENTITY_ID_2 = 'd56b4262-0d00-4507-b909-7a1eb19bb82f';
 export async function sync_allEventsScenario(context: SyncTestContext) {
   const { sourceServer, targetServer } = context;
 
-  // Ensure the servers are empty
-  const initialSourceSyncEvents = (
-    await sourceServer.getSyncEvents({ after: null, limit: 10 })
-  ).valueOrThrow();
-  assertEquals(initialSourceSyncEvents.events.length, 0);
+  await ensureServerIsEmpty(sourceServer);
+  await ensureServerIsEmpty(targetServer);
 
-  assertResultValue(await sourceServer.getPrincipals(), null);
-
-  const initialTargetSyncEvents = (
-    await targetServer.getSyncEvents({ after: null, limit: 10 })
-  ).valueOrThrow();
-  assertEquals(initialTargetSyncEvents.events.length, 0);
-
-  assertResultValue(await targetServer.getPrincipals(), null);
-
-  // Create principal and create clients
-  let scenarioContext = await sync_allEventsScenario_createPrincipal(context);
+  let scenarioContext = await createPrincipalSyncAndInitializeScenarioContext(context);
 
   for (const step of STEPS) {
     scenarioContext = await step(scenarioContext);
   }
-}
-
-async function sync_allEventsScenario_createPrincipal(context: SyncTestContext) {
-  const { sourceServer, targetServer } = context;
-
-  // Setup source Dossier client
-  const sourceClient = createDossierClientProvider(sourceServer).dossierClient() as DossierClient;
-  // Use source Dossier client to force lazy creation of the main principal
-  assertErrorResult(
-    await sourceClient.getEntity({ id: TITLE_ONLY_ENTITY_ID_1 }),
-    ErrorType.NotFound,
-    'No such entity',
-  );
-
-  // Get source principals
-  assertResultValue(await sourceServer.getPrincipalsTotalCount(), 1);
-  const sourcePrincipalConnection = (await sourceServer.getPrincipals()).valueOrThrow();
-  assertTruthy(sourcePrincipalConnection);
-  const sourcePrincipals = sourcePrincipalConnection.edges.map((it) => it.node.valueOrThrow());
-  assertEquals(sourcePrincipals.length, 1);
-
-  const createdBy = sourcePrincipalConnection.edges[0].node.valueOrThrow().subjectId;
-
-  // Apply sync events
-  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext({
-    ...context,
-    after: null,
-  });
-
-  assertSyncEventsEqual(events, [
-    {
-      type: EventType.createPrincipal,
-      parentId: null,
-      createdBy,
-      provider: 'test',
-      identifier: 'main',
-    },
-  ]);
-
-  // Check that the target principals are identical
-  assertResultValue(await targetServer.getPrincipalsTotalCount(), 1);
-  const targetPrincipalConnection = (await targetServer.getPrincipals()).valueOrThrow();
-  assertTruthy(targetPrincipalConnection);
-  const targetPrincipals = targetPrincipalConnection.edges.map((it) => it.node.valueOrThrow());
-  assertEquals(targetPrincipals, sourcePrincipals);
-
-  // Create target Dossier client after the principals have been created
-  const targetClient = createDossierClientProvider(targetServer).dossierClient() as DossierClient;
-
-  const scenarioContext: ScenarioContext = {
-    ...context,
-    sourceClient,
-    targetClient,
-    createdBy,
-    after: nextContext.after,
-  };
-
-  return scenarioContext;
 }
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
@@ -324,7 +242,7 @@ async function sync_allEventsScenario_4_updateEntity(context: ScenarioContext) {
   return nextContext;
 }
 
-async function sync_allEventsScenario_5_updateAndPublishedEntity(context: ScenarioContext) {
+async function sync_allEventsScenario_5_updateAndPublishEntity(context: ScenarioContext) {
   const { sourceClient, targetClient, after, createdBy } = context;
 
   const id = TITLE_ONLY_ENTITY_ID_2;
@@ -490,39 +408,4 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
   assertEquals(targetEntity, sourceEntity);
 
   return nextContext;
-}
-
-async function applyEventsOnTargetAndResolveNextContext<
-  TContext extends Pick<ScenarioContext, 'sourceServer' | 'targetServer' | 'after'>,
->(context: TContext) {
-  const { sourceServer, targetServer, after } = context;
-
-  // Apply source events on target server
-
-  const sourceSyncEvents = (await sourceServer.getSyncEvents({ after, limit: 10 })).valueOrThrow();
-
-  let nextAfter = after;
-  for (const syncEvent of sourceSyncEvents.events) {
-    assertOkResult(await targetServer.applySyncEvent(syncEvent));
-    nextAfter = syncEvent.id;
-  }
-
-  const targetSyncEvents = (await targetServer.getSyncEvents({ after, limit: 10 })).valueOrThrow();
-
-  assertEquals(targetSyncEvents.events, sourceSyncEvents.events);
-
-  // Process all dirty entities
-  for (const server of [sourceServer, targetServer]) {
-    let processOneMore = true;
-    while (processOneMore) {
-      const info = (await server.processNextDirtyEntity()).valueOrThrow();
-      processOneMore = !!info;
-    }
-  }
-
-  // Construct nextContext
-
-  const nextContext = { ...context, after: nextAfter };
-
-  return { nextContext, events: sourceSyncEvents.events };
 }
