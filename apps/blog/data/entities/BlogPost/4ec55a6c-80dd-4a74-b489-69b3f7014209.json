@@ -110,11 +110,16 @@
                 "text": ", which is now integrated into the Dossier documentation.",
                 "type": "text",
                 "version": 1
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
               {
                 "detail": 0,
                 "format": 0,
@@ -185,11 +190,16 @@
                 "text": ". There are still some improvements to be made, but I'm happy with the current state of the integration.",
                 "type": "text",
                 "version": 1
-              },
-              {
-                "type": "linebreak",
-                "version": 1
-              },
+              }
+            ]
+          },
+          {
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "children": [
               {
                 "detail": 0,
                 "format": 0,
@@ -255,7 +265,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " articles). Please have a look, modify the code, and click on the \"Run\" buttons to see the results. I hope this will make it easier for users to understand how to use Dossier.",
+                "text": " articles). Please have a look, modify the code, and click on the \"Run\" buttons to see the results. I hope this will make it easier for users to understand how to use Dossier and provides a foundation for writing the documentation.",
                 "type": "text",
                 "version": 1
               }
