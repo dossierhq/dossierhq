@@ -213,6 +213,7 @@ export {
   type ArchiveEntitySyncEvent,
   type ChangelogEvent,
   type ChangelogEventQuery,
+  type ChangelogEventSharedQuery,
   type CreateEntitySyncEvent,
   type CreatePrincipalChangelogEvent,
   type CreatePrincipalSyncEvent,

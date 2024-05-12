@@ -26,11 +26,14 @@ interface EventShared<TEventType extends keyof typeof EventType> {
   createdBy: string;
 }
 
-export interface ChangelogEventQuery {
-  reverse?: boolean;
+export interface ChangelogEventSharedQuery {
   createdBy?: string;
   entity?: EntityReference;
   types?: (keyof typeof EventType)[];
+}
+
+export interface ChangelogEventQuery extends ChangelogEventSharedQuery {
+  reverse?: boolean;
 }
 
 export type ChangelogEvent =

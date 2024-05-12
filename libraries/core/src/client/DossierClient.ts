@@ -7,7 +7,11 @@ import {
   type PromiseResult,
   type Result,
 } from '../ErrorResult.js';
-import type { ChangelogEvent, ChangelogEventQuery } from '../events/EventTypes.js';
+import type {
+  ChangelogEvent,
+  ChangelogEventQuery,
+  ChangelogEventSharedQuery,
+} from '../events/EventTypes.js';
 import type {
   SchemaSpecification,
   SchemaSpecificationUpdate,
@@ -195,7 +199,7 @@ export interface DossierClient<
   >;
 
   getChangelogEventsTotalCount(
-    query?: ChangelogEventQuery,
+    query?: ChangelogEventSharedQuery,
   ): PromiseResult<
     number,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

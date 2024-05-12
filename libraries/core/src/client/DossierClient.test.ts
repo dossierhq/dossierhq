@@ -481,10 +481,7 @@ describe('DossierClient forward operation over JSON', () => {
       },
     );
 
-    const result = await client.getChangelogEventsTotalCount({
-      types: [EventType.archiveEntity],
-      reverse: true,
-    });
+    const result = await client.getChangelogEventsTotalCount({ types: [EventType.archiveEntity] });
     assertOkResult(result);
     expectResultValue(result, 10);
 
@@ -502,7 +499,6 @@ describe('DossierClient forward operation over JSON', () => {
           {
             "args": [
               {
-                "reverse": true,
                 "types": [
                   "archiveEntity",
                 ],
