@@ -41,13 +41,17 @@ class AdminContextAdapter implements DossierContextAdapter {
       value &&
       isCloudinaryImage(value)
     ) {
-      return CloudinaryImageFieldEditor({
-        ...props,
-        cloudName: CLOUDINARY_CLOUD_NAME,
-        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-        fieldSpec,
-        value,
-      });
+      return (
+        <CloudinaryImageFieldEditor
+          {...{
+            ...props,
+            cloudName: CLOUDINARY_CLOUD_NAME,
+            uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+            fieldSpec,
+            value,
+          }}
+        />
+      );
     }
     return null;
   }
