@@ -1831,7 +1831,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": " for all operations. Even if the API call fails, no exceptions are thrown. The benefit is that you are forced to handle errors for all calls and TypeScript helps you in knowing which errors can occur. However, sometimes it can be easier to exceptions.",
+                "text": " for all operations. Even if the API call fails, no exceptions are thrown. The benefit is that you are forced to handle errors for all calls and TypeScript helps you in knowing which errors can occur. However, sometimes it can be easier to use exceptions.",
                 "type": "text",
                 "version": 1
               }
@@ -1847,14 +1847,6 @@
             },
             "format": "",
             "version": 1
-          },
-          {
-            "direction": "ltr",
-            "format": "",
-            "indent": 0,
-            "type": "paragraph",
-            "version": 1,
-            "children": []
           },
           {
             "direction": "ltr",
@@ -1976,14 +1968,6 @@
             },
             "format": "",
             "version": 1
-          },
-          {
-            "direction": "ltr",
-            "format": "",
-            "indent": 0,
-            "type": "paragraph",
-            "version": 1,
-            "children": []
           }
         ]
       }
