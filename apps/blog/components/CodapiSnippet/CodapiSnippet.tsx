@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { useId, type HTMLAttributes } from 'react';
+import { useMemo, type HTMLAttributes } from 'react';
 import type { PublishedCodapiSnippet } from '../../utils/SchemaTypes';
 import styles from './codapi.module.css';
 
@@ -10,7 +10,7 @@ interface CodapiSnippetHTMLAttributes<T> extends HTMLAttributes<T> {
   sandbox: 'javascript';
   editor: 'basic' | 'external';
   selector?: string;
-  'depends-in'?: string;
+  'depends-on'?: string;
 }
 
 declare global {
@@ -25,7 +25,7 @@ declare global {
 }
 
 export function CodapiSnippet({ snippet }: { snippet: PublishedCodapiSnippet }) {
-  const id = useId();
+  const id = useMemo(() => 'codapi-' + Math.random().toString().substring(2), []);
   return (
     <div className={styles.container}>
       <pre>
@@ -49,6 +49,7 @@ const jar = CodeJar(editor, (editor) => {
   editor.textContent = editor.textContent;
   Prism.highlightElement(editor);
 }, { tab: '  ' });
+jar.updateCode(editor.textContent); // force highlight
 `}
       </Script>
     </div>
