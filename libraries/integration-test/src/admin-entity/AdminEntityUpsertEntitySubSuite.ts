@@ -1,4 +1,10 @@
-import { copyEntity, EntityStatus, ErrorType, isEntityNameAsRequested } from '@dossierhq/core';
+import {
+  copyEntity,
+  EntityStatus,
+  ErrorType,
+  EventType,
+  isEntityNameAsRequested,
+} from '@dossierhq/core';
 import {
   assertEquals,
   assertErrorResult,
@@ -8,6 +14,7 @@ import {
 } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { assertIsTitleOnly, type TitleOnly } from '../SchemaTypes.js';
+import { assertChangelogEventsConnection } from '../shared-entity/EventsTestUtils.js';
 import {
   SUBJECT_ONLY_CREATE,
   SUBJECT_ONLY_UPSERT,
@@ -24,6 +31,11 @@ export const UpsertEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   upsertEntity_createNoAuthKey,
   upsertEntity_updateWithoutChange,
   upsertEntity_updateAndPublishWithSubjectAuthKey,
+  upsertEntity_createEntityEvent,
+  upsertEntity_createAndPublishEntityEvent,
+  upsertEntity_updateEntityEvent,
+  upsertEntity_updateAndPublishEntityEvent,
+  upsertEntity_publishEntitiesEventDueToNoChangeAndPublish,
   upsertEntity_errorCreateAuthKeyNotMatchingPattern,
   upsertEntity_errorUpdateTryingToChangeAuthKey,
   upsertEntity_errorUpdateNoAuthKeyWhenExistingHasAuthKey,
@@ -173,6 +185,186 @@ async function upsertEntity_updateAndPublishWithSubjectAuthKey({
 
   const getResult = await client.getEntity({ id });
   assertResultValue(getResult, expectedEntity);
+}
+
+async function upsertEntity_createEntityEvent({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+  const createResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id }));
+  const {
+    entity: {
+      info: { name, createdAt, updatedAt, version },
+    },
+  } = createResult.valueOrThrow();
+
+  assertEquals(createdAt, updatedAt);
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function upsertEntity_createAndPublishEntityEvent({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const id = crypto.randomUUID();
+  const createResult = await client.upsertEntity(copyEntity(TITLE_ONLY_UPSERT, { id }), {
+    publish: true,
+  });
+  const {
+    entity: {
+      info: { name, createdAt, updatedAt, version },
+    },
+  } = createResult.valueOrThrow();
+
+  assertEquals(createdAt, updatedAt);
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createAndPublishEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function upsertEntity_updateEntityEvent({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id,
+      info: { name: originalName, createdAt },
+    },
+  } = createResult.valueOrThrow();
+
+  const updateResult = await client.upsertEntity({
+    id,
+    info: { type: 'TitleOnly', name: 'Updated name' },
+    fields: { title: 'Updated title' },
+  });
+  const {
+    entity: {
+      info: { updatedAt, name: updatedName },
+    },
+  } = updateResult.valueOrThrow();
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name: originalName, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.updateEntity,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name: updatedName, version: 2, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function upsertEntity_updateAndPublishEntityEvent({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id,
+      info: { name: originalName, createdAt },
+    },
+  } = createResult.valueOrThrow();
+
+  const updateResult = await client.upsertEntity(
+    {
+      id,
+      info: { type: 'TitleOnly', name: 'Updated name' },
+      fields: { title: 'Updated title' },
+    },
+    { publish: true },
+  );
+  const {
+    entity: {
+      info: { updatedAt, name: updatedName },
+    },
+  } = updateResult.valueOrThrow();
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name: originalName, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.updateAndPublishEntity,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name: updatedName, version: 2, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
+}
+
+async function upsertEntity_publishEntitiesEventDueToNoChangeAndPublish({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+  const createResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: {
+      id,
+      info: { name, createdAt },
+    },
+  } = createResult.valueOrThrow();
+
+  const updateResult = await client.upsertEntity(
+    { id, info: { type: 'TitleOnly' }, fields: {} },
+    { publish: true },
+  );
+  const {
+    effect: updateEffect,
+    entity: {
+      info: { updatedAt },
+    },
+  } = updateResult.valueOrThrow();
+  assertEquals(updateEffect, 'published');
+
+  const connectionResult = await client.getChangelogEvents({ entity: { id } });
+  assertChangelogEventsConnection(connectionResult, [
+    {
+      type: EventType.createEntity,
+      createdAt,
+      createdBy: '',
+      entities: [{ id, name, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+    {
+      type: EventType.publishEntities,
+      createdAt: updatedAt,
+      createdBy: '',
+      entities: [{ id, name, version: 1, type: 'TitleOnly' }],
+      unauthorizedEntityCount: 0,
+    },
+  ]);
 }
 
 async function upsertEntity_errorCreateAuthKeyNotMatchingPattern({
