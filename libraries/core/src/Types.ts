@@ -217,7 +217,7 @@ export interface EntityCreate<T extends Entity<string, object> = Entity> {
      *
      * The name needs to be unique, so if it clashes with an existing entity a random suffix will be
      * appended to the name. */
-    name?: string;
+    name?: string | null;
     version?: 1;
     authKey?: T['info']['authKey'] | null;
   };
@@ -232,7 +232,7 @@ export interface EntityCreatePayload<T extends Entity<string, object> = Entity> 
 export interface EntityUpdate<T extends Entity<string, object> = Entity> {
   id: string;
   info?: {
-    name?: string;
+    name?: string | null;
     /** If provided, has to be same as the entity's existing type, i.e. there's no way to change the type of an entity */
     type?: T['info']['type'];
     /** If provided, has to be the same as the existing version + 1 */
@@ -251,7 +251,7 @@ export interface EntityUpdatePayload<T extends Entity<string, object> = Entity> 
 export interface EntityUpsert<T extends Entity<string, object> = Entity> {
   id: string;
   info: {
-    name?: string;
+    name?: string | null;
     type: T['info']['type'];
     authKey?: T['info']['authKey'] | null;
   };

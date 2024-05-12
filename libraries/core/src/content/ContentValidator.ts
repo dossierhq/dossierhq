@@ -184,7 +184,7 @@ function validateTypeAndAuthKey(
 
 function validateName(
   path: ContentValuePath,
-  name: string | undefined,
+  name: string | null | undefined,
   create: boolean,
 ): SaveValidationIssue | null {
   if (!create && !name) {
