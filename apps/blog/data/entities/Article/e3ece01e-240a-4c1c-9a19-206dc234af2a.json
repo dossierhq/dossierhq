@@ -505,7 +505,7 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Fill out the fields, select None as the authorization key. Click \"Create\" to create the entity. Go back to the Content screen and ensure that it's included in the list.",
+                "text": "Fill out the fields and click \"Create\" to create the entity. Go back to the Content screen and ensure that it's included in the list.",
                 "type": "text",
                 "version": 1
               }
@@ -680,7 +680,38 @@
                 "format": 0,
                 "mode": "normal",
                 "style": "",
-                "text": "Explore the Playground or read more in the deep dive documentation.",
+                "text": "Explore the ",
+                "type": "text",
+                "version": 1
+              },
+              {
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "type": "link",
+                "version": 1,
+                "rel": "noreferrer",
+                "target": null,
+                "title": null,
+                "url": "https://playground.dossierhq.dev/",
+                "children": [
+                  {
+                    "detail": 0,
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "text": "Playground",
+                    "type": "text",
+                    "version": 1
+                  }
+                ]
+              },
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": " or read more in the deep dive documentation.",
                 "type": "text",
                 "version": 1
               }

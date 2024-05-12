@@ -1,0 +1,295 @@
+{
+  "id": "92e73f10-8967-472d-bc0d-4ced87cf896e",
+  "parentId": "68f5bf00-c141-442c-a959-11c93ca1958c",
+  "type": "updateAndPublishEntity",
+  "createdAt": "2024-05-12T12:49:29.114Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "47288236-2a96-41ef-8061-9846cb2a50d7",
+    "info": {
+      "name": "Main chapter",
+      "version": 7,
+      "schemaVersion": 4
+    },
+    "fields": {
+      "items": [
+        {
+          "type": "ArticleTocItem",
+          "title": "Overview",
+          "article": {
+            "id": "e3ece01e-240a-4c1c-9a19-206dc234af2a"
+          }
+        },
+        {
+          "type": "ArticleTocItem",
+          "title": "Limitations",
+          "article": {
+            "id": "b6c8b451-4c27-44e8-bccf-38e475aeb78d"
+          }
+        },
+        {
+          "type": "TocItem",
+          "title": "Deep dive",
+          "items": [
+            {
+              "type": "ArticleTocItem",
+              "title": "Content",
+              "article": {
+                "id": "6384629e-72aa-482c-b070-bc26d90e0fc6"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "Admin vs. published",
+              "article": {
+                "id": "3b674111-90ab-41e3-97b2-7d7860e71f31"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "Schema",
+              "article": {
+                "id": "91bf925b-22fc-48c3-af22-920e1f35d2d7"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "Auth key",
+              "article": {
+                "id": "e20ac669-98d9-4cef-9144-ca3b7bb7fec6"
+              }
+            }
+          ]
+        },
+        {
+          "type": "TocItem",
+          "title": "Development",
+          "items": [
+            {
+              "type": "ArticleTocItem",
+              "title": "Getting started",
+              "article": {
+                "id": "c7e5e706-e1ce-431f-b414-c713ee704318"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "Tutorial",
+              "article": {
+                "id": "6985480d-e397-45e7-b793-b3411b65f906"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ project",
+              "article": {
+                "id": "23c2afc4-7fbb-4747-a621-9366bf7f20c0"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ database",
+              "article": {
+                "id": "a6f4bda5-58ce-4aff-b12d-c218222c7d3e"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ server",
+              "article": {
+                "id": "43d269d4-fd4b-481d-9b37-9513e2486a74"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ schema",
+              "article": {
+                "id": "4e33c422-5bf8-44ed-a1c3-f1aa167564cf"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ managing content",
+              "article": {
+                "id": "0ab79be1-7c06-4f04-a810-43ece0f16030"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ admin REST API",
+              "article": {
+                "id": "517a506b-9ccc-4459-b66e-155762d1e3be"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ published REST API",
+              "article": {
+                "id": "749fb82c-6ddb-451b-8d14-540cfa185964"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ web interface",
+              "article": {
+                "id": "bfea1a83-d2be-4a49-8cd5-8258016de0d3"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ auth",
+              "article": {
+                "id": "a189c724-0ba9-4db5-aebe-98ebe14d3d1f"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "⤷ images",
+              "article": {
+                "id": "a537a671-b77f-4095-a203-ddfe6b7bdbbb"
+              }
+            }
+          ]
+        },
+        {
+          "type": "TocItem",
+          "title": "Dossier API",
+          "items": [
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "2ced03dc-d385-4dd6-b0d1-7e71be364825"
+              },
+              "title": "getEntity"
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "getEntityList",
+              "article": {
+                "id": "68663590-cc4b-410a-89fe-d182fd164a9f"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "24305da2-31bc-46b5-9ae6-1ed61488debf"
+              },
+              "title": "getEntities"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "2d9935fc-8c1a-492d-a474-059b0555feda"
+              },
+              "title": "getEntitiesSample"
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "createEntity",
+              "article": {
+                "id": "f3125418-8a32-40ba-ac50-c53a211b48dc"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "title": "updateEntity",
+              "article": {
+                "id": "11047baa-8c2c-46f9-9a0e-7e6dc04fa6d9"
+              }
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "692bbb72-9b59-4560-a1da-ae46313ec2d8"
+              },
+              "title": "upsertEntity"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "da025a0e-f7b3-4153-9c44-5a8f8f9092d3"
+              },
+              "title": "publishEntities"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "adccfa97-53ac-4f37-bcea-88d2808f5878"
+              },
+              "title": "archiveEntity"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "d3a2a4c0-259c-4ccb-b88d-44294e9a8a65"
+              },
+              "title": "getSchemaSpecification"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "827caf64-ed62-4aba-9cd9-cb6ecb37e433"
+              },
+              "title": "updateSchemaSpecification"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "7b2f88d7-0f37-4783-b5e8-197674964d89"
+              },
+              "title": "getChangelogEvents"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "deaeb55d-236b-4906-b70f-b293591c28ae"
+              },
+              "title": "acquireAdvisoryLock"
+            }
+          ]
+        },
+        {
+          "type": "TocItem",
+          "title": "Published DossierAPI",
+          "items": [
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "c26da5df-0d70-4b0a-9905-7d9e724aeb51"
+              },
+              "title": "getEntity"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "d715ac86-6e42-41f0-a7f1-ffbc24294fae"
+              },
+              "title": "getEntityList"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "a29e9c69-6d07-4524-ac69-b7ba12cdc083"
+              },
+              "title": "getEntities"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "66964a58-178a-4214-971d-d7a432ce196b"
+              },
+              "title": "getEntitiesSample"
+            },
+            {
+              "type": "ArticleTocItem",
+              "article": {
+                "id": "8e178756-62d3-473c-b8d3-c120dc576ace"
+              },
+              "title": "getSchemaSpecification"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

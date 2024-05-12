@@ -168,6 +168,20 @@
           },
           {
             "type": "ArticleTocItem",
+            "article": {
+              "id": "24305da2-31bc-46b5-9ae6-1ed61488debf"
+            },
+            "title": "getEntities"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "2d9935fc-8c1a-492d-a474-059b0555feda"
+            },
+            "title": "getEntitiesSample"
+          },
+          {
+            "type": "ArticleTocItem",
             "title": "createEntity",
             "article": {
               "id": "f3125418-8a32-40ba-ac50-c53a211b48dc"
@@ -186,6 +200,89 @@
               "id": "692bbb72-9b59-4560-a1da-ae46313ec2d8"
             },
             "title": "upsertEntity"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "da025a0e-f7b3-4153-9c44-5a8f8f9092d3"
+            },
+            "title": "publishEntities"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "adccfa97-53ac-4f37-bcea-88d2808f5878"
+            },
+            "title": "archiveEntity"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "d3a2a4c0-259c-4ccb-b88d-44294e9a8a65"
+            },
+            "title": "getSchemaSpecification"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "827caf64-ed62-4aba-9cd9-cb6ecb37e433"
+            },
+            "title": "updateSchemaSpecification"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "7b2f88d7-0f37-4783-b5e8-197674964d89"
+            },
+            "title": "getChangelogEvents"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "deaeb55d-236b-4906-b70f-b293591c28ae"
+            },
+            "title": "acquireAdvisoryLock"
+          }
+        ]
+      },
+      {
+        "type": "TocItem",
+        "title": "Published Dossier API",
+        "items": [
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "c26da5df-0d70-4b0a-9905-7d9e724aeb51"
+            },
+            "title": "getEntity"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "d715ac86-6e42-41f0-a7f1-ffbc24294fae"
+            },
+            "title": "getEntityList"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "a29e9c69-6d07-4524-ac69-b7ba12cdc083"
+            },
+            "title": "getEntities"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "66964a58-178a-4214-971d-d7a432ce196b"
+            },
+            "title": "getEntitiesSample"
+          },
+          {
+            "type": "ArticleTocItem",
+            "article": {
+              "id": "8e178756-62d3-473c-b8d3-c120dc576ace"
+            },
+            "title": "getSchemaSpecification"
           }
         ]
       }

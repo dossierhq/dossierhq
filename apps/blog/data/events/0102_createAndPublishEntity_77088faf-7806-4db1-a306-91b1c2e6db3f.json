@@ -1,0 +1,1440 @@
+{
+  "id": "77088faf-7806-4db1-a306-91b1c2e6db3f",
+  "parentId": "d19676d4-1985-4958-8e0c-b652219aa2a7",
+  "type": "createAndPublishEntity",
+  "createdAt": "2024-05-12T12:42:36.082Z",
+  "createdBy": "97f8d2c7-60ee-4e88-a4d2-43f366d212f0",
+  "entity": {
+    "id": "66964a58-178a-4214-971d-d7a432ce196b",
+    "info": {
+      "type": "Article",
+      "name": "Published Dossier API – getEntitiesSample",
+      "authKey": "",
+      "resolvedAuthKey": "",
+      "schemaVersion": 4
+    },
+    "fields": {
+      "title": "Published Dossier API – getEntitiesSample",
+      "slug": "published-dossier-api-get-entities-sample",
+      "description": "Learn how to use getEntitiesSample to search published content and get a random sample with the Published Dossier API",
+      "body": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 16,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "getEntitiesSample",
+                  "type": "text",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " is used to get a random sample of published entities matching an optional query argument.",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1
+            },
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "interface",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "keyword"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "PublishedDossierClient",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "class-name"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "{",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "getEntitiesSample",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "function"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "(",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    query",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " PublishedEntitySharedQuery",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ",",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    options",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " EntitySamplingOptions",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ",",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ")",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " PromiseResult",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "<",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    EntitySamplingPayload",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ",",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "    ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"BadRequest\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "|",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"NotAuthorized\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "|",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "\"Generic\"",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "string"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ">",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "}",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "interface",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "keyword"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "PublishedEntitySharedQuery",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "class-name"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "{",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  authKeys",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "string",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "[",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "]",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  entityTypes",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "string",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "[",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "]",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  componentTypes",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "string",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "[",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "]",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  linksTo",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " EntityReference",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  linksFrom",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " EntityReference",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  boundingBox",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " BoundingBox",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  text",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "string",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "}",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "interface",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "keyword"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "EntitySamplingOptions",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "class-name"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "{",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  seed",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "number",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  count",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "?",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "number",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "}",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "interface",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "keyword"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "EntitySamplingPayload",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "class-name"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "{",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  seed",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "number",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  totalCount",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " ",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "number",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "builtin"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "  items",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ":",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "operator"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": " PublishedEntity",
+                  "type": "code-highlight",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "[",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "]",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": ";",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                },
+                {
+                  "type": "linebreak",
+                  "version": 1
+                },
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "}",
+                  "type": "code-highlight",
+                  "version": 1,
+                  "highlightType": "punctuation"
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "code",
+              "version": 1,
+              "language": "typescript"
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      }
+    }
+  }
+}
