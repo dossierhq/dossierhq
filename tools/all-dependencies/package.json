@@ -10,7 +10,7 @@
     "outdated": "rush-pnpm outdated"
   },
   "dependencies": {
-    "@antonz/codapi": "~0.19.5",
+    "@antonz/codapi": "~0.19.6",
     "@astrojs/check": "~0.6.0",
     "@astrojs/node": "~8.2.5",
     "@astrojs/react": "~3.3.2",

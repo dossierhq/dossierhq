@@ -13,8 +13,8 @@ importers:
   ../../apps/blog:
     dependencies:
       '@antonz/codapi':
-        specifier: ~0.19.5
-        version: 0.19.5
+        specifier: ~0.19.6
+        version: 0.19.6
       '@cloudinary/url-gen':
         specifier: ~1.19.0
         version: 1.19.0
@@ -1911,8 +1911,8 @@ importers:
   ../../tools/all-dependencies:
     dependencies:
       '@antonz/codapi':
-        specifier: ~0.19.5
-        version: 0.19.5
+        specifier: ~0.19.6
+        version: 0.19.6
       '@astrojs/check':
         specifier: ~0.6.0
         version: 0.6.0(prettier@3.2.5)(typescript@5.4.5)
@@ -2335,8 +2335,8 @@ packages:
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
     engines: {node: '>=6.0.0'}
 
-  '@antonz/codapi@0.19.5':
-    resolution: {integrity: sha512-gmMeo5pzFaO5pStvpbtem89SckHg6KTyUWYeyo9w13DVbr4f/Tp1ZZqNj0a8nw9tVkWHfkQBM1qjsWx99Y68EQ==}
+  '@antonz/codapi@0.19.6':
+    resolution: {integrity: sha512-1sCjuJMYIa3S9UjNXxdmJix51vAEkIzhROMYI5lyGZcwZKbIR6qcePOyDFWtQdaicwPqclbZ5JcphCL5re8qFw==}
 
   '@ardatan/sync-fetch@0.0.1':
     resolution: {integrity: sha512-xhlTqH0m31mnsG0tIP4ETgfSB6gXDaYYsUWTrlUV93fFQPI9dd8hE0Ot6MHLCtqgB32hwJAC3YZMWlXZw7AleA==}
@@ -11313,7 +11313,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@antonz/codapi@0.19.5': {}
+  '@antonz/codapi@0.19.6': {}
 
   '@ardatan/sync-fetch@0.0.1':
     dependencies:
