@@ -45,7 +45,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.6",
+    "@rushstack/heft": "0.66.9",
     "eslint": "~8.57.0",
     "prettier": "3.2.5",
     "typescript": "~5.4.5",

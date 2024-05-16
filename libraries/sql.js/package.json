@@ -51,7 +51,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.6",
+    "@rushstack/heft": "0.66.9",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
     "base-64": "~1.0.0",
