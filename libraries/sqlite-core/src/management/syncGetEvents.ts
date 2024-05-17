@@ -32,7 +32,7 @@ import type {
   SubjectsTable,
 } from '../DatabaseSchema.js';
 import { queryMany, queryNoneOrOne, type Database } from '../QueryFunctions.js';
-import { assertExhaustive } from '../utils/AssertUtils.js';
+import { assertExhaustive, assertIsDefined } from '../utils/AssertUtils.js';
 
 export async function managementSyncGetEvents(
   database: Database,
@@ -254,6 +254,7 @@ function convertEventRowsToPayload(
     switch (type) {
       case EventType.archiveEntity: {
         const entityInfo = eventEntityInfo[0];
+        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<ArchiveEntitySyncEvent>(type, parentId, eventRow, {
             entity: { id: entityInfo.uuid, version: entityInfo.version },
@@ -267,6 +268,7 @@ function convertEventRowsToPayload(
         if (!('fields' in entityInfo)) {
           return notOk.Generic('Cannot find extended info about entity');
         }
+        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<CreateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
@@ -287,17 +289,21 @@ function convertEventRowsToPayload(
       case EventType.publishEntities: {
         events.push(
           makeEvent<PublishEntitiesSyncEvent>(type, parentId, eventRow, {
-            entities: eventEntityInfo.map((it) => ({
-              id: it.uuid,
-              version: it.version,
-              publishedName: it.published_name!,
-            })),
+            entities: eventEntityInfo.map((it) => {
+              assertIsDefined(it.uuid);
+              return {
+                id: it.uuid,
+                version: it.version,
+                publishedName: it.published_name!,
+              };
+            }),
           }),
         );
         break;
       }
       case EventType.unarchiveEntity: {
         const entityInfo = eventEntityInfo[0];
+        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<UnarchiveEntitySyncEvent>(type, parentId, eventRow, {
             entity: { id: entityInfo.uuid, version: entityInfo.version },
@@ -308,10 +314,13 @@ function convertEventRowsToPayload(
       case EventType.unpublishEntities: {
         events.push(
           makeEvent<UnpublishEntitiesSyncEvent>(type, parentId, eventRow, {
-            entities: eventEntityInfo.map((it) => ({
-              id: it.uuid,
-              version: it.version,
-            })),
+            entities: eventEntityInfo.map((it) => {
+              assertIsDefined(it.uuid);
+              return {
+                id: it.uuid,
+                version: it.version,
+              };
+            }),
           }),
         );
         break;
@@ -322,6 +331,7 @@ function convertEventRowsToPayload(
         if (!('fields' in entityInfo)) {
           return notOk.Generic('Cannot find extended info about entity');
         }
+        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<UpdateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {

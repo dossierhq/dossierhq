@@ -29,6 +29,7 @@ import type {
   EntityArchivePayload,
   EntityCreate,
   EntityCreatePayload,
+  EntityDeletePayload,
   EntityMutationOptions,
   EntityProcessDirtyPayload,
   EntityPublishPayload,
@@ -51,18 +52,20 @@ import type { LooseAutocomplete } from '../utils/TypeUtils.js';
 import {
   convertJsonChangelogEventEdge,
   convertJsonConnection,
+  convertJsonDeletePayload,
   convertJsonEdge,
   convertJsonEntity,
-  convertJsonPublishingResult,
+  convertJsonPublishingPayload,
   convertJsonResult,
   type JsonChangelogEvent,
   type JsonConnection,
   type JsonEdge,
   type JsonEntity,
   type JsonEntityCreatePayload,
+  type JsonEntityDeletePayload,
+  type JsonEntityPublishingPayload,
   type JsonEntityUpdatePayload,
   type JsonEntityUpsertPayload,
-  type JsonPublishingResult,
   type JsonResult,
 } from './JsonUtils.js';
 import {
@@ -245,6 +248,16 @@ export interface DossierClient<
     | typeof ErrorType.Generic
   >;
 
+  deleteEntity(
+    reference: EntityReference,
+  ): PromiseResult<
+    EntityDeletePayload,
+    | typeof ErrorType.BadRequest
+    | typeof ErrorType.NotFound
+    | typeof ErrorType.NotAuthorized
+    | typeof ErrorType.Generic
+  >;
+
   processDirtyEntity(
     reference: EntityReference,
   ): PromiseResult<
@@ -368,6 +381,8 @@ export interface DossierExceptionClient<
 
   unarchiveEntity(reference: EntityReference): Promise<EntityUnarchivePayload>;
 
+  deleteEntity(reference: EntityReference): Promise<EntityDeletePayload>;
+
   processDirtyEntity(reference: EntityReference): Promise<EntityProcessDirtyPayload | null>;
 
   acquireAdvisoryLock(name: string, options: AdvisoryLockOptions): Promise<AdvisoryLockPayload>;
@@ -381,6 +396,7 @@ export const DossierClientOperationName = {
   acquireAdvisoryLock: 'acquireAdvisoryLock',
   archiveEntity: 'archiveEntity',
   createEntity: 'createEntity',
+  deleteEntity: 'deleteEntity',
   getChangelogEvents: 'getChangelogEvents',
   getChangelogEventsTotalCount: 'getChangelogEventsTotalCount',
   getEntities: 'getEntities',
@@ -428,6 +444,7 @@ interface DossierClientOperationArguments {
   [DossierClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
   [DossierClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [DossierClientOperationName.createEntity]: MethodParameters<'createEntity'>;
+  [DossierClientOperationName.deleteEntity]: MethodParameters<'deleteEntity'>;
   [DossierClientOperationName.getChangelogEvents]: MethodParameters<'getChangelogEvents'>;
   [DossierClientOperationName.getChangelogEventsTotalCount]: MethodParameters<'getChangelogEventsTotalCount'>;
   [DossierClientOperationName.getEntities]: MethodParameters<'getEntities'>;
@@ -451,6 +468,7 @@ interface DossierClientOperationReturnOk {
   [DossierClientOperationName.acquireAdvisoryLock]: MethodReturnTypeOk<'acquireAdvisoryLock'>;
   [DossierClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
   [DossierClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
+  [DossierClientOperationName.deleteEntity]: MethodReturnTypeOk<'deleteEntity'>;
   [DossierClientOperationName.getChangelogEvents]: MethodReturnTypeOk<'getChangelogEvents'>;
   [DossierClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeOk<'getChangelogEventsTotalCount'>;
   [DossierClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
@@ -474,6 +492,7 @@ interface DossierClientOperationReturnError {
   [DossierClientOperationName.acquireAdvisoryLock]: MethodReturnTypeError<'acquireAdvisoryLock'>;
   [DossierClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
   [DossierClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
+  [DossierClientOperationName.deleteEntity]: MethodReturnTypeError<'deleteEntity'>;
   [DossierClientOperationName.getChangelogEvents]: MethodReturnTypeError<'getChangelogEvents'>;
   [DossierClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeError<'getChangelogEventsTotalCount'>;
   [DossierClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
@@ -516,6 +535,7 @@ export const DossierClientModifyingOperations: Readonly<Set<string>> = /* @__PUR
     DossierClientOperationName.acquireAdvisoryLock,
     DossierClientOperationName.archiveEntity,
     DossierClientOperationName.createEntity,
+    DossierClientOperationName.deleteEntity,
     DossierClientOperationName.processDirtyEntity,
     DossierClientOperationName.publishEntities,
     DossierClientOperationName.releaseAdvisoryLock,
@@ -755,6 +775,16 @@ class BaseDossierClient<TContext extends ClientContext> implements DossierClient
     });
   }
 
+  deleteEntity(
+    reference: EntityReference,
+  ): MethodReturnType<typeof DossierClientOperationName.deleteEntity> {
+    return this.executeOperation({
+      name: DossierClientOperationName.deleteEntity,
+      args: [reference],
+      modifies: true,
+    });
+  }
+
   processDirtyEntity(
     reference: EntityReference,
   ): MethodReturnType<typeof DossierClientOperationName.processDirtyEntity> {
@@ -954,6 +984,10 @@ class DossierExceptionClientWrapper implements DossierExceptionClient {
     return (await this.client.unarchiveEntity(reference)).valueOrThrow();
   }
 
+  async deleteEntity(reference: EntityReference): Promise<EntityDeletePayload> {
+    return (await this.client.deleteEntity(reference)).valueOrThrow();
+  }
+
   async processDirtyEntity(reference: EntityReference): Promise<EntityProcessDirtyPayload | null> {
     return (await this.client.processDirtyEntity(reference)).valueOrThrow();
   }
@@ -1005,6 +1039,11 @@ export async function executeJsonDossierClientOperation(
       const [entity, options] =
         operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.createEntity];
       return await client.createEntity(entity, options);
+    }
+    case DossierClientOperationName.deleteEntity: {
+      const [reference] =
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.deleteEntity];
+      return await client.deleteEntity(reference);
     }
     case DossierClientOperationName.getChangelogEvents: {
       const [query, paging] =
@@ -1121,7 +1160,9 @@ export function convertJsonDossierClientResult<
       const result: MethodReturnTypeWithoutPromise<
         typeof DossierClientOperationName.archiveEntity
       > = ok(
-        convertJsonPublishingResult(value as JsonPublishingResult<EntityArchivePayload['effect']>),
+        convertJsonPublishingPayload(
+          value as JsonEntityPublishingPayload<EntityArchivePayload['effect']>,
+        ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
@@ -1132,6 +1173,11 @@ export function convertJsonDossierClientResult<
           ...valueTyped,
           entity: convertJsonEntity(valueTyped.entity),
         });
+      return result as MethodReturnTypeWithoutPromise<TName, TClient>;
+    }
+    case DossierClientOperationName.deleteEntity: {
+      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.deleteEntity> =
+        ok(convertJsonDeletePayload(value as JsonEntityDeletePayload));
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case DossierClientOperationName.getChangelogEvents: {
@@ -1199,8 +1245,8 @@ export function convertJsonDossierClientResult<
       const result: MethodReturnTypeWithoutPromise<
         typeof DossierClientOperationName.publishEntities
       > = ok(
-        (value as JsonPublishingResult<EntityPublishPayload['effect']>[]).map(
-          convertJsonPublishingResult,
+        (value as JsonEntityPublishingPayload<EntityPublishPayload['effect']>[]).map(
+          convertJsonPublishingPayload,
         ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
@@ -1221,8 +1267,8 @@ export function convertJsonDossierClientResult<
       const result: MethodReturnTypeWithoutPromise<
         typeof DossierClientOperationName.unarchiveEntity
       > = ok(
-        convertJsonPublishingResult(
-          value as JsonPublishingResult<EntityUnarchivePayload['effect']>,
+        convertJsonPublishingPayload(
+          value as JsonEntityPublishingPayload<EntityUnarchivePayload['effect']>,
         ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
@@ -1231,8 +1277,8 @@ export function convertJsonDossierClientResult<
       const result: MethodReturnTypeWithoutPromise<
         typeof DossierClientOperationName.unpublishEntities
       > = ok(
-        (value as JsonPublishingResult<EntityUnpublishPayload['effect']>[]).map(
-          convertJsonPublishingResult,
+        (value as JsonEntityPublishingPayload<EntityUnpublishPayload['effect']>[]).map(
+          convertJsonPublishingPayload,
         ),
       );
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;

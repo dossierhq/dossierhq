@@ -281,6 +281,11 @@ export type EntityUnarchivePayload = EntityPublishingPayload<'unarchived' | 'non
 export type EntityPublishPayload = EntityPublishingPayload<'published' | 'none'>;
 export type EntityUnpublishPayload = EntityPublishingPayload<'unpublished' | 'none'>;
 
+export interface EntityDeletePayload {
+  effect: 'deleted';
+  deletedAt: Date;
+}
+
 export const EntityQueryOrder = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

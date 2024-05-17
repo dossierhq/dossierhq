@@ -15,6 +15,7 @@ import type {
   Edge,
   Entity,
   EntityCreatePayload,
+  EntityDeletePayload,
   EntityInfo,
   EntityPublishingPayload,
   EntityUpdatePayload,
@@ -67,9 +68,13 @@ export interface JsonEntityUpsertPayload extends Omit<EntityUpsertPayload, 'enti
   entity: JsonEntity;
 }
 
-export interface JsonPublishingResult<TEffect>
+export interface JsonEntityPublishingPayload<TEffect>
   extends Omit<EntityPublishingPayload<TEffect>, 'updatedAt'> {
   updatedAt: string;
+}
+
+export interface JsonEntityDeletePayload extends Omit<EntityDeletePayload, 'deletedAt'> {
+  deletedAt: string;
 }
 
 type WithCreatedAt<T extends { createdAt: Date }> = Omit<T, 'createdAt'> & { createdAt: string };
@@ -138,12 +143,19 @@ export function convertJsonPublishedEntity(entity: JsonPublishedEntity): Publish
   };
 }
 
-export function convertJsonPublishingResult<TEffect>(
-  publishingResult: JsonPublishingResult<TEffect>,
+export function convertJsonPublishingPayload<TEffect>(
+  payload: JsonEntityPublishingPayload<TEffect>,
 ): EntityPublishingPayload<TEffect> {
   return {
-    ...publishingResult,
-    updatedAt: new Date(publishingResult.updatedAt),
+    ...payload,
+    updatedAt: new Date(payload.updatedAt),
+  };
+}
+
+export function convertJsonDeletePayload(payload: JsonEntityDeletePayload): EntityDeletePayload {
+  return {
+    ...payload,
+    deletedAt: new Date(payload.deletedAt),
   };
 }
 

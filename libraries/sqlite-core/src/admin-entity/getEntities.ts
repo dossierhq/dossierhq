@@ -6,6 +6,7 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { queryMany, type Database } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminEntityGetMultiple(
@@ -37,11 +38,14 @@ export async function adminEntityGetMultiple(
   if (result.isError()) return result;
 
   return ok(
-    result.value.map((row) => ({
-      ...resolveAdminEntityInfo(row),
-      ...resolveEntityFields(row),
-      id: row.uuid,
-      resolvedAuthKey: row.resolved_auth_key,
-    })),
+    result.value.map((row) => {
+      assertIsDefined(row.uuid);
+      return {
+        ...resolveAdminEntityInfo(row),
+        ...resolveEntityFields(row),
+        id: row.uuid,
+        resolvedAuthKey: row.resolved_auth_key,
+      };
+    }),
   );
 }

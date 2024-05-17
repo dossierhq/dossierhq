@@ -8,6 +8,7 @@ import type {
 import type { ReadOnlyEntityRepository } from '../shared-entity/ReadOnlyEntityRepository.js';
 import { ArchiveEntitySubSuite } from './AdminEntityArchiveEntitySubSuite.js';
 import { CreateEntitySubSuite } from './AdminEntityCreateEntitySubSuite.js';
+import { DeleteEntitySubSuite } from './AdminEntityDeleteEntitySubSuite.js';
 import { GetEntitiesSampleSubSuite } from './AdminEntityGetEntitiesSampleSubSuite.js';
 import { GetEntitiesSubSuite } from './AdminEntityGetEntitiesSubSuite.js';
 import { GetEntitiesTotalCountSubSuite } from './AdminEntityGetEntitiesTotalCountSubSuite.js';
@@ -32,6 +33,7 @@ export function createAdminEntityTestSuite<TCleanup>(
     initializer,
     ...ArchiveEntitySubSuite,
     ...CreateEntitySubSuite,
+    ...DeleteEntitySubSuite,
     ...GetEntitiesSampleSubSuite,
     ...GetEntitiesSubSuite,
     ...GetEntitiesTotalCountSubSuite,

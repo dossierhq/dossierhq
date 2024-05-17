@@ -83,6 +83,10 @@ export interface DatabaseAdminEntityCreatePayload extends DatabaseResolvedEntity
   updatedAt: Date;
 }
 
+export interface DatabaseAdminEntityDeletePayload {
+  deletedAt: Date;
+}
+
 export interface DatabaseAdminEntityPayload {
   id: string;
   type: string;
@@ -380,6 +384,12 @@ export interface DatabaseAdapter<
     event: DatabaseAdminEntityCreateEntityEventArg,
     syncEvent: Exclude<Exclude<SyncEvent, UpdateSchemaSyncEvent>, CreatePrincipalSyncEvent> | null,
   ): PromiseResult<void, typeof ErrorType.Generic>;
+
+  adminEntityDeleteEntity(
+    context: TransactionContext,
+    reference: DatabaseResolvedEntityReference,
+    syncEvent: ArchiveEntitySyncEvent | null,
+  ): PromiseResult<DatabaseAdminEntityDeletePayload, typeof ErrorType.Generic>;
 
   adminEntityGetEntityName(
     context: TransactionContext,

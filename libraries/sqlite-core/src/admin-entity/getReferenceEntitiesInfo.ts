@@ -6,6 +6,7 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import { queryMany, type Database } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 
 export async function adminEntityGetReferenceEntitiesInfo(
   database: Database,
@@ -27,11 +28,14 @@ export async function adminEntityGetReferenceEntitiesInfo(
   if (result.isError()) return result;
 
   return ok(
-    result.value.map((it) => ({
-      entityInternalId: it.id,
-      id: it.uuid,
-      type: it.type,
-      status: it.status,
-    })),
+    result.value.map((it) => {
+      assertIsDefined(it.uuid);
+      return {
+        entityInternalId: it.id,
+        id: it.uuid,
+        type: it.type,
+        status: it.status,
+      };
+    }),
   );
 }

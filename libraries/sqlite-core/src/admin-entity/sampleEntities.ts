@@ -15,6 +15,7 @@ import {
   sampleAdminEntitiesQuery,
   type SearchAdminEntitiesItem,
 } from '../search/QueryGenerator.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminEntitySampleEntities(
@@ -42,10 +43,13 @@ export async function adminEntitySampleEntities(
   const entitiesValues = searchResult.value;
 
   return ok(
-    entitiesValues.map((it) => ({
-      ...resolveAdminEntityInfo(it),
-      ...resolveEntityFields(it),
-      id: it.uuid,
-    })),
+    entitiesValues.map((it) => {
+      assertIsDefined(it.uuid);
+      return {
+        ...resolveAdminEntityInfo(it),
+        ...resolveEntityFields(it),
+        id: it.uuid,
+      };
+    }),
   );
 }

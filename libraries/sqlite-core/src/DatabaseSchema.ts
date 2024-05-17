@@ -16,7 +16,8 @@ export const ENTITY_DIRTY_FLAG_INDEX_PUBLISHED = 0x8;
 
 export interface EntitiesTable {
   id: number;
-  uuid: string;
+  uuid: string | null;
+  uuid_before_delete: string | null;
   name: string;
   published_name: string | null;
   type: string;
@@ -29,6 +30,7 @@ export interface EntitiesTable {
   created_at: string;
   updated_at: string;
   updated_seq: number;
+  deleted_at: string | null;
   latest_entity_versions_id: number | null;
   published_entity_versions_id: number | null;
 }

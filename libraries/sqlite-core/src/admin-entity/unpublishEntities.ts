@@ -64,6 +64,7 @@ export async function adminEntityUnpublishGetEntitiesInfo(
     references.map((reference) => {
       const entityInfo = entitiesInfo.find((it) => it.uuid === reference.id);
       assertIsDefined(entityInfo);
+      assertIsDefined(entityInfo.uuid);
 
       return {
         id: entityInfo.uuid,
@@ -163,5 +164,10 @@ export async function adminEntityUnpublishGetPublishedReferencedEntities(
   });
   if (result.isError()) return result;
 
-  return result.map((row) => row.map(({ uuid }) => ({ id: uuid })));
+  return result.map((row) =>
+    row.map(({ uuid }) => {
+      assertIsDefined(uuid);
+      return { id: uuid };
+    }),
+  );
 }

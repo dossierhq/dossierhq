@@ -14,6 +14,7 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { queryNoneOrOne, type Database } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminGetEntity(
@@ -31,6 +32,7 @@ export async function adminGetEntity(
   if (result.isError()) return result;
   const row = result.value;
 
+  assertIsDefined(row.uuid);
   return ok({
     ...resolveAdminEntityInfo(row),
     ...resolveEntityFields(row),

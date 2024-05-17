@@ -21,6 +21,7 @@ import type {
 } from '../DatabaseSchema.js';
 import { queryMany, type Database } from '../QueryFunctions.js';
 import { toOpaqueCursor } from '../search/OpaqueCursor.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 import { generateGetChangelogEventsQuery, type EventsRow } from './ChangelogQueryGenerator.js';
 
@@ -108,6 +109,7 @@ function convertEdge(
       const entities: DatabaseEventChangelogEntityEventPayload['entities'] = [];
       for (const entityRow of entityRows) {
         if (entityRow.events_id === row.id) {
+          assertIsDefined(entityRow.uuid);
           entities.push({
             id: entityRow.uuid,
             name: entityRow.name,

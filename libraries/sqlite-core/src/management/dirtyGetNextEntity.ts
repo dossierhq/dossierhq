@@ -19,6 +19,7 @@ import {
   type EntityVersionsTable,
 } from '../DatabaseSchema.js';
 import { queryNoneOrOne, type Database } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 type EntityRow = Pick<
@@ -66,7 +67,7 @@ export async function managementDirtyGetNextEntity(
     resolved_auth_key: resolvedAuthKey,
     dirty,
   } = result.value;
-
+  assertIsDefined(id);
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),

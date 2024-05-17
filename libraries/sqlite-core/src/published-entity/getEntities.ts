@@ -6,6 +6,7 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { queryMany, type Database } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 type Row = Pick<
@@ -30,11 +31,14 @@ export async function publishedEntityGetEntities(
   if (result.isError()) return result;
 
   return ok(
-    result.value.map((row) => ({
-      ...resolvePublishedEntityInfo(row),
-      ...resolveEntityFields(row),
-      id: row.uuid,
-      resolvedAuthKey: row.resolved_auth_key,
-    })),
+    result.value.map((row) => {
+      assertIsDefined(row.uuid);
+      return {
+        ...resolvePublishedEntityInfo(row),
+        ...resolveEntityFields(row),
+        id: row.uuid,
+        resolvedAuthKey: row.resolved_auth_key,
+      };
+    }),
   );
 }

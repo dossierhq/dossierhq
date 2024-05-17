@@ -15,6 +15,7 @@ import {
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { adminArchiveEntity } from './admin-entity/adminArchiveEntity.js';
 import { adminCreateEntity } from './admin-entity/adminCreateEntity.js';
+import { adminDeleteEntity } from './admin-entity/adminDeleteEntity.js';
 import { adminGetEntity } from './admin-entity/adminGetEntity.js';
 import { adminGetEntityList } from './admin-entity/adminGetEntityList.js';
 import { adminGetTotalCount } from './admin-entity/adminGetTotalCount.js';
@@ -90,6 +91,14 @@ export function createServerDossierClient({
             options,
           ),
         );
+        break;
+      }
+      case DossierClientOperationName.deleteEntity: {
+        const {
+          args: [reference],
+          resolve,
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.deleteEntity>;
+        resolve(await adminDeleteEntity(authorizationAdapter, databaseAdapter, context, reference));
         break;
       }
       case DossierClientOperationName.getChangelogEvents: {

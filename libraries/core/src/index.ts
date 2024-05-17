@@ -31,6 +31,7 @@ export {
   type EntityArchivePayload,
   type EntityCreate,
   type EntityCreatePayload,
+  type EntityDeletePayload,
   type EntityInfo,
   type EntityLike,
   type EntityMutationOptions,

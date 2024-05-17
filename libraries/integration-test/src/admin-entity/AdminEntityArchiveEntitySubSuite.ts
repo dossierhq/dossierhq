@@ -9,7 +9,7 @@ export const ArchiveEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[
   archiveEntity_minimal,
   archiveEntity_archivedEntity,
   archiveEntity_archiveEntityEvent,
-  archiveEntity_errorInvalidError,
+  archiveEntity_errorInvalidReference,
   archiveEntity_errorWrongAuthKey,
   archiveEntity_errorPublishedEntity,
   archiveEntity_errorReadonlySession,
@@ -100,7 +100,7 @@ async function archiveEntity_archiveEntityEvent({ clientProvider }: AdminEntityT
   ]);
 }
 
-async function archiveEntity_errorInvalidError({ clientProvider }: AdminEntityTestContext) {
+async function archiveEntity_errorInvalidReference({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.dossierClient().archiveEntity({
     id: '5b14e69f-6612-4ddb-bb42-7be273104486',
   });

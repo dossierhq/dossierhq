@@ -4,6 +4,7 @@ export type {
   DatabaseAdminEntityCreateEntityArg,
   DatabaseAdminEntityCreateEntityEventArg,
   DatabaseAdminEntityCreatePayload,
+  DatabaseAdminEntityDeletePayload,
   DatabaseAdminEntityGetOnePayload,
   DatabaseAdminEntityGetReferenceEntityInfoPayload,
   DatabaseAdminEntityPayload,

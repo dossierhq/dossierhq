@@ -16,6 +16,7 @@ import {
   searchPublishedEntitiesQuery,
   type SearchPublishedEntitiesItem,
 } from '../search/QueryGenerator.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 
@@ -51,11 +52,14 @@ export async function publishedEntitySearchEntities(
 
   return ok({
     hasMore,
-    edges: edges.map((edge) => ({
-      ...resolvePublishedEntityInfo(edge),
-      ...resolveEntityFields(edge),
-      id: edge.uuid,
-      cursor: cursorExtractor(edge),
-    })),
+    edges: edges.map((edge) => {
+      assertIsDefined(edge.uuid);
+      return {
+        ...resolvePublishedEntityInfo(edge),
+        ...resolveEntityFields(edge),
+        id: edge.uuid,
+        cursor: cursorExtractor(edge),
+      };
+    }),
   });
 }

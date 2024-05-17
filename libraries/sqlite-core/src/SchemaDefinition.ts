@@ -485,6 +485,52 @@ const VERSION_26: SchemaVersionDefinition = {
   ],
 };
 
+// Make uuid nullable and add deleted_at and uuid_before_delete columns
+const VERSION_27: SchemaVersionDefinition = {
+  temporarilyDisableForeignKeys: true,
+  queries: [
+    `CREATE TABLE "new_entities" (
+  id INTEGER PRIMARY KEY,
+  uuid TEXT,
+  uuid_before_delete TEXT,
+  name TEXT NOT NULL,
+  published_name TEXT,
+  type TEXT NOT NULL,
+  auth_key TEXT NOT NULL,
+  resolved_auth_key TEXT NOT NULL,
+  status TEXT NOT NULL,
+  never_published INTEGER NOT NULL DEFAULT TRUE,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  updated_seq INTEGER NOT NULL,
+  deleted_at TEXT,
+  latest_entity_versions_id INTEGER,
+  published_entity_versions_id INTEGER,
+  dirty INTEGER NOT NULL DEFAULT 0,
+  invalid INTEGER NOT NULL DEFAULT 0,
+  CONSTRAINT entities_uuid UNIQUE (uuid),
+  CONSTRAINT entities_name UNIQUE (name),
+  CONSTRAINT entities_published_name UNIQUE (published_name),
+  CONSTRAINT entities_updated_seq UNIQUE (updated_seq),
+  FOREIGN KEY (latest_entity_versions_id) REFERENCES entity_versions(id),
+  FOREIGN KEY (published_entity_versions_id) REFERENCES entity_versions(id)
+) STRICT;`,
+    `INSERT INTO new_entities (id, uuid, name, published_name, type, auth_key, resolved_auth_key, status, never_published, created_at, updated_at, updated_seq, latest_entity_versions_id, published_entity_versions_id, dirty, invalid)
+       SELECT id, uuid, name, published_name, type, auth_key, resolved_auth_key, status, never_published, created_at, updated_at, updated_seq, latest_entity_versions_id, published_entity_versions_id, dirty, invalid FROM entities`,
+    'DROP TABLE entities',
+    'ALTER TABLE new_entities RENAME TO entities',
+    'CREATE INDEX entities_resolved_auth_key ON entities(resolved_auth_key)',
+    'CREATE INDEX entities_resolved_auth_key_name ON entities(resolved_auth_key, name)',
+    'CREATE INDEX entities_resolved_auth_key_updated_seq ON entities(resolved_auth_key, updated_seq)',
+    'CREATE INDEX entities_resolved_auth_uuid ON entities(resolved_auth_key, uuid)',
+    'CREATE INDEX entities_dirty ON entities(dirty)',
+    `CREATE TRIGGER delete_entity_fts DELETE ON entities BEGIN
+  DELETE FROM entities_latest_fts WHERE rowid = OLD.id;
+  DELETE FROM entities_published_fts WHERE rowid = OLD.id;
+END`,
+  ],
+};
+
 const VERSIONS: SchemaVersionDefinition[] = /* @__PURE__ */ (() => [
   { queries: [] }, // nothing for version 0
   VERSION_1,
@@ -513,6 +559,7 @@ const VERSIONS: SchemaVersionDefinition[] = /* @__PURE__ */ (() => [
   VERSION_24,
   VERSION_25,
   VERSION_26,
+  VERSION_27,
 ])();
 
 export const REQUIRED_SCHEMA_VERSION = /* @__PURE__ */ (() => VERSIONS.length - 1)();

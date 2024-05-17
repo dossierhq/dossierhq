@@ -13,6 +13,7 @@ import {
 } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import { queryNoneOrOne, type Database } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 type Row = Pick<
@@ -44,7 +45,7 @@ export async function publishedEntityGetOne(
     return notOk.NotFound('No such entity');
   }
   const { uuid: id, resolved_auth_key: resolvedAuthKey } = result.value;
-
+  assertIsDefined(id);
   return ok({
     ...resolvePublishedEntityInfo(result.value),
     ...resolveEntityFields(result.value),

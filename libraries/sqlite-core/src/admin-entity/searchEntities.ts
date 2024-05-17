@@ -16,6 +16,7 @@ import {
   searchAdminEntitiesQuery,
   type SearchAdminEntitiesItem,
 } from '../search/QueryGenerator.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 
@@ -47,11 +48,14 @@ export async function adminEntitySearchEntities(
 
   return ok({
     hasMore,
-    edges: edges.map((edge) => ({
-      ...resolveAdminEntityInfo(edge),
-      ...resolveEntityFields(edge),
-      id: edge.uuid,
-      cursor: cursorExtractor(edge),
-    })),
+    edges: edges.map((edge) => {
+      assertIsDefined(edge.uuid);
+      return {
+        ...resolveAdminEntityInfo(edge),
+        ...resolveEntityFields(edge),
+        id: edge.uuid,
+        cursor: cursorExtractor(edge),
+      };
+    }),
   });
 }
