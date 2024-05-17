@@ -4,7 +4,7 @@ import {
   FieldType,
   type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
-import { assertEquals, assertResultValue } from '../Asserts.js';
+import { assertEquals, assertErrorResult, assertResultValue } from '../Asserts.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import {
   applyEventsOnTargetAndResolveNextContext,
@@ -23,6 +23,8 @@ const STEPS: ((context: ScenarioContext) => Promise<ScenarioContext>)[] = [
   sync_allEventsScenario_7_unpublishEntities,
   sync_allEventsScenario_8_archiveEntity,
   sync_allEventsScenario_9_unarchiveEntity,
+  sync_allEventsScenario_10_archiveEntity,
+  sync_allEventsScenario_11_deleteEntity,
 ];
 
 const TITLE_ONLY_ENTITY_ID_1 = 'b1793e40-285c-423f-b4f8-e71fa74677b8';
@@ -406,6 +408,68 @@ async function sync_allEventsScenario_9_unarchiveEntity(context: ScenarioContext
   const sourceEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
   const targetEntity = (await targetClient.getEntity({ id })).valueOrThrow();
   assertEquals(targetEntity, sourceEntity);
+
+  return nextContext;
+}
+
+async function sync_allEventsScenario_10_archiveEntity(context: ScenarioContext) {
+  const { sourceClient, targetClient, after, createdBy } = context;
+
+  const id = TITLE_ONLY_ENTITY_ID_1;
+
+  // Archive entity
+  const result = await sourceClient.archiveEntity({ id });
+  const { updatedAt } = result.valueOrThrow();
+  assertResultValue(result, {
+    id,
+    effect: 'archived',
+    status: EntityStatus.archived,
+    updatedAt,
+  });
+
+  // Apply sync events
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.archiveEntity,
+      parentId: after,
+      createdBy,
+      entity: { id, version: 2 },
+    },
+  ]);
+
+  // Check that the target entity is identical
+  const sourceEntity = (await sourceClient.getEntity({ id })).valueOrThrow();
+  const targetEntity = (await targetClient.getEntity({ id })).valueOrThrow();
+  assertEquals(targetEntity, sourceEntity);
+
+  return nextContext;
+}
+
+async function sync_allEventsScenario_11_deleteEntity(context: ScenarioContext) {
+  const { sourceClient, targetClient, after, createdBy } = context;
+
+  const id = TITLE_ONLY_ENTITY_ID_1;
+
+  // Archive entity
+  const result = await sourceClient.deleteEntity({ id });
+  const { deletedAt } = result.valueOrThrow();
+  assertResultValue(result, { effect: 'deleted', deletedAt });
+
+  // Apply sync events
+  const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
+  assertSyncEventsEqual(events, [
+    {
+      type: EventType.deleteEntity,
+      parentId: after,
+      createdBy,
+      entity: { id, version: 2 },
+    },
+  ]);
+
+  // Check that the target entity is missing from target
+  const targetGetResult = await targetClient.getEntity({ id });
+  assertErrorResult(targetGetResult, 'NotFound', 'No such entity');
 
   return nextContext;
 }

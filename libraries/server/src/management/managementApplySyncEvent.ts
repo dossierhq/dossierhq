@@ -11,6 +11,7 @@ import {
 import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { adminArchiveEntitySyncEvent } from '../admin-entity/adminArchiveEntity.js';
 import { adminCreateEntitySyncEvent } from '../admin-entity/adminCreateEntity.js';
+import { adminDeleteEntitySyncEvent } from '../admin-entity/adminDeleteEntity.js';
 import { adminPublishEntitiesSyncEvent } from '../admin-entity/adminPublishEntities.js';
 import { adminUnarchiveEntitySyncEvent } from '../admin-entity/adminUnarchiveEntity.js';
 import { adminUnpublishEntitiesSyncEvent } from '../admin-entity/adminUnpublishEntities.js';
@@ -111,6 +112,8 @@ function applyEvent(
         context,
         event,
       );
+    case EventType.deleteEntity:
+      return adminDeleteEntitySyncEvent(authorizationAdapter, databaseAdapter, context, event);
     case EventType.publishEntities:
       return adminPublishEntitiesSyncEvent(
         schema,

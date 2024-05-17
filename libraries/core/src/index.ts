@@ -218,6 +218,7 @@ export {
   type CreateEntitySyncEvent,
   type CreatePrincipalChangelogEvent,
   type CreatePrincipalSyncEvent,
+  type DeleteEntitySyncEvent,
   type EntityChangelogEvent,
   type PublishEntitiesSyncEvent,
   type SchemaChangelogEvent,

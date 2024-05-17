@@ -4,6 +4,7 @@ import type {
   CreateEntitySyncEvent,
   CreatePrincipalChangelogEvent,
   CreatePrincipalSyncEvent,
+  DeleteEntitySyncEvent,
   EntityChangelogEvent,
   EntityQuery,
   EntityReference,
@@ -388,7 +389,7 @@ export interface DatabaseAdapter<
   adminEntityDeleteEntity(
     context: TransactionContext,
     reference: DatabaseResolvedEntityReference,
-    syncEvent: ArchiveEntitySyncEvent | null,
+    syncEvent: DeleteEntitySyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityDeletePayload, typeof ErrorType.Generic>;
 
   adminEntityGetEntityName(

@@ -6,6 +6,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const DeleteEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   deleteEntity_minimal,
+  deleteEntity_deleteEntityEvent,
   deleteEntity_errorInvalidReference,
   deleteEntity_errorWrongAuthKey,
   deleteEntity_errorDraftEntity,
@@ -24,6 +25,31 @@ async function deleteEntity_minimal({ clientProvider }: AdminEntityTestContext) 
   const result = await client.deleteEntity({ id });
   const { deletedAt } = result.valueOrThrow();
   assertResultValue(result, { effect: 'deleted', deletedAt });
+}
+
+async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const {
+    entity: { id },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  assertOkResult(await client.archiveEntity({ id }));
+
+  const result = await client.deleteEntity({ id });
+  // const { deletedAt } =
+  result.valueOrThrow();
+
+  // const connectionResult = await client.getChangelogEvents({ types: ['deleteEntity'] });
+  // assertChangelogEventsConnection(connectionResult, [
+  //   {
+  //     type: EventType.createEntity,
+  //     createdAt,
+  //     createdBy: '',
+  //     entities: [{ id, name, version, type: 'TitleOnly' }],
+  //     unauthorizedEntityCount: 0,
+  //   },
+  // ]);
 }
 
 async function deleteEntity_errorInvalidReference({ clientProvider }: AdminEntityTestContext) {

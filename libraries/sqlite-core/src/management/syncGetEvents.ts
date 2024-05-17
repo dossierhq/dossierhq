@@ -5,6 +5,7 @@ import {
   type ArchiveEntitySyncEvent,
   type CreateEntitySyncEvent,
   type CreatePrincipalSyncEvent,
+  type DeleteEntitySyncEvent,
   type ErrorType,
   type PromiseResult,
   type PublishEntitiesSyncEvent,
@@ -122,7 +123,7 @@ async function getEvents(
 type EventEntityInfoPayload = Record<EventsTable['id'], EntityInfoPayload[]>;
 
 type EntityInfoPayload = Pick<EventEntityVersionsTable, 'published_name'> &
-  Pick<EntitiesTable, 'uuid' | 'auth_key' | 'resolved_auth_key'> &
+  Pick<EntitiesTable, 'uuid' | 'uuid_before_delete' | 'auth_key' | 'resolved_auth_key'> &
   Pick<EntityVersionsTable, 'version'> &
   (Pick<EntityVersionsTable, 'name' | 'type' | 'schema_version' | 'fields'> | object);
 
@@ -146,13 +147,13 @@ async function getEntityInfoForEvents(
   // Get shared info that is needed by all entity events (the superset except what's needed only for create/update)
   const sharedResult = await queryMany<
     Pick<EventEntityVersionsTable, 'events_id' | 'published_name'> &
-      Pick<EntitiesTable, 'uuid' | 'auth_key' | 'resolved_auth_key'> &
+      Pick<EntitiesTable, 'uuid' | 'uuid_before_delete' | 'auth_key' | 'resolved_auth_key'> &
       Pick<EntityVersionsTable, 'version'>
   >(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`SELECT eev.events_id, eev.published_name, e.uuid, e.auth_key, e.resolved_auth_key, ev.version`;
+      sql`SELECT eev.events_id, eev.published_name, e.uuid, e.uuid_before_delete, e.auth_key, e.resolved_auth_key, ev.version`;
       sql`FROM event_entity_versions eev`;
       sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
       sql`JOIN entities e ON ev.entities_id = e.id`;
@@ -254,10 +255,9 @@ function convertEventRowsToPayload(
     switch (type) {
       case EventType.archiveEntity: {
         const entityInfo = eventEntityInfo[0];
-        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<ArchiveEntitySyncEvent>(type, parentId, eventRow, {
-            entity: { id: entityInfo.uuid, version: entityInfo.version },
+            entity: { id: resolveId(entityInfo), version: entityInfo.version },
           }),
         );
         break;
@@ -268,11 +268,10 @@ function convertEventRowsToPayload(
         if (!('fields' in entityInfo)) {
           return notOk.Generic('Cannot find extended info about entity');
         }
-        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<CreateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
-              id: entityInfo.uuid,
+              id: resolveId(entityInfo),
               info: {
                 type: entityInfo.type,
                 name: entityInfo.name,
@@ -286,27 +285,32 @@ function convertEventRowsToPayload(
         );
         break;
       }
+      case EventType.deleteEntity: {
+        const entityInfo = eventEntityInfo[0];
+        events.push(
+          makeEvent<DeleteEntitySyncEvent>(type, parentId, eventRow, {
+            entity: { id: resolveId(entityInfo), version: entityInfo.version },
+          }),
+        );
+        break;
+      }
       case EventType.publishEntities: {
         events.push(
           makeEvent<PublishEntitiesSyncEvent>(type, parentId, eventRow, {
-            entities: eventEntityInfo.map((it) => {
-              assertIsDefined(it.uuid);
-              return {
-                id: it.uuid,
-                version: it.version,
-                publishedName: it.published_name!,
-              };
-            }),
+            entities: eventEntityInfo.map((it) => ({
+              id: resolveId(it),
+              version: it.version,
+              publishedName: it.published_name!,
+            })),
           }),
         );
         break;
       }
       case EventType.unarchiveEntity: {
         const entityInfo = eventEntityInfo[0];
-        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<UnarchiveEntitySyncEvent>(type, parentId, eventRow, {
-            entity: { id: entityInfo.uuid, version: entityInfo.version },
+            entity: { id: resolveId(entityInfo), version: entityInfo.version },
           }),
         );
         break;
@@ -314,13 +318,10 @@ function convertEventRowsToPayload(
       case EventType.unpublishEntities: {
         events.push(
           makeEvent<UnpublishEntitiesSyncEvent>(type, parentId, eventRow, {
-            entities: eventEntityInfo.map((it) => {
-              assertIsDefined(it.uuid);
-              return {
-                id: it.uuid,
-                version: it.version,
-              };
-            }),
+            entities: eventEntityInfo.map((it) => ({
+              id: resolveId(it),
+              version: it.version,
+            })),
           }),
         );
         break;
@@ -331,11 +332,10 @@ function convertEventRowsToPayload(
         if (!('fields' in entityInfo)) {
           return notOk.Generic('Cannot find extended info about entity');
         }
-        assertIsDefined(entityInfo.uuid);
         events.push(
           makeEvent<UpdateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
-              id: entityInfo.uuid,
+              id: resolveId(entityInfo),
               info: {
                 name: entityInfo.name,
                 version: entityInfo.version,
@@ -368,4 +368,10 @@ function makeEvent<TEvent extends SyncEvent>(
     createdBy: eventRow.created_by,
     ...specific,
   } as TEvent;
+}
+
+function resolveId(entityInfo: EntityInfoPayload) {
+  const id = entityInfo.uuid ?? entityInfo.uuid_before_delete;
+  assertIsDefined(id);
+  return id;
 }

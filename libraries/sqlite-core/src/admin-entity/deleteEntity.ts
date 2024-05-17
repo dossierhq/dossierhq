@@ -1,4 +1,4 @@
-import { ok, type ArchiveEntitySyncEvent } from '@dossierhq/core';
+import { ok, type DeleteEntitySyncEvent } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type DatabaseAdapter,
@@ -12,7 +12,7 @@ export async function adminEntityDeleteEntity(
   database: Database,
   context: TransactionContext,
   reference: DatabaseResolvedEntityReference,
-  syncEvent: ArchiveEntitySyncEvent | null,
+  syncEvent: DeleteEntitySyncEvent | null,
 ): ReturnType<DatabaseAdapter['adminEntityDeleteEntity']> {
   const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
   const entityId = reference.entityInternalId as number;

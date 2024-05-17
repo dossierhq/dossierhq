@@ -8,6 +8,7 @@ export const EventType = {
   createPrincipal: 'createPrincipal',
   createEntity: 'createEntity',
   createAndPublishEntity: 'createAndPublishEntity',
+  deleteEntity: 'deleteEntity',
   updateEntity: 'updateEntity',
   updateAndPublishEntity: 'updateAndPublishEntity',
   publishEntities: 'publishEntities',
@@ -68,7 +69,8 @@ export type SyncEvent =
   | PublishEntitiesSyncEvent
   | UnpublishEntitiesSyncEvent
   | ArchiveEntitySyncEvent
-  | UnarchiveEntitySyncEvent;
+  | UnarchiveEntitySyncEvent
+  | DeleteEntitySyncEvent;
 
 interface SyncEventShared<TEventType extends keyof typeof EventType>
   extends EventShared<TEventType> {
@@ -135,5 +137,9 @@ export interface ArchiveEntitySyncEvent extends SyncEventShared<typeof EventType
 
 export interface UnarchiveEntitySyncEvent
   extends SyncEventShared<typeof EventType.unarchiveEntity> {
+  entity: EntityVersionReference;
+}
+
+export interface DeleteEntitySyncEvent extends SyncEventShared<typeof EventType.deleteEntity> {
   entity: EntityVersionReference;
 }

@@ -15,7 +15,8 @@ CREATE TABLE advisory_locks (
 
 CREATE TABLE "entities" (
   id INTEGER PRIMARY KEY,
-  uuid TEXT NOT NULL,
+  uuid TEXT,
+  uuid_before_delete TEXT,
   name TEXT NOT NULL,
   published_name TEXT,
   type TEXT NOT NULL,
@@ -26,6 +27,7 @@ CREATE TABLE "entities" (
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
   updated_seq INTEGER NOT NULL,
+  deleted_at TEXT,
   latest_entity_versions_id INTEGER,
   published_entity_versions_id INTEGER,
   dirty INTEGER NOT NULL DEFAULT 0,
