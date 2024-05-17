@@ -1,5 +1,13 @@
-import { assertOkResult, ErrorType } from '@dossierhq/core';
-import { assertErrorResult, assertResultValue } from '../Asserts.js';
+import {
+  assertOkResult,
+  ErrorType,
+  EventType,
+  getAllNodesForConnection,
+  type ChangelogEvent,
+  type DeleteEntitySyncEvent,
+  type EntityChangelogEvent,
+} from '@dossierhq/core';
+import { assertEquals, assertErrorResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import { SUBJECT_ONLY_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
@@ -31,25 +39,40 @@ async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTes
   const client = clientProvider.dossierClient();
 
   const {
-    entity: { id },
+    entity: {
+      id,
+      info: { name },
+    },
   } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
   assertOkResult(await client.archiveEntity({ id }));
 
   const result = await client.deleteEntity({ id });
-  // const { deletedAt } =
-  result.valueOrThrow();
+  const { deletedAt } = result.valueOrThrow();
 
-  // const connectionResult = await client.getChangelogEvents({ types: ['deleteEntity'] });
-  // assertChangelogEventsConnection(connectionResult, [
-  //   {
-  //     type: EventType.createEntity,
-  //     createdAt,
-  //     createdBy: '',
-  //     entities: [{ id, name, version, type: 'TitleOnly' }],
-  //     unauthorizedEntityCount: 0,
-  //   },
-  // ]);
+  // Can't use the entity filter since it's deleted, but we can still find it by searching
+  let matchEvent: EntityChangelogEvent | null = null;
+  for await (const node of getAllNodesForConnection({}, (paging) =>
+    client.getChangelogEvents({ types: ['deleteEntity'], reverse: true }, paging),
+  )) {
+    if (node.isError()) {
+      continue;
+    }
+    const event = node.value;
+    if (event.type === EventType.deleteEntity && event.entities[0].id === id) {
+      matchEvent = event;
+      break;
+    }
+  }
+
+  assertEquals(matchEvent, {
+    id: matchEvent!.id,
+    createdAt: deletedAt,
+    createdBy: matchEvent!.createdBy,
+    type: EventType.deleteEntity,
+    unauthorizedEntityCount: 0,
+    entities: [{ id, name, type: 'TitleOnly', version: 1 }],
+  });
 }
 
 async function deleteEntity_errorInvalidReference({ clientProvider }: AdminEntityTestContext) {
