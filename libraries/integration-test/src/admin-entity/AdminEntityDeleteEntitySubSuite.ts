@@ -1,19 +1,24 @@
 import {
   assertOkResult,
+  copyEntity,
   ErrorType,
   EventType,
   getAllNodesForConnection,
-  type ChangelogEvent,
-  type DeleteEntitySyncEvent,
   type EntityChangelogEvent,
 } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
-import { SUBJECT_ONLY_CREATE, TITLE_ONLY_CREATE } from '../shared-entity/Fixtures.js';
+import {
+  STRINGS_CREATE,
+  SUBJECT_ONLY_CREATE,
+  TITLE_ONLY_CREATE,
+} from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
 export const DeleteEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   deleteEntity_minimal,
+  deleteEntity_releasesId,
+  deleteEntity_releasesUniqueIndexValue,
   deleteEntity_deleteEntityEvent,
   deleteEntity_errorInvalidReference,
   deleteEntity_errorWrongAuthKey,
@@ -33,6 +38,43 @@ async function deleteEntity_minimal({ clientProvider }: AdminEntityTestContext) 
   const result = await client.deleteEntity({ id });
   const { deletedAt } = result.valueOrThrow();
   assertResultValue(result, { effect: 'deleted', deletedAt });
+}
+
+async function deleteEntity_releasesId({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const {
+    entity: { id },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  assertOkResult(await client.archiveEntity({ id }));
+  assertOkResult(await client.deleteEntity({ id }));
+
+  assertErrorResult(await client.getEntity({ id }), ErrorType.NotFound, 'No such entity');
+
+  assertOkResult(await client.createEntity(copyEntity(STRINGS_CREATE, { id })));
+}
+
+async function deleteEntity_releasesUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const uniqueValue = crypto.randomUUID();
+
+  const {
+    entity: { id },
+  } = (
+    await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique: uniqueValue } }))
+  ).valueOrThrow();
+
+  assertOkResult(await client.archiveEntity({ id }));
+  assertOkResult(await client.deleteEntity({ id }));
+
+  // Since delete entity releases the unique value we can create a new entity with the same unique value
+  const { entity: secondEntity } = (
+    await client.createEntity(copyEntity(STRINGS_CREATE, { fields: { unique: uniqueValue } }))
+  ).valueOrThrow();
+  const getResult = await client.getEntity({ index: 'stringsUnique', value: uniqueValue });
+  assertResultValue(getResult, secondEntity);
 }
 
 async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTestContext) {
