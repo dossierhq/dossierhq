@@ -112,7 +112,7 @@ function applyEvent(
         context,
         event,
       );
-    case EventType.deleteEntity:
+    case EventType.deleteEntities:
       return adminDeleteEntitySyncEvent(authorizationAdapter, databaseAdapter, context, event);
     case EventType.publishEntities:
       return adminPublishEntitiesSyncEvent(

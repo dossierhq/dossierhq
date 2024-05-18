@@ -3,7 +3,7 @@ import {
   EventType,
   notOk,
   ok,
-  type DeleteEntitySyncEvent,
+  type DeleteEntitiesSyncEvent,
   type DossierClient,
   type EntityDeletePayload,
   type EntityReference,
@@ -12,27 +12,28 @@ import type { DatabaseAdapter } from '@dossierhq/database-adapter';
 import { authVerifyAuthorizationKey } from '../Auth.js';
 import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import type { SessionContext } from '../Context.js';
+import { checkUUIDsAreUnique } from './AdminEntityMutationUtils.js';
 
 export async function adminDeleteEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference,
-): ReturnType<DossierClient['deleteEntity']> {
-  return doAdminDeleteEntity(authorizationAdapter, databaseAdapter, context, reference, null);
+  references: EntityReference[],
+): ReturnType<DossierClient['deleteEntities']> {
+  return doAdminDeleteEntity(authorizationAdapter, databaseAdapter, context, references, null);
 }
 
 export async function adminDeleteEntitySyncEvent(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  syncEvent: DeleteEntitySyncEvent,
+  syncEvent: DeleteEntitiesSyncEvent,
 ) {
   return doAdminDeleteEntity(
     authorizationAdapter,
     databaseAdapter,
     context,
-    syncEvent.entity,
+    syncEvent.entities,
     syncEvent,
   );
 }
@@ -41,43 +42,47 @@ async function doAdminDeleteEntity(
   authorizationAdapter: AuthorizationAdapter,
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
-  reference: EntityReference,
-  syncEvent: DeleteEntitySyncEvent | null,
-): ReturnType<DossierClient['deleteEntity']> {
+  references: EntityReference[],
+  syncEvent: DeleteEntitiesSyncEvent | null,
+): ReturnType<DossierClient['deleteEntities']> {
   if (context.session.type === 'readonly') {
     return notOk.BadRequest('Readonly session used to delete entity');
   }
   const { session } = context;
 
-  //TODO check no incoming references
+  const uniqueIdCheck = checkUUIDsAreUnique(references);
+  if (uniqueIdCheck.isError()) return uniqueIdCheck;
+
+  if (references.length === 0) {
+    return notOk.BadRequest('No references provided');
+  }
 
   return context.withTransaction(async (context) => {
-    //TODO check which get info to use
-    // Step 1: Get entity info
-    const entityInfoResult = await databaseAdapter.adminEntityArchivingGetEntityInfo(
+    const entityInfoResult = await databaseAdapter.adminEntityDeleteGetEntityInfo(
       context,
-      reference,
+      references,
     );
     if (entityInfoResult.isError()) return entityInfoResult;
-    const { entityInternalId, entityVersionInternalId, authKey, resolvedAuthKey, status } =
-      entityInfoResult.value;
+    const entityInfos = entityInfoResult.value;
 
-    // Step 2: Verify authKey
-    const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
-      authKey,
-      resolvedAuthKey,
-    });
-    if (authResult.isError()) return authResult;
+    for (const { entityId, authKey, resolvedAuthKey, status } of entityInfos) {
+      // Step 2: Verify authKey
+      const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
+        authKey,
+        resolvedAuthKey,
+      });
+      if (authResult.isError()) return authResult;
 
-    // Step 3: Check status
-    if (status !== EntityStatus.archived) {
-      return notOk.BadRequest(`Entity is not archived (status: ${status})`);
+      // Step 3: Check status
+      if (status !== EntityStatus.archived) {
+        return notOk.BadRequest(`Entity is not archived (id: ${entityId}, status: ${status})`);
+      }
     }
 
-    // Step 4: Delete entity
-    const deleteResult = await databaseAdapter.adminEntityDeleteEntity(
+    // Step 4: Delete entities
+    const deleteResult = await databaseAdapter.adminEntityDeleteEntities(
       context,
-      { entityInternalId },
+      entityInfos.map(({ entityInternalId }) => ({ entityInternalId })),
       syncEvent,
     );
     if (deleteResult.isError()) return deleteResult;
@@ -85,7 +90,11 @@ async function doAdminDeleteEntity(
     // Step 5: Create publishing event
     const publishingEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
       context,
-      { session, type: EventType.deleteEntity, references: [{ entityVersionInternalId }] },
+      {
+        session,
+        type: EventType.deleteEntities,
+        references: entityInfos.map(({ entityVersionInternalId }) => ({ entityVersionInternalId })),
+      },
       syncEvent,
     );
     if (publishingEventResult.isError()) return publishingEventResult;

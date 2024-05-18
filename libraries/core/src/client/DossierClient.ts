@@ -248,8 +248,8 @@ export interface DossierClient<
     | typeof ErrorType.Generic
   >;
 
-  deleteEntity(
-    reference: EntityReference,
+  deleteEntities(
+    references: EntityReference[],
   ): PromiseResult<
     EntityDeletePayload,
     | typeof ErrorType.BadRequest
@@ -381,7 +381,7 @@ export interface DossierExceptionClient<
 
   unarchiveEntity(reference: EntityReference): Promise<EntityUnarchivePayload>;
 
-  deleteEntity(reference: EntityReference): Promise<EntityDeletePayload>;
+  deleteEntities(references: EntityReference[]): Promise<EntityDeletePayload>;
 
   processDirtyEntity(reference: EntityReference): Promise<EntityProcessDirtyPayload | null>;
 
@@ -396,7 +396,7 @@ export const DossierClientOperationName = {
   acquireAdvisoryLock: 'acquireAdvisoryLock',
   archiveEntity: 'archiveEntity',
   createEntity: 'createEntity',
-  deleteEntity: 'deleteEntity',
+  deleteEntities: 'deleteEntities',
   getChangelogEvents: 'getChangelogEvents',
   getChangelogEventsTotalCount: 'getChangelogEventsTotalCount',
   getEntities: 'getEntities',
@@ -444,7 +444,7 @@ interface DossierClientOperationArguments {
   [DossierClientOperationName.acquireAdvisoryLock]: MethodParameters<'acquireAdvisoryLock'>;
   [DossierClientOperationName.archiveEntity]: MethodParameters<'archiveEntity'>;
   [DossierClientOperationName.createEntity]: MethodParameters<'createEntity'>;
-  [DossierClientOperationName.deleteEntity]: MethodParameters<'deleteEntity'>;
+  [DossierClientOperationName.deleteEntities]: MethodParameters<'deleteEntities'>;
   [DossierClientOperationName.getChangelogEvents]: MethodParameters<'getChangelogEvents'>;
   [DossierClientOperationName.getChangelogEventsTotalCount]: MethodParameters<'getChangelogEventsTotalCount'>;
   [DossierClientOperationName.getEntities]: MethodParameters<'getEntities'>;
@@ -468,7 +468,7 @@ interface DossierClientOperationReturnOk {
   [DossierClientOperationName.acquireAdvisoryLock]: MethodReturnTypeOk<'acquireAdvisoryLock'>;
   [DossierClientOperationName.archiveEntity]: MethodReturnTypeOk<'archiveEntity'>;
   [DossierClientOperationName.createEntity]: MethodReturnTypeOk<'createEntity'>;
-  [DossierClientOperationName.deleteEntity]: MethodReturnTypeOk<'deleteEntity'>;
+  [DossierClientOperationName.deleteEntities]: MethodReturnTypeOk<'deleteEntities'>;
   [DossierClientOperationName.getChangelogEvents]: MethodReturnTypeOk<'getChangelogEvents'>;
   [DossierClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeOk<'getChangelogEventsTotalCount'>;
   [DossierClientOperationName.getEntities]: MethodReturnTypeOk<'getEntities'>;
@@ -492,7 +492,7 @@ interface DossierClientOperationReturnError {
   [DossierClientOperationName.acquireAdvisoryLock]: MethodReturnTypeError<'acquireAdvisoryLock'>;
   [DossierClientOperationName.archiveEntity]: MethodReturnTypeError<'archiveEntity'>;
   [DossierClientOperationName.createEntity]: MethodReturnTypeError<'createEntity'>;
-  [DossierClientOperationName.deleteEntity]: MethodReturnTypeError<'deleteEntity'>;
+  [DossierClientOperationName.deleteEntities]: MethodReturnTypeError<'deleteEntities'>;
   [DossierClientOperationName.getChangelogEvents]: MethodReturnTypeError<'getChangelogEvents'>;
   [DossierClientOperationName.getChangelogEventsTotalCount]: MethodReturnTypeError<'getChangelogEventsTotalCount'>;
   [DossierClientOperationName.getEntities]: MethodReturnTypeError<'getEntities'>;
@@ -535,7 +535,7 @@ export const DossierClientModifyingOperations: Readonly<Set<string>> = /* @__PUR
     DossierClientOperationName.acquireAdvisoryLock,
     DossierClientOperationName.archiveEntity,
     DossierClientOperationName.createEntity,
-    DossierClientOperationName.deleteEntity,
+    DossierClientOperationName.deleteEntities,
     DossierClientOperationName.processDirtyEntity,
     DossierClientOperationName.publishEntities,
     DossierClientOperationName.releaseAdvisoryLock,
@@ -775,12 +775,12 @@ class BaseDossierClient<TContext extends ClientContext> implements DossierClient
     });
   }
 
-  deleteEntity(
-    reference: EntityReference,
-  ): MethodReturnType<typeof DossierClientOperationName.deleteEntity> {
+  deleteEntities(
+    references: EntityReference[],
+  ): MethodReturnType<typeof DossierClientOperationName.deleteEntities> {
     return this.executeOperation({
-      name: DossierClientOperationName.deleteEntity,
-      args: [reference],
+      name: DossierClientOperationName.deleteEntities,
+      args: [references],
       modifies: true,
     });
   }
@@ -984,8 +984,8 @@ class DossierExceptionClientWrapper implements DossierExceptionClient {
     return (await this.client.unarchiveEntity(reference)).valueOrThrow();
   }
 
-  async deleteEntity(reference: EntityReference): Promise<EntityDeletePayload> {
-    return (await this.client.deleteEntity(reference)).valueOrThrow();
+  async deleteEntities(references: EntityReference[]): Promise<EntityDeletePayload> {
+    return (await this.client.deleteEntities(references)).valueOrThrow();
   }
 
   async processDirtyEntity(reference: EntityReference): Promise<EntityProcessDirtyPayload | null> {
@@ -1040,10 +1040,10 @@ export async function executeJsonDossierClientOperation(
         operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.createEntity];
       return await client.createEntity(entity, options);
     }
-    case DossierClientOperationName.deleteEntity: {
+    case DossierClientOperationName.deleteEntities: {
       const [reference] =
-        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.deleteEntity];
-      return await client.deleteEntity(reference);
+        operationArgs as DossierClientOperationArguments[typeof DossierClientOperationName.deleteEntities];
+      return await client.deleteEntities(reference);
     }
     case DossierClientOperationName.getChangelogEvents: {
       const [query, paging] =
@@ -1175,9 +1175,10 @@ export function convertJsonDossierClientResult<
         });
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
-    case DossierClientOperationName.deleteEntity: {
-      const result: MethodReturnTypeWithoutPromise<typeof DossierClientOperationName.deleteEntity> =
-        ok(convertJsonDeletePayload(value as JsonEntityDeletePayload));
+    case DossierClientOperationName.deleteEntities: {
+      const result: MethodReturnTypeWithoutPromise<
+        typeof DossierClientOperationName.deleteEntities
+      > = ok(convertJsonDeletePayload(value as JsonEntityDeletePayload));
       return result as MethodReturnTypeWithoutPromise<TName, TClient>;
     }
     case DossierClientOperationName.getChangelogEvents: {

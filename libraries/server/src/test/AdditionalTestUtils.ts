@@ -105,7 +105,8 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
   const adapter: MockDatabaseAdapter = {
     adminEntityArchivingGetEntityInfo: vi.fn(),
     adminEntityCreate: vi.fn(),
-    adminEntityDeleteEntity: vi.fn(),
+    adminEntityDeleteEntities: vi.fn(),
+    adminEntityDeleteGetEntityInfo: vi.fn(),
     adminEntityGetEntityName: vi.fn(),
     adminEntityGetMultiple: vi.fn(),
     adminEntityGetOne: vi.fn(),

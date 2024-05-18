@@ -1,4 +1,4 @@
-import { ok, type DeleteEntitySyncEvent } from '@dossierhq/core';
+import { ok, type DeleteEntitiesSyncEvent } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,
   type DatabaseAdapter,
@@ -8,22 +8,22 @@ import {
 import { queryRun, type Database } from '../QueryFunctions.js';
 import { getTransactionTimestamp } from '../SqliteTransaction.js';
 
-export async function adminEntityDeleteEntity(
+export async function adminEntityDeleteEntities(
   database: Database,
   context: TransactionContext,
-  reference: DatabaseResolvedEntityReference,
-  syncEvent: DeleteEntitySyncEvent | null,
-): ReturnType<DatabaseAdapter['adminEntityDeleteEntity']> {
+  references: DatabaseResolvedEntityReference[],
+  syncEvent: DeleteEntitiesSyncEvent | null,
+): ReturnType<DatabaseAdapter['adminEntityDeleteEntities']> {
   const now = syncEvent?.createdAt ?? getTransactionTimestamp(context.transaction);
-  const entityId = reference.entityInternalId as number;
+  const entityIds = references.map((it) => it.entityInternalId as number);
 
   const entityResult = await queryRun(
     database,
     context,
-    buildSqliteSqlQuery(({ sql }) => {
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
       sql`UPDATE entities
           SET uuid_before_delete = uuid, uuid = NULL, name_before_delete = name, name = NULL, deleted_at = ${now.toISOString()}, status = 'deleted'
-          WHERE id = ${entityId}`;
+          WHERE id IN ${addValueList(entityIds)}`;
     }),
   );
   if (entityResult.isError()) return entityResult;
@@ -34,7 +34,8 @@ export async function adminEntityDeleteEntity(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entities_latest_fts WHERE rowid = ${entityId}`,
+      ({ sql, addValueList }) =>
+        sql`DELETE FROM entities_latest_fts WHERE rowid IN ${addValueList(entityIds)}`,
     ),
   );
   if (deleteFtsResult.isError()) return deleteFtsResult;
@@ -43,7 +44,8 @@ export async function adminEntityDeleteEntity(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_latest_references WHERE from_entities_id = ${entityId}`,
+      ({ sql, addValueList }) =>
+        sql`DELETE FROM entity_latest_references WHERE from_entities_id IN ${addValueList(entityIds)}`,
     ),
   );
   if (removeExistingReferencesResult.isError()) return removeExistingReferencesResult;
@@ -52,7 +54,8 @@ export async function adminEntityDeleteEntity(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_latest_locations WHERE entities_id = ${entityId}`,
+      ({ sql, addValueList }) =>
+        sql`DELETE FROM entity_latest_locations WHERE entities_id IN ${addValueList(entityIds)}`,
     ),
   );
   if (removeExistingLocationsResult.isError()) return removeExistingLocationsResult;
@@ -61,7 +64,8 @@ export async function adminEntityDeleteEntity(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM entity_latest_value_types WHERE entities_id = ${entityId}`,
+      ({ sql, addValueList }) =>
+        sql`DELETE FROM entity_latest_value_types WHERE entities_id IN ${addValueList(entityIds)}`,
     ),
   );
   if (removeExistingValueTypesResult.isError()) return removeExistingValueTypesResult;
@@ -70,7 +74,8 @@ export async function adminEntityDeleteEntity(
     database,
     context,
     buildSqliteSqlQuery(
-      ({ sql }) => sql`DELETE FROM unique_index_values WHERE entities_id = ${entityId}`,
+      ({ sql, addValueList }) =>
+        sql`DELETE FROM unique_index_values WHERE entities_id IN ${addValueList(entityIds)}`,
     ),
   );
   if (removeUniqueValuesResult.isError()) return removeUniqueValuesResult;

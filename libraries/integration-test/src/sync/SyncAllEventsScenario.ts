@@ -452,7 +452,7 @@ async function sync_allEventsScenario_11_deleteEntity(context: ScenarioContext) 
   const id = TITLE_ONLY_ENTITY_ID_1;
 
   // Archive entity
-  const result = await sourceClient.deleteEntity({ id });
+  const result = await sourceClient.deleteEntities([{ id }]);
   const { deletedAt } = result.valueOrThrow();
   assertResultValue(result, { effect: 'deleted', deletedAt });
 
@@ -460,10 +460,10 @@ async function sync_allEventsScenario_11_deleteEntity(context: ScenarioContext) 
   const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext(context);
   assertSyncEventsEqual(events, [
     {
-      type: EventType.deleteEntity,
+      type: EventType.deleteEntities,
       parentId: after,
       createdBy,
-      entity: { id, version: 2 },
+      entities: [{ id, version: 2 }],
     },
   ]);
 

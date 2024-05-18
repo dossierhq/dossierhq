@@ -4,7 +4,7 @@ import type {
   CreateEntitySyncEvent,
   CreatePrincipalChangelogEvent,
   CreatePrincipalSyncEvent,
-  DeleteEntitySyncEvent,
+  DeleteEntitiesSyncEvent,
   EntityChangelogEvent,
   EntityQuery,
   EntityReference,
@@ -86,6 +86,14 @@ export interface DatabaseAdminEntityCreatePayload extends DatabaseResolvedEntity
 
 export interface DatabaseAdminEntityDeletePayload {
   deletedAt: Date;
+}
+
+export interface DatabaseAdminEntityDeleteGetInfoPayload
+  extends DatabaseResolvedEntityVersionReference {
+  entityId: string;
+  authKey: string;
+  resolvedAuthKey: string;
+  status: EntityStatus;
 }
 
 export interface DatabaseAdminEntityPayload {
@@ -386,11 +394,19 @@ export interface DatabaseAdapter<
     syncEvent: Exclude<Exclude<SyncEvent, UpdateSchemaSyncEvent>, CreatePrincipalSyncEvent> | null,
   ): PromiseResult<void, typeof ErrorType.Generic>;
 
-  adminEntityDeleteEntity(
+  adminEntityDeleteEntities(
     context: TransactionContext,
-    reference: DatabaseResolvedEntityReference,
-    syncEvent: DeleteEntitySyncEvent | null,
+    references: DatabaseResolvedEntityReference[],
+    syncEvent: DeleteEntitiesSyncEvent | null,
   ): PromiseResult<DatabaseAdminEntityDeletePayload, typeof ErrorType.Generic>;
+
+  adminEntityDeleteGetEntityInfo(
+    context: TransactionContext,
+    references: EntityReference[],
+  ): PromiseResult<
+    DatabaseAdminEntityDeleteGetInfoPayload[],
+    typeof ErrorType.NotFound | typeof ErrorType.Generic
+  >;
 
   adminEntityGetEntityName(
     context: TransactionContext,

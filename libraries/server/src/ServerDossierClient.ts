@@ -93,12 +93,14 @@ export function createServerDossierClient({
         );
         break;
       }
-      case DossierClientOperationName.deleteEntity: {
+      case DossierClientOperationName.deleteEntities: {
         const {
-          args: [reference],
+          args: [references],
           resolve,
-        } = operation as DossierClientOperation<typeof DossierClientOperationName.deleteEntity>;
-        resolve(await adminDeleteEntity(authorizationAdapter, databaseAdapter, context, reference));
+        } = operation as DossierClientOperation<typeof DossierClientOperationName.deleteEntities>;
+        resolve(
+          await adminDeleteEntity(authorizationAdapter, databaseAdapter, context, references),
+        );
         break;
       }
       case DossierClientOperationName.getChangelogEvents: {

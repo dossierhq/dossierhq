@@ -5,7 +5,7 @@ import {
   type ArchiveEntitySyncEvent,
   type CreateEntitySyncEvent,
   type CreatePrincipalSyncEvent,
-  type DeleteEntitySyncEvent,
+  type DeleteEntitiesSyncEvent,
   type ErrorType,
   type PromiseResult,
   type PublishEntitiesSyncEvent,
@@ -285,11 +285,10 @@ function convertEventRowsToPayload(
         );
         break;
       }
-      case EventType.deleteEntity: {
-        const entityInfo = eventEntityInfo[0];
+      case EventType.deleteEntities: {
         events.push(
-          makeEvent<DeleteEntitySyncEvent>(type, parentId, eventRow, {
-            entity: { id: resolveId(entityInfo), version: entityInfo.version },
+          makeEvent<DeleteEntitiesSyncEvent>(type, parentId, eventRow, {
+            entities: eventEntityInfo.map((it) => ({ id: resolveId(it), version: it.version })),
           }),
         );
         break;

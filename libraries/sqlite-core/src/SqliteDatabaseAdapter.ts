@@ -7,7 +7,8 @@ import type {
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
-import { adminEntityDeleteEntity } from './admin-entity/deleteEntity.js';
+import { adminEntityDeleteEntities } from './admin-entity/deleteEntity.js';
+import { adminEntityDeleteGetEntityInfo } from './admin-entity/deleteGetEntityInfo.js';
 import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
 import { adminGetEntity } from './admin-entity/getEntity.js';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
@@ -194,7 +195,8 @@ function createOuterAdapter(
       adminEntityArchivingGetEntityInfo(database, ...args),
     adminEntityCreate: (...args) => adminCreateEntity(database, ...args),
     adminEntityCreateEntityEvent: (...args) => adminEntityCreateEntityEvent(database, ...args),
-    adminEntityDeleteEntity: (...args) => adminEntityDeleteEntity(database, ...args),
+    adminEntityDeleteEntities: (...args) => adminEntityDeleteEntities(database, ...args),
+    adminEntityDeleteGetEntityInfo: (...args) => adminEntityDeleteGetEntityInfo(database, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(database, ...args),
     adminEntityGetMultiple: (...args) => adminEntityGetMultiple(database, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(database, ...args),
