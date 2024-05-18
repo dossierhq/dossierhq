@@ -22,7 +22,7 @@ export async function adminEntityDeleteEntity(
     context,
     buildSqliteSqlQuery(({ sql }) => {
       sql`UPDATE entities
-          SET uuid_before_delete = uuid, uuid = NULL, deleted_at = ${now.toISOString()}, status = 'deleted'
+          SET uuid_before_delete = uuid, uuid = NULL, name_before_delete = name, name = NULL, deleted_at = ${now.toISOString()}, status = 'deleted'
           WHERE id = ${entityId}`;
     }),
   );

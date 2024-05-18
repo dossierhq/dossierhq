@@ -18,7 +18,8 @@ export interface EntitiesTable {
   id: number;
   uuid: string | null;
   uuid_before_delete: string | null;
-  name: string;
+  name: string | null;
+  name_before_delete: string | null;
   published_name: string | null;
   type: string;
   auth_key: string;

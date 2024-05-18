@@ -485,7 +485,7 @@ const VERSION_26: SchemaVersionDefinition = {
   ],
 };
 
-// Make uuid nullable and add deleted_at and uuid_before_delete columns
+// Make uuid and nullable and add deleted_at, uuid_before_delete, name_before_delete columns
 const VERSION_27: SchemaVersionDefinition = {
   temporarilyDisableForeignKeys: true,
   queries: [
@@ -493,7 +493,8 @@ const VERSION_27: SchemaVersionDefinition = {
   id INTEGER PRIMARY KEY,
   uuid TEXT,
   uuid_before_delete TEXT,
-  name TEXT NOT NULL,
+  name TEXT,
+  name_before_delete TEXT,
   published_name TEXT,
   type TEXT NOT NULL,
   auth_key TEXT NOT NULL,

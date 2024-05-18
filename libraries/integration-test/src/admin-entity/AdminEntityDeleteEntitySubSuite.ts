@@ -18,6 +18,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const DeleteEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   deleteEntity_minimal,
   deleteEntity_releasesId,
+  deleteEntity_releasesName,
   deleteEntity_releasesUniqueIndexValue,
   deleteEntity_deleteEntityEvent,
   deleteEntity_errorInvalidReference,
@@ -53,6 +54,24 @@ async function deleteEntity_releasesId({ clientProvider }: AdminEntityTestContex
   assertErrorResult(await client.getEntity({ id }), ErrorType.NotFound, 'No such entity');
 
   assertOkResult(await client.createEntity(copyEntity(STRINGS_CREATE, { id })));
+}
+
+async function deleteEntity_releasesName({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const {
+    entity: {
+      id,
+      info: { name },
+    },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+
+  assertOkResult(await client.archiveEntity({ id }));
+  assertOkResult(await client.deleteEntity({ id }));
+
+  // If delete didn't release the name we would get another unique name here
+  const createResult = await client.createEntity(copyEntity(STRINGS_CREATE, { info: { name } }));
+  assertEquals(name, createResult.valueOrThrow().entity.info.name);
 }
 
 async function deleteEntity_releasesUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {

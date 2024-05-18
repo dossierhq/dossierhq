@@ -1,7 +1,7 @@
 import { EntityStatus } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
-import { assertExhaustive } from './AssertUtils.js';
+import { assertExhaustive, assertIsDefined } from './AssertUtils.js';
 
 export function resolveEntityStatus(status: EntitiesTable['status']): EntityStatus {
   switch (status) {
@@ -28,6 +28,7 @@ export function resolveAdminEntityInfo(
     Pick<EntityVersionsTable, 'version'> & { subjects_uuid?: string },
 ) {
   const status = resolveEntityStatus(row.status);
+  assertIsDefined(row.name);
   return {
     ...resolveEntityValidity(row.invalid, status),
     authKey: row.auth_key,
