@@ -122,14 +122,21 @@ async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTes
 
   const {
     entity: {
-      id,
-      info: { name },
+      id: id1,
+      info: { name: name1 },
+    },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  const {
+    entity: {
+      id: id2,
+      info: { name: name2 },
     },
   } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
 
-  assertOkResult(await client.archiveEntity({ id }));
+  assertOkResult(await client.archiveEntity({ id: id1 }));
+  assertOkResult(await client.archiveEntity({ id: id2 }));
 
-  const result = await client.deleteEntities([{ id }]);
+  const result = await client.deleteEntities([{ id: id1 }, { id: id2 }]);
   const { deletedAt } = result.valueOrThrow();
 
   // Can't use the entity filter since it's deleted, but we can still find it by searching
@@ -141,11 +148,16 @@ async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTes
       continue;
     }
     const event = node.value;
-    if (event.type === EventType.deleteEntities && event.entities[0].id === id) {
+    if (
+      event.type === EventType.deleteEntities &&
+      event.entities.some((it) => [id1, id2].includes(it.id))
+    ) {
       matchEvent = event;
       break;
     }
   }
+
+  const entity1First = matchEvent!.entities[0].id === id1;
 
   assertEquals(matchEvent, {
     id: matchEvent!.id,
@@ -153,7 +165,15 @@ async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTes
     createdBy: matchEvent!.createdBy,
     type: EventType.deleteEntities,
     unauthorizedEntityCount: 0,
-    entities: [{ id, name, type: 'TitleOnly', version: 1 }],
+    entities: entity1First
+      ? [
+          { id: id1, name: name1, type: 'TitleOnly', version: 1 },
+          { id: id2, name: name2, type: 'TitleOnly', version: 1 },
+        ]
+      : [
+          { id: id2, name: name2, type: 'TitleOnly', version: 1 },
+          { id: id1, name: name1, type: 'TitleOnly', version: 1 },
+        ],
   });
 }
 
