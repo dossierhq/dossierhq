@@ -113,6 +113,11 @@ export function updateCacheEntityInfo<TEffect>(
   });
 }
 
+export function removeCacheEntity(mutate: ScopedMutator, reference: EntityReference) {
+  const key = CACHE_KEYS.adminEntity(reference);
+  mutate(key, undefined);
+}
+
 export function invalidateChangelogEvents(mutate: ScopedMutator) {
   const keyString = CACHE_KEYS.adminChangelogEvents(undefined, undefined)[0];
 

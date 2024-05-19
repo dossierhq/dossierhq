@@ -14,8 +14,13 @@ import {
   Row,
   type NotificationInfo,
 } from '@dossierhq/design';
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, type Dispatch } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
+import { EntityEditorDispatchContext } from '../../contexts/EntityEditorDispatchContext.js';
+import {
+  EntityEditorActions,
+  type EntityEditorStateAction,
+} from '../../reducers/EntityEditorReducer/EntityEditorReducer.js';
 
 interface Props {
   disabled?: boolean;
@@ -23,7 +28,7 @@ interface Props {
   entitySpec: EntityTypeSpecification;
 }
 
-type PublishingActionId = 'publish' | 'unpublish' | 'archive' | 'unarchive';
+type PublishingActionId = 'publish' | 'unpublish' | 'archive' | 'unarchive' | 'delete';
 
 interface PublishAction {
   id: PublishingActionId;
@@ -35,6 +40,7 @@ const successMessages: Record<PublishingActionId, string> = {
   publish: 'Published entity',
   unarchive: 'Unarchived entity',
   unpublish: 'Unpublished entity',
+  delete: 'Deleted entity',
 };
 
 const errorMessages: Record<PublishingActionId, string> = {
@@ -42,11 +48,13 @@ const errorMessages: Record<PublishingActionId, string> = {
   publish: 'Failed publishing entity',
   unarchive: 'Failed unarchiving entity',
   unpublish: 'Failed unpublishing entity',
+  delete: 'Failed deleting entity',
 };
 
 export function PublishingButton({ disabled, entity, entitySpec }: Props) {
   const { client } = useContext(DossierContext);
   const { showNotification } = useContext(NotificationContext);
+  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
 
   const [buttonAction, ...dropdownActions] = useMemo(
     () => createPublishActions(entity, entitySpec),
@@ -63,7 +71,14 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
         disabled={disabled || !buttonAction}
         onClick={
           entity
-            ? () => executeAction(buttonAction.id, entity, client, showNotification)
+            ? () =>
+                executeAction(
+                  buttonAction.id,
+                  entity,
+                  client,
+                  showNotification,
+                  dispatchEntityEditorState,
+                )
             : undefined
         }
       >
@@ -76,7 +91,10 @@ export function PublishingButton({ disabled, entity, entitySpec }: Props) {
           items={dropdownActions}
           renderItem={(it) => it.name}
           onItemClick={
-            entity ? (it) => executeAction(it.id, entity, client, showNotification) : undefined
+            entity
+              ? (it) =>
+                  executeAction(it.id, entity, client, showNotification, dispatchEntityEditorState)
+              : undefined
           }
         />
       ) : null}
@@ -99,7 +117,7 @@ function createPublishActions(entity: Entity | null, entitySpec: EntityTypeSpeci
   } else if (status === EntityStatus.modified) {
     publishActionsIds = ['publish', 'unpublish'];
   } else if (status === EntityStatus.archived) {
-    publishActionsIds = ['unarchive', 'publish'];
+    publishActionsIds = ['unarchive', 'publish', 'delete'];
   }
 
   if (!entitySpec.publishable) {
@@ -129,6 +147,11 @@ function createPublishActions(entity: Entity | null, entitySpec: EntityTypeSpeci
           id: 'unpublish',
           name: 'Unpublish',
         };
+      case 'delete':
+        return {
+          id: 'delete',
+          name: 'Delete',
+        };
     }
   });
 
@@ -140,6 +163,7 @@ async function executeAction(
   entity: Entity,
   client: DossierClient<Entity<string, object>, Component<string, object>>,
   showNotification: (notification: NotificationInfo) => void,
+  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
 ) {
   const reference = { id: entity.id };
   let result: Result<unknown, ErrorType>;
@@ -155,6 +179,13 @@ async function executeAction(
       break;
     case 'unpublish':
       result = await client.unpublishEntities([reference]);
+      break;
+    case 'delete':
+      if (!window.confirm('Are you sure you want to delete this entity?')) {
+        return;
+      }
+      result = await client.deleteEntities([reference]);
+      dispatchEntityEditorState(new EntityEditorActions.DeleteDraft(reference.id));
       break;
   }
 

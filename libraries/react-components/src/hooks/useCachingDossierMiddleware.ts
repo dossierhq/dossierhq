@@ -13,6 +13,7 @@ import { assertIsDefined } from '../utils/AssertUtils.js';
 import {
   clearCacheDueToSchemaMigrations,
   invalidateChangelogEvents,
+  removeCacheEntity,
   updateCacheEntity,
   updateCacheEntityInfo,
   updateCacheSchemas,
@@ -76,6 +77,14 @@ function createCachingDossierMiddleware<TContext extends ClientContext>(swrConfi
           invalidateChangelogEvents(mutate);
           break;
         }
+        case DossierClientOperationName.deleteEntities: {
+          const [references] = operation.args as Parameters<DossierClient['deleteEntities']>;
+          references.forEach((it) => {
+            removeCacheEntity(mutate, it);
+          });
+          invalidateChangelogEvents(mutate);
+          break;
+        }
         case DossierClientOperationName.getSchemaSpecification: {
           const args = operation.args as Parameters<DossierClient['getSchemaSpecification']>;
           const payload = result.value as OkFromResult<
@@ -92,8 +101,8 @@ function createCachingDossierMiddleware<TContext extends ClientContext>(swrConfi
           >;
           payload.forEach((it) => {
             updateCacheEntityInfo(mutate, it);
-            invalidateChangelogEvents(mutate);
           });
+          invalidateChangelogEvents(mutate);
           break;
         }
         case DossierClientOperationName.unarchiveEntity: {
@@ -110,8 +119,8 @@ function createCachingDossierMiddleware<TContext extends ClientContext>(swrConfi
           >;
           payload.forEach((it) => {
             updateCacheEntityInfo(mutate, it);
-            invalidateChangelogEvents(mutate);
           });
+          invalidateChangelogEvents(mutate);
           break;
         }
         case DossierClientOperationName.updateEntity: {
