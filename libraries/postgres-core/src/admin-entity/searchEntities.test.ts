@@ -51,7 +51,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "",
           26,
         ],
@@ -109,7 +109,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 ORDER BY e.id LIMIT $2",
           "",
           26,
         ],
@@ -165,7 +165,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.id > $2 ORDER BY e.id LIMIT $3",
           "",
           1,
           11,
@@ -222,7 +222,7 @@ describe('adminEntitySearchEntities', () => {
       [
         [
           "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.id < $2 ORDER BY e.id LIMIT $3",
           "",
           1,
           11,

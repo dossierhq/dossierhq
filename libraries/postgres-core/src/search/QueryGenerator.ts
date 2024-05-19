@@ -396,6 +396,9 @@ function addQueryFilters(
     sql`AND e.published_entity_versions_id IS NOT NULL`;
   }
 
+  // Filter: deleted
+  sql`AND e.uuid IS NOT NULL`;
+
   // Filter: authKeys
   if (authKeys.length === 0) {
     return notOk.BadRequest('No authKeys provided');
