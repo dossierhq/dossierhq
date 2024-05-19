@@ -21,6 +21,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNone, queryOne } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { createEntityEvent } from '../utils/EventUtils.js';
 import { getSessionSubjectInternalId } from '../utils/SessionUtils.js';
 import { withUniqueNameAttempt } from '../utils/withUniqueNameAttempt.js';
@@ -43,8 +44,8 @@ export async function adminCreateEntity(
     syncEvent,
   );
   if (createEntityRowResult.isError()) return createEntityRowResult;
-
   const { uuid, actualName, entityId, createdAt, updatedAt } = createEntityRowResult.value;
+  assertIsDefined(uuid);
 
   const createEntityVersionResult = await queryOne<Pick<EntityVersionsTable, 'id'>>(
     databaseAdapter,

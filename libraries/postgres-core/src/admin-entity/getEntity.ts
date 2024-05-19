@@ -15,6 +15,7 @@ import {
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function adminGetEntity(
@@ -32,6 +33,7 @@ export async function adminGetEntity(
   if (result.isError()) return result;
   const { uuid: id, resolved_auth_key: resolvedAuthKey } = result.value;
 
+  assertIsDefined(id);
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),

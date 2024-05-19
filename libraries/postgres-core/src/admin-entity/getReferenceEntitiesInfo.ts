@@ -6,6 +6,8 @@ import type {
 import type { EntitiesTable } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
+import { resolveEntityStatus } from '../utils/CodecUtils.js';
 
 export async function adminEntityGetReferenceEntitiesInfo(
   databaseAdapter: PostgresDatabaseAdapter,
@@ -22,15 +24,17 @@ export async function adminEntityGetReferenceEntitiesInfo(
       values: [references.map(({ id }) => id)],
     },
   );
-  if (result.isError()) {
-    return result;
-  }
+  if (result.isError()) return result;
+
   return ok(
-    result.value.map((it) => ({
-      entityInternalId: it.id,
-      id: it.uuid,
-      type: it.type,
-      status: it.status,
-    })),
+    result.value.map((it) => {
+      assertIsDefined(it.uuid);
+      return {
+        entityInternalId: it.id,
+        id: it.uuid,
+        type: it.type,
+        status: resolveEntityStatus(it.status),
+      };
+    }),
   );
 }

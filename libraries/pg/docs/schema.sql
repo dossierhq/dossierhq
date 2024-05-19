@@ -14,19 +14,13 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
-CREATE TYPE public.entity_publish_event_kind AS ENUM (
-    'publish',
-    'unpublish',
-    'archive',
-    'unarchive'
-);
-
 CREATE TYPE public.entity_status AS ENUM (
     'draft',
     'published',
     'modified',
     'withdrawn',
-    'archived'
+    'archived',
+    'deleted'
 );
 
 CREATE TYPE public.event_type AS ENUM (
@@ -39,7 +33,8 @@ CREATE TYPE public.event_type AS ENUM (
     'archiveEntity',
     'unarchiveEntity',
     'updateSchema',
-    'createPrincipal'
+    'createPrincipal',
+    'deleteEntities'
 );
 
 SET default_tablespace = '';
@@ -67,12 +62,12 @@ ALTER SEQUENCE public.advisory_locks_id_seq OWNED BY public.advisory_locks.id;
 
 CREATE TABLE public.entities (
     id integer NOT NULL,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    name character varying(255) NOT NULL,
+    uuid uuid DEFAULT public.uuid_generate_v4(),
+    name character varying(255),
     type character varying(255) NOT NULL,
     published_entity_versions_id integer,
     latest_draft_entity_versions_id integer,
-    latest_fts tsvector NOT NULL,
+    latest_fts tsvector,
     archived boolean DEFAULT false NOT NULL,
     never_published boolean DEFAULT true NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -84,7 +79,10 @@ CREATE TABLE public.entities (
     resolved_auth_key character varying(255) NOT NULL,
     dirty smallint DEFAULT 0 NOT NULL,
     invalid smallint DEFAULT 0 NOT NULL,
-    published_name character varying(255)
+    published_name character varying(255),
+    deleted_at timestamp with time zone,
+    uuid_before_delete uuid,
+    name_before_delete character varying(255)
 );
 
 CREATE SEQUENCE public.entities_id_seq

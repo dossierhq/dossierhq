@@ -1,7 +1,7 @@
 import { EntityStatus } from '@dossierhq/core';
 import type { DatabaseEntityFieldsPayload } from '@dossierhq/database-adapter';
 import type { EntitiesTable, EntityVersionsTable } from '../DatabaseSchema.js';
-import { assertExhaustive } from './AssertUtils.js';
+import { assertExhaustive, assertIsDefined } from './AssertUtils.js';
 
 export function resolveEntityStatus(status: EntitiesTable['status']): EntityStatus {
   switch (status) {
@@ -15,6 +15,8 @@ export function resolveEntityStatus(status: EntitiesTable['status']): EntityStat
       return EntityStatus.withdrawn;
     case 'archived':
       return EntityStatus.archived;
+    case 'deleted':
+      throw new Error('Unexpected deleted status');
     default:
       assertExhaustive(status);
   }
@@ -28,6 +30,7 @@ export function resolveAdminEntityInfo(
     Pick<EntityVersionsTable, 'version'> & { subjects_uuid?: string },
 ) {
   const status = resolveEntityStatus(row.status);
+  assertIsDefined(row.name);
   return {
     ...resolveEntityValidity(row.invalid, status),
     authKey: row.auth_key,

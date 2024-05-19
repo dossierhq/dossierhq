@@ -5,6 +5,7 @@ import {
   type ArchiveEntitySyncEvent,
   type CreateEntitySyncEvent,
   type CreatePrincipalSyncEvent,
+  type DeleteEntitiesSyncEvent,
   type ErrorType,
   type PromiseResult,
   type PublishEntitiesSyncEvent,
@@ -33,7 +34,7 @@ import type {
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany, queryNoneOrOne } from '../QueryFunctions.js';
-import { assertExhaustive } from '../utils/AssertUtils.js';
+import { assertExhaustive, assertIsDefined } from '../utils/AssertUtils.js';
 
 export async function managementSyncGetEvents(
   database: PostgresDatabaseAdapter,
@@ -123,7 +124,7 @@ async function getEvents(
 type EventEntityInfoPayload = Record<EventsTable['id'], EntityInfoPayload[]>;
 
 type EntityInfoPayload = Pick<EventEntityVersionsTable, 'published_name'> &
-  Pick<EntitiesTable, 'uuid' | 'auth_key' | 'resolved_auth_key'> &
+  Pick<EntitiesTable, 'uuid' | 'uuid_before_delete' | 'auth_key' | 'resolved_auth_key'> &
   Pick<EntityVersionsTable, 'version'> &
   (Pick<EntityVersionsTable, 'name' | 'type' | 'schema_version' | 'data'> | object);
 
@@ -147,13 +148,13 @@ async function getEntityInfoForEvents(
   // Get shared info that is needed by all entity events (the superset except what's needed only for create/update)
   const sharedResult = await queryMany<
     Pick<EventEntityVersionsTable, 'events_id' | 'published_name'> &
-      Pick<EntitiesTable, 'uuid' | 'auth_key' | 'resolved_auth_key'> &
+      Pick<EntitiesTable, 'uuid' | 'uuid_before_delete' | 'auth_key' | 'resolved_auth_key'> &
       Pick<EntityVersionsTable, 'version'>
   >(
     database,
     context,
     buildPostgresSqlQuery(({ sql }) => {
-      sql`SELECT eev.events_id, eev.published_name, e.uuid, e.auth_key, e.resolved_auth_key, ev.version`;
+      sql`SELECT eev.events_id, eev.published_name, e.uuid, e.uuid_before_delete, e.auth_key, e.resolved_auth_key, ev.version`;
       sql`FROM event_entity_versions eev`;
       sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
       sql`JOIN entities e ON ev.entities_id = e.id`;
@@ -254,7 +255,7 @@ function convertEventRowsToPayload(
         const entityInfo = eventEntityInfo[0];
         events.push(
           makeEvent<ArchiveEntitySyncEvent>(type, parentId, eventRow, {
-            entity: { id: entityInfo.uuid, version: entityInfo.version },
+            entity: { id: resolveId(entityInfo), version: entityInfo.version },
           }),
         );
         break;
@@ -268,7 +269,7 @@ function convertEventRowsToPayload(
         events.push(
           makeEvent<CreateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
-              id: entityInfo.uuid,
+              id: resolveId(entityInfo),
               info: {
                 type: entityInfo.type,
                 name: entityInfo.name,
@@ -282,11 +283,19 @@ function convertEventRowsToPayload(
         );
         break;
       }
+      case EventType.deleteEntities: {
+        events.push(
+          makeEvent<DeleteEntitiesSyncEvent>(type, parentId, eventRow, {
+            entities: eventEntityInfo.map((it) => ({ id: resolveId(it), version: it.version })),
+          }),
+        );
+        break;
+      }
       case EventType.publishEntities: {
         events.push(
           makeEvent<PublishEntitiesSyncEvent>(type, parentId, eventRow, {
             entities: eventEntityInfo.map((it) => ({
-              id: it.uuid,
+              id: resolveId(it),
               version: it.version,
               publishedName: it.published_name!,
             })),
@@ -298,7 +307,7 @@ function convertEventRowsToPayload(
         const entityInfo = eventEntityInfo[0];
         events.push(
           makeEvent<UnarchiveEntitySyncEvent>(type, parentId, eventRow, {
-            entity: { id: entityInfo.uuid, version: entityInfo.version },
+            entity: { id: resolveId(entityInfo), version: entityInfo.version },
           }),
         );
         break;
@@ -307,7 +316,7 @@ function convertEventRowsToPayload(
         events.push(
           makeEvent<UnpublishEntitiesSyncEvent>(type, parentId, eventRow, {
             entities: eventEntityInfo.map((it) => ({
-              id: it.uuid,
+              id: resolveId(it),
               version: it.version,
             })),
           }),
@@ -323,7 +332,7 @@ function convertEventRowsToPayload(
         events.push(
           makeEvent<UpdateEntitySyncEvent>(type, parentId, eventRow, {
             entity: {
-              id: entityInfo.uuid,
+              id: resolveId(entityInfo),
               info: {
                 name: entityInfo.name,
                 version: entityInfo.version,
@@ -356,4 +365,10 @@ function makeEvent<TEvent extends SyncEvent>(
     createdBy: eventRow.created_by,
     ...specific,
   } as TEvent;
+}
+
+function resolveId(entityInfo: EntityInfoPayload) {
+  const id = entityInfo.uuid ?? entityInfo.uuid_before_delete;
+  assertIsDefined(id);
+  return id;
 }

@@ -2,6 +2,8 @@ import type { DatabaseAdapter, DatabaseOptimizationOptions } from '@dossierhq/da
 import { adminEntityArchivingGetEntityInfo } from './admin-entity/archivingGetEntityInfo.js';
 import { adminCreateEntity } from './admin-entity/createEntity.js';
 import { adminEntityCreateEntityEvent } from './admin-entity/createEntityEvent.js';
+import { adminEntityDeleteEntities } from './admin-entity/deleteEntity.js';
+import { adminEntityDeleteGetEntityInfo } from './admin-entity/deleteGetEntityInfo.js';
 import { adminEntityGetMultiple } from './admin-entity/getEntities.js';
 import { adminGetEntity } from './admin-entity/getEntity.js';
 import { adminEntityGetEntityName } from './admin-entity/getEntityName.js';
@@ -93,6 +95,9 @@ export function createPostgresDatabaseAdapterAdapter(
     adminEntityCreate: (...args) => adminCreateEntity(databaseAdapter, ...args),
     adminEntityCreateEntityEvent: (...args) =>
       adminEntityCreateEntityEvent(databaseAdapter, ...args),
+    adminEntityDeleteEntities: (...args) => adminEntityDeleteEntities(databaseAdapter, ...args),
+    adminEntityDeleteGetEntityInfo: (...args) =>
+      adminEntityDeleteGetEntityInfo(databaseAdapter, ...args),
     adminEntityGetOne: (...args) => adminGetEntity(databaseAdapter, ...args),
     adminEntityGetMultiple: (...args) => adminEntityGetMultiple(databaseAdapter, ...args),
     adminEntityGetEntityName: (...args) => adminEntityGetEntityName(databaseAdapter, ...args),

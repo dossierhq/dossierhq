@@ -46,22 +46,31 @@ export const ENTITY_DIRTY_FLAG_INDEX_PUBLISHED = 0x8;
 
 export interface EntitiesTable {
   id: number;
-  uuid: string;
-  name: string;
+  uuid: string | null;
+  uuid_before_delete: string | null;
+  name: string | null;
+  name_before_delete: string | null;
   published_name: string | null;
   type: string;
   created_at: Date;
   updated_at: Date;
   updated: number;
+  deleted_at: Date | null;
   latest_draft_entity_versions_id: number | null;
   never_published: boolean;
   archived: boolean; // TODO remove and rely on status instead
   published_entity_versions_id: number | null;
-  status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived';
+  status: 'draft' | 'published' | 'modified' | 'withdrawn' | 'archived' | 'deleted';
   dirty: number; // bit field, ENTITY_DIRTY_FLAG_*
   invalid: number; // bit field 0x1 = latest, 0x2 = published
   auth_key: string;
   resolved_auth_key: string;
+}
+
+export interface EntityLatestReferencesTable {
+  id: number;
+  from_entities_id: number;
+  to_entities_id: number;
 }
 
 export interface EntityPublishedReferencesTable {

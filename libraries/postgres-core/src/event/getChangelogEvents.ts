@@ -22,6 +22,7 @@ import type {
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryMany } from '../QueryFunctions.js';
 import { toOpaqueCursor } from '../search/OpaqueCursor.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveConnectionPagingAndOrdering } from '../utils/ConnectionUtils.js';
 import { generateGetChangelogEventsQuery, type EventsRow } from './ChangelogQueryGenerator.js';
 
@@ -53,7 +54,7 @@ export async function eventGetChangelogEvents(
 }
 
 type EntityInfoRow = Pick<EventEntityVersionsTable, 'events_id'> &
-  Pick<EntitiesTable, 'uuid' | 'auth_key' | 'resolved_auth_key'> &
+  Pick<EntitiesTable, 'uuid' | 'uuid_before_delete' | 'auth_key' | 'resolved_auth_key'> &
   Pick<EntityVersionsTable, 'type' | 'name' | 'version'>;
 
 async function getEntityInfoForEvents(
@@ -70,7 +71,7 @@ async function getEntityInfoForEvents(
   }
 
   const { sql, query } = createPostgresSqlQuery();
-  sql`SELECT eev.events_id, e.uuid, e.auth_key, e.resolved_auth_key, ev.type, ev.name, ev.version FROM event_entity_versions eev`;
+  sql`SELECT eev.events_id, e.uuid, e.uuid_before_delete, e.auth_key, e.resolved_auth_key, ev.type, ev.name, ev.version FROM event_entity_versions eev`;
   sql`JOIN entity_versions ev ON eev.entity_versions_id = ev.id`;
   sql`JOIN entities e ON ev.entities_id = e.id`;
   sql`WHERE eev.events_id = ANY(${entityEventIds})`;
@@ -102,7 +103,7 @@ function convertEdge(
       for (const entityRow of entityRows) {
         if (entityRow.events_id === row.id) {
           entities.push({
-            id: entityRow.uuid,
+            id: resolveId(entityRow),
             name: entityRow.name,
             version: entityRow.version,
             type: entityRow.type,
@@ -115,4 +116,10 @@ function convertEdge(
       return { cursor, id, type: row.type, createdAt, createdBy, entities };
     }
   }
+}
+
+function resolveId(row: EntityInfoRow): string {
+  const id = row.uuid ?? row.uuid_before_delete;
+  assertIsDefined(id);
+  return id;
 }

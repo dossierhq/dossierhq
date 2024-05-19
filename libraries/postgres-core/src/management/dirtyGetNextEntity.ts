@@ -20,6 +20,7 @@ import {
 } from '../DatabaseSchema.js';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { queryNoneOrOne } from '../QueryFunctions.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveAdminEntityInfo, resolveEntityFields } from '../utils/CodecUtils.js';
 
 export async function managementDirtyGetNextEntity(
@@ -67,6 +68,7 @@ export async function managementDirtyGetNextEntity(
     dirty,
   } = result.value;
 
+  assertIsDefined(id);
   return ok({
     ...resolveAdminEntityInfo(result.value),
     ...resolveEntityFields(result.value),

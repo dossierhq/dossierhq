@@ -16,6 +16,7 @@ import {
   samplePublishedEntitiesQuery,
   type SearchPublishedEntitiesItem,
 } from '../search/QueryGenerator.js';
+import { assertIsDefined } from '../utils/AssertUtils.js';
 import { resolveEntityFields, resolvePublishedEntityInfo } from '../utils/CodecUtils.js';
 
 export async function publishedEntitySampleEntities(
@@ -45,14 +46,16 @@ export async function publishedEntitySampleEntities(
     sqlQueryResult.value,
   );
   if (searchResult.isError()) return searchResult;
-
   const entitiesValues = searchResult.value;
 
   return ok(
-    entitiesValues.map((it) => ({
-      ...resolvePublishedEntityInfo(it),
-      ...resolveEntityFields(it),
-      id: it.uuid,
-    })),
+    entitiesValues.map((it) => {
+      assertIsDefined(it.uuid);
+      return {
+        ...resolvePublishedEntityInfo(it),
+        ...resolveEntityFields(it),
+        id: it.uuid,
+      };
+    }),
   );
 }
