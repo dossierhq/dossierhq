@@ -30,11 +30,12 @@ export async function adminEntityDeleteGetEntityInfo(
   const entityResult = await queryMany<EntityRow>(
     database,
     context,
-    buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.latest_entity_versions_id
-        FROM entities e
-        WHERE e.uuid IN ${addValueList(uuids)}`;
-    }),
+    buildSqliteSqlQuery(
+      ({ sql, addValueList }) =>
+        sql`SELECT e.id, e.uuid, e.auth_key, e.resolved_auth_key, e.status, e.latest_entity_versions_id
+            FROM entities e
+            WHERE e.uuid IN ${addValueList(uuids)}`,
+    ),
   );
   if (entityResult.isError()) return entityResult;
 
@@ -68,12 +69,13 @@ export async function adminEntityDeleteGetEntityInfo(
   const latestReferencesResult = await queryMany<LatestReferenceRow>(
     database,
     context,
-    buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`SELECT elr.to_entities_id, e.uuid
-          FROM entity_latest_references elr
-          JOIN entities e ON elr.from_entities_id = e.id
-          WHERE elr.to_entities_id IN ${addValueList(payload.map((it) => it.entityInternalId as number))}`;
-    }),
+    buildSqliteSqlQuery(
+      ({ sql, addValueList }) =>
+        sql`SELECT elr.to_entities_id, e.uuid
+            FROM entity_latest_references elr
+            JOIN entities e ON elr.from_entities_id = e.id
+            WHERE elr.to_entities_id IN ${addValueList(payload.map((it) => it.entityInternalId as number))}`,
+    ),
   );
   if (latestReferencesResult.isError()) return latestReferencesResult;
 

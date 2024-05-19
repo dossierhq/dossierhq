@@ -20,11 +20,12 @@ export async function adminEntityDeleteEntities(
   const entityResult = await queryRun(
     database,
     context,
-    buildSqliteSqlQuery(({ sql, addValueList }) => {
-      sql`UPDATE entities
-          SET uuid_before_delete = uuid, uuid = NULL, name_before_delete = name, name = NULL, deleted_at = ${now.toISOString()}, status = 'deleted'
-          WHERE id IN ${addValueList(entityIds)}`;
-    }),
+    buildSqliteSqlQuery(
+      ({ sql, addValueList }) =>
+        sql`UPDATE entities
+            SET uuid_before_delete = uuid, uuid = NULL, name_before_delete = name, name = NULL, deleted_at = ${now.toISOString()}, status = 'deleted'
+            WHERE id IN ${addValueList(entityIds)}`,
+    ),
   );
   if (entityResult.isError()) return entityResult;
 

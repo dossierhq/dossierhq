@@ -89,7 +89,6 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_authKeySubject,
   getEntities_authKeySubjectFromReadonlyRandom,
   getEntities_authKeyNoneAndSubject,
-  getEntities_whenDeleted,
 ];
 
 async function getEntities_minimal({
@@ -1101,21 +1100,4 @@ async function getEntities_authKeyNoneAndSubject({
   });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
-}
-
-async function getEntities_whenDeleted({ clientProvider }: AdminEntityTestContext) {
-  const client = clientProvider.dossierClient();
-
-  const {
-    entity: { id },
-  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
-  assertOkResult(await client.archiveEntity({ id }));
-  assertOkResult(await client.deleteEntities([{ id }]));
-
-  // Can't guarantee that the deleted entity will be in this page (race condition) but should be good
-  const page = (
-    await client.getEntities({ order: 'createdAt', reverse: true }, { first: 100 })
-  ).valueOrThrow();
-  const entityWithId = page?.edges.find((edge) => edge.node.isOk() && edge.node.value.id === id);
-  assertEquals(entityWithId, undefined);
 }

@@ -16,24 +16,25 @@ import {
 } from '../shared-entity/Fixtures.js';
 import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 
-export const DeleteEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
-  deleteEntity_minimal,
-  deleteEntity_twoIndependentEntities,
-  deleteEntity_twoEntitiesWithReferenceToEachOther,
-  deleteEntity_releasesId,
-  deleteEntity_releasesName,
-  deleteEntity_releasesUniqueIndexValue,
-  deleteEntity_deleteEntityEvent,
-  deleteEntity_errorInvalidReference,
-  deleteEntity_errorDuplicateReference,
-  deleteEntity_errorNoReferences,
-  deleteEntity_errorWrongAuthKey,
-  deleteEntity_errorDraftEntity,
-  deleteEntity_errorReferencedByOtherEntity,
-  deleteEntity_errorReadonlySession,
+export const DeleteEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
+  deleteEntities_minimal,
+  deleteEntities_twoIndependentEntities,
+  deleteEntities_twoEntitiesWithReferenceToEachOther,
+  deleteEntities_releasesId,
+  deleteEntities_releasesName,
+  deleteEntities_releasesUniqueIndexValue,
+  deleteEntities_ignoredInSearch,
+  deleteEntities_deleteEntityEvent,
+  deleteEntities_errorInvalidReference,
+  deleteEntities_errorDuplicateReference,
+  deleteEntities_errorNoReferences,
+  deleteEntities_errorWrongAuthKey,
+  deleteEntities_errorDraftEntity,
+  deleteEntities_errorReferencedByOtherEntity,
+  deleteEntities_errorReadonlySession,
 ];
 
-async function deleteEntity_minimal({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_minimal({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
 
   const {
@@ -47,7 +48,7 @@ async function deleteEntity_minimal({ clientProvider }: AdminEntityTestContext) 
   assertResultValue(result, { effect: 'deleted', deletedAt });
 }
 
-async function deleteEntity_twoIndependentEntities({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_twoIndependentEntities({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
 
   const {
@@ -65,7 +66,7 @@ async function deleteEntity_twoIndependentEntities({ clientProvider }: AdminEnti
   assertResultValue(result, { effect: 'deleted', deletedAt });
 }
 
-async function deleteEntity_twoEntitiesWithReferenceToEachOther({
+async function deleteEntities_twoEntitiesWithReferenceToEachOther({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
@@ -89,7 +90,7 @@ async function deleteEntity_twoEntitiesWithReferenceToEachOther({
   assertResultValue(result, { effect: 'deleted', deletedAt });
 }
 
-async function deleteEntity_releasesId({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_releasesId({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
 
   const {
@@ -104,7 +105,7 @@ async function deleteEntity_releasesId({ clientProvider }: AdminEntityTestContex
   assertOkResult(await client.createEntity(copyEntity(STRINGS_CREATE, { id })));
 }
 
-async function deleteEntity_releasesName({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_releasesName({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
 
   const {
@@ -122,7 +123,7 @@ async function deleteEntity_releasesName({ clientProvider }: AdminEntityTestCont
   assertEquals(name, createResult.valueOrThrow().entity.info.name);
 }
 
-async function deleteEntity_releasesUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_releasesUniqueIndexValue({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
 
   const uniqueValue = crypto.randomUUID();
@@ -144,7 +145,24 @@ async function deleteEntity_releasesUniqueIndexValue({ clientProvider }: AdminEn
   assertResultValue(getResult, secondEntity);
 }
 
-async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_ignoredInSearch({ clientProvider }: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const {
+    entity: { id },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  assertOkResult(await client.archiveEntity({ id }));
+  assertOkResult(await client.deleteEntities([{ id }]));
+
+  // Can't guarantee that the deleted entity will be in this page (race condition) but should be good
+  const page = (
+    await client.getEntities({ order: 'createdAt', reverse: true }, { first: 100 })
+  ).valueOrThrow();
+  const entityWithId = page?.edges.find((edge) => edge.node.isOk() && edge.node.value.id === id);
+  assertEquals(entityWithId, undefined);
+}
+
+async function deleteEntities_deleteEntityEvent({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
 
   const {
@@ -204,7 +222,7 @@ async function deleteEntity_deleteEntityEvent({ clientProvider }: AdminEntityTes
   });
 }
 
-async function deleteEntity_errorInvalidReference({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_errorInvalidReference({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider
     .dossierClient()
     .deleteEntities([{ id: '5b14e69f-6612-4ddb-bb42-7be273104486' }]);
@@ -215,7 +233,7 @@ async function deleteEntity_errorInvalidReference({ clientProvider }: AdminEntit
   );
 }
 
-async function deleteEntity_errorDuplicateReference({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_errorDuplicateReference({ clientProvider }: AdminEntityTestContext) {
   const id = '5b14e69f-6612-4ddb-bb42-7be273104486';
   const result = await clientProvider.dossierClient().deleteEntities([{ id }, { id }]);
   assertErrorResult(
@@ -225,12 +243,12 @@ async function deleteEntity_errorDuplicateReference({ clientProvider }: AdminEnt
   );
 }
 
-async function deleteEntity_errorNoReferences({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_errorNoReferences({ clientProvider }: AdminEntityTestContext) {
   const result = await clientProvider.dossierClient().deleteEntities([]);
   assertErrorResult(result, ErrorType.BadRequest, 'No references provided');
 }
 
-async function deleteEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_errorWrongAuthKey({ clientProvider }: AdminEntityTestContext) {
   const createResult = await clientProvider.dossierClient().createEntity(SUBJECT_ONLY_CREATE);
   const {
     entity: { id },
@@ -240,7 +258,7 @@ async function deleteEntity_errorWrongAuthKey({ clientProvider }: AdminEntityTes
   assertErrorResult(deleteResult, ErrorType.NotAuthorized, 'Wrong authKey provided');
 }
 
-async function deleteEntity_errorDraftEntity({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_errorDraftEntity({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
   const createResult = await client.createEntity(TITLE_ONLY_CREATE);
   const {
@@ -255,7 +273,7 @@ async function deleteEntity_errorDraftEntity({ clientProvider }: AdminEntityTest
   );
 }
 
-async function deleteEntity_errorReferencedByOtherEntity({
+async function deleteEntities_errorReferencedByOtherEntity({
   clientProvider,
 }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient();
@@ -279,7 +297,7 @@ async function deleteEntity_errorReferencedByOtherEntity({
   );
 }
 
-async function deleteEntity_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
+async function deleteEntities_errorReadonlySession({ clientProvider }: AdminEntityTestContext) {
   const client = clientProvider.dossierClient('main', 'readonly');
   const createResult = await client.deleteEntities([
     { id: '5b14e69f-6612-4ddb-bb42-7be273104486' },
