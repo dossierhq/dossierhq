@@ -52,6 +52,13 @@ interface ChangelogEvent {
 
 scalar DateTime
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -735,6 +742,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -1197,6 +1211,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -1806,6 +1827,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -2205,6 +2233,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -2986,6 +3021,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -3525,6 +3567,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -4177,6 +4226,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -4606,6 +4662,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -5319,6 +5382,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -5808,6 +5878,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -6357,6 +6434,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -6724,6 +6808,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -7307,6 +7398,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -7690,6 +7788,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -8320,6 +8425,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -8724,6 +8836,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -9295,6 +9414,13 @@ interface ChangelogEvent {
   createdAt: DateTime!
 }
 
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
@@ -9674,6 +9800,13 @@ interface ChangelogEvent {
 }
 
 scalar DateTime
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
 
 type SchemaChangelogEvent implements ChangelogEvent {
   id: ID!
@@ -10334,6 +10467,13 @@ input ChangelogEventQueryInput {
 }
 
 interface ChangelogEvent {
+  id: ID!
+  type: EventType!
+  createdBy: ID!
+  createdAt: DateTime!
+}
+
+type CreatePrincipalChangelogEvent implements ChangelogEvent {
   id: ID!
   type: EventType!
   createdBy: ID!

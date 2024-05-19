@@ -917,6 +917,21 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
+    // CreatePrincipalChangelogEvent
+    this.addType(
+      new GraphQLObjectType<ChangelogEvent, TContext>({
+        name: 'CreatePrincipalChangelogEvent',
+        interfaces: this.getInterfaces('ChangelogEvent'),
+        isTypeOf: (source, _context, _info) => source.type === EventType.createPrincipal,
+        fields: {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },
+          createdBy: { type: new GraphQLNonNull(GraphQLID) },
+          createdAt: { type: new GraphQLNonNull(DateTimeScalar) },
+        },
+      }),
+    );
+
     // SchemaChangelogEvent
     this.addType(
       new GraphQLObjectType<ChangelogEvent, TContext>({
@@ -951,7 +966,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLObjectType<ChangelogEvent, TContext>({
         name: 'EntityChangelogEvent',
         interfaces: this.getInterfaces('ChangelogEvent'),
-        isTypeOf: (source, _context, _info) => source.type !== EventType.updateSchema,
+        isTypeOf: (source, _context, _info) =>
+          source.type !== EventType.updateSchema && source.type !== EventType.createPrincipal,
         fields: {
           id: { type: new GraphQLNonNull(GraphQLID) },
           type: { type: new GraphQLNonNull(this.getEnumType('EventType')) },

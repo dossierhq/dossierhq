@@ -1657,7 +1657,26 @@ describe('searchAdminEntities()', () => {
 });
 
 describe('changelogEvents()', () => {
-  test('Filter schemaUpdate events', async () => {
+  test('Filter createPrincipal events', async () => {
+    const result = await globalChangelogEvents(schema, createContext(), {
+      query: { types: [EventType.createPrincipal] },
+    });
+    expect(result.errors).toBeUndefined();
+
+    expect(result.data?.changelogEvents.totalCount).toBeGreaterThanOrEqual(1);
+
+    expect(result.data?.changelogEvents.edges.length).toBeGreaterThanOrEqual(1);
+    const firstEdge = result.data?.changelogEvents.edges[0];
+    assert(firstEdge);
+    const firstEvent = firstEdge.node;
+    assert(firstEvent);
+    expect(firstEvent.type).toBe(EventType.createPrincipal);
+
+    expect(result.data?.changelogEvents.pageInfo.hasPreviousPage).toBeFalsy();
+    expect(result.data?.changelogEvents.pageInfo.startCursor).toEqual(firstEdge.cursor);
+  });
+
+  test('Filter updateSchema events', async () => {
     const result = await globalChangelogEvents(schema, createContext(), {
       query: { types: [EventType.updateSchema] },
     });
