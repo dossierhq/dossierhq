@@ -9,6 +9,7 @@ import {
 import { assertEquals, assertErrorResult, assertResultValue } from '../Asserts.js';
 import type { UnboundTestFunction } from '../Builder.js';
 import {
+  REFERENCES_CREATE,
   STRINGS_CREATE,
   SUBJECT_ONLY_CREATE,
   TITLE_ONLY_CREATE,
@@ -18,6 +19,7 @@ import type { AdminEntityTestContext } from './AdminEntityTestSuite.js';
 export const DeleteEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[] = [
   deleteEntity_minimal,
   deleteEntity_twoIndependentEntities,
+  deleteEntity_twoEntitiesWithReferenceToEachOther,
   deleteEntity_releasesId,
   deleteEntity_releasesName,
   deleteEntity_releasesUniqueIndexValue,
@@ -27,6 +29,7 @@ export const DeleteEntitySubSuite: UnboundTestFunction<AdminEntityTestContext>[]
   deleteEntity_errorNoReferences,
   deleteEntity_errorWrongAuthKey,
   deleteEntity_errorDraftEntity,
+  deleteEntity_errorReferencedByOtherEntity,
   deleteEntity_errorReadonlySession,
 ];
 
@@ -53,6 +56,30 @@ async function deleteEntity_twoIndependentEntities({ clientProvider }: AdminEnti
   const {
     entity: { id: id2 },
   } = (await client.createEntity(SUBJECT_ONLY_CREATE)).valueOrThrow();
+
+  assertOkResult(await client.archiveEntity({ id: id1 }));
+  assertOkResult(await client.archiveEntity({ id: id2 }));
+
+  const result = await client.deleteEntities([{ id: id1 }, { id: id2 }]);
+  const { deletedAt } = result.valueOrThrow();
+  assertResultValue(result, { effect: 'deleted', deletedAt });
+}
+
+async function deleteEntity_twoEntitiesWithReferenceToEachOther({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const {
+    entity: { id: id1 },
+  } = (await client.createEntity(REFERENCES_CREATE)).valueOrThrow();
+  const {
+    entity: { id: id2 },
+  } = (
+    await client.createEntity(copyEntity(REFERENCES_CREATE, { fields: { any: { id: id1 } } }))
+  ).valueOrThrow();
+
+  assertOkResult(await client.updateEntity({ id: id1, fields: { any: { id: id2 } } }));
 
   assertOkResult(await client.archiveEntity({ id: id1 }));
   assertOkResult(await client.archiveEntity({ id: id2 }));
@@ -225,6 +252,30 @@ async function deleteEntity_errorDraftEntity({ clientProvider }: AdminEntityTest
     deleteResult,
     ErrorType.BadRequest,
     `Entity is not archived (id: ${id}, status: draft)`,
+  );
+}
+
+async function deleteEntity_errorReferencedByOtherEntity({
+  clientProvider,
+}: AdminEntityTestContext) {
+  const client = clientProvider.dossierClient();
+
+  const {
+    entity: { id: id1 },
+  } = (await client.createEntity(TITLE_ONLY_CREATE)).valueOrThrow();
+  const {
+    entity: { id: id2 },
+  } = (
+    await client.createEntity(copyEntity(REFERENCES_CREATE, { fields: { any: { id: id1 } } }))
+  ).valueOrThrow();
+
+  assertOkResult(await client.archiveEntity({ id: id1 }));
+
+  const deleteResult = await client.deleteEntities([{ id: id1 }]);
+  assertErrorResult(
+    deleteResult,
+    ErrorType.BadRequest,
+    `Entity (${id1}) is referenced by other entities (${id2})`,
   );
 }
 

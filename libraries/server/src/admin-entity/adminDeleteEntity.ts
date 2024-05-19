@@ -65,7 +65,7 @@ async function doAdminDeleteEntity(
     if (entityInfoResult.isError()) return entityInfoResult;
     const entityInfos = entityInfoResult.value;
 
-    for (const { entityId, authKey, resolvedAuthKey, status } of entityInfos) {
+    for (const { entityId, authKey, resolvedAuthKey, status, referencedBy } of entityInfos) {
       // Step 2: Verify authKey
       const authResult = await authVerifyAuthorizationKey(authorizationAdapter, context, {
         authKey,
@@ -77,9 +77,19 @@ async function doAdminDeleteEntity(
       if (status !== EntityStatus.archived) {
         return notOk.BadRequest(`Entity is not archived (id: ${entityId}, status: ${status})`);
       }
+
+      // Step 4: Check if it's referenced by other entities
+      const referencedByOthers = referencedBy.filter(
+        (it) => !references.find((ref) => ref.id === it.id),
+      );
+      if (referencedByOthers.length > 0) {
+        return notOk.BadRequest(
+          `Entity (${entityId}) is referenced by other entities (${referencedByOthers.map((it) => it.id).join(', ')})`,
+        );
+      }
     }
 
-    // Step 4: Delete entities
+    // Step 5: Delete entities
     const deleteResult = await databaseAdapter.adminEntityDeleteEntities(
       context,
       entityInfos.map(({ entityInternalId }) => ({ entityInternalId })),
@@ -87,7 +97,7 @@ async function doAdminDeleteEntity(
     );
     if (deleteResult.isError()) return deleteResult;
 
-    // Step 5: Create publishing event
+    // Step 6: Create event
     const publishingEventResult = await databaseAdapter.adminEntityCreateEntityEvent(
       context,
       {

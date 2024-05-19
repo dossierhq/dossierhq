@@ -94,6 +94,7 @@ export interface DatabaseAdminEntityDeleteGetInfoPayload
   authKey: string;
   resolvedAuthKey: string;
   status: EntityStatus;
+  referencedBy: EntityReference[];
 }
 
 export interface DatabaseAdminEntityPayload {

@@ -10,7 +10,7 @@ import {
   type DatabaseAdminEntityDeleteGetInfoPayload,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import type { EntitiesTable } from '../DatabaseSchema.js';
+import type { EntitiesTable, EntityLatestReferencesTable } from '../DatabaseSchema.js';
 import { queryMany, type Database } from '../QueryFunctions.js';
 
 export async function adminEntityDeleteGetEntityInfo(
@@ -22,11 +22,12 @@ export async function adminEntityDeleteGetEntityInfo(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const uuids = references.map(({ id }) => id);
-  type Row = Pick<
+
+  type EntityRow = Pick<
     EntitiesTable,
     'id' | 'uuid' | 'auth_key' | 'resolved_auth_key' | 'status' | 'latest_entity_versions_id'
   >;
-  const result = await queryMany<Row>(
+  const entityResult = await queryMany<EntityRow>(
     database,
     context,
     buildSqliteSqlQuery(({ sql, addValueList }) => {
@@ -35,12 +36,12 @@ export async function adminEntityDeleteGetEntityInfo(
         WHERE e.uuid IN ${addValueList(uuids)}`;
     }),
   );
-  if (result.isError()) return result;
+  if (entityResult.isError()) return entityResult;
 
   const missingUuids: string[] = [];
   const payload: DatabaseAdminEntityDeleteGetInfoPayload[] = [];
   for (const uuid of uuids) {
-    const row = result.value.find((row) => row.uuid === uuid);
+    const row = entityResult.value.find((row) => row.uuid === uuid);
     if (!row) {
       missingUuids.push(uuid);
     } else {
@@ -51,12 +52,36 @@ export async function adminEntityDeleteGetEntityInfo(
         authKey: row.auth_key,
         resolvedAuthKey: row.resolved_auth_key,
         status: row.status,
+        referencedBy: [],
       });
     }
   }
 
   if (missingUuids.length > 0) {
     return notOk.NotFound(`No such entities: ${missingUuids.join(', ')}`);
+  }
+
+  // Check if it's referenced by other entities (latest)
+
+  type LatestReferenceRow = Pick<EntityLatestReferencesTable, 'to_entities_id'> &
+    Pick<EntitiesTable, 'uuid'>;
+  const latestReferencesResult = await queryMany<LatestReferenceRow>(
+    database,
+    context,
+    buildSqliteSqlQuery(({ sql, addValueList }) => {
+      sql`SELECT elr.to_entities_id, e.uuid
+          FROM entity_latest_references elr
+          JOIN entities e ON elr.from_entities_id = e.id
+          WHERE elr.to_entities_id IN ${addValueList(payload.map((it) => it.entityInternalId as number))}`;
+    }),
+  );
+  if (latestReferencesResult.isError()) return latestReferencesResult;
+
+  for (const row of latestReferencesResult.value) {
+    const entity = payload.find((it) => it.entityInternalId === row.to_entities_id);
+    if (entity && row.uuid) {
+      entity.referencedBy.push({ id: row.uuid });
+    }
   }
 
   return ok(payload);
