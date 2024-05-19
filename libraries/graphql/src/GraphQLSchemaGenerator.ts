@@ -828,6 +828,27 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       }),
     );
 
+    // EntityDeleteEffect
+    this.addType(
+      new GraphQLEnumType({
+        name: 'EntityDeleteEffect',
+        values: {
+          deleted: {},
+        },
+      }),
+    );
+
+    // EntityDeletePayload
+    this.addType(
+      new GraphQLObjectType({
+        name: 'EntityDeletePayload',
+        fields: {
+          effect: { type: new GraphQLNonNull(this.getEnumType('EntityDeleteEffect')) },
+          deletedAt: { type: new GraphQLNonNull(DateTimeScalar) },
+        },
+      }),
+    );
+
     // AdvisoryLockPayload
     this.addType(
       new GraphQLObjectType({
@@ -856,6 +877,8 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       new GraphQLEnumType({
         name: 'EventType',
         values: {
+          createPrincipal: {},
+          updateSchema: {},
           createEntity: {},
           createAndPublishEntity: {},
           updateEntity: {},
@@ -864,7 +887,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
           unpublishEntities: {},
           archiveEntity: {},
           unarchiveEntity: {},
-          updateSchema: {},
+          deleteEntities: {},
         },
       }),
     );
@@ -1867,6 +1890,23 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     });
   }
 
+  buildMutationDeleteEntities<TSource>(): GraphQLFieldConfig<TSource, TContext> {
+    return fieldConfigWithArgs<TSource, TContext, { references: EntityReference[] }>({
+      type: this.getOutputType('EntityDeletePayload'),
+      args: {
+        references: {
+          type: new GraphQLNonNull(
+            new GraphQLList(new GraphQLNonNull(this.getInputType('EntityReferenceInput'))),
+          ),
+        },
+      },
+      resolve: async (_source, args, context, _info) => {
+        const { references } = args;
+        return await Mutations.deleteEntities(context, references);
+      },
+    });
+  }
+
   buildMutationType<TSource>(schema: Schema): GraphQLObjectType | null {
     const includeEntities = schema.getEntityTypeCount() > 0;
     if (!includeEntities) {
@@ -1878,6 +1918,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       unpublishEntities: this.buildMutationUnpublishEntities(),
       archiveEntity: this.buildMutationArchiveEntity(),
       unarchiveEntity: this.buildMutationUnarchiveEntity(),
+      deleteEntities: this.buildMutationDeleteEntities(),
     };
 
     for (const entitySpec of schema.spec.entityTypes) {

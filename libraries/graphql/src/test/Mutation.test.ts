@@ -2610,6 +2610,71 @@ describe('unarchiveEntity()', () => {
   });
 });
 
+describe('deleteEntities()', () => {
+  test('Delete', async () => {
+    const { client } = server;
+    const createResult = await client.createEntity({
+      info: { type: 'MutationFoo', name: 'Howdy name' },
+      fields: { title: 'Howdy title', summary: 'Howdy summary' },
+    });
+    const {
+      entity: { id },
+    } = createResult.valueOrThrow();
+
+    expectOkResult(await client.archiveEntity({ id }));
+
+    const result = (await graphql({
+      schema,
+      source: gql`
+        mutation DeleteEntities($references: [EntityReferenceInput!]!) {
+          deleteEntities(references: $references) {
+            __typename
+            effect
+            deletedAt
+          }
+        }
+      `,
+      contextValue: createContext(),
+      variableValues: { references: [{ id }] },
+    })) as ExecutionResult<{ deleteEntities: { deletedAt: string } }>;
+    const deletedAt = result.data?.deleteEntities.deletedAt;
+    expect(result).toEqual({
+      data: {
+        deleteEntities: {
+          __typename: 'EntityDeletePayload',
+          effect: 'deleted',
+          deletedAt,
+        },
+      },
+    });
+  });
+
+  test('Error: not found', async () => {
+    const result = await graphql({
+      schema,
+      source: gql`
+        mutation DeleteEntities($references: [EntityReferenceInput!]!) {
+          deleteEntities(references: $references) {
+            effect
+          }
+        }
+      `,
+      contextValue: createContext(),
+      variableValues: { references: [{ id: '635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3' }] },
+    });
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "data": {
+          "deleteEntities": null,
+        },
+        "errors": [
+          [GraphQLError: NotFound: No such entities: 635d7ee9-c1c7-4ae7-bcdf-fb53f30a3cd3],
+        ],
+      }
+    `);
+  });
+});
+
 describe('Multiple', () => {
   test('Update and publish', async () => {
     const { client } = server;

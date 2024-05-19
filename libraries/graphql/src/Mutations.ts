@@ -5,6 +5,7 @@ import type {
   EntityArchivePayload,
   EntityCreate,
   EntityCreatePayload,
+  EntityDeletePayload,
   EntityMutationOptions,
   EntityPublishPayload,
   EntityReference,
@@ -98,6 +99,15 @@ export async function unarchiveEntity<TContext extends SessionGraphQLContext>(
 ): Promise<EntityUnarchivePayload> {
   const client = context.client.valueOrThrow();
   const result = await client.unarchiveEntity(reference);
+  return result.valueOrThrow();
+}
+
+export async function deleteEntities<TContext extends SessionGraphQLContext>(
+  context: TContext,
+  references: EntityReference[],
+): Promise<EntityDeletePayload> {
+  const client = context.client.valueOrThrow();
+  const result = await client.deleteEntities(references);
   return result.valueOrThrow();
 }
 

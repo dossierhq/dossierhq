@@ -6,16 +6,16 @@ import type { EntityReference, EntityVersionReference } from '../Types.js';
 
 export const EventType = {
   createPrincipal: 'createPrincipal',
+  updateSchema: 'updateSchema',
   createEntity: 'createEntity',
   createAndPublishEntity: 'createAndPublishEntity',
-  deleteEntities: 'deleteEntities',
   updateEntity: 'updateEntity',
   updateAndPublishEntity: 'updateAndPublishEntity',
   publishEntities: 'publishEntities',
   unpublishEntities: 'unpublishEntities',
   archiveEntity: 'archiveEntity',
   unarchiveEntity: 'unarchiveEntity',
-  updateSchema: 'updateSchema',
+  deleteEntities: 'deleteEntities',
 } as const;
 
 type EntityEventTypes = keyof Omit<typeof EventType, 'createPrincipal' | 'updateSchema'>;

@@ -24,6 +24,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -32,7 +34,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -301,6 +303,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -439,6 +450,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -697,6 +709,8 @@ type PublishedValueTwo implements PublishedComponent {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -705,7 +719,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -967,6 +981,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -1110,6 +1133,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -1146,6 +1170,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -1154,7 +1180,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -1421,6 +1447,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -1501,6 +1536,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -1744,6 +1780,8 @@ type PublishedValueOne implements PublishedComponent {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -1752,7 +1790,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -2012,6 +2050,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -2097,6 +2144,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -2130,6 +2178,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -2138,7 +2188,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -2408,6 +2458,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -2575,6 +2634,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -2900,6 +2960,8 @@ type PublishedValueOne implements PublishedComponent {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -2908,7 +2970,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -3171,6 +3233,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -3345,6 +3416,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -3426,6 +3498,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -3434,7 +3508,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -3692,6 +3766,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -3811,6 +3894,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -4067,6 +4151,8 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -4075,7 +4161,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -4326,6 +4412,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -4447,6 +4542,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -4483,6 +4579,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -4491,7 +4589,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -4750,6 +4848,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -4911,6 +5018,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -5185,6 +5293,8 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -5193,7 +5303,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -5445,6 +5555,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -5622,6 +5741,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -5661,6 +5781,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -5669,7 +5791,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -5926,6 +6048,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -5984,6 +6115,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -6199,6 +6331,8 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -6207,7 +6341,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -6457,6 +6591,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -6520,6 +6663,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -6553,6 +6697,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -6561,7 +6707,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -6822,6 +6968,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -6892,6 +7047,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -7125,6 +7281,8 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -7133,7 +7291,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -7387,6 +7545,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -7462,6 +7629,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -7495,6 +7663,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -7503,7 +7673,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -7770,6 +7940,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -7855,6 +8034,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -8114,6 +8294,8 @@ type PublishedValueOne implements PublishedComponent {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -8122,7 +8304,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -8382,6 +8564,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -8472,6 +8663,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -8505,6 +8697,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -8513,7 +8707,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -8770,6 +8964,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -8840,6 +9043,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -9065,6 +9269,8 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -9073,7 +9279,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -9323,6 +9529,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -9398,6 +9613,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createFooEntity(entity: FooCreateInput!, publish: Boolean): FooCreatePayload
   updateFooEntity(entity: FooUpdateInput!, publish: Boolean): FooUpdatePayload
   upsertFooEntity(entity: FooUpsertInput!, publish: Boolean): FooUpsertPayload
@@ -9431,6 +9647,8 @@ input BoundingBoxInput {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -9439,7 +9657,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -9697,6 +9915,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -9824,6 +10051,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
@@ -10086,6 +10314,8 @@ type PublishedFoo implements Node & PublishedEntity {
 }
 
 enum EventType {
+  createPrincipal
+  updateSchema
   createEntity
   createAndPublishEntity
   updateEntity
@@ -10094,7 +10324,7 @@ enum EventType {
   unpublishEntities
   archiveEntity
   unarchiveEntity
-  updateSchema
+  deleteEntities
 }
 
 input ChangelogEventQueryInput {
@@ -10345,6 +10575,15 @@ type EntityUnarchivePayload {
   updatedAt: DateTime!
 }
 
+enum EntityDeleteEffect {
+  deleted
+}
+
+type EntityDeletePayload {
+  effect: EntityDeleteEffect!
+  deletedAt: DateTime!
+}
+
 type AdvisoryLockPayload {
   name: String!
   handle: Int!
@@ -10474,6 +10713,7 @@ type Mutation {
   unpublishEntities(references: [EntityReferenceInput!]!): [EntityUnpublishPayload!]
   archiveEntity(id: ID!): EntityArchivePayload
   unarchiveEntity(id: ID!): EntityUnarchivePayload
+  deleteEntities(references: [EntityReferenceInput!]!): EntityDeletePayload
   createBarEntity(entity: BarCreateInput!, publish: Boolean): BarCreatePayload
   updateBarEntity(entity: BarUpdateInput!, publish: Boolean): BarUpdatePayload
   upsertBarEntity(entity: BarUpsertInput!, publish: Boolean): BarUpsertPayload
