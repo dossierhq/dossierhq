@@ -37,6 +37,7 @@ export async function createPrincipalSyncAndInitializeScenarioContext(context: S
   const { events, nextContext } = await applyEventsOnTargetAndResolveNextContext({
     ...context,
     after: null,
+    events: [],
   });
 
   assertSyncEventsEqual(events, [
@@ -65,13 +66,14 @@ export async function createPrincipalSyncAndInitializeScenarioContext(context: S
     targetClient,
     createdBy,
     after: nextContext.after,
+    events,
   };
 
   return scenarioContext;
 }
 
 export async function applyEventsOnTargetAndResolveNextContext<
-  TContext extends Pick<ScenarioContext, 'sourceServer' | 'targetServer' | 'after'>,
+  TContext extends Pick<ScenarioContext, 'sourceServer' | 'targetServer' | 'after' | 'events'>,
 >(context: TContext) {
   const { sourceServer, targetServer, after } = context;
 
@@ -99,8 +101,21 @@ export async function applyEventsOnTargetAndResolveNextContext<
   }
 
   // Construct nextContext
-
-  const nextContext = { ...context, after: nextAfter };
+  const nextContext = {
+    ...context,
+    after: nextAfter,
+    events: [...context.events, ...sourceSyncEvents.events],
+  };
 
   return { nextContext, events: sourceSyncEvents.events };
+}
+
+export async function ensureServerHasTheSameSyncEventsAsFirstSeen(
+  context: ScenarioContext,
+  server: Server,
+) {
+  const syncEvents = (await server.getSyncEvents({ after: null, limit: 100 })).valueOrThrow();
+  assertEquals(syncEvents.hasMore, false);
+
+  assertEquals(syncEvents.events, context.events);
 }

@@ -1,4 +1,4 @@
-import type { DossierClient } from '@dossierhq/core';
+import type { DossierClient, SyncEvent } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { buildSuite } from '../Builder.js';
 import type { TestFunctionInitializer, TestSuite } from '../index.js';
@@ -14,6 +14,7 @@ export interface ScenarioContext extends SyncTestContext {
   targetClient: DossierClient;
   after: string | null;
   createdBy: string;
+  events: SyncEvent[];
 }
 
 export function createSyncTestSuite<TCleanup>(

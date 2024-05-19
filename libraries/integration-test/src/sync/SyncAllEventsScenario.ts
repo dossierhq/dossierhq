@@ -9,6 +9,7 @@ import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import {
   applyEventsOnTargetAndResolveNextContext,
   createPrincipalSyncAndInitializeScenarioContext,
+  ensureServerHasTheSameSyncEventsAsFirstSeen,
   ensureServerIsEmpty,
 } from './SyncScenarioUtils.js';
 import type { ScenarioContext, SyncTestContext } from './SyncTestSuite.js';
@@ -41,6 +42,9 @@ export async function sync_allEventsScenario(context: SyncTestContext) {
   for (const step of STEPS) {
     scenarioContext = await step(scenarioContext);
   }
+
+  await ensureServerHasTheSameSyncEventsAsFirstSeen(scenarioContext, sourceServer);
+  await ensureServerHasTheSameSyncEventsAsFirstSeen(scenarioContext, targetServer);
 }
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
