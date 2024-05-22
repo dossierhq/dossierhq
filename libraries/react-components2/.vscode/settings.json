@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "cSpell.words": ["Bengtsson", "dossierhq", "ianvs", "rushstack"],
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "dossierhq-dossierhq",
+    "projectKey": "dossierhq_dossierhq"
+  }
+}

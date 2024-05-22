@@ -1,0 +1,73 @@
+{
+  "name": "@dossierhq/react-components2",
+  "version": "0.0.1",
+  "description": "React components for creating a headless CMS using Dossier.",
+  "keywords": [
+    "dossier",
+    "cms",
+    "react"
+  ],
+  "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./lib/index.js",
+    "./main.css": "./lib/main.css"
+  },
+  "types": "./lib/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run prettier:check && heft build --clean",
+    "build:watch": "heft build-watch",
+    "clean": "heft clean",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "start": "storybook dev -p 6008 --no-open",
+    "storybook:build": "storybook build --quiet",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/react-components2"
+  },
+  "dependencies": {
+    "tslib": "~2.6.2"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@dossierhq/heft-node-rig": "workspace:*",
+    "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
+    "@rushstack/heft": "0.66.9",
+    "@storybook/addon-actions": "~8.1.1",
+    "@storybook/addon-docs": "~8.1.1",
+    "@storybook/addon-essentials": "~8.1.1",
+    "@storybook/addon-links": "~8.1.1",
+    "@storybook/preset-scss": "~1.0.3",
+    "@storybook/react": "~8.1.1",
+    "@storybook/react-vite": "~8.1.1",
+    "@types/react": "18.3.2",
+    "@types/react-dom": "~18.3.0",
+    "@typescript-eslint/eslint-plugin": "~7.9.0",
+    "@typescript-eslint/parser": "~7.9.0",
+    "@vitejs/plugin-react": "~4.2.1",
+    "eslint": "~8.57.0",
+    "eslint-plugin-react": "~7.34.1",
+    "eslint-plugin-react-hooks": "~4.6.2",
+    "eslint-plugin-storybook": "~0.8.0",
+    "prettier": "3.2.5",
+    "react": "~18.3.1",
+    "react-dom": "~18.3.1",
+    "storybook": "~8.1.1",
+    "typescript": "~5.4.5",
+    "vite": "~5.2.11"
+  }
+}

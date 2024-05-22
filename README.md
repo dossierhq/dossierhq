@@ -100,6 +100,7 @@ If you just want to get started using Dossier, these destinations might get you 
 - 5173: examples/tutorial
 - 6006: libraries/react-components
 - 6007: libraries/design
+- 6008: libraries/react-components2
 - 9000: libraries/libsql - admin entity
 - 9001: libraries/libsql - advisory lock
 - 9002: libraries/libsql - advisory lock

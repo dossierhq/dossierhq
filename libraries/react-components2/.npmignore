@@ -1,0 +1,28 @@
+# THIS IS A STANDARD TEMPLATE FOR .npmignore FILES IN THIS REPO.
+
+# Ignore all files by default, to avoid accidentally publishing unintended files.
+*
+
+# Use negative patterns to bring back the specific things we want to publish.
+!/lib/**
+
+# Ignore certain patterns that should not get published.
+/lib/**/test/
+/lib/**/stories/
+*.test.*
+*.stories.*
+
+# NOTE: These don't need to be specified, because NPM includes them automatically.
+#
+# package.json
+# README (and its variants)
+# CHANGELOG (and its variants)
+# LICENSE / LICENCE
+
+#--------------------------------------------
+# DO NOT MODIFY THE TEMPLATE ABOVE THIS LINE
+#--------------------------------------------
+
+# Run `npm pack --dryrun` to debug configuration
+# (Add your project-specific overrides here, with negative pattern: !glob-pattern)
+

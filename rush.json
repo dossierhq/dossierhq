@@ -389,6 +389,10 @@
       "versionPolicyName": "DossierFramework"
     },
     {
+      "packageName": "@dossierhq/react-components2",
+      "projectFolder": "libraries/react-components2"
+    },
+    {
       "packageName": "@dossierhq/sqlite-core",
       "projectFolder": "libraries/sqlite-core",
       "versionPolicyName": "DossierFramework"
