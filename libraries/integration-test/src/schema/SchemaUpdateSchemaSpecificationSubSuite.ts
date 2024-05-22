@@ -3,6 +3,7 @@ import {
   ErrorType,
   EventType,
   FieldType,
+  getAllNodesForConnection,
   ok,
   type Component,
   type Entity,
@@ -42,8 +43,8 @@ import type { SchemaTestContext } from './SchemaTestSuite.js';
 export const SchemaUpdateSchemaSpecificationSubSuite: UnboundTestFunction<SchemaTestContext>[] = [
   updateSchemaSpecification_removeAllFieldsFromMigrationEntity,
   updateSchemaSpecification_removeAllFieldsFromMigrationComponent,
+  updateSchemaSpecification_removeAllTemporaryEntityTypes,
   updateSchemaSpecification_removeAllTemporaryComponentTypes,
-  //TODO updateSchemaSpecification_removeAllTemporaryEntityTypes, add when we can delete entities
   updateSchemaSpecification_updateSchemaEvent,
   updateSchemaSpecification_concurrentUpdates,
   updateSchemaSpecification_adminOnlyEntityMakesPublishedEntityInvalidAndRemovedFromFtsIndex,
@@ -139,6 +140,53 @@ async function updateSchemaSpecification_removeAllFieldsFromMigrationComponent({
               componentType: 'MigrationComponent',
               field: it.name,
             })),
+          },
+        ],
+      });
+      assertOkResult(updateResult);
+    }
+    return ok(undefined);
+  });
+  assertOkResult(result);
+}
+
+async function updateSchemaSpecification_removeAllTemporaryEntityTypes({
+  clientProvider,
+}: SchemaTestContext) {
+  const client = clientProvider.dossierClient();
+  // Lock since the version needs to be consecutive
+  const result = await withSchemaAdvisoryLock(client, async () => {
+    const schemaSpec = (
+      await client.getSchemaSpecification({ includeMigrations: true })
+    ).valueOrThrow();
+
+    const entitySpecs = schemaSpec.entityTypes.filter(
+      (it) => it.name.startsWith('MigrationEntity') && it.name !== 'MigrationEntity',
+    );
+    if (entitySpecs.length > 0) {
+      // TODO deleting all entities should probably not be needed in the future, but is now
+      for await (const node of getAllNodesForConnection({}, (paging) =>
+        client.getEntities(
+          { entityTypes: entitySpecs.map((it) => it.name as AppEntity['info']['type']) },
+          paging,
+        ),
+      )) {
+        const {
+          id,
+          info: { status },
+        } = node.valueOrThrow();
+        if (status === 'published' || status === 'modified') {
+          assertOkResult(await client.unpublishEntities([{ id }]));
+        }
+        assertOkResult(await client.archiveEntity({ id }));
+        assertOkResult(await client.deleteEntities([{ id }]));
+      }
+
+      const updateResult = await client.updateSchemaSpecification({
+        migrations: [
+          {
+            version: schemaSpec.version + 1,
+            actions: entitySpecs.map((it) => ({ action: 'deleteType', entityType: it.name })),
           },
         ],
       });
