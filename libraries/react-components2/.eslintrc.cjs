@@ -16,7 +16,7 @@ module.exports = {
     ecmaVersion: 2023,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['@typescript-eslint', 'react', 'eslint-plugin-react-compiler'],
   reportUnusedDisableDirectives: true,
   rules: {
     '@typescript-eslint/consistent-type-imports': ['warn'],
@@ -31,6 +31,7 @@ module.exports = {
       },
     ],
     'react/react-in-jsx-scope': ['off'],
+    'react-compiler/react-compiler': ['error'],
   },
   settings: { react: { version: 'detect' } },
 };
