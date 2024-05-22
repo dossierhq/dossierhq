@@ -1,8 +1,4 @@
-import {
-  RichTextNodeType,
-  type FieldSpecification,
-  type RichTextFieldSpecification,
-} from '@dossierhq/core';
+import { RichTextNodeType, type RichTextFieldSpecification } from '@dossierhq/core';
 import {
   ButtonDropdown,
   Dialog2,

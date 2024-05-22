@@ -1,9 +1,4 @@
-import type {
-  EntityReference,
-  FieldSpecification,
-  RichText,
-  RichTextFieldSpecification,
-} from '@dossierhq/core';
+import type { EntityReference, RichText, RichTextFieldSpecification } from '@dossierhq/core';
 import { ClassName, LexicalTheme, toClassName } from '@dossierhq/design';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { LinkNode } from '@lexical/link';

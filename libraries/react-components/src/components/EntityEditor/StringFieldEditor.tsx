@@ -1,4 +1,4 @@
-import type { FieldSpecification, StringFieldSpecification } from '@dossierhq/core';
+import type { StringFieldSpecification } from '@dossierhq/core';
 import {
   Button,
   ButtonDropdown,

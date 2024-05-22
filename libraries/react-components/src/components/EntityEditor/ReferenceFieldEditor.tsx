@@ -1,9 +1,4 @@
-import type {
-  Entity,
-  EntityReference,
-  FieldSpecification,
-  ReferenceFieldSpecification,
-} from '@dossierhq/core';
+import type { Entity, EntityReference, ReferenceFieldSpecification } from '@dossierhq/core';
 import {
   Button2,
   Column,
