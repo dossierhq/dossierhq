@@ -281,7 +281,7 @@ importers:
         version: 0.7.0(prettier@3.2.5)(typescript@5.4.5)
       '@astrojs/node':
         specifier: ~8.2.5
-        version: 8.2.5(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+        version: 8.2.5(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       '@astrojs/react':
         specifier: ~3.4.0
         version: 3.4.0(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.11(@types/node@20.12.12)(sass@1.77.1))
@@ -308,13 +308,13 @@ importers:
         version: link:../../libraries/server
       '@sentry/astro':
         specifier: ~8.2.1
-        version: 8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+        version: 8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       '@spotlightjs/astro':
         specifier: ~1.0.20
-        version: 1.0.20(@sentry/astro@8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)))(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+        version: 1.0.20(@sentry/astro@8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)))(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       astro:
-        specifier: ~4.8.5
-        version: 4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
+        specifier: ~4.9.1
+        version: 4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
       better-sqlite3:
         specifier: ~10.0.0
         version: 10.0.0
@@ -2003,7 +2003,7 @@ importers:
         version: 0.7.0(prettier@3.2.5)(typescript@5.4.5)
       '@astrojs/node':
         specifier: ~8.2.5
-        version: 8.2.5(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+        version: 8.2.5(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       '@astrojs/react':
         specifier: ~3.4.0
         version: 3.4.0(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.11(@types/node@20.12.12)(sass@1.77.1))
@@ -2054,10 +2054,10 @@ importers:
         version: 1.10.2
       '@sentry/astro':
         specifier: ~8.2.1
-        version: 8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+        version: 8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       '@spotlightjs/astro':
         specifier: ~1.0.20
-        version: 1.0.20(@sentry/astro@8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)))(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+        version: 1.0.20(@sentry/astro@8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)))(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       '@typescript-eslint/eslint-plugin':
         specifier: ~7.10.0
         version: 7.10.0(@typescript-eslint/parser@7.10.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -2065,8 +2065,8 @@ importers:
         specifier: ~7.10.0
         version: 7.10.0(eslint@8.57.0)(typescript@5.4.5)
       astro:
-        specifier: ~4.8.5
-        version: 4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
+        specifier: ~4.9.1
+        version: 4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
       better-sqlite3:
         specifier: ~10.0.0
         version: 10.0.0
@@ -6782,8 +6782,8 @@ packages:
     resolution: {integrity: sha512-6t10qk83GOG8p0vKmaCr8eiilZwO171AvbROMtvvNiwrTly62t+7XkA8RdIIVbpMhCASAsxgAzdRSwh6nw/5Dg==}
     engines: {node: '>=4'}
 
-  astro@4.8.5:
-    resolution: {integrity: sha512-h+t4VGLPBk6KjIiJnYGotJ16wsLIdmNVSvnwEk51XhqZ5T2VlbozgDtgDi6y3qP3mqkhpN3Q39YQORhVeuEYsg==}
+  astro@4.9.1:
+    resolution: {integrity: sha512-9TsoAu0WBPiqyAIj9H0JW7R+tIjPjFsPKo70Nja6WL3imTTuUJQmnCre4ZVmoNV3oicTTlb+N4zjRYANW0Ty9A==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -11841,9 +11841,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@8.2.5(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))':
+  '@astrojs/node@8.2.5(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))':
     dependencies:
-      astro: 4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
+      astro: 4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
       send: 0.18.0
       server-destroy: 1.0.1
 
@@ -12374,7 +12374,7 @@ snapshots:
   '@babel/plugin-syntax-flow@7.23.3(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
 
   '@babel/plugin-syntax-import-assertions@7.24.1(@babel/core@7.24.5)':
     dependencies:
@@ -12399,7 +12399,7 @@ snapshots:
   '@babel/plugin-syntax-jsx@7.23.3(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
 
   '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.24.5)':
     dependencies:
@@ -12444,7 +12444,7 @@ snapshots:
   '@babel/plugin-syntax-typescript@7.23.3(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
 
   '@babel/plugin-syntax-unicode-sets-regex@7.18.6(@babel/core@7.24.5)':
     dependencies:
@@ -12486,7 +12486,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.24.5
       '@babel/helper-create-class-features-plugin': 7.23.10(@babel/core@7.24.5)
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
 
   '@babel/plugin-transform-class-properties@7.24.1(@babel/core@7.24.5)':
     dependencies:
@@ -12556,7 +12556,7 @@ snapshots:
   '@babel/plugin-transform-flow-strip-types@7.23.3(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/plugin-syntax-flow': 7.23.3(@babel/core@7.24.5)
 
   '@babel/plugin-transform-for-of@7.24.1(@babel/core@7.24.5)':
@@ -12604,7 +12604,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.24.5
       '@babel/helper-module-transforms': 7.24.5(@babel/core@7.24.5)
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/helper-simple-access': 7.24.5
 
   '@babel/plugin-transform-modules-commonjs@7.24.1(@babel/core@7.24.5)':
@@ -12642,7 +12642,7 @@ snapshots:
   '@babel/plugin-transform-nullish-coalescing-operator@7.23.4(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3(@babel/core@7.24.5)
 
   '@babel/plugin-transform-nullish-coalescing-operator@7.24.1(@babel/core@7.24.5)':
@@ -12680,7 +12680,7 @@ snapshots:
   '@babel/plugin-transform-optional-chaining@7.23.4(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/helper-skip-transparent-expression-wrappers': 7.22.5
       '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.24.5)
 
@@ -12700,7 +12700,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.24.5
       '@babel/helper-create-class-features-plugin': 7.23.10(@babel/core@7.24.5)
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
 
   '@babel/plugin-transform-private-methods@7.24.1(@babel/core@7.24.5)':
     dependencies:
@@ -12736,7 +12736,7 @@ snapshots:
       '@babel/core': 7.24.5
       '@babel/helper-annotate-as-pure': 7.22.5
       '@babel/helper-module-imports': 7.24.3
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.24.5)
       '@babel/types': 7.24.5
 
@@ -12782,7 +12782,7 @@ snapshots:
       '@babel/core': 7.24.5
       '@babel/helper-annotate-as-pure': 7.22.5
       '@babel/helper-create-class-features-plugin': 7.23.10(@babel/core@7.24.5)
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.24.5)
 
   '@babel/plugin-transform-unicode-escapes@7.24.1(@babel/core@7.24.5)':
@@ -12898,7 +12898,7 @@ snapshots:
   '@babel/preset-flow@7.23.3(@babel/core@7.24.5)':
     dependencies:
       '@babel/core': 7.24.5
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.5
       '@babel/helper-validator-option': 7.23.5
       '@babel/plugin-transform-flow-strip-types': 7.23.3(@babel/core@7.24.5)
 
@@ -15972,7 +15972,7 @@ snapshots:
       '@sentry/types': 8.2.1
       '@sentry/utils': 8.2.1
 
-  '@sentry/astro@8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))':
+  '@sentry/astro@8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))':
     dependencies:
       '@sentry/browser': 8.2.1
       '@sentry/core': 8.2.1
@@ -15980,7 +15980,7 @@ snapshots:
       '@sentry/types': 8.2.1
       '@sentry/utils': 8.2.1
       '@sentry/vite-plugin': 2.16.1
-      astro: 4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
+      astro: 4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -16122,12 +16122,12 @@ snapshots:
 
   '@sindresorhus/merge-streams@2.3.0': {}
 
-  '@spotlightjs/astro@1.0.20(@sentry/astro@8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)))(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))':
+  '@spotlightjs/astro@1.0.20(@sentry/astro@8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)))(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))':
     dependencies:
-      '@sentry/astro': 8.2.1(astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
+      '@sentry/astro': 8.2.1(astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5))
       '@spotlightjs/overlay': 1.8.3
       '@spotlightjs/sidecar': 1.4.0
-      astro: 4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
+      astro: 4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5)
       source-map: 0.7.4
 
   '@spotlightjs/overlay@1.8.3': {}
@@ -17233,7 +17233,7 @@ snapshots:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.4.5)
       eslint: 8.57.0
       eslint-scope: 5.1.1
-      semver: 7.6.0
+      semver: 7.6.2
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -17674,7 +17674,7 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  astro@4.8.5(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5):
+  astro@4.9.1(@types/node@20.12.12)(sass@1.77.1)(typescript@5.4.5):
     dependencies:
       '@astrojs/compiler': 2.8.0
       '@astrojs/internal-helpers': 0.4.0
