@@ -1,6 +1,6 @@
 import { NotificationContainer, Row } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
+import { fn } from '@storybook/test';
 import { ContentEditorScreen } from '../screens/ContentEditorScreen/ContentEditorScreen';
 import { SchemaEditorScreen } from '../screens/SchemaEditorScreen/SchemaEditorScreen';
 import { AdminLoadContextProvider } from '../test/AdminLoadContextProvider';
@@ -24,13 +24,10 @@ function Combo({
   );
 }
 
-const meta = {
+const meta: Meta<typeof Combo> = {
   title: 'Combo/ContentEditor and SchemaEditor',
   component: Combo,
-  argTypes: {
-    onEntityEditorHasChangesChange: { action: 'entity-editor-has-changes' },
-    onSchemaEditorHasChangesChange: { action: 'schema-editor-has-changes' },
-  },
+  args: { onEntityEditorHasChangesChange: fn(), onSchemaEditorHasChangesChange: fn() },
   parameters: { layout: 'fullscreen' },
   decorators: [
     (Story) => (

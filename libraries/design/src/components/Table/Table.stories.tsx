@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import React, { useState, type MouseEvent } from 'react';
 import { Table, type TableProps } from './Table.js';
 
@@ -15,8 +16,7 @@ export interface StoryProps extends Omit<TableProps, 'children'> {
 const meta = {
   title: 'Components/Table',
   component: Wrapper,
-  args: { orderableHeaders: [], rowCount: 50 },
-  argTypes: { onHeaderClick: { action: 'clicked' }, onRowClick: { action: 'clicked' } },
+  args: { orderableHeaders: [], rowCount: 50, onHeaderClick: fn(), onRowClick: fn() },
   tags: ['autodocs'],
 } satisfies Meta<typeof Wrapper>;
 export default meta;

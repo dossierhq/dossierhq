@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { toSizeClassName } from '../../utils/LayoutPropsUtils.js';
 import { Text } from '../Text/Text.js';
 import { Card2 } from './Card2.js';

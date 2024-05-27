@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { EmptyStateMessage } from './EmptyStateMessage.js';
 
-const meta = {
+const meta: Meta<typeof EmptyStateMessage> = {
   title: 'Components/EmptyStateMessage',
   component: EmptyStateMessage,
   args: { icon: 'add', title: 'Title', message: 'Message' },

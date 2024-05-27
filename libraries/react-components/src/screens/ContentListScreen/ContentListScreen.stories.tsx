@@ -1,7 +1,8 @@
 import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { fn } from '@storybook/test';
+import { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';
@@ -17,17 +18,7 @@ type StoryProps = Omit<ContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'>
 const meta = {
   title: 'Screens/ContentListScreen',
   component: Wrapper,
-  argTypes: {
-    onCreateEntity: {
-      action: 'create-entity',
-      table: { disable: true },
-    },
-    onOpenEntity: {
-      action: 'open-entity',
-      table: { disable: true },
-    },
-  },
-  args: { showUrl: false, ownCache: true },
+  args: { showUrl: false, ownCache: true, onCreateEntity: fn(), onOpenEntity: fn() },
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
 } satisfies Meta<typeof Wrapper>;

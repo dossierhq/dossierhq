@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { Button } from '../Button/Button.js';
 import { Input } from '../Input/Input.js';
 import { Field } from './Field.js';

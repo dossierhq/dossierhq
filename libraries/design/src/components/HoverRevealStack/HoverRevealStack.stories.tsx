@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { Delete } from '../Delete/Delete.js';
 import { HoverRevealStack } from './HoverRevealStack.js';
 

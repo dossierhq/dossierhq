@@ -1,6 +1,7 @@
 import { NotificationContainer, Text } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useMemo, useState } from 'react';
+import { fn } from '@storybook/test';
+import { useMemo, useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
 import { ContentEditorScreen, type ContentEditorScreenProps } from './ContentEditorScreen.js';
@@ -13,12 +14,7 @@ type StoryProps = Omit<ContentEditorScreenProps, 'urlSearchParams' | 'onUrlSearc
 const meta = {
   title: 'Screens/ContentEditorScreen',
   component: Wrapper,
-  argTypes: {
-    onEditorHasChangesChange: {
-      action: 'editor-has-changes',
-    },
-  },
-  args: { showUrl: false },
+  args: { showUrl: false, onEditorHasChangesChange: fn() },
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
 } satisfies Meta<typeof Wrapper>;

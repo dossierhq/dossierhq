@@ -1,6 +1,7 @@
 import type { ClientContext, PublishedDossierClientMiddleware } from '@dossierhq/core';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { fn } from '@storybook/test';
+import { useState } from 'react';
 import { CacheConfig } from '../../test/CacheConfig';
 import { PublishedLoadContextProvider } from '../../test/PublishedLoadContextProvider';
 import { createSlowPublishedMiddleware } from '../../test/TestContextAdapter';
@@ -18,10 +19,7 @@ type StoryProps = Omit<PublishedContentListScreenProps, 'urlQuery' | 'onUrlQuery
 const meta = {
   title: 'Screens/PublishedContentListScreen',
   component: Wrapper,
-  argTypes: {
-    onOpenEntity: { action: 'open-entity' },
-  },
-  args: { ownCache: true },
+  args: { ownCache: true, onOpenEntity: fn() },
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
 } satisfies Meta<typeof Wrapper>;

@@ -21,7 +21,7 @@ export interface IconButtonGroupProps {
   children: React.ReactNode;
 }
 
-interface IconButtonComponent extends FunctionComponent<IconButtonProps> {
+export interface IconButtonComponent extends FunctionComponent<IconButtonProps> {
   Group: FunctionComponent<IconButtonGroupProps>;
 }
 

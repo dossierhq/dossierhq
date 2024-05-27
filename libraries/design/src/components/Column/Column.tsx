@@ -20,7 +20,7 @@ interface ColumnItemProps extends FlexItemProps {
   children?: ReactNode;
 }
 
-interface ColumnComponent extends FunctionComponent<ColumnProps> {
+export interface ColumnComponent extends FunctionComponent<ColumnProps> {
   Item: FunctionComponent<ColumnItemProps>;
 }
 

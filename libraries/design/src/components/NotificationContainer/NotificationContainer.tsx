@@ -10,7 +10,7 @@ export interface NotificationContainerProps {
 
 interface NotificationState extends NotificationInfo {
   id: number;
-  hideHandle: number;
+  hideHandle: ReturnType<typeof setTimeout>;
 }
 
 const COLOR_CLASSNAMES = {

@@ -3,7 +3,7 @@ import React from 'react';
 import { Table } from '../Table/Table.js';
 import { Scrollable } from './Scrollable.js';
 
-const meta = {
+const meta: Meta<typeof Scrollable> = {
   title: 'Components/Scrollable',
   component: Scrollable,
   decorators: [

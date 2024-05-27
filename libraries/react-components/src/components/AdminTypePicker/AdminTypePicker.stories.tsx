@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { AdminTypePicker } from './AdminTypePicker';
 
-const meta = {
+const meta: Meta<typeof AdminTypePicker> = {
   title: 'Components/AdminTypePicker',
   component: AdminTypePicker,
   args: {},

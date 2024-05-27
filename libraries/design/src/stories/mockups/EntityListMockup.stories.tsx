@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useReducer, useState, type MouseEvent } from 'react';
+import { fn } from '@storybook/test';
+import { useReducer, useState, type MouseEvent } from 'react';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
 import { reduceMultipleSelectorState } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Field } from '../../components/Field/Field.js';
@@ -48,11 +49,9 @@ const meta = {
   component: Screen,
   args: {
     entityCount: 50,
-  },
-  argTypes: {
-    onCreateClick: { action: 'clicked' },
-    onMapClick: { action: 'clicked' },
-    onTableRowClick: { action: 'clicked' },
+    onCreateClick: fn(),
+    onMapClick: fn(),
+    onTableRowClick: fn(),
   },
   parameters: {
     layout: 'fullscreen',

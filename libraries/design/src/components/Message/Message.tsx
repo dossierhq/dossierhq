@@ -26,7 +26,7 @@ interface MessageFlexBodyProps extends FlexContainerProps, SpacingProps {
   children?: ReactNode;
 }
 
-interface MessageComponent extends FunctionComponent<MessageProps> {
+export interface MessageComponent extends FunctionComponent<MessageProps> {
   Header: FunctionComponent<MessageHeaderProps>;
   HeaderTitle: FunctionComponent<MessageHeaderTitleProps>;
   Body: FunctionComponent<MessageBodyProps>;

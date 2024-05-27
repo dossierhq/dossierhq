@@ -48,7 +48,7 @@ interface EditLocationMarkerProps {
   onChange: (location: Location) => void;
 }
 
-interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
+export interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
   LocateControl: FunctionComponent<LocateControlProps>;
   Marker: FunctionComponent<MarkerProps>;
   EditLocationMarker: FunctionComponent<EditLocationMarkerProps>;

@@ -22,7 +22,7 @@ export interface TagGroupProps {
   children: React.ReactNode;
 }
 
-interface TagComponent extends FunctionComponent<TagProps> {
+export interface TagComponent extends FunctionComponent<TagProps> {
   Remove: FunctionComponent<TagRemoveProps>;
   Clear: FunctionComponent<TagClearProps>;
   Group: FunctionComponent<TagGroupProps>;

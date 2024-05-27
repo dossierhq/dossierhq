@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { fn } from '@storybook/test';
+import { useState } from 'react';
 import { Button } from '../Button/Button.js';
 import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
 import { Card } from '../Card/Card.js';
@@ -16,6 +17,7 @@ const meta = {
   args: {
     form: true,
     modal: true,
+    onClose: fn(),
   },
   parameters: { layout: 'centered' },
 } satisfies Meta<typeof Wrapper>;

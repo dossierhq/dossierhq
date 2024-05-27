@@ -30,7 +30,7 @@ export interface FieldBodyColumnProps {
   children: React.ReactNode;
 }
 
-interface FieldComponent extends FunctionComponent<FieldProps> {
+export interface FieldComponent extends FunctionComponent<FieldProps> {
   Label: FunctionComponent<FieldLabelProps>;
   Control: FunctionComponent<FieldControlProps>;
   Help: FunctionComponent<FieldHelpProps>;

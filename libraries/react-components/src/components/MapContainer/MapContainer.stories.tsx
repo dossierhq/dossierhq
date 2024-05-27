@@ -1,8 +1,7 @@
 import { MapContainer } from '@dossierhq/leaflet';
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 
-const meta = {
+const meta: Meta<typeof MapContainer> = {
   title: 'Components/MapContainer',
   component: MapContainer,
   args: {

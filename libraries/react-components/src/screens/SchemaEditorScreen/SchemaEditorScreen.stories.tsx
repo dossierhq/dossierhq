@@ -1,20 +1,17 @@
 import type { ComponentTypeSpecification, EntityTypeSpecification } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useContext } from 'react';
+import { fn } from '@storybook/test';
+import { useContext } from 'react';
 import { DossierContext } from '../../contexts/DossierContext';
 import { useAdminSchema } from '../../hooks/useAdminSchema';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { SchemaEditorScreen } from './SchemaEditorScreen';
 
-const meta = {
+const meta: Meta<typeof SchemaEditorScreen> = {
   title: 'Screens/SchemaEditorScreen',
   component: SchemaEditorScreen,
-  argTypes: {
-    onEditorHasChangesChange: {
-      action: 'editor-has-changes',
-    },
-  },
+  args: { onEditorHasChangesChange: fn() },
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
   decorators: [
