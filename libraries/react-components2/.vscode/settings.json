@@ -1,6 +1,15 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["Bengtsson", "dossierhq", "ianvs", "rushstack"],
+  "cSpell.words": [
+    "autodocs",
+    "Bengtsson",
+    "clsx",
+    "dossierhq",
+    "ianvs",
+    "lucide",
+    "rushstack",
+    "tailwindcss"
+  ],
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

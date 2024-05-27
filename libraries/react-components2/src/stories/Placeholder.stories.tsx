@@ -1,7 +1,12 @@
+import { Button } from '@/components/ui/button';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function Placeholder() {
-  return <div>Placeholder</div>;
+  return (
+    <div>
+      <Button>Placeholder</Button>
+    </div>
+  );
 }
 
 const meta = {
