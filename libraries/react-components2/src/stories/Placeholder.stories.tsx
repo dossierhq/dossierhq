@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 
-function Placeholder() {
+function Placeholder({ onClick }: { onClick: () => void }) {
   return (
     <div>
-      <Button>Placeholder</Button>
+      <Button onClick={onClick}>Placeholder</Button>
     </div>
   );
 }
@@ -12,7 +13,7 @@ function Placeholder() {
 const meta = {
   title: 'Placeholder',
   component: Placeholder,
-  argTypes: {},
+  args: { onClick: fn() },
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Placeholder>;
 export default meta;

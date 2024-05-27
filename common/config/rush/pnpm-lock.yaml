@@ -1633,15 +1633,15 @@ importers:
       '@storybook/addon-links':
         specifier: ~8.1.1
         version: 8.1.1(react@18.3.1)
-      '@storybook/preset-scss':
-        specifier: ~1.0.3
-        version: 1.0.3(sass-loader@14.2.1(sass@1.77.1))
       '@storybook/react':
         specifier: ~8.1.1
         version: 8.1.1(prettier@3.2.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5)
       '@storybook/react-vite':
         specifier: ~8.1.1
         version: 8.1.1(prettier@3.2.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.18.0)(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.12)(sass@1.77.1))
+      '@storybook/test':
+        specifier: ~8.1.1
+        version: 8.1.4(vitest@1.6.0(@types/node@20.12.12)(sass@1.77.1))
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
