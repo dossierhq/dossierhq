@@ -92,6 +92,7 @@
     "@storybook/preset-scss": "~1.0.3",
     "@storybook/react": "~8.1.4",
     "@storybook/react-vite": "~8.1.4",
+    "@storybook/test": "~8.1.4",
     "@types/base-64": "~1.0.2",
     "@types/better-sqlite3": "~7.6.10",
     "@types/body-parser": "~1.19.5",
