@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "leaflet": "~1.9.4",
-    "leaflet.locatecontrol": "~0.81.0",
+    "leaflet.locatecontrol": "~0.81.1",
     "react-leaflet": "~4.2.1",
     "tslib": "~2.6.2"
   },
@@ -50,7 +50,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.9",
+    "@rushstack/heft": "0.66.17",
     "@types/leaflet": "~1.9.12",
     "@types/leaflet.locatecontrol": "~0.74.5",
     "@types/react": "18.3.3",

@@ -8,8 +8,8 @@
     "build": ""
   },
   "dependencies": {
-    "@rushstack/eslint-patch": "~1.10.2",
-    "@typescript-eslint/eslint-plugin": "~7.10.0",
-    "@typescript-eslint/parser": "~7.10.0"
+    "@rushstack/eslint-patch": "~1.10.3",
+    "@typescript-eslint/eslint-plugin": "~7.11.0",
+    "@typescript-eslint/parser": "~7.11.0"
   }
 }
