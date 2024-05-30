@@ -28,6 +28,7 @@
     "@dossierhq/design": "workspace:*",
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "better-sqlite3": "~10.0.0",
     "codejar": "~4.2.0",

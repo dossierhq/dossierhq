@@ -1,8 +1,9 @@
-import { useEntities } from '@/hooks/useEntities';
+'use client';
+
+import { useEntities } from '../hooks/useEntities';
 
 export function ContentListScreen() {
   const { connection } = useEntities({}, {});
-  console.log(connection);
 
   if (connection === undefined) {
     return <div>Loading...</div>;

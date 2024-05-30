@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { useSchema } from '@/hooks/useSchema';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { Button } from '../components/ui/button';
+import { useSchema } from '../hooks/useSchema';
 import { StoryDossierProvider } from './StoryDossierProvider';
 
 function Placeholder({ onClick }: { onClick: () => void }) {

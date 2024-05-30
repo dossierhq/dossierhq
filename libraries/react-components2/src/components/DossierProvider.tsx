@@ -1,4 +1,5 @@
-import { DossierContext, type DossierContextValue } from '@/contexts/DossierContext.js';
+'use client';
+
 import {
   NoOpLogger,
   type Component,
@@ -7,6 +8,7 @@ import {
   type Logger,
 } from '@dossierhq/core';
 import { useMemo, type ReactNode } from 'react';
+import { DossierContext, type DossierContextValue } from '../contexts/DossierContext.js';
 
 interface Props {
   client: DossierClient<Entity<string, object>, Component<string, object>>;

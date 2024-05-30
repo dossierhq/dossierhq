@@ -1,5 +1,5 @@
-import { StoryDossierProvider } from '@/stories/StoryDossierProvider';
 import type { Meta, StoryObj } from '@storybook/react';
+import { StoryDossierProvider } from '../stories/StoryDossierProvider';
 import { ContentListScreen } from './ContentListScreen';
 
 function Placeholder() {

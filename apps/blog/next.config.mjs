@@ -7,7 +7,11 @@ const config = {
     domains: ['res.cloudinary.com'],
   },
   experimental: {
-    optimizePackageImports: ['@dossierhq/design', '@dossierhq/react-components'],
+    optimizePackageImports: [
+      '@dossierhq/design',
+      '@dossierhq/react-components',
+      '@dossierhq/react-components2',
+    ],
   },
 };
 

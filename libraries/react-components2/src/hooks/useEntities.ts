@@ -1,5 +1,3 @@
-import { DossierContext } from '@/contexts/DossierContext.js';
-import { CACHE_KEYS } from '@/lib/CacheUtils.js';
 import type {
   Connection,
   DossierClient,
@@ -12,6 +10,8 @@ import type {
 } from '@dossierhq/core';
 import { useCallback, useContext } from 'react';
 import useSWR from 'swr';
+import { DossierContext } from '../contexts/DossierContext.js';
+import { CACHE_KEYS } from '../lib/CacheUtils.js';
 
 type FetcherKey = Readonly<[string, EntityQuery | undefined, Paging | undefined]>;
 type FetcherData<T> = Connection<Edge<T, ErrorType>> | null;

@@ -1,11 +1,19 @@
-import { DossierProvider } from '@/components/DossierProvider.js';
-import { createConsoleLogger, type DossierClient, type Logger } from '@dossierhq/core';
+import {
+  createConsoleLogger,
+  LoggingClientMiddleware,
+  type ClientContext,
+  type DossierClient,
+  type DossierClientMiddleware,
+  type Logger,
+} from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
 import { useEffect, useState, type ReactNode } from 'react';
 import type { Database, SqlJsStatic } from 'sql.js';
 import initSqlJs from 'sql.js/dist/sql-wasm';
 import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
+import { DossierProvider } from '../components/DossierProvider.js';
+import { useCachingDossierMiddleware } from '../hooks/useCachingDossierMiddleware.js';
 
 let sqlPromise: Promise<SqlJsStatic> | null = null;
 async function getSql() {
@@ -18,6 +26,7 @@ async function getSql() {
 }
 
 export function StoryDossierProvider({ children }: { children: ReactNode }) {
+  const cachingMiddleware = useCachingDossierMiddleware();
   const [init, setInit] = useState<{ db: Database; client: DossierClient; logger: Logger } | null>(
     null,
   );
@@ -44,7 +53,10 @@ export function StoryDossierProvider({ children }: { children: ReactNode }) {
       const session = (
         await server.createSession({ provider: 'sys', identifier: 'user1' })
       ).valueOrThrow();
-      const client = server.createDossierClient(session.context);
+      const client = server.createDossierClient(session.context, [
+        LoggingClientMiddleware as DossierClientMiddleware<ClientContext>,
+        cachingMiddleware,
+      ]);
 
       setInit({ db, client, logger });
     })();
