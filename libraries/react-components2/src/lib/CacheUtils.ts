@@ -33,8 +33,8 @@ export const CACHE_KEYS = {
   ) {
     return ['dossierhq-2/useAdminEntitiesSample', query, options] as const;
   },
-  adminEntities(query: EntityQuery | undefined, paging: Paging | undefined) {
-    return ['dossierhq-2/useAdminEntities', query, paging] as const;
+  entities(query: EntityQuery | undefined, paging: Paging | undefined) {
+    return ['dossierhq-2/entities', query, paging] as const;
   },
   adminEntitiesTotalCount(query: EntitySharedQuery | undefined) {
     return ['dossierhq-2/useAdminEntitiesTotalCount', query] as const;
