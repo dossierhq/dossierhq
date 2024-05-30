@@ -1,16 +1,18 @@
+import { DossierProvider } from '@/components/DossierProvider.js';
 import { Button } from '@/components/ui/button';
-import { createConsoleLogger } from '@dossierhq/core';
+import { DossierContext } from '@/contexts/DossierContext.js';
+import { createConsoleLogger, type DossierClient } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import type { Database, SqlJsStatic } from 'sql.js';
 import initSqlJs from 'sql.js/dist/sql-wasm';
 import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
 
 function Placeholder({ onClick }: { onClick: () => void }) {
-  const [_init, setInit] = useState<{ db: Database } | null>(null);
+  const [init, setInit] = useState<{ db: Database; client: DossierClient } | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -31,15 +33,32 @@ function Placeholder({ onClick }: { onClick: () => void }) {
       server.addPlugin(processorPlugin);
       processorPlugin.start();
 
-      setInit({ db });
+      const session = (
+        await server.createSession({ provider: 'sys', identifier: 'user1' })
+      ).valueOrThrow();
+      const client = server.createDossierClient(session.context);
+
+      setInit({ db, client });
     })();
   }, []);
 
+  if (!init) {
+    return null;
+  }
+
   return (
-    <div>
-      <Button onClick={onClick}>Placeholder</Button>
-    </div>
+    <DossierProvider client={init.client}>
+      <div>
+        <Button onClick={onClick}>Placeholder</Button>
+        <Inner />
+      </div>
+    </DossierProvider>
   );
+}
+
+function Inner() {
+  const context = useContext(DossierContext);
+  return <div>{JSON.stringify(context.schema)}</div>;
 }
 
 let sqlPromise: Promise<SqlJsStatic> | null = null;
