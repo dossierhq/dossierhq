@@ -59,7 +59,7 @@ export interface EntityChangelogEvent<TEventType extends EntityEventTypes = Enti
   unauthorizedEntityCount: number;
 }
 
-//TODO how to handle deleted entities? include id and add a deleted flag?
+//TODO how to handle deleted entities? include id and add a deleted flag? Or current?
 
 export type SyncEvent =
   | CreatePrincipalSyncEvent

@@ -60,7 +60,7 @@ export function StoryDossierProvider({ children }: { children: ReactNode }) {
 
       setInit({ db, client, logger });
     })();
-  }, []);
+  }, [cachingMiddleware]);
 
   if (!init) {
     return null;

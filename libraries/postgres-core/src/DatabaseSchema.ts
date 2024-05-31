@@ -49,7 +49,7 @@ export interface EntitiesTable {
   uuid: string | null;
   uuid_before_delete: string | null;
   name: string | null;
-  name_before_delete: string | null;
+  name_before_delete: string | null; //TODO not actually used since we store name in entity_versions
   published_name: string | null;
   type: string;
   created_at: Date;
