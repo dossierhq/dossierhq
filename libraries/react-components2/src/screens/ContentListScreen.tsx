@@ -1,6 +1,7 @@
 'use client';
 
 import { useReducer } from 'react';
+import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
 import {
   initializeContentListState,
@@ -16,13 +17,6 @@ export function ContentListScreen() {
   );
   useLoadContentList(searchEntityState, dispatchSearchEntityState);
 
-  if (searchEntityState.connection === undefined) {
-    return <div>Loading...</div>;
-  }
-  if (searchEntityState.connection === null) {
-    return <div>No matches</div>;
-  }
-
   return (
     <div className="flex h-dvh w-dvw overflow-hidden">
       <main className="flex flex-grow flex-col">
@@ -32,7 +26,11 @@ export function ContentListScreen() {
             searchEntityState={searchEntityState}
           />
         </div>
-        {/* <PagingButtons className="border-t py-2" /> */}
+        <ContentListPagingButtons
+          className="border-t py-2"
+          contentListState={searchEntityState}
+          dispatchContentListState={dispatchSearchEntityState}
+        />
       </main>
     </div>
   );
@@ -47,14 +45,11 @@ function EntityList({
 }) {
   return (
     <ul className={className}>
-      {searchEntityState.connection?.edges.map((edge) => {
-        if (edge.node.isError())
-          return (
-            <li key={edge.cursor}>
-              {edge.node.error} - {edge.node.message}
-            </li>
-          );
-        return <li key={edge.cursor}>{edge.node.value.info.name}</li>;
+      {searchEntityState.entities?.map((item) => {
+        if (item.isError()) {
+          return null;
+        }
+        return <li key={item.value.id}>{item.value.info.name}</li>;
       })}
     </ul>
   );

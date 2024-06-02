@@ -1699,6 +1699,9 @@ importers:
       eslint-plugin-storybook:
         specifier: ~0.8.0
         version: 0.8.0(eslint@8.57.0)(typescript@5.4.5)
+      playground-example-generator:
+        specifier: workspace:*
+        version: link:../../apps/playground-example-generator
       postcss:
         specifier: ~8.4.38
         version: 8.4.38
