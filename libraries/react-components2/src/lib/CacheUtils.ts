@@ -18,44 +18,44 @@ import type { Arguments, Cache, useSWRConfig } from 'swr';
 export type ScopedMutator = ReturnType<typeof useSWRConfig>['mutate'];
 
 export const CACHE_KEYS = {
-  adminChangelogEvents(query: ChangelogEventQuery | undefined, paging: Paging | undefined) {
-    return ['dossierhq-2/useAdminChangelogEvents', query, paging] as const;
+  getChangelogEvents(query: ChangelogEventQuery | undefined, paging: Paging | undefined) {
+    return ['dossierhq-2/getChangelogEvents', query, paging] as const;
   },
-  adminChangelogEventsTotalCount(query: ChangelogEventQuery | undefined) {
-    return ['dossierhq-2/useAdminChangelogEventsTotalCount', query] as const;
+  getChangelogEventsTotalCount(query: ChangelogEventQuery | undefined) {
+    return ['dossierhq-2/getChangelogEventsTotalCount', query] as const;
   },
-  adminEntity(reference: EntityReference | EntityVersionReference) {
-    return ['dossierhq-2/useAdminEntity', reference] as const;
+  getEntity(reference: EntityReference | EntityVersionReference) {
+    return ['dossierhq-2/getEntity', reference] as const;
   },
-  adminEntitiesSample(
+  getEntitiesSample(
     query: EntitySharedQuery | undefined,
     options: EntitySamplingOptions | undefined,
   ) {
-    return ['dossierhq-2/useAdminEntitiesSample', query, options] as const;
+    return ['dossierhq-2/getEntitiesSample', query, options] as const;
   },
-  entities(query: EntityQuery | undefined, paging: Paging | undefined) {
-    return ['dossierhq-2/entities', query, paging] as const;
+  getEntities(query: EntityQuery | undefined, paging: Paging | undefined) {
+    return ['dossierhq-2/getEntities', query, paging] as const;
   },
-  adminEntitiesTotalCount(query: EntitySharedQuery | undefined) {
-    return ['dossierhq-2/useAdminEntitiesTotalCount', query] as const;
+  getEntitiesTotalCount(query: EntitySharedQuery | undefined) {
+    return ['dossierhq-2/getEntitiesTotalCount', query] as const;
   },
-  schema: 'dossierhq-2/useSchema',
-  publishedEntity(reference: EntityReference) {
-    return ['dossierhq-2/usePublishedEntity', reference] as const;
+  getSchemaSpecification: 'dossierhq-2/getSchemaSpecification',
+  publishedGetEntity(reference: EntityReference) {
+    return ['dossierhq-2/published/getEntity', reference] as const;
   },
-  publishedEntitiesSample(
+  publishedGetEntitiesSample(
     query: PublishedEntitySharedQuery | undefined,
     options: EntitySamplingOptions | undefined,
   ) {
-    return ['dossierhq-2/usePublishedEntitiesSample', query, options] as const;
+    return ['dossierhq-2/published/getEntitiesSample', query, options] as const;
   },
-  publishedEntities(query: PublishedEntityQuery | undefined, paging: Paging | undefined) {
-    return ['dossierhq-2/usePublishedEntities', query, paging] as const;
+  publishedGetEntities(query: PublishedEntityQuery | undefined, paging: Paging | undefined) {
+    return ['dossierhq-2/published/entities', query, paging] as const;
   },
-  publishedEntitiesTotalCount(query: PublishedEntitySharedQuery | undefined) {
-    return ['dossierhq-2/usePublishedEntitiesTotalCount', query] as const;
+  publishedGetEntitiesTotalCount(query: PublishedEntitySharedQuery | undefined) {
+    return ['dossierhq-2/published/getEntitiesTotalCount', query] as const;
   },
-  publishedSchema: 'dossierhq-2/usePublishedSchema',
+  publishedSchema: 'dossierhq-2/published/getSchemaSpecification',
 };
 
 function geInitialCacheKey(key: Arguments): string | null {
@@ -81,11 +81,11 @@ export function updateCacheSchemas(
   mutate: ScopedMutator,
   schema: SchemaWithMigrations | undefined,
 ) {
-  const hasAdmin = !!cache.get(CACHE_KEYS.schema);
+  const hasAdmin = !!cache.get(CACHE_KEYS.getSchemaSpecification);
   const hasPublished = !!cache.get(CACHE_KEYS.publishedSchema);
   if (hasAdmin || hasPublished) {
     if (hasAdmin) {
-      mutate(CACHE_KEYS.schema, schema);
+      mutate(CACHE_KEYS.getSchemaSpecification, schema);
     }
     if (hasPublished) {
       const publishedSchema = schema?.toPublishedSchema();
@@ -98,7 +98,7 @@ export function updateCacheEntity<T extends Entity<string, object> = Entity>(
   mutate: ScopedMutator,
   entity: T,
 ) {
-  const key = CACHE_KEYS.adminEntity({ id: entity.id });
+  const key = CACHE_KEYS.getEntity({ id: entity.id });
   mutate(key, entity);
 }
 
@@ -106,7 +106,7 @@ export function updateCacheEntityInfo<TEffect>(
   mutate: ScopedMutator,
   payload: EntityPublishingPayload<TEffect>,
 ) {
-  const key = CACHE_KEYS.adminEntity({ id: payload.id });
+  const key = CACHE_KEYS.getEntity({ id: payload.id });
   mutate(key, (entity: Entity | undefined) => {
     if (!entity) return entity;
     return copyEntity(entity, { info: { status: payload.status, updatedAt: payload.updatedAt } });
@@ -114,12 +114,12 @@ export function updateCacheEntityInfo<TEffect>(
 }
 
 export function removeCacheEntity(mutate: ScopedMutator, reference: EntityReference) {
-  const key = CACHE_KEYS.adminEntity(reference);
+  const key = CACHE_KEYS.getEntity(reference);
   mutate(key, undefined);
 }
 
 export function invalidateChangelogEvents(mutate: ScopedMutator) {
-  const keyString = CACHE_KEYS.adminChangelogEvents(undefined, undefined)[0];
+  const keyString = CACHE_KEYS.getChangelogEvents(undefined, undefined)[0];
 
   mutate((key) => {
     const initialKey = geInitialCacheKey(key);

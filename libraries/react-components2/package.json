@@ -20,7 +20,7 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && postcss src/globals.css -o lib/main.css",
+    "build": "npm run prettier:check && heft build --clean && postcss src/globals.css -o lib/main.css && npm run test",
     "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -29,7 +29,9 @@
     "prettier:fix": "prettier --write .",
     "start": "storybook dev -p 6008 --no-open",
     "storybook:build": "storybook build --quiet",
-    "test": ""
+    "test": "vitest",
+    "test:update-snapshot": "vitest --update",
+    "test:watch": "vitest --watch"
   },
   "repository": {
     "type": "git",
@@ -40,6 +42,7 @@
     "@radix-ui/react-slot": "~1.0.2",
     "class-variance-authority": "~0.7.0",
     "clsx": "~2.1.1",
+    "lodash": "~4.17.21",
     "lucide-react": "~0.381.0",
     "swr": "~2.2.5",
     "tailwind-merge": "~2.3.0",
@@ -64,6 +67,7 @@
     "@storybook/react": "~8.1.5",
     "@storybook/react-vite": "~8.1.5",
     "@storybook/test": "~8.1.5",
+    "@types/lodash": "~4.17.4",
     "@types/react": "18.3.3",
     "@types/react-dom": "~18.3.0",
     "@types/sql.js": "~1.4.9",
@@ -79,12 +83,14 @@
     "postcss": "~8.4.38",
     "postcss-cli": "~11.0.0",
     "prettier": "3.2.5",
+    "prettier-plugin-tailwindcss": "~0.6.1",
     "react": "~18.3.1",
     "react-dom": "~18.3.1",
     "sql.js": "~1.10.3",
     "storybook": "~8.1.5",
     "tailwindcss": "~3.4.3",
     "typescript": "~5.4.5",
-    "vite": "~5.2.12"
+    "vite": "~5.2.12",
+    "vitest": "~1.6.0"
   }
 }

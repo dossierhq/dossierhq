@@ -21,7 +21,10 @@ export function useSchema(): {
 } {
   const { client } = useContext(DossierContext);
   const fetcher = useCallback((_action: FetcherKey) => fetchSchema(client), [client]);
-  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(CACHE_KEYS.schema, fetcher);
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(
+    CACHE_KEYS.getSchemaSpecification,
+    fetcher,
+  );
 
   // useDebugLogChangedValues('useSchema changed values', { data, error });
 

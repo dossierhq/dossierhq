@@ -1,0 +1,879 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContentListState scenarios > From sampling -> set paging -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 1,
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    ],
+    "seed": 123,
+    "totalCount": 1,
+  },
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": undefined,
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`ContentListState scenarios > From sampling -> set paging -> loading -> loaded > 2 - loading 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 1,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "first-page",
+  "mode": "full",
+  "paging": {
+    "first": 1,
+  },
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`ContentListState scenarios > From sampling -> set paging -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": {
+            "fields": {
+              "title": "Title 2",
+            },
+            "id": "2",
+            "info": {
+              "authKey": "",
+              "createdAt": 2022-03-19T07:51:25.560Z,
+              "name": "Entity 2",
+              "type": "TitleOnly",
+              "valid": true,
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-2",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 2,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {
+    "first": 1,
+  },
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > From searching -> set sampling -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": {
+            "fields": {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": {
+              "authKey": "",
+              "createdAt": 2022-03-19T07:51:25.560Z,
+              "name": "Entity 1",
+              "type": "TitleOnly",
+              "valid": true,
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > From searching -> set sampling -> loading -> loaded > 2 - loading 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "sample",
+  "mode": "full",
+  "paging": undefined,
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`ContentListState scenarios > From searching -> set sampling -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 1,
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    ],
+    "seed": 123,
+    "totalCount": 1,
+  },
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": undefined,
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`ContentListState scenarios > Next page -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": {
+            "fields": {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": {
+              "authKey": "",
+              "createdAt": 2022-03-19T07:51:25.560Z,
+              "name": "Entity 1",
+              "type": "TitleOnly",
+              "valid": true,
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > Next page -> loading -> loaded > 2 - loading 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "next-page",
+  "mode": "full",
+  "paging": {
+    "after": "cursor-1",
+  },
+  "query": {
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > Next page -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": {
+            "fields": {
+              "title": "Title 2",
+            },
+            "id": "2",
+            "info": {
+              "authKey": "",
+              "createdAt": 2022-03-19T07:51:25.560Z,
+              "name": "Entity 2",
+              "type": "TitleOnly",
+              "valid": true,
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-2",
+      "hasNextPage": false,
+      "hasPreviousPage": true,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 1,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {
+    "after": "cursor-1",
+  },
+  "query": {
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > Refresh > 1 - initial 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-1",
+        "node": OkResult {
+          "value": {
+            "fields": {
+              "title": "Title 1",
+            },
+            "id": "1",
+            "info": {
+              "authKey": "",
+              "createdAt": 2022-03-19T07:51:25.560Z,
+              "name": "Entity 1",
+              "type": "TitleOnly",
+              "valid": true,
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-1",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-1",
+    },
+  },
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > Refresh > 2 - loaded 1`] = `
+{
+  "connection": {
+    "edges": [
+      {
+        "cursor": "cursor-2",
+        "node": OkResult {
+          "value": {
+            "fields": {
+              "title": "Title 2",
+            },
+            "id": "2",
+            "info": {
+              "authKey": "",
+              "createdAt": 2022-03-19T07:51:25.560Z,
+              "name": "Entity 2",
+              "type": "TitleOnly",
+              "valid": true,
+            },
+          },
+        },
+      },
+    ],
+    "pageInfo": {
+      "endCursor": "cursor-2",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "cursor-2",
+    },
+  },
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {
+    "first": 1,
+  },
+  "query": {
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": 2,
+}
+`;
+
+exports[`ContentListState scenarios > Sampling -> change seed -> loading -> loaded > 1 - initial 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 1,
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    ],
+    "seed": 123,
+    "totalCount": 2,
+  },
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": undefined,
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": {
+    "count": 1,
+    "seed": 123,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`ContentListState scenarios > Sampling -> change seed -> loading -> loaded > 2 - loading 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 1",
+        },
+        "id": "1",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 1",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 1,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "sample",
+  "mode": "full",
+  "paging": undefined,
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": {
+    "count": 1,
+    "seed": 456,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`ContentListState scenarios > Sampling -> change seed -> loading -> loaded > 3 - loaded 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": [
+    OkResult {
+      "value": {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    },
+  ],
+  "entitiesScrollToTopSignal": 2,
+  "entitySamples": {
+    "items": [
+      {
+        "fields": {
+          "title": "Title 2",
+        },
+        "id": "2",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-03-19T07:51:25.560Z,
+          "name": "Entity 2",
+          "type": "TitleOnly",
+          "valid": true,
+        },
+      },
+    ],
+    "seed": 456,
+    "totalCount": 2,
+  },
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": undefined,
+  "query": {},
+  "requestedCount": 1,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": null,
+  "sampling": {
+    "count": 1,
+    "seed": 456,
+  },
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`initializeContentListState > restrict linksFrom 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": null,
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {},
+  "query": {
+    "linksFrom": {
+      "id": "123",
+    },
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 25,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": {
+    "id": "123",
+  },
+  "restrictLinksTo": null,
+  "sampling": undefined,
+  "text": "",
+  "totalCount": null,
+}
+`;
+
+exports[`initializeContentListState > restrict linksTo 1`] = `
+{
+  "connection": undefined,
+  "connectionError": undefined,
+  "entities": null,
+  "entitiesScrollToTopSignal": 0,
+  "entitySamples": undefined,
+  "entitySamplesError": undefined,
+  "loadingState": "",
+  "mode": "full",
+  "paging": {},
+  "query": {
+    "linksTo": {
+      "id": "123",
+    },
+    "order": "updatedAt",
+    "reverse": true,
+  },
+  "requestedCount": 25,
+  "restrictEntityTypes": [],
+  "restrictLinksFrom": null,
+  "restrictLinksTo": {
+    "id": "123",
+  },
+  "sampling": undefined,
+  "text": "",
+  "totalCount": null,
+}
+`;

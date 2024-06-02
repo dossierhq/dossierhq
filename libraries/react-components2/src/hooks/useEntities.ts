@@ -36,7 +36,7 @@ export function useEntities<TEntity extends Entity<string, object> = Entity>(
     [client],
   );
   const { data, error } = useSWR<FetcherData<TEntity>, FetcherError, FetcherKey | null>(
-    query ? CACHE_KEYS.entities(query, paging) : null,
+    query ? CACHE_KEYS.getEntities(query, paging) : null,
     fetcher,
   );
 
