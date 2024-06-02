@@ -20,7 +20,7 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && heft build --clean && postcss src/globals.css -o lib/main.css && npm run test",
+    "build": "npm run prettier:check && heft build --clean && postcss src/globals.css -o lib/main.css && npm run eslint:check && npm run test",
     "build:watch": "heft build-watch",
     "clean": "heft clean",
     "eslint:check": "eslint .",
@@ -39,6 +39,7 @@
     "directory": "libraries/react-components2"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "~1.0.7",
     "@radix-ui/react-slot": "~1.0.2",
     "class-variance-authority": "~0.7.0",
     "clsx": "~2.1.1",
