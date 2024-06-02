@@ -73,7 +73,7 @@
     "autoprefixer": "~10.4.19",
     "eslint": "~8.57.0",
     "eslint-plugin-react": "~7.34.2",
-    "eslint-plugin-react-compiler": "~0.0.0-experimental-c8b3f72-20240517",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-51a85ea-20240601",
     "eslint-plugin-react-hooks": "~4.6.2",
     "eslint-plugin-storybook": "~0.8.0",
     "postcss": "~8.4.38",
