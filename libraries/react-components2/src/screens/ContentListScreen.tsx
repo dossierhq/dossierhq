@@ -2,7 +2,9 @@
 
 import { useReducer } from 'react';
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
+import { EntityCard } from '../components/EntityCard.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
+import { cn } from '../lib/utils.js';
 import {
   initializeContentListState,
   reduceContentListState,
@@ -44,13 +46,13 @@ function EntityList({
   searchEntityState: ContentListState;
 }) {
   return (
-    <ul className={className}>
+    <div className={cn(className, 'flex flex-col gap-2')}>
       {searchEntityState.entities?.map((item) => {
         if (item.isError()) {
           return null;
         }
-        return <li key={item.value.id}>{item.value.info.name}</li>;
+        return <EntityCard key={item.value.id} info={item.value.info} />;
       })}
-    </ul>
+    </div>
   );
 }
