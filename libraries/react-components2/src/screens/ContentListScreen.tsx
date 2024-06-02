@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '../components/ui/button.js';
 import { useEntities } from '../hooks/useEntities';
 
 export function ContentListScreen() {
@@ -9,12 +10,13 @@ export function ContentListScreen() {
     return <div>Loading...</div>;
   }
   if (connection === null) {
-    return <div>No matches</div>;
+    return <Button>No matches</Button>;
   }
 
   return (
     <div>
       <h1>Content List</h1>
+      <Button>Hello</Button>
       <ul>
         {connection.edges.map((edge) => {
           if (edge.node.isError())
