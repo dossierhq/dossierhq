@@ -38,7 +38,7 @@
     "prismjs": "~1.29.0",
     "react": "~18.3.1",
     "react-dom": "~18.3.1",
-    "tslib": "~2.6.2"
+    "tslib": "~2.6.3"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
@@ -46,13 +46,13 @@
     "@types/better-sqlite3": "~7.6.10",
     "@types/react": "18.3.3",
     "@types/react-dom": "~18.3.0",
-    "@typescript-eslint/eslint-plugin": "~7.11.0",
+    "@typescript-eslint/eslint-plugin": "~7.12.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.2.3",
-    "prettier": "3.2.5",
+    "prettier": "3.3.1",
     "schema-dts": "~1.1.2",
-    "tsx": "~4.11.0",
+    "tsx": "~4.12.0",
     "typescript": "~5.4.5",
     "vitest": "~1.6.0"
   }

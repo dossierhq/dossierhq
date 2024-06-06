@@ -33,7 +33,7 @@
     "directory": "libraries/integration-test"
   },
   "dependencies": {
-    "tslib": "~2.6.2",
+    "tslib": "~2.6.3",
     "uuid": "~9.0.1"
   },
   "peerDependencies": {
@@ -47,11 +47,11 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.17",
-    "@types/node": "~20.12.13",
+    "@rushstack/heft": "0.66.18",
+    "@types/node": "~20.14.2",
     "@types/uuid": "~9.0.7",
     "eslint": "~8.57.0",
-    "prettier": "3.2.5",
+    "prettier": "3.3.1",
     "typescript": "~5.4.5"
   }
 }

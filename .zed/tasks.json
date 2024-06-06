@@ -2,5 +2,9 @@
   {
     "label": "rush build",
     "command": "rush build"
+  },
+  {
+    "label": "rush upgrade-interactive",
+    "command": "rush upgrade-interactive"
   }
 ]

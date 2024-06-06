@@ -25,7 +25,7 @@
     "@dossierhq/server": "workspace:*",
     "cloudinary": "~2.2.0",
     "dotenv": "~16.4.5",
-    "tslib": "~2.6.2",
+    "tslib": "~2.6.3",
     "uuid": "~9.0.1"
   },
   "devDependencies": {
@@ -33,12 +33,12 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
-    "@rushstack/heft": "0.66.17",
+    "@rushstack/heft": "0.66.18",
     "@types/better-sqlite3": "~7.6.10",
     "@types/uuid": "~9.0.7",
     "better-sqlite3": "~11.0.0",
     "eslint": "~8.57.0",
-    "prettier": "3.2.5",
+    "prettier": "3.3.1",
     "typescript": "~5.4.5"
   }
 }
