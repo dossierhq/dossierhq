@@ -1,12 +1,9 @@
 import { useReducer } from 'react';
 import { ContentEditorLoader } from '../components/ContentEditorLoader';
-import { EntityCard } from '../components/EntityCard';
+import { EntityEditor } from '../components/EntityEditor';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext';
 import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext';
-import {
-  reduceEntityEditorState,
-  type EntityEditorDraftState,
-} from '../reducers/EntityEditorReducer';
+import { reduceEntityEditorState } from '../reducers/EntityEditorReducer';
 import { initializeEditorEntityStateFromUrlQuery } from '../reducers/EntityEditorUrlSynchronizer';
 
 export function ContentEditorScreen({
@@ -40,8 +37,4 @@ export function ContentEditorScreen({
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
   );
-}
-
-function EntityEditor({ draftState }: { draftState: EntityEditorDraftState }) {
-  return draftState.entity ? <EntityCard info={draftState.entity?.info} /> : 'new entity';
 }

@@ -1,0 +1,28 @@
+import type { FieldEditorState } from '../reducers/EntityEditorReducer.js';
+import { FieldEditor } from './FieldEditor.js';
+
+interface Props {
+  field: FieldEditorState;
+  onValueChange: (value: unknown) => void;
+}
+
+export function EntityFieldEditor({ field, onValueChange }: Props) {
+  return (
+    // <Card2>
+    //   <Card2.Header noIcons>
+    //     <Card2.HeaderTitle>{field.fieldSpec.name}</Card2.HeaderTitle>
+    //     {field.fieldSpec.adminOnly ? <Card2.HeaderTag>Admin only</Card2.HeaderTag> : null}
+    //     {field.fieldSpec.required ? <Card2.HeaderTag>Required</Card2.HeaderTag> : null}
+    //   </Card2.Header>
+    //   <Card2.Content style={{ maxHeight: '80vh' }}>
+    <FieldEditor
+      fieldSpec={field.fieldSpec}
+      adminOnly={field.adminOnly}
+      value={field.value}
+      onChange={onValueChange}
+      validationIssues={field.validationIssues}
+    />
+    //   </Card2.Content>
+    // </Card2>
+  );
+}
