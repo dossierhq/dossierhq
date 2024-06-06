@@ -9,11 +9,11 @@ import { initializeEditorEntityStateFromUrlQuery } from '../reducers/EntityEdito
 export function ContentEditorScreen({
   urlSearchParams,
 }: {
-  urlSearchParams: Readonly<URLSearchParams> | undefined;
+  urlSearchParams?: Readonly<URLSearchParams> | null;
 }) {
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
-    urlSearchParams,
+    urlSearchParams ?? null,
     initializeEditorEntityStateFromUrlQuery,
   );
 

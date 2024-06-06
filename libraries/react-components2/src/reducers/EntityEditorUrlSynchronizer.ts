@@ -7,7 +7,7 @@ import {
 } from './EntityEditorReducer.js';
 
 export function initializeEditorEntityStateFromUrlQuery(
-  urlSearchParams: Readonly<URLSearchParams> | undefined,
+  urlSearchParams: Readonly<URLSearchParams> | null,
 ): EntityEditorState {
   const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
   return initializeEntityEditorState({ actions });
@@ -47,9 +47,7 @@ export function useSynchronizeUrlQueryAndEntityEditorState(
   // useDebugLogChangedValues('useSynchronizeUrlQueryAndEntityEditorState', { query, paging, sampling, sample, urlQuery });
 }
 
-function urlQueryToSearchEntityStateActions(
-  urlSearchParams: Readonly<URLSearchParams> | undefined,
-) {
+function urlQueryToSearchEntityStateActions(urlSearchParams: Readonly<URLSearchParams> | null) {
   const actions = [];
   if (urlSearchParams) {
     for (const newTypeId of urlSearchParams.getAll('new')) {
