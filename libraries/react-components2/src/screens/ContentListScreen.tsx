@@ -11,7 +11,7 @@ import {
   type ContentListState,
 } from '../reducers/ContentListReducer.js';
 
-export function ContentListScreen() {
+export function ContentListScreen({ onOpenEntity }: { onOpenEntity: (id: string) => void }) {
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceContentListState,
     { mode: 'full' },
@@ -26,6 +26,7 @@ export function ContentListScreen() {
           <EntityList
             className="container h-full w-full p-2"
             searchEntityState={searchEntityState}
+            onItemClick={onOpenEntity}
           />
         </div>
         <ContentListPagingButtons
@@ -41,9 +42,11 @@ export function ContentListScreen() {
 function EntityList({
   className,
   searchEntityState,
+  onItemClick,
 }: {
   className?: string;
   searchEntityState: ContentListState;
+  onItemClick?: (id: string) => void;
 }) {
   return (
     <div className={cn(className, 'flex flex-col gap-2')}>
@@ -51,7 +54,13 @@ function EntityList({
         if (item.isError()) {
           return null;
         }
-        return <EntityCard key={item.value.id} info={item.value.info} />;
+        return (
+          <EntityCard
+            key={item.value.id}
+            info={item.value.info}
+            onClick={onItemClick ? () => onItemClick(item.value.id) : undefined}
+          />
+        );
       })}
     </div>
   );

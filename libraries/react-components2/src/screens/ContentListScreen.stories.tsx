@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
+import type { ComponentProps } from 'react';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';
 import { ContentListScreen } from './ContentListScreen.js';
 
-function Wrapper() {
+function Wrapper(props: ComponentProps<typeof ContentListScreen>) {
   return (
     <StoryDossierProvider>
-      <ContentListScreen />
+      <ContentListScreen {...props} />
     </StoryDossierProvider>
   );
 }
@@ -13,6 +15,7 @@ function Wrapper() {
 const meta = {
   title: 'Screens/ContentListScreen',
   component: Wrapper,
+  args: { onOpenEntity: fn() },
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Wrapper>;
 export default meta;
