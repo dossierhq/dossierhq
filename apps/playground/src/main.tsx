@@ -1,4 +1,5 @@
 import '@dossierhq/react-components/main.css';
+import '@dossierhq/react-components2/main.css';
 import '@dossierhq/design/main.css';
 import '@dossierhq/leaflet/icons.css';
 import '@dossierhq/leaflet/main.css';

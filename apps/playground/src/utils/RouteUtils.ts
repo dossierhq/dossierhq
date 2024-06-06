@@ -9,6 +9,10 @@ export const ROUTE = {
     route: 'content',
     url: (serverName: string) => `/${serverName}/content`,
   },
+  contentList2: {
+    route: 'content2',
+    url: (serverName: string) => `/${serverName}/content2`,
+  },
   changelogList: {
     route: 'changelog',
     url: (serverName: string) => `/${serverName}/changelog`,
@@ -33,6 +37,20 @@ export const ROUTE = {
         }
       }
       return `/${serverName}/content/edit?${p.toString()}`;
+    },
+  },
+  contentEditor2: {
+    route: 'content2/edit',
+    url: (serverName: string, selectors: ({ newType: string; id: string } | { id: string })[]) => {
+      const p = new URLSearchParams();
+      for (const selector of selectors) {
+        if ('newType' in selector) {
+          p.set('new', `${selector.newType}:${selector.id}`);
+        } else {
+          p.set('id', selector.id);
+        }
+      }
+      return `/${serverName}/content2/edit?${p.toString()}`;
     },
   },
   publishedContentList: {

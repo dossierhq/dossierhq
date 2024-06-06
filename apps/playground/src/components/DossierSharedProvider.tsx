@@ -15,6 +15,10 @@ import {
   PublishedDossierProvider,
   useCachingDossierMiddleware,
 } from '@dossierhq/react-components';
+import {
+  DossierProvider as DossierProvider2,
+  useCachingDossierMiddleware as useCachingDossierMiddleware2,
+} from '@dossierhq/react-components2';
 import { type CreateSessionPayload, type Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useSWRConfig, type Cache } from 'swr';
@@ -45,6 +49,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   sessionResultRef.current = sessionResult;
 
   const cachingAdminMiddleware = useCachingDossierMiddleware();
+  const cachingMiddleware2 = useCachingDossierMiddleware2();
 
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
@@ -101,8 +106,16 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       ),
       authKeys: DISPLAY_AUTH_KEYS,
     };
-    return { adminArgs, publishedArgs };
-  }, [server, cachingAdminMiddleware]);
+
+    const dossier2Args = {
+      client: server.createDossierClient(
+        () => Promise.resolve(sessionResultRef.current),
+        [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>, cachingMiddleware2],
+      ),
+    };
+
+    return { adminArgs, publishedArgs, dossier2Args };
+  }, [server, cachingAdminMiddleware, cachingMiddleware2]);
 
   if (!args || sessionResult === uninitializedSession) {
     return null;
@@ -110,7 +123,9 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   return (
     <LoginContext.Provider value={login}>
       <DossierProvider {...args.adminArgs}>
-        <PublishedDossierProvider {...args.publishedArgs}>{children}</PublishedDossierProvider>
+        <PublishedDossierProvider {...args.publishedArgs}>
+          <DossierProvider2 {...args.dossier2Args}>{children}</DossierProvider2>
+        </PublishedDossierProvider>
       </DossierProvider>
     </LoginContext.Provider>
   );

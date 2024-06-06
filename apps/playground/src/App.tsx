@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ChangelogListRoute } from './routes/ChangelogListRoute.js';
+import { ContentEditor2Route } from './routes/ContentEditor2Route.js';
 import { ContentEditorRoute } from './routes/ContentEditorRoute.js';
+import { ContentList2Route } from './routes/ContentList2Route.js';
 import { ContentListRoute } from './routes/ContentListRoute.js';
 import { GraphiQLRoute } from './routes/GraphiQLRoute.js';
 import { IndexRoute } from './routes/IndexRoute.js';
@@ -25,7 +27,9 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <ServerRoute /> },
           { path: ROUTE.contentList.route, element: <ContentListRoute /> },
+          { path: ROUTE.contentList2.route, element: <ContentList2Route /> },
           { path: ROUTE.contentEditor.route, element: <ContentEditorRoute /> },
+          { path: ROUTE.contentEditor2.route, element: <ContentEditor2Route /> },
           { path: ROUTE.login.route, element: <LoginRoute /> },
           { path: ROUTE.publishedContentList.route, element: <PublishedContentListRoute /> },
           { path: ROUTE.publishedContentDisplay.route, element: <PublishedContentDisplayRoute /> },

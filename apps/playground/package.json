@@ -20,6 +20,7 @@
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
     "graphiql": "~3.2.2",
