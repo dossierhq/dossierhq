@@ -1,9 +1,12 @@
 import {
+  isStringSingleField,
   type FieldSpecification,
   type PublishValidationIssue,
   type SaveValidationIssue,
+  type StringFieldSpecification,
 } from '@dossierhq/core';
 import { type ReactNode } from 'react';
+import { StringFieldEditor } from './StringFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
@@ -18,10 +21,7 @@ export interface FieldEditorProps<
 }
 
 export function FieldEditor(props: FieldEditorProps) {
-  const {
-    fieldSpec,
-    // value
-  } = props;
+  const { fieldSpec, value } = props;
 
   /*TODO
   const { adapter } = useContext(DossierContext);
@@ -31,8 +31,8 @@ export function FieldEditor(props: FieldEditorProps) {
   }
   */
 
-  /* TODO
   let editor: JSX.Element;
+  /* TODO
   if (isBooleanSingleField(fieldSpec, value)) {
     editor = (
       <BooleanFieldEditor
@@ -123,7 +123,9 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={RichTextFieldEditor}
       />
     );
-  } else if (isStringSingleField(fieldSpec, value)) {
+  } else
+  */
+  if (isStringSingleField(fieldSpec, value)) {
     editor = (
       <StringFieldEditor
         {...props}
@@ -131,6 +133,7 @@ export function FieldEditor(props: FieldEditorProps) {
         value={value}
       />
     );
+    /*
   } else if (isStringListField(fieldSpec, value)) {
     editor = (
       <FieldListWrapper
@@ -159,9 +162,9 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={ComponentFieldEditor}
       />
     );
-  } else {
   */
-  const editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
-  // }
+  } else {
+    editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
+  }
   return editor;
 }

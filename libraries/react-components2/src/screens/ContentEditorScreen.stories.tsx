@@ -27,7 +27,7 @@ export const Normal: Story = {};
 
 export const OneOpen: Story = {
   args: {
-    urlSearchParams: urlFor(['1344d8d8-079d-5175-b9af-400c2e4c786a']),
+    urlSearchParams: urlFor(['a94c056e-7ae4-563c-a8d7-dd7ac41f7929']),
   },
 };
 
