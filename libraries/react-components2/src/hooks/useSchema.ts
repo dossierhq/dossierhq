@@ -9,7 +9,7 @@ import {
 import { useCallback, useContext } from 'react';
 import useSWR from 'swr';
 import { DossierContext } from '../contexts/DossierContext.js';
-import { CACHE_KEYS } from '../lib/CacheUtils.js';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
 
 type FetcherKey = string;
 type FetcherData = SchemaWithMigrations;

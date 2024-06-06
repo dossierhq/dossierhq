@@ -1,17 +1,23 @@
 import { useReducer } from 'react';
+import { ContentEditorLoader } from '../components/ContentEditorLoader';
+import { EntityCard } from '../components/EntityCard';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext';
 import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext';
 import {
-  initializeEntityEditorState,
   reduceEntityEditorState,
   type EntityEditorDraftState,
 } from '../reducers/EntityEditorReducer';
+import { initializeEditorEntityStateFromUrlQuery } from '../reducers/EntityEditorUrlSynchronizer';
 
-export function ContentEditorScreen() {
+export function ContentEditorScreen({
+  urlSearchParams,
+}: {
+  urlSearchParams: Readonly<URLSearchParams> | undefined;
+}) {
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
-    undefined,
-    initializeEntityEditorState, //TODO initialize with urlSearchParams
+    urlSearchParams,
+    initializeEditorEntityStateFromUrlQuery,
   );
 
   const { drafts } = entityEditorState;
@@ -19,6 +25,7 @@ export function ContentEditorScreen() {
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEntityEditorState}>
       <EntityEditorStateContext.Provider value={entityEditorState}>
+        <ContentEditorLoader />
         <div className="flex h-dvh w-dvw overflow-hidden">
           <main className="flex flex-grow flex-col">
             <div className="overflow-auto">
@@ -36,5 +43,5 @@ export function ContentEditorScreen() {
 }
 
 function EntityEditor({ draftState }: { draftState: EntityEditorDraftState }) {
-  return draftState.id;
+  return draftState.entity ? <EntityCard info={draftState.entity?.info} /> : 'new entity';
 }

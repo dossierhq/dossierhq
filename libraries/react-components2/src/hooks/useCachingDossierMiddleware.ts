@@ -17,7 +17,7 @@ import {
   updateCacheEntityInfo,
   updateCacheSchemas,
   type ScopedMutator,
-} from '../lib/CacheUtils.js';
+} from '../utils/CacheUtils.js';
 
 type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
 
