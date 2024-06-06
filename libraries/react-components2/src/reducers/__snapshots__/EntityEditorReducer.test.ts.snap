@@ -1,0 +1,5281 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AddDraftAction > add already open Foo 1`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "foo": null,
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`AddDraftAction > add new Foo 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`DeleteDraftAction > add/delete Foo 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 2`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 3`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 4`] = `
+{
+  "fields": {
+    "title": null,
+  },
+  "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "info": {
+    "authKey": "",
+    "name": "Foo name",
+    "type": "Foo",
+  },
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 5`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 6`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "title": null,
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 2`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 3`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 4`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 5`] = `
+{
+  "fields": {
+    "title": "Foo title",
+  },
+  "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "info": {
+    "authKey": "",
+    "name": "Foo name",
+    "type": "Foo",
+  },
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 6`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 7`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo title#123456",
+        "nameIsLinkedToField": true,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo title#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 2`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "New title",
+          },
+        ],
+        "name": "New title",
+        "nameIsLinkedToField": true,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo title#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 3`] = `
+{
+  "fields": {
+    "title": "New title",
+  },
+  "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "info": {
+    "name": "New title",
+    "type": "Foo",
+  },
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 4`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "New title",
+          },
+        ],
+        "name": "New title",
+        "nameIsLinkedToField": true,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo title#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 5`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "New title",
+            "status": "",
+            "validationIssues": [],
+            "value": "New title",
+          },
+        ],
+        "name": "New title#123456",
+        "nameIsLinkedToField": true,
+      },
+      "entity": {
+        "fields": {
+          "title": "New title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "New title#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Existing title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Existing title",
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 2`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Existing title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Existing title",
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "title": "Existing title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "published",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": true,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing, get schema 1`] = `
+{
+  "activeEntityEditorScrollSignal": 0,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 0,
+  "drafts": [],
+  "pendingSchemaActions": [
+    AddDraftAction {
+      "selector": {
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      },
+    },
+  ],
+  "schema": null,
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
+{
+  "activeEntityEditorScrollSignal": 0,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 0,
+  "drafts": [
+    {
+      "draft": null,
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo's title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Foo's title",
+          },
+        ],
+        "name": "Foo's title#123456",
+        "nameIsLinkedToField": true,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo's title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo's title#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open first entity, open second entity > 1 Initial 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+            "normalizedValue": {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+            "status": "",
+            "validationIssues": [],
+            "value": {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "foo": {
+            "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+          },
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "entityTypes": [],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "type": "Reference",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open first entity, open second entity > 2 After AddDraft 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+            "normalizedValue": {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+            "status": "",
+            "validationIssues": [],
+            "value": {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "foo": {
+            "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+          },
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+    {
+      "draft": null,
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "entityTypes": [],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "type": "Reference",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > open first entity, open second entity > 3 After UpdateEntity 1`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+            "normalizedValue": {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+            "status": "",
+            "validationIssues": [],
+            "value": {
+              "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+            },
+          },
+        ],
+        "name": "Foo name#123456",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "foo": {
+            "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+          },
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo name#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo 2",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "foo": null,
+        },
+        "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo 2",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "entityTypes": [],
+                "list": false,
+                "name": "foo",
+                "required": false,
+                "type": "Reference",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [],
+              "list": false,
+              "name": "foo",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial loaded entity with oldName 1`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "Foo",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "oldName": "value",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": SchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "newName",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 2,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "renameField",
+              "entityType": "Foo",
+              "field": "oldName",
+              "newName": "newName",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 2,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading entity with correct field name 1`] = `
+{
+  "activeEntityEditorScrollSignal": 2,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 2,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "value",
+            "status": "",
+            "validationIssues": [],
+            "value": "value",
+          },
+        ],
+        "name": "Foo",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "newName": "value",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-05-01T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": SchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "newName",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 2,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "newName",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "renameField",
+              "entityType": "Foo",
+              "field": "oldName",
+              "newName": "newName",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 2,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 1 Initial 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": true,
+            "fieldSpec": {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [
+          {
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "required",
+                "required": true,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "RequiredString",
+          },
+        ],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "componentTypes": [],
+                "list": false,
+                "name": "normal",
+                "required": false,
+                "type": "Component",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "required",
+              "required": true,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "RequiredString",
+        },
+      ],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 2 Setting adminOnly field to empty component 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": true,
+            "fieldSpec": {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            "normalizedValue": {
+              "required": null,
+              "type": "RequiredString",
+            },
+            "status": "changed",
+            "validationIssues": [],
+            "value": {
+              "required": null,
+              "type": "RequiredString",
+            },
+          },
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [
+          {
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "required",
+                "required": true,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "RequiredString",
+          },
+        ],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "componentTypes": [],
+                "list": false,
+                "name": "normal",
+                "required": false,
+                "type": "Component",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "required",
+              "required": true,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "RequiredString",
+        },
+      ],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 3 Setting normal field to empty component 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": true,
+            "fieldSpec": {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            "normalizedValue": {
+              "required": null,
+              "type": "RequiredString",
+            },
+            "status": "changed",
+            "validationIssues": [],
+            "value": {
+              "required": null,
+              "type": "RequiredString",
+            },
+          },
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+            "normalizedValue": {
+              "required": null,
+              "type": "RequiredString",
+            },
+            "status": "changed",
+            "validationIssues": [
+              {
+                "message": "Required field is empty",
+                "path": [
+                  "required",
+                ],
+                "type": "publish",
+              },
+            ],
+            "value": {
+              "required": null,
+              "type": "RequiredString",
+            },
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": true,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [
+          {
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "required",
+                "required": true,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "RequiredString",
+          },
+        ],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "componentTypes": [],
+                "list": false,
+                "name": "normal",
+                "required": false,
+                "type": "Component",
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "required",
+              "required": true,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "RequiredString",
+        },
+      ],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": true,
+              "componentTypes": [],
+              "list": false,
+              "name": "adminOnly",
+              "required": false,
+              "type": "Component",
+            },
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "list": false,
+              "name": "normal",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`SetActiveEntityAction > add two entities, set active to first 1`] = `
+{
+  "activeEntityEditorScrollSignal": 3,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 3,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Bar",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "9516465b-935a-4cc7-8b97-ccaca81bbe9a",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Bar",
+          "nameField": null,
+          "publishable": true,
+        },
+        {
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`SetAuthKeyAction > set authKey of new draft 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "subject",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`SetFieldAction > set invalid value (matchPattern) on field of new draft 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": "foo",
+              "multiline": false,
+              "name": "string",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": "foo",
+              "multiline": false,
+              "name": "string",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "not-foo",
+            "status": "changed",
+            "validationIssues": [
+              {
+                "message": "Value does not match pattern foo",
+                "path": [],
+                "type": "save",
+              },
+            ],
+            "value": "not-foo",
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": true,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {
+      "foo": /\\^foo\\$/,
+    },
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": "foo",
+                "multiline": false,
+                "name": "string",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [
+          {
+            "name": "foo",
+            "pattern": "^foo$",
+          },
+        ],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": "foo",
+              "multiline": false,
+              "name": "string",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [
+        {
+          "name": "foo",
+          "pattern": "^foo$",
+        },
+      ],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`SetFieldAction > set title field of new draft 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "New title",
+          },
+        ],
+        "name": "New title",
+        "nameIsLinkedToField": true,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`SetFieldAction > set title field of new draft after name has been set 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "New title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "New title",
+          },
+        ],
+        "name": "New name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`SetNameAction > clearing name of new draft links to name field 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "",
+        "nameIsLinkedToField": true,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`SetNameAction > set name of new draft 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": null,
+            "status": "",
+            "validationIssues": [],
+            "value": null,
+          },
+        ],
+        "name": "New name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "changed",
+}
+`;
+
+exports[`UpdateEntityAction > add draft, update entity 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo title#123456",
+        "nameIsLinkedToField": true,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Foo title#123456",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`UpdateEntityAction > add draft, update entity 2`] = `
+{
+  "fields": {
+    "title": "Foo title",
+  },
+  "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "info": {
+    "type": "Foo",
+  },
+}
+`;
+
+exports[`UpdateEntityAction > add draft, update entity with unlinked name 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Different name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+        "info": {
+          "authKey": "",
+          "createdAt": 2022-04-30T07:51:25.560Z,
+          "name": "Different name",
+          "status": "draft",
+          "type": "Foo",
+          "updatedAt": 2022-04-30T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      },
+      "entityWillBeUpdatedDueToUpsert": false,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "status": "",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
+{
+  "activeEntityEditorScrollSignal": 0,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 0,
+  "drafts": [],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 0,
+    },
+  },
+  "status": "",
+}
+`;

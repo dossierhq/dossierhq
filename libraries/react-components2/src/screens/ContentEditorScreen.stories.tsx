@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';
-import { ContentListScreen } from './ContentListScreen.js';
+import { ContentEditorScreen } from './ContentEditorScreen.js';
 
 function Wrapper() {
   return (
     <StoryDossierProvider>
-      <ContentListScreen />
+      <ContentEditorScreen />
     </StoryDossierProvider>
   );
 }
 
 const meta = {
-  title: 'Screens/ContentListScreen',
+  title: 'Screens/ContentEditorScreen',
   component: Wrapper,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Wrapper>;
