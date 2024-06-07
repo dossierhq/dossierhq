@@ -31,7 +31,7 @@
     "@radix-ui/react-slot": "~1.0.2",
     "@react-aria/overlays": "~3.22.0",
     "@rushstack/eslint-patch": "~1.10.3",
-    "@sentry/astro": "~8.7.0",
+    "@sentry/astro": "~8.8.0",
     "@spotlightjs/astro": "~1.0.20",
     "@typescript-eslint/eslint-plugin": "~7.12.0",
     "@typescript-eslint/parser": "~7.12.0",
