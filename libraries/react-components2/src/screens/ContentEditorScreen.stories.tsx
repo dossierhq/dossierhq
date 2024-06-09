@@ -18,6 +18,7 @@ const meta = {
   args: {
     urlSearchParams: new URLSearchParams(),
     onUrlSearchParamsChange: fn(),
+    onEditorHasChangesChange: fn(),
   },
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Wrapper>;

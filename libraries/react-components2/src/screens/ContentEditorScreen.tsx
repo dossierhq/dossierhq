@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { ContentEditorLoader } from '../components/ContentEditorLoader';
 import { EntityEditor } from '../components/EntityEditor';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext';
@@ -12,9 +12,11 @@ import {
 export function ContentEditorScreen({
   urlSearchParams,
   onUrlSearchParamsChange,
+  onEditorHasChangesChange,
 }: {
   urlSearchParams?: Readonly<URLSearchParams> | null;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
+  onEditorHasChangesChange: (hasChanges: boolean) => void;
 }) {
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
@@ -22,6 +24,10 @@ export function ContentEditorScreen({
     initializeEditorEntityStateFromUrlQuery,
   );
   useEntityEditorCallOnUrlSearchQueryParamChange(entityEditorState, onUrlSearchParamsChange);
+
+  useEffect(() => {
+    onEditorHasChangesChange(entityEditorState.status === 'changed');
+  }, [entityEditorState.status, onEditorHasChangesChange]);
 
   const { drafts } = entityEditorState;
 

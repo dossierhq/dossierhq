@@ -5,7 +5,7 @@ import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
 
 export function ContentEditor2Route() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [hasChanges, _setHasChanges] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
 
   const handleSearchParamsChange = useCallback(
     (searchParams: URLSearchParams) => setSearchParams(searchParams, { replace: true }),
@@ -20,7 +20,7 @@ export function ContentEditor2Route() {
         // header={<NavBar current="content" />}
         urlSearchParams={searchParams}
         onUrlSearchParamsChange={handleSearchParamsChange}
-        // onEditorHasChangesChange={setHasChanges}
+        onEditorHasChangesChange={setHasChanges}
       />
     </ScreenChangesContext.Provider>
   );

@@ -2,7 +2,7 @@
 
 import { ContentEditorScreen } from '@dossierhq/react-components2';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useCallback } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 
 export default function Page() {
   return (
@@ -15,6 +15,7 @@ export default function Page() {
 function Inner() {
   const router = useRouter();
   const urlSearchParams = useSearchParams();
+  const [_hasChanges, setHasChanges] = useState(false);
 
   const handleUrlSearchParamsChange = useCallback(
     (urlSearchParams: URLSearchParams) => {
@@ -27,6 +28,7 @@ function Inner() {
     <ContentEditorScreen
       urlSearchParams={urlSearchParams}
       onUrlSearchParamsChange={handleUrlSearchParamsChange}
+      onEditorHasChangesChange={setHasChanges}
     />
   );
 }
