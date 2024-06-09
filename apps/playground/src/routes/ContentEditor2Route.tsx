@@ -1,4 +1,4 @@
-import { ContentEditorScreen } from '@dossierhq/react-components2';
+import { ContentEditorScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
@@ -13,15 +13,17 @@ export function ContentEditor2Route() {
   );
 
   return (
-    <ScreenChangesContext.Provider
-      value={hasChanges ? 'Changes will be lost, are you sure you want to leave the page?' : null}
-    >
-      <ContentEditorScreen
-        // header={<NavBar current="content" />}
-        urlSearchParams={searchParams}
-        onUrlSearchParamsChange={handleSearchParamsChange}
-        onEditorHasChangesChange={setHasChanges}
-      />
-    </ScreenChangesContext.Provider>
+    <ThemeProvider>
+      <ScreenChangesContext.Provider
+        value={hasChanges ? 'Changes will be lost, are you sure you want to leave the page?' : null}
+      >
+        <ContentEditorScreen
+          // header={<NavBar current="content" />}
+          urlSearchParams={searchParams}
+          onUrlSearchParamsChange={handleSearchParamsChange}
+          onEditorHasChangesChange={setHasChanges}
+        />
+      </ScreenChangesContext.Provider>
+    </ThemeProvider>
   );
 }

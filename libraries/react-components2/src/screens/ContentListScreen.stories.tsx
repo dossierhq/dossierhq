@@ -1,14 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import type { ComponentProps } from 'react';
+import { ThemeProvider } from '../components/ThemeProvider.js';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';
 import { ContentListScreen } from './ContentListScreen.js';
 
 function Wrapper(props: ComponentProps<typeof ContentListScreen>) {
   return (
-    <StoryDossierProvider>
-      <ContentListScreen {...props} />
-    </StoryDossierProvider>
+    <ThemeProvider>
+      <StoryDossierProvider>
+        <ContentListScreen {...props} />
+      </StoryDossierProvider>
+    </ThemeProvider>
   );
 }
 

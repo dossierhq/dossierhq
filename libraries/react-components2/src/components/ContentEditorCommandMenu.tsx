@@ -1,3 +1,5 @@
+import type { Schema } from '@dossierhq/core';
+import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { useContext, type Dispatch } from 'react';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.js';
@@ -11,7 +13,11 @@ import {
   type CommandMenuAction,
   type CommandMenuState,
 } from '../reducers/CommandReducer.js';
-import { EntityEditorActions } from '../reducers/EntityEditorReducer.js';
+import {
+  EntityEditorActions,
+  type EntityEditorStateAction,
+} from '../reducers/EntityEditorReducer.js';
+import { useTheme } from './ThemeProvider.js';
 import {
   CommandDialog,
   CommandEmpty,
@@ -30,7 +36,6 @@ export function ContentEditorCommandMenu({
   state: Readonly<CommandMenuState<ContentEditorCommandMenuPage>>;
   dispatch: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
 }) {
-  // const { setTheme } = useTheme();
   const { schema } = useContext(EntityEditorStateContext);
   const dispatchEntityEditor = useContext(EntityEditorDispatchContext);
 
@@ -70,58 +75,79 @@ export function ContentEditorCommandMenu({
                 Create entity...
               </CommandItem>
             </CommandGroup>
-            {/* <CommandGroup heading="Theme">
-              <CommandItem
-                onSelect={() => {
-                  setTheme('light');
-                  dispatch(new CommandMenuState_CloseAction());
-                }}
-              >
-                <Sun className="mr-2 h-4 w-4" />
-                <span>Light</span>
-              </CommandItem>
-              <CommandItem
-                onSelect={() => {
-                  setTheme('dark');
-                  dispatch(new CommandMenuState_CloseAction());
-                }}
-              >
-                <Moon className="mr-2 h-4 w-4" />
-                <span>Dark</span>
-              </CommandItem>
-              <CommandItem
-                onSelect={() => {
-                  setTheme('system');
-                  dispatch(new CommandMenuState_CloseAction());
-                }}
-              >
-                <Laptop className="mr-2 h-4 w-4" />
-                <span>System</span>
-              </CommandItem>
-            </CommandGroup> */}
+            <GenericCommands dispatch={dispatch} />
           </>
         )}
         {state.currentPage?.id === 'create' && (
-          <CommandGroup heading="Create entity">
-            {schema?.spec.entityTypes.map((entityType) => (
-              <CommandItem
-                key={entityType.name}
-                onSelect={() => {
-                  dispatchEntityEditor(
-                    new EntityEditorActions.AddDraft({
-                      id: crypto.randomUUID(),
-                      newType: entityType.name,
-                    }),
-                  );
-                  dispatch(new CommandMenuState_ToggleShowAction(false));
-                }}
-              >
-                {entityType.name}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CreateEntityCommandGroup {...{ schema, dispatchEntityEditor, dispatch }} />
         )}
       </CommandList>
     </CommandDialog>
+  );
+}
+
+function CreateEntityCommandGroup({
+  schema,
+  dispatchEntityEditor,
+  dispatch,
+}: {
+  schema: Schema | null;
+  dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
+  dispatch: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+}) {
+  return (
+    <CommandGroup heading="Create entity">
+      {schema?.spec.entityTypes.map((entityType) => (
+        <CommandItem
+          key={entityType.name}
+          onSelect={() => {
+            dispatchEntityEditor(
+              new EntityEditorActions.AddDraft({
+                id: crypto.randomUUID(),
+                newType: entityType.name,
+              }),
+            );
+            dispatch(new CommandMenuState_ToggleShowAction(false));
+          }}
+        >
+          {entityType.name}
+        </CommandItem>
+      ))}
+    </CommandGroup>
+  );
+}
+
+function GenericCommands<TPage>({ dispatch }: { dispatch: Dispatch<CommandMenuAction<TPage>> }) {
+  const { setTheme } = useTheme();
+  return (
+    <CommandGroup heading="Theme">
+      <CommandItem
+        onSelect={() => {
+          setTheme('light');
+          dispatch(new CommandMenuState_CloseAction());
+        }}
+      >
+        <SunIcon className="mr-2 h-4 w-4" />
+        <span>Light</span>
+      </CommandItem>
+      <CommandItem
+        onSelect={() => {
+          setTheme('dark');
+          dispatch(new CommandMenuState_CloseAction());
+        }}
+      >
+        <MoonIcon className="mr-2 h-4 w-4" />
+        <span>Dark</span>
+      </CommandItem>
+      <CommandItem
+        onSelect={() => {
+          setTheme('system');
+          dispatch(new CommandMenuState_CloseAction());
+        }}
+      >
+        <LaptopIcon className="mr-2 h-4 w-4" />
+        <span>System</span>
+      </CommandItem>
+    </CommandGroup>
   );
 }

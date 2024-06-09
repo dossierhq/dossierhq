@@ -1,4 +1,4 @@
-import { ContentListScreen } from '@dossierhq/react-components2';
+import { ContentListScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useCallback } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { assertIsDefined } from '../utils/AssertUtils.js';
@@ -26,12 +26,14 @@ export function ContentList2Route() {
   );
 
   return (
-    <ContentListScreen
-      // header={<NavBar current="content" />}
-      urlSearchParams={searchParams}
-      onUrlSearchParamsChange={handleSearchParamsChange}
-      // onCreateEntity={handleCreateEntity}
-      onOpenEntity={handleEntityOpen}
-    />
+    <ThemeProvider>
+      <ContentListScreen
+        // header={<NavBar current="content" />}
+        urlSearchParams={searchParams}
+        onUrlSearchParamsChange={handleSearchParamsChange}
+        // onCreateEntity={handleCreateEntity}
+        onOpenEntity={handleEntityOpen}
+      />
+    </ThemeProvider>
   );
 }
