@@ -7,9 +7,13 @@ import { ROUTE } from '../utils/RouteUtils.js';
 export function ContentList2Route() {
   const navigate = useNavigate();
   const { serverName } = useParams<{ serverName: string }>();
-  // const [searchParams, setSearchParams] = useSearchParams();
-
   assertIsDefined(serverName);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSearchParamsChange = useCallback(
+    (searchParams: URLSearchParams) => setSearchParams(searchParams, { replace: true }),
+    [setSearchParams],
+  );
 
   // const handleCreateEntity = useCallback(
   //   (type: string) =>
@@ -24,8 +28,8 @@ export function ContentList2Route() {
   return (
     <ContentListScreen
       // header={<NavBar current="content" />}
-      // urlSearchParams={searchParams}
-      // onUrlSearchParamsChange={setSearchParams}
+      urlSearchParams={searchParams}
+      onUrlSearchParamsChange={handleSearchParamsChange}
       // onCreateEntity={handleCreateEntity}
       onOpenEntity={handleEntityOpen}
     />
