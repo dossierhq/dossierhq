@@ -106,14 +106,15 @@ export function ContentEditorCommandMenu({
             {schema?.spec.entityTypes.map((entityType) => (
               <CommandItem
                 key={entityType.name}
-                onSelect={() =>
+                onSelect={() => {
                   dispatchEntityEditor(
                     new EntityEditorActions.AddDraft({
                       id: crypto.randomUUID(),
                       newType: entityType.name,
                     }),
-                  )
-                }
+                  );
+                  dispatch(new CommandMenuState_ToggleShowAction(false));
+                }}
               >
                 {entityType.name}
               </CommandItem>
