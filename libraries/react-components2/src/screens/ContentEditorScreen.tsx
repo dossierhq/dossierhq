@@ -1,13 +1,18 @@
 import { useEffect, useReducer } from 'react';
-import { ContentEditorLoader } from '../components/ContentEditorLoader';
-import { EntityEditor } from '../components/EntityEditor';
-import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext';
-import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext';
-import { reduceEntityEditorState } from '../reducers/EntityEditorReducer';
+import {
+  ContentEditorCommandMenu,
+  type ContentEditorCommandMenuPage,
+} from '../components/ContentEditorCommandMenu.js';
+import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
+import { EntityEditor } from '../components/EntityEditor.js';
+import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
+import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.js';
+import { initializeCommandMenuState, reduceCommandMenuState } from '../reducers/CommandReducer.js';
+import { reduceEntityEditorState } from '../reducers/EntityEditorReducer.js';
 import {
   initializeEditorEntityStateFromUrlQuery,
   useEntityEditorCallOnUrlSearchQueryParamChange,
-} from '../reducers/EntityEditorUrlSynchronizer';
+} from '../reducers/EntityEditorUrlSynchronizer.js';
 
 export function ContentEditorScreen({
   urlSearchParams,
@@ -25,6 +30,12 @@ export function ContentEditorScreen({
   );
   useEntityEditorCallOnUrlSearchQueryParamChange(entityEditorState, onUrlSearchParamsChange);
 
+  const [commandMenuState, dispatchCommandMenu] = useReducer(
+    reduceCommandMenuState<ContentEditorCommandMenuPage>,
+    { id: 'root' },
+    initializeCommandMenuState<ContentEditorCommandMenuPage>,
+  );
+
   useEffect(() => {
     onEditorHasChangesChange(entityEditorState.status === 'changed');
   }, [entityEditorState.status, onEditorHasChangesChange]);
@@ -35,6 +46,7 @@ export function ContentEditorScreen({
     <EntityEditorDispatchContext.Provider value={dispatchEntityEditorState}>
       <EntityEditorStateContext.Provider value={entityEditorState}>
         <ContentEditorLoader />
+        <ContentEditorCommandMenu state={commandMenuState} dispatch={dispatchCommandMenu} />
         <div className="flex h-dvh w-dvw overflow-hidden">
           <main className="flex flex-grow flex-col">
             <div className="overflow-auto">

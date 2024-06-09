@@ -6,5 +6,9 @@
   {
     "label": "rush upgrade-interactive",
     "command": "rush upgrade-interactive"
+  },
+  {
+    "label": "Update dependencies in all-dependencies",
+    "command": "npm --prefix tools/all-dependencies run build && rush update"
   }
 ]
