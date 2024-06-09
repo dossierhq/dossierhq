@@ -5,18 +5,27 @@ import { ContentListPagingButtons } from '../components/ContentListPagingButtons
 import { EntityCard } from '../components/EntityCard.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
 import { cn } from '../lib/utils.js';
+import { reduceContentListState, type ContentListState } from '../reducers/ContentListReducer.js';
 import {
-  initializeContentListState,
-  reduceContentListState,
-  type ContentListState,
-} from '../reducers/ContentListReducer.js';
+  initializeContentListStateFromUrlQuery,
+  useContentListCallOnUrlSearchQueryParamChange,
+} from '../reducers/ContentListUrlSynchronizer.js';
 
-export function ContentListScreen({ onOpenEntity }: { onOpenEntity: (id: string) => void }) {
+export function ContentListScreen({
+  urlSearchParams,
+  onOpenEntity,
+  onUrlSearchParamsChange,
+}: {
+  urlSearchParams?: Readonly<URLSearchParams> | null;
+  onOpenEntity: (id: string) => void;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
+}) {
   const [searchEntityState, dispatchSearchEntityState] = useReducer(
     reduceContentListState,
-    { mode: 'full' },
-    initializeContentListState, //TODO initialize from urlSearchParams instead
+    { mode: 'full', urlSearchParams },
+    initializeContentListStateFromUrlQuery,
   );
+  useContentListCallOnUrlSearchQueryParamChange('full', searchEntityState, onUrlSearchParamsChange);
   useLoadContentList(searchEntityState, dispatchSearchEntityState);
 
   return (

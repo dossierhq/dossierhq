@@ -1,9 +1,8 @@
-import { useEffect, type Dispatch } from 'react';
+import { useEffect, useState } from 'react';
 import {
   EntityEditorActions,
   initializeEntityEditorState,
   type EntityEditorState,
-  type EntityEditorStateAction,
 } from './EntityEditorReducer.js';
 
 export function initializeEditorEntityStateFromUrlQuery(
@@ -13,38 +12,31 @@ export function initializeEditorEntityStateFromUrlQuery(
   return initializeEntityEditorState({ actions });
 }
 
-export function useSynchronizeUrlQueryAndEntityEditorState(
-  urlSearchParams: Readonly<URLSearchParams> | undefined,
-  onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
+export function useEntityEditorCallOnUrlSearchQueryParamChange(
   entityEditorState: EntityEditorState,
-  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
+  onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
 ) {
-  const { schema, drafts } = entityEditorState;
-  const schemaIsLoaded = !!schema;
+  const [params, setParams] = useState<URLSearchParams | null>(null);
 
+  const { drafts } = entityEditorState;
   useEffect(() => {
-    if (!schemaIsLoaded || !onUrlSearchParamsChange || !urlSearchParams) return;
     const result = new URLSearchParams();
     for (const id of drafts.map((it) => it.id)) {
       result.append('id', id);
     }
-    if (urlSearchParams.toString() !== result.toString()) {
-      onUrlSearchParamsChange(result);
-    }
-  }, [schemaIsLoaded, drafts, onUrlSearchParamsChange, urlSearchParams]);
+    setParams((oldParams) => {
+      if (oldParams && oldParams.toString() === result.toString()) {
+        return oldParams;
+      }
+      return result;
+    });
+  }, [drafts]);
 
   useEffect(() => {
-    if (!schemaIsLoaded || !urlSearchParams) return;
-    const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
-    actions.forEach((action) => dispatchEntityEditorState(action));
-    if (actions.length > 0) {
-      dispatchEntityEditorState(
-        new EntityEditorActions.SetActiveEntity(actions[0].selector.id, false, false),
-      );
+    if (onUrlSearchParamsChange && params) {
+      onUrlSearchParamsChange(params);
     }
-  }, [schemaIsLoaded, dispatchEntityEditorState, urlSearchParams]);
-
-  // useDebugLogChangedValues('useSynchronizeUrlQueryAndEntityEditorState', { query, paging, sampling, sample, urlQuery });
+  }, [onUrlSearchParamsChange, params]);
 }
 
 function urlQueryToSearchEntityStateActions(urlSearchParams: Readonly<URLSearchParams> | null) {

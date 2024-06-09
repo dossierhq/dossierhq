@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import type { ComponentProps } from 'react';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';
 import { ContentEditorScreen } from './ContentEditorScreen.js';
@@ -16,6 +17,7 @@ const meta = {
   component: Wrapper,
   args: {
     urlSearchParams: new URLSearchParams(),
+    onUrlSearchParamsChange: fn(),
   },
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Wrapper>;

@@ -4,18 +4,24 @@ import { EntityEditor } from '../components/EntityEditor';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext';
 import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext';
 import { reduceEntityEditorState } from '../reducers/EntityEditorReducer';
-import { initializeEditorEntityStateFromUrlQuery } from '../reducers/EntityEditorUrlSynchronizer';
+import {
+  initializeEditorEntityStateFromUrlQuery,
+  useEntityEditorCallOnUrlSearchQueryParamChange,
+} from '../reducers/EntityEditorUrlSynchronizer';
 
 export function ContentEditorScreen({
   urlSearchParams,
+  onUrlSearchParamsChange,
 }: {
   urlSearchParams?: Readonly<URLSearchParams> | null;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
 }) {
   const [entityEditorState, dispatchEntityEditorState] = useReducer(
     reduceEntityEditorState,
     urlSearchParams ?? null,
     initializeEditorEntityStateFromUrlQuery,
   );
+  useEntityEditorCallOnUrlSearchQueryParamChange(entityEditorState, onUrlSearchParamsChange);
 
   const { drafts } = entityEditorState;
 

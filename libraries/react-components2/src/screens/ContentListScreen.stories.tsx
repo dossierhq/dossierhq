@@ -15,7 +15,7 @@ function Wrapper(props: ComponentProps<typeof ContentListScreen>) {
 const meta = {
   title: 'Screens/ContentListScreen',
   component: Wrapper,
-  args: { onOpenEntity: fn() },
+  args: { onOpenEntity: fn(), onUrlSearchParamsChange: fn() },
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Wrapper>;
 export default meta;
