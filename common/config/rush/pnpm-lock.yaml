@@ -316,8 +316,8 @@ importers:
         specifier: ~8.9.2
         version: 8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
       '@spotlightjs/astro':
-        specifier: ~1.0.20
-        version: 1.0.20(@sentry/astro@8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)))(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
+        specifier: ~2.0.0
+        version: 2.0.0(@sentry/astro@8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)))(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
       astro:
         specifier: ~4.10.0
         version: 4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)
@@ -2149,8 +2149,8 @@ importers:
         specifier: ~8.9.2
         version: 8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
       '@spotlightjs/astro':
-        specifier: ~1.0.20
-        version: 1.0.20(@sentry/astro@8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)))(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
+        specifier: ~2.0.0
+        version: 2.0.0(@sentry/astro@8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)))(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
       '@typescript-eslint/eslint-plugin':
         specifier: ~7.13.0
         version: 7.13.0(@typescript-eslint/parser@7.13.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -5977,14 +5977,14 @@ packages:
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
 
-  '@spotlightjs/astro@1.0.20':
-    resolution: {integrity: sha512-3j4GqodpdaNPcsP2KbQylg2dF2nlRLe1z8UH/TgWx1MZJM16V2WP474nHUeP54kVmBaFwaJmF9OCkCMBqfKYfw==}
+  '@spotlightjs/astro@2.0.0':
+    resolution: {integrity: sha512-dM7yC99seOWgTK24YmzYKFCCK51Jc2pQBsBIeKqSk/B5XqfWLqCymQlOkm6PVeFcmjIMR5uYuoW4wUTUlwhrvQ==}
     peerDependencies:
       '@sentry/astro': '>=7.84.0'
       astro: '>=3.4.0 || >=4.0.0-beta'
 
-  '@spotlightjs/overlay@1.8.3':
-    resolution: {integrity: sha512-6b5tBspOOEd6Gj0l4xgdUwR4Ydn2dNX9lqJ/WSzIu1lqkI96w2lqf69IGzEo6jb9aPtfTtu8nx5K2SD6JXH2SA==}
+  '@spotlightjs/overlay@2.0.0':
+    resolution: {integrity: sha512-6P2Kwko9NPxat+Z5/QxWHr9+PLZtbXb/Bi2bdFmKc1yWTBVTJcbvntU9Xy+Qd8L4tFFFfqSORiXg7L4Bk6z4Jw==}
 
   '@spotlightjs/sidecar@1.4.0':
     resolution: {integrity: sha512-onj/phrNtDI8a79zc8jfxJ5BITQk5klO4xSoQXxiYeQWTZcegVeO8VftOVfWPBnMY/axnh+ltxJm/cHaV5SP6Q==}
@@ -16775,15 +16775,15 @@ snapshots:
 
   '@sindresorhus/merge-streams@2.3.0': {}
 
-  '@spotlightjs/astro@1.0.20(@sentry/astro@8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)))(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))':
+  '@spotlightjs/astro@2.0.0(@sentry/astro@8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)))(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))':
     dependencies:
       '@sentry/astro': 8.9.2(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
-      '@spotlightjs/overlay': 1.8.3
+      '@spotlightjs/overlay': 2.0.0
       '@spotlightjs/sidecar': 1.4.0
       astro: 4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)
       source-map: 0.7.4
 
-  '@spotlightjs/overlay@1.8.3': {}
+  '@spotlightjs/overlay@2.0.0': {}
 
   '@spotlightjs/sidecar@1.4.0': {}
 
