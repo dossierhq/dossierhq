@@ -33,7 +33,7 @@
     "@react-aria/overlays": "~3.22.0",
     "@rushstack/eslint-patch": "~1.10.3",
     "@sentry/astro": "~8.9.2",
-    "@spotlightjs/astro": "~1.0.20",
+    "@spotlightjs/astro": "~2.0.0",
     "@typescript-eslint/eslint-plugin": "~7.13.0",
     "@typescript-eslint/parser": "~7.13.0",
     "astro": "~4.10.0",
