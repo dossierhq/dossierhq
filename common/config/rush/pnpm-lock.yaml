@@ -286,8 +286,8 @@ importers:
         specifier: ~0.7.0
         version: 0.7.0(prettier@3.3.1)(typescript@5.4.5)
       '@astrojs/node':
-        specifier: ~8.2.5
-        version: 8.2.5(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
+        specifier: ~8.3.0
+        version: 8.3.0(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
       '@astrojs/react':
         specifier: ~3.5.0
         version: 3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.12(@types/node@20.14.2)(sass@1.77.4))
@@ -2086,8 +2086,8 @@ importers:
         specifier: ~0.7.0
         version: 0.7.0(prettier@3.3.1)(typescript@5.4.5)
       '@astrojs/node':
-        specifier: ~8.2.5
-        version: 8.2.5(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
+        specifier: ~8.3.0
+        version: 8.3.0(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))
       '@astrojs/react':
         specifier: ~3.5.0
         version: 3.5.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.12(@types/node@20.14.2)(sass@1.77.4))
@@ -2593,8 +2593,8 @@ packages:
   '@astrojs/markdown-remark@5.1.0':
     resolution: {integrity: sha512-S6Z3K2hOB7MfjeDoHsotnP/q2UsnEDB8NlNAaCjMDsGBZfTUbWxyLW3CaphEWw08f6KLZi2ibK9yC3BaMhh2NQ==}
 
-  '@astrojs/node@8.2.5':
-    resolution: {integrity: sha512-IdVD4dBNyg+ScmCATZ0FM7vNLAHq0TSdiJ3LpR4jcWIUhpN1ps5Jg+9CfzMaLmCCe/SJUZejK5EnzqUJdnGYyg==}
+  '@astrojs/node@8.3.0':
+    resolution: {integrity: sha512-XskynbRTrpY9nqzc4NDrulNWoynRvVO+8UmEKjw6KZABUYUmjZqN88sa/RXtXl0CPI2sPZ5Gzi3WXH8y2PKd5Q==}
     peerDependencies:
       astro: ^4.2.0
 
@@ -12396,7 +12396,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@8.2.5(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))':
+  '@astrojs/node@8.3.0(astro@4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5))':
     dependencies:
       astro: 4.10.0(@types/node@20.14.2)(sass@1.77.4)(typescript@5.4.5)
       send: 0.18.0
