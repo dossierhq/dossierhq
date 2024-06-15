@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import { useContext, useState } from 'react';
 import { EntityFieldEditor } from '../components/EntityFieldEditor.js';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
 import {
@@ -6,6 +7,8 @@ import {
   type EntityEditorDraftState,
 } from '../reducers/EntityEditorReducer.js';
 import { EntityCard } from './EntityCard.js';
+import { Button } from './ui/button.js';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.js';
 
 interface Props {
   draftState: EntityEditorDraftState;
@@ -14,6 +17,7 @@ interface Props {
 export function EntityEditor({ draftState }: Props) {
   // const { client } = useContext(DossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  const [showFields, setShowFields] = useState(true);
   // const [submitLoading, setSubmitLoading] = useState(false);
 
   /* TODO
@@ -61,7 +65,11 @@ export function EntityEditor({ draftState }: Props) {
   return (
     <>
       {draftState.entity ? <EntityCard info={draftState.entity.info} /> : null}
-      {/* <Field>
+      <Collapsible open={showFields} onOpenChange={setShowFields}>
+        <EntityEditorToolbar showFields={showFields} />
+        <CollapsibleContent className="CollapsibleContent">
+          <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">
+            {/* <Field>
         <Field.Label>Name</Field.Label>
         <Field.Control>
           <Input value={draftState.draft.name} onChange={handleNameChange} />
@@ -72,7 +80,7 @@ export function EntityEditor({ draftState }: Props) {
           ) : null}
         </Field.Control>
       </Field> */}
-      {/* {!draftState.entity && draftState.draft.entitySpec.authKeyPattern ? (
+            {/* {!draftState.entity && draftState.draft.entitySpec.authKeyPattern ? (
         <Field>
           <Field.Label>Authorization key</Field.Label>
           <Field.Control>
@@ -87,7 +95,7 @@ export function EntityEditor({ draftState }: Props) {
           ) : null}
         </Field>
       ) : null} */}
-      {/* <Row gap={2} justifyContent="center">
+            {/* <Row gap={2} justifyContent="center">
         <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
           {isNewEntity ? 'Create' : 'Save'}
         </Button>
@@ -102,18 +110,38 @@ export function EntityEditor({ draftState }: Props) {
           entitySpec={draftState.draft.entitySpec}
         />
       </Row> */}
-      {draftState.draft.fields.map((field) => (
-        <EntityFieldEditor
-          key={field.fieldSpec.name}
-          field={field}
-          onValueChange={(value) =>
-            dispatchEntityEditorState(
-              new EntityEditorActions.SetField(draftState.id, field.fieldSpec.name, value),
-            )
-          }
-        />
-      ))}
+            {draftState.draft.fields.map((field) => (
+              <EntityFieldEditor
+                key={field.fieldSpec.name}
+                field={field}
+                onValueChange={(value) =>
+                  dispatchEntityEditorState(
+                    new EntityEditorActions.SetField(draftState.id, field.fieldSpec.name, value),
+                  )
+                }
+              />
+            ))}
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     </>
+  );
+}
+
+function EntityEditorToolbar({ showFields }: { showFields: boolean }) {
+  return (
+    <div className="mb-2 flex gap-2">
+      <div className="flex w-0 flex-grow gap-2 overflow-auto"></div>
+      <CollapsibleTrigger asChild>
+        <Button variant="ghost">
+          {showFields ? (
+            <ChevronUpIcon className="pointer-events-none h-4 w-4" />
+          ) : (
+            <ChevronDownIcon className="pointer-events-none h-4 w-4" />
+          )}
+        </Button>
+      </CollapsibleTrigger>
+    </div>
   );
 }
 
