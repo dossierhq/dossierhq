@@ -66,7 +66,11 @@ function EntityList({
         return (
           <EntityCard
             key={item.value.id}
-            info={item.value.info}
+            name={item.value.info.name}
+            status={'status' in item.value.info ? item.value.info.status : undefined}
+            type={item.value.info.type}
+            updatedAt={'updatedAt' in item.value.info ? item.value.info.updatedAt : undefined}
+            valid={item.value.info.valid}
             onClick={onItemClick ? () => onItemClick(item.value.id) : undefined}
           />
         );

@@ -40,7 +40,19 @@ export function ContentEditorScreen({
     onEditorHasChangesChange(entityEditorState.status === 'changed');
   }, [entityEditorState.status, onEditorHasChangesChange]);
 
-  const { drafts } = entityEditorState;
+  const { drafts, activeEntityEditorScrollSignal, activeEntityId } = entityEditorState;
+
+  const entityEditorAndSignal = activeEntityId
+    ? `${activeEntityId} ${activeEntityEditorScrollSignal}`
+    : null;
+  useEffect(() => {
+    if (!entityEditorAndSignal) return;
+    const [entityId, _signal] = entityEditorAndSignal.split(' ');
+    const element = document.getElementById(`entity-${entityId}-editor`);
+    if (element) {
+      element.scrollIntoView();
+    }
+  }, [entityEditorAndSignal]);
 
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEntityEditorState}>
@@ -52,7 +64,7 @@ export function ContentEditorScreen({
             <div className="overflow-auto">
               <div className="container flex flex-col gap-2 p-2">
                 {drafts.map((it) => (
-                  <EntityEditor key={it.id} draftState={it} />
+                  <EntityEditor key={it.id} id={`entity-${it.id}-editor`} draftState={it} />
                 ))}
               </div>
             </div>

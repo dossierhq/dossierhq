@@ -11,10 +11,11 @@ import { Button } from './ui/button.js';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.js';
 
 interface Props {
+  id?: string;
   draftState: EntityEditorDraftState;
 }
 
-export function EntityEditor({ draftState }: Props) {
+export function EntityEditor({ id, draftState }: Props) {
   // const { client } = useContext(DossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const [showFields, setShowFields] = useState(true);
@@ -62,11 +63,19 @@ export function EntityEditor({ draftState }: Props) {
   //   !submitLoading && (isNewEntity || draftState.status === 'changed') && !draftState.hasSaveErrors;
   // const isPublishable = !draftState.hasPublishErrors;
 
+  // the id we scroll to can't be sticky, so we need to add a placeholder
   return (
     <>
-      {draftState.entity ? (
-        <EntityCard info={draftState.entity.info} changed={draftState.status === 'changed'} />
-      ) : null}
+      {id ? <span id={id} /> : null}
+      <EntityCard
+        authKey={draftState.draft.authKey}
+        changed={draftState.status === 'changed'}
+        name={draftState.draft.name}
+        status={draftState.entity?.info.status}
+        type={draftState.draft.entitySpec.name}
+        updatedAt={draftState.entity?.info.updatedAt}
+        valid={draftState.entity?.info.valid}
+      />
       <Collapsible open={showFields} onOpenChange={setShowFields}>
         <EntityEditorToolbar showFields={showFields} />
         <CollapsibleContent className="CollapsibleContent">
