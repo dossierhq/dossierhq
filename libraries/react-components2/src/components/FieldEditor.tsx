@@ -12,6 +12,7 @@ export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
   TValue = unknown,
 > {
+  id: string;
   fieldSpec: TFieldSpec;
   adminOnly: boolean;
   value: TValue | null;

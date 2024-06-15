@@ -7,6 +7,7 @@ type Props = FieldEditorProps<StringFieldSpecification, string>;
 
 export function StringFieldEditor(props: Props) {
   const {
+    id,
     // fieldSpec,
     value,
     // validationIssues, dragHandle,
@@ -25,7 +26,7 @@ export function StringFieldEditor(props: Props) {
   //   return <StringValueFieldEditor {...props} />;
   // }
   //
-  return <Input value={value ?? ''} onChange={handleChange} />;
+  return <Input id={id} value={value ?? ''} onChange={handleChange} />;
 
   /*TODO
 return (

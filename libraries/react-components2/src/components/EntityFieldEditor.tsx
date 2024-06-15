@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { FieldEditorState } from '../reducers/EntityEditorReducer.js';
 import { FieldEditor } from './FieldEditor.js';
 import { Badge } from './ui/badge.js';
@@ -9,11 +10,14 @@ interface Props {
 }
 
 export function EntityFieldEditor({ field, onValueChange }: Props) {
+  const id = useId();
   //TODO no need to show admin only and required tags when the type is admin only
   return (
     <>
       <div className="mb-1 flex items-baseline gap-2 py-2">
-        <Label className="w-0 grow">{field.fieldSpec.name}</Label>
+        <Label className="w-0 grow" htmlFor={id}>
+          {field.fieldSpec.name}
+        </Label>
         {field.fieldSpec.adminOnly && <Badge variant="outline">Admin only</Badge>}
         {!field.fieldSpec.adminOnly && field.fieldSpec.required && (
           <Badge variant="outline">Required</Badge>
@@ -27,6 +31,7 @@ export function EntityFieldEditor({ field, onValueChange }: Props) {
       </div>
       <div className="max-h-[80vh]">
         <FieldEditor
+          id={id}
           fieldSpec={field.fieldSpec}
           adminOnly={field.adminOnly}
           value={field.value}
