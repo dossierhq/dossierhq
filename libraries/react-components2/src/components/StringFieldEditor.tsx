@@ -2,13 +2,14 @@ import type { StringFieldSpecification } from '@dossierhq/core';
 import { useCallback, type ChangeEvent } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { Input } from './ui/input.js';
+import { Textarea } from './ui/textarea.js';
 
 type Props = FieldEditorProps<StringFieldSpecification, string>;
 
 export function StringFieldEditor(props: Props) {
   const {
     id,
-    // fieldSpec,
+    fieldSpec,
     value,
     // validationIssues, dragHandle,
     onChange,
@@ -26,7 +27,11 @@ export function StringFieldEditor(props: Props) {
   //   return <StringValueFieldEditor {...props} />;
   // }
   //
-  return <Input id={id} value={value ?? ''} onChange={handleChange} />;
+  return fieldSpec.multiline ? (
+    <Textarea id={id} value={value ?? ''} onChange={handleChange} />
+  ) : (
+    <Input id={id} value={value ?? ''} onChange={handleChange} />
+  );
 
   /*TODO
 return (

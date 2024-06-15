@@ -2,7 +2,11 @@
   "name": "@dossierhq/react-components2",
   "version": "0.0.1",
   "description": "React components for creating a headless CMS using Dossier.",
-  "keywords": ["dossier", "cms", "react"],
+  "keywords": [
+    "dossier",
+    "cms",
+    "react"
+  ],
   "homepage": "https://dossierhq.dev",
   "author": {
     "name": "Jonas Bengtsson"

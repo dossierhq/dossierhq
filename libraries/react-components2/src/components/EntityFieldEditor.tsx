@@ -11,7 +11,7 @@ interface Props {
 
 export function EntityFieldEditor({ field, onValueChange }: Props) {
   const id = useId();
-  //TODO no need to show admin only and required tags when the type is admin only
+  //TODO no need to show admin only and required tags when the "type"/context is admin only
   return (
     <>
       <div className="mb-1 flex items-baseline gap-2 py-2">
@@ -29,7 +29,7 @@ export function EntityFieldEditor({ field, onValueChange }: Props) {
           />
         )}
       </div>
-      <div className="max-h-[80vh]">
+      <div className="flex max-h-[80vh] flex-col">
         <FieldEditor
           id={id}
           fieldSpec={field.fieldSpec}
