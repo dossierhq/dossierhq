@@ -64,7 +64,9 @@ export function EntityEditor({ draftState }: Props) {
 
   return (
     <>
-      {draftState.entity ? <EntityCard info={draftState.entity.info} /> : null}
+      {draftState.entity ? (
+        <EntityCard info={draftState.entity.info} changed={draftState.status === 'changed'} />
+      ) : null}
       <Collapsible open={showFields} onOpenChange={setShowFields}>
         <EntityEditorToolbar showFields={showFields} />
         <CollapsibleContent className="CollapsibleContent">
@@ -135,9 +137,9 @@ function EntityEditorToolbar({ showFields }: { showFields: boolean }) {
       <CollapsibleTrigger asChild>
         <Button variant="ghost">
           {showFields ? (
-            <ChevronUpIcon className="pointer-events-none h-4 w-4" />
+            <ChevronUpIcon className="h-4 w-4" />
           ) : (
-            <ChevronDownIcon className="pointer-events-none h-4 w-4" />
+            <ChevronDownIcon className="h-4 w-4" />
           )}
         </Button>
       </CollapsibleTrigger>

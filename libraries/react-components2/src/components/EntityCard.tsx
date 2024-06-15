@@ -74,7 +74,10 @@ function Content({ info, changed }: { info: EntityInfo | PublishedEntityInfo; ch
             </span>
           )}
           {changed && (
-            <span className="inline-block h-3 w-3 self-center rounded-full bg-foreground" />
+            <span
+              className="inline-block h-3 w-3 self-center rounded-full bg-foreground"
+              title="Changed"
+            />
           )}
         </div>
       </div>

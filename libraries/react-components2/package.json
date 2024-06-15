@@ -2,11 +2,7 @@
   "name": "@dossierhq/react-components2",
   "version": "0.0.1",
   "description": "React components for creating a headless CMS using Dossier.",
-  "keywords": [
-    "dossier",
-    "cms",
-    "react"
-  ],
+  "keywords": ["dossier", "cms", "react"],
   "homepage": "https://dossierhq.dev",
   "author": {
     "name": "Jonas Bengtsson"
@@ -41,6 +37,7 @@
   "dependencies": {
     "@radix-ui/react-collapsible": "~1.0.3",
     "@radix-ui/react-dialog": "~1.0.5",
+    "@radix-ui/react-label": "~2.0.2",
     "@radix-ui/react-popover": "~1.0.7",
     "@radix-ui/react-slot": "~1.0.2",
     "class-variance-authority": "~0.7.0",
