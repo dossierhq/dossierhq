@@ -60,7 +60,7 @@ export function ContentEditorScreen({
     const [entityId, _signal] = entityEditorAndSignal.split(' ');
     const element = document.getElementById(`entity-${entityId}-editor`);
     if (element) {
-      element.scrollIntoView();
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [entityEditorAndSignal]);
 
