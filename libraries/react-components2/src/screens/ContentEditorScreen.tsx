@@ -73,6 +73,7 @@ export function ContentEditorScreen({
         <div className="flex h-dvh w-dvw overflow-hidden">
           {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
           <main className="flex flex-grow flex-col">
+            {!md && <Toolbar dispatchCommandMenu={dispatchCommandMenu} />}
             <div className="overflow-auto">
               <div className="container flex flex-col gap-2 p-2">
                 {drafts.map((it) => (
@@ -149,4 +150,34 @@ function OpenEntityList() {
       </button>
     );
   });
+}
+
+function Toolbar({
+  dispatchCommandMenu,
+}: {
+  dispatchCommandMenu: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+}) {
+  return (
+    <div className="flex items-center border-b">
+      <div className="container flex gap-2 p-2">
+        <Button
+          variant="outline"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
+        >
+          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
+        </Button>
+        <div className="flex flex-grow justify-end gap-2">
+          {/* <Button variant="secondary">Open</Button> */}
+          <Button
+            variant="secondary"
+            onClick={() =>
+              dispatchCommandMenu(new CommandMenuState_OpenPageAction({ id: 'create' }))
+            }
+          >
+            Create
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 }
