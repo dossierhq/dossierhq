@@ -1,6 +1,7 @@
 import type { StringFieldSpecification } from '@dossierhq/core';
 import { useCallback, type ChangeEvent } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
+import { Button } from './ui/button.js';
 import { Input } from './ui/input.js';
 import { Textarea } from './ui/textarea.js';
 
@@ -96,34 +97,32 @@ return (
   </HoverRevealContainer>
 );
 }
-
+*/
 export function AddStringListItemButton({
-fieldSpec,
-onAddItem,
+  fieldSpec: _,
+  onAddItem,
 }: {
-fieldSpec: StringFieldSpecification;
-onAddItem: (value: string | null) => void;
+  fieldSpec: StringFieldSpecification;
+  onAddItem: (value: string | null) => void;
 }) {
-if (fieldSpec.values.length > 0) {
+  /*
+  if (fieldSpec.values.length > 0) {
+    return (
+      <ButtonDropdown
+        className={toFlexItemClassName({ alignSelf: 'flex-start' })}
+        items={fieldSpec.values.map((item) => ({ id: item.value }))}
+        renderItem={(item) => item.id}
+        onItemClick={(item) => onAddItem(item.id)}
+      >
+        Add
+      </ButtonDropdown>
+    );
+  }
+  */
+
   return (
-    <ButtonDropdown
-      className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-      items={fieldSpec.values.map((item) => ({ id: item.value }))}
-      renderItem={(item) => item.id}
-      onItemClick={(item) => onAddItem(item.id)}
-    >
+    <Button className="self-start" onClick={() => onAddItem(null)}>
       Add
-    </ButtonDropdown>
+    </Button>
   );
 }
-
-return (
-  <Button
-    className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-    onClick={() => onAddItem(null)}
-  >
-    Add
-  </Button>
-);
-}
-*/

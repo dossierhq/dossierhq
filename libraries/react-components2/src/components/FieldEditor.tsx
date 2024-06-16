@@ -1,4 +1,5 @@
 import {
+  isStringListField,
   isStringSingleField,
   type FieldSpecification,
   type PublishValidationIssue,
@@ -6,13 +7,14 @@ import {
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import { type ReactNode } from 'react';
-import { StringFieldEditor } from './StringFieldEditor.js';
+import { FieldListWrapper } from './FieldListWrapper.js';
+import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
 
 export interface FieldEditorProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
   TValue = unknown,
 > {
-  id: string;
+  id?: string;
   fieldSpec: TFieldSpec;
   adminOnly: boolean;
   value: TValue | null;
@@ -134,7 +136,6 @@ export function FieldEditor(props: FieldEditorProps) {
         value={value}
       />
     );
-    /*
   } else if (isStringListField(fieldSpec, value)) {
     editor = (
       <FieldListWrapper
@@ -145,6 +146,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={StringFieldEditor}
       />
     );
+    /*
   } else if (isComponentSingleField(fieldSpec, value)) {
     editor = (
       <ComponentFieldEditor
