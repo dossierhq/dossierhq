@@ -4,6 +4,7 @@ import type { FieldEditorProps } from './FieldEditor.js';
 import { Button } from './ui/button.js';
 import { Input } from './ui/input.js';
 import { Textarea } from './ui/textarea.js';
+import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 
 type Props = FieldEditorProps<StringFieldSpecification, string>;
 
@@ -12,7 +13,8 @@ export function StringFieldEditor(props: Props) {
     id,
     fieldSpec,
     value,
-    // validationIssues, dragHandle,
+    validationIssues,
+    // dragHandle,
     onChange,
   } = props;
 
@@ -28,10 +30,15 @@ export function StringFieldEditor(props: Props) {
   //   return <StringValueFieldEditor {...props} />;
   // }
   //
-  return fieldSpec.multiline ? (
-    <Textarea id={id} value={value ?? ''} onChange={handleChange} />
-  ) : (
-    <Input id={id} value={value ?? ''} onChange={handleChange} />
+  return (
+    <>
+      {fieldSpec.multiline ? (
+        <Textarea id={id} value={value ?? ''} onChange={handleChange} />
+      ) : (
+        <Input id={id} value={value ?? ''} onChange={handleChange} />
+      )}
+      <ValidationIssuesDisplay validationIssues={validationIssues} />
+    </>
   );
 
   /*TODO

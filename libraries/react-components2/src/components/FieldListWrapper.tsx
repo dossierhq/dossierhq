@@ -6,6 +6,7 @@ import {
 } from '@dossierhq/core';
 import { useCallback, useMemo, type JSXElementConstructor } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
+import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>
   extends FieldEditorProps<TFieldSpec, (TItem | null)[]> {
@@ -51,7 +52,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
     [value, onChange],
   );
 
-  const { root: _rootValidationIssues, children: indexValidationIssues } = useMemo(
+  const { root: rootValidationIssues, children: indexValidationIssues } = useMemo(
     () => groupValidationIssuesByTopLevelPath(validationIssues),
     [validationIssues],
   );
@@ -86,7 +87,7 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
   // });
 
   return (
-    <div className="flex flex-col overflow-y-auto">
+    <div className="flex flex-col gap-1 overflow-y-auto">
       {value && value.length > 0 ? (
         <>
           {/*<GridList aria-label={`List of values`} dragAndDropHooks={fieldsDragAndDropHooks}>*/}
@@ -116,9 +117,8 @@ export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
         </>
       ) : // </GridList>
       null}
-
       <AddButton fieldSpec={fieldSpec} onAddItem={handleAddItem} />
-      {/* <ValidationIssuesDisplay validationIssues={rootValidationIssues} /> */}
+      <ValidationIssuesDisplay validationIssues={rootValidationIssues} />
     </div>
   );
 }
