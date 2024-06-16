@@ -67,15 +67,17 @@ export function EntityEditor({ id, draftState }: Props) {
   return (
     <>
       {id ? <span id={id} /> : null}
-      <EntityCard
-        authKey={draftState.draft.authKey}
-        changed={draftState.status === 'changed'}
-        name={draftState.draft.name}
-        status={draftState.entity?.info.status}
-        type={draftState.draft.entitySpec.name}
-        updatedAt={draftState.entity?.info.updatedAt}
-        valid={draftState.entity?.info.valid}
-      />
+      <div className="sticky top-0 bg-background pt-1">
+        <EntityCard
+          authKey={draftState.draft.authKey}
+          changed={draftState.status === 'changed'}
+          name={draftState.draft.name}
+          status={draftState.entity?.info.status}
+          type={draftState.draft.entitySpec.name}
+          updatedAt={draftState.entity?.info.updatedAt}
+          valid={draftState.entity?.info.valid}
+        />
+      </div>
       <Collapsible open={showFields} onOpenChange={setShowFields}>
         <EntityEditorToolbar showFields={showFields} />
         <CollapsibleContent className="CollapsibleContent">
