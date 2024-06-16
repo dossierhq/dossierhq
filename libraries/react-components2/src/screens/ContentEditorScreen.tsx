@@ -1,14 +1,24 @@
-import { useEffect, useReducer } from 'react';
+import { TerminalIcon } from 'lucide-react';
+import { useContext, useEffect, useReducer, type Dispatch } from 'react';
 import {
   ContentEditorCommandMenu,
   type ContentEditorCommandMenuPage,
 } from '../components/ContentEditorCommandMenu.js';
 import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
 import { EntityEditor } from '../components/EntityEditor.js';
+import { ThemeToggle } from '../components/ThemeToggle.js';
+import { Button } from '../components/ui/button.js';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
 import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.js';
-import { initializeCommandMenuState, reduceCommandMenuState } from '../reducers/CommandReducer.js';
-import { reduceEntityEditorState } from '../reducers/EntityEditorReducer.js';
+import { useResponsive } from '../hooks/useResponsive.js';
+import {
+  CommandMenuState_OpenPageAction,
+  CommandMenuState_ShowAction,
+  initializeCommandMenuState,
+  reduceCommandMenuState,
+  type CommandMenuAction,
+} from '../reducers/CommandReducer.js';
+import { EntityEditorActions, reduceEntityEditorState } from '../reducers/EntityEditorReducer.js';
 import {
   initializeEditorEntityStateFromUrlQuery,
   useEntityEditorCallOnUrlSearchQueryParamChange,
@@ -54,12 +64,14 @@ export function ContentEditorScreen({
     }
   }, [entityEditorAndSignal]);
 
+  const md = useResponsive('md');
   return (
     <EntityEditorDispatchContext.Provider value={dispatchEntityEditorState}>
       <EntityEditorStateContext.Provider value={entityEditorState}>
         <ContentEditorLoader />
         <ContentEditorCommandMenu state={commandMenuState} dispatch={dispatchCommandMenu} />
         <div className="flex h-dvh w-dvw overflow-hidden">
+          {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
           <main className="flex flex-grow flex-col">
             <div className="overflow-auto">
               <div className="container flex flex-col gap-2 p-2">
@@ -73,4 +85,68 @@ export function ContentEditorScreen({
       </EntityEditorStateContext.Provider>
     </EntityEditorDispatchContext.Provider>
   );
+}
+
+function Sidebar({
+  dispatchCommandMenu,
+}: {
+  dispatchCommandMenu: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+}) {
+  return (
+    <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
+      <div className="mt-2 flex gap-2 px-2">
+        <Button
+          variant="outline"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
+        >
+          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
+        </Button>
+        {/* <Button variant="secondary">Open</Button> */}
+        <Button
+          variant="secondary"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_OpenPageAction({ id: 'create' }))}
+        >
+          Create
+        </Button>
+      </div>
+      <div className="flex flex-grow flex-col gap-2 overflow-auto p-2">
+        <OpenEntityList />
+      </div>
+      <div className="flex justify-between border-t px-2 py-1">
+        <ThemeToggle />
+        {/* <Button variant="outline" size="icon">
+          <ChevronLeft className="h-[1.2rem] w-[1.2rem]" />
+        </Button> */}
+      </div>
+    </aside>
+  );
+}
+
+function OpenEntityList() {
+  const entityEditorState = useContext(EntityEditorStateContext);
+  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  return entityEditorState.drafts.map((entityDraft) => {
+    if (!entityDraft.draft) return null;
+    return (
+      <button
+        key={entityDraft.id}
+        className="rounded border bg-background p-2 text-start hover:bg-accent"
+        onClick={() =>
+          dispatchEntityEditorState(
+            new EntityEditorActions.SetActiveEntity(entityDraft.id, false, true),
+          )
+        }
+      >
+        <div className="flex items-baseline gap-2">
+          <p className="w-0 flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground">
+            {entityDraft.draft.entitySpec.name}
+          </p>
+          {entityDraft.status === 'changed' && (
+            <span className="inline-block h-3 w-3 rounded-full bg-foreground" />
+          )}
+        </div>
+        <p className="overflow-hidden text-ellipsis whitespace-nowrap">{entityDraft.draft.name}</p>
+      </button>
+    );
+  });
 }
