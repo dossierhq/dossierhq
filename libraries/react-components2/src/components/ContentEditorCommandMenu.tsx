@@ -6,8 +6,10 @@ import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.j
 import { useOpenCommandMenu } from '../hooks/useOpenCommandMenu.js';
 import {
   CommandMenuState_CloseAction,
+  CommandMenuState_CloseAlertAction,
   CommandMenuState_ClosePageAction,
   CommandMenuState_OpenPageAction,
+  CommandMenuState_ShowAlertAction,
   CommandMenuState_ToggleShowAction,
   CommandMenuState_UpdateSearchAction,
   type CommandMenuAction,
@@ -15,9 +17,20 @@ import {
 } from '../reducers/CommandReducer.js';
 import {
   EntityEditorActions,
+  type EntityEditorDraftState,
   type EntityEditorStateAction,
 } from '../reducers/EntityEditorReducer.js';
 import { useTheme } from './ThemeProvider.js';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from './ui/alert-dialog.js';
 import {
   CommandDialog,
   CommandEmpty,
@@ -27,19 +40,32 @@ import {
   CommandList,
 } from './ui/command.js';
 
-export type ContentEditorCommandMenuPage = { id: 'root' } | { id: 'create' };
+export type ContentEditorCommandMenuPage =
+  | { id: 'root' }
+  | { id: 'create' }
+  | { id: 'draft'; draftId: string };
+
+export type ContentEditorCommandMenuAlert = { id: 'closeDraft'; draftId: string };
 
 export function ContentEditorCommandMenu({
   state,
   dispatch,
 }: {
-  state: Readonly<CommandMenuState<ContentEditorCommandMenuPage>>;
-  dispatch: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+  state: Readonly<CommandMenuState<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>>;
+  dispatch: Dispatch<
+    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
+  >;
 }) {
-  const { schema } = useContext(EntityEditorStateContext);
+  const { schema, drafts } = useContext(EntityEditorStateContext);
   const dispatchEntityEditor = useContext(EntityEditorDispatchContext);
 
   useOpenCommandMenu(dispatch);
+
+  if (state.alert) {
+    return (
+      <Alert alert={state.alert} dispatch={dispatch} dispatchEntityEditor={dispatchEntityEditor} />
+    );
+  }
 
   return (
     <CommandDialog
@@ -75,14 +101,82 @@ export function ContentEditorCommandMenu({
                 Create entity...
               </CommandItem>
             </CommandGroup>
+            {drafts.length > 0 && (
+              <CommandGroup heading="Entities">
+                {drafts.map((draft) => (
+                  <CommandItem
+                    key={draft.id}
+                    onSelect={() =>
+                      dispatch(
+                        new CommandMenuState_OpenPageAction({ id: 'draft', draftId: draft.id }),
+                      )
+                    }
+                  >
+                    <DraftItem draft={draft} />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
             <GenericCommands dispatch={dispatch} />
           </>
         )}
         {state.currentPage?.id === 'create' && (
           <CreateEntityCommandGroup {...{ schema, dispatchEntityEditor, dispatch }} />
         )}
+        {state.currentPage?.id === 'draft' && (
+          <DraftCommandGroup
+            id={state.currentPage.draftId}
+            {...{ schema, dispatchEntityEditor, dispatch }}
+          />
+        )}
       </CommandList>
     </CommandDialog>
+  );
+}
+
+function Alert({
+  alert,
+  dispatch,
+  dispatchEntityEditor,
+}: {
+  alert: ContentEditorCommandMenuAlert;
+  dispatch: Dispatch<
+    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
+  >;
+  dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
+}) {
+  switch (alert.id) {
+    case 'closeDraft':
+      return (
+        <AlertDialog open onOpenChange={() => dispatch(new CommandMenuState_CloseAlertAction())}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure you want to close this entity?</AlertDialogTitle>
+              <AlertDialogDescription>All changes will be lost.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  dispatchEntityEditor(new EntityEditorActions.DeleteDraft(alert.draftId));
+                }}
+              >
+                Close
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      );
+    default:
+      alert.id satisfies never;
+  }
+}
+
+function DraftItem({ draft }: { draft: EntityEditorDraftState }) {
+  return (
+    <span>
+      {draft.draft?.entitySpec.name} / {draft.draft?.name}
+    </span>
   );
 }
 
@@ -93,7 +187,9 @@ function CreateEntityCommandGroup({
 }: {
   schema: Schema | null;
   dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
-  dispatch: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+  dispatch: Dispatch<
+    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
+  >;
 }) {
   return (
     <CommandGroup heading="Create entity">
@@ -117,7 +213,55 @@ function CreateEntityCommandGroup({
   );
 }
 
-function GenericCommands<TPage>({ dispatch }: { dispatch: Dispatch<CommandMenuAction<TPage>> }) {
+function DraftCommandGroup({
+  id,
+  dispatchEntityEditor,
+  dispatch,
+}: {
+  id: string;
+  dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
+  dispatch: Dispatch<
+    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
+  >;
+}) {
+  const draft = useContext(EntityEditorStateContext).drafts.find((d) => d.id === id);
+  if (!draft) {
+    return null;
+  }
+
+  const confirmClose = draft.status === 'changed' || !draft.entity;
+
+  return (
+    <CommandGroup heading={<DraftItem draft={draft} />}>
+      <CommandItem
+        onSelect={() => {
+          dispatchEntityEditor(new EntityEditorActions.SetActiveEntity(id, true, true));
+          dispatch(new CommandMenuState_CloseAction());
+        }}
+      >
+        Jump to
+      </CommandItem>
+      <CommandItem
+        onSelect={() => {
+          dispatch(new CommandMenuState_CloseAction());
+          if (confirmClose) {
+            dispatch(new CommandMenuState_ShowAlertAction({ id: 'closeDraft', draftId: id }));
+          } else {
+            dispatchEntityEditor(new EntityEditorActions.DeleteDraft(id));
+          }
+        }}
+      >
+        Close{confirmClose ? '...' : ''}
+      </CommandItem>
+    </CommandGroup>
+  );
+}
+
+function GenericCommands<TPage, TAlert>({
+  dispatch,
+}: {
+  dispatch: Dispatch<CommandMenuAction<TPage, TAlert>>;
+}) {
   const { setTheme } = useTheme();
   return (
     <CommandGroup heading="Theme">

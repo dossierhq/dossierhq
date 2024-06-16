@@ -4,7 +4,9 @@ import {
   type CommandMenuAction,
 } from '../reducers/CommandReducer.js';
 
-export function useOpenCommandMenu<TPage>(dispatch: Dispatch<CommandMenuAction<TPage>>) {
+export function useOpenCommandMenu<TPage, TAlert>(
+  dispatch: Dispatch<CommandMenuAction<TPage, TAlert>>,
+) {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {

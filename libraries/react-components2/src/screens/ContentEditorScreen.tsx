@@ -2,6 +2,7 @@ import { TerminalIcon } from 'lucide-react';
 import { useContext, useEffect, useReducer, type Dispatch } from 'react';
 import {
   ContentEditorCommandMenu,
+  type ContentEditorCommandMenuAlert,
   type ContentEditorCommandMenuPage,
 } from '../components/ContentEditorCommandMenu.js';
 import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
@@ -41,9 +42,9 @@ export function ContentEditorScreen({
   useEntityEditorCallOnUrlSearchQueryParamChange(entityEditorState, onUrlSearchParamsChange);
 
   const [commandMenuState, dispatchCommandMenu] = useReducer(
-    reduceCommandMenuState<ContentEditorCommandMenuPage>,
+    reduceCommandMenuState<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>,
     { id: 'root' },
-    initializeCommandMenuState<ContentEditorCommandMenuPage>,
+    initializeCommandMenuState<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>,
   );
 
   useEffect(() => {
@@ -91,7 +92,9 @@ export function ContentEditorScreen({
 function Sidebar({
   dispatchCommandMenu,
 }: {
-  dispatchCommandMenu: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+  dispatchCommandMenu: Dispatch<
+    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
+  >;
 }) {
   return (
     <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
@@ -155,7 +158,9 @@ function OpenEntityList() {
 function Toolbar({
   dispatchCommandMenu,
 }: {
-  dispatchCommandMenu: Dispatch<CommandMenuAction<ContentEditorCommandMenuPage>>;
+  dispatchCommandMenu: Dispatch<
+    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
+  >;
 }) {
   return (
     <div className="flex items-center border-b">
