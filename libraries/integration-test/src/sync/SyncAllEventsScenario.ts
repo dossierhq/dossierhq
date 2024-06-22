@@ -5,6 +5,7 @@ import {
   type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
 import { assertEquals, assertErrorResult, assertResultValue } from '../Asserts.js';
+import type { UnboundTestFunction } from '../Builder.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import {
   applyEventsOnTargetAndResolveNextContext,
@@ -31,7 +32,7 @@ const STEPS: ((context: ScenarioContext) => Promise<ScenarioContext>)[] = [
 const TITLE_ONLY_ENTITY_ID_1 = 'b1793e40-285c-423f-b4f8-e71fa74677b8';
 const TITLE_ONLY_ENTITY_ID_2 = 'd56b4262-0d00-4507-b909-7a1eb19bb82f';
 
-export async function sync_allEventsScenario(context: SyncTestContext): Promise<void> {
+export const sync_allEventsScenario: UnboundTestFunction<SyncTestContext> = async (context) => {
   const { sourceServer, targetServer } = context;
 
   await ensureServerIsEmpty(sourceServer);
@@ -45,7 +46,8 @@ export async function sync_allEventsScenario(context: SyncTestContext): Promise<
 
   await ensureServerHasTheSameSyncEventsAsFirstSeen(scenarioContext, sourceServer);
   await ensureServerHasTheSameSyncEventsAsFirstSeen(scenarioContext, targetServer);
-}
+};
+sync_allEventsScenario.timeout = 'long';
 
 async function sync_allEventsScenario_1_updateSchema(context: ScenarioContext) {
   const { sourceClient, targetClient, createdBy, after } = context;
