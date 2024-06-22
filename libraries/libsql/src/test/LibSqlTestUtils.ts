@@ -1,6 +1,3 @@
-import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
-import { unlink } from 'node:fs/promises';
 import { NoOpLogger, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import { createTestAuthorizationAdapter, IntegrationTestSchema } from '@dossierhq/integration-test';
 import { createServer, type Server } from '@dossierhq/server';
@@ -42,10 +39,17 @@ export async function initializeEmptyServer(
   config: Config,
   options: Pick<SqliteDatabaseOptions, 'journalMode'> = { journalMode: 'wal' },
 ): PromiseResult<Server, typeof ErrorType.Generic | typeof ErrorType.BadRequest> {
-  assert(config.url.startsWith('file:'));
-  const filename = config.url.slice(5);
-  if (existsSync(filename)) {
-    await unlink(filename);
+  const client = createClient(config);
+  const tableCheck = await client.execute(
+    "SELECT name FROM sqlite_master WHERE type='table' AND name='events'",
+  );
+  if (tableCheck.rows.length > 0) {
+    await client.batch([
+      'DELETE FROM events',
+      'DELETE FROM entities',
+      'DELETE FROM schema_versions',
+      'DELETE FROM subjects',
+    ]);
   }
 
   const databaseAdapterResult = await createAdapter(config, options);

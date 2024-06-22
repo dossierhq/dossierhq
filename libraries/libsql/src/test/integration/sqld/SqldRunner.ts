@@ -22,7 +22,7 @@ export async function createSqldProcess(name: string, address: string): Promise<
   sqld.stdout.pipe(logStream);
   sqld.stderr.pipe(logStream);
 
-  await waitForHealthy(url);
+  await waitForHealthy(url, logStream);
 
   return {
     url,
@@ -32,12 +32,13 @@ export async function createSqldProcess(name: string, address: string): Promise<
   };
 }
 
-async function waitForHealthy(url: string) {
+async function waitForHealthy(url: string, logStream: NodeJS.WritableStream) {
   const healthUrl = `${url}/health`;
   for (let i = 0; i < 100; i++) {
     try {
       const res = await fetch(healthUrl);
       if (res.ok) {
+        logStream.write(`Server is healthy on ${healthUrl} (after ${i + 1} attempts}\n`);
         return;
       }
     } catch (error) {

@@ -107,3 +107,5 @@ If you just want to get started using Dossier, these destinations might get you 
 - 9003: libraries/libsql - published entity
 - 9004: libraries/libsql - schema
 - 9005: libraries/libsql - changelog
+- 9006: libraries/libsql - sync source
+- 9007: libraries/libsql - sync target
