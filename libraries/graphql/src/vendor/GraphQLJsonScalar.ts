@@ -1,33 +1,41 @@
 // Source: https://github.com/taion/graphql-type-json
 // License: MIT
-// Vendored since these was a clash with different graphql when running tests (at least under vitest)
+// Vendored since these was a clash with different graphql version when running tests (at least under vitest)
+// Converted to TypeScript
 
 import { GraphQLScalarType } from 'graphql';
-import { Kind, print } from 'graphql/language/index.js';
+import { Kind, print, type ObjectValueNode, type ValueNode } from 'graphql/language/index.js';
 
-function identity(value) {
+function identity<T>(value: T): T {
   return value;
 }
 
-function ensureObject(value) {
+function ensureObject(value: unknown): object {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
-    throw new TypeError(`JSONObject cannot represent non-object value: ${value}`);
+    throw new TypeError(`JSONObject cannot represent non-object value: ${typeof value}`);
   }
 
   return value;
 }
 
-function parseObject(typeName, ast, variables) {
-  const value = Object.create(null);
+function parseObject(
+  typeName: 'JSON' | 'JSONObject',
+  ast: ObjectValueNode,
+  variables: Record<string, unknown> | null | undefined,
+): Record<string, unknown> {
+  const value = Object.create(null) as Record<string, unknown>;
   ast.fields.forEach((field) => {
-    // eslint-disable-next-line no-use-before-define
     value[field.name.value] = parseLiteral(typeName, field.value, variables);
   });
 
   return value;
 }
 
-function parseLiteral(typeName, ast, variables) {
+function parseLiteral(
+  typeName: 'JSON' | 'JSONObject',
+  ast: ValueNode,
+  variables: Record<string, unknown> | null | undefined,
+): unknown {
   switch (ast.kind) {
     case Kind.STRING:
     case Kind.BOOLEAN:
@@ -54,7 +62,7 @@ export const GraphQLJSON = new GraphQLScalarType({
   name: 'JSON',
   description:
     'The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).',
-  specifiedByUrl: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf',
+  specifiedByURL: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf',
   serialize: identity,
   parseValue: identity,
   parseLiteral: (ast, variables) => parseLiteral('JSON', ast, variables),
@@ -66,7 +74,7 @@ export const GraphQLJSONObject = new GraphQLScalarType({
   name: 'JSONObject',
   description:
     'The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).',
-  specifiedByUrl: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf',
+  specifiedByURL: 'http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf',
   serialize: ensureObject,
   parseValue: ensureObject,
   parseLiteral: (ast, variables) => {
