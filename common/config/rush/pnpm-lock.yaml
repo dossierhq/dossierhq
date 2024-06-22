@@ -1130,9 +1130,6 @@ importers:
 
   ../../libraries/graphql:
     dependencies:
-      graphql:
-        specifier: ~16.9.0
-        version: 16.9.0
       tslib:
         specifier: ~2.6.3
         version: 2.6.3
@@ -1173,6 +1170,9 @@ importers:
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
+      graphql:
+        specifier: ~16.9.0
+        version: 16.9.0
       prettier:
         specifier: 3.3.2
         version: 3.3.2
@@ -1672,6 +1672,9 @@ importers:
       '@storybook/addon-essentials':
         specifier: ~8.1.10
         version: 8.1.10(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@storybook/addon-interactions':
+        specifier: ~8.1.10
+        version: 8.1.10(@types/bun@1.1.5)(vitest@1.6.0(@types/node@20.14.8)(sass@1.77.6))
       '@storybook/addon-links':
         specifier: ~8.1.10
         version: 8.1.10(react@18.3.1)
@@ -2341,6 +2344,9 @@ importers:
       '@storybook/addon-essentials':
         specifier: ~8.1.10
         version: 8.1.10(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@storybook/addon-interactions':
+        specifier: ~8.1.10
+        version: 8.1.10(@types/bun@1.1.5)(vitest@1.6.0(@types/node@20.14.8)(sass@1.77.6))
       '@storybook/addon-links':
         specifier: ~8.1.10
         version: 8.1.10(react@18.3.1)
@@ -6222,6 +6228,9 @@ packages:
 
   '@storybook/addon-highlight@8.1.10':
     resolution: {integrity: sha512-s9QKGtU6WGB/+CggNWg940NIi+u0tcxpPxqg/ltg3EOHr8J0NAZur6mibs3Z4Q5CXkAuNdWrvopLu+/27i1rQQ==}
+
+  '@storybook/addon-interactions@8.1.10':
+    resolution: {integrity: sha512-GGU66TxYv6Bis10mmlgMhLOyai1am1amKVvX7ML8XYfsi6lA9zCnfQSVXulYLfjfzyIR6Ld8Kxe5awvjucPxSw==}
 
   '@storybook/addon-links@8.1.10':
     resolution: {integrity: sha512-SxCuK7k7A0/qIPzV68u25qfye3Fb0PkC1izlRbt7u64wIUIxGzgfjM3dFRWK2VaJzCsEQWSmIdv7YHi7Wv5y3w==}
@@ -17257,6 +17266,21 @@ snapshots:
   '@storybook/addon-highlight@8.1.10':
     dependencies:
       '@storybook/global': 5.0.0
+
+  '@storybook/addon-interactions@8.1.10(@types/bun@1.1.5)(vitest@1.6.0(@types/node@20.14.8)(sass@1.77.6))':
+    dependencies:
+      '@storybook/global': 5.0.0
+      '@storybook/instrumenter': 8.1.10
+      '@storybook/test': 8.1.10(@types/bun@1.1.5)(vitest@1.6.0(@types/node@20.14.8)(sass@1.77.6))
+      '@storybook/types': 8.1.10
+      polished: 4.2.2
+      ts-dedent: 2.2.0
+    transitivePeerDependencies:
+      - '@jest/globals'
+      - '@types/bun'
+      - '@types/jest'
+      - jest
+      - vitest
 
   '@storybook/addon-links@8.1.10(react@18.3.1)':
     dependencies:
