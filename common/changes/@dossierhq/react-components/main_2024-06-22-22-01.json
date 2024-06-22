@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components",
+      "comment": "Support deleting entity",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components"
+}
