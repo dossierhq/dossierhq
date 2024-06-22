@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/graphql
 
-This log was last generated on Fri, 10 May 2024 12:33:35 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jun 2024 22:08:27 GMT and should not be manually modified.
+
+## 0.7.7
+Sat, 22 Jun 2024 22:08:27 GMT
+
+### Updates
+
+- Move graphql dependency to peerDependencies. Support deleteEntities mutation
 
 ## 0.7.6
 Fri, 10 May 2024 12:33:35 GMT

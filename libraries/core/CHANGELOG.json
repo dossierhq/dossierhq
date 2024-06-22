@@ -2,6 +2,18 @@
   "name": "@dossierhq/core",
   "entries": [
     {
+      "version": "0.7.7",
+      "tag": "@dossierhq/core_v0.7.7",
+      "date": "Sat, 22 Jun 2024 22:08:27 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Allow name=null in create/update/upsertEntity. Introduce ChangelogEventSharedQuery and use it for getChangelogEventsTotalCount. Support DossierClient.deleteEntities()."
+          }
+        ]
+      }
+    },
+    {
       "version": "0.7.6",
       "tag": "@dossierhq/core_v0.7.6",
       "date": "Fri, 10 May 2024 12:33:35 GMT",
