@@ -26,7 +26,18 @@ export function resolveAdminEntityInfo(
     'auth_key' | 'created_at' | 'invalid' | 'name' | 'status' | 'type' | 'updated_at'
   > &
     Pick<EntityVersionsTable, 'version'> & { subjects_uuid?: string },
-) {
+): {
+  authKey: string;
+  createdAt: Date;
+  name: string;
+  status: EntityStatus;
+  type: string;
+  updatedAt: Date;
+  updatedBy: string | undefined;
+  version: number;
+  valid: boolean;
+  validPublished: boolean | null;
+} {
   const status = resolveEntityStatus(row.status);
   assertIsDefined(row.name);
   return {
@@ -44,7 +55,13 @@ export function resolveAdminEntityInfo(
 
 export function resolvePublishedEntityInfo(
   row: Pick<EntitiesTable, 'type' | 'published_name' | 'auth_key' | 'created_at' | 'invalid'>,
-) {
+): {
+  type: string;
+  name: string;
+  authKey: string;
+  createdAt: Date;
+  validPublished: boolean;
+} {
   const name = row.published_name;
   if (name === null) {
     throw new Error('Unexpected null published name');
@@ -58,7 +75,13 @@ export function resolvePublishedEntityInfo(
   };
 }
 
-export function resolveEntityValidity(invalid: EntitiesTable['invalid'], status: EntityStatus) {
+export function resolveEntityValidity(
+  invalid: EntitiesTable['invalid'],
+  status: EntityStatus,
+): {
+  valid: boolean;
+  validPublished: boolean | null;
+} {
   return {
     valid: (invalid & 1) === 0,
     validPublished:

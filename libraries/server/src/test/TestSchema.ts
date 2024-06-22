@@ -1,6 +1,6 @@
-import { FieldType, SchemaWithMigrations } from '@dossierhq/core';
+import { FieldType, SchemaWithMigrations, type PublishedSchema } from '@dossierhq/core';
 
-export const adminTestSchema = SchemaWithMigrations.createAndValidate({
+export const adminTestSchema: SchemaWithMigrations = SchemaWithMigrations.createAndValidate({
   entityTypes: [
     { name: 'ReferencesEntity', fields: [{ name: 'normal', type: FieldType.Reference }] },
     { name: 'TitleOnly', fields: [{ name: 'title', type: FieldType.String }] },
@@ -30,4 +30,4 @@ export const adminTestSchema = SchemaWithMigrations.createAndValidate({
   ],
 }).valueOrThrow();
 
-export const publishedTestSchema = adminTestSchema.toPublishedSchema();
+export const publishedTestSchema: PublishedSchema = adminTestSchema.toPublishedSchema();

@@ -27,7 +27,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
     this.logger = logger;
   }
 
-  start() {
+  start(): void {
     this.logger.info('BackgroundEntityProcessorPlugin: starting');
     this.processing = true;
     this.batchCount = 0;
@@ -37,7 +37,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
     this.handle = setTimeout(this.tick, TIME_SINCE_LAST_OPERATION_MS);
   }
 
-  onServerShutdown() {
+  onServerShutdown(): void {
     this.logger.info('BackgroundEntityProcessorPlugin: stopping');
     if (this.handle) {
       clearTimeout(this.handle);

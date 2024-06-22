@@ -31,7 +31,7 @@ const STEPS: ((context: ScenarioContext) => Promise<ScenarioContext>)[] = [
 const TITLE_ONLY_ENTITY_ID_1 = 'b1793e40-285c-423f-b4f8-e71fa74677b8';
 const TITLE_ONLY_ENTITY_ID_2 = 'd56b4262-0d00-4507-b909-7a1eb19bb82f';
 
-export async function sync_allEventsScenario(context: SyncTestContext) {
+export async function sync_allEventsScenario(context: SyncTestContext): Promise<void> {
   const { sourceServer, targetServer } = context;
 
   await ensureServerIsEmpty(sourceServer);

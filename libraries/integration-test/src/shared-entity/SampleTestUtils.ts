@@ -32,7 +32,7 @@ export function assertSampledEntities<
   actualResult: Result<EntitySamplingPayload<AppEntity | AppPublishedEntity>, ErrorType>,
   expectedSeed: number,
   expectedEntities: TEntity[],
-) {
+): void {
   assertOkResult(actualResult);
   const { seed, totalCount, items } = actualResult.value;
 
@@ -47,7 +47,10 @@ export function assertSampledEntities<
 
 export function assertSampledEntitiesArePartOfExpected<
   TEntity extends Entity<string, object> | PublishedEntity<string, object>,
->(actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>, expectedEntities: TEntity[]) {
+>(
+  actualResult: Result<EntitySamplingPayload<TEntity>, ErrorType>,
+  expectedEntities: TEntity[],
+): void {
   assertOkResult(actualResult);
 
   const expectedIds = expectedEntities.map((it) => it.id);

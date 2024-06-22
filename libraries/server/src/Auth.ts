@@ -37,7 +37,7 @@ export async function authCreatePrincipalSyncEvent(
   databaseAdapter: DatabaseAdapter,
   context: TransactionContext,
   event: CreatePrincipalSyncEvent,
-) {
+): PromiseResult<DatabaseAuthCreateSessionPayload, 'Generic'> {
   return await databaseAdapter.authCreateSession(
     context,
     event.provider,

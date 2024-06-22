@@ -88,7 +88,7 @@ export async function getOrCreateSubject(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   { subjectId }: { subjectId: string },
-) {
+): PromiseResult<{ id: number }, typeof ErrorType.Generic> {
   const getResult = await queryNoneOrOne<Pick<SubjectsTable, 'id'>>(
     adapter,
     context,

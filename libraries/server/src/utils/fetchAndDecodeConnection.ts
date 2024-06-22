@@ -27,7 +27,10 @@ export async function fetchAndDecodeConnection<
     typeof ErrorType.BadRequest | typeof ErrorType.Generic
   >,
   decoder: (edge: TEncodedEdge) => Result<TDecodedNode, TNodeError>,
-) {
+): PromiseResult<
+  Connection<Edge<TDecodedNode, TNodeError>> | null,
+  typeof ErrorType.BadRequest | typeof ErrorType.Generic
+> {
   const pagingResult = resolvePagingInfo(paging);
   if (pagingResult.isError()) return pagingResult;
   const pagingInfo = pagingResult.value;

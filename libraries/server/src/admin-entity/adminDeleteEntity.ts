@@ -28,7 +28,7 @@ export async function adminDeleteEntitySyncEvent(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: DeleteEntitiesSyncEvent,
-) {
+): ReturnType<DossierClient['deleteEntities']> {
   return doAdminDeleteEntity(
     authorizationAdapter,
     databaseAdapter,

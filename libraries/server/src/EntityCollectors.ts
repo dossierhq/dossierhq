@@ -34,7 +34,10 @@ export interface RequestedReference {
   linkEntityTypes: string[] | undefined;
 }
 
-export function createFullTextSearchCollector<TSchema extends Schema | PublishedSchema>() {
+export function createFullTextSearchCollector<TSchema extends Schema | PublishedSchema>(): {
+  collect: (node: ContentTraverseNode<TSchema>) => void;
+  readonly result: string;
+} {
   const fullTextSearchText: string[] = [];
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -60,7 +63,10 @@ export function createFullTextSearchCollector<TSchema extends Schema | Published
 }
 
 //TODO we have three similar implementations of this function, should it move to core?
-export function createReferencesCollector<TSchema extends Schema | PublishedSchema>() {
+export function createReferencesCollector<TSchema extends Schema | PublishedSchema>(): {
+  collect: (node: ContentTraverseNode<TSchema>) => void;
+  readonly result: EntityReference[];
+} {
   const references = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -85,7 +91,10 @@ export function createReferencesCollector<TSchema extends Schema | PublishedSche
   };
 }
 
-export function createRequestedReferencesCollector<TSchema extends Schema | PublishedSchema>() {
+export function createRequestedReferencesCollector<TSchema extends Schema | PublishedSchema>(): {
+  collect: (node: ContentTraverseNode<TSchema>) => void;
+  readonly result: RequestedReference[];
+} {
   const requestedReferences: RequestedReference[] = [];
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -126,7 +135,10 @@ export function createRequestedReferencesCollector<TSchema extends Schema | Publ
 
 export function createUniqueIndexCollector<TSchema extends Schema | PublishedSchema>(
   schema: TSchema,
-) {
+): {
+  collect: (node: ContentTraverseNode<TSchema>) => void;
+  readonly result: UniqueIndexValueCollection;
+} {
   const uniqueIndexValues: UniqueIndexValueCollection = new Map();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -158,7 +170,10 @@ export function createUniqueIndexCollector<TSchema extends Schema | PublishedSch
   };
 }
 
-export function createLocationsCollector<TSchema extends Schema | PublishedSchema>() {
+export function createLocationsCollector<TSchema extends Schema | PublishedSchema>(): {
+  collect: (node: ContentTraverseNode<TSchema>) => void;
+  readonly result: Location[];
+} {
   const locations: Location[] = [];
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {
@@ -176,7 +191,10 @@ export function createLocationsCollector<TSchema extends Schema | PublishedSchem
   };
 }
 
-export function createComponentTypesCollector<TSchema extends Schema | PublishedSchema>() {
+export function createComponentTypesCollector<TSchema extends Schema | PublishedSchema>(): {
+  collect: (node: ContentTraverseNode<TSchema>) => void;
+  readonly result: string[];
+} {
   const payload = new Set<string>();
   return {
     collect: (node: ContentTraverseNode<TSchema>) => {

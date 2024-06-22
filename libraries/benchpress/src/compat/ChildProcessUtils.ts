@@ -1,6 +1,6 @@
 import * as childProcess from 'node:child_process';
 
-export const NoSuchCommand = Symbol('NoSuchCommand');
+export const NoSuchCommand: unique symbol = Symbol('NoSuchCommand');
 
 export function execFile(
   file: string,

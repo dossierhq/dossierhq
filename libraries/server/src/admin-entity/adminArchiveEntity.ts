@@ -34,7 +34,7 @@ export function adminArchiveEntitySyncEvent(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   syncEvent: ArchiveEntitySyncEvent,
-) {
+): PromiseResult<EntityArchivePayload, 'BadRequest' | 'Generic' | 'NotAuthorized' | 'NotFound'> {
   return doArchiveEntity(
     databaseAdapter,
     authorizationAdapter,

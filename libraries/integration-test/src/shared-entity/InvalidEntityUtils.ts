@@ -28,7 +28,13 @@ export async function createInvalidEntity(
   client: AppDossierClient,
   fields: Partial<ChangeValidations['fields']>,
   options?: Options,
-) {
+): PromiseResult<
+  { entity: ChangeValidations; validations: EntityProcessDirtyPayload[] },
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
   return doCreateInvalidEntity<ChangeValidations>(
     client,
     ChangeValidationsWithoutValidationsUpdate,
@@ -40,7 +46,13 @@ export async function createInvalidEntity(
 export async function createEntityWithInvalidComponent(
   client: AppDossierClient,
   options?: Options,
-) {
+): PromiseResult<
+  { entity: Components; validations: EntityProcessDirtyPayload[] },
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.Conflict
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
   return doCreateInvalidEntity<Components>(
     client,
     ChangeValidationsComponentWithoutValidationsUpdate,

@@ -5,7 +5,7 @@ export class Randomizer {
     this.#prng = mulberry32(seed);
   }
 
-  randomInt(max: number) {
+  randomInt(max: number): number {
     return Math.floor(this.#prng() * max);
   }
 

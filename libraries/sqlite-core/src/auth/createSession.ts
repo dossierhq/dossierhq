@@ -90,7 +90,7 @@ export async function getOrCreateSubject(
   database: Database,
   context: TransactionContext,
   { subjectId }: { subjectId: string },
-) {
+): PromiseResult<{ id: number }, typeof ErrorType.Generic> {
   //TODO validate subjectID uuid format
   const now = getTransactionTimestamp(context.transaction).toISOString();
 

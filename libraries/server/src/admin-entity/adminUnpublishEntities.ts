@@ -56,7 +56,13 @@ export function adminUnpublishEntitiesSyncEvent(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   syncEvent: UnpublishEntitiesSyncEvent,
-) {
+): PromiseResult<
+  EntityUnpublishPayload[],
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
   return doUnpublishEntities(
     databaseAdapter,
     authorizationAdapter,

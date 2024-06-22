@@ -53,7 +53,13 @@ export async function adminUpdateEntitySyncEvent(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: UpdateEntitySyncEvent,
-) {
+): PromiseResult<
+  EntityUpdatePayload,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
   if (schema.spec.version !== syncEvent.entity.info.schemaVersion) {
     return notOk.BadRequest(
       `Schema version mismatch: expected ${schema.spec.version}, got ${syncEvent.entity.info.schemaVersion}`,

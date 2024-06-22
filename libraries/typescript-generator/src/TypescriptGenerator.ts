@@ -23,7 +23,7 @@ export function generateTypescriptForSchema({
   schema: Schema | null;
   publishedSchema: PublishedSchema | null;
   authKeyPatternTypeMap?: Record<string, string>;
-}) {
+}): string {
   const context: GeneratorContext = { coreImports: new Set<string>() };
   const paragraphs: string[] = [];
 

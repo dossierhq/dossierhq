@@ -88,7 +88,13 @@ export function adminPublishEntitiesSyncEvent(
   databaseAdapter: DatabaseAdapter,
   context: SessionContext,
   syncEvent: PublishEntitiesSyncEvent,
-) {
+): PromiseResult<
+  EntityPublishPayload[],
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.Generic
+> {
   return doPublishEntities(
     schema,
     authorizationAdapter,

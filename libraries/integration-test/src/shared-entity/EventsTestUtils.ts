@@ -71,7 +71,7 @@ export function assertChangelogEventsConnection(
 export function assertSyncEventsEqual(
   actualEvents: SyncEvent[],
   expectedEvents: SyncEventWithoutIdAndCreatedAt[],
-) {
+): void {
   assertEquals(actualEvents.length, expectedEvents.length);
   for (let i = 0; i < actualEvents.length; i++) {
     const { id, createdAt, ...actualEvent } = actualEvents[i];

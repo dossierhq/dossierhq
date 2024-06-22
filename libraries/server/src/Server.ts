@@ -255,14 +255,18 @@ export class ServerImpl {
     );
   }
 
-  resolveDossierClientMiddleware(middleware: DossierClientMiddleware<SessionContext>[]) {
+  resolveDossierClientMiddleware(
+    middleware: DossierClientMiddleware<SessionContext>[],
+  ): DossierClientMiddleware<SessionContext<Session>>[] {
     for (const plugin of this.#plugins) {
       middleware = plugin.onCreateDossierClient(middleware);
     }
     return middleware;
   }
 
-  resolvePublishedClientMiddleware(middleware: PublishedDossierClientMiddleware<SessionContext>[]) {
+  resolvePublishedClientMiddleware(
+    middleware: PublishedDossierClientMiddleware<SessionContext>[],
+  ): PublishedDossierClientMiddleware<SessionContext<Session>>[] {
     for (const plugin of this.#plugins) {
       middleware = plugin.onCreatePublishedDossierClient(middleware);
     }

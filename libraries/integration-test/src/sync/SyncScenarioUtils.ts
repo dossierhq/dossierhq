@@ -1,18 +1,26 @@
-import { assertOkResult, ErrorType, EventType, type DossierClient } from '@dossierhq/core';
+import {
+  assertOkResult,
+  ErrorType,
+  EventType,
+  type DossierClient,
+  type SyncEvent,
+} from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { assertEquals, assertErrorResult, assertResultValue, assertTruthy } from '../Asserts.js';
 import { assertSyncEventsEqual } from '../shared-entity/EventsTestUtils.js';
 import { createDossierClientProvider } from '../shared-entity/TestClients.js';
 import type { ScenarioContext, SyncTestContext } from './SyncTestSuite.js';
 
-export async function ensureServerIsEmpty(server: Server) {
+export async function ensureServerIsEmpty(server: Server): Promise<void> {
   const initialSyncEvents = (await server.getSyncEvents({ after: null, limit: 10 })).valueOrThrow();
   assertEquals(initialSyncEvents.events.length, 0);
 
   assertResultValue(await server.getPrincipals(), null);
 }
 
-export async function createPrincipalSyncAndInitializeScenarioContext(context: SyncTestContext) {
+export async function createPrincipalSyncAndInitializeScenarioContext(
+  context: SyncTestContext,
+): Promise<ScenarioContext> {
   const { sourceServer, targetServer } = context;
 
   // Setup source Dossier client
@@ -74,7 +82,12 @@ export async function createPrincipalSyncAndInitializeScenarioContext(context: S
 
 export async function applyEventsOnTargetAndResolveNextContext<
   TContext extends Pick<ScenarioContext, 'sourceServer' | 'targetServer' | 'after' | 'events'>,
->(context: TContext) {
+>(
+  context: TContext,
+): Promise<{
+  nextContext: TContext & { after: string | null; events: SyncEvent[] };
+  events: SyncEvent[];
+}> {
   const { sourceServer, targetServer, after } = context;
 
   // Apply source events on target server
@@ -113,7 +126,7 @@ export async function applyEventsOnTargetAndResolveNextContext<
 export async function ensureServerHasTheSameSyncEventsAsFirstSeen(
   context: ScenarioContext,
   server: Server,
-) {
+): Promise<void> {
   const syncEvents = (await server.getSyncEvents({ after: null, limit: 100 })).valueOrThrow();
   assertEquals(syncEvents.hasMore, false);
 

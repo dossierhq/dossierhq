@@ -7,7 +7,9 @@ import {
   type UniqueIndexReference,
 } from '@dossierhq/core';
 
-export function validateEntityReference(reference: UniqueIndexReference | EntityReference) {
+export function validateEntityReference(
+  reference: UniqueIndexReference | EntityReference,
+): Result<void, typeof ErrorType.BadRequest> {
   if ('index' in reference) {
     if (typeof reference.index !== 'string') {
       return notOk.BadRequest(

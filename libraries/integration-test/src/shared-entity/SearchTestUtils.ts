@@ -121,7 +121,7 @@ export function assertSearchResultEntities<TItem extends AppEntity | AppPublishe
 export function assertPageInfoEquals<TEntity extends AppEntity | AppPublishedEntity>(
   connectionResult: Result<Connection<Edge<TEntity, ErrorType>> | null, ErrorType>,
   { hasNextPage, hasPreviousPage }: { hasNextPage: boolean; hasPreviousPage: boolean },
-) {
+): void {
   assertOkResult(connectionResult);
   assertTruthy(connectionResult.value);
   const connection = connectionResult.value;

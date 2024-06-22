@@ -1,8 +1,8 @@
-export const DEFAULT = Symbol('DEFAULT');
+export const DEFAULT: unique symbol = Symbol('DEFAULT');
 
-const ValueReferenceSymbol = Symbol('ValueReference');
+const ValueReferenceSymbol: unique symbol = Symbol('ValueReference');
 
-const RawSqlSymbol = Symbol('RawSql');
+const RawSqlSymbol: unique symbol = Symbol('RawSql');
 
 interface ValueReference {
   marker: typeof ValueReferenceSymbol;

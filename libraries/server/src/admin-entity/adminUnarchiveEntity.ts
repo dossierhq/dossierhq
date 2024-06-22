@@ -34,7 +34,13 @@ export function adminUnarchiveEntitySyncEvent(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
   syncEvent: UnarchiveEntitySyncEvent,
-) {
+): PromiseResult<
+  EntityUnarchivePayload,
+  | typeof ErrorType.BadRequest
+  | typeof ErrorType.NotAuthorized
+  | typeof ErrorType.NotFound
+  | typeof ErrorType.Generic
+> {
   return doUnarchiveEntity(
     databaseAdapter,
     authorizationAdapter,

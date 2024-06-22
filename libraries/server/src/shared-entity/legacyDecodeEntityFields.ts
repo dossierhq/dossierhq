@@ -27,7 +27,7 @@ export function legacyDecodeEntityFields(
   schema: Schema | PublishedSchema,
   entitySpec: EntityTypeSpecification | PublishedEntityTypeSpecification,
   encodedFields: Record<string, unknown>,
-) {
+): Record<string, unknown> {
   const decodedFields: Record<string, unknown> = {};
 
   for (const fieldSpec of entitySpec.fields) {

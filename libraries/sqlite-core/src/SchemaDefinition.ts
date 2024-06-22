@@ -563,7 +563,7 @@ const VERSIONS: SchemaVersionDefinition[] = /* @__PURE__ */ (() => [
   VERSION_27,
 ])();
 
-export const REQUIRED_SCHEMA_VERSION = /* @__PURE__ */ (() => VERSIONS.length - 1)();
+export const REQUIRED_SCHEMA_VERSION: number = /* @__PURE__ */ (() => VERSIONS.length - 1)();
 
 export async function migrateDatabaseIfNecessary(
   database: Database,
