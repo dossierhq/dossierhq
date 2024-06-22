@@ -21,7 +21,7 @@
     "@types/node": "~20.14.8",
     "@vitest/coverage-v8": "~1.6.0",
     "tsx": "~4.15.7",
-    "typescript": "~5.4.5",
+    "typescript": "~5.5.2",
     "vitest": "~1.6.0"
   }
 }

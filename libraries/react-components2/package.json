@@ -97,7 +97,7 @@
     "sql.js": "~1.10.3",
     "storybook": "~8.1.10",
     "tailwindcss": "~3.4.4",
-    "typescript": "~5.4.5",
+    "typescript": "~5.5.2",
     "vite": "~5.3.1",
     "vitest": "~1.6.0"
   }

@@ -24,9 +24,7 @@ export function processResults(
   result: BenchPressResult,
   options: BenchPressProcessOptions,
 ): BenchPressProcessedResult {
-  const successfulIterations_ms = result.iterationDurations_ms.filter(
-    (it) => it !== null,
-  ) as number[];
+  const successfulIterations_ms = result.iterationDurations_ms.filter((it) => it !== null);
   const resultSorted_ms = [...successfulIterations_ms].sort((a, b) => a - b);
   const iterations_ms = result.iterationDurations_ms;
 

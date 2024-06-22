@@ -357,7 +357,7 @@ function entityRef(entity: AppEntity | undefined): EntityReference | null {
 }
 
 function entityRefs(entities: AppEntity[]): EntityReference[] {
-  return entities.map(entityRef).filter((it) => it !== null) as EntityReference[];
+  return entities.map(entityRef).filter((it) => it !== null);
 }
 
 async function createLocationsEntities(client: AppDossierClient) {
