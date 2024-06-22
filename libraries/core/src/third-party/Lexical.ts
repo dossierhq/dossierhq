@@ -90,7 +90,16 @@ export const IS_DIRECTIONLESS = 1;
 export const IS_UNMERGEABLE = 2;
 
 // our own type, not from lexical
-export const TEXT_TYPE_TO_FORMAT = {
+export const TEXT_TYPE_TO_FORMAT: {
+  bold: number;
+  code: number;
+  highlight: number;
+  italic: number;
+  strikethrough: number;
+  subscript: number;
+  superscript: number;
+  underline: number;
+} = {
   bold: IS_BOLD,
   code: IS_CODE,
   highlight: IS_HIGHLIGHT,
@@ -99,7 +108,7 @@ export const TEXT_TYPE_TO_FORMAT = {
   subscript: IS_SUBSCRIPT,
   superscript: IS_SUPERSCRIPT,
   underline: IS_UNDERLINE,
-} as const;
+};
 
 // from @lexical/code
 

@@ -7,7 +7,9 @@ import {
   type SchemaSpecification,
 } from './SchemaSpecification.js';
 
-export function schemaToPublished(schema: BaseSchema<SchemaSpecification>) {
+export function schemaToPublished(
+  schema: BaseSchema<SchemaSpecification>,
+): PublishedSchemaSpecification {
   const spec: PublishedSchemaSpecification = {
     schemaKind: 'published',
     version: schema.spec.version,

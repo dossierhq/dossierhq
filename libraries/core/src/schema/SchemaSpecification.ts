@@ -325,7 +325,7 @@ type Legacy_V0_6_2_FieldSpecification<T extends FieldSpecification = FieldSpecif
       }
     : T;
 
-export const REQUIRED_RICH_TEXT_NODES = /* @__PURE__ */ (() => [
+export const REQUIRED_RICH_TEXT_NODES: RichTextNodeType[] = /* @__PURE__ */ (() => [
   RichTextNodeType.root,
   RichTextNodeType.paragraph,
   RichTextNodeType.text,
