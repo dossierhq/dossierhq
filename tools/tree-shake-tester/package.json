@@ -11,6 +11,7 @@
     "@dossierhq/design": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*"
   },
   "devDependencies": {

@@ -23,6 +23,7 @@ bundle_esbuild test-cases/core-empty.js
 bundle_esbuild test-cases/design-empty.js
 bundle_esbuild test-cases/graphql-empty.js
 bundle_esbuild test-cases/react-components-empty.js
+bundle_esbuild test-cases/react-components2-empty.js
 bundle_esbuild test-cases/server-empty.js
 
 bundle_rollup test-cases/better-sqlite3-empty.js
@@ -30,4 +31,5 @@ bundle_rollup test-cases/core-empty.js
 bundle_rollup test-cases/design-empty.js -p @rollup/plugin-commonjs
 bundle_rollup test-cases/graphql-empty.js -p @rollup/plugin-commonjs
 bundle_rollup test-cases/react-components-empty.js -p @rollup/plugin-commonjs
+bundle_rollup test-cases/react-components2-empty.js -p @rollup/plugin-commonjs
 bundle_rollup test-cases/server-empty.js
