@@ -15,6 +15,10 @@ updates:
       day: "friday"
     open-pull-requests-limit: 10
     groups:
+      astro:
+        patterns:
+          - "@astrojs/*"
+          - "astro"
       eslint:
         patterns:
           - "@typescript-eslint/*"
