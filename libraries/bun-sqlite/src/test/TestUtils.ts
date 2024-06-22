@@ -25,7 +25,7 @@ export function registerTestSuite(suiteName: string, testSuite: TestSuite): void
 export async function initializeIntegrationTestServer(
   filename: string,
 ): PromiseResult<ServerInit, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  const database = Database.open(filename);
+  const database = new Database(filename, { strict: true });
   const serverResult = await createServer({
     databaseAdapter: (
       await createBunSqliteAdapter({ logger: NoOpLogger }, database, {
@@ -58,7 +58,7 @@ export async function initializeEmptyIntegrationTestServer(
     await unlink(filename);
   }
 
-  const database = Database.open(filename);
+  const database = new Database(filename, { strict: true });
   return await createServer({
     databaseAdapter: (
       await createBunSqliteAdapter({ logger: NoOpLogger }, database, {

@@ -1,6 +1,6 @@
 import { Database } from 'bun:sqlite';
 
-const db = Database.open(':memory:');
+const db = new Database(':memory:', { strict: true });
 db.run('CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT UNIQUE)');
 db.run('INSERT INTO users (name) VALUES ("john")');
 try {

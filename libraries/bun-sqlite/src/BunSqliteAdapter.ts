@@ -40,9 +40,8 @@ export async function createBunSqliteAdapter(
 
     run: (_context: SqliteTransactionContext, query: string, values: ColumnValue[] | undefined) => {
       const statement = database.prepare(query);
-      const result = values ? statement.all(...values) : statement.all();
-      return Promise.resolve(typeof result === 'number' ? result : 0);
-      // TODO https://github.com/oven-sh/bun/issues/2608
+      const changes = values ? statement.run(...values) : statement.run();
+      return Promise.resolve(changes.changes);
     },
 
     isFtsVirtualTableConstraintFailed,
