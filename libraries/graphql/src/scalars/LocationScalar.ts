@@ -2,31 +2,35 @@ import type { Location } from '@dossierhq/core';
 import { GraphQLScalarType } from 'graphql';
 import { Kind, type ObjectValueNode } from 'graphql/language/index.js';
 
-export const LocationScalar = new GraphQLScalarType({
-  name: 'Location',
-  description: 'Geographic location using EPSG:4326/WGS 84',
-  serialize(value) {
-    if (value === null) return null;
-    assertLocation(value);
-    return value;
-  },
-  parseValue(value) {
-    if (value === null) return null;
-    assertLocation(value);
-    return value;
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.OBJECT) {
-      const lat = getFloatFieldValue(ast, 'lat');
-      const lng = getFloatFieldValue(ast, 'lng');
-      return { lat, lng };
-    }
-    if (ast.kind === Kind.NULL) {
-      return null;
-    }
-    throw new Error(`Expected Location to be an object, got ${ast.kind}`);
-  },
-});
+export const LocationScalar: GraphQLScalarType<Location | null, Location | null> =
+  new GraphQLScalarType<Location | null, Location | null>({
+    name: 'Location',
+    description: 'Geographic location using EPSG:4326/WGS 84',
+    serialize(value) {
+      if (value === null) return null;
+      assertLocation(value);
+      return value;
+    },
+    parseValue(value) {
+      if (value === null) return null;
+      assertLocation(value);
+      return value;
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.OBJECT) {
+        const lat = getFloatFieldValue(ast, 'lat');
+        const lng = getFloatFieldValue(ast, 'lng');
+        if (lat === null || lng === null) {
+          throw new Error('Location must have lat and lng fields');
+        }
+        return { lat, lng };
+      }
+      if (ast.kind === Kind.NULL) {
+        return null;
+      }
+      throw new Error(`Expected Location to be an object, got ${ast.kind}`);
+    },
+  });
 
 function assertLocation(value: unknown): asserts value is Location {
   if (typeof value !== 'object' || value === null) {

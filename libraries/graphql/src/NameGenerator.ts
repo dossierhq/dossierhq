@@ -1,4 +1,4 @@
-export function toAdminTypeName(name: string, isAdmin = true) {
+export function toAdminTypeName(name: string, isAdmin = true): string {
   return isAdmin ? `${name}` : toPublishedTypeName(name);
 }
 

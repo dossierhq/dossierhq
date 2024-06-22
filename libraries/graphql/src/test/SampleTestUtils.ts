@@ -5,7 +5,7 @@ export function expectSampledEntitiesArePartOfExpected(
   actualResult: { seed: number; totalCount: number; items: { id: string }[] } | undefined,
   seed: number,
   expectedEntities: (Entity | PublishedEntity)[],
-) {
+): void {
   expect(actualResult).toBeDefined();
   assert(actualResult);
   expect(actualResult.seed).toBe(seed);

@@ -1,6 +1,3 @@
 {
-  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/library-esm/tsconfig-base.json",
-  "compilerOptions": {
-    "isolatedDeclarations": false
-  }
+  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/library-esm/tsconfig-base.json"
 }

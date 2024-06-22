@@ -319,7 +319,7 @@ function getType(resolveInfo: GraphQLResolveInfo, typeCondition: NamedTypeNode) 
 export function simplifyParsedResolveInfoFragmentWithType(
   parsedResolveInfoFragment: ResolveTree,
   type: GraphQLType,
-) {
+): ResolveTree & { fields: Record<string, ResolveTree> } {
   const { fieldsByTypeName } = parsedResolveInfoFragment;
   const fields = {};
   const strippedType = getNamedType(type);
@@ -339,6 +339,7 @@ export function simplifyParsedResolveInfoFragmentWithType(
   };
 }
 
-export const parse = parseResolveInfo;
-export const simplify = simplifyParsedResolveInfoFragmentWithType;
-export const getAlias = getAliasFromResolveInfo;
+export const parse: typeof parseResolveInfo = parseResolveInfo;
+export const simplify: typeof simplifyParsedResolveInfoFragmentWithType =
+  simplifyParsedResolveInfoFragmentWithType;
+export const getAlias: typeof getAliasFromResolveInfo = getAliasFromResolveInfo;

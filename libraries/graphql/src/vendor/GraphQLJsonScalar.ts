@@ -58,7 +58,7 @@ function parseLiteral(
 
 // This named export is intended for users of CommonJS. Users of ES modules
 //  should instead use the default export.
-export const GraphQLJSON = new GraphQLScalarType({
+export const GraphQLJSON: GraphQLScalarType = new GraphQLScalarType({
   name: 'JSON',
   description:
     'The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).',
@@ -70,7 +70,10 @@ export const GraphQLJSON = new GraphQLScalarType({
 
 export default GraphQLJSON;
 
-export const GraphQLJSONObject = new GraphQLScalarType({
+export const GraphQLJSONObject: GraphQLScalarType<object, object> = new GraphQLScalarType<
+  object,
+  object
+>({
   name: 'JSONObject',
   description:
     'The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).',

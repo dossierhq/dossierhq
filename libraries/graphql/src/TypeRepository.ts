@@ -15,7 +15,7 @@ import { toAdminComponentInputTypeName, toAdminTypeName, toEnumName } from './Na
 export class TypeRepository {
   #types: GraphQLNamedType[] = [];
 
-  getTypes() {
+  getTypes(): GraphQLNamedType[] {
     return this.#types;
   }
 
