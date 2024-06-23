@@ -49,6 +49,7 @@ jobs:
           workingDir: libraries/react-components2
       - name: Serve Storybook and run tests
         run: |
+          cd libraries/react-components2
           npx --yes concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx --yes http-server storybook-static --port 6008 --silent" \
             "npx --yes wait-on tcp:6008 && npm run test:storybook"
