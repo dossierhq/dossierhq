@@ -31,7 +31,8 @@
     "start": "storybook dev -p 6008 --no-open",
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "test:storybook": "test-storybook --url http://127.0.0.1:6008 -s --browsers firefox chromium webkit"
   },
   "repository": {
     "type": "git",
