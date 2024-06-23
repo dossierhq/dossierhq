@@ -83,6 +83,7 @@
     "uuid": "~10.0.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "~1.5.0",
     "@graphiql/toolkit": "~0.9.1",
     "@ianvs/prettier-plugin-sort-imports": "~4.2.1",
     "@libsql/client": "~0.6.2",
@@ -101,6 +102,7 @@
     "@storybook/react": "~8.1.10",
     "@storybook/react-vite": "~8.1.10",
     "@storybook/test": "~8.1.10",
+    "@storybook/test-runner": "~0.19.0",
     "@types/base-64": "~1.0.2",
     "@types/better-sqlite3": "~7.6.10",
     "@types/body-parser": "~1.19.5",
@@ -121,6 +123,7 @@
     "autoprefixer": "~10.4.19",
     "base-64": "~1.0.0",
     "bulma": "~0.9.4",
+    "chromatic": "~11.5.4",
     "concurrently": "~8.2.2",
     "esbuild": "~0.21.5",
     "eslint-config-next": "~14.2.4",

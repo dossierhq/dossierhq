@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn, userEvent, waitFor, waitForElementToBeRemoved, within } from '@storybook/test';
+import { fn, screen, userEvent, waitFor, waitForElementToBeRemoved, within } from '@storybook/test';
 import type { ComponentProps } from 'react';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';
@@ -32,29 +32,18 @@ type Story = StoryObj<typeof meta>;
 export const Normal: Story = {};
 
 export const CreateStringsEntity: Story = {
+  args: {
+    urlSearchParams: new URLSearchParams([
+      ['new', 'StringsEntity:e20e9cfc-994a-4115-91bf-2c907f9a87df'],
+    ]),
+  },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('Open create dialog', async () => {
-      const createButtonElement = await waitFor(() => canvas.getByText('Create'));
-      await userEvent.click(createButtonElement);
-    });
-
-    await step('Select StringsEntity', async () => {
-      const dialogElement = document.querySelector('[role="dialog"]');
-      if (!dialogElement || !(dialogElement instanceof HTMLElement)) {
-        throw new Error('Dialog not found');
-      }
-      const dialog = within(dialogElement);
-
-      await userEvent.type(dialog.getByRole('combobox'), 'StringsEntity');
-      await userEvent.keyboard('{Enter}');
-
-      await waitForElementToBeRemoved(dialogElement);
-    });
+    const titleElement = await waitFor(() => canvas.getByLabelText('title'));
 
     await step('Enter a title', async () => {
-      await userEvent.type(canvas.getByLabelText('title'), 'My title');
+      await userEvent.type(titleElement, 'My title');
     });
   },
 };

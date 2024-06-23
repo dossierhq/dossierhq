@@ -22,13 +22,13 @@
   "scripts": {
     "build": "npm run prettier:check && heft build --clean && postcss src/globals.css -o lib/main.css && npm run eslint:check && npm run test",
     "build:watch": "heft build-watch",
+    "build-storybook": "storybook build --quiet",
     "clean": "heft clean",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "storybook dev -p 6008 --no-open",
-    "storybook:build": "storybook build --quiet",
     "test": "vitest",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
@@ -37,6 +37,9 @@
     "type": "git",
     "url": "git+https://github.com/dossierhq/dossierhq.git",
     "directory": "libraries/react-components2"
+  },
+  "bugs": {
+    "url": "https://github.com/dossierhq/dossierhq/issues"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "~1.1.1",
@@ -61,6 +64,7 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "~1.5.0",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
@@ -75,6 +79,7 @@
     "@storybook/react": "~8.1.10",
     "@storybook/react-vite": "~8.1.10",
     "@storybook/test": "~8.1.10",
+    "@storybook/test-runner": "~0.19.0",
     "@types/lodash": "~4.17.5",
     "@types/react": "18.3.3",
     "@types/react-dom": "~18.3.0",
@@ -83,6 +88,7 @@
     "@typescript-eslint/parser": "~7.13.1",
     "@vitejs/plugin-react": "~4.3.1",
     "autoprefixer": "~10.4.19",
+    "chromatic": "~11.5.4",
     "eslint": "~8.57.0",
     "eslint-plugin-react": "~7.34.3",
     "eslint-plugin-react-compiler": "0.0.0-experimental-51a85ea-20240601",

@@ -37,6 +37,11 @@ jobs:
         run: |
           cd libraries/sql.js-browser-integration-test
           npx playwright install --with-deps
-      - name: rush build --to @dossierhq/sql.js-browser-integration-test
+      - name: rush build --to @dossierhq/sql.js-browser-integration-test --to @dossierhq/react-components2
         run: |
-          node common/scripts/install-run-rush.js build --to @dossierhq/sql.js-browser-integration-test --verbose --timeline
+          node common/scripts/install-run-rush.js build --to @dossierhq/sql.js-browser-integration-test --to @dossierhq/react-components2 --verbose --timeline
+      - name: Run Chromatic for react-components2
+        uses: chromaui/action@v11
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: libraries/react-components2
