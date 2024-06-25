@@ -53,13 +53,15 @@ export type ContentEditorCommandMenuConfig = CommandMenuConfig<
   ContentEditorCommandMenuAlert
 >;
 
+export type ContentEditorCommandMenuState = CommandMenuState<ContentEditorCommandMenuConfig>;
+
 export type ContentEditorCommandMenuAction = CommandMenuAction<ContentEditorCommandMenuConfig>;
 
 export function ContentEditorCommandMenu({
   state,
   dispatch,
 }: {
-  state: Readonly<CommandMenuState<ContentEditorCommandMenuConfig>>;
+  state: Readonly<ContentEditorCommandMenuState>;
   dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   const { schema, drafts } = useContext(EntityEditorStateContext);
@@ -102,9 +104,17 @@ export function ContentEditorCommandMenu({
           <>
             <CommandGroup heading="Suggestions">
               <CommandItem
+                onSelect={() => {
+                  dispatchEntityEditor(new EntityEditorActions.ToggleShowOpenDialog(true));
+                  dispatch(new CommandMenuState_CloseAction());
+                }}
+              >
+                Open entity
+              </CommandItem>
+              <CommandItem
                 onSelect={() => dispatch(new CommandMenuState_OpenPageAction({ id: 'create' }))}
               >
-                Create entity...
+                Create entity
               </CommandItem>
             </CommandGroup>
             {drafts.length > 0 && (

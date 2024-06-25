@@ -22,6 +22,7 @@ const dialogContentVariants = cva(
         default: 'left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] max-w-lg w-full',
         'sm-fill':
           'top-4 left-4 right-4 md:inset-auto md:left-[50%] md:top-[50%] md:translate-x-[-50%] md:translate-y-[-50%] md:max-w-lg md:w-full',
+        maximize: 'top-4 left-4 right-4 bottom-4',
       },
     },
     defaultVariants: {

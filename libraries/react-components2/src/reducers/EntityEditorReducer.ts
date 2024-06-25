@@ -28,6 +28,7 @@ export interface EntityEditorState {
   activeEntityEditorScrollSignal: number;
   activeEntityMenuScrollSignal: number;
   pendingSchemaActions: EntityEditorStateAction[] | null;
+  showOpenDialog: boolean;
 }
 
 export interface EntityEditorDraftState {
@@ -70,6 +71,7 @@ export function initializeEntityEditorState({
     activeEntityEditorScrollSignal: 0,
     activeEntityMenuScrollSignal: 0,
     pendingSchemaActions: actions ?? null,
+    showOpenDialog: false,
   };
 }
 
@@ -470,6 +472,22 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
   }
 }
 
+class ToggleShowOpenDialogAction implements EntityEditorStateAction {
+  showOpenDialog: boolean;
+
+  constructor(showOpenDialog: boolean) {
+    this.showOpenDialog = showOpenDialog;
+  }
+
+  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+    if (state.showOpenDialog === this.showOpenDialog) {
+      return state;
+    }
+
+    return { ...state, showOpenDialog: this.showOpenDialog };
+  }
+}
+
 class UpdateEntityAction extends EntityEditorDraftAction {
   entity: Entity;
 
@@ -573,6 +591,7 @@ export const EntityEditorActions = {
   SetField: SetFieldAction,
   SetName: SetNameAction,
   SetNextEntityUpdateIsDueToUpsert: SetNextEntityUpdateIsDueToUpsertAction,
+  ToggleShowOpenDialog: ToggleShowOpenDialogAction,
   UpdateEntity: UpdateEntityAction,
   UpdateSchemaSpecification: UpdateSchemaSpecificationAction,
 };

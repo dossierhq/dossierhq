@@ -39,6 +39,7 @@ describe('initializeEntityEditorState', () => {
         "drafts": [],
         "pendingSchemaActions": null,
         "schema": null,
+        "showOpenDialog": false,
         "status": "",
       }
     `);
@@ -63,6 +64,7 @@ describe('initializeEntityEditorState', () => {
           },
         ],
         "schema": null,
+        "showOpenDialog": false,
         "status": "",
       }
     `);
@@ -88,6 +90,7 @@ describe('initializeEntityEditorState', () => {
           },
         ],
         "schema": null,
+        "showOpenDialog": false,
         "status": "",
       }
     `);
