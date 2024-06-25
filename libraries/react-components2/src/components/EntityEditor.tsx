@@ -1,11 +1,16 @@
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import { useContext, useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon, MenuIcon } from 'lucide-react';
+import { useCallback, useContext, useState, type Dispatch } from 'react';
 import { EntityFieldEditor } from '../components/EntityFieldEditor.js';
 import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
+import { CommandMenuState_OpenPageAction } from '../reducers/CommandReducer.js';
 import {
   EntityEditorActions,
   type EntityEditorDraftState,
 } from '../reducers/EntityEditorReducer.js';
+import type {
+  ContentEditorCommandMenuAction,
+  ContentEditorCommandMenuConfig,
+} from './ContentEditorCommandMenu.js';
 import { EntityCard } from './EntityCard.js';
 import { Button } from './ui/button.js';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.js';
@@ -13,9 +18,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collap
 interface Props {
   id?: string;
   draftState: EntityEditorDraftState;
+  dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
 }
 
-export function EntityEditor({ id, draftState }: Props) {
+export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
   // const { client } = useContext(DossierContext);
   const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
   const [showFields, setShowFields] = useState(true);
@@ -79,7 +85,11 @@ export function EntityEditor({ id, draftState }: Props) {
         />
       </div>
       <Collapsible open={showFields} onOpenChange={setShowFields}>
-        <EntityEditorToolbar showFields={showFields} />
+        <EntityEditorToolbar
+          entityId={draftState.id}
+          showFields={showFields}
+          dispatchCommandMenu={dispatchCommandMenu}
+        />
         <CollapsibleContent className="CollapsibleContent">
           <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">
             {/* <Field>
@@ -141,10 +151,31 @@ export function EntityEditor({ id, draftState }: Props) {
   );
 }
 
-function EntityEditorToolbar({ showFields }: { showFields: boolean }) {
+function EntityEditorToolbar({
+  entityId,
+  showFields,
+  dispatchCommandMenu,
+}: {
+  entityId: string;
+  showFields: boolean;
+  dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
+}) {
+  const handleMenuClick = useCallback(() => {
+    dispatchCommandMenu(
+      new CommandMenuState_OpenPageAction<ContentEditorCommandMenuConfig>({
+        id: 'draft',
+        draftId: entityId,
+      }),
+    );
+  }, [dispatchCommandMenu, entityId]);
+
   return (
     <div className="mb-2 flex gap-2">
-      <div className="flex w-0 flex-grow gap-2 overflow-auto"></div>
+      <div className="flex w-0 flex-grow gap-2 overflow-auto">
+        <Button variant="ghost" onClick={handleMenuClick}>
+          <MenuIcon className="h-4 w-4" />
+        </Button>
+      </div>
       <CollapsibleTrigger asChild>
         <Button variant="ghost">
           {showFields ? (

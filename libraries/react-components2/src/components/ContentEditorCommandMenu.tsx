@@ -13,6 +13,7 @@ import {
   CommandMenuState_ToggleShowAction,
   CommandMenuState_UpdateSearchAction,
   type CommandMenuAction,
+  type CommandMenuConfig,
   type CommandMenuState,
 } from '../reducers/CommandReducer.js';
 import {
@@ -47,14 +48,19 @@ export type ContentEditorCommandMenuPage =
 
 export type ContentEditorCommandMenuAlert = { id: 'closeDraft'; draftId: string };
 
+export type ContentEditorCommandMenuConfig = CommandMenuConfig<
+  ContentEditorCommandMenuPage,
+  ContentEditorCommandMenuAlert
+>;
+
+export type ContentEditorCommandMenuAction = CommandMenuAction<ContentEditorCommandMenuConfig>;
+
 export function ContentEditorCommandMenu({
   state,
   dispatch,
 }: {
-  state: Readonly<CommandMenuState<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>>;
-  dispatch: Dispatch<
-    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
-  >;
+  state: Readonly<CommandMenuState<ContentEditorCommandMenuConfig>>;
+  dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   const { schema, drafts } = useContext(EntityEditorStateContext);
   const dispatchEntityEditor = useContext(EntityEditorDispatchContext);
@@ -140,9 +146,7 @@ function Alert({
   dispatchEntityEditor,
 }: {
   alert: ContentEditorCommandMenuAlert;
-  dispatch: Dispatch<
-    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
-  >;
+  dispatch: Dispatch<ContentEditorCommandMenuAction>;
   dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
 }) {
   switch (alert.id) {
@@ -187,9 +191,7 @@ function CreateEntityCommandGroup({
 }: {
   schema: Schema | null;
   dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
-  dispatch: Dispatch<
-    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
-  >;
+  dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   return (
     <CommandGroup heading="Create entity">
@@ -220,9 +222,7 @@ function DraftCommandGroup({
 }: {
   id: string;
   dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
-  dispatch: Dispatch<
-    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
-  >;
+  dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   const draft = useContext(EntityEditorStateContext).drafts.find((d) => d.id === id);
   if (!draft) {
@@ -257,10 +257,10 @@ function DraftCommandGroup({
   );
 }
 
-function GenericCommands<TPage, TAlert>({
+function GenericCommands<TConfig extends CommandMenuConfig<unknown, unknown>>({
   dispatch,
 }: {
-  dispatch: Dispatch<CommandMenuAction<TPage, TAlert>>;
+  dispatch: Dispatch<CommandMenuAction<TConfig>>;
 }) {
   const { setTheme } = useTheme();
   return (

@@ -2,10 +2,11 @@ import { useEffect, type Dispatch } from 'react';
 import {
   CommandMenuState_ToggleShowAction,
   type CommandMenuAction,
+  type CommandMenuConfig,
 } from '../reducers/CommandReducer.js';
 
-export function useOpenCommandMenu<TPage, TAlert>(
-  dispatch: Dispatch<CommandMenuAction<TPage, TAlert>>,
+export function useOpenCommandMenu<TConfig extends CommandMenuConfig<unknown, unknown>>(
+  dispatch: Dispatch<CommandMenuAction<TConfig>>,
 ) {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

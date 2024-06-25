@@ -2,8 +2,8 @@ import { TerminalIcon } from 'lucide-react';
 import { useContext, useEffect, useReducer, type Dispatch } from 'react';
 import {
   ContentEditorCommandMenu,
-  type ContentEditorCommandMenuAlert,
-  type ContentEditorCommandMenuPage,
+  type ContentEditorCommandMenuAction,
+  type ContentEditorCommandMenuConfig,
 } from '../components/ContentEditorCommandMenu.js';
 import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
 import { EntityEditor } from '../components/EntityEditor.js';
@@ -17,7 +17,6 @@ import {
   CommandMenuState_ShowAction,
   initializeCommandMenuState,
   reduceCommandMenuState,
-  type CommandMenuAction,
 } from '../reducers/CommandReducer.js';
 import { EntityEditorActions, reduceEntityEditorState } from '../reducers/EntityEditorReducer.js';
 import {
@@ -42,9 +41,9 @@ export function ContentEditorScreen({
   useEntityEditorCallOnUrlSearchQueryParamChange(entityEditorState, onUrlSearchParamsChange);
 
   const [commandMenuState, dispatchCommandMenu] = useReducer(
-    reduceCommandMenuState<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>,
+    reduceCommandMenuState<ContentEditorCommandMenuConfig>,
     { id: 'root' },
-    initializeCommandMenuState<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>,
+    initializeCommandMenuState<ContentEditorCommandMenuConfig>,
   );
 
   useEffect(() => {
@@ -78,7 +77,12 @@ export function ContentEditorScreen({
             <div className="overflow-auto">
               <div className="container flex flex-col gap-2 p-2">
                 {drafts.map((it) => (
-                  <EntityEditor key={it.id} id={`entity-${it.id}-editor`} draftState={it} />
+                  <EntityEditor
+                    key={it.id}
+                    id={`entity-${it.id}-editor`}
+                    draftState={it}
+                    dispatchCommandMenu={dispatchCommandMenu}
+                  />
                 ))}
               </div>
             </div>
@@ -92,9 +96,7 @@ export function ContentEditorScreen({
 function Sidebar({
   dispatchCommandMenu,
 }: {
-  dispatchCommandMenu: Dispatch<
-    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
-  >;
+  dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   return (
     <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
@@ -158,9 +160,7 @@ function OpenEntityList() {
 function Toolbar({
   dispatchCommandMenu,
 }: {
-  dispatchCommandMenu: Dispatch<
-    CommandMenuAction<ContentEditorCommandMenuPage, ContentEditorCommandMenuAlert>
-  >;
+  dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   return (
     <div className="flex items-center border-b">
