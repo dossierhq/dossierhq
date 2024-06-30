@@ -5,6 +5,15 @@ export function encodeObjectToURLSearchParams(
   options?: { keepEmptyObjects: boolean },
 ): URLSearchParams {
   const payload = new URLSearchParams();
+  encodeURLSearchParams(payload, params, options);
+  return payload;
+}
+
+export function encodeURLSearchParams(
+  urlSearchParams: URLSearchParams,
+  params: object | undefined,
+  options?: { keepEmptyObjects: boolean },
+): void {
   const removeEmptyObjects = !options?.keepEmptyObjects;
   if (params) {
     for (const [key, value] of Object.entries(params)) {
@@ -20,10 +29,9 @@ export function encodeObjectToURLSearchParams(
         continue;
       }
       const encoded = JSON.stringify(value);
-      payload.set(key, encoded);
+      urlSearchParams.set(key, encoded);
     }
   }
-  return payload;
 }
 
 export function decodeURLSearchParamsParam<TReturn>(

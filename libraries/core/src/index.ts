@@ -124,6 +124,7 @@ export {
 export {
   decodeURLSearchParamsParam,
   encodeObjectToURLSearchParams,
+  encodeURLSearchParams,
 } from './client/UrlQueryUtils.js';
 export {
   normalizeComponent,
