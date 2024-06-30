@@ -1630,8 +1630,8 @@ importers:
         specifier: ~4.17.21
         version: 4.17.21
       lucide-react:
-        specifier: ~0.397.0
-        version: 0.397.0(react@18.3.1)
+        specifier: ~0.398.0
+        version: 0.398.0(react@18.3.1)
       swr:
         specifier: ~2.2.5
         version: 2.2.5(react@18.3.1)
@@ -2275,8 +2275,8 @@ importers:
         specifier: ~4.17.21
         version: 4.17.21
       lucide-react:
-        specifier: ~0.397.0
-        version: 0.397.0(react@18.3.1)
+        specifier: ~0.398.0
+        version: 0.398.0(react@18.3.1)
       next:
         specifier: ~14.2.4
         version: 14.2.4(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(@playwright/test@1.45.0)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
@@ -10306,8 +10306,8 @@ packages:
   lru-memoizer@2.2.0:
     resolution: {integrity: sha512-QfOZ6jNkxCcM/BkIPnFsqDhtrazLRsghi9mBwFAzol5GCvj4EkFT899Za3+QwikCg5sRX8JstioBDwOxEyzaNw==}
 
-  lucide-react@0.397.0:
-    resolution: {integrity: sha512-rUcbRY5jFP/4za/OJvaRUUmdPsPb940Tw9zE1ehrRZmr9JnkDcW8OV3POR3XfEAAMDkssiTc5IWBFv8Y//pkDQ==}
+  lucide-react@0.398.0:
+    resolution: {integrity: sha512-qwTvyiWP1iBIbq4qr5yA7fdjB9fxCy/HKDNM3og5oGZ3NRAMCMDzak7/w+yJJ39AJI3+1yPlAigdpRyF3h7gzw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -23566,7 +23566,7 @@ snapshots:
       lodash.clonedeep: 4.5.0
       lru-cache: 4.0.2
 
-  lucide-react@0.397.0(react@18.3.1):
+  lucide-react@0.398.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
