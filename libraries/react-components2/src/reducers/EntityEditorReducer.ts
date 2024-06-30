@@ -33,6 +33,7 @@ export interface EntityEditorState {
 
 export interface EntityEditorDraftState {
   id: string;
+  isNew: boolean;
   status: '' | 'changed';
   hasSaveErrors: boolean;
   hasPublishErrors: boolean;
@@ -258,8 +259,10 @@ class AddDraftAction implements EntityEditorStateAction {
     const { schema } = state;
     assertIsDefined(schema);
 
+    const isNew = 'newType' in this.selector;
     const draft: EntityEditorDraftState = {
       id: this.selector.id,
+      isNew,
       status: '',
       hasSaveErrors: false,
       hasPublishErrors: false,
@@ -559,6 +562,7 @@ class UpdateEntityAction extends EntityEditorDraftAction {
       hasPublishErrors,
       hasSaveErrors,
       entity: this.entity,
+      isNew: false,
     };
   }
 }

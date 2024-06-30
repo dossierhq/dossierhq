@@ -29,8 +29,10 @@ export function useEntityEditorCallOnUrlSearchQueryParamChange(
       query: contentListState.query,
       sampling: contentListState.sampling,
       paging: contentListState.paging,
-      entities: drafts.map((draft) => {
-        return { id: draft.id };
+      entities: drafts.map((draftState) => {
+        return draftState.isNew
+          ? { id: draftState.id, type: draftState.draft?.entitySpec.name, isNew: true }
+          : { id: draftState.id };
       }),
     });
     setParams((oldParams) => {

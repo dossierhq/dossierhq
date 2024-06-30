@@ -18,13 +18,18 @@ export function ContentEditorLoader() {
 
   return (
     <>
-      {entityEditorState.drafts.map((draft) => (
-        <EntityLoader
-          key={draft.id}
-          id={draft.id}
-          dispatchEntityEditorState={dispatchEntityEditorState}
-        />
-      ))}
+      {entityEditorState.drafts.map((draftState) => {
+        if (draftState.isNew) {
+          return null;
+        }
+        return (
+          <EntityLoader
+            key={draftState.id}
+            id={draftState.id}
+            dispatchEntityEditorState={dispatchEntityEditorState}
+          />
+        );
+      })}
     </>
   );
 }
