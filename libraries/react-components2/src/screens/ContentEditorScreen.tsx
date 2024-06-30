@@ -11,8 +11,8 @@ import { OpenContentDialogContent } from '../components/OpenContentDialogContent
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import { Dialog } from '../components/ui/dialog.js';
-import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
-import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.js';
+import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
+import { ContentEditorStateContext } from '../contexts/ContentEditorStateContext.js';
 import { useResponsive } from '../hooks/useResponsive.js';
 import {
   CommandMenuState_OpenPageAction,
@@ -20,13 +20,16 @@ import {
   initializeCommandMenuState,
   reduceCommandMenuState,
 } from '../reducers/CommandReducer.js';
+import {
+  ContentEditorActions,
+  reduceContentEditorState,
+} from '../reducers/ContentEditorReducer.js';
+import {
+  initializeContentEntityStateFromUrlQuery,
+  useContentEditorCallOnUrlSearchQueryParamChange,
+} from '../reducers/ContentEditorUrlSynchronizer.js';
 import { reduceContentListState } from '../reducers/ContentListReducer.js';
 import { initializeContentListStateFromUrlQuery } from '../reducers/ContentListUrlSynchronizer.js';
-import { EntityEditorActions, reduceEntityEditorState } from '../reducers/EntityEditorReducer.js';
-import {
-  initializeEditorEntityStateFromUrlQuery,
-  useEntityEditorCallOnUrlSearchQueryParamChange,
-} from '../reducers/EntityEditorUrlSynchronizer.js';
 
 export function ContentEditorScreen({
   urlSearchParams,
@@ -42,14 +45,14 @@ export function ContentEditorScreen({
     { mode: 'full', urlSearchParams },
     initializeContentListStateFromUrlQuery,
   );
-  const [entityEditorState, dispatchEntityEditorState] = useReducer(
-    reduceEntityEditorState,
+  const [contentEditorState, dispatchContentEditor] = useReducer(
+    reduceContentEditorState,
     urlSearchParams ?? null,
-    initializeEditorEntityStateFromUrlQuery,
+    initializeContentEntityStateFromUrlQuery,
   );
-  useEntityEditorCallOnUrlSearchQueryParamChange(
+  useContentEditorCallOnUrlSearchQueryParamChange(
     contentListState,
-    entityEditorState,
+    contentEditorState,
     onUrlSearchParamsChange,
   );
 
@@ -60,10 +63,10 @@ export function ContentEditorScreen({
   );
 
   useEffect(() => {
-    onEditorHasChangesChange(entityEditorState.status === 'changed');
-  }, [entityEditorState.status, onEditorHasChangesChange]);
+    onEditorHasChangesChange(contentEditorState.status === 'changed');
+  }, [contentEditorState.status, onEditorHasChangesChange]);
 
-  const { drafts, activeEntityEditorScrollSignal, activeEntityId } = entityEditorState;
+  const { drafts, activeEntityEditorScrollSignal, activeEntityId } = contentEditorState;
 
   const entityEditorAndSignal = activeEntityId
     ? `${activeEntityId} ${activeEntityEditorScrollSignal}`
@@ -79,8 +82,8 @@ export function ContentEditorScreen({
 
   const md = useResponsive('md');
   return (
-    <EntityEditorDispatchContext.Provider value={dispatchEntityEditorState}>
-      <EntityEditorStateContext.Provider value={entityEditorState}>
+    <ContentEditorDispatchContext.Provider value={dispatchContentEditor}>
+      <ContentEditorStateContext.Provider value={contentEditorState}>
         <ContentEditorLoader />
         <ContentEditorCommandMenu state={commandMenuState} dispatch={dispatchCommandMenu} />
         <div className="flex h-dvh w-dvw overflow-hidden">
@@ -101,25 +104,25 @@ export function ContentEditorScreen({
             </div>
           </main>
         </div>
-        {entityEditorState.showOpenDialog && (
+        {contentEditorState.showOpenDialog && (
           <Dialog
             open
             onOpenChange={() =>
-              dispatchEntityEditorState(new EntityEditorActions.ToggleShowOpenDialog(false))
+              dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false))
             }
           >
             <OpenContentDialogContent
               contentListState={contentListState}
               dispatchContentListState={dispatchContentListState}
               onOpenEntity={(entityId) => {
-                dispatchEntityEditorState(new EntityEditorActions.AddDraft({ id: entityId }));
-                dispatchEntityEditorState(new EntityEditorActions.ToggleShowOpenDialog(false));
+                dispatchContentEditor(new ContentEditorActions.AddDraft({ id: entityId }));
+                dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false));
               }}
             />
           </Dialog>
         )}
-      </EntityEditorStateContext.Provider>
-    </EntityEditorDispatchContext.Provider>
+      </ContentEditorStateContext.Provider>
+    </ContentEditorDispatchContext.Provider>
   );
 }
 
@@ -128,7 +131,7 @@ function Sidebar({
 }: {
   dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
 }) {
-  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   return (
     <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
@@ -140,9 +143,7 @@ function Sidebar({
         </Button>
         <Button
           variant="secondary"
-          onClick={() =>
-            dispatchEntityEditorState(new EntityEditorActions.ToggleShowOpenDialog(true))
-          }
+          onClick={() => dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(true))}
         >
           Open
         </Button>
@@ -167,17 +168,17 @@ function Sidebar({
 }
 
 function OpenEntityList() {
-  const entityEditorState = useContext(EntityEditorStateContext);
-  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
-  return entityEditorState.drafts.map((entityDraft) => {
+  const contentEditorState = useContext(ContentEditorStateContext);
+  const dispatchContentEditor = useContext(ContentEditorDispatchContext);
+  return contentEditorState.drafts.map((entityDraft) => {
     if (!entityDraft.draft) return null;
     return (
       <button
         key={entityDraft.id}
         className="rounded border bg-background p-2 text-start hover:bg-accent"
         onClick={() =>
-          dispatchEntityEditorState(
-            new EntityEditorActions.SetActiveEntity(entityDraft.id, false, true),
+          dispatchContentEditor(
+            new ContentEditorActions.SetActiveEntity(entityDraft.id, false, true),
           )
         }
       >

@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import type { FieldEditorState } from '../reducers/EntityEditorReducer.js';
+import type { FieldEditorState } from '../reducers/ContentEditorReducer.js';
 import { FieldEditor } from './FieldEditor.js';
 import { Badge } from './ui/badge.js';
 import { Label } from './ui/label.js';

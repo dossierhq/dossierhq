@@ -1,28 +1,28 @@
 import type { EntityQuery, EntityReference, EntitySamplingOptions, Paging } from '@dossierhq/core';
 import { useEffect, useState } from 'react';
+import {
+  ContentEditorActions,
+  initializeContentEditorState,
+  type ContentEditorState,
+} from './ContentEditorReducer.js';
 import type { ContentListState } from './ContentListReducer.js';
 import { addContentListParamsToURLSearchParams } from './ContentListUrlSynchronizer.js';
-import {
-  EntityEditorActions,
-  initializeEntityEditorState,
-  type EntityEditorState,
-} from './EntityEditorReducer.js';
 
-export function initializeEditorEntityStateFromUrlQuery(
+export function initializeContentEntityStateFromUrlQuery(
   urlSearchParams: Readonly<URLSearchParams> | null,
-): EntityEditorState {
-  const actions = urlQueryToSearchEntityStateActions(urlSearchParams);
-  return initializeEntityEditorState({ actions });
+): ContentEditorState {
+  const actions = urlQueryToContentEditorStateActions(urlSearchParams);
+  return initializeContentEditorState({ actions });
 }
 
-export function useEntityEditorCallOnUrlSearchQueryParamChange(
+export function useContentEditorCallOnUrlSearchQueryParamChange(
   contentListState: ContentListState,
-  entityEditorState: EntityEditorState,
+  contentEditorState: ContentEditorState,
   onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
 ) {
   const [params, setParams] = useState<URLSearchParams | null>(null);
 
-  const { drafts } = entityEditorState;
+  const { drafts } = contentEditorState;
   useEffect(() => {
     const result = new URLSearchParams();
     addContentEditorParamsToURLSearchParams(result, {
@@ -50,18 +50,18 @@ export function useEntityEditorCallOnUrlSearchQueryParamChange(
   }, [onUrlSearchParamsChange, params]);
 }
 
-function urlQueryToSearchEntityStateActions(urlSearchParams: Readonly<URLSearchParams> | null) {
+function urlQueryToContentEditorStateActions(urlSearchParams: Readonly<URLSearchParams> | null) {
   const actions = [];
   if (urlSearchParams) {
     for (const newTypeId of urlSearchParams.getAll('new')) {
       const parts = newTypeId.split(':');
       if (parts.length === 2) {
         const [newType, id] = parts;
-        actions.push(new EntityEditorActions.AddDraft({ newType, id }));
+        actions.push(new ContentEditorActions.AddDraft({ newType, id }));
       }
     }
     for (const id of urlSearchParams.getAll('id')) {
-      actions.push(new EntityEditorActions.AddDraft({ id }));
+      actions.push(new ContentEditorActions.AddDraft({ id }));
     }
   }
   return actions;

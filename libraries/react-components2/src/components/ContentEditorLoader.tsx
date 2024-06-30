@@ -1,24 +1,27 @@
 import { useContext, useEffect, type Dispatch } from 'react';
-import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
-import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.js';
+import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
+import { ContentEditorStateContext } from '../contexts/ContentEditorStateContext.js';
 import { useEntity } from '../hooks/useEntity.js';
 import { useSchema } from '../hooks/useSchema.js';
-import { EntityEditorActions, type EntityEditorStateAction } from '../reducers/EntityEditorReducer';
+import {
+  ContentEditorActions,
+  type ContentEditorStateAction,
+} from '../reducers/ContentEditorReducer.js';
 
 export function ContentEditorLoader() {
-  const entityEditorState = useContext(EntityEditorStateContext);
-  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  const contentEditorState = useContext(ContentEditorStateContext);
+  const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   const { schema } = useSchema();
 
   useEffect(() => {
     if (schema) {
-      dispatchEntityEditorState(new EntityEditorActions.UpdateSchemaSpecification(schema));
+      dispatchContentEditor(new ContentEditorActions.UpdateSchemaSpecification(schema));
     }
-  }, [dispatchEntityEditorState, schema]);
+  }, [dispatchContentEditor, schema]);
 
   return (
     <>
-      {entityEditorState.drafts.map((draftState) => {
+      {contentEditorState.drafts.map((draftState) => {
         if (draftState.isNew) {
           return null;
         }
@@ -26,7 +29,7 @@ export function ContentEditorLoader() {
           <EntityLoader
             key={draftState.id}
             id={draftState.id}
-            dispatchEntityEditorState={dispatchEntityEditorState}
+            dispatchContentEditor={dispatchContentEditor}
           />
         );
       })}
@@ -36,10 +39,10 @@ export function ContentEditorLoader() {
 
 function EntityLoader({
   id,
-  dispatchEntityEditorState,
+  dispatchContentEditor,
 }: {
   id: string;
-  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>;
+  dispatchContentEditor: Dispatch<ContentEditorStateAction>;
 }) {
   //TODO don't fetch new entities
   //TODO handle errors
@@ -47,9 +50,9 @@ function EntityLoader({
 
   useEffect(() => {
     if (entity) {
-      dispatchEntityEditorState(new EntityEditorActions.UpdateEntity(entity));
+      dispatchContentEditor(new ContentEditorActions.UpdateEntity(entity));
     }
-  }, [dispatchEntityEditorState, entity]);
+  }, [dispatchContentEditor, entity]);
 
   return null;
 }

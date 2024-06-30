@@ -8,29 +8,29 @@ import {
 } from '@dossierhq/core';
 import { assert, describe, expect, test } from 'vitest';
 import {
-  EntityEditorActions,
+  ContentEditorActions,
   getEntityCreateFromDraftState,
   getEntityUpdateFromDraftState,
-  initializeEntityEditorState,
-  reduceEntityEditorState,
-  type EntityEditorState,
-  type EntityEditorStateAction,
-} from './EntityEditorReducer.js';
+  initializeContentEditorState,
+  reduceContentEditorState,
+  type ContentEditorState,
+  type ContentEditorStateAction,
+} from './ContentEditorReducer.js';
 
-function reduceEntityEditorStateActions(
-  state: EntityEditorState,
-  ...actions: EntityEditorStateAction[]
+function reduceContentEditorStateActions(
+  state: ContentEditorState,
+  ...actions: ContentEditorStateAction[]
 ) {
   let newState = state;
   for (const action of actions) {
-    newState = reduceEntityEditorState(newState, action);
+    newState = reduceContentEditorState(newState, action);
   }
   return newState;
 }
 
-describe('initializeEntityEditorState', () => {
+describe('initializeContentEditorState', () => {
   test('no args', () => {
-    const state = initializeEntityEditorState();
+    const state = initializeContentEditorState();
     expect(state).toMatchInlineSnapshot(`
       {
         "activeEntityEditorScrollSignal": 0,
@@ -47,8 +47,8 @@ describe('initializeEntityEditorState', () => {
 
   test('add draft', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = initializeEntityEditorState({
-      actions: [new EntityEditorActions.AddDraft({ id })],
+    const state = initializeContentEditorState({
+      actions: [new ContentEditorActions.AddDraft({ id })],
     });
     expect(state).toMatchInlineSnapshot(`
       {
@@ -72,8 +72,8 @@ describe('initializeEntityEditorState', () => {
 
   test('add new entity', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = initializeEntityEditorState({
-      actions: [new EntityEditorActions.AddDraft({ id, newType: 'Foo' })],
+    const state = initializeContentEditorState({
+      actions: [new ContentEditorActions.AddDraft({ id, newType: 'Foo' })],
     });
     expect(state).toMatchInlineSnapshot(`
       {
@@ -100,23 +100,23 @@ describe('initializeEntityEditorState', () => {
 describe('AddDraftAction', () => {
   test('add new Foo', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [{ name: 'Foo', fields: [{ name: 'title', type: FieldType.String }] }],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot();
   });
 
   test('add already open Foo', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -126,8 +126,8 @@ describe('AddDraftAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id }),
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.AddDraft({ id }),
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -144,7 +144,7 @@ describe('AddDraftAction', () => {
           foo: null,
         },
       }),
-      new EntityEditorActions.AddDraft({ id }),
+      new ContentEditorActions.AddDraft({ id }),
     );
     expect(state).toMatchSnapshot();
     expect(state.activeEntityMenuScrollSignal).toBe(2);
@@ -155,9 +155,9 @@ describe('AddDraftAction', () => {
 describe('DeleteDraftAction', () => {
   test('add/delete Foo', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -167,9 +167,9 @@ describe('DeleteDraftAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetName(id, 'Changed name'),
-      new EntityEditorActions.DeleteDraft(id),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetName(id, 'Changed name'),
+      new ContentEditorActions.DeleteDraft(id),
     );
     expect(state).toMatchSnapshot();
     expect(state.status).toBe('');
@@ -180,9 +180,9 @@ describe('DeleteDraftAction', () => {
 
 describe('SetActiveEntityAction', () => {
   test('add two entities, set active to first', () => {
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             { name: 'Foo', fields: [] },
@@ -190,15 +190,15 @@ describe('SetActiveEntityAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({
+      new ContentEditorActions.AddDraft({
         id: '619725d7-e583-4544-8bb0-23fc3c2870c0',
         newType: 'Foo',
       }),
-      new EntityEditorActions.AddDraft({
+      new ContentEditorActions.AddDraft({
         id: '9516465b-935a-4cc7-8b97-ccaca81bbe9a',
         newType: 'Bar',
       }),
-      new EntityEditorActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true),
+      new ContentEditorActions.SetActiveEntity('619725d7-e583-4544-8bb0-23fc3c2870c0', true, true),
     );
     expect(state).toMatchSnapshot();
     expect(state.activeEntityId).toBe('619725d7-e583-4544-8bb0-23fc3c2870c0');
@@ -208,9 +208,9 @@ describe('SetActiveEntityAction', () => {
 describe('SetNameAction', () => {
   test('set name of new draft', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -220,8 +220,8 @@ describe('SetNameAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetName(id, 'New name'),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetName(id, 'New name'),
     );
     expect(state).toMatchSnapshot();
 
@@ -234,9 +234,9 @@ describe('SetNameAction', () => {
 
   test('clearing name of new draft links to name field', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -247,9 +247,9 @@ describe('SetNameAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetName(id, 'New name'),
-      new EntityEditorActions.SetName(id, ''),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetName(id, 'New name'),
+      new ContentEditorActions.SetName(id, ''),
     );
     expect(state).toMatchSnapshot();
 
@@ -263,9 +263,9 @@ describe('SetNameAction', () => {
 describe('SetFieldAction', () => {
   test('set title field of new draft', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -276,17 +276,17 @@ describe('SetFieldAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetField(id, 'title', 'New title'),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetField(id, 'title', 'New title'),
     );
     expect(state).toMatchSnapshot();
   });
 
   test('set title field of new draft after name has been set', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -297,18 +297,18 @@ describe('SetFieldAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetName(id, 'New name'),
-      new EntityEditorActions.SetField(id, 'title', 'New title'),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetName(id, 'New name'),
+      new ContentEditorActions.SetField(id, 'title', 'New title'),
     );
     expect(state).toMatchSnapshot();
   });
 
   test('set invalid value (matchPattern) on field of new draft', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -319,8 +319,8 @@ describe('SetFieldAction', () => {
           patterns: [{ name: 'foo', pattern: '^foo$' }],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetField(id, 'string', 'not-foo'),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetField(id, 'string', 'not-foo'),
     );
     expect(state).toMatchSnapshot();
   });
@@ -329,9 +329,9 @@ describe('SetFieldAction', () => {
 describe('SetAuthKeyAction', () => {
   test('set authKey of new draft', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -341,8 +341,8 @@ describe('SetAuthKeyAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.SetAuthKey(id, 'subject'),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.SetAuthKey(id, 'subject'),
     );
     expect(state).toMatchSnapshot();
     expect(state.drafts.find((it) => it.id === id)?.draft?.authKey).toEqual('subject');
@@ -352,9 +352,9 @@ describe('SetAuthKeyAction', () => {
 describe('UpdateEntityAction', () => {
   test('add draft, update entity', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -365,8 +365,8 @@ describe('UpdateEntityAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id }),
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.AddDraft({ id }),
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -395,9 +395,9 @@ describe('UpdateEntityAction', () => {
 
   test('add draft, update entity with unlinked name', () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    const state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -408,8 +408,8 @@ describe('UpdateEntityAction', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id }),
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.AddDraft({ id }),
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -437,9 +437,9 @@ describe('UpdateEntityAction', () => {
 
 describe('UpdateSchemaSpecificationAction', () => {
   test('add empty schema', () => {
-    const state = reduceEntityEditorState(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    const state = reduceContentEditorState(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({}).valueOrThrow(),
       ),
     );
@@ -447,18 +447,18 @@ describe('UpdateSchemaSpecificationAction', () => {
   });
 });
 
-describe('EntityEditorReducer scenarios', () => {
+describe('ContentEditorReducer scenarios', () => {
   test('open existing, get schema', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    let state = initializeEntityEditorState({
-      actions: [new EntityEditorActions.AddDraft({ id })],
+    let state = initializeContentEditorState({
+      actions: [new ContentEditorActions.AddDraft({ id })],
     });
     expect(state).toMatchSnapshot();
     expect(state.pendingSchemaActions).toHaveLength(1);
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateSchemaSpecification(
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -473,9 +473,9 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state).toMatchSnapshot();
     expect(state.pendingSchemaActions).toBeNull();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -500,9 +500,9 @@ describe('EntityEditorReducer scenarios', () => {
 
   test('add new draft, set name and authKey, force update', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -512,29 +512,29 @@ describe('EntityEditorReducer scenarios', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.SetName(id, 'Foo name'));
+    state = reduceContentEditorState(state, new ContentEditorActions.SetName(id, 'Foo name'));
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, ''));
+    state = reduceContentEditorState(state, new ContentEditorActions.SetAuthKey(id, ''));
     expect(state).toMatchSnapshot();
 
     expect(
       getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
+      new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -557,9 +557,9 @@ describe('EntityEditorReducer scenarios', () => {
 
   test('add new draft, set name, authKey and title, simulate save', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -569,19 +569,19 @@ describe('EntityEditorReducer scenarios', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.SetName(id, 'Foo name'));
+    state = reduceContentEditorState(state, new ContentEditorActions.SetName(id, 'Foo name'));
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.SetAuthKey(id, ''));
+    state = reduceContentEditorState(state, new ContentEditorActions.SetAuthKey(id, ''));
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'title', 'Foo title'),
+      new ContentEditorActions.SetField(id, 'title', 'Foo title'),
     );
     expect(state).toMatchSnapshot();
 
@@ -589,15 +589,15 @@ describe('EntityEditorReducer scenarios', () => {
       getEntityCreateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
+      new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -620,9 +620,9 @@ describe('EntityEditorReducer scenarios', () => {
 
   test('open existing entity, set title field, simulate save', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -633,8 +633,8 @@ describe('EntityEditorReducer scenarios', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id }),
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.AddDraft({ id }),
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -654,9 +654,9 @@ describe('EntityEditorReducer scenarios', () => {
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'title', 'New title'),
+      new ContentEditorActions.SetField(id, 'title', 'New title'),
     );
     expect(state).toMatchSnapshot();
 
@@ -664,15 +664,15 @@ describe('EntityEditorReducer scenarios', () => {
       getEntityUpdateFromDraftState(state.drafts.find((it) => it.id === id)!),
     ).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
+      new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(id, true),
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.UpdateEntity({
         id,
         info: {
           authKey: '',
@@ -712,9 +712,9 @@ describe('EntityEditorReducer scenarios', () => {
         title: 'Existing title',
       },
     };
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -724,14 +724,14 @@ describe('EntityEditorReducer scenarios', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id }),
-      new EntityEditorActions.UpdateEntity(entity),
+      new ContentEditorActions.AddDraft({ id }),
+      new ContentEditorActions.UpdateEntity(entity),
     );
     expect(state).toMatchSnapshot();
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity(
+      new ContentEditorActions.UpdateEntity(
         copyEntity(entity, {
           info: {
             status: EntityStatus.published,
@@ -752,9 +752,9 @@ describe('EntityEditorReducer scenarios', () => {
   test('open first entity, open second entity', async () => {
     const firstId = '619725d7-e583-4544-8bb0-23fc3c2870c0';
     const secondId = 'af83fa2d-e05c-49ef-9e31-61e6472c1f28';
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -764,8 +764,8 @@ describe('EntityEditorReducer scenarios', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id: firstId }),
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.AddDraft({ id: firstId }),
+      new ContentEditorActions.UpdateEntity({
         id: firstId,
         info: {
           authKey: '',
@@ -787,14 +787,14 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state.activeEntityMenuScrollSignal).toBe(1);
     expect(state.activeEntityEditorScrollSignal).toBe(1);
 
-    state = reduceEntityEditorState(state, new EntityEditorActions.AddDraft({ id: secondId }));
+    state = reduceContentEditorState(state, new ContentEditorActions.AddDraft({ id: secondId }));
     expect(state).toMatchSnapshot('2 After AddDraft');
     expect(state.activeEntityMenuScrollSignal).toBe(1);
     expect(state.activeEntityEditorScrollSignal).toBe(1);
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity({
+      new ContentEditorActions.UpdateEntity({
         id: secondId,
         info: {
           authKey: '',
@@ -819,9 +819,9 @@ describe('EntityEditorReducer scenarios', () => {
 
   test('required string fields component place in normal and adminOnly fields', async () => {
     const id = '619725d7-e583-4544-8bb0-23fc3c2870c0';
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(
         Schema.createAndValidate({
           entityTypes: [
             {
@@ -840,7 +840,7 @@ describe('EntityEditorReducer scenarios', () => {
           ],
         }).valueOrThrow(),
       ),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
     );
     expect(state).toMatchSnapshot('1 Initial');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
@@ -848,9 +848,12 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);
     expect(state.drafts[0].draft?.fields[1].validationIssues).toEqual([]);
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'adminOnly', { type: 'RequiredString', required: null }),
+      new ContentEditorActions.SetField(id, 'adminOnly', {
+        type: 'RequiredString',
+        required: null,
+      }),
     );
     expect(state).toMatchSnapshot('2 Setting adminOnly field to empty component');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
@@ -858,9 +861,9 @@ describe('EntityEditorReducer scenarios', () => {
     expect(state.drafts[0].draft?.fields[0].validationIssues).toEqual([]);
     expect(state.drafts[0].draft?.fields[1].validationIssues).toEqual([]);
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.SetField(id, 'normal', { type: 'RequiredString', required: null }),
+      new ContentEditorActions.SetField(id, 'normal', { type: 'RequiredString', required: null }),
     );
     expect(state).toMatchSnapshot('3 Setting normal field to empty component');
     expect(state.drafts[0].hasSaveErrors).toBe(false);
@@ -908,17 +911,17 @@ describe('EntityEditorReducer scenarios', () => {
       })
       .valueOrThrow();
 
-    let state = reduceEntityEditorStateActions(
-      initializeEntityEditorState(),
-      new EntityEditorActions.UpdateSchemaSpecification(schema),
-      new EntityEditorActions.AddDraft({ id, newType: 'Foo' }),
-      new EntityEditorActions.UpdateEntity(initialEntity),
+    let state = reduceContentEditorStateActions(
+      initializeContentEditorState(),
+      new ContentEditorActions.UpdateSchemaSpecification(schema),
+      new ContentEditorActions.AddDraft({ id, newType: 'Foo' }),
+      new ContentEditorActions.UpdateEntity(initialEntity),
     );
     expect(state).toMatchSnapshot('1 Initial loaded entity with oldName');
 
-    state = reduceEntityEditorState(
+    state = reduceContentEditorState(
       state,
-      new EntityEditorActions.UpdateEntity({ ...initialEntity, fields: { newName: 'value' } }),
+      new ContentEditorActions.UpdateEntity({ ...initialEntity, fields: { newName: 'value' } }),
     );
     expect(state).toMatchSnapshot('2 Loading entity with correct field name');
     expect(state.drafts[0].draft?.fields[0].fieldSpec.name).toBe('newName');

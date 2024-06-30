@@ -1,8 +1,8 @@
 import type { Schema } from '@dossierhq/core';
 import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { useContext, type Dispatch } from 'react';
-import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
-import { EntityEditorStateContext } from '../contexts/EntityEditorStateContext.js';
+import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
+import { ContentEditorStateContext } from '../contexts/ContentEditorStateContext.js';
 import { useOpenCommandMenu } from '../hooks/useOpenCommandMenu.js';
 import {
   CommandMenuState_CloseAction,
@@ -17,10 +17,10 @@ import {
   type CommandMenuState,
 } from '../reducers/CommandReducer.js';
 import {
-  EntityEditorActions,
-  type EntityEditorDraftState,
-  type EntityEditorStateAction,
-} from '../reducers/EntityEditorReducer.js';
+  ContentEditorActions,
+  type ContentEditorDraftState,
+  type ContentEditorStateAction,
+} from '../reducers/ContentEditorReducer.js';
 import { useTheme } from './ThemeProvider.js';
 import {
   AlertDialog,
@@ -64,14 +64,18 @@ export function ContentEditorCommandMenu({
   state: Readonly<ContentEditorCommandMenuState>;
   dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
-  const { schema, drafts } = useContext(EntityEditorStateContext);
-  const dispatchEntityEditor = useContext(EntityEditorDispatchContext);
+  const { schema, drafts } = useContext(ContentEditorStateContext);
+  const dispatchContentEditor = useContext(ContentEditorDispatchContext);
 
   useOpenCommandMenu(dispatch);
 
   if (state.alert) {
     return (
-      <Alert alert={state.alert} dispatch={dispatch} dispatchEntityEditor={dispatchEntityEditor} />
+      <Alert
+        alert={state.alert}
+        dispatch={dispatch}
+        dispatchContentEditor={dispatchContentEditor}
+      />
     );
   }
 
@@ -105,7 +109,7 @@ export function ContentEditorCommandMenu({
             <CommandGroup heading="Suggestions">
               <CommandItem
                 onSelect={() => {
-                  dispatchEntityEditor(new EntityEditorActions.ToggleShowOpenDialog(true));
+                  dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(true));
                   dispatch(new CommandMenuState_CloseAction());
                 }}
               >
@@ -137,12 +141,12 @@ export function ContentEditorCommandMenu({
           </>
         )}
         {state.currentPage?.id === 'create' && (
-          <CreateEntityCommandGroup {...{ schema, dispatchEntityEditor, dispatch }} />
+          <CreateEntityCommandGroup {...{ schema, dispatchContentEditor, dispatch }} />
         )}
         {state.currentPage?.id === 'draft' && (
           <DraftCommandGroup
             id={state.currentPage.draftId}
-            {...{ schema, dispatchEntityEditor, dispatch }}
+            {...{ schema, dispatchContentEditor, dispatch }}
           />
         )}
       </CommandList>
@@ -153,11 +157,11 @@ export function ContentEditorCommandMenu({
 function Alert({
   alert,
   dispatch,
-  dispatchEntityEditor,
+  dispatchContentEditor,
 }: {
   alert: ContentEditorCommandMenuAlert;
   dispatch: Dispatch<ContentEditorCommandMenuAction>;
-  dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
+  dispatchContentEditor: Dispatch<ContentEditorStateAction>;
 }) {
   switch (alert.id) {
     case 'closeDraft':
@@ -172,7 +176,7 @@ function Alert({
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
-                  dispatchEntityEditor(new EntityEditorActions.DeleteDraft(alert.draftId));
+                  dispatchContentEditor(new ContentEditorActions.DeleteDraft(alert.draftId));
                 }}
               >
                 Close
@@ -186,7 +190,7 @@ function Alert({
   }
 }
 
-function DraftItem({ draft }: { draft: EntityEditorDraftState }) {
+function DraftItem({ draft }: { draft: ContentEditorDraftState }) {
   return (
     <span>
       {draft.draft?.entitySpec.name} / {draft.draft?.name}
@@ -196,11 +200,11 @@ function DraftItem({ draft }: { draft: EntityEditorDraftState }) {
 
 function CreateEntityCommandGroup({
   schema,
-  dispatchEntityEditor,
+  dispatchContentEditor,
   dispatch,
 }: {
   schema: Schema | null;
-  dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
+  dispatchContentEditor: Dispatch<ContentEditorStateAction>;
   dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   return (
@@ -209,8 +213,8 @@ function CreateEntityCommandGroup({
         <CommandItem
           key={entityType.name}
           onSelect={() => {
-            dispatchEntityEditor(
-              new EntityEditorActions.AddDraft({
+            dispatchContentEditor(
+              new ContentEditorActions.AddDraft({
                 id: crypto.randomUUID(),
                 newType: entityType.name,
               }),
@@ -227,14 +231,14 @@ function CreateEntityCommandGroup({
 
 function DraftCommandGroup({
   id,
-  dispatchEntityEditor,
+  dispatchContentEditor,
   dispatch,
 }: {
   id: string;
-  dispatchEntityEditor: Dispatch<EntityEditorStateAction>;
+  dispatchContentEditor: Dispatch<ContentEditorStateAction>;
   dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
-  const draft = useContext(EntityEditorStateContext).drafts.find((d) => d.id === id);
+  const draft = useContext(ContentEditorStateContext).drafts.find((d) => d.id === id);
   if (!draft) {
     return null;
   }
@@ -245,7 +249,7 @@ function DraftCommandGroup({
     <CommandGroup heading={<DraftItem draft={draft} />}>
       <CommandItem
         onSelect={() => {
-          dispatchEntityEditor(new EntityEditorActions.SetActiveEntity(id, true, true));
+          dispatchContentEditor(new ContentEditorActions.SetActiveEntity(id, true, true));
           dispatch(new CommandMenuState_CloseAction());
         }}
       >
@@ -257,7 +261,7 @@ function DraftCommandGroup({
           if (confirmClose) {
             dispatch(new CommandMenuState_ShowAlertAction({ id: 'closeDraft', draftId: id }));
           } else {
-            dispatchEntityEditor(new EntityEditorActions.DeleteDraft(id));
+            dispatchContentEditor(new ContentEditorActions.DeleteDraft(id));
           }
         }}
       >

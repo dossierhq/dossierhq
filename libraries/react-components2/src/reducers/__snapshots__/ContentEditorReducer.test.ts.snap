@@ -266,78 +266,7 @@ exports[`AddDraftAction > add new Foo 1`] = `
 }
 `;
 
-exports[`DeleteDraftAction > add/delete Foo 1`] = `
-{
-  "activeEntityEditorScrollSignal": 1,
-  "activeEntityId": null,
-  "activeEntityMenuScrollSignal": 1,
-  "drafts": [],
-  "pendingSchemaActions": null,
-  "schema": Schema {
-    "cachedPatternRegExps": {},
-    "cachedPublishedSchema": PublishedSchema {
-      "cachedPatternRegExps": {},
-      "spec": {
-        "componentTypes": [],
-        "entityTypes": [
-          {
-            "authKeyPattern": null,
-            "fields": [
-              {
-                "index": null,
-                "list": false,
-                "matchPattern": null,
-                "multiline": false,
-                "name": "title",
-                "required": false,
-                "type": "String",
-                "values": [],
-              },
-            ],
-            "name": "Foo",
-          },
-        ],
-        "indexes": [],
-        "patterns": [],
-        "schemaKind": "published",
-        "version": 1,
-      },
-    },
-    "spec": {
-      "componentTypes": [],
-      "entityTypes": [
-        {
-          "authKeyPattern": null,
-          "fields": [
-            {
-              "adminOnly": false,
-              "index": null,
-              "list": false,
-              "matchPattern": null,
-              "multiline": false,
-              "name": "title",
-              "required": false,
-              "type": "String",
-              "values": [],
-            },
-          ],
-          "name": "Foo",
-          "nameField": null,
-          "publishable": true,
-        },
-      ],
-      "indexes": [],
-      "patterns": [],
-      "schemaKind": "full",
-      "version": 1,
-    },
-  },
-  "showOpenDialog": false,
-  "status": "",
-}
-`;
-
-exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 1`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name and authKey, force update 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -462,7 +391,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 2`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name and authKey, force update 2`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -587,7 +516,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 3`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name and authKey, force update 3`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -712,7 +641,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 4`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name and authKey, force update 4`] = `
 {
   "fields": {
     "title": null,
@@ -726,7 +655,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 5`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name and authKey, force update 5`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -851,7 +780,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, force update 6`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name and authKey, force update 6`] = `
 {
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -992,7 +921,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name and authKey, fo
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 1`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1117,7 +1046,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 2`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 2`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1242,7 +1171,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 3`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 3`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1367,7 +1296,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 4`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 4`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1492,7 +1421,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 5`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 5`] = `
 {
   "fields": {
     "title": "Foo title",
@@ -1506,7 +1435,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 6`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 6`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1631,7 +1560,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 7`] = `
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 7`] = `
 {
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1772,7 +1701,7 @@ exports[`EntityEditorReducer scenarios > add new draft, set name, authKey and ti
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 1`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, set title field, simulate save 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -1913,7 +1842,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 2`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, set title field, simulate save 2`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2054,7 +1983,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 3`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, set title field, simulate save 3`] = `
 {
   "fields": {
     "title": "New title",
@@ -2067,7 +1996,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 4`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, set title field, simulate save 4`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2208,7 +2137,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, set title field, simulate save 5`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, set title field, simulate save 5`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2349,7 +2278,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, set title field, 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 1`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, simulate publish 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2490,7 +2419,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 2`] = `
+exports[`ContentEditorReducer scenarios > open existing entity, simulate publish 2`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2631,7 +2560,7 @@ exports[`EntityEditorReducer scenarios > open existing entity, simulate publish 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing, get schema 1`] = `
+exports[`ContentEditorReducer scenarios > open existing, get schema 1`] = `
 {
   "activeEntityEditorScrollSignal": 0,
   "activeEntityId": null,
@@ -2650,7 +2579,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 1`] = `
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
+exports[`ContentEditorReducer scenarios > open existing, get schema 2`] = `
 {
   "activeEntityEditorScrollSignal": 0,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2705,7 +2634,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 2`] = `
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
+exports[`ContentEditorReducer scenarios > open existing, get schema 3`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2846,7 +2775,7 @@ exports[`EntityEditorReducer scenarios > open existing, get schema 3`] = `
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open first entity, open second entity > 1 Initial 1`] = `
+exports[`ContentEditorReducer scenarios > open first entity, open second entity > 1 Initial 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -2981,7 +2910,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open first entity, open second entity > 2 After AddDraft 1`] = `
+exports[`ContentEditorReducer scenarios > open first entity, open second entity > 2 After AddDraft 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
@@ -3126,7 +3055,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
 }
 `;
 
-exports[`EntityEditorReducer scenarios > open first entity, open second entity > 3 After UpdateEntity 1`] = `
+exports[`ContentEditorReducer scenarios > open first entity, open second entity > 3 After UpdateEntity 1`] = `
 {
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "af83fa2d-e05c-49ef-9e31-61e6472c1f28",
@@ -3324,7 +3253,7 @@ exports[`EntityEditorReducer scenarios > open first entity, open second entity >
 }
 `;
 
-exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial loaded entity with oldName 1`] = `
+exports[`ContentEditorReducer scenarios > renameField of entity field > 1 Initial loaded entity with oldName 1`] = `
 {
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -3478,7 +3407,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 1 Initial
 }
 `;
 
-exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading entity with correct field name 1`] = `
+exports[`ContentEditorReducer scenarios > renameField of entity field > 2 Loading entity with correct field name 1`] = `
 {
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -3632,7 +3561,7 @@ exports[`EntityEditorReducer scenarios > renameField of entity field > 2 Loading
 }
 `;
 
-exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 1 Initial 1`] = `
+exports[`ContentEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 1 Initial 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -3810,7 +3739,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 2 Setting adminOnly field to empty component 1`] = `
+exports[`ContentEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 2 Setting adminOnly field to empty component 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -3994,7 +3923,7 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
 }
 `;
 
-exports[`EntityEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 3 Setting normal field to empty component 1`] = `
+exports[`ContentEditorReducer scenarios > required string fields component place in normal and adminOnly fields > 3 Setting normal field to empty component 1`] = `
 {
   "activeEntityEditorScrollSignal": 1,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
@@ -4189,6 +4118,77 @@ exports[`EntityEditorReducer scenarios > required string fields component place 
   },
   "showOpenDialog": false,
   "status": "changed",
+}
+`;
+
+exports[`DeleteDraftAction > add/delete Foo 1`] = `
+{
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": null,
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "showOpenDialog": false,
+  "status": "",
 }
 `;
 

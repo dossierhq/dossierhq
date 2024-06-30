@@ -16,22 +16,22 @@ import {
 import isEqual from 'lodash/isEqual.js';
 import { assertIsDefined } from '../utils/AssertUtils.js';
 
-type EntityEditorSelector = { id: string } | { id: string; newType: string };
+type ContentEditorSelector = { id: string } | { id: string; newType: string };
 
 type ValidationIssue = SaveValidationIssue | PublishValidationIssue;
 
-export interface EntityEditorState {
+export interface ContentEditorState {
   status: '' | 'changed';
   schema: Schema | null;
-  drafts: EntityEditorDraftState[];
+  drafts: ContentEditorDraftState[];
   activeEntityId: string | null;
   activeEntityEditorScrollSignal: number;
   activeEntityMenuScrollSignal: number;
-  pendingSchemaActions: EntityEditorStateAction[] | null;
+  pendingSchemaActions: ContentEditorStateAction[] | null;
   showOpenDialog: boolean;
 }
 
-export interface EntityEditorDraftState {
+export interface ContentEditorDraftState {
   id: string;
   isNew: boolean;
   status: '' | 'changed';
@@ -57,13 +57,13 @@ export interface FieldEditorState {
   validationIssues: ValidationIssue[];
 }
 
-export interface EntityEditorStateAction {
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState>;
+export interface ContentEditorStateAction {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState>;
 }
 
-export function initializeEntityEditorState({
+export function initializeContentEditorState({
   actions,
-}: { actions?: EntityEditorStateAction[] } = {}): EntityEditorState {
+}: { actions?: ContentEditorStateAction[] } = {}): ContentEditorState {
   return {
     status: '',
     schema: null,
@@ -76,10 +76,10 @@ export function initializeEntityEditorState({
   };
 }
 
-export function reduceEntityEditorState(
-  state: Readonly<EntityEditorState>,
-  action: EntityEditorStateAction,
-): Readonly<EntityEditorState> {
+export function reduceContentEditorState(
+  state: Readonly<ContentEditorState>,
+  action: ContentEditorStateAction,
+): Readonly<ContentEditorState> {
   const newState = action.reduce(state);
   // if (state !== newState) console.log(`State changed for ${action.constructor.name}`, state, action, newState);
   return newState;
@@ -87,12 +87,14 @@ export function reduceEntityEditorState(
 
 // STATUS RESOLVES
 
-function resolveEditorStatus(state: EntityEditorState): EntityEditorState['status'] {
+function resolveEditorStatus(state: ContentEditorState): ContentEditorState['status'] {
   const someChanged = state.drafts.some((it) => it.status === 'changed');
   return someChanged ? 'changed' : '';
 }
 
-function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDraftState['status'] {
+function resolveDraftStatus(
+  draftState: ContentEditorDraftState,
+): ContentEditorDraftState['status'] {
   if (!draftState.draft) {
     return '';
   }
@@ -118,7 +120,7 @@ function resolveDraftStatus(draftState: EntityEditorDraftState): EntityEditorDra
 
 function resolveFieldStatus(
   field: FieldEditorState,
-  draftState: EntityEditorDraftState,
+  draftState: ContentEditorDraftState,
 ): FieldEditorState['status'] {
   const isEmpty = field.normalizedValue === null;
   if (!draftState.entity) {
@@ -131,7 +133,7 @@ function resolveFieldStatus(
 
 function resolveDraftErrors(
   fields: FieldEditorState[] | undefined,
-): Pick<EntityEditorDraftState, 'hasPublishErrors' | 'hasSaveErrors'> {
+): Pick<ContentEditorDraftState, 'hasPublishErrors' | 'hasSaveErrors'> {
   let hasSaveErrors = false;
   let hasPublishErrors = false;
   if (fields) {
@@ -153,14 +155,14 @@ function resolveDraftErrors(
 
 // ACTION HELPERS
 
-abstract class EntityEditorDraftAction implements EntityEditorStateAction {
+abstract class ContentEditorDraftAction implements ContentEditorStateAction {
   id: string;
 
   constructor(id: string) {
     this.id = id;
   }
 
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     const draftIndex = state.drafts.findIndex((it) => it.id === this.id);
     if (draftIndex < 0) throw new Error(`No such draft for id ${this.id}`);
     const currentDraft = state.drafts[draftIndex];
@@ -181,12 +183,12 @@ abstract class EntityEditorDraftAction implements EntityEditorStateAction {
   }
 
   abstract reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>,
-  ): Readonly<EntityEditorDraftState>;
+    draftState: Readonly<ContentEditorDraftState>,
+    editorState: Readonly<ContentEditorState>,
+  ): Readonly<ContentEditorDraftState>;
 }
 
-abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
+abstract class ContentEditorFieldAction extends ContentEditorDraftAction {
   fieldName: string;
 
   constructor(entryId: string, fieldName: string) {
@@ -195,9 +197,9 @@ abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
   }
 
   reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>,
-  ): Readonly<EntityEditorDraftState> {
+    draftState: Readonly<ContentEditorDraftState>,
+    editorState: Readonly<ContentEditorState>,
+  ): Readonly<ContentEditorDraftState> {
     assertIsDefined(draftState.draft);
     const fieldIndex = draftState.draft.fields.findIndex(
       (it) => it.fieldSpec.name === this.fieldName,
@@ -228,20 +230,20 @@ abstract class EntityEditorFieldAction extends EntityEditorDraftAction {
 
   abstract reduceField(
     fieldState: Readonly<FieldEditorState>,
-    draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>,
+    draftState: Readonly<ContentEditorDraftState>,
+    editorState: Readonly<ContentEditorState>,
   ): Readonly<FieldEditorState>;
 }
 
 // ACTIONS
 
-class AddDraftAction implements EntityEditorStateAction {
-  selector: EntityEditorSelector;
-  constructor(selector: EntityEditorSelector) {
+class AddDraftAction implements ContentEditorStateAction {
+  selector: ContentEditorSelector;
+  constructor(selector: ContentEditorSelector) {
     this.selector = selector;
   }
 
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     let { activeEntityEditorScrollSignal, activeEntityMenuScrollSignal } = state;
 
     // If the entity already exist, make it active and scroll to it
@@ -260,7 +262,7 @@ class AddDraftAction implements EntityEditorStateAction {
     assertIsDefined(schema);
 
     const isNew = 'newType' in this.selector;
-    const draft: EntityEditorDraftState = {
+    const draft: ContentEditorDraftState = {
       id: this.selector.id,
       isNew,
       status: '',
@@ -295,13 +297,13 @@ class AddDraftAction implements EntityEditorStateAction {
   }
 }
 
-class DeleteDraftAction implements EntityEditorStateAction {
+class DeleteDraftAction implements ContentEditorStateAction {
   id: string;
   constructor(id: string) {
     this.id = id;
   }
 
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     let { activeEntityId } = state;
     if (activeEntityId === this.id) {
       activeEntityId = null;
@@ -317,7 +319,7 @@ class DeleteDraftAction implements EntityEditorStateAction {
   }
 }
 
-class SetActiveEntityAction implements EntityEditorStateAction {
+class SetActiveEntityAction implements ContentEditorStateAction {
   id: string;
   increaseMenuScrollSignal: boolean;
   increaseEditorScrollSignal: boolean;
@@ -328,7 +330,7 @@ class SetActiveEntityAction implements EntityEditorStateAction {
     this.increaseEditorScrollSignal = increaseEditorScrollSignal;
   }
 
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     if (state.activeEntityId === this.id) {
       return state;
     }
@@ -352,7 +354,7 @@ class SetActiveEntityAction implements EntityEditorStateAction {
   }
 }
 
-class SetFieldAction extends EntityEditorFieldAction {
+class SetFieldAction extends ContentEditorFieldAction {
   value: unknown;
 
   constructor(entityId: string, fieldName: string, value: unknown) {
@@ -362,8 +364,8 @@ class SetFieldAction extends EntityEditorFieldAction {
 
   reduceField(
     fieldState: Readonly<FieldEditorState>,
-    _draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>,
+    _draftState: Readonly<ContentEditorDraftState>,
+    editorState: Readonly<ContentEditorState>,
   ): Readonly<FieldEditorState> {
     const { schema } = editorState;
     assertIsDefined(schema);
@@ -387,9 +389,9 @@ class SetFieldAction extends EntityEditorFieldAction {
   }
 
   override reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    editorState: Readonly<EntityEditorState>,
-  ): Readonly<EntityEditorDraftState> {
+    draftState: Readonly<ContentEditorDraftState>,
+    editorState: Readonly<ContentEditorState>,
+  ): Readonly<ContentEditorDraftState> {
     let newDraftState = super.reduceDraft(draftState, editorState);
     if (newDraftState === draftState) {
       return draftState;
@@ -412,7 +414,7 @@ class SetFieldAction extends EntityEditorFieldAction {
   }
 }
 
-class SetNameAction extends EntityEditorDraftAction {
+class SetNameAction extends ContentEditorDraftAction {
   name: string;
 
   constructor(id: string, name: string) {
@@ -421,9 +423,9 @@ class SetNameAction extends EntityEditorDraftAction {
   }
 
   reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    _editorState: Readonly<EntityEditorState>,
-  ): Readonly<EntityEditorDraftState> {
+    draftState: Readonly<ContentEditorDraftState>,
+    _editorState: Readonly<ContentEditorState>,
+  ): Readonly<ContentEditorDraftState> {
     if (!draftState.draft || draftState.draft.name === this.name) {
       return draftState;
     }
@@ -435,7 +437,7 @@ class SetNameAction extends EntityEditorDraftAction {
   }
 }
 
-class SetNextEntityUpdateIsDueToUpsertAction extends EntityEditorDraftAction {
+class SetNextEntityUpdateIsDueToUpsertAction extends ContentEditorDraftAction {
   entityWillBeUpdatedDueToUpsert: boolean;
 
   constructor(id: string, entityWillBeUpdatedDueToUpsert: boolean) {
@@ -444,9 +446,9 @@ class SetNextEntityUpdateIsDueToUpsertAction extends EntityEditorDraftAction {
   }
 
   reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    _editorState: Readonly<EntityEditorState>,
-  ): Readonly<EntityEditorDraftState> {
+    draftState: Readonly<ContentEditorDraftState>,
+    _editorState: Readonly<ContentEditorState>,
+  ): Readonly<ContentEditorDraftState> {
     if (draftState.entityWillBeUpdatedDueToUpsert === this.entityWillBeUpdatedDueToUpsert) {
       return draftState;
     }
@@ -455,7 +457,7 @@ class SetNextEntityUpdateIsDueToUpsertAction extends EntityEditorDraftAction {
   }
 }
 
-class SetAuthKeyAction extends EntityEditorDraftAction {
+class SetAuthKeyAction extends ContentEditorDraftAction {
   authKey: string;
 
   constructor(id: string, authKey: string) {
@@ -464,9 +466,9 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
   }
 
   reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    _editorState: Readonly<EntityEditorState>,
-  ): Readonly<EntityEditorDraftState> {
+    draftState: Readonly<ContentEditorDraftState>,
+    _editorState: Readonly<ContentEditorState>,
+  ): Readonly<ContentEditorDraftState> {
     if (!draftState.draft || draftState.draft.authKey === this.authKey) {
       return draftState;
     }
@@ -475,14 +477,14 @@ class SetAuthKeyAction extends EntityEditorDraftAction {
   }
 }
 
-class ToggleShowOpenDialogAction implements EntityEditorStateAction {
+class ToggleShowOpenDialogAction implements ContentEditorStateAction {
   showOpenDialog: boolean;
 
   constructor(showOpenDialog: boolean) {
     this.showOpenDialog = showOpenDialog;
   }
 
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     if (state.showOpenDialog === this.showOpenDialog) {
       return state;
     }
@@ -491,7 +493,7 @@ class ToggleShowOpenDialogAction implements EntityEditorStateAction {
   }
 }
 
-class UpdateEntityAction extends EntityEditorDraftAction {
+class UpdateEntityAction extends ContentEditorDraftAction {
   entity: Entity;
 
   constructor(entity: Entity) {
@@ -499,7 +501,7 @@ class UpdateEntityAction extends EntityEditorDraftAction {
     this.entity = entity;
   }
 
-  override reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  override reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     const newState = super.reduce(state);
     if (state === newState) {
       return newState;
@@ -520,9 +522,9 @@ class UpdateEntityAction extends EntityEditorDraftAction {
   }
 
   reduceDraft(
-    draftState: Readonly<EntityEditorDraftState>,
-    editorState: EntityEditorState,
-  ): Readonly<EntityEditorDraftState> {
+    draftState: Readonly<ContentEditorDraftState>,
+    editorState: ContentEditorState,
+  ): Readonly<ContentEditorDraftState> {
     if (!draftState.entityWillBeUpdatedDueToUpsert && draftState.entity) {
       if (isEqual(draftState.entity, this.entity)) {
         // no change
@@ -567,27 +569,31 @@ class UpdateEntityAction extends EntityEditorDraftAction {
   }
 }
 
-class UpdateSchemaSpecificationAction implements EntityEditorStateAction {
+class UpdateSchemaSpecificationAction implements ContentEditorStateAction {
   schema: Schema;
   constructor(schema: Schema) {
     this.schema = schema;
   }
 
-  reduce(state: Readonly<EntityEditorState>): Readonly<EntityEditorState> {
+  reduce(state: Readonly<ContentEditorState>): Readonly<ContentEditorState> {
     // TODO apply migrations
     // TODO update specs in drafts
     const actions = state.pendingSchemaActions;
-    let newState: EntityEditorState = { ...state, schema: this.schema, pendingSchemaActions: null };
+    let newState: ContentEditorState = {
+      ...state,
+      schema: this.schema,
+      pendingSchemaActions: null,
+    };
     if (actions) {
       for (const action of actions) {
-        newState = reduceEntityEditorState(newState, action);
+        newState = reduceContentEditorState(newState, action);
       }
     }
     return newState;
   }
 }
 
-export const EntityEditorActions = {
+export const ContentEditorActions = {
   AddDraft: AddDraftAction,
   DeleteDraft: DeleteDraftAction,
   SetActiveEntity: SetActiveEntityAction,
@@ -632,7 +638,7 @@ function createEditorEntityDraftState(
   schema: Schema,
   entitySpec: EntityTypeSpecification,
   entity: Entity | null,
-): EntityEditorDraftState['draft'] {
+): ContentEditorDraftState['draft'] {
   const fields = entitySpec.fields.map<FieldEditorState>((fieldSpec) => {
     const value = entity?.fields[fieldSpec.name] ?? null;
     const adminOnly = !entitySpec.publishable || fieldSpec.adminOnly;
@@ -675,7 +681,7 @@ function createEditorEntityDraftState(
 
 //
 
-export function getEntityCreateFromDraftState(draftState: EntityEditorDraftState) {
+export function getEntityCreateFromDraftState(draftState: ContentEditorDraftState) {
   const { draft } = draftState;
   assertIsDefined(draft);
   assertIsDefined(draft.authKey);
@@ -698,7 +704,7 @@ export function getEntityCreateFromDraftState(draftState: EntityEditorDraftState
   return result;
 }
 
-export function getEntityUpdateFromDraftState(draftState: EntityEditorDraftState) {
+export function getEntityUpdateFromDraftState(draftState: ContentEditorDraftState) {
   const { draft, entity } = draftState;
   assertIsDefined(draft);
   assertIsDefined(entity);

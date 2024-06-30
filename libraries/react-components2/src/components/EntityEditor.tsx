@@ -1,12 +1,12 @@
 import { ChevronDownIcon, ChevronUpIcon, MenuIcon } from 'lucide-react';
 import { useCallback, useContext, useState, type Dispatch } from 'react';
 import { EntityFieldEditor } from '../components/EntityFieldEditor.js';
-import { EntityEditorDispatchContext } from '../contexts/EntityEditorDispatchContext.js';
+import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
 import { CommandMenuState_OpenPageAction } from '../reducers/CommandReducer.js';
 import {
-  EntityEditorActions,
-  type EntityEditorDraftState,
-} from '../reducers/EntityEditorReducer.js';
+  ContentEditorActions,
+  type ContentEditorDraftState,
+} from '../reducers/ContentEditorReducer.js';
 import type {
   ContentEditorCommandMenuAction,
   ContentEditorCommandMenuConfig,
@@ -17,47 +17,47 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collap
 
 interface Props {
   id?: string;
-  draftState: EntityEditorDraftState;
+  draftState: ContentEditorDraftState;
   dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
 }
 
 export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
   // const { client } = useContext(DossierContext);
-  const dispatchEntityEditorState = useContext(EntityEditorDispatchContext);
+  const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   const [showFields, setShowFields] = useState(true);
   // const [submitLoading, setSubmitLoading] = useState(false);
 
   /* TODO
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
-      dispatchEntityEditorState(new EntityEditorActions.SetName(draftState.id, event.target.value)),
-    [dispatchEntityEditorState, draftState.id],
+      dispatchContentEditor(new ContentEditorActions.SetName(draftState.id, event.target.value)),
+    [dispatchContentEditor, draftState.id],
   );
   const handleAuthKeyChange = useCallback(
     (authKey: string) =>
-      dispatchEntityEditorState(new EntityEditorActions.SetAuthKey(draftState.id, authKey)),
-    [dispatchEntityEditorState, draftState.id],
+      dispatchContentEditor(new ContentEditorActions.SetAuthKey(draftState.id, authKey)),
+    [dispatchContentEditor, draftState.id],
   );
   const handleSubmitClick = useCallback(() => {
     submitEntity(
       draftState,
       setSubmitLoading,
       client,
-      dispatchEntityEditorState,
+      dispatchContentEditor,
       showNotification,
       false,
     );
-  }, [client, dispatchEntityEditorState, draftState, showNotification]);
+  }, [client, dispatchContentEditor, draftState, showNotification]);
   const handleSubmitAndPublishClick = useCallback(() => {
     submitEntity(
       draftState,
       setSubmitLoading,
       client,
-      dispatchEntityEditorState,
+      dispatchContentEditor,
       showNotification,
       true,
     );
-  }, [client, dispatchEntityEditorState, draftState, showNotification]);
+  }, [client, dispatchContentEditor, draftState, showNotification]);
   */
 
   if (!draftState.draft) {
@@ -138,8 +138,8 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
                 key={field.fieldSpec.name}
                 field={field}
                 onValueChange={(value) =>
-                  dispatchEntityEditorState(
-                    new EntityEditorActions.SetField(draftState.id, field.fieldSpec.name, value),
+                  dispatchContentEditor(
+                    new ContentEditorActions.SetField(draftState.id, field.fieldSpec.name, value),
                   )
                 }
               />
@@ -191,16 +191,16 @@ function EntityEditorToolbar({
 
 /*
 async function submitEntity(
-  draftState: EntityEditorDraftState,
+  draftState: ContentEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   client: DossierClient<Entity<string, object>, Component<string, object>>,
-  dispatchEntityEditorState: Dispatch<EntityEditorStateAction>,
+  dispatchContentEditor: Dispatch<ContentEditorStateAction>,
   showNotification: (notification: NotificationInfo) => void,
   publish: boolean,
 ) {
   setSubmitLoading(true);
-  dispatchEntityEditorState(
-    new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, true),
+  dispatchContentEditor(
+    new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, true),
   );
 
   const isCreate = !draftState.entity;
@@ -230,8 +230,8 @@ async function submitEntity(
         ? 'Failed updating and publishing entity'
         : 'Failed updating entity';
     showNotification({ color: 'error', message });
-    dispatchEntityEditorState(
-      new EntityEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false),
+    dispatchContentEditor(
+      new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false),
     );
   }
 
