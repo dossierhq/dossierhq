@@ -47,7 +47,11 @@ export function ContentEditorScreen({
     urlSearchParams ?? null,
     initializeEditorEntityStateFromUrlQuery,
   );
-  useEntityEditorCallOnUrlSearchQueryParamChange(entityEditorState, onUrlSearchParamsChange);
+  useEntityEditorCallOnUrlSearchQueryParamChange(
+    contentListState,
+    entityEditorState,
+    onUrlSearchParamsChange,
+  );
 
   const [commandMenuState, dispatchCommandMenu] = useReducer(
     reduceCommandMenuState<ContentEditorCommandMenuConfig>,

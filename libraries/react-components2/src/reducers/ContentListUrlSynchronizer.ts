@@ -1,9 +1,10 @@
 import {
   decodeURLSearchParamsParam,
-  encodeObjectToURLSearchParams,
+  encodeURLSearchParams,
   type EntityQuery,
   type EntitySamplingOptions,
   type Paging,
+  type PublishedEntityQuery,
 } from '@dossierhq/core';
 import { useEffect, useState } from 'react';
 import {
@@ -65,12 +66,17 @@ export function useContentListCallOnUrlSearchQueryParamChange(
 
   const { query, paging, sampling } = searchEntityState;
   useEffect(() => {
-    const params: Params = {
-      query: getQueryWithoutDefaults(mode, query),
-      paging,
-      sampling,
-    };
-    const result = encodeObjectToURLSearchParams(params);
+    const result = new URLSearchParams();
+    if (mode === 'full') {
+      addContentListParamsToURLSearchParams(result, { mode, query, sampling, paging });
+    } else {
+      addContentListParamsToURLSearchParams(result, {
+        mode,
+        query: query as PublishedEntityQuery,
+        sampling,
+        paging,
+      });
+    }
     setParams((oldParams) => {
       if (oldParams && oldParams.toString() === result.toString()) {
         return oldParams;
@@ -86,4 +92,28 @@ export function useContentListCallOnUrlSearchQueryParamChange(
   }, [onUrlSearchParamsChange, params]);
 
   // useDebugLogChangedValues('useSynchronizeUrlQueryState', { query, paging, sampling, sample, urlQuery });
+}
+
+export function addContentListParamsToURLSearchParams(
+  urlSearchParams: URLSearchParams,
+  options:
+    | {
+        mode: 'full';
+        query?: EntityQuery;
+        sampling?: EntitySamplingOptions;
+        paging?: Paging;
+      }
+    | {
+        mode: 'published';
+        query?: PublishedEntityQuery;
+        sampling?: EntitySamplingOptions;
+        paging?: Paging;
+      },
+) {
+  const params: Params = {
+    query: getQueryWithoutDefaults(options.mode, options.query ?? {}),
+    paging: options.paging,
+    sampling: options.sampling,
+  };
+  encodeURLSearchParams(urlSearchParams, params);
 }

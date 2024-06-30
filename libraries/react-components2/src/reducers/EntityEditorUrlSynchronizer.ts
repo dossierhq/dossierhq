@@ -1,4 +1,7 @@
+import type { EntityQuery, EntityReference, EntitySamplingOptions, Paging } from '@dossierhq/core';
 import { useEffect, useState } from 'react';
+import type { ContentListState } from './ContentListReducer.js';
+import { addContentListParamsToURLSearchParams } from './ContentListUrlSynchronizer.js';
 import {
   EntityEditorActions,
   initializeEntityEditorState,
@@ -13,6 +16,7 @@ export function initializeEditorEntityStateFromUrlQuery(
 }
 
 export function useEntityEditorCallOnUrlSearchQueryParamChange(
+  contentListState: ContentListState,
   entityEditorState: EntityEditorState,
   onUrlSearchParamsChange: ((urlSearchParams: Readonly<URLSearchParams>) => void) | undefined,
 ) {
@@ -21,16 +25,21 @@ export function useEntityEditorCallOnUrlSearchQueryParamChange(
   const { drafts } = entityEditorState;
   useEffect(() => {
     const result = new URLSearchParams();
-    for (const id of drafts.map((it) => it.id)) {
-      result.append('id', id);
-    }
+    addContentEditorParamsToURLSearchParams(result, {
+      query: contentListState.query,
+      sampling: contentListState.sampling,
+      paging: contentListState.paging,
+      entities: drafts.map((draft) => {
+        return { id: draft.id };
+      }),
+    });
     setParams((oldParams) => {
       if (oldParams && oldParams.toString() === result.toString()) {
         return oldParams;
       }
       return result;
     });
-  }, [drafts]);
+  }, [contentListState.paging, contentListState.query, contentListState.sampling, drafts]);
 
   useEffect(() => {
     if (onUrlSearchParamsChange && params) {
@@ -54,4 +63,26 @@ function urlQueryToSearchEntityStateActions(urlSearchParams: Readonly<URLSearchP
     }
   }
   return actions;
+}
+
+export function addContentEditorParamsToURLSearchParams(
+  urlSearchParams: URLSearchParams,
+  options: {
+    query?: EntityQuery;
+    sampling?: EntitySamplingOptions;
+    paging?: Paging;
+    entities?: (EntityReference | { type: string; id: string; isNew: true })[];
+  },
+) {
+  if (options.entities) {
+    for (const entity of options.entities) {
+      if ('isNew' in entity) {
+        urlSearchParams.append('new', `${entity.type}:${entity.id}`);
+      } else {
+        urlSearchParams.append('id', entity.id);
+      }
+    }
+  }
+
+  addContentListParamsToURLSearchParams(urlSearchParams, { mode: 'full', ...options });
 }
