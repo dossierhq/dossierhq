@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn, userEvent, waitFor, within } from '@storybook/test';
 import type { ComponentProps } from 'react';
 import { ThemeProvider } from '../components/ThemeProvider.js';
+import { addContentEditorParamsToURLSearchParams } from '../reducers/ContentEditorUrlSynchronizer.js';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';
 import { ContentEditorScreen } from './ContentEditorScreen.js';
 
@@ -33,9 +34,11 @@ export const Normal: Story = {};
 
 export const CreateStringsEntity: Story = {
   args: {
-    urlSearchParams: new URLSearchParams([
-      ['new', 'StringsEntity:e20e9cfc-994a-4115-91bf-2c907f9a87df'],
-    ]),
+    urlSearchParams: urlFor({
+      entities: [
+        { type: 'StringsEntity', id: 'a94c056e-7ae4-563c-a8d7-dd7ac41f7929', isNew: true },
+      ],
+    }),
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -50,10 +53,23 @@ export const CreateStringsEntity: Story = {
 
 export const OneOpen: Story = {
   args: {
-    urlSearchParams: urlFor(['a94c056e-7ae4-563c-a8d7-dd7ac41f7929']),
+    urlSearchParams: urlFor({ entities: [{ id: 'a94c056e-7ae4-563c-a8d7-dd7ac41f7929' }] }),
   },
 };
 
-function urlFor(ids: string[]) {
-  return new URLSearchParams(ids.map((id) => ['id', id]));
+export const OneOpenOneNew: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [
+        { id: 'a94c056e-7ae4-563c-a8d7-dd7ac41f7929' },
+        { isNew: true, type: 'BooleansEntity', id: 'a40eee5b-1e7f-4323-86d1-f8b14990da74' },
+      ],
+    }),
+  },
+};
+
+function urlFor(options: Parameters<typeof addContentEditorParamsToURLSearchParams>[1]) {
+  const payload = new URLSearchParams();
+  addContentEditorParamsToURLSearchParams(payload, options);
+  return payload;
 }

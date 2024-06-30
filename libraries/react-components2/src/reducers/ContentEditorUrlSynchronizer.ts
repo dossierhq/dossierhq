@@ -4,6 +4,7 @@ import {
   ContentEditorActions,
   initializeContentEditorState,
   type ContentEditorState,
+  type ContentEditorStateAction,
 } from './ContentEditorReducer.js';
 import type { ContentListState } from './ContentListReducer.js';
 import { addContentListParamsToURLSearchParams } from './ContentListUrlSynchronizer.js';
@@ -51,19 +52,18 @@ export function useContentEditorCallOnUrlSearchQueryParamChange(
 }
 
 function urlQueryToContentEditorStateActions(urlSearchParams: Readonly<URLSearchParams> | null) {
-  const actions = [];
-  if (urlSearchParams) {
-    for (const newTypeId of urlSearchParams.getAll('new')) {
-      const parts = newTypeId.split(':');
+  const actions: ContentEditorStateAction[] = [];
+  urlSearchParams?.forEach((value, key) => {
+    if (key === 'new') {
+      const parts = value.split(':');
       if (parts.length === 2) {
         const [newType, id] = parts;
         actions.push(new ContentEditorActions.AddDraft({ newType, id }));
       }
+    } else if (key === 'id') {
+      actions.push(new ContentEditorActions.AddDraft({ id: value }));
     }
-    for (const id of urlSearchParams.getAll('id')) {
-      actions.push(new ContentEditorActions.AddDraft({ id }));
-    }
-  }
+  });
   return actions;
 }
 
