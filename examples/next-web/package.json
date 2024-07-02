@@ -23,7 +23,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.1.1",
+    "better-sqlite3": "~11.1.2",
     "graphql": "~16.9.0",
     "graphql-voyager": "~2.0.0",
     "leaflet": "~1.9.4",
@@ -33,12 +33,12 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "~4.3.0",
-    "@types/better-sqlite3": "~7.6.10",
+    "@types/better-sqlite3": "~7.6.11",
     "@types/react": "18.3.3",
-    "@typescript-eslint/eslint-plugin": "~7.14.1",
+    "@typescript-eslint/eslint-plugin": "~7.15.0",
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.2.4",
     "prettier": "3.3.2",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.3"
   }
 }

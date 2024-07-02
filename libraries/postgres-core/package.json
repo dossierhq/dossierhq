@@ -51,7 +51,7 @@
     "@rushstack/heft": "0.66.19",
     "eslint": "~8.57.0",
     "prettier": "3.3.2",
-    "typescript": "~5.5.2",
+    "typescript": "~5.5.3",
     "vitest": "~1.6.0"
   }
 }

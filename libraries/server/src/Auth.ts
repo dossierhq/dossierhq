@@ -79,7 +79,7 @@ function verifyAuthKeyFormat(authKey: string): Result<void, typeof ErrorType.Bad
 }
 
 export function verifyAuthKeysFormat(
-  authKeys: Readonly<string[]>,
+  authKeys: readonly string[],
 ): Result<void, typeof ErrorType.BadRequest> {
   for (const authKey of authKeys) {
     const result = verifyAuthKeyFormat(authKey);
