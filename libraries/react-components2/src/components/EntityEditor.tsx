@@ -1,11 +1,16 @@
+import type { Component, DossierClient, Entity } from '@dossierhq/core';
 import { ChevronDownIcon, ChevronUpIcon, MenuIcon } from 'lucide-react';
-import { useCallback, useContext, useState, type Dispatch } from 'react';
+import { useCallback, useContext, useState, type Dispatch, type SetStateAction } from 'react';
 import { EntityFieldEditor } from '../components/EntityFieldEditor.js';
 import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
+import { DossierContext } from '../contexts/DossierContext.js';
 import { CommandMenuState_OpenPageAction } from '../reducers/CommandReducer.js';
 import {
   ContentEditorActions,
+  getEntityCreateFromDraftState,
+  getEntityUpdateFromDraftState,
   type ContentEditorDraftState,
+  type ContentEditorStateAction,
 } from '../reducers/ContentEditorReducer.js';
 import type {
   ContentEditorCommandMenuAction,
@@ -22,10 +27,8 @@ interface Props {
 }
 
 export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
-  // const { client } = useContext(DossierContext);
   const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   const [showFields, setShowFields] = useState(true);
-  // const [submitLoading, setSubmitLoading] = useState(false);
 
   /* TODO
   const handleNameChange = useCallback(
@@ -38,16 +41,6 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
       dispatchContentEditor(new ContentEditorActions.SetAuthKey(draftState.id, authKey)),
     [dispatchContentEditor, draftState.id],
   );
-  const handleSubmitClick = useCallback(() => {
-    submitEntity(
-      draftState,
-      setSubmitLoading,
-      client,
-      dispatchContentEditor,
-      showNotification,
-      false,
-    );
-  }, [client, dispatchContentEditor, draftState, showNotification]);
   const handleSubmitAndPublishClick = useCallback(() => {
     submitEntity(
       draftState,
@@ -63,11 +56,6 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
   if (!draftState.draft) {
     return null;
   }
-
-  // const isNewEntity = !draftState.entity;
-  // const isSubmittable =
-  //   !submitLoading && (isNewEntity || draftState.status === 'changed') && !draftState.hasSaveErrors;
-  // const isPublishable = !draftState.hasPublishErrors;
 
   // the id we scroll to can't be sticky, so we need to add a placeholder
   return (
@@ -86,9 +74,10 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
       </div>
       <Collapsible open={showFields} onOpenChange={setShowFields}>
         <EntityEditorToolbar
-          entityId={draftState.id}
+          draftState={draftState}
           showFields={showFields}
           dispatchCommandMenu={dispatchCommandMenu}
+          dispatchEntityEditor={dispatchContentEditor}
         />
         <CollapsibleContent className="CollapsibleContent">
           <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">
@@ -152,28 +141,47 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
 }
 
 function EntityEditorToolbar({
-  entityId,
+  draftState,
   showFields,
   dispatchCommandMenu,
+  dispatchEntityEditor,
 }: {
-  entityId: string;
+  draftState: ContentEditorDraftState;
   showFields: boolean;
   dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
+  dispatchEntityEditor: Dispatch<ContentEditorStateAction>;
 }) {
+  const { client } = useContext(DossierContext);
+  //TODO useTransition() instead when react 19
+  const [submitLoading, setSubmitLoading] = useState(false);
+
   const handleMenuClick = useCallback(() => {
     dispatchCommandMenu(
       new CommandMenuState_OpenPageAction<ContentEditorCommandMenuConfig>({
         id: 'draft',
-        draftId: entityId,
+        draftId: draftState.id,
       }),
     );
-  }, [dispatchCommandMenu, entityId]);
+  }, [dispatchCommandMenu, draftState.id]);
+
+  const handleSubmitClick = useCallback(() => {
+    submitEntity(draftState, setSubmitLoading, client, dispatchEntityEditor, false);
+  }, [client, dispatchEntityEditor, draftState]);
+
+  const isSubmittable =
+    !submitLoading &&
+    (draftState.isNew || draftState.status === 'changed') &&
+    !draftState.hasSaveErrors;
+  //TODO const isPublishable = !draftState.hasPublishErrors;
 
   return (
     <div className="mb-2 flex gap-2">
       <div className="flex w-0 flex-grow gap-2 overflow-auto">
         <Button variant="ghost" onClick={handleMenuClick}>
           <MenuIcon className="h-4 w-4" />
+        </Button>
+        <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
+          {draftState.isNew ? 'Create' : 'Save'}
         </Button>
       </div>
       <CollapsibleTrigger asChild>
@@ -189,13 +197,11 @@ function EntityEditorToolbar({
   );
 }
 
-/*
 async function submitEntity(
   draftState: ContentEditorDraftState,
   setSubmitLoading: Dispatch<SetStateAction<boolean>>,
   client: DossierClient<Entity<string, object>, Component<string, object>>,
   dispatchContentEditor: Dispatch<ContentEditorStateAction>,
-  showNotification: (notification: NotificationInfo) => void,
   publish: boolean,
 ) {
   setSubmitLoading(true);
@@ -203,9 +209,8 @@ async function submitEntity(
     new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, true),
   );
 
-  const isCreate = !draftState.entity;
   let result;
-  if (isCreate) {
+  if (draftState.isNew) {
     const entityCreate = getEntityCreateFromDraftState(draftState);
     result = await client.createEntity(entityCreate, { publish });
   } else {
@@ -213,28 +218,29 @@ async function submitEntity(
     result = await client.updateEntity(entityUpdate, { publish });
   }
   if (result.isOk()) {
-    const message = isCreate
-      ? publish
-        ? 'Created and published entity'
-        : 'Created entity'
-      : publish
-        ? 'Updated and published entity'
-        : 'Updated entity';
-    showNotification({ color: 'success', message });
+    // const message = isCreate
+    //   ? publish
+    //     ? 'Created and published entity'
+    //     : 'Created entity'
+    //   : publish
+    //     ? 'Updated and published entity'
+    //     : 'Updated entity';
+    //TODO showNotification({ color: 'success', message });
+    if (draftState.isNew) {
+      dispatchContentEditor(new ContentEditorActions.SetEntityIsNoLongerNew(draftState.id));
+    }
   } else {
-    const message = isCreate
-      ? publish
-        ? 'Failed creating and publishing entity'
-        : 'Failed creating entity'
-      : publish
-        ? 'Failed updating and publishing entity'
-        : 'Failed updating entity';
-    showNotification({ color: 'error', message });
+    // const message = isCreate
+    //   ? publish
+    //     ? 'Failed creating and publishing entity'
+    //     : 'Failed creating entity'
+    //   : publish
+    //     ? 'Failed updating and publishing entity'
+    //     : 'Failed updating entity';
+    //TODO showNotification({ color: 'error', message });
     dispatchContentEditor(
       new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false),
     );
   }
-
   setSubmitLoading(false);
 }
-*/

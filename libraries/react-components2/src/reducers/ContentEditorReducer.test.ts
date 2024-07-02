@@ -595,6 +595,9 @@ describe('ContentEditorReducer scenarios', () => {
     );
     expect(state).toMatchSnapshot();
 
+    state = reduceContentEditorState(state, new ContentEditorActions.SetEntityIsNoLongerNew(id));
+    expect(state).toMatchSnapshot();
+
     state = reduceContentEditorState(
       state,
       new ContentEditorActions.UpdateEntity({

@@ -437,6 +437,23 @@ class SetNameAction extends ContentEditorDraftAction {
   }
 }
 
+class SetEntityIsNoLongerNewAction extends ContentEditorDraftAction {
+  constructor(id: string) {
+    super(id);
+  }
+
+  reduceDraft(
+    draftState: Readonly<ContentEditorDraftState>,
+    _editorState: Readonly<ContentEditorState>,
+  ) {
+    if (!draftState.isNew) {
+      return draftState;
+    }
+
+    return { ...draftState, isNew: false };
+  }
+}
+
 class SetNextEntityUpdateIsDueToUpsertAction extends ContentEditorDraftAction {
   entityWillBeUpdatedDueToUpsert: boolean;
 
@@ -598,6 +615,7 @@ export const ContentEditorActions = {
   DeleteDraft: DeleteDraftAction,
   SetActiveEntity: SetActiveEntityAction,
   SetAuthKey: SetAuthKeyAction,
+  SetEntityIsNoLongerNew: SetEntityIsNoLongerNewAction,
   SetField: SetFieldAction,
   SetName: SetNameAction,
   SetNextEntityUpdateIsDueToUpsert: SetNextEntityUpdateIsDueToUpsertAction,

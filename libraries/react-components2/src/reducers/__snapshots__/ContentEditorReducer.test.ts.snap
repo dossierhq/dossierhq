@@ -1562,6 +1562,131 @@ exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and t
 
 exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 7`] = `
 {
+  "activeEntityEditorScrollSignal": 1,
+  "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+  "activeEntityMenuScrollSignal": 1,
+  "drafts": [
+    {
+      "draft": {
+        "authKey": "",
+        "entitySpec": {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+        "fields": [
+          {
+            "adminOnly": false,
+            "fieldSpec": {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+            "normalizedValue": "Foo title",
+            "status": "changed",
+            "validationIssues": [],
+            "value": "Foo title",
+          },
+        ],
+        "name": "Foo name",
+        "nameIsLinkedToField": false,
+      },
+      "entity": null,
+      "entityWillBeUpdatedDueToUpsert": true,
+      "hasPublishErrors": false,
+      "hasSaveErrors": false,
+      "id": "619725d7-e583-4544-8bb0-23fc3c2870c0",
+      "isNew": false,
+      "status": "changed",
+    },
+  ],
+  "pendingSchemaActions": null,
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": PublishedSchema {
+      "cachedPatternRegExps": {},
+      "spec": {
+        "componentTypes": [],
+        "entityTypes": [
+          {
+            "authKeyPattern": null,
+            "fields": [
+              {
+                "index": null,
+                "list": false,
+                "matchPattern": null,
+                "multiline": false,
+                "name": "title",
+                "required": false,
+                "type": "String",
+                "values": [],
+              },
+            ],
+            "name": "Foo",
+          },
+        ],
+        "indexes": [],
+        "patterns": [],
+        "schemaKind": "published",
+        "version": 1,
+      },
+    },
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "showOpenDialog": false,
+  "status": "changed",
+}
+`;
+
+exports[`ContentEditorReducer scenarios > add new draft, set name, authKey and title, simulate save 8`] = `
+{
   "activeEntityEditorScrollSignal": 2,
   "activeEntityId": "619725d7-e583-4544-8bb0-23fc3c2870c0",
   "activeEntityMenuScrollSignal": 2,
