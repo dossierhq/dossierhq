@@ -41,16 +41,6 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
       dispatchContentEditor(new ContentEditorActions.SetAuthKey(draftState.id, authKey)),
     [dispatchContentEditor, draftState.id],
   );
-  const handleSubmitAndPublishClick = useCallback(() => {
-    submitEntity(
-      draftState,
-      setSubmitLoading,
-      client,
-      dispatchContentEditor,
-      showNotification,
-      true,
-    );
-  }, [client, dispatchContentEditor, draftState, showNotification]);
   */
 
   if (!draftState.draft) {
@@ -77,7 +67,7 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
           draftState={draftState}
           showFields={showFields}
           dispatchCommandMenu={dispatchCommandMenu}
-          dispatchEntityEditor={dispatchContentEditor}
+          dispatchContentEditor={dispatchContentEditor}
         />
         <CollapsibleContent className="CollapsibleContent">
           <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">
@@ -108,14 +98,6 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
         </Field>
       ) : null} */}
             {/* <Row gap={2} justifyContent="center">
-        <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
-          {isNewEntity ? 'Create' : 'Save'}
-        </Button>
-        {draftState.draft.entitySpec.publishable ? (
-          <Button disabled={!isSubmittable || !isPublishable} onClick={handleSubmitAndPublishClick}>
-            {isNewEntity ? 'Create & publish' : 'Save & publish'}
-          </Button>
-        ) : null}
         <PublishingButton
           disabled={draftState.status !== ''}
           entity={draftState.entity}
@@ -144,12 +126,12 @@ function EntityEditorToolbar({
   draftState,
   showFields,
   dispatchCommandMenu,
-  dispatchEntityEditor,
+  dispatchContentEditor,
 }: {
   draftState: ContentEditorDraftState;
   showFields: boolean;
   dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
-  dispatchEntityEditor: Dispatch<ContentEditorStateAction>;
+  dispatchContentEditor: Dispatch<ContentEditorStateAction>;
 }) {
   const { client } = useContext(DossierContext);
   //TODO useTransition() instead when react 19
@@ -165,14 +147,18 @@ function EntityEditorToolbar({
   }, [dispatchCommandMenu, draftState.id]);
 
   const handleSubmitClick = useCallback(() => {
-    submitEntity(draftState, setSubmitLoading, client, dispatchEntityEditor, false);
-  }, [client, dispatchEntityEditor, draftState]);
+    submitEntity(draftState, setSubmitLoading, client, dispatchContentEditor, false);
+  }, [client, dispatchContentEditor, draftState]);
+
+  const handleSubmitAndPublishClick = useCallback(() => {
+    submitEntity(draftState, setSubmitLoading, client, dispatchContentEditor, true);
+  }, [client, dispatchContentEditor, draftState]);
 
   const isSubmittable =
     !submitLoading &&
     (draftState.isNew || draftState.status === 'changed') &&
     !draftState.hasSaveErrors;
-  //TODO const isPublishable = !draftState.hasPublishErrors;
+  const isPublishable = !draftState.hasPublishErrors;
 
   return (
     <div className="mb-2 flex gap-2">
@@ -180,9 +166,18 @@ function EntityEditorToolbar({
         <Button variant="ghost" onClick={handleMenuClick}>
           <MenuIcon className="h-4 w-4" />
         </Button>
-        <Button color="primary" disabled={!isSubmittable} onClick={handleSubmitClick}>
+        <Button disabled={!isSubmittable} onClick={handleSubmitClick}>
           {draftState.isNew ? 'Create' : 'Save'}
         </Button>
+        {draftState.draft?.entitySpec.publishable ? (
+          <Button
+            disabled={!isSubmittable || !isPublishable}
+            variant="secondary"
+            onClick={handleSubmitAndPublishClick}
+          >
+            {draftState.isNew ? 'Create & publish' : 'Save & publish'}
+          </Button>
+        ) : null}
       </div>
       <CollapsibleTrigger asChild>
         <Button variant="ghost">
