@@ -35,9 +35,7 @@ export const Normal: Story = {};
 export const CreateStringsEntity: Story = {
   args: {
     urlSearchParams: urlFor({
-      entities: [
-        { type: 'StringsEntity', id: 'a94c056e-7ae4-563c-a8d7-dd7ac41f7929', isNew: true },
-      ],
+      entities: [{ type: 'StringsEntity', id: crypto.randomUUID(), isNew: true }],
     }),
   },
   play: async ({ canvasElement, step }) => {

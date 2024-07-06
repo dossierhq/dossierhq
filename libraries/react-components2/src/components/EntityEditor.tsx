@@ -1,6 +1,7 @@
 import type { Component, DossierClient, Entity } from '@dossierhq/core';
 import { ChevronDownIcon, ChevronUpIcon, MenuIcon } from 'lucide-react';
 import { useCallback, useContext, useState, type Dispatch, type SetStateAction } from 'react';
+import { toast } from 'sonner';
 import { EntityFieldEditor } from '../components/EntityFieldEditor.js';
 import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
 import { DossierContext } from '../contexts/DossierContext.js';
@@ -213,26 +214,27 @@ async function submitEntity(
     result = await client.updateEntity(entityUpdate, { publish });
   }
   if (result.isOk()) {
-    // const message = isCreate
-    //   ? publish
-    //     ? 'Created and published entity'
-    //     : 'Created entity'
-    //   : publish
-    //     ? 'Updated and published entity'
-    //     : 'Updated entity';
-    //TODO showNotification({ color: 'success', message });
+    const message = draftState.isNew
+      ? publish
+        ? 'Created and published entity'
+        : 'Created entity'
+      : publish
+        ? 'Updated and published entity'
+        : 'Updated entity';
+    toast(message);
     if (draftState.isNew) {
       dispatchContentEditor(new ContentEditorActions.SetEntityIsNoLongerNew(draftState.id));
     }
   } else {
-    // const message = isCreate
-    //   ? publish
-    //     ? 'Failed creating and publishing entity'
-    //     : 'Failed creating entity'
-    //   : publish
-    //     ? 'Failed updating and publishing entity'
-    //     : 'Failed updating entity';
-    //TODO showNotification({ color: 'error', message });
+    const message = draftState.isNew
+      ? publish
+        ? 'Failed creating and publishing entity'
+        : 'Failed creating entity'
+      : publish
+        ? 'Failed updating and publishing entity'
+        : 'Failed updating entity';
+    toast(message);
+    console.warn(`${message}. ${result.error}: ${result.message}`);
     dispatchContentEditor(
       new ContentEditorActions.SetNextEntityUpdateIsDueToUpsert(draftState.id, false),
     );

@@ -11,6 +11,7 @@ import { OpenContentDialogContent } from '../components/OpenContentDialogContent
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import { Dialog } from '../components/ui/dialog.js';
+import { Toaster } from '../components/ui/sonner.js';
 import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
 import { ContentEditorStateContext } from '../contexts/ContentEditorStateContext.js';
 import { useResponsive } from '../hooks/useResponsive.js';
@@ -86,6 +87,7 @@ export function ContentEditorScreen({
       <ContentEditorStateContext.Provider value={contentEditorState}>
         <ContentEditorLoader />
         <ContentEditorCommandMenu state={commandMenuState} dispatch={dispatchCommandMenu} />
+        <Toaster />
         <div className="flex h-dvh w-dvw overflow-hidden">
           {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
           <main className="flex flex-grow flex-col">
