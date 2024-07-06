@@ -22,7 +22,7 @@ function TriggerToast() {
 }
 
 const meta = {
-  title: 'Components/Conner',
+  title: 'Components/Sonner',
   component: Wrapper,
   args: {},
   parameters: { layout: 'fullscreen' },
