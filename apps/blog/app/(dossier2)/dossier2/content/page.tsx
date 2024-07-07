@@ -1,6 +1,9 @@
 'use client';
 
-import { ContentListScreen } from '@dossierhq/react-components2';
+import {
+  addContentEditorParamsToURLSearchParams,
+  ContentListScreen,
+} from '@dossierhq/react-components2';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback } from 'react';
 
@@ -19,9 +22,22 @@ function Inner() {
 
   const handleOpenEntity = useCallback(
     (id: string) => {
-      router.push(`/dossier2/content/edit?id=${id}`);
+      const editorUrlsSearchParams = new URLSearchParams(urlSearchParams ?? undefined);
+      addContentEditorParamsToURLSearchParams(editorUrlsSearchParams, { entities: [{ id }] });
+      router.push(`/dossier2/content/edit?${editorUrlsSearchParams.toString()}`);
     },
-    [router],
+    [router, urlSearchParams],
+  );
+
+  const handleCreateEntity = useCallback(
+    (type: string) => {
+      const editorUrlsSearchParams = new URLSearchParams(urlSearchParams ?? undefined);
+      addContentEditorParamsToURLSearchParams(editorUrlsSearchParams, {
+        entities: [{ type, isNew: true, id: crypto.randomUUID() }],
+      });
+      router.push(`/dossier2/content/edit?${editorUrlsSearchParams.toString()}`);
+    },
+    [router, urlSearchParams],
   );
 
   const handleUrlSearchParamsChange = useCallback(
@@ -35,6 +51,7 @@ function Inner() {
     <ContentListScreen
       urlSearchParams={urlSearchParams}
       onOpenEntity={handleOpenEntity}
+      onCreateEntity={handleCreateEntity}
       onUrlSearchParamsChange={handleUrlSearchParamsChange}
     />
   );

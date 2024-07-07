@@ -7,16 +7,16 @@ import { DialogContent, DialogHeader, DialogTitle } from './ui/dialog.js';
 
 interface Props {
   contentListState: ContentListState;
-  dispatchContentListState: Dispatch<ContentListStateAction>;
+  dispatchContentList: Dispatch<ContentListStateAction>;
   onOpenEntity: (entityId: string) => void;
 }
 
 export function OpenContentDialogContent({
   contentListState,
-  dispatchContentListState,
+  dispatchContentList,
   onOpenEntity,
 }: Props) {
-  useLoadContentList(contentListState, dispatchContentListState);
+  useLoadContentList(contentListState, dispatchContentList);
   return (
     <DialogContent size="maximize">
       <DialogHeader>
@@ -32,7 +32,7 @@ export function OpenContentDialogContent({
       <ContentListPagingButtons
         className="border-t py-2"
         contentListState={contentListState}
-        dispatchContentListState={dispatchContentListState}
+        dispatchContentList={dispatchContentList}
       />
     </DialogContent>
   );

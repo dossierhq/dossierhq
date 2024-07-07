@@ -15,14 +15,21 @@ export function ContentList2Route() {
     [setSearchParams],
   );
 
-  // const handleCreateEntity = useCallback(
-  //   (type: string) =>
-  //     navigate(ROUTE.contentEditor2.url(serverName, [{ newType: type, id: crypto.randomUUID() }])),
-  //   [navigate, serverName],
-  // );
+  const handleCreateEntity = useCallback(
+    (type: string) =>
+      navigate(
+        ROUTE.contentEditor2.url(
+          serverName,
+          { entities: [{ isNew: true, type, id: crypto.randomUUID() }] },
+          searchParams,
+        ),
+      ),
+    [navigate, serverName, searchParams],
+  );
   const handleEntityOpen = useCallback(
-    (id: string) => navigate(ROUTE.contentEditor2.url(serverName, [{ id }])),
-    [navigate, serverName],
+    (id: string) =>
+      navigate(ROUTE.contentEditor2.url(serverName, { entities: [{ id }] }, searchParams)),
+    [navigate, serverName, searchParams],
   );
 
   return (
@@ -31,7 +38,7 @@ export function ContentList2Route() {
         // header={<NavBar current="content" />}
         urlSearchParams={searchParams}
         onUrlSearchParamsChange={handleSearchParamsChange}
-        // onCreateEntity={handleCreateEntity}
+        onCreateEntity={handleCreateEntity}
         onOpenEntity={handleEntityOpen}
       />
     </ThemeProvider>

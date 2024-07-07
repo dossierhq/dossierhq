@@ -1,3 +1,5 @@
+import { addContentEditorParamsToURLSearchParams } from '@dossierhq/react-components2';
+
 export const ROUTE = {
   index: {
     url: '/',
@@ -41,15 +43,13 @@ export const ROUTE = {
   },
   contentEditor2: {
     route: 'content2/edit',
-    url: (serverName: string, selectors: ({ newType: string; id: string } | { id: string })[]) => {
-      const p = new URLSearchParams();
-      for (const selector of selectors) {
-        if ('newType' in selector) {
-          p.set('new', `${selector.newType}:${selector.id}`);
-        } else {
-          p.set('id', selector.id);
-        }
-      }
+    url: (
+      serverName: string,
+      options: Parameters<typeof addContentEditorParamsToURLSearchParams>[1],
+      listSearchParams: URLSearchParams,
+    ) => {
+      const p = new URLSearchParams(listSearchParams);
+      addContentEditorParamsToURLSearchParams(p, options);
       return `/${serverName}/content2/edit?${p.toString()}`;
     },
   },

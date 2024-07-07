@@ -19,7 +19,7 @@ import { useEntitiesTotalCount } from './useEntitiesTotalCount.js';
 
 export function useLoadContentList(
   searchEntityState: ContentListState,
-  dispatchContentListState: Dispatch<ContentListStateAction>,
+  dispatchContentList: Dispatch<ContentListStateAction>,
 ) {
   // search
   const searchQuery = searchEntityState.paging
@@ -36,24 +36,24 @@ export function useLoadContentList(
   );
 
   useEffect(() => {
-    dispatchContentListState(
+    dispatchContentList(
       new ContentListStateActions.UpdateSearchResult(
         connection as Connection<Edge<Entity, ErrorType>> | null,
         connectionError,
       ),
     );
-  }, [connection, connectionError, dispatchContentListState]);
+  }, [connection, connectionError, dispatchContentList]);
 
   useEffect(() => {
-    dispatchContentListState(new ContentListStateActions.UpdateTotalCount(totalCount ?? null));
-  }, [totalCount, dispatchContentListState]);
+    dispatchContentList(new ContentListStateActions.UpdateTotalCount(totalCount ?? null));
+  }, [totalCount, dispatchContentList]);
 
   useEffect(() => {
-    dispatchContentListState(
+    dispatchContentList(
       new ContentListStateActions.UpdateSampleResult(
         entitiesSample as EntitySamplingPayload<Entity>,
         entitiesSampleError,
       ),
     );
-  }, [entitiesSample, entitiesSampleError, dispatchContentListState]);
+  }, [entitiesSample, entitiesSampleError, dispatchContentList]);
 }

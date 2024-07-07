@@ -15,7 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover.js';
 interface Props {
   className?: string;
   contentListState: ContentListState;
-  dispatchContentListState: Dispatch<ContentListStateAction>;
+  dispatchContentList: Dispatch<ContentListStateAction>;
 }
 
 export function ContentListPagingButtons({ className, ...props }: Props) {
@@ -27,16 +27,16 @@ export function ContentListPagingButtons({ className, ...props }: Props) {
   );
 }
 
-function SearchButtons({ className, contentListState, dispatchContentListState }: Props) {
+function SearchButtons({ className, contentListState, dispatchContentList }: Props) {
   const handleEnableSample = useCallback(() => {
-    dispatchContentListState(new ContentListStateActions.SetSampling({}, false));
-  }, [dispatchContentListState]);
+    dispatchContentList(new ContentListStateActions.SetSampling({}, false));
+  }, [dispatchContentList]);
 
   const handlePagingChange = useCallback(
     (paging: Paging, pagingAction?: 'first-page' | 'prev-page' | 'next-page' | 'last-page') => {
-      dispatchContentListState(new ContentListStateActions.SetPaging(paging, pagingAction));
+      dispatchContentList(new ContentListStateActions.SetPaging(paging, pagingAction));
     },
-    [dispatchContentListState],
+    [dispatchContentList],
   );
 
   return (
@@ -60,18 +60,18 @@ function SearchButtons({ className, contentListState, dispatchContentListState }
   );
 }
 
-function SamplingButtons({ className, contentListState, dispatchContentListState }: Props) {
+function SamplingButtons({ className, contentListState, dispatchContentList }: Props) {
   const handleOrdered = useCallback(() => {
-    dispatchContentListState(new ContentListStateActions.SetPaging({}, 'first-page'));
-  }, [dispatchContentListState]);
+    dispatchContentList(new ContentListStateActions.SetPaging({}, 'first-page'));
+  }, [dispatchContentList]);
 
   const handleChangeSeed = useCallback(() => {
-    dispatchContentListState(new ContentListStateActions.SetSampling({ seed: undefined }, true));
-  }, [dispatchContentListState]);
+    dispatchContentList(new ContentListStateActions.SetSampling({ seed: undefined }, true));
+  }, [dispatchContentList]);
 
   return (
     <div className={className}>
-      <SampleEntitiesOptionsCount {...{ contentListState, dispatchContentListState }} />
+      <SampleEntitiesOptionsCount {...{ contentListState, dispatchContentList }} />
       <Button variant="outline" size="icon" onClick={handleChangeSeed}>
         <ShuffleIcon className="h-4 w-4" />
       </Button>
@@ -91,10 +91,10 @@ const items = [
 
 function SampleEntitiesOptionsCount({
   contentListState,
-  dispatchContentListState,
+  dispatchContentList,
 }: {
   contentListState: ContentListState;
-  dispatchContentListState: Dispatch<ContentListStateAction>;
+  dispatchContentList: Dispatch<ContentListStateAction>;
 }) {
   const [open, setOpen] = useState(false);
   const { requestedCount } = contentListState;
@@ -116,7 +116,7 @@ function SampleEntitiesOptionsCount({
             key={it.id}
             variant={it.count === requestedCount ? 'default' : 'ghost'}
             onClick={() => {
-              dispatchContentListState(
+              dispatchContentList(
                 new ContentListStateActions.SetSampling({ count: it.count }, true),
               );
               setOpen(false);

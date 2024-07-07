@@ -41,7 +41,7 @@ export function ContentEditorScreen({
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
   onEditorHasChangesChange: (hasChanges: boolean) => void;
 }) {
-  const [contentListState, dispatchContentListState] = useReducer(
+  const [contentListState, dispatchContentList] = useReducer(
     reduceContentListState,
     { mode: 'full', urlSearchParams },
     initializeContentListStateFromUrlQuery,
@@ -115,7 +115,7 @@ export function ContentEditorScreen({
           >
             <OpenContentDialogContent
               contentListState={contentListState}
-              dispatchContentListState={dispatchContentListState}
+              dispatchContentList={dispatchContentList}
               onOpenEntity={(entityId) => {
                 dispatchContentEditor(new ContentEditorActions.AddDraft({ id: entityId }));
                 dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false));
