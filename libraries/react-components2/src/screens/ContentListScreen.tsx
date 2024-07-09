@@ -1,15 +1,27 @@
 'use client';
 
-import { useReducer } from 'react';
+import { TerminalIcon } from 'lucide-react';
+import { useReducer, type Dispatch } from 'react';
 import { ContentList } from '../components/ContentList.js';
 import {
   ContentListCommandMenu,
+  type ContentListCommandMenuAction,
   type ContentListCommandMenuConfig,
 } from '../components/ContentListCommandMenu.js';
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
+import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
+import { Button } from '../components/ui/button.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
-import { initializeCommandMenuState, reduceCommandMenuState } from '../reducers/CommandReducer.js';
-import { reduceContentListState } from '../reducers/ContentListReducer.js';
+import {
+  CommandMenuState_ShowAction,
+  initializeCommandMenuState,
+  reduceCommandMenuState,
+} from '../reducers/CommandReducer.js';
+import {
+  reduceContentListState,
+  type ContentListState,
+  type ContentListStateAction,
+} from '../reducers/ContentListReducer.js';
 import {
   initializeContentListStateFromUrlQuery,
   useContentListCallOnUrlSearchQueryParamChange,
@@ -51,6 +63,11 @@ export function ContentListScreen({
         onCreateEntity={onCreateEntity}
       />
       <main className="flex flex-grow flex-col">
+        <Toolbar
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
+          dispatchCommandMenu={dispatchCommandMenu}
+        />
         <div className="flex-1 overflow-auto">
           <ContentList
             className="container h-full w-full p-2"
@@ -64,6 +81,38 @@ export function ContentListScreen({
           dispatchContentList={dispatchContentList}
         />
       </main>
+    </div>
+  );
+}
+
+function Toolbar({
+  contentListState,
+  dispatchContentList,
+  dispatchCommandMenu,
+}: {
+  contentListState: ContentListState;
+  dispatchContentList: Dispatch<ContentListStateAction>;
+  dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
+}) {
+  return (
+    <div className="flex items-center border-b">
+      <div className="container flex gap-2 p-2">
+        <Button
+          variant="outline"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
+        >
+          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
+        </Button>
+        <ContentListSearchSearchInput
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
+        />
+        <Button
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
+        >
+          Create
+        </Button>
+      </div>
     </div>
   );
 }
