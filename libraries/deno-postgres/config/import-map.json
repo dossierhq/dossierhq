@@ -5,9 +5,10 @@
     "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/index.js",
     "@dossierhq/integration-test": "../node_modules/@dossierhq/integration-test/lib/index.js",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/index.js",
+    "crypto": "node:crypto",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
     "std/": "https://deno.land/std@0.201.0/",
-    "tslib": "npm:tslib@~2.6.2",
-    "uuid": "npm:uuid@~9.0.1"
+    "tslib": "../node_modules/tslib/modules/index.js",
+    "uuid": "../node_modules/uuid/dist/esm-node/index.js"
   }
 }

@@ -1,4 +1,3 @@
 {
-  "importMap": "./config/import-map.json",
-  "nodeModulesDir": false
+  "importMap": "./config/import-map.json"
 }
