@@ -1,7 +1,12 @@
 import { EntityStatus } from '@dossierhq/core';
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils.js';
+import {
+  createMockAdapter,
+  createMockContext,
+  getQueryCalls,
+  mockQueryImplementation,
+} from '../test/TestUtils.js';
 import { adminGetEntity } from './getEntity.js';
 
 describe('adminGetEntity', () => {
@@ -9,10 +14,9 @@ describe('adminGetEntity', () => {
     const now = new Date();
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, query, _values) => {
-      let result;
+    mockQueryImplementation(adapter, (_transaction, query, _values) => {
       if (query.startsWith('SELECT e.uuid')) {
-        result = {
+        return {
           rows: [
             {
               uuid: '123',
@@ -32,9 +36,8 @@ describe('adminGetEntity', () => {
           ],
         };
       } else {
-        result = { rows: [] };
+        return { rows: [] };
       }
-      return Promise.resolve(result);
     });
 
     const result = await adminGetEntity(adapter, context, { id: '123' });
@@ -71,10 +74,9 @@ describe('adminGetEntity', () => {
     const now = new Date();
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, query, _values) => {
-      let result;
+    mockQueryImplementation(adapter, (_transaction, query, _values) => {
       if (query.startsWith('SELECT e.uuid')) {
-        result = {
+        return {
           rows: [
             {
               uuid: '123',
@@ -94,9 +96,8 @@ describe('adminGetEntity', () => {
           ],
         };
       } else {
-        result = { rows: [] };
+        return { rows: [] };
       }
-      return Promise.resolve(result);
     });
 
     const result = await adminGetEntity(adapter, context, { id: '123', version: 5 });

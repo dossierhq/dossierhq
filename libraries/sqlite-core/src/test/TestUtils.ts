@@ -17,21 +17,18 @@ import {
   type Transaction,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { vi, type MockInstance } from 'vitest';
+import { vi, type Mock, type MockInstance } from 'vitest';
 import { REQUIRED_SCHEMA_VERSION } from '../SchemaDefinition.js';
 import {
   createSqliteDatabaseAdapterAdapter,
   type ColumnValue,
   type SqliteDatabaseAdapter,
 } from '../SqliteDatabaseAdapter.js';
+import type { SqliteTransactionContext } from '../SqliteTransaction.js';
 import { Mutex } from '../utils/MutexUtils.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<
-  Parameters<TFn>,
-  ReturnType<TFn>
-> &
-  TFn;
+type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<TFn> & TFn;
 
 type QueryFn = SqliteDatabaseAdapter['query'];
 
@@ -41,7 +38,7 @@ interface MockedSqliteDatabaseAdapter extends SqliteDatabaseAdapter {
   mockQuery?: (query: string, values: ColumnValue[] | undefined) => unknown[] | undefined;
 
   createTransaction: MockedFunction<SqliteDatabaseAdapter['createTransaction']>;
-  query: MockedFunction<QueryFn>;
+  queryMock: Mock<QueryFn>;
   run: MockedFunction<SqliteDatabaseAdapter['run']>;
   encodeCursor: MockedFunction<SqliteDatabaseAdapter['encodeCursor']>;
   decodeCursor: MockedFunction<SqliteDatabaseAdapter['decodeCursor']>;
@@ -103,6 +100,7 @@ export function createMockDatabase(): MockedDatabase {
 export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
   const allQueries: [string, ...ColumnValue[]][] = [];
 
+  const query = vi.fn<QueryFn>();
   const mockAdapter: MockedSqliteDatabaseAdapter = {
     allQueries,
     clearAllQueries: () => {
@@ -110,8 +108,8 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     },
     createTransaction: vi.fn(),
     disconnect: vi.fn(),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    query: vi.fn<any, any>(),
+    queryMock: query,
+    query: query as MockedSqliteDatabaseAdapter['query'],
     run: vi.fn(),
     isFtsVirtualTableConstraintFailed: vi.fn().mockReturnValue(false),
     isUniqueViolationOfConstraint: vi.fn().mockReturnValue(false),
@@ -140,26 +138,32 @@ export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
     };
   });
 
-  mockAdapter.query.mockImplementation((_transaction, query, values) => {
-    allQueries.push([query, ...(values ?? [])]);
+  mockAdapter.queryMock.mockImplementation(
+    <R>(
+      _transaction: SqliteTransactionContext,
+      query: string,
+      values: ColumnValue[] | undefined,
+    ) => {
+      allQueries.push([query, ...(values ?? [])]);
 
-    let result: unknown[] | undefined;
-    if (mockAdapter.mockQuery) {
-      result = mockAdapter.mockQuery(query, values);
-    }
-    if (!result) {
-      if (query.startsWith('SELECT sqlite_version()')) {
-        result = [{ version: '3.37.0' }];
-      } else if (query === 'PRAGMA user_version') {
-        result = [{ user_version: REQUIRED_SCHEMA_VERSION }]; // prevent migration
-      } else if (query === 'PRAGMA foreign_keys') {
-        result = [{ foreign_keys: 0 }]; // turned off by default for each connection
-      } else {
-        result = [];
+      let result: unknown[] | undefined;
+      if (mockAdapter.mockQuery) {
+        result = mockAdapter.mockQuery(query, values);
       }
-    }
-    return Promise.resolve(result);
-  });
+      if (!result) {
+        if (query.startsWith('SELECT sqlite_version()')) {
+          result = [{ version: '3.37.0' }];
+        } else if (query === 'PRAGMA user_version') {
+          result = [{ user_version: REQUIRED_SCHEMA_VERSION }]; // prevent migration
+        } else if (query === 'PRAGMA foreign_keys') {
+          result = [{ foreign_keys: 0 }]; // turned off by default for each connection
+        } else {
+          result = [];
+        }
+      }
+      return Promise.resolve(result as R[]);
+    },
+  );
 
   mockAdapter.run.mockImplementation((transaction, query, values) => {
     allQueries.push([query, ...(values ?? [])]);

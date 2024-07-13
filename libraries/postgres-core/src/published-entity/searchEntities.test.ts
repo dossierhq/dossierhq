@@ -6,6 +6,7 @@ import {
   createMockContext,
   createTestAdminSchema,
   getQueryCalls,
+  mockQueryImplementation,
   resolvePaging,
 } from '../test/TestUtils.js';
 import { publishedEntitySearchEntities } from './searchEntities.js';
@@ -31,9 +32,7 @@ describe('publishedEntitySearchEntities', () => {
   test('Minimal, no results', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, _query, _values) =>
-      Promise.resolve({ rows: [] }),
-    );
+    mockQueryImplementation(adapter, (_transaction, _query, _values) => ({ rows: [] }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema().toPublishedSchema(),
@@ -57,9 +56,9 @@ describe('publishedEntitySearchEntities', () => {
   test('Minimal, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, _query, _values) =>
-      Promise.resolve({ rows: [createEntityDbRow(1)] }),
-    );
+    mockQueryImplementation(adapter, (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(1)],
+    }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema().toPublishedSchema(),
@@ -107,9 +106,9 @@ describe('publishedEntitySearchEntities', () => {
   test('Paging after, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, _query, _values) =>
-      Promise.resolve({ rows: [createEntityDbRow(2)] }),
-    );
+    mockQueryImplementation(adapter, (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(2)],
+    }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema().toPublishedSchema(),
@@ -158,9 +157,9 @@ describe('publishedEntitySearchEntities', () => {
   test('Paging before, one result', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, _query, _values) =>
-      Promise.resolve({ rows: [createEntityDbRow(2)] }),
-    );
+    mockQueryImplementation(adapter, (_transaction, _query, _values) => ({
+      rows: [createEntityDbRow(2)],
+    }));
     const result = await publishedEntitySearchEntities(
       adapter,
       createTestAdminSchema().toPublishedSchema(),

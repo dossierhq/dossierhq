@@ -1,18 +1,24 @@
 import { expectResultValue } from '@dossierhq/core-vitest';
 import { describe, expect, test } from 'vitest';
-import { createMockAdapter, createMockContext, getQueryCalls } from '../test/TestUtils.js';
+import {
+  createMockAdapter,
+  createMockContext,
+  getQueryCalls,
+  mockQueryImplementation,
+} from '../test/TestUtils.js';
 import { authCreateSession } from './createSession.js';
 
 describe('authCreateSession', () => {
   test('Create new principal', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, query, _values) => {
-      let result;
-      if (query.startsWith('INSERT INTO subjects')) result = { rows: [{ id: 123, uuid: '4321' }] };
-      else if (query.startsWith('INSERT INTO principals')) result = { rows: [{ id: 456 }] };
-      else result = { rows: [] };
-      return Promise.resolve(result);
+    mockQueryImplementation(adapter, (_transaction, query, _values) => {
+      if (query.startsWith('INSERT INTO subjects')) {
+        return { rows: [{ id: 123, uuid: '4321' }] };
+      } else if (query.startsWith('INSERT INTO principals')) {
+        return { rows: [{ id: 456 }] };
+      }
+      return { rows: [] };
     });
     const result = await authCreateSession(adapter, context, 'test', 'hello', false, null);
     expectResultValue(result, {
@@ -55,11 +61,11 @@ describe('authCreateSession', () => {
   test('Existing principal', async () => {
     const adapter = createMockAdapter();
     const context = createMockContext(adapter);
-    adapter.query.mockImplementation((_transaction, query, _values) => {
+    mockQueryImplementation(adapter, (_transaction, query, _values) => {
       if (query.startsWith('SELECT s.id, s.uuid FROM')) {
-        return Promise.resolve({ rows: [{ id: 123, uuid: '4321' }] });
+        return { rows: [{ id: 123, uuid: '4321' }] };
       }
-      return Promise.resolve({ rows: [] });
+      return { rows: [] };
     });
     const result = await authCreateSession(adapter, context, 'test', 'hello', false, null);
     expectResultValue(result, {
