@@ -5,11 +5,7 @@ import type { AuthorizationAdapter } from '../AuthorizationAdapter.js';
 import { SessionContextImpl, type SessionContext } from '../Context.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<
-  Parameters<TFn>,
-  ReturnType<TFn>
-> &
-  TFn;
+type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<TFn> & TFn;
 
 export interface MockDatabaseAdapter extends DatabaseAdapter {
   adminEntityCreate: MockedFunction<DatabaseAdapter['adminEntityCreate']>;
@@ -158,7 +154,7 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     schemaUpdateSpecification: vi.fn(),
     withNestedTransaction: vi.fn(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    withRootTransaction: vi.fn<any, any>(),
+    withRootTransaction: vi.fn() as MockDatabaseAdapter['withRootTransaction'],
   };
 
   adapter.withRootTransaction.mockImplementation((context, childContextFactory, callback) => {

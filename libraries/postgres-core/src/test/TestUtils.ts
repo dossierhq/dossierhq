@@ -7,19 +7,17 @@ import {
   type Transaction,
   type TransactionContext,
 } from '@dossierhq/database-adapter';
-import { vi, type MockInstance } from 'vitest';
+import { vi, type Mock } from 'vitest';
 import type { UniqueConstraints } from '../DatabaseSchema.js';
 import {
   createPostgresDatabaseAdapterAdapter,
   type PostgresDatabaseAdapter,
+  type PostgresQueryResult,
 } from '../PostgresDatabaseAdapter.js';
+import type { PostgresTransaction } from '../PostgresTransaction.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MockedFunction<TFn extends (...args: any[]) => any> = MockInstance<
-  Parameters<TFn>,
-  ReturnType<TFn>
-> &
-  TFn;
+type MockedFunction<TFn extends (...args: any[]) => any> = Mock<TFn> & TFn;
 
 type QueryFn = PostgresDatabaseAdapter['query'];
 
@@ -47,7 +45,7 @@ class DummyContextImpl extends TransactionContextImpl<TransactionContext> {
 }
 
 interface MockedPostgresDatabaseAdapter extends PostgresDatabaseAdapter {
-  query: MockedFunction<QueryFn>;
+  queryMock: Mock<QueryFn>;
   base64Encode: MockedFunction<PostgresDatabaseAdapter['base64Encode']>;
   base64Decode: MockedFunction<PostgresDatabaseAdapter['base64Decode']>;
 }
@@ -68,15 +66,15 @@ export function createMockContext(adapter: PostgresDatabaseAdapter): Transaction
 }
 
 export function createMockAdapter(): MockedPostgresDatabaseAdapter {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const query: MockedFunction<QueryFn> = vi.fn<any, any>();
+  const query = vi.fn<QueryFn>();
 
   const databaseAdapter: MockedPostgresDatabaseAdapter = {
     disconnect: vi.fn(),
     isUniqueViolationOfConstraint: (error, constraintName) =>
       error instanceof MockUniqueViolationOfConstraintError &&
       error.uniqueConstraint === constraintName,
-    query,
+    queryMock: query,
+    query: query as MockedPostgresDatabaseAdapter['query'],
     createTransaction: () =>
       Promise.resolve({
         _type: 'Transaction',
@@ -95,8 +93,22 @@ export function createMockAdapter(): MockedPostgresDatabaseAdapter {
   return databaseAdapter;
 }
 
+export function mockQueryImplementation(
+  adapter: MockedPostgresDatabaseAdapter,
+  implementation: (
+    transaction: PostgresTransaction | null,
+    query: string,
+    values: unknown[] | undefined,
+  ) => PostgresQueryResult<unknown>,
+): void {
+  adapter.queryMock.mockImplementation(
+    <R>(transaction: PostgresTransaction | null, query: string, values: unknown[] | undefined) =>
+      Promise.resolve(implementation(transaction, query, values) as PostgresQueryResult<R>),
+  );
+}
+
 export function getQueryCalls(adapter: MockedPostgresDatabaseAdapter): [string, ...unknown[]][] {
-  return adapter.query.mock.calls.map((call) => {
+  return adapter.queryMock.mock.calls.map((call) => {
     const [_transaction, query, values] = call;
     return [query, ...(values ?? [])];
   });

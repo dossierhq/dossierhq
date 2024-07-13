@@ -70,7 +70,7 @@ function createJsonConvertingDossierClientsForOperation<
     operation: DossierClientOperation<TName>,
   ) => Promise<void>,
 ) {
-  const operationHandlerMock = vi.fn<[TContext, DossierClientOperation<TName>], Promise<void>>();
+  const operationHandlerMock = vi.fn<typeof operationHandlerMockImplementation>();
   operationHandlerMock.mockImplementation(operationHandlerMockImplementation);
 
   const innerMiddleware: DossierClientMiddleware<TContext> = async (context, operation) => {
