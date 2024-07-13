@@ -8,7 +8,7 @@
     "crypto": "node:crypto",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
     "std/": "https://deno.land/std@0.201.0/",
-    "tslib": "../node_modules/tslib/modules/index.js",
-    "uuid": "../node_modules/uuid/dist/esm-node/index.js"
+    "tslib": "npm:tslib@~2.6.3",
+    "uuid": "npm:uuid@~10.0.0"
   }
 }

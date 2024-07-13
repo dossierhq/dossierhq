@@ -7,6 +7,8 @@
       "npm:tslib@~2.5.0": "npm:tslib@2.5.0",
       "npm:tslib@~2.6.0": "npm:tslib@2.6.0",
       "npm:tslib@~2.6.2": "npm:tslib@2.6.2",
+      "npm:tslib@~2.6.3": "npm:tslib@2.6.3",
+      "npm:uuid@~10.0.0": "npm:uuid@10.0.0",
       "npm:uuid@~9.0.0": "npm:uuid@9.0.0",
       "npm:uuid@~9.0.1": "npm:uuid@9.0.1"
     },
@@ -29,6 +31,14 @@
       },
       "tslib@2.6.2": {
         "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==",
+        "dependencies": {}
+      },
+      "tslib@2.6.3": {
+        "integrity": "sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==",
+        "dependencies": {}
+      },
+      "uuid@10.0.0": {
+        "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
         "dependencies": {}
       },
       "uuid@9.0.0": {
