@@ -1,3 +1,7 @@
+@import 'leaflet/dist/leaflet.css';
+@import '@dossierhq/leaflet/icons.css';
+@import '@dossierhq/leaflet/main.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -70,6 +74,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -78,9 +83,11 @@
 .CollapsibleContent {
   overflow: hidden;
 }
+
 .CollapsibleContent[data-state='open'] {
   animation: slideDown 300ms ease-out;
 }
+
 .CollapsibleContent[data-state='closed'] {
   animation: slideUp 300ms ease-out;
 }
@@ -89,6 +96,7 @@
   from {
     height: 0;
   }
+
   to {
     height: var(--radix-collapsible-content-height);
   }
@@ -98,6 +106,7 @@
   from {
     height: var(--radix-collapsible-content-height);
   }
+
   to {
     height: 0;
   }

@@ -1,11 +1,11 @@
 'use client';
 
-import {
-  addContentEditorParamsToURLSearchParams,
-  ContentListScreen,
-} from '@dossierhq/react-components2';
+import { addContentEditorParamsToURLSearchParams } from '@dossierhq/react-components2';
+import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback } from 'react';
+
+const ContentListScreen = dynamic(() => import('./ContentListScreen'), { ssr: false });
 
 export default function Page() {
   return (

@@ -43,6 +43,8 @@
     "url": "https://github.com/dossierhq/dossierhq/issues"
   },
   "dependencies": {
+    "@dossierhq/core": "workspace:*",
+    "@dossierhq/leaflet": "workspace:*",
     "@radix-ui/react-alert-dialog": "~1.1.1",
     "@radix-ui/react-collapsible": "~1.1.0",
     "@radix-ui/react-dialog": "~1.1.1",
@@ -55,6 +57,7 @@
     "class-variance-authority": "~0.7.0",
     "clsx": "~2.1.1",
     "cmdk": "~1.0.0",
+    "leaflet": "~1.9.4",
     "lodash": "~4.17.21",
     "lucide-react": "~0.408.0",
     "next-themes": "~0.3.0",
@@ -71,7 +74,6 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "~1.6.0",
-    "@dossierhq/core": "workspace:*",
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",

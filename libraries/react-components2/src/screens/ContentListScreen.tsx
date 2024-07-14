@@ -1,6 +1,6 @@
 'use client';
 
-import { EntityQueryOrder } from '@dossierhq/core';
+import { EntityQueryOrder, type Entity } from '@dossierhq/core';
 import {
   ArrowDownNarrowWideIcon,
   ArrowDownWideNarrowIcon,
@@ -10,7 +10,7 @@ import {
   Rows2Icon,
   TerminalIcon,
 } from 'lucide-react';
-import { useReducer, useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useReducer, useState, type Dispatch, type SetStateAction } from 'react';
 import { ContentList } from '../components/ContentList.js';
 import {
   ContentListCommandMenu,
@@ -19,6 +19,8 @@ import {
 } from '../components/ContentListCommandMenu.js';
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
 import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
+import { ContentMap } from '../components/ContentMap.js';
+import { ContentMapMarker } from '../components/ContentMapMarker.js';
 import { EntityDisplay } from '../components/EntityDisplay.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
@@ -39,6 +41,7 @@ import {
 import { ToggleGroup, ToggleGroupItem } from '../components/ui/toggle-group.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
 import { useResponsive } from '../hooks/useResponsive.js';
+import { useSchema } from '../hooks/useSchema.js';
 import { cn } from '../lib/utils.js';
 import {
   CommandMenuState_ShowAction,
@@ -69,6 +72,7 @@ export function ContentListScreen({
   onCreateEntity: (type: string) => void;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
 }) {
+  const { schema } = useSchema();
   const [contentListState, dispatchContentList] = useReducer(
     reduceContentListState,
     { mode: 'full', urlSearchParams },
@@ -77,7 +81,19 @@ export function ContentListScreen({
   useContentListCallOnUrlSearchQueryParamChange('full', contentListState, onUrlSearchParamsChange);
   useLoadContentList(contentListState, dispatchContentList);
 
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    contentListState.query.boundingBox ? 'map' : 'list',
+  );
+  useEffect(() => {
+    if (viewMode !== 'map' && contentListState.query.boundingBox) {
+      dispatchContentList(
+        new ContentListStateActions.SetQuery(
+          { boundingBox: undefined },
+          { partial: true, resetPagingIfModifying: true },
+        ),
+      );
+    }
+  }, [contentListState.query.boundingBox, viewMode]);
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null);
 
   const [commandMenuState, dispatchCommandMenu] = useReducer(
@@ -147,7 +163,22 @@ export function ContentListScreen({
                     entityId={selectedEntityId}
                   />
                 )}
-              {viewMode === 'map' && <div className="h-full w-full bg-blue-500" />}
+              {viewMode === 'map' && !!schema ? (
+                <ContentMap<Entity>
+                  className="h-full"
+                  schema={schema}
+                  contentListState={contentListState}
+                  dispatchContentList={dispatchContentList}
+                  renderEntityMarker={(key, entity, location) => (
+                    <ContentMapMarker
+                      key={key}
+                      entity={entity}
+                      location={location}
+                      onClick={() => onOpenEntity(entity.id)}
+                    />
+                  )}
+                />
+              ) : null}
             </ResizablePanel>
           </ResizablePanelGroup>
         )}
