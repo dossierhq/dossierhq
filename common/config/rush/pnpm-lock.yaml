@@ -1596,6 +1596,9 @@ importers:
 
   ../../libraries/react-components2:
     dependencies:
+      '@dossierhq/core':
+        specifier: workspace:*
+        version: link:../core
       '@dossierhq/leaflet':
         specifier: workspace:*
         version: link:../leaflet
@@ -1669,9 +1672,6 @@ importers:
       '@chromatic-com/storybook':
         specifier: ~1.6.0
         version: 1.6.0(react@18.3.1)
-      '@dossierhq/core':
-        specifier: workspace:*
-        version: link:../core
       '@dossierhq/heft-node-rig':
         specifier: workspace:*
         version: link:../../rigs/heft-node-rig
