@@ -58,6 +58,7 @@
     "lodash": "~4.17.21",
     "lucide-react": "~0.408.0",
     "next-themes": "~0.3.0",
+    "react-resizable-panels": "~2.0.20",
     "sonner": "1.4.3",
     "swr": "~2.2.5",
     "tailwind-merge": "~2.3.0",

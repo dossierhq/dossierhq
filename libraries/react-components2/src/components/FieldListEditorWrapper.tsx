@@ -19,7 +19,7 @@ interface Props<TFieldSpec extends FieldSpecification, TItem>
 
 const noErrors: (PublishValidationIssue | SaveValidationIssue)[] = [];
 
-export function FieldListWrapper<TFieldSpec extends FieldSpecification, TItem>({
+export function FieldListEditorWrapper<TFieldSpec extends FieldSpecification, TItem>({
   id,
   value,
   fieldSpec,

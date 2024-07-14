@@ -2,28 +2,23 @@ import {
   isStringListField,
   isStringSingleField,
   type FieldSpecification,
-  type PublishValidationIssue,
-  type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import type { ReactNode } from 'react';
-import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
-import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
+import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
+import { StringFieldDisplay } from './StringFieldDisplay.js';
 
-export interface FieldEditorProps<
+export interface FieldDisplayProps<
   TFieldSpec extends FieldSpecification = FieldSpecification,
   TValue = unknown,
 > {
   id?: string;
   fieldSpec: TFieldSpec;
-  adminOnly: boolean;
   value: TValue | null;
   dragHandle?: ReactNode;
-  onChange: (value: TValue | null) => void;
-  validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
 }
 
-export function FieldEditor(props: FieldEditorProps) {
+export function FieldDisplay(props: FieldDisplayProps) {
   const { fieldSpec, value } = props;
 
   /*TODO
@@ -34,7 +29,7 @@ export function FieldEditor(props: FieldEditorProps) {
   }
   */
 
-  let editor: JSX.Element;
+  let display: JSX.Element;
   /* TODO
   if (isBooleanSingleField(fieldSpec, value)) {
     editor = (
@@ -129,21 +124,20 @@ export function FieldEditor(props: FieldEditorProps) {
   } else
   */
   if (isStringSingleField(fieldSpec, value)) {
-    editor = (
-      <StringFieldEditor
+    display = (
+      <StringFieldDisplay
         {...props}
         fieldSpec={fieldSpec as StringFieldSpecification}
         value={value}
       />
     );
   } else if (isStringListField(fieldSpec, value)) {
-    editor = (
-      <FieldListEditorWrapper
+    display = (
+      <FieldListDisplayWrapper
         {...props}
         fieldSpec={fieldSpec as StringFieldSpecification}
         value={value}
-        AddButton={AddStringListItemButton}
-        Editor={StringFieldEditor}
+        Display={StringFieldDisplay}
       />
     );
     /*
@@ -167,7 +161,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   */
   } else {
-    editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
+    display = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }
-  return editor;
+  return display;
 }

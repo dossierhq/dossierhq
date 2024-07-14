@@ -7,10 +7,12 @@ import { EntityCard } from './EntityCard.js';
 export function ContentList({
   className,
   contentListState,
+  selectedItem,
   onItemClick,
 }: {
   className?: string;
   contentListState: ContentListState;
+  selectedItem?: string | null;
   onItemClick?: (id: string) => void;
 }) {
   return (
@@ -27,6 +29,7 @@ export function ContentList({
             type={item.value.info.type}
             updatedAt={'updatedAt' in item.value.info ? item.value.info.updatedAt : undefined}
             valid={item.value.info.valid}
+            selected={selectedItem === item.value.id}
             onClick={onItemClick ? () => onItemClick(item.value.id) : undefined}
           />
         );

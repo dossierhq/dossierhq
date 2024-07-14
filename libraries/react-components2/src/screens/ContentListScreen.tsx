@@ -19,6 +19,7 @@ import {
 } from '../components/ContentListCommandMenu.js';
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
 import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
+import { EntityDisplay } from '../components/EntityDisplay.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import {
@@ -30,6 +31,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../components/ui/dropdown-menu.js';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '../components/ui/resizable.js';
 import { ToggleGroup, ToggleGroupItem } from '../components/ui/toggle-group.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
 import { useResponsive } from '../hooks/useResponsive.js';
@@ -72,6 +78,7 @@ export function ContentListScreen({
   useLoadContentList(contentListState, dispatchContentList);
 
   const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null);
 
   const [commandMenuState, dispatchCommandMenu] = useReducer(
     reduceCommandMenuState<ContentListCommandMenuConfig>,
@@ -80,6 +87,7 @@ export function ContentListScreen({
   );
 
   const md = useResponsive('md');
+  const lg = useResponsive('lg');
   return (
     <div className="flex h-dvh w-dvw overflow-hidden">
       <ContentListCommandMenu
@@ -103,18 +111,46 @@ export function ContentListScreen({
           dispatchContentList={dispatchContentList}
           dispatchCommandMenu={dispatchCommandMenu}
         />
-        <div className="flex-1 overflow-auto">
-          <ContentList
-            className="container h-full w-full p-2"
-            contentListState={contentListState}
-            onItemClick={onOpenEntity}
-          />
-        </div>
-        <ContentListPagingButtons
-          className="border-t py-2"
-          contentListState={contentListState}
-          dispatchContentList={dispatchContentList}
-        />
+        {viewMode === 'list' && (
+          <>
+            <div className="flex-1 overflow-auto">
+              <ContentList
+                className="container h-full w-full p-2"
+                contentListState={contentListState}
+                onItemClick={onOpenEntity}
+              />
+            </div>
+            <ContentListPagingButtons
+              className="border-t py-2"
+              contentListState={contentListState}
+              dispatchContentList={dispatchContentList}
+            />
+          </>
+        )}
+        {(viewMode === 'split' || viewMode === 'map') && (
+          <ResizablePanelGroup direction={lg ? 'horizontal' : 'vertical'}>
+            <ResizablePanel minSize={20}>
+              <ContentList
+                className="h-full w-full overflow-auto p-2"
+                contentListState={contentListState}
+                selectedItem={selectedEntityId}
+                onItemClick={setSelectedEntityId}
+              />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel minSize={20}>
+              {viewMode === 'split' &&
+                ((contentListState.entities && contentListState.entities.length > 0) ||
+                  selectedEntityId) && (
+                  <EntityDisplay
+                    className="h-full w-full overflow-auto p-2"
+                    entityId={selectedEntityId}
+                  />
+                )}
+              {viewMode === 'map' && <div className="h-full w-full bg-blue-500" />}
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        )}
       </main>
     </div>
   );
