@@ -161,9 +161,6 @@ function Sidebar({
       </div>
       <div className="flex justify-between border-t px-2 py-1">
         <ThemeToggle />
-        {/* <Button variant="outline" size="icon">
-          <ChevronLeft className="h-[1.2rem] w-[1.2rem]" />
-        </Button> */}
       </div>
     </aside>
   );
