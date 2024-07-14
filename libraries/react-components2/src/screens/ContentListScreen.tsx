@@ -1,7 +1,15 @@
 'use client';
 
 import { EntityQueryOrder } from '@dossierhq/core';
-import { ArrowDownNarrowWideIcon, ArrowDownWideNarrowIcon, TerminalIcon } from 'lucide-react';
+import {
+  ArrowDownNarrowWideIcon,
+  ArrowDownWideNarrowIcon,
+  Columns2Icon,
+  ListIcon,
+  MapIcon,
+  Rows2Icon,
+  TerminalIcon,
+} from 'lucide-react';
 import { useReducer, useState, type Dispatch, type SetStateAction } from 'react';
 import { ContentList } from '../components/ContentList.js';
 import {
@@ -22,6 +30,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../components/ui/dropdown-menu.js';
+import { ToggleGroup, ToggleGroupItem } from '../components/ui/toggle-group.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
 import { useResponsive } from '../hooks/useResponsive.js';
 import { cn } from '../lib/utils.js';
@@ -112,8 +121,8 @@ export function ContentListScreen({
 }
 
 function Sidebar({
-  viewMode: _1,
-  setViewMode: _2,
+  viewMode,
+  setViewMode,
   dispatchCommandMenu,
 }: {
   viewMode: ViewMode;
@@ -138,6 +147,7 @@ function Sidebar({
       <div className="flex flex-grow flex-col gap-2 overflow-auto p-2"></div>
       <div className="flex justify-between border-t px-2 py-1">
         <ThemeToggle />
+        <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
       </div>
     </aside>
   );
@@ -179,6 +189,38 @@ function Toolbar({
         </Button>
       </div>
     </div>
+  );
+}
+
+function ViewModeToggle({
+  viewMode,
+  setViewMode,
+}: {
+  viewMode: string;
+  setViewMode: Dispatch<SetStateAction<ViewMode>>;
+}) {
+  return (
+    <ToggleGroup
+      className="bg-background"
+      value={viewMode}
+      type="single"
+      onValueChange={(value) => {
+        if (value) {
+          setViewMode(value as ViewMode);
+        }
+      }}
+    >
+      <ToggleGroupItem value="list" aria-label="">
+        <ListIcon className="h-4 w-4" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="split">
+        <Columns2Icon className="hidden h-4 w-4 lg:block" />
+        <Rows2Icon className="h-4 w-4 lg:hidden" />
+      </ToggleGroupItem>
+      <ToggleGroupItem value="map">
+        <MapIcon className="h-4 w-4" />
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 }
 
