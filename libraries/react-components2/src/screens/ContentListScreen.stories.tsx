@@ -52,6 +52,16 @@ export const SwitchToSplit: Story = {
   },
 };
 
+export const SwitchToSplitNoMatches: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByTitle('View split'));
+
+    await userEvent.type(await canvas.findByPlaceholderText('Search content...'), 'no matches');
+  },
+};
+
 export const SwitchToSplitAndSelectEntity: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

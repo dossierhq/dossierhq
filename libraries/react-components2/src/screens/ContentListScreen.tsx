@@ -147,7 +147,7 @@ export function ContentListScreen({
           <>
             <div className="flex-1 overflow-auto">
               <ContentList
-                className="container h-full w-full p-2"
+                className="container min-h-full w-full p-2"
                 contentListState={contentListState}
                 showDate={showDate}
                 onItemClick={onOpenEntity}
@@ -164,7 +164,7 @@ export function ContentListScreen({
           <ResizablePanelGroup direction={lg ? 'horizontal' : 'vertical'}>
             <ResizablePanel minSize={20}>
               <ContentList
-                className="h-full w-full overflow-auto p-2"
+                className="min-h-full w-full overflow-auto p-2"
                 contentListState={contentListState}
                 selectedItem={selectedEntityId}
                 onItemClick={setSelectedEntityId}
