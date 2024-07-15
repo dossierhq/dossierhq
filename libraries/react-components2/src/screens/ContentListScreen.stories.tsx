@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn, userEvent, waitFor, within } from '@storybook/test';
 import type { ComponentProps } from 'react';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { addContentListParamsToURLSearchParams } from '../reducers/ContentListUrlSynchronizer.js';
@@ -30,6 +30,22 @@ export const Normal: Story = {};
 
 export const NoMatches: Story = {
   args: { urlSearchParams: urlFor({ mode: 'full', query: { text: 'no matches' } }) },
+};
+
+export const SwitchToMap: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByTitle('View map'));
+  },
+};
+
+export const SwitchToSplit: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByTitle('View split'));
+  },
 };
 
 function urlFor(options: Parameters<typeof addContentListParamsToURLSearchParams>[1]) {

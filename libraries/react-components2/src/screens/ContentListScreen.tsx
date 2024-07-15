@@ -292,14 +292,14 @@ function ViewModeToggle({
         }
       }}
     >
-      <ToggleGroupItem value="list" aria-label="">
+      <ToggleGroupItem value="list" title="View list">
         <ListIcon className="h-4 w-4" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="split">
+      <ToggleGroupItem value="split" title="View split">
         <Columns2Icon className="hidden h-4 w-4 lg:block" />
         <Rows2Icon className="h-4 w-4 lg:hidden" />
       </ToggleGroupItem>
-      <ToggleGroupItem value="map">
+      <ToggleGroupItem value="map" title="View map">
         <MapIcon className="h-4 w-4" />
       </ToggleGroupItem>
     </ToggleGroup>
