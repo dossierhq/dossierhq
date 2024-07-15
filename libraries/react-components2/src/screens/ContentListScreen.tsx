@@ -10,15 +10,7 @@ import {
   Rows2Icon,
   TerminalIcon,
 } from 'lucide-react';
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useReducer,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from 'react';
+import { lazy, Suspense, useReducer, useState, type Dispatch } from 'react';
 import { ContentList } from '../components/ContentList.js';
 import {
   ContentListCommandMenu,
@@ -59,6 +51,7 @@ import {
   reduceContentListState,
   type ContentListState,
   type ContentListStateAction,
+  type ContentListViewMode,
 } from '../reducers/ContentListReducer.js';
 import {
   initializeContentListStateFromUrlQuery,
@@ -71,8 +64,6 @@ const ContentMap = lazy(() =>
 const ContentMapMarker = lazy(() =>
   import('../components/ContentMapMarker.js').then((it) => ({ default: it.ContentMapMarker })),
 );
-
-type ViewMode = 'list' | 'split' | 'map';
 
 export function ContentListScreen({
   urlSearchParams,
@@ -94,19 +85,6 @@ export function ContentListScreen({
   useContentListCallOnUrlSearchQueryParamChange('full', contentListState, onUrlSearchParamsChange);
   useLoadContentList(contentListState, dispatchContentList);
 
-  const [viewMode, setViewMode] = useState<ViewMode>(
-    contentListState.query.boundingBox ? 'map' : 'list',
-  );
-  useEffect(() => {
-    if (viewMode !== 'map' && contentListState.query.boundingBox) {
-      dispatchContentList(
-        new ContentListStateActions.SetQuery(
-          { boundingBox: undefined },
-          { partial: true, resetPagingIfModifying: true },
-        ),
-      );
-    }
-  }, [contentListState.query.boundingBox, viewMode]);
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null);
 
   const [commandMenuState, dispatchCommandMenu] = useReducer(
@@ -132,8 +110,8 @@ export function ContentListScreen({
       />
       {md && (
         <Sidebar
-          viewMode={viewMode}
-          setViewMode={setViewMode}
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
           dispatchCommandMenu={dispatchCommandMenu}
         />
       )}
@@ -143,7 +121,7 @@ export function ContentListScreen({
           dispatchContentList={dispatchContentList}
           dispatchCommandMenu={dispatchCommandMenu}
         />
-        {viewMode === 'list' && (
+        {contentListState.viewMode === 'list' && (
           <>
             <div className="flex-1 overflow-auto">
               <ContentList
@@ -160,7 +138,7 @@ export function ContentListScreen({
             />
           </>
         )}
-        {(viewMode === 'split' || viewMode === 'map') && (
+        {(contentListState.viewMode === 'split' || contentListState.viewMode === 'map') && (
           <ResizablePanelGroup direction={lg ? 'horizontal' : 'vertical'}>
             <ResizablePanel minSize={20}>
               <div className="flex h-full flex-col">
@@ -191,7 +169,7 @@ export function ContentListScreen({
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel minSize={20}>
-              {viewMode === 'split' &&
+              {contentListState.viewMode === 'split' &&
                 ((contentListState.entities && contentListState.entities.length > 0) ||
                   selectedEntityId) && (
                   <EntityDisplay
@@ -199,7 +177,7 @@ export function ContentListScreen({
                     entityId={selectedEntityId}
                   />
                 )}
-              {viewMode === 'map' && !!schema ? (
+              {contentListState.viewMode === 'map' && !!schema ? (
                 <Suspense>
                   <ContentMap
                     className="h-full"
@@ -226,12 +204,12 @@ export function ContentListScreen({
 }
 
 function Sidebar({
-  viewMode,
-  setViewMode,
+  contentListState,
+  dispatchContentList,
   dispatchCommandMenu,
 }: {
-  viewMode: ViewMode;
-  setViewMode: Dispatch<SetStateAction<ViewMode>>;
+  contentListState: ContentListState;
+  dispatchContentList: Dispatch<ContentListStateAction>;
   dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
 }) {
   return (
@@ -244,6 +222,7 @@ function Sidebar({
           <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
         </Button>
         <Button
+          variant="secondary"
           onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
         >
           Create
@@ -252,7 +231,10 @@ function Sidebar({
       <div className="flex flex-grow flex-col gap-2 overflow-auto p-2"></div>
       <div className="flex justify-between border-t px-2 py-1">
         <ThemeToggle />
-        <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
+        <ViewModeToggle
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
+        />
       </div>
     </aside>
   );
@@ -298,20 +280,22 @@ function Toolbar({
 }
 
 function ViewModeToggle({
-  viewMode,
-  setViewMode,
+  contentListState,
+  dispatchContentList,
 }: {
-  viewMode: string;
-  setViewMode: Dispatch<SetStateAction<ViewMode>>;
+  contentListState: ContentListState;
+  dispatchContentList: Dispatch<ContentListStateAction>;
 }) {
   return (
     <ToggleGroup
       className="bg-background"
-      value={viewMode}
+      value={contentListState.viewMode}
       type="single"
       onValueChange={(value) => {
         if (value) {
-          setViewMode(value as ViewMode);
+          dispatchContentList(
+            new ContentListStateActions.SetViewMode(value as ContentListViewMode),
+          );
         }
       }}
     >

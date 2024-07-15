@@ -32,6 +32,8 @@ const DEFAULT_VALUES = {
   },
 } as const;
 
+export type ContentListViewMode = 'list' | 'split' | 'map';
+
 export interface ContentListState {
   mode: 'full' | 'published';
 
@@ -54,6 +56,8 @@ export interface ContentListState {
     | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
     | undefined;
   totalCount: number | null;
+
+  viewMode: ContentListViewMode;
 
   // null until first loaded
   entities: Result<Entity | PublishedEntity, ErrorType>[] | null;
@@ -89,6 +93,7 @@ export function initializeContentListState({
     sampling: undefined,
     requestedCount: defaultValues.requestedCount,
     text: '',
+    viewMode: 'list',
     connection: undefined,
     connectionError: undefined,
     entitySamples: undefined,
@@ -272,7 +277,31 @@ class SetQueryAction implements ContentListStateAction {
       paging = {};
       loadingState = 'first-page';
     }
-    return { ...state, query, text: query.text ?? '', paging, sampling, loadingState };
+
+    let viewMode = state.viewMode;
+    if (query.boundingBox) {
+      viewMode = 'map';
+    }
+    if (!query.boundingBox && viewMode === 'map') {
+      viewMode = 'list';
+    }
+
+    return { ...state, query, text: query.text ?? '', paging, sampling, loadingState, viewMode };
+  }
+}
+
+class SetViewModeAction implements ContentListStateAction {
+  readonly value: ContentListViewMode;
+
+  constructor(value: ContentListViewMode) {
+    this.value = value;
+  }
+
+  reduce(state: Readonly<ContentListState>): Readonly<ContentListState> {
+    if (state.viewMode === this.value) {
+      return state;
+    }
+    return { ...state, viewMode: this.value };
   }
 }
 
@@ -371,6 +400,7 @@ export const ContentListStateActions = {
   SetPaging: SetPagingAction,
   SetSampling: SetSamplingAction,
   SetQuery: SetQueryAction,
+  SetViewMode: SetViewModeAction,
   UpdateSearchResult: UpdateSearchResultAction,
   UpdateSampleResult: UpdateSampleResultAction,
   UpdateTotalCount: UpdateTotalCountAction,

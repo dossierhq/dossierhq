@@ -56,6 +56,7 @@ exports[`ContentListState scenarios > From sampling -> set paging -> loading -> 
   },
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -96,6 +97,7 @@ exports[`ContentListState scenarios > From sampling -> set paging -> loading -> 
   "sampling": undefined,
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -163,6 +165,7 @@ exports[`ContentListState scenarios > From sampling -> set paging -> loading -> 
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -233,6 +236,7 @@ exports[`ContentListState scenarios > From searching -> set sampling -> loading 
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -274,6 +278,7 @@ exports[`ContentListState scenarios > From searching -> set sampling -> loading 
   },
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -333,6 +338,7 @@ exports[`ContentListState scenarios > From searching -> set sampling -> loading 
   },
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -403,6 +409,7 @@ exports[`ContentListState scenarios > Next page -> loading -> loaded > 1 - initi
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -446,6 +453,7 @@ exports[`ContentListState scenarios > Next page -> loading -> loaded > 2 - loadi
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -516,6 +524,7 @@ exports[`ContentListState scenarios > Next page -> loading -> loaded > 3 - loade
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -586,6 +595,7 @@ exports[`ContentListState scenarios > Refresh > 1 - initial 1`] = `
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -656,6 +666,7 @@ exports[`ContentListState scenarios > Refresh > 2 - loaded 1`] = `
   "sampling": undefined,
   "text": "",
   "totalCount": 2,
+  "viewMode": "list",
 }
 `;
 
@@ -715,6 +726,7 @@ exports[`ContentListState scenarios > Sampling -> change seed -> loading -> load
   },
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -756,6 +768,7 @@ exports[`ContentListState scenarios > Sampling -> change seed -> loading -> load
   },
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -815,6 +828,7 @@ exports[`ContentListState scenarios > Sampling -> change seed -> loading -> load
   },
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -845,6 +859,7 @@ exports[`initializeContentListState > restrict linksFrom 1`] = `
   "sampling": undefined,
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;
 
@@ -875,5 +890,6 @@ exports[`initializeContentListState > restrict linksTo 1`] = `
   "sampling": undefined,
   "text": "",
   "totalCount": null,
+  "viewMode": "list",
 }
 `;

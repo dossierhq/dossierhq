@@ -94,6 +94,7 @@ describe('initializeContentListState', () => {
         "sampling": undefined,
         "text": "",
         "totalCount": null,
+        "viewMode": "list",
       }
     `);
   });
@@ -129,6 +130,7 @@ describe('initializeContentListState', () => {
           "sampling": undefined,
           "text": "",
           "totalCount": null,
+          "viewMode": "list",
         }
       `);
   });

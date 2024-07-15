@@ -1,5 +1,5 @@
 import type { Schema } from '@dossierhq/core';
-import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
+import { LaptopIcon, MoonIcon, PlusIcon, SearchIcon, SunIcon } from 'lucide-react';
 import { useContext, type Dispatch } from 'react';
 import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
 import { ContentEditorStateContext } from '../contexts/ContentEditorStateContext.js';
@@ -113,12 +113,14 @@ export function ContentEditorCommandMenu({
                   dispatch(new CommandMenuState_CloseAction());
                 }}
               >
-                Open entity
+                <SearchIcon className="mr-2 h-4 w-4" />
+                <span>Open entity</span>
               </CommandItem>
               <CommandItem
                 onSelect={() => dispatch(new CommandMenuState_OpenPageAction({ id: 'create' }))}
               >
-                Create entity
+                <PlusIcon className="mr-2 h-4 w-4" />
+                <span>Create entity</span>
               </CommandItem>
             </CommandGroup>
             {drafts.length > 0 && (

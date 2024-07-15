@@ -1,6 +1,18 @@
 import type { Schema } from '@dossierhq/core';
-import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
-import { type Dispatch } from 'react';
+import {
+  AsteriskIcon,
+  Columns2Icon,
+  LaptopIcon,
+  ListIcon,
+  MapIcon,
+  MilestoneIcon,
+  MoonIcon,
+  PlusIcon,
+  Rows2Icon,
+  ShapesIcon,
+  SunIcon,
+} from 'lucide-react';
+import type { Dispatch } from 'react';
 import { useOpenCommandMenu } from '../hooks/useOpenCommandMenu.js';
 import { useSchema } from '../hooks/useSchema.js';
 import {
@@ -13,7 +25,11 @@ import {
   type CommandMenuConfig,
   type CommandMenuState,
 } from '../reducers/CommandReducer.js';
-import type { ContentListState, ContentListStateAction } from '../reducers/ContentListReducer.js';
+import {
+  ContentListStateActions,
+  type ContentListState,
+  type ContentListStateAction,
+} from '../reducers/ContentListReducer.js';
 import { useTheme } from './ThemeProvider.js';
 import {
   CommandDialog,
@@ -40,8 +56,8 @@ export type ContentListCommandMenuAction = CommandMenuAction<ContentListCommandM
 export function ContentListCommandMenu({
   state,
   dispatch,
-  contentListState: _1,
-  dispatchContentList: _2,
+  contentListState,
+  dispatchContentList,
   onOpenEntity: _3,
   onCreateEntity,
 }: {
@@ -86,8 +102,61 @@ export function ContentListCommandMenu({
               <CommandItem
                 onSelect={() => dispatch(new CommandMenuState_OpenPageAction({ id: 'create' }))}
               >
-                Create entity
+                <PlusIcon className="mr-2 h-4 w-4" />
+                <span>Create entity</span>
               </CommandItem>
+            </CommandGroup>
+            <CommandGroup heading="Filters">
+              <CommandItem onSelect={() => {}}>
+                <MilestoneIcon className="mr-2 h-4 w-4" />
+                Status
+              </CommandItem>
+              <CommandItem onSelect={() => {}}>
+                <ShapesIcon className="mr-2 h-4 w-4" />
+                <span className="max-w-96 overflow-hidden text-ellipsis whitespace-nowrap">
+                  Content types
+                </span>
+              </CommandItem>
+              <CommandItem onSelect={() => {}}>
+                <AsteriskIcon className="mr-2 h-4 w-4" />
+                <span>Clear all filters</span>
+              </CommandItem>
+            </CommandGroup>
+            <CommandGroup heading="View mode">
+              {contentListState.viewMode !== 'list' && (
+                <CommandItem
+                  onSelect={() => {
+                    dispatchContentList(new ContentListStateActions.SetViewMode('list'));
+                    dispatch(new CommandMenuState_ToggleShowAction(false));
+                  }}
+                >
+                  <ListIcon className="mr-2 h-4 w-4" />
+                  <span>List</span>
+                </CommandItem>
+              )}
+              {contentListState.viewMode !== 'split' && (
+                <CommandItem
+                  onSelect={() => {
+                    dispatchContentList(new ContentListStateActions.SetViewMode('split'));
+                    dispatch(new CommandMenuState_ToggleShowAction(false));
+                  }}
+                >
+                  <Columns2Icon className="mr-2 hidden h-4 w-4 lg:block" />
+                  <Rows2Icon className="mr-2 h-4 w-4 lg:hidden" />
+                  <span>Split</span>
+                </CommandItem>
+              )}
+              {contentListState.viewMode !== 'map' && (
+                <CommandItem
+                  onSelect={() => {
+                    dispatchContentList(new ContentListStateActions.SetViewMode('map'));
+                    dispatch(new CommandMenuState_ToggleShowAction(false));
+                  }}
+                >
+                  <MapIcon className="mr-2 h-4 w-4" />
+                  <span>Map</span>
+                </CommandItem>
+              )}
             </CommandGroup>
             <GenericCommands dispatch={dispatch} />
           </>
