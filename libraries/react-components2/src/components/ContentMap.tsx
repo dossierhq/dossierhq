@@ -22,7 +22,7 @@ import {
 //TODO make configurable through a context. also max bounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;
 
-export interface ContentMapProps<TEntity> {
+export interface ContentMapProps<TEntity = Entity> {
   className?: string;
   schema: Schema | PublishedSchema | undefined;
   center?: Location | null;
@@ -34,7 +34,7 @@ export interface ContentMapProps<TEntity> {
   children?: ReactNode;
 }
 
-export function ContentMap<TEntity extends Entity | PublishedEntity>({
+export function ContentMap<TEntity extends Entity | PublishedEntity = Entity>({
   className,
   schema,
   center,

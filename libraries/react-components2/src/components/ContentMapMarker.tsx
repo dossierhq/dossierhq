@@ -1,8 +1,8 @@
-import type { Entity, Location } from '@dossierhq/core';
+import type { Entity, Location, PublishedEntity } from '@dossierhq/core';
 import { MapContainer } from '@dossierhq/leaflet';
 
 interface Props {
-  entity: Entity;
+  entity: Entity | PublishedEntity;
   location: Location;
   onClick?: () => void;
 }

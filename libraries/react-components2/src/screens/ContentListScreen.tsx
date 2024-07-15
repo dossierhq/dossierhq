@@ -1,6 +1,6 @@
 'use client';
 
-import { EntityQueryOrder, type Entity } from '@dossierhq/core';
+import { EntityQueryOrder } from '@dossierhq/core';
 import {
   ArrowDownNarrowWideIcon,
   ArrowDownWideNarrowIcon,
@@ -10,7 +10,15 @@ import {
   Rows2Icon,
   TerminalIcon,
 } from 'lucide-react';
-import { useEffect, useReducer, useState, type Dispatch, type SetStateAction } from 'react';
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useReducer,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 import { ContentList } from '../components/ContentList.js';
 import {
   ContentListCommandMenu,
@@ -19,8 +27,6 @@ import {
 } from '../components/ContentListCommandMenu.js';
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
 import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
-import { ContentMap } from '../components/ContentMap.js';
-import { ContentMapMarker } from '../components/ContentMapMarker.js';
 import { EntityDisplay } from '../components/EntityDisplay.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
@@ -58,6 +64,13 @@ import {
   initializeContentListStateFromUrlQuery,
   useContentListCallOnUrlSearchQueryParamChange,
 } from '../reducers/ContentListUrlSynchronizer.js';
+
+const ContentMap = lazy(() =>
+  import('../components/ContentMap.js').then((it) => ({ default: it.ContentMap })),
+);
+const ContentMapMarker = lazy(() =>
+  import('../components/ContentMapMarker.js').then((it) => ({ default: it.ContentMapMarker })),
+);
 
 type ViewMode = 'list' | 'split' | 'map';
 
@@ -164,20 +177,22 @@ export function ContentListScreen({
                   />
                 )}
               {viewMode === 'map' && !!schema ? (
-                <ContentMap<Entity>
-                  className="h-full"
-                  schema={schema}
-                  contentListState={contentListState}
-                  dispatchContentList={dispatchContentList}
-                  renderEntityMarker={(key, entity, location) => (
-                    <ContentMapMarker
-                      key={key}
-                      entity={entity}
-                      location={location}
-                      onClick={() => onOpenEntity(entity.id)}
-                    />
-                  )}
-                />
+                <Suspense>
+                  <ContentMap
+                    className="h-full"
+                    schema={schema}
+                    contentListState={contentListState}
+                    dispatchContentList={dispatchContentList}
+                    renderEntityMarker={(key, entity, location) => (
+                      <ContentMapMarker
+                        key={key}
+                        entity={entity}
+                        location={location}
+                        onClick={() => onOpenEntity(entity.id)}
+                      />
+                    )}
+                  />
+                </Suspense>
               ) : null}
             </ResizablePanel>
           </ResizablePanelGroup>
