@@ -32,22 +32,6 @@ export const NoMatches: Story = {
   args: { urlSearchParams: urlFor({ mode: 'full', query: { text: 'no matches' } }) },
 };
 
-export const Map: Story = {
-  args: {
-    urlSearchParams: urlFor({
-      mode: 'full',
-      query: {
-        boundingBox: {
-          minLat: 55.48663527739911,
-          minLng: 12.558059692382814,
-          maxLat: 55.73058999769508,
-          maxLng: 13.509063720703125,
-        },
-      },
-    }),
-  },
-};
-
 function urlFor(options: Parameters<typeof addContentListParamsToURLSearchParams>[1]) {
   const payload = new URLSearchParams();
   addContentListParamsToURLSearchParams(payload, options);
