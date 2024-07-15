@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn, userEvent, waitFor, within } from '@storybook/test';
+import { fn, userEvent, within } from '@storybook/test';
 import type { ComponentProps } from 'react';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { addContentListParamsToURLSearchParams } from '../reducers/ContentListUrlSynchronizer.js';
