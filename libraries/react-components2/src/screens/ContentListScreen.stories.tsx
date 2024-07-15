@@ -48,6 +48,16 @@ export const SwitchToSplit: Story = {
   },
 };
 
+export const SwitchToSplitAndSelectEntity: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByTitle('View split'));
+
+    await userEvent.click(await canvas.findByText('Strings filled'));
+  },
+};
+
 function urlFor(options: Parameters<typeof addContentListParamsToURLSearchParams>[1]) {
   const payload = new URLSearchParams();
   addContentListParamsToURLSearchParams(payload, options);
