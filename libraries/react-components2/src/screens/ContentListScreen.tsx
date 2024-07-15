@@ -105,7 +105,6 @@ export function ContentListScreen({
         dispatch={dispatchCommandMenu}
         contentListState={contentListState}
         dispatchContentList={dispatchContentList}
-        onOpenEntity={onOpenEntity}
         onCreateEntity={onCreateEntity}
       />
       {md && (
@@ -146,8 +145,10 @@ export function ContentListScreen({
                   <ContentList
                     className="min-h-full w-full p-2"
                     contentListState={contentListState}
-                    selectedItem={selectedEntityId}
-                    onItemClick={setSelectedEntityId}
+                    selectedItem={contentListState.viewMode === 'split' ? selectedEntityId : null}
+                    onItemClick={
+                      contentListState.viewMode === 'split' ? setSelectedEntityId : onOpenEntity
+                    }
                     showDate={showDate}
                   />
                   {!lg && (

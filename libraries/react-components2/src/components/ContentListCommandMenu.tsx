@@ -58,14 +58,12 @@ export function ContentListCommandMenu({
   dispatch,
   contentListState,
   dispatchContentList,
-  onOpenEntity: _3,
   onCreateEntity,
 }: {
   state: Readonly<ContentListCommandMenuState>;
   dispatch: Dispatch<ContentListCommandMenuAction>;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
-  onOpenEntity: (id: string) => void;
   onCreateEntity: (type: string) => void;
 }) {
   useOpenCommandMenu(dispatch);
