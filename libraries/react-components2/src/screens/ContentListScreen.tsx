@@ -163,13 +163,31 @@ export function ContentListScreen({
         {(viewMode === 'split' || viewMode === 'map') && (
           <ResizablePanelGroup direction={lg ? 'horizontal' : 'vertical'}>
             <ResizablePanel minSize={20}>
-              <ContentList
-                className="min-h-full w-full overflow-auto p-2"
-                contentListState={contentListState}
-                selectedItem={selectedEntityId}
-                onItemClick={setSelectedEntityId}
-                showDate={showDate}
-              />
+              <div className="flex h-full flex-col">
+                <div className="flex-1 overflow-auto">
+                  <ContentList
+                    className="min-h-full w-full p-2"
+                    contentListState={contentListState}
+                    selectedItem={selectedEntityId}
+                    onItemClick={setSelectedEntityId}
+                    showDate={showDate}
+                  />
+                  {!lg && (
+                    <ContentListPagingButtons
+                      className="border-t py-2"
+                      contentListState={contentListState}
+                      dispatchContentList={dispatchContentList}
+                    />
+                  )}
+                </div>
+                {lg && (
+                  <ContentListPagingButtons
+                    className="border-t py-2"
+                    contentListState={contentListState}
+                    dispatchContentList={dispatchContentList}
+                  />
+                )}
+              </div>
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel minSize={20}>
