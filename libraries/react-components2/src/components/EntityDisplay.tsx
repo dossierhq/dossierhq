@@ -37,7 +37,8 @@ export function EntityDisplay({ className, entityId }: Props) {
         name={entity.info.name}
         status={entity.info.status}
         type={entity.info.type}
-        updatedAt={entity.info.updatedAt}
+        date={entity.info.updatedAt}
+        dateKind="updated"
         valid={entity.info.valid}
       />
       <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">

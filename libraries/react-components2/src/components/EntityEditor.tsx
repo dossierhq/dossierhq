@@ -59,7 +59,8 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
           name={draftState.draft.name}
           status={draftState.entity?.info.status}
           type={draftState.draft.entitySpec.name}
-          updatedAt={draftState.entity?.info.updatedAt}
+          date={draftState.entity?.info.updatedAt}
+          dateKind="updated"
           valid={draftState.entity?.info.valid}
         />
       </div>

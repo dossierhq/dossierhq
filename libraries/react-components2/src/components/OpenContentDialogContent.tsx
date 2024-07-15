@@ -26,6 +26,7 @@ export function OpenContentDialogContent({
         <ContentList
           className="container h-full w-full p-2"
           contentListState={contentListState}
+          showDate={contentListState.query.order === 'createdAt' ? 'createdAt' : 'updatedAt'}
           onItemClick={onOpenEntity}
         />
       </div>
