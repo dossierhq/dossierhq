@@ -1,7 +1,9 @@
 'use client';
 
+import { SearchIcon } from 'lucide-react';
 import { cn } from '../lib/utils.js';
 import type { ContentListState } from '../reducers/ContentListReducer.js';
+import { EmptyStateMessage } from './EmptyStateMessage.js';
 import { EntityCard } from './EntityCard.js';
 
 export function ContentList({
@@ -15,6 +17,18 @@ export function ContentList({
   selectedItem?: string | null;
   onItemClick?: (id: string) => void;
 }) {
+  if (contentListState.entities?.length === 0) {
+    return (
+      <div className={cn(className, 'flex flex-col items-center justify-center')}>
+        <EmptyStateMessage
+          className="w-full max-w-96"
+          icon={<SearchIcon className="h-full w-full" />}
+          title="No matches"
+          description="No content match the filters."
+        />
+      </div>
+    );
+  }
   return (
     <div className={cn(className, 'flex flex-col gap-2')}>
       {contentListState.entities?.map((item) => {
