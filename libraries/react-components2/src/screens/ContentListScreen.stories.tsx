@@ -32,6 +32,10 @@ export const NoMatches: Story = {
   args: { urlSearchParams: urlFor({ mode: 'full', query: { text: 'no matches' } }) },
 };
 
+export const SortedByCreatedAt: Story = {
+  args: { urlSearchParams: urlFor({ mode: 'full', query: { order: 'createdAt' } }) },
+};
+
 export const SwitchToMap: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

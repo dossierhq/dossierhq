@@ -1,5 +1,6 @@
 'use client';
 
+import type { EntityInfo } from '@dossierhq/core';
 import { SearchIcon } from 'lucide-react';
 import { cn } from '../lib/utils.js';
 import type { ContentListState } from '../reducers/ContentListReducer.js';
@@ -9,11 +10,13 @@ import { EntityCard } from './EntityCard.js';
 export function ContentList({
   className,
   contentListState,
+  showDate,
   selectedItem,
   onItemClick,
 }: {
   className?: string;
   contentListState: ContentListState;
+  showDate: 'createdAt' | 'updatedAt';
   selectedItem?: string | null;
   onItemClick?: (id: string) => void;
 }) {
@@ -35,14 +38,17 @@ export function ContentList({
         if (item.isError()) {
           return null;
         }
+        const info = item.value.info;
+        const dateKind = showDate === 'createdAt' || !('updatedAt' in info) ? 'created' : 'updated';
         return (
           <EntityCard
             key={item.value.id}
-            name={item.value.info.name}
-            status={'status' in item.value.info ? item.value.info.status : undefined}
-            type={item.value.info.type}
-            updatedAt={'updatedAt' in item.value.info ? item.value.info.updatedAt : undefined}
-            valid={item.value.info.valid}
+            name={info.name}
+            status={'status' in info ? info.status : undefined}
+            type={info.type}
+            date={dateKind === 'created' ? info.createdAt : (info as EntityInfo).updatedAt}
+            dateKind={dateKind}
+            valid={info.valid}
             selected={selectedItem === item.value.id}
             onClick={onItemClick ? () => onItemClick(item.value.id) : undefined}
           />

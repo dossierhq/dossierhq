@@ -115,6 +115,9 @@ export function ContentListScreen({
     initializeCommandMenuState<ContentListCommandMenuConfig>,
   );
 
+  const showDate =
+    contentListState.query.order === EntityQueryOrder.createdAt ? 'createdAt' : 'updatedAt';
+
   const md = useResponsive('md');
   const lg = useResponsive('lg');
   return (
@@ -146,6 +149,7 @@ export function ContentListScreen({
               <ContentList
                 className="container h-full w-full p-2"
                 contentListState={contentListState}
+                showDate={showDate}
                 onItemClick={onOpenEntity}
               />
             </div>
@@ -164,6 +168,7 @@ export function ContentListScreen({
                 contentListState={contentListState}
                 selectedItem={selectedEntityId}
                 onItemClick={setSelectedEntityId}
+                showDate={showDate}
               />
             </ResizablePanel>
             <ResizableHandle withHandle />
@@ -325,7 +330,7 @@ function OrderDropdown({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className={cn(className, 'min-w-32')} variant="outline">
+        <Button className={cn(className, 'min-w-32')} variant="outline" title="Change sort order">
           {currentReverse ? (
             <ArrowDownWideNarrowIcon className="mr-2 h-4 w-4" />
           ) : (

@@ -17,7 +17,8 @@ interface ContentProps {
   name: string;
   status?: EntityStatus;
   type: string;
-  updatedAt?: Date;
+  date?: Date;
+  dateKind?: 'created' | 'updated';
   valid?: boolean;
 }
 
@@ -47,7 +48,7 @@ export function EntityCard({ id, className, selected, onClick, ...props }: Props
   );
 }
 
-function Content({ authKey, changed, name, status, type, updatedAt, valid }: ContentProps) {
+function Content({ authKey, changed, name, status, type, date, dateKind, valid }: ContentProps) {
   return (
     <>
       <div className="flex justify-between gap-2 align-top">
@@ -85,9 +86,9 @@ function Content({ authKey, changed, name, status, type, updatedAt, valid }: Con
         <p className="w-0 flex-grow overflow-hidden text-ellipsis whitespace-nowrap font-medium">
           {name}
         </p>
-        {updatedAt && (
+        {!!date && !!dateKind && (
           <p className="overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground">
-            Updated <DateDisplay date={updatedAt} />
+            {{ created: 'Created', updated: 'Updated' }[dateKind]} <DateDisplay date={date} />
           </p>
         )}
       </div>
