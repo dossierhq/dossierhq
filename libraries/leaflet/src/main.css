@@ -4,6 +4,10 @@
   height: 30px;
 }
 
+.leaflet-container {
+  isolation: isolate;
+}
+
 @keyframes breathing {
   0% {
     opacity: 100%;
