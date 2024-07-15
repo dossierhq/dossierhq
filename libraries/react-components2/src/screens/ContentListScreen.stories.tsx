@@ -28,6 +28,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Normal: Story = {};
 
+export const NoMatches: Story = {
+  args: { urlSearchParams: urlFor({ mode: 'full', query: { text: 'no matches' } }) },
+};
+
 export const Map: Story = {
   args: {
     urlSearchParams: urlFor({
