@@ -24,6 +24,7 @@
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@sentry/astro": "~8.14.0",
     "@spotlightjs/astro": "~2.0.0",

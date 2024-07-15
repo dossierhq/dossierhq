@@ -1,0 +1,15 @@
+---
+import { DossierContentListPage2 } from '../../../dossier/components/DossierContentListPage2.jsx';
+import { addContentEditorParamsToURLSearchParams } from '@dossierhq/react-components2';
+import DossierLayout2 from '../../../layouts/DossierLayout2.astro';
+
+export const prerender = false;
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+---
+
+<DossierLayout2 title="Content">
+  <DossierContentListPage2  client:only="react"/>
+</DossierLayout2>
