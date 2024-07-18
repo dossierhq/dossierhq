@@ -10,6 +10,8 @@ import {
   PlusIcon,
   Rows2Icon,
   ShapesIcon,
+  SquareCheckBigIcon,
+  SquareIcon,
   SunIcon,
 } from 'lucide-react';
 import type { Dispatch } from 'react';
@@ -40,7 +42,10 @@ import {
   CommandList,
 } from './ui/command.js';
 
-export type ContentListCommandMenuPage = { id: 'root' } | { id: 'create' };
+export type ContentListCommandMenuPage =
+  | { id: 'root' }
+  | { id: 'create' }
+  | { id: 'filterContentTypes' };
 
 type ContentListCommandMenuAlert = never;
 
@@ -109,7 +114,11 @@ export function ContentListCommandMenu({
                 <MilestoneIcon className="mr-2 h-4 w-4" />
                 Status
               </CommandItem>
-              <CommandItem onSelect={() => {}}>
+              <CommandItem
+                onSelect={() => {
+                  dispatch(new CommandMenuState_OpenPageAction({ id: 'filterContentTypes' }));
+                }}
+              >
                 <ShapesIcon className="mr-2 h-4 w-4" />
                 <span className="max-w-96 overflow-hidden text-ellipsis whitespace-nowrap">
                   Content types
@@ -162,6 +171,9 @@ export function ContentListCommandMenu({
         {state.currentPage?.id === 'create' && (
           <CreateEntityCommandGroup {...{ schema, dispatch, onCreateEntity }} />
         )}
+        {state.currentPage?.id === 'filterContentTypes' && (
+          <FilterContentTypesCommandGroup {...{ schema, contentListState, dispatchContentList }} />
+        )}
       </CommandList>
     </CommandDialog>
   );
@@ -190,6 +202,100 @@ function CreateEntityCommandGroup({
         </CommandItem>
       ))}
     </CommandGroup>
+  );
+}
+
+function FilterContentTypesCommandGroup({
+  schema,
+  contentListState,
+  dispatchContentList,
+}: {
+  schema: Schema | undefined;
+  contentListState: ContentListState;
+  dispatchContentList: Dispatch<ContentListStateAction>;
+}) {
+  return (
+    <>
+      <CommandItem
+        disabled={
+          contentListState.query.entityTypes === undefined &&
+          contentListState.query.componentTypes === undefined
+        }
+        onSelect={() =>
+          dispatchContentList(
+            new ContentListStateActions.SetQuery(
+              { entityTypes: undefined, componentTypes: undefined },
+              { partial: true, resetPagingIfModifying: false },
+            ),
+          )
+        }
+      >
+        <AsteriskIcon className="mr-2 h-4 w-4" />
+        <span>Include all content types</span>
+      </CommandItem>
+      <CommandGroup heading="Entity types">
+        {schema?.spec.entityTypes.map((entityType) => {
+          const selected = contentListState.query.entityTypes?.includes(entityType.name);
+          return (
+            <CommandItem
+              key={entityType.name}
+              onSelect={() => {
+                dispatchContentList(
+                  new ContentListStateActions.SetQuery(
+                    {
+                      entityTypes: selected
+                        ? contentListState.query.entityTypes?.filter((it) => it !== entityType.name)
+                        : [...(contentListState.query.entityTypes ?? []), entityType.name],
+                    },
+                    { partial: true, resetPagingIfModifying: false },
+                  ),
+                );
+              }}
+            >
+              {selected ? (
+                <SquareCheckBigIcon className="mr-2 h-4 w-4" />
+              ) : (
+                <SquareIcon className="mr-2 h-4 w-4" />
+              )}
+              <span>{entityType.name}</span>
+            </CommandItem>
+          );
+        })}
+      </CommandGroup>
+      {!!schema?.spec.componentTypes && (
+        <CommandGroup heading="Component types">
+          {schema?.spec.componentTypes.map((componentType) => {
+            const selected = contentListState.query.componentTypes?.includes(componentType.name);
+            return (
+              <CommandItem
+                key={componentType.name}
+                onSelect={() => {
+                  dispatchContentList(
+                    new ContentListStateActions.SetQuery(
+                      {
+                        componentTypes: selected
+                          ? contentListState.query.componentTypes?.filter(
+                              (it) => it !== componentType.name,
+                            )
+                          : [...(contentListState.query.componentTypes ?? []), componentType.name],
+                      },
+                      { partial: true, resetPagingIfModifying: false },
+                    ),
+                  );
+                }}
+              >
+                {selected ? (
+                  <SquareCheckBigIcon className="mr-2 h-4 w-4" />
+                ) : (
+                  <SquareIcon className="mr-2 h-4 w-4" />
+                )}
+                <span>{componentType.name}</span>
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+      )}
+    </>
   );
 }
 
