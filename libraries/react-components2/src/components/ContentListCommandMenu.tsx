@@ -124,7 +124,22 @@ export function ContentListCommandMenu({
                   Content types
                 </span>
               </CommandItem>
-              <CommandItem onSelect={() => {}}>
+              <CommandItem
+                disabled={
+                  !contentListState.query.authKeys &&
+                  !contentListState.query.componentTypes &&
+                  !contentListState.query.entityTypes
+                }
+                onSelect={() => {
+                  dispatchContentList(
+                    new ContentListStateActions.SetQuery(
+                      { text: contentListState.text },
+                      { partial: false, resetPagingIfModifying: true },
+                    ),
+                  );
+                  dispatch(new CommandMenuState_ToggleShowAction(false));
+                }}
+              >
                 <AsteriskIcon className="mr-2 h-4 w-4" />
                 <span>Clear all filters</span>
               </CommandItem>
@@ -225,7 +240,7 @@ function FilterContentTypesCommandGroup({
           dispatchContentList(
             new ContentListStateActions.SetQuery(
               { entityTypes: undefined, componentTypes: undefined },
-              { partial: true, resetPagingIfModifying: false },
+              { partial: true, resetPagingIfModifying: true },
             ),
           )
         }
@@ -247,7 +262,7 @@ function FilterContentTypesCommandGroup({
                         ? contentListState.query.entityTypes?.filter((it) => it !== entityType.name)
                         : [...(contentListState.query.entityTypes ?? []), entityType.name],
                     },
-                    { partial: true, resetPagingIfModifying: false },
+                    { partial: true, resetPagingIfModifying: true },
                   ),
                 );
               }}
@@ -279,7 +294,7 @@ function FilterContentTypesCommandGroup({
                             )
                           : [...(contentListState.query.componentTypes ?? []), componentType.name],
                       },
-                      { partial: true, resetPagingIfModifying: false },
+                      { partial: true, resetPagingIfModifying: true },
                     ),
                   );
                 }}
