@@ -1,6 +1,6 @@
 'use client';
 
-import { EntityQueryOrder } from '@dossierhq/core';
+import { EntityQueryOrder, type EntityStatus } from '@dossierhq/core';
 import {
   ArrowDownNarrowWideIcon,
   ArrowDownWideNarrowIcon,
@@ -20,6 +20,7 @@ import {
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
 import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
 import { EntityDisplay } from '../components/EntityDisplay.js';
+import { MultiCombobox } from '../components/MultiCombobox.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import {
@@ -229,7 +230,44 @@ function Sidebar({
           Create
         </Button>
       </div>
-      <div className="flex flex-grow flex-col gap-2 overflow-auto p-2"></div>
+      <div className="flex flex-grow flex-col gap-2 overflow-auto p-2">
+        <MultiCombobox<{ value: EntityStatus; label: string }>
+          items={[
+            { value: 'draft', label: 'Draft' },
+            { value: 'published', label: 'Published' },
+            { value: 'modified', label: 'Modified' },
+            { value: 'withdrawn', label: 'Withdrawn' },
+            { value: 'archived', label: 'Archived' },
+          ]}
+          selected={(contentListState as ContentListState<'full'>).query.status ?? []}
+          placeholder="Status"
+          onSelect={(status) =>
+            dispatchContentList(
+              new ContentListStateActions.SetQuery(
+                {
+                  status: [
+                    ...((contentListState as ContentListState<'full'>).query.status ?? []),
+                    status,
+                  ],
+                },
+                { partial: true, resetPagingIfModifying: true },
+              ),
+            )
+          }
+          onUnselect={(status) =>
+            dispatchContentList(
+              new ContentListStateActions.SetQuery(
+                {
+                  status: (
+                    (contentListState as ContentListState<'full'>).query.status ?? []
+                  ).filter((it) => it !== status),
+                },
+                { partial: true, resetPagingIfModifying: true },
+              ),
+            )
+          }
+        />
+      </div>
       <div className="flex justify-between border-t px-2 py-1">
         <ThemeToggle />
         <ViewModeToggle
