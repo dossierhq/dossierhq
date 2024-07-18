@@ -1,4 +1,4 @@
-import type { Schema } from '@dossierhq/core';
+import type { EntityStatus, Schema } from '@dossierhq/core';
 import {
   AsteriskIcon,
   Columns2Icon,
@@ -32,6 +32,7 @@ import {
   type ContentListState,
   type ContentListStateAction,
 } from '../reducers/ContentListReducer.js';
+import { toSentenceCase } from '../utils/StringDisplayUtils.js';
 import { useTheme } from './ThemeProvider.js';
 import {
   CommandDialog,
@@ -45,6 +46,7 @@ import {
 export type ContentListCommandMenuPage =
   | { id: 'root' }
   | { id: 'create' }
+  | { id: 'filterStatus' }
   | { id: 'filterContentTypes' };
 
 type ContentListCommandMenuAlert = never;
@@ -110,7 +112,11 @@ export function ContentListCommandMenu({
               </CommandItem>
             </CommandGroup>
             <CommandGroup heading="Filters">
-              <CommandItem onSelect={() => {}}>
+              <CommandItem
+                onSelect={() => {
+                  dispatch(new CommandMenuState_OpenPageAction({ id: 'filterStatus' }));
+                }}
+              >
                 <MilestoneIcon className="mr-2 h-4 w-4" />
                 Status
               </CommandItem>
@@ -128,7 +134,8 @@ export function ContentListCommandMenu({
                 disabled={
                   !contentListState.query.authKeys &&
                   !contentListState.query.componentTypes &&
-                  !contentListState.query.entityTypes
+                  !contentListState.query.entityTypes &&
+                  !('status' in contentListState.query)
                 }
                 onSelect={() => {
                   dispatchContentList(
@@ -186,6 +193,14 @@ export function ContentListCommandMenu({
         {state.currentPage?.id === 'create' && (
           <CreateEntityCommandGroup {...{ schema, dispatch, onCreateEntity }} />
         )}
+        {state.currentPage?.id === 'filterStatus' && (
+          <FilterStatusCommandGroup
+            {...{
+              contentListState: contentListState as ContentListState<'full'>,
+              dispatchContentList,
+            }}
+          />
+        )}
         {state.currentPage?.id === 'filterContentTypes' && (
           <FilterContentTypesCommandGroup {...{ schema, contentListState, dispatchContentList }} />
         )}
@@ -216,6 +231,69 @@ function CreateEntityCommandGroup({
           {entityType.name}
         </CommandItem>
       ))}
+    </CommandGroup>
+  );
+}
+
+const availableStatuses: EntityStatus[] = [
+  'draft',
+  'published',
+  'modified',
+  'withdrawn',
+  'archived',
+];
+
+function FilterStatusCommandGroup({
+  contentListState,
+  dispatchContentList,
+}: {
+  contentListState: ContentListState<'full'>;
+  dispatchContentList: Dispatch<ContentListStateAction>;
+}) {
+  const query = contentListState.query;
+  return (
+    <CommandGroup heading="Status">
+      <CommandItem
+        disabled={query.status === undefined}
+        onSelect={() =>
+          dispatchContentList(
+            new ContentListStateActions.SetQuery(
+              { status: undefined },
+              { partial: true, resetPagingIfModifying: true },
+            ),
+          )
+        }
+      >
+        <AsteriskIcon className="mr-2 h-4 w-4" />
+        <span>Include all statuses</span>
+      </CommandItem>
+      {availableStatuses.map((status) => {
+        const selected = query.status?.includes(status);
+        return (
+          <CommandItem
+            key={status}
+            onSelect={() => {
+              dispatchContentList(
+                new ContentListStateActions.SetQuery(
+                  {
+                    status: selected
+                      ? query.status?.filter((it) => it !== status)
+                      : [...(query.status ?? []), status],
+                  },
+                  { partial: true, resetPagingIfModifying: true },
+                ),
+              );
+            }}
+          >
+            {selected ? (
+              <SquareCheckBigIcon className="mr-2 h-4 w-4" />
+            ) : (
+              <SquareIcon className="mr-2 h-4 w-4" />
+            )}
+            <span>{toSentenceCase(status)}</span>
+          </CommandItem>
+        );
+      })}
     </CommandGroup>
   );
 }

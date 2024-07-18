@@ -34,24 +34,34 @@ const DEFAULT_VALUES = {
 
 export type ContentListViewMode = 'list' | 'split' | 'map';
 
-export interface ContentListState {
-  mode: 'full' | 'published';
+interface ModeQueryTypeMap {
+  full: EntityQuery;
+  published: PublishedEntityQuery;
+}
+
+interface ModeEntityTypeMap {
+  full: Entity;
+  published: PublishedEntity;
+}
+
+export interface ContentListState<TMode extends 'full' | 'published' = 'full' | 'published'> {
+  mode: TMode;
 
   restrictEntityTypes: string[];
   restrictLinksFrom: EntityReference | null;
   restrictLinksTo: EntityReference | null;
 
-  query: EntityQuery | PublishedEntityQuery;
+  query: ModeQueryTypeMap[TMode];
   paging: Paging | undefined;
   sampling: EntitySamplingOptions | undefined;
   requestedCount: number;
   text: string;
 
-  connection: Connection<Edge<Entity | PublishedEntity, ErrorType>> | null | undefined;
+  connection: Connection<Edge<ModeEntityTypeMap[TMode], ErrorType>> | null | undefined;
   connectionError:
     | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
     | undefined;
-  entitySamples: EntitySamplingPayload<Entity | PublishedEntity> | undefined;
+  entitySamples: EntitySamplingPayload<ModeEntityTypeMap[TMode]> | undefined;
   entitySamplesError:
     | ErrorResult<unknown, typeof ErrorType.BadRequest | typeof ErrorType.Generic>
     | undefined;
@@ -60,7 +70,7 @@ export interface ContentListState {
   viewMode: ContentListViewMode;
 
   // null until first loaded
-  entities: Result<Entity | PublishedEntity, ErrorType>[] | null;
+  entities: Result<ModeEntityTypeMap[TMode], ErrorType>[] | null;
   loadingState: '' | 'sample' | 'next-page' | 'prev-page' | 'first-page' | 'last-page';
   entitiesScrollToTopSignal: number;
 }
@@ -81,7 +91,7 @@ export function initializeContentListState({
   restrictEntityTypes?: string[];
   restrictLinksFrom?: EntityReference;
   restrictLinksTo?: EntityReference;
-}): ContentListState {
+}): ContentListState<typeof mode> {
   const defaultValues = DEFAULT_VALUES[mode];
   let state: ContentListState = {
     mode,
