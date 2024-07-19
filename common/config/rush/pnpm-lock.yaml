@@ -75,7 +75,7 @@ importers:
         version: link:../../libraries/typescript-generator
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -98,8 +98,8 @@ importers:
         specifier: ~14.2.4
         version: 14.2.4(eslint@8.57.0)(typescript@5.5.3)
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       schema-dts:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.5.3)
@@ -181,7 +181,7 @@ importers:
         version: 0.9.1(@types/node@20.14.9)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -204,8 +204,8 @@ importers:
         specifier: ~5.16.0
         version: 5.16.0(graphql@16.9.0)
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       rollup-plugin-visualizer:
         specifier: ~5.12.0
         version: 5.12.0(rollup@4.18.0)
@@ -257,7 +257,7 @@ importers:
         version: link:../../libraries/typescript-generator
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -274,8 +274,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -284,7 +284,7 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: ~0.8.1
-        version: 0.8.1(prettier@3.3.2)(typescript@5.5.3)
+        version: 0.8.1(prettier@3.3.3)(typescript@5.5.3)
       '@astrojs/node':
         specifier: ~8.3.2
         version: 8.3.2(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.3))
@@ -342,7 +342,7 @@ importers:
         version: link:../../libraries/typescript-generator
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -350,8 +350,8 @@ importers:
         specifier: 18.3.3
         version: 18.3.3
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       rollup-plugin-visualizer:
         specifier: ~5.12.0
         version: 5.12.0(rollup@4.18.0)
@@ -418,7 +418,7 @@ importers:
         version: link:../../libraries/postgres-tools
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -435,8 +435,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -458,7 +458,7 @@ importers:
         version: link:../../stack/eslint-config-generic
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@types/bun':
         specifier: ~1.1.6
         version: 1.1.6
@@ -466,8 +466,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -528,7 +528,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -542,8 +542,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -595,7 +595,7 @@ importers:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -612,8 +612,8 @@ importers:
         specifier: ~14.2.4
         version: 14.2.4(eslint@8.57.0)(typescript@5.5.3)
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -680,7 +680,7 @@ importers:
         version: link:../../libraries/typescript-generator
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -706,8 +706,8 @@ importers:
         specifier: ~3.1.4
         version: 3.1.4
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       tsx:
         specifier: ~4.16.0
         version: 4.16.0
@@ -732,7 +732,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -746,8 +746,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -778,7 +778,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -792,8 +792,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -824,7 +824,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -835,8 +835,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -867,7 +867,7 @@ importers:
         version: link:../react-components
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -878,8 +878,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -901,7 +901,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -912,8 +912,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -938,7 +938,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -946,8 +946,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -972,7 +972,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -980,8 +980,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1036,7 +1036,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1101,8 +1101,8 @@ importers:
         specifier: ~1.4.4
         version: 1.4.4
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -1157,7 +1157,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1177,8 +1177,8 @@ importers:
         specifier: ~16.9.0
         version: 16.9.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1212,7 +1212,7 @@ importers:
         version: link:../typescript-generator
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1226,8 +1226,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1255,7 +1255,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1275,8 +1275,8 @@ importers:
         specifier: ~1.4.4
         version: 1.4.4
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -1313,7 +1313,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@libsql/client':
         specifier: ~0.7.0
         version: 0.7.0
@@ -1324,8 +1324,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1368,7 +1368,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1388,8 +1388,8 @@ importers:
         specifier: ~8.12.0
         version: 8.12.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1423,7 +1423,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1431,8 +1431,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1508,7 +1508,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1573,8 +1573,8 @@ importers:
         specifier: workspace:*
         version: link:../../apps/playground-example-generator
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -1686,7 +1686,7 @@ importers:
         version: link:../sql.js
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1716,7 +1716,7 @@ importers:
         version: 8.2.2(@jest/globals@29.7.0)(@types/bun@1.1.6)(jest@29.7.0(@types/node@20.14.9)(babel-plugin-macros@3.1.0))(storybook@8.2.2(@babel/preset-env@7.24.5(@babel/core@7.24.7)))(vitest@2.0.2(@types/node@20.14.9)(sass@1.77.6))
       '@storybook/test-runner':
         specifier: ~0.19.0
-        version: 0.19.0(@swc/helpers@0.5.5)(@types/node@20.14.9)(babel-plugin-macros@3.1.0)(prettier@3.3.2)
+        version: 0.19.0(@swc/helpers@0.5.5)(@types/node@20.14.9)(babel-plugin-macros@3.1.0)(prettier@3.3.3)
       '@types/lodash':
         specifier: ~4.17.6
         version: 4.17.6
@@ -1775,11 +1775,11 @@ importers:
         specifier: ~11.0.0
         version: 11.0.0(jiti@1.21.0)(postcss@8.4.39)(tsx@4.16.0)
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       prettier-plugin-tailwindcss:
         specifier: ~0.6.5
-        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2))(prettier@3.3.2)
+        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3))(prettier@3.3.3)
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -1831,7 +1831,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1842,8 +1842,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -1877,7 +1877,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1894,8 +1894,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       sql.js:
         specifier: ~1.10.3
         version: 1.10.3
@@ -1929,7 +1929,7 @@ importers:
         version: link:../server
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@playwright/test':
         specifier: ~1.45.1
         version: 1.45.1
@@ -1943,8 +1943,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       sql.js:
         specifier: ~1.10.3
         version: 1.10.3
@@ -1975,7 +1975,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -1983,8 +1983,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -2009,7 +2009,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -2020,8 +2020,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -2089,7 +2089,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -2097,8 +2097,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -2120,7 +2120,7 @@ importers:
         version: link:../../rigs/heft-node-rig
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
         specifier: 0.66.19
         version: 0.66.19(@types/node@20.14.9)
@@ -2128,8 +2128,8 @@ importers:
         specifier: ~8.57.0
         version: 8.57.0
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
@@ -2141,7 +2141,7 @@ importers:
         version: 0.19.7
       '@astrojs/check':
         specifier: ~0.8.1
-        version: 0.8.1(prettier@3.3.2)(typescript@5.5.3)
+        version: 0.8.1(prettier@3.3.3)(typescript@5.5.3)
       '@astrojs/node':
         specifier: ~8.3.2
         version: 8.3.2(astro@4.11.3(@types/node@20.14.9)(sass@1.77.6)(typescript@5.5.3))
@@ -2373,7 +2373,7 @@ importers:
         version: 0.9.1(@types/node@20.14.9)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.3.0
-        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+        version: 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@libsql/client':
         specifier: ~0.7.0
         version: 0.7.0
@@ -2424,7 +2424,7 @@ importers:
         version: 8.2.2(@jest/globals@29.7.0)(@types/bun@1.1.6)(jest@29.7.0(@types/node@20.14.9)(babel-plugin-macros@3.1.0))(storybook@8.2.2(@babel/preset-env@7.24.5(@babel/core@7.24.7)))(vitest@2.0.2(@types/node@20.14.9)(sass@1.77.6))
       '@storybook/test-runner':
         specifier: ~0.19.0
-        version: 0.19.0(@swc/helpers@0.5.5)(@types/node@20.14.9)(babel-plugin-macros@3.1.0)(prettier@3.3.2)
+        version: 0.19.0(@swc/helpers@0.5.5)(@types/node@20.14.9)(babel-plugin-macros@3.1.0)(prettier@3.3.3)
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -2528,11 +2528,11 @@ importers:
         specifier: ~11.0.0
         version: 11.0.0(jiti@1.21.0)(postcss@8.4.39)(tsx@4.16.0)
       prettier:
-        specifier: 3.3.2
-        version: 3.3.2
+        specifier: 3.3.3
+        version: 3.3.3
       prettier-plugin-tailwindcss:
         specifier: ~0.6.5
-        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2))(prettier@3.3.2)
+        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3))(prettier@3.3.3)
       react-stately:
         specifier: ~3.31.1
         version: 3.31.1(react@18.3.1)
@@ -11426,8 +11426,8 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.3.2:
-    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -13346,9 +13346,9 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@astrojs/check@0.8.1(prettier@3.3.2)(typescript@5.5.3)':
+  '@astrojs/check@0.8.1(prettier@3.3.3)(typescript@5.5.3)':
     dependencies:
-      '@astrojs/language-server': 2.11.1(prettier@3.3.2)(typescript@5.5.3)
+      '@astrojs/language-server': 2.11.1(prettier@3.3.3)(typescript@5.5.3)
       chokidar: 3.6.0
       fast-glob: 3.3.2
       kleur: 4.1.5
@@ -13362,7 +13362,7 @@ snapshots:
 
   '@astrojs/internal-helpers@0.4.1': {}
 
-  '@astrojs/language-server@2.11.1(prettier@3.3.2)(typescript@5.5.3)':
+  '@astrojs/language-server@2.11.1(prettier@3.3.3)(typescript@5.5.3)':
     dependencies:
       '@astrojs/compiler': 2.8.1
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -13376,13 +13376,13 @@ snapshots:
       volar-service-css: 0.0.59(@volar/language-service@2.4.0-alpha.15)
       volar-service-emmet: 0.0.59(@volar/language-service@2.4.0-alpha.15)
       volar-service-html: 0.0.59(@volar/language-service@2.4.0-alpha.15)
-      volar-service-prettier: 0.0.59(@volar/language-service@2.4.0-alpha.15)(prettier@3.3.2)
+      volar-service-prettier: 0.0.59(@volar/language-service@2.4.0-alpha.15)(prettier@3.3.3)
       volar-service-typescript: 0.0.59(@volar/language-service@2.4.0-alpha.15)
       volar-service-typescript-twoslash-queries: 0.0.59(@volar/language-service@2.4.0-alpha.15)
       vscode-html-languageservice: 5.2.0
       vscode-uri: 3.0.8
     optionalDependencies:
-      prettier: 3.3.2
+      prettier: 3.3.3
     transitivePeerDependencies:
       - typescript
 
@@ -15043,14 +15043,14 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.2': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)':
+  '@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/generator': 7.24.7
       '@babel/parser': 7.24.7
       '@babel/traverse': 7.24.7
       '@babel/types': 7.24.7
-      prettier: 3.3.2
+      prettier: 3.3.3
       semver: 7.6.2
     optionalDependencies:
       '@vue/compiler-sfc': 3.4.15
@@ -18227,7 +18227,7 @@ snapshots:
       globby: 14.0.1
       jscodeshift: 0.15.1(@babel/preset-env@7.24.5(@babel/core@7.24.7))
       lodash: 4.17.21
-      prettier: 3.3.2
+      prettier: 3.3.3
       recast: 0.23.6
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -18235,7 +18235,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/core-common@8.1.10(prettier@3.3.2)':
+  '@storybook/core-common@8.1.10(prettier@3.3.3)':
     dependencies:
       '@storybook/core-events': 8.1.10
       '@storybook/csf-tools': 8.1.10
@@ -18258,7 +18258,7 @@ snapshots:
       node-fetch: 2.7.0
       picomatch: 2.3.1
       pkg-dir: 5.0.0
-      prettier-fallback: prettier@3.3.2
+      prettier-fallback: prettier@3.3.3
       pretty-hrtime: 1.0.3
       resolve-from: 5.0.0
       semver: 7.6.2
@@ -18267,7 +18267,7 @@ snapshots:
       ts-dedent: 2.2.0
       util: 0.12.5
     optionalDependencies:
-      prettier: 3.3.2
+      prettier: 3.3.3
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -18416,14 +18416,14 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.3
 
-  '@storybook/test-runner@0.19.0(@swc/helpers@0.5.5)(@types/node@20.14.9)(babel-plugin-macros@3.1.0)(prettier@3.3.2)':
+  '@storybook/test-runner@0.19.0(@swc/helpers@0.5.5)(@types/node@20.14.9)(babel-plugin-macros@3.1.0)(prettier@3.3.3)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/generator': 7.24.7
       '@babel/template': 7.24.7
       '@babel/types': 7.24.7
       '@jest/types': 29.6.3
-      '@storybook/core-common': 8.1.10(prettier@3.3.2)
+      '@storybook/core-common': 8.1.10(prettier@3.3.3)
       '@storybook/csf': 0.1.7
       '@storybook/csf-tools': 8.1.10
       '@storybook/preview-api': 8.1.10
@@ -24489,13 +24489,13 @@ snapshots:
 
   prepend-http@2.0.0: {}
 
-  prettier-plugin-tailwindcss@0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2))(prettier@3.3.2):
+  prettier-plugin-tailwindcss@0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3))(prettier@3.3.3):
     dependencies:
-      prettier: 3.3.2
+      prettier: 3.3.3
     optionalDependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.2)
+      '@ianvs/prettier-plugin-sort-imports': 4.3.0(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
 
-  prettier@3.3.2: {}
+  prettier@3.3.3: {}
 
   pretty-format@27.5.1:
     dependencies:
@@ -25553,7 +25553,7 @@ snapshots:
       jscodeshift: 0.15.1(@babel/preset-env@7.24.5(@babel/core@7.24.7))
       leven: 3.1.0
       ora: 5.4.1
-      prettier: 3.3.2
+      prettier: 3.3.3
       prompts: 2.4.2
       semver: 7.6.2
       strip-json-comments: 3.1.1
@@ -26394,12 +26394,12 @@ snapshots:
     optionalDependencies:
       '@volar/language-service': 2.4.0-alpha.15
 
-  volar-service-prettier@0.0.59(@volar/language-service@2.4.0-alpha.15)(prettier@3.3.2):
+  volar-service-prettier@0.0.59(@volar/language-service@2.4.0-alpha.15)(prettier@3.3.3):
     dependencies:
       vscode-uri: 3.0.8
     optionalDependencies:
       '@volar/language-service': 2.4.0-alpha.15
-      prettier: 3.3.2
+      prettier: 3.3.3
 
   volar-service-typescript-twoslash-queries@0.0.59(@volar/language-service@2.4.0-alpha.15):
     dependencies:

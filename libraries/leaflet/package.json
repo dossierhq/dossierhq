@@ -56,7 +56,7 @@
     "@types/react": "18.3.3",
     "eslint": "~8.57.0",
     "mini-svg-data-uri": "~1.4.4",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "react": "~18.3.1",
     "svgo": "~3.3.2",
     "typescript": "~5.5.3"
