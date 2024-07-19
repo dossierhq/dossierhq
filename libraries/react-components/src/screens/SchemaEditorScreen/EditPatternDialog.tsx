@@ -66,7 +66,7 @@ export function EditPatternDialog({
 
   useEffect(() => {
     const p = selector
-      ? schemaEditorState.patterns.find((it) => it.name === selector.name)?.pattern ?? ''
+      ? (schemaEditorState.patterns.find((it) => it.name === selector.name)?.pattern ?? '')
       : '';
     setPattern(p);
     setExistingPattern(p);
