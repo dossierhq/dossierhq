@@ -18,10 +18,10 @@
   },
   "devDependencies": {
     "@types/better-sqlite3": "~7.6.11",
-    "@types/node": "~20.14.9",
-    "@vitest/coverage-v8": "~2.0.2",
-    "tsx": "~4.16.0",
+    "@types/node": "~20.14.11",
+    "@vitest/coverage-v8": "~2.0.3",
+    "tsx": "~4.16.2",
     "typescript": "~5.5.3",
-    "vitest": "~2.0.2"
+    "vitest": "~2.0.3"
   }
 }

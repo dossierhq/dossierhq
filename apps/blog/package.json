@@ -34,7 +34,7 @@
     "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.14.3",
-    "next": "~14.2.4",
+    "next": "~14.2.5",
     "prismjs": "~1.29.0",
     "react": "~18.3.1",
     "react-dom": "~18.3.1",
@@ -42,18 +42,18 @@
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@types/better-sqlite3": "~7.6.11",
     "@types/react": "18.3.3",
     "@types/react-dom": "~18.3.0",
-    "@typescript-eslint/eslint-plugin": "~7.16.0",
+    "@typescript-eslint/eslint-plugin": "~7.16.1",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
-    "eslint-config-next": "~14.2.4",
+    "eslint-config-next": "~14.2.5",
     "prettier": "3.3.3",
     "schema-dts": "~1.1.2",
-    "tsx": "~4.16.0",
+    "tsx": "~4.16.2",
     "typescript": "~5.5.3",
-    "vitest": "~2.0.2"
+    "vitest": "~2.0.3"
   }
 }

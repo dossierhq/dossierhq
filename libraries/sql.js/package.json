@@ -50,7 +50,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@rushstack/heft": "0.66.22",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
@@ -59,6 +59,6 @@
     "prettier": "3.3.3",
     "sql.js": "~1.10.3",
     "typescript": "~5.5.3",
-    "vitest": "~2.0.2"
+    "vitest": "~2.0.3"
   }
 }

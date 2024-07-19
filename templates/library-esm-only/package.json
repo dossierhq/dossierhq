@@ -31,11 +31,11 @@
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@rushstack/heft": "0.66.22",
     "eslint": "~8.57.0",
     "prettier": "3.3.3",
     "typescript": "~5.5.3",
-    "vitest": "~2.0.2"
+    "vitest": "~2.0.3"
   }
 }
