@@ -191,10 +191,10 @@ export function ContentListCommandMenu({
           </>
         )}
         {state.currentPage?.id === 'create' && (
-          <CreateEntityCommandGroup {...{ schema, dispatch, onCreateEntity }} />
+          <CreateEntityCommandPage {...{ schema, dispatch, onCreateEntity }} />
         )}
         {state.currentPage?.id === 'filterStatus' && (
-          <FilterStatusCommandGroup
+          <FilterStatusCommandPage
             {...{
               contentListState: contentListState as ContentListState<'full'>,
               dispatchContentList,
@@ -202,14 +202,14 @@ export function ContentListCommandMenu({
           />
         )}
         {state.currentPage?.id === 'filterContentTypes' && (
-          <FilterContentTypesCommandGroup {...{ schema, contentListState, dispatchContentList }} />
+          <FilterContentTypesCommandPage {...{ schema, contentListState, dispatchContentList }} />
         )}
       </CommandList>
     </CommandDialog>
   );
 }
 
-function CreateEntityCommandGroup({
+function CreateEntityCommandPage({
   schema,
   dispatch,
   onCreateEntity,
@@ -243,7 +243,7 @@ const availableStatuses: EntityStatus[] = [
   'archived',
 ];
 
-function FilterStatusCommandGroup({
+function FilterStatusCommandPage({
   contentListState,
   dispatchContentList,
 }: {
@@ -265,7 +265,7 @@ function FilterStatusCommandGroup({
         }
       >
         <AsteriskIcon className="mr-2 h-4 w-4" />
-        <span>Include all statuses</span>
+        <span>Include all statuses (except archived)</span>
       </CommandItem>
       {availableStatuses.map((status) => {
         const selected = query.status?.includes(status);
@@ -298,7 +298,7 @@ function FilterStatusCommandGroup({
   );
 }
 
-function FilterContentTypesCommandGroup({
+function FilterContentTypesCommandPage({
   schema,
   contentListState,
   dispatchContentList,

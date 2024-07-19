@@ -36,13 +36,25 @@ export class ReadOnlyEntityRepository {
     this.secondaryEntities = secondary;
   }
 
-  getMainPrincipalAdminEntities(authKeys?: string[]): ReadOnly[] {
+  getMainPrincipalAdminEntities({
+    authKeys,
+    status,
+  }: {
+    authKeys?: string[];
+    status?: EntityStatus[];
+  } = {}): ReadOnly[] {
     const checkAuthKeys = authKeys ?? [''];
+    const checkStatus: EntityStatus[] = status ?? ['draft', 'published', 'modified', 'withdrawn'];
 
     const entities = [
-      ...this.mainEntities.filter((it) => checkAuthKeys.includes(it.info.authKey)),
+      ...this.mainEntities.filter(
+        (it) => checkAuthKeys.includes(it.info.authKey) && checkStatus.includes(it.info.status),
+      ),
       ...this.secondaryEntities.filter(
-        (it) => it.info.authKey === '' && checkAuthKeys.includes(it.info.authKey),
+        (it) =>
+          it.info.authKey === '' &&
+          checkAuthKeys.includes(it.info.authKey) &&
+          checkStatus.includes(it.info.status),
       ),
     ];
 
@@ -50,7 +62,7 @@ export class ReadOnlyEntityRepository {
   }
 
   getMainPrincipalPublishedEntities(authKeys?: string[]): PublishedReadOnly[] {
-    const adminEntities = this.getMainPrincipalAdminEntities(authKeys);
+    const adminEntities = this.getMainPrincipalAdminEntities({ authKeys });
     const publishedOnly = adminEntities.filter(
       (it) => it.info.status === EntityStatus.published || it.info.status === EntityStatus.modified,
     );

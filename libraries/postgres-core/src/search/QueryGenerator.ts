@@ -226,11 +226,13 @@ function addCursorName(published: boolean, sql: PostgresSqlTemplateTag, cursorNa
   }
 }
 
-function addFilterStatusSqlSegment(query: EntitySharedQuery, { sql }: PostgresQueryBuilder) {
-  if (!query.status || query.status.length === 0) {
-    return;
-  }
-  if (query.status.length === 1) {
+function addFilterStatusSqlSegment(
+  query: EntitySharedQuery | undefined,
+  { sql }: PostgresQueryBuilder,
+) {
+  if (!query?.status || query.status.length === 0) {
+    sql`AND e.status != 'archived'`;
+  } else if (query.status.length === 1) {
     sql`AND e.status = ${query.status[0]}`;
   } else {
     sql`AND e.status = ANY(${query.status})`;
@@ -424,7 +426,7 @@ function addQueryFilters(
   }
 
   // Filter: status
-  if (!published && query && 'status' in query) {
+  if (!published) {
     addFilterStatusSqlSegment(query, queryBuilder);
   }
 

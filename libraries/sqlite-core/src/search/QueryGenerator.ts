@@ -225,13 +225,12 @@ function addCursorName(published: boolean, sql: SqliteSqlTemplateTag, cursorName
 }
 
 function addFilterStatusSqlSegment(
-  query: EntitySharedQuery,
+  query: EntitySharedQuery | undefined,
   { sql, addValueList }: SqliteQueryBuilder,
 ) {
-  if (!query.status || query.status.length === 0) {
-    return;
-  }
-  if (query.status.length === 1) {
+  if (!query?.status || query.status.length === 0) {
+    sql`AND e.status != 'archived'`;
+  } else if (query.status.length === 1) {
     sql`AND e.status = ${query.status[0]}`;
   } else {
     sql`AND e.status IN ${addValueList(query.status)}`;
@@ -461,7 +460,7 @@ function addQueryFilters(
   }
 
   // Filter: status
-  if (!published && query && 'status' in query) {
+  if (!published) {
     addFilterStatusSqlSegment(query, queryBuilder);
   }
 

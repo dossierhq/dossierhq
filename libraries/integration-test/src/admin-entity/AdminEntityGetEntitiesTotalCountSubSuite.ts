@@ -46,7 +46,9 @@ async function getEntitiesTotalCount_authKeySubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    authKeys: ['subject'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
@@ -67,7 +69,9 @@ async function getEntitiesTotalCount_authKeyNoneAndSubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    authKeys: ['', 'subject'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     authKeys: ['', 'subject'],
@@ -79,9 +83,9 @@ async function getEntitiesTotalCount_statusDraft({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === EntityStatus.draft);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['draft'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft],
@@ -93,9 +97,9 @@ async function getEntitiesTotalCount_statusPublished({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === EntityStatus.published);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['published'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.published],
@@ -107,9 +111,9 @@ async function getEntitiesTotalCount_statusModified({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === EntityStatus.modified);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['modified'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified],
@@ -121,9 +125,9 @@ async function getEntitiesTotalCount_statusWithdrawn({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === EntityStatus.withdrawn);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['withdrawn'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.withdrawn],
@@ -135,9 +139,9 @@ async function getEntitiesTotalCount_statusArchived({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter((it) => it.info.status === EntityStatus.archived);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['archived'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.archived],
@@ -149,11 +153,9 @@ async function getEntitiesTotalCount_statusDraftArchived({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter(
-      (it) => it.info.status === EntityStatus.draft || it.info.status === EntityStatus.archived,
-    );
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['draft', 'archived'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.draft, EntityStatus.archived],
@@ -165,11 +167,9 @@ async function getEntitiesTotalCount_statusModifiedPublished({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository
-    .getMainPrincipalAdminEntities()
-    .filter(
-      (it) => it.info.status === EntityStatus.modified || it.info.status === EntityStatus.published,
-    );
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: ['modified', 'published'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [EntityStatus.modified, EntityStatus.published],
@@ -181,7 +181,15 @@ async function getEntitiesTotalCount_statusAll({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    status: [
+      EntityStatus.draft,
+      EntityStatus.modified,
+      EntityStatus.published,
+      EntityStatus.withdrawn,
+      EntityStatus.archived,
+    ],
+  });
   const result = await clientProvider.dossierClient().getEntitiesTotalCount({
     entityTypes: ['ReadOnly'],
     status: [

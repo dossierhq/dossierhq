@@ -50,7 +50,9 @@ async function getEntitiesSample_minimal({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities();
+  const expectedEntities = readOnlyEntityRepository
+    .getMainPrincipalAdminEntities()
+    .filter((it) => it.info.status !== 'archived');
   const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
   });
@@ -465,7 +467,9 @@ async function getEntitiesSample_authKeySubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    authKeys: ['subject'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
@@ -601,7 +605,9 @@ async function getEntitiesSample_authKeyNoneAndSubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    authKeys: ['', 'subject'],
+  });
   const result = await clientProvider.dossierClient().getEntitiesSample({
     entityTypes: ['ReadOnly'],
     authKeys: ['', 'subject'],

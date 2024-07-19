@@ -55,6 +55,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_orderUpdatedAtReversed,
   getEntities_orderName,
   getEntities_orderNameReversed,
+  getEntities_statusDefaultNoArchived,
   getEntities_statusDraft,
   getEntities_statusPublished,
   getEntities_statusModified,
@@ -418,6 +419,20 @@ async function getEntities_orderNameReversed({
     true,
   );
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
+}
+
+async function getEntities_statusDefaultNoArchived({ clientProvider }: AdminEntityTestContext) {
+  const statusesResult = await countSearchResultStatuses(clientProvider.dossierClient(), {
+    entityTypes: ['ReadOnly'],
+  });
+  assertOkResult(statusesResult);
+  const { archived, draft, modified, published, withdrawn } = statusesResult.value;
+  assertEquals(archived, 0);
+
+  assertTruthy(draft > 0);
+  assertTruthy(modified > 0);
+  assertTruthy(published > 0);
+  assertTruthy(withdrawn > 0);
 }
 
 async function getEntities_statusDraft({ clientProvider }: AdminEntityTestContext) {
@@ -980,7 +995,9 @@ async function getEntities_authKeySubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['subject']);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    authKeys: ['subject'],
+  });
   const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['subject'],
@@ -1094,7 +1111,9 @@ async function getEntities_authKeyNoneAndSubject({
   clientProvider,
   readOnlyEntityRepository,
 }: AdminEntityTestContext) {
-  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities(['', 'subject']);
+  const expectedEntities = readOnlyEntityRepository.getMainPrincipalAdminEntities({
+    authKeys: ['', 'subject'],
+  });
   const result = await clientProvider.dossierClient().getEntities({
     entityTypes: ['ReadOnly'],
     authKeys: ['', 'subject'],
