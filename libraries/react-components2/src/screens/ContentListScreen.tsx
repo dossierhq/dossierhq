@@ -245,6 +245,25 @@ function Sidebar({
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}
         />
+        {(contentListState.query.authKeys ||
+          contentListState.query.componentTypes ||
+          contentListState.query.entityTypes ||
+          'status' in contentListState.query) && (
+          <Button
+            className="self-start"
+            variant="ghost"
+            onClick={() => {
+              dispatchContentList(
+                new ContentListStateActions.SetQuery(
+                  { text: contentListState.text },
+                  { partial: false, resetPagingIfModifying: true },
+                ),
+              );
+            }}
+          >
+            Clear all filters
+          </Button>
+        )}
       </div>
       <div className="flex justify-between border-t px-2 py-1">
         <ThemeToggle />
