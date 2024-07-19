@@ -1,5 +1,6 @@
 import {
   EntityQueryOrder,
+  EntityStatus,
   getPagingInfo,
   ok,
   PublishedEntityQueryOrder,
@@ -78,6 +79,8 @@ export interface ContentListState<TMode extends 'full' | 'published' = 'full' | 
 export interface ContentListStateAction {
   reduce(state: Readonly<ContentListState>): Readonly<ContentListState>;
 }
+
+const STATUS_ORDER = Object.values(EntityStatus);
 
 export function initializeContentListState({
   mode,
@@ -262,11 +265,20 @@ class SetQueryAction implements ContentListStateAction {
     if (query.componentTypes && query.componentTypes !== state.query.componentTypes) {
       query.componentTypes = query.componentTypes.toSorted();
     }
-    if ('status' in query && query.status?.length === 0) {
-      delete query.status;
-    }
     if (query.text?.length === 0) {
       delete query.text;
+    }
+    if (state.mode === 'full') {
+      if (query.status?.length === 0) {
+        delete query.status;
+      }
+      if (query.status && query.status !== (state.query as EntityQuery).status) {
+        query.status = query.status.toSorted((a, b) => {
+          const aIndex = STATUS_ORDER.indexOf(a);
+          const bIndex = STATUS_ORDER.indexOf(b);
+          return aIndex - bIndex;
+        });
+      }
     }
 
     if (paging) {

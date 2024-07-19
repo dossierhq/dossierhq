@@ -1,6 +1,6 @@
 'use client';
 
-import { EntityQueryOrder, type EntityStatus, type Schema } from '@dossierhq/core';
+import { EntityQueryOrder, type Schema } from '@dossierhq/core';
 import {
   ArrowDownNarrowWideIcon,
   ArrowDownWideNarrowIcon,
@@ -21,7 +21,7 @@ import { ContentListPagingButtons } from '../components/ContentListPagingButtons
 import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
 import { ContentTypesSelector } from '../components/ContentTypesSelector.js';
 import { EntityDisplay } from '../components/EntityDisplay.js';
-import { MultiCombobox } from '../components/MultiCombobox.js';
+import { EntityStatusSelector } from '../components/EntityStatusSelector.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import {
@@ -236,41 +236,9 @@ function Sidebar({
       </div>
       <div className="flex flex-grow flex-col gap-2 overflow-auto p-2">
         <p className="text-sm font-semibold">Filters</p>
-        <MultiCombobox<{ value: EntityStatus; label: string }>
-          items={[
-            { value: 'draft', label: 'Draft' },
-            { value: 'published', label: 'Published' },
-            { value: 'modified', label: 'Modified' },
-            { value: 'withdrawn', label: 'Withdrawn' },
-            { value: 'archived', label: 'Archived' },
-          ]}
-          selected={(contentListState as ContentListState<'full'>).query.status ?? []}
-          placeholder="Status"
-          onSelect={(status) =>
-            dispatchContentList(
-              new ContentListStateActions.SetQuery(
-                {
-                  status: [
-                    ...((contentListState as ContentListState<'full'>).query.status ?? []),
-                    status,
-                  ],
-                },
-                { partial: true, resetPagingIfModifying: true },
-              ),
-            )
-          }
-          onUnselect={(status) =>
-            dispatchContentList(
-              new ContentListStateActions.SetQuery(
-                {
-                  status: (
-                    (contentListState as ContentListState<'full'>).query.status ?? []
-                  ).filter((it) => it !== status),
-                },
-                { partial: true, resetPagingIfModifying: true },
-              ),
-            )
-          }
+        <EntityStatusSelector
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
         />
         <ContentTypesSelector
           schema={schema}
