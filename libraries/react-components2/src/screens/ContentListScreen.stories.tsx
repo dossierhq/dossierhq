@@ -36,6 +36,15 @@ export const SortedByCreatedAt: Story = {
   args: { urlSearchParams: urlFor({ mode: 'full', query: { order: 'createdAt' } }) },
 };
 
+export const Filters: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      mode: 'full',
+      query: { text: 'Hello', entityTypes: ['StringsEntity'], status: ['draft', 'published'] },
+    }),
+  },
+};
+
 export const SwitchToMap: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
