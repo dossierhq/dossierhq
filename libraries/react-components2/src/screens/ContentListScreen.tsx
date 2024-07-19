@@ -1,6 +1,6 @@
 'use client';
 
-import { EntityQueryOrder, type EntityStatus } from '@dossierhq/core';
+import { EntityQueryOrder, type EntityStatus, type Schema } from '@dossierhq/core';
 import {
   ArrowDownNarrowWideIcon,
   ArrowDownWideNarrowIcon,
@@ -19,6 +19,7 @@ import {
 } from '../components/ContentListCommandMenu.js';
 import { ContentListPagingButtons } from '../components/ContentListPagingButtons.js';
 import { ContentListSearchSearchInput } from '../components/ContentListSearchInput.js';
+import { ContentTypesSelector } from '../components/ContentTypesSelector.js';
 import { EntityDisplay } from '../components/EntityDisplay.js';
 import { MultiCombobox } from '../components/MultiCombobox.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
@@ -110,6 +111,7 @@ export function ContentListScreen({
       />
       {md && (
         <Sidebar
+          schema={schema}
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}
           dispatchCommandMenu={dispatchCommandMenu}
@@ -206,10 +208,12 @@ export function ContentListScreen({
 }
 
 function Sidebar({
+  schema,
   contentListState,
   dispatchContentList,
   dispatchCommandMenu,
 }: {
+  schema: Schema | undefined;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
   dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
@@ -231,6 +235,7 @@ function Sidebar({
         </Button>
       </div>
       <div className="flex flex-grow flex-col gap-2 overflow-auto p-2">
+        <p className="text-sm font-semibold">Filters</p>
         <MultiCombobox<{ value: EntityStatus; label: string }>
           items={[
             { value: 'draft', label: 'Draft' },
@@ -266,6 +271,11 @@ function Sidebar({
               ),
             )
           }
+        />
+        <ContentTypesSelector
+          schema={schema}
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
         />
       </div>
       <div className="flex justify-between border-t px-2 py-1">
