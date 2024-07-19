@@ -18,7 +18,7 @@
     "@cloudinary/url-gen": "~1.19.0",
     "@creativebulma/bulma-badge": "~1.0.1",
     "@faker-js/faker": "~8.4.1",
-    "@fortawesome/free-solid-svg-icons": "~6.5.2",
+    "@fortawesome/free-solid-svg-icons": "~6.6.0",
     "@lexical/code": "0.14.3",
     "@lexical/link": "0.14.3",
     "@lexical/list": "0.14.3",
