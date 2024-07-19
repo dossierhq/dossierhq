@@ -1779,7 +1779,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       isEntity: boolean,
     ) => {
       const component = isComponent(item);
-      const fields = component ? item : item.fields ?? {};
+      const fields = component ? item : (item.fields ?? {});
       for (const fieldName of Object.keys(fields)) {
         // Skip standard fields
         if (component && fieldName === 'type') {
