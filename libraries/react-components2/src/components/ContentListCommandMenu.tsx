@@ -112,22 +112,33 @@ export function ContentListCommandMenu({
               </CommandItem>
             </CommandGroup>
             <CommandGroup heading="Filters">
-              <CommandItem
-                onSelect={() => {
-                  dispatch(new CommandMenuState_OpenPageAction({ id: 'filterStatus' }));
-                }}
-              >
-                <MilestoneIcon className="mr-2 h-4 w-4" />
-                Status
-              </CommandItem>
+              {contentListState.mode === 'full' && (
+                <CommandItem
+                  onSelect={() => {
+                    dispatch(new CommandMenuState_OpenPageAction({ id: 'filterStatus' }));
+                  }}
+                >
+                  <MilestoneIcon className="mr-2 h-4 w-4" />
+                  Status
+                  {'status' in contentListState.query && contentListState.query.status
+                    ? `: ${contentListState.query.status.join(', ')}`
+                    : ''}
+                </CommandItem>
+              )}
               <CommandItem
                 onSelect={() => {
                   dispatch(new CommandMenuState_OpenPageAction({ id: 'filterContentTypes' }));
                 }}
               >
                 <ShapesIcon className="mr-2 h-4 w-4" />
-                <span className="max-w-96 overflow-hidden text-ellipsis whitespace-nowrap">
+                <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                   Content types
+                  {contentListState.query.entityTypes || contentListState.query.componentTypes
+                    ? `: ${[
+                        ...(contentListState.query.entityTypes ?? []),
+                        contentListState.query.componentTypes ?? [],
+                      ].join(', ')}`
+                    : ''}
                 </span>
               </CommandItem>
               <CommandItem
