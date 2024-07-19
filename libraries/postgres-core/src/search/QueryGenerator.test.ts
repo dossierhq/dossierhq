@@ -592,7 +592,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "",
               "draft",
@@ -620,7 +620,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "",
               "published",
@@ -648,7 +648,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "",
               "modified",
@@ -676,7 +676,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "",
               "withdrawn",
@@ -704,7 +704,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2 ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2 ORDER BY e.id LIMIT $3",
             "values": [
               "",
               "archived",
@@ -732,7 +732,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "",
               [
@@ -763,7 +763,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "",
               [
@@ -802,7 +802,7 @@ describe('searchAdminEntitiesQuery()', () => {
           "cursorExtractor": [Function],
           "sqlQuery": {
             "text": "SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated, e.status, e.invalid, ev.version, ev.schema_version, ev.encode_version, ev.data
-        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = ANY($2) ORDER BY e.id LIMIT $3",
+        FROM entities e, entity_versions ev WHERE e.latest_draft_entity_versions_id = ev.id AND e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = ANY($2) ORDER BY e.id LIMIT $3",
             "values": [
               "",
               [
@@ -2151,7 +2151,7 @@ describe('totalAdminEntitiesQuery()', () => {
       .toMatchInlineSnapshot(`
         OkResult {
           "value": {
-            "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2",
+            "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2",
             "values": [
               "",
               "draft",
@@ -2169,7 +2169,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2",
           "values": [
             "",
             "published",
@@ -2187,7 +2187,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2",
           "values": [
             "",
             "modified",
@@ -2205,7 +2205,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2",
           "values": [
             "",
             "withdrawn",
@@ -2223,7 +2223,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND status = $2",
+          "text": "SELECT COUNT(e.id)::integer AS count FROM entities e WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = $1 AND e.status = $2",
           "values": [
             "",
             "archived",

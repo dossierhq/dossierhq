@@ -89,6 +89,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_authKeySubject,
   getEntities_authKeySubjectFromReadonlyRandom,
   getEntities_authKeyNoneAndSubject,
+  getEntities_comboLinksToAndStatus,
 ];
 
 async function getEntities_minimal({
@@ -1100,4 +1101,25 @@ async function getEntities_authKeyNoneAndSubject({
   });
   assertAdminEntityConnectionToMatchSlice(expectedEntities, result, 0, 25);
   assertPageInfoEquals(result, { hasPreviousPage: false, hasNextPage: true });
+}
+
+async function getEntities_comboLinksToAndStatus({ clientProvider }: AdminEntityTestContext) {
+  // Regression test for ambiguous column name: status
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const {
+    entity: { id: titleOnlyId },
+  } = titleOnlyResult.valueOrThrow();
+
+  const referenceResult = await client.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyId } } }),
+  );
+  assertOkResult(referenceResult);
+
+  const searchResult = await client.getEntities({
+    linksTo: { id: titleOnlyId },
+    status: ['draft'],
+  });
+  assertSearchResultEntities(searchResult, [referenceResult.value.entity]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
 }

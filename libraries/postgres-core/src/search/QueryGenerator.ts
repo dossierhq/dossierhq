@@ -231,9 +231,9 @@ function addFilterStatusSqlSegment(query: EntitySharedQuery, { sql }: PostgresQu
     return;
   }
   if (query.status.length === 1) {
-    sql`AND status = ${query.status[0]}`;
+    sql`AND e.status = ${query.status[0]}`;
   } else {
-    sql`AND status = ANY(${query.status})`;
+    sql`AND e.status = ANY(${query.status})`;
   }
 }
 
