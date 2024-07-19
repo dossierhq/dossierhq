@@ -114,8 +114,8 @@ describe('initializeContentListState', () => {
           "paging": {},
           "query": {
             "entityTypes": [
-              "Foo",
               "Bar",
+              "Foo",
             ],
             "order": "updatedAt",
             "reverse": true,

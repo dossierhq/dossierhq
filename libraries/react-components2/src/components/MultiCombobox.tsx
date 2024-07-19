@@ -2,7 +2,7 @@ import { Command as CommandPrimitive } from 'cmdk';
 import { XIcon } from 'lucide-react';
 import { useCallback, useRef, useState, type KeyboardEvent } from 'react';
 import { Badge } from './ui/badge.js';
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from './ui/command.js';
+import { Command, CommandGroup, CommandItem, CommandList } from './ui/command.js';
 
 export function MultiCombobox<TItem extends { value: string; label: string }>({
   items,

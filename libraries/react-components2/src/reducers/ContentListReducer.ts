@@ -253,8 +253,14 @@ class SetQueryAction implements ContentListStateAction {
     if (query.entityTypes?.length === 0) {
       delete query.entityTypes;
     }
+    if (query.entityTypes && query.entityTypes !== state.query.entityTypes) {
+      query.entityTypes = query.entityTypes.toSorted();
+    }
     if (query.componentTypes?.length === 0) {
       delete query.componentTypes;
+    }
+    if (query.componentTypes && query.componentTypes !== state.query.componentTypes) {
+      query.componentTypes = query.componentTypes.toSorted();
     }
     if ('status' in query && query.status?.length === 0) {
       delete query.status;
