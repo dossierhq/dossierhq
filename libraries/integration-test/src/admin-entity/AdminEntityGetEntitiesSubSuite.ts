@@ -68,6 +68,7 @@ export const GetEntitiesSubSuite: UnboundTestFunction<AdminEntityTestContext>[] 
   getEntities_validOnly,
   getEntities_componentTypes,
   getEntities_linksToOneReference,
+  getEntities_linksFromOneArchivedReference,
   getEntities_linksToOneReferenceFromRichText,
   getEntities_linksToOneReferenceFromLinkRichText,
   getEntities_linksToOneReferenceFromComponentInRichText,
@@ -832,6 +833,31 @@ async function getEntities_linksFromOneReference({ clientProvider }: AdminEntity
   const {
     entity: { id: referenceId },
   } = referenceResult.value;
+
+  const searchResult = await client.getEntities({ linksFrom: { id: referenceId } });
+  assertSearchResultEntities(searchResult, [titleOnlyEntity]);
+  assertPageInfoEquals(searchResult, { hasPreviousPage: false, hasNextPage: false });
+}
+
+async function getEntities_linksFromOneArchivedReference({
+  clientProvider,
+}: AdminEntityTestContext) {
+  // Archived entities are excluded by default by getEntities(), but are included for linksFrom/linksTo
+  const client = clientProvider.dossierClient();
+  const titleOnlyResult = await client.createEntity(TITLE_ONLY_CREATE);
+  const { entity: titleOnlyEntity } = titleOnlyResult.valueOrThrow();
+
+  const archiveResult = await client.archiveEntity({ id: titleOnlyEntity.id });
+  assertOkResult(archiveResult);
+  titleOnlyEntity.info.status = archiveResult.value.status;
+  titleOnlyEntity.info.updatedAt = archiveResult.value.updatedAt;
+
+  const referenceResult = await client.createEntity(
+    copyEntity(REFERENCES_CREATE, { fields: { titleOnly: { id: titleOnlyEntity.id } } }),
+  );
+  const {
+    entity: { id: referenceId },
+  } = referenceResult.valueOrThrow();
 
   const searchResult = await client.getEntities({ linksFrom: { id: referenceId } });
   assertSearchResultEntities(searchResult, [titleOnlyEntity]);

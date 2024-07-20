@@ -858,7 +858,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entities e_from, entity_latest_references er_from WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.status != 'archived' AND e_from.uuid = ?2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id ORDER BY e.id LIMIT ?3)
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entities e_from, entity_latest_references er_from WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e_from.uuid = ?2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
             "values": [
               "",
@@ -886,7 +886,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.status != 'archived' AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?2 ORDER BY e.id LIMIT ?3)
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?2 ORDER BY e.id LIMIT ?3)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
             "values": [
               "",
@@ -1014,7 +1014,7 @@ describe('searchAdminEntitiesQuery()', () => {
         "value": {
           "cursorExtractor": [Function],
           "sqlQuery": {
-            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.status != 'archived' AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?4 AND e.id > ?5 ORDER BY e.id LIMIT ?6)
+            "text": "WITH entities_cte AS (SELECT e.id, e.uuid, e.type, e.name, e.auth_key, e.created_at, e.updated_at, e.updated_seq, e.status, e.invalid, e.latest_entity_versions_id FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?4 AND e.id > ?5 ORDER BY e.id LIMIT ?6)
       SELECT e.*, ev.version, ev.schema_version, ev.encode_version, ev.fields FROM entities_cte e JOIN entity_versions ev ON e.latest_entity_versions_id = ev.id",
             "values": [
               "",
@@ -2254,7 +2254,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_references er_from, entities e_from WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.status != 'archived' AND e_from.uuid = ?2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_references er_from, entities e_from WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e_from.uuid = ?2 AND e_from.id = er_from.from_entities_id AND er_from.to_entities_id = e.id",
           "values": [
             "",
             "37b48706-803e-4227-a51e-8208db12d949",
@@ -2272,7 +2272,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.status != 'archived' AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?2",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?2",
           "values": [
             "",
             "37b48706-803e-4227-a51e-8208db12d949",
@@ -2291,7 +2291,7 @@ describe('totalAdminEntitiesQuery()', () => {
     ).toMatchInlineSnapshot(`
       OkResult {
         "value": {
-          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.status != 'archived' AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?4",
+          "text": "SELECT COUNT(e.id) AS count FROM entities e, entity_latest_references er_to, entities e_to WHERE e.uuid IS NOT NULL AND e.resolved_auth_key = ?1 AND e.type IN (?2, ?3) AND e.id = er_to.from_entities_id AND er_to.to_entities_id = e_to.id AND e_to.uuid = ?4",
           "values": [
             "",
             "QueryGeneratorFoo",

@@ -229,6 +229,9 @@ function addFilterStatusSqlSegment(
   { sql, addValueList }: SqliteQueryBuilder,
 ) {
   if (!query?.status || query.status.length === 0) {
+    if (!!query?.linksFrom || !!query?.linksTo) {
+      return; // Include all statuses by default when filtering by links
+    }
     sql`AND e.status != 'archived'`;
   } else if (query.status.length === 1) {
     sql`AND e.status = ${query.status[0]}`;
