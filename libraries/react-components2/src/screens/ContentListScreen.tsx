@@ -1,7 +1,6 @@
 'use client';
 
 import type { Schema } from '@dossierhq/core';
-import { TerminalIcon } from 'lucide-react';
 import { useReducer, type Dispatch } from 'react';
 import {
   ContentListCommandMenu,
@@ -14,6 +13,7 @@ import { ContentListViewModeToggle } from '../components/ContentListViewModeTogg
 import { ContentTypesSelector } from '../components/ContentTypesSelector.js';
 import { EntityQueryOrderDropdownMenu } from '../components/EntityQueryOrderDropdownMenu.js';
 import { EntityStatusSelector } from '../components/EntityStatusSelector.js';
+import { ShowCommandMenuButton } from '../components/ShowCommandMenuButton.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
@@ -112,12 +112,7 @@ function Sidebar({
   return (
     <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
-        <Button
-          variant="outline"
-          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
-        >
-          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
-        </Button>
+        <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
         <Button
           variant="secondary"
           onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
@@ -179,13 +174,7 @@ function Toolbar({
   return (
     <div className="flex items-center border-b">
       <div className="container flex gap-2 p-2">
-        <Button
-          className="md:hidden"
-          variant="outline"
-          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
-        >
-          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
-        </Button>
+        <ShowCommandMenuButton className="md:hidden" dispatchCommandMenu={dispatchCommandMenu} />
         <ContentListSearchSearchInput
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}

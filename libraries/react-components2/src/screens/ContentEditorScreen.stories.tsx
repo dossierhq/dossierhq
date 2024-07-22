@@ -66,6 +66,14 @@ export const OneOpenOneNew: Story = {
   },
 };
 
+export const ShowCommandMenu: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByTitle('Show command menu'));
+  },
+};
+
 export const OpenOpenDialog: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

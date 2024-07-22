@@ -45,6 +45,15 @@ export const Filters: Story = {
   },
 };
 
+export const ShowCommandMenu: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const buttons = await canvas.findAllByTitle('Show command menu');
+    await userEvent.click(buttons[0]);
+  },
+};
+
 export const SwitchToMap: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

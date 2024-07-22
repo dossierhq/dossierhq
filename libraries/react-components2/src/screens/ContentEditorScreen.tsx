@@ -1,4 +1,3 @@
-import { TerminalIcon } from 'lucide-react';
 import { useContext, useEffect, useReducer, type Dispatch } from 'react';
 import {
   ContentEditorCommandMenu,
@@ -8,6 +7,7 @@ import {
 import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
 import { EntityEditor } from '../components/EntityEditor.js';
 import { OpenContentDialogContent } from '../components/OpenContentDialogContent.js';
+import { ShowCommandMenuButton } from '../components/ShowCommandMenuButton.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import { Dialog } from '../components/ui/dialog.js';
@@ -17,7 +17,6 @@ import { ContentEditorStateContext } from '../contexts/ContentEditorStateContext
 import { useResponsive } from '../hooks/useResponsive.js';
 import {
   CommandMenuState_OpenPageAction,
-  CommandMenuState_ShowAction,
   initializeCommandMenuState,
   reduceCommandMenuState,
 } from '../reducers/CommandReducer.js';
@@ -147,12 +146,7 @@ function Sidebar({
   return (
     <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
-        <Button
-          variant="outline"
-          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
-        >
-          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
-        </Button>
+        <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
         <Button
           variant="secondary"
           onClick={() => dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(true))}
@@ -210,17 +204,20 @@ function Toolbar({
 }: {
   dispatchCommandMenu: Dispatch<ContentEditorCommandMenuAction>;
 }) {
+  const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   return (
     <div className="flex items-center border-b">
       <div className="container flex gap-2 p-2">
-        <Button
-          variant="outline"
-          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
-        >
-          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
-        </Button>
+        <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
         <div className="flex flex-grow justify-end gap-2">
-          {/* <Button variant="secondary">Open</Button> */}
+          <Button
+            variant="secondary"
+            onClick={() =>
+              dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(true))
+            }
+          >
+            Open
+          </Button>
           <Button
             variant="secondary"
             onClick={() =>
