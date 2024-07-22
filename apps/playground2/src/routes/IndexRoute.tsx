@@ -1,4 +1,6 @@
-import { FullscreenContainer, Message, Text, toSpacingClassName } from '@dossierhq/design';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.js';
+import { FullscreenContainer, toSpacingClassName } from '@dossierhq/design';
+import { DatabaseBackupIcon } from 'lucide-react';
 import { LoadDatabaseMessage } from '../components/LoadDatabaseMessage.js';
 
 export function IndexRoute() {
@@ -7,10 +9,10 @@ export function IndexRoute() {
       <FullscreenContainer.Row fullWidth>TODO</FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row paddingVertical={5} paddingHorizontal={2}>
-          <Text as="h1" textStyle="headline4">
+          <h1 className="text-4xl font-extrabold tracking-tight">
             Welcome to Dossier Playground! 👋
-          </Text>
-          <Text textStyle="body1">
+          </h1>
+          <p className="leading-7 mt-2">
             This is a playground where you can explore{' '}
             <a href="https://dossierhq.dev" target="_blank" rel="noopener noreferrer">
               Dossier
@@ -21,19 +23,19 @@ export function IndexRoute() {
               documentation
             </a>{' '}
             for more information.
-          </Text>
-          <Text textStyle="body1" marginTop={2}>
-            Happy playing! 🎉
-          </Text>
-          <Message className={toSpacingClassName({ marginTop: 5 })} color="danger">
-            <Message.Body>
+          </p>
+          <p className="leading-7 mt-2">Happy playing! 🎉</p>
+          <Alert className="mt-4" variant="destructive">
+            <DatabaseBackupIcon className="h-4 w-4" />
+            <AlertTitle>Heads up!</AlertTitle>
+            <AlertDescription>
               <p>
                 The database in the Playground is only stored in your browser. If you close or
                 refresh the browser tab all changes will be lost.
               </p>
               <p>Make sure to download a copy of the database if you want to keep it.</p>
-            </Message.Body>
-          </Message>
+            </AlertDescription>
+          </Alert>
           <LoadDatabaseMessage className={toSpacingClassName({ marginTop: 3 })} />
         </FullscreenContainer.Row>
       </FullscreenContainer.ScrollableRow>
