@@ -27,7 +27,8 @@ import { EntityStatusSelector } from './EntityStatusSelector.js';
 import { ShowCommandMenuButton } from './ShowCommandMenuButton.js';
 import { ThemeToggle } from './ThemeToggle.js';
 import { Button } from './ui/button.js';
-import { DialogContent, DialogHeader, DialogTitle } from './ui/dialog.js';
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog.js';
+import { VisuallyHidden } from './ui/visually-hidden.js';
 
 interface Props {
   contentListState: ContentListState;
@@ -62,10 +63,12 @@ export function OpenContentDialogContent({
         dispatchContentList={dispatchContentList}
         onCreateEntity={onCreateEntity}
       />
-
       <DialogHeader>
         <DialogTitle>Select content</DialogTitle>
       </DialogHeader>
+      <VisuallyHidden asChild>
+        <DialogDescription>Select content to open or create new content.</DialogDescription>
+      </VisuallyHidden>
       <div className="-m-6 mt-0 flex overflow-hidden">
         {md && (
           <Sidebar

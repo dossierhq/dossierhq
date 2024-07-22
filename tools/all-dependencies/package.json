@@ -36,6 +36,7 @@
     "@radix-ui/react-slot": "~1.1.0",
     "@radix-ui/react-toggle": "~1.1.0",
     "@radix-ui/react-toggle-group": "~1.1.0",
+    "@radix-ui/react-visually-hidden": "~1.1.0",
     "@react-aria/overlays": "~3.22.1",
     "@rushstack/eslint-patch": "~1.10.3",
     "@sentry/astro": "~8.19.0",

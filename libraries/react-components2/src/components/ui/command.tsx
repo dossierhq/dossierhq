@@ -5,7 +5,8 @@ import { Command as CommandPrimitive } from 'cmdk';
 import { Search } from 'lucide-react';
 import * as React from 'react';
 import { cn } from '../../lib/utils.js';
-import { Dialog, DialogContent } from './dialog.js';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from './dialog.js';
+import { VisuallyHidden } from './visually-hidden.js';
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -30,6 +31,12 @@ const CommandDialog = ({ onKeyDown, children, ...props }: CommandDialogProps) =>
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0 shadow-lg" size="sm-fill">
+        <VisuallyHidden asChild>
+          <DialogTitle>Command menu</DialogTitle>
+        </VisuallyHidden>
+        <VisuallyHidden asChild>
+          <DialogDescription>Select a command or type to search for a command.</DialogDescription>
+        </VisuallyHidden>
         <Command
           className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
           onKeyDown={onKeyDown}
