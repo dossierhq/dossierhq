@@ -95,6 +95,7 @@ If you just want to get started using Dossier, these destinations might get you 
 - 3001: examples/next-web
 - 3002: apps/playground
 - 3003: apps/blog
+- 3004: apps/playground2
 - 4321: examples/astro
 - 4322: examples/astro (HMR)
 - 5173: examples/tutorial

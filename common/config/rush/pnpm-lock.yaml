@@ -280,6 +280,103 @@ importers:
         specifier: ~5.5.3
         version: 5.5.3
 
+  ../../apps/playground2:
+    dependencies:
+      '@dossierhq/cloudinary':
+        specifier: workspace:*
+        version: link:../../libraries/cloudinary
+      '@dossierhq/core':
+        specifier: workspace:*
+        version: link:../../libraries/core
+      '@dossierhq/design':
+        specifier: workspace:*
+        version: link:../../libraries/design
+      '@dossierhq/graphql':
+        specifier: workspace:*
+        version: link:../../libraries/graphql
+      '@dossierhq/react-components2':
+        specifier: workspace:*
+        version: link:../../libraries/react-components2
+      '@dossierhq/server':
+        specifier: workspace:*
+        version: link:../../libraries/server
+      '@dossierhq/sql.js':
+        specifier: workspace:*
+        version: link:../../libraries/sql.js
+      graphiql:
+        specifier: ~3.3.2
+        version: 3.3.2(@types/node@20.14.11)(@types/react-dom@18.3.0)(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      graphql:
+        specifier: ~16.9.0
+        version: 16.9.0
+      history:
+        specifier: ~5.3.0
+        version: 5.3.0
+      playground-example-generator:
+        specifier: workspace:*
+        version: link:../playground-example-generator
+      react:
+        specifier: ~18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ~18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-router-dom:
+        specifier: ~6.25.1
+        version: 6.25.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      sql.js:
+        specifier: ~1.10.3
+        version: 1.10.3
+      swr:
+        specifier: ~2.2.5
+        version: 2.2.5(react@18.3.1)
+    devDependencies:
+      '@dossierhq/eslint-config-react':
+        specifier: workspace:*
+        version: link:../../stack/eslint-config-react
+      '@graphiql/toolkit':
+        specifier: ~0.9.1
+        version: 0.9.1(@types/node@20.14.11)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ~4.3.1
+        version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
+      '@types/react':
+        specifier: 18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ~18.3.0
+        version: 18.3.0
+      '@types/sql.js':
+        specifier: ~1.4.9
+        version: 1.4.9
+      '@vitejs/plugin-react-swc':
+        specifier: ~3.7.0
+        version: 3.7.0(@swc/helpers@0.5.5)(vite@5.3.4(@types/node@20.14.11)(sass@1.77.8))
+      eslint:
+        specifier: ~8.57.0
+        version: 8.57.0
+      graphql-config:
+        specifier: ~5.0.3
+        version: 5.0.3(@types/node@20.14.11)(graphql@16.9.0)(typescript@5.5.3)
+      graphql-ws:
+        specifier: ~5.16.0
+        version: 5.16.0(graphql@16.9.0)
+      prettier:
+        specifier: 3.3.3
+        version: 3.3.3
+      rollup-plugin-visualizer:
+        specifier: ~5.12.0
+        version: 5.12.0(rollup@4.19.0)
+      tsx:
+        specifier: ~4.16.2
+        version: 4.16.2
+      typescript:
+        specifier: ~5.5.3
+        version: 5.5.3
+      vite:
+        specifier: ~5.3.4
+        version: 5.3.4(@types/node@20.14.11)(sass@1.77.8)
+
   ../../examples/astro:
     dependencies:
       '@astrojs/check':

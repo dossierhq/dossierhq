@@ -333,6 +333,10 @@
       "projectFolder": "apps/playground"
     },
     {
+      "packageName": "playground2",
+      "projectFolder": "apps/playground2"
+    },
+    {
       "packageName": "playground-example-generator",
       "projectFolder": "apps/playground-example-generator"
     },
