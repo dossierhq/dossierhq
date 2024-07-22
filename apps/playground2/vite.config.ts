@@ -1,12 +1,28 @@
-import react from '@vitejs/plugin-react-swc';
+import path from 'node:path';
+import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 
+const ReactCompilerConfig = {
+  runtimeModule: '@/mycache',
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  plugins: [
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
+      },
+    }),
+  ],
   build: {
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       plugins: [visualizer()],
     },
