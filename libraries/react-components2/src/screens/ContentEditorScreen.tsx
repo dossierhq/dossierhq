@@ -86,7 +86,11 @@ export function ContentEditorScreen({
     <ContentEditorDispatchContext.Provider value={dispatchContentEditor}>
       <ContentEditorStateContext.Provider value={contentEditorState}>
         <ContentEditorLoader />
-        <ContentEditorCommandMenu state={commandMenuState} dispatch={dispatchCommandMenu} />
+        <ContentEditorCommandMenu
+          disabled={contentEditorState.showOpenDialog}
+          state={commandMenuState}
+          dispatch={dispatchCommandMenu}
+        />
         <Toaster />
         <div className="flex h-dvh w-dvw overflow-hidden">
           {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
@@ -120,8 +124,10 @@ export function ContentEditorScreen({
                 dispatchContentEditor(new ContentEditorActions.AddDraft({ id: entityId }));
                 dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false));
               }}
-              onCreateEntity={() => {
-                dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]));
+              onCreateEntity={(type: string) => {
+                dispatchContentEditor(
+                  new ContentEditorActions.AddDraft({ id: crypto.randomUUID(), newType: type }),
+                );
                 dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false));
               }}
             />

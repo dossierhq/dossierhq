@@ -1,13 +1,24 @@
 import type { Schema } from '@dossierhq/core';
-import type { Dispatch } from 'react';
+import { TerminalIcon } from 'lucide-react';
+import { useReducer, type Dispatch } from 'react';
 import { useLoadContentList } from '../hooks/useLoadContentList.js';
 import { useResponsive } from '../hooks/useResponsive.js';
 import { useSchema } from '../hooks/useSchema.js';
+import {
+  CommandMenuState_ShowAction,
+  initializeCommandMenuState,
+  reduceCommandMenuState,
+} from '../reducers/CommandReducer.js';
 import {
   ContentListStateActions,
   type ContentListState,
   type ContentListStateAction,
 } from '../reducers/ContentListReducer.js';
+import {
+  ContentListCommandMenu,
+  type ContentListCommandMenuAction,
+  type ContentListCommandMenuConfig,
+} from './ContentListCommandMenu.js';
 import { ContentListSearchSearchInput } from './ContentListSearchInput.js';
 import { ContentListSplitOrMapContainer } from './ContentListSplitOrMapContainer.js';
 import { ContentListViewModeToggle } from './ContentListViewModeToggle.js';
@@ -22,7 +33,7 @@ interface Props {
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
   onOpenEntity: (entityId: string) => void;
-  onCreateEntity: () => void;
+  onCreateEntity: (type: string) => void;
 }
 
 export function OpenContentDialogContent({
@@ -33,10 +44,25 @@ export function OpenContentDialogContent({
 }: Props) {
   const { schema } = useSchema();
   useLoadContentList(contentListState, dispatchContentList);
+
+  const [commandMenuState, dispatchCommandMenu] = useReducer(
+    reduceCommandMenuState<ContentListCommandMenuConfig>,
+    { id: 'root' },
+    initializeCommandMenuState<ContentListCommandMenuConfig>,
+  );
+
   const md = useResponsive('md');
   const lg = useResponsive('lg');
   return (
     <DialogContent className="grid-rows-[auto_1fr]" size="maximize">
+      <ContentListCommandMenu
+        state={commandMenuState}
+        dispatch={dispatchCommandMenu}
+        contentListState={contentListState}
+        dispatchContentList={dispatchContentList}
+        onCreateEntity={onCreateEntity}
+      />
+
       <DialogHeader>
         <DialogTitle>Select content</DialogTitle>
       </DialogHeader>
@@ -46,14 +72,14 @@ export function OpenContentDialogContent({
             schema={schema}
             contentListState={contentListState}
             dispatchContentList={dispatchContentList}
-            onCreateEntity={onCreateEntity}
+            dispatchCommandMenu={dispatchCommandMenu}
           />
         )}
         <main className="flex flex-grow flex-col">
           <Toolbar
             contentListState={contentListState}
             dispatchContentList={dispatchContentList}
-            onCreateEntity={onCreateEntity}
+            dispatchCommandMenu={dispatchCommandMenu}
           />
           <ContentListSplitOrMapContainer
             schema={schema}
@@ -72,17 +98,26 @@ function Sidebar({
   schema,
   contentListState,
   dispatchContentList,
-  onCreateEntity,
+  dispatchCommandMenu,
 }: {
   schema: Schema | undefined;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
-  onCreateEntity: () => void;
+  dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
 }) {
   return (
     <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
-        <Button variant="secondary" onClick={onCreateEntity}>
+        <Button
+          variant="outline"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
+        >
+          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
+        >
           Create
         </Button>
       </div>
@@ -131,15 +166,22 @@ function Sidebar({
 function Toolbar({
   contentListState,
   dispatchContentList,
-  onCreateEntity,
+  dispatchCommandMenu,
 }: {
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
-  onCreateEntity: () => void;
+  dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
 }) {
   return (
     <div className="flex items-center border-b">
       <div className="container flex gap-2 p-2">
+        <Button
+          className="md:hidden"
+          variant="outline"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'root' }]))}
+        >
+          <TerminalIcon className="h-[1.2rem] w-[1.2rem]" />
+        </Button>
         <ContentListSearchSearchInput
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}
@@ -149,7 +191,10 @@ function Toolbar({
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}
         />
-        <Button className="md:hidden" onClick={onCreateEntity}>
+        <Button
+          className="md:hidden"
+          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
+        >
           Create
         </Button>
       </div>

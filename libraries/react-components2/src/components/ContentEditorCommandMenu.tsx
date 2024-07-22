@@ -58,16 +58,18 @@ export type ContentEditorCommandMenuState = CommandMenuState<ContentEditorComman
 export type ContentEditorCommandMenuAction = CommandMenuAction<ContentEditorCommandMenuConfig>;
 
 export function ContentEditorCommandMenu({
+  disabled,
   state,
   dispatch,
 }: {
+  disabled: boolean;
   state: Readonly<ContentEditorCommandMenuState>;
   dispatch: Dispatch<ContentEditorCommandMenuAction>;
 }) {
   const { schema, drafts } = useContext(ContentEditorStateContext);
   const dispatchContentEditor = useContext(ContentEditorDispatchContext);
 
-  useOpenCommandMenu(dispatch);
+  useOpenCommandMenu(disabled ? undefined : dispatch);
 
   if (state.alert) {
     return (

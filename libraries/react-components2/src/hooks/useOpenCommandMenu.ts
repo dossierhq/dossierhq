@@ -6,9 +6,12 @@ import {
 } from '../reducers/CommandReducer.js';
 
 export function useOpenCommandMenu<TConfig extends CommandMenuConfig<unknown, unknown>>(
-  dispatch: Dispatch<CommandMenuAction<TConfig>>,
+  dispatch: Dispatch<CommandMenuAction<TConfig>> | undefined,
 ) {
   useEffect(() => {
+    if (!dispatch) {
+      return;
+    }
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
