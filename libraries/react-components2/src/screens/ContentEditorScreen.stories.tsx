@@ -74,6 +74,17 @@ export const OpenOpenDialog: Story = {
   },
 };
 
+export const OpenOpenWithNoMatchesDialog: Story = {
+  args: {
+    urlSearchParams: urlFor({ query: { text: 'no matches' } }),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByText('Open'));
+  },
+};
+
 function urlFor(options: Parameters<typeof addContentEditorParamsToURLSearchParams>[1]) {
   const payload = new URLSearchParams();
   addContentEditorParamsToURLSearchParams(payload, options);
