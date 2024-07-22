@@ -120,6 +120,10 @@ export function ContentEditorScreen({
                 dispatchContentEditor(new ContentEditorActions.AddDraft({ id: entityId }));
                 dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false));
               }}
+              onCreateEntity={() => {
+                dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]));
+                dispatchContentEditor(new ContentEditorActions.ToggleShowOpenDialog(false));
+              }}
             />
           </Dialog>
         )}

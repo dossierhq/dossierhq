@@ -66,6 +66,14 @@ export const OneOpenOneNew: Story = {
   },
 };
 
+export const OpenOpenDialog: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(await canvas.findByText('Open'));
+  },
+};
+
 function urlFor(options: Parameters<typeof addContentEditorParamsToURLSearchParams>[1]) {
   const payload = new URLSearchParams();
   addContentEditorParamsToURLSearchParams(payload, options);
