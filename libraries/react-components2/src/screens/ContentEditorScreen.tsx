@@ -1,3 +1,4 @@
+import { SearchIcon } from 'lucide-react';
 import { useContext, useEffect, useReducer, type Dispatch } from 'react';
 import {
   ContentEditorCommandMenu,
@@ -5,6 +6,7 @@ import {
   type ContentEditorCommandMenuConfig,
 } from '../components/ContentEditorCommandMenu.js';
 import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
+import { EmptyStateMessage } from '../components/EmptyStateMessage.js';
 import { EntityEditor } from '../components/EntityEditor.js';
 import { OpenContentDialogContent } from '../components/OpenContentDialogContent.js';
 import { ShowCommandMenuButton } from '../components/ShowCommandMenuButton.js';
@@ -95,18 +97,29 @@ export function ContentEditorScreen({
           {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
           <main className="flex flex-grow flex-col">
             {!md && <Toolbar dispatchCommandMenu={dispatchCommandMenu} />}
-            <div className="overflow-auto">
-              <div className="container flex flex-col gap-2 p-2">
-                {drafts.map((it) => (
-                  <EntityEditor
-                    key={it.id}
-                    id={`entity-${it.id}-editor`}
-                    draftState={it}
-                    dispatchCommandMenu={dispatchCommandMenu}
-                  />
-                ))}
+            {drafts.length === 0 ? (
+              <div className="flex flex-grow flex-col items-center justify-center p-2">
+                <EmptyStateMessage
+                  className="w-full max-w-96"
+                  icon={<SearchIcon />}
+                  title="No open drafts"
+                  description="Create or open an entity"
+                />
               </div>
-            </div>
+            ) : (
+              <div className="overflow-auto">
+                <div className="container flex flex-col gap-2 p-2">
+                  {drafts.map((it) => (
+                    <EntityEditor
+                      key={it.id}
+                      id={`entity-${it.id}-editor`}
+                      draftState={it}
+                      dispatchCommandMenu={dispatchCommandMenu}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </main>
         </div>
         {contentEditorState.showOpenDialog && (

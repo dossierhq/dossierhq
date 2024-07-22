@@ -44,7 +44,6 @@ function EntityLoader({
   id: string;
   dispatchContentEditor: Dispatch<ContentEditorStateAction>;
 }) {
-  //TODO don't fetch new entities
   //TODO handle errors
   const { entity, entityError: _unused } = useEntity({ id });
 
