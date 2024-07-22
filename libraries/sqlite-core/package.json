@@ -53,6 +53,6 @@
     "eslint": "~8.57.0",
     "prettier": "3.3.3",
     "typescript": "~5.5.3",
-    "vitest": "~2.0.3"
+    "vitest": "~2.0.4"
   }
 }
