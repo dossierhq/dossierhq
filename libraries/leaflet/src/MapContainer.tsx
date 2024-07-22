@@ -1,6 +1,12 @@
 import { control, type Map } from 'leaflet';
 import 'leaflet.locatecontrol';
-import React, { useEffect, useRef, type CSSProperties, type FunctionComponent } from 'react';
+import React, {
+  Suspense,
+  useEffect,
+  useRef,
+  type CSSProperties,
+  type FunctionComponent,
+} from 'react';
 import {
   MapContainer as LeafletMapContainer,
   Marker,
@@ -91,17 +97,19 @@ export const MapContainer: MapContainerComponent = ({
       maxBounds={maxBoundingBox ? toLatLngLiteral(maxBoundingBox) : undefined}
       scrollWheelZoom
     >
-      {!!onBoundingBoxChanged || !!onZoomMetricsChanged ? (
-        <MapEventListener
-          onBoundingBoxChanged={onBoundingBoxChanged}
-          onZoomMetricsChanged={onZoomMetricsChanged}
+      <Suspense>
+        {!!onBoundingBoxChanged || !!onZoomMetricsChanged ? (
+          <MapEventListener
+            onBoundingBoxChanged={onBoundingBoxChanged}
+            onZoomMetricsChanged={onZoomMetricsChanged}
+          />
+        ) : null}
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-      ) : null}
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {children}
+        {children}
+      </Suspense>
     </LeafletMapContainer>
   );
 };
