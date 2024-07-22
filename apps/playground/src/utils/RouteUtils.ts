@@ -1,5 +1,3 @@
-import { addContentEditorParamsToURLSearchParams } from '@dossierhq/react-components2';
-
 export const ROUTE = {
   index: {
     url: '/',
@@ -10,10 +8,6 @@ export const ROUTE = {
   contentList: {
     route: 'content',
     url: (serverName: string) => `/${serverName}/content`,
-  },
-  contentList2: {
-    route: 'content2',
-    url: (serverName: string) => `/${serverName}/content2`,
   },
   changelogList: {
     route: 'changelog',
@@ -39,18 +33,6 @@ export const ROUTE = {
         }
       }
       return `/${serverName}/content/edit?${p.toString()}`;
-    },
-  },
-  contentEditor2: {
-    route: 'content2/edit',
-    url: (
-      serverName: string,
-      options: Parameters<typeof addContentEditorParamsToURLSearchParams>[1],
-      listSearchParams: URLSearchParams,
-    ) => {
-      const p = new URLSearchParams(listSearchParams);
-      addContentEditorParamsToURLSearchParams(p, options);
-      return `/${serverName}/content2/edit?${p.toString()}`;
     },
   },
   publishedContentList: {

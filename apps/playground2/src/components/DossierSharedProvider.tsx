@@ -9,7 +9,7 @@ import {
   type Result,
 } from '@dossierhq/core';
 import { DossierProvider, useCachingDossierMiddleware } from '@dossierhq/react-components2';
-import { type CreateSessionPayload, type Server } from '@dossierhq/server';
+import type { CreateSessionPayload, Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useSWRConfig, type Cache } from 'swr';
 import { SESSION_LOGGER } from '../config/LoggerConfig.js';
