@@ -71,6 +71,8 @@ export const ShowCommandMenu: Story = {
     const canvas = within(canvasElement);
 
     await userEvent.click(await canvas.findByTitle('Show command menu'));
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
   },
 };
 
@@ -79,6 +81,8 @@ export const OpenOpenDialog: Story = {
     const canvas = within(canvasElement);
 
     await userEvent.click(await canvas.findByText('Open'));
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
   },
 };
 
@@ -90,6 +94,8 @@ export const OpenOpenWithNoMatchesDialog: Story = {
     const canvas = within(canvasElement);
 
     await userEvent.click(await canvas.findByText('Open'));
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
   },
 };
 
