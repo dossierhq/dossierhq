@@ -382,6 +382,9 @@ importers:
       prettier:
         specifier: 3.3.3
         version: 3.3.3
+      prettier-plugin-tailwindcss:
+        specifier: ~0.6.5
+        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3))(prettier@3.3.3)
       rollup-plugin-visualizer:
         specifier: ~5.12.0
         version: 5.12.0(rollup@4.19.0)

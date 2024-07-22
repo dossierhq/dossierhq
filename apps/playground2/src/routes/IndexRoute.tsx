@@ -12,7 +12,7 @@ export function IndexRoute() {
           <h1 className="text-4xl font-extrabold tracking-tight">
             Welcome to Dossier Playground! 👋
           </h1>
-          <p className="leading-7 mt-2">
+          <p className="mt-2 leading-7">
             This is a playground where you can explore{' '}
             <a href="https://dossierhq.dev" target="_blank" rel="noopener noreferrer">
               Dossier
@@ -24,7 +24,7 @@ export function IndexRoute() {
             </a>{' '}
             for more information.
           </p>
-          <p className="leading-7 mt-2">Happy playing! 🎉</p>
+          <p className="mt-2 leading-7">Happy playing! 🎉</p>
           <Alert className="mt-4" variant="destructive">
             <DatabaseBackupIcon className="h-4 w-4" />
             <AlertTitle>Heads up!</AlertTitle>
