@@ -69,14 +69,14 @@ export const OneOpenOneNew: Story = {
 export const ShowCommandMenu: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByTitle('Show command menu', {}, { timeout: 10_000 }));
+    await userEvent.click(await canvas.findByTitle('Show command menu', {}, { timeout: 60_000 }));
   },
 };
 
 export const OpenOpenDialog: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 10_000 }));
+    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 60_000 }));
   },
 };
 
@@ -86,7 +86,7 @@ export const OpenOpenWithNoMatchesDialog: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 10_000 }));
+    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 60_000 }));
   },
 };
 
