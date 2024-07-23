@@ -80,6 +80,7 @@ export const ShowCommandMenu: Story = {
 export const OpenOpenDialog: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await userEvent.click(await canvas.findByText('Open', {}, { timeout: 60_000 }));
   },
 };
@@ -91,6 +92,7 @@ export const OpenOpenWithNoMatchesDialog: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(await canvas.findByText('Open', {}, { timeout: 60_000 }));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   },
 };
 
