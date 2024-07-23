@@ -1,4 +1,4 @@
-import { Button, Message, NotificationContext, Row } from '@dossierhq/design';
+import { Button, Message, Row } from '@dossierhq/design';
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
@@ -10,10 +10,13 @@ interface Props {
   className?: string;
 }
 
+function showNotification() {
+  //TODO
+}
+
 export function DatabaseInfoMessage({ className }: Props) {
   const navigate = useNavigate();
   const { database, clearDatabase } = useContext(DatabaseContext);
-  const { showNotification } = useContext(NotificationContext);
   const { data } = useSWR(database, queryDatabaseSize);
 
   const handleDownloadOnClick = useCallback(() => {
