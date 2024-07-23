@@ -79,10 +79,9 @@ export const ShowCommandMenu: Story = {
 export const OpenOpenDialog: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const openButton = await waitFor(() => canvas.findByText('Open'));
 
-    await userEvent.click(await canvas.findByText('Open'));
-
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await userEvent.click(openButton);
   },
 };
 
@@ -92,10 +91,9 @@ export const OpenOpenWithNoMatchesDialog: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const openButton = await waitFor(() => canvas.findByText('Open'));
 
-    await userEvent.click(await canvas.findByText('Open'));
-
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await userEvent.click(openButton);
   },
 };
 
