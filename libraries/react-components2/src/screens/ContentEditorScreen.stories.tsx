@@ -69,7 +69,11 @@ export const OneOpenOneNew: Story = {
 export const ShowCommandMenu: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByTitle('Show command menu', {}, { timeout: 60_000 }));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const button = await canvas.findByTitle('Show command menu', {}, { timeout: 60_000 });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await userEvent.click(button);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   },
 };
 
