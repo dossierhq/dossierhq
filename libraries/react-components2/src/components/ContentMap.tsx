@@ -13,11 +13,12 @@ import {
 } from '@dossierhq/core';
 import { MapContainer } from '@dossierhq/leaflet';
 import { useCallback, type Dispatch, type ReactNode } from 'react';
+import { cn } from '../lib/utils.js';
 import {
   ContentListStateActions,
   type ContentListState,
   type ContentListStateAction,
-} from '../reducers/ContentListReducer';
+} from '../reducers/ContentListReducer.js';
 
 //TODO make configurable through a context. also max bounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;
@@ -60,7 +61,7 @@ export function ContentMap<TEntity extends Entity | PublishedEntity = Entity>({
 
   return (
     <MapContainer
-      className={className}
+      className={cn(className, 'chromatic-ignore')}
       center={center ?? defaultCenter}
       resetSignal={resetSignal}
       onBoundingBoxChanged={handleBoundingBoxChange}
