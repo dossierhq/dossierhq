@@ -77,7 +77,7 @@ export const ShowCommandMenu: Story = {
 
 export const OpenOpenDialog: Story = {
   play: async ({ canvasElement }) => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     const canvas = within(canvasElement);
     await userEvent.click(await canvas.findByText('Open', {}, { timeout: 2_000 }));
   },
