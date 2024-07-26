@@ -43,7 +43,7 @@
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react": "~4.3.1",
     "autoprefixer": "~10.4.19",
-    "babel-plugin-react-compiler": "0.0.0-experimental-696af53-20240625",
+    "babel-plugin-react-compiler": "0.0.0",
     "class-variance-authority": "~0.7.0",
     "clsx": "~2.1.1",
     "eslint": "~8.57.0",
