@@ -256,8 +256,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -553,8 +553,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -663,8 +663,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -867,8 +867,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/bun':
         specifier: ~1.1.6
         version: 1.1.6
@@ -913,8 +913,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -959,8 +959,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/bun':
         specifier: ~1.1.6
         version: 1.1.6
@@ -1002,8 +1002,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -1036,8 +1036,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@vitest/coverage-v8':
         specifier: ~2.0.4
         version: 2.0.4(vitest@2.0.4(@types/node@20.14.11)(sass@1.77.8))
@@ -1073,8 +1073,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1107,8 +1107,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1171,8 +1171,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@storybook/addon-actions':
         specifier: ~8.2.5
         version: 8.2.5(storybook@8.2.5(@babel/preset-env@7.24.5(@babel/core@7.24.9)))
@@ -1292,8 +1292,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/better-sqlite3':
         specifier: ~7.6.11
         version: 7.6.11
@@ -1347,8 +1347,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/node':
         specifier: ~20.14.11
         version: 20.14.11
@@ -1390,8 +1390,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/leaflet':
         specifier: ~1.9.12
         version: 1.9.12
@@ -1451,8 +1451,8 @@ importers:
         specifier: ~0.7.0
         version: 0.7.0
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1503,8 +1503,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/pg':
         specifier: ~8.11.6
         version: 8.11.6
@@ -1558,8 +1558,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1643,8 +1643,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@storybook/addon-actions':
         specifier: ~8.2.5
         version: 8.2.5(storybook@8.2.5(@babel/preset-env@7.24.5(@babel/core@7.24.9)))
@@ -1824,8 +1824,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@storybook/addon-actions':
         specifier: ~8.2.5
         version: 8.2.5(storybook@8.2.5(@babel/preset-env@7.24.5(@babel/core@7.24.9)))
@@ -1969,8 +1969,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@vitest/coverage-v8':
         specifier: ~2.0.4
         version: 2.0.4(vitest@2.0.4(@types/node@20.14.11)(sass@1.77.8))
@@ -2015,8 +2015,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -2113,8 +2113,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2147,8 +2147,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@vitest/coverage-v8':
         specifier: ~2.0.4
         version: 2.0.4(vitest@2.0.4(@types/node@20.14.11)(sass@1.77.8))
@@ -2175,14 +2175,14 @@ importers:
         version: 5.5.3
     devDependencies:
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.3.43
-        version: 0.3.43(@rushstack/heft@0.66.22(@types/node@20.14.11))(@types/node@20.14.11)
+        version: 0.3.43(@rushstack/heft@0.66.23(@types/node@20.14.11))(@types/node@20.14.11)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.5.20
-        version: 0.5.20(@rushstack/heft@0.66.22(@types/node@20.14.11))(@types/node@20.14.11)
+        version: 0.5.20(@rushstack/heft@0.66.23(@types/node@20.14.11))(@types/node@20.14.11)
 
   ../../stack/eslint-config-generic:
     dependencies:
@@ -2227,8 +2227,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2258,8 +2258,8 @@ importers:
         specifier: ~4.3.1
         version: 4.3.1(@vue/compiler-sfc@3.4.15)(prettier@3.3.3)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2526,14 +2526,14 @@ importers:
         specifier: ~15.2.3
         version: 15.2.3(rollup@4.19.0)
       '@rushstack/heft':
-        specifier: 0.66.22
-        version: 0.66.22(@types/node@20.14.11)
+        specifier: 0.66.23
+        version: 0.66.23(@types/node@20.14.11)
       '@rushstack/heft-lint-plugin':
         specifier: ~0.3.43
-        version: 0.3.43(@rushstack/heft@0.66.22(@types/node@20.14.11))(@types/node@20.14.11)
+        version: 0.3.43(@rushstack/heft@0.66.23(@types/node@20.14.11))(@types/node@20.14.11)
       '@rushstack/heft-typescript-plugin':
         specifier: ~0.5.20
-        version: 0.5.20(@rushstack/heft@0.66.22(@types/node@20.14.11))(@types/node@20.14.11)
+        version: 0.5.20(@rushstack/heft@0.66.23(@types/node@20.14.11))(@types/node@20.14.11)
       '@storybook/addon-actions':
         specifier: ~8.2.5
         version: 8.2.5(storybook@8.2.5(@babel/preset-env@7.24.5(@babel/core@7.24.9)))
@@ -6415,8 +6415,8 @@ packages:
     peerDependencies:
       '@rushstack/heft': 0.66.22
 
-  '@rushstack/heft@0.66.22':
-    resolution: {integrity: sha512-lKDQY2ZkpJC4v1fYMPJUZ62xE2NtHorOMyWpxB7+G798Igheuw1ewRKo1JiriEbVJrfJ7xZtBoIodiR6mHQ3NA==}
+  '@rushstack/heft@0.66.23':
+    resolution: {integrity: sha512-upqRcm+4N4LwTeApgjMbDcepfGRf6tDYVktWSQwcOaCHMRY5SxDozV7+tZo+5/Jdt3WpYEHdoibMhBYHDb10Eg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
@@ -17979,17 +17979,17 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/heft-lint-plugin@0.3.43(@rushstack/heft@0.66.22(@types/node@20.14.11))(@types/node@20.14.11)':
+  '@rushstack/heft-lint-plugin@0.3.43(@rushstack/heft@0.66.23(@types/node@20.14.11))(@types/node@20.14.11)':
     dependencies:
-      '@rushstack/heft': 0.66.22(@types/node@20.14.11)
+      '@rushstack/heft': 0.66.23(@types/node@20.14.11)
       '@rushstack/node-core-library': 5.5.0(@types/node@20.14.11)
       semver: 7.5.4
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/heft-typescript-plugin@0.5.20(@rushstack/heft@0.66.22(@types/node@20.14.11))(@types/node@20.14.11)':
+  '@rushstack/heft-typescript-plugin@0.5.20(@rushstack/heft@0.66.23(@types/node@20.14.11))(@types/node@20.14.11)':
     dependencies:
-      '@rushstack/heft': 0.66.22(@types/node@20.14.11)
+      '@rushstack/heft': 0.66.23(@types/node@20.14.11)
       '@rushstack/heft-config-file': 0.15.2(@types/node@20.14.11)
       '@rushstack/node-core-library': 5.5.0(@types/node@20.14.11)
       '@types/tapable': 1.0.6
@@ -17998,7 +17998,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rushstack/heft@0.66.22(@types/node@20.14.11)':
+  '@rushstack/heft@0.66.23(@types/node@20.14.11)':
     dependencies:
       '@rushstack/heft-config-file': 0.15.2(@types/node@20.14.11)
       '@rushstack/node-core-library': 5.5.0(@types/node@20.14.11)
