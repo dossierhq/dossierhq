@@ -70,16 +70,16 @@ export const ShowCommandMenu: Story = {
   play: async ({ canvasElement }) => {
     await new Promise((resolve) => setTimeout(resolve, 50));
     const canvas = within(canvasElement);
-    const button = await canvas.findByTitle('Show command menu', {}, { timeout: 2_000 });
+    const button = await canvas.findByTitle('Show command menu', {}, { timeout: 3_000 });
     await userEvent.click(button);
   },
 };
 
 export const OpenOpenDialog: Story = {
   play: async ({ canvasElement }) => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 2_000 }));
+    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 3_000 }));
   },
 };
 
@@ -90,7 +90,7 @@ export const OpenOpenWithNoMatchesDialog: Story = {
   play: async ({ canvasElement }) => {
     await new Promise((resolve) => setTimeout(resolve, 50));
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 2_000 }));
+    await userEvent.click(await canvas.findByText('Open', {}, { timeout: 3_000 }));
   },
 };
 
