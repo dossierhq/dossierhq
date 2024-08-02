@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function exec_in_container {
-  docker-compose -p "${DOCKER_PROJECT_NAME}" exec -T "${DOCKER_POSTGRES_SERVICE}" "$@"
+  docker compose -p "${DOCKER_PROJECT_NAME}" exec -T "${DOCKER_POSTGRES_SERVICE}" "$@"
 }
 
 function psql_in_container {
