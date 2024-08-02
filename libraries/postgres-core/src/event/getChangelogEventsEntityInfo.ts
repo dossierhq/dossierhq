@@ -23,6 +23,7 @@ export async function eventGetChangelogEventsEntityInfo(
   typeof ErrorType.NotFound | typeof ErrorType.Generic
 > {
   const { sql, query } = createPostgresSqlQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   sql`SELECT id, auth_key, resolved_auth_key FROM entities WHERE uuid = ${reference.id}`;
 
   const result = await queryNoneOrOne<Pick<EntitiesTable, 'id' | 'auth_key' | 'resolved_auth_key'>>(

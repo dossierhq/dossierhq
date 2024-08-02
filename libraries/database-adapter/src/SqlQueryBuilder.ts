@@ -148,19 +148,19 @@ function endsWithPunctuation(query: string) {
 }
 
 function startsWithKeyword(query: string) {
-  return !!query.match(/^[A-Z]+\w/);
+  return !!/^[A-Z]+\w/.exec(query);
 }
 
 function endsWithKeyword(query: string) {
-  return !!query.match(/\w[A-Z]+$/);
+  return !!/\w[A-Z]+$/.exec(query);
 }
 
 function startsWithOperator(query: string) {
-  return !!query.match(/^[=!<>]+/);
+  return !!/^[=!<>]+/.exec(query);
 }
 
 function endsWithOperator(query: string) {
-  return !!query.match(/[=!<>]+$/);
+  return !!/[=!<>]+$/.exec(query);
 }
 
 // POSTGRES

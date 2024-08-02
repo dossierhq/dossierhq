@@ -9,6 +9,7 @@ export async function schemaUpdateCountEntitiesWithTypes(
   entityTypes: string[],
 ): PromiseResult<number, typeof ErrorType.Generic> {
   const { sql, query } = createPostgresSqlQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   sql`SELECT COUNT(*) AS count FROM entities WHERE uuid IS NOT NULL AND type = ANY(${entityTypes})`;
   const result = await queryOne<{ count: number }>(adapter, context, query);
   if (result.isError()) return result;

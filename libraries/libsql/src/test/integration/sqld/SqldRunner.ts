@@ -41,6 +41,7 @@ async function waitForHealthy(url: string, logStream: NodeJS.WritableStream) {
         logStream.write(`Server is healthy on ${healthUrl} (after ${i + 1} attempts}\n`);
         return;
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // ignore
     }

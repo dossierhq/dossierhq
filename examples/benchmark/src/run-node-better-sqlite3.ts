@@ -8,6 +8,7 @@ async function createSqliteDatabaseAdapter(databasePath: string) {
   try {
     // delete database to have consistent results
     await fs.unlink(databasePath);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     // ignore
   }

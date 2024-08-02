@@ -113,6 +113,7 @@ async function getBodyAsJsonResult(response: Response) {
   if (response.ok) {
     try {
       return ok(await response.json());
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return notOk.Generic('Failed parsing response');
     }
@@ -120,6 +121,7 @@ async function getBodyAsJsonResult(response: Response) {
     let text = 'Failed fetching response';
     try {
       text = await response.text();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // ignore
     }

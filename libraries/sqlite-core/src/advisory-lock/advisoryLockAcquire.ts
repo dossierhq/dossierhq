@@ -16,6 +16,7 @@ export async function advisoryLockAcquire(
 
   const query = buildSqliteSqlQuery(({ sql, addValue }) => {
     const nowValue = addValue(now.toISOString());
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     sql`INSERT INTO advisory_locks (name, handle, acquired_at, renewed_at, expires_at, lease_duration)
         VALUES (${name}, ${handle}, ${nowValue}, ${nowValue}, ${expires_at}, ${leaseDuration})`;
   });

@@ -10,6 +10,7 @@ export async function advisoryLockDeleteExpired(
   const now = Date.now();
 
   const query = buildSqliteSqlQuery(({ sql }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     sql`DELETE FROM advisory_locks WHERE expires_at <= ${now} RETURNING name`;
   });
 

@@ -12,6 +12,7 @@ export async function advisoryLockAcquire(
   leaseDuration: number,
 ): PromiseResult<{ acquiredAt: Date }, typeof ErrorType.Conflict | typeof ErrorType.Generic> {
   const query = buildPostgresSqlQuery(({ sql }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     sql`INSERT INTO advisory_locks (name, handle, lease_duration)
         VALUES (${name}, ${handle}, make_interval(secs => ${leaseDuration / 1000}))
         RETURNING acquired_at`;

@@ -8,6 +8,7 @@ export async function getEntitiesUpdatedSeq(
   context: TransactionContext,
 ): PromiseResult<number, typeof ErrorType.Generic> {
   const { query, sql } = createSqliteSqlQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   sql`UPDATE sequences SET value = value + 1 WHERE name = ${'entities_updated'} RETURNING value`;
   const result = await queryOne<Pick<SequencesTable, 'value'>>(database, context, query);
   if (result.isError()) return result;

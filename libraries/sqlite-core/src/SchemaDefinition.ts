@@ -451,6 +451,7 @@ const VERSION_25: SchemaVersionDefinition = {
             database,
             context,
             buildSqliteSqlQuery(({ sql }) => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               sql`UPDATE events SET uuid = ${database.adapter.randomUUID()} WHERE id = ${id}`;
             }),
           );

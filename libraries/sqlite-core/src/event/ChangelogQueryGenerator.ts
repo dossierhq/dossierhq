@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { ok, type ChangelogEventQuery, type ErrorType, type Result } from '@dossierhq/core';
 import {
   createSqliteSqlQuery,

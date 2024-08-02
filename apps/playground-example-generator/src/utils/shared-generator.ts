@@ -21,6 +21,7 @@ export async function createNewDatabase(databasePath: string): Promise<Database>
   try {
     // delete existing database
     await unlink(databasePath);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     // ignore
   }

@@ -248,7 +248,8 @@ describe('DossierClient forward operation over JSON', () => {
       effect: 'archived',
       updatedAt: new Date('2021-08-17T08:51:25.56Z'),
     });
-    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Date);
+    assertOkResult(result);
+    expect(result.value.updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -703,8 +704,7 @@ describe('DossierClient forward operation over JSON', () => {
     );
 
     const result = await client.getSchemaSpecification();
-    expectOkResult(result) &&
-      expect(result.value).toMatchInlineSnapshot(`
+    expect(result.valueOrThrow()).toMatchInlineSnapshot(`
         {
           "componentTypes": [],
           "entityTypes": [],
@@ -761,8 +761,7 @@ describe('DossierClient forward operation over JSON', () => {
     );
 
     const result = await client.getSchemaSpecification({ includeMigrations: true });
-    expectOkResult(result) &&
-      expect(result.value).toMatchInlineSnapshot(`
+    expect(result.valueOrThrow()).toMatchInlineSnapshot(`
         {
           "componentTypes": [],
           "entityTypes": [],
@@ -887,8 +886,8 @@ describe('DossierClient forward operation over JSON', () => {
         updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
     ]);
-    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Date);
-    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow()[0].updatedAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow()[1].updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1249,7 +1248,7 @@ describe('DossierClient forward operation over JSON', () => {
       effect: 'unarchived',
       updatedAt: new Date('2021-08-17T08:51:25.56Z'),
     });
-    expectOkResult(result) && expect(result.value.updatedAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow().updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1313,8 +1312,8 @@ describe('DossierClient forward operation over JSON', () => {
         updatedAt: new Date('2021-08-17T08:51:25.56Z'),
       },
     ]);
-    expectOkResult(result) && expect(result.value[0].updatedAt).toBeInstanceOf(Date);
-    expectOkResult(result) && expect(result.value[1].updatedAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow()[0].updatedAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow()[1].updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1461,8 +1460,7 @@ describe('DossierClient forward operation over JSON', () => {
       entityTypes: [],
       componentTypes: [],
     });
-    expectOkResult(result) &&
-      expect(result.value).toMatchInlineSnapshot(`
+    expect(result.valueOrThrow()).toMatchInlineSnapshot(`
         {
           "effect": "updated",
           "schemaSpecification": {
@@ -1532,8 +1530,7 @@ describe('DossierClient forward operation over JSON', () => {
       { entityTypes: [], componentTypes: [] },
       { includeMigrations: true },
     );
-    expectOkResult(result) &&
-      expect(result.value).toMatchInlineSnapshot(`
+    expect(result.valueOrThrow()).toMatchInlineSnapshot(`
         {
           "effect": "updated",
           "schemaSpecification": {

@@ -16,6 +16,7 @@ export async function managementDirtyUpdateEntity(
 ): PromiseResult<void, typeof ErrorType.Generic> {
   const invalid = (valid === false ? 1 : 0) | (validPublished === false ? 2 : 0);
   const { query, sql } = createPostgresSqlQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   sql`UPDATE entities SET invalid = ${invalid}, dirty = 0 WHERE id = ${reference.entityInternalId}`;
   return await queryNone(databaseAdapter, context, query);
 }

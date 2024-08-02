@@ -5,6 +5,7 @@ export async function fetchTextCached(url: string, cachePath: string) {
   try {
     const data = await readFile(cachePath, { encoding: 'utf-8' });
     return data;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     // skip error
   }

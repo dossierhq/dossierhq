@@ -16,6 +16,7 @@ export async function adminEntityGetReferenceEntitiesInfo(
   if (references.length === 0) return ok([]);
 
   const { addValueList, query, sql } = createSqliteSqlQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   sql`SELECT id, uuid, type, status FROM entities WHERE uuid IN ${addValueList(
     references.map(({ id }) => id),
   )}`;

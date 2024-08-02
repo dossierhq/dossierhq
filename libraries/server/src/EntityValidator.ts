@@ -109,7 +109,7 @@ export async function validateReferencedEntitiesForSaveAndCollectInfo(
       }
 
       if (request.isRichTextLink && request.linkEntityTypes && request.linkEntityTypes.length > 0) {
-        if (request.linkEntityTypes.indexOf(item.type) < 0) {
+        if (!request.linkEntityTypes.includes(item.type)) {
           validationIssues.push({
             type: 'save',
             path: request.path,
@@ -119,7 +119,7 @@ export async function validateReferencedEntitiesForSaveAndCollectInfo(
       }
 
       if (request.entityTypes && request.entityTypes.length > 0) {
-        if (request.entityTypes.indexOf(item.type) < 0) {
+        if (!request.entityTypes.includes(item.type)) {
           validationIssues.push({
             type: 'save',
             path: request.path,

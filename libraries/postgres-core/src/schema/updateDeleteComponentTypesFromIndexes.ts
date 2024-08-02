@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import { buildPostgresSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
 import { type PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';

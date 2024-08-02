@@ -12,7 +12,6 @@ export interface ServerInit {
   server: Server;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 type LooseAutocomplete<T> = T | (string & {});
 
 export async function initializeSqlite3Server(

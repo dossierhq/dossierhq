@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { notOk, ok, type ErrorType, type PromiseResult } from '@dossierhq/core';
 import { buildSqliteSqlQuery, type TransactionContext } from '@dossierhq/database-adapter';
 import type { AdvisoryLocksTable } from '../DatabaseSchema.js';

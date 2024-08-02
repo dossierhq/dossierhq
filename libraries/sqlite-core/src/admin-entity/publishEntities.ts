@@ -149,6 +149,7 @@ export async function adminEntityPublishUpdateEntity(
           database,
           context,
           buildSqliteSqlQuery(({ sql }) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             sql`UPDATE entities SET published_name = ${name} WHERE id = ${
               entityInternalId as number
             }`;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabasePagingInfo, SqliteSqlTemplateTag } from '@dossierhq/database-adapter';
 import type { Database } from '../QueryFunctions.js';

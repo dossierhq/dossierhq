@@ -257,8 +257,7 @@ describe('PublishedDossierClient forward operation over JSON', () => {
       );
 
     const result = await publishedClient.getSchemaSpecification();
-    expectOkResult(result) &&
-      expect(result.value).toMatchInlineSnapshot(`
+    expect(result.valueOrThrow()).toMatchInlineSnapshot(`
         {
           "componentTypes": [],
           "entityTypes": [],
@@ -371,7 +370,7 @@ describe('PublishedDossierClient forward operation over JSON', () => {
     );
     expectResultValue(result, { seed: 123, totalCount: 1, items: [entity1] });
 
-    expectOkResult(result) && expect(result.value.items[0].info.createdAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow().items[0].info.createdAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -466,10 +465,7 @@ describe('PublishedDossierClient forward operation over JSON', () => {
       ],
     });
 
-    expectOkResult(result) &&
-      result.value?.edges[0].node &&
-      expectOkResult(result.value.edges[0].node) &&
-      expect(result.value?.edges[0].node.value.info.createdAt).toBeInstanceOf(Date);
+    expect(result.valueOrThrow()?.edges[0].node.valueOrThrow().info.createdAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [

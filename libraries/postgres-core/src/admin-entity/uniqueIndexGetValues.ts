@@ -20,6 +20,7 @@ export async function adminEntityUniqueIndexGetValues(
     databaseAdapter,
     context,
     buildPostgresSqlQuery(({ sql }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       sql`SELECT index_name, value, latest, published FROM unique_index_values WHERE entities_id = ${entity.entityInternalId}`;
     }),
   );

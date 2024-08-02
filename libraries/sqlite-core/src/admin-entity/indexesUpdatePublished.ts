@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { ErrorType, notOk, ok, type PromiseResult } from '@dossierhq/core';
 import {
   buildSqliteSqlQuery,

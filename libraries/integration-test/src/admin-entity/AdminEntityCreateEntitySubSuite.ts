@@ -248,7 +248,7 @@ async function createEntity_duplicateName({ clientProvider }: AdminEntityTestCon
   assertNotSame(firstId, secondId);
   assertNotSame(firstName, secondName);
 
-  assertTruthy(secondName.match(/^TitleOnly name#\d{8}$/));
+  assertTruthy(/^TitleOnly name#\d{8}$/.exec(secondName));
 }
 
 async function createEntity_canUsePublishedNameOfOtherEntity({

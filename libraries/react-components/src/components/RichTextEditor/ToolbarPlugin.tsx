@@ -569,6 +569,7 @@ function sanitizeUrl(url: string | null) {
     if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
       return urlObj.toString();
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // ignore
   }

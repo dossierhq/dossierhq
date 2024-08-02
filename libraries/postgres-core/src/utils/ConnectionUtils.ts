@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { ok, type ErrorType, type Result } from '@dossierhq/core';
 import type { DatabasePagingInfo, PostgresSqlTemplateTag } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
