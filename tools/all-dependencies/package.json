@@ -92,7 +92,7 @@
     "@chromatic-com/storybook": "~1.6.1",
     "@graphiql/toolkit": "~0.9.1",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@libsql/client": "~0.7.0",
+    "@libsql/client": "~0.8.0",
     "@playwright/test": "~1.45.2",
     "@rollup/plugin-commonjs": "~26.0.1",
     "@rollup/plugin-node-resolve": "~15.2.3",
