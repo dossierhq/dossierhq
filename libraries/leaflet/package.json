@@ -50,7 +50,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@rushstack/heft": "0.66.23",
+    "@rushstack/heft": "0.66.25",
     "@types/leaflet": "~1.9.12",
     "@types/leaflet.locatecontrol": "~0.74.5",
     "@types/react": "18.3.3",
@@ -59,6 +59,6 @@
     "prettier": "3.3.3",
     "react": "~18.3.1",
     "svgo": "~3.3.2",
-    "typescript": "~5.5.3"
+    "typescript": "~5.5.4"
   }
 }

@@ -11,12 +11,12 @@
     "post-process-build": "./scripts/post-process-build.js"
   },
   "dependencies": {
-    "typescript": "~5.5.3",
+    "typescript": "~5.5.4",
     "eslint": "~8.57.0"
   },
   "devDependencies": {
-    "@rushstack/heft": "0.66.23",
-    "@rushstack/heft-lint-plugin": "~0.3.43",
-    "@rushstack/heft-typescript-plugin": "~0.5.20"
+    "@rushstack/heft": "0.66.25",
+    "@rushstack/heft-lint-plugin": "~0.3.46",
+    "@rushstack/heft-typescript-plugin": "~0.5.23"
   }
 }
