@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/sqlite-core
 
-This log was last generated on Sat, 22 Jun 2024 22:08:27 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Aug 2024 14:47:04 GMT and should not be manually modified.
+
+## 0.7.8
+Fri, 02 Aug 2024 14:47:04 GMT
+
+### Updates
+
+- Exclude archived entities by default when searching. Include archived entities by default when using linksTo/linksFrom. Fix: Support filtering on status and linksTo, linksFrom.
 
 ## 0.7.7
 Sat, 22 Jun 2024 22:08:27 GMT
