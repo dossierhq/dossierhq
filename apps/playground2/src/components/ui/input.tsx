@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { cn } from '@/utils/ClassUtils';
 import * as React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

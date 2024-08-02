@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 'use client';
 
 import * as LabelPrimitive from '@radix-ui/react-label';

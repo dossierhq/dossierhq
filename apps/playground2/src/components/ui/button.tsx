@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { cn } from '@/utils/ClassUtils';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';

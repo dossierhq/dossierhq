@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('@dossierhq/eslint-config-react/patch/modern-module-resolution.js');
 
 module.exports = {
