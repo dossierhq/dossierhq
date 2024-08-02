@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-core",
+      "comment": "Exclude archived entities by default when searching. Include archived entities by default when using linksTo/linksFrom. Fix:m Support filtering on status and linksTo, linksFrom.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-core"
+}

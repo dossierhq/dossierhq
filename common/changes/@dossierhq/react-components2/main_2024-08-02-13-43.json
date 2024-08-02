@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/react-components2",
+      "comment": "First release",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/react-components2"
+}
