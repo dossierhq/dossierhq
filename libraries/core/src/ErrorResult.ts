@@ -92,7 +92,7 @@ export class ErrorResult<TOk, TError extends ErrorType> {
     return this.error === errorType;
   }
 
-  get httpStatus(): number {
+  get httpStatus(): 400 | 401 | 403 | 404 | 409 | 500 {
     switch (this.error) {
       case ErrorType.BadRequest:
         return 400;
