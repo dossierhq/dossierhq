@@ -129,7 +129,7 @@
     "autoprefixer": "~10.4.19",
     "babel-plugin-react-compiler": "0.0.0-experimental-334f00b-20240725",
     "base-64": "~1.0.0",
-    "bulma": "~0.9.4",
+    "bulma": "~1.0.2",
     "chromatic": "~11.7.0",
     "concurrently": "~8.2.2",
     "esbuild": "~0.23.0",
