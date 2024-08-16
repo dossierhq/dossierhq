@@ -37,7 +37,7 @@
     "@radix-ui/react-toggle": "~1.1.0",
     "@radix-ui/react-toggle-group": "~1.1.0",
     "@radix-ui/react-visually-hidden": "~1.1.0",
-    "@react-aria/overlays": "~3.22.1",
+    "@react-aria/overlays": "~3.23.1",
     "@rushstack/eslint-patch": "~1.10.4",
     "@sentry/astro": "~8.25.0",
     "@spotlightjs/astro": "~2.1.5",
