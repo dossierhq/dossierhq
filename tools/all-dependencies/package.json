@@ -96,7 +96,7 @@
     "@playwright/test": "~1.45.3",
     "@rollup/plugin-commonjs": "~26.0.1",
     "@rollup/plugin-node-resolve": "~15.2.3",
-    "@rushstack/heft": "0.66.25",
+    "@rushstack/heft": "0.67.0",
     "@rushstack/heft-lint-plugin": "~0.3.46",
     "@rushstack/heft-typescript-plugin": "~0.5.23",
     "@storybook/addon-actions": "~8.2.7",
