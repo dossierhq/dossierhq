@@ -2171,8 +2171,8 @@
     "packageJson": {
       "dependencies": [
         "npm:@faker-js/faker@~8.4.1",
-        "npm:@ianvs/prettier-plugin-sort-imports@~4.3.0",
-        "npm:@rushstack/heft@0.66.19",
+        "npm:@ianvs/prettier-plugin-sort-imports@~4.3.1",
+        "npm:@rushstack/heft@0.67.0",
         "npm:@types/better-sqlite3@~7.6.11",
         "npm:@types/bun@~1.1.6",
         "npm:@types/pg@~8.11.6",
@@ -2180,9 +2180,9 @@
         "npm:dotenv@~16.4.5",
         "npm:eslint@~8.57.0",
         "npm:pg@~8.12.0",
-        "npm:prettier@3.3.2",
+        "npm:prettier@3.3.3",
         "npm:tslib@~2.6.3",
-        "npm:typescript@~5.5.3"
+        "npm:typescript@~5.5.4"
       ]
     }
   }
