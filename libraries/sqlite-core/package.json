@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@dossierhq/database-adapter": "workspace:*",
-    "tslib": "~2.6.3"
+    "tslib": "~2.7.0"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*"

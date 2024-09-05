@@ -20,7 +20,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@antonz/codapi": "~0.19.7",
+    "@antonz/codapi": "~0.19.8",
     "@cloudinary/url-gen": "~1.20.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
@@ -30,29 +30,29 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.1.2",
+    "better-sqlite3": "~11.2.1",
     "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.14.3",
-    "next": "~14.2.5",
+    "next": "~14.2.8",
     "prismjs": "~1.29.0",
     "react": "~18.3.1",
     "react-dom": "~18.3.1",
-    "tslib": "~2.6.3"
+    "tslib": "~2.7.0"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@types/better-sqlite3": "~7.6.11",
-    "@types/react": "18.3.4",
+    "@types/react": "18.3.5",
     "@types/react-dom": "~18.3.0",
-    "@typescript-eslint/eslint-plugin": "~8.3.0",
+    "@typescript-eslint/eslint-plugin": "~8.4.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
-    "eslint-config-next": "~14.2.5",
+    "eslint-config-next": "~14.2.8",
     "prettier": "3.3.3",
     "schema-dts": "~1.1.2",
-    "tsx": "~4.16.5",
+    "tsx": "~4.19.0",
     "typescript": "~5.5.4",
     "vitest": "~2.0.5"
   }

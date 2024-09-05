@@ -20,10 +20,10 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.1.2",
+    "better-sqlite3": "~11.2.1",
     "express": "~4.19.2",
     "graphql-http": "~1.22.1",
-    "tslib": "~2.6.3"
+    "tslib": "~2.7.0"
   },
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",

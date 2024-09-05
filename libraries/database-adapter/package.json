@@ -36,7 +36,7 @@
     "directory": "libraries/database-adapter"
   },
   "dependencies": {
-    "tslib": "~2.6.3"
+    "tslib": "~2.7.0"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*"

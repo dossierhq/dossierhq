@@ -42,7 +42,7 @@
   "dependencies": {
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
-    "tslib": "~2.6.3"
+    "tslib": "~2.7.0"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -58,7 +58,7 @@
     "@dossierhq/server": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@rushstack/heft": "0.67.0",
-    "@types/pg": "~8.11.6",
+    "@types/pg": "~8.11.8",
     "@types/uuid": "~10.0.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
