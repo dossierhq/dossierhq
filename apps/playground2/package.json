@@ -46,7 +46,7 @@
     "babel-plugin-react-compiler": "0.0.0-experimental-334f00b-20240725",
     "class-variance-authority": "~0.7.0",
     "clsx": "~2.1.1",
-    "eslint": "~8.57.0",
+    "eslint": "~9.9.1",
     "eslint-plugin-react-compiler": "0.0.0-experimental-9ed098e-20240725",
     "graphql-config": "~5.1.2",
     "graphql-ws": "~5.16.0",

@@ -33,7 +33,7 @@
     "@rushstack/heft": "0.67.0",
     "@types/bun": "~1.1.8",
     "@types/node": "~22.5.4",
-    "eslint": "~8.57.0",
+    "eslint": "~9.9.1",
     "prettier": "3.3.3",
     "typescript": "~5.5.4"
   }
