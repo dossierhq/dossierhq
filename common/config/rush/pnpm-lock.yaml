@@ -1806,8 +1806,8 @@ importers:
         version: 2.7.0
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: ~1.8.0
-        version: 1.8.0(react@18.3.1)
+        specifier: ~1.9.0
+        version: 1.9.0(react@18.3.1)
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../core
@@ -2505,8 +2505,8 @@ importers:
         version: 10.0.0
     devDependencies:
       '@chromatic-com/storybook':
-        specifier: ~1.8.0
-        version: 1.8.0(react@18.3.1)
+        specifier: ~1.9.0
+        version: 1.9.0(react@18.3.1)
       '@graphiql/toolkit':
         specifier: ~0.11.0
         version: 0.11.0(@types/node@22.5.4)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)
@@ -3692,8 +3692,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@chromatic-com/storybook@1.8.0':
-    resolution: {integrity: sha512-vkB9dPVmM2Yvqc/0DJ4MYwOGY1MOjd/KbB9TXTMGN+qshaEyiZtSOgbz9u0ExFALEgDKLmtUnWyUtoGb0pCzUg==}
+  '@chromatic-com/storybook@1.9.0':
+    resolution: {integrity: sha512-vYQ+TcfktEE3GHnLZXHCzXF/sN9dw+KivH8a5cmPyd9YtQs7fZtHrEgsIjWpYycXiweKMo1Lm1RZsjxk8DH3rA==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
 
   '@cloudinary/transformation-builder-sdk@1.14.1':
@@ -15013,7 +15013,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@chromatic-com/storybook@1.8.0(react@18.3.1)':
+  '@chromatic-com/storybook@1.9.0(react@18.3.1)':
     dependencies:
       chromatic: 11.7.1
       filesize: 10.1.2
