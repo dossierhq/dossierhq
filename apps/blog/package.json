@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@antonz/codapi": "~0.19.8",
-    "@cloudinary/url-gen": "~1.20.0",
+    "@cloudinary/url-gen": "~1.21.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
@@ -46,7 +46,7 @@
     "@types/better-sqlite3": "~7.6.11",
     "@types/react": "18.3.10",
     "@types/react-dom": "~18.3.0",
-    "@typescript-eslint/eslint-plugin": "~8.7.0",
+    "@typescript-eslint/eslint-plugin": "~8.8.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.2.13",
