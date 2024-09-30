@@ -44,7 +44,7 @@ interface ScreenProps {
   onTableRowClick: (event: MouseEvent) => void;
 }
 
-const meta = {
+const meta: Meta<typeof Screen> = {
   title: 'Mockups/Entity list',
   component: Screen,
   args: {
@@ -57,7 +57,7 @@ const meta = {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Screen>;
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;

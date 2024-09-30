@@ -11,7 +11,7 @@ import { Dialog, type DialogProps } from './Dialog.js';
 
 type StoryProps = Omit<DialogProps, 'show'>;
 
-const meta = {
+const meta: Meta<typeof Wrapper> = {
   title: 'Components/Dialog',
   component: Wrapper,
   args: {
@@ -20,7 +20,7 @@ const meta = {
     onClose: fn(),
   },
   parameters: { layout: 'centered' },
-} satisfies Meta<typeof Wrapper>;
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;
