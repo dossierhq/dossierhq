@@ -10,7 +10,7 @@ import {
 } from '@dossierhq/core';
 import { DossierProvider, useCachingDossierMiddleware } from '@dossierhq/react-components2';
 import type { CreateSessionPayload, Server } from '@dossierhq/server';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useSWRConfig, type Cache } from 'swr';
 import { SESSION_LOGGER } from '../config/LoggerConfig.js';
 import { LoginContext } from '../contexts/LoginContext.js';
@@ -32,14 +32,10 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   const { users, setCurrentUserId } = useContext(UserContext);
 
   const [sessionResult, setSessionResult] = useState<SessionResult>(uninitializedSession);
-  const sessionResultRef = useRef<SessionResult>(sessionResult);
-  sessionResultRef.current = sessionResult;
 
   const cachingMiddleware = useCachingDossierMiddleware();
 
   const { cache, mutate } = useSWRConfig();
-  const swrConfigRef = useRef({ cache, mutate });
-  swrConfigRef.current = { cache, mutate };
 
   const login = useCallback(
     async (
@@ -49,12 +45,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       const user = users.find((it) => it.id === userId);
       assertIsDefined(user);
 
-      const result = await loginUser(
-        server,
-        userId,
-        swrConfigRef.current.cache,
-        swrConfigRef.current.mutate,
-      );
+      const result = await loginUser(server, userId, cache, mutate);
       if (result.isError()) return result;
 
       setSessionResult(result);
@@ -62,7 +53,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
       //TODO showNotification({ color: 'success', message: `Logged in as ${user.name}` });
       return ok(undefined);
     },
-    [server, setCurrentUserId, users],
+    [cache, mutate, server, setCurrentUserId, users],
   );
 
   useEffect(() => {
@@ -76,13 +67,13 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
     const dossierArgs = {
       client: server.createDossierClient(
-        () => Promise.resolve(sessionResultRef.current),
+        () => Promise.resolve(sessionResult),
         [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>, cachingMiddleware],
       ),
     };
 
     return { dossierArgs };
-  }, [server, cachingMiddleware]);
+  }, [server, cachingMiddleware, sessionResult]);
 
   if (!args || sessionResult === uninitializedSession) {
     return null;

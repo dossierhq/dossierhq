@@ -7,7 +7,7 @@ import {
   type OkFromResult,
   type SchemaSpecificationWithMigrations,
 } from '@dossierhq/core';
-import { useMemo, useRef, type RefObject } from 'react';
+import { useMemo } from 'react';
 import { useSWRConfig, type Cache } from 'swr';
 import {
   clearCacheDueToSchemaMigrations,
@@ -19,18 +19,16 @@ import {
   type ScopedMutator,
 } from '../utils/CacheUtils.js';
 
-type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
-
 export function useCachingDossierMiddleware() {
   const { cache, mutate } = useSWRConfig();
-  const swrConfigRef = useRef({ cache, mutate });
-  swrConfigRef.current = { cache, mutate };
-  const middleware = useMemo(() => createCachingDossierMiddleware(swrConfigRef), []);
-
+  const middleware = useMemo(() => createCachingDossierMiddleware(cache, mutate), [cache, mutate]);
   return middleware;
 }
 
-function createCachingDossierMiddleware<TContext extends ClientContext>(swrConfig: SwrConfigRef) {
+function createCachingDossierMiddleware<TContext extends ClientContext>(
+  cache: Cache,
+  mutate: ScopedMutator,
+) {
   let lastSchemaVersion = 0;
 
   function handleUpdatedAdminSchema(
@@ -61,7 +59,6 @@ function createCachingDossierMiddleware<TContext extends ClientContext>(swrConfi
   const middleware: DossierClientMiddleware<TContext> = async (context, operation) => {
     const result = await operation.next();
     if (result.isOk()) {
-      const { cache, mutate } = swrConfig.current!;
       switch (operation.name) {
         case DossierClientOperationName.archiveEntity: {
           const payload = result.value as OkFromResult<ReturnType<DossierClient['archiveEntity']>>;

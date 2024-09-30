@@ -103,7 +103,7 @@
     "concurrently": "~9.0.1",
     "eslint": "~8.57.0",
     "eslint-plugin-react": "~7.37.0",
-    "eslint-plugin-react-compiler": "0.0.0-experimental-9ed098e-20240725",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-939a02d-20240930",
     "eslint-plugin-react-hooks": "~4.6.2",
     "eslint-plugin-storybook": "~0.9.0",
     "http-server": "~14.1.1",
