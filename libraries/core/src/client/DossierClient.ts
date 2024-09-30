@@ -911,49 +911,38 @@ class DossierExceptionClientWrapper implements DossierExceptionClient {
   }
 
   async getEntities(
-    query?: EntityQuery<string, string> | undefined,
-    paging?: Paging | undefined,
+    query?: EntityQuery<string, string>,
+    paging?: Paging,
   ): Promise<Connection<Edge<Entity<string, Record<string, unknown>, string>, ErrorType>> | null> {
     return (await this.client.getEntities(query, paging)).valueOrThrow();
   }
 
-  async getEntitiesTotalCount(
-    query?: EntitySharedQuery<string, string> | undefined,
-  ): Promise<number> {
+  async getEntitiesTotalCount(query?: EntitySharedQuery<string, string>): Promise<number> {
     return (await this.client.getEntitiesTotalCount(query)).valueOrThrow();
   }
 
   async getEntitiesSample(
-    query?: EntitySharedQuery<string, string> | undefined,
-    options?: EntitySamplingOptions | undefined,
+    query?: EntitySharedQuery<string, string>,
+    options?: EntitySamplingOptions,
   ): Promise<EntitySamplingPayload<Entity<string, Record<string, unknown>, string>>> {
     return (await this.client.getEntitiesSample(query, options)).valueOrThrow();
   }
 
   async createEntity<
     T extends Entity<string, object, string> = Entity<string, Record<string, unknown>, string>,
-  >(
-    entity: EntityCreate<T>,
-    options?: EntityMutationOptions | undefined,
-  ): Promise<EntityCreatePayload<T>> {
+  >(entity: EntityCreate<T>, options?: EntityMutationOptions): Promise<EntityCreatePayload<T>> {
     return (await this.client.createEntity(entity, options)).valueOrThrow();
   }
 
   async updateEntity<
     T extends Entity<string, object, string> = Entity<string, Record<string, unknown>, string>,
-  >(
-    entity: EntityUpdate<T>,
-    options?: EntityMutationOptions | undefined,
-  ): Promise<EntityUpdatePayload<T>> {
+  >(entity: EntityUpdate<T>, options?: EntityMutationOptions): Promise<EntityUpdatePayload<T>> {
     return (await this.client.updateEntity(entity, options)).valueOrThrow();
   }
 
   async upsertEntity<
     T extends Entity<string, object, string> = Entity<string, Record<string, unknown>, string>,
-  >(
-    entity: EntityUpsert<T>,
-    options?: EntityMutationOptions | undefined,
-  ): Promise<EntityUpsertPayload<T>> {
+  >(entity: EntityUpsert<T>, options?: EntityMutationOptions): Promise<EntityUpsertPayload<T>> {
     return (await this.client.upsertEntity(entity, options)).valueOrThrow();
   }
 

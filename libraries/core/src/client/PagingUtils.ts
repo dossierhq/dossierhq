@@ -30,7 +30,7 @@ export function getPagingInfo(
   return ok({ forwards, count });
 }
 
-function validatePaging(paging?: Paging | undefined) {
+function validatePaging(paging?: Paging) {
   if (paging) {
     const { first, last } = paging;
     if (typeof first === 'number' && first < 0) {

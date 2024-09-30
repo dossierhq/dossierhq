@@ -411,23 +411,21 @@ class PublishedExceptionClientWrapper implements PublishedDossierExceptionClient
   }
 
   async getEntities(
-    query?: PublishedEntityQuery<string> | undefined,
-    paging?: Paging | undefined,
+    query?: PublishedEntityQuery<string>,
+    paging?: Paging,
   ): Promise<Connection<
     Edge<PublishedEntity<string, Record<string, unknown>, string>, ErrorType>
   > | null> {
     return (await this.client.getEntities(query, paging)).valueOrThrow();
   }
 
-  async getEntitiesTotalCount(
-    query?: PublishedEntitySharedQuery<string, string> | undefined,
-  ): Promise<number> {
+  async getEntitiesTotalCount(query?: PublishedEntitySharedQuery<string, string>): Promise<number> {
     return (await this.client.getEntitiesTotalCount(query)).valueOrThrow();
   }
 
   async getEntitiesSample(
-    query?: PublishedEntitySharedQuery<string, string> | undefined,
-    options?: EntitySamplingOptions | undefined,
+    query?: PublishedEntitySharedQuery<string, string>,
+    options?: EntitySamplingOptions,
   ): Promise<EntitySamplingPayload<PublishedEntity<string, Record<string, unknown>, string>>> {
     return (await this.client.getEntitiesSample(query, options)).valueOrThrow();
   }
