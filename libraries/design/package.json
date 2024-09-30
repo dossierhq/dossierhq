@@ -53,7 +53,7 @@
   "devDependencies": {
     "@dossierhq/heft-node-rig": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@rushstack/heft": "0.67.0",
+    "@rushstack/heft": "0.68.0",
     "@storybook/addon-actions": "~8.2.9",
     "@storybook/addon-docs": "~8.2.9",
     "@storybook/addon-essentials": "~8.2.9",

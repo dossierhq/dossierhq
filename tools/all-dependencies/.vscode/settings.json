@@ -15,10 +15,13 @@
     "jwks",
     "libsql",
     "locatecontrol",
+    "lucide",
     "postgrator",
     "prismjs",
     "rushstack",
-    "spotlightjs"
+    "sonner",
+    "spotlightjs",
+    "tailwindcss"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
