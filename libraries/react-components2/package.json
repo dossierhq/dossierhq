@@ -95,8 +95,8 @@
     "@types/react": "18.3.10",
     "@types/react-dom": "~18.3.0",
     "@types/sql.js": "~1.4.9",
-    "@typescript-eslint/eslint-plugin": "~8.4.0",
-    "@typescript-eslint/parser": "~8.4.0",
+    "@typescript-eslint/eslint-plugin": "~8.7.0",
+    "@typescript-eslint/parser": "~8.7.0",
     "@vitejs/plugin-react": "~4.3.1",
     "autoprefixer": "~10.4.20",
     "chromatic": "~11.7.1",
@@ -117,9 +117,9 @@
     "sql.js": "~1.11.0",
     "storybook": "~8.3.4",
     "tailwindcss": "~3.4.10",
-    "typescript": "~5.5.4",
+    "typescript": "~5.6.2",
     "vite": "~5.4.3",
-    "vitest": "~2.0.5",
+    "vitest": "~2.1.1",
     "wait-on": "~8.0.0"
   }
 }

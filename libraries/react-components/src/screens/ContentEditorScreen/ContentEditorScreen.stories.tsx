@@ -11,13 +11,13 @@ type StoryProps = Omit<ContentEditorScreenProps, 'urlSearchParams' | 'onUrlSearc
   showUrl: boolean;
 };
 
-const meta = {
+const meta: Meta<typeof Wrapper> = {
   title: 'Screens/ContentEditorScreen',
   component: Wrapper,
   args: { showUrl: false, onEditorHasChangesChange: fn() },
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
-} satisfies Meta<typeof Wrapper>;
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;

@@ -41,8 +41,8 @@
     "@rushstack/eslint-patch": "~1.10.4",
     "@sentry/astro": "~8.32.0",
     "@spotlightjs/astro": "~2.1.10",
-    "@typescript-eslint/eslint-plugin": "~8.4.0",
-    "@typescript-eslint/parser": "~8.4.0",
+    "@typescript-eslint/eslint-plugin": "~8.7.0",
+    "@typescript-eslint/parser": "~8.7.0",
     "astro": "~4.15.9",
     "better-sqlite3": "~11.2.1",
     "body-parser": "~1.20.3",
@@ -85,7 +85,7 @@
     "tailwind-merge": "~2.5.2",
     "tailwindcss-animate": "~1.0.7",
     "tslib": "~2.7.0",
-    "typescript": "~5.5.4",
+    "typescript": "~5.6.2",
     "uuid": "~10.0.0"
   },
   "devDependencies": {
@@ -125,7 +125,7 @@
     "@types/uuid": "~10.0.0",
     "@vitejs/plugin-react": "~4.3.1",
     "@vitejs/plugin-react-swc": "~3.7.0",
-    "@vitest/coverage-v8": "~2.0.5",
+    "@vitest/coverage-v8": "~2.1.1",
     "autoprefixer": "~10.4.20",
     "babel-plugin-react-compiler": "0.0.0-experimental-334f00b-20240725",
     "base-64": "~1.0.0",
@@ -155,9 +155,9 @@
     "storybook": "~8.3.4",
     "svgo": "~3.3.2",
     "tailwindcss": "~3.4.10",
-    "tsx": "~4.19.0",
+    "tsx": "~4.19.1",
     "vite": "~5.4.3",
-    "vitest": "~2.0.5",
+    "vitest": "~2.1.1",
     "wait-on": "~8.0.0"
   }
 }

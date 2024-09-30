@@ -16,12 +16,12 @@ function Wrapper(props: ComponentProps<typeof ContentListScreen>) {
   );
 }
 
-const meta = {
+const meta: Meta<typeof Wrapper> = {
   title: 'Screens/ContentListScreen',
   component: Wrapper,
   args: { onOpenEntity: fn(), onCreateEntity: fn(), onUrlSearchParamsChange: fn() },
   parameters: { layout: 'fullscreen' },
-} satisfies Meta<typeof Wrapper>;
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;

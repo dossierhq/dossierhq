@@ -15,13 +15,13 @@ type StoryProps = Omit<ContentListScreenProps, 'urlQuery' | 'onUrlQueryChanged'>
   dossierClientMiddleware?: DossierClientMiddleware<ClientContext>[];
 };
 
-const meta = {
+const meta: Meta<typeof Wrapper> = {
   title: 'Screens/ContentListScreen',
   component: Wrapper,
   args: { showUrl: false, ownCache: true, onCreateEntity: fn(), onOpenEntity: fn() },
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
-} satisfies Meta<typeof Wrapper>;
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;

@@ -16,7 +16,7 @@ function Wrapper(props: ComponentProps<typeof ContentEditorScreen>) {
   );
 }
 
-const meta = {
+const meta: Meta<typeof Wrapper> = {
   title: 'Screens/ContentEditorScreen',
   component: Wrapper,
   args: {
@@ -25,7 +25,7 @@ const meta = {
     onEditorHasChangesChange: fn(),
   },
   parameters: { layout: 'fullscreen' },
-} satisfies Meta<typeof Wrapper>;
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;

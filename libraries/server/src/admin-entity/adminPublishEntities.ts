@@ -210,11 +210,8 @@ async function doPublishEntities(
       );
     if (validateReferencedEntitiesResult.isError()) return validateReferencedEntitiesResult;
     if (validateReferencedEntitiesResult.value.unpublishedReferences.size > 0) {
-      const [entityId, unpublishedReferences] =
-        validateReferencedEntitiesResult.value.unpublishedReferences.entries().next().value as [
-          string,
-          EntityReference[],
-        ];
+      const [entityId, unpublishedReferences]: [string, EntityReference[]] =
+        validateReferencedEntitiesResult.value.unpublishedReferences.entries().next().value!;
       return notOk.BadRequest(
         `${entityId}: References unpublished entities: ${unpublishedReferences
           .map(({ id }) => id)
@@ -222,9 +219,8 @@ async function doPublishEntities(
       );
     }
     if (validateReferencedEntitiesResult.value.invalidReferences.size > 0) {
-      const [entityId, invalidReferences] = validateReferencedEntitiesResult.value.invalidReferences
-        .entries()
-        .next().value as [string, EntityReference[]];
+      const [entityId, invalidReferences]: [string, EntityReference[]] =
+        validateReferencedEntitiesResult.value.invalidReferences.entries().next().value!;
       return notOk.BadRequest(
         `${entityId}: References invalid entities: ${invalidReferences
           .map(({ id }) => id)
