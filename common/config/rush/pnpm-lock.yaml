@@ -362,8 +362,8 @@ importers:
         specifier: ~10.4.20
         version: 10.4.20(postcss@8.4.47)
       babel-plugin-react-compiler:
-        specifier: 0.0.0-experimental-3feb7e4-20240930
-        version: 0.0.0-experimental-3feb7e4-20240930
+        specifier: 0.0.0-experimental-27e0f40-20241002
+        version: 0.0.0-experimental-27e0f40-20241002
       class-variance-authority:
         specifier: ~0.7.0
         version: 0.7.0
@@ -2619,8 +2619,8 @@ importers:
         specifier: ~10.4.20
         version: 10.4.20(postcss@8.4.47)
       babel-plugin-react-compiler:
-        specifier: 0.0.0-experimental-3feb7e4-20240930
-        version: 0.0.0-experimental-3feb7e4-20240930
+        specifier: 0.0.0-experimental-27e0f40-20241002
+        version: 0.0.0-experimental-27e0f40-20241002
       base-64:
         specifier: ~1.0.0
         version: 1.0.0
@@ -7563,8 +7563,8 @@ packages:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
     engines: {node: '>=10', npm: '>=6'}
 
-  babel-plugin-react-compiler@0.0.0-experimental-3feb7e4-20240930:
-    resolution: {integrity: sha512-+zfcqLj8SFwmt5lfkMCUfNgjxm4u2A072u9H0W68CEgQkmeBNrpHtTX/9s2BmqPx3XyejHFlV0oVcq8+ke8YSg==}
+  babel-plugin-react-compiler@0.0.0-experimental-27e0f40-20241002:
+    resolution: {integrity: sha512-hMOwSqoI0gxyjgGVhsMqPsVV4bjCqJ2WTUFsQyrk+KAkDqK/o7Th9XRl/xhVApPbE4VzQeiutC60rbBGqNebHQ==}
 
   babel-preset-current-node-syntax@1.0.1:
     resolution: {integrity: sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ==}
@@ -19106,7 +19106,7 @@ snapshots:
       cosmiconfig: 7.1.0
       resolve: 1.22.8
 
-  babel-plugin-react-compiler@0.0.0-experimental-3feb7e4-20240930:
+  babel-plugin-react-compiler@0.0.0-experimental-27e0f40-20241002:
     dependencies:
       '@babel/generator': 7.2.0
       '@babel/types': 7.25.6
