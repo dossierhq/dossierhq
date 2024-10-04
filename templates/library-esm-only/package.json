@@ -33,7 +33,7 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@rushstack/heft": "0.68.0",
-    "eslint": "~8.57.0",
+    "eslint": "~9.11.1",
     "prettier": "3.3.3",
     "typescript": "~5.6.2",
     "vitest": "~2.1.1"
