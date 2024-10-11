@@ -93,7 +93,7 @@
     "@graphiql/toolkit": "~0.11.0",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
     "@libsql/client": "~0.14.0",
-    "@playwright/test": "~1.47.2",
+    "@playwright/test": "~1.48.0",
     "@rollup/plugin-commonjs": "~28.0.0",
     "@rollup/plugin-node-resolve": "~15.3.0",
     "@rushstack/heft": "0.68.0",
