@@ -99,7 +99,7 @@
     "@typescript-eslint/parser": "~8.8.0",
     "@vitejs/plugin-react": "~4.3.2",
     "autoprefixer": "~10.4.20",
-    "chromatic": "~11.11.0",
+    "chromatic": "~11.12.5",
     "concurrently": "~9.0.1",
     "eslint": "~8.57.0",
     "eslint-plugin-react": "~7.37.0",
