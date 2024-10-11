@@ -130,7 +130,7 @@
     "babel-plugin-react-compiler": "0.0.0-experimental-27e0f40-20241002",
     "base-64": "~1.0.0",
     "bulma": "~0.9.4",
-    "chromatic": "~11.11.0",
+    "chromatic": "~11.12.5",
     "concurrently": "~9.0.1",
     "esbuild": "~0.24.0",
     "eslint-config-next": "~14.2.13",
