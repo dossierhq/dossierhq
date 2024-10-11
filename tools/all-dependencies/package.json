@@ -26,7 +26,7 @@
     "@lexical/rich-text": "0.14.3",
     "@lexical/selection": "0.14.3",
     "@lexical/utils": "0.14.3",
-    "@microsoft/rush-lib": "~5.136.1",
+    "@microsoft/rush-lib": "~5.138.0",
     "@radix-ui/react-alert-dialog": "~1.1.1",
     "@radix-ui/react-collapsible": "~1.1.0",
     "@radix-ui/react-dialog": "~1.1.1",
