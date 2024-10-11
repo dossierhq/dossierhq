@@ -54,7 +54,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@rushstack/heft": "0.68.0",
+    "@rushstack/heft": "0.68.2",
     "@types/better-sqlite3": "~7.6.11",
     "better-sqlite3": "~11.3.0",
     "eslint": "~8.57.0",
