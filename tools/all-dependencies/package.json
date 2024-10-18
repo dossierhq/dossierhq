@@ -149,7 +149,7 @@
     "react-stately": "~3.32.1",
     "rollup": "~4.22.5",
     "rollup-plugin-visualizer": "~5.12.0",
-    "sass": "~1.79.4",
+    "sass": "~1.80.2",
     "sass-loader": "~16.0.2",
     "schema-dts": "~1.1.2",
     "storybook": "~8.3.4",
