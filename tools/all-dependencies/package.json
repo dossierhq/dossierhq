@@ -43,7 +43,7 @@
     "@spotlightjs/astro": "~2.1.10",
     "@typescript-eslint/eslint-plugin": "~8.11.0",
     "@typescript-eslint/parser": "~8.11.0",
-    "astro": "~4.15.9",
+    "astro": "~4.16.7",
     "better-sqlite3": "~11.3.0",
     "body-parser": "~1.20.3",
     "class-variance-authority": "~0.7.0",
