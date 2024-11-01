@@ -5,7 +5,7 @@
     "@dossierhq/postgres-core": "../node_modules/@dossierhq/postgres-core/lib/index.js",
     "@dossierhq/deno-postgres": "../../../libraries/deno-postgres/src/mod.ts",
     "@dossierhq/server": "../node_modules/@dossierhq/server/lib/index.js",
-    "@faker-js/faker": "../node_modules/@faker-js/faker/dist/esm/index.mjs",
+    "@faker-js/faker": "../node_modules/@faker-js/faker/dist/index.js",
     "benchpress": "../node_modules/benchpress/lib/index.js",
     "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts",
     "std/": "https://deno.land/std@0.201.0/",
