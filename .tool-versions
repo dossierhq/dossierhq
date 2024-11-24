@@ -1,4 +1,4 @@
-bun 1.1.21
-deno 2.0.0
+bun 1.1.36
+deno 2.1.1
 nodejs 20.15.0
-libsql-server 0.24.18
+libsql-server 0.24.28
