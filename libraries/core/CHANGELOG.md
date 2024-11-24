@@ -1,6 +1,13 @@
 # Change Log - @dossierhq/core
 
-This log was last generated on Fri, 02 Aug 2024 14:47:04 GMT and should not be manually modified.
+This log was last generated on Sun, 24 Nov 2024 13:36:03 GMT and should not be manually modified.
+
+## 0.7.9
+Sun, 24 Nov 2024 13:36:03 GMT
+
+### Updates
+
+-  Use explicit number literal as type of ErrorResult.httpStatus()
 
 ## 0.7.8
 Fri, 02 Aug 2024 14:47:04 GMT
