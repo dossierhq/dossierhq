@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.7.0"
+    "tslib": "~2.8.1"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*"
@@ -50,12 +50,12 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
+    "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@libsql/client": "~0.14.0",
-    "@rushstack/heft": "0.68.2",
+    "@rushstack/heft": "0.68.8",
     "eslint": "~8.57.0",
     "prettier": "3.3.3",
-    "typescript": "~5.6.2",
-    "vitest": "~2.1.1"
+    "typescript": "~5.7.2",
+    "vitest": "~2.1.5"
   }
 }

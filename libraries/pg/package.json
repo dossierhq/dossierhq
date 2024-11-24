@@ -42,7 +42,7 @@
   "dependencies": {
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/postgres-core": "workspace:*",
-    "tslib": "~2.7.0"
+    "tslib": "~2.8.1"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -56,16 +56,16 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@rushstack/heft": "0.68.2",
+    "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
+    "@rushstack/heft": "0.68.8",
     "@types/pg": "~8.11.10",
     "@types/uuid": "~10.0.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
-    "pg": "~8.13.0",
+    "pg": "~8.13.1",
     "prettier": "3.3.3",
-    "typescript": "~5.6.2",
-    "uuid": "~10.0.0",
-    "vitest": "~2.1.1"
+    "typescript": "~5.7.2",
+    "uuid": "~11.0.3",
+    "vitest": "~2.1.5"
   }
 }

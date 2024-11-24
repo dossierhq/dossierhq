@@ -26,8 +26,8 @@
     // "some-library": "1.2.3"
     // Handle "Browserslist: caniuse-lite is outdated" by specifying a version. Bump to latest version when build is failing.
     // npm show browserslist version; npm show caniuse-lite version
-    "browserslist": "^4.23.0",
-    "caniuse-lite": "1.0.30001626"
+    "browserslist": "^4.24.2",
+    "caniuse-lite": "1.0.30001684"
   },
 
   /**

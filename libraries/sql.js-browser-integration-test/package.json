@@ -21,20 +21,20 @@
   },
   "dependencies": {
     "@dossierhq/sql.js": "workspace:*",
-    "tslib": "~2.7.0"
+    "tslib": "~2.8.1"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@playwright/test": "~1.48.0",
+    "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
+    "@playwright/test": "~1.49.0",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
     "eslint": "~8.57.0",
     "prettier": "3.3.3",
-    "sql.js": "~1.11.0",
-    "typescript": "~5.6.2"
+    "sql.js": "~1.12.0",
+    "typescript": "~5.7.2"
   }
 }

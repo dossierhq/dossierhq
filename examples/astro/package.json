@@ -15,9 +15,9 @@
     "start:production": "astro preview"
   },
   "dependencies": {
-    "@astrojs/check": "~0.9.3",
+    "@astrojs/check": "~0.9.4",
     "@astrojs/node": "~8.3.4",
-    "@astrojs/react": "~3.6.2",
+    "@astrojs/react": "~3.6.3",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
@@ -26,22 +26,22 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@sentry/astro": "~8.33.1",
-    "@spotlightjs/astro": "~2.1.10",
-    "astro": "~4.16.7",
-    "better-sqlite3": "~11.3.0",
+    "@sentry/astro": "~8.40.0",
+    "@spotlightjs/astro": "~2.1.11",
+    "astro": "~4.16.14",
+    "better-sqlite3": "~11.5.0",
     "leaflet": "~1.9.4",
     "react": "~18.3.1",
     "react-dom": "~18.3.1"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.3.1",
-    "@types/better-sqlite3": "~7.6.11",
-    "@types/react": "18.3.11",
+    "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
+    "@types/better-sqlite3": "~7.6.12",
+    "@types/react": "18.3.12",
     "prettier": "3.3.3",
     "rollup-plugin-visualizer": "~5.12.0",
-    "tsx": "~4.19.1",
-    "typescript": "~5.6.2"
+    "tsx": "~4.19.2",
+    "typescript": "~5.7.2"
   }
 }
