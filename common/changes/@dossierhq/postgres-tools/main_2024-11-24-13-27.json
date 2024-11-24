@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/postgres-tools",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/postgres-tools"
+}

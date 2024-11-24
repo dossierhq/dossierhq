@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core",
+      "comment": " Use explicit number literal as type of ErrorResult.httpStatus()",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core"
+}
