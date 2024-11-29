@@ -126,7 +126,7 @@
     "@vitejs/plugin-react-swc": "~3.7.1",
     "@vitest/coverage-v8": "~2.1.5",
     "autoprefixer": "~10.4.20",
-    "babel-plugin-react-compiler": "0.0.0-experimental-27e0f40-20241002",
+    "babel-plugin-react-compiler": "0.0.0-experimental-7449567-20240905",
     "base-64": "~1.0.0",
     "bulma": "~0.9.4",
     "chromatic": "~11.18.1",
