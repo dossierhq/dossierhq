@@ -35,7 +35,7 @@
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "18.3.12",
-    "@typescript-eslint/eslint-plugin": "~8.15.0",
+    "@typescript-eslint/eslint-plugin": "~8.17.0",
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.2.13",
     "prettier": "3.3.3",
