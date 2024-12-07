@@ -60,7 +60,7 @@
     "@rushstack/heft": "0.68.9",
     "@types/pg": "~8.11.10",
     "@types/uuid": "~10.0.0",
-    "dotenv": "~16.4.5",
+    "dotenv": "~16.4.7",
     "eslint": "~8.57.0",
     "pg": "~8.13.1",
     "prettier": "3.4.2",

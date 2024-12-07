@@ -24,7 +24,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "cloudinary": "~2.5.1",
-    "dotenv": "~16.4.5",
+    "dotenv": "~16.4.7",
     "tslib": "~2.8.1",
     "uuid": "~11.0.3"
   },

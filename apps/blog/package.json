@@ -47,7 +47,7 @@
     "@types/react": "18.3.12",
     "@types/react-dom": "~18.3.1",
     "@typescript-eslint/eslint-plugin": "~8.17.0",
-    "dotenv": "~16.4.5",
+    "dotenv": "~16.4.7",
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.2.13",
     "prettier": "3.4.2",
