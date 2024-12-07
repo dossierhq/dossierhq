@@ -37,7 +37,7 @@ export async function acquireAdvisoryLock(
   if (deletedLocks.length > 0) {
     logger.info('Remove %d expired advisory locks: %s', [
       deletedLocks.length,
-      deletedLocks.join(', '),
+      deletedLocks.map((it) => it.name).join(', '),
     ]);
   }
 
