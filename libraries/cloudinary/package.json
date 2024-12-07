@@ -47,10 +47,10 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
-    "@rushstack/heft": "0.68.8",
+    "@rushstack/heft": "0.68.9",
     "@types/react": "18.3.12",
     "eslint": "~8.57.0",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "react": "~18.3.1",
     "typescript": "~5.7.2"
   }

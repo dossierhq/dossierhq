@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "pg": "~8.13.1",
-    "postgrator": "~7.3.0"
+    "postgrator": "~8.0.0"
   }
 }

@@ -30,7 +30,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.5.0",
+    "better-sqlite3": "~11.6.0",
     "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.14.3",
@@ -46,15 +46,15 @@
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "18.3.12",
     "@types/react-dom": "~18.3.1",
-    "@typescript-eslint/eslint-plugin": "~8.15.0",
+    "@typescript-eslint/eslint-plugin": "~8.17.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
     "eslint-config-next": "~14.2.13",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "schema-dts": "~1.1.2",
     "tsx": "~4.19.2",
     "typescript": "~5.7.2",
-    "vitest": "~2.1.5"
+    "vitest": "~2.1.8"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

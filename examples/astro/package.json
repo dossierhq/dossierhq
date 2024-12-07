@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./scripts/generate-typescript.ts && npm run prettier:check && npm run check:with-retry && npm run build-app",
+    "build": "./scripts/generate-typescript.ts && npm run prettier:check && npm run check:with-retry && npm run build-app 2>&1",
     "build-app": "astro build",
     "check:with-retry": "astro check --minimumFailingSeverity warning 2>&1 || astro check --minimumFailingSeverity warning 2>&1",
     "clean": "rm -rf dist/ && rm *.log",
@@ -26,10 +26,10 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@sentry/astro": "~8.40.0",
-    "@spotlightjs/astro": "~2.1.11",
+    "@sentry/astro": "~8.42.0",
+    "@spotlightjs/astro": "~2.2.0",
     "astro": "~5.0.3",
-    "better-sqlite3": "~11.5.0",
+    "better-sqlite3": "~11.6.0",
     "leaflet": "~1.9.4",
     "react": "~18.3.1",
     "react-dom": "~18.3.1"
@@ -39,7 +39,7 @@
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "18.3.12",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "rollup-plugin-visualizer": "~5.12.0",
     "tsx": "~4.19.2",
     "typescript": "~5.7.2"

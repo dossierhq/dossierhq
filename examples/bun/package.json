@@ -20,9 +20,9 @@
   "devDependencies": {
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
-    "@types/bun": "~1.1.13",
+    "@types/bun": "~1.1.14",
     "eslint": "~8.57.0",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "typescript": "~5.7.2"
   }
 }

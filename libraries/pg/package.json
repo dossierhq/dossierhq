@@ -57,15 +57,15 @@
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
-    "@rushstack/heft": "0.68.8",
+    "@rushstack/heft": "0.68.9",
     "@types/pg": "~8.11.10",
     "@types/uuid": "~10.0.0",
     "dotenv": "~16.4.5",
     "eslint": "~8.57.0",
     "pg": "~8.13.1",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "typescript": "~5.7.2",
     "uuid": "~11.0.3",
-    "vitest": "~2.1.5"
+    "vitest": "~2.1.8"
   }
 }
