@@ -43,8 +43,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       codejar:
         specifier: ~4.2.0
         version: 4.2.0
@@ -265,8 +265,8 @@ importers:
         specifier: ~10.0.0
         version: 10.0.0
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -458,8 +458,8 @@ importers:
         specifier: ~5.0.3
         version: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.82.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -528,8 +528,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/benchpress
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       dotenv:
         specifier: ~16.4.7
         version: 16.4.7
@@ -641,8 +641,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       express:
         specifier: ~4.21.2
         version: 4.21.2
@@ -705,8 +705,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       graphql:
         specifier: ~16.9.0
         version: 16.9.0
@@ -778,8 +778,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       body-parser:
         specifier: ~1.20.3
         version: 1.20.3
@@ -919,8 +919,8 @@ importers:
         specifier: ~7.6.12
         version: 7.6.12
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1301,8 +1301,8 @@ importers:
         specifier: ~2.1.8
         version: 2.1.8(vitest@2.1.8(@types/node@22.10.1)(sass@1.82.0))
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1371,8 +1371,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: 0.81.1
-        version: 0.81.1
+        specifier: 0.82.0
+        version: 0.82.0
       react-leaflet:
         specifier: ~4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1393,8 +1393,8 @@ importers:
         specifier: 0.68.9
         version: 0.68.9(@types/node@22.10.1)
       '@types/leaflet':
-        specifier: ~1.9.14
-        version: 1.9.14
+        specifier: ~1.9.15
+        version: 1.9.15
       '@types/leaflet.locatecontrol':
         specifier: ~0.74.6
         version: 0.74.6
@@ -1664,8 +1664,8 @@ importers:
         specifier: ~8.4.7
         version: 8.4.7(storybook@8.4.7(prettier@3.4.2))
       '@types/leaflet':
-        specifier: ~1.9.14
-        version: 1.9.14
+        specifier: ~1.9.15
+        version: 1.9.15
       '@types/lodash':
         specifier: ~4.17.13
         version: 4.17.13
@@ -1790,8 +1790,8 @@ importers:
         specifier: ~2.1.7
         version: 2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sonner:
-        specifier: 1.7.0
-        version: 1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.7.1
+        version: 1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       swr:
         specifier: ~2.2.5
         version: 2.2.5(react@18.3.1)
@@ -2375,8 +2375,8 @@ importers:
         specifier: ~5.0.3
         version: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.82.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       body-parser:
         specifier: ~1.20.3
         version: 1.20.3
@@ -2435,8 +2435,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: 0.81.1
-        version: 0.81.1
+        specifier: 0.82.0
+        version: 0.82.0
       lexical:
         specifier: 0.14.3
         version: 0.14.3
@@ -2480,8 +2480,8 @@ importers:
         specifier: ~6.26.2
         version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sonner:
-        specifier: 1.7.0
-        version: 1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.7.1
+        version: 1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sql.js:
         specifier: ~1.12.0
         version: 1.12.0
@@ -2577,8 +2577,8 @@ importers:
         specifier: ~5.0.0
         version: 5.0.0
       '@types/leaflet':
-        specifier: ~1.9.14
-        version: 1.9.14
+        specifier: ~1.9.15
+        version: 1.9.15
       '@types/leaflet.locatecontrol':
         specifier: ~0.74.6
         version: 0.74.6
@@ -2718,8 +2718,8 @@ importers:
   ../../tools/better-sqlite3-amalgamation:
     dependencies:
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
     devDependencies:
       '@types/better-sqlite3':
         specifier: ~7.6.12
@@ -6738,8 +6738,8 @@ packages:
   '@types/leaflet.locatecontrol@0.74.6':
     resolution: {integrity: sha512-IMnp6zSkiEKx5fwZSfySIyQWJWR/tpF00jRZC6BmFU//ygVRChakQpGPMpHIjQOnP3UMTmTXgztvQ2AwlHL8Mg==}
 
-  '@types/leaflet@1.9.14':
-    resolution: {integrity: sha512-sx2q6MDJaajwhKeVgPSvqXd8rhNJSTA3tMidQGduZn9S6WBYxDkCpSpV5xXEmSg7Cgdk/5vJGhVF1kMYLzauBg==}
+  '@types/leaflet@1.9.15':
+    resolution: {integrity: sha512-7UuggAuAs+mva66gtf2OTB1nEhzU/9JED93TIaOEgvFMvG/dIGQaukHE7izHo1Zd+Ko1L4ETUw7TBc8yUxevpg==}
 
   '@types/lodash@4.17.13':
     resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
@@ -7372,8 +7372,8 @@ packages:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
 
-  better-sqlite3@11.6.0:
-    resolution: {integrity: sha512-2J6k/eVxcFYY2SsTxsXrj6XylzHWPxveCn4fKPKZFv/Vqn/Cd7lOuX4d7rGQXT5zL+97MkNL3nSbCrIoe3LkgA==}
+  better-sqlite3@11.7.0:
+    resolution: {integrity: sha512-mXpa5jnIKKHeoGzBrUJrc65cXFKcILGZpU3FXR0pradUEm9MA7UZz02qfEejaMcm9iXrSOCenwwYMJ/tZ1y5Ig==}
 
   binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
@@ -9746,8 +9746,8 @@ packages:
   launch-editor@2.9.1:
     resolution: {integrity: sha512-Gcnl4Bd+hRO9P9icCP/RVVT2o8SFlPXofuCxvA2SaZuH45whSvf5p8x5oih5ftLiVhEI4sp5xDY+R+b3zJBh5w==}
 
-  leaflet.locatecontrol@0.81.1:
-    resolution: {integrity: sha512-ZtsdScGufPw330X3UIaGGjnfQ1NrhLySnlruWufIMnfzsHgQPz0+mSxsCQMVh7QgOBoefCGb/lioSejiaNx1EQ==}
+  leaflet.locatecontrol@0.82.0:
+    resolution: {integrity: sha512-+lvtZ7tfqgWoUvTYRqDggw50HUZJGvaSgSU5JYvl5H4WtlnHek2R0TsL0EqROhT3igPFwYVV87bFT/ps1SqyGA==}
 
   leaflet@1.9.4:
     resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
@@ -11601,8 +11601,8 @@ packages:
     resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
     engines: {node: '>=14.16'}
 
-  sonner@1.7.0:
-    resolution: {integrity: sha512-W6dH7m5MujEPyug3lpI2l3TC3Pp1+LTgK0Efg+IHDrBbtEjyCmCHHo6yfNBOsf1tFZ6zf+jceWwB38baC8yO9g==}
+  sonner@1.7.1:
+    resolution: {integrity: sha512-b6LHBfH32SoVasRFECrdY8p8s7hXPDn3OHUFbZZbiB1ctLS9Gdh6rpX2dVrpQA0kiL5jcRzDDldwwLkSKk3+QQ==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
@@ -17670,9 +17670,9 @@ snapshots:
 
   '@types/leaflet.locatecontrol@0.74.6':
     dependencies:
-      '@types/leaflet': 1.9.14
+      '@types/leaflet': 1.9.15
 
-  '@types/leaflet@1.9.14':
+  '@types/leaflet@1.9.15':
     dependencies:
       '@types/geojson': 7946.0.14
 
@@ -18554,7 +18554,7 @@ snapshots:
     dependencies:
       is-windows: 1.0.2
 
-  better-sqlite3@11.6.0:
+  better-sqlite3@11.7.0:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.1
@@ -21536,7 +21536,7 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.8.1
 
-  leaflet.locatecontrol@0.81.1: {}
+  leaflet.locatecontrol@0.82.0: {}
 
   leaflet@1.9.4: {}
 
@@ -23754,7 +23754,7 @@ snapshots:
 
   slash@5.1.0: {}
 
-  sonner@1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  sonner@1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
