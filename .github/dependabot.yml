@@ -31,6 +31,12 @@ updates:
         patterns:
           - "eslint-config-next"
           - "next"
+      react:
+        patterns:
+          - "@types/react"
+          - "@types/react-dom"
+          - "react"
+          - "react-dom"
       react-aria:
         patterns:
           - "react-aria-components"
