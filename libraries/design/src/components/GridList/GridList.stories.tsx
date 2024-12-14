@@ -46,7 +46,7 @@ type Story = StoryObj<typeof meta>;
 function Wrapper({ items: initialItems, reorderable, ...props }: StoryProps) {
   const list = useListData({ initialItems: initialItems ? [...initialItems] : [] });
   const { dragAndDropHooks } = useDragAndDrop({
-    getItems: (keys) => [...keys].map((key) => ({ 'text/plain': list.getItem(key).title })),
+    getItems: (keys) => [...keys].map((key) => ({ 'text/plain': list.getItem(key)?.title ?? '' })),
     onReorder(e) {
       if (e.target.dropPosition === 'before') {
         list.moveBefore(e.target.key, e.keys);
