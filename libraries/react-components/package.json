@@ -73,7 +73,7 @@
     "@storybook/react": "~8.4.7",
     "@storybook/react-vite": "~8.4.7",
     "@storybook/test": "~8.4.7",
-    "@types/leaflet": "~1.9.15",
+    "@types/leaflet": "~1.9.14",
     "@types/lodash": "~4.17.13",
     "@types/react-dom": "~18.3.1",
     "@types/react": "18.3.12",

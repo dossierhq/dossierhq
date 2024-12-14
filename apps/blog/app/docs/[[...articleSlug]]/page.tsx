@@ -13,9 +13,9 @@ interface Params {
   articleSlug: string[] | undefined;
 }
 
-export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const publishedClient = await getPublishedClientForServerComponent();
-  const article = await getArticle(publishedClient, (await params).articleSlug);
+  const article = await getArticle(publishedClient, params.articleSlug);
 
   return {
     title: article.fields.title,
@@ -31,9 +31,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-export default async function Page({ params }: { params: Promise<Params> }) {
+export default async function Page({ params }: { params: Params }) {
   const publishedClient = await getPublishedClientForServerComponent();
-  const article = await getArticle(publishedClient, (await params).articleSlug);
+  const article = await getArticle(publishedClient, params.articleSlug);
   return (
     <>
       <Text as="h1" textStyle="headline3">
