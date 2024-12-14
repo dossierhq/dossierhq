@@ -420,7 +420,7 @@ importers:
         version: 0.9.4(prettier@3.4.2)(typescript@5.7.2)
       '@astrojs/node':
         specifier: ~9.0.0
-        version: 9.0.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        version: 9.0.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@astrojs/react':
         specifier: ~4.1.0
         version: 4.1.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)(tsx@4.19.2)(yaml@2.5.1)
@@ -449,14 +449,14 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@sentry/astro':
-        specifier: ~8.44.0
-        version: 8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        specifier: ~8.45.0
+        version: 8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@spotlightjs/astro':
-        specifier: ~2.2.0
-        version: 2.2.0(@sentry/astro@8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        specifier: ~2.3.0
+        version: 2.3.0(@sentry/astro@8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       astro:
-        specifier: ~5.0.3
-        version: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
+        specifier: ~5.0.5
+        version: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       better-sqlite3:
         specifier: ~11.6.0
         version: 11.6.0
@@ -2280,7 +2280,7 @@ importers:
         version: 0.9.4(prettier@3.4.2)(typescript@5.7.2)
       '@astrojs/node':
         specifier: ~9.0.0
-        version: 9.0.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        version: 9.0.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@astrojs/react':
         specifier: ~4.1.0
         version: 4.1.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)(tsx@4.19.2)(yaml@2.5.1)
@@ -2360,11 +2360,11 @@ importers:
         specifier: ~1.10.4
         version: 1.10.4
       '@sentry/astro':
-        specifier: ~8.44.0
-        version: 8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        specifier: ~8.45.0
+        version: 8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@spotlightjs/astro':
-        specifier: ~2.2.0
-        version: 2.2.0(@sentry/astro@8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        specifier: ~2.3.0
+        version: 2.3.0(@sentry/astro@8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@typescript-eslint/eslint-plugin':
         specifier: ~8.18.0
         version: 8.18.0(@typescript-eslint/parser@8.18.0(eslint@8.57.0)(typescript@5.7.2))(eslint@8.57.0)(typescript@5.7.2)
@@ -2372,8 +2372,8 @@ importers:
         specifier: ~8.18.0
         version: 8.18.0(eslint@8.57.0)(typescript@5.7.2)
       astro:
-        specifier: ~5.0.3
-        version: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
+        specifier: ~5.0.5
+        version: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       better-sqlite3:
         specifier: ~11.6.0
         version: 11.6.0
@@ -2837,8 +2837,8 @@ packages:
       prettier-plugin-astro:
         optional: true
 
-  '@astrojs/markdown-remark@6.0.0':
-    resolution: {integrity: sha512-Tabo7xM44Pz2Yf9qpdaCCgxRmtaypi2YCinqTUNefDrWUa+OyKW62OuNeCaGwNh/ys+QAd9FUWN5/3HgPWjP4Q==}
+  '@astrojs/markdown-remark@6.0.1':
+    resolution: {integrity: sha512-CTSYijj25NfxgZi15TU3CwPwgyD1/7yA3FcdcNmB9p94nydupiUbrIiq3IqeTp2m5kCVzxbPZeC7fTwEOaNyGw==}
 
   '@astrojs/node@9.0.0':
     resolution: {integrity: sha512-3h/5kFZvpuo+chYAjj75YhtRUxfquxEJrpZRRC7TdiMGp2WhLp2us4VXm2mjezJp/zHKotW2L3qgp0P2ujQ0xw==}
@@ -6257,24 +6257,24 @@ packages:
   '@rushstack/ts-command-line@4.23.2':
     resolution: {integrity: sha512-JJ7XZX5K3ThBBva38aomgsPv1L7FV6XmSOcR6HtM7HDFZJkepqT65imw26h9ggGqMjsY0R9jcl30tzKcVj9aOQ==}
 
-  '@sentry-internal/browser-utils@8.44.0':
-    resolution: {integrity: sha512-kmSRdS1r2G3i0wTJJv69uMZqf/UwP3pVqrCq/0hvNaF4L5v+vrEOKTDZghDvCqutEqOFXI0V/l9SuDpgjElcZQ==}
+  '@sentry-internal/browser-utils@8.45.0':
+    resolution: {integrity: sha512-MX/E/C+W5I9jkGD1PsbZ2hpCc7YuizNKmEbuGPxQPfUSIPrdE2wpo6ZfIhEbxq9m/trl1oRCN4PXi3BB7dlYYg==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/feedback@8.44.0':
-    resolution: {integrity: sha512-x/7dilh9VRpsPRgx+1kT3Aulgj0X02GF+JfNeaFA2p786+2jBHTupGBu7AGiq1b1YRbDefkFXQxS1MaeqEEeOg==}
+  '@sentry-internal/feedback@8.45.0':
+    resolution: {integrity: sha512-WerpfkKrKPAlnQuqjEgKXZtrx68cla7GyOkNOeL40JQbY4/By4Qjx1atUOmgk/FdjrCLPw+jQQY9pXRpMRqqRw==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/replay-canvas@8.44.0':
-    resolution: {integrity: sha512-hFCUHDekuJknzVCu5JnDkgUuOTJbwu82RR+VfbT+2lfIpZoT+gH44LzSH5bQUPXgmznRae4OYHblWAPue9U1Bw==}
+  '@sentry-internal/replay-canvas@8.45.0':
+    resolution: {integrity: sha512-LZ8kBuzO5gutDiWnCyYEzBMDLq9PIllcsWsXRpKoau0Zqs3DbyRolI11dNnxmUSh7UW21FksxBpqn5yPmUMbag==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/replay@8.44.0':
-    resolution: {integrity: sha512-ZPX3Bg8ShuWZZzL5lw/fHjHdRhxxhhdzsVXq2jItg3CPvuO7oQofZsG4po6vgXTlj+fdtjUMQanj/6Ah4+jwsQ==}
+  '@sentry-internal/replay@8.45.0':
+    resolution: {integrity: sha512-SOFwFpzx0B6lxhLl2hBnxvybo7gdB5TMY8dOHMwXgk5A2+BXvSpvWXnr33yqUlBmC8R3LeFTB3C0plzM5lhkJg==}
     engines: {node: '>=14.18'}
 
-  '@sentry/astro@8.44.0':
-    resolution: {integrity: sha512-haVhOSyykyGuw/yBy9TIkGjhyBbSOJXsqDdkzgCQHUgQqtRwPk8dOM69jgnEVmjH8Em/C/LAFpV6JldgpHf68g==}
+  '@sentry/astro@8.45.0':
+    resolution: {integrity: sha512-FZKbor6p70m+efcVeNJ3iAo9Oglix1yOYX3a4RWIKvwfK4UxFIwJ8yLik3VkcDY4C+GRa0gQVCiCABwmNImSpw==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       astro: '>=3.x || >=4.0.0-beta || >=5.x'
@@ -6283,8 +6283,8 @@ packages:
     resolution: {integrity: sha512-V2g1Y1I5eSe7dtUVMBvAJr8BaLRr4CLrgNgtPaZyMT4Rnps82SrZ5zqmEkLXPumlXhLUWR6qzoMNN2u+RXVXfQ==}
     engines: {node: '>= 14'}
 
-  '@sentry/browser@8.44.0':
-    resolution: {integrity: sha512-s12u8rz2aYjiWPzoE7StL7fiCS2Z5p5BYmk9bhGDqDWyAPVEVZFUB3u/hwcPUF4yDAroWCbsNzTiBwr813zihg==}
+  '@sentry/browser@8.45.0':
+    resolution: {integrity: sha512-Y+BcfpXY1eEkOYOzgLGkx1YH940uMAymYOxfSZSvC+Vx6xHuaGT05mIFef/aeZbyu2AUs6JjdvD1BRBZlHg78w==}
     engines: {node: '>=14.18'}
 
   '@sentry/bundler-plugin-core@2.22.6':
@@ -6341,12 +6341,30 @@ packages:
     resolution: {integrity: sha512-C43eW9Mr1WGpxCeI6pXUl7TeTwR2TwWhuU8wHx2s5eoATDQwbjz9l+JXXjVJf5YXXEwNOZL2WAx/f0diLA5rTQ==}
     engines: {node: '>=14.18'}
 
+  '@sentry/core@8.45.0':
+    resolution: {integrity: sha512-4YTuBipWSh4JrtSYS5GxUQBAcAgOIkEoFfFbwVcr3ivijOacJLRXTBn3rpcy1CKjBq0PHDGR+2RGRYC+bNAMxg==}
+    engines: {node: '>=14.18'}
+
   '@sentry/node@8.44.0':
     resolution: {integrity: sha512-mONfSnPwbkQEr0o5mhuJdLbxeEjyjt9VbYYXmXvHF/gQD7nzLYKkc6mA2rl74ITBZdyyKOTO7OmsSHMfD0f+ZA==}
     engines: {node: '>=14.18'}
 
+  '@sentry/node@8.45.0':
+    resolution: {integrity: sha512-a+4csASc7zQlSAGt5AMVTUFn3Rz0qyiU90Hq1ejWLEF11i2FI73TrPVmyYT9bb+/AhzZV0vqmmrL5HVvxp/UGA==}
+    engines: {node: '>=14.18'}
+
   '@sentry/opentelemetry@8.44.0':
     resolution: {integrity: sha512-zOqDrsLJr6femKKs7Sp00FvsiextrDWNzNfNab3RACCmK3Ezj37Eoag23FHbxjCDuPouqIxLy3cxOygwnb/IoQ==}
+    engines: {node: '>=14.18'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.9.0
+      '@opentelemetry/core': ^1.29.0
+      '@opentelemetry/instrumentation': ^0.56.0
+      '@opentelemetry/sdk-trace-base': ^1.29.0
+      '@opentelemetry/semantic-conventions': ^1.28.0
+
+  '@sentry/opentelemetry@8.45.0':
+    resolution: {integrity: sha512-qk8TBqk0EO7ggMdun16Wfb38IBN+VQBKwdbs7rbUfKOmXudsDAcz3gg7QfCO7qHoCK8c+fY3cIKoVrQkJ879+Q==}
     engines: {node: '>=14.18'}
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
@@ -6400,23 +6418,23 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
-  '@spotlightjs/astro@2.2.0':
-    resolution: {integrity: sha512-nXb8zlkkmhA/ksO3m57E/3Eli6WhmT0eL45AM1YurgXHblCqAlVnoBPQ7SeQEHytnMRq3LP238DZC2a4f7kPRw==}
+  '@spotlightjs/astro@2.3.0':
+    resolution: {integrity: sha512-OnBYS4rDgkigxQkTpH5aGFQzReuF1CKagOSHudyTQBcd17zdNLKSujeBAUJBhH7VoNz9mu6q2+weGW8sWlH4og==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sentry/astro': '>=7.84.0'
       astro: '>=4.0.0'
 
-  '@spotlightjs/overlay@2.8.0':
-    resolution: {integrity: sha512-4FGJ8rhjXE/avG0PEPT/Na37Iq+ZucbSvANWNIsS5+fVSurvWH884OFaXNbtzzRfHMPk4333XQlYZaT8NXgidg==}
+  '@spotlightjs/overlay@2.9.0':
+    resolution: {integrity: sha512-toZW0hmFgx51yiEkz2+csXiwKWSBzFF1VD0JmEHdQrD76+n3YfEmkVxUqqmcB/s8vC32i/9ti0QQRbQzjACbow==}
 
-  '@spotlightjs/sidecar@1.9.2':
-    resolution: {integrity: sha512-xGHyyXotXLwNjM9XbIY7tK1jX8t8b7gX3h7UNqB9Hcd8YJW2mRl/ZJUedXQh6oK/TY8+mLZo8xyE7uJ70iljOA==}
+  '@spotlightjs/sidecar@1.10.0':
+    resolution: {integrity: sha512-aGqj3kp09OmxVwr30J3vAVfN+aCAZQ1jF6YyyQJ4vWGzymxYJJCTO1U4Amh5NgPxLw02OCWPqQ5c7cKSHvn4WQ==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@spotlightjs/spotlight@2.7.0':
-    resolution: {integrity: sha512-wQkn1z2aMisNfeEK5J675Unzee9WVtKn4PfW6aPpc/hVR497BiU3z+JzO22bkPwFdn8eG8u1u1+Se1c8/rrgmw==}
+  '@spotlightjs/spotlight@2.9.0':
+    resolution: {integrity: sha512-SQeToiN6Fykl++VkQhbn8aomPtIBW9qQOKyeEHxoOQGzK5irsU0O0fCUOfZHh8loV34K3m5ua8Ic1sIPR2tGlg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -7346,8 +7364,8 @@ packages:
     resolution: {integrity: sha512-6t10qk83GOG8p0vKmaCr8eiilZwO171AvbROMtvvNiwrTly62t+7XkA8RdIIVbpMhCASAsxgAzdRSwh6nw/5Dg==}
     engines: {node: '>=4'}
 
-  astro@5.0.3:
-    resolution: {integrity: sha512-qpeN+POmmfAQu/XDXaI2CxkUgQFwH9uMUVaA1reV9rybzIbOVYc3E3BU5SkiP/W4BMUFPdJtyw6+/n/0AUv6rw==}
+  astro@5.0.5:
+    resolution: {integrity: sha512-xfptdmurDsQcj/Anc7mU+eKlcyV7ppJIlmaSwhX3ZWwK5N/0rGKVmUqnuILgR6MB0XVJiIfublNzDGoyj4Q6BQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -12903,7 +12921,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@6.0.0':
+  '@astrojs/markdown-remark@6.0.1':
     dependencies:
       '@astrojs/prism': 3.2.0
       github-slugger: 2.0.0
@@ -12927,9 +12945,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@9.0.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
+  '@astrojs/node@9.0.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
     dependencies:
-      astro: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
+      astro: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       send: 1.1.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -17103,44 +17121,44 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@sentry-internal/browser-utils@8.44.0':
+  '@sentry-internal/browser-utils@8.45.0':
     dependencies:
-      '@sentry/core': 8.44.0
+      '@sentry/core': 8.45.0
 
-  '@sentry-internal/feedback@8.44.0':
+  '@sentry-internal/feedback@8.45.0':
     dependencies:
-      '@sentry/core': 8.44.0
+      '@sentry/core': 8.45.0
 
-  '@sentry-internal/replay-canvas@8.44.0':
+  '@sentry-internal/replay-canvas@8.45.0':
     dependencies:
-      '@sentry-internal/replay': 8.44.0
-      '@sentry/core': 8.44.0
+      '@sentry-internal/replay': 8.45.0
+      '@sentry/core': 8.45.0
 
-  '@sentry-internal/replay@8.44.0':
+  '@sentry-internal/replay@8.45.0':
     dependencies:
-      '@sentry-internal/browser-utils': 8.44.0
-      '@sentry/core': 8.44.0
+      '@sentry-internal/browser-utils': 8.45.0
+      '@sentry/core': 8.45.0
 
-  '@sentry/astro@8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
+  '@sentry/astro@8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
     dependencies:
-      '@sentry/browser': 8.44.0
-      '@sentry/core': 8.44.0
-      '@sentry/node': 8.44.0
+      '@sentry/browser': 8.45.0
+      '@sentry/core': 8.45.0
+      '@sentry/node': 8.45.0
       '@sentry/vite-plugin': 2.22.6
-      astro: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
+      astro: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
     transitivePeerDependencies:
       - encoding
       - supports-color
 
   '@sentry/babel-plugin-component-annotate@2.22.6': {}
 
-  '@sentry/browser@8.44.0':
+  '@sentry/browser@8.45.0':
     dependencies:
-      '@sentry-internal/browser-utils': 8.44.0
-      '@sentry-internal/feedback': 8.44.0
-      '@sentry-internal/replay': 8.44.0
-      '@sentry-internal/replay-canvas': 8.44.0
-      '@sentry/core': 8.44.0
+      '@sentry-internal/browser-utils': 8.45.0
+      '@sentry-internal/feedback': 8.45.0
+      '@sentry-internal/replay': 8.45.0
+      '@sentry-internal/replay-canvas': 8.45.0
+      '@sentry/core': 8.45.0
 
   '@sentry/bundler-plugin-core@2.22.6':
     dependencies:
@@ -17198,6 +17216,8 @@ snapshots:
 
   '@sentry/core@8.44.0': {}
 
+  '@sentry/core@8.45.0': {}
+
   '@sentry/node@8.44.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
@@ -17238,6 +17258,46 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@sentry/node@8.45.0':
+    dependencies:
+      '@opentelemetry/api': 1.9.0
+      '@opentelemetry/context-async-hooks': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/core': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation': 0.56.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-amqplib': 0.45.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-connect': 0.42.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-dataloader': 0.15.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-express': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-fastify': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-fs': 0.18.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-generic-pool': 0.42.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-graphql': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-hapi': 0.44.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-http': 0.56.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-ioredis': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-kafkajs': 0.6.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-knex': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-koa': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-lru-memoizer': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mongodb': 0.50.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mongoose': 0.45.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mysql': 0.44.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mysql2': 0.44.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-nestjs-core': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-pg': 0.49.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-redis-4': 0.45.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-tedious': 0.17.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-undici': 0.9.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/semantic-conventions': 1.28.0
+      '@prisma/instrumentation': 5.19.1
+      '@sentry/core': 8.45.0
+      '@sentry/opentelemetry': 8.45.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)
+      import-in-the-middle: 1.11.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@sentry/opentelemetry@8.44.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
@@ -17246,6 +17306,15 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.28.0
       '@sentry/core': 8.44.0
+
+  '@sentry/opentelemetry@8.45.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)':
+    dependencies:
+      '@opentelemetry/api': 1.9.0
+      '@opentelemetry/core': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation': 0.56.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/semantic-conventions': 1.28.0
+      '@sentry/core': 8.45.0
 
   '@sentry/vite-plugin@2.22.6':
     dependencies:
@@ -17304,28 +17373,36 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@spotlightjs/astro@2.2.0(@sentry/astro@8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
+  '@spotlightjs/astro@2.3.0(@sentry/astro@8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
     dependencies:
-      '@sentry/astro': 8.44.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
-      '@spotlightjs/spotlight': 2.7.0
-      astro: 5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
+      '@sentry/astro': 8.45.0(astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+      '@spotlightjs/spotlight': 2.9.0
+      astro: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
+    transitivePeerDependencies:
+      - supports-color
 
-  '@spotlightjs/overlay@2.8.0': {}
+  '@spotlightjs/overlay@2.9.0': {}
 
-  '@spotlightjs/sidecar@1.9.2':
+  '@spotlightjs/sidecar@1.10.0':
     dependencies:
+      '@sentry/node': 8.44.0
       kleur: 4.1.5
       launch-editor: 2.9.1
       source-map: 0.7.4
+    transitivePeerDependencies:
+      - supports-color
 
-  '@spotlightjs/spotlight@2.7.0':
+  '@spotlightjs/spotlight@2.9.0':
     dependencies:
-      '@spotlightjs/overlay': 2.8.0
-      '@spotlightjs/sidecar': 1.9.2
+      '@sentry/node': 8.44.0
+      '@spotlightjs/overlay': 2.9.0
+      '@spotlightjs/sidecar': 1.10.0
       import-meta-resolve: 4.1.0
       macho-unsign: 2.0.6
       portable-executable-signature: 2.0.6
       postject: 1.0.0-alpha.6
+    transitivePeerDependencies:
+      - supports-color
 
   '@storybook/addon-actions@8.4.7(storybook@8.4.7(prettier@3.4.2))':
     dependencies:
@@ -18490,11 +18567,11 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1):
+  astro@5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.4.2
-      '@astrojs/markdown-remark': 6.0.0
+      '@astrojs/markdown-remark': 6.0.1
       '@astrojs/telemetry': 3.2.0
       '@oslojs/encoding': 1.1.0
       '@rollup/pluginutils': 5.1.3(rollup@4.28.1)
