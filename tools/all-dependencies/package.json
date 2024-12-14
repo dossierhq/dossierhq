@@ -79,7 +79,7 @@
     "react-leaflet": "~4.2.1",
     "react-resizable-panels": "~2.1.7",
     "react-router-dom": "~6.26.2",
-    "sonner": "1.7.0",
+    "sonner": "1.7.1",
     "sql.js": "~1.12.0",
     "swr": "~2.2.5",
     "tailwind-merge": "~2.5.5",
