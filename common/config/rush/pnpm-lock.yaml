@@ -422,8 +422,8 @@ importers:
         specifier: ~9.0.0
         version: 9.0.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.82.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@astrojs/react':
-        specifier: ~4.0.0
-        version: 4.0.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)(tsx@4.19.2)(yaml@2.5.1)
+        specifier: ~4.1.0
+        version: 4.1.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)(tsx@4.19.2)(yaml@2.5.1)
       '@dossierhq/better-sqlite3':
         specifier: workspace:*
         version: link:../../libraries/better-sqlite3
@@ -2282,8 +2282,8 @@ importers:
         specifier: ~9.0.0
         version: 9.0.0(astro@5.0.3(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.82.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@astrojs/react':
-        specifier: ~4.0.0
-        version: 4.0.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)(tsx@4.19.2)(yaml@2.5.1)
+        specifier: ~4.1.0
+        version: 4.1.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)(tsx@4.19.2)(yaml@2.5.1)
       '@auth0/auth0-react':
         specifier: ~2.2.4
         version: 2.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2849,14 +2849,14 @@ packages:
     resolution: {integrity: sha512-GilTHKGCW6HMq7y3BUv9Ac7GMe/MO9gi9GW62GzKtth0SwukCu/qp2wLiGpEujhY+VVhaG9v7kv/5vFzvf4NYw==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
 
-  '@astrojs/react@4.0.0':
-    resolution: {integrity: sha512-YwTKFm/EMAl3JU3wlVBBI3qpuNMW5ofkvq9nWfpQEo4P38yLJjrqO/trxv0HSrAYinRp7gg3rgAR7MeadSNuvQ==}
+  '@astrojs/react@4.1.0':
+    resolution: {integrity: sha512-8F0ncvcCexVeQZMwPouLSFuzCK1KXUIYQ57lW3ZG2p7B5DGAajXGanb/CGF7MMSpX8Z0t9sELQqLHOCV/+78Ig==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
     peerDependencies:
-      '@types/react': ^17.0.50 || ^18.0.21
-      '@types/react-dom': ^17.0.17 || ^18.0.6
-      react: ^17.0.2 || ^18.0.0 || ^19.0.0-beta
-      react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0-beta
+      '@types/react': ^17.0.50 || ^18.0.21 || ^19.0.0
+      '@types/react-dom': ^17.0.17 || ^18.0.6 || ^19.0.0
+      react: ^17.0.2 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
 
   '@astrojs/telemetry@3.2.0':
     resolution: {integrity: sha512-wxhSKRfKugLwLlr4OFfcqovk+LIFtKwLyGPqMsv+9/ibqqnW3Gv7tBhtKEb0gAyUAC4G9BTVQeQahqnQAhd6IQ==}
@@ -12865,7 +12865,7 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/react@4.0.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)(tsx@4.19.2)(yaml@2.5.1)':
+  '@astrojs/react@4.1.0(@types/node@22.10.1)(@types/react-dom@18.3.1)(@types/react@18.3.12)(jiti@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)(tsx@4.19.2)(yaml@2.5.1)':
     dependencies:
       '@types/react': 18.3.12
       '@types/react-dom': 18.3.1
