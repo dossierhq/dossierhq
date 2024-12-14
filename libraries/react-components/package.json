@@ -66,7 +66,7 @@
     "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
-    "@rushstack/heft": "0.68.9",
+    "@rushstack/heft": "0.68.11",
     "@storybook/addon-actions": "~8.4.7",
     "@storybook/addon-essentials": "~8.4.7",
     "@storybook/addon-links": "~8.4.7",
