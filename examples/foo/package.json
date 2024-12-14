@@ -20,7 +20,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.7.0",
+    "better-sqlite3": "~11.6.0",
     "express": "~4.21.2",
     "graphql-http": "~1.22.3",
     "tslib": "~2.8.1"
