@@ -161,8 +161,8 @@ importers:
         specifier: ~18.3.1
         version: 18.3.1(react@18.3.1)
       react-router-dom:
-        specifier: ~6.26.2
-        version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ~7.0.2
+        version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sql.js:
         specifier: ~1.12.0
         version: 1.12.0
@@ -328,8 +328,8 @@ importers:
         specifier: ~18.3.1
         version: 18.3.1(react@18.3.1)
       react-router-dom:
-        specifier: ~6.26.2
-        version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ~7.0.2
+        version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sql.js:
         specifier: ~1.12.0
         version: 1.12.0
@@ -805,8 +805,8 @@ importers:
         specifier: ~18.3.1
         version: 18.3.1(react@18.3.1)
       react-router-dom:
-        specifier: ~6.26.2
-        version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ~7.0.2
+        version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
@@ -2477,8 +2477,8 @@ importers:
         specifier: ~2.1.7
         version: 2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
-        specifier: ~6.26.2
-        version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ~7.0.2
+        version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sonner:
         specifier: 1.7.0
         version: 1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5990,10 +5990,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0
 
-  '@remix-run/router@1.19.2':
-    resolution: {integrity: sha512-baiMx18+IMuD1yyvOGaHM9QrVUPGGG0jC+z+IPHnRJWUAUvaKuWKyE8gjDj2rzv3sz9zOGoRSPgeBVHRhZnBlA==}
-    engines: {node: '>=14.0.0'}
-
   '@repeaterjs/repeater@3.0.5':
     resolution: {integrity: sha512-l3YHBLAol6d/IKnB9LhpD0cEZWAoe3eFKUyTYWmFmCO2Q/WOckxLQAUyMZWwZV2M/m3+4vgRoaolFqaII82/TA==}
 
@@ -7825,6 +7821,10 @@ packages:
   cookie@0.7.2:
     resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
+
+  cookie@1.0.2:
+    resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
+    engines: {node: '>=18'}
 
   copy-to-clipboard@3.3.3:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
@@ -11196,18 +11196,22 @@ packages:
       react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
-  react-router-dom@6.26.2:
-    resolution: {integrity: sha512-z7YkaEW0Dy35T3/QKPYB1LjMK2R1fxnHO8kWpUMTBdfVzZrWOiY9a7CtN8HqdWtDUWd5FY6Dl8HFsqVwH4uOtQ==}
-    engines: {node: '>=14.0.0'}
+  react-router-dom@7.0.2:
+    resolution: {integrity: sha512-VJOQ+CDWFDGaWdrG12Nl+d7yHtLaurNgAQZVgaIy7/Xd+DojgmYLosFfZdGz1wpxmjJIAkAMVTKWcvkx1oggAw==}
+    engines: {node: '>=20.0.0'}
     peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
+      react: '>=18'
+      react-dom: '>=18'
 
-  react-router@6.26.2:
-    resolution: {integrity: sha512-tvN1iuT03kHgOFnLPfLJ8V95eijteveqdOSk+srqfePtQvqCExB8eHOYnlilbOcyJyKnYkr1vJvf7YqotAJu1A==}
-    engines: {node: '>=14.0.0'}
+  react-router@7.0.2:
+    resolution: {integrity: sha512-m5AcPfTRUcjwmhBzOJGEl6Y7+Crqyju0+TgTQxoS4SO+BkWbhOrcfZNq6wSWdl2BBbJbsAoBUb8ZacOFT+/JlA==}
+    engines: {node: '>=20.0.0'}
     peerDependencies:
-      react: '>=16.8'
+      react: '>=18'
+      react-dom: '>=18'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
 
   react-stately@3.32.1:
     resolution: {integrity: sha512-znw+bqHJk1fvv34O3HoVH61otyYJomRu1gI7A4B3UHCnSFS6E6nMI6D3nRv9RrAWhf4ekLLg35FwDTHDcG1zdg==}
@@ -11565,6 +11569,9 @@ packages:
 
   set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
+
+  set-cookie-parser@2.7.1:
+    resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
 
   set-function-length@1.2.1:
     resolution: {integrity: sha512-j4t6ccc+VsKwYHso+kElc5neZpjtq9EnRICFZtWyBsLojhmeF/ZBd/elqm22WJh/BziDe/SBiOeAt0m2mfLD0g==}
@@ -12073,6 +12080,9 @@ packages:
 
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
+
+  turbo-stream@2.4.0:
+    resolution: {integrity: sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g==}
 
   tween-functions@1.2.0:
     resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
@@ -16766,8 +16776,6 @@ snapshots:
       '@react-types/shared': 3.24.1(react@18.3.1)
       react: 18.3.1
 
-  '@remix-run/router@1.19.2': {}
-
   '@repeaterjs/repeater@3.0.5': {}
 
   '@rollup/plugin-commonjs@28.0.1(rollup@4.28.1)':
@@ -19070,6 +19078,8 @@ snapshots:
   cookie@0.7.1: {}
 
   cookie@0.7.2: {}
+
+  cookie@1.0.2: {}
 
   copy-to-clipboard@3.3.3:
     dependencies:
@@ -23258,17 +23268,21 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-router-dom@6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router-dom@7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@remix-run/router': 1.19.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.26.2(react@18.3.1)
+      react-router: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  react-router@6.26.2(react@18.3.1):
+  react-router@7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@remix-run/router': 1.19.2
+      '@types/cookie': 0.6.0
+      cookie: 1.0.2
       react: 18.3.1
+      set-cookie-parser: 2.7.1
+      turbo-stream: 2.4.0
+    optionalDependencies:
+      react-dom: 18.3.1(react@18.3.1)
 
   react-stately@3.32.1(react@18.3.1):
     dependencies:
@@ -23754,6 +23768,8 @@ snapshots:
   server-destroy@1.0.1: {}
 
   set-blocking@2.0.0: {}
+
+  set-cookie-parser@2.7.1: {}
 
   set-function-length@1.2.1:
     dependencies:
@@ -24303,6 +24319,8 @@ snapshots:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
+
+  turbo-stream@2.4.0: {}
 
   tween-functions@1.2.0: {}
 
