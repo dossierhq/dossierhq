@@ -17,10 +17,10 @@ import { getBlogPost } from './getBlogPost';
 export async function generateMetadata({
   params,
 }: {
-  params: { blogSlug: string };
+  params: Promise<{ blogSlug: string }>;
 }): Promise<Metadata> {
   const publishedClient = await getPublishedClientForServerComponent();
-  const { blogPost, authors } = await getBlogPost(publishedClient, params.blogSlug);
+  const { blogPost, authors } = await getBlogPost(publishedClient, (await params).blogSlug);
 
   const metadata: Metadata = {
     title: blogPost.fields.title,
@@ -50,9 +50,9 @@ export async function generateMetadata({
   return metadata;
 }
 
-export default async function Page({ params }: { params: { blogSlug: string } }) {
+export default async function Page({ params }: { params: Promise<{ blogSlug: string }> }) {
   const publishedClient = await getPublishedClientForServerComponent();
-  const { blogPost, authors } = await getBlogPost(publishedClient, params.blogSlug);
+  const { blogPost, authors } = await getBlogPost(publishedClient, (await params).blogSlug);
 
   return (
     <>
