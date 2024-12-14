@@ -103,7 +103,7 @@
     "eslint": "~8.57.0",
     "eslint-plugin-react": "~7.37.2",
     "eslint-plugin-react-compiler": "0.0.0-experimental-939a02d-20240930",
-    "eslint-plugin-react-hooks": "~4.6.2",
+    "eslint-plugin-react-hooks": "~5.1.0",
     "eslint-plugin-storybook": "~0.11.1",
     "http-server": "~14.1.1",
     "playground-example-generator": "workspace:*",

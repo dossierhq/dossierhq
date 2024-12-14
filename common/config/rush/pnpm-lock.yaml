@@ -1225,8 +1225,8 @@ importers:
         specifier: ~7.37.2
         version: 7.37.2(eslint@8.57.0)
       eslint-plugin-react-hooks:
-        specifier: ~4.6.2
-        version: 4.6.2(eslint@8.57.0)
+        specifier: ~5.1.0
+        version: 5.1.0(eslint@8.57.0)
       eslint-plugin-storybook:
         specifier: ~0.11.1
         version: 0.11.1(eslint@8.57.0)(typescript@5.7.2)
@@ -1697,8 +1697,8 @@ importers:
         specifier: ~7.37.2
         version: 7.37.2(eslint@8.57.0)
       eslint-plugin-react-hooks:
-        specifier: ~4.6.2
-        version: 4.6.2(eslint@8.57.0)
+        specifier: ~5.1.0
+        version: 5.1.0(eslint@8.57.0)
       eslint-plugin-storybook:
         specifier: ~0.11.1
         version: 0.11.1(eslint@8.57.0)(typescript@5.7.2)
@@ -1890,8 +1890,8 @@ importers:
         specifier: 0.0.0-experimental-939a02d-20240930
         version: 0.0.0-experimental-939a02d-20240930(eslint@8.57.0)
       eslint-plugin-react-hooks:
-        specifier: ~4.6.2
-        version: 4.6.2(eslint@8.57.0)
+        specifier: ~5.1.0
+        version: 5.1.0(eslint@8.57.0)
       eslint-plugin-storybook:
         specifier: ~0.11.1
         version: 0.11.1(eslint@8.57.0)(typescript@5.7.2)
@@ -2208,8 +2208,8 @@ importers:
         specifier: ~7.37.2
         version: 7.37.2(eslint@8.57.0)
       eslint-plugin-react-hooks:
-        specifier: ~4.6.2
-        version: 4.6.2(eslint@8.57.0)
+        specifier: ~5.1.0
+        version: 5.1.0(eslint@8.57.0)
 
   ../../templates/library-esm-only:
     dependencies:
@@ -2405,8 +2405,8 @@ importers:
         specifier: ~7.37.2
         version: 7.37.2(eslint@8.57.0)
       eslint-plugin-react-hooks:
-        specifier: ~4.6.2
-        version: 4.6.2(eslint@8.57.0)
+        specifier: ~5.1.0
+        version: 5.1.0(eslint@8.57.0)
       express:
         specifier: ~4.21.2
         version: 4.21.2
@@ -8424,6 +8424,12 @@ packages:
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
 
+  eslint-plugin-react-hooks@5.1.0:
+    resolution: {integrity: sha512-mpJRtPgHN2tNAvZ35AMfqeB3Xqeo273QxrHJsbBEPWODRM4r0yB6jfoROqKEYrOn27UtRPpcpHc2UqyBSuUNTw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
+
   eslint-plugin-react@7.37.2:
     resolution: {integrity: sha512-EsTAnj9fLVr/GZleBLFbj/sSuXeWmp1eXIN60ceYnZveqEaUCyW4X+Vh4WTdUhCkW4xutXYqTXCUSyqD4rB75w==}
     engines: {node: '>=4'}
@@ -12118,9 +12124,6 @@ packages:
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
 
-  tslib@2.6.3:
-    resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
-
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -14730,7 +14733,7 @@ snapshots:
       '@motionone/types': 10.17.0
       '@motionone/utils': 10.17.0
       hey-listen: 1.0.8
-      tslib: 2.6.3
+      tslib: 2.8.1
 
   '@motionone/easing@10.17.0':
     dependencies:
@@ -19925,6 +19928,10 @@ snapshots:
     dependencies:
       eslint: 8.57.0
 
+  eslint-plugin-react-hooks@5.1.0(eslint@8.57.0):
+    dependencies:
+      eslint: 8.57.0
+
   eslint-plugin-react@7.37.2(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.8
@@ -24436,8 +24443,6 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@1.14.1: {}
-
-  tslib@2.6.3: {}
 
   tslib@2.8.1: {}
 
