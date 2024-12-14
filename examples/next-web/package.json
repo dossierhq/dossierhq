@@ -27,7 +27,7 @@
     "graphql": "~16.9.0",
     "graphql-voyager": "~2.1.0",
     "leaflet": "~1.9.4",
-    "next": "~15.0.4",
+    "next": "~14.2.13",
     "react": "~18.3.1",
     "react-dom": "~18.3.1"
   },
@@ -37,7 +37,7 @@
     "@types/react": "18.3.12",
     "@typescript-eslint/eslint-plugin": "~8.17.0",
     "eslint": "~8.57.0",
-    "eslint-config-next": "~15.0.4",
+    "eslint-config-next": "~14.2.13",
     "prettier": "3.4.2",
     "typescript": "~5.7.2"
   },
