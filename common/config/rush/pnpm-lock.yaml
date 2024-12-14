@@ -56,7 +56,7 @@ importers:
         version: 0.14.3
       next:
         specifier: ~14.2.13
-        version: 14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
+        version: 14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
       prismjs:
         specifier: ~1.29.0
         version: 1.29.0
@@ -718,7 +718,7 @@ importers:
         version: 1.9.4
       next:
         specifier: ~14.2.13
-        version: 14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
+        version: 14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
       react:
         specifier: ~18.3.1
         version: 18.3.1
@@ -1875,8 +1875,8 @@ importers:
         specifier: ~10.4.20
         version: 10.4.20(postcss@8.4.49)
       chromatic:
-        specifier: ~11.20.0
-        version: 11.20.0
+        specifier: ~11.20.2
+        version: 11.20.2
       concurrently:
         specifier: ~9.1.0
         version: 9.1.0
@@ -2067,8 +2067,8 @@ importers:
         specifier: ~4.4.0
         version: 4.4.0(@vue/compiler-sfc@3.4.15)(prettier@3.4.2)
       '@playwright/test':
-        specifier: ~1.49.0
-        version: 1.49.0
+        specifier: ~1.49.1
+        version: 1.49.1
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -2448,7 +2448,7 @@ importers:
         version: 0.468.0(react@18.3.1)
       next:
         specifier: ~14.2.13
-        version: 14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
+        version: 14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
       next-themes:
         specifier: ~0.4.4
         version: 0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2514,8 +2514,8 @@ importers:
         specifier: ~0.14.0
         version: 0.14.0
       '@playwright/test':
-        specifier: ~1.49.0
-        version: 1.49.0
+        specifier: ~1.49.1
+        version: 1.49.1
       '@rollup/plugin-commonjs':
         specifier: ~28.0.1
         version: 28.0.1(rollup@4.28.1)
@@ -2625,8 +2625,8 @@ importers:
         specifier: ~0.9.4
         version: 0.9.4
       chromatic:
-        specifier: ~11.20.0
-        version: 11.20.0
+        specifier: ~11.20.2
+        version: 11.20.2
       concurrently:
         specifier: ~9.1.0
         version: 9.1.0
@@ -4825,8 +4825,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@playwright/test@1.49.0':
-    resolution: {integrity: sha512-DMulbwQURa8rNIQrf94+jPJQ4FmOVdpE5ZppRNvWVjvhC+6sOeo28r8MgIpQRYouXRtt/FCCXU7zn20jnHR4Qw==}
+  '@playwright/test@1.49.1':
+    resolution: {integrity: sha512-Ky+BVzPz8pL6PQxHqNRW1k3mIyv933LML7HktS8uik0bUXNCdPhoS/kLihiO1tMf/egaJb4IutXd7UywvXEW+g==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -6878,9 +6878,6 @@ packages:
   '@types/node@20.12.13':
     resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
 
-  '@types/node@22.10.1':
-    resolution: {integrity: sha512-qKgsUwfHZV2WCWLAnVP1JqnpE6Im6h3Y0+fYgMTasNQ7V++CBX5OT1as0g0f+OyubbFqhf6XVNIsmN4IIhEgGQ==}
-
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
 
@@ -7653,8 +7650,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  chromatic@11.20.0:
-    resolution: {integrity: sha512-Btdli1qoAI01UKmk3Iqe6vKhAhePRXqNI/2uKKy2R16q7SN/5kLTqhd1JI20LFOZSnH3xSJaUXeJ2xZOJB//3A==}
+  chromatic@11.20.2:
+    resolution: {integrity: sha512-c+M3HVl5Y60c7ipGTZTyeWzWubRW70YsJ7PPDpO1D735ib8+Lu3yGF90j61pvgkXGngpkTPHZyBw83lcu2JMxA==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -10802,8 +10799,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.49.1:
+    resolution: {integrity: sha512-BzmpVcs4kE2CH15rWfzpjzVGhWERJfmnXmniSyKeRZUs9Ws65m+RGIi7mjJK/euCegfn3i7jvqWeWyHe9y3Vgg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.49.0:
     resolution: {integrity: sha512-eKpmys0UFDnfNb3vfsf8Vx2LEOtflgRebl0Im2eQQnYMA4Aqd+Zw8bEOB+7ZKvN76901mRnqdsiOGKxzVTbi7A==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.49.1:
+    resolution: {integrity: sha512-VYL8zLoNTBxVOrJBbDuRgDWa3i+mfQgDTrL8Ah9QXZ7ax4Dsj0MSq5bYgytRnDVVe+njoKnfsYkH3HzqVj5UZA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -13468,7 +13475,7 @@ snapshots:
 
   '@chromatic-com/storybook@3.2.2(react@18.3.1)(storybook@8.4.7(prettier@3.4.2))':
     dependencies:
-      chromatic: 11.20.0
+      chromatic: 11.20.2
       filesize: 10.1.2
       jsonfile: 6.1.0
       react-confetti: 6.1.0(react@18.3.1)
@@ -15235,9 +15242,9 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@playwright/test@1.49.0':
+  '@playwright/test@1.49.1':
     dependencies:
-      playwright: 1.49.0
+      playwright: 1.49.1
 
   '@pnpm/crypto.base32-hash@1.0.1':
     dependencies:
@@ -17803,12 +17810,12 @@ snapshots:
 
   '@types/better-sqlite3@7.6.12':
     dependencies:
-      '@types/node': 22.10.1
+      '@types/node': 22.10.2
 
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.10.1
+      '@types/node': 22.10.2
 
   '@types/bun@1.1.14':
     dependencies:
@@ -17941,10 +17948,6 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@22.10.1':
-    dependencies:
-      undici-types: 6.20.0
-
   '@types/node@22.10.2':
     dependencies:
       undici-types: 6.20.0
@@ -17959,7 +17962,7 @@ snapshots:
 
   '@types/pg@8.11.10':
     dependencies:
-      '@types/node': 22.10.1
+      '@types/node': 22.10.2
       pg-protocol: 1.6.1
       pg-types: 4.0.2
 
@@ -18008,7 +18011,7 @@ snapshots:
   '@types/sql.js@1.4.9':
     dependencies:
       '@types/emscripten': 1.39.10
-      '@types/node': 22.10.1
+      '@types/node': 22.10.2
 
   '@types/stack-utils@2.0.3': {}
 
@@ -19007,7 +19010,7 @@ snapshots:
 
   chownr@2.0.0: {}
 
-  chromatic@11.20.0: {}
+  chromatic@11.20.2: {}
 
   ci-info@2.0.0: {}
 
@@ -22436,7 +22439,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  next@14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0):
+  next@14.2.13(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0):
     dependencies:
       '@next/env': 14.2.13
       '@swc/helpers': 0.5.5
@@ -22458,7 +22461,7 @@ snapshots:
       '@next/swc-win32-ia32-msvc': 14.2.13
       '@next/swc-win32-x64-msvc': 14.2.13
       '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.49.0
+      '@playwright/test': 1.49.1
       sass: 1.83.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -22935,9 +22938,17 @@ snapshots:
 
   playwright-core@1.49.0: {}
 
+  playwright-core@1.49.1: {}
+
   playwright@1.49.0:
     dependencies:
       playwright-core: 1.49.0
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.49.1:
+    dependencies:
+      playwright-core: 1.49.1
     optionalDependencies:
       fsevents: 2.3.2
 
