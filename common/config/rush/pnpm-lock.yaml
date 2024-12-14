@@ -43,8 +43,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       codejar:
         specifier: ~4.2.0
         version: 4.2.0
@@ -265,8 +265,8 @@ importers:
         specifier: ~10.0.0
         version: 10.0.0
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -458,8 +458,8 @@ importers:
         specifier: ~5.0.5
         version: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -528,8 +528,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/benchpress
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       dotenv:
         specifier: ~16.4.7
         version: 16.4.7
@@ -641,8 +641,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       express:
         specifier: ~4.21.2
         version: 4.21.2
@@ -705,8 +705,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       graphql:
         specifier: ~16.9.0
         version: 16.9.0
@@ -778,8 +778,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       body-parser:
         specifier: ~1.20.3
         version: 1.20.3
@@ -919,8 +919,8 @@ importers:
         specifier: ~7.6.12
         version: 7.6.12
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -1301,8 +1301,8 @@ importers:
         specifier: ~2.1.8
         version: 2.1.8(vitest@2.1.8(@types/node@22.10.1)(sass@1.83.0))
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2375,8 +2375,8 @@ importers:
         specifier: ~5.0.5
         version: 5.0.5(@types/node@22.10.1)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
       body-parser:
         specifier: ~1.20.3
         version: 1.20.3
@@ -2718,8 +2718,8 @@ importers:
   ../../tools/better-sqlite3-amalgamation:
     dependencies:
       better-sqlite3:
-        specifier: ~11.6.0
-        version: 11.6.0
+        specifier: ~11.7.0
+        version: 11.7.0
     devDependencies:
       '@types/better-sqlite3':
         specifier: ~7.6.12
@@ -7456,8 +7456,8 @@ packages:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
 
-  better-sqlite3@11.6.0:
-    resolution: {integrity: sha512-2J6k/eVxcFYY2SsTxsXrj6XylzHWPxveCn4fKPKZFv/Vqn/Cd7lOuX4d7rGQXT5zL+97MkNL3nSbCrIoe3LkgA==}
+  better-sqlite3@11.7.0:
+    resolution: {integrity: sha512-mXpa5jnIKKHeoGzBrUJrc65cXFKcILGZpU3FXR0pradUEm9MA7UZz02qfEejaMcm9iXrSOCenwwYMJ/tZ1y5Ig==}
 
   binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
@@ -18769,7 +18769,7 @@ snapshots:
     dependencies:
       is-windows: 1.0.2
 
-  better-sqlite3@11.6.0:
+  better-sqlite3@11.7.0:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.1

@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "~8.18.0",
     "@typescript-eslint/parser": "~8.18.0",
     "astro": "~5.0.5",
-    "better-sqlite3": "~11.6.0",
+    "better-sqlite3": "~11.7.0",
     "body-parser": "~1.20.3",
     "class-variance-authority": "~0.7.1",
     "cloudinary": "~2.5.1",
