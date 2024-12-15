@@ -6,7 +6,7 @@ import {
   type PublishedDossierContextAdapter,
   type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
-import { useMemo } from 'react';
+import { useMemo, type JSX } from 'react';
 import { usePublishedClient } from './ClientUtils.js';
 import { CLOUDINARY_CLOUD_NAME } from './CloudinaryConfig.js';
 import { isPublishedCloudinaryImage } from './SchemaTypes.js';

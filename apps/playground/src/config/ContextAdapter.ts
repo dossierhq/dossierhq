@@ -14,6 +14,7 @@ import type {
   RichTextComponentDisplayProps,
   RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
+import type { JSX } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 
 export class ContextAdapter implements DossierContextAdapter, PublishedDossierContextAdapter {

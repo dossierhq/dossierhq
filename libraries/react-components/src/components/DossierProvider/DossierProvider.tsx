@@ -5,7 +5,7 @@ import {
   type Entity,
   type Logger,
 } from '@dossierhq/core';
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, type JSX, type ReactNode } from 'react';
 import {
   DossierContext,
   type AdminDossierContextValue,

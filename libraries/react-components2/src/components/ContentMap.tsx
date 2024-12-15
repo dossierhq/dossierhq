@@ -12,7 +12,7 @@ import {
   type Schema,
 } from '@dossierhq/core';
 import { MapContainer } from '@dossierhq/leaflet';
-import { useCallback, type Dispatch, type ReactNode } from 'react';
+import { useCallback, type Dispatch, type JSX, type ReactNode } from 'react';
 import { cn } from '../lib/utils.js';
 import {
   ContentListStateActions,

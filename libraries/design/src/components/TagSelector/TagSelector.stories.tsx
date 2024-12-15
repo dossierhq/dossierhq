@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 import {
   initializeMultipleSelectorState,
   reduceMultipleSelectorState,
-  type MultipleSelectorReducer,
+  type MultipleSelectorState,
+  type MultipleSelectorStateAction,
   type MultipleSelectorStateInitializerArgs,
 } from '../DropdownSelector/MultipleSelectorReducer.js';
 import type { TagProps } from '../Tag/Tag.js';
@@ -42,8 +43,9 @@ type Story = StoryObj<typeof meta>;
 
 function Wrapper({ initialState, ...args }: StoryProps) {
   const [state, dispatch] = useReducer<
-    MultipleSelectorReducer<StoryItem>,
-    MultipleSelectorStateInitializerArgs<StoryItem>
+    MultipleSelectorState<StoryItem>,
+    MultipleSelectorStateInitializerArgs<StoryItem>,
+    [MultipleSelectorStateAction<StoryItem>]
   >(reduceMultipleSelectorState, initialState, initializeMultipleSelectorState);
   return <TagSelector dispatch={dispatch} state={state} {...args} />;
 }

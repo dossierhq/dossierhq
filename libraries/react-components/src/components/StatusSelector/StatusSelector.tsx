@@ -9,7 +9,7 @@ import {
   type MultipleSelectorState,
   type MultipleSelectorStateAction,
 } from '@dossierhq/design';
-import type { Dispatch } from 'react';
+import type { Dispatch, JSX } from 'react';
 import { StatusTag } from '../StatusTag/StatusTag.js';
 
 export type StatusItem = MultipleSelectorItem<EntityStatus>;

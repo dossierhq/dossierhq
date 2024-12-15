@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
 import { IconButton } from '../../components/IconButton/IconButton.js';
 import { Row } from '../../components/Row/Row.js';

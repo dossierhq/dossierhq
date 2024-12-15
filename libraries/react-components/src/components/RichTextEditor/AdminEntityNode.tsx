@@ -15,6 +15,7 @@ import {
   type LexicalNode,
   type NodeKey,
 } from 'lexical';
+import type { JSX } from 'react';
 import { ReferenceFieldEditorWithoutClear } from '../EntityEditor/ReferenceFieldEditor.js';
 
 export type SerializedAdminEntityNode = RichTextEntityNode;

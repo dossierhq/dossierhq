@@ -1,4 +1,4 @@
-import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
+import type { FunctionComponent, JSX, MouseEventHandler, ReactNode } from 'react';
 import { Dropdown, type DropdownItem } from '../Dropdown/Dropdown.js';
 import { Icon, type IconName } from '../Icon/Icon.js';
 

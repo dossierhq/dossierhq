@@ -24,7 +24,7 @@ import {
   type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
-import { useContext, type ReactNode } from 'react';
+import { useContext, type JSX, type ReactNode } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
 import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';

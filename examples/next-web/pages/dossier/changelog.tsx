@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import type { JSX } from 'react';
 
 const ChangelogListPage = dynamic(
   () => import('../../components/ChangelogListPage/ChangelogListPage'),

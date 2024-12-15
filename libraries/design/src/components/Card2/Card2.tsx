@@ -1,4 +1,4 @@
-import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
+import type { FunctionComponent, JSX, MouseEventHandler, ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toFlexContainerClassName, toFlexItemClassName } from '../../utils/FlexboxUtils.js';
 import { toSpacingClassName } from '../../utils/LayoutPropsUtils.js';

@@ -19,7 +19,7 @@ export interface DropdownDisplayProps {
   up?: boolean;
   left?: boolean;
   trigger: ReactNode;
-  triggerRef: RefObject<HTMLElement>;
+  triggerRef: RefObject<HTMLElement | null>;
   children: ReactNode;
 }
 

@@ -2,7 +2,7 @@
 
 import type { Entity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
-import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
+import { useCallback, useContext, useReducer, useState, type JSX, type ReactNode } from 'react';
 import { AdminEntityList } from '../../components/AdminEntityList/AdminEntityList.js';
 import { AdminEntityMapMarker } from '../../components/AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { AdminEntitySearchToolbar } from '../../components/AdminEntitySearchToolbar/AdminEntitySearchToolbar.js';

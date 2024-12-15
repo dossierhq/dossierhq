@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { useReducer, useState, type MouseEvent } from 'react';
+import { useReducer, useState, type JSX, type MouseEvent } from 'react';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
 import { reduceMultipleSelectorState } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Field } from '../../components/Field/Field.js';
@@ -15,8 +15,6 @@ import {
   AuthKeySelector,
   initializeAuthKeySelectorState,
   type AuthKeySelectorDispatch,
-  type AuthKeySelectorInitArgs,
-  type AuthKeySelectorReducer,
   type AuthKeySelectorState,
 } from './AuthKeySelector.js';
 import { AuthKeyTagList } from './AuthKeyTagList.js';
@@ -31,8 +29,6 @@ import {
   initializeStatusSelectorState,
   StatusSelector,
   type StatusSelectorDispatch,
-  type StatusSelectorInitArgs,
-  type StatusSelectorReducer,
   type StatusSelectorState,
 } from './StatusSelector.js';
 import { StatusTagList } from './StatusTagList';
@@ -73,14 +69,16 @@ function Screen({
     { selectedIds: ['foo', 'bar'] },
     initializeEntityTypeSelectorState,
   );
-  const [statusFilterState, statusFilterDispatch] = useReducer<
-    StatusSelectorReducer,
-    StatusSelectorInitArgs
-  >(reduceMultipleSelectorState, { selectedIds: ['published'] }, initializeStatusSelectorState);
-  const [authKeyFilterState, authKeyFilterDispatch] = useReducer<
-    AuthKeySelectorReducer,
-    AuthKeySelectorInitArgs
-  >(reduceMultipleSelectorState, { selectedIds: ['none'] }, initializeAuthKeySelectorState);
+  const [statusFilterState, statusFilterDispatch] = useReducer(
+    reduceMultipleSelectorState,
+    { selectedIds: ['published'] },
+    initializeStatusSelectorState,
+  );
+  const [authKeyFilterState, authKeyFilterDispatch] = useReducer(
+    reduceMultipleSelectorState,
+    { selectedIds: ['none'] },
+    initializeAuthKeySelectorState,
+  );
   const [burgerOpen, setBurgerOpen] = useState(false);
 
   return (

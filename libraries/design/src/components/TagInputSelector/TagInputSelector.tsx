@@ -1,4 +1,4 @@
-import { useCallback, type Dispatch } from 'react';
+import { useCallback, type Dispatch, type JSX } from 'react';
 import { Dropdown } from '../Dropdown/Dropdown.js';
 import {
   MultipleSelectorStateActions,

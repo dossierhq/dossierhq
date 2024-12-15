@@ -1,4 +1,4 @@
-import React, { type Dispatch } from 'react';
+import type { Dispatch, JSX } from 'react';
 import {
   DropdownSelector,
   type DropdownSelectorProps,

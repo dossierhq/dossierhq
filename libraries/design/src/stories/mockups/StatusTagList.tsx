@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field } from '../../components/Field/Field.js';
 import { TagSelector } from '../../components/TagSelector/TagSelector.js';
 import type { StatusSelectorDispatch, StatusSelectorState } from './StatusSelector.js';

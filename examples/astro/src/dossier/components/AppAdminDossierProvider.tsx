@@ -17,7 +17,7 @@ import {
   type FieldEditorProps,
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
-import { useMemo } from 'react';
+import { useMemo, type JSX } from 'react';
 import { fetchJsonResult } from '../utils/fetchJsonResult.ts';
 
 type BackendContext = ClientContext;

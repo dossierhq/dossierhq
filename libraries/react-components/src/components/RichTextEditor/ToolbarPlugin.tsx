@@ -39,7 +39,7 @@ import {
   type LexicalEditor,
   type NodeKey,
 } from 'lexical';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState, type JSX } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
 import { getSelectedNode } from '../../third-party/lexical-playground/utils/getSelectedNode.js';
 import { assertExhaustive } from '../../utils/AssertUtils.js';

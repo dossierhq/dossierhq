@@ -1,5 +1,5 @@
 import { ButtonDropdown, type IconName } from '@dossierhq/design';
-import { useContext, type ReactNode } from 'react';
+import { useContext, type JSX, type ReactNode } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   filterTypeSpecifications,

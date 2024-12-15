@@ -1,6 +1,7 @@
 import { FullscreenContainer } from '@dossierhq/design';
 import { Voyager, voyagerIntrospectionQuery } from 'graphql-voyager';
 import Head from 'next/head';
+import type { JSX } from 'react';
 import { NavBar } from '../NavBar/NavBar';
 
 export default function VoyagerPage(): JSX.Element {

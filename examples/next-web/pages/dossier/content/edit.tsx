@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import type { JSX } from 'react';
 
 const ContentEditorPage = dynamic(
   () => import('../../../components/ContentEditorPage/ContentEditorPage'),

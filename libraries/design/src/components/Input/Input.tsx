@@ -1,4 +1,4 @@
-import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
+import type { ChangeEventHandler, JSX, KeyboardEventHandler, MouseEventHandler } from 'react';
 import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';

@@ -1,4 +1,4 @@
-import React from 'react';
+import type { JSX } from 'react';
 import { Icon, ICON_NAMES, type IconName, type IconProps } from '../components/Icon/Icon.js';
 import { Table } from '../components/Table/Table.js';
 

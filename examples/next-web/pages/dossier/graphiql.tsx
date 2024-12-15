@@ -1,5 +1,6 @@
 import { FullscreenContainer } from '@dossierhq/design';
 import Head from 'next/head';
+import type { JSX } from 'react';
 import { NavBar } from '../../components/NavBar/NavBar';
 
 export default function GraphiQLPage(): JSX.Element {

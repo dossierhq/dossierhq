@@ -1,5 +1,5 @@
 import type { ClientContext, PublishedDossierClientMiddleware } from '@dossierhq/core';
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, type JSX, type ReactNode } from 'react';
 import { PublishedDossierProvider } from '../components/PublishedDossierProvider/PublishedDossierProvider.js';
 import {
   createBackendPublishedClient,

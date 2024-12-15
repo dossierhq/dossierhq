@@ -5,7 +5,7 @@ import {
   type PublishedDossierClient,
   type PublishedEntity,
 } from '@dossierhq/core';
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, type JSX, type ReactNode } from 'react';
 import {
   PublishedDossierContext,
   type PublishedDossierContextAdapter,

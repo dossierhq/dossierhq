@@ -4,7 +4,7 @@ import {
   type FieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 

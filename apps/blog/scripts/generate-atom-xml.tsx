@@ -24,7 +24,7 @@ import {
   type RichTextNode,
 } from '@dossierhq/core';
 import { config } from 'dotenv';
-import type { Key, ReactNode } from 'react';
+import type { JSX, Key, ReactNode } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { SYSTEM_USERS } from '../config/SystemUsers.js';
 import { BrowserUrls } from '../utils/BrowserUrls.js';

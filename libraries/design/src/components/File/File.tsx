@@ -1,4 +1,4 @@
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, JSX } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { IconAsset } from '../Icon/Icon.js';
 

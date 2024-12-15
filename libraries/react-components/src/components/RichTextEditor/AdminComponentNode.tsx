@@ -24,7 +24,7 @@ import {
   type LexicalNode,
   type NodeKey,
 } from 'lexical';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, type JSX } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
 import { ComponentFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';

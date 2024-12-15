@@ -9,7 +9,7 @@ import {
   type FieldEditorProps,
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
-import { useMemo } from 'react';
+import { useMemo, type JSX } from 'react';
 import { useDossierClient } from './ClientUtils.js';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 import { isCloudinaryImage } from './SchemaTypes.js';

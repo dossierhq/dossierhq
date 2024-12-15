@@ -4,7 +4,7 @@ import {
   type PublishValidationIssue,
   type SaveValidationIssue,
 } from '@dossierhq/core';
-import { useCallback, useMemo, type JSXElementConstructor } from 'react';
+import { useCallback, useMemo, type JSX, type JSXElementConstructor } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 

@@ -6,7 +6,7 @@ import {
   type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
 

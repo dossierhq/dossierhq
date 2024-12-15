@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, type JSX } from 'react';
 import { Table } from '../components/Table/Table.js';
 import { Color, toBackgroundColorClassName } from '../config/Colors.js';
 

@@ -2,7 +2,7 @@
 
 import type { PublishedEntity } from '@dossierhq/core';
 import { FullscreenContainer, toSizeClassName } from '@dossierhq/design';
-import { useCallback, useContext, useReducer, useState, type ReactNode } from 'react';
+import { useCallback, useContext, useReducer, useState, type JSX, type ReactNode } from 'react';
 import { AuthKeyTagSelector } from '../../components/AuthKeyTagSelector/AuthKeyTagSelector.js';
 import { EntityMap } from '../../components/EntityMap/EntityMap.js';
 import { PublishedEntityList } from '../../components/PublishedEntityList/PublishedEntityList.js';

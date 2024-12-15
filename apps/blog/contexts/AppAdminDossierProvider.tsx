@@ -22,7 +22,7 @@ import {
   type FieldEditorProps,
   type RichTextComponentEditorProps,
 } from '@dossierhq/react-components';
-import { useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';

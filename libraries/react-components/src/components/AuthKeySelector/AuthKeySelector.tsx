@@ -8,7 +8,7 @@ import {
   type MultipleSelectorState,
   type MultipleSelectorStateAction,
 } from '@dossierhq/design';
-import type { Dispatch } from 'react';
+import type { Dispatch, JSX } from 'react';
 import type { DisplayAuthKey } from '../../types/DisplayAuthKey.js';
 import { AuthKeyTag } from '../AuthKeyTag/AuthKeyTag.js';
 

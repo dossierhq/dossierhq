@@ -1,4 +1,4 @@
-import type { Dispatch } from 'react';
+import type { Dispatch, JSX } from 'react';
 import {
   MultipleSelectorStateActions,
   type MultipleSelectorItem,

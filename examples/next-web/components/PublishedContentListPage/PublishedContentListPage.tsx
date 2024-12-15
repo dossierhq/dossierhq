@@ -2,7 +2,7 @@ import type { PublishedEntity } from '@dossierhq/core';
 import { PublishedContentListScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, type JSX } from 'react';
 import { AppPublishedDossierProvider } from '../../contexts/AppPublishedDossierProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { BrowserUrls } from '../../utils/BrowserUrls';

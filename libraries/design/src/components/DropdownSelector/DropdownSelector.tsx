@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState, type Dispatch, type ReactNode } from 'react';
+import { useCallback, useRef, useState, type Dispatch, type JSX, type ReactNode } from 'react';
 import { useKeyHandler } from '../../hooks/useKeyHandler.js';
 import { useWindowClick } from '../../hooks/useWindowClick.js';
 import { Badge } from '../Badge/Badge.js';

@@ -7,7 +7,7 @@ import {
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents.js';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode.js';
 import type { EditorConfig, ElementFormatType, LexicalEditor, LexicalNode, NodeKey } from 'lexical';
-import { useContext } from 'react';
+import { useContext, type JSX } from 'react';
 import { ReferenceFieldDisplay } from '../EntityDisplay/ReferenceFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 

@@ -9,7 +9,7 @@ import type {
   SaveValidationIssue,
   Schema,
 } from '@dossierhq/core';
-import { createContext } from 'react';
+import { createContext, type JSX } from 'react';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type { DisplayAuthKey } from '../types/DisplayAuthKey.js';
 

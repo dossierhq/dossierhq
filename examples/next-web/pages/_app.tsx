@@ -5,6 +5,7 @@ import '@dossierhq/leaflet/main.css';
 import '@dossierhq/react-components/main.css';
 import 'graphql-voyager/dist/voyager.css';
 import 'leaflet/dist/leaflet.css';
+import type { JSX } from 'react';
 
 //TODO bundle CSS in ARC and remove need to add all css files here and to have direct dependencies to design/dossier-leaflet/leaflet
 

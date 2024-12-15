@@ -10,7 +10,7 @@ import {
   type MultipleSelectorState,
   type MultipleSelectorStateAction,
 } from '@dossierhq/design';
-import { useEffect, type Dispatch } from 'react';
+import { useEffect, type Dispatch, type JSX } from 'react';
 
 export interface TypeItem extends MultipleSelectorItem {
   name: string;

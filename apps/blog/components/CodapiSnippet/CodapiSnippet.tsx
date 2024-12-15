@@ -13,7 +13,7 @@ interface CodapiSnippetHTMLAttributes<T> extends HTMLAttributes<T> {
   'depends-on'?: string;
 }
 
-declare global {
+declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       'codapi-snippet': React.DetailedHTMLProps<

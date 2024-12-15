@@ -13,7 +13,7 @@ import {
   type PublishedDossierContextAdapter,
   type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
-import { useMemo } from 'react';
+import { useMemo, type JSX } from 'react';
 import { fetchJsonResult } from '../utils/fetchJsonResult.js';
 
 type BackendContext = ClientContext;

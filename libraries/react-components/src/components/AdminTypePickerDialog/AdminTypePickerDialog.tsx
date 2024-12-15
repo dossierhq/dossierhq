@@ -1,5 +1,5 @@
 import { Card2, Dialog2, Table } from '@dossierhq/design';
-import { useContext } from 'react';
+import { useContext, type JSX } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
 import {
   filterTypeSpecifications,

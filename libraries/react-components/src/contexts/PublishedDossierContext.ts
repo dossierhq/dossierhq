@@ -7,7 +7,7 @@ import type {
   PublishedEntity,
   PublishedSchema,
 } from '@dossierhq/core';
-import { createContext } from 'react';
+import { createContext, type JSX } from 'react';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { DisplayAuthKey } from '../types/DisplayAuthKey.js';
 

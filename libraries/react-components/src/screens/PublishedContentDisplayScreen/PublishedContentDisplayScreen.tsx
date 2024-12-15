@@ -20,6 +20,7 @@ import {
   useReducer,
   useState,
   type Dispatch,
+  type JSX,
   type MouseEvent,
   type ReactNode,
 } from 'react';

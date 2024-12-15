@@ -17,6 +17,7 @@ import {
   type PublishedDossierClientMiddleware,
   type PublishedDossierClientOperation,
 } from '@dossierhq/core';
+import type { JSX } from 'react';
 import type { FieldDisplayProps } from '../components/EntityDisplay/FieldDisplay.js';
 import type { FieldEditorProps } from '../components/EntityEditor/FieldEditor.js';
 import type {

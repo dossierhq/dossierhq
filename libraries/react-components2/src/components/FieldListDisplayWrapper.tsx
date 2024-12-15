@@ -1,5 +1,5 @@
 import type { FieldSpecification } from '@dossierhq/core';
-import type { JSXElementConstructor } from 'react';
+import type { JSX, JSXElementConstructor } from 'react';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
 interface Props<TFieldSpec extends FieldSpecification, TItem>

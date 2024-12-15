@@ -6,7 +6,7 @@ import {
   $isRangeSelection,
   type LexicalEditor,
 } from 'lexical';
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import { $isPublishedEntityLinkNode } from './PublishedEntityLinkNode.js';
 
 interface Props {

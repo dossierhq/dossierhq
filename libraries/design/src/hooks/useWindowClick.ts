@@ -4,7 +4,7 @@ import { isEventTargetNode } from '../utils/EventUtils.js';
 import { useWindowEventListener } from './useWindowEventListener.js';
 
 export function useWindowClick(
-  ignoreRef: RefObject<HTMLElement>,
+  ignoreRef: RefObject<HTMLElement | null>,
   onClick: () => void,
   enabled?: boolean,
 ): void {

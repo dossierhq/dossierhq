@@ -1,5 +1,6 @@
 import { ChangelogListScreen } from '@dossierhq/react-components';
 import Head from 'next/head';
+import type { JSX } from 'react';
 import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';
 import { useUrlSearchParams } from '../../hooks/useUrlSearchParams';
 import { NavBar } from '../NavBar/NavBar';

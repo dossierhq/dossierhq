@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Button } from '../Button/Button.js';
 import { Dropdown, type DropdownItem, type DropdownProps } from '../Dropdown/Dropdown.js';
 import type { IconName } from '../Icon/Icon.js';

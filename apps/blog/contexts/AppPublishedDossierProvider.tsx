@@ -14,7 +14,7 @@ import {
   type PublishedDossierContextAdapter,
   type RichTextComponentDisplayProps,
 } from '@dossierhq/react-components';
-import { useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';

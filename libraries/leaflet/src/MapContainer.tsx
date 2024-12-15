@@ -6,6 +6,7 @@ import React, {
   useRef,
   type CSSProperties,
   type FunctionComponent,
+  type JSX,
 } from 'react';
 import {
   MapContainer as LeafletMapContainer,

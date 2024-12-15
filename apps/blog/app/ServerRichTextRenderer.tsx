@@ -20,7 +20,7 @@ import {
 import { ClassName, LexicalTheme } from '@dossierhq/design';
 import type { EditorThemeClasses } from 'lexical';
 import Link from 'next/link.js';
-import { Fragment, type Key, type ReactNode } from 'react';
+import { Fragment, JSX, type Key, type ReactNode } from 'react';
 import { CloudinaryImage } from '../components/CloudinaryImage/CloudinaryImage';
 import { CodapiSnippet } from '../components/CodapiSnippet/CodapiSnippet';
 import { BrowserUrls } from '../utils/BrowserUrls';
