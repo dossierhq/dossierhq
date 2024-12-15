@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/design",
+      "comment": "React 19",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/design"
+}

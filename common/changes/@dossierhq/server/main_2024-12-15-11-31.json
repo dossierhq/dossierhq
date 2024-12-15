@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/server",
+      "comment": "Fix logging of advisory locks",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/server"
+}
