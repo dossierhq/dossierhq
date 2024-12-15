@@ -70,8 +70,8 @@
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
-    "react": ">=18",
-    "react-dom": ">=18"
+    "react": ">=19",
+    "react-dom": ">=19"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "~3.2.2",
