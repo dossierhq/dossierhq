@@ -14,12 +14,17 @@ export function ContentListRoute() {
   assertIsDefined(serverName);
 
   const handleCreateEntity = useCallback(
-    (type: string) =>
-      navigate(ROUTE.contentEditor.url(serverName, [{ newType: type, id: crypto.randomUUID() }])),
+    (type: string) => {
+      void navigate(
+        ROUTE.contentEditor.url(serverName, [{ newType: type, id: crypto.randomUUID() }]),
+      );
+    },
     [navigate, serverName],
   );
   const handleEntityOpen = useCallback(
-    (entity: Entity) => navigate(ROUTE.contentEditor.url(serverName, [{ id: entity.id }])),
+    (entity: Entity) => {
+      void navigate(ROUTE.contentEditor.url(serverName, [{ id: entity.id }]));
+    },
     [navigate, serverName],
   );
 

@@ -60,7 +60,7 @@ export function DatabaseProvider({ children }: Props) {
         color: 'error',
         message: 'Your uploaded database is lost due to refreshed browser tab',
       });
-      navigate(ROUTE.index.url);
+      void navigate(ROUTE.index.url);
     } else if (config) {
       void loadDatabaseFromUrl(config.url, createDatabase, showNotification);
     }

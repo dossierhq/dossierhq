@@ -16,19 +16,22 @@ export function ContentListRoute() {
   );
 
   const handleCreateEntity = useCallback(
-    (type: string) =>
-      navigate(
+    (type: string) => {
+      void navigate(
         ROUTE.contentEditor.url(
           serverName,
           { entities: [{ isNew: true, type, id: crypto.randomUUID() }] },
           searchParams,
         ),
-      ),
+      );
+    },
     [navigate, serverName, searchParams],
   );
   const handleEntityOpen = useCallback(
-    (id: string) =>
-      navigate(ROUTE.contentEditor.url(serverName, { entities: [{ id }] }, searchParams)),
+    (id: string) => {
+      // TODO should ContentListScreen callbacks support promises?
+      void navigate(ROUTE.contentEditor.url(serverName, { entities: [{ id }] }, searchParams));
+    },
     [navigate, serverName, searchParams],
   );
 

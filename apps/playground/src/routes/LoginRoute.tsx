@@ -22,7 +22,7 @@ export function LoginRoute() {
 
   useEffect(() => {
     if (currentUserId === userId) {
-      navigate(serverName ? ROUTE.server.url(serverName) : ROUTE.index.url);
+      void navigate(serverName ? ROUTE.server.url(serverName) : ROUTE.index.url);
     }
   }, [currentUserId, navigate, serverName, userId]);
 

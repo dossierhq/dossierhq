@@ -30,7 +30,7 @@ export function resetDatabase(
 
   clearDatabase();
   showNotification({ color: 'success', message: 'Deleted the database' });
-  navigate(ROUTE.index.url);
+  void navigate(ROUTE.index.url);
 }
 
 export async function loadDatabaseFromUrl(
@@ -65,7 +65,7 @@ export function uploadDatabase(
     const data = new Uint8Array(reader.result as ArrayBuffer);
     void createDatabase(data).then(() => {
       showNotification({ color: 'success', message: 'Loaded new database' });
-      navigate(ROUTE.contentList.url('upload'));
+      return navigate(ROUTE.contentList.url('upload'));
     });
   };
   reader.readAsArrayBuffer(file);

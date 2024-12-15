@@ -14,7 +14,9 @@ export function PublishedContentListRoute() {
   assertIsDefined(serverName);
 
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => navigate(ROUTE.publishedContentDisplay.url(serverName, entity.id)),
+    (entity: PublishedEntity) => {
+      void navigate(ROUTE.publishedContentDisplay.url(serverName, entity.id));
+    },
     [navigate, serverName],
   );
 
