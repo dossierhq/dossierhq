@@ -1371,8 +1371,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: 0.81.1
-        version: 0.81.1
+        specifier: 0.82.0
+        version: 0.82.0
       react-leaflet:
         specifier: ~4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2435,8 +2435,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: 0.81.1
-        version: 0.81.1
+        specifier: 0.82.0
+        version: 0.82.0
       lexical:
         specifier: 0.14.3
         version: 0.14.3
@@ -9913,8 +9913,8 @@ packages:
   launch-editor@2.9.1:
     resolution: {integrity: sha512-Gcnl4Bd+hRO9P9icCP/RVVT2o8SFlPXofuCxvA2SaZuH45whSvf5p8x5oih5ftLiVhEI4sp5xDY+R+b3zJBh5w==}
 
-  leaflet.locatecontrol@0.81.1:
-    resolution: {integrity: sha512-ZtsdScGufPw330X3UIaGGjnfQ1NrhLySnlruWufIMnfzsHgQPz0+mSxsCQMVh7QgOBoefCGb/lioSejiaNx1EQ==}
+  leaflet.locatecontrol@0.82.0:
+    resolution: {integrity: sha512-+lvtZ7tfqgWoUvTYRqDggw50HUZJGvaSgSU5JYvl5H4WtlnHek2R0TsL0EqROhT3igPFwYVV87bFT/ps1SqyGA==}
 
   leaflet@1.9.4:
     resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
@@ -21888,7 +21888,7 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.8.1
 
-  leaflet.locatecontrol@0.81.1: {}
+  leaflet.locatecontrol@0.82.0: {}
 
   leaflet@1.9.4: {}
 
