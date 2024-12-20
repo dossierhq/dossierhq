@@ -100,7 +100,7 @@
     "autoprefixer": "~10.4.20",
     "chromatic": "~11.20.2",
     "concurrently": "~9.1.0",
-    "eslint": "~8.57.0",
+    "eslint": "~9.17.0",
     "eslint-plugin-react": "~7.37.2",
     "eslint-plugin-react-compiler": "19.0.0-beta-37ed2a7-20241206",
     "eslint-plugin-react-hooks": "~5.1.0",
