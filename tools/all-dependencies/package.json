@@ -94,7 +94,7 @@
     "@libsql/client": "~0.14.0",
     "@playwright/test": "~1.49.1",
     "@rollup/plugin-commonjs": "~28.0.1",
-    "@rollup/plugin-node-resolve": "~15.3.0",
+    "@rollup/plugin-node-resolve": "~16.0.0",
     "@rushstack/heft": "0.68.11",
     "@rushstack/heft-lint-plugin": "~0.5.10",
     "@rushstack/heft-typescript-plugin": "~0.6.4",
