@@ -48,7 +48,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@rushstack/heft": "0.68.11",
-    "@types/react": "19.0.1",
+    "@types/react": "19.0.2",
     "eslint": "~8.57.0",
     "prettier": "3.4.2",
     "react": "~19.0.0",
