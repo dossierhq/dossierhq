@@ -51,7 +51,7 @@
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@rushstack/heft": "0.68.11",
     "@vitest/coverage-v8": "~2.1.8",
-    "eslint": "~8.57.0",
+    "eslint": "~9.17.0",
     "prettier": "3.4.2",
     "typescript": "~5.7.2",
     "vitest": "~2.1.8"
