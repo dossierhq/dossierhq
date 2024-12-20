@@ -449,11 +449,11 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@sentry/astro':
-        specifier: ~8.45.0
-        version: 8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        specifier: ~8.47.0
+        version: 8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@spotlightjs/astro':
         specifier: ~2.3.0
-        version: 2.3.0(@sentry/astro@8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        version: 2.3.0(@sentry/astro@8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       astro:
         specifier: ~5.1.0
         version: 5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
@@ -2360,11 +2360,11 @@ importers:
         specifier: ~1.10.4
         version: 1.10.4
       '@sentry/astro':
-        specifier: ~8.45.0
-        version: 8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        specifier: ~8.47.0
+        version: 8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@spotlightjs/astro':
         specifier: ~2.3.0
-        version: 2.3.0(@sentry/astro@8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+        version: 2.3.0(@sentry/astro@8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@typescript-eslint/eslint-plugin':
         specifier: ~8.18.0
         version: 8.18.0(@typescript-eslint/parser@8.18.0(eslint@8.57.0)(typescript@5.7.2))(eslint@8.57.0)(typescript@5.7.2)
@@ -4880,6 +4880,9 @@ packages:
   '@prisma/instrumentation@5.19.1':
     resolution: {integrity: sha512-VLnzMQq7CWroL5AeaW0Py2huiNKeoMfCH3SUxstdzPrlWQi6UQ9UrfcbUkNHlVFqOMacqy8X/8YtE0kuKDpD9w==}
 
+  '@prisma/instrumentation@5.22.0':
+    resolution: {integrity: sha512-LxccF392NN37ISGxIurUljZSh1YWnphO34V5a0+T7FVQG2u9bhAXRTJpgmQ3483woVhkraQZFF7cbRrpbw/F4Q==}
+
   '@radix-ui/primitive@1.0.1':
     resolution: {integrity: sha512-yQ8oGX2GVsEYMWGxcovu1uGWPCxV5BFfeeYxqPmuAzUyLT9qmaMXSAhXpb0WrspIeqYzdJpkh2vHModJPgRIaw==}
 
@@ -6240,24 +6243,24 @@ packages:
   '@rushstack/ts-command-line@4.23.2':
     resolution: {integrity: sha512-JJ7XZX5K3ThBBva38aomgsPv1L7FV6XmSOcR6HtM7HDFZJkepqT65imw26h9ggGqMjsY0R9jcl30tzKcVj9aOQ==}
 
-  '@sentry-internal/browser-utils@8.45.0':
-    resolution: {integrity: sha512-MX/E/C+W5I9jkGD1PsbZ2hpCc7YuizNKmEbuGPxQPfUSIPrdE2wpo6ZfIhEbxq9m/trl1oRCN4PXi3BB7dlYYg==}
+  '@sentry-internal/browser-utils@8.47.0':
+    resolution: {integrity: sha512-vOXzYzHTKkahTLDzWWIA4EiVCQ+Gk+7xGWUlNcR2ZiEPBqYZVb5MjsUozAcc7syrSUy6WicyFjcomZ3rlCVQhg==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/feedback@8.45.0':
-    resolution: {integrity: sha512-WerpfkKrKPAlnQuqjEgKXZtrx68cla7GyOkNOeL40JQbY4/By4Qjx1atUOmgk/FdjrCLPw+jQQY9pXRpMRqqRw==}
+  '@sentry-internal/feedback@8.47.0':
+    resolution: {integrity: sha512-IAiIemTQIalxAOYhUENs9bZ8pMNgJnX3uQSuY7v0gknEqClOGpGkG04X/cxCmtJUj1acZ9ShTGDxoh55a+ggAQ==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/replay-canvas@8.45.0':
-    resolution: {integrity: sha512-LZ8kBuzO5gutDiWnCyYEzBMDLq9PIllcsWsXRpKoau0Zqs3DbyRolI11dNnxmUSh7UW21FksxBpqn5yPmUMbag==}
+  '@sentry-internal/replay-canvas@8.47.0':
+    resolution: {integrity: sha512-M4W9UGouEeELbGbP3QsXLDVtGiQSZoWJlKwqMWyqdQgZuLoKw0S33+60t6teLVMhuQZR0UI9VJTF5coiXysnnA==}
     engines: {node: '>=14.18'}
 
-  '@sentry-internal/replay@8.45.0':
-    resolution: {integrity: sha512-SOFwFpzx0B6lxhLl2hBnxvybo7gdB5TMY8dOHMwXgk5A2+BXvSpvWXnr33yqUlBmC8R3LeFTB3C0plzM5lhkJg==}
+  '@sentry-internal/replay@8.47.0':
+    resolution: {integrity: sha512-G/S40ZBORj0HSMLw/uVC6YDEPN/dqVk901vf4VYfml686DEhJrZesfAfp5SydJumQ0NKZQrdtvny+BWnlI5H1w==}
     engines: {node: '>=14.18'}
 
-  '@sentry/astro@8.45.0':
-    resolution: {integrity: sha512-FZKbor6p70m+efcVeNJ3iAo9Oglix1yOYX3a4RWIKvwfK4UxFIwJ8yLik3VkcDY4C+GRa0gQVCiCABwmNImSpw==}
+  '@sentry/astro@8.47.0':
+    resolution: {integrity: sha512-ISAkHnLGJyuJI/3OQfACZ2izV5KCF8l8U3c/NxNmdIM9d+befYo5ceL9CiZyyZjEFIToq/DpU+vcY6ohnFzAwA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       astro: '>=3.x || >=4.0.0-beta || >=5.x'
@@ -6266,8 +6269,8 @@ packages:
     resolution: {integrity: sha512-V2g1Y1I5eSe7dtUVMBvAJr8BaLRr4CLrgNgtPaZyMT4Rnps82SrZ5zqmEkLXPumlXhLUWR6qzoMNN2u+RXVXfQ==}
     engines: {node: '>= 14'}
 
-  '@sentry/browser@8.45.0':
-    resolution: {integrity: sha512-Y+BcfpXY1eEkOYOzgLGkx1YH940uMAymYOxfSZSvC+Vx6xHuaGT05mIFef/aeZbyu2AUs6JjdvD1BRBZlHg78w==}
+  '@sentry/browser@8.47.0':
+    resolution: {integrity: sha512-K6BzHisykmbFy/wORtGyfsAlw7ShevLALzu3ReZZZ18dVubO1bjSNjkZQU9MJD5Jcb9oLwkq89n3N9XIBfvdRA==}
     engines: {node: '>=14.18'}
 
   '@sentry/bundler-plugin-core@2.22.6':
@@ -6320,24 +6323,24 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
-  '@sentry/core@8.44.0':
-    resolution: {integrity: sha512-C43eW9Mr1WGpxCeI6pXUl7TeTwR2TwWhuU8wHx2s5eoATDQwbjz9l+JXXjVJf5YXXEwNOZL2WAx/f0diLA5rTQ==}
-    engines: {node: '>=14.18'}
-
   '@sentry/core@8.45.0':
     resolution: {integrity: sha512-4YTuBipWSh4JrtSYS5GxUQBAcAgOIkEoFfFbwVcr3ivijOacJLRXTBn3rpcy1CKjBq0PHDGR+2RGRYC+bNAMxg==}
     engines: {node: '>=14.18'}
 
-  '@sentry/node@8.44.0':
-    resolution: {integrity: sha512-mONfSnPwbkQEr0o5mhuJdLbxeEjyjt9VbYYXmXvHF/gQD7nzLYKkc6mA2rl74ITBZdyyKOTO7OmsSHMfD0f+ZA==}
+  '@sentry/core@8.47.0':
+    resolution: {integrity: sha512-iSEJZMe3DOcqBFZQAqgA3NB2lCWBc4Gv5x/SCri/TVg96wAlss4VrUunSI2Mp0J4jJ5nJcJ2ChqHSBAU48k3FA==}
     engines: {node: '>=14.18'}
 
   '@sentry/node@8.45.0':
     resolution: {integrity: sha512-a+4csASc7zQlSAGt5AMVTUFn3Rz0qyiU90Hq1ejWLEF11i2FI73TrPVmyYT9bb+/AhzZV0vqmmrL5HVvxp/UGA==}
     engines: {node: '>=14.18'}
 
-  '@sentry/opentelemetry@8.44.0':
-    resolution: {integrity: sha512-zOqDrsLJr6femKKs7Sp00FvsiextrDWNzNfNab3RACCmK3Ezj37Eoag23FHbxjCDuPouqIxLy3cxOygwnb/IoQ==}
+  '@sentry/node@8.47.0':
+    resolution: {integrity: sha512-tMzeU3KkmDi2OVvSu+Ah5pwoi7srsSyc1DovBbRQU96RFf/lOFzGe9JERa1MyDUqqLH95NqnPTNsa4Amb8/Vxg==}
+    engines: {node: '>=14.18'}
+
+  '@sentry/opentelemetry@8.45.0':
+    resolution: {integrity: sha512-qk8TBqk0EO7ggMdun16Wfb38IBN+VQBKwdbs7rbUfKOmXudsDAcz3gg7QfCO7qHoCK8c+fY3cIKoVrQkJ879+Q==}
     engines: {node: '>=14.18'}
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
@@ -6346,8 +6349,8 @@ packages:
       '@opentelemetry/sdk-trace-base': ^1.29.0
       '@opentelemetry/semantic-conventions': ^1.28.0
 
-  '@sentry/opentelemetry@8.45.0':
-    resolution: {integrity: sha512-qk8TBqk0EO7ggMdun16Wfb38IBN+VQBKwdbs7rbUfKOmXudsDAcz3gg7QfCO7qHoCK8c+fY3cIKoVrQkJ879+Q==}
+  '@sentry/opentelemetry@8.47.0':
+    resolution: {integrity: sha512-wunyBIUPeY6Kx3SFhOQqOPs+hyRADO5bztpo8aZ3N3xfzhefSTOdrgUroKvHx1DvoQO6MAlykcuUFps3yfaqmg==}
     engines: {node: '>=14.18'}
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
@@ -15462,6 +15465,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@prisma/instrumentation@5.22.0':
+    dependencies:
+      '@opentelemetry/api': 1.9.0
+      '@opentelemetry/instrumentation': 0.52.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
+    transitivePeerDependencies:
+      - supports-color
+
   '@radix-ui/primitive@1.0.1':
     dependencies:
       '@babel/runtime': 7.24.6
@@ -17279,29 +17290,29 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@sentry-internal/browser-utils@8.45.0':
+  '@sentry-internal/browser-utils@8.47.0':
     dependencies:
-      '@sentry/core': 8.45.0
+      '@sentry/core': 8.47.0
 
-  '@sentry-internal/feedback@8.45.0':
+  '@sentry-internal/feedback@8.47.0':
     dependencies:
-      '@sentry/core': 8.45.0
+      '@sentry/core': 8.47.0
 
-  '@sentry-internal/replay-canvas@8.45.0':
+  '@sentry-internal/replay-canvas@8.47.0':
     dependencies:
-      '@sentry-internal/replay': 8.45.0
-      '@sentry/core': 8.45.0
+      '@sentry-internal/replay': 8.47.0
+      '@sentry/core': 8.47.0
 
-  '@sentry-internal/replay@8.45.0':
+  '@sentry-internal/replay@8.47.0':
     dependencies:
-      '@sentry-internal/browser-utils': 8.45.0
-      '@sentry/core': 8.45.0
+      '@sentry-internal/browser-utils': 8.47.0
+      '@sentry/core': 8.47.0
 
-  '@sentry/astro@8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
+  '@sentry/astro@8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
     dependencies:
-      '@sentry/browser': 8.45.0
-      '@sentry/core': 8.45.0
-      '@sentry/node': 8.45.0
+      '@sentry/browser': 8.47.0
+      '@sentry/core': 8.47.0
+      '@sentry/node': 8.47.0
       '@sentry/vite-plugin': 2.22.6
       astro: 5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
     transitivePeerDependencies:
@@ -17310,13 +17321,13 @@ snapshots:
 
   '@sentry/babel-plugin-component-annotate@2.22.6': {}
 
-  '@sentry/browser@8.45.0':
+  '@sentry/browser@8.47.0':
     dependencies:
-      '@sentry-internal/browser-utils': 8.45.0
-      '@sentry-internal/feedback': 8.45.0
-      '@sentry-internal/replay': 8.45.0
-      '@sentry-internal/replay-canvas': 8.45.0
-      '@sentry/core': 8.45.0
+      '@sentry-internal/browser-utils': 8.47.0
+      '@sentry-internal/feedback': 8.47.0
+      '@sentry-internal/replay': 8.47.0
+      '@sentry-internal/replay-canvas': 8.47.0
+      '@sentry/core': 8.47.0
 
   '@sentry/bundler-plugin-core@2.22.6':
     dependencies:
@@ -17372,49 +17383,9 @@ snapshots:
       - encoding
       - supports-color
 
-  '@sentry/core@8.44.0': {}
-
   '@sentry/core@8.45.0': {}
 
-  '@sentry/node@8.44.0':
-    dependencies:
-      '@opentelemetry/api': 1.9.0
-      '@opentelemetry/context-async-hooks': 1.29.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/core': 1.29.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation': 0.56.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-amqplib': 0.45.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-connect': 0.42.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-dataloader': 0.15.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-express': 0.46.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-fastify': 0.43.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-fs': 0.18.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-generic-pool': 0.42.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-graphql': 0.46.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-hapi': 0.44.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-http': 0.56.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-ioredis': 0.46.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-kafkajs': 0.6.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-knex': 0.43.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-koa': 0.46.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-lru-memoizer': 0.43.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-mongodb': 0.50.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-mongoose': 0.45.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-mysql': 0.44.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-mysql2': 0.44.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-nestjs-core': 0.43.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-pg': 0.49.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-redis-4': 0.45.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-tedious': 0.17.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/instrumentation-undici': 0.9.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 1.29.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/semantic-conventions': 1.28.0
-      '@prisma/instrumentation': 5.19.1
-      '@sentry/core': 8.44.0
-      '@sentry/opentelemetry': 8.44.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)
-      import-in-the-middle: 1.11.2
-    transitivePeerDependencies:
-      - supports-color
+  '@sentry/core@8.47.0': {}
 
   '@sentry/node@8.45.0':
     dependencies:
@@ -17456,14 +17427,45 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sentry/opentelemetry@8.44.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)':
+  '@sentry/node@8.47.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
+      '@opentelemetry/context-async-hooks': 1.29.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/core': 1.29.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/instrumentation': 0.56.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-amqplib': 0.45.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-connect': 0.42.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-dataloader': 0.15.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-express': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-fastify': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-fs': 0.18.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-generic-pool': 0.42.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-graphql': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-hapi': 0.44.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-http': 0.56.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-ioredis': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-kafkajs': 0.6.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-knex': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-koa': 0.46.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-lru-memoizer': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mongodb': 0.50.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mongoose': 0.45.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mysql': 0.44.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-mysql2': 0.44.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-nestjs-core': 0.43.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-pg': 0.49.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-redis-4': 0.45.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-tedious': 0.17.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation-undici': 0.9.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 1.29.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.28.0
-      '@sentry/core': 8.44.0
+      '@prisma/instrumentation': 5.22.0
+      '@sentry/core': 8.47.0
+      '@sentry/opentelemetry': 8.47.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)
+      import-in-the-middle: 1.11.2
+    transitivePeerDependencies:
+      - supports-color
 
   '@sentry/opentelemetry@8.45.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)':
     dependencies:
@@ -17473,6 +17475,15 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.28.0
       '@sentry/core': 8.45.0
+
+  '@sentry/opentelemetry@8.47.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.28.0)':
+    dependencies:
+      '@opentelemetry/api': 1.9.0
+      '@opentelemetry/core': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation': 0.56.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 1.29.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/semantic-conventions': 1.28.0
+      '@sentry/core': 8.47.0
 
   '@sentry/vite-plugin@2.22.6':
     dependencies:
@@ -17531,9 +17542,9 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@spotlightjs/astro@2.3.0(@sentry/astro@8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
+  '@spotlightjs/astro@2.3.0(@sentry/astro@8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)))(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))':
     dependencies:
-      '@sentry/astro': 8.45.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
+      '@sentry/astro': 8.47.0(astro@5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1))
       '@spotlightjs/spotlight': 2.9.0
       astro: 5.1.0(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.10.2)(jiti@2.4.0)(rollup@4.28.1)(sass@1.83.0)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.1)
     transitivePeerDependencies:
@@ -17543,7 +17554,7 @@ snapshots:
 
   '@spotlightjs/sidecar@1.10.0':
     dependencies:
-      '@sentry/node': 8.44.0
+      '@sentry/node': 8.45.0
       kleur: 4.1.5
       launch-editor: 2.9.1
       source-map: 0.7.4
@@ -17552,7 +17563,7 @@ snapshots:
 
   '@spotlightjs/spotlight@2.9.0':
     dependencies:
-      '@sentry/node': 8.44.0
+      '@sentry/node': 8.45.0
       '@spotlightjs/overlay': 2.9.0
       '@spotlightjs/sidecar': 1.10.0
       import-meta-resolve: 4.1.0
