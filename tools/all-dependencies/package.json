@@ -146,7 +146,7 @@
     "prettier": "3.4.2",
     "prettier-plugin-tailwindcss": "~0.6.9",
     "react-stately": "~3.34.0",
-    "rollup": "~4.28.1",
+    "rollup": "~4.29.1",
     "rollup-plugin-visualizer": "~5.12.0",
     "sass": "~1.83.0",
     "sass-loader": "~16.0.4",
