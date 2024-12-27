@@ -65,7 +65,7 @@
     "react-resizable-panels": "~2.1.7",
     "sonner": "1.7.1",
     "swr": "~2.2.5",
-    "tailwind-merge": "~2.5.5",
+    "tailwind-merge": "~2.6.0",
     "tslib": "~2.8.1"
   },
   "peerDependencies": {
