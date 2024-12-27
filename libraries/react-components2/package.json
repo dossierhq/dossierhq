@@ -89,7 +89,7 @@
     "@storybook/react": "~8.4.7",
     "@storybook/react-vite": "~8.4.7",
     "@storybook/test": "~8.4.7",
-    "@storybook/test-runner": "~0.20.1",
+    "@storybook/test-runner": "~0.21.0",
     "@types/lodash": "~4.17.13",
     "@types/react": "19.0.2",
     "@types/react-dom": "~19.0.2",
