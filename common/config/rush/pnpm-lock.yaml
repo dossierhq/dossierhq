@@ -167,8 +167,8 @@ importers:
         specifier: ~1.12.0
         version: 1.12.0
       swr:
-        specifier: ~2.2.5
-        version: 2.2.5(react@19.0.0)
+        specifier: ~2.3.0
+        version: 2.3.0(react@19.0.0)
     devDependencies:
       '@dossierhq/eslint-config-react':
         specifier: workspace:*
@@ -334,8 +334,8 @@ importers:
         specifier: ~1.12.0
         version: 1.12.0
       swr:
-        specifier: ~2.2.5
-        version: 2.2.5(react@19.0.0)
+        specifier: ~2.3.0
+        version: 2.3.0(react@19.0.0)
     devDependencies:
       '@dossierhq/eslint-config-react':
         specifier: workspace:*
@@ -1621,8 +1621,8 @@ importers:
         specifier: ~4.17.21
         version: 4.17.21
       swr:
-        specifier: ~2.2.5
-        version: 2.2.5(react@19.0.0)
+        specifier: ~2.3.0
+        version: 2.3.0(react@19.0.0)
       tslib:
         specifier: ~2.8.1
         version: 2.8.1
@@ -1793,8 +1793,8 @@ importers:
         specifier: 1.7.1
         version: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       swr:
-        specifier: ~2.2.5
-        version: 2.2.5(react@19.0.0)
+        specifier: ~2.3.0
+        version: 2.3.0(react@19.0.0)
       tailwind-merge:
         specifier: ~2.6.0
         version: 2.6.0
@@ -2486,8 +2486,8 @@ importers:
         specifier: ~1.12.0
         version: 1.12.0
       swr:
-        specifier: ~2.2.5
-        version: 2.2.5(react@19.0.0)
+        specifier: ~2.3.0
+        version: 2.3.0(react@19.0.0)
       tailwind-merge:
         specifier: ~2.6.0
         version: 2.6.0
@@ -12025,10 +12025,10 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  swr@2.2.5:
-    resolution: {integrity: sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==}
+  swr@2.3.0:
+    resolution: {integrity: sha512-NyZ76wA4yElZWBHzSgEJc28a0u6QZvhb6w0azeL2k7+Q1gAzVK+IqQYXhVOC/mzi+HZIozrZvBVeSeOZNR2bqA==}
     peerDependencies:
-      react: ^16.11.0 || ^17.0.0 || ^18.0.0
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   system-architecture@0.1.0:
     resolution: {integrity: sha512-ulAk51I9UVUyJgxlv9M6lFot2WP3e7t8Kz9+IS6D4rVba1tR9kON+Ey69f+1R4Q8cd45Lod6a4IcJIxnzGc/zA==}
@@ -12479,11 +12479,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-sync-external-store@1.2.0:
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   use-sync-external-store@1.4.0:
     resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
@@ -24524,11 +24519,11 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.0.0
 
-  swr@2.2.5(react@19.0.0):
+  swr@2.3.0(react@19.0.0):
     dependencies:
-      client-only: 0.0.1
+      dequal: 2.0.3
       react: 19.0.0
-      use-sync-external-store: 1.2.0(react@19.0.0)
+      use-sync-external-store: 1.4.0(react@19.0.0)
 
   system-architecture@0.1.0: {}
 
@@ -24966,10 +24961,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.0.2
-
-  use-sync-external-store@1.2.0(react@19.0.0):
-    dependencies:
-      react: 19.0.0
 
   use-sync-external-store@1.4.0(react@19.0.0):
     dependencies:
