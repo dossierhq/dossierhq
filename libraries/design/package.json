@@ -68,7 +68,7 @@
     "@typescript-eslint/eslint-plugin": "~8.18.0",
     "@typescript-eslint/parser": "~8.18.0",
     "@vitejs/plugin-react": "~4.3.4",
-    "bulma": "~0.9.4",
+    "bulma": "~1.0.3",
     "eslint": "~8.57.0",
     "eslint-plugin-react": "~7.37.2",
     "eslint-plugin-react-hooks": "~5.1.0",
