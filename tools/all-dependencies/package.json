@@ -134,7 +134,7 @@
     "esbuild": "~0.24.0",
     "eslint-config-next": "~15.1.0",
     "eslint-plugin-import": "~2.31.0",
-    "eslint-plugin-react-compiler": "19.0.0-beta-201e55d-20241215",
+    "eslint-plugin-react-compiler": "19.0.0-beta-55955c9-20241229",
     "eslint-plugin-storybook": "~0.11.1",
     "graphql-config": "~5.1.3",
     "graphql-ws": "~5.16.0",
