@@ -1216,8 +1216,8 @@ importers:
         specifier: ~4.3.4
         version: 4.3.4(vite@6.0.3(@types/node@22.10.2)(jiti@2.4.0)(sass@1.83.0)(tsx@4.19.2)(yaml@2.5.1))
       bulma:
-        specifier: ~0.9.4
-        version: 0.9.4
+        specifier: ~1.0.3
+        version: 1.0.3
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2622,8 +2622,8 @@ importers:
         specifier: ~1.0.0
         version: 1.0.0
       bulma:
-        specifier: ~0.9.4
-        version: 0.9.4
+        specifier: ~1.0.3
+        version: 1.0.3
       chromatic:
         specifier: ~11.20.2
         version: 11.20.2
@@ -7503,8 +7503,8 @@ packages:
   builtins@1.0.3:
     resolution: {integrity: sha512-uYBjakWipfaO/bXI7E8rq6kpwHRZK5cNYrUv2OzZSI/FvmdMyXJ2tG9dKcjEC5YHmHpUAwsargWIZNWdxb/bnQ==}
 
-  bulma@0.9.4:
-    resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
+  bulma@1.0.3:
+    resolution: {integrity: sha512-9eVXBrXwlU337XUXBjIIq7i88A+tRbJYAjXQjT/21lwam+5tpvKF0R7dCesre9N+HV9c6pzCNEPKrtgvBBes2g==}
 
   bun-types@1.1.37:
     resolution: {integrity: sha512-C65lv6eBr3LPJWFZ2gswyrGZ82ljnH8flVE03xeXxKhi2ZGtFiO4isRKTKnitbSqtRAcaqYSR6djt1whI66AbA==}
@@ -19030,7 +19030,7 @@ snapshots:
 
   builtins@1.0.3: {}
 
-  bulma@0.9.4: {}
+  bulma@1.0.3: {}
 
   bun-types@1.1.37:
     dependencies:
