@@ -44,7 +44,7 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@types/better-sqlite3": "~7.6.12",
-    "@types/react": "19.0.2",
+    "@types/react": "19.0.4",
     "@types/react-dom": "~19.0.2",
     "@typescript-eslint/eslint-plugin": "~8.19.0",
     "dotenv": "~16.4.7",
