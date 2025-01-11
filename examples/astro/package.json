@@ -38,7 +38,7 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
     "@types/better-sqlite3": "~7.6.12",
-    "@types/react": "19.0.2",
+    "@types/react": "19.0.4",
     "prettier": "3.4.2",
     "rollup-plugin-visualizer": "~5.13.1",
     "tsx": "~4.19.2",
