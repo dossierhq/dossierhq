@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@rushstack/eslint-patch": "~1.10.4",
-    "@typescript-eslint/eslint-plugin": "~8.19.0",
-    "@typescript-eslint/parser": "~8.19.0"
+    "@typescript-eslint/eslint-plugin": "~8.20.0",
+    "@typescript-eslint/parser": "~8.20.0"
   }
 }
