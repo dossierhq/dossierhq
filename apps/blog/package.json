@@ -20,7 +20,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@antonz/codapi": "~0.19.8",
+    "@antonz/codapi": "~0.19.10",
     "@cloudinary/url-gen": "~1.21.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
