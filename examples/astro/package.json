@@ -29,7 +29,7 @@
     "@sentry/astro": "~8.51.0",
     "@spotlightjs/astro": "~2.4.2",
     "astro": "~5.1.9",
-    "better-sqlite3": "~11.7.0",
+    "better-sqlite3": "~11.8.1",
     "leaflet": "~1.9.4",
     "react": "~19.0.0",
     "react-dom": "~19.0.0"
@@ -38,9 +38,9 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/better-sqlite3": "~7.6.12",
-    "@types/react": "19.0.7",
+    "@types/react": "19.0.8",
     "prettier": "3.4.2",
-    "rollup-plugin-visualizer": "~5.13.1",
+    "rollup-plugin-visualizer": "~5.14.0",
     "tsx": "~4.19.2",
     "typescript": "~5.7.3"
   }

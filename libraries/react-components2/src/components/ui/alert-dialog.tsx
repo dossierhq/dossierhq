@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 'use client';
 
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';

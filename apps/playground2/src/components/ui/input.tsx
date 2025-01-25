@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { cn } from '@/utils/ClassUtils';
 import * as React from 'react';
 
