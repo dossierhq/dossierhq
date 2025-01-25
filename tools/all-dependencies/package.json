@@ -111,7 +111,7 @@
     "@types/base-64": "~1.0.2",
     "@types/better-sqlite3": "~7.6.12",
     "@types/body-parser": "~1.19.5",
-    "@types/bun": "~1.1.14",
+    "@types/bun": "~1.2.0",
     "@types/express": "~5.0.0",
     "@types/leaflet": "~1.9.14",
     "@types/leaflet.locatecontrol": "~0.74.6",

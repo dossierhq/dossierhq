@@ -559,8 +559,8 @@ importers:
         specifier: ~7.6.12
         version: 7.6.12
       '@types/bun':
-        specifier: ~1.1.14
-        version: 1.1.14
+        specifier: ~1.2.0
+        version: 1.2.0
       '@types/pg':
         specifier: ~8.11.11
         version: 8.11.11
@@ -593,8 +593,8 @@ importers:
         specifier: ~4.4.1
         version: 4.4.1(@vue/compiler-sfc@3.4.15)(prettier@3.4.2)
       '@types/bun':
-        specifier: ~1.1.14
-        version: 1.1.14
+        specifier: ~1.2.0
+        version: 1.2.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -870,8 +870,8 @@ importers:
         specifier: 0.68.13
         version: 0.68.13(@types/node@22.10.10)
       '@types/bun':
-        specifier: ~1.1.14
-        version: 1.1.14
+        specifier: ~1.2.0
+        version: 1.2.0
       '@types/node':
         specifier: ~22.10.10
         version: 22.10.10
@@ -962,8 +962,8 @@ importers:
         specifier: 0.68.13
         version: 0.68.13(@types/node@22.10.10)
       '@types/bun':
-        specifier: ~1.1.14
-        version: 1.1.14
+        specifier: ~1.2.0
+        version: 1.2.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
@@ -2571,8 +2571,8 @@ importers:
         specifier: ~1.19.5
         version: 1.19.5
       '@types/bun':
-        specifier: ~1.1.14
-        version: 1.1.14
+        specifier: ~1.2.0
+        version: 1.2.0
       '@types/express':
         specifier: ~5.0.0
         version: 5.0.0
@@ -6628,8 +6628,8 @@ packages:
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
 
-  '@types/bun@1.1.14':
-    resolution: {integrity: sha512-opVYiFGtO2af0dnWBdZWlioLBoxSdDO5qokaazLhq8XQtGZbY4pY3/JxY8Zdf/hEwGubbp7ErZXoN1+h2yesxA==}
+  '@types/bun@1.2.0':
+    resolution: {integrity: sha512-5N1JqdahfpBlAv4wy6svEYcd/YfO2GNrbL95JOmFx8nkE6dbK4R0oSE5SpBA4vBRqgrOUAXF8Dpiz+gi7r80SA==}
 
   '@types/codemirror@0.0.90':
     resolution: {integrity: sha512-8Z9+tSg27NPRGubbUPUCrt5DDG/OWzLph5BvcDykwR5D7RyZh5mhHG0uS1ePKV1YFCA+/cwc4Ey2AJAEFfV3IA==}
@@ -6732,9 +6732,6 @@ packages:
 
   '@types/nlcst@2.0.3':
     resolution: {integrity: sha512-vSYNSDe6Ix3q+6Z7ri9lyWqgGhJTmzRjZRqyq15N0Z/1/UnVsno9G/N40NBijoYx2seFDIl0+B2mgAb9mezUCA==}
-
-  '@types/node@20.12.13':
-    resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
 
   '@types/node@22.10.10':
     resolution: {integrity: sha512-X47y/mPNzxviAGY5TcYPtYL8JsY3kAq2n8fMmKoRCxq/c4v4pyGNCzM2R6+M5/umG4ZfHuT+sgqDYqWc9rJ6ww==}
@@ -7391,8 +7388,8 @@ packages:
   bulma@0.9.4:
     resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
 
-  bun-types@1.1.37:
-    resolution: {integrity: sha512-C65lv6eBr3LPJWFZ2gswyrGZ82ljnH8flVE03xeXxKhi2ZGtFiO4isRKTKnitbSqtRAcaqYSR6djt1whI66AbA==}
+  bun-types@1.2.0:
+    resolution: {integrity: sha512-KEaJxyZfbV/c4eyG0vyehDpYmBGreNiQbZIqvVHJwZ4BmeuWlNZ7EAzMN2Zcd7ailmS/tGVW0BgYbGf+lGEpWw==}
 
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -12365,9 +12362,6 @@ packages:
 
   undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
-
-  undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
@@ -17940,9 +17934,9 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/node': 22.10.10
 
-  '@types/bun@1.1.14':
+  '@types/bun@1.2.0':
     dependencies:
-      bun-types: 1.1.37
+      bun-types: 1.2.0
 
   '@types/codemirror@0.0.90':
     dependencies:
@@ -18061,10 +18055,6 @@ snapshots:
   '@types/nlcst@2.0.3':
     dependencies:
       '@types/unist': 3.0.2
-
-  '@types/node@20.12.13':
-    dependencies:
-      undici-types: 5.26.5
 
   '@types/node@22.10.10':
     dependencies:
@@ -19029,9 +19019,9 @@ snapshots:
 
   bulma@0.9.4: {}
 
-  bun-types@1.1.37:
+  bun-types@1.2.0:
     dependencies:
-      '@types/node': 20.12.13
+      '@types/node': 22.10.10
       '@types/ws': 8.5.10
 
   busboy@1.6.0:
@@ -25088,8 +25078,6 @@ snapshots:
   uncrypto@0.1.3: {}
 
   undefsafe@2.0.5: {}
-
-  undici-types@5.26.5: {}
 
   undici-types@6.20.0: {}
 
