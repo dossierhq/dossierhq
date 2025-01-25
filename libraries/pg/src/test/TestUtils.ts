@@ -28,7 +28,7 @@ export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): 
   describe(testSuiteName, () => {
     for (const [testName, testFunction] of Object.entries(testSuite)) {
       const timeout = testFunction.timeout ? { long: 50_000 }[testFunction.timeout] : undefined;
-      test(testName, testFunction, { timeout });
+      test(testName, { timeout }, testFunction);
     }
   });
 }

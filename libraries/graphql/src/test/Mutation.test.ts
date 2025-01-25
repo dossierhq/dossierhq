@@ -2285,6 +2285,7 @@ describe('publishEntities()', () => {
   test('Error: using the wrong authKey', async () => {
     const { clientOther } = server;
     const createResult = await clientOther.createEntity({
+      id: '735d39f6-9d83-4641-ac88-7d33942305dd',
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2305,12 +2306,16 @@ describe('publishEntities()', () => {
         contextValue: createContext(),
         variableValues: { references: [{ id, version: 1 }] },
       });
-      expect(result).toEqual({
-        data: {
-          publishEntities: null,
-        },
-        errors: [new Error(`NotAuthorized: entity(${id}): Wrong authKey provided`)],
-      });
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "publishEntities": null,
+          },
+          "errors": [
+            [GraphQLError: NotAuthorized: entity(735d39f6-9d83-4641-ac88-7d33942305dd): Wrong authKey provided],
+          ],
+        }
+      `);
     }
   });
 });
@@ -2392,6 +2397,7 @@ describe('unpublishEntities()', () => {
   test('Error: using the wrong authKey', async () => {
     const { clientOther } = server;
     const createResult = await clientOther.createEntity({
+      id: '4fcb0ad7-a9ef-4a53-804e-91e006fa50e8',
       info: { type: 'MutationFoo', name: 'Howdy name', authKey: 'subject' },
       fields: { title: 'Howdy title', summary: 'Howdy summary' },
     });
@@ -2412,12 +2418,16 @@ describe('unpublishEntities()', () => {
         contextValue: createContext(),
         variableValues: { references: [{ id }] },
       });
-      expect(result).toEqual({
-        data: {
-          unpublishEntities: null,
-        },
-        errors: [new Error(`NotAuthorized: entity(${id}): Wrong authKey provided`)],
-      });
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "unpublishEntities": null,
+          },
+          "errors": [
+            [GraphQLError: NotAuthorized: entity(4fcb0ad7-a9ef-4a53-804e-91e006fa50e8): Wrong authKey provided],
+          ],
+        }
+      `);
     }
   });
 });
