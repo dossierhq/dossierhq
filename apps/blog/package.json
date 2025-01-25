@@ -42,18 +42,18 @@
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.4.0",
+    "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "19.0.7",
     "@types/react-dom": "~19.0.2",
-    "@typescript-eslint/eslint-plugin": "~8.20.0",
+    "@typescript-eslint/eslint-plugin": "~8.21.0",
     "dotenv": "~16.4.7",
     "eslint": "~8.57.0",
     "eslint-config-next": "~15.1.0",
     "prettier": "3.4.2",
     "schema-dts": "~1.1.2",
     "tsx": "~4.19.2",
-    "typescript": "~5.7.2",
+    "typescript": "~5.7.3",
     "vitest": "~2.1.8"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
