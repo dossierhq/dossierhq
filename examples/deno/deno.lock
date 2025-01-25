@@ -1,49 +1,39 @@
 {
-  "version": "3",
-  "packages": {
-    "specifiers": {
-      "npm:tslib@~2.4.0": "npm:tslib@2.4.1",
-      "npm:tslib@~2.5.0": "npm:tslib@2.5.0",
-      "npm:tslib@~2.6.0": "npm:tslib@2.6.0",
-      "npm:tslib@~2.6.2": "npm:tslib@2.6.2",
-      "npm:tslib@~2.6.3": "npm:tslib@2.6.3",
-      "npm:uuid@~10.0.0": "npm:uuid@10.0.0",
-      "npm:uuid@~9.0.0": "npm:uuid@9.0.0",
-      "npm:uuid@~9.0.1": "npm:uuid@9.0.1"
+  "version": "4",
+  "specifiers": {
+    "npm:tslib@2.4": "2.4.1",
+    "npm:tslib@2.5": "2.5.0",
+    "npm:tslib@2.6": "2.6.0",
+    "npm:tslib@~2.6.2": "2.6.2",
+    "npm:tslib@~2.6.3": "2.6.3",
+    "npm:uuid@10.0": "10.0.0",
+    "npm:uuid@9.0": "9.0.0",
+    "npm:uuid@~9.0.1": "9.0.1"
+  },
+  "npm": {
+    "tslib@2.4.1": {
+      "integrity": "sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA=="
     },
-    "npm": {
-      "tslib@2.4.1": {
-        "integrity": "sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==",
-        "dependencies": {}
-      },
-      "tslib@2.5.0": {
-        "integrity": "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==",
-        "dependencies": {}
-      },
-      "tslib@2.6.0": {
-        "integrity": "sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==",
-        "dependencies": {}
-      },
-      "tslib@2.6.2": {
-        "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==",
-        "dependencies": {}
-      },
-      "tslib@2.6.3": {
-        "integrity": "sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==",
-        "dependencies": {}
-      },
-      "uuid@10.0.0": {
-        "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
-        "dependencies": {}
-      },
-      "uuid@9.0.0": {
-        "integrity": "sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==",
-        "dependencies": {}
-      },
-      "uuid@9.0.1": {
-        "integrity": "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==",
-        "dependencies": {}
-      }
+    "tslib@2.5.0": {
+      "integrity": "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
+    },
+    "tslib@2.6.0": {
+      "integrity": "sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA=="
+    },
+    "tslib@2.6.2": {
+      "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q=="
+    },
+    "tslib@2.6.3": {
+      "integrity": "sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ=="
+    },
+    "uuid@10.0.0": {
+      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ=="
+    },
+    "uuid@9.0.0": {
+      "integrity": "sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg=="
+    },
+    "uuid@9.0.1": {
+      "integrity": "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA=="
     }
   },
   "remote": {
@@ -227,5 +217,11 @@
     "https://deno.land/x/postgres@v0.17.0/query/types.ts": "a6dc8024867fe7ccb0ba4b4fa403ee5d474c7742174128c8e689c3b5e5eaa933",
     "https://deno.land/x/postgres@v0.17.0/utils/deferred.ts": "dd94f2a57355355c47812b061a51b55263f72d24e9cb3fdb474c7519f4d61083",
     "https://deno.land/x/postgres@v0.17.0/utils/utils.ts": "19c3527ddd5c6c4c49ae36397120274c7f41f9d3cbf479cb36065d23329e9f90"
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:tslib@~2.6.3",
+      "npm:uuid@10.0"
+    ]
   }
 }
