@@ -11,14 +11,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: asdf-vm/actions/setup@v3
-      - name: Install asdf
-        run: |
-          asdf plugin add bun
-          asdf plugin add deno
-          asdf plugin add nodejs
-          asdf plugin add libsql-server https://github.com/jonasb/asdf-libsql-server.git
-          asdf install
+      - uses: jdx/mise-action@v2
       - name: Fetch Dependabot metadata
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2

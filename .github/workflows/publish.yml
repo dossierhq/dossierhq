@@ -31,14 +31,7 @@ jobs:
             app/blog/.next/cache/
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - uses: asdf-vm/actions/setup@v3
-      - name: Install asdf
-        run: |
-          asdf plugin add bun
-          asdf plugin add deno
-          asdf plugin add nodejs
-          asdf plugin add libsql-server https://github.com/jonasb/asdf-libsql-server.git
-          asdf install
+      - uses: jdx/mise-action@v2
       - name: rush install
         run: node common/scripts/install-run-rush.js install --bypass-policy
       - name: rush change -v

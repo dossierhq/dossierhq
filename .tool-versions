@@ -1,4 +1,5 @@
-bun 1.2.0
-deno 2.1.7
-nodejs 22.11.0
-libsql-server libsql-server-v0.24.31
+bun                 1.2.0
+deno                2.1.7
+nodejs              22.11.0
+libsql-server       libsql-server-v0.24.31
+npm:@microsoft/rush latest
