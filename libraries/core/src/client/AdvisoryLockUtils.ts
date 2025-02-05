@@ -67,7 +67,7 @@ export async function withAdvisoryLock<TOk, TError extends ErrorType>(
     await client.releaseAdvisoryLock(name, handle); // ignore potential error of releasing
   }
 
-  return realRenewError ? realRenewError : result;
+  return realRenewError ?? result;
 }
 
 function setStatusError(
