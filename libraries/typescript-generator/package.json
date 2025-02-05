@@ -50,10 +50,10 @@
     "@dossierhq/eslint-config-generic": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@rushstack/heft": "0.68.13",
-    "@vitest/coverage-v8": "~3.0.4",
+    "@vitest/coverage-v8": "~3.0.5",
     "eslint": "~8.57.0",
     "prettier": "3.4.2",
     "typescript": "~5.7.3",
-    "vitest": "~3.0.4"
+    "vitest": "~3.0.5"
   }
 }

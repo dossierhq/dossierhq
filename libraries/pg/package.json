@@ -66,6 +66,6 @@
     "prettier": "3.4.2",
     "typescript": "~5.7.3",
     "uuid": "~11.0.5",
-    "vitest": "~3.0.4"
+    "vitest": "~3.0.5"
   }
 }
