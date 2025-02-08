@@ -70,6 +70,9 @@ importers:
         specifier: ~2.8.1
         version: 2.8.1
     devDependencies:
+      '@dossierhq/eslint-config':
+        specifier: workspace:*
+        version: link:../../libraries/eslint-config
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
@@ -85,18 +88,12 @@ importers:
       '@types/react-dom':
         specifier: ~19.0.3
         version: 19.0.3(@types/react@19.0.8)
-      '@typescript-eslint/eslint-plugin':
-        specifier: ~8.23.0
-        version: 8.23.0(@typescript-eslint/parser@8.23.0(eslint@8.57.0)(typescript@5.7.3))(eslint@8.57.0)(typescript@5.7.3)
       dotenv:
         specifier: ~16.4.7
         version: 16.4.7
       eslint:
-        specifier: ~8.57.0
-        version: 8.57.0
-      eslint-config-next:
-        specifier: ~15.1.6
-        version: 15.1.6(eslint@8.57.0)(typescript@5.7.3)
+        specifier: ~9.19.0
+        version: 9.19.0(jiti@2.4.0)
       prettier:
         specifier: 3.4.2
         version: 3.4.2
@@ -1245,6 +1242,9 @@ importers:
       '@eslint/js':
         specifier: ~9.19.0
         version: 9.19.0
+      '@next/eslint-plugin-next':
+        specifier: ~15.1.6
+        version: 15.1.6
       eslint-plugin-react:
         specifier: ~7.37.4
         version: 7.37.4(eslint@9.19.0(jiti@2.4.0))
@@ -13409,7 +13409,7 @@ snapshots:
       '@volar/language-core': 2.4.10
       '@volar/language-server': 2.4.10
       '@volar/language-service': 2.4.10
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       muggle-string: 0.4.1
       volar-service-css: 0.0.62(@volar/language-service@2.4.10)
       volar-service-emmet: 0.0.62(@volar/language-service@2.4.10)
@@ -18945,7 +18945,7 @@ snapshots:
       '@typescript-eslint/types': 8.20.0
       '@typescript-eslint/visitor-keys': 8.20.0
       debug: 4.4.0
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.7.1
@@ -21626,7 +21626,7 @@ snapshots:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
@@ -21634,7 +21634,7 @@ snapshots:
   globby@14.0.1:
     dependencies:
       '@sindresorhus/merge-streams': 2.3.0
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       ignore: 5.3.1
       path-type: 5.0.0
       slash: 5.1.0
