@@ -310,8 +310,8 @@ importers:
         specifier: ~5.3.0
         version: 5.3.0
       lucide-react:
-        specifier: ~0.474.0
-        version: 0.474.0(react@19.0.0)
+        specifier: ~0.475.0
+        version: 0.475.0(react@19.0.0)
       playground-example-generator:
         specifier: workspace:*
         version: link:../playground-example-generator
@@ -1721,8 +1721,8 @@ importers:
         specifier: ~4.17.21
         version: 4.17.21
       lucide-react:
-        specifier: ~0.474.0
-        version: 0.474.0(react@19.0.0)
+        specifier: ~0.475.0
+        version: 0.475.0(react@19.0.0)
       next-themes:
         specifier: ~0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -2286,8 +2286,8 @@ importers:
         specifier: ~4.17.21
         version: 4.17.21
       lucide-react:
-        specifier: ~0.474.0
-        version: 0.474.0(react@19.0.0)
+        specifier: ~0.475.0
+        version: 0.475.0(react@19.0.0)
       next:
         specifier: ~15.1.6
         version: 15.1.6(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.50.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@19.0.0-beta-714736e-20250131)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.83.4)
@@ -9925,8 +9925,8 @@ packages:
   lru-memoizer@2.2.0:
     resolution: {integrity: sha512-QfOZ6jNkxCcM/BkIPnFsqDhtrazLRsghi9mBwFAzol5GCvj4EkFT899Za3+QwikCg5sRX8JstioBDwOxEyzaNw==}
 
-  lucide-react@0.474.0:
-    resolution: {integrity: sha512-CmghgHkh0OJNmxGKWc0qfPJCYHASPMVSyGY8fj3xgk4v84ItqDg64JNKFZn5hC6E0vHi6gxnbCgwhyVB09wQtA==}
+  lucide-react@0.475.0:
+    resolution: {integrity: sha512-NJzvVu1HwFVeZ+Gwq2q00KygM1aBhy/ZrhY9FsAgJtpB+E4R7uxRk9M2iKvHa6/vNxZydIB59htha4c2vvwvVg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -22267,7 +22267,7 @@ snapshots:
       lodash.clonedeep: 4.5.0
       lru-cache: 4.0.2
 
-  lucide-react@0.474.0(react@19.0.0):
+  lucide-react@0.475.0(react@19.0.0):
     dependencies:
       react: 19.0.0
 
