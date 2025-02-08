@@ -367,9 +367,6 @@ importers:
       eslint:
         specifier: ~9.19.0
         version: 9.19.0(jiti@2.4.0)
-      eslint-plugin-react-compiler:
-        specifier: 19.0.0-beta-714736e-20250131
-        version: 19.0.0-beta-714736e-20250131(eslint@9.19.0(jiti@2.4.0))
       graphql-config:
         specifier: ~5.1.3
         version: 5.1.3(@types/node@22.13.1)(graphql@16.10.0)(typescript@5.7.3)
@@ -1230,6 +1227,9 @@ importers:
       eslint-plugin-react:
         specifier: ~7.37.4
         version: 7.37.4(eslint@9.19.0(jiti@2.4.0))
+      eslint-plugin-react-compiler:
+        specifier: 19.0.0-beta-714736e-20250131
+        version: 19.0.0-beta-714736e-20250131(eslint@9.19.0(jiti@2.4.0))
       eslint-plugin-react-hooks:
         specifier: ~5.1.0
         version: 5.1.0(eslint@9.19.0(jiti@2.4.0))
@@ -1754,9 +1754,9 @@ importers:
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../core
-      '@dossierhq/heft-node-rig':
+      '@dossierhq/eslint-config':
         specifier: workspace:*
-        version: link:../../rigs/heft-node-rig
+        version: link:../eslint-config
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../server
@@ -1766,9 +1766,6 @@ importers:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.4.1
         version: 4.4.1(@vue/compiler-sfc@3.4.15)(prettier@3.4.2)
-      '@rushstack/heft':
-        specifier: 0.68.15
-        version: 0.68.15(@types/node@22.13.1)
       '@storybook/addon-actions':
         specifier: ~8.5.3
         version: 8.5.3(storybook@8.5.3(prettier@3.4.2))
@@ -1808,12 +1805,6 @@ importers:
       '@types/sql.js':
         specifier: ~1.4.9
         version: 1.4.9
-      '@typescript-eslint/eslint-plugin':
-        specifier: ~8.23.0
-        version: 8.23.0(@typescript-eslint/parser@8.23.0(eslint@8.57.0)(typescript@5.7.3))(eslint@8.57.0)(typescript@5.7.3)
-      '@typescript-eslint/parser':
-        specifier: ~8.23.0
-        version: 8.23.0(eslint@8.57.0)(typescript@5.7.3)
       '@vitejs/plugin-react':
         specifier: ~4.3.4
         version: 4.3.4(vite@6.1.0(@types/node@22.13.1)(jiti@2.4.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.5.1))
@@ -1827,20 +1818,8 @@ importers:
         specifier: ~9.1.2
         version: 9.1.2
       eslint:
-        specifier: ~8.57.0
-        version: 8.57.0
-      eslint-plugin-react:
-        specifier: ~7.37.4
-        version: 7.37.4(eslint@8.57.0)
-      eslint-plugin-react-compiler:
-        specifier: 19.0.0-beta-714736e-20250131
-        version: 19.0.0-beta-714736e-20250131(eslint@8.57.0)
-      eslint-plugin-react-hooks:
-        specifier: ~5.1.0
-        version: 5.1.0(eslint@8.57.0)
-      eslint-plugin-storybook:
-        specifier: ~0.11.2
-        version: 0.11.2(eslint@8.57.0)(typescript@5.7.3)
+        specifier: ~9.19.0
+        version: 9.19.0(jiti@2.4.0)
       http-server:
         specifier: ~14.1.1
         version: 14.1.1

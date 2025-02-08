@@ -1,6 +1,9 @@
 {
-  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/library-react-esm/tsconfig-base.json",
+  "extends": "@dossierhq/typescript-config/react-library.json",
   "compilerOptions": {
-    "types": ["vite/client"]
-  }
+    "outDir": "lib",
+    "rootDir": "src",
+    "isolatedDeclarations": false
+  },
+  "exclude": ["storybook-static", "vite.config.ts", "lib", "src/**/*.stories.tsx", "src/stories"]
 }
