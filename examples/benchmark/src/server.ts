@@ -1,7 +1,10 @@
-import { createServer, type DatabaseAdapter } from '@dossierhq/server';
+import type { PromiseResult } from '@dossierhq/core';
+import { createServer, type DatabaseAdapter, type Server } from '@dossierhq/server';
 import { schemaSpecification } from './schema.js';
 
-export async function initializeServer(databaseAdapter: DatabaseAdapter) {
+export async function initializeServer(
+  databaseAdapter: DatabaseAdapter,
+): PromiseResult<Server, 'BadRequest' | 'Generic'> {
   const serverResult = await createServer({ databaseAdapter });
   if (serverResult.isError()) return serverResult;
   const server = serverResult.value;

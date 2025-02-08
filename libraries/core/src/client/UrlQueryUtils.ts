@@ -23,7 +23,6 @@ export function encodeURLSearchParams(
         (removeEmptyObjects &&
           typeof value === 'object' &&
           value &&
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           Object.keys(value).length === 0)
       ) {
         continue;

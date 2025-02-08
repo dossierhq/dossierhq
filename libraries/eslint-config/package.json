@@ -1,0 +1,17 @@
+{
+  "name": "@dossierhq/eslint-config",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": ""
+  },
+  "devDependencies": {
+    "@eslint/js": "~9.19.0",
+    "eslint-plugin-react-hooks": "~5.1.0",
+    "eslint-plugin-react": "~7.37.4",
+    "globals": "~15.14.0",
+    "typescript-eslint": "~8.23.0"
+  }
+}

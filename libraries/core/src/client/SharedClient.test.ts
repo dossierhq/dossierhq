@@ -77,7 +77,6 @@ describe('executeOperationPipeline()', () => {
           if (operation.name === TestClientOperationName.foo) {
             const { resolve } = operation;
             const result = await operation.next();
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
             resolve(ok({ item: `[[[${result.isOk() ? result.value.item : result}]]]` }));
           }
         },

@@ -25,14 +25,14 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@playwright/test": "~1.50.1",
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
-    "eslint": "~8.57.0",
+    "eslint": "~9.19.0",
     "prettier": "3.4.2",
     "sql.js": "~1.12.0",
     "typescript": "~5.7.3"

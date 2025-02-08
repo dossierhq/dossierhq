@@ -18,7 +18,7 @@ import {
   Text,
 } from '@dossierhq/design';
 import type { FieldEditorProps } from '@dossierhq/react-components';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, type JSX } from 'react';
 import { useInitializeUploadWidget } from '../hooks/useInitializeUploadWidget.js';
 import type { AdminCloudinaryImage } from '../types/CloudinaryImageComponent.js';
 import type { CloudinaryUploadResult } from '../types/CloudinaryUploadWidget.js';
@@ -37,7 +37,7 @@ export function CloudinaryImageFieldEditor({
   value,
   validationIssues,
   onChange,
-}: Props) {
+}: Props): JSX.Element {
   const handleDeleteClick = useCallback(() => onChange(null), [onChange]);
   return (
     <HoverRevealStack>
@@ -67,7 +67,7 @@ export function CloudinaryImageFieldEditorWithoutClear({
   value: AdminCloudinaryImage;
   validationIssues: (SaveValidationIssue | PublishValidationIssue)[];
   onChange: (value: AdminCloudinaryImage) => void;
-}) {
+}): JSX.Element {
   const { publicId } = value;
 
   const { publicIdValidationIssues, altValidationIssues } = useMemo(() => {

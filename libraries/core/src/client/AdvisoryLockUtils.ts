@@ -84,7 +84,6 @@ async function acquireLockWithRetry(
   options: AdvisoryLockOptions,
   acquireInterval: number,
 ): PromiseResult<AdvisoryLockPayload, typeof ErrorType.BadRequest | typeof ErrorType.Generic> {
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const result = await client.acquireAdvisoryLock(name, options);
     if (result.isOk()) return result.map((it) => it);
