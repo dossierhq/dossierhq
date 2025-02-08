@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
 import { PublishedLoadContextProvider } from '../../test/PublishedLoadContextProvider.js';
 import {
