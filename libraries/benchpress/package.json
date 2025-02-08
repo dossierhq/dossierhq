@@ -27,7 +27,6 @@
     "tslib": "~2.8.1"
   },
   "devDependencies": {
-    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",

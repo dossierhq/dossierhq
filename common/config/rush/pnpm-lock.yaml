@@ -845,9 +845,6 @@ importers:
       '@dossierhq/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@dossierhq/heft-node-rig':
-        specifier: workspace:*
-        version: link:../../rigs/heft-node-rig
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1356,9 +1353,6 @@ importers:
       '@dossierhq/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@dossierhq/heft-node-rig':
-        specifier: workspace:*
-        version: link:../../rigs/heft-node-rig
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1763,6 +1757,9 @@ importers:
       '@dossierhq/sql.js':
         specifier: workspace:*
         version: link:../sql.js
+      '@dossierhq/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ~4.4.1
         version: 4.4.1(@vue/compiler-sfc@3.4.15)(prettier@3.4.2)
