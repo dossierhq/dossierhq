@@ -2077,33 +2077,6 @@ importers:
         specifier: ~3.0.5
         version: 3.0.5(@types/debug@4.1.12)(@types/node@22.13.1)(jiti@2.4.0)(sass@1.83.4)(tsx@4.19.2)(yaml@2.5.1)
 
-  ../../stack/eslint-config-generic:
-    dependencies:
-      '@rushstack/eslint-patch':
-        specifier: ~1.10.5
-        version: 1.10.5
-      '@typescript-eslint/eslint-plugin':
-        specifier: ~8.23.0
-        version: 8.23.0(@typescript-eslint/parser@8.23.0(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3))(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3)
-      '@typescript-eslint/parser':
-        specifier: ~8.23.0
-        version: 8.23.0(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3)
-
-  ../../stack/eslint-config-react:
-    dependencies:
-      '@dossierhq/eslint-config-generic':
-        specifier: workspace:*
-        version: link:../eslint-config-generic
-      '@rushstack/eslint-patch':
-        specifier: ~1.10.5
-        version: 1.10.5
-      eslint-plugin-react:
-        specifier: ~7.37.4
-        version: 7.37.4(eslint@9.19.0(jiti@2.4.0))
-      eslint-plugin-react-hooks:
-        specifier: ~5.1.0
-        version: 5.1.0(eslint@9.19.0(jiti@2.4.0))
-
   ../../templates/library-esm-only:
     dependencies:
       tslib:
@@ -2243,21 +2216,12 @@ importers:
       '@react-aria/overlays':
         specifier: ~3.25.0
         version: 3.25.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@rushstack/eslint-patch':
-        specifier: ~1.10.5
-        version: 1.10.5
       '@sentry/astro':
         specifier: ~8.54.0
         version: 8.54.0(astro@5.2.5(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.13.1)(jiti@2.4.0)(rollup@4.34.3)(sass@1.83.4)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.5.1))
       '@spotlightjs/astro':
         specifier: ~2.4.3
         version: 2.4.3(@sentry/astro@8.54.0(astro@5.2.5(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.13.1)(jiti@2.4.0)(rollup@4.34.3)(sass@1.83.4)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.5.1)))(astro@5.2.5(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.13.1)(jiti@2.4.0)(rollup@4.34.3)(sass@1.83.4)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.5.1))
-      '@typescript-eslint/eslint-plugin':
-        specifier: ~8.23.0
-        version: 8.23.0(@typescript-eslint/parser@8.23.0(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3))(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3)
-      '@typescript-eslint/parser':
-        specifier: ~8.23.0
-        version: 8.23.0(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3)
       astro:
         specifier: ~5.2.5
         version: 5.2.5(@azure/identity@4.5.0)(@azure/storage-blob@12.26.0)(@types/node@22.13.1)(jiti@2.4.0)(rollup@4.34.3)(sass@1.83.4)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.5.1)
@@ -2285,12 +2249,6 @@ importers:
       dotenv:
         specifier: ~16.4.7
         version: 16.4.7
-      eslint-plugin-react:
-        specifier: ~7.37.4
-        version: 7.37.4(eslint@9.19.0(jiti@2.4.0))
-      eslint-plugin-react-hooks:
-        specifier: ~5.1.0
-        version: 5.1.0(eslint@9.19.0(jiti@2.4.0))
       express:
         specifier: ~4.21.2
         version: 4.21.2
@@ -2514,9 +2472,15 @@ importers:
       eslint:
         specifier: ~9.19.0
         version: 9.19.0(jiti@2.4.0)
+      eslint-plugin-react:
+        specifier: ~7.37.4
+        version: 7.37.4(eslint@9.19.0(jiti@2.4.0))
       eslint-plugin-react-compiler:
         specifier: 19.0.0-beta-714736e-20250131
         version: 19.0.0-beta-714736e-20250131(eslint@9.19.0(jiti@2.4.0))
+      eslint-plugin-react-hooks:
+        specifier: ~5.1.0
+        version: 5.1.0(eslint@9.19.0(jiti@2.4.0))
       eslint-plugin-storybook:
         specifier: ~0.11.2
         version: 0.11.2(eslint@9.19.0(jiti@2.4.0))(typescript@5.7.3)
@@ -6115,9 +6079,6 @@ packages:
     resolution: {integrity: sha512-CUypcYP31Q8O04myV6NKGzk9GVXslO5EJNfmARNSzLF2A+5rmZUlDJ4et6eoJaZgBT9wrC2p4JZH04Vkic8HdQ==}
     cpu: [x64]
     os: [win32]
-
-  '@rushstack/eslint-patch@1.10.5':
-    resolution: {integrity: sha512-kkKUDVlII2DQiKy7UstOR1ErJP8kUKAQ4oa+SQtM0K+lPdmmjj0YnnxBgtTVYH7mUKtbsxeFC9y0AmK7Yb78/A==}
 
   '@rushstack/heft-config-file@0.16.3':
     resolution: {integrity: sha512-fyk/amla4g9kuCh52Bj0EAM9n6tfLr9Y0AyCKFwlbXyKUtfbgN1BajxkBxHi3agRINp9TlF87zdL3Ceii5ZUpw==}
@@ -11652,11 +11613,6 @@ packages:
 
   semver@7.6.3:
     resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
-    engines: {node: '>=10'}
-    hasBin: true
-
-  semver@7.7.0:
-    resolution: {integrity: sha512-DrfFnPzblFmNrIZzg5RzHegbiRWg7KMR7btwi2yjHwx06zsUbO5g613sVwEV7FTwmzJu+Io0lJe2GJ3LxqpvBQ==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -17316,8 +17272,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.34.3':
     optional: true
 
-  '@rushstack/eslint-patch@1.10.5': {}
-
   '@rushstack/heft-config-file@0.16.3(@types/node@22.13.1)':
     dependencies:
       '@rushstack/node-core-library': 5.10.2(@types/node@22.13.1)
@@ -18458,7 +18412,7 @@ snapshots:
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
-      semver: 7.7.0
+      semver: 7.7.1
       ts-api-utils: 2.0.1(typescript@5.7.3)
       typescript: 5.7.3
     transitivePeerDependencies:
@@ -24336,8 +24290,6 @@ snapshots:
       lru-cache: 6.0.0
 
   semver@7.6.3: {}
-
-  semver@7.7.0: {}
 
   semver@7.7.1: {}
 

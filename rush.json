@@ -487,14 +487,6 @@
       "projectFolder": "libraries/typescript-config"
     },
     {
-      "packageName": "@dossierhq/eslint-config-generic",
-      "projectFolder": "stack/eslint-config-generic"
-    },
-    {
-      "packageName": "@dossierhq/eslint-config-react",
-      "projectFolder": "stack/eslint-config-react"
-    },
-    {
       "packageName": "@dossierhq/template-library-esm-only",
       "projectFolder": "templates/library-esm-only"
     },
