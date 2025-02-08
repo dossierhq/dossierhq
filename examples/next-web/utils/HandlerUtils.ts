@@ -10,7 +10,7 @@ import type { NextApiResponse } from 'next';
 const logger = createConsoleLogger(console);
 
 function handleError<T>(res: NextApiResponse<T>, error: ErrorResult<unknown, ErrorType>): void {
-  res.status(error.httpStatus).json({ message: error.message } as any);
+  res.status(error.httpStatus).json({ message: error.message } as T);
 }
 
 export function sendMethodNotAllowedError<T>(

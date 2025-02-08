@@ -134,7 +134,6 @@
     "chromatic": "~11.25.2",
     "concurrently": "~9.1.2",
     "esbuild": "~0.24.2",
-    "eslint-config-next": "~15.1.6",
     "eslint-plugin-import": "~2.31.0",
     "eslint-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
     "eslint-plugin-storybook": "~0.11.2",

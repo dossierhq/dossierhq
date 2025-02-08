@@ -32,14 +32,12 @@
     "react-dom": "~19.0.0"
   },
   "devDependencies": {
+    "@dossierhq/eslint-config": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "19.0.8",
-    "@typescript-eslint/eslint-plugin": "~8.23.0",
-    "eslint": "~8.57.0",
-    "eslint-config-next": "~15.1.6",
+    "eslint": "~9.19.0",
     "prettier": "3.4.2",
     "typescript": "~5.7.3"
-  },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  }
 }
