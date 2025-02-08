@@ -123,7 +123,7 @@
     "bulma": "~0.9.4",
     "chromatic": "~11.25.2",
     "concurrently": "~9.1.2",
-    "esbuild": "~0.24.2",
+    "esbuild": "~0.25.0",
     "eslint": "~9.19.0",
     "eslint-plugin-react": "~7.37.4",
     "eslint-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
