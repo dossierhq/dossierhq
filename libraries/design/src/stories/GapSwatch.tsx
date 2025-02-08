@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import type { JSX } from 'react';
 import { Row } from '../components/Row/Row.js';
 import { Text } from '../components/Text/Text.js';
 import { SpacingValues, type SpacingValue } from '../utils/LayoutPropsUtils.js';

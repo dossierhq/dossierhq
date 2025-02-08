@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '../Button/Button.js';
 import { DropdownDisplay, type DropdownDisplayProps } from './DropdownDisplay.js';
 

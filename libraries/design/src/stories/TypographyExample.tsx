@@ -1,4 +1,4 @@
-import React, { useCallback, useState, type JSX } from 'react';
+import { useCallback, useState, type JSX } from 'react';
 import { Text } from '../components/Text/Text.js';
 import type { TextStyle } from '../utils/TextStylePropsUtils.js';
 

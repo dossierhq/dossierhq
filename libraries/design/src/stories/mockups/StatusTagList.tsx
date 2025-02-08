@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Field } from '../../components/Field/Field.js';
 import { TagSelector } from '../../components/TagSelector/TagSelector.js';
 import type { StatusSelectorDispatch, StatusSelectorState } from './StatusSelector.js';
@@ -8,7 +9,7 @@ export function StatusTagList({
 }: {
   state: StatusSelectorState;
   dispatch: StatusSelectorDispatch;
-}) {
+}): JSX.Element | null {
   if (state.selectedIds.length === 0) {
     return null;
   }

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button2 } from '../Button2/Button2.js';
 import { ButtonDropdown } from '../ButtonDropdown/ButtonDropdown.js';
 import { Card } from '../Card/Card.js';
