@@ -168,7 +168,7 @@ export async function collectMatchingSearchResultNodes<
   for await (const pageResult of getAllPagesForConnection<
     Edge<AppEntity | AppPublishedEntity, ErrorType>,
     typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   >({ first: 50 }, (currentPaging) => client.getEntities(query as any, currentPaging))) {
     if (pageResult.isError()) return pageResult;
     for (const edge of pageResult.value.edges) {
