@@ -1,4 +1,4 @@
-import React from 'react';
+import type { JSX } from 'react';
 import { Field } from '../../components/Field/Field.js';
 import { TagSelector } from '../../components/TagSelector/TagSelector.js';
 import type { AuthKeySelectorDispatch, AuthKeySelectorState } from './AuthKeySelector.js';
@@ -9,7 +9,7 @@ export function AuthKeyTagList({
 }: {
   state: AuthKeySelectorState;
   dispatch: AuthKeySelectorDispatch;
-}) {
+}): JSX.Element | null {
   if (state.selectedIds.length === 0) {
     return null;
   }

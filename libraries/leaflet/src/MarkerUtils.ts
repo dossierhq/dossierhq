@@ -37,7 +37,7 @@ const markerIconStats = (() => {
   return { maxLeft, maxRight, maxTop, maxBottom };
 })();
 
-export function getMarkerIcon(color: MarkerColor | undefined) {
+export function getMarkerIcon(color: MarkerColor | undefined): Icon {
   return color === 'current' ? currentMarkerIcon : markerIcon;
 }
 

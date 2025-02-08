@@ -5,9 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "bun ./scripts/generate-typescript.ts && npm run prettier:check && heft build --clean",
-    "build:watch": "heft build-watch",
-    "clean": "heft clean",
+    "build": "bun ./scripts/generate-typescript.ts && npm run prettier:check && eslint && tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rm -rf lib/",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
@@ -29,15 +29,14 @@
     "uuid": "~11.0.5"
   },
   "devDependencies": {
-    "@dossierhq/heft-node-rig": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@dossierhq/eslint-config-generic": "workspace:*",
+    "@dossierhq/eslint-config": "workspace:*",
+    "@dossierhq/typescript-config": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
-    "@rushstack/heft": "0.68.15",
     "@types/better-sqlite3": "~7.6.12",
     "@types/uuid": "~10.0.0",
     "better-sqlite3": "~11.8.1",
-    "eslint": "~8.57.0",
+    "eslint": "~9.19.0",
     "prettier": "3.4.2",
     "typescript": "~5.7.3"
   }

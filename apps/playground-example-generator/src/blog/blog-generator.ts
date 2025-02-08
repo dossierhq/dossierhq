@@ -67,7 +67,6 @@ async function main() {
   const database = await createNewDatabase('dist/blog.sqlite');
   const { client, server } = await createAdapterAndServer<AppDossierClient>(database, SCHEMA);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
   const images = cloudinaryImages.map<CloudinaryImage>((image) => ({
     type: 'CloudinaryImage',

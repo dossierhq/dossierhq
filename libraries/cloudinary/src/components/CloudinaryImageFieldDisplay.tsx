@@ -1,6 +1,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
 import { Column, IconButton, Row, Text } from '@dossierhq/design';
+import type { JSX } from 'react';
 import type { PublishedCloudinaryImage } from '../types/CloudinaryImageComponent.js';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
   value: PublishedCloudinaryImage;
 }
 
-export function CloudinaryImageFieldDisplay({ cloudName, value }: Props) {
+export function CloudinaryImageFieldDisplay({ cloudName, value }: Props): JSX.Element {
   const { publicId } = value;
 
   const cld = new Cloudinary({ cloud: { cloudName } });

@@ -79,6 +79,8 @@ export const MapContainer: MapContainerComponent = ({
     if (resetSignal && mapRef.current) {
       mapRef.current.setView(center, zoom ?? defaultZoom, { animate: true });
     }
+    //TODO fix dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetSignal]);
 
   useEffect(() => {

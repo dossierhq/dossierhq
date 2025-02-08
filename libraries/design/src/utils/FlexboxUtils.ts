@@ -58,7 +58,7 @@ const alignSelfClassNames = {
   'flex-end': 'is-align-self-flex-end',
 };
 
-export function toFlexItemClassName({ alignSelf, flexGrow }: FlexItemProps) {
+export function toFlexItemClassName({ alignSelf, flexGrow }: FlexItemProps): string {
   return toClassName(
     typeof flexGrow === 'number' && `is-flex-grow-${flexGrow}`,
     alignSelf && alignSelfClassNames[alignSelf],

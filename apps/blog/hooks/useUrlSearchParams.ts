@@ -18,7 +18,7 @@ export function useUrlSearchParams() {
 
   const onUrlSearchParamsChange = useCallback(
     (urlSearchParams: URLSearchParams) => {
-      let [path, existingQuery] = router.asPath.split('?');
+      const [path, existingQuery] = router.asPath.split('?');
       const query = urlSearchParams.toString();
       if (existingQuery !== query) {
         const url = query ? `${path}?${query}` : path;

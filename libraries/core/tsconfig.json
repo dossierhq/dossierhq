@@ -1,4 +1,6 @@
 {
-  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/library-esm/tsconfig-base.json",
-  "compilerOptions": {}
+  "extends": "@dossierhq/typescript-config/library.json",
+  "compilerOptions": {
+    "outDir": "lib"
+  }
 }

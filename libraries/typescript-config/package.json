@@ -1,0 +1,13 @@
+{
+  "name": "@dossierhq/typescript-config",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "post-process-build": "./scripts/post-process-build.js"
+  },
+  "scripts": {
+    "build": ""
+  }
+}

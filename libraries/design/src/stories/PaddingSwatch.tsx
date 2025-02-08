@@ -1,4 +1,4 @@
-import React from 'react';
+import type { JSX } from 'react';
 import { Row } from '../components/Row/Row.js';
 import { Text } from '../components/Text/Text.js';
 import { SpacingValues, toSpacingClassName, type SpacingValue } from '../utils/LayoutPropsUtils.js';
@@ -7,7 +7,7 @@ interface Props {
   size: SpacingValue;
 }
 
-export function PaddingSwatch({ size }: Props) {
+export function PaddingSwatch({ size }: Props): JSX.Element {
   return (
     <Row style={{ border: 'solid 1px lightgray' }} marginBottom={2}>
       {[...new Array(5)].map((_, index) => (
@@ -32,7 +32,7 @@ export function PaddingSwatch({ size }: Props) {
   );
 }
 
-export function AllPaddingSwatches() {
+export function AllPaddingSwatches(): JSX.Element {
   return (
     <>
       {SpacingValues.map((size) => (

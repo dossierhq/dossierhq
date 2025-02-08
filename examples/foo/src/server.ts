@@ -1,12 +1,14 @@
 import { createBetterSqlite3Adapter } from '@dossierhq/better-sqlite3';
-import { ok, Schema, type Logger } from '@dossierhq/core';
+import { ok, Schema, type Logger, type PromiseResult } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer, type Server } from '@dossierhq/server';
 import Database from 'better-sqlite3';
 import { schemaSpecification } from './schema.js';
 
 const SQLITE3_DATABASE = 'data/foo.sqlite';
 
-export async function initializeServer(logger: Logger) {
+export async function initializeServer(
+  logger: Logger,
+): PromiseResult<Server, 'BadRequest' | 'Generic'> {
   const database = new Database(SQLITE3_DATABASE);
 
   const adapterResult = await createBetterSqlite3Adapter({ logger }, database, {
@@ -27,7 +29,7 @@ export async function initializeServer(logger: Logger) {
   return ok(server);
 }
 
-export async function updateSchema(server: Server) {
+export async function updateSchema(server: Server): Promise<Schema> {
   const sessionResult = server.createSession({
     provider: 'sys',
     identifier: 'schemaloader',

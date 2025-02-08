@@ -21,8 +21,8 @@ updates:
           - "astro"
       eslint:
         patterns:
-          - "@typescript-eslint/*"
-          # skip until supported by typescript-eslint: - "eslint"
+          - "@eslint/*"
+          - "eslint"
       lexical:
         patterns:
           - "lexical"

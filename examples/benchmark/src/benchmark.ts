@@ -498,7 +498,7 @@ export async function initializeAndRunTests({
   variant: string;
   databaseAdapter: DatabaseAdapter;
   ciOrLocal: { githubSha: string | undefined } | 'local';
-}) {
+}): PromiseResult<void, 'Generic' | 'BadRequest'> {
   const isCI = typeof ciOrLocal === 'object';
   if (isCI) {
     assert(ciOrLocal.githubSha);

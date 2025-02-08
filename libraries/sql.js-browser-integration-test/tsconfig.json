@@ -1,7 +1,6 @@
 {
+  "extends": "@dossierhq/typescript-config/library.json",
   "compilerOptions": {
-    "strictNullChecks": true,
-    "allowJs": true
-  },
-  "include": [".eslintrc.cjs", "vitest.config.js", "playwright.config.ts", "browser/**/*.ts"]
+    "outDir": "lib"
+  }
 }

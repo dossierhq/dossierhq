@@ -3,7 +3,6 @@
 export function isFieldValueEqual(a: unknown, b: unknown): boolean {
   if (a === b) return true;
 
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (a === null || a === undefined || b === null || b === undefined) {
     return false; // if a or be are not defined they can't be equal
   }

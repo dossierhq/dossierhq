@@ -13,7 +13,7 @@ import {
   type StringFieldSpecificationUpdate,
 } from '@dossierhq/core';
 
-export const SCHEMA = {
+export const SCHEMA: SchemaSpecificationUpdate = {
   entityTypes: [
     {
       name: 'BooleansEntity',
@@ -207,7 +207,7 @@ export const SCHEMA = {
 
 export const SCHEMA_WITHOUT_VALIDATIONS: SchemaSpecificationUpdate = {
   ...SCHEMA,
-  entityTypes: SCHEMA.entityTypes.map((entityType) => {
+  entityTypes: SCHEMA.entityTypes?.map((entityType) => {
     switch (entityType.name) {
       case 'BooleansEntity':
         return copyEntityType(entityType, (entityType) => {

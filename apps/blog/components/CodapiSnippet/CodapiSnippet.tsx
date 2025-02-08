@@ -3,7 +3,7 @@ import { useMemo, type HTMLAttributes } from 'react';
 import type { PublishedCodapiSnippet } from '../../utils/SchemaTypes';
 import styles from './codapi.module.css';
 
-interface CodapiSnippetElement extends HTMLElement {}
+type CodapiSnippetElement = HTMLElement;
 
 interface CodapiSnippetHTMLAttributes<T> extends HTMLAttributes<T> {
   engine: 'browser';
@@ -14,6 +14,7 @@ interface CodapiSnippetHTMLAttributes<T> extends HTMLAttributes<T> {
 }
 
 declare module 'react' {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'codapi-snippet': React.DetailedHTMLProps<

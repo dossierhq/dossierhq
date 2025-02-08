@@ -81,7 +81,7 @@ export async function createAdapterAndServer<
   return { client, bobDossierClient, server };
 }
 
-export async function optimizeAndCloseDatabase(server: Server) {
+export async function optimizeAndCloseDatabase(server: Server): Promise<void> {
   let keepOnGoing = true;
   while (keepOnGoing) {
     const processed = (await server.processNextDirtyEntity()).valueOrThrow();

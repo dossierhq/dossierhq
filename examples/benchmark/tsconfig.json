@@ -1,4 +1,7 @@
 {
-  "extends": "./node_modules/@dossierhq/heft-node-rig/profiles/tool/tsconfig-base.json",
-  "compilerOptions": {}
+  "extends": "@dossierhq/typescript-config/node.json",
+  "compilerOptions": {
+    "outDir": "lib"
+  },
+  "include": ["src"]
 }

@@ -587,7 +587,6 @@ async function createRichTextsEntities(
                 'Since this field is admin only it can contain references to unpublished entities',
               ),
             ]),
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             createRichTextEntityNode(numbersEntities.find((it) => it.info.status === 'draft')!),
             createRichTextParagraphNode([
               createRichTextTextNode(
@@ -821,7 +820,6 @@ async function createComponentsEntities(
 }
 
 async function createCloudinaryImageComponents() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cloudinaryImages = await listCloudinaryImages(process.env.CLOUDINARY_BLOG_FOLDER!);
   const images = cloudinaryImages.map<CloudinaryImage>((image) => ({
     type: 'CloudinaryImage',

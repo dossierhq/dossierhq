@@ -1,4 +1,4 @@
-import React from 'react';
+import type { JSX } from 'react';
 import { Row } from '../components/Row/Row.js';
 import { Text } from '../components/Text/Text.js';
 import { SpacingValues, toSpacingClassName, type SpacingValue } from '../utils/LayoutPropsUtils.js';
@@ -7,7 +7,7 @@ interface MarginSwatchProps {
   size: SpacingValue;
 }
 
-export function MarginSwatch({ size }: MarginSwatchProps) {
+export function MarginSwatch({ size }: MarginSwatchProps): JSX.Element {
   return (
     <Row style={{ border: 'solid 1px lightgray' }} marginBottom={2}>
       {[...new Array(5)].map((_, index) => (
@@ -29,7 +29,7 @@ export function MarginSwatch({ size }: MarginSwatchProps) {
   );
 }
 
-export function AllMarginSwatches() {
+export function AllMarginSwatches(): JSX.Element {
   return (
     <>
       {SpacingValues.map((size) => (

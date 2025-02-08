@@ -378,6 +378,10 @@
       "versionPolicyName": "DossierFramework"
     },
     {
+      "packageName": "@dossierhq/eslint-config",
+      "projectFolder": "libraries/eslint-config"
+    },
+    {
       "packageName": "@dossierhq/postgres-core",
       "projectFolder": "libraries/postgres-core",
       "versionPolicyName": "DossierFramework"
@@ -479,16 +483,8 @@
       "versionPolicyName": "DossierFramework"
     },
     {
-      "packageName": "@dossierhq/heft-node-rig",
-      "projectFolder": "rigs/heft-node-rig"
-    },
-    {
-      "packageName": "@dossierhq/eslint-config-generic",
-      "projectFolder": "stack/eslint-config-generic"
-    },
-    {
-      "packageName": "@dossierhq/eslint-config-react",
-      "projectFolder": "stack/eslint-config-react"
+      "packageName": "@dossierhq/typescript-config",
+      "projectFolder": "libraries/typescript-config"
     },
     {
       "packageName": "@dossierhq/template-library-esm-only",
