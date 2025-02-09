@@ -9,11 +9,11 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint && tsc && post-process-build deno-esm-only && npm run test",
+    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && post-process-build deno-esm-only && npm run test",
     "build:watch": "tsc --watch",
     "clean": "rm -rf lib/",
     "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "examples:timer-benchmark:bun": "bun run ./src/examples/timer-benchmark.ts",
     "examples:timer-benchmark:deno": "if [ -x \"$(command -v gnuplot)\" ]; then deno run --allow-env --allow-run=gnuplot --allow-read --allow-write=output ./lib/examples/timer-benchmark.js; else deno run --allow-env --allow-read --allow-write=output ./lib/examples/timer-benchmark.js; fi",

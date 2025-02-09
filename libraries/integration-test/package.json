@@ -19,10 +19,10 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "bun ./scripts/generate-typescript.ts && npm run prettier:check && eslint && tsc && post-process-build deno-esm-only",
+    "build": "bun ./scripts/generate-typescript.ts && npm run prettier:check && eslint --max-warnings=0 && tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
     "clean": "rm -rf lib/",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write ."

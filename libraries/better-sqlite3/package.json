@@ -21,11 +21,11 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint && tsc && npm run test && ./scripts/dump-database-schema.js",
+    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && npm run test && ./scripts/dump-database-schema.js",
     "build:watch": "tsc --watch",
     "clean": "rm -rf lib/",
     "db:clear": "rm -f databases/*.sqlite",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",

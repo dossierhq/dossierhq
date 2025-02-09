@@ -1840,7 +1840,6 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
       return JSON.parse(fieldValue);
     } catch (error) {
       throw new Error(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         `${fieldPrefix}: Failed parsing JSON: ${error instanceof Error ? error.message : error}`,
       );
     }

@@ -1,6 +1,6 @@
 import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';
 import { CacheConfig } from '../../test/CacheConfig.js';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter.js';

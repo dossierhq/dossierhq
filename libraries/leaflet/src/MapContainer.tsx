@@ -1,6 +1,6 @@
 import { control, type Map } from 'leaflet';
 import 'leaflet.locatecontrol';
-import React, {
+import {
   Suspense,
   useEffect,
   useRef,

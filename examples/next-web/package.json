@@ -8,7 +8,7 @@
     "build": "npm run prettier:check && npm run eslint:check && npm run build-app",
     "build-app": "next build",
     "clean": "rm -rf .next/ && rm -f example-next-web.build.log tsconfig.tsbuildinfo",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",

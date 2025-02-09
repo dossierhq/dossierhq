@@ -21,11 +21,11 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && ./scripts/generate-icons.cjs && eslint && tsc && (npm run css:build 2>&1)",
+    "build": "npm run prettier:check && ./scripts/generate-icons.cjs && eslint --max-warnings=0 && tsc && npm run css:build",
     "build:watch": "tsc --watch",
     "clean": "rm -rf lib/",
     "css:build": "sass src/styles/main.scss lib/main.css",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",

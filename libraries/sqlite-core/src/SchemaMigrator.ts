@@ -99,7 +99,6 @@ async function migrateVersion(
 
       // PRAGMA can't use values, so create query manually. No SQL injection since we know it's a number
       if (typeof version !== 'number') {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         return notOk.Generic(`version is for some reason NaN (${version})`);
       }
       const updateVersionResult = await queryRun(
