@@ -4,7 +4,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 16
-    if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
       - name: apt-get update
         run: sudo apt-get update # to avoid error when installing Playwright
