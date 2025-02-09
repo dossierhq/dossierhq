@@ -28,10 +28,17 @@
       "dependsOn": ["^build", "^lint"]
     },
     "test": {
-      "dependsOn": [],
+      "dependsOn": ["^build", "^test"],
       "outputs": ["coverage/**"]
     },
     "test:watch": {
+      "cache": false
+    },
+    "test-integration": {
+      "dependsOn": ["^build", "^test", "^test-integration"],
+      "outputs": ["coverage/**"]
+    },
+    "test-integration:watch": {
       "cache": false
     },
     "start": {

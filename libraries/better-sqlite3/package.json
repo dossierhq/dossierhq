@@ -30,9 +30,10 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "vitest",
+    "test": "vitest src/*.test.ts",
     "test:update-snapshot": "vitest --update",
-    "test:watch": "vitest --watch"
+    "test-integration": "vitest test/integration",
+    "test-integration:watch": "vitest --watch"
   },
   "repository": {
     "type": "git",
