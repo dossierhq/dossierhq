@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@dossierhq/core-vitest",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@dossierhq/core-vitest"
+}
