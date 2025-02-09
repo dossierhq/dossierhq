@@ -28,8 +28,8 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "vitest",
-    "test:sqld": "npm run test -- test/integration/sqld",
+    "test-integration": "vitest",
+    "test:sqld": "npm run test-integration -- test/integration/sqld",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
   },

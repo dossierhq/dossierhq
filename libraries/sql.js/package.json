@@ -29,7 +29,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "vitest",
+    "test-integration": "vitest",
     "test:update-snapshot": "vitest --update",
     "test:watch": "vitest --watch"
   },

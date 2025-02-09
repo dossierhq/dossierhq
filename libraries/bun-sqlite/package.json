@@ -18,7 +18,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "bun test src/"
+    "test-integration": "bun test src/"
   },
   "dependencies": {
     "@dossierhq/sqlite-core": "workspace:*"

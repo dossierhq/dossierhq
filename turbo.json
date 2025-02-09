@@ -38,9 +38,6 @@
       "dependsOn": ["^build", "^test", "^test-integration"],
       "outputs": ["coverage/**"]
     },
-    "test-integration:watch": {
-      "cache": false
-    },
     "start": {
       "dependsOn": ["^build"],
       "cache": false,

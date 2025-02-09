@@ -21,7 +21,7 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && ./scripts/dump-database-schema.js",
+    "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
@@ -32,8 +32,8 @@
     "prettier:fix": "prettier --write .",
     "test": "vitest src/*.test.ts",
     "test:update-snapshot": "vitest --update",
-    "test-integration": "vitest test/integration",
-    "test-integration:watch": "vitest --watch"
+    "test-integration": "vitest test/integration && ./scripts/dump-database-schema.js",
+    "test:watch": "vitest --watch"
   },
   "repository": {
     "type": "git",

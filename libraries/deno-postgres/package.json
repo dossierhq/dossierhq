@@ -12,7 +12,7 @@
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
     "format:fix": "deno fmt",
     "postinstall": "if [ -x \"$(command -v deno)\" ]; then echo deno cache external-dependencies.ts; else echo Deno is not installed; fi",
-    "test": "deno test --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
+    "test-integration": "deno test --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",

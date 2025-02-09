@@ -11,7 +11,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "[ \"$CI_SKIP_BROWSER_TEST\" = \"true\" ] && echo Skip browser test || playwright test",
+    "test-integration": "[ \"$CI_SKIP_BROWSER_TEST\" = \"true\" ] && echo Skip browser test || playwright test",
     "test:ui": "playwright test --ui"
   },
   "repository": {
