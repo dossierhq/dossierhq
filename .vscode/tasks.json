@@ -4,34 +4,13 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "rush build",
+      "label": "pnpm build",
       "type": "shell",
-      "command": "$SHELL -i -c \"rush build\"",
+      "command": "$SHELL -i -c \"pnpm build\"",
       "problemMatcher": [],
       "group": {
-        "kind": "build",
-        "isDefault": true
+        "kind": "build"
       }
-    },
-    {
-      "label": "rush build --verbose",
-      "type": "shell",
-      "command": "$SHELL -i -c \"rush build --verbose\"",
-      "problemMatcher": [],
-      "group": "build"
-    },
-    {
-      "label": "rush rebuild",
-      "type": "shell",
-      "command": "$SHELL -i -c \"rush rebuild\"",
-      "problemMatcher": [],
-      "group": "build"
-    },
-    {
-      "label": "rush check && rush update",
-      "type": "shell",
-      "command": "$SHELL -i -c \"rush check && rush update\"",
-      "problemMatcher": []
     }
   ]
 }

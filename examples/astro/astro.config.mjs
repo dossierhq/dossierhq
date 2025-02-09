@@ -28,7 +28,7 @@ export default defineConfig({
         port: 4322,
       },
       watch: {
-        ignored: ['**/*.log', '**/dist/**', '**/.rush/**', '**/database/*'],
+        ignored: ['**/*.log', '**/dist/**', '**/database/*'],
       },
     },
   },

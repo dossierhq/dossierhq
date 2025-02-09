@@ -1,6 +1,4 @@
-/.rush/
 /coverage/
 /lib/
 /playwright-report/
-/temp/
 /test-results/

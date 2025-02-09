@@ -44,7 +44,7 @@ If you just want to get started using Dossier, these destinations might get you 
 
 ## Getting started
 
-- `rush update` to install dependencies.
+- `pnpm i` to install dependencies.
 - In `tools/generic-tools/`:
   - By default the databases (test and example databases on PostgreSQL) are configured in Docker. To use another db set the env variable `HOST_ROOT_DATABASE_URL`
   - `npm run db:start` (only if running db in Docker)
@@ -52,7 +52,7 @@ If you just want to get started using Dossier, these destinations might get you 
   - `npm run db:make-users:superuser`
   - `npm run db:migrate:all`
   - `npm run db:make-users:no-superuser`
-- `rush build`
+- `pnpm run build`
 
 ## Dev container / Github Code Spaces
 
@@ -61,20 +61,10 @@ If you just want to get started using Dossier, these destinations might get you 
 - When done, restart your shell since it sets up environment variables
 - For root access to the Postgres database, run `psql "$HOST_ROOT_DATABASE_URL"` or `pgcli "$HOST_ROOT_DATABASE_URL"`
 
-## Dependencies
-
-- Run `rush add --package foo` instead of `npm install foo` (`rush add --package foo --dev` instead of `npm install --save-dev foo`)
-- Run `cd tools/all-dependencies && npm run build`
-- Check that the same versions of dependencies are used, run `rush check`.
-
 ## Upgrade dependencies
 
 - Upgrade tool versions in `.tool-versions`
-- Update `rushVersion` and `pnpmVersion` in `rush.json` (`npm show @microsoft/rush version`/`npm show pnpm version` – or use same version as rush: [rush.json](https://github.com/microsoft/rushstack/blob/main/rush.json))
-- Upgrade individual dependencies in `tools/all-dependencies/`:
-  - `npm run outdated` to get a list of outdated dependencies
-  - `rush add --package typescript@latest --dev --make-consistent`
-  - or `rush upgrade-interactive`
+- Run `pnpm deps:update-interactive`
 - Upgrade Deno dependencies in the 3 `import-map.json` files
 - Run `(cd tools/generic-tools && npm run deno:reload-dependencies:all)`
 - Upgrade the postgres version in `./docker-compose.yml`

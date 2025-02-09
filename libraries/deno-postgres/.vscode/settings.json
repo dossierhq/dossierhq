@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["dossierhq", "rushstack"],
+  "cSpell.words": ["dossierhq"],
   "deno.enable": true,
   "deno.lint": true,
   "editor.defaultFormatter": "denoland.vscode-deno",
