@@ -4,14 +4,15 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "build": "deno lint -q && deno fmt --check && deno check -q src/mod.ts && npm run test",
+    "check-types": "deno check -q src/mod.ts",
+    "lint": "deno lint -q && deno fmt --check",
     "db:cli": "./scripts/db-cli.sh",
     "db:clear": "./scripts/db-clear.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
     "format:fix": "deno fmt",
     "postinstall": "if [ -x \"$(command -v deno)\" ]; then echo deno cache external-dependencies.ts; else echo Deno is not installed; fi",
-    "test": "deno test --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
+    "test-integration": "deno test --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",

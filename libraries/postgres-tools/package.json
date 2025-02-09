@@ -16,9 +16,7 @@
   "main": "src/index.js",
   "type": "module",
   "license": "MIT",
-  "scripts": {
-    "build": ""
-  },
+  "scripts": {},
   "bin": {
     "dossier-pg-migrate": "./dossier-pg-migrate.js"
   },

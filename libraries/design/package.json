@@ -21,8 +21,9 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && ./scripts/generate-icons.cjs && eslint --max-warnings=0 && tsc && npm run css:build",
+    "build": "./scripts/generate-icons.cjs && tsc && npm run css:build",
     "build:watch": "tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "css:build": "sass src/styles/main.scss lib/main.css",
     "eslint:check": "eslint --max-warnings=0",

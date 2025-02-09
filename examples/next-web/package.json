@@ -5,8 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && npm run eslint:check && npm run build-app",
+    "build": "npm run build-app",
     "build-app": "next build",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf .next/ && rm -f example-next-web.build.log tsconfig.tsbuildinfo",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",

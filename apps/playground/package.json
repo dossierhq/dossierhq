@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "vite --force --port 3002",
-    "build": "./scripts/sync-dossier-docs-database.sh && tsc && npm run eslint:check && vite build",
+    "build": "./scripts/sync-dossier-docs-database.sh && vite build",
+    "check-types": "tsc",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",

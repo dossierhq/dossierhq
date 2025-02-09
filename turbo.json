@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "globalDependencies": ["**/.env.*local"],
   "globalEnv": [
     "BASE_URL",
@@ -20,16 +21,25 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "lib/**", ".next/**", "!.next/cache/**"]
     },
+    "check-types": {
+      "dependsOn": ["^build", "^check-types"]
+    },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^build", "^lint"]
     },
     "test": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build", "^test"],
+      "outputs": ["coverage/**"]
     },
     "test:watch": {
       "cache": false
     },
+    "test-integration": {
+      "dependsOn": ["^build", "^test", "^test-integration"],
+      "outputs": ["coverage/**"]
+    },
     "start": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     }

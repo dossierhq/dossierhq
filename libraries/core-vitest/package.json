@@ -19,15 +19,14 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc",
+    "build": "tsc",
     "build:watch": "tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "test": "vitest",
-    "test:watch": "vitest --watch"
+    "prettier:fix": "prettier --write ."
   },
   "repository": {
     "type": "git",

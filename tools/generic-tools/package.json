@@ -5,7 +5,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "",
     "clean:all": "./scripts/npm-all-projects.sh run clean --if-present",
     "db:clear:all": "./scripts/npm-all-projects.sh run db:clear --if-present",
     "db:ensure-dbs": "./scripts/db-ensure-databases.sh",

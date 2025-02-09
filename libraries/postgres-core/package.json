@@ -19,8 +19,9 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && npm run test && post-process-build deno-esm-only",
+    "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",

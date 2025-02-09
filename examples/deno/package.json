@@ -4,7 +4,8 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "build": "deno lint -q && deno fmt --check && deno cache server.ts && npm run test",
+    "check-types": "deno check .",
+    "lint": "deno lint -q && deno fmt --check",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",

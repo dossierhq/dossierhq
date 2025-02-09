@@ -7,8 +7,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "turbo lint build",
-    "build:no-cache": "turbo lint build test --no-cache --force",
+    "build": "turbo run lint check-types build test test-integration",
+    "build:no-integration": "turbo run lint check-types build test",
+    "build:no-cache": "turbo run lint check-types build test test-integration --no-cache --force",
     "lint": "turbo lint",
     "test": "turbo test",
     "start": "turbo start",

@@ -8,6 +8,7 @@
     "start": "concurrently -n be,fe --handle-input 'nodemon --watch \"backend/*\" --exec tsx backend/main.ts' 'sleep 2 && vite'",
     "dev": "vite",
     "build": "./generate-typescript.ts && tsc && vite build",
+    "lint": "npm run prettier:check",
     "preview": "vite preview",
     "backend": "tsx backend/main.ts",
     "prettier:check": "prettier --check .",
