@@ -3,16 +3,16 @@ export default {
     alias: {
       '@dossierhq/better-sqlite3': new URL(
         '../../libraries/better-sqlite3/src/index.ts',
-        import.meta.url
+        import.meta.url,
       ).pathname,
       '@dossierhq/core': new URL('../../libraries/core/src/index.ts', import.meta.url).pathname,
       '@dossierhq/database-adapter': new URL(
         '../../libraries/database-adapter/src/index.ts',
-        import.meta.url
+        import.meta.url,
       ).pathname,
       '@dossierhq/integration-test': new URL(
         '../../libraries/integration-test/src/index.ts',
-        import.meta.url
+        import.meta.url,
       ).pathname,
       '@dossierhq/server': new URL('../../libraries/server/src/index.ts', import.meta.url).pathname,
       '@dossierhq/sqlite-core': new URL('../../libraries/sqlite-core/src/index.ts', import.meta.url)

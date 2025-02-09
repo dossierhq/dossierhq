@@ -20,9 +20,10 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && postcss src/globals.css -o lib/main.css && npm run test",
+    "build": "tsc && postcss src/globals.css -o lib/main.css",
     "build:watch": "tsc --watch",
     "build-storybook": "storybook build --quiet",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "chromatic": "chromatic",
     "eslint:check": "eslint --max-warnings=0",

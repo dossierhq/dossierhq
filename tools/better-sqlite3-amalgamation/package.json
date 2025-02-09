@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/start-server.ts",
-    "build": "",
     "_build": "tsc",
+    "lint": "npm run prettier:check",
     "clean": "rm -rf dist/ && rm -rf coverage/ && rm -f better-sqlite3-amalgamation.build.log",
     "db:clear": "rm -f databases/*.sqlite",
-    "test": "vitest",
+    "prettier:check": "prettier --check .",
+    "_test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest --watch"
   },
@@ -20,6 +21,7 @@
     "@types/better-sqlite3": "~7.6.12",
     "@types/node": "~22.13.1",
     "@vitest/coverage-v8": "~3.0.5",
+    "prettier": "3.5.0",
     "tsx": "~4.19.2",
     "typescript": "~5.7.3",
     "vitest": "~3.0.5"

@@ -4,7 +4,8 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "build": "deno lint -q && deno fmt --check && deno check -q src/mod.ts && npm run test",
+    "check-types": "deno check -q src/mod.ts",
+    "lint": "deno lint -q && deno fmt --check",
     "db:cli": "./scripts/db-cli.sh",
     "db:clear": "./scripts/db-clear.sh",
     "db:migrate": "./scripts/db-migrate.sh",

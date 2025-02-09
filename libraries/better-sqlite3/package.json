@@ -21,8 +21,9 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && npm run test && ./scripts/dump-database-schema.js",
+    "build": "tsc && ./scripts/dump-database-schema.js",
     "build:watch": "tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "db:clear": "rm -f databases/*.sqlite",
     "eslint:check": "eslint --max-warnings=0",

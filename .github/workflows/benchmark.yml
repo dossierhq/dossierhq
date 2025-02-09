@@ -33,7 +33,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: build
         run: |
-          npx turbo run --filter=@dossierhq/example-benchmark lint build
+          npx turbo run --filter=@dossierhq/example-benchmark lint check-types build test
         env:
           TURBO_TEAM: ${{ secrets.DOSSIERHQ_TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}

@@ -5,8 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "bun ./scripts/generate-typescript.ts && npm run prettier:check && eslint --max-warnings=0 && tsc",
+    "build": "bun ./scripts/generate-typescript.ts && tsc",
     "build:watch": "tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",

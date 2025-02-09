@@ -6,12 +6,12 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "[ \"$CI_SKIP_BROWSER_TEST\" = \"true\" ] && echo Skip browser test || (npm run prettier:check && npm run eslint:check && npm run test)",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "playwright test",
+    "test": "[ \"$CI_SKIP_BROWSER_TEST\" = \"true\" ] && echo Skip browser test || playwright test",
     "test:ui": "playwright test --ui"
   },
   "repository": {

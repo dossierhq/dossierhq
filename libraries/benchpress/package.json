@@ -9,8 +9,9 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && post-process-build deno-esm-only && npm run test",
+    "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
+    "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
     "eslint:check": "eslint --max-warnings=0",

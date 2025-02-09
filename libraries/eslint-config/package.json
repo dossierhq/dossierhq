@@ -4,9 +4,7 @@
   "description": "",
   "type": "module",
   "license": "MIT",
-  "scripts": {
-    "build": ""
-  },
+  "scripts": {},
   "devDependencies": {
     "@eslint/js": "~9.20.0",
     "@next/eslint-plugin-next": "~15.1.6",
