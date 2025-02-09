@@ -7,6 +7,5 @@ export function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
 }
 
 export function assertExhaustive(param: never): never {
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   throw new Error(`Invalid exhaustiveness check: ${param}`);
 }

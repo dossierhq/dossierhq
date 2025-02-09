@@ -20,10 +20,10 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint && tsc && npm run test && post-process-build deno-esm-only",
+    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && npm run test && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
     "clean": "rm -rf lib/ coverage/",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",

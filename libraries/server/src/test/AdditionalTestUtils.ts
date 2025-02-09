@@ -153,7 +153,6 @@ export function createMockDatabaseAdapter(): MockDatabaseAdapter {
     schemaUpdateRenameTypes: vi.fn(),
     schemaUpdateSpecification: vi.fn(),
     withNestedTransaction: vi.fn(),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     withRootTransaction: vi.fn() as MockDatabaseAdapter['withRootTransaction'],
   };
 

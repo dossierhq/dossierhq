@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "BASE_URL",
+    "CI_SKIP_BROWSER_TEST",
+    "CI",
+    "CLOUDINARY_API_KEY",
+    "CLOUDINARY_API_SECRET",
+    "CLOUDINARY_BLOG_FOLDER",
+    "CLOUDINARY_CLOUD_NAME",
+    "DATABASE_A_URL",
+    "DATABASE_B_URL",
+    "DATABASE_URL",
+    "EXAMPLES_BENCHMARK_DATABASE_URL",
+    "GITHUB_SHA"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "lib/**", ".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "test:watch": {
+      "cache": false
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

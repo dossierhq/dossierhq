@@ -1,0 +1,34 @@
+{
+  "name": "dossierhq",
+  "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "turbo lint build",
+    "build:no-cache": "turbo lint build test --no-cache --force",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "start": "turbo start",
+    "test:watch": "turbo test:watch",
+    "watch": "turbo watch lint build test",
+    "deps:outdated": "pnpm outdated -r",
+    "deps:update-interactive": "pnpm update -r -i --latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dossierhq/dossierhq.git"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0"
+  },
+  "packageManager": "pnpm@10.2.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "better-sqlite3"
+    ]
+  }
+}

@@ -51,7 +51,6 @@ function decodeFieldItemOrList(
   const fieldAdapter = LegacyCodecFieldTypeAdapters.getAdapter(fieldSpec);
   if (fieldSpec.list) {
     if (!Array.isArray(fieldValue)) {
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
       throw new Error(`Expected list but got ${fieldValue} (${fieldSpec.name})`);
     }
     const decodedItems: unknown[] = [];

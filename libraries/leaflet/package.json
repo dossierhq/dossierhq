@@ -23,10 +23,10 @@
   "types": "./lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run prettier:check && eslint && tsc && cp src/*.css lib/",
+    "build": "npm run prettier:check && eslint --max-warnings=0 && tsc && cp src/*.css lib/",
     "build:watch": "tsc --watch",
     "clean": "rm -rf lib/",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "icons:update": "scripts/generate-icons.js",
     "prettier:check": "prettier --check .",

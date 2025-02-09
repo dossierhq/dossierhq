@@ -7,7 +7,6 @@
     "middlewares",
     "pino",
     "postgres",
-    "rushstack",
     "testpass",
     "testuser",
     "unarchived",

@@ -195,7 +195,7 @@ export async function countSearchResultWithEntity<
   let matchCount = 0;
 
   for await (const pageResult of getAllPagesForConnection({ first: 50 }, (currentPaging) =>
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     client.getEntities(query as any, currentPaging),
   )) {
     if (pageResult.isError()) {

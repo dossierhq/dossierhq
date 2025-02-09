@@ -6,11 +6,11 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run prettier:check && tsc --noEmit && npm run eslint:check && npm run test",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "bun test 2>&1"
+    "test": "bun test"
   },
   "dependencies": {
     "@dossierhq/bun-sqlite": "workspace:*",

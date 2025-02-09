@@ -34,6 +34,8 @@ export function useInitializeUploadWidget(
       void widget.destroy();
       setUploadWidget(null);
     };
+    //TODO fix deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callback, status]);
 
   return uploadWidget;

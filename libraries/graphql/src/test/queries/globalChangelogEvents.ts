@@ -4,12 +4,10 @@ import type { SessionGraphQLContext } from '../../GraphQLSchemaGenerator.js';
 
 const gql = String.raw;
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type Variables = {
   query?: ChangelogEventQuery | null;
 };
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type Payload = {
   changelogEvents: {
     pageInfo: {
