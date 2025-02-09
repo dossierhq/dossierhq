@@ -6,7 +6,7 @@ jobs:
     timeout-minutes: 16
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
       - name: Cache blog/next-web next
         uses: actions/cache@v4
         with:
