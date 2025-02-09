@@ -1,4 +1,6 @@
 packages:
   - "apps/*"
+  - "examples/*"
   - "libraries/*"
+  - "templates/*"
   - "tools/*"
