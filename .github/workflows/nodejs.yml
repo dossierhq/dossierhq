@@ -32,6 +32,7 @@ jobs:
           npm run db:make-users:no-superuser
       - name: build
         run: |
+          npx turbo run --filter=@dossierhq/libsql lint build
           env CI_SKIP_BROWSER_TEST=true pnpm build
       - name: stop db
         run: |
