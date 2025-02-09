@@ -68,3 +68,5 @@ temp/
 
 # Local Netlify folder
 .netlify
+
+/.turbo/

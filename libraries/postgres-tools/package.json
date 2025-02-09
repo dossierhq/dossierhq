@@ -17,8 +17,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": ""
   },
   "bin": {
     "dossier-pg-migrate": "./dossier-pg-migrate.js"

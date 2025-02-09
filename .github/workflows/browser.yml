@@ -11,30 +11,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Cache Rush
-        uses: actions/cache@v4
-        with:
-          path: |
-            common/temp/install-run
-            ~/.rush
-          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
-      - name: Cache pnpm
-        uses: actions/cache@v4
-        with:
-          path: |
-            common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - uses: pnpm/action-setup@v4.0.0
       - uses: jdx/mise-action@v2
-      - name: rush install
-        run: |
-          node common/scripts/install-run-rush.js install --bypass-policy
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Install Playwright Browsers
         run: |
           cd libraries/sql.js-browser-integration-test
           npx playwright install --with-deps
-      - name: rush build --to @dossierhq/sql.js-browser-integration-test --to @dossierhq/react-components2
+      - name: build
         run: |
-          node common/scripts/install-run-rush.js build --to @dossierhq/sql.js-browser-integration-test --to @dossierhq/react-components2 --verbose --timeline
+          npx turbo run --filter=@dossierhq/sql.js-browser-integration-test --filter=@dossierhq/react-components2 lint build
       - name: Run Chromatic for react-components2
         uses: chromaui/action@v11
         with:

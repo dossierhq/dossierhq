@@ -7,30 +7,17 @@ jobs:
     if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
       - uses: actions/checkout@v4
-      - name: Cache Rush
-        uses: actions/cache@v4
-        with:
-          path: |
-            common/temp/install-run
-            ~/.rush
-          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
-      - name: Cache pnpm
-        uses: actions/cache@v4
-        with:
-          path: |
-            common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - uses: pnpm/action-setup@v4.0.0
       - name: Cache blog/next-web next
         uses: actions/cache@v4
         with:
           path: |
             app/blog/.next/cache/
             examples/next-web/.next/cache/
-          key: ${{ runner.os }}-next-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}
       - uses: jdx/mise-action@v2
-      - name: rush install
-        run: |
-          node common/scripts/install-run-rush.js install --bypass-policy
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: start db
         run: |
           cd tools/generic-tools/
@@ -43,10 +30,9 @@ jobs:
           npm run db:make-users:superuser
           npm run db:migrate:all
           npm run db:make-users:no-superuser
-      - name: rush build
+      - name: build
         run: |
-          env CI_SKIP_BROWSER_TEST=true node common/scripts/install-run-rush.js build --to @dossierhq/example-astro --verbose --timeline
-          env CI_SKIP_BROWSER_TEST=true node common/scripts/install-run-rush.js build --verbose --timeline
+          env CI_SKIP_BROWSER_TEST=true pnpm build
       - name: stop db
         run: |
           cd tools/generic-tools/
