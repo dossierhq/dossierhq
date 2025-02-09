@@ -32,7 +32,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
-    "eslint": "~9.19.0",
+    "eslint": "~9.20.0",
     "prettier": "3.4.2",
     "typescript": "~5.7.3",
     "vitest": "~3.0.5"
