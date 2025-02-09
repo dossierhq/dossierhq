@@ -1,4 +1,5 @@
 import pluginJs from "@eslint/js";
+import turboPlugin from "eslint-plugin-turbo";
 import globals from "globals";
 import tsEslint from "typescript-eslint";
 
@@ -11,6 +12,10 @@ export default [
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
   ...tsEslint.configs.recommended,
+  {
+    plugins: { turbo: { rules: turboPlugin.rules } },
+    rules: { "turbo/no-undeclared-env-vars": "error" },
+  },
   {
     rules: {
       "@typescript-eslint/consistent-type-imports": ["warn"],
