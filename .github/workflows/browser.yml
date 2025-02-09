@@ -22,6 +22,9 @@ jobs:
       - name: build
         run: |
           npx turbo run --filter=@dossierhq/sql.js-browser-integration-test --filter=@dossierhq/react-components2 lint build
+        env:
+          TURBO_TEAM: ${{ secrets.DOSSIERHQ_TURBO_TEAM }}
+          TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}
       - name: Run Chromatic for react-components2
         uses: chromaui/action@v11
         with:

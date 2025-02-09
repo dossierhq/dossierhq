@@ -4,7 +4,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 16
-    if: ${{ !startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4.0.0
