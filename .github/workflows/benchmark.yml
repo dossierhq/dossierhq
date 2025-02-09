@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 16
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
       - uses: jdx/mise-action@v2
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
