@@ -16,6 +16,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4.1.0
+      - uses: jdx/mise-action@v2
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Create Release Pull Request or Publish to npm
@@ -25,4 +26,18 @@ jobs:
           publish: "pnpm run changeset:build-and-publish"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          pnpm run -C tools/generic-tools db:start &
+          pnpm run -C tools/generic-tools db:wait
+          pnpm run -C tools/generic-tools db:ensure-dbs
+          pnpm run -C tools/generic-tools db:make-users:superuser
+          pnpm run -C tools/generic-tools db:migrate:all
+          pnpm run -C tools/generic-tools db:make-users:no-superuser
+          pnpm run changeset:build-and-publish
+          pnpm run -C tools/generic-tools db:stop
+        env:
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          TURBO_TEAM: ${{ secrets.DOSSIERHQ_TURBO_TEAM }}
+          TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}
