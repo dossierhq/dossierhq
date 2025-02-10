@@ -11,6 +11,14 @@
       "group": {
         "kind": "build"
       }
+    },
+    {
+      "label": "pnpm changeset:add",
+      "type": "shell",
+      "command": "$SHELL -i -c \"pnpm changeset:add\"",
+      "group": {
+        "kind": "build"
+      }
     }
   ]
 }
