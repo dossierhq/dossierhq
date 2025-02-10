@@ -1,0 +1,51 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.5/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@dossierhq/better-sqlite3",
+      "@dossierhq/cloudinary",
+      "@dossierhq/core",
+      "@dossierhq/core-vitest",
+      "@dossierhq/database-adapter",
+      "@dossierhq/design",
+      "@dossierhq/graphql",
+      "@dossierhq/integration-test",
+      "@dossierhq/leaflet",
+      "@dossierhq/pg",
+      "@dossierhq/postgres-core",
+      "@dossierhq/postgres-tools",
+      "@dossierhq/react-components",
+      "@dossierhq/react-components2",
+      "@dossierhq/server",
+      "@dossierhq/sql.js",
+      "@dossierhq/sqlite-core",
+      "@dossierhq/typescript-generator"
+    ]
+  ],
+  "linked": [],
+  "access": "restricted",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "@dossierhq/example-astro",
+    "@dossierhq/better-sqlite3-amalgamation",
+    "@dossierhq/example-benchmark",
+    "@dossierhq/example-bun",
+    "@dossierhq/example-deno",
+    "@dossierhq/example-foo",
+    "@dossierhq/example-next-web",
+    "@dossierhq/libsql",
+    "@dossierhq/sql.js-browser-integration-test",
+    "@dossierhq/template-library-esm-only",
+    "@dossierhq/template-tool",
+    "@dossierhq/tree-shake-tester",
+    "benchpress",
+    "blog",
+    "dossier-tutorial",
+    "generic-tools",
+    "playground",
+    "playground2"
+  ]
+}

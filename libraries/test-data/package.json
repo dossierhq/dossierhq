@@ -1,7 +1,11 @@
 {
-  "name": "playground-example-generator",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@dossierhq/test-data",
+  "version": "1.0.0",
+  "description": "Generates test data for Dossier projects",
+  "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -18,6 +22,11 @@
     "generate:catalog": "node lib/catalog/catalog-generator.js",
     "generate:reviews": "node lib/reviews/reviews-generator.js",
     "generate:starwars": "node lib/starwars/starwars-generator.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/test-data"
   },
   "dependencies": {
     "@faker-js/faker": "~9.4.0",

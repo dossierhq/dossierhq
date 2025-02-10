@@ -29,14 +29,14 @@
     },
     "test": {
       "dependsOn": ["build", "^test"],
-      "outputs": ["coverage/**"]
+      "outputs": []
     },
     "test:watch": {
       "cache": false
     },
     "test-integration": {
       "dependsOn": ["^build", "^test", "^test-integration"],
-      "outputs": ["coverage/**"]
+      "outputs": []
     },
     "start": {
       "dependsOn": ["^build"],

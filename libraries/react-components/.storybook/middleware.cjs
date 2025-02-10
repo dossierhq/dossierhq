@@ -14,7 +14,7 @@ const Database = require('better-sqlite3');
 const bodyParser = require('body-parser');
 const { copyFileSync } = require('node:fs');
 
-const SOURCE_DATABASE_PATH = './node_modules/playground-example-generator/dist/catalog.sqlite';
+const SOURCE_DATABASE_PATH = './node_modules/@dossierhq/test-data/dist/catalog.sqlite';
 const SQLITE_DATABASE_PATH = 'data/catalog.sqlite';
 
 const logger = createConsoleLogger(console);

@@ -15,6 +15,7 @@
     "start": "turbo start",
     "test:watch": "turbo test:watch",
     "watch": "turbo watch lint build test",
+    "changeset:add": "changeset",
     "deps:outdated": "pnpm outdated -r",
     "deps:update-interactive": "pnpm update -r -i --latest"
   },
@@ -23,6 +24,7 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.12",
     "turbo": "^2.4.0"
   },
   "packageManager": "pnpm@10.2.0",

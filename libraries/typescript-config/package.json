@@ -1,13 +1,20 @@
 {
   "name": "@dossierhq/typescript-config",
   "version": "1.0.0",
-  "description": "",
+  "description": "TypeScript configuration for Dossier projects",
+  "homepage": "https://dossierhq.dev",
+  "author": {
+    "name": "Jonas Bengtsson"
+  },
   "type": "module",
   "license": "MIT",
   "bin": {
     "post-process-build": "./scripts/post-process-build.js"
   },
-  "scripts": {
-    "build": ""
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dossierhq/dossierhq.git",
+    "directory": "libraries/typescript-config"
   }
 }

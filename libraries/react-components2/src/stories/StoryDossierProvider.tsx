@@ -8,7 +8,7 @@ import {
 } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
-import catalogDatabase from 'playground-example-generator/dist/catalog.sqlite?url';
+import catalogDatabase from '@dossierhq/test-data/dist/catalog.sqlite?url';
 import { useEffect, useState, type ReactNode } from 'react';
 import type { Database, SqlJsStatic } from 'sql.js';
 import initSqlJs from 'sql.js/dist/sql-wasm';
