@@ -34,11 +34,9 @@
   },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "19.0.8",
     "eslint": "~9.20.0",
-    "prettier": "3.5.0",
     "typescript": "~5.7.3"
   }
 }

@@ -11,6 +11,12 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.12
         version: 2.27.12
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ~4.4.1
+        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
+      prettier:
+        specifier: 3.5.0
+        version: 3.5.0
       turbo:
         specifier: ^2.4.0
         version: 2.4.0
@@ -81,9 +87,6 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -99,9 +102,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       schema-dts:
         specifier: ~1.1.2
         version: 1.1.2(typescript@5.7.3)
@@ -178,9 +178,6 @@ importers:
       '@graphiql/toolkit':
         specifier: ~0.11.1
         version: 0.11.1(@types/node@22.13.1)(graphql-ws@6.0.3(graphql@16.10.0)(ws@8.18.0))(graphql@16.10.0)
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/react':
         specifier: 19.0.8
         version: 19.0.8
@@ -202,9 +199,6 @@ importers:
       graphql-ws:
         specifier: ~6.0.3
         version: 6.0.3(graphql@16.10.0)(ws@8.18.0)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       rollup-plugin-visualizer:
         specifier: ~5.14.0
         version: 5.14.0(rollup@4.34.6)
@@ -284,9 +278,6 @@ importers:
       '@graphiql/toolkit':
         specifier: ~0.11.1
         version: 0.11.1(@types/node@22.13.1)(graphql-ws@6.0.3(graphql@16.10.0)(ws@8.18.0))(graphql@16.10.0)
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/react':
         specifier: 19.0.8
         version: 19.0.8
@@ -323,9 +314,6 @@ importers:
       postcss:
         specifier: ~8.5.1
         version: 8.5.1
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       prettier-plugin-tailwindcss:
         specifier: ~0.6.11
         version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0))(prettier@3.5.0)
@@ -411,18 +399,12 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
       '@types/react':
         specifier: 19.0.8
         version: 19.0.8
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       rollup-plugin-visualizer:
         specifier: ~5.14.0
         version: 5.14.0(rollup@4.34.6)
@@ -487,9 +469,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../../libraries/typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -502,9 +481,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -527,18 +503,12 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../../libraries/typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/bun':
         specifier: ~1.2.2
         version: 1.2.2
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -597,9 +567,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../../libraries/typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -609,9 +576,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -664,9 +628,6 @@ importers:
       '@dossierhq/eslint-config':
         specifier: workspace:*
         version: link:../../libraries/eslint-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -676,9 +637,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -743,9 +701,6 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -770,9 +725,6 @@ importers:
       nodemon:
         specifier: ~3.1.9
         version: 3.1.9
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       tsx:
         specifier: ~4.19.2
         version: 4.19.2
@@ -795,9 +747,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/bun':
         specifier: ~1.2.2
         version: 1.2.2
@@ -807,9 +756,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -838,9 +784,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -850,9 +793,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -881,18 +821,12 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/bun':
         specifier: ~1.2.2
         version: 1.2.2
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -921,18 +855,12 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/react':
         specifier: 19.0.8
         version: 19.0.8
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       react:
         specifier: ~19.0.0
         version: 19.0.0
@@ -952,18 +880,12 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@vitest/coverage-v8':
         specifier: ~3.0.5
         version: 3.0.5(vitest@3.0.5(@types/debug@4.1.12)(@types/node@22.13.1)(jiti@2.4.2)(sass@1.84.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0))
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -986,15 +908,9 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1017,15 +933,9 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1081,9 +991,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@storybook/addon-actions':
         specifier: ~8.5.3
         version: 8.5.3(storybook@8.5.3(prettier@3.5.0))
@@ -1129,9 +1036,6 @@ importers:
       mini-svg-data-uri:
         specifier: ~1.4.4
         version: 1.4.4
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       react:
         specifier: ~19.0.0
         version: 19.0.0
@@ -1214,9 +1118,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -1232,9 +1133,6 @@ importers:
       graphql:
         specifier: ~16.10.0
         version: 16.10.0
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1266,9 +1164,6 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../typescript-generator
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/node':
         specifier: ~22.13.1
         version: 22.13.1
@@ -1278,9 +1173,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1306,9 +1198,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/leaflet':
         specifier: ~1.9.14
         version: 1.9.16
@@ -1324,9 +1213,6 @@ importers:
       mini-svg-data-uri:
         specifier: ~1.4.4
         version: 1.4.4
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       react:
         specifier: ~19.0.0
         version: 19.0.0
@@ -1361,18 +1247,15 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@libsql/client':
         specifier: ~0.14.0
         version: 0.14.0
+      '@types/node':
+        specifier: ~22.13.1
+        version: 22.13.1
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1413,9 +1296,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/pg':
         specifier: ~8.11.11
         version: 8.11.11
@@ -1431,9 +1311,6 @@ importers:
       pg:
         specifier: ~8.13.1
         version: 8.13.1
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1465,15 +1342,9 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1553,9 +1424,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@storybook/addon-actions':
         specifier: ~8.5.3
         version: 8.5.3(storybook@8.5.3(prettier@3.5.0))
@@ -1595,9 +1463,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       react:
         specifier: ~19.0.0
         version: 19.0.0
@@ -1713,9 +1578,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@storybook/addon-actions':
         specifier: ~8.5.3
         version: 8.5.3(storybook@8.5.3(prettier@3.5.0))
@@ -1779,9 +1641,6 @@ importers:
       postcss-cli:
         specifier: ~11.0.0
         version: 11.0.0(jiti@2.4.2)(postcss@8.5.1)(tsx@4.19.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       prettier-plugin-tailwindcss:
         specifier: ~0.6.11
         version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0))(prettier@3.5.0)
@@ -1837,18 +1696,12 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@vitest/coverage-v8':
         specifier: ~3.0.5
         version: 3.0.5(vitest@3.0.5(@types/debug@4.1.12)(@types/node@22.13.1)(jiti@2.4.2)(sass@1.84.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0))
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -1880,9 +1733,6 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/base-64':
         specifier: ~1.0.2
         version: 1.0.2
@@ -1895,9 +1745,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       sql.js:
         specifier: ~1.12.0
         version: 1.12.0
@@ -1929,9 +1776,6 @@ importers:
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../server
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@playwright/test':
         specifier: ~1.50.1
         version: 1.50.1
@@ -1944,9 +1788,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       sql.js:
         specifier: ~1.12.0
         version: 1.12.0
@@ -1975,15 +1816,9 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -2014,9 +1849,6 @@ importers:
       '@faker-js/faker':
         specifier: ~9.4.0
         version: 9.4.0
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@types/better-sqlite3':
         specifier: ~7.6.12
         version: 7.6.12
@@ -2035,9 +1867,6 @@ importers:
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       tslib:
         specifier: ~2.8.1
         version: 2.8.1
@@ -2065,18 +1894,12 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       '@vitest/coverage-v8':
         specifier: ~3.0.5
         version: 3.0.5(vitest@3.0.5(@types/debug@4.1.12)(@types/node@22.13.1)(jiti@2.4.2)(sass@1.84.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0))
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -2096,15 +1919,9 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../../libraries/typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -2124,15 +1941,9 @@ importers:
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../../libraries/typescript-config
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.4.1
-        version: 4.4.1(@vue/compiler-sfc@3.5.13)(prettier@3.5.0)
       eslint:
         specifier: ~9.20.0
         version: 9.20.0(jiti@2.4.2)
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
@@ -2152,9 +1963,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: ~3.0.5
         version: 3.0.5(vitest@3.0.5(@types/debug@4.1.12)(@types/node@22.13.1)(jiti@2.4.2)(sass@1.84.0)(terser@5.38.1)(tsx@4.19.2)(yaml@2.7.0))
-      prettier:
-        specifier: 3.5.0
-        version: 3.5.0
       tsx:
         specifier: ~4.19.2
         version: 4.19.2
@@ -8592,6 +8400,7 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
+    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@3.1.3:

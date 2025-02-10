@@ -13,6 +13,15 @@
       }
     },
     {
+      "label": "pnpm build --continue",
+      "type": "shell",
+      "command": "$SHELL -i -c \"pnpm build --continue\"",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build"
+      }
+    },
+    {
       "label": "pnpm changeset:add",
       "type": "shell",
       "command": "$SHELL -i -c \"pnpm changeset:add\"",

@@ -50,11 +50,9 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/node": "~22.13.1",
     "@types/uuid": "~10.0.0",
     "eslint": "~9.20.0",
-    "prettier": "3.5.0",
     "typescript": "~5.7.3"
   }
 }

@@ -44,13 +44,11 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "19.0.8",
     "@types/react-dom": "~19.0.3",
     "dotenv": "~16.4.7",
     "eslint": "~9.20.0",
-    "prettier": "3.5.0",
     "schema-dts": "~1.1.2",
     "tsx": "~4.19.2",
     "typescript": "~5.7.3",
