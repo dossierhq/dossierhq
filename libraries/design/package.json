@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/design",
-  "version": "0.7.12",
+  "version": "0.7.13",
   "description": "The design system for Dossier.",
   "keywords": [
     "dossier",
@@ -20,6 +20,9 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "./scripts/generate-icons.cjs && tsc && npm run css:build",
     "build:watch": "tsc --watch",

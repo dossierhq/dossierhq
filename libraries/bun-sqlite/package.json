@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/bun-sqlite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "exports": {
@@ -8,6 +8,7 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

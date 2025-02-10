@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "clean:all": "./scripts/npm-all-projects.sh run clean --if-present",
     "db:clear:all": "./scripts/npm-all-projects.sh run db:clear --if-present",

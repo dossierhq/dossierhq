@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/typescript-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript configuration for Dossier projects",
   "homepage": "https://dossierhq.dev",
   "author": {
@@ -8,6 +8,9 @@
   },
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "post-process-build": "./scripts/post-process-build.js"
   },

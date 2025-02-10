@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "lint": "npm run prettier:check && npm run eslint:check",

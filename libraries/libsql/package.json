@@ -18,6 +18,7 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

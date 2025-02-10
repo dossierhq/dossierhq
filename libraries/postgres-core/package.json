@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/postgres-core",
-  "version": "0.7.12",
+  "version": "0.7.13",
   "description": "A library used by concrete PostgreSQL adapters for Dossier.",
   "keywords": [
     "dossier",
@@ -18,6 +18,9 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",

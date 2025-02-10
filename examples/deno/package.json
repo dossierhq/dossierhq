@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "check-types": "deno check .",
     "lint": "deno lint -q && deno fmt --check",

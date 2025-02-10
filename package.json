@@ -17,6 +17,7 @@
     "watch": "turbo watch lint build test",
     "changeset:add": "changeset",
     "changeset:bump-version": "changeset version",
+    "changeset:publish": "changeset publish",
     "deps:outdated": "pnpm outdated -r",
     "deps:update-interactive": "pnpm update -r -i --latest"
   },

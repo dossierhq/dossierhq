@@ -1,8 +1,9 @@
 {
   "name": "@dossierhq/deno-postgres",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "check-types": "deno check -q src/mod.ts",
     "lint": "deno lint -q && deno fmt --check",

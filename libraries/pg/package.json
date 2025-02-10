@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/pg",
-  "version": "0.7.12",
+  "version": "0.7.13",
   "description": "A Dossier database adapter for pg (PostgreSQL).",
   "keywords": [
     "dossier",
@@ -18,6 +18,9 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

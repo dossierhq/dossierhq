@@ -9,6 +9,7 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",

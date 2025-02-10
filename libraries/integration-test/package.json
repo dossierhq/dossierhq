@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/integration-test",
-  "version": "0.7.12",
+  "version": "0.7.13",
   "description": "Integration test to ensure that different Dossier database adapters work as expected.",
   "keywords": [
     "dossier",
@@ -18,6 +18,9 @@
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "bun ./scripts/generate-typescript.ts && tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
