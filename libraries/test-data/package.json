@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/test-data",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generates test data for Dossier projects",
   "homepage": "https://dossierhq.dev",
   "author": {
