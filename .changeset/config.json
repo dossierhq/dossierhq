@@ -29,8 +29,9 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@dossierhq/example-astro",
     "@dossierhq/better-sqlite3-amalgamation",
+    "@dossierhq/bun-sqlite",
+    "@dossierhq/example-astro",
     "@dossierhq/example-benchmark",
     "@dossierhq/example-bun",
     "@dossierhq/example-deno",

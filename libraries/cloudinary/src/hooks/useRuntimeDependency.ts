@@ -21,7 +21,7 @@ export function useRuntimeDependency(dependencyName: keyof typeof EXTERNAL_DEPEN
 
   useEffect(() => {
     const statusPromise = dependencyStatus[scriptUrl];
-    if (statusPromise) {
+    if (statusPromise !== undefined) {
       void statusPromise.then(setStatus);
       return;
     }
