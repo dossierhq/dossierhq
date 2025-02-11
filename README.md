@@ -71,12 +71,9 @@ If you just want to get started using Dossier, these destinations might get you 
 
 ## Publish packages
 
-- Normally publishing the packages bumps the patch version, change `nextBump` to `minor` in [common/config/rush/version-policies.json](./common/config/rush/version-policies.json) to bump minor instead
-- `rush change`
-- `git add common/changes/ && git commit`
-- `git push`
-- Start [publish](https://github.com/dossierhq/dossierhq/actions/workflows/publish.yml) workflow
-- When done, change back `nextBump` to `patch` if you changed it
+- When making changes to published packages, create a changeset using `pnpm changeset:add`
+- The [release workflow](./.github/workflows/release.yml) will automatically open a PR to bump the versions
+- Merge the PR to publish the packages
 
 ## Ports
 

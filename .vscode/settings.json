@@ -22,6 +22,7 @@
     "pgcli",
     "pnpm",
     "postgres",
+    "psql",
     "SAVEPOINT",
     "sqljs",
     "starwars",
