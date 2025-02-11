@@ -46,13 +46,13 @@
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/server": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
+    "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/node": "~22.13.1",
     "@types/uuid": "~10.0.0",
-    "eslint": "~9.20.0",
+    "eslint": "~9.20.1",
     "typescript": "~5.7.3"
   }
 }

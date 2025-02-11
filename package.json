@@ -29,7 +29,7 @@
     "@changesets/cli": "^2.27.12",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "prettier": "3.5.0",
-    "turbo": "^2.4.0"
+    "turbo": "^2.4.1"
   },
   "packageManager": "pnpm@10.2.0",
   "pnpm": {
