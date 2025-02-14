@@ -89,7 +89,7 @@ beforeAll(async () => {
   await ensureEntitiesExistForPublishedEntityOnlyEditBefore(client, '');
   entitiesOfTypePublishedEntityOnlyEditBeforeNone =
     await getEntitiesForPublishedEntityOnlyEditBefore(client, '');
-});
+}, 100_000);
 afterAll(async () => {
   await server.shutdown();
 });

@@ -10,7 +10,7 @@ let serverInit: IntegrationTestServerInit | null = null;
 
 beforeAll(async () => {
   serverInit = (await initializeIntegrationTestServer()).valueOrThrow();
-});
+}, 100_000);
 afterAll(async () => {
   if (serverInit) {
     (await serverInit.server.shutdown()).throwIfError();

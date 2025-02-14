@@ -8,7 +8,7 @@ let server: Server | null = null;
 beforeAll(async () => {
   const serverInit = (await initializeIntegrationTestServer()).valueOrThrow();
   server = serverInit.server;
-});
+}, 100_000);
 afterAll(async () => {
   if (server) {
     (await server.shutdown()).throwIfError();

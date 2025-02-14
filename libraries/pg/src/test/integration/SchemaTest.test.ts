@@ -11,7 +11,7 @@ let server: Server | null = null;
 beforeAll(async () => {
   const result = await initializeIntegrationTestServer();
   server = result.valueOrThrow().server;
-}, 100000);
+}, 100_000);
 afterAll(async () => {
   if (server) {
     (await server.shutdown()).throwIfError();

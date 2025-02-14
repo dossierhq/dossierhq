@@ -258,7 +258,7 @@ beforeAll(async () => {
 
   await ensureEntitiesExistForAdminOnlyEditBefore(client, '');
   entitiesOfTypeAdminOnlyEditBeforeNone = await getEntitiesForAdminOnlyEditBefore(client, '');
-});
+}, 100_000);
 afterAll(async () => {
   await server.shutdown();
 });
