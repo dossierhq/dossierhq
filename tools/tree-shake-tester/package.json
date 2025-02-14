@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "./tree-shake.sh"
+    "test-integration": "./tree-shake.sh"
   },
   "dependencies": {
     "@dossierhq/better-sqlite3": "workspace:*",
