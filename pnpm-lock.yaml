@@ -1005,7 +1005,7 @@ importers:
         version: 8.5.6(react@19.0.0)(storybook@8.5.6(prettier@3.5.1))
       '@storybook/preset-scss':
         specifier: ~1.0.3
-        version: 1.0.3(css-loader@7.1.2(webpack@5.97.1(esbuild@0.24.2)))(sass-loader@16.0.4(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2)))(style-loader@4.0.0(webpack@5.97.1(esbuild@0.24.2)))
+        version: 1.0.3(css-loader@7.1.2(webpack@5.97.1(esbuild@0.24.2)))(sass-loader@16.0.5(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2)))(style-loader@4.0.0(webpack@5.97.1(esbuild@0.24.2)))
       '@storybook/react':
         specifier: ~8.5.6
         version: 8.5.6(@storybook/test@8.5.6(storybook@8.5.6(prettier@3.5.1)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.5.6(prettier@3.5.1))(typescript@5.7.3)
@@ -1049,8 +1049,8 @@ importers:
         specifier: ~1.84.0
         version: 1.84.0
       sass-loader:
-        specifier: ~16.0.4
-        version: 16.0.4(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2))
+        specifier: ~16.0.5
+        version: 16.0.5(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2))
       storybook:
         specifier: ~8.5.6
         version: 8.5.6(prettier@3.5.1)
@@ -2421,8 +2421,8 @@ packages:
   '@codemirror/state@6.5.2':
     resolution: {integrity: sha512-FVqsPqtPWKVVL3dPSxy8wEF/ymIEuVzF1PK3VbUgrxXpJUSHQWWZz4JMToquRxnkw+36LTamCZG2iua2Ptq0fA==}
 
-  '@codemirror/view@6.36.2':
-    resolution: {integrity: sha512-DZ6ONbs8qdJK0fdN7AB82CgI6tYXf4HWk1wSVa0+9bhVznCuuvhQtX8bFBoy3dv8rZSQqUd8GvhVAcielcidrA==}
+  '@codemirror/view@6.36.3':
+    resolution: {integrity: sha512-N2bilM47QWC8Hnx0rMdDxO2x2ImJ1FvZWXubwKgjeoOrWwEiFrtpA7SFHcuZ+o2Ze2VzbkgbzWVj4+V18LVkeg==}
 
   '@creativebulma/bulma-badge@1.0.1':
     resolution: {integrity: sha512-cTMgxPdTOsAfPqd9wbrvKNUTvnIt+pNgwwO9Xzu6MRUIFlvGRtIVApaV51f3wt0/uI78BpKv5FPAtEJbmSTZOg==}
@@ -9410,6 +9410,10 @@ packages:
     resolution: {integrity: sha512-MjOadfU3Ys9KYoX0AdkBlFEF1Vx37uCCeN4ZHnmwm9FfpbsGWMZeBLMmmpY+6Ocqod7mkdZ0DT31OlbsFrLlkA==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.5.3:
+    resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
+    engines: {node: ^10 || ^12 || >=14}
+
   postgrator@8.0.0:
     resolution: {integrity: sha512-Kaw+/Ibk59pFyFzhdTpiXB3JVi4LFGl2JZ9RiWQk7qCtKUMFY8rat6ek0S3ON7SA4gj1yt6tn5s0Ukok2xnUFQ==}
     engines: {node: '>=20.0.0'}
@@ -9977,8 +9981,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass-loader@16.0.4:
-    resolution: {integrity: sha512-LavLbgbBGUt3wCiYzhuLLu65+fWXaXLmq7YxivLhEqmiupCFZ5sKUAipK3do6V80YSU0jvSxNhEdT13IXNr3rg==}
+  sass-loader@16.0.5:
+    resolution: {integrity: sha512-oL+CMBXrj6BZ/zOq4os+UECPL+bWqt6OAC6DWS8Ln8GZRcMDjlJ4JC3FBDuHJdYaFWIdKNIBYmtZtK2MaMkNIw==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -11968,7 +11972,7 @@ snapshots:
   '@codemirror/language@6.0.0':
     dependencies:
       '@codemirror/state': 6.5.2
-      '@codemirror/view': 6.36.2
+      '@codemirror/view': 6.36.3
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
@@ -11978,7 +11982,7 @@ snapshots:
     dependencies:
       '@marijn/find-cluster-break': 1.0.2
 
-  '@codemirror/view@6.36.2':
+  '@codemirror/view@6.36.3':
     dependencies:
       '@codemirror/state': 6.5.2
       style-mod: 4.1.2
@@ -15646,10 +15650,10 @@ snapshots:
     dependencies:
       storybook: 8.5.6(prettier@3.5.1)
 
-  '@storybook/preset-scss@1.0.3(css-loader@7.1.2(webpack@5.97.1(esbuild@0.24.2)))(sass-loader@16.0.4(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2)))(style-loader@4.0.0(webpack@5.97.1(esbuild@0.24.2)))':
+  '@storybook/preset-scss@1.0.3(css-loader@7.1.2(webpack@5.97.1(esbuild@0.24.2)))(sass-loader@16.0.5(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2)))(style-loader@4.0.0(webpack@5.97.1(esbuild@0.24.2)))':
     dependencies:
       css-loader: 7.1.2(webpack@5.97.1(esbuild@0.24.2))
-      sass-loader: 16.0.4(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2))
+      sass-loader: 16.0.5(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2))
       style-loader: 4.0.0(webpack@5.97.1(esbuild@0.24.2))
 
   '@storybook/preview-api@8.5.6(storybook@8.5.6(prettier@3.5.1))':
@@ -16404,7 +16408,7 @@ snapshots:
       '@vue/shared': 3.5.13
       estree-walker: 2.0.2
       magic-string: 0.30.17
-      postcss: 8.5.2
+      postcss: 8.5.3
       source-map-js: 1.2.1
     optional: true
 
@@ -17314,12 +17318,12 @@ snapshots:
 
   css-loader@7.1.2(webpack@5.97.1(esbuild@0.24.2)):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.2)
-      postcss: 8.5.2
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.2)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.2)
-      postcss-modules-scope: 3.2.1(postcss@8.5.2)
-      postcss-modules-values: 4.0.0(postcss@8.5.2)
+      icss-utils: 5.1.0(postcss@8.5.3)
+      postcss: 8.5.3
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.3)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.3)
+      postcss-modules-scope: 3.2.1(postcss@8.5.3)
+      postcss-modules-values: 4.0.0(postcss@8.5.3)
       postcss-value-parser: 4.2.0
       semver: 7.7.1
     optionalDependencies:
@@ -18697,9 +18701,9 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  icss-utils@5.1.0(postcss@8.5.2):
+  icss-utils@5.1.0(postcss@8.5.3):
     dependencies:
-      postcss: 8.5.2
+      postcss: 8.5.3
 
   ieee754@1.2.1: {}
 
@@ -20564,26 +20568,26 @@ snapshots:
       postcss: 8.5.2
       tsx: 4.19.2
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.5.2):
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.3):
     dependencies:
-      postcss: 8.5.2
+      postcss: 8.5.3
 
-  postcss-modules-local-by-default@4.2.0(postcss@8.5.2):
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.3):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.2)
-      postcss: 8.5.2
+      icss-utils: 5.1.0(postcss@8.5.3)
+      postcss: 8.5.3
       postcss-selector-parser: 7.1.0
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.1(postcss@8.5.2):
+  postcss-modules-scope@3.2.1(postcss@8.5.3):
     dependencies:
-      postcss: 8.5.2
+      postcss: 8.5.3
       postcss-selector-parser: 7.1.0
 
-  postcss-modules-values@4.0.0(postcss@8.5.2):
+  postcss-modules-values@4.0.0(postcss@8.5.3):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.2)
-      postcss: 8.5.2
+      icss-utils: 5.1.0(postcss@8.5.3)
+      postcss: 8.5.3
 
   postcss-nested@6.2.0(postcss@8.5.2):
     dependencies:
@@ -20621,6 +20625,12 @@ snapshots:
       source-map-js: 1.2.1
 
   postcss@8.5.2:
+    dependencies:
+      nanoid: 3.3.8
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.3:
     dependencies:
       nanoid: 3.3.8
       picocolors: 1.1.1
@@ -21299,7 +21309,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.4(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2)):
+  sass-loader@16.0.5(sass@1.84.0)(webpack@5.97.1(esbuild@0.24.2)):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
