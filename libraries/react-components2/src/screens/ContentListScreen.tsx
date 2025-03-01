@@ -80,7 +80,7 @@ export function ContentListScreen({
           dispatchCommandMenu={dispatchCommandMenu}
         />
       )}
-      <main className="flex flex-grow flex-col">
+      <main className="flex grow flex-col">
         <Toolbar
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}
@@ -110,7 +110,7 @@ function Sidebar({
   dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
 }) {
   return (
-    <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
+    <aside className="flex w-1/5 max-w-80 min-w-72 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
         <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
         <Button
@@ -120,7 +120,7 @@ function Sidebar({
           Create
         </Button>
       </div>
-      <div className="flex flex-grow flex-col gap-2 overflow-auto p-2">
+      <div className="flex grow flex-col gap-2 overflow-auto p-2">
         <p className="text-sm font-semibold">Filters</p>
         <EntityStatusSelector
           contentListState={contentListState}

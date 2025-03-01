@@ -52,7 +52,7 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
   return (
     <>
       {id ? <span id={id} /> : null}
-      <div className="sticky top-0 bg-background pt-1">
+      <div className="bg-background sticky top-0 pt-1">
         <EntityCard
           authKey={draftState.draft.authKey}
           changed={draftState.status === 'changed'}
@@ -164,7 +164,7 @@ function EntityEditorToolbar({
 
   return (
     <div className="mb-2 flex gap-2">
-      <div className="flex w-0 flex-grow gap-2 overflow-auto">
+      <div className="flex w-0 grow gap-2 overflow-auto">
         <Button variant="ghost" onClick={handleMenuClick}>
           <MenuIcon className="h-4 w-4" />
         </Button>

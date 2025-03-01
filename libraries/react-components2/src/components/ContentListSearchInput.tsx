@@ -30,8 +30,8 @@ export function ContentListSearchSearchInput({ contentListState, dispatchContent
   }, [dispatchContentList]);
 
   return (
-    <div className="relative flex-grow">
-      <SearchIcon className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+    <div className="relative grow">
+      <SearchIcon className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
       <Input
         placeholder="Search content..."
         className="pl-8"

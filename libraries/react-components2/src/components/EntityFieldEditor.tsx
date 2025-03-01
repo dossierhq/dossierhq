@@ -24,7 +24,7 @@ export function EntityFieldEditor({ field, onValueChange }: Props) {
         )}
         {field.status === 'changed' && (
           <span
-            className="inline-block h-3 w-3 self-center rounded-full bg-foreground"
+            className="bg-foreground inline-block h-3 w-3 self-center rounded-full"
             title="Changed"
           />
         )}

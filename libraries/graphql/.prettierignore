@@ -1,4 +1,6 @@
+/.turbo/
 /coverage/
+/data/
 /lib/
 /temp/
 /CHANGELOG.md

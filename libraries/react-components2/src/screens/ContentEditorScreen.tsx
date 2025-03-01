@@ -95,10 +95,10 @@ export function ContentEditorScreen({
         <Toaster />
         <div className="flex h-dvh w-dvw overflow-hidden">
           {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
-          <main className="flex flex-grow flex-col">
+          <main className="flex grow flex-col">
             {!md && <Toolbar dispatchCommandMenu={dispatchCommandMenu} />}
             {drafts.length === 0 ? (
-              <div className="flex flex-grow flex-col items-center justify-center p-2">
+              <div className="flex grow flex-col items-center justify-center p-2">
                 <EmptyStateMessage
                   className="w-full max-w-96"
                   icon={<SearchIcon />}
@@ -157,7 +157,7 @@ function Sidebar({
 }) {
   const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   return (
-    <aside className="flex w-1/5 min-w-72 max-w-80 flex-col border-r">
+    <aside className="flex w-1/5 max-w-80 min-w-72 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
         <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
         <Button
@@ -173,7 +173,7 @@ function Sidebar({
           Create
         </Button>
       </div>
-      <div className="flex flex-grow flex-col gap-2 overflow-auto p-2">
+      <div className="flex grow flex-col gap-2 overflow-auto p-2">
         <OpenEntityList />
       </div>
       <div className="flex justify-between border-t px-2 py-1">
@@ -191,7 +191,7 @@ function OpenEntityList() {
     return (
       <button
         key={entityDraft.id}
-        className="rounded border bg-background p-2 text-start hover:bg-accent"
+        className="bg-background hover:bg-accent rounded-sm border p-2 text-start"
         onClick={() =>
           dispatchContentEditor(
             new ContentEditorActions.SetActiveEntity(entityDraft.id, false, true),
@@ -199,11 +199,11 @@ function OpenEntityList() {
         }
       >
         <div className="flex items-baseline gap-2">
-          <p className="w-0 flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground">
+          <p className="text-muted-foreground w-0 grow overflow-hidden text-ellipsis whitespace-nowrap">
             {entityDraft.draft.entitySpec.name}
           </p>
           {entityDraft.status === 'changed' && (
-            <span className="inline-block h-3 w-3 rounded-full bg-foreground" />
+            <span className="bg-foreground inline-block h-3 w-3 rounded-full" />
           )}
         </div>
         <p className="overflow-hidden text-ellipsis whitespace-nowrap">{entityDraft.draft.name}</p>
@@ -222,7 +222,7 @@ function Toolbar({
     <div className="flex items-center border-b">
       <div className="container flex gap-2 p-2">
         <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
-        <div className="flex flex-grow justify-end gap-2">
+        <div className="flex grow justify-end gap-2">
           <Button
             variant="secondary"
             onClick={() =>

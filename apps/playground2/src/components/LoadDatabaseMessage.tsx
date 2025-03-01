@@ -149,7 +149,7 @@ function ProjectCard({
 }) {
   return (
     <Card className="flex flex-col">
-      <CardHeader className="flex-grow">
+      <CardHeader className="grow">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{children}</CardDescription>
       </CardHeader>
