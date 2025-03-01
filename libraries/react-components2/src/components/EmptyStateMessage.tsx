@@ -13,7 +13,7 @@ export function EmptyStateMessage({
   description?: string;
 }) {
   return (
-    <div className={cn(className, 'rounded border p-4')}>
+    <div className={cn(className, 'rounded-sm border p-4')}>
       <div className="mx-auto h-10 w-10 text-slate-600 dark:text-slate-300">{icon}</div>
       <p className="mt-3 text-center text-xl font-bold text-slate-600 dark:text-slate-300">
         {title}

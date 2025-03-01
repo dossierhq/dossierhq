@@ -6,7 +6,7 @@ import logo from '../components/logo.svg';
 export function IndexRoute() {
   return (
     <div>
-      <main className="container py-4">
+      <main className="container mx-auto py-4">
         <img className="m-auto mb-6" src={logo} alt="Dossier logo" width={400} height={106} />
         <h1 className="text-4xl font-extrabold tracking-tight">
           Welcome to Dossier Playground! 👋

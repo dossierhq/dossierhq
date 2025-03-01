@@ -7,7 +7,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "turbo run lint check-types build test test-integration",
+    "build": "turbo run --continue lint check-types build test test-integration",
     "build:no-integration": "turbo run lint check-types build test",
     "build:no-cache": "turbo run lint check-types build test test-integration --no-cache --force",
     "lint": "turbo lint",

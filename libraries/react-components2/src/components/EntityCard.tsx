@@ -27,7 +27,7 @@ export function EntityCard({ id, className, selected, onClick, ...props }: Props
     return (
       <div
         id={id}
-        className={cn(className, 'rounded border bg-background p-2', selected && 'bg-muted')}
+        className={cn(className, 'bg-background rounded-sm border p-2', selected && 'bg-muted')}
       >
         <Content {...props} />
       </div>
@@ -38,7 +38,7 @@ export function EntityCard({ id, className, selected, onClick, ...props }: Props
       id={id}
       className={cn(
         className,
-        'rounded border bg-background p-2 text-start hover:bg-accent',
+        'bg-background hover:bg-accent rounded-sm border p-2 text-start',
         selected && 'bg-muted',
       )}
       onClick={onClick}
@@ -52,7 +52,7 @@ function Content({ authKey, changed, name, status, type, date, dateKind, valid }
   return (
     <>
       <div className="flex justify-between gap-2 align-top">
-        <p className="w-0 flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground">
+        <p className="text-muted-foreground w-0 grow overflow-hidden text-ellipsis whitespace-nowrap">
           {type}
         </p>
         <div className="flex gap-2 align-baseline">
@@ -68,7 +68,7 @@ function Content({ authKey, changed, name, status, type, date, dateKind, valid }
           )}
           {authKey && (
             <span className="relative">
-              <Key className="absolute left-2 top-1.5 h-3 w-3" />
+              <Key className="absolute top-1.5 left-2 h-3 w-3" />
               <Badge className="pl-6" variant="outline">
                 {authKey}
               </Badge>
@@ -76,18 +76,18 @@ function Content({ authKey, changed, name, status, type, date, dateKind, valid }
           )}
           {changed && (
             <span
-              className="inline-block h-3 w-3 self-center rounded-full bg-foreground"
+              className="bg-foreground inline-block h-3 w-3 self-center rounded-full"
               title="Changed"
             />
           )}
         </div>
       </div>
       <div className="flex justify-between gap-2 align-baseline">
-        <p className="w-0 flex-grow overflow-hidden text-ellipsis whitespace-nowrap font-medium">
+        <p className="w-0 grow overflow-hidden font-medium text-ellipsis whitespace-nowrap">
           {name}
         </p>
         {!!date && !!dateKind && (
-          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground">
+          <p className="text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap">
             {{ created: 'Created', updated: 'Updated' }[dateKind]} <DateDisplay date={date} />
           </p>
         )}
