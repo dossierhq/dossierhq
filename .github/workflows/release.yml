@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4.1.0
       - uses: jdx/mise-action@v2
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
