@@ -24,7 +24,7 @@
     "build:watch": "tsc --watch",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
-    "db:clear": "rm -f databases/*.sqlite && rm -rf databases/sqld-*",
+    "db:clear": "rm -f databases/*.sqlite* && rm -rf databases/sqld-*",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
