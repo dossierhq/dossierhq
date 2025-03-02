@@ -1,5 +1,7 @@
 # Change Log - @dossierhq/leaflet
 
+## 0.7.15
+
 ## 0.7.14
 
 This log was last generated on Sun, 09 Feb 2025 13:11:00 GMT and should not be manually modified.
