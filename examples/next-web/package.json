@@ -36,7 +36,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "19.0.10",
-    "eslint": "~9.20.1",
+    "eslint": "~9.21.0",
     "typescript": "~5.7.3"
   }
 }
