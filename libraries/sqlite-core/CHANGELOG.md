@@ -1,5 +1,12 @@
 # Change Log - @dossierhq/sqlite-core
 
+## 0.7.15
+
+### Patch Changes
+
+- @dossierhq/core@0.7.15
+- @dossierhq/database-adapter@0.7.15
+
 ## 0.7.14
 
 ### Patch Changes
