@@ -44,7 +44,7 @@
   "dependencies": {
     "leaflet": "~1.9.4",
     "leaflet.locatecontrol": "0.81.1",
-    "react-leaflet": "~4.2.1",
+    "react-leaflet": "~5.0.0",
     "tslib": "~2.8.1"
   },
   "peerDependencies": {
