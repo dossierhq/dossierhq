@@ -49,9 +49,9 @@
     "@types/react-dom": "~19.0.4",
     "dotenv": "~16.4.7",
     "eslint": "~9.21.0",
-    "schema-dts": "~1.1.2",
-    "tsx": "~4.19.2",
-    "typescript": "~5.7.3",
+    "schema-dts": "~1.1.5",
+    "tsx": "~4.19.3",
+    "typescript": "~5.8.2",
     "vitest": "~3.0.7"
   }
 }

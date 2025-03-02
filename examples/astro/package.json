@@ -40,7 +40,7 @@
     "@types/better-sqlite3": "~7.6.12",
     "@types/react": "19.0.10",
     "rollup-plugin-visualizer": "~5.14.0",
-    "tsx": "~4.19.2",
-    "typescript": "~5.7.3"
+    "tsx": "~4.19.3",
+    "typescript": "~5.8.2"
   }
 }
