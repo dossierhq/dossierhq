@@ -6,16 +6,7 @@
     {
       "label": "pnpm build",
       "type": "shell",
-      "command": "$SHELL -i -c \"pnpm build\"",
-      "problemMatcher": [],
-      "group": {
-        "kind": "build"
-      }
-    },
-    {
-      "label": "pnpm build --continue",
-      "type": "shell",
-      "command": "$SHELL -i -c \"pnpm build --continue\"",
+      "command": "mise exec -- pnpm build",
       "problemMatcher": [],
       "group": {
         "kind": "build"
@@ -24,7 +15,17 @@
     {
       "label": "pnpm changeset:add",
       "type": "shell",
-      "command": "$SHELL -i -c \"pnpm changeset:add\"",
+      "command": "mise exec -- pnpm changeset:add",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build"
+      }
+    },
+    {
+      "label": "pnpm deps:update-interactive",
+      "type": "shell",
+      "command": "mise exec -- pnpm deps:update-interactive",
+      "problemMatcher": [],
       "group": {
         "kind": "build"
       }
