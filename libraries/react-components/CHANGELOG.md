@@ -1,5 +1,13 @@
 # Change Log - @dossierhq/react-components
 
+## 0.7.17
+
+### Patch Changes
+
+- @dossierhq/core@0.7.17
+- @dossierhq/design@0.7.17
+- @dossierhq/leaflet@0.7.17
+
 ## 0.7.16
 
 ### Patch Changes
