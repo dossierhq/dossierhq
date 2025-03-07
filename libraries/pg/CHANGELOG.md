@@ -1,5 +1,13 @@
 # Change Log - @dossierhq/pg
 
+## 0.7.16
+
+### Patch Changes
+
+- @dossierhq/core@0.7.16
+- @dossierhq/database-adapter@0.7.16
+- @dossierhq/postgres-core@0.7.16
+
 ## 0.7.15
 
 ### Patch Changes

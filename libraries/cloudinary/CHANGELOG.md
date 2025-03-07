@@ -1,5 +1,13 @@
 # Change Log - @dossierhq/cloudinary
 
+## 0.7.16
+
+### Patch Changes
+
+- Updated dependencies [9c5126c]
+  - @dossierhq/design@0.7.16
+  - @dossierhq/core@0.7.16
+
 ## 0.7.15
 
 ### Patch Changes

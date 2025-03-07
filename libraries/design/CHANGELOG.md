@@ -1,5 +1,11 @@
 # Change Log - @dossierhq/design
 
+## 0.7.16
+
+### Patch Changes
+
+- 9c5126c: Upgrade dependencies
+
 ## 0.7.15
 
 ## 0.7.14
