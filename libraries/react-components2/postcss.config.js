@@ -2,7 +2,13 @@
 const config = {
   plugins: {
     '@tailwindcss/postcss': {},
-    'postcss-url': { url: 'inline', basePath: '../node_modules/leaflet/dist/' },
+    'postcss-remove-rules': {
+      rulesToRemove: {
+        '.leaflet-control-layers-toggle': 'background-image',
+        '.leaflet-retina .leaflet-control-layers-toggle': 'background-image',
+        '.leaflet-default-icon-path': 'background-image',
+      },
+    },
   },
 };
 
