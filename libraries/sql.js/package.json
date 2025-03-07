@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/sql.js",
-  "version": "0.7.15",
+  "version": "0.7.16",
   "description": "A Dossier database adapter for sql.js.",
   "keywords": [
     "dossier",
