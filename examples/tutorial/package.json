@@ -32,7 +32,7 @@
     "leaflet": "~1.9.4",
     "react": "~19.0.0",
     "react-dom": "~19.0.0",
-    "react-router-dom": "~7.2.0"
+    "react-router-dom": "~7.3.0"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
@@ -46,6 +46,6 @@
     "nodemon": "~3.1.9",
     "tsx": "~4.19.3",
     "typescript": "~5.8.2",
-    "vite": "~6.2.0"
+    "vite": "~6.2.1"
   }
 }
