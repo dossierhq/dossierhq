@@ -34,7 +34,7 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@types/bun": "~1.2.2",
-    "eslint": "~9.21.0",
+    "eslint": "~9.22.0",
     "typescript": "~5.8.2"
   }
 }
