@@ -96,7 +96,7 @@
     "@storybook/test-runner": "~0.22.0",
     "@tailwindcss/vite": "^4.0.12",
     "@types/lodash": "~4.17.16",
-    "@types/react": "19.0.10",
+    "@types/react": "19.0.12",
     "@types/react-dom": "~19.0.4",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react": "~4.3.4",

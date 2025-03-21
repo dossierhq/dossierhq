@@ -39,7 +39,7 @@
     "@types/better-sqlite3": "~7.6.12",
     "@types/body-parser": "~1.19.5",
     "@types/express": "~5.0.0",
-    "@types/react": "19.0.10",
+    "@types/react": "19.0.12",
     "@types/react-dom": "~19.0.4",
     "@vitejs/plugin-react": "~4.3.4",
     "concurrently": "~9.1.2",
