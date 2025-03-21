@@ -23,7 +23,7 @@
     "eslint-plugin-react": "~7.37.4",
     "eslint-plugin-react-compiler": "19.0.0-beta-e1e972c-20250221",
     "eslint-plugin-react-hooks": "~5.2.0",
-    "eslint-plugin-storybook": "~0.11.4",
+    "eslint-plugin-storybook": "~0.11.6",
     "eslint-plugin-turbo": "^2.4.4",
     "globals": "~16.0.0",
     "typescript-eslint": "~8.26.0"
