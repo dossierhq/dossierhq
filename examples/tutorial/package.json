@@ -23,7 +23,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.8.1",
+    "better-sqlite3": "~11.9.1",
     "body-parser": "~1.20.3",
     "dotenv": "~16.4.7",
     "express": "~4.21.2",
