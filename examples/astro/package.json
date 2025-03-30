@@ -30,7 +30,7 @@
     "@sentry/astro": "~9.5.0",
     "@spotlightjs/astro": "~3.0.1",
     "astro": "~5.5.2",
-    "better-sqlite3": "~11.8.1",
+    "better-sqlite3": "~11.9.1",
     "leaflet": "~1.9.4",
     "react": "~19.0.0",
     "react-dom": "~19.0.0"
