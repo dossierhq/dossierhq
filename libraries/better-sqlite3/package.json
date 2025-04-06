@@ -62,6 +62,6 @@
     "better-sqlite3": "~11.9.1",
     "eslint": "~9.23.0",
     "typescript": "~5.8.2",
-    "vitest": "~3.0.9"
+    "vitest": "~3.1.1"
   }
 }
