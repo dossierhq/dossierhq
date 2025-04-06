@@ -378,8 +378,8 @@ importers:
         specifier: ~9.11.0
         version: 9.11.0(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))
       '@spotlightjs/astro':
-        specifier: ~3.0.1
-        version: 3.0.1(@sentry/astro@9.11.0(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))
+        specifier: ~3.1.0
+        version: 3.1.0(@sentry/astro@9.11.0(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))
       astro:
         specifier: ~5.5.5
         version: 5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)
@@ -5529,23 +5529,23 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
-  '@spotlightjs/astro@3.0.1':
-    resolution: {integrity: sha512-FXIokaAOVj/BK8rqzYwH4TSnWEoDTSrh0E3n8h2oULMF5KiMqQ1zfB0ub2lIcBV5ORyVGD+41juWOD/kl9cEhQ==}
+  '@spotlightjs/astro@3.1.0':
+    resolution: {integrity: sha512-BpzefedHkoT9uzcwr/4KsPLne8toEtPNEz3JwHPQ4Kt7GY+cctQxyAW6+O2Crbr+bVrPQHROzKZEqNtqRumBCw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sentry/astro': '>=7.84.0'
       astro: '>=4.7.0'
 
-  '@spotlightjs/overlay@2.12.1':
-    resolution: {integrity: sha512-pw0m6QgCZfb7cuCW4ILEx1+dPcLu0jFXxheClLg1aRFiRUC59Qz4LQ9ifuvFMfC5a7YvDhyqM+mHvInxZo0M/Q==}
+  '@spotlightjs/overlay@2.13.0':
+    resolution: {integrity: sha512-ye2J02PiiyeQDC71X6KeW5xEetnGuCLMmJ+B2lXtDUKjsStq6e0sQbmfdn45WVMt4d8Ksu1SFEMPY6ey8AfJfA==}
 
   '@spotlightjs/sidecar@1.11.2':
     resolution: {integrity: sha512-j5r/AQ3VJWs1tiDttdpMlI+JLVB17JrZxXNndDNKkxTa7KaitButyEv53RGV6GbPREMg7Hvu1V5HVVEdNE7tcg==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@spotlightjs/spotlight@2.11.1':
-    resolution: {integrity: sha512-XycQcQsQycKr5ZmH/enMybQP17eYa/VVuL406rW+elLLL0K1fmHhi8fLQAljBrYTXKtYpKf96zTPqTDP/ojVyw==}
+  '@spotlightjs/spotlight@2.12.0':
+    resolution: {integrity: sha512-b+cBgbnuOFh8OEPlG16Nu3Pn6dSjgFjql07FAt5FS9zuMeVGqXDPEP10HhhXPgiVFnX7LxZXGcZH27eeiJBrjA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16521,15 +16521,15 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@spotlightjs/astro@3.0.1(@sentry/astro@9.11.0(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))':
+  '@spotlightjs/astro@3.1.0(@sentry/astro@9.11.0(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)))(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))':
     dependencies:
       '@sentry/astro': 9.11.0(astro@5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0))
-      '@spotlightjs/spotlight': 2.11.1
+      '@spotlightjs/spotlight': 2.12.0
       astro: 5.5.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.38.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@spotlightjs/overlay@2.12.1': {}
+  '@spotlightjs/overlay@2.13.0': {}
 
   '@spotlightjs/sidecar@1.11.2':
     dependencies:
@@ -16540,10 +16540,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@spotlightjs/spotlight@2.11.1':
+  '@spotlightjs/spotlight@2.12.0':
     dependencies:
       '@sentry/node': 8.55.0
-      '@spotlightjs/overlay': 2.12.1
+      '@spotlightjs/overlay': 2.13.0
       '@spotlightjs/sidecar': 1.11.2
       import-meta-resolve: 4.1.0
       macho-unsign: 2.0.6
