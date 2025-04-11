@@ -83,7 +83,7 @@
     "@types/react-dom": "~19.1.1",
     "@types/uuid": "~10.0.0",
     "@vitejs/plugin-react": "~4.3.4",
-    "eslint": "~9.23.0",
+    "eslint": "~9.24.0",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
     "storybook": "~8.6.12",
