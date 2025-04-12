@@ -1064,8 +1064,8 @@ importers:
         specifier: ~7.37.4
         version: 7.37.4(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-react-compiler:
-        specifier: 19.0.0-beta-e1e972c-20250221
-        version: 19.0.0-beta-e1e972c-20250221(eslint@9.24.0(jiti@2.4.2))
+        specifier: 19.0.0-beta-e993439-20250405
+        version: 19.0.0-beta-e993439-20250405(eslint@9.24.0(jiti@2.4.2))
       eslint-plugin-react-hooks:
         specifier: ~5.2.0
         version: 5.2.0(eslint@9.24.0(jiti@2.4.2))
@@ -2137,8 +2137,8 @@ packages:
     resolution: {integrity: sha512-LVk7fbXml0H2xH34dFzKQ7TDZ2G4/rVTOrq9V+icbbadjbVxxeFeDsNHv2SrZeWoA+6ZiTyWYWtScEIW07EAcA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-create-class-features-plugin@7.26.9':
-    resolution: {integrity: sha512-ubbUqCofvxPRurw5L8WTsCLSkQiVpov4Qx0WMA+jUN+nXBK8ADPlJO1grkFw5CWKC5+sZSOfuGMdX1aI1iT9Sg==}
+  '@babel/helper-create-class-features-plugin@7.27.0':
+    resolution: {integrity: sha512-vSGCvMecvFCd/BdpGlhpXYNhhC4ccxyvQWpbGL4CWbvfEoLFWUZuSuf7s9Aw70flgQF+6vptvgK2IfOnKlRmBg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -8015,8 +8015,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-plugin-react-compiler@19.0.0-beta-e1e972c-20250221:
-    resolution: {integrity: sha512-qdkOo4TJqFfK5td7EVNxDG2zAY44qK+ew7GKZ+nybOS/ONHFVRnluMfC+yjqyBexlfDZJul5ZFzsANJDQa3WSw==}
+  eslint-plugin-react-compiler@19.0.0-beta-e993439-20250405:
+    resolution: {integrity: sha512-8ZQU4qGc8NOfsM7u7tf7gXmZ+d4tSK+7BFb+Fvs4s9ItQ12m/G6ttSGxompH/Jq7nXgnJ20EqQRshwVG6GwUdA==}
     engines: {node: ^14.17.0 || ^16.0.0 || >= 18.0.0}
     peerDependencies:
       eslint: '>=7'
@@ -12543,7 +12543,7 @@ snapshots:
       '@babel/helper-compilation-targets': 7.26.5
       '@babel/helper-module-transforms': 7.26.0(@babel/core@7.26.9)
       '@babel/helpers': 7.26.9
-      '@babel/parser': 7.26.9
+      '@babel/parser': 7.27.0
       '@babel/template': 7.26.9
       '@babel/traverse': 7.26.9
       '@babel/types': 7.27.0
@@ -12557,7 +12557,7 @@ snapshots:
 
   '@babel/generator@7.26.8':
     dependencies:
-      '@babel/parser': 7.26.8
+      '@babel/parser': 7.27.0
       '@babel/types': 7.27.0
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
@@ -12565,7 +12565,7 @@ snapshots:
 
   '@babel/generator@7.26.9':
     dependencies:
-      '@babel/parser': 7.26.9
+      '@babel/parser': 7.27.0
       '@babel/types': 7.27.0
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
@@ -12599,13 +12599,13 @@ snapshots:
       lru-cache: 5.1.1
       semver: 6.3.1
 
-  '@babel/helper-create-class-features-plugin@7.26.9(@babel/core@7.26.9)':
+  '@babel/helper-create-class-features-plugin@7.27.0(@babel/core@7.26.10)':
     dependencies:
-      '@babel/core': 7.26.9
+      '@babel/core': 7.26.10
       '@babel/helper-annotate-as-pure': 7.25.9
       '@babel/helper-member-expression-to-functions': 7.25.9
       '@babel/helper-optimise-call-expression': 7.25.9
-      '@babel/helper-replace-supers': 7.26.5(@babel/core@7.26.9)
+      '@babel/helper-replace-supers': 7.26.5(@babel/core@7.26.10)
       '@babel/helper-skip-transparent-expression-wrappers': 7.25.9
       '@babel/traverse': 7.27.0
       semver: 6.3.1
@@ -12659,9 +12659,9 @@ snapshots:
 
   '@babel/helper-plugin-utils@7.26.5': {}
 
-  '@babel/helper-replace-supers@7.26.5(@babel/core@7.26.9)':
+  '@babel/helper-replace-supers@7.26.5(@babel/core@7.26.10)':
     dependencies:
-      '@babel/core': 7.26.9
+      '@babel/core': 7.26.10
       '@babel/helper-member-expression-to-functions': 7.25.9
       '@babel/helper-optimise-call-expression': 7.25.9
       '@babel/traverse': 7.27.0
@@ -12688,7 +12688,7 @@ snapshots:
 
   '@babel/helpers@7.26.9':
     dependencies:
-      '@babel/template': 7.26.9
+      '@babel/template': 7.27.0
       '@babel/types': 7.27.0
 
   '@babel/helpers@7.27.0':
@@ -12708,10 +12708,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.27.0
 
-  '@babel/plugin-proposal-private-methods@7.18.6(@babel/core@7.26.9)':
+  '@babel/plugin-proposal-private-methods@7.18.6(@babel/core@7.26.10)':
     dependencies:
-      '@babel/core': 7.26.9
-      '@babel/helper-create-class-features-plugin': 7.26.9(@babel/core@7.26.9)
+      '@babel/core': 7.26.10
+      '@babel/helper-create-class-features-plugin': 7.27.0(@babel/core@7.26.10)
       '@babel/helper-plugin-utils': 7.26.5
     transitivePeerDependencies:
       - supports-color
@@ -12826,13 +12826,13 @@ snapshots:
   '@babel/template@7.26.8':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/parser': 7.26.8
+      '@babel/parser': 7.27.0
       '@babel/types': 7.27.0
 
   '@babel/template@7.26.9':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/parser': 7.26.9
+      '@babel/parser': 7.27.0
       '@babel/types': 7.27.0
 
   '@babel/template@7.27.0':
@@ -12845,7 +12845,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.26.2
       '@babel/generator': 7.26.9
-      '@babel/parser': 7.26.8
+      '@babel/parser': 7.27.0
       '@babel/template': 7.26.9
       '@babel/types': 7.27.0
       debug: 4.4.0(supports-color@5.5.0)
@@ -12857,7 +12857,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.26.2
       '@babel/generator': 7.26.9
-      '@babel/parser': 7.26.9
+      '@babel/parser': 7.27.0
       '@babel/template': 7.26.9
       '@babel/types': 7.27.0
       debug: 4.4.0(supports-color@5.5.0)
@@ -17816,7 +17816,7 @@ snapshots:
 
   '@types/babel__template@7.4.4':
     dependencies:
-      '@babel/parser': 7.26.8
+      '@babel/parser': 7.27.0
       '@babel/types': 7.27.0
 
   '@types/babel__traverse@7.20.6':
@@ -19786,11 +19786,11 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-plugin-react-compiler@19.0.0-beta-e1e972c-20250221(eslint@9.24.0(jiti@2.4.2)):
+  eslint-plugin-react-compiler@19.0.0-beta-e993439-20250405(eslint@9.24.0(jiti@2.4.2)):
     dependencies:
-      '@babel/core': 7.26.9
-      '@babel/parser': 7.26.9
-      '@babel/plugin-proposal-private-methods': 7.18.6(@babel/core@7.26.9)
+      '@babel/core': 7.26.10
+      '@babel/parser': 7.27.0
+      '@babel/plugin-proposal-private-methods': 7.18.6(@babel/core@7.26.10)
       eslint: 9.24.0(jiti@2.4.2)
       hermes-parser: 0.25.1
       zod: 3.24.2
@@ -21317,7 +21317,7 @@ snapshots:
   jest-snapshot@29.7.0:
     dependencies:
       '@babel/core': 7.26.10
-      '@babel/generator': 7.26.9
+      '@babel/generator': 7.27.0
       '@babel/plugin-syntax-jsx': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-syntax-typescript': 7.25.9(@babel/core@7.26.10)
       '@babel/types': 7.27.0
