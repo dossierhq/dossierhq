@@ -1,0 +1,42 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    "apps/blog": {
+      "ignoreDependencies": ["codejar"],
+    },
+    "examples/benchmark": {
+      "entry": ["deno/run-*.ts", "src/run-*.ts"],
+    },
+    "examples/bun": {
+      "entry": ["*.ts"],
+    },
+    "examples/deno": {
+      "entry": ["*.ts"],
+    },
+    "examples/foo": {
+      "entry": ["src/*.ts"],
+      "ignoreDependencies": ["tslib"],
+    },
+    "libraries/bun-sqlite": {
+      "entry": ["src/**/*.test.ts"],
+    },
+    "libraries/deno-postgres": {
+      "entry": ["src/mod.ts", "src/**/*.test.ts"],
+    },
+    "libraries/design": {
+      "ignoreDependencies": ["@creativebulma/bulma-badge"],
+    },
+    "libraries/leaflet": {
+      "entry": ["scripts/*.js"],
+    },
+    "libraries/react-components": {
+      "entry": [".storybook/*.js"],
+    },
+    "libraries/test-data": {
+      "entry": ["src/**/*-generator.ts"],
+    },
+    "tools/tree-shake-tester": {
+      "entry": ["test-cases/*.js"],
+    },
+  },
+}

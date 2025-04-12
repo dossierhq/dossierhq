@@ -16,7 +16,6 @@
     "preview": "vite --port 3004 preview"
   },
   "dependencies": {
-    "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/design": "workspace:*",
     "@dossierhq/graphql": "workspace:*",
@@ -26,8 +25,6 @@
     "@dossierhq/test-data": "workspace:*",
     "@radix-ui/react-label": "~2.1.2",
     "@radix-ui/react-slot": "~1.1.2",
-    "graphiql": "~3.8.3",
-    "graphql": "~16.10.0",
     "history": "~5.3.0",
     "lucide-react": "~0.487.0",
     "react": "~19.1.0",
@@ -38,7 +35,6 @@
   },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
-    "@graphiql/toolkit": "~0.11.1",
     "@tailwindcss/postcss": "^4.0.14",
     "@types/react": "19.1.1",
     "@types/react-dom": "~19.1.2",
