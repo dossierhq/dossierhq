@@ -52,6 +52,7 @@ updates:
       tailwind:
         patterns:
           - "@tailwindcss/*"
+          - "tailwind-merge"
           - "tailwindcss"
       vitest:
         patterns:
