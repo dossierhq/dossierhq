@@ -1829,8 +1829,8 @@ importers:
         specifier: ~11.9.1
         version: 11.9.1
       cloudinary:
-        specifier: ~2.5.1
-        version: 2.5.1
+        specifier: ~2.6.0
+        version: 2.6.0
       dotenv:
         specifier: ~16.4.7
         version: 16.4.7
@@ -7135,8 +7135,8 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
 
-  cloudinary@2.5.1:
-    resolution: {integrity: sha512-CNg6uU53Hl4FEVynkTGpt5bQEAQWDHi3H+Sm62FzKf5uQHipSN2v7qVqS8GRVqeb0T1WNV+22+75DOJeRXYeSQ==}
+  cloudinary@2.6.0:
+    resolution: {integrity: sha512-FIlny9RR5LPgkMioG4V7yUpC6ASyIFQMWfx4TgOi/xBeLxJTegbyQc3itiXL0b0lDlSaL0KyT2THEw6osrKqpQ==}
     engines: {node: '>=9'}
 
   clsx@1.2.1:
@@ -18339,7 +18339,7 @@ snapshots:
   clone@1.0.4:
     optional: true
 
-  cloudinary@2.5.1:
+  cloudinary@2.6.0:
     dependencies:
       lodash: 4.17.21
       q: 1.5.1
