@@ -30,9 +30,7 @@
       "entry": ["src/main.tsx", "src/SchemaTypes.ts"],
       "ignoreDependencies": ["nodemon"],
     },
-    "libraries/benchpress": {
-      "entry": ["src/compat/DenoUtils.ts"],
-    },
+    "libraries/benchpress": {},
     "libraries/bun-sqlite": {
       "entry": ["src/**/*.test.ts"],
     },

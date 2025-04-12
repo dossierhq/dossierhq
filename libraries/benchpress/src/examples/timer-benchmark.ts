@@ -19,9 +19,9 @@ async function main(runName: string, variant: string) {
   });
 }
 
-const args = typeof Deno !== 'undefined' ? Deno.args : process.argv.slice(2);
+const args = process.argv.slice(2);
 const runName = args[0] ?? '';
-const variant = typeof Deno !== 'undefined' ? 'deno' : typeof Bun !== 'undefined' ? 'bun' : 'node';
+const variant = 'Deno' in globalThis ? 'deno' : typeof Bun !== 'undefined' ? 'bun' : 'node';
 const timestamp = fileTimestamp();
 const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
 await main(fullRunName, variant);
