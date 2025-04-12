@@ -20,7 +20,7 @@
   "devDependencies": {
     "@eslint/js": "~9.24.0",
     "@next/eslint-plugin-next": "~15.3.0",
-    "eslint-plugin-react": "~7.37.4",
+    "eslint-plugin-react": "~7.37.5",
     "eslint-plugin-react-compiler": "19.0.0-beta-e993439-20250405",
     "eslint-plugin-react-hooks": "~5.2.0",
     "eslint-plugin-storybook": "~0.12.0",
