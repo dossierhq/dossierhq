@@ -110,7 +110,7 @@
     "prettier-plugin-tailwindcss": "~0.6.11",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
-    "sql.js": "~1.12.0",
+    "sql.js": "~1.13.0",
     "storybook": "~8.6.12",
     "tailwindcss": "~4.0.12",
     "tailwindcss-animate": "~1.0.7",
