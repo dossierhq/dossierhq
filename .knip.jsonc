@@ -1,8 +1,14 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": ["tslib"],
   "workspaces": {
     "apps/blog": {
+      "entry": ["utils/SchemaTypes.ts"],
       "ignoreDependencies": ["codejar"],
+    },
+    "examples/astro": {
+      "entry": ["src/generated/SchemaTypes.ts"],
+      "ignoreDependencies": ["tsx"],
     },
     "examples/benchmark": {
       "entry": ["deno/run-*.ts", "src/run-*.ts"],
@@ -15,7 +21,12 @@
     },
     "examples/foo": {
       "entry": ["src/*.ts"],
-      "ignoreDependencies": ["tslib"],
+    },
+    "examples/tutorial": {
+      "entry": ["src/main.tsx", "src/SchemaTypes.ts"],
+    },
+    "libraries/benchpress": {
+      "entry": ["src/compat/DenoUtils.ts"],
     },
     "libraries/bun-sqlite": {
       "entry": ["src/**/*.test.ts"],
@@ -26,14 +37,15 @@
     "libraries/design": {
       "ignoreDependencies": ["@creativebulma/bulma-badge"],
     },
+    "libraries/integration-test": { "entry": ["src/SchemaTypes.ts"] },
     "libraries/leaflet": {
       "entry": ["scripts/*.js"],
     },
     "libraries/react-components": {
-      "entry": [".storybook/*.js"],
+      "entry": [".storybook/*.cjs"],
     },
     "libraries/test-data": {
-      "entry": ["src/**/*-generator.ts"],
+      "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],
     },
     "tools/tree-shake-tester": {
       "entry": ["test-cases/*.js"],

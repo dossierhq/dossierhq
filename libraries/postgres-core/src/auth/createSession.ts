@@ -85,7 +85,7 @@ export async function authCreateSyncSessionForSubject(
   );
 }
 
-export async function getOrCreateSubject(
+async function getOrCreateSubject(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   { subjectId }: { subjectId: string },
@@ -187,7 +187,7 @@ async function createSubjectAndPrincipal(
   });
 }
 
-export function createPrincipal(
+function createPrincipal(
   adapter: PostgresDatabaseAdapter,
   context: TransactionContext,
   provider: string,

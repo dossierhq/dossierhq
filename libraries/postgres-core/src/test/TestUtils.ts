@@ -50,7 +50,7 @@ interface MockedPostgresDatabaseAdapter extends PostgresDatabaseAdapter {
   base64Decode: MockedFunction<PostgresDatabaseAdapter['base64Decode']>;
 }
 
-export class MockUniqueViolationOfConstraintError extends Error {
+class MockUniqueViolationOfConstraintError extends Error {
   readonly uniqueConstraint: UniqueConstraints;
 
   constructor(message: string, uniqueConstraint: UniqueConstraints) {

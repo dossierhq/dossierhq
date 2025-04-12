@@ -187,11 +187,6 @@ export const SUBJECT_OR_DEFAULT_CREATE: Readonly<EntityCreate<SubjectOrDefaultAu
   fields: { message: 'Message' },
 };
 
-export const SUBJECT_OR_DEFAULT_UPSERT: Readonly<EntityUpsert<SubjectOrDefaultAuthKey>> = {
-  id: 'REPLACE',
-  ...SUBJECT_OR_DEFAULT_CREATE,
-};
-
 export const TITLE_ONLY_CREATE: Readonly<EntityCreate<TitleOnly>> = {
   info: {
     type: 'TitleOnly',

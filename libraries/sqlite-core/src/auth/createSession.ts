@@ -87,7 +87,7 @@ export async function authCreateSyncSessionForSubject(
   );
 }
 
-export async function getOrCreateSubject(
+async function getOrCreateSubject(
   database: Database,
   context: TransactionContext,
   { subjectId }: { subjectId: string },
@@ -175,7 +175,7 @@ async function createSubjectAndPrincipal(
   });
 }
 
-export function createPrincipal(
+function createPrincipal(
   database: Database,
   context: TransactionContext,
   provider: string,

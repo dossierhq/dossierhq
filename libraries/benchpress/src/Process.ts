@@ -1,6 +1,6 @@
 import type { BenchPressResult } from './Runner.js';
 
-export interface BenchPressProcessOptions {
+interface BenchPressProcessOptions {
   percentiles: number[];
 }
 

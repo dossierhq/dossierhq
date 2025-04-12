@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'node:path';
 
-export async function fetchTextCached(url: string, cachePath: string): Promise<string> {
+async function fetchTextCached(url: string, cachePath: string): Promise<string> {
   try {
     const data = await readFile(cachePath, { encoding: 'utf-8' });
     return data;

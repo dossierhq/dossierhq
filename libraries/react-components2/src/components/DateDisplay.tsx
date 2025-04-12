@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-export interface DateDisplayProps {
+interface DateDisplayProps {
   className?: string;
   date: Date;
 }

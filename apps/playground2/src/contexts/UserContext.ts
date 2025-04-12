@@ -5,7 +5,7 @@ export interface User {
   name: string;
 }
 
-export interface UserContextValue {
+interface UserContextValue {
   currentUserId: string | null;
   users: User[];
   setCurrentUserId(this: void, id: string): void;

@@ -49,6 +49,10 @@ updates:
           - "@storybook/*"
           - "eslint-plugin-storybook"
           - "storybook"
+      tailwind:
+        patterns:
+          - "@tailwindcss/*"
+          - "tailwindcss"
       vitest:
         patterns:
           - "@vitest/*"

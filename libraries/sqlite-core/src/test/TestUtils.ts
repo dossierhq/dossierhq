@@ -97,7 +97,7 @@ export function createMockDatabase(): MockedDatabase {
   };
 }
 
-export function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
+function createMockInnerAdapter(): MockedSqliteDatabaseAdapter {
   const allQueries: [string, ...ColumnValue[]][] = [];
 
   const query = vi.fn<QueryFn>();

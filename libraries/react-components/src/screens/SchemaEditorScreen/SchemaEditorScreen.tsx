@@ -51,7 +51,7 @@ import { SaveSchemaDialog } from './SaveSchemaDialog.js';
 import { SchemaMenu } from './SchemaMenu.js';
 import { TypeDraftStatusTag } from './TypeDraftStatusTag.js';
 
-export interface SchemaEditorScreenProps {
+interface SchemaEditorScreenProps {
   header?: ReactNode;
   footer?: ReactNode;
   onEditorHasChangesChange: (hasChanges: boolean) => void;

@@ -42,23 +42,29 @@ export interface EntityLatestReferencesTable {
   to_entities_id: number;
 }
 
+/*
 export interface EntityPublishedReferencesTable {
   id: number;
   from_entities_id: number;
   to_entities_id: number;
 }
+*/
 
+/*
 export interface EntityLatestValueTypesTable {
   id: number;
   entities_id: number;
   value_type: string;
 }
+*/
 
+/*
 export interface EntityPublishedValueTypesTable {
   id: number;
   entities_id: number;
   value_type: string;
 }
+*/
 
 export interface EntityVersionsTable {
   id: number;

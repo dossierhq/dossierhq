@@ -14,11 +14,11 @@ import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 export type SerializedPublishedComponentNode = RichTextComponentNode;
 
-export function $createPublishedComponentNode(data: Component): PublishedComponentNode {
+function $createPublishedComponentNode(data: Component): PublishedComponentNode {
   return new PublishedComponentNode(data);
 }
 
-export function $isPublishedComponentNode(
+function $isPublishedComponentNode(
   node: LexicalNode | undefined | null,
 ): node is PublishedComponentNode {
   return node instanceof PublishedComponentNode;

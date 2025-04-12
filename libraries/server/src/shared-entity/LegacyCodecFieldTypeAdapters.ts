@@ -7,7 +7,7 @@ import {
   type PublishedFieldSpecification,
 } from '@dossierhq/core';
 
-export interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
+interface FieldTypeAdapter<TDecoded = unknown, TEncoded = unknown> {
   decodeData(encodedData: TEncoded): TDecoded;
   decodeJson(json: unknown): TDecoded;
 }
@@ -65,7 +65,7 @@ export function getAdapter(
   return getAdapterForType(fieldSpec.type as FieldType);
 }
 
-export function getAdapterForType(
+function getAdapterForType(
   fieldType: (typeof FieldType)[keyof typeof FieldType],
 ): FieldTypeAdapter {
   const payload = adapters[fieldType];

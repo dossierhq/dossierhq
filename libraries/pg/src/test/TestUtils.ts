@@ -46,7 +46,7 @@ function getConnectionString(selector?: 'default' | 'a' | 'b') {
   return value;
 }
 
-export function createPostgresTestAdapter(connectionString: string): DatabaseAdapter {
+function createPostgresTestAdapter(connectionString: string): DatabaseAdapter {
   return createPostgresAdapter({ connectionString });
 }
 

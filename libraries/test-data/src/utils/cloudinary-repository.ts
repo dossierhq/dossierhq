@@ -7,7 +7,7 @@ cloudinary.config({
   secure: true,
 });
 
-export interface CloudinaryAsset {
+interface CloudinaryAsset {
   public_id: string;
   width: number;
   height: number;
