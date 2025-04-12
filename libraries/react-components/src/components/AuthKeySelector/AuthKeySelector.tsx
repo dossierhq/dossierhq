@@ -16,8 +16,8 @@ export interface AuthKeyItem extends MultipleSelectorItem {
   displayName: string;
 }
 
-export type AuthKeySelectorReducer = MultipleSelectorReducer<AuthKeyItem>;
-export type AuthKeySelectorInitArgs = {
+type AuthKeySelectorReducer = MultipleSelectorReducer<AuthKeyItem>;
+type AuthKeySelectorInitArgs = {
   authKeys: DisplayAuthKey[];
   selectedIds?: string[] | undefined;
 };

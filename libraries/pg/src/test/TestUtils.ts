@@ -27,7 +27,7 @@ import { createPostgresAdapter } from '../PgDatabaseAdapter.js';
 export function registerTestSuite(testSuiteName: string, testSuite: TestSuite): void {
   describe(testSuiteName, () => {
     for (const [testName, testFunction] of Object.entries(testSuite)) {
-      const timeout = testFunction.timeout ? { long: 50_000 }[testFunction.timeout] : undefined;
+      const timeout = testFunction.timeout ? { long: 50_000 }[testFunction.timeout] : 20_000;
       test(testName, { timeout }, testFunction);
     }
   });

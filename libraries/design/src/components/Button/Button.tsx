@@ -9,7 +9,7 @@ import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { Icon, type IconName } from '../Icon/Icon.js';
 
-export type ButtonProps = {
+type ButtonProps = {
   ref?: Ref<HTMLAnchorElement | HTMLButtonElement>;
   className?: string;
   style?: CSSProperties;

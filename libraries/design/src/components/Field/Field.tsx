@@ -2,31 +2,31 @@ import type { FunctionComponent } from 'react';
 import { toColorClassName, type Color } from '../../config/Colors.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
-export interface FieldProps {
+interface FieldProps {
   grouped?: boolean;
   horizontal?: boolean;
   children: React.ReactNode;
 }
 
-export interface FieldLabelProps {
+interface FieldLabelProps {
   size?: 'small' | 'medium' | 'large';
   children: string;
 }
 
-export interface FieldControlProps {
+interface FieldControlProps {
   children: React.ReactNode;
 }
 
-export interface FieldHelpProps {
+interface FieldHelpProps {
   color?: Color;
   children: React.ReactNode;
 }
 
-export interface FieldLabelColumnProps {
+interface FieldLabelColumnProps {
   children?: React.ReactNode;
 }
 
-export interface FieldBodyColumnProps {
+interface FieldBodyColumnProps {
   children: React.ReactNode;
 }
 

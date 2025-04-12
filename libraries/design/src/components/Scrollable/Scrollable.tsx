@@ -4,7 +4,7 @@ import { useEffect, useRef, type CSSProperties, type JSX, type ReactNode } from 
 import { useIsClippedObserver } from '../../hooks/useIsClippedObserver.js';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
-export interface ScrollableProps {
+interface ScrollableProps {
   className?: string;
   style?: CSSProperties;
   // defaults to 'vertical'

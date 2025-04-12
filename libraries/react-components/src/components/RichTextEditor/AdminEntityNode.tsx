@@ -18,7 +18,7 @@ import {
 import type { JSX } from 'react';
 import { ReferenceFieldEditorWithoutClear } from '../EntityEditor/ReferenceFieldEditor.js';
 
-export type SerializedAdminEntityNode = RichTextEntityNode;
+type SerializedAdminEntityNode = RichTextEntityNode;
 
 export function $createAdminEntityNode(reference: EntityReference): AdminEntityNode {
   return new AdminEntityNode(reference);

@@ -16,7 +16,7 @@ interface ServerInit {
 
 export function registerTestSuite(
   testSuite: TestSuite,
-  subset?: { page: number; totalPages: number }
+  subset?: { page: number; totalPages: number },
 ) {
   let testSuiteToAdd = Object.entries(testSuite);
   if (subset) {
@@ -51,7 +51,7 @@ export async function initializeIntegrationTestServer(): PromiseResult<
   const client = server.createDossierClient(() => sessionResult);
 
   const schemaResult = await client.updateSchemaSpecification(
-    IntegrationTestSchema
+    IntegrationTestSchema,
   );
   if (schemaResult.isError()) return schemaResult;
 

@@ -4,7 +4,7 @@ import { queryRun, type Database } from './QueryFunctions.js';
 import type { AdapterTransaction } from './SqliteDatabaseAdapter.js';
 import { withQueryPerformance } from './utils/withQueryPerformance.js';
 
-export interface SqliteTransaction extends Transaction {
+interface SqliteTransaction extends Transaction {
   savePointCount: number;
   /** The start of the root transaction */
   transactionTimestamp: Date;

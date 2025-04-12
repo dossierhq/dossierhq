@@ -23,13 +23,13 @@ export interface DropdownDisplayProps {
   children: ReactNode;
 }
 
-export interface DropdownDisplayItemProps {
+interface DropdownDisplayItemProps {
   active?: boolean;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   children: ReactNode;
 }
 
-export interface DropdownDisplayContentItemProps {
+interface DropdownDisplayContentItemProps {
   children: ReactNode;
 }
 

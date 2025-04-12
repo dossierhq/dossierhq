@@ -6,7 +6,7 @@ import {
   type TypeSelectionFilter,
 } from '../../utils/TypeSelectionUtils.js';
 
-export interface AdminTypePickerDialogProps extends TypeSelectionFilter {
+interface AdminTypePickerDialogProps extends TypeSelectionFilter {
   title: string;
   onItemClick: (type: string) => void;
 }

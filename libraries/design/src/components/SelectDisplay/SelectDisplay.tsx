@@ -6,14 +6,14 @@ import type {
 } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
-export interface SelectDisplayProps {
+interface SelectDisplayProps {
   fullWidth?: boolean;
   value?: SelectHTMLAttributes<HTMLSelectElement>['value'];
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   children: ReactNode;
 }
 
-export interface SelectDisplayOptionProps {
+interface SelectDisplayOptionProps {
   value: OptionHTMLAttributes<HTMLOptionElement>['value'];
   disabled?: boolean;
   children: ReactNode;

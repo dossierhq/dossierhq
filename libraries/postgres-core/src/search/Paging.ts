@@ -3,7 +3,7 @@ import type { DatabasePagingInfo } from '@dossierhq/database-adapter';
 import type { PostgresDatabaseAdapter } from '../PostgresDatabaseAdapter.js';
 import { fromOpaqueCursor, type CursorNativeType } from './OpaqueCursor.js';
 
-export interface ResolvedPagingCursors<TCursor> {
+interface ResolvedPagingCursors<TCursor> {
   before: TCursor | null;
   after: TCursor | null;
 }

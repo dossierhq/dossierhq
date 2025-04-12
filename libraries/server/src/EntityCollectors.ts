@@ -19,7 +19,7 @@ import {
 } from '@dossierhq/core';
 import { assertIsDefined } from './utils/AssertUtils.js';
 
-export interface UniqueIndexValue {
+interface UniqueIndexValue {
   path: ContentValuePath;
   value: string;
 }

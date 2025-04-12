@@ -1,13 +1,13 @@
 import { FieldType, type Component, type ComponentTypeSpecificationUpdate } from '@dossierhq/core';
 
-export interface AdminCloudinaryImageFields {
+interface AdminCloudinaryImageFields {
   publicId: string | null;
   width: number | null;
   height: number | null;
   alt: string | null;
 }
 
-export interface PublishedCloudinaryImageFields {
+interface PublishedCloudinaryImageFields {
   publicId: string;
   width: number;
   height: number;

@@ -3,7 +3,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toSpacingClassName, type PaddingProps } from '../../utils/LayoutPropsUtils.js';
 import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
 
-export interface LevelProps extends PaddingProps {
+interface LevelProps extends PaddingProps {
   sticky?: boolean;
   children: ReactNode;
 }

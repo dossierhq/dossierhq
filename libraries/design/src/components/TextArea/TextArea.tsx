@@ -2,7 +2,7 @@ import type { ChangeEventHandler, CSSProperties } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
 
-export interface TextAreaProps {
+interface TextAreaProps {
   className?: string;
   style?: CSSProperties;
   fixedSize?: boolean;

@@ -7,7 +7,7 @@ import { Icon, type IconName } from '../Icon/Icon.js';
 import { Tag, type TagProps } from '../Tag/Tag.js';
 import { Text } from '../Text/Text.js';
 
-export interface CardProps {
+interface CardProps {
   className?: string;
   children: ReactNode;
 }

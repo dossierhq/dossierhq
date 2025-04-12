@@ -9,11 +9,11 @@ export interface TagProps {
   children: string | [string, ReactElement<TagRemoveProps> | null];
 }
 
-export interface TagRemoveProps {
+interface TagRemoveProps {
   onClick?: MouseEventHandler<HTMLElement>;
 }
 
-export interface TagClearProps {
+interface TagClearProps {
   onClick?: MouseEventHandler<HTMLElement>;
   children: React.ReactNode;
 }

@@ -17,7 +17,7 @@ import {
   type NodeKey,
 } from 'lexical';
 
-export type SerializedAdminEntityLinkNode = RichTextEntityLinkNode;
+type SerializedAdminEntityLinkNode = RichTextEntityLinkNode;
 
 function $createAdminEntityLinkNode(reference: EntityReference): AdminEntityLinkNode {
   return new AdminEntityLinkNode(reference);

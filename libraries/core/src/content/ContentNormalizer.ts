@@ -12,7 +12,7 @@ import {
   type ContentTransformerOptions,
 } from './ContentTransformer.js';
 
-export type ContentNormalizerOptions = ContentTransformerOptions;
+type ContentNormalizerOptions = ContentTransformerOptions;
 export type ContentNormalizerEntityFieldsOptions = ContentTransformerEntityFieldsOptions;
 
 export function normalizeEntityFields<TEntity extends EntityLike<string, object>>(

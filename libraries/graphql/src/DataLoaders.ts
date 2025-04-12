@@ -360,7 +360,7 @@ function createReferencesCollector<TSchema extends Schema | PublishedSchema>() {
   };
 }
 
-export function buildResolversForValue<TContext extends SessionGraphQLContext>(
+function buildResolversForValue<TContext extends SessionGraphQLContext>(
   schema: Schema | PublishedSchema,
   component: Component,
   isAdmin: boolean,

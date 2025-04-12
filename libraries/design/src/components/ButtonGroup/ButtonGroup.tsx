@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
-export interface ButtonGroupProps {
+interface ButtonGroupProps {
   centered?: boolean;
   hasAddons?: boolean;
   noBottomMargin?: boolean;

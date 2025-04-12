@@ -6,12 +6,16 @@
       "entry": ["utils/SchemaTypes.ts"],
       "ignoreDependencies": ["codejar"],
     },
+    "apps/playground2": {
+      "ignoreDependencies": ["babel-plugin-react-compiler"],
+    },
     "examples/astro": {
       "entry": ["src/generated/SchemaTypes.ts"],
       "ignoreDependencies": ["tsx"],
     },
     "examples/benchmark": {
       "entry": ["deno/run-*.ts", "src/run-*.ts"],
+      "ignoreDependencies": ["@dossierhq/postgres-tools"],
     },
     "examples/bun": {
       "entry": ["*.ts"],
@@ -24,6 +28,7 @@
     },
     "examples/tutorial": {
       "entry": ["src/main.tsx", "src/SchemaTypes.ts"],
+      "ignoreDependencies": ["nodemon"],
     },
     "libraries/benchpress": {
       "entry": ["src/compat/DenoUtils.ts"],
@@ -33,22 +38,28 @@
     },
     "libraries/deno-postgres": {
       "entry": ["src/mod.ts", "src/**/*.test.ts"],
+      "ignoreDependencies": ["@dossierhq/postgres-tools"],
     },
     "libraries/design": {
-      "ignoreDependencies": ["@creativebulma/bulma-badge"],
+      "ignoreDependencies": ["@creativebulma/bulma-badge", "bulma"],
     },
     "libraries/integration-test": { "entry": ["src/SchemaTypes.ts"] },
     "libraries/leaflet": {
       "entry": ["scripts/*.js"],
     },
+    "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
       "entry": [".storybook/*.cjs"],
+    },
+    "libraries/react-components2": {
+      "ignoreDependencies": ["concurrently", "wait-on"],
     },
     "libraries/test-data": {
       "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],
     },
     "tools/tree-shake-tester": {
       "entry": ["test-cases/*.js"],
+      "ignoreDependencies": ["esbuild", "rollup"],
     },
   },
 }

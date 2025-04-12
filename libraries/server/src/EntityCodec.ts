@@ -36,7 +36,7 @@ import {
 } from './shared-entity/migrateDecodeAndNormalizeEntityFields.js';
 import { assertIsDefined } from './utils/AssertUtils.js';
 
-export interface EncodeAdminEntityPayload {
+interface EncodeAdminEntityPayload {
   validationIssues: SaveValidationIssue[];
   type: string;
   name: string;

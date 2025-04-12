@@ -12,12 +12,12 @@ import {
   type MultipleSelectorStateAction,
 } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 
-export interface EntityTypeItem extends MultipleSelectorItem {
+interface EntityTypeItem extends MultipleSelectorItem {
   name: string;
 }
 
-export type EntityTypeSelectorReducer = MultipleSelectorReducer<EntityTypeItem>;
-export type EntityTypeSelectorInitArgs = { selectedIds?: string[] };
+type EntityTypeSelectorReducer = MultipleSelectorReducer<EntityTypeItem>;
+type EntityTypeSelectorInitArgs = { selectedIds?: string[] };
 export type EntityTypeSelectorState = MultipleSelectorState<EntityTypeItem>;
 export type EntityTypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<EntityTypeItem>>;
 

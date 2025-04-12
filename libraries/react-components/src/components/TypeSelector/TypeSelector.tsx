@@ -17,8 +17,8 @@ export interface TypeItem extends MultipleSelectorItem {
   kind: 'entity' | 'component';
 }
 
-export type TypeSelectorReducer = MultipleSelectorReducer<TypeItem>;
-export type TypeSelectorInitArgs = { selectedIds?: string[] };
+type TypeSelectorReducer = MultipleSelectorReducer<TypeItem>;
+type TypeSelectorInitArgs = { selectedIds?: string[] };
 export type TypeSelectorState = MultipleSelectorState<TypeItem>;
 export type TypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<TypeItem>>;
 

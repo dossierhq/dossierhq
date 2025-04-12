@@ -1,4 +1,4 @@
-export interface CheckboxProps {
+interface CheckboxProps {
   checked?: boolean;
   disabled?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;

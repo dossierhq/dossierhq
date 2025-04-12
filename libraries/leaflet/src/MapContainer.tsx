@@ -22,7 +22,7 @@ import type { ZoomMetrics } from './Types.js';
 
 const defaultZoom = 13;
 
-export interface MapContainerProps {
+interface MapContainerProps {
   className?: string;
   style?: CSSProperties;
   center: Location;
@@ -55,7 +55,7 @@ interface EditLocationMarkerProps {
   onChange: (location: Location) => void;
 }
 
-export interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
+interface MapContainerComponent extends FunctionComponent<MapContainerProps> {
   LocateControl: FunctionComponent<LocateControlProps>;
   Marker: FunctionComponent<MarkerProps>;
   EditLocationMarker: FunctionComponent<EditLocationMarkerProps>;

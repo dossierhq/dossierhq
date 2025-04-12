@@ -1,4 +1,4 @@
-export interface RadioProps {
+interface RadioProps {
   checked?: boolean;
   disabled?: boolean;
   name: string;

@@ -2,7 +2,7 @@ import { Column } from '../Column/Column.js';
 import { Icon, type IconName } from '../Icon/Icon.js';
 import { Text } from '../Text/Text.js';
 
-export interface EmptyStateMessageProps {
+interface EmptyStateMessageProps {
   icon: IconName;
   title: string;
   message: string;

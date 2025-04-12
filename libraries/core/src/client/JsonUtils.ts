@@ -39,7 +39,7 @@ export type JsonResult<TOk, TError extends ErrorType> =
   | { value: TOk }
   | { error: TError; message: string };
 
-export interface JsonEntityInfo extends Omit<EntityInfo, 'createdAt' | 'updatedAt'> {
+interface JsonEntityInfo extends Omit<EntityInfo, 'createdAt' | 'updatedAt'> {
   createdAt: string;
   updatedAt: string;
 }
@@ -48,7 +48,7 @@ export interface JsonEntity extends Omit<Entity, 'info'> {
   info: JsonEntityInfo;
 }
 
-export interface JsonPublishedEntityInfo extends Omit<PublishedEntityInfo, 'createdAt'> {
+interface JsonPublishedEntityInfo extends Omit<PublishedEntityInfo, 'createdAt'> {
   createdAt: string;
 }
 

@@ -20,7 +20,7 @@ import {
 //TODO make configurable through a context. also max bounds
 const defaultCenter = { lat: 55.60498, lng: 13.003822 } as const;
 
-export interface EntityMapProps<TEntity> {
+interface EntityMapProps<TEntity> {
   className?: string;
   schema: Schema | PublishedSchema | undefined;
   center?: Location | null;

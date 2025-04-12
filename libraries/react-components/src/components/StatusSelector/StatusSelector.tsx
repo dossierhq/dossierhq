@@ -14,8 +14,8 @@ import { StatusTag } from '../StatusTag/StatusTag.js';
 
 export type StatusItem = MultipleSelectorItem<EntityStatus>;
 
-export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;
-export type StatusSelectorInitArgs = { selectedIds?: EntityStatus[] | undefined };
+type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;
+type StatusSelectorInitArgs = { selectedIds?: EntityStatus[] | undefined };
 export type StatusSelectorState = MultipleSelectorState<StatusItem>;
 export type StatusSelectorDispatch = Dispatch<MultipleSelectorStateAction<StatusItem>>;
 

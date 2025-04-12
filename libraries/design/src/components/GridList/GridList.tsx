@@ -19,10 +19,10 @@ export type GridListProps<TItem extends object> = React.ComponentProps<
   typeof ReactAriaGridList<TItem>
 >;
 
-export type GridListItemProps = React.ComponentProps<typeof ReactAriaGridListItem> & SpacingProps;
+type GridListItemProps = React.ComponentProps<typeof ReactAriaGridListItem> & SpacingProps;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface GridListDragHandleProps {}
+interface GridListDragHandleProps {}
 
 export function GridList<TItem extends object>(props: GridListProps<TItem>) {
   return <ReactAriaGridList {...props} />;

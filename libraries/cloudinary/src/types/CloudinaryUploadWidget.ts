@@ -40,7 +40,7 @@ export type CloudinaryUploadResult =
   | { event: 'success'; info: CloudinaryAsset }
   | { event: 'close' };
 
-export interface CloudinaryAsset {
+interface CloudinaryAsset {
   access_mode: 'public';
   asset_id: string;
   batchId: string;

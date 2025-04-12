@@ -32,7 +32,7 @@ export function getJsonLdImageUrlsForLimitFit(cld: Cloudinary, publicId: string)
   ];
 }
 
-export function getImageUrlForLimitFill(
+function getImageUrlForLimitFill(
   cld: Cloudinary,
   publicId: string,
   width: number,

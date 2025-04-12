@@ -4,7 +4,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toSpacingClassName, type MarginProps } from '../../utils/LayoutPropsUtils.js';
 import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
 
-export interface TextProps extends MarginProps {
+interface TextProps extends MarginProps {
   as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   id?: string;
   textStyle: TextStyle;

@@ -1,6 +1,6 @@
 import type { ChangelogEvent, Connection, Edge, EntityReference, ErrorType } from '@dossierhq/core';
 
-export interface VersionSelectionState {
+interface VersionSelectionState {
   entity: EntityReference;
   leftVersion: number | null;
   rightVersion: number | null;

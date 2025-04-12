@@ -4,7 +4,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 import { Button } from '../Button/Button.js';
 import { Icon, type IconName, type IconProps } from '../Icon/Icon.js';
 
-export interface IconButtonProps {
+interface IconButtonProps {
   className?: string;
   color?: Color;
   disabled?: boolean;

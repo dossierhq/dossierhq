@@ -8,7 +8,7 @@ import {
 } from '../../utils/FlexboxUtils.js';
 import { toSpacingClassName, type SpacingProps } from '../../utils/LayoutPropsUtils.js';
 
-export interface ColumnProps extends Omit<FlexContainerProps, 'flexDirection'>, SpacingProps {
+interface ColumnProps extends Omit<FlexContainerProps, 'flexDirection'>, SpacingProps {
   className?: string;
   style?: CSSProperties;
   children: ReactNode;

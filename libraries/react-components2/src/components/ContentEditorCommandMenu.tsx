@@ -41,19 +41,19 @@ import {
   CommandList,
 } from './ui/command.js';
 
-export type ContentEditorCommandMenuPage =
+type ContentEditorCommandMenuPage =
   | { id: 'root' }
   | { id: 'create' }
   | { id: 'draft'; draftId: string };
 
-export type ContentEditorCommandMenuAlert = { id: 'closeDraft'; draftId: string };
+type ContentEditorCommandMenuAlert = { id: 'closeDraft'; draftId: string };
 
 export type ContentEditorCommandMenuConfig = CommandMenuConfig<
   ContentEditorCommandMenuPage,
   ContentEditorCommandMenuAlert
 >;
 
-export type ContentEditorCommandMenuState = CommandMenuState<ContentEditorCommandMenuConfig>;
+type ContentEditorCommandMenuState = CommandMenuState<ContentEditorCommandMenuConfig>;
 
 export type ContentEditorCommandMenuAction = CommandMenuAction<ContentEditorCommandMenuConfig>;
 

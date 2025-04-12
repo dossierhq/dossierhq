@@ -2,7 +2,7 @@ import type { ChangeEventHandler, JSX } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 import { IconAsset } from '../Icon/Icon.js';
 
-export interface FileProps {
+interface FileProps {
   className?: string;
   accept?: string;
   boxed?: boolean;

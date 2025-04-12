@@ -6,20 +6,18 @@ import {
 import {
   initializeMultipleSelectorState,
   type MultipleSelectorItem,
-  type MultipleSelectorReducer,
   type MultipleSelectorState,
   type MultipleSelectorStateAction,
 } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Tag } from '../../components/Tag/Tag.js';
 import type { StatusColor } from '../../config/Colors.js';
 
-export interface StatusItem extends MultipleSelectorItem {
+interface StatusItem extends MultipleSelectorItem {
   name: string;
   color: (typeof StatusColor)[keyof typeof StatusColor];
 }
 
-export type StatusSelectorReducer = MultipleSelectorReducer<StatusItem>;
-export type StatusSelectorInitArgs = { selectedIds?: string[] };
+type StatusSelectorInitArgs = { selectedIds?: string[] };
 export type StatusSelectorState = MultipleSelectorState<StatusItem>;
 export type StatusSelectorDispatch = Dispatch<MultipleSelectorStateAction<StatusItem>>;
 

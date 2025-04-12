@@ -43,7 +43,7 @@ import {
   CommandList,
 } from './ui/command.js';
 
-export type ContentListCommandMenuPage =
+type ContentListCommandMenuPage =
   | { id: 'root' }
   | { id: 'create' }
   | { id: 'filterStatus' }
@@ -56,7 +56,7 @@ export type ContentListCommandMenuConfig = CommandMenuConfig<
   ContentListCommandMenuAlert
 >;
 
-export type ContentListCommandMenuState = CommandMenuState<ContentListCommandMenuConfig>;
+type ContentListCommandMenuState = CommandMenuState<ContentListCommandMenuConfig>;
 
 export type ContentListCommandMenuAction = CommandMenuAction<ContentListCommandMenuConfig>;
 

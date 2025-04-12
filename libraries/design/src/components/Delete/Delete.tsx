@@ -1,6 +1,6 @@
 import type { MouseEventHandler } from 'react';
 
-export interface DeleteProps {
+interface DeleteProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 

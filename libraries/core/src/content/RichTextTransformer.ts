@@ -8,7 +8,7 @@ import {
 } from './ContentTypeUtils.js';
 import { checkRichTextNodeTraversable } from './ContentUtils.js';
 
-export type RichTextNodeTransformer<TError extends ErrorType> = (
+type RichTextNodeTransformer<TError extends ErrorType> = (
   path: ContentValuePath,
   node: Readonly<RichTextNode>,
 ) => Result<Readonly<RichTextNode | null>, TError>;

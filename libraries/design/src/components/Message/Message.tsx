@@ -4,7 +4,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toFlexContainerClassName, type FlexContainerProps } from '../../utils/FlexboxUtils.js';
 import { toSpacingClassName, type SpacingProps } from '../../utils/LayoutPropsUtils.js';
 
-export interface MessageProps {
+interface MessageProps {
   className?: string;
   color?: Color;
   children: ReactNode;

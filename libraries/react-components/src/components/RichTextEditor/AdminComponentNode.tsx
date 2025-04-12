@@ -29,7 +29,7 @@ import { DossierContext } from '../../contexts/DossierContext.js';
 import { ComponentFieldEditorWithoutClear } from '../EntityEditor/ComponentFieldEditor.js';
 import { RichTextEditorContext } from './RichTextEditorContext.js';
 
-export type SerializedAdminComponentNode = RichTextComponentNode;
+type SerializedAdminComponentNode = RichTextComponentNode;
 
 type ValidationIssue = SaveValidationIssue | PublishValidationIssue;
 

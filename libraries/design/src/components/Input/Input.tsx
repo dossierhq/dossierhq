@@ -4,7 +4,7 @@ import { toClassName } from '../../utils/ClassNameUtils.js';
 import { toTextStyleClassName, type TextStyle } from '../../utils/TextStylePropsUtils.js';
 import { Icon, type IconName } from '../Icon/Icon.js';
 
-export interface InputProps {
+interface InputProps {
   className?: string;
   color?: Color;
   iconLeft?: IconName;

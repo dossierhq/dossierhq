@@ -1,44 +1,44 @@
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import { toClassName } from '../../utils/ClassNameUtils.js';
 
-export interface NavbarProps {
+interface NavbarProps {
   children: ReactNode;
 }
 
-export interface NavbarBrandProps {
+interface NavbarBrandProps {
   children: ReactNode;
 }
 
-export interface NavbarBurgerProps {
+interface NavbarBurgerProps {
   active: boolean;
   onClick: MouseEventHandler<HTMLAnchorElement>;
 }
 
-export interface NavbarMenuProps {
+interface NavbarMenuProps {
   active: boolean;
   children: ReactNode;
 }
 
-export interface NavbarStartProps {
+interface NavbarStartProps {
   children: ReactNode;
 }
 
-export interface NavbarEndProps {
+interface NavbarEndProps {
   children: ReactNode;
 }
 
-export interface NavbarItemProps {
+interface NavbarItemProps {
   active?: boolean;
   children: ({ className }: { className: string }) => React.ReactElement;
 }
 
-export interface NavbarDropdownProps {
+interface NavbarDropdownProps {
   left?: boolean;
   renderLink: (className: string) => React.ReactElement;
   children: ReactNode;
 }
 
-export interface NavbarDropdownContentItemProps {
+interface NavbarDropdownContentItemProps {
   children: ReactNode;
 }
 

@@ -17,13 +17,13 @@ import {
 } from '../../utils/LayoutPropsUtils.js';
 import { Scrollable } from '../Scrollable/Scrollable.js';
 
-export interface FullscreenContainerProps {
+interface FullscreenContainerProps {
   card?: boolean;
   height?: SizeProps['height'];
   children: React.ReactNode;
 }
 
-export interface FullscreenContainerRowProps
+interface FullscreenContainerRowProps
   extends MarginProps,
     PaddingProps,
     GapProps,
@@ -39,7 +39,7 @@ export interface FullscreenContainerRowProps
   children: React.ReactNode;
 }
 
-export interface FullscreenContainerScrollableRowProps {
+interface FullscreenContainerScrollableRowProps {
   // defaults to 'vertical'
   direction?: 'vertical' | 'horizontal';
   scrollToTopSignal?: unknown;

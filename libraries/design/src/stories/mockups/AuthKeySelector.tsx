@@ -6,18 +6,16 @@ import {
 import {
   initializeMultipleSelectorState,
   type MultipleSelectorItem,
-  type MultipleSelectorReducer,
   type MultipleSelectorState,
   type MultipleSelectorStateAction,
 } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Tag } from '../../components/Tag/Tag.js';
 
-export interface AuthKeyItem extends MultipleSelectorItem {
+interface AuthKeyItem extends MultipleSelectorItem {
   name: string;
 }
 
-export type AuthKeySelectorReducer = MultipleSelectorReducer<AuthKeyItem>;
-export type AuthKeySelectorInitArgs = { selectedIds?: string[] };
+type AuthKeySelectorInitArgs = { selectedIds?: string[] };
 export type AuthKeySelectorState = MultipleSelectorState<AuthKeyItem>;
 export type AuthKeySelectorDispatch = Dispatch<MultipleSelectorStateAction<AuthKeyItem>>;
 

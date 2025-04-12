@@ -11,7 +11,7 @@ import { useContext, type JSX } from 'react';
 import { ReferenceFieldDisplay } from '../EntityDisplay/ReferenceFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
-export type SerializedPublishedEntityNode = RichTextEntityNode;
+type SerializedPublishedEntityNode = RichTextEntityNode;
 
 export function $createPublishedEntityNode(reference: EntityReference): PublishedEntityNode {
   return new PublishedEntityNode(reference);

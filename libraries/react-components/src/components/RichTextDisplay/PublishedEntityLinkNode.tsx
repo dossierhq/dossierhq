@@ -15,7 +15,7 @@ import {
   type NodeKey,
 } from 'lexical';
 
-export type SerializedPublishedEntityLinkNode = RichTextEntityLinkNode;
+type SerializedPublishedEntityLinkNode = RichTextEntityLinkNode;
 
 function $createPublishedEntityLinkNode(reference: EntityReference): PublishedEntityLinkNode {
   return new PublishedEntityLinkNode(reference);

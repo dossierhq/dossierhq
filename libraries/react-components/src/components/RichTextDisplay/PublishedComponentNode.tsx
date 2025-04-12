@@ -12,13 +12,13 @@ import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.
 import { ComponentFieldDisplay } from '../EntityDisplay/ComponentFieldDisplay.js';
 import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
-export type SerializedPublishedComponentNode = RichTextComponentNode;
+type SerializedPublishedComponentNode = RichTextComponentNode;
 
 function $createPublishedComponentNode(data: Component): PublishedComponentNode {
   return new PublishedComponentNode(data);
 }
 
-function $isPublishedComponentNode(
+export function $isPublishedComponentNode(
   node: LexicalNode | undefined | null,
 ): node is PublishedComponentNode {
   return node instanceof PublishedComponentNode;

@@ -1,18 +1,18 @@
 import type { FunctionComponent, ReactNode } from 'react';
 
-export interface MenuProps {
+interface MenuProps {
   children: ReactNode;
 }
 
-export interface MenuLabelProps {
+interface MenuLabelProps {
   children: ReactNode;
 }
 
-export interface MenuListProps {
+interface MenuListProps {
   children: React.ReactNode;
 }
 
-export interface MenuItemProps {
+interface MenuItemProps {
   active?: boolean;
   children: React.ReactNode;
 }

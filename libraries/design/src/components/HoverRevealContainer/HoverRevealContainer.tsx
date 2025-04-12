@@ -12,7 +12,7 @@ import {
   type PaddingProps,
 } from '../../utils/LayoutPropsUtils.js';
 
-export interface HoverRevealContainerProps extends FlexContainerProps, GapProps {
+interface HoverRevealContainerProps extends FlexContainerProps, GapProps {
   children: ReactNode;
 }
 

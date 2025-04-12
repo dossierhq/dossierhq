@@ -4,7 +4,7 @@ import type { Database } from '../QueryFunctions.js';
 import type { ColumnValue } from '../SqliteDatabaseAdapter.js';
 import { fromOpaqueCursor, type CursorNativeType } from './OpaqueCursor.js';
 
-export interface ResolvedPagingCursors<TCursor extends ColumnValue> {
+interface ResolvedPagingCursors<TCursor extends ColumnValue> {
   before: TCursor | null;
   after: TCursor | null;
 }

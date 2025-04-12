@@ -52,7 +52,7 @@ export type SearchPublishedEntitiesItem = Pick<
 
 type CursorName = 'name' | 'updated' | 'id';
 
-export interface SharedEntitiesQuery<TItem> {
+interface SharedEntitiesQuery<TItem> {
   sqlQuery: { text: string; values: unknown[] };
   cursorExtractor: (item: TItem) => string;
 }
