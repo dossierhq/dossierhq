@@ -29,8 +29,11 @@ updates:
           - "@lexical/*"
       next:
         patterns:
-          - "eslint-config-next"
+          - "@next/eslint-plugin-next"
           - "next"
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
       react:
         patterns:
           - "@types/react"
