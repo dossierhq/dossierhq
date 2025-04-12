@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "leaflet": "~1.9.4",
-    "leaflet.locatecontrol": "0.81.1",
+    "leaflet.locatecontrol": "0.84.1",
     "react-leaflet": "~4.2.1",
     "tslib": "~2.8.1"
   },
