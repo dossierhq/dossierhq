@@ -21,7 +21,7 @@ async function main(runName: string, variant: string) {
 
 const args = process.argv.slice(2);
 const runName = args[0] ?? '';
-const variant = 'Deno' in globalThis ? 'deno' : typeof Bun !== 'undefined' ? 'bun' : 'node';
+const variant = 'Deno' in globalThis ? 'deno' : 'Bun' in globalThis ? 'bun' : 'node';
 const timestamp = fileTimestamp();
 const fullRunName = runName ? `${timestamp}-${runName}` : timestamp;
 await main(fullRunName, variant);
