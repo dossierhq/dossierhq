@@ -175,8 +175,8 @@ importers:
         specifier: ~7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       sql.js:
-        specifier: ~1.12.0
-        version: 1.12.0
+        specifier: ~1.13.0
+        version: 1.13.0
       swr:
         specifier: ~2.3.3
         version: 2.3.3(react@19.1.0)
@@ -254,8 +254,8 @@ importers:
         specifier: ~7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       sql.js:
-        specifier: ~1.12.0
-        version: 1.12.0
+        specifier: ~1.13.0
+        version: 1.13.0
       swr:
         specifier: ~2.3.3
         version: 2.3.3(react@19.1.0)
@@ -1624,8 +1624,8 @@ importers:
         specifier: ~19.1.0
         version: 19.1.0(react@19.1.0)
       sql.js:
-        specifier: ~1.12.0
-        version: 1.12.0
+        specifier: ~1.13.0
+        version: 1.13.0
       storybook:
         specifier: ~8.6.12
         version: 8.6.12(prettier@3.5.3)
@@ -1719,8 +1719,8 @@ importers:
         specifier: ~9.24.0
         version: 9.24.0(jiti@2.4.2)
       sql.js:
-        specifier: ~1.12.0
-        version: 1.12.0
+        specifier: ~1.13.0
+        version: 1.13.0
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
@@ -1762,8 +1762,8 @@ importers:
         specifier: ~9.24.0
         version: 9.24.0(jiti@2.4.2)
       sql.js:
-        specifier: ~1.12.0
-        version: 1.12.0
+        specifier: ~1.13.0
+        version: 1.13.0
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
@@ -10780,8 +10780,8 @@ packages:
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
-  sql.js@1.12.0:
-    resolution: {integrity: sha512-Bi+43yMx/tUFZVYD4AUscmdL6NHn3gYQ+CM+YheFWLftOmrEC/Mz6Yh7E96Y2WDHYz3COSqT+LP6Z79zgrwJlA==}
+  sql.js@1.13.0:
+    resolution: {integrity: sha512-RJbVP1HRDlUUXahJ7VMTcu9Rm1Nzw+EBpoPr94vnbD4LwR715F3CcxE2G2k45PewcaZ57pjetYa+LoSJLAASgA==}
 
   stack-utils@2.0.6:
     resolution: {integrity: sha512-XlkWvfIm6RmsWtNJx+uqtKLS8eqFbxUg0ZzLXqY0caEy9l7hruX8IpiDnjsLavoBgqCCR71TqWO8MaXYheJ3RQ==}
@@ -22860,7 +22860,7 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  sql.js@1.12.0: {}
+  sql.js@1.13.0: {}
 
   stack-utils@2.0.6:
     dependencies:
