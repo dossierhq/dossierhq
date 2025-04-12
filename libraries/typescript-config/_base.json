@@ -12,6 +12,7 @@
     "strict": true,
     "noImplicitOverride": true,
     "skipLibCheck": true,
-    "isolatedDeclarations": true
+    "isolatedDeclarations": true,
+    "erasableSyntaxOnly": true
   }
 }
