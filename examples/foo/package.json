@@ -23,7 +23,7 @@
     "@dossierhq/graphql": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "better-sqlite3": "~11.9.1",
-    "express": "~4.21.2",
+    "express": "~5.1.0",
     "graphql-http": "~1.22.4",
     "tslib": "~2.8.1"
   },
@@ -31,7 +31,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@types/better-sqlite3": "~7.6.12",
-    "@types/express": "~5.0.0",
+    "@types/express": "~5.0.1",
     "eslint": "~9.24.0",
     "typescript": "~5.8.2"
   }
