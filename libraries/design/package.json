@@ -45,7 +45,7 @@
   "dependencies": {
     "@creativebulma/bulma-badge": "~1.0.1",
     "@fortawesome/free-solid-svg-icons": "~6.7.2",
-    "@react-aria/overlays": "~3.26.0",
+    "@react-aria/overlays": "~3.27.0",
     "lodash": "~4.17.21",
     "react-aria-components": "~1.8.0",
     "tslib": "~2.8.1"
