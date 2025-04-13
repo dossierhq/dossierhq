@@ -54,6 +54,10 @@ updates:
           - "@tailwindcss/*"
           - "tailwind-merge"
           - "tailwindcss"
+      turbo:
+        patterns:
+          - "eslint-plugin-turbo"
+          - "turbo"
       vitest:
         patterns:
           - "@vitest/*"
