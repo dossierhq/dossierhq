@@ -42,7 +42,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/better-sqlite3": "~7.6.12",
+    "@types/better-sqlite3": "~7.6.13",
     "@types/bun": "~1.2.9",
     "@types/pg": "~8.11.11",
     "eslint": "~9.24.0",

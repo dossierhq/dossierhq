@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@types/better-sqlite3": "~7.6.12",
+    "@types/better-sqlite3": "~7.6.13",
     "@types/body-parser": "~1.19.5",
     "@types/express": "~5.0.1",
     "@types/react": "19.1.1",
@@ -46,6 +46,6 @@
     "nodemon": "~3.1.9",
     "tsx": "~4.19.3",
     "typescript": "~5.8.3",
-    "vite": "~6.2.1"
+    "vite": "6.2.6"
   }
 }
