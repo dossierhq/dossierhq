@@ -100,8 +100,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/react':
         specifier: 19.1.1
         version: 19.1.1
@@ -376,8 +376,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/react':
         specifier: 19.1.1
         version: 19.1.1
@@ -440,8 +440,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/typescript-config
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/bun':
         specifier: ~1.2.9
         version: 1.2.9
@@ -538,8 +538,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/typescript-config
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/express':
         specifier: ~5.0.1
         version: 5.0.1
@@ -599,8 +599,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/eslint-config
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/react':
         specifier: 19.1.1
         version: 19.1.1
@@ -672,8 +672,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/body-parser':
         specifier: ~1.19.5
         version: 1.19.5
@@ -752,8 +752,8 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       better-sqlite3:
         specifier: ~11.9.1
         version: 11.9.1
@@ -1086,8 +1086,8 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@vitest/coverage-v8':
         specifier: ~3.1.1
         version: 3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1))
@@ -1820,8 +1820,8 @@ importers:
         specifier: ~9.6.0
         version: 9.6.0
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/uuid':
         specifier: ~10.0.0
         version: 10.0.0
@@ -1925,8 +1925,8 @@ importers:
         version: 11.9.1
     devDependencies:
       '@types/better-sqlite3':
-        specifier: ~7.6.12
-        version: 7.6.12
+        specifier: ~7.6.13
+        version: 7.6.13
       '@types/node':
         specifier: ~22.14.1
         version: 22.14.1
@@ -6144,8 +6144,8 @@ packages:
   '@types/base-64@1.0.2':
     resolution: {integrity: sha512-uPgKMmM9fmn7I+Zi6YBqctOye4SlJsHKcisjHIMWpb2YKZRc36GpKyNuQ03JcT+oNXg1m7Uv4wU94EVltn8/cw==}
 
-  '@types/better-sqlite3@7.6.12':
-    resolution: {integrity: sha512-fnQmj8lELIj7BSrZQAdBMHEHX8OZLYIHXqAKT1O7tDfLxaINzf00PMjw22r3N/xXh0w/sGHlO6SVaCQ2mj78lg==}
+  '@types/better-sqlite3@7.6.13':
+    resolution: {integrity: sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA==}
 
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -16930,7 +16930,7 @@ snapshots:
 
   '@types/base-64@1.0.2': {}
 
-  '@types/better-sqlite3@7.6.12':
+  '@types/better-sqlite3@7.6.13':
     dependencies:
       '@types/node': 22.14.1
 
