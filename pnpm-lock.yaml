@@ -109,8 +109,8 @@ importers:
         specifier: ~19.1.2
         version: 19.1.2(@types/react@19.1.1)
       dotenv:
-        specifier: ~16.4.7
-        version: 16.4.7
+        specifier: ~16.5.0
+        version: 16.5.0
       eslint:
         specifier: ~9.24.0
         version: 9.24.0(jiti@2.4.2)
@@ -421,8 +421,8 @@ importers:
         specifier: ~11.9.1
         version: 11.9.1
       dotenv:
-        specifier: ~16.4.7
-        version: 16.4.7
+        specifier: ~16.5.0
+        version: 16.5.0
       pg:
         specifier: ~8.14.1
         version: 8.14.1
@@ -644,8 +644,8 @@ importers:
         specifier: ~2.2.0
         version: 2.2.0
       dotenv:
-        specifier: ~16.4.7
-        version: 16.4.7
+        specifier: ~16.5.0
+        version: 16.5.0
       express:
         specifier: ~5.1.0
         version: 5.1.0
@@ -1270,8 +1270,8 @@ importers:
         specifier: ~10.0.0
         version: 10.0.0
       dotenv:
-        specifier: ~16.4.7
-        version: 16.4.7
+        specifier: ~16.5.0
+        version: 16.5.0
       eslint:
         specifier: ~9.24.0
         version: 9.24.0(jiti@2.4.2)
@@ -1832,8 +1832,8 @@ importers:
         specifier: ~2.6.0
         version: 2.6.0
       dotenv:
-        specifier: ~16.4.7
-        version: 16.4.7
+        specifier: ~16.5.0
+        version: 16.5.0
       eslint:
         specifier: ~9.24.0
         version: 9.24.0(jiti@2.4.2)
@@ -1946,8 +1946,8 @@ importers:
   tools/generic-tools:
     dependencies:
       dotenv:
-        specifier: ~16.4.7
-        version: 16.4.7
+        specifier: ~16.5.0
+        version: 16.5.0
       pg:
         specifier: ~8.14.1
         version: 8.14.1
@@ -7551,8 +7551,8 @@ packages:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
 
-  dotenv@16.4.7:
-    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+  dotenv@16.5.0:
+    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
     engines: {node: '>=12'}
 
   dset@3.1.4:
@@ -16269,7 +16269,7 @@ snapshots:
       '@babel/core': 7.26.10
       '@sentry/babel-plugin-component-annotate': 2.23.0
       '@sentry/cli': 2.39.1
-      dotenv: 16.4.7
+      dotenv: 16.5.0
       find-up: 5.0.0
       glob: 9.3.5
       magic-string: 0.30.8
@@ -18718,7 +18718,7 @@ snapshots:
 
   dotenv@16.0.3: {}
 
-  dotenv@16.4.7: {}
+  dotenv@16.5.0: {}
 
   dset@3.1.4: {}
 
