@@ -27,7 +27,7 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.28.1",
+    "@changesets/cli": "^2.29.2",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/node": "~22.14.1",
     "knip": "^5.50.2",
