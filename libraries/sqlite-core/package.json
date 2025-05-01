@@ -52,7 +52,7 @@
     "@dossierhq/core-vitest": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "eslint": "~9.24.0",
+    "eslint": "~9.25.1",
     "typescript": "~5.8.3",
     "vitest": "~3.1.1"
   }

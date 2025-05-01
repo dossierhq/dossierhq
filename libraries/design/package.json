@@ -70,7 +70,7 @@
     "@types/react-dom": "~19.1.2",
     "@vitejs/plugin-react": "~4.3.4",
     "bulma": "~0.9.4",
-    "eslint": "~9.24.0",
+    "eslint": "~9.25.1",
     "mini-svg-data-uri": "~1.4.4",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
