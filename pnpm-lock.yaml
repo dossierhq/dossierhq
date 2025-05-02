@@ -1986,8 +1986,8 @@ importers:
         specifier: ~16.0.1
         version: 16.0.1(rollup@4.40.0)
       esbuild:
-        specifier: ~0.25.2
-        version: 0.25.2
+        specifier: ~0.25.3
+        version: 0.25.3
       rollup:
         specifier: ~4.40.0
         version: 4.40.0
