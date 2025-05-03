@@ -9,7 +9,7 @@
     "build-app": "astro build",
     "lint": "npm run prettier:check && npm run check:with-retry",
     "check:with-retry": "astro check --minimumFailingSeverity warning || astro check --minimumFailingSeverity warning",
-    "clean": "rm -rf dist/ && rm *.log",
+    "clean": "rm -rf dist/",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "astro dev",

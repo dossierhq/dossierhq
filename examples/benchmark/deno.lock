@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "5",
   "remote": {
     "https://deno.land/std@0.160.0/_util/assert.ts": "e94f2eb37cebd7f199952e242c77654e43333c1ac4c5c700e929ea3aa5489f74",
     "https://deno.land/std@0.160.0/_util/os.ts": "8a33345f74990e627b9dfe2de9b040004b08ea5146c7c9e8fe9a29070d193934",
@@ -44,6 +44,8 @@
     "https://deno.land/std@0.160.0/testing/_diff.ts": "a23e7fc2b4d8daa3e158fa06856bedf5334ce2a2831e8bf9e509717f455adb2c",
     "https://deno.land/std@0.160.0/testing/_format.ts": "cd11136e1797791045e639e9f0f4640d5b4166148796cad37e6ef75f7d7f3832",
     "https://deno.land/std@0.160.0/testing/asserts.ts": "1e340c589853e82e0807629ba31a43c84ebdcdeca910c4a9705715dfdb0f5ce8",
+    "https://deno.land/std@0.201.0/dotenv/mod.ts": "1da8c6d0e7f7d8a5c2b19400b763bc11739df24acec235dda7ea2cfd3d300057",
+    "https://deno.land/std@0.201.0/encoding/base64.ts": "144ae6234c1fbe5b68666c711dc15b1e9ee2aef6d42b3b4345bf9a6c91d70d0d",
     "https://deno.land/x/postgres@v0.17.0/client.ts": "348779c9f6a1c75ef1336db662faf08dce7d2101ff72f0d1e341ba1505c8431d",
     "https://deno.land/x/postgres@v0.17.0/client/error.ts": "0817583b666fd546664ed52c1d37beccc5a9eebcc6e3c2ead20ada99b681e5f7",
     "https://deno.land/x/postgres@v0.17.0/connection/auth.ts": "1070125e2ac4ca4ade36d69a4222d37001903092826d313217987583edd61ce9",
@@ -70,18 +72,16 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@faker-js/faker@9.4",
-        "npm:@ianvs/prettier-plugin-sort-imports@~4.4.1",
-        "npm:@types/better-sqlite3@~7.6.12",
-        "npm:@types/bun@~1.2.2",
-        "npm:@types/pg@~8.11.11",
-        "npm:better-sqlite3@~11.8.1",
-        "npm:dotenv@~16.4.7",
-        "npm:eslint@9.19",
-        "npm:pg@~8.13.1",
-        "npm:prettier@3.4.2",
+        "npm:@faker-js/faker@9.7",
+        "npm:@types/better-sqlite3@~7.6.13",
+        "npm:@types/bun@~1.2.11",
+        "npm:@types/pg@~8.11.14",
+        "npm:better-sqlite3@~11.9.1",
+        "npm:dotenv@16.5",
+        "npm:eslint@9.26",
+        "npm:pg@~8.15.6",
         "npm:tslib@~2.8.1",
-        "npm:typescript@~5.7.3"
+        "npm:typescript@~5.8.3"
       ]
     }
   }
