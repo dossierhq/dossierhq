@@ -1150,8 +1150,8 @@ importers:
         specifier: ~1.9.4
         version: 1.9.4
       leaflet.locatecontrol:
-        specifier: 0.81.1
-        version: 0.81.1
+        specifier: 0.84.2
+        version: 0.84.2
       react-leaflet:
         specifier: ~4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -8737,8 +8737,8 @@ packages:
   launch-editor@2.10.0:
     resolution: {integrity: sha512-D7dBRJo/qcGX9xlvt/6wUYzQxjh5G1RvZPgPv8vi4KRU99DVQL/oW7tnVOCCTm2HGeo3C5HvGE5Yrh6UBoZ0vA==}
 
-  leaflet.locatecontrol@0.81.1:
-    resolution: {integrity: sha512-ZtsdScGufPw330X3UIaGGjnfQ1NrhLySnlruWufIMnfzsHgQPz0+mSxsCQMVh7QgOBoefCGb/lioSejiaNx1EQ==}
+  leaflet.locatecontrol@0.84.2:
+    resolution: {integrity: sha512-Tv0S2bAhpFgZYyyfPgeVhb3hPr9CnlcP15EpMQd9m5vA+aALhM6key1ucfnnD7n09AEeNEmIFe71T4V18Kpu7g==}
 
   leaflet@1.9.4:
     resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
@@ -20326,7 +20326,7 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.8.2
 
-  leaflet.locatecontrol@0.81.1: {}
+  leaflet.locatecontrol@0.84.2: {}
 
   leaflet@1.9.4: {}
 
