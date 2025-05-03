@@ -29,7 +29,7 @@
     "db:cli": "./scripts/db-cli.sh",
     "db:clear": "./scripts/db-clear.sh",
     "db:dump-schema": "./scripts/db-dump-schema.sh",
-    "db:migrate": "./scripts/db-migrate.sh && ./scripts/db-dump-schema.sh",
+    "db:migrate": "./scripts/db-migrate.sh && echo TODO ./scripts/db-dump-schema.sh",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
