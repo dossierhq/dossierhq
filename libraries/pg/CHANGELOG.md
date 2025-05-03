@@ -1,5 +1,14 @@
 # Change Log - @dossierhq/pg
 
+## 0.7.18
+
+### Patch Changes
+
+- acd4d03: Remove CJS import workaround
+  - @dossierhq/core@0.7.18
+  - @dossierhq/database-adapter@0.7.18
+  - @dossierhq/postgres-core@0.7.18
+
 ## 0.7.17
 
 ### Patch Changes
