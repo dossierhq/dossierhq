@@ -8,6 +8,12 @@ updates:
       interval: "weekly"
       day: "friday"
 
+  - package-ecosystem: "devcontainer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:

@@ -6,12 +6,7 @@
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   // https://containers.dev/features
-  "features": {
-    // Add an asdf plugin here to install asdf. The rest are setup by post-create.sh/.tool-versions
-    "ghcr.io/devcontainers-contrib/features/asdf-package:1": {
-      "plugin": "bun"
-    }
-  },
+  "features": { "ghcr.io/devcontainers-extra/features/mise:1": {} },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // This can be used to network with other containers or with the host.

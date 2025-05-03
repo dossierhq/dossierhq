@@ -9,20 +9,18 @@ if [ -f ~/.bashrc ] && ! grep -q "HOST_ROOT_DATABASE_URL" ~/.bashrc; then
     echo "export HOST_ROOT_DATABASE_URL=$HOST_ROOT_DATABASE_URL" >> ~/.bashrc
 fi
 
+if [ -f ~/.zshrc ] && ! grep -q "mise" ~/.zshrc; then
+    echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
+fi
+if [ -f ~/.bashrc ] && ! grep -q "mise" ~/.bashrc; then
+    echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+fi
+
 # tools
-asdf plugin add nodejs
-asdf plugin add bun
-asdf plugin add deno
-asdf install
+mise install
+eval "$(mise activate bash)"
+pip install --break-system-packages -q litecli pgcli
 
-pip install -q litecli pgcli
-
-# nvm/node
-
-npm install -g @microsoft/rush
-
-# git user is not yet set, so need to bypass policy
-rush update --bypass-policy
 
 (
     cd tools/generic-tools/ || (echo "No such path: tools/generic-tools/"; exit)
