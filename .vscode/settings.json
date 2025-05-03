@@ -22,6 +22,7 @@
     "nvmrc",
     "pgcli",
     "pnpm",
+    "postgis",
     "postgres",
     "psql",
     "SAVEPOINT",
