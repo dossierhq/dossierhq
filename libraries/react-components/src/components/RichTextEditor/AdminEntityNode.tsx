@@ -24,6 +24,7 @@ export function $createAdminEntityNode(reference: EntityReference): AdminEntityN
   return new AdminEntityNode(reference);
 }
 
+/** @public */
 export function $isAdminEntityNode(node: LexicalNode | undefined | null): node is AdminEntityNode {
   return node instanceof AdminEntityNode;
 }

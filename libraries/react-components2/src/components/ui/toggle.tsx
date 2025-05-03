@@ -40,4 +40,4 @@ function Toggle({
   );
 }
 
-export { Toggle, toggleVariants };
+export { /** @public */ Toggle, toggleVariants };

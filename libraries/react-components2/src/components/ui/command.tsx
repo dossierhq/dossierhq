@@ -145,6 +145,8 @@ export {
   CommandEmpty,
   CommandGroup,
   CommandItem,
+  /** @public */
   CommandShortcut,
+  /** @public */
   CommandSeparator,
 };

@@ -35,4 +35,4 @@ function Badge({
   );
 }
 
-export { Badge, badgeVariants };
+export { Badge, /** @public */ badgeVariants };

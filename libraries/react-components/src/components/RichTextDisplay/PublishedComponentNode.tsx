@@ -18,6 +18,7 @@ function $createPublishedComponentNode(data: Component): PublishedComponentNode 
   return new PublishedComponentNode(data);
 }
 
+/** @public */
 export function $isPublishedComponentNode(
   node: LexicalNode | undefined | null,
 ): node is PublishedComponentNode {

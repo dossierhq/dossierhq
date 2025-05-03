@@ -208,18 +208,25 @@ function DropdownMenuSubContent({
 
 export {
   DropdownMenu,
+  /** @public */
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  /** @public */
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  /** @public */
   DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  /** @public */
   DropdownMenuShortcut,
+  /** @public */
   DropdownMenuSub,
+  /** @public */
   DropdownMenuSubContent,
+  /** @public */
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 };

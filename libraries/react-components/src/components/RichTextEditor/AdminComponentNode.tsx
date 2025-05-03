@@ -37,6 +37,7 @@ export function $createAdminComponentNode(data: Component): AdminComponentNode {
   return new AdminComponentNode(data);
 }
 
+/** @public */
 export function $isAdminComponentNode(
   node: LexicalNode | undefined | null,
 ): node is AdminComponentNode {

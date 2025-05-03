@@ -103,6 +103,7 @@ export class PublishedEntityLinkNode extends ElementNode {
   }
 }
 
+/** @public */
 export function toggleEntityLink(reference: EntityReference | null): void {
   const selection = $getSelection();
   if (!$isRangeSelection(selection)) {

@@ -13,10 +13,12 @@ import { RichTextDisplayContext } from './RichTextDisplayContext.js';
 
 type SerializedPublishedEntityNode = RichTextEntityNode;
 
+/** @public */
 export function $createPublishedEntityNode(reference: EntityReference): PublishedEntityNode {
   return new PublishedEntityNode(reference);
 }
 
+/** @public */
 export function $isPublishedEntityNode(
   node: LexicalNode | undefined | null,
 ): node is PublishedEntityNode {

@@ -124,13 +124,18 @@ function DialogDescription({
 
 export {
   Dialog,
+  /** @public */
   DialogClose,
   DialogContent,
   DialogDescription,
+  /** @public */
   DialogFooter,
   DialogHeader,
+  /** @public */
   DialogOverlay,
+  /** @public */
   DialogPortal,
   DialogTitle,
+  /** @public */
   DialogTrigger,
 };
