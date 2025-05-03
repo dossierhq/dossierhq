@@ -7,28 +7,54 @@ export default function GraphiQLPage(): JSX.Element {
   const src = `<html>
     <head>
       <title>GraphiQL</title>
-      <link href="https://unpkg.com/graphiql/graphiql.min.css" rel="stylesheet" />
+      <link href="https://esm.sh/graphiql@4.0.0/dist/style.css" rel="stylesheet" />
+      <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.1.0",
+          "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
+
+          "react-dom": "https://esm.sh/react-dom@19.1.0",
+          "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
+
+          "graphiql": "https://esm.sh/graphiql@4.0.0?standalone&external=react,react/jsx-runtime,react-dom,@graphiql/react",
+          "@graphiql/plugin-explorer": "https://esm.sh/@graphiql/plugin-explorer@4.0.0?standalone&external=react,react/jsx-runtime,react-dom,@graphiql/react,graphql",
+          "@graphiql/react": "https://esm.sh/@graphiql/react@0.30.0?standalone&external=react,react/jsx-runtime,react-dom,graphql,@graphiql/toolkit",
+
+          "@graphiql/toolkit": "https://esm.sh/@graphiql/toolkit@0.11.2?standalone&external=graphql",
+          "graphql": "https://esm.sh/graphql@16.11.0"
+        }
+      }
+    </script>
+     <script type="module">
+      // Import React and ReactDOM
+      import React from 'react';
+      import ReactDOM from 'react-dom/client';
+      // Import GraphiQL and the Explorer plugin
+      import { GraphiQL } from 'graphiql';
+      import { createGraphiQLFetcher } from '@graphiql/toolkit';
+      import { explorerPlugin } from '@graphiql/plugin-explorer';
+
+      const fetcher = createGraphiQLFetcher({
+        url: '${process.env.NEXT_PUBLIC_API_BASE_URL}/graphql',
+      });
+      localStorage.setItem('graphiql:theme', 'light');
+      const explorer = explorerPlugin();
+
+      function App() {
+        return React.createElement(GraphiQL, {
+          fetcher,
+          plugins: [explorer],
+        });
+      }
+
+      const container = document.getElementById('graphiql');
+      const root = ReactDOM.createRoot(container);
+      root.render(React.createElement(App));
+    </script>
     </head>
     <body style="margin: 0;">
       <div id="graphiql" style="height: 100vh;"></div>
-      <script crossorigin src="https://unpkg.com/react/umd/react.production.min.js"></script>
-      <script
-        crossorigin
-        src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"
-      ></script>
-      <script crossorigin src="https://unpkg.com/graphiql/graphiql.min.js"></script>
-
-      <script>
-        const fetcher = GraphiQL.createFetcher({
-          url: '${process.env.NEXT_PUBLIC_API_BASE_URL}/graphql',
-        });
-
-        localStorage.setItem('graphiql:theme', 'light');
-        ReactDOM.render(
-          React.createElement(GraphiQL, { fetcher }),
-          document.getElementById('graphiql')
-        );
-      </script>
     </body>
   </html>`;
   const iframe = <iframe srcDoc={src} style={{ width: '100%', height: '100%' }} />;

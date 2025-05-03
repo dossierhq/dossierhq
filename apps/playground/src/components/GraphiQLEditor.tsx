@@ -2,8 +2,8 @@ import { ok, type PublishedSchema, type Schema } from '@dossierhq/core';
 import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/graphql';
 import { DossierContext, PublishedDossierContext } from '@dossierhq/react-components';
 import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
-import GraphiQL from 'graphiql';
-import 'graphiql/graphiql.min.css';
+import { GraphiQL } from 'graphiql';
+import 'graphiql/style.css';
 import { graphql } from 'graphql';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
