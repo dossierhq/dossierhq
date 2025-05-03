@@ -63,7 +63,8 @@ If you just want to get started using Dossier, these destinations might get you 
 
 ## Upgrade dependencies
 
-- Upgrade tool versions in `.tool-versions`
+- Run `pnpm tools:update`
+  - Update `packageManager` in `package.json` to match the version of `pnpm` you have installed
 - Run `pnpm deps:update-interactive`
 - Upgrade Deno dependencies in the 3 `import-map.json` files
 - Run `(cd tools/generic-tools && npm run deno:reload-dependencies:all)`
