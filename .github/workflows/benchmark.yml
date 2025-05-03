@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  pull-requests: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,13 +47,12 @@ jobs:
         run: |
           cd tools/generic-tools/
           npm run db:stop
-      - name: Git status
-        run: |
-          git status
-      - name: Add and commit changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add -f examples/benchmark/output/ci-benchmark.tsv
-          git commit -m "chore(benchmark): Record new benchmark results"
-          git push
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: New benchmark results
+          branch: benchmark/ci-benchmark
+          commit-message: |
+            chore(benchmark): Record new benchmark results
+          add-paths: |
+            examples/benchmark/output/ci-benchmark.tsv
