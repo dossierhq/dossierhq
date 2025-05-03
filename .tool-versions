@@ -1,5 +1,5 @@
-bun           1.2.9
-deno          2.2.9
-nodejs        22.11.0
+bun           1.2.10
+deno          2.3.1
+nodejs        23.11.0
 libsql-server libsql-server-v0.24.31
-npm:pnpm      10.2.1
+npm:pnpm      10.10.0

@@ -22,6 +22,7 @@
     "deps:outdated": "pnpm outdated -r",
     "deps:rebuild": "pnpm rebuild -r",
     "deps:update-interactive": "pnpm update -r -i --latest",
+    "tools:update": "mise up --bump",
     "knip": "knip"
   },
   "repository": {
@@ -37,11 +38,15 @@
     "turbo": "^2.5.2",
     "typescript": "~5.8.3"
   },
-  "packageManager": "pnpm@10.2.0",
+  "packageManager": "pnpm@10.10.0",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@sentry/cli",
       "@swc/core",
-      "better-sqlite3"
+      "better-sqlite3",
+      "esbuild",
+      "sharp"
     ],
     "overrides": {
       "postcss@5.2.18": "7.0.36",
