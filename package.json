@@ -41,8 +41,12 @@
   "packageManager": "pnpm@10.10.0",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@sentry/cli",
       "@swc/core",
-      "better-sqlite3"
+      "better-sqlite3",
+      "esbuild",
+      "sharp"
     ],
     "overrides": {
       "postcss@5.2.18": "7.0.36",
