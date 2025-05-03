@@ -29,6 +29,8 @@
     "Unpublish",
     "Upsert",
     "uuidv",
+    "vite",
+    "vitejs",
     "vitest"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",

@@ -58,6 +58,10 @@ updates:
         patterns:
           - "eslint-plugin-turbo"
           - "turbo"
+      vite:
+        patterns:
+          - "@vitejs/*"
+          - "vitejs"
       vitest:
         patterns:
           - "@vitest/*"
