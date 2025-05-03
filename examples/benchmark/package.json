@@ -31,7 +31,7 @@
     "@dossierhq/deno-postgres": "workspace:*",
     "@dossierhq/pg": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "~9.7.0",
     "benchpress": "workspace:*",
     "better-sqlite3": "~11.9.1",
     "dotenv": "~16.5.0",
