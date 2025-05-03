@@ -67,3 +67,5 @@ jspm_packages/
 
 # Turborepo
 .turbo
+
+mise.local.toml

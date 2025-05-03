@@ -29,6 +29,15 @@
       "group": {
         "kind": "build"
       }
+    },
+    {
+      "label": "pnpm db:clear",
+      "type": "shell",
+      "command": "mise exec -- pnpm db:clear",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build"
+      }
     }
   ]
 }

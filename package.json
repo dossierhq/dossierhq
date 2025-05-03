@@ -10,6 +10,7 @@
     "build": "turbo run --continue=dependencies-successful lint check-types build test test-integration",
     "build:no-integration": "turbo run lint check-types build test",
     "build:no-cache": "turbo run lint check-types build test test-integration --no-cache --force",
+    "db:clear": "turbo run --no-cache --concurrency=1 db:clear",
     "lint": "turbo lint",
     "test": "turbo test",
     "start": "turbo start",

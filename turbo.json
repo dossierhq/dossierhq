@@ -42,6 +42,11 @@
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
+    },
+    "db:clear": {
+      "dependsOn": [],
+      "outputs": [],
+      "cache": false
     }
   }
 }
