@@ -3,6 +3,7 @@ import Head from 'next/head';
 import type { JSX } from 'react';
 import { NavBar } from '../../components/NavBar/NavBar';
 
+// https://github.com/graphql/graphiql/blob/main/examples/graphiql-cdn/index.html
 export default function GraphiQLPage(): JSX.Element {
   const src = `<html>
     <head>
