@@ -35,7 +35,7 @@ function asyncHandler(handler: (...args: Parameters<RequestHandler>) => Promise<
 
 function sendResult(res: Response, result: Result<unknown, ErrorType>) {
   if (result.isError()) {
-    res.status(result.httpStatus).send(result.message);
+    res.status(result.httpStatus).setHeader('Content-Type', 'plain/text').send(result.message);
   } else {
     res.json(result.value);
   }
