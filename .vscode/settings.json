@@ -34,7 +34,6 @@
     "vitejs",
     "vitest"
   ],
-  "dev.containers.experimentalLockfile": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
