@@ -1166,8 +1166,8 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       '@types/leaflet':
-        specifier: ~1.9.14
-        version: 1.9.16
+        specifier: ~1.9.17
+        version: 1.9.17
       '@types/leaflet.locatecontrol':
         specifier: ~0.74.6
         version: 0.74.6
@@ -1410,8 +1410,8 @@ importers:
         specifier: ~8.6.12
         version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
       '@types/leaflet':
-        specifier: ~1.9.14
-        version: 1.9.16
+        specifier: ~1.9.17
+        version: 1.9.17
       '@types/lodash':
         specifier: ~4.17.16
         version: 4.17.16
@@ -6049,8 +6049,8 @@ packages:
   '@types/leaflet.locatecontrol@0.74.6':
     resolution: {integrity: sha512-IMnp6zSkiEKx5fwZSfySIyQWJWR/tpF00jRZC6BmFU//ygVRChakQpGPMpHIjQOnP3UMTmTXgztvQ2AwlHL8Mg==}
 
-  '@types/leaflet@1.9.16':
-    resolution: {integrity: sha512-wzZoyySUxkgMZ0ihJ7IaUIblG8Rdc8AbbZKLneyn+QjYsj5q1QU7TEKYqwTr10BGSzY5LI7tJk9Ifo+mEjdFRw==}
+  '@types/leaflet@1.9.17':
+    resolution: {integrity: sha512-IJ4K6t7I3Fh5qXbQ1uwL3CFVbCi6haW9+53oLWgdKlLP7EaS21byWFJxxqOx9y8I0AP0actXSJLVMbyvxhkUTA==}
 
   '@types/lodash@4.17.16':
     resolution: {integrity: sha512-HX7Em5NYQAXKW+1T+FiuG27NGwzJfCX3s1GjOa7ujxZa52kjJLOr4FUxT+giF6Tgxv1e+/czV/iTtBw27WTU9g==}
@@ -16804,9 +16804,9 @@ snapshots:
 
   '@types/leaflet.locatecontrol@0.74.6':
     dependencies:
-      '@types/leaflet': 1.9.16
+      '@types/leaflet': 1.9.17
 
-  '@types/leaflet@1.9.16':
+  '@types/leaflet@1.9.17':
     dependencies:
       '@types/geojson': 7946.0.16
 
