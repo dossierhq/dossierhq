@@ -25,7 +25,13 @@
         "src/run-*.ts",
         "deno-external-dependencies.ts",
       ],
-      "ignoreDependencies": ["@dossierhq/postgres-tools", "postgres", "std"],
+      "ignoreDependencies": [
+        "@dossierhq/database-adapter",
+        "@dossierhq/postgres-core",
+        "@dossierhq/postgres-tools",
+        "postgres",
+        "std",
+      ],
     },
     "examples/bun": {
       "entry": ["*.ts"],

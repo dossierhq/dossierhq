@@ -403,12 +403,18 @@ importers:
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../../libraries/core
+      '@dossierhq/database-adapter':
+        specifier: workspace:*
+        version: link:../../libraries/database-adapter
       '@dossierhq/deno-postgres':
         specifier: workspace:*
         version: link:../../libraries/deno-postgres
       '@dossierhq/pg':
         specifier: workspace:*
         version: link:../../libraries/pg
+      '@dossierhq/postgres-core':
+        specifier: workspace:*
+        version: link:../../libraries/postgres-core
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../../libraries/server
