@@ -26,7 +26,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@sentry/astro": "~9.13.0",
+    "@sentry/astro": "~9.15.0",
     "@spotlightjs/astro": "~3.2.3",
     "astro": "~5.7.10",
     "better-sqlite3": "~11.9.1",
@@ -39,7 +39,7 @@
     "@types/better-sqlite3": "~7.6.13",
     "@types/react": "19.1.2",
     "rollup-plugin-visualizer": "~5.14.0",
-    "tsx": "~4.19.3",
+    "tsx": "~4.19.4",
     "typescript": "~5.8.3"
   }
 }

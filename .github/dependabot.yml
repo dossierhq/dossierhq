@@ -23,6 +23,7 @@ updates:
         patterns:
           - "@eslint/*"
           - "eslint"
+          - "typescript-eslint"
       lexical:
         patterns:
           - "lexical"
