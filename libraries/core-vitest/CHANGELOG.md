@@ -1,5 +1,11 @@
 # Change Log - @dossierhq/core-vitest
 
+## 0.7.18
+
+### Patch Changes
+
+- @dossierhq/core@0.7.18
+
 ## 0.7.17
 
 ### Patch Changes
