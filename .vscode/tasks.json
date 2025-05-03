@@ -47,6 +47,15 @@
       "group": {
         "kind": "build"
       }
+    },
+    {
+      "label": "pnpm knip",
+      "type": "shell",
+      "command": "mise exec -- pnpm knip",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build"
+      }
     }
   ]
 }

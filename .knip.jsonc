@@ -1,6 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreDependencies": ["tslib"],
+  "ignoreBinaries": ["concurrently", "mise", "playwright"],
   "workspaces": {
     "apps/blog": {
       "entry": ["utils/SchemaTypes.ts"],
@@ -15,13 +16,14 @@
     },
     "examples/benchmark": {
       "entry": ["deno/run-*.ts", "src/run-*.ts"],
-      "ignoreDependencies": ["@dossierhq/postgres-tools"],
+      "ignoreDependencies": ["@dossierhq/postgres-tools", "postgres", "std"],
     },
     "examples/bun": {
       "entry": ["*.ts"],
     },
     "examples/deno": {
       "entry": ["*.ts"],
+      "ignoreDependencies": ["postgres", "std", "uuid"],
     },
     "examples/foo": {
       "entry": ["src/*.ts"],
@@ -36,10 +38,14 @@
     },
     "libraries/deno-postgres": {
       "entry": ["src/mod.ts", "src/**/*.test.ts"],
-      "ignoreDependencies": ["@dossierhq/postgres-tools"],
+      "ignoreDependencies": ["@dossierhq/postgres-tools", "postgres", "std"],
     },
     "libraries/design": {
       "ignoreDependencies": ["@creativebulma/bulma-badge", "bulma"],
+      "entry": ["src/stories/*.mdx"],
+    },
+    "libraries/eslint-config": {
+      "entry": ["*.d.ts"],
     },
     "libraries/integration-test": { "entry": ["src/SchemaTypes.ts"] },
     "libraries/leaflet": {
@@ -47,7 +53,7 @@
     },
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
-      "entry": [".storybook/*.cjs"],
+      "entry": [".storybook/*.cjs", ".storybook/*.js", "src/**/*.stories.tsx"],
     },
     "libraries/react-components2": {
       "ignoreDependencies": ["concurrently", "wait-on"],

@@ -32,7 +32,7 @@
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
-    "icons:update": "scripts/generate-icons.js",
+    "icons:update": "./scripts/generate-icons.js",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write ."
   },

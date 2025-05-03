@@ -61,6 +61,7 @@
     "@storybook/addon-docs": "~8.6.12",
     "@storybook/addon-essentials": "~8.6.12",
     "@storybook/addon-links": "~8.6.12",
+    "@storybook/blocks": "~8.6.12",
     "@storybook/preset-scss": "~1.0.3",
     "@storybook/react": "~8.6.12",
     "@storybook/react-vite": "~8.6.12",

@@ -86,7 +86,7 @@ const expressMiddleWare = (router) => {
 };
 
 function getDefaultAuthKeysFromRequest(req) {
-  const defaultKeysValue = req.header('Dossier-Default-Auth-Keys');
+  const defaultKeysValue = req.headers['Dossier-Default-Auth-Keys'];
   const defaultAuthKeys = defaultKeysValue
     ? defaultKeysValue.split(',').map((it) => it.trim())
     : [];
@@ -101,7 +101,8 @@ function handleClientOperation(req, res, executeOperation) {
   } else if (req.method === 'PUT') {
     operation = req.body;
   } else {
-    res.status(405).send('Only GET and PUT allowed');
+    res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Only GET and PUT allowed');
     return;
   }
   if (!operationName) {
@@ -115,19 +116,21 @@ function handleClientOperation(req, res, executeOperation) {
     const serverResult = await getServer();
     if (serverResult.isError()) {
       logger.error('Failed initializing server: %s: %s', serverResult.error, serverResult.message);
-      res.status(500).send(`${serverResult.error}: ${serverResult.message}`).end();
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(`${serverResult.error}: ${serverResult.message}`);
       return;
     }
     const server = serverResult.value;
 
     const result = await executeOperation(server, operationName, operation);
     if (result.isError()) {
-      res.status(result.httpStatus).send(result.message);
+      res.writeHead(result.statusCode, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(result.message);
       return;
     }
     // Express built-in json conversion doesn't handle null (sends empty response)
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.send(JSON.stringify(result.value, null, 2)).end();
+    res.end(JSON.stringify(result.value, null, 2));
   })();
 }
 
