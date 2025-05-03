@@ -5,16 +5,7 @@ import {
   type PostgresDatabaseOptimizationOptions,
   type PostgresTransaction,
 } from '@dossierhq/postgres-core';
-import type { PoolClient, PoolConfig } from 'pg';
-import * as PG from 'pg';
-
-// TODO @types/pg is slightly wrong in terms of CommonJS/ESM export
-// If simplifying this, ensure users of this library still work (CJS usage)
-const {
-  types: PgTypes,
-  DatabaseError,
-  Pool,
-} = 'default' in PG ? (PG as unknown as { default: typeof PG }).default : PG;
+import { DatabaseError, types as PgTypes, Pool, type PoolClient, type PoolConfig } from 'pg';
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
