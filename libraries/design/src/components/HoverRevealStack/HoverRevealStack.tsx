@@ -17,6 +17,7 @@ interface HoverRevealStackItemProps {
   children: ReactNode;
 }
 
+/** @public */
 export interface HoverRevealStackComponent extends FunctionComponent<HoverRevealStackProps> {
   Item: FunctionComponent<HoverRevealStackItemProps>;
 }

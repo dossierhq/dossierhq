@@ -15,12 +15,14 @@ interface IconButtonProps {
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
 }
 
+/** @public */
 export interface IconButtonGroupProps {
   condensed?: boolean;
   skipBottomMargin?: boolean;
   children: React.ReactNode;
 }
 
+/** @public */
 export interface IconButtonComponent extends FunctionComponent<IconButtonProps> {
   Group: FunctionComponent<IconButtonGroupProps>;
 }

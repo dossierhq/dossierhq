@@ -18,10 +18,12 @@ interface TagClearProps {
   children: React.ReactNode;
 }
 
+/** @public */
 export interface TagGroupProps {
   children: React.ReactNode;
 }
 
+/** @public */
 export interface TagComponent extends FunctionComponent<TagProps> {
   Remove: FunctionComponent<TagRemoveProps>;
   Clear: FunctionComponent<TagClearProps>;

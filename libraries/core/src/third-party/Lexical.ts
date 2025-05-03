@@ -59,7 +59,7 @@ export type TextFormatType =
   | 'subscript'
   | 'superscript';
 
-export type TextModeType = 'normal' | 'token' | 'segmented';
+type TextModeType = 'normal' | 'token' | 'segmented';
 
 // packages/lexical/src/nodes/LexicalLineBreakNode.ts
 
@@ -86,7 +86,7 @@ const IS_SUPERSCRIPT = 64;
 const IS_HIGHLIGHT = 128;
 
 // Text node details
-export const IS_DIRECTIONLESS = 1;
+// const IS_DIRECTIONLESS = 1;
 export const IS_UNMERGEABLE = 2;
 
 // our own type, not from lexical
@@ -130,7 +130,7 @@ export type SerializedCodeHighlightNode = Spread<
 
 // packages/lexical-link/src/index.ts
 
-export interface LinkAttributes {
+interface LinkAttributes {
   rel?: null | string;
   target?: null | string;
   title?: null | string;
@@ -150,9 +150,9 @@ export type SerializedListNode = Spread<
   SerializedElementNode
 >;
 
-export type ListType = 'number' | 'bullet' | 'check';
+type ListType = 'number' | 'bullet' | 'check';
 
-export type ListNodeTagType = 'ul' | 'ol';
+type ListNodeTagType = 'ul' | 'ol';
 
 // packages/lexical-list/src/LexicalListItemNode.ts
 

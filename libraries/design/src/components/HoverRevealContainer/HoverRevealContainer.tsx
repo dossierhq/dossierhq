@@ -22,6 +22,7 @@ interface HoverRevealContainerItemProps extends FlexItemProps, PaddingProps {
   children: ReactNode;
 }
 
+/** @public */
 export interface HoverRevealContainerComponent
   extends FunctionComponent<HoverRevealContainerProps> {
   Item: FunctionComponent<HoverRevealContainerItemProps>;

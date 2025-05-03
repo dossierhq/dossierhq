@@ -21,6 +21,7 @@ interface LevelItemProps {
   children: ReactNode;
 }
 
+/** @public */
 export interface LevelComponent extends FunctionComponent<LevelProps> {
   Left: FunctionComponent<LevelLeftProps>;
   Right: FunctionComponent<LevelRightProps>;

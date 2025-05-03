@@ -1,21 +1,30 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreDependencies": ["tslib"],
-  "ignoreBinaries": ["concurrently", "mise", "playwright"],
+  "ignoreBinaries": ["concurrently", "magenta,blue", "mise", "playwright"],
   "workspaces": {
     "apps/blog": {
       "entry": ["utils/SchemaTypes.ts"],
       "ignoreDependencies": ["codejar"],
     },
     "apps/playground2": {
-      "ignoreDependencies": ["babel-plugin-react-compiler"],
+      "postcss": true,
+      "ignoreDependencies": [
+        "babel-plugin-react-compiler",
+        "tailwindcss",
+        "tailwindcss-animate",
+      ],
     },
     "examples/astro": {
       "entry": ["src/generated/SchemaTypes.ts"],
       "ignoreDependencies": ["tsx"],
     },
     "examples/benchmark": {
-      "entry": ["deno/run-*.ts", "src/run-*.ts"],
+      "entry": [
+        "deno/run-*.ts",
+        "src/run-*.ts",
+        "deno-external-dependencies.ts",
+      ],
       "ignoreDependencies": ["@dossierhq/postgres-tools", "postgres", "std"],
     },
     "examples/bun": {
@@ -23,7 +32,14 @@
     },
     "examples/deno": {
       "entry": ["*.ts"],
-      "ignoreDependencies": ["postgres", "std", "uuid"],
+      "ignoreDependencies": [
+        "@dossierhq/database-adapter",
+        "@dossierhq/postgres-core",
+        "@dossierhq/postgres-tools",
+        "postgres",
+        "std",
+        "uuid",
+      ],
     },
     "examples/foo": {
       "entry": ["src/*.ts"],
@@ -37,33 +53,63 @@
       "entry": ["src/**/*.test.ts"],
     },
     "libraries/deno-postgres": {
-      "entry": ["src/mod.ts", "src/**/*.test.ts"],
-      "ignoreDependencies": ["@dossierhq/postgres-tools", "postgres", "std"],
+      "entry": ["src/mod.ts", "src/**/*.test.ts", "external-dependencies.ts"],
+      "ignoreDependencies": [
+        "@dossierhq/postgres-tools",
+        "postgres",
+        "std",
+        "uuid",
+      ],
     },
     "libraries/design": {
       "ignoreDependencies": ["@creativebulma/bulma-badge", "bulma"],
-      "entry": ["src/stories/*.mdx"],
+      "entry": ["src/stories/*.mdx", "src/stories/*.tsx"],
     },
     "libraries/eslint-config": {
       "entry": ["*.d.ts"],
     },
+    "libraries/graphql": {},
     "libraries/integration-test": { "entry": ["src/SchemaTypes.ts"] },
     "libraries/leaflet": {
       "entry": ["scripts/*.js"],
     },
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
-      "entry": [".storybook/*.cjs", ".storybook/*.js", "src/**/*.stories.tsx"],
+      "entry": [
+        ".storybook/*.cjs",
+        ".storybook/*.js",
+        "src/**/*.stories.tsx",
+        "src/hooks/useDebugLogChangedValues.ts",
+      ],
+      "ignoreDependencies": ["@dossierhq/test-data"],
     },
     "libraries/react-components2": {
-      "ignoreDependencies": ["concurrently", "wait-on"],
+      "ignoreDependencies": [
+        "concurrently",
+        "leaflet",
+        "tailwindcss-animate",
+        "tailwindcss",
+        "wait-on",
+      ],
     },
     "libraries/test-data": {
       "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],
     },
+    "tools/better-sqlite3-amalgamation": {
+      "ignoreDependencies": [
+        "@dossierhq/better-sqlite3",
+        "@dossierhq/core",
+        "@dossierhq/server",
+      ],
+    },
     "tools/tree-shake-tester": {
       "entry": ["test-cases/*.js"],
-      "ignoreDependencies": ["esbuild", "rollup"],
+      "ignoreDependencies": [
+        "@rollup/plugin-commonjs",
+        "@rollup/plugin-node-resolve",
+        "esbuild",
+        "rollup",
+      ],
     },
   },
 }

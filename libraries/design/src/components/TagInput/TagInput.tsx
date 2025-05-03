@@ -1,6 +1,7 @@
 import { forwardRef, type MouseEvent, type ReactNode, type Ref } from 'react';
 import { Tag } from '../Tag/Tag.js';
 
+/** @public */
 export interface TagInputProps {
   ref?: Ref<HTMLDivElement>;
   onClick?: (event: MouseEvent) => void;

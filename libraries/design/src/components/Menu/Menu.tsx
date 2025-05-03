@@ -17,6 +17,7 @@ interface MenuItemProps {
   children: React.ReactNode;
 }
 
+/** @public */
 export interface MenuComponent extends FunctionComponent<MenuProps> {
   Label: FunctionComponent<MenuLabelProps>;
   List: FunctionComponent<MenuListProps>;

@@ -18,8 +18,8 @@
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
-    "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/deno-postgres": "workspace:*",
+    "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*"
   }

@@ -5,7 +5,6 @@
 import {
   getArgumentValues,
   getNamedType,
-  GraphQLObjectType,
   GraphQLUnionType,
   isCompositeType,
   Kind,
@@ -16,8 +15,8 @@ import {
   type GraphQLField,
   type GraphQLInterfaceType,
   type GraphQLNamedType,
+  type GraphQLObjectType,
   type GraphQLResolveInfo,
-  type GraphQLType,
   type InlineFragmentNode,
   type NamedTypeNode,
   type SelectionNode,
@@ -28,7 +27,7 @@ import {
 // Last updated 4.13.0, Feb 12, 2021
 // License MIT
 
-export type FieldsByTypeName = Record<string, Record<string, ResolveTree>>;
+type FieldsByTypeName = Record<string, Record<string, ResolveTree>>;
 
 export interface ResolveTree {
   name: string;
@@ -76,23 +75,7 @@ function skipField(resolveInfo: GraphQLResolveInfo, { directives = [] }: Selecti
 
 // Originally based on https://github.com/tjmehta/graphql-parse-fields
 
-export function getAliasFromResolveInfo(resolveInfo: GraphQLResolveInfo): string {
-  const asts: readonly FieldNode[] =
-    // @ts-ignore Property 'fieldASTs' does not exist on type 'GraphQLResolveInfo'.
-    resolveInfo.fieldNodes || resolveInfo.fieldASTs;
-  for (let i = 0, l = asts.length; i < l; i++) {
-    const val = asts[i];
-    if (val.kind === 'Field') {
-      const alias = val.alias ? val.alias.value : val.name && val.name.value;
-      if (alias) {
-        return alias;
-      }
-    }
-  }
-  throw new Error('Could not determine alias?!');
-}
-
-export interface ParseOptions {
+interface ParseOptions {
   keepRoot?: boolean;
   deep?: boolean;
 }
@@ -311,31 +294,3 @@ function getType(resolveInfo: GraphQLResolveInfo, typeCondition: NamedTypeNode) 
     return schema.getType(typeName);
   }
 }
-
-export function simplifyParsedResolveInfoFragmentWithType(
-  parsedResolveInfoFragment: ResolveTree,
-  type: GraphQLType,
-): ResolveTree & { fields: Record<string, ResolveTree> } {
-  const { fieldsByTypeName } = parsedResolveInfoFragment;
-  const fields = {};
-  const strippedType = getNamedType(type);
-  if (isCompositeType(strippedType)) {
-    Object.assign(fields, fieldsByTypeName[strippedType.name]);
-    if (strippedType instanceof GraphQLObjectType) {
-      const objectType: GraphQLObjectType = strippedType;
-      // GraphQL ensures that the subfields cannot clash, so it's safe to simply overwrite them
-      for (const anInterface of objectType.getInterfaces()) {
-        Object.assign(fields, fieldsByTypeName[anInterface.name]);
-      }
-    }
-  }
-  return {
-    ...parsedResolveInfoFragment,
-    fields,
-  };
-}
-
-export const parse: typeof parseResolveInfo = parseResolveInfo;
-export const simplify: typeof simplifyParsedResolveInfoFragmentWithType =
-  simplifyParsedResolveInfoFragmentWithType;
-export const getAlias: typeof getAliasFromResolveInfo = getAliasFromResolveInfo;

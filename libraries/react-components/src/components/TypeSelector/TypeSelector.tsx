@@ -1,12 +1,9 @@
 import type { PublishedSchema, Schema } from '@dossierhq/core';
 import {
   DropdownSelector,
-  initializeMultipleSelectorState,
   MultipleSelectorStateActions,
-  reduceMultipleSelectorState,
   type DropdownSelectorProps,
   type MultipleSelectorItem,
-  type MultipleSelectorReducer,
   type MultipleSelectorState,
   type MultipleSelectorStateAction,
 } from '@dossierhq/design';
@@ -17,23 +14,12 @@ export interface TypeItem extends MultipleSelectorItem {
   kind: 'entity' | 'component';
 }
 
-type TypeSelectorReducer = MultipleSelectorReducer<TypeItem>;
-type TypeSelectorInitArgs = { selectedIds?: string[] };
 export type TypeSelectorState = MultipleSelectorState<TypeItem>;
 export type TypeSelectorDispatch = Dispatch<MultipleSelectorStateAction<TypeItem>>;
 
 type Props = Omit<DropdownSelectorProps<TypeItem>, 'renderItem'> & {
   schema: Schema | PublishedSchema | undefined;
 };
-
-export function initializeTypeSelectorState({
-  selectedIds,
-}: TypeSelectorInitArgs): MultipleSelectorState<TypeItem> {
-  const items: TypeItem[] = [];
-  return initializeMultipleSelectorState({ items, selectedIds });
-}
-
-export const reduceEntityTypeSelectorState: TypeSelectorReducer = reduceMultipleSelectorState;
 
 export function TypeSelector({ schema, ...props }: Props): JSX.Element {
   const { dispatch } = props;

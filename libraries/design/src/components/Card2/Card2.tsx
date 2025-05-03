@@ -61,6 +61,7 @@ interface CardFooterButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+/** @public */
 export interface CardComponent extends FunctionComponent<CardProps> {
   Header: FunctionComponent<CardHeaderProps>;
   HeaderTitle: FunctionComponent<CardHeaderTitleProps>;

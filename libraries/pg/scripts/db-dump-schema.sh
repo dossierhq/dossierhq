@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e -u
+set -e -u -o pipefail
 
 THIS_DIR="$(pushd "$(dirname "$0")" > /dev/null; pwd; popd > /dev/null)"
 

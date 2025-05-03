@@ -19,6 +19,7 @@ interface SelectDisplayOptionProps {
   children: ReactNode;
 }
 
+/** @public */
 export interface SelectDisplayComponent extends FunctionComponent<SelectDisplayProps> {
   Option: FunctionComponent<SelectDisplayOptionProps>;
 }

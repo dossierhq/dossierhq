@@ -71,6 +71,7 @@ interface FullscreenContainerItemProps extends FlexItemProps, MarginProps, Paddi
   children?: ReactNode;
 }
 
+/** @public */
 export interface FullscreenContainerComponent extends FunctionComponent<FullscreenContainerProps> {
   Row: FunctionComponent<FullscreenContainerRowProps>;
   ScrollableRow: FunctionComponent<FullscreenContainerScrollableRowProps>;

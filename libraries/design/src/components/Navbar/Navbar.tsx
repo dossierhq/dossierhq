@@ -42,6 +42,7 @@ interface NavbarDropdownContentItemProps {
   children: ReactNode;
 }
 
+/** @public */
 export interface NavbarComponent extends FunctionComponent<NavbarProps> {
   Brand: FunctionComponent<NavbarBrandProps>;
   Burger: FunctionComponent<NavbarBurgerProps>;
