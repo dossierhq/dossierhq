@@ -38,11 +38,6 @@ export async function loadDatabaseFromUrl(
   createDatabase: (data: Uint8Array | null) => Promise<void>,
   showNotification: (notification: NotificationInfo) => void,
 ) {
-  // Cleanup url when running in dev mode
-  if (url.startsWith('/../')) {
-    url = url.replace('/../', '/node_modules/');
-  }
-
   const response = await fetch(url);
   if (response.ok) {
     const buffer = await response.arrayBuffer();
