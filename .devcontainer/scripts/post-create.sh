@@ -21,6 +21,7 @@ mise install
 eval "$(mise activate bash)"
 pip install --break-system-packages -q litecli pgcli
 
+pnpm install
 
 (
     cd tools/generic-tools/ || (echo "No such path: tools/generic-tools/"; exit)
