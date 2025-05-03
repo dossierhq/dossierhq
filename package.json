@@ -20,6 +20,7 @@
     "changeset:bump-version": "changeset version",
     "changeset:build-and-publish": "turbo run lint check-types build test && changeset publish",
     "deps:outdated": "pnpm outdated -r",
+    "deps:rebuild": "pnpm rebuild -r",
     "deps:update-interactive": "pnpm update -r -i --latest",
     "knip": "knip"
   },
@@ -43,6 +44,7 @@
       "better-sqlite3"
     ],
     "overrides": {
+      "postcss@5.2.18": "7.0.36",
       "vite@6.2.1": "6.2.7"
     }
   }
