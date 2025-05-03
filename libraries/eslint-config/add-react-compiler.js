@@ -1,5 +1,5 @@
-import reactCompiler from "eslint-plugin-react-compiler";
-
 /** @import { Linter } from "eslint" */
 /** @type {Linter.Config[]} */
-export default [reactCompiler.configs.recommended];
+export default [{ rules: { "react-hooks/react-compiler": "error" } }];
+
+//TODO enable by default in all react configs when all libraries are updated
