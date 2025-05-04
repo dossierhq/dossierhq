@@ -25,3 +25,5 @@
 
 # Run `npm pack --dryrun` to debug configuration
 # (Add your project-specific overrides here, with negative pattern: !glob-pattern)
+
+!*.json
