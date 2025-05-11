@@ -26,6 +26,6 @@
     "eslint-plugin-storybook": "~0.12.0",
     "eslint-plugin-turbo": "^2.5.2",
     "globals": "~16.0.0",
-    "typescript-eslint": "~8.31.1"
+    "typescript-eslint": "~8.32.0"
   }
 }
