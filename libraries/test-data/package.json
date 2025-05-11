@@ -41,7 +41,7 @@
     "@faker-js/faker": "~9.7.0",
     "@types/better-sqlite3": "~7.6.13",
     "@types/uuid": "~10.0.0",
-    "better-sqlite3": "~11.9.1",
+    "better-sqlite3": "~11.10.0",
     "cloudinary": "~2.6.0",
     "dotenv": "~16.5.0",
     "eslint": "~9.26.0",
