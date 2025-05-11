@@ -22,7 +22,7 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/test-data": "workspace:*",
-    "@radix-ui/react-slot": "~1.2.0",
+    "@radix-ui/react-slot": "~1.2.2",
     "lucide-react": "~0.507.0",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
