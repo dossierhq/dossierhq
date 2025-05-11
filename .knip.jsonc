@@ -11,6 +11,7 @@
       "postcss": true,
       "ignoreDependencies": [
         "babel-plugin-react-compiler",
+        "postcss",
         "tailwindcss",
         "tailwindcss-animate",
       ],
