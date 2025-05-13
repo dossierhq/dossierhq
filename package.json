@@ -30,7 +30,7 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.2",
+    "@changesets/cli": "^2.29.4",
     "@ianvs/prettier-plugin-sort-imports": "~4.4.1",
     "@types/node": "~22.15.3",
     "knip": "^5.53.0",
