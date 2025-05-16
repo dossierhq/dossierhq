@@ -52,7 +52,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@libsql/client": "~0.15.4",
+    "@libsql/client": "~0.15.6",
     "@types/node": "~22.15.3",
     "eslint": "~9.26.0",
     "typescript": "~5.8.3",
