@@ -46,7 +46,7 @@
     "@dossierhq/typescript-config": "workspace:*",
     "@types/better-sqlite3": "~7.6.13",
     "@types/bun": "~1.2.11",
-    "@types/pg": "~8.15.1",
+    "@types/pg": "~8.15.2",
     "eslint": "~9.26.0",
     "typescript": "~5.8.3"
   }
