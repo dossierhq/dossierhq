@@ -38,7 +38,7 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@faker-js/faker": "~9.7.0",
+    "@faker-js/faker": "~9.8.0",
     "@types/better-sqlite3": "~7.6.13",
     "@types/uuid": "~10.0.0",
     "better-sqlite3": "~11.10.0",
