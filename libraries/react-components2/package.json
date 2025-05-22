@@ -101,7 +101,7 @@
     "@vitejs/plugin-react": "~4.4.1",
     "chromatic": "~11.28.2",
     "concurrently": "~9.1.2",
-    "eslint": "~9.26.0",
+    "eslint": "~9.27.0",
     "postcss": "~8.5.3",
     "postcss-cli": "~11.0.1",
     "postcss-load-config": "^6.0.1",
