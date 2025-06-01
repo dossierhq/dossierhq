@@ -30,8 +30,8 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/database-adapter": "workspace:*",
     "@dossierhq/deno-postgres": "workspace:*",
-    "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/pg": "workspace:*",
+    "@dossierhq/postgres-core": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@faker-js/faker": "~9.8.0",
     "benchpress": "workspace:*",
@@ -47,7 +47,7 @@
     "@types/better-sqlite3": "~7.6.13",
     "@types/bun": "~1.2.11",
     "@types/pg": "~8.15.1",
-    "eslint": "~9.27.0",
+    "eslint": "~9.28.0",
     "typescript": "~5.8.3"
   }
 }
