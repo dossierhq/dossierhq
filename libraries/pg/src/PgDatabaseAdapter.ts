@@ -9,8 +9,10 @@ import { DatabaseError, types as PgTypes, Pool, type PoolClient, type PoolConfig
 
 PgTypes.setTypeParser(PgTypes.builtins.INT8, BigInt);
 // 1016 = _int8 (int8 array)
-const parseBigIntArray = PgTypes.getTypeParser<string[]>(1016);
-PgTypes.setTypeParser(1016, (it) => (parseBigIntArray(it) as string[]).map(BigInt));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const parseBigIntArray = PgTypes.getTypeParser(1016 as any);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+PgTypes.setTypeParser(1016 as any, (it) => (parseBigIntArray(it) as string[]).map(BigInt));
 
 export type PgDatabaseAdapter = DatabaseAdapter<PostgresDatabaseOptimizationOptions>;
 
