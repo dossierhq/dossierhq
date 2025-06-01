@@ -69,7 +69,11 @@
       ],
     },
     "libraries/design": {
-      "ignoreDependencies": ["@creativebulma/bulma-badge", "bulma"],
+      "ignoreDependencies": [
+        "@creativebulma/bulma-badge",
+        "@storybook/blocks",
+        "bulma",
+      ],
       "entry": ["src/stories/*.mdx", "src/stories/*.tsx"],
     },
     "libraries/eslint-config": {
