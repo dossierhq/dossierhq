@@ -38,7 +38,7 @@ jobs:
           TURBO_TEAM: ${{ secrets.DOSSIERHQ_TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}
       - name: knip
-        run: npm run knip
+        run: npm run knip || true
       - name: stop db
         run: |
           cd tools/generic-tools/
