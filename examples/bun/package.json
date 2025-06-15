@@ -23,7 +23,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@types/bun": "~1.2.11",
-    "eslint": "~9.28.0",
+    "eslint": "~9.29.0",
     "typescript": "~5.8.3"
   }
 }
