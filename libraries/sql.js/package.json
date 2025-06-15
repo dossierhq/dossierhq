@@ -57,7 +57,7 @@
     "@types/base-64": "~1.0.2",
     "@types/sql.js": "~1.4.9",
     "base-64": "~1.0.0",
-    "eslint": "~9.28.0",
+    "eslint": "~9.29.0",
     "sql.js": "~1.13.0",
     "typescript": "~5.8.3",
     "vitest": "~3.1.2"
