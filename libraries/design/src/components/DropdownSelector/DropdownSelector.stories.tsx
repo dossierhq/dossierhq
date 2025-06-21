@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useReducer } from 'react';
 import { DropdownSelector, type DropdownSelectorProps } from './DropdownSelector.js';
 import {

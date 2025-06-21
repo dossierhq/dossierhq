@@ -47,6 +47,11 @@
       "dependsOn": [],
       "outputs": [],
       "cache": false
+    },
+    "prettier:fix": {
+      "dependsOn": [],
+      "outputs": [],
+      "cache": true
     }
   }
 }

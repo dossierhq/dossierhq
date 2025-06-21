@@ -1,7 +1,7 @@
 import { NotificationContainer, Text } from '@dossierhq/design';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useMemo, useState } from 'react';
+import { fn } from 'storybook/test';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
 import { ContentEditorScreen, type ContentEditorScreenProps } from './ContentEditorScreen.js';

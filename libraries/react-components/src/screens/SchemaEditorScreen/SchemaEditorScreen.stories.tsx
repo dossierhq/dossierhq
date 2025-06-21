@@ -1,8 +1,8 @@
 import type { ComponentTypeSpecification, EntityTypeSpecification } from '@dossierhq/core';
 import { NotificationContainer } from '@dossierhq/design';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useContext } from 'react';
+import { fn } from 'storybook/test';
 import { DossierContext } from '../../contexts/DossierContext';
 import { useAdminSchema } from '../../hooks/useAdminSchema';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';

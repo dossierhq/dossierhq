@@ -1,6 +1,6 @@
 import { NotificationContainer, Row } from '@dossierhq/design';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
 import { ContentEditorScreen } from '../screens/ContentEditorScreen/ContentEditorScreen';
 import { SchemaEditorScreen } from '../screens/SchemaEditorScreen/SchemaEditorScreen';
 import { AdminLoadContextProvider } from '../test/AdminLoadContextProvider';

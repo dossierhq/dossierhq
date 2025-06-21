@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useReducer, useState, type JSX, type MouseEvent } from 'react';
+import { fn } from 'storybook/test';
 import { ButtonDropdown } from '../../components/ButtonDropdown/ButtonDropdown.js';
 import { reduceMultipleSelectorState } from '../../components/DropdownSelector/MultipleSelectorReducer.js';
 import { Field } from '../../components/Field/Field.js';

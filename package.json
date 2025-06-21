@@ -23,7 +23,8 @@
     "deps:rebuild": "pnpm rebuild -r",
     "deps:update-interactive": "pnpm update -r -i --latest",
     "tools:update": "mise up --bump",
-    "knip": "knip"
+    "knip": "knip",
+    "prettier:fix": "turbo prettier:fix"
   },
   "repository": {
     "type": "git",

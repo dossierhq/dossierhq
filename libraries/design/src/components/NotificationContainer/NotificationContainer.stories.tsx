@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useContext, useRef } from 'react';
 import { NotificationContext } from '../../contexts/NotificationContext.js';
 import { Button } from '../Button/Button.js';

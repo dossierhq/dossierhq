@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { CatalogEntities } from '../../test/CatalogEntities.js';
 import { PublishedLoadContextProvider } from '../../test/PublishedLoadContextProvider.js';

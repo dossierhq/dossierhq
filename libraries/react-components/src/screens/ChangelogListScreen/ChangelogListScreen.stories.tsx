@@ -1,5 +1,5 @@
 import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider.js';
 import { CacheConfig } from '../../test/CacheConfig.js';

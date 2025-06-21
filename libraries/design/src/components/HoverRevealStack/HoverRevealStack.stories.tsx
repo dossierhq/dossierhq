@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Delete } from '../Delete/Delete.js';
 import { HoverRevealStack } from './HoverRevealStack.js';
 

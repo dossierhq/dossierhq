@@ -56,6 +56,15 @@
       "group": {
         "kind": "build"
       }
+    },
+    {
+      "label": "prettier:fix",
+      "type": "shell",
+      "command": "mise exec -- pnpm prettier:fix",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build"
+      }
     }
   ]
 }

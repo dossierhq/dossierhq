@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn, userEvent, within } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
+import { fn, userEvent, within } from 'storybook/test';
 import { ThemeProvider } from '../components/ThemeProvider.js';
 import { addContentListParamsToURLSearchParams } from '../reducers/ContentListUrlSynchronizer.js';
 import { StoryDossierProvider } from '../stories/StoryDossierProvider.js';

@@ -1,8 +1,8 @@
 import type { ClientContext, DossierClientMiddleware } from '@dossierhq/core';
 import { Text } from '@dossierhq/design';
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { fn } from 'storybook/test';
 import { AdminLoadContextProvider } from '../../test/AdminLoadContextProvider';
 import { CacheConfig } from '../../test/CacheConfig';
 import { createSlowAdminMiddleware } from '../../test/TestContextAdapter';

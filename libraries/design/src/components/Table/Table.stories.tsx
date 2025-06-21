@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState, type MouseEvent } from 'react';
+import { fn } from 'storybook/test';
 import { Table, type TableProps } from './Table.js';
 
 type ColumnName = 'one' | 'two' | 'three';
