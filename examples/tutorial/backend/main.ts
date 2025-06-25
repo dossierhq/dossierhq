@@ -15,7 +15,7 @@ import { config } from 'dotenv';
 import express, { type RequestHandler, type Response } from 'express';
 import { expressjwt, type GetVerificationKey } from 'express-jwt';
 import { expressJwtSecret } from 'jwks-rsa';
-import { getDossierClientForRequest, getPublishedClientForRequest, initialize } from './server.js';
+import { getDossierClientForRequest, getPublishedClientForRequest, initialize } from './server.ts';
 
 // prefer .env.local file if exists, over .env file
 config({ path: '.env.local' });

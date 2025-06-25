@@ -1,10 +1,10 @@
 import { v5 as uuidv5 } from 'uuid';
-import { fetchJsonCached } from '../utils/fetchUtils.js';
+import { fetchJsonCached } from '../utils/fetchUtils.ts';
 import {
   createAdapterAndServer,
   createNewDatabase,
   optimizeAndCloseDatabase,
-} from '../utils/shared-generator.js';
+} from '../utils/shared-generator.ts';
 import type {
   AppDossierClient,
   Film,
@@ -14,8 +14,8 @@ import type {
   Starship,
   Transport,
   Vehicle,
-} from './schema-types.js';
-import { SCHEMA } from './schema.js';
+} from './schema-types.ts';
+import { SCHEMA } from './schema.ts';
 
 const UUID_NAMESPACE = 'b0a4c16c-8feb-4a68-9d43-98f96719eee5';
 

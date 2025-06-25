@@ -12,7 +12,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "bun ./scripts/generate-typescript.ts && tsc",
+    "build": "./scripts/generate-typescript.ts && tsc",
     "build:watch": "tsc --watch",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
@@ -21,10 +21,10 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "generate:all": "npm run generate:blog && npm run generate:catalog && npm run generate:reviews && npm run generate:starwars",
-    "generate:blog": "node lib/blog/blog-generator.js",
-    "generate:catalog": "node lib/catalog/catalog-generator.js",
-    "generate:reviews": "node lib/reviews/reviews-generator.js",
-    "generate:starwars": "node lib/starwars/starwars-generator.js"
+    "generate:blog": "node src/blog/blog-generator.ts",
+    "generate:catalog": "node src/catalog/catalog-generator.ts",
+    "generate:reviews": "node src/reviews/reviews-generator.ts",
+    "generate:starwars": "node src/starwars/starwars-generator.ts"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env -S node
 import { readFile } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 import {
@@ -8,10 +8,10 @@ import {
 } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { config } from 'dotenv';
-import { SYSTEM_USERS } from '../config/SystemUsers.js';
-import { getCurrentSyncEventFiles, updateSyncEventsOnDisk } from '../utils/FileSystemSerializer.js';
-import type { AppDossierClient } from '../utils/SchemaTypes';
-import { initializeServer } from '../utils/SharedServerUtils.js';
+import { SYSTEM_USERS } from '../config/SystemUsers.ts';
+import { getCurrentSyncEventFiles, updateSyncEventsOnDisk } from '../utils/FileSystemSerializer.ts';
+import type { AppDossierClient } from '../utils/SchemaTypes.ts';
+import { initializeServer } from '../utils/SharedServerUtils.ts';
 
 const DATA_DIR = new URL('../data', import.meta.url).pathname;
 

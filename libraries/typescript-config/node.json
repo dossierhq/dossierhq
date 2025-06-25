@@ -1,4 +1,6 @@
 {
   "extends": "./_base.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "allowImportingTsExtensions": true
+  }
 }

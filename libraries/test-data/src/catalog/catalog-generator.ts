@@ -18,12 +18,12 @@ import {
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
 import { v5 as uuidv5 } from 'uuid';
-import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
+import { listCloudinaryImages } from '../utils/cloudinary-repository.ts';
 import {
   createAdapterAndServer,
   createNewDatabase,
   optimizeAndCloseDatabase,
-} from '../utils/shared-generator.js';
+} from '../utils/shared-generator.ts';
 import type {
   AppDossierClient,
   AppEntity,
@@ -37,8 +37,8 @@ import type {
   RichTextsEntity,
   StringsComponent,
   StringsEntity,
-} from './schema-types.js';
-import { SCHEMA, SCHEMA_WITHOUT_VALIDATIONS } from './schema.js';
+} from './schema-types.ts';
+import { SCHEMA, SCHEMA_WITHOUT_VALIDATIONS } from './schema.ts';
 
 const UUID_NAMESPACE = 'fdf4e979-6f82-4d61-ab14-26c318cb6731';
 

@@ -1,9 +1,9 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env -S node
 import { writeFile } from 'node:fs/promises';
 import { createConsoleLogger, Schema, type Logger } from '@dossierhq/core';
 import type { Server } from '@dossierhq/server';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
-import { initialize } from './backend/server.js';
+import { initialize } from './backend/server.ts';
 
 async function generateTypes(logger: Logger, schema: Schema, filename: string) {
   const publishedSchema = schema.toPublishedSchema();

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import { readFile, writeFile } from 'node:fs/promises';
-import { Schema } from '@dossierhq/core';
+import { Schema, type SchemaSpecification } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import prettier from 'prettier';
 
-async function generateTypes(schemaSpec, filename) {
+async function generateTypes(schemaSpec: SchemaSpecification, filename: string) {
   const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();
   const publishedSchema = schema.toPublishedSchema();
   const sourceCode = generateTypescriptForSchema({ schema, publishedSchema });

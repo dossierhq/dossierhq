@@ -11,15 +11,15 @@ import {
   createAdapterAndServer,
   createNewDatabase,
   optimizeAndCloseDatabase,
-} from '../utils/shared-generator.js';
+} from '../utils/shared-generator.ts';
 import type {
   AppDossierClient,
   PersonalNote,
   PlaceOfBusiness,
   Review,
   Reviewer,
-} from './schema-types.js';
-import { SCHEMA } from './schema.js';
+} from './schema-types.ts';
+import { SCHEMA } from './schema.ts';
 
 function* generateLocation(): Generator<Location, void> {
   let lat = 55.6;

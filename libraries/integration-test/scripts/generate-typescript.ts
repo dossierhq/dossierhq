@@ -1,9 +1,9 @@
-#!/usr/bin/env -S bun
+#!/usr/bin/env -S node
 import { writeFile } from 'node:fs/promises';
 import { Schema, type SchemaSpecificationUpdate } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { format, resolveConfig } from 'prettier';
-import { IntegrationTestSchema } from '../src/IntegrationTestSchema.js';
+import { IntegrationTestSchema } from '../src/IntegrationTestSchema.ts';
 
 async function generateTypes(schemaSpec: SchemaSpecificationUpdate, filename: string) {
   const schema = Schema.createAndValidate(schemaSpec).valueOrThrow();

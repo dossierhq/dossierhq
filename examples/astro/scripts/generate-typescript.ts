@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env -S node
 import { writeFile } from 'node:fs/promises';
 import {
   createConsoleLogger,
@@ -8,7 +8,7 @@ import {
 } from '@dossierhq/core';
 import { generateTypescriptForSchema } from '@dossierhq/typescript-generator';
 import { format, resolveConfig } from 'prettier';
-import { getAuthenticatedDossierClient, getServer } from '../src/dossier/utils/ServerUtils.js';
+import { getAuthenticatedDossierClient, getServer } from '../src/dossier/utils/ServerUtils.ts';
 
 async function generateTypes(logger: Logger, schema: SchemaWithMigrations, filename: string) {
   const publishedSchema = schema.toPublishedSchema();

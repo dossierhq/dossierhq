@@ -18,7 +18,6 @@
     },
     "examples/astro": {
       "entry": ["src/generated/SchemaTypes.ts"],
-      "ignoreDependencies": ["tsx"],
     },
     "examples/benchmark": {
       "entry": [

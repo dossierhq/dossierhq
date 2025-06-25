@@ -7,14 +7,14 @@ import {
   createRichTextTextNode,
 } from '@dossierhq/core';
 import { faker } from '@faker-js/faker';
-import { listCloudinaryImages } from '../utils/cloudinary-repository.js';
+import { listCloudinaryImages } from '../utils/cloudinary-repository.ts';
 import {
   createAdapterAndServer,
   createNewDatabase,
   optimizeAndCloseDatabase,
-} from '../utils/shared-generator.js';
-import type { AppDossierClient, BlogPost, CloudinaryImage, Person } from './schema-types.js';
-import { SCHEMA } from './schema.js';
+} from '../utils/shared-generator.ts';
+import type { AppDossierClient, BlogPost, CloudinaryImage, Person } from './schema-types.ts';
+import { SCHEMA } from './schema.ts';
 
 async function createPerson(client: AppDossierClient) {
   const name = faker.person.fullName();
