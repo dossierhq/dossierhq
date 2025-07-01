@@ -22,7 +22,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "./scripts/generate-typescript.ts && tsc && post-process-build deno-esm-only",
+    "build": "tsx ./scripts/generate-typescript.ts && tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
