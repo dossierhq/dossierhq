@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "./scripts/generate-typescript.ts && ./scripts/sync-database-with-disk.ts && npm run copy-public-resources && npm run build-app && tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
+    "build": "tsx ./scripts/generate-typescript.ts && ./scripts/sync-database-with-disk.ts && npm run copy-public-resources && npm run build-app && tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "copy-public-resources": "cp node_modules/@antonz/codapi/dist/snippet.js public/codapi-snippet.js && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/prismjs/prism.js public/",
