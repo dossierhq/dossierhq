@@ -12,7 +12,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "./scripts/generate-typescript.ts && tsc",
+    "build": "tsx ./scripts/generate-typescript.ts && tsc",
     "build:watch": "tsc --watch",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
@@ -46,6 +46,7 @@
     "dotenv": "~16.5.0",
     "eslint": "~9.29.0",
     "tslib": "~2.8.1",
+    "tsx": "~4.19.4",
     "typescript": "~5.8.3",
     "uuid": "~11.1.0"
   }

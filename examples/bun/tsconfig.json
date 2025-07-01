@@ -1,6 +1,4 @@
 {
   "extends": "@dossierhq/typescript-config/node.json",
-  "compilerOptions": {
-    "noEmit": true
-  }
+  "compilerOptions": {}
 }
