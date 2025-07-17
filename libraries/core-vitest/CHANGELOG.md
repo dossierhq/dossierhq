@@ -1,5 +1,12 @@
 # Change Log - @dossierhq/core-vitest
 
+## 0.7.19
+
+### Patch Changes
+
+- Updated dependencies [b3471ee]
+  - @dossierhq/core@0.7.19
+
 ## 0.7.18
 
 ### Patch Changes

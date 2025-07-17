@@ -1,5 +1,11 @@
 # Change Log - @dossierhq/core
 
+## 0.7.19
+
+### Patch Changes
+
+- b3471ee: Breaking change of Logger, remove printf formatting and accept one data argument
+
 ## 0.7.18
 
 ## 0.7.17

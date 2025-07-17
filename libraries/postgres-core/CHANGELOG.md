@@ -1,5 +1,13 @@
 # Change Log - @dossierhq/postgres-core
 
+## 0.7.19
+
+### Patch Changes
+
+- Updated dependencies [b3471ee]
+  - @dossierhq/core@0.7.19
+  - @dossierhq/database-adapter@0.7.19
+
 ## 0.7.18
 
 ### Patch Changes
