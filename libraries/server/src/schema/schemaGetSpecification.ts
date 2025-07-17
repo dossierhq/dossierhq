@@ -35,11 +35,7 @@ export async function schemaGetSpecification(
 
   if (initialLoad) {
     logger.info(
-      'Loaded schema with %d entity types, %d component types, %d patterns, %d indexes',
-      payload.entityTypes.length,
-      payload.componentTypes.length,
-      payload.patterns.length,
-      payload.indexes.length,
+      `Loaded schema with ${payload.entityTypes.length} entity types, ${payload.componentTypes.length} component types, ${payload.patterns.length} patterns, ${payload.indexes.length} indexes`,
     );
   }
   return ok(payload);

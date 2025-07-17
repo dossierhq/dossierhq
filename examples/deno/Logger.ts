@@ -1,25 +1,20 @@
 import { Logger } from "@dossierhq/core";
 import * as log from "std/log/mod.ts";
-import { sprintf } from "std/fmt/printf.ts";
-
-function formatLogMessage(message: string, args: unknown[]) {
-  return sprintf(message.replaceAll("%O", "%#v"), ...args);
-}
 
 export function getLogger(name?: string): Logger {
   const logger = log.getLogger(name);
   const wrapper: Logger = {
-    error(message, ...args) {
-      logger.error(formatLogMessage(message, args));
+    error(message: string, data?: unknown): void {
+      logger.error(message, data);
     },
-    warn(message, ...args) {
-      logger.warning(formatLogMessage(message, args));
+    warn(message: string, data?: unknown): void {
+      logger.warning(message, data);
     },
-    info(message, ...args) {
-      logger.info(formatLogMessage(message, args));
+    info(message: string, data?: unknown): void {
+      logger.info(message, data);
     },
-    debug(message, ...args) {
-      logger.debug(formatLogMessage(message, args));
+    debug(message: string, data?: unknown): void {
+      logger.debug(message, data);
     },
   };
   return wrapper;

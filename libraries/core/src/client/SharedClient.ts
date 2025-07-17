@@ -106,15 +106,15 @@ export async function LoggingClientMiddleware<
   const { logger } = context;
   const noArgs = Array.isArray(operation.args) && operation.args.length === 0;
   if (noArgs) {
-    logger.info('Executing %s', operation.name);
+    logger.info(`Executing ${operation.name}`);
   } else {
-    logger.info('Executing %s: %O', operation.name, operation.args);
+    logger.info(`Executing ${operation.name}: ${JSON.stringify(operation.args)}`);
   }
 
   const result = await operation.next();
 
   if (result.isError()) {
-    logger.warn('Result %s error: %s: %s', operation.name, result.error, result.message);
+    logger.warn(`Result ${operation.name} error: ${result.error}: ${result.message}`);
   } else {
     // Add effect to log, effect is just a convention, not a formal part of OkResult
     const effect =
@@ -122,9 +122,9 @@ export async function LoggingClientMiddleware<
       result.value &&
       (result.value as { effect?: unknown }).effect;
     if (typeof effect === 'string') {
-      logger.info('Result %s ok, effect %s', operation.name, effect);
+      logger.info(`Result ${operation.name} ok, effect ${effect}`);
     } else {
-      logger.info('Result %s ok', operation.name);
+      logger.info(`Result ${operation.name} ok`);
     }
   }
   operation.resolve(result);

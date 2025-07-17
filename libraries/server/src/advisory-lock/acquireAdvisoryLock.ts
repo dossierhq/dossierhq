@@ -35,10 +35,9 @@ export async function acquireAdvisoryLock(
   const deletedLocks = deleteResult.value;
 
   if (deletedLocks.length > 0) {
-    logger.info('Remove %d expired advisory locks: %s', [
-      deletedLocks.length,
-      deletedLocks.map((it) => it.name).join(', '),
-    ]);
+    logger.info(`Remove ${deletedLocks.length} expired advisory locks`, {
+      expiredLocks: deletedLocks.map((it) => it.name),
+    });
   }
 
   const handle = Math.floor(Math.random() * MAX_HANDLE);

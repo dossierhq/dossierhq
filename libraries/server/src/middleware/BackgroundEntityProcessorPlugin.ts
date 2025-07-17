@@ -106,8 +106,7 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
 
         if (this.batchCount % 200 === 0) {
           this.logger.info(
-            'BackgroundEntityProcessorPlugin: processed %d entities',
-            this.batchCount,
+            `BackgroundEntityProcessorPlugin: processed ${this.batchCount} entities`,
           );
         }
 
@@ -116,27 +115,19 @@ export class BackgroundEntityProcessorPlugin implements ServerPlugin {
             const { valid, validPublished, previousValid, previousValidPublished } = result.value;
             if (valid !== previousValid || validPublished !== previousValidPublished) {
               this.logger.warn(
-                'BackgroundEntityProcessorPlugin: processed entity %s: valid %s (was: %s), validPublished %s (was: %s)',
-                result.value.id,
-                valid,
-                previousValid,
-                validPublished,
-                previousValidPublished,
+                `BackgroundEntityProcessorPlugin: processed entity ${result.value.id}: valid ${valid} (was: ${previousValid}), validPublished ${validPublished} (was: ${previousValidPublished})`,
               );
             }
           } else {
             this.logger.info(
-              'BackgroundEntityProcessorPlugin: no more entities to process, processed %d entities',
-              this.batchCount,
+              `BackgroundEntityProcessorPlugin: no more entities to process, processed ${this.batchCount} entities`,
             );
             this.processing = false;
             this.batchCount = 0;
           }
         } else {
           this.logger.error(
-            'BackgroundEntityProcessorPlugin: failed processing %s: %s',
-            result.error,
-            result.message,
+            `BackgroundEntityProcessorPlugin: failed processing ${result.error}: ${result.message}`,
           );
         }
       }

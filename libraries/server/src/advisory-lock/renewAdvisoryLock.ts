@@ -27,6 +27,6 @@ export async function renewAdvisoryLock(
   if (result.isError()) return result;
   const { acquiredAt, renewedAt } = result.value;
 
-  logger.info('Renewed advisory lock: %s', name);
+  logger.info(`Renewed advisory lock: ${name}`);
   return ok({ name, handle, acquiredAt, renewedAt });
 }

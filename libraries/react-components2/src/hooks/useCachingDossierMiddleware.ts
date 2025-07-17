@@ -45,10 +45,7 @@ function createCachingDossierMiddleware<TContext extends ClientContext>(
 
     if (migrationsToApply > 0) {
       context.logger.info(
-        'Clearing cache since there are new schema migrations (previous version=%d, new version=%d, versions with migrations=%d)',
-        lastSchemaVersion,
-        schema.version,
-        migrationsToApply,
+        `Clearing cache since there are new schema migrations (previous version=${lastSchemaVersion}, new version=${schema.version}, versions with migrations=${migrationsToApply})`,
       );
       clearCacheDueToSchemaMigrations(mutate);
     }

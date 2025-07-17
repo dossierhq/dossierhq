@@ -143,21 +143,17 @@ process.once('SIGTERM', shutdown);
 process.once('SIGUSR2', shutdown);
 
 async function shutdown(signal: NodeJS.Signals) {
-  logger.info('Received signal %s, shutting down', signal);
+  logger.info(`Received signal ${signal}, shutting down`);
   httpServer.closeAllConnections();
 
   const shutdownResult = await server.shutdown();
   if (shutdownResult.isError()) {
-    logger.error(
-      'Error while shutting down: %s (%s)',
-      shutdownResult.error,
-      shutdownResult.message,
-    );
+    logger.error(`Error while shutting down: ${shutdownResult.error} (${shutdownResult.message})`);
   }
 
   httpServer.close((error) => {
     if (error) {
-      logger.error('Error while shutting down: %s', error.message);
+      logger.error('Error while shutting down', error);
     }
     logger.info('Backend shut down');
     process.kill(process.pid, signal);

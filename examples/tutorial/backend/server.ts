@@ -94,7 +94,7 @@ async function createMessages(logger: Logger, client: AppDossierClient) {
     if (createResult.isError()) return createResult;
     const entity = createResult.value.entity;
 
-    logger.info('Created message, id=%s', entity.id);
+    logger.info(`Created message, id=${entity.id}`);
   }
 
   return ok(undefined);

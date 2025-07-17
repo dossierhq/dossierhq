@@ -26,6 +26,6 @@ export async function releaseAdvisoryLock(
   const result = await databaseAdapter.advisoryLockRelease(context, name, handle);
   if (result.isError()) return result;
 
-  logger.info('Released advisory lock: %s', name);
+  logger.info(`Released advisory lock: ${name}`);
   return ok({ name });
 }

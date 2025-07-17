@@ -208,7 +208,7 @@ async function calculateAndUpdateSchemaSpec(
       .filter(([_selector, types]) => types.length > 0)
       .map(([selector, types]) => `${selector}=${types.join(',')}`)
       .join(', ');
-    logger.info('Marking entities as dirty (%s)', selectorLogString);
+    logger.info(`Marking entities as dirty (${selectorLogString})`);
     const markDirtyResult = await databaseAdapter.managementDirtyMarkEntities(
       context,
       dirtyEntitiesSelector,
@@ -216,9 +216,7 @@ async function calculateAndUpdateSchemaSpec(
     if (markDirtyResult.isError()) return markDirtyResult;
 
     logger.info(
-      'Marked entities as dirty (validate=%d, index=%d)',
-      markDirtyResult.value.validationCount,
-      markDirtyResult.value.indexCount,
+      `Marked entities as dirty (validate=${markDirtyResult.value.validationCount}, index=${markDirtyResult.value.indexCount})`,
     );
   }
 
@@ -231,11 +229,7 @@ async function calculateAndUpdateSchemaSpec(
   if (deleteComponentTypesResult.isError()) return deleteComponentTypesResult;
 
   logger.info(
-    'Updated schema, new schema has %d entity types, %d component types, %d patterns, %d indexes',
-    newSchema.spec.entityTypes.length,
-    newSchema.spec.componentTypes.length,
-    newSchema.spec.patterns.length,
-    newSchema.spec.indexes.length,
+    `Updated schema, new schema has ${newSchema.spec.entityTypes.length} entity types, ${newSchema.spec.componentTypes.length} component types, ${newSchema.spec.patterns.length} patterns, ${newSchema.spec.indexes.length} indexes`,
   );
 
   return ok(undefined);

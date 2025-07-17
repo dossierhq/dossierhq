@@ -189,7 +189,6 @@ export const notOk = {
     error: unknown,
   ): ErrorResult<unknown, typeof ErrorType.Generic> => {
     if (error instanceof Error) {
-      //TODO need to decide how to pass errors to Logger
       context.logger.error('Unexpected error', error);
       return createErrorResult(
         ErrorType.Generic,

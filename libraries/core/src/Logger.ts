@@ -1,7 +1,3 @@
-// Formatting placeholders compatible with node and pino: %s %d %O
-// https://nodejs.org/api/util.html#util_util_format_format_args
-// https://github.com/pinojs/pino/blob/master/docs/api.md#message
-
 interface ConsoleLike {
   error: (...args: unknown[]) => void;
   warn: (...args: unknown[]) => void;
@@ -11,25 +7,41 @@ interface ConsoleLike {
 
 export interface Logger {
   /**
-   * @param message Message with printf formatting (%s, %d, %O)
-   * @param args Arguments to formatting
+   * @param message Message
    */
-  error(message: string, ...args: unknown[]): void;
+  error(message: string): void;
   /**
-   * @param message Message with printf formatting (%s, %d, %O)
-   * @param args Arguments to formatting
+   * @param message Message
+   * @param data Additional data to log
    */
-  warn(message: string, ...args: unknown[]): void;
+  error(message: string, data: unknown): void;
   /**
-   * @param message Message with printf formatting (%s, %d, %O)
-   * @param args Arguments to formatting
+   * @param message Message
    */
-  info(message: string, ...args: unknown[]): void;
+  warn(message: string): void;
   /**
-   * @param message Message with printf formatting (%s, %d, %O)
-   * @param args Arguments to formatting
+   * @param message Message
+   * @param data Additional data to log
    */
-  debug(message: string, ...args: unknown[]): void;
+  warn(message: string, data: unknown): void;
+  /**
+   * @param message Message
+   */
+  info(message: string): void;
+  /**
+   * @param message Message
+   * @param data Additional data to log
+   */
+  info(message: string, data: unknown): void;
+  /**
+   * @param message Message
+   */
+  debug(message: string): void;
+  /**
+   * @param message Message
+   * @param data Additional data to log
+   */
+  debug(message: string, data: unknown): void;
 }
 
 export interface LoggerContext {
@@ -48,17 +60,33 @@ export const NoOpLogger: Logger = {
 
 export function createConsoleLogger(console: ConsoleLike): Logger {
   return {
-    error(message, ...args) {
-      console.error(`error: ${message}`, ...args);
+    error(message: string, data?: unknown): void {
+      if (arguments.length === 1) {
+        console.error(`error: ${message}`);
+      } else {
+        console.error(`error: ${message}`, data);
+      }
     },
-    warn(message, ...args) {
-      console.warn(`warn: ${message}`, ...args);
+    warn(message: string, data?: unknown): void {
+      if (arguments.length === 1) {
+        console.warn(`warn: ${message}`);
+      } else {
+        console.warn(`warn: ${message}`, data);
+      }
     },
-    info(message, ...args) {
-      console.info(`info: ${message}`, ...args);
+    info(message: string, data?: unknown): void {
+      if (arguments.length === 1) {
+        console.info(`info: ${message}`);
+      } else {
+        console.info(`info: ${message}`, data);
+      }
     },
-    debug(message, ...args) {
-      console.debug(`debug: ${message}`, ...args);
+    debug(message: string, data?: unknown): void {
+      if (arguments.length === 1) {
+        console.debug(`debug: ${message}`);
+      } else {
+        console.debug(`debug: ${message}`, data);
+      }
     },
   };
 }

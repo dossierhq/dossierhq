@@ -318,7 +318,7 @@ function convertErrorResultForValidation(
   result: ErrorResult<undefined, typeof ErrorType.BadRequest | typeof ErrorType.Generic>,
 ): Result<EntityValidityAndInfoPayload, typeof ErrorType.Generic> {
   if (result.isErrorType(ErrorType.BadRequest)) {
-    context.logger.error('entity(%s): %s: %s', reference.id, logMessage, result.message);
+    context.logger.error(`entity(${reference.id}): ${logMessage}: ${result.message}`);
     return ok({ valid: false, ...EMPTY_ENTITY_INFO });
   }
   return notOk.Generic(result.message); // cast Generic -> Generic

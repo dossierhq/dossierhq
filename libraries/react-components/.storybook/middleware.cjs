@@ -115,7 +115,7 @@ function handleClientOperation(req, res, executeOperation) {
   (async () => {
     const serverResult = await getServer();
     if (serverResult.isError()) {
-      logger.error('Failed initializing server: %s: %s', serverResult.error, serverResult.message);
+      logger.error(`Failed initializing server: ${serverResult.error}: ${serverResult.message}`);
       res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end(`${serverResult.error}: ${serverResult.message}`);
       return;
