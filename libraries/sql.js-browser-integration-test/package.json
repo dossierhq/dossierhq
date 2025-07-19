@@ -31,7 +31,7 @@
     "@dossierhq/typescript-config": "workspace:*",
     "@playwright/test": "~1.52.0",
     "@types/sql.js": "~1.4.9",
-    "eslint": "~9.30.1",
+    "eslint": "~9.31.0",
     "sql.js": "~1.13.0",
     "typescript": "~5.8.3"
   }
