@@ -26,10 +26,10 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "@sentry/astro": "~9.24.0",
+    "@sentry/astro": "~9.41.0",
     "@spotlightjs/astro": "~3.2.3",
-    "astro": "~5.11.0",
-    "better-sqlite3": "~11.10.0",
+    "astro": "~5.12.3",
+    "better-sqlite3": "~12.2.0",
     "leaflet": "~1.9.4",
     "react": "~19.1.0",
     "react-dom": "~19.1.0"

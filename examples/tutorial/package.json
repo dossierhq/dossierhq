@@ -15,7 +15,7 @@
     "prettier:fix": "prettier --write ."
   },
   "dependencies": {
-    "@auth0/auth0-react": "~2.3.0",
+    "@auth0/auth0-react": "~2.4.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
@@ -23,7 +23,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~11.10.0",
+    "better-sqlite3": "~12.2.0",
     "body-parser": "~2.2.0",
     "dotenv": "~17.2.0",
     "express": "~5.1.0",
@@ -32,7 +32,7 @@
     "leaflet": "~1.9.4",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
-    "react-router-dom": "~7.6.0"
+    "react-router-dom": "~7.7.1"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
