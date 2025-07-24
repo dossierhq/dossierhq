@@ -29,7 +29,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@playwright/test": "~1.52.0",
+    "@playwright/test": "~1.54.1",
     "@types/sql.js": "~1.4.9",
     "eslint": "~9.31.0",
     "sql.js": "~1.13.0",

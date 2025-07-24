@@ -30,7 +30,7 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/node": "~22.15.29",
+    "@types/node": "~24.1.0",
     "eslint": "~9.31.0",
     "typescript": "~5.8.3"
   }
