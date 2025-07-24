@@ -1,5 +1,11 @@
 # Change Log - @dossierhq/database-adapter
 
+## 0.7.20
+
+### Patch Changes
+
+- @dossierhq/core@0.7.20
+
 ## 0.7.19
 
 ### Patch Changes

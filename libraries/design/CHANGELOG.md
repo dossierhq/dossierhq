@@ -1,5 +1,7 @@
 # Change Log - @dossierhq/design
 
+## 0.7.20
+
 ## 0.7.19
 
 ## 0.7.18

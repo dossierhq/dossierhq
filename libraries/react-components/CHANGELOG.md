@@ -1,5 +1,14 @@
 # Change Log - @dossierhq/react-components
 
+## 0.7.20
+
+### Patch Changes
+
+- 28fe341: Update dependencies
+  - @dossierhq/core@0.7.20
+  - @dossierhq/design@0.7.20
+  - @dossierhq/leaflet@0.7.20
+
 ## 0.7.19
 
 ### Patch Changes
