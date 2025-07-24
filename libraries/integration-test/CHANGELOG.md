@@ -1,5 +1,12 @@
 # Change Log - @dossierhq/integration-test
 
+## 0.7.20
+
+### Patch Changes
+
+- @dossierhq/core@0.7.20
+- @dossierhq/server@0.7.20
+
 ## 0.7.19
 
 ### Patch Changes
