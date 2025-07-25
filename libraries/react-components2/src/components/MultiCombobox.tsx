@@ -12,7 +12,7 @@ export function MultiCombobox<TItem extends { value: string; label: string }>({
   onUnselect,
 }: {
   items: TItem[];
-  selected: string[];
+  selected: readonly string[];
   placeholder?: string;
   onSelect: (value: TItem['value']) => void;
   onUnselect: (value: TItem['value']) => void;

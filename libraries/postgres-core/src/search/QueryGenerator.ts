@@ -475,7 +475,7 @@ function addQueryFilters(
 function getFilterEntityTypes(
   schema: PublishedSchema | Schema,
   query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
-): Result<string[], typeof ErrorType.BadRequest> {
+): Result<readonly string[], typeof ErrorType.BadRequest> {
   if (!query?.entityTypes || query.entityTypes.length === 0) {
     return ok([]);
   }
@@ -490,7 +490,7 @@ function getFilterEntityTypes(
 function getFilterComponentTypes(
   schema: PublishedSchema | Schema,
   query: PublishedEntitySharedQuery | EntitySharedQuery | undefined,
-): Result<string[], typeof ErrorType.BadRequest> {
+): Result<readonly string[], typeof ErrorType.BadRequest> {
   if (!query?.componentTypes || query.componentTypes.length === 0) {
     return ok([]);
   }

@@ -38,7 +38,7 @@ export function usePublishedEntitySearchFilters(
 
   const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
     reduceAuthKeySelectorState,
-    { authKeys, selectedIds: searchEntityState.query.authKeys },
+    { authKeys, selectedIds: searchEntityState.query.authKeys as string[] | undefined },
     initializeAuthKeySelectorState,
   );
 

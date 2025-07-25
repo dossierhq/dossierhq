@@ -118,7 +118,7 @@ export async function authResolveAuthorizationKey(
 export async function authResolveAuthorizationKeys(
   authorizationAdapter: AuthorizationAdapter,
   context: SessionContext,
-  requestedAuthKeys: string[] | undefined,
+  requestedAuthKeys: readonly string[] | undefined,
 ): PromiseResult<
   ResolvedAuthKey[],
   typeof ErrorType.BadRequest | typeof ErrorType.NotAuthorized | typeof ErrorType.Generic

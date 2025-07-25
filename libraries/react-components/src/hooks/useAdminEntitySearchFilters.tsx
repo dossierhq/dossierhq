@@ -1,4 +1,4 @@
-import type { EntityQuery } from '@dossierhq/core';
+import type { EntityQuery, EntityStatus } from '@dossierhq/core';
 import {
   initializeMultipleSelectorState,
   type MultipleSelectorState,
@@ -43,13 +43,13 @@ export function useAdminEntitySearchFilters(
 
   const [statusFilterState, dispatchStatusFilterState] = useReducer(
     reduceStatusSelectorState,
-    { selectedIds: (searchEntityState.query as EntityQuery).status },
+    { selectedIds: (searchEntityState.query as EntityQuery).status as EntityStatus[] | undefined },
     initializeStatusSelectorState,
   );
 
   const [authKeyFilterState, dispatchAuthKeyFilterState] = useReducer(
     reduceAuthKeySelectorState,
-    { authKeys, selectedIds: searchEntityState.query.authKeys },
+    { authKeys, selectedIds: searchEntityState.query.authKeys as string[] | undefined },
     initializeAuthKeySelectorState,
   );
 

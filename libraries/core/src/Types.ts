@@ -298,10 +298,10 @@ export interface EntitySharedQuery<
   TComponentType extends string = string,
   TAuthKey extends string = string,
 > {
-  authKeys?: TAuthKey[];
-  entityTypes?: TEntityType[];
-  componentTypes?: TComponentType[];
-  status?: EntityStatus[];
+  authKeys?: readonly TAuthKey[];
+  entityTypes?: readonly TEntityType[];
+  componentTypes?: readonly TComponentType[];
+  status?: readonly EntityStatus[];
   valid?: boolean;
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
@@ -330,9 +330,9 @@ export interface PublishedEntitySharedQuery<
   TComponentType extends string = string,
   TAuthKey extends string = string,
 > {
-  authKeys?: TAuthKey[];
-  entityTypes?: TEntityType[];
-  componentTypes?: TComponentType[];
+  authKeys?: readonly TAuthKey[];
+  entityTypes?: readonly TEntityType[];
+  componentTypes?: readonly TComponentType[];
   linksTo?: EntityReference;
   linksFrom?: EntityReference;
   boundingBox?: BoundingBox;

@@ -186,7 +186,7 @@ type SqliteColumnValue = number | string | Uint8Array | null;
 export type SqliteSqlTemplateTag = SqlTemplateTag<SqliteColumnValue>;
 
 export interface SqliteQueryBuilder extends SqlQueryBuilder<SqliteColumnValue> {
-  addValueList: (values: SqliteColumnValue[]) => RawSql;
+  addValueList: (values: readonly SqliteColumnValue[]) => RawSql;
 }
 
 type SqliteQueryBuilderCallback = (builder: Omit<SqliteQueryBuilder, 'query'>) => void;
@@ -194,7 +194,7 @@ type SqliteQueryBuilderCallback = (builder: Omit<SqliteQueryBuilder, 'query'>) =
 export function createSqliteSqlQuery(): SqliteQueryBuilder {
   const sqlBuilder = createSqlQuery<SqliteColumnValue>({ indexPrefix: '?' });
 
-  const addValueList = (list: SqliteColumnValue[]) => {
+  const addValueList = (list: readonly SqliteColumnValue[]) => {
     const values = list.map((it) => sqlBuilder.addValue(it));
     return createRawSql('(' + values.map((it) => `?${it.index}`).join(', ') + ')');
   };
