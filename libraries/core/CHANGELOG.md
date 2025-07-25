@@ -1,5 +1,11 @@
 # Change Log - @dossierhq/core
 
+## 0.7.21
+
+### Patch Changes
+
+- eecb7c5: Change arrays in queries to readonly
+
 ## 0.7.20
 
 ## 0.7.19
