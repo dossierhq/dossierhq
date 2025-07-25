@@ -1,5 +1,11 @@
 # Change Log - @dossierhq/sql.js
 
+## 0.7.21
+
+### Patch Changes
+
+- @dossierhq/sqlite-core@0.7.21
+
 ## 0.7.20
 
 ### Patch Changes
