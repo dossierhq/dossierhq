@@ -36,7 +36,7 @@
     "@faker-js/faker": "~9.9.0",
     "benchpress": "workspace:*",
     "better-sqlite3": "~12.2.0",
-    "dotenv": "~17.2.0",
+    "dotenv": "~17.2.1",
     "pg": "~8.16.0",
     "tslib": "~2.8.1"
   },
