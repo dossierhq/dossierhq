@@ -82,7 +82,7 @@
     "@vitejs/plugin-react": "~4.7.0",
     "better-sqlite3": "~12.2.0",
     "body-parser": "~2.2.0",
-    "eslint": "~9.31.0",
+    "eslint": "~9.32.0",
     "eslint-plugin-storybook": "9.0.18",
     "react": "~19.1.0",
     "react-dom": "~19.1.0",
