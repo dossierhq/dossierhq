@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: apt-get update
         run: sudo apt-get update # to avoid error when installing Playwright
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - uses: jdx/mise-action@v2
