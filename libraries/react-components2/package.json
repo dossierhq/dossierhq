@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@dossierhq/leaflet": "workspace:*",
-    "@radix-ui/react-alert-dialog": "~1.1.11",
+    "@radix-ui/react-alert-dialog": "~1.1.15",
     "@radix-ui/react-collapsible": "~1.1.8",
     "@radix-ui/react-dialog": "~1.1.11",
     "@radix-ui/react-dropdown-menu": "~2.1.12",
