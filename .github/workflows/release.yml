@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v5
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@v3
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Create Release Pull Request or Publish to npm
