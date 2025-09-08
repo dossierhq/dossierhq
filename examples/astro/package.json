@@ -28,7 +28,7 @@
     "@dossierhq/server": "workspace:*",
     "@sentry/astro": "~9.41.0",
     "@spotlightjs/astro": "~3.2.3",
-    "astro": "~5.13.3",
+    "astro": "~5.13.5",
     "better-sqlite3": "~12.2.0",
     "leaflet": "~1.9.4",
     "react": "~19.1.0",
