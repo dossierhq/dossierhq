@@ -37,7 +37,7 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@graphiql/toolkit": "~0.11.1",
-    "@types/react": "19.2.0",
+    "@types/react": "19.2.2",
     "@types/react-dom": "~19.2.0",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react-swc": "~3.11.0",
