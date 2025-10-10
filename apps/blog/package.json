@@ -45,7 +45,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.13",
-    "@types/react": "19.2.0",
+    "@types/react": "19.2.2",
     "@types/react-dom": "~19.2.0",
     "dotenv": "~17.2.1",
     "eslint": "~9.36.0",
