@@ -76,7 +76,7 @@
     "@storybook/react-vite": "~9.1.10",
     "@types/leaflet": "~1.9.14",
     "@types/lodash": "~4.17.16",
-    "@types/react": "19.2.0",
+    "@types/react": "19.2.2",
     "@types/react-dom": "~19.2.0",
     "@types/uuid": "~10.0.0",
     "@vitejs/plugin-react": "~4.7.0",

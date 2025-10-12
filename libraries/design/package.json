@@ -62,7 +62,7 @@
     "@storybook/preset-scss": "~1.0.3",
     "@storybook/react-vite": "~9.1.10",
     "@types/lodash": "~4.17.16",
-    "@types/react": "19.2.0",
+    "@types/react": "19.2.2",
     "@types/react-dom": "~19.2.0",
     "@vitejs/plugin-react": "~4.7.0",
     "bulma": "~0.9.4",
