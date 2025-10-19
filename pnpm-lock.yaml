@@ -20,8 +20,8 @@ importers:
         specifier: ^2.29.2
         version: 2.29.7(@types/node@24.4.0)
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: ~4.5.1
-        version: 4.5.1(@vue/compiler-sfc@3.5.13)(prettier@3.6.2)
+        specifier: ~4.7.0
+        version: 4.7.0(@vue/compiler-sfc@3.5.13)(prettier@3.6.2)
       '@types/node':
         specifier: ~24.4.0
         version: 24.4.0
@@ -297,7 +297,7 @@ importers:
         version: 9.38.0(jiti@2.6.1)
       prettier-plugin-tailwindcss:
         specifier: ~0.6.14
-        version: 0.6.14(@ianvs/prettier-plugin-sort-imports@4.5.1(@vue/compiler-sfc@3.5.13)(prettier@3.6.2))(prettier@3.6.2)
+        version: 0.6.14(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.13)(prettier@3.6.2))(prettier@3.6.2)
       rollup-plugin-visualizer:
         specifier: ~6.0.1
         version: 6.0.5(rollup@4.52.3)
@@ -1594,7 +1594,7 @@ importers:
         version: 1.0.0
       prettier-plugin-tailwindcss:
         specifier: ~0.6.14
-        version: 0.6.14(@ianvs/prettier-plugin-sort-imports@4.5.1(@vue/compiler-sfc@3.5.13)(prettier@3.6.2))(prettier@3.6.2)
+        version: 0.6.14(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.13)(prettier@3.6.2))(prettier@3.6.2)
       react:
         specifier: ~19.2.0
         version: 19.2.0
@@ -2763,16 +2763,22 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@ianvs/prettier-plugin-sort-imports@4.5.1':
-    resolution: {integrity: sha512-vOQwIyQHnHz0ikvHEQDzwUkNfX74o/7qNEpm9LiPtyBvCg/AU/DOkhwe1o92chPS1QzS6G7HeiO+OwIt8a358A==}
+  '@ianvs/prettier-plugin-sort-imports@4.7.0':
+    resolution: {integrity: sha512-soa2bPUJAFruLL4z/CnMfSEKGznm5ebz29fIa9PxYtu8HHyLKNE1NXAs6dylfw1jn/ilEIfO2oLLN6uAafb7DA==}
     peerDependencies:
       '@prettier/plugin-oxc': ^0.0.4
       '@vue/compiler-sfc': 2.7.x || 3.x
+      content-tag: ^4.0.0
       prettier: 2 || 3 || ^4.0.0-0
+      prettier-plugin-ember-template-tag: ^2.1.0
     peerDependenciesMeta:
       '@prettier/plugin-oxc':
         optional: true
       '@vue/compiler-sfc':
+        optional: true
+      content-tag:
+        optional: true
+      prettier-plugin-ember-template-tag:
         optional: true
 
   '@img/colour@1.0.0':
@@ -12443,7 +12449,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.5.1(@vue/compiler-sfc@3.5.13)(prettier@3.6.2)':
+  '@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.13)(prettier@3.6.2)':
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.4
@@ -20918,11 +20924,11 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.6.14(@ianvs/prettier-plugin-sort-imports@4.5.1(@vue/compiler-sfc@3.5.13)(prettier@3.6.2))(prettier@3.6.2):
+  prettier-plugin-tailwindcss@0.6.14(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.13)(prettier@3.6.2))(prettier@3.6.2):
     dependencies:
       prettier: 3.6.2
     optionalDependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.5.1(@vue/compiler-sfc@3.5.13)(prettier@3.6.2)
+      '@ianvs/prettier-plugin-sort-imports': 4.7.0(@vue/compiler-sfc@3.5.13)(prettier@3.6.2)
 
   prettier@2.8.7:
     optional: true
