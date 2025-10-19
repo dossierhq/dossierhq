@@ -1,0 +1,87 @@
+name: Dependency Maintenance
+
+on:
+  schedule:
+    # Run pnpm dedupe daily at 3 AM UTC
+    - cron: "0 3 * * *"
+    # Run mise tool updates weekly on Tuesday at 3 AM UTC
+    - cron: "0 3 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pnpm-dedupe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jdx/mise-action@v3
+
+      - name: Set up pnpm global bin directory
+        run: |
+          PNPM_HOME=/home/runner/.local/share/pnpm
+          echo "PNPM_HOME=$PNPM_HOME" >> "$GITHUB_ENV"
+          echo "$PNPM_HOME" >> "$GITHUB_PATH"
+        shell: bash
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          UV_FROZEN: "1"
+
+      - name: Run pnpm dedupe
+        run: pnpm dedupe
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(deps): Deduplicate pnpm lockfile"
+          title: "chore(deps): Deduplicate pnpm lockfile"
+          body: |
+            This automated PR deduplicates dependencies in the pnpm lockfile.
+
+            Running `pnpm dedupe` optimizes the lockfile by removing duplicate packages and can reduce installation time and disk space usage.
+
+            Please review the changes and merge if CI passes.
+          branch: automated/pnpm-dedupe
+          delete-branch: true
+          labels: dependencies
+
+  mise-tool-updates:
+    runs-on: ubuntu-latest
+    # Only run weekly on Tuesday at 3 AM UTC
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 3 * * 2')
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jdx/mise-action@v3
+
+      - name: Update mise tools
+        run: mise up --bump
+
+      - name: Sync pnpm version in package.json
+        run: |
+          PNPM_VERSION=$(grep '^pnpm' .tool-versions | awk '{print $2}')
+          if [ -n "$PNPM_VERSION" ]; then
+            jq --arg version "pnpm@$PNPM_VERSION" '.packageManager = $version' package.json > package.json.tmp
+            mv package.json.tmp package.json
+            echo "Updated packageManager to pnpm@$PNPM_VERSION"
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(tools): Update tool versions"
+          title: "chore(tools): Update tool versions"
+          body: |
+            This automated PR updates tool versions in `.tool-versions` using `mise up --bump`.
+
+            Please review the changes and merge if CI passes.
+          branch: automated/mise-tool-updates
+          delete-branch: true
+          labels: dependencies
