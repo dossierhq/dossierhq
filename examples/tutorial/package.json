@@ -15,7 +15,7 @@
     "prettier:fix": "prettier --write ."
   },
   "dependencies": {
-    "@auth0/auth0-react": "~2.4.0",
+    "@auth0/auth0-react": "~2.8.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
