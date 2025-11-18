@@ -2,4 +2,4 @@ bun           1.2.10
 deno          2.3.1
 nodejs        24.3.0
 libsql-server libsql-server-v0.24.31
-pnpm          10.21.0
+pnpm          10.22.0
