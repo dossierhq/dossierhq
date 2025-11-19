@@ -4,3 +4,4 @@
 /public/codejar.js
 /public/prism.js
 /public/voyager.worker.js
+next-env.d.ts

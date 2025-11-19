@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "noImplicitOverride": true,
     "incremental": true
   },

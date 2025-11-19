@@ -13,12 +13,18 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "noImplicitOverride": true,
     "incremental": true,
     "plugins": [{ "name": "next" }],
     "allowImportingTsExtensions": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": ["node_modules", "public/*.js"]
 }
