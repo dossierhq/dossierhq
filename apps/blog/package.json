@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@antonz/codapi": "~0.19.10",
-    "@cloudinary/url-gen": "~1.21.0",
+    "@cloudinary/url-gen": "~1.22.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
@@ -31,7 +31,7 @@
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~12.2.0",
+    "better-sqlite3": "~12.4.1",
     "codejar": "~4.2.0",
     "leaflet": "~1.9.4",
     "lexical": "0.14.3",

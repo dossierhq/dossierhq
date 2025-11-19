@@ -22,7 +22,7 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/bun": "~1.2.19",
+    "@types/bun": "~1.3.2",
     "eslint": "~9.39.1",
     "typescript": "~5.9.3"
   }

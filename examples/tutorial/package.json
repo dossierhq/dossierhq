@@ -23,7 +23,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~12.2.0",
+    "better-sqlite3": "~12.4.1",
     "body-parser": "~2.2.0",
     "dotenv": "~17.2.1",
     "express": "~5.1.0",
@@ -43,7 +43,7 @@
     "@types/react-dom": "~19.2.0",
     "@vitejs/plugin-react": "~5.1.1",
     "concurrently": "~9.2.0",
-    "nodemon": "~3.1.10",
+    "nodemon": "~3.1.11",
     "typescript": "~5.9.3",
     "vite": "7.2.2"
   }
