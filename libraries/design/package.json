@@ -75,7 +75,7 @@
     "sass-loader": "~16.0.5",
     "storybook": "~9.1.10",
     "svgo": "~4.0.0",
-    "typescript": "~5.8.3",
+    "typescript": "~5.9.3",
     "vite": "7.0.6"
   }
 }

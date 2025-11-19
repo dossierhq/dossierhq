@@ -73,7 +73,7 @@ export function uploadDatabase(
 
 export function downloadDatabase(database: Database) {
   const data = database.export();
-  const blob = new Blob([data]);
+  const blob = new Blob([new Uint8Array(data).buffer]);
   const a = document.createElement('a');
   document.body.appendChild(a);
   a.href = window.URL.createObjectURL(blob);

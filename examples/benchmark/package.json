@@ -48,6 +48,6 @@
     "@types/bun": "~1.2.19",
     "@types/pg": "~8.15.3",
     "eslint": "~9.39.1",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.3"
   }
 }

@@ -50,10 +50,10 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@types/node": "~24.4.0",
+    "@types/node": "~24.10.1",
     "@types/uuid": "~10.0.0",
     "eslint": "~9.39.1",
     "tsx": "~4.20.3",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.3"
   }
 }
