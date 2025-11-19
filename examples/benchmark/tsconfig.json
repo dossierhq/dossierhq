@@ -2,7 +2,8 @@
   "extends": "@dossierhq/typescript-config/node.json",
   "compilerOptions": {
     "outDir": "lib",
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": false,
+    "noEmit": false
   },
   "include": ["src"]
 }

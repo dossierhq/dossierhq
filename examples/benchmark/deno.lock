@@ -72,16 +72,16 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@faker-js/faker@9.7",
+        "npm:@faker-js/faker@10.1",
         "npm:@types/better-sqlite3@~7.6.13",
-        "npm:@types/bun@~1.2.11",
-        "npm:@types/pg@~8.11.14",
-        "npm:better-sqlite3@~11.9.1",
-        "npm:dotenv@16.5",
-        "npm:eslint@9.26",
-        "npm:pg@~8.15.6",
+        "npm:@types/bun@~1.3.2",
+        "npm:@types/pg@~8.15.3",
+        "npm:better-sqlite3@~12.4.1",
+        "npm:dotenv@~17.2.1",
+        "npm:eslint@~9.39.1",
+        "npm:pg@8.16",
         "npm:tslib@~2.8.1",
-        "npm:typescript@~5.8.3"
+        "npm:typescript@~5.9.3"
       ]
     }
   }
