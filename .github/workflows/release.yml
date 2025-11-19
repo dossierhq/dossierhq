@@ -30,9 +30,8 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Publish
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.changesets.outputs.hasChangesets == 'false' && contains(github.event.head_commit.message, 'Version Packages')
         run: |
-          echo "Changesets published outputs: ${{toJson(steps.changesets.outputs)}}"
           pnpm run changeset:build-and-publish
           git push origin --tags
         env:
