@@ -32,6 +32,7 @@ jobs:
       - name: Publish
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
+          echo "Changesets published outputs: ${{toJson(steps.changesets.outputs)}}"
           pnpm run changeset:build-and-publish
           git push origin --tags
         env:
