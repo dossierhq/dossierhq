@@ -30,15 +30,15 @@
     "leaflet": "~1.9.4",
     "react": "~19.2.0",
     "react-dom": "~19.2.0",
-    "react-router-dom": "~7.7.1",
+    "react-router-dom": "~7.9.6",
     "sql.js": "~1.13.0",
     "swr": "~2.3.3"
   },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@graphiql/toolkit": "~0.11.1",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "~19.2.0",
+    "@types/react": "19.2.6",
+    "@types/react-dom": "~19.2.3",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react-swc": "~4.1.0",
     "eslint": "~9.39.1",

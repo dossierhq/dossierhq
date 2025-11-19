@@ -71,7 +71,7 @@ async function createPlaceOfBusiness(
 }
 
 async function createReviewer(client: AppDossierClient) {
-  const name = faker.internet.userName();
+  const name = faker.internet.username();
   return (
     await client.createEntity<Reviewer>(
       {
