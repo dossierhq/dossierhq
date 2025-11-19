@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "check-types": "tsc --noEmit",
+    "check-types:watch": "tsc --watch --noEmit",
     "lint": "npm run prettier:check && npm run eslint:check",
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
@@ -15,7 +15,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "start": "npm run start:graphql",
-    "start:graphql": "node ./lib/graphql.js"
+    "start:graphql": "node ./src/graphql.ts"
   },
   "dependencies": {
     "@dossierhq/better-sqlite3": "workspace:*",
