@@ -327,7 +327,7 @@ importers:
         version: 0.9.5(prettier@3.6.2)(typescript@5.9.3)
       '@astrojs/node':
         specifier: ~9.5.1
-        version: 9.5.1(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
+        version: 9.5.1(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
       '@astrojs/react':
         specifier: ~4.4.2
         version: 4.4.2(@types/node@24.10.1)(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.7.1)
@@ -354,13 +354,13 @@ importers:
         version: link:../../libraries/server
       '@sentry/astro':
         specifier: ~10.26.0
-        version: 10.26.0(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
+        version: 10.26.0(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
       '@spotlightjs/astro':
         specifier: ~3.2.3
-        version: 3.2.6(@sentry/astro@10.26.0(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)))(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
+        version: 3.2.6(@sentry/astro@10.26.0(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)))(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
       astro:
-        specifier: ~5.15.9
-        version: 5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
+        specifier: ~5.16.0
+        version: 5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
       better-sqlite3:
         specifier: ~12.4.1
         version: 12.4.1
@@ -6584,8 +6584,8 @@ packages:
   ast-v8-to-istanbul@0.3.3:
     resolution: {integrity: sha512-MuXMrSLVVoA6sYN/6Hke18vMzrT4TZNbZIj/hvh0fnYFpO+/kFXcLIaiPwXXWaQUPg4yJD8fj+lfJ7/1EBconw==}
 
-  astro@5.15.9:
-    resolution: {integrity: sha512-XLDXxu0282cC/oYHswWZm3johGlRvk9rLRS7pWVWSne+HsZe9JgrpHI+vewAJSSNHBGd1aCyaQOElT5RNGe7IQ==}
+  astro@5.16.0:
+    resolution: {integrity: sha512-GaDRs2Mngpw3dr2vc085GnORh98NiXxwIjg/EoQQQl/icZt3Z7s0BRsYHDZ8swkZbOA6wZsqWJdrNirl+iKcDg==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -9470,6 +9470,9 @@ packages:
   pgpass@1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
 
+  piccolore@0.1.3:
+    resolution: {integrity: sha512-o8bTeDWjE086iwKrROaDf31K0qC/BENdm15/uH9usSC/uZjJOKb2YGiVHfLY4GhwsERiPI1jmwI2XrA7ACOxVw==}
+
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -10860,8 +10863,8 @@ packages:
   unrs-resolver@1.11.1:
     resolution: {integrity: sha512-bSjt9pjaEBnNiGgc9rUiHGKv5l4/TGzDmYw3RhnkJGtLhbnnA/5qJj7x3dNDCRx/PJxu774LlH8lCOlB4hEfKg==}
 
-  unstorage@1.17.2:
-    resolution: {integrity: sha512-cKEsD6iBWJgOMJ6vW1ID/SYuqNf8oN4yqRk8OYqaVQ3nnkJXOT1PSpaMh2QfzLs78UN5kSNRD2c/mgjT8tX7+w==}
+  unstorage@1.17.3:
+    resolution: {integrity: sha512-i+JYyy0DoKmQ3FximTHbGadmIYb8JEpq7lxUjnjeB702bCPum0vzo6oy5Mfu0lpqISw7hCyMW2yj4nWC8bqJ3Q==}
     peerDependencies:
       '@azure/app-configuration': ^1.8.0
       '@azure/cosmos': ^4.2.0
@@ -11605,10 +11608,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@9.5.1(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))':
+  '@astrojs/node@9.5.1(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.7.5
-      astro: 5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
+      astro: 5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
       send: 1.2.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -15738,13 +15741,13 @@ snapshots:
       '@sentry-internal/browser-utils': 10.26.0
       '@sentry/core': 10.26.0
 
-  '@sentry/astro@10.26.0(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))':
+  '@sentry/astro@10.26.0(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))':
     dependencies:
       '@sentry/browser': 10.26.0
       '@sentry/core': 10.26.0
       '@sentry/node': 10.26.0
       '@sentry/vite-plugin': 4.6.0
-      astro: 5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
+      astro: 5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -15997,11 +16000,11 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@spotlightjs/astro@3.2.6(@sentry/astro@10.26.0(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)))(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))':
+  '@spotlightjs/astro@3.2.6(@sentry/astro@10.26.0(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)))(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))':
     dependencies:
-      '@sentry/astro': 10.26.0(astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
+      '@sentry/astro': 10.26.0(astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
       '@spotlightjs/spotlight': 3.0.2
-      astro: 5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
+      astro: 5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -17274,7 +17277,7 @@ snapshots:
       estree-walker: 3.0.3
       js-tokens: 9.0.1
 
-  astro@5.15.9(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1):
+  astro@5.16.0(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.5
@@ -17315,20 +17318,21 @@ snapshots:
       p-limit: 6.2.0
       p-queue: 8.1.1
       package-manager-detector: 1.5.0
-      picocolors: 1.1.1
+      piccolore: 0.1.3
       picomatch: 4.0.3
       prompts: 2.4.2
       rehype: 13.0.2
       semver: 7.7.3
       shiki: 3.15.0
       smol-toml: 1.5.2
+      svgo: 4.0.0
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tsconfck: 3.1.6(typescript@5.9.3)
       ultrahtml: 1.6.0
       unifont: 0.6.0
       unist-util-visit: 5.0.0
-      unstorage: 1.17.2
+      unstorage: 1.17.3
       vfile: 6.0.3
       vite: 6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.7.1)
       vitefu: 1.1.1(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.7.1))
@@ -20914,6 +20918,8 @@ snapshots:
     dependencies:
       split2: 4.2.0
 
+  piccolore@0.1.3: {}
+
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
@@ -22537,7 +22543,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.11.1
       '@unrs/resolver-binding-win32-x64-msvc': 1.11.1
 
-  unstorage@1.17.2:
+  unstorage@1.17.3:
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
