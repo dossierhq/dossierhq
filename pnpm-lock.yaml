@@ -84,7 +84,7 @@ importers:
         version: 0.14.3
       next:
         specifier: 16.0.3
-        version: 16.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.56.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2)
+        version: 16.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.56.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2)
       prismjs:
         specifier: ~1.30.0
         version: 1.30.0
@@ -284,8 +284,8 @@ importers:
         specifier: ~5.1.1
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(sass@1.89.2)(terser@5.44.1)(tsx@4.20.6)(yaml@2.7.1))
       babel-plugin-react-compiler:
-        specifier: rc
-        version: 19.1.0-rc.3
+        specifier: 1.0.0
+        version: 1.0.0
       class-variance-authority:
         specifier: ~0.7.1
         version: 0.7.1
@@ -592,7 +592,7 @@ importers:
         version: 1.9.4
       next:
         specifier: 16.0.3
-        version: 16.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.56.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2)
+        version: 16.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.56.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2)
       react:
         specifier: 19.2.0
         version: 19.2.0
@@ -6625,8 +6625,8 @@ packages:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
     engines: {node: '>=10', npm: '>=6'}
 
-  babel-plugin-react-compiler@19.1.0-rc.3:
-    resolution: {integrity: sha512-mjRn69WuTz4adL0bXGx8Rsyk1086zFJeKmes6aK0xPuK3aaXmDJdLHqwKKMrpm6KAI1MCoUK72d2VeqQbu8YIA==}
+  babel-plugin-react-compiler@1.0.0:
+    resolution: {integrity: sha512-Ixm8tFfoKKIPYdCCKYTsqv+Fd4IJ0DQqMyEimo+pxUOMUR9cVPlwTrFt9Avu+3cb6Zp3mAzl+t1MrG2fxxKsxw==}
 
   babel-preset-current-node-syntax@1.2.0:
     resolution: {integrity: sha512-E/VlAEzRrsLEb2+dv8yp3bo4scof3l9nR4lrld+Iy5NyVqgVYUJnDAmunkhPMisRI32Qc4iRiz425d8vM++2fg==}
@@ -17430,7 +17430,7 @@ snapshots:
       cosmiconfig: 7.1.0
       resolve: 1.22.11
 
-  babel-plugin-react-compiler@19.1.0-rc.3:
+  babel-plugin-react-compiler@1.0.0:
     dependencies:
       '@babel/types': 7.28.5
 
@@ -20542,7 +20542,7 @@ snapshots:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
 
-  next@16.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.56.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2):
+  next@16.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.56.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.89.2):
     dependencies:
       '@next/env': 16.0.3
       '@swc/helpers': 0.5.15
@@ -20562,6 +20562,7 @@ snapshots:
       '@next/swc-win32-x64-msvc': 16.0.3
       '@opentelemetry/api': 1.9.0
       '@playwright/test': 1.56.1
+      babel-plugin-react-compiler: 1.0.0
       sass: 1.89.2
       sharp: 0.34.5
     transitivePeerDependencies:

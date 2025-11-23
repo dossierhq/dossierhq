@@ -37,7 +37,7 @@
     "@types/react-dom": "~19.2.3",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react": "~5.1.1",
-    "babel-plugin-react-compiler": "rc",
+    "babel-plugin-react-compiler": "1.0.0",
     "class-variance-authority": "~0.7.1",
     "clsx": "~2.1.1",
     "eslint": "~9.39.1",
