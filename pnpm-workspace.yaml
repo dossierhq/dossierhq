@@ -4,3 +4,5 @@ packages:
   - "libraries/*"
   - "templates/*"
   - "tools/*"
+
+minimumReleaseAge: 1440
