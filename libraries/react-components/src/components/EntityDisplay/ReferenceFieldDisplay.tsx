@@ -11,11 +11,10 @@ import { usePublishedEntity } from '../../hooks/usePublishedEntity.js';
 import { EntityDisplayActions } from '../../reducers/EntityDisplayReducer/EntityDisplayReducer.js';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-interface Props
-  extends FieldDisplayProps<
-    PublishedReferenceFieldSpecification | PublishedRichTextFieldSpecification,
-    EntityReference
-  > {
+interface Props extends FieldDisplayProps<
+  PublishedReferenceFieldSpecification | PublishedRichTextFieldSpecification,
+  EntityReference
+> {
   className?: string;
 }
 

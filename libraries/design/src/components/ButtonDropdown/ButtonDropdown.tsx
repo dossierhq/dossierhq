@@ -3,8 +3,10 @@ import { Button } from '../Button/Button.js';
 import { Dropdown, type DropdownItem, type DropdownProps } from '../Dropdown/Dropdown.js';
 import type { IconName } from '../Icon/Icon.js';
 
-interface ButtonDropdownProps<TItem extends DropdownItem = DropdownItem>
-  extends Omit<DropdownProps<HTMLButtonElement, TItem>, 'renderTrigger'> {
+interface ButtonDropdownProps<TItem extends DropdownItem = DropdownItem> extends Omit<
+  DropdownProps<HTMLButtonElement, TItem>,
+  'renderTrigger'
+> {
   id?: string;
   className?: string;
   iconLeft?: IconName;

@@ -67,9 +67,9 @@ export function reduceMultipleSelectorState<TItem extends MultipleSelectorItem>(
 
 // Actions
 
-class ClearSelectionAction<TItem extends MultipleSelectorItem>
-  implements MultipleSelectorStateAction<TItem>
-{
+class ClearSelectionAction<
+  TItem extends MultipleSelectorItem,
+> implements MultipleSelectorStateAction<TItem> {
   reduce(state: Readonly<MultipleSelectorState<TItem>>): Readonly<MultipleSelectorState<TItem>> {
     const selectedIds = state.selectedIds.filter((id) => !isItemIdRemovable(state.items, id));
     if (selectedIds.length === state.selectedIds.length) {
@@ -79,9 +79,9 @@ class ClearSelectionAction<TItem extends MultipleSelectorItem>
   }
 }
 
-class SetSelectionAction<TItem extends MultipleSelectorItem>
-  implements MultipleSelectorStateAction<TItem>
-{
+class SetSelectionAction<
+  TItem extends MultipleSelectorItem,
+> implements MultipleSelectorStateAction<TItem> {
   private readonly selectedIds: string[];
 
   constructor(selectedIds: string[]) {
@@ -96,9 +96,9 @@ class SetSelectionAction<TItem extends MultipleSelectorItem>
   }
 }
 
-class ToggleItemAction<TItem extends MultipleSelectorItem>
-  implements MultipleSelectorStateAction<TItem>
-{
+class ToggleItemAction<
+  TItem extends MultipleSelectorItem,
+> implements MultipleSelectorStateAction<TItem> {
   private readonly id: TItem['id'];
 
   constructor(id: TItem['id']) {
@@ -118,9 +118,10 @@ class ToggleItemAction<TItem extends MultipleSelectorItem>
   }
 }
 
-class UpdateItemsAction<TItem extends MultipleSelectorItem<TId>, TId extends string = string>
-  implements MultipleSelectorStateAction<TItem>
-{
+class UpdateItemsAction<
+  TItem extends MultipleSelectorItem<TId>,
+  TId extends string = string,
+> implements MultipleSelectorStateAction<TItem> {
   private readonly items: TItem[];
 
   constructor(items: TItem[]) {

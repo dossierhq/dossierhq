@@ -30,8 +30,8 @@
     "express-jwt": "~8.5.1",
     "jwks-rsa": "~3.2.0",
     "leaflet": "~1.9.4",
-    "react": "~19.2.0",
-    "react-dom": "~19.2.0",
+    "react": "~19.2.3",
+    "react-dom": "~19.2.3",
     "react-router-dom": "~7.9.6"
   },
   "devDependencies": {
