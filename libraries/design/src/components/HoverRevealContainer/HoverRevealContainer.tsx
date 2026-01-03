@@ -23,7 +23,8 @@ interface HoverRevealContainerItemProps extends FlexItemProps, PaddingProps {
 }
 
 /** @public */
-export interface HoverRevealContainerComponent extends FunctionComponent<HoverRevealContainerProps> {
+export interface HoverRevealContainerComponent
+  extends FunctionComponent<HoverRevealContainerProps> {
   Item: FunctionComponent<HoverRevealContainerItemProps>;
 }
 

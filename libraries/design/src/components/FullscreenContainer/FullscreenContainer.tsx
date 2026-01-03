@@ -24,7 +24,11 @@ interface FullscreenContainerProps {
 }
 
 interface FullscreenContainerRowProps
-  extends MarginProps, PaddingProps, GapProps, FlexContainerProps, Pick<SizeProps, 'height'> {
+  extends MarginProps,
+    PaddingProps,
+    GapProps,
+    FlexContainerProps,
+    Pick<SizeProps, 'height'> {
   id?: string;
   center?: boolean;
   fullWidth?: boolean;
@@ -54,7 +58,9 @@ interface FullscreenContainerColumnProps extends PaddingProps, GapProps, FlexCon
 }
 
 interface FullscreenContainerScrollableColumnProps
-  extends PaddingProps, GapProps, FlexContainerProps {
+  extends PaddingProps,
+    GapProps,
+    FlexContainerProps {
   width?: keyof typeof COLUMN_WIDTHS;
   scrollToId?: string;
   scrollToIdSignal?: unknown;
