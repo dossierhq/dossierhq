@@ -54,7 +54,7 @@
     "@dossierhq/typescript-config": "workspace:*",
     "@libsql/client": "~0.15.10",
     "@types/node": "~24.10.1",
-    "eslint": "~9.39.1",
+    "eslint": "~9.39.2",
     "typescript": "~5.9.3",
     "vitest": "~4.0.10"
   }

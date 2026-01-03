@@ -52,7 +52,7 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/node": "~24.10.1",
     "@types/uuid": "~11.0.0",
-    "eslint": "~9.39.1",
+    "eslint": "~9.39.2",
     "tsx": "~4.20.3",
     "typescript": "~5.9.3"
   }
