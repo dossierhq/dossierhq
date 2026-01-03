@@ -18,9 +18,7 @@ jobs:
       - name: Install Playwright Browsers
         run: |
           cd libraries/sql.js-browser-integration-test
-          npx playwright install --with-deps
-          cd ../react-components2
-          npx playwright install --with-deps
+          npx playwright install --with-deps chromium firefox webkit
       - name: build
         run: |
           npx turbo run --filter=@dossierhq/sql.js-browser-integration-test --filter=@dossierhq/react-components2 lint check-types build test test-integration
