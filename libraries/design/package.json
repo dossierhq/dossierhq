@@ -57,10 +57,10 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@storybook/addon-docs": "~10.1.10",
-    "@storybook/addon-links": "~10.1.10",
+    "@storybook/addon-docs": "~10.1.11",
+    "@storybook/addon-links": "~10.1.11",
     "@storybook/preset-scss": "~1.0.3",
-    "@storybook/react-vite": "~10.1.10",
+    "@storybook/react-vite": "~10.1.11",
     "@types/lodash": "~4.17.16",
     "@types/react": "19.2.7",
     "@types/react-dom": "~19.2.3",
@@ -73,7 +73,7 @@
     "react-stately": "~3.43.0",
     "sass": "~1.89.0",
     "sass-loader": "~16.0.5",
-    "storybook": "~10.1.10",
+    "storybook": "~10.1.11",
     "svgo": "~4.0.0",
     "typescript": "~5.9.3",
     "vite": "7.2.2"
