@@ -48,8 +48,9 @@ export interface SchemaChangelogEvent extends EventShared<typeof EventType.updat
   version: number;
 }
 
-export interface EntityChangelogEvent<TEventType extends EntityEventTypes = EntityEventTypes>
-  extends EventShared<TEventType> {
+export interface EntityChangelogEvent<
+  TEventType extends EntityEventTypes = EntityEventTypes,
+> extends EventShared<TEventType> {
   entities: {
     id: string;
     version: number;
@@ -72,13 +73,15 @@ export type SyncEvent =
   | UnarchiveEntitySyncEvent
   | DeleteEntitiesSyncEvent;
 
-interface SyncEventShared<TEventType extends keyof typeof EventType>
-  extends EventShared<TEventType> {
+interface SyncEventShared<
+  TEventType extends keyof typeof EventType,
+> extends EventShared<TEventType> {
   parentId: string | null;
 }
 
-export interface CreatePrincipalSyncEvent
-  extends SyncEventShared<typeof EventType.createPrincipal> {
+export interface CreatePrincipalSyncEvent extends SyncEventShared<
+  typeof EventType.createPrincipal
+> {
   provider: string;
   identifier: string;
 }
@@ -117,8 +120,9 @@ export interface UpdateEntitySyncEvent<
   };
 }
 
-export interface PublishEntitiesSyncEvent
-  extends SyncEventShared<typeof EventType.publishEntities> {
+export interface PublishEntitiesSyncEvent extends SyncEventShared<
+  typeof EventType.publishEntities
+> {
   entities: {
     id: string;
     version: number;
@@ -126,8 +130,9 @@ export interface PublishEntitiesSyncEvent
   }[];
 }
 
-export interface UnpublishEntitiesSyncEvent
-  extends SyncEventShared<typeof EventType.unpublishEntities> {
+export interface UnpublishEntitiesSyncEvent extends SyncEventShared<
+  typeof EventType.unpublishEntities
+> {
   entities: EntityVersionReference[];
 }
 
@@ -135,8 +140,9 @@ export interface ArchiveEntitySyncEvent extends SyncEventShared<typeof EventType
   entity: EntityVersionReference;
 }
 
-export interface UnarchiveEntitySyncEvent
-  extends SyncEventShared<typeof EventType.unarchiveEntity> {
+export interface UnarchiveEntitySyncEvent extends SyncEventShared<
+  typeof EventType.unarchiveEntity
+> {
   entity: EntityVersionReference;
 }
 

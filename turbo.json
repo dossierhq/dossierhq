@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
+  "ui": "stream",
+  "noUpdateNotifier": true,
   "globalDependencies": ["**/.env.*local"],
   "globalEnv": [
     "BASE_URL",

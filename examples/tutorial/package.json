@@ -38,13 +38,13 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.13",
     "@types/body-parser": "~1.19.5",
-    "@types/express": "~5.0.1",
+    "@types/express": "~5.0.6",
     "@types/react": "19.2.7",
     "@types/react-dom": "~19.2.3",
-    "@vitejs/plugin-react": "~5.1.1",
+    "@vitejs/plugin-react": "~5.1.2",
     "concurrently": "~9.2.0",
     "nodemon": "~3.1.11",
     "typescript": "~5.9.3",
-    "vite": "7.2.2"
+    "vite": "7.3.1"
   }
 }

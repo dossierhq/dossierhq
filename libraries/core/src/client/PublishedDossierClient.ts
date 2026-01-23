@@ -45,11 +45,8 @@ export interface PublishedDossierClient<
   TEntity extends PublishedEntity<string, object> = PublishedEntity,
   TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
-  TExceptionClient extends PublishedDossierExceptionClient<
-    TEntity,
-    TComponent,
-    TUniqueIndex
-  > = PublishedDossierExceptionClient<TEntity, TComponent, TUniqueIndex>,
+  TExceptionClient extends PublishedDossierExceptionClient<TEntity, TComponent, TUniqueIndex> =
+    PublishedDossierExceptionClient<TEntity, TComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(): PromiseResult<PublishedSchemaSpecification, typeof ErrorType.Generic>;
 

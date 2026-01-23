@@ -20,10 +20,10 @@
   },
   "devDependencies": {
     "@types/better-sqlite3": "~7.6.13",
-    "@types/node": "~24.10.1",
-    "@vitest/coverage-v8": "~4.0.10",
-    "tsx": "~4.20.3",
+    "@types/node": "~25.0.10",
+    "@vitest/coverage-v8": "~4.0.18",
+    "tsx": "~4.21.0",
     "typescript": "~5.9.3",
-    "vitest": "~4.0.10"
+    "vitest": "~4.0.18"
   }
 }

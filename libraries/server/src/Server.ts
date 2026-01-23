@@ -131,10 +131,8 @@ export interface Server<
   >;
 
   createDossierClient<
-    TClient extends DossierClient<
-      Entity<string, object>,
-      Component<string, object>
-    > = DossierClient,
+    TClient extends DossierClient<Entity<string, object>, Component<string, object>> =
+      DossierClient,
   >(
     context: SessionContext | ContextProvider<SessionContext>,
     middleware?: DossierClientMiddleware<SessionContext>[],
@@ -428,10 +426,8 @@ export async function createServer<
     },
 
     createDossierClient: <
-      TClient extends DossierClient<
-        Entity<string, object>,
-        Component<string, object>
-      > = DossierClient,
+      TClient extends DossierClient<Entity<string, object>, Component<string, object>> =
+        DossierClient,
     >(
       context: SessionContext | ContextProvider<SessionContext>,
       middleware?: DossierClientMiddleware<SessionContext>[],

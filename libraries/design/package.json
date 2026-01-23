@@ -61,10 +61,10 @@
     "@storybook/addon-links": "~10.1.11",
     "@storybook/preset-scss": "~1.0.3",
     "@storybook/react-vite": "~10.1.11",
-    "@types/lodash": "~4.17.16",
+    "@types/lodash": "~4.17.23",
     "@types/react": "19.2.7",
     "@types/react-dom": "~19.2.3",
-    "@vitejs/plugin-react": "~5.1.1",
+    "@vitejs/plugin-react": "~5.1.2",
     "bulma": "~0.9.4",
     "eslint": "~9.39.2",
     "mini-svg-data-uri": "~1.4.4",
@@ -76,6 +76,6 @@
     "storybook": "~10.1.11",
     "svgo": "~4.0.0",
     "typescript": "~5.9.3",
-    "vite": "7.2.2"
+    "vite": "7.3.1"
   }
 }

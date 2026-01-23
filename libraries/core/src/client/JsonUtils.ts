@@ -68,8 +68,10 @@ export interface JsonEntityUpsertPayload extends Omit<EntityUpsertPayload, 'enti
   entity: JsonEntity;
 }
 
-export interface JsonEntityPublishingPayload<TEffect>
-  extends Omit<EntityPublishingPayload<TEffect>, 'updatedAt'> {
+export interface JsonEntityPublishingPayload<TEffect> extends Omit<
+  EntityPublishingPayload<TEffect>,
+  'updatedAt'
+> {
   updatedAt: string;
 }
 

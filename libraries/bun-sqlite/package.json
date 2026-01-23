@@ -33,7 +33,7 @@
     "@dossierhq/integration-test": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/bun": "~1.3.2",
+    "@types/bun": "~1.3.6",
     "eslint": "~9.39.2",
     "typescript": "~5.9.3"
   }

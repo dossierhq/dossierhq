@@ -60,8 +60,10 @@ type FieldValueOrResolver<TContext, TPayload, TArgs = unknown> =
   | Promise<TPayload>
   | ((args: TArgs, context: TContext, info: GraphQLResolveInfo) => TPayload | Promise<TPayload>);
 
-interface ConnectionWithTotalCount<T extends Edge<TContext, unknown>, TContext>
-  extends Connection<TContext, T> {
+interface ConnectionWithTotalCount<T extends Edge<TContext, unknown>, TContext> extends Connection<
+  TContext,
+  T
+> {
   totalCount?: FieldValueOrResolver<TContext, number> | null;
 }
 

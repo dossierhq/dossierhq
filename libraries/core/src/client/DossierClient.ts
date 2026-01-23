@@ -81,11 +81,8 @@ export interface DossierClient<
   TEntity extends Entity<string, object> = Entity,
   TComponent extends Component<string, object> = Component,
   TUniqueIndex extends string = string,
-  TExceptionClient extends DossierExceptionClient<
-    TEntity,
-    TComponent,
-    TUniqueIndex
-  > = DossierExceptionClient<TEntity, TComponent, TUniqueIndex>,
+  TExceptionClient extends DossierExceptionClient<TEntity, TComponent, TUniqueIndex> =
+    DossierExceptionClient<TEntity, TComponent, TUniqueIndex>,
 > {
   getSchemaSpecification(options: {
     includeMigrations: true;

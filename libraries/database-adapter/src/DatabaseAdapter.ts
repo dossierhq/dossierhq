@@ -55,8 +55,7 @@ export interface DatabaseResolvedEntityVersionReference {
   entityVersionInternalId: unknown;
 }
 
-export interface DatabaseAdminEntityArchivingEntityInfoPayload
-  extends DatabaseResolvedEntityVersionReference {
+export interface DatabaseAdminEntityArchivingEntityInfoPayload extends DatabaseResolvedEntityVersionReference {
   authKey: string;
   resolvedAuthKey: string;
   status: EntityStatus;
@@ -88,8 +87,7 @@ export interface DatabaseAdminEntityDeletePayload {
   deletedAt: Date;
 }
 
-export interface DatabaseAdminEntityDeleteGetInfoPayload
-  extends DatabaseResolvedEntityVersionReference {
+export interface DatabaseAdminEntityDeleteGetInfoPayload extends DatabaseResolvedEntityVersionReference {
   entityId: string;
   authKey: string;
   resolvedAuthKey: string;
@@ -123,18 +121,15 @@ export interface DatabaseAdminEntityGetOnePayload extends DatabaseAdminEntityPay
 }
 
 export interface DatabaseAdminEntityWithResolvedReferencePayload
-  extends DatabaseAdminEntityPayload,
-    DatabaseResolvedEntityReference {}
+  extends DatabaseAdminEntityPayload, DatabaseResolvedEntityReference {}
 
-export interface DatabaseAdminEntityGetReferenceEntityInfoPayload
-  extends DatabaseResolvedEntityReference {
+export interface DatabaseAdminEntityGetReferenceEntityInfoPayload extends DatabaseResolvedEntityReference {
   id: string;
   type: string;
   status: EntityStatus;
 }
 
-export interface DatabaseAdminEntityPublishGetVersionInfoPayload
-  extends DatabaseResolvedEntityVersionReference {
+export interface DatabaseAdminEntityPublishGetVersionInfoPayload extends DatabaseResolvedEntityVersionReference {
   versionIsPublished: boolean;
   versionIsLatest: boolean;
   type: string;
@@ -148,15 +143,13 @@ export interface DatabaseAdminEntityPublishGetVersionInfoPayload
   entityFields: DatabaseEntityFieldsPayload;
 }
 
-export interface DatabaseAdminEntityPublishUpdateEntityArg
-  extends DatabaseResolvedEntityVersionReference {
+export interface DatabaseAdminEntityPublishUpdateEntityArg extends DatabaseResolvedEntityVersionReference {
   status: EntityStatus;
   publishedName: string;
   changePublishedName: boolean;
 }
 
-export interface DatabaseAdminEntityPublishUpdateEntityPayload
-  extends DatabaseAdminEntityUpdateStatusPayload {
+export interface DatabaseAdminEntityPublishUpdateEntityPayload extends DatabaseAdminEntityUpdateStatusPayload {
   publishedName: string;
 }
 
@@ -232,8 +225,7 @@ export interface DatabaseAdminEntityUpdateStatusPayload {
   updatedAt: Date;
 }
 
-export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
-  extends DatabaseResolvedEntityVersionReference {
+export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload extends DatabaseResolvedEntityVersionReference {
   id: string;
   authKey: string;
   resolvedAuthKey: string;
@@ -241,8 +233,7 @@ export interface DatabaseAdminEntityUnpublishGetEntityInfoPayload
   updatedAt: Date;
 }
 
-export interface DatabaseAdminEntityUnpublishUpdateEntityPayload
-  extends DatabaseResolvedEntityReference {
+export interface DatabaseAdminEntityUnpublishUpdateEntityPayload extends DatabaseResolvedEntityReference {
   updatedAt: Date;
 }
 
@@ -263,8 +254,7 @@ export type DatabaseAuthGetPrincipalsPayload = DatabaseConnectionPayload<
   }
 >;
 
-export interface DatabaseManagementGetNextDirtyEntityPayload
-  extends DatabaseAdminEntityWithResolvedReferencePayload {
+export interface DatabaseManagementGetNextDirtyEntityPayload extends DatabaseAdminEntityWithResolvedReferencePayload {
   dirtyValidateLatest: boolean;
   dirtyValidatePublished: boolean;
   dirtyIndexLatest: boolean;
@@ -321,8 +311,7 @@ export interface DatabasePublishedEntitySearchPayloadEntity extends DatabasePubl
   cursor: string;
 }
 
-export interface DatabaseEventGetChangelogEventsEntityInfoPayload
-  extends DatabaseResolvedEntityReference {
+export interface DatabaseEventGetChangelogEventsEntityInfoPayload extends DatabaseResolvedEntityReference {
   authKey: string;
   resolvedAuthKey: string;
 }

@@ -270,8 +270,10 @@ export type LegacyComponentTypeSpecification =
  * - field spec validations valueTypes were renamed to componentTypes
  * - migration actions valueType selector was renamed to componentType
  */
-interface Legacy_V0_4_7_SchemaSpecificationWithMigrations
-  extends Omit<SchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes' | 'migrations'> {
+interface Legacy_V0_4_7_SchemaSpecificationWithMigrations extends Omit<
+  SchemaSpecificationWithMigrations,
+  'entityTypes' | 'componentTypes' | 'migrations'
+> {
   entityTypes: (Omit<EntityTypeSpecification, 'publishable' | 'fields'> & {
     adminOnly: boolean;
     fields: Legacy_V0_4_7_FieldSpecification[];
@@ -307,8 +309,10 @@ type Legacy_v0_4_7_SchemaMigrationAction<T extends SchemaMigrationAction = Schem
  * - Entity field type was renamed to Reference
  * - adminOnly in EntityTypeSpecification was renamed to publishable (and inverted)
  */
-interface Legacy_V0_6_2_SchemaSpecificationWithMigrations
-  extends Omit<SchemaSpecificationWithMigrations, 'entityTypes' | 'componentTypes'> {
+interface Legacy_V0_6_2_SchemaSpecificationWithMigrations extends Omit<
+  SchemaSpecificationWithMigrations,
+  'entityTypes' | 'componentTypes'
+> {
   entityTypes: (Omit<EntityTypeSpecification, 'publishable' | 'fields'> & {
     adminOnly: boolean;
     fields: Legacy_V0_6_2_FieldSpecification[];

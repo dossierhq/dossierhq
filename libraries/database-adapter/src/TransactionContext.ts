@@ -12,8 +12,9 @@ export interface DatabasePerformanceCallbacks {
   onRootTransactionCompleted: (duration: number) => void;
 }
 
-export interface TransactionContext<TTransaction extends Transaction = Transaction>
-  extends LoggerContext {
+export interface TransactionContext<
+  TTransaction extends Transaction = Transaction,
+> extends LoggerContext {
   readonly transaction: TTransaction | null;
   databasePerformance: DatabasePerformanceCallbacks | null;
 
@@ -22,9 +23,9 @@ export interface TransactionContext<TTransaction extends Transaction = Transacti
   ): PromiseResult<TOk, TError | typeof ErrorType.Generic>;
 }
 
-export abstract class TransactionContextImpl<TContext extends TransactionContext>
-  implements TransactionContext
-{
+export abstract class TransactionContextImpl<
+  TContext extends TransactionContext,
+> implements TransactionContext {
   readonly #databaseAdapter: DatabaseAdapter;
   readonly logger: Logger;
   readonly transaction: Transaction | null;

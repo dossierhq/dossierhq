@@ -53,9 +53,9 @@
     "@dossierhq/core-vitest": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@vitest/coverage-v8": "~4.0.10",
+    "@vitest/coverage-v8": "~4.0.18",
     "eslint": "~9.39.2",
     "typescript": "~5.9.3",
-    "vitest": "~4.0.10"
+    "vitest": "~4.0.18"
   }
 }
