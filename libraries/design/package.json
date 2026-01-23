@@ -45,8 +45,8 @@
   "dependencies": {
     "@creativebulma/bulma-badge": "~1.0.1",
     "@fortawesome/free-solid-svg-icons": "~7.1.0",
-    "@react-aria/overlays": "~3.30.0",
-    "lodash": "~4.17.21",
+    "@react-aria/overlays": "~3.31.0",
+    "lodash": "~4.17.23",
     "react-aria-components": "~1.14.0",
     "tslib": "~2.8.1"
   },
@@ -62,7 +62,7 @@
     "@storybook/preset-scss": "~1.0.3",
     "@storybook/react-vite": "~10.2.0",
     "@types/lodash": "~4.17.23",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.9",
     "@types/react-dom": "~19.2.3",
     "@vitejs/plugin-react": "~5.1.2",
     "bulma": "~0.9.4",
