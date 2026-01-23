@@ -69,3 +69,4 @@ jspm_packages/
 .turbo
 
 mise.local.toml
+.claude/settings.local.json
