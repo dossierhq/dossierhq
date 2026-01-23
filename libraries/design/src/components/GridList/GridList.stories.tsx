@@ -27,7 +27,7 @@ const meta = {
     ],
     children: (item: Item) => (
       <GridListItem key={item.id} id={item.id} textValue={item.title} marginVertical={1}>
-        {({ allowsDragging }: { allowsDragging: boolean }) => (
+        {({ allowsDragging }: { allowsDragging?: boolean }) => (
           <div>
             {allowsDragging ? <GridListDragHandle /> : null}
             {item.title}
