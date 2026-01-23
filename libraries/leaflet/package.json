@@ -28,13 +28,13 @@
   "scripts": {
     "build": "tsc && cp src/*.css lib/",
     "build:watch": "tsc --watch",
-    "lint": "npm run prettier:check && npm run eslint:check",
+    "lint": "npm run eslint:check",
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "icons:update": "./scripts/generate-icons.js",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",

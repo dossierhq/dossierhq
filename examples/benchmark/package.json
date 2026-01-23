@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "lint": "npm run prettier:check && npm run eslint:check",
+    "lint": "npm run eslint:check",
     "clean": "rm -rf lib/",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
@@ -16,7 +16,7 @@
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
+    "format": "prettier --write .",
     "start": "node lib/run-node-pg.js && node lib/run-node-better-sqlite3.js && bun run lib/run-bun-sqlite.js && deno run --allow-all deno/run-deno-postgres.ts",
     "start:bun-sqlite": "bun run lib/run-bun-sqlite.js",
     "start:deno-postgres": "deno run --allow-all deno/run-deno-postgres.ts",

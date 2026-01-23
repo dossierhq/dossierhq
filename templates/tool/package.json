@@ -7,12 +7,12 @@
   "scripts": {
     "check-types": "tsc",
     "build:watch": "tsc --watch",
-    "lint": "npm run prettier:check && npm run eslint:check",
+    "lint": "npm run eslint:check",
     "clean": "rm -rf lib/",
     "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
+    "format": "prettier --write .",
     "start": "node lib/main.js"
   },
   "dependencies": {

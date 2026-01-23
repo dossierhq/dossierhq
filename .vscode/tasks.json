@@ -58,9 +58,9 @@
       }
     },
     {
-      "label": "prettier:fix",
+      "label": "format",
       "type": "shell",
-      "command": "mise exec -- pnpm prettier:fix",
+      "command": "mise exec -- pnpm format",
       "problemMatcher": [],
       "group": {
         "kind": "build"

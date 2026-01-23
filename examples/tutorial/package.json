@@ -8,11 +8,10 @@
     "start": "concurrently -n be,fe --handle-input 'nodemon --watch \"backend/*\" --exec node backend/main.ts' 'sleep 2 && vite'",
     "dev": "vite",
     "build": "./generate-typescript.ts && tsc && vite build",
-    "lint": "npm run prettier:check",
     "preview": "vite preview",
     "backend": "node backend/main.ts",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@auth0/auth0-react": "~2.8.0",

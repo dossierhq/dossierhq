@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
-    "lint": "npm run prettier:check && npm run eslint:check",
+    "lint": "npm run eslint:check",
     "clean": "rm -rf lib/",
     "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
     "eslint:check": "eslint --max-warnings=0",
@@ -21,7 +21,7 @@
     "examples:timer-benchmark:deno": "if [ -x \"$(command -v gnuplot)\" ]; then deno run --allow-env --allow-run=gnuplot --allow-read --allow-write=output ./lib/examples/timer-benchmark.js; else deno run --allow-env --allow-read --allow-write=output ./lib/examples/timer-benchmark.js; fi",
     "examples:timer-benchmark:node": "node ./lib/examples/timer-benchmark.js",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
+    "format": "prettier --write .",
     "test": "npm run examples:timer-benchmark:bun && npm run examples:timer-benchmark:deno && npm run examples:timer-benchmark:node"
   },
   "dependencies": {

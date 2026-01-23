@@ -7,11 +7,11 @@
   "scripts": {
     "build": "./scripts/generate-typescript.ts && npm run build-app",
     "build-app": "astro build",
-    "lint": "npm run prettier:check && npm run check:with-retry",
+    "lint": "npm run check:with-retry",
     "check:with-retry": "astro check --minimumFailingSeverity warning || astro check --minimumFailingSeverity warning",
     "clean": "rm -rf dist/",
     "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write .",
+    "format": "prettier --write .",
     "start": "astro dev",
     "start:production": "astro preview"
   },

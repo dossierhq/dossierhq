@@ -6,12 +6,12 @@
   "private": true,
   "scripts": {
     "check-types": "deno check -q src/mod.ts",
-    "lint": "deno lint -q && deno fmt --check",
+    "lint": "deno lint -q",
     "db:cli": "./scripts/db-cli.sh",
     "db:clear": "./scripts/db-clear.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload external-dependencies.ts",
-    "format:fix": "deno fmt",
+    "format": "deno fmt",
     "postinstall": "if [ -x \"$(command -v deno)\" ]; then echo deno cache external-dependencies.ts; else echo Deno is not installed; fi",
     "test-integration": "deno test --allow-net=localhost:5432 --allow-read=.env,.env.defaults,.env.example --allow-env"
   },

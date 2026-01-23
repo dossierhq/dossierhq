@@ -49,7 +49,7 @@
       "outputs": [],
       "cache": false
     },
-    "prettier:fix": {
+    "format": {
       "dependsOn": [],
       "outputs": [],
       "cache": true
