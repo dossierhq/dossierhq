@@ -33,7 +33,7 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@tailwindcss/postcss": "^4.1.18",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.9",
     "@types/react-dom": "~19.2.3",
     "@types/sql.js": "~1.4.9",
     "@vitejs/plugin-react": "~5.1.2",
