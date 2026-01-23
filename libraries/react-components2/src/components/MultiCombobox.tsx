@@ -92,11 +92,11 @@ export function MultiCombobox<TItem extends { value: string; label: string }>({
                     return (
                       <CommandItem
                         key={item.value}
-                        onMouseDown={(e) => {
+                        onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
                           e.preventDefault();
                           e.stopPropagation();
                         }}
-                        onSelect={(_value) => {
+                        onSelect={(_value: string) => {
                           setInputValue('');
                           onSelect(item.value);
                         }}

@@ -15,7 +15,7 @@ interface Props {
 export function CreateLinkDialog({ onCreateLink, onCreateEntityLink }: Props) {
   return (
     <Dialog2 width="narrow">
-      {({ close }) => (
+      {({ close }: { close: () => void }) => (
         <FullscreenContainer card height="100%">
           <FullscreenContainer.Row flexDirection="row" alignItems="center">
             <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>

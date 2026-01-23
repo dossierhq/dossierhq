@@ -97,7 +97,7 @@ export function ContentListCommandMenu({
       <CommandInput
         placeholder="Type a command or search..."
         value={state.search}
-        onValueChange={(search) => dispatch(new CommandMenuState_UpdateSearchAction(search))}
+        onValueChange={(search: string) => dispatch(new CommandMenuState_UpdateSearchAction(search))}
       />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>

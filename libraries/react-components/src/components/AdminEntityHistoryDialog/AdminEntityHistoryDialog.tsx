@@ -32,7 +32,7 @@ interface AdminEntityHistoryDialogProps {
 export function AdminEntityHistoryDialog({ reference }: AdminEntityHistoryDialogProps) {
   return (
     <Dialog2 width="wide" height="fill">
-      {({ close }) => (
+      {({ close }: { close: () => void }) => (
         <FullscreenContainer card height="100%">
           <FullscreenContainer.Row flexDirection="row" alignItems="center">
             <FullscreenContainer.Item flexGrow={1} paddingHorizontal={3} paddingVertical={2}>

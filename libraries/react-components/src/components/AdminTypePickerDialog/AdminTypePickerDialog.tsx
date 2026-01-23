@@ -30,7 +30,7 @@ export function AdminTypePickerDialog({
 
   return (
     <Dialog2 width="narrow">
-      {({ close }) => (
+      {({ close }: { close: () => void }) => (
         <Card2>
           <Card2.Header>
             <Card2.HeaderTitle>{title}</Card2.HeaderTitle>

@@ -208,11 +208,11 @@ function SelectableGroup({
         return (
           <CommandItem
             key={item}
-            onMouseDown={(e) => {
+            onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
               e.preventDefault();
               e.stopPropagation();
             }}
-            onSelect={(_value) => {
+            onSelect={(_value: string) => {
               setInputValue('');
               onSelect(item);
             }}
