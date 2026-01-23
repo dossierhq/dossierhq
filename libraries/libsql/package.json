@@ -22,10 +22,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/",
     "db:clear": "rm -f databases/*.sqlite* && rm -rf databases/sqld-*",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",

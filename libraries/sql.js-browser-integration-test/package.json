@@ -6,8 +6,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "lint": "npm run eslint:check",
-    "eslint:check": "eslint --max-warnings=0",
+    "lint": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",

@@ -12,10 +12,9 @@
   "scripts": {
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/",
     "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "examples:timer-benchmark:bun": "bun run ./src/examples/timer-benchmark.ts",
     "examples:timer-benchmark:deno": "if [ -x \"$(command -v gnuplot)\" ]; then deno run --allow-env --allow-run=gnuplot --allow-read --allow-write=output ./lib/examples/timer-benchmark.js; else deno run --allow-env --allow-read --allow-write=output ./lib/examples/timer-benchmark.js; fi",

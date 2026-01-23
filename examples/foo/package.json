@@ -8,9 +8,8 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "check-types:watch": "tsc --watch --noEmit",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",

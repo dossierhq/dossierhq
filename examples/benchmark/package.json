@@ -8,12 +8,11 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
     "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",

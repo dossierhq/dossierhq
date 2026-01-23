@@ -6,10 +6,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsx ./scripts/generate-typescript.ts && tsx ./scripts/sync-database-with-disk.ts && npm run copy-public-resources && npm run build-app && tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "copy-public-resources": "cp node_modules/@antonz/codapi/dist/snippet.js public/codapi-snippet.js && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/prismjs/prism.js public/",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",

@@ -28,9 +28,8 @@
   "scripts": {
     "build": "tsc && cp src/*.css lib/",
     "build:watch": "tsc --watch",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "icons:update": "./scripts/generate-icons.js",
     "prettier:check": "prettier --check .",

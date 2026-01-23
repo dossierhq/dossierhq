@@ -25,9 +25,8 @@
   "scripts": {
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
-    "lint": "npm run eslint:check",
+    "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/ coverage/",
-    "eslint:check": "eslint --max-warnings=0",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",
