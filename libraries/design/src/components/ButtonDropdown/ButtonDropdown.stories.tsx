@@ -16,7 +16,7 @@ const meta = {
       { id: 'two', name: 'Two' },
       { id: 'three', name: 'Three' },
     ],
-    renderItem: (item) => item.name,
+    renderItem: (item: StoryItem) => item.name,
   },
   argTypes: { onItemClick: { action: 'clicked' } },
   parameters: { layout: 'centered' },

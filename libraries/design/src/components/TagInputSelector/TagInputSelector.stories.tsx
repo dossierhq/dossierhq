@@ -34,7 +34,11 @@ const meta = {
       ],
       selectedIds: ['one', 'two', 'three'],
     },
-    itemTag: (item) => ({ tag: item.name, color: item.color, removable: item.removable }),
+    itemTag: (item: StoryItem) => ({
+      tag: item.name,
+      color: item.color,
+      removable: item.removable,
+    }),
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof Wrapper>;

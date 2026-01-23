@@ -1,4 +1,4 @@
-import { control, type Map } from 'leaflet';
+import { control, type LeafletEvent, type LeafletMouseEvent, type Map } from 'leaflet';
 import 'leaflet.locatecontrol';
 import {
   Suspense,
@@ -128,14 +128,14 @@ function MapEventListener({
   const map = useMapEvents({
     ...(onBoundingBoxChanged
       ? {
-          move: (_event) => {
+          move: (_event: LeafletEvent) => {
             onBoundingBoxChanged(getBoundingBox(map));
           },
         }
       : {}),
     ...(onZoomMetricsChanged
       ? {
-          zoom: (_event) => {
+          zoom: (_event: LeafletEvent) => {
             onZoomMetricsChanged(getZoomMetrics(map));
           },
         }
@@ -217,7 +217,7 @@ MapContainer.Marker.displayName = 'MapContainer.Marker';
 
 function EditLocationMarker({ value, onChange }: EditLocationMarkerProps): JSX.Element | null {
   useMapEvents({
-    click: (event) => {
+    click: (event: LeafletMouseEvent) => {
       onChange({
         lat: Math.round(event.latlng.lat * 1e6) / 1e6,
         lng: Math.round(event.latlng.lng * 1e6) / 1e6,

@@ -8,7 +8,7 @@ const meta: Meta<typeof Icon> = {
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   decorators: [
-    (Story) => (
+    (Story: React.ComponentType) => (
       <div style={{ backgroundColor: '#1111' }}>
         <Story />
       </div>
@@ -25,7 +25,7 @@ export const Empty: Story = { args: { icon: null } };
 
 export const TextIcon: Story = {
   decorators: [
-    (Story) => (
+    (Story: React.ComponentType) => (
       <p>
         Icon in
         <Story />

@@ -33,7 +33,7 @@ const meta = {
       ],
       selectedIds: ['one', 'two', 'three'],
     },
-    itemTag: (item) => ({ tag: item.name, color: item.color }),
+    itemTag: (item: StoryItem) => ({ tag: item.name, color: item.color }),
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof Wrapper>;

@@ -30,7 +30,7 @@ const meta = {
         { id: 'three', name: 'Three' },
       ],
     },
-    renderItem: (item) => item.name,
+    renderItem: (item: StoryItem) => item.name,
   },
   parameters: { layout: 'centered' },
   tags: ['autodocs'],

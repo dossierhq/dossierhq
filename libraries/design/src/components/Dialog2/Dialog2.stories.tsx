@@ -53,7 +53,7 @@ function Wrapper({ children, ...args }: StoryProps) {
 
 export const Normal: Story = {
   args: {
-    children: ({ close }) => (
+    children: ({ close }: { close: () => void }) => (
       <Card>
         <Card.Header>
           <Card.HeaderTitle>Card title</Card.HeaderTitle>

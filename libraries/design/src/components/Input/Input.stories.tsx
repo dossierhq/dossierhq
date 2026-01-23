@@ -27,7 +27,7 @@ export const ClickToEdit: Story = {
   args: {
     value: 'Initial value',
     readOnly: true,
-    onClick: (event) => {
+    onClick: (event: React.MouseEvent<HTMLInputElement>) => {
       const newValue = window.prompt('Enter value', event.currentTarget.value);
       if (newValue !== null) {
         event.currentTarget.value = newValue ?? '';
