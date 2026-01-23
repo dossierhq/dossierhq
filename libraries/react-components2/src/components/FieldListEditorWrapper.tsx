@@ -8,8 +8,10 @@ import { useCallback, useMemo, type JSX, type JSXElementConstructor } from 'reac
 import type { FieldEditorProps } from './FieldEditor.js';
 import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 
-interface Props<TFieldSpec extends FieldSpecification, TItem>
-  extends FieldEditorProps<TFieldSpec, (TItem | null)[]> {
+interface Props<TFieldSpec extends FieldSpecification, TItem> extends FieldEditorProps<
+  TFieldSpec,
+  (TItem | null)[]
+> {
   AddButton: JSXElementConstructor<{
     fieldSpec: TFieldSpec;
     onAddItem: (value: TItem | null) => void;

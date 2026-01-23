@@ -2,8 +2,10 @@ import type { FieldSpecification } from '@dossierhq/core';
 import type { JSX, JSXElementConstructor } from 'react';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-interface Props<TFieldSpec extends FieldSpecification, TItem>
-  extends FieldDisplayProps<TFieldSpec, (TItem | null)[]> {
+interface Props<TFieldSpec extends FieldSpecification, TItem> extends FieldDisplayProps<
+  TFieldSpec,
+  (TItem | null)[]
+> {
   Display: JSXElementConstructor<FieldDisplayProps<TFieldSpec, TItem>>;
 }
 

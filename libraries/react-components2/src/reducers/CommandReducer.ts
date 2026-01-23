@@ -36,9 +36,9 @@ export function reduceCommandMenuState<TConfig extends CommandMenuConfig<unknown
   return newState;
 }
 
-export class CommandMenuState_ShowAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_ShowAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   pages: TConfig['page'][];
 
   constructor(pages?: TConfig['page'][]) {
@@ -51,9 +51,9 @@ export class CommandMenuState_ShowAction<TConfig extends CommandMenuConfig<unkno
   }
 }
 
-export class CommandMenuState_ToggleShowAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_ToggleShowAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   show: boolean | undefined;
 
   constructor(show?: boolean) {
@@ -89,9 +89,9 @@ export class CommandMenuState_ToggleShowAction<TConfig extends CommandMenuConfig
   }
 }
 
-export class CommandMenuState_OpenPageAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_OpenPageAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   page: TConfig['page'];
 
   constructor(page: TConfig['page']) {
@@ -108,34 +108,34 @@ export class CommandMenuState_OpenPageAction<TConfig extends CommandMenuConfig<u
   }
 }
 
-export class CommandMenuState_CloseAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_CloseAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   reduce(state: Readonly<CommandMenuState<TConfig>>): Readonly<CommandMenuState<TConfig>> {
     return { ...state, pages: [], currentPage: null };
   }
 }
 
-export class CommandMenuState_CloseAlertAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_CloseAlertAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   reduce(state: Readonly<CommandMenuState<TConfig>>): Readonly<CommandMenuState<TConfig>> {
     return { ...state, alert: null };
   }
 }
 
-export class CommandMenuState_ClosePageAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_ClosePageAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   reduce(state: Readonly<CommandMenuState<TConfig>>): Readonly<CommandMenuState<TConfig>> {
     const pages = state.pages.slice(0, -1);
     return { ...state, pages, currentPage: pages[pages.length - 1] };
   }
 }
 
-export class CommandMenuState_ShowAlertAction<TConfig extends CommandMenuConfig<unknown, unknown>>
-  implements CommandMenuAction<TConfig>
-{
+export class CommandMenuState_ShowAlertAction<
+  TConfig extends CommandMenuConfig<unknown, unknown>,
+> implements CommandMenuAction<TConfig> {
   alert: TConfig['alert'];
 
   constructor(alert: TConfig['alert']) {
@@ -149,8 +149,7 @@ export class CommandMenuState_ShowAlertAction<TConfig extends CommandMenuConfig<
 
 export class CommandMenuState_UpdateSearchAction<
   TConfig extends CommandMenuConfig<unknown, unknown>,
-> implements CommandMenuAction<TConfig>
-{
+> implements CommandMenuAction<TConfig> {
   search: string;
 
   constructor(search: string) {

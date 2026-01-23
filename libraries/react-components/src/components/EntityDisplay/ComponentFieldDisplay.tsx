@@ -9,11 +9,10 @@ import { Fragment, useContext } from 'react';
 import { PublishedDossierContext } from '../../contexts/PublishedDossierContext.js';
 import { FieldDisplay, type FieldDisplayProps } from './FieldDisplay.js';
 
-interface Props
-  extends FieldDisplayProps<
-    PublishedComponentFieldSpecification | PublishedRichTextFieldSpecification,
-    Component
-  > {
+interface Props extends FieldDisplayProps<
+  PublishedComponentFieldSpecification | PublishedRichTextFieldSpecification,
+  Component
+> {
   className?: string;
 }
 

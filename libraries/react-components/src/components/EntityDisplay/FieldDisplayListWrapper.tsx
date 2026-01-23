@@ -3,8 +3,10 @@ import { Column } from '@dossierhq/design';
 import type { JSX } from 'react';
 import type { FieldDisplayProps } from './FieldDisplay.js';
 
-interface Props<TFieldSpec extends PublishedFieldSpecification, TItem>
-  extends FieldDisplayProps<TFieldSpec, TItem[]> {
+interface Props<TFieldSpec extends PublishedFieldSpecification, TItem> extends FieldDisplayProps<
+  TFieldSpec,
+  TItem[]
+> {
   Display: React.JSXElementConstructor<FieldDisplayProps<TFieldSpec, TItem>>;
 }
 

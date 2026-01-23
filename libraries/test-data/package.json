@@ -40,7 +40,6 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@faker-js/faker": "~10.1.0",
     "@types/better-sqlite3": "~7.6.13",
-    "@types/uuid": "~11.0.0",
     "better-sqlite3": "~12.4.1",
     "cloudinary": "~2.8.0",
     "dotenv": "~17.2.1",
