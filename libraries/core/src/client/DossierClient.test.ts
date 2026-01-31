@@ -114,6 +114,7 @@ function createDummyEntity(changes: {
 }
 
 describe('Custom Entity types', () => {
+  // eslint-disable-next-line vitest/expect-expect -- type checking test
   test('FooEntity creation', async () => {
     const client = createBaseDossierClient({
       context: { logger: NoOpLogger },
@@ -134,6 +135,7 @@ describe('Custom Entity types', () => {
     const _fooEntity: FooEntity = fooCreatePayload.entity;
   });
 
+  // eslint-disable-next-line vitest/expect-expect -- type checking test
   test('FooEntity update', async () => {
     const client = createBaseDossierClient({
       context: { logger: NoOpLogger },
@@ -155,6 +157,7 @@ describe('Custom Entity types', () => {
     const _fooEntity: FooEntity = fooUpdatePayload.entity;
   });
 
+  // eslint-disable-next-line vitest/expect-expect -- type checking test
   test('FooEntity upsert', async () => {
     const client = createBaseDossierClient({
       context: { logger: NoOpLogger },

@@ -17,6 +17,7 @@ import {
 } from './ContentTypeUtils.js';
 
 describe('isRichTextXxxNode', () => {
+  // eslint-disable-next-line vitest/expect-expect -- type checking test
   test('all', () => {
     // checking that all the 'leaf' types are covered and are distinct
     const node: RichTextNode = { type: 'any', version: 1 };
