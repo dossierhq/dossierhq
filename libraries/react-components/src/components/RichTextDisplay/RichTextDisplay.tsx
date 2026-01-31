@@ -9,7 +9,7 @@ import { LinkNode } from '@lexical/link';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer.js';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable.js';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary.js';
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary.js';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.js';
 import { HeadingNode } from '@lexical/rich-text';
 import type { LexicalEditor } from 'lexical';
