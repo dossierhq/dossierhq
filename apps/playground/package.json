@@ -9,6 +9,7 @@
     "build": "./scripts/sync-dossier-docs-database.sh && vite build",
     "check-types": "tsc",
     "lint": "eslint --max-warnings=0",
+    "lint:staged": "lint-staged",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",
@@ -46,5 +47,11 @@
     "tsx": "~4.21.0",
     "typescript": "~5.9.3",
     "vite": "7.3.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ]
   }
 }

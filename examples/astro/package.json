@@ -8,6 +8,7 @@
     "build": "./scripts/generate-typescript.ts && npm run build-app",
     "build-app": "astro build",
     "lint": "npm run check:with-retry",
+    "lint:staged": "lint-staged",
     "check:with-retry": "astro check --minimumFailingSeverity warning || astro check --minimumFailingSeverity warning",
     "clean": "rm -rf dist/",
     "prettier:check": "prettier --check .",
@@ -41,5 +42,11 @@
     "@types/react": "19.2.9",
     "rollup-plugin-visualizer": "~6.0.1",
     "typescript": "~5.9.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ]
   }
 }

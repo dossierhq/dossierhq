@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --max-warnings=0",
+    "lint:staged": "lint-staged",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "format": "prettier --write .",
@@ -33,5 +34,11 @@
     "eslint": "~9.39.2",
     "sql.js": "~1.13.0",
     "typescript": "~5.9.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ]
   }
 }

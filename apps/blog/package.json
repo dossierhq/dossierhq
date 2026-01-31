@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsx ./scripts/generate-typescript.ts && tsx ./scripts/sync-database-with-disk.ts && npm run copy-public-resources && npm run build-app && tsx --tsconfig ./tsconfig.tsx.json ./scripts/generate-atom-xml.tsx",
     "lint": "eslint --max-warnings=0",
+    "lint:staged": "lint-staged",
     "clean": "rm -rf .next/ && rm -f blog.build.log tsconfig.tsbuildinfo",
     "copy-public-resources": "cp node_modules/@antonz/codapi/dist/snippet.js public/codapi-snippet.js && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/codejar/dist/codejar.js public/ && cp node_modules/prismjs/prism.js public/",
     "eslint:fix": "eslint --fix .",
@@ -52,5 +53,11 @@
     "tsx": "~4.21.0",
     "typescript": "~5.9.3",
     "vitest": "~4.0.18"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ]
   }
 }

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Check if mise is available and use it
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate bash --shims)"
+fi
+
+# Get the pnpm command
+PNPM=$(command -v pnpm)
+
+# Run lint:staged task with Turbo (one workspace at a time)
+$PNPM turbo --concurrency=1 lint:staged
+
+# Run root-level lint-staged for config files
+$PNPM -w lint:staged

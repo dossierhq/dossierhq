@@ -27,6 +27,7 @@
     "build:watch": "tsc --watch",
     "build-storybook": "storybook build --quiet",
     "lint": "eslint --max-warnings=0",
+    "lint:staged": "lint-staged",
     "clean": "rm -rf lib/",
     "chromatic": "chromatic",
     "eslint:fix": "eslint --fix .",
@@ -113,5 +114,12 @@
     "vite": "7.3.1",
     "vitest": "~4.0.18",
     "wait-on": "~9.0.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "*.css": "prettier --write"
   }
 }

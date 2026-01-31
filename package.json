@@ -13,6 +13,8 @@
     "db:clear": "turbo run --no-cache --concurrency=1 db:clear",
     "check-types": "turbo check-types",
     "lint": "turbo lint",
+    "lint:staged": "lint-staged",
+    "prepare": "husky",
     "test": "turbo test",
     "start": "turbo start",
     "test:watch": "turbo test:watch",
@@ -35,10 +37,15 @@
     "@changesets/cli": "^2.29.8",
     "@ianvs/prettier-plugin-sort-imports": "~4.7.0",
     "@types/node": "~25.0.10",
+    "husky": "^9.1.7",
     "knip": "^5.82.1",
+    "lint-staged": "^16.2.7",
     "prettier": "3.8.1",
     "turbo": "^2.7.5",
     "typescript": "~5.9.3"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.28.2",
+  "lint-staged": {
+    "*.{json,md,yml,yaml}": "prettier --write"
+  }
 }

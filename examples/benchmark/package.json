@@ -9,6 +9,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "eslint --max-warnings=0",
+    "lint:staged": "lint-staged",
     "clean": "rm -rf lib/",
     "db:cli": "./scripts/db-cli.sh",
     "db:migrate": "./scripts/db-migrate.sh",
@@ -48,5 +49,11 @@
     "@types/pg": "~8.16.0",
     "eslint": "~9.39.2",
     "typescript": "~5.9.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ]
   }
 }
