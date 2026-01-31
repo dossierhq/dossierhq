@@ -8,22 +8,22 @@ export default function GraphiQLPage(): JSX.Element {
   const src = `<html>
     <head>
       <title>GraphiQL</title>
-      <link href="https://esm.sh/graphiql@4.0.0/dist/style.css" rel="stylesheet" />
+      <link href="https://esm.sh/graphiql@5.2.2/dist/style.css" rel="stylesheet" />
       <script type="importmap">
       {
         "imports": {
-          "react": "https://esm.sh/react@19.1.0",
-          "react/jsx-runtime": "https://esm.sh/react@19.1.0/jsx-runtime",
+          "react": "https://esm.sh/react@19.2.3",
+          "react/jsx-runtime": "https://esm.sh/react@19.2.3/jsx-runtime",
 
-          "react-dom": "https://esm.sh/react-dom@19.1.0",
-          "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
+          "react-dom": "https://esm.sh/react-dom@19.2.3",
+          "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
 
-          "graphiql": "https://esm.sh/graphiql@4.0.0?standalone&external=react,react/jsx-runtime,react-dom,@graphiql/react",
-          "@graphiql/plugin-explorer": "https://esm.sh/@graphiql/plugin-explorer@4.0.0?standalone&external=react,react/jsx-runtime,react-dom,@graphiql/react,graphql",
-          "@graphiql/react": "https://esm.sh/@graphiql/react@0.30.0?standalone&external=react,react/jsx-runtime,react-dom,graphql,@graphiql/toolkit",
+          "graphiql": "https://esm.sh/graphiql@5.2.2?standalone&external=react,react/jsx-runtime,react-dom,@graphiql/react",
+          "@graphiql/plugin-explorer": "https://esm.sh/@graphiql/plugin-explorer@5.2.2?standalone&external=react,react/jsx-runtime,react-dom,@graphiql/react,graphql",
+          "@graphiql/react": "https://esm.sh/@graphiql/react@1.4.0?standalone&external=react,react/jsx-runtime,react-dom,graphql,@graphiql/toolkit",
 
           "@graphiql/toolkit": "https://esm.sh/@graphiql/toolkit@0.11.2?standalone&external=graphql",
-          "graphql": "https://esm.sh/graphql@16.11.0"
+          "graphql": "https://esm.sh/graphql@16.12.0"
         }
       }
     </script>
@@ -35,6 +35,16 @@ export default function GraphiQLPage(): JSX.Element {
       import { GraphiQL } from 'graphiql';
       import { createGraphiQLFetcher } from '@graphiql/toolkit';
       import { explorerPlugin } from '@graphiql/plugin-explorer';
+
+      // Configure Monaco Editor workers
+      window.MonacoEnvironment = {
+        getWorker(_workerId, label) {
+          const workerUrl = label === 'json'
+            ? 'https://esm.sh/monaco-editor@0.52.2/esm/vs/language/json/json.worker.js?worker'
+            : 'https://esm.sh/monaco-editor@0.52.2/esm/vs/editor/editor.worker.js?worker';
+          return new Worker(workerUrl, { type: 'module' });
+        }
+      };
 
       const fetcher = createGraphiQLFetcher({
         url: '${process.env.NEXT_PUBLIC_API_BASE_URL}/graphql',

@@ -7,6 +7,28 @@ import 'graphiql/style.css';
 import { graphql } from 'graphql';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
+// Setup Monaco Editor workers for Vite
+if (!window.MonacoEnvironment) {
+  window.MonacoEnvironment = {
+    getWorker(_workerId: string, label: string) {
+      const getWorkerModule = (moduleUrl: string) => {
+        return new Worker(new URL(moduleUrl, import.meta.url), {
+          type: 'module',
+        });
+      };
+
+      switch (label) {
+        case 'json':
+          return getWorkerModule('monaco-editor/esm/vs/language/json/json.worker.js');
+        case 'graphql':
+          return getWorkerModule('monaco-graphql/esm/graphql.worker.js');
+        default:
+          return getWorkerModule('monaco-editor/esm/vs/editor/editor.worker.js');
+      }
+    },
+  };
+}
+
 const DEFAULT_QUERY = `# Welcome to GraphiQL
 #
 # GraphiQL is an in-browser tool for writing, validating, and
