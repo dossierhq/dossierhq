@@ -84,7 +84,6 @@
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/test-data": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@playwright/test": "~1.57.0",
     "@storybook/addon-docs": "~10.2.0",
     "@storybook/addon-links": "~10.2.0",
     "@storybook/react-vite": "~10.2.0",

@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreDependencies": ["tslib"],
-  "ignoreBinaries": ["concurrently", "magenta,blue", "mise", "playwright"],
+  "ignoreBinaries": ["concurrently", "http-server", "magenta,blue", "mise", "playwright", "storybook-static", "wait-on"],
   "workspaces": {
     "apps/blog": {
       "entry": ["utils/SchemaTypes.ts"],
@@ -10,14 +10,12 @@
     "apps/playground2": {
       "postcss": true,
       "ignoreDependencies": [
-        "babel-plugin-react-compiler",
         "postcss",
-        "tailwindcss",
-        "tailwindcss-animate",
       ],
     },
     "examples/astro": {
       "entry": ["src/generated/SchemaTypes.ts"],
+      "ignoreDependencies": ["hono"],
     },
     "examples/benchmark": {
       "entry": [
@@ -52,6 +50,7 @@
     },
     "examples/tutorial": {
       "entry": ["src/main.tsx", "src/SchemaTypes.ts"],
+      "ignoreBinaries": ["sleep"],
       "ignoreDependencies": ["nodemon"],
     },
     "libraries/benchpress": {},
@@ -69,9 +68,6 @@
     },
     "libraries/design": {
       "ignoreDependencies": [
-        "@creativebulma/bulma-badge",
-        "@storybook/blocks",
-        "bulma",
       ],
       "entry": ["src/stories/*.mdx", "src/stories/*.tsx"],
     },
@@ -83,6 +79,8 @@
     "libraries/leaflet": {
       "entry": ["scripts/*.js"],
     },
+    "libraries/libsql": {
+    "ignoreBinaries": ["test/integration/sqld"]},
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
       "entry": [
@@ -96,9 +94,6 @@
     "libraries/react-components2": {
       "ignoreDependencies": [
         "concurrently",
-        "leaflet",
-        "tailwindcss-animate",
-        "tailwindcss",
         "wait-on",
       ],
     },
