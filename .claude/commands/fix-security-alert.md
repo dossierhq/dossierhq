@@ -90,6 +90,8 @@ Note: We use `minimumReleaseAge` which means that we sometimes can't install the
 2. Verify with `pnpm audit` - should show 0 vulnerabilities (or at least the specific one is resolved)
 3. Verify the new version: `grep "dependency@" pnpm-lock.yaml`
 4. Run `pnpm -w build` to ensure no regressions
+5. Run `pnpm -w check-types` to verify type safety
+6. Run `pnpm -w lint` to ensure code quality (must pass with 0 warnings)
 
 ### Note
 

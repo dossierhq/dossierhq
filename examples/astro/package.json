@@ -30,6 +30,7 @@
     "@spotlightjs/astro": "~3.2.3",
     "astro": "~5.16.14",
     "better-sqlite3": "~12.6.2",
+    "hono": "4.11.7",
     "leaflet": "~1.9.4",
     "react": "~19.2.3",
     "react-dom": "~19.2.3"
