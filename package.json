@@ -11,6 +11,7 @@
     "build:no-integration": "turbo run lint check-types build test",
     "build:no-cache": "turbo run lint check-types build test test-integration --no-cache --force",
     "db:clear": "turbo run --no-cache --concurrency=1 db:clear",
+    "check-types": "turbo check-types",
     "lint": "turbo lint",
     "test": "turbo test",
     "start": "turbo start",
