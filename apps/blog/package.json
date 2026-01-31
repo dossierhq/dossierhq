@@ -33,7 +33,7 @@
     "better-sqlite3": "~12.6.2",
     "codejar": "~4.3.0",
     "leaflet": "~1.9.4",
-    "lexical": "0.28.0",
+    "lexical": "0.33.1",
     "next": "16.1.4",
     "prismjs": "~1.30.0",
     "react": "19.2.3",
