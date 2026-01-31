@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Mapping of Lexical playground files to local copies and auto-discovery configuration",
+  "auto-discover": {
+    "enabled": true,
+    "description": "Automatically discover files importing from @lexical packages",
+    "patterns": [
+      "libraries/react-components/src/**/*.{ts,tsx}",
+      "apps/blog/src/**/*.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      "**/*.test.tsx",
+      "**/*.spec.tsx",
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/dist/**",
+      "**/build/**"
+    ],
+    "importPatterns": [
+      "from\\s+['\"]@lexical/",
+      "from\\s+['\"]lexical['\"]"
+    ]
+  },
+  "tracked-files": [
+    {
+      "playground": "packages/lexical-playground/src/utils/getSelectedNode.ts",
+      "local": "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts",
+      "syncType": "exact-copy",
+      "note": "Used in ToolbarPlugin.tsx for determining selected node"
+    },
+    {
+      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPlugin/index.ts",
+      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
+      "syncType": "manual-review",
+      "note": "Adapted version - review changes manually, don't auto-apply"
+    }
+  ],
+  "custom-nodes": {
+    "description": "Custom Lexical nodes that need validation after upgrades",
+    "editor-nodes": [
+      {
+        "path": "libraries/react-components/src/components/RichTextEditor/AdminEntityLinkNode.tsx",
+        "type": "EntityLinkNode",
+        "baseClass": "ElementNode",
+        "note": "Editor version - handles admin entity links"
+      },
+      {
+        "path": "libraries/react-components/src/components/RichTextEditor/AdminEntityNode.tsx",
+        "type": "EntityNode",
+        "baseClass": "DecoratorNode",
+        "note": "Editor version - renders admin entities"
+      },
+      {
+        "path": "libraries/react-components/src/components/RichTextEditor/AdminComponentNode.tsx",
+        "type": "ComponentNode",
+        "baseClass": "DecoratorNode",
+        "note": "Editor version - renders admin components"
+      }
+    ],
+    "display-nodes": [
+      {
+        "path": "libraries/react-components/src/components/RichTextDisplay/PublishedEntityLinkNode.tsx",
+        "type": "EntityLinkNode",
+        "baseClass": "ElementNode",
+        "note": "Display version - read-only entity links"
+      },
+      {
+        "path": "libraries/react-components/src/components/RichTextDisplay/PublishedEntityNode.tsx",
+        "type": "EntityNode",
+        "baseClass": "DecoratorNode",
+        "note": "Display version - read-only entities"
+      },
+      {
+        "path": "libraries/react-components/src/components/RichTextDisplay/PublishedComponentNode.tsx",
+        "type": "ComponentNode",
+        "baseClass": "DecoratorNode",
+        "note": "Display version - read-only components"
+      }
+    ],
+    "validation": {
+      "requiredMethods": [
+        {
+          "name": "getType",
+          "signature": "static override getType(): string",
+          "required": true
+        },
+        {
+          "name": "clone",
+          "signature": "static override clone(node: ThisType): ThisType",
+          "required": true
+        },
+        {
+          "name": "importJSON",
+          "signature": "static override importJSON(serialized: SerializedType): ThisType",
+          "required": true
+        },
+        {
+          "name": "exportJSON",
+          "signature": "override exportJSON(): SerializedType",
+          "required": true
+        },
+        {
+          "name": "createDOM",
+          "signature": "override createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement",
+          "required": true
+        }
+      ],
+      "optionalMethods": [
+        {
+          "name": "afterCloneFrom",
+          "signature": "override afterCloneFrom(prevNode: this): void",
+          "introducedIn": "0.33.1",
+          "note": "Recommended if node has instance-specific state"
+        },
+        {
+          "name": "updateDOM",
+          "signature": "override updateDOM(prevNode: ThisType, dom: HTMLElement, config: EditorConfig): boolean",
+          "note": "Required if DOM needs updates when node changes"
+        }
+      ]
+    }
+  },
+  "known-file-groups": {
+    "description": "Common file patterns discovered in codebase analysis",
+    "main-components": [
+      "libraries/react-components/src/components/RichTextEditor/RichTextEditor.tsx",
+      "libraries/react-components/src/components/RichTextDisplay/RichTextDisplay.tsx"
+    ],
+    "plugins": [
+      "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
+      "libraries/react-components/src/components/RichTextEditor/ToolbarPlugin.tsx",
+      "libraries/react-components/src/components/RichTextEditor/LinkPlugin.tsx",
+      "libraries/react-components/src/components/RichTextEditor/ListMaxIndentLevelPlugin.tsx",
+      "libraries/react-components/src/components/RichTextEditor/AutoLinkPlugin.tsx"
+    ],
+    "utilities": [
+      "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts"
+    ]
+  },
+  "files": [
+    {
+      "playground": "packages/lexical-playground/src/utils/getSelectedNode.ts",
+      "local": "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts",
+      "syncType": "exact-copy",
+      "note": "Used in ToolbarPlugin.tsx for determining selected node"
+    },
+    {
+      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPlugin/index.ts",
+      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
+      "syncType": "manual-review",
+      "note": "Adapted version - review changes manually, don't auto-apply"
+    }
+  ]
+}
