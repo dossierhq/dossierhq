@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   pnpm-dedupe:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
@@ -52,7 +52,7 @@ jobs:
           labels: dependencies
 
   mise-tool-updates:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     # Only run weekly on Tuesday at 3 AM UTC
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 3 * * 2')
     timeout-minutes: 10
