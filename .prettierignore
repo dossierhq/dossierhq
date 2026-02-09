@@ -1,1 +1,6 @@
+apps/
+examples/
+libraries/
+templates/
+tools/
 pnpm-lock.yaml

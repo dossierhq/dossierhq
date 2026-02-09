@@ -181,6 +181,7 @@ This skill automates the incremental upgrade of Lexical dependencies while synch
 26. Show git diff of staged changes for review
 
 27. Create commit with message following repo conventions:
+
     ```
     chore(lexical): Upgrade from {old} to {new}
 
@@ -258,9 +259,10 @@ When auto-detecting the next version:
 
 ## Data Files
 
-
 ### file-mapping.json
+
 Enhanced configuration file with:
+
 - **tracked-files**: Playground files to sync (backwards compatible with old format)
 - **auto-discover**: Patterns for finding all Lexical-related files
 - **custom-nodes**: List of custom node classes with metadata

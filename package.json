@@ -27,7 +27,7 @@
     "deps:update-interactive": "pnpm update -r -i --latest",
     "tools:update": "mise up --bump",
     "knip": "knip",
-    "format": "turbo format"
+    "format": "turbo format && prettier --write ."
   },
   "repository": {
     "type": "git",

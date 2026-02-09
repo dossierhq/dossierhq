@@ -18,10 +18,7 @@
       "**/dist/**",
       "**/build/**"
     ],
-    "importPatterns": [
-      "from\\s+['\"]@lexical/",
-      "from\\s+['\"]lexical['\"]"
-    ]
+    "importPatterns": ["from\\s+['\"]@lexical/", "from\\s+['\"]lexical['\"]"]
   },
   "tracked-files": [
     {

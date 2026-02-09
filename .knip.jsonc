@@ -1,7 +1,15 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreDependencies": ["tslib"],
-  "ignoreBinaries": ["concurrently", "http-server", "magenta,blue", "mise", "playwright", "storybook-static", "wait-on"],
+  "ignoreBinaries": [
+    "concurrently",
+    "http-server",
+    "magenta,blue",
+    "mise",
+    "playwright",
+    "storybook-static",
+    "wait-on",
+  ],
   "workspaces": {
     "apps/blog": {
       "entry": ["utils/SchemaTypes.ts"],
@@ -9,9 +17,7 @@
     },
     "apps/playground2": {
       "postcss": true,
-      "ignoreDependencies": [
-        "postcss",
-      ],
+      "ignoreDependencies": ["postcss"],
     },
     "examples/astro": {
       "entry": ["src/generated/SchemaTypes.ts"],
@@ -67,8 +73,7 @@
       ],
     },
     "libraries/design": {
-      "ignoreDependencies": [
-      ],
+      "ignoreDependencies": [],
       "entry": ["src/stories/*.mdx", "src/stories/*.tsx"],
     },
     "libraries/eslint-config": {
@@ -80,7 +85,8 @@
       "entry": ["scripts/*.js"],
     },
     "libraries/libsql": {
-    "ignoreBinaries": ["test/integration/sqld"]},
+      "ignoreBinaries": ["test/integration/sqld"],
+    },
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
       "entry": [
@@ -92,10 +98,7 @@
       "ignoreDependencies": ["@dossierhq/test-data"],
     },
     "libraries/react-components2": {
-      "ignoreDependencies": [
-        "concurrently",
-        "wait-on",
-      ],
+      "ignoreDependencies": ["concurrently", "wait-on"],
     },
     "libraries/test-data": {
       "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],
