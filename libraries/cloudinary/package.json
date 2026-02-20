@@ -50,7 +50,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/react": "19.2.13",
+    "@types/react": "19.2.14",
     "eslint": "~9.39.2",
     "react": "~19.2.4",
     "typescript": "~5.9.3"
