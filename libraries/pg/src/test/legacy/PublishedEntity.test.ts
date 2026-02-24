@@ -442,8 +442,10 @@ describe('getEntitiesTotalCount', () => {
       const totalResult = await publishedClient.getEntitiesTotalCount({ boundingBox });
       if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
         // Hopefully there aren't too many entities in the bounding box
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(totalResult.value).toBe(searchResult.value?.edges.length);
       }
     }

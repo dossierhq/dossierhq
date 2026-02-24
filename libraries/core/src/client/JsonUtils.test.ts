@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { ErrorType, notOk, ok } from '../ErrorResult.js';
+import { assertOkResult, ErrorType, notOk, ok } from '../ErrorResult.js';
 import { EventType, SchemaWithMigrations, type UpdateSchemaSyncEvent } from '../index.js';
-import { expectErrorResult, expectOkResult } from '../test/CoreTestUtils.js';
+import { expectErrorResult } from '../test/CoreTestUtils.js';
 import type { Connection, Edge } from '../Types.js';
 import {
   convertJsonConnection,
@@ -76,18 +76,16 @@ describe('convertJsonResult()', () => {
     const expected = ok({ foo: 123 });
     const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<{ foo: number }, ErrorType>;
     const converted = convertJsonResult(asJson);
-    if (expectOkResult(converted)) {
-      expect(converted).toEqual(expected);
-    }
+    assertOkResult(converted);
+    expect(converted).toEqual(expected);
   });
 
   test('ok(null)', () => {
     const expected = ok(null);
     const asJson = JSON.parse(JSON.stringify(expected)) as JsonResult<null, ErrorType>;
     const converted = convertJsonResult(asJson);
-    if (expectOkResult(converted)) {
-      expect(converted).toEqual(expected);
-    }
+    assertOkResult(converted);
+    expect(converted).toEqual(expected);
   });
 
   test('notOk', () => {

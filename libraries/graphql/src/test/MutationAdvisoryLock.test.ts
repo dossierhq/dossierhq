@@ -104,6 +104,7 @@ describe('acquireAdvisoryLock()', () => {
         variableValues: { name: 'Already locked', leaseDuration: 123 },
       });
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -132,8 +133,11 @@ describe('renewAdvisoryLock()', () => {
         variableValues: { name, handle },
       })) as RenewAdvisoryLockResult;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.errors).toBeUndefined();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data).toBeDefined();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data!.renewAdvisoryLock).toEqual({ name, handle });
     }
   });
@@ -173,8 +177,11 @@ describe('releaseAdvisoryLock()', () => {
         variableValues: { name, handle },
       })) as ReleaseAdvisoryLockResult;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.errors).toBeUndefined();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data).toBeDefined();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data!.releaseAdvisoryLock).toEqual({ name });
     }
   });

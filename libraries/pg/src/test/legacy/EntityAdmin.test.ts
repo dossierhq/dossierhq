@@ -351,7 +351,9 @@ describe('createEntity()', () => {
           info: { name, createdAt, updatedAt },
         },
       } = createResult.value;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(validateUuid(id)).toBeTruthy();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(name).toMatch(/^Foo(#[0-9]+)?$/);
 
       const expectedEntity: Entity = {
@@ -425,6 +427,7 @@ describe('createEntity()', () => {
           info: { name, createdAt, updatedAt },
         },
       } = createResult.value;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(validateUuid(id)).toBeTruthy();
 
       expectResultValue(createResult, {
@@ -513,6 +516,7 @@ describe('createEntity()', () => {
           fields: { title },
         },
       } = createResult.value;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(title).toBe(null);
     }
   });
@@ -575,6 +579,7 @@ describe('createEntity()', () => {
             info: { name, createdAt, updatedAt },
           },
         } = createFooResult.value;
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(validateUuid(fooId)).toBeTruthy();
 
         const expectedFooEntity: Entity = {
@@ -1179,6 +1184,7 @@ describe('createEntity()', () => {
           linksTo: { id: bar1Id },
         });
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(
           bar1References.isOk() &&
             bar1References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null)),
@@ -1188,6 +1194,7 @@ describe('createEntity()', () => {
           linksTo: { id: bar2Id },
         });
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(
           bar2References.isOk() &&
             bar2References.value?.edges.map((x) => (x.node.isOk() ? x.node.value.id : null)),
@@ -1675,6 +1682,7 @@ describe('getEntitiesTotalCount', () => {
       linksTo: { id: barId },
     });
     if (expectOkResult(result)) {
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.value).toBe(1);
     }
   });
@@ -1701,8 +1709,10 @@ describe('getEntitiesTotalCount', () => {
       const totalResult = await client.getEntitiesTotalCount({ boundingBox });
       if (expectOkResult(searchResult) && expectOkResult(totalResult)) {
         // Hopefully there aren't too many entities in the bounding box
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(searchResult.value?.pageInfo.hasNextPage).toBeFalsy();
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(totalResult.value).toBe(searchResult.value?.edges.length);
       }
     }
@@ -1724,6 +1734,7 @@ describe('getEntitiesTotalCount', () => {
         text: 'sensational clown',
       });
       if (expectOkResult(resultAfter)) {
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(resultAfter.value).toBe(resultBefore.value + 1);
       }
     }
@@ -1779,6 +1790,7 @@ describe('updateEntity()', () => {
           info: { name },
         },
       } = updateResult.value;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
       expectedEntity.info.name = name;
@@ -1903,6 +1915,7 @@ describe('updateEntity()', () => {
             info: { name },
           },
         } = updateResult.value;
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
         expectedEntity.info.name = name;
@@ -1931,6 +1944,7 @@ describe('updateEntity()', () => {
 
         const publishedResult = await publishedClient.getEntity({ id });
         const publishedName = publishedResult.valueOrThrow().info.name;
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(isEntityNameAsRequested(publishedName, 'First')).toBeTruthy();
         expectResultValue(publishedResult, {
           id,
@@ -2222,6 +2236,7 @@ describe('updateEntity()', () => {
           },
         } = updateResult.value;
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(title).toBe(null);
       }
     }
@@ -2740,6 +2755,7 @@ describe('upsertEntity()', () => {
 
     const createResult = await client.upsertEntity(upsertEntity);
     if (expectOkResult(createResult)) {
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(createResult.value.effect).toBe('created');
 
       const updateResult = await client.upsertEntity(upsertEntity);

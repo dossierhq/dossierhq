@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import {
+  assertOkResult,
   createErrorResult,
   createErrorResultFromError,
   ErrorType,
@@ -7,7 +8,7 @@ import {
   ok,
   type Result,
 } from './ErrorResult.js';
-import { expectErrorResult, expectOkResult } from './test/CoreTestUtils.js';
+import { expectErrorResult } from './test/CoreTestUtils.js';
 import { createMockLogger } from './test/MockLogger.js';
 
 describe('createErrorResultFromError()', () => {
@@ -113,9 +114,8 @@ describe('OkResult', () => {
     const mappedResult: Result<string, typeof ErrorType.Conflict> = result.map((value) =>
       String(value),
     );
-    if (expectOkResult(mappedResult)) {
-      expect(mappedResult.value).toBe('123');
-    }
+    assertOkResult(mappedResult);
+    expect(mappedResult.value).toBe('123');
   });
 
   test('map(object => object)', () => {
@@ -125,9 +125,8 @@ describe('OkResult', () => {
         baz: foo.toUpperCase(),
       }),
     );
-    if (expectOkResult(mappedResult)) {
-      expect(mappedResult.value).toEqual({ baz: 'BAR' });
-    }
+    assertOkResult(mappedResult);
+    expect(mappedResult.value).toEqual({ baz: 'BAR' });
   });
 });
 
