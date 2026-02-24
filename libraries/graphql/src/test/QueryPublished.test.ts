@@ -133,6 +133,7 @@ describe('node()', () => {
         contextValue: createContext(),
         variableValues: { id },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           node: {
@@ -207,6 +208,7 @@ describe('node()', () => {
         contextValue: createContext(),
         variableValues: { id },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           node: {
@@ -275,6 +277,7 @@ describe('node()', () => {
         contextValue: createContext(),
         variableValues: { id: fooId },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           node: {
@@ -459,6 +462,7 @@ describe('node()', () => {
           contextValue: createContext(),
           variableValues: { id: fooId },
         });
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             node: {
@@ -561,6 +565,7 @@ describe('node()', () => {
           contextValue: createContext(),
           variableValues: { id: fooId },
         });
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             node: {
@@ -662,6 +667,7 @@ describe('node()', () => {
           contextValue: createContext(),
           variableValues: { id: fooId },
         });
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             node: {
@@ -798,6 +804,7 @@ describe('nodes()', () => {
         contextValue: createContext(),
         variableValues: { ids: [foo1Id, foo2Id] },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           nodes: [

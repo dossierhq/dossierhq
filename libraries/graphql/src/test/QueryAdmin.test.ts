@@ -294,6 +294,7 @@ describe('entity()', () => {
       } = createResult.value;
 
       const result = await adminEntityFoo(schema, createContext(), { id });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           entity: {
@@ -342,6 +343,7 @@ describe('entity()', () => {
       } = createResult.value;
 
       const result = await adminEntityFoo(schema, createContext(), { id });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           entity: {
@@ -444,6 +446,7 @@ describe('entity()', () => {
         contextValue: createContext(),
         variableValues: { id, version1: 1, version2: 2, version3: 100, version4: null },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data).toEqual({
         first: {
           id,
@@ -473,6 +476,7 @@ describe('entity()', () => {
         },
       });
       const errorStrings = result.errors?.map((it) => it.toString());
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(errorStrings).toMatchInlineSnapshot(`
         [
           "NotFound: No such entity or version
@@ -528,7 +532,9 @@ describe('entity()', () => {
         variableValues: { id },
       });
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.errors).toBeUndefined();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data).toEqual({
         entity: {
           id,
@@ -595,7 +601,9 @@ describe('entity()', () => {
         variableValues: { id: fooId },
       });
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.errors).toBeUndefined();
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           entity: {
@@ -692,6 +700,7 @@ describe('entity()', () => {
           contextValue: createContext(),
           variableValues: { id: fooId },
         });
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             entity: {
@@ -778,6 +787,7 @@ describe('entity()', () => {
           contextValue: createContext(),
           variableValues: { id: fooId },
         });
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             entity: {
@@ -877,7 +887,9 @@ describe('entity()', () => {
           variableValues: { id: fooId },
         });
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result.errors).toBeUndefined();
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             entity: {
@@ -981,7 +993,9 @@ describe('entity()', () => {
           variableValues: { id: fooId },
         });
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result.errors).toBeUndefined();
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             entity: {
@@ -1095,10 +1109,12 @@ GraphQL request:3:11
         contextValue: createContext(),
         variableValues: { id },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result.data).toEqual({
         entity: null,
       });
       const errorStrings = result.errors?.map((it) => it.toString());
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(errorStrings).toMatchInlineSnapshot(`
         [
           "NotAuthorized: Wrong authKey provided
@@ -1212,6 +1228,7 @@ describe('entityList()', () => {
         contextValue: createContext(),
         variableValues: { ids: [foo1Id, foo2Id] },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           entityList: [
@@ -1618,6 +1635,7 @@ describe('searchAdminEntities()', () => {
         entities: { totalCount: number; edges: { node: { id: string } }[] };
       }>;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result?.data?.entities.totalCount).toBeGreaterThanOrEqual(1);
 
       let fooIdCount = 0;
@@ -1626,6 +1644,7 @@ describe('searchAdminEntities()', () => {
           fooIdCount += 1;
         }
       }
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(fooIdCount).toBe(1);
     }
   });

@@ -431,6 +431,7 @@ describe('create*Entity()', () => {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
       } = gqlResult.data!.createMutationFooEntity.entity;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -548,11 +549,13 @@ describe('create*Entity()', () => {
         };
       }>;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult.errors).toBeUndefined();
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
       } = gqlResult.data!.createMutationFooEntity.entity;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -675,11 +678,13 @@ describe('create*Entity()', () => {
         };
       }>;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult.errors).toBeUndefined();
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
       } = gqlResult.data!.createMutationFooEntity.entity;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -804,11 +809,13 @@ describe('create*Entity()', () => {
         };
       }>;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult.errors).toBeUndefined();
       const {
         id: fooId,
         info: { name: fooName, createdAt, updatedAt },
       } = gqlResult.data!.createMutationFooEntity.entity;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(gqlResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -950,6 +957,7 @@ describe('create*Entity()', () => {
         info: { name: fooName, createdAt, updatedAt },
       } = createFooResult.data!.createMutationFooEntity.entity;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(createFooResult).toEqual({
         data: {
           createMutationFooEntity: {
@@ -1323,6 +1331,7 @@ describe('update*Entity()', () => {
 
       const { updatedAt } = result.data!.updateMutationFooEntity.entity.info;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: {
@@ -1421,6 +1430,7 @@ describe('update*Entity()', () => {
         },
       });
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: {
@@ -1588,10 +1598,13 @@ describe('update*Entity()', () => {
           };
         }>;
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result.errors).toBeFalsy();
         const { name, createdAt, updatedAt } = result.data!.updateMutationFooEntity.entity.info;
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(name).toMatch(/^Updated name(#[0-9]+)?$/);
 
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(result).toEqual({
           data: {
             updateMutationFooEntity: {
@@ -1758,6 +1771,7 @@ describe('update*Entity()', () => {
 
       const { updatedAt: updatedAtString } = result.data!.updateMutationFooEntity.entity.info;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: {
@@ -1845,6 +1859,7 @@ describe('update*Entity()', () => {
         },
       });
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -1895,6 +1910,7 @@ describe('update*Entity()', () => {
         },
       });
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -2004,6 +2020,7 @@ describe('upsert*Entity()', () => {
 
       const { name, createdAt, updatedAt } = result.data!.upsertMutationFooEntity.entity.info;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           upsertMutationFooEntity: {
@@ -2080,6 +2097,7 @@ describe('upsert*Entity()', () => {
 
       const { name, createdAt, updatedAt } = result.data!.upsertMutationFooEntity.entity.info;
 
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           upsertMutationFooEntity: {
@@ -2239,6 +2257,7 @@ describe('publishEntities()', () => {
         variableValues: { references: [{ id, version: 1 }] },
       })) as ExecutionResult<{ publishEntities: { updatedAt: string }[] }>;
       const updatedAt = result.data!.publishEntities[0].updatedAt;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           publishEntities: [
@@ -2306,6 +2325,7 @@ describe('publishEntities()', () => {
         contextValue: createContext(),
         variableValues: { references: [{ id, version: 1 }] },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -2351,6 +2371,7 @@ describe('unpublishEntities()', () => {
         variableValues: { references: [{ id }] },
       })) as ExecutionResult<{ unpublishEntities: { updatedAt: string }[] }>;
       const updatedAt = result.data!.unpublishEntities[0].updatedAt;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           unpublishEntities: [
@@ -2418,6 +2439,7 @@ describe('unpublishEntities()', () => {
         contextValue: createContext(),
         variableValues: { references: [{ id }] },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -2461,6 +2483,7 @@ describe('archiveEntity()', () => {
         variableValues: { id },
       })) as ExecutionResult<{ archiveEntity: { updatedAt: string } }>;
       const updatedAt = result.data!.archiveEntity.updatedAt;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           archiveEntity: {
@@ -2498,6 +2521,7 @@ describe('archiveEntity()', () => {
         contextValue: createContext(),
         variableValues: { id },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -2543,6 +2567,7 @@ describe('unarchiveEntity()', () => {
         variableValues: { id },
       })) as ExecutionResult<{ unarchiveEntity: { updatedAt: string } }>;
       const updatedAt = result.data!.unarchiveEntity.updatedAt;
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           unarchiveEntity: {
@@ -2606,6 +2631,7 @@ describe('unarchiveEntity()', () => {
         contextValue: createContext(),
         variableValues: { id },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toMatchInlineSnapshot(`
         {
           "data": {
@@ -2730,6 +2756,7 @@ describe('Multiple', () => {
           references: { id, version: 2 },
         },
       });
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(result).toEqual({
         data: {
           updateMutationFooEntity: {

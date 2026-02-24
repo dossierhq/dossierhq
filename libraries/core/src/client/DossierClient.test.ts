@@ -8,7 +8,7 @@ import {
   type SchemaChangelogEvent,
 } from '../events/EventTypes.js';
 import { NoOpLogger } from '../Logger.js';
-import { expectOkResult, expectResultValue } from '../test/CoreTestUtils.js';
+import { expectResultValue } from '../test/CoreTestUtils.js';
 import {
   EntityStatus,
   type Entity,
@@ -310,33 +310,32 @@ describe('DossierClient forward operation over JSON', () => {
       },
       { publish: true },
     );
-    if (expectOkResult(result)) {
-      expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
-      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
+    assertOkResult(result);
+    expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
+    expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
 
-      expect(result.value).toMatchInlineSnapshot(`
-        {
-          "effect": "createdAndPublished",
-          "entity": {
-            "fields": {
-              "title": "Foo title",
-            },
-            "id": "1234",
-            "info": {
-              "authKey": "",
-              "createdAt": 2021-08-17T07:51:25.560Z,
-              "name": "Foo name",
-              "status": "published",
-              "type": "FooType",
-              "updatedAt": 2021-08-17T07:51:25.560Z,
-              "valid": true,
-              "validPublished": null,
-              "version": 1,
-            },
+    expect(result.value).toMatchInlineSnapshot(`
+      {
+        "effect": "createdAndPublished",
+        "entity": {
+          "fields": {
+            "title": "Foo title",
           },
-        }
-      `);
-    }
+          "id": "1234",
+          "info": {
+            "authKey": "",
+            "createdAt": 2021-08-17T07:51:25.560Z,
+            "name": "Foo name",
+            "status": "published",
+            "type": "FooType",
+            "updatedAt": 2021-08-17T07:51:25.560Z,
+            "valid": true,
+            "validPublished": null,
+            "version": 1,
+          },
+        },
+      }
+    `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -532,58 +531,55 @@ describe('DossierClient forward operation over JSON', () => {
     );
 
     const result = await client.getEntityList([{ id: '1234' }, { id: '5678' }]);
-    if (expectOkResult(result)) {
-      expect(result.value[0].isOk()).toBeTruthy();
-      expect(result.value[1].isOk()).toBeTruthy();
+    assertOkResult(result);
+    expect(result.value[0].isOk()).toBeTruthy();
+    expect(result.value[1].isOk()).toBeTruthy();
+    assertOkResult(result.value[0]);
+    expect(result.value[0].value.info.createdAt).toBeInstanceOf(Date);
+    expect(result.value[0].value.info.updatedAt).toBeInstanceOf(Date);
 
-      if (expectOkResult(result.value[0])) {
-        expect(result.value[0].value.info.createdAt).toBeInstanceOf(Date);
-        expect(result.value[0].value.info.updatedAt).toBeInstanceOf(Date);
-      }
-
-      expect(result.value).toMatchInlineSnapshot(`
-        [
-          OkResult {
-            "value": {
-              "fields": {
-                "title": "Foo title",
-              },
-              "id": "1234",
-              "info": {
-                "authKey": "",
-                "createdAt": 2021-08-17T07:51:25.560Z,
-                "name": "Foo name",
-                "status": "draft",
-                "type": "FooType",
-                "updatedAt": 2021-08-17T07:51:25.560Z,
-                "valid": true,
-                "validPublished": null,
-                "version": 1,
-              },
+    expect(result.value).toMatchInlineSnapshot(`
+      [
+        OkResult {
+          "value": {
+            "fields": {
+              "title": "Foo title",
+            },
+            "id": "1234",
+            "info": {
+              "authKey": "",
+              "createdAt": 2021-08-17T07:51:25.560Z,
+              "name": "Foo name",
+              "status": "draft",
+              "type": "FooType",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
+              "validPublished": null,
+              "version": 1,
             },
           },
-          OkResult {
-            "value": {
-              "fields": {
-                "title": "Foo title",
-              },
-              "id": "5678",
-              "info": {
-                "authKey": "",
-                "createdAt": 2021-08-17T07:51:25.560Z,
-                "name": "Foo name",
-                "status": "draft",
-                "type": "FooType",
-                "updatedAt": 2021-08-17T07:51:25.560Z,
-                "valid": true,
-                "validPublished": null,
-                "version": 1,
-              },
+        },
+        OkResult {
+          "value": {
+            "fields": {
+              "title": "Foo title",
+            },
+            "id": "5678",
+            "info": {
+              "authKey": "",
+              "createdAt": 2021-08-17T07:51:25.560Z,
+              "name": "Foo name",
+              "status": "draft",
+              "type": "FooType",
+              "updatedAt": 2021-08-17T07:51:25.560Z,
+              "valid": true,
+              "validPublished": null,
+              "version": 1,
             },
           },
-        ]
-      `);
-    }
+        },
+      ]
+    `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -635,30 +631,29 @@ describe('DossierClient forward operation over JSON', () => {
     );
 
     const result = await client.getEntity({ id: '1234' });
-    if (expectOkResult(result)) {
-      expect(result.value.info.createdAt).toBeInstanceOf(Date);
-      expect(result.value.info.updatedAt).toBeInstanceOf(Date);
+    assertOkResult(result);
+    expect(result.value.info.createdAt).toBeInstanceOf(Date);
+    expect(result.value.info.updatedAt).toBeInstanceOf(Date);
 
-      expect(result.value).toMatchInlineSnapshot(`
-        {
-          "fields": {
-            "title": "Foo title",
-          },
-          "id": "1234",
-          "info": {
-            "authKey": "",
-            "createdAt": 2021-08-17T07:51:25.560Z,
-            "name": "Foo name",
-            "status": "draft",
-            "type": "FooType",
-            "updatedAt": 2021-08-17T07:51:25.560Z,
-            "valid": true,
-            "validPublished": null,
-            "version": 1,
-          },
-        }
-      `);
-    }
+    expect(result.value).toMatchInlineSnapshot(`
+      {
+        "fields": {
+          "title": "Foo title",
+        },
+        "id": "1234",
+        "info": {
+          "authKey": "",
+          "createdAt": 2021-08-17T07:51:25.560Z,
+          "name": "Foo name",
+          "status": "draft",
+          "type": "FooType",
+          "updatedAt": 2021-08-17T07:51:25.560Z,
+          "valid": true,
+          "validPublished": null,
+          "version": 1,
+        },
+      }
+    `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1039,10 +1034,9 @@ describe('DossierClient forward operation over JSON', () => {
     );
     expectResultValue(result, { seed: 1234, totalCount: 1, items: [entity1] });
 
-    if (expectOkResult(result)) {
-      expect(result.value.items[0].info.createdAt).toBeInstanceOf(Date);
-      expect(result.value.items[0].info.updatedAt).toBeInstanceOf(Date);
-    }
+    assertOkResult(result);
+    expect(result.value.items[0].info.createdAt).toBeInstanceOf(Date);
+    expect(result.value.items[0].info.updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1141,14 +1135,13 @@ describe('DossierClient forward operation over JSON', () => {
       ],
     });
 
-    if (expectOkResult(result)) {
-      const node = result.value?.edges[0].node;
-      assertIsDefined(node);
-      if (expectOkResult(node)) {
-        expect(node.value.info.createdAt).toBeInstanceOf(Date);
-        expect(node.value.info.updatedAt).toBeInstanceOf(Date);
-      }
-    }
+    assertOkResult(result);
+    assertIsDefined(result.value);
+    const node = result.value.edges[0].node;
+    assertIsDefined(node);
+    assertOkResult(node);
+    expect(node.value.info.createdAt).toBeInstanceOf(Date);
+    expect(node.value.info.updatedAt).toBeInstanceOf(Date);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1378,33 +1371,32 @@ describe('DossierClient forward operation over JSON', () => {
       },
       { publish: true },
     );
-    if (expectOkResult(result)) {
-      expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
-      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
+    assertOkResult(result);
+    expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
+    expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
 
-      expect(result.value).toMatchInlineSnapshot(`
-        {
-          "effect": "updatedAndPublished",
-          "entity": {
-            "fields": {
-              "title": "Foo title",
-            },
-            "id": "1234",
-            "info": {
-              "authKey": "",
-              "createdAt": 2021-08-17T07:51:25.560Z,
-              "name": "Foo name",
-              "status": "published",
-              "type": "FooType",
-              "updatedAt": 2021-08-17T07:51:25.560Z,
-              "valid": true,
-              "validPublished": null,
-              "version": 1,
-            },
+    expect(result.value).toMatchInlineSnapshot(`
+      {
+        "effect": "updatedAndPublished",
+        "entity": {
+          "fields": {
+            "title": "Foo title",
           },
-        }
-      `);
-    }
+          "id": "1234",
+          "info": {
+            "authKey": "",
+            "createdAt": 2021-08-17T07:51:25.560Z,
+            "name": "Foo name",
+            "status": "published",
+            "type": "FooType",
+            "updatedAt": 2021-08-17T07:51:25.560Z,
+            "valid": true,
+            "validPublished": null,
+            "version": 1,
+          },
+        },
+      }
+    `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
@@ -1608,33 +1600,32 @@ describe('DossierClient forward operation over JSON', () => {
       },
       { publish: true },
     );
-    if (expectOkResult(result)) {
-      expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
-      expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
+    assertOkResult(result);
+    expect(result.value.entity.info.createdAt).toBeInstanceOf(Date);
+    expect(result.value.entity.info.updatedAt).toBeInstanceOf(Date);
 
-      expect(result.value).toMatchInlineSnapshot(`
-        {
-          "effect": "created",
-          "entity": {
-            "fields": {
-              "title": "Foo title",
-            },
-            "id": "1234",
-            "info": {
-              "authKey": "",
-              "createdAt": 2021-08-17T07:51:25.560Z,
-              "name": "Foo name",
-              "status": "published",
-              "type": "FooType",
-              "updatedAt": 2021-08-17T07:51:25.560Z,
-              "valid": true,
-              "validPublished": null,
-              "version": 1,
-            },
+    expect(result.value).toMatchInlineSnapshot(`
+      {
+        "effect": "created",
+        "entity": {
+          "fields": {
+            "title": "Foo title",
           },
-        }
-      `);
-    }
+          "id": "1234",
+          "info": {
+            "authKey": "",
+            "createdAt": 2021-08-17T07:51:25.560Z,
+            "name": "Foo name",
+            "status": "published",
+            "type": "FooType",
+            "updatedAt": 2021-08-17T07:51:25.560Z,
+            "valid": true,
+            "validPublished": null,
+            "version": 1,
+          },
+        },
+      }
+    `);
 
     expect(operationHandlerMock.mock.calls).toMatchInlineSnapshot(`
       [
