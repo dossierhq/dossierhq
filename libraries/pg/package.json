@@ -62,7 +62,7 @@
     "@dossierhq/typescript-config": "workspace:*",
     "@types/pg": "~8.16.0",
     "dotenv": "~17.2.1",
-    "eslint": "~9.39.2",
+    "eslint": "~10.0.1",
     "pg": "~8.17.2",
     "typescript": "~5.9.3",
     "uuid": "~13.0.0",
