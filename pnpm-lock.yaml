@@ -1024,8 +1024,8 @@ importers:
         specifier: ~10.2.17
         version: 10.2.17(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       svgo:
-        specifier: ~4.0.0
-        version: 4.0.0
+        specifier: ~4.0.1
+        version: 4.0.1
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -1058,7 +1058,7 @@ importers:
         version: 10.2.17(eslint@10.0.3(jiti@2.6.1))(storybook@10.2.17(@testing-library/dom@10.4.0)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
       eslint-plugin-turbo:
         specifier: ^2.8.16
-        version: 2.8.16(eslint@10.0.3(jiti@2.6.1))(turbo@2.8.16)
+        version: 2.8.16(eslint@10.0.3(jiti@2.6.1))(turbo@2.8.17)
       globals:
         specifier: ~17.0.0
         version: 17.0.0
@@ -1189,8 +1189,8 @@ importers:
         specifier: ~19.2.4
         version: 19.2.4
       svgo:
-        specifier: ~4.0.0
-        version: 4.0.0
+        specifier: ~4.0.1
+        version: 4.0.1
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -7332,10 +7332,6 @@ packages:
     resolution: {integrity: sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
-  css-tree@3.1.0:
-    resolution: {integrity: sha512-0eW44TGN5SQXU1mWSkKwFstI/22X2bG1nYzZTYMAWjylYURhse752YgbE4Cx46AC+bAvI+/dYTPRk1LqSUnu6w==}
-    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
-
   css-tree@3.2.1:
     resolution: {integrity: sha512-X7sjQzceUhu1u7Y/ylrRZFU2FS6LRiFVp6rKLPg23y3x3c3DOKAwuXGDp+PAGjh6CSnCjYeAul8pcT8bAl+lSA==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
@@ -9242,9 +9238,6 @@ packages:
   mdn-data@2.0.28:
     resolution: {integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==}
 
-  mdn-data@2.12.2:
-    resolution: {integrity: sha512-IEn+pegP1aManZuckezWCO+XZQDplx1366JoVhTpMpBB1sPey/SbveZQUosKiKiGYjg1wH4pMlNgXbCiYgihQA==}
-
   mdn-data@2.27.1:
     resolution: {integrity: sha512-9Yubnt3e8A0OKwxYSXyhLymGW4sCufcLG6VdiDdUGVkPhpqLxlvP5vl1983gQjJl3tqbrM731mjaZaP68AgosQ==}
 
@@ -10530,9 +10523,6 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  sax@1.4.1:
-    resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
-
   sax@1.5.0:
     resolution: {integrity: sha512-21IYA3Q5cQf089Z6tgaUTr7lDAyzoTPx5HRtbhsME8Udispad8dC/+sziTNugOEx54ilvatQ9YCzl4KQLPcRHA==}
     engines: {node: '>=11.0.0'}
@@ -10884,11 +10874,6 @@ packages:
   svg-pan-zoom@3.6.1:
     resolution: {integrity: sha512-JaKkGHHfGvRrcMPdJWkssLBeWqM+Isg/a09H7kgNNajT1cX5AztDTNs+C8UzpCxjCTRrG34WbquwaovZbmSk9g==}
 
-  svgo@4.0.0:
-    resolution: {integrity: sha512-VvrHQ+9uniE+Mvx3+C9IEe/lWasXCU0nXMY2kZeLrHNICuRiC8uMPyM14UEaMOFA5mhyQqEkB02VoQ16n3DLaw==}
-    engines: {node: '>=16'}
-    hasBin: true
-
   svgo@4.0.1:
     resolution: {integrity: sha512-XDpWUOPC6FEibaLzjfe0ucaV0YrOjYotGJO1WpF0Zd+n6ZGEQUsSugaoLq9QkEZtAfQIxT42UChcssDVPP3+/w==}
     engines: {node: '>=16'}
@@ -11057,8 +11042,18 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  turbo-darwin-64@2.8.17:
+    resolution: {integrity: sha512-ZFkv2hv7zHpAPEXBF6ouRRXshllOavYc+jjcrYyVHvxVTTwJWsBZwJ/gpPzmOKGvkSjsEyDO5V6aqqtZzwVF+Q==}
+    cpu: [x64]
+    os: [darwin]
+
   turbo-darwin-arm64@2.8.16:
     resolution: {integrity: sha512-NBgaqBDLQSZlJR4D5XCkQq6noaO0RvIgwm5eYFJYL3bH5dNu8o0UBpq7C5DYnQI8+ybyoHFjT5/icN4LeUYLow==}
+    cpu: [arm64]
+    os: [darwin]
+
+  turbo-darwin-arm64@2.8.17:
+    resolution: {integrity: sha512-5DXqhQUt24ycEryXDfMNKEkW5TBHs+QmU23a2qxXwwFDaJsWcPo2obEhBxxdEPOv7qmotjad+09RGeWCcJ9JDw==}
     cpu: [arm64]
     os: [darwin]
 
@@ -11067,8 +11062,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  turbo-linux-64@2.8.17:
+    resolution: {integrity: sha512-KLUbz6w7F73D/Ihh51hVagrKR0/CTsPEbRkvXLXvoND014XJ4BCrQUqSxlQ4/hu+nqp1v5WlM85/h3ldeyujuA==}
+    cpu: [x64]
+    os: [linux]
+
   turbo-linux-arm64@2.8.16:
     resolution: {integrity: sha512-beq8tgUVI3uwkQkXJMiOr/hfxQRw54M3elpBwqgYFfemiK5LhCjjcwO0DkE8GZZfElBIlk+saMAQOZy3885wNQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  turbo-linux-arm64@2.8.17:
+    resolution: {integrity: sha512-pJK67XcNJH40lTAjFu7s/rUlobgVXyB3A3lDoq+/JccB3hf+SysmkpR4Itlc93s8LEaFAI4mamhFuTV17Z6wOg==}
     cpu: [arm64]
     os: [linux]
 
@@ -11077,13 +11082,27 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  turbo-windows-64@2.8.17:
+    resolution: {integrity: sha512-EijeQ6zszDMmGZLP2vT2RXTs/GVi9rM0zv2/G4rNu2SSRSGFapgZdxgW4b5zUYLVaSkzmkpWlGfPfj76SW9yUg==}
+    cpu: [x64]
+    os: [win32]
+
   turbo-windows-arm64@2.8.16:
     resolution: {integrity: sha512-fOWjbEA2PiE2HEnFQrwNZKYEdjewyPc2no9GmrXklZnTCuMsxeCN39aVlKpKpim03Zq/ykIuvApGwq8ZbfS2Yw==}
     cpu: [arm64]
     os: [win32]
 
+  turbo-windows-arm64@2.8.17:
+    resolution: {integrity: sha512-crpfeMPkfECd4V1PQ/hMoiyVcOy04+bWedu/if89S15WhOalHZ2BYUi6DOJhZrszY+mTT99OwpOsj4wNfb/GHQ==}
+    cpu: [arm64]
+    os: [win32]
+
   turbo@2.8.16:
     resolution: {integrity: sha512-u6e9e3cTTpE2adQ1DYm3A3r8y3LAONEx1jYvJx6eIgSY4bMLxIxs0riWzI0Z/IK903ikiUzRPZ2c1Ph5lVLkhA==}
+    hasBin: true
+
+  turbo@2.8.17:
+    resolution: {integrity: sha512-YwPsNSqU2f/RXU/+Kcb7cPkPZARxom4+me7LKEdN5jsvy2tpfze3zDZ4EiGrJnvOm9Avu9rK0aaYsP7qZ3iz7A==}
     hasBin: true
 
   type-check@0.4.0:
@@ -17030,6 +17049,7 @@ snapshots:
   '@types/node@25.5.0':
     dependencies:
       undici-types: 7.18.2
+    optional: true
 
   '@types/parse-json@4.0.2': {}
 
@@ -18354,11 +18374,6 @@ snapshots:
       mdn-data: 2.0.28
       source-map-js: 1.2.1
 
-  css-tree@3.1.0:
-    dependencies:
-      mdn-data: 2.12.2
-      source-map-js: 1.2.1
-
   css-tree@3.2.1:
     dependencies:
       mdn-data: 2.27.1
@@ -18852,11 +18867,11 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-turbo@2.8.16(eslint@10.0.3(jiti@2.6.1))(turbo@2.8.16):
+  eslint-plugin-turbo@2.8.16(eslint@10.0.3(jiti@2.6.1))(turbo@2.8.17):
     dependencies:
       dotenv: 16.0.3
       eslint: 10.0.3(jiti@2.6.1)
-      turbo: 2.8.16
+      turbo: 2.8.17
 
   eslint-scope@5.1.1:
     dependencies:
@@ -20261,7 +20276,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 25.5.0
+      '@types/node': 25.0.10
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -20769,8 +20784,6 @@ snapshots:
       '@types/mdast': 4.0.4
 
   mdn-data@2.0.28: {}
-
-  mdn-data@2.12.2: {}
 
   mdn-data@2.27.1: {}
 
@@ -22294,8 +22307,6 @@ snapshots:
     optionalDependencies:
       '@parcel/watcher': 2.5.4
 
-  sax@1.4.1: {}
-
   sax@1.5.0: {}
 
   scheduler@0.27.0: {}
@@ -22720,16 +22731,6 @@ snapshots:
 
   svg-pan-zoom@3.6.1: {}
 
-  svgo@4.0.0:
-    dependencies:
-      commander: 11.1.0
-      css-select: 5.2.2
-      css-tree: 3.1.0
-      css-what: 6.2.2
-      csso: 5.0.5
-      picocolors: 1.1.1
-      sax: 1.4.1
-
   svgo@4.0.1:
     dependencies:
       commander: 11.1.0
@@ -22885,19 +22886,37 @@ snapshots:
   turbo-darwin-64@2.8.16:
     optional: true
 
+  turbo-darwin-64@2.8.17:
+    optional: true
+
   turbo-darwin-arm64@2.8.16:
+    optional: true
+
+  turbo-darwin-arm64@2.8.17:
     optional: true
 
   turbo-linux-64@2.8.16:
     optional: true
 
+  turbo-linux-64@2.8.17:
+    optional: true
+
   turbo-linux-arm64@2.8.16:
+    optional: true
+
+  turbo-linux-arm64@2.8.17:
     optional: true
 
   turbo-windows-64@2.8.16:
     optional: true
 
+  turbo-windows-64@2.8.17:
+    optional: true
+
   turbo-windows-arm64@2.8.16:
+    optional: true
+
+  turbo-windows-arm64@2.8.17:
     optional: true
 
   turbo@2.8.16:
@@ -22908,6 +22927,15 @@ snapshots:
       turbo-linux-arm64: 2.8.16
       turbo-windows-64: 2.8.16
       turbo-windows-arm64: 2.8.16
+
+  turbo@2.8.17:
+    optionalDependencies:
+      turbo-darwin-64: 2.8.17
+      turbo-darwin-arm64: 2.8.17
+      turbo-linux-64: 2.8.17
+      turbo-linux-arm64: 2.8.17
+      turbo-windows-64: 2.8.17
+      turbo-windows-arm64: 2.8.17
 
   type-check@0.4.0:
     dependencies:
@@ -23002,7 +23030,8 @@ snapshots:
 
   undici-types@7.16.0: {}
 
-  undici-types@7.18.2: {}
+  undici-types@7.18.2:
+    optional: true
 
   unified@11.0.5:
     dependencies:
