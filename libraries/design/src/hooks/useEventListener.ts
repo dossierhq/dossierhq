@@ -9,6 +9,7 @@ export function useEventListener(
   options?: boolean | AddEventListenerOptions,
 ): void {
   const listenerRef = useRef<typeof listener | null>(null);
+  // eslint-disable-next-line react-hooks/refs
   listenerRef.current = listener;
 
   useEffect(() => {

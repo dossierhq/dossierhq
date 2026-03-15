@@ -9,6 +9,7 @@ interface Props {
 
 export function BeforeUnload({ message }: Props) {
   const currentMessage = useRef(message);
+  // eslint-disable-next-line react-hooks/refs
   currentMessage.current = message;
   useWindowEventListener('beforeunload', (event) => {
     event.returnValue = currentMessage.current;

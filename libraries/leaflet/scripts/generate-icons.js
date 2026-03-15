@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-env node */
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import svgToDataUri from 'mini-svg-data-uri';

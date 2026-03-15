@@ -18,6 +18,7 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
       : undefined;
   }, [connection?.pageInfo.hasPreviousPage, onPagingChange, pagingCount]);
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const handlePrevious = useMemo(() => {
     return connection?.pageInfo.hasPreviousPage
       ? () =>
@@ -36,6 +37,7 @@ export function ConnectionPagingButtons({ connection, pagingCount, onPagingChang
     pagingCount,
   ]);
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const handleNext = useMemo(() => {
     return connection?.pageInfo.hasNextPage
       ? () =>

@@ -26,6 +26,8 @@ declare module 'react' {
 }
 
 export function CodapiSnippet({ snippet }: { snippet: PublishedCodapiSnippet }) {
+  // TODO resolve eslint error
+  // eslint-disable-next-line react-hooks/purity
   const id = useMemo(() => 'codapi-' + Math.random().toString().substring(2), []);
   return (
     <div className={styles.container}>

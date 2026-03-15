@@ -36,6 +36,8 @@ export function useContentEditorCallOnUrlSearchQueryParamChange(
           : { id: draftState.id };
       }),
     });
+    // TODO resolve eslint error
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParams((oldParams) => {
       if (oldParams && oldParams.toString() === result.toString()) {
         return oldParams;

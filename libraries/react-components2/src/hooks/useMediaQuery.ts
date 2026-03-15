@@ -10,6 +10,8 @@ export function useMediaQuery(query: string) {
 
     const result = matchMedia(query);
     result.addEventListener('change', onChange);
+    // TODO resolve eslint error
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setValue(result.matches);
 
     return () => result.removeEventListener('change', onChange);

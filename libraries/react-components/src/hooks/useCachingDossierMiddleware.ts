@@ -25,7 +25,11 @@ type SwrConfigRef = RefObject<{ cache: Cache; mutate: ScopedMutator }>;
 export function useCachingDossierMiddleware() {
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
+  // TODO resolve eslint error
+  // eslint-disable-next-line react-hooks/refs
   swrConfigRef.current = { cache, mutate };
+  // TODO resolve eslint error
+  // eslint-disable-next-line react-hooks/refs
   const middleware = useMemo(() => createCachingDossierMiddleware(swrConfigRef), []);
 
   return middleware;

@@ -25,6 +25,8 @@ export function ServerProvider({ children }: Props) {
 
   useEffect(() => {
     if (!database) {
+      // TODO resolve eslint error
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setValue({ server: null, error: false });
     } else {
       void initializeServer(database).then((result) => {

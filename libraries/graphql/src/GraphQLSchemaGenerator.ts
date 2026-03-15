@@ -1841,6 +1841,7 @@ export class GraphQLSchemaGenerator<TContext extends SessionGraphQLContext> exte
     } catch (error) {
       throw new Error(
         `${fieldPrefix}: Failed parsing JSON: ${error instanceof Error ? error.message : error}`,
+        { cause: error },
       );
     }
   }

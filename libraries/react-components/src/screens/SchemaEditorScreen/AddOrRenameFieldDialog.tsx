@@ -75,6 +75,8 @@ export function AddOrRenameFieldDialog({
   );
 
   useEffect(() => {
+    // TODO resolve eslint error
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setName(selector && 'fieldName' in selector ? selector.fieldName : '');
   }, [selector]);
 
@@ -82,6 +84,8 @@ export function AddOrRenameFieldDialog({
     const newStatus = selector
       ? validateName(schemaEditorState, selector, name)
       : DialogStatus.empty;
+    // TODO resolve eslint error
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setStatus(newStatus);
   }, [name, schemaEditorState, selector]);
 

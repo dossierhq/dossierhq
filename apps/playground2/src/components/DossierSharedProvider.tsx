@@ -58,6 +58,8 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
   useEffect(() => {
     if (server) {
+      // TODO resolve eslint error
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       void login(users[0].id);
     }
   }, [login, server, users]);

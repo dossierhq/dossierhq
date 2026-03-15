@@ -42,12 +42,14 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
 
   const [sessionResult, setSessionResult] = useState<SessionResult>(uninitializedSession);
   const sessionResultRef = useRef<SessionResult>(sessionResult);
+  // eslint-disable-next-line react-hooks/refs
   sessionResultRef.current = sessionResult;
 
   const cachingAdminMiddleware = useCachingDossierMiddleware();
 
   const { cache, mutate } = useSWRConfig();
   const swrConfigRef = useRef({ cache, mutate });
+  // eslint-disable-next-line react-hooks/refs
   swrConfigRef.current = { cache, mutate };
 
   const login = useCallback(
@@ -86,6 +88,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
     const adapter = new ContextAdapter();
     const adminArgs = {
       client: server.createDossierClient(
+        // eslint-disable-next-line react-hooks/refs
         () => Promise.resolve(sessionResultRef.current),
         [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>, cachingAdminMiddleware],
       ),
@@ -96,6 +99,7 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
     const publishedArgs = {
       adapter,
       publishedClient: server.createPublishedDossierClient(
+        // eslint-disable-next-line react-hooks/refs
         () => Promise.resolve(sessionResultRef.current),
         [LoggingClientMiddleware as PublishedDossierClientMiddleware<ClientContext>],
       ),

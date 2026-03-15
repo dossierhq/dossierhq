@@ -38,11 +38,9 @@ export async function migrate(
   const initialVersion = initialVersionResult.value;
 
   let version = initialVersion + 1;
-  let done = false;
-  while (!done) {
+  while (true) {
     const plan = schemaVersionGenerator(version);
     if (!plan) {
-      done = true;
       break;
     }
 

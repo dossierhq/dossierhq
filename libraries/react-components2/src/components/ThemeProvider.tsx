@@ -31,6 +31,8 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   useEffect(() => {
+    // TODO resolve eslint error
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme((window.localStorage.getItem(storageKey) as Theme) || defaultTheme);
   }, [defaultTheme, storageKey]);
 

@@ -107,6 +107,7 @@ export default function GraphiQLEditor({
 
   useEffect(() => {
     localStorage.setItem('graphiql:theme', 'light');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeIsSet(true);
   }, []);
 
