@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
 
       - name: Set up pnpm global bin directory
         run: |
@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
 
       - name: Update mise tools
         run: mise up --bump
