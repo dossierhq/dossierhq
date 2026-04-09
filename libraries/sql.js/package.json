@@ -55,12 +55,12 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@types/base-64": "~1.0.2",
-    "@types/sql.js": "~1.4.9",
+    "@types/sql.js": "~1.4.11",
     "base-64": "~1.0.0",
-    "eslint": "~10.1.0",
+    "eslint": "~10.2.0",
     "sql.js": "~1.13.0",
     "typescript": "~5.9.3",
-    "vitest": "~4.0.18"
+    "vitest": "~4.1.3"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,cjs,mjs}": [

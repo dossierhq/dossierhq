@@ -47,10 +47,10 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@vitest/coverage-v8": "~4.0.18",
-    "eslint": "~10.1.0",
+    "@vitest/coverage-v8": "~4.1.3",
+    "eslint": "~10.2.0",
     "typescript": "~5.9.3",
-    "vitest": "~4.0.18"
+    "vitest": "~4.1.3"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,cjs,mjs}": [

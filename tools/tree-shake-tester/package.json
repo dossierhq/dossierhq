@@ -16,9 +16,9 @@
     "@dossierhq/server": "workspace:*"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "~29.0.0",
+    "@rollup/plugin-commonjs": "~29.0.2",
     "@rollup/plugin-node-resolve": "~16.0.1",
-    "esbuild": "~0.27.0",
-    "rollup": "~4.59.0"
+    "esbuild": "~0.28.0",
+    "rollup": "~4.60.1"
   }
 }
