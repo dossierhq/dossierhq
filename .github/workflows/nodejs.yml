@@ -39,6 +39,15 @@ jobs:
           TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}
       - name: knip
         run: npm run knip || true
+      - name: check for uncommitted changes after build
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "::error::Build produced uncommitted changes. Regenerate locally and commit:"
+            git status --short
+            echo "--- diff ---"
+            git diff
+            exit 1
+          fi
       - name: stop db
         run: |
           cd tools/generic-tools/
