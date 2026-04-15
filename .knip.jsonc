@@ -11,6 +11,9 @@
     "wait-on",
   ],
   "workspaces": {
+    ".": {
+      "entry": ["lint-staged-pkg.mjs"],
+    },
     "apps/blog": {
       "entry": ["utils/SchemaTypes.ts"],
       "ignoreDependencies": ["codejar"],

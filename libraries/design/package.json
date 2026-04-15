@@ -27,7 +27,6 @@
     "build": "./scripts/generate-icons.cjs && tsc && npm run css:build",
     "build:watch": "tsc --watch",
     "lint": "eslint --max-warnings=0",
-    "lint:staged": "lint-staged",
     "clean": "rm -rf lib/",
     "css:build": "sass src/styles/main.scss lib/main.css",
     "eslint:fix": "eslint --fix .",
@@ -75,12 +74,5 @@
     "svgo": "~4.0.1",
     "typescript": "~5.9.3",
     "vite": "8.0.8"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,cjs,mjs}": [
-      "eslint --fix --max-warnings=0",
-      "prettier --write"
-    ],
-    "*.css": "prettier --write"
   }
 }

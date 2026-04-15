@@ -26,7 +26,6 @@
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
     "lint": "eslint --max-warnings=0",
-    "lint:staged": "lint-staged",
     "clean": "rm -rf lib/",
     "db:clear": "rm -f data/*.sqlite",
     "eslint:fix": "eslint --fix .",
@@ -63,11 +62,5 @@
     "graphql": "~16.13.2",
     "typescript": "~5.9.3",
     "vitest": "~4.1.3"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,cjs,mjs}": [
-      "eslint --fix --max-warnings=0",
-      "prettier --write"
-    ]
   }
 }

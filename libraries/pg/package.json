@@ -25,7 +25,6 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "lint": "eslint --max-warnings=0",
-    "lint:staged": "lint-staged",
     "clean": "rm -rf lib/",
     "db:cli": "./scripts/db-cli.sh",
     "db:clear": "./scripts/db-clear.sh",
@@ -67,11 +66,5 @@
     "typescript": "~5.9.3",
     "uuid": "~13.0.0",
     "vitest": "~4.1.3"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,cjs,mjs}": [
-      "eslint --fix --max-warnings=0",
-      "prettier --write"
-    ]
   }
 }
