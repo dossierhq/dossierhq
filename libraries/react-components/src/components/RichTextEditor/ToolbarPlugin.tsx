@@ -8,13 +8,12 @@ import {
   toSpacingClassName,
   type IconName,
 } from '@dossierhq/design';
+import { $createCodeNode, $isCodeNode } from '@lexical/code';
 import {
-  $createCodeNode,
-  $isCodeNode,
   CODE_LANGUAGE_FRIENDLY_NAME_MAP,
   CODE_LANGUAGE_MAP,
   getLanguageFriendlyName,
-} from '@lexical/code';
+} from '@lexical/code-prism';
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import {
   $isListNode,

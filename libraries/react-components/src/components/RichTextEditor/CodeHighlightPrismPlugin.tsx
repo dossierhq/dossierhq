@@ -6,11 +6,11 @@
  *
  */
 
-import { registerCodeHighlighting } from '@lexical/code';
+import { registerCodeHighlighting } from '@lexical/code-prism';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.js';
 import { useEffect, type JSX } from 'react';
 
-export function CodeHighlightPlugin(): JSX.Element | null {
+export function CodeHighlightPrismPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

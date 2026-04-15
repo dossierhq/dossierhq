@@ -47,6 +47,7 @@
     "@dossierhq/design": "workspace:*",
     "@dossierhq/leaflet": "workspace:*",
     "@lexical/code": "0.42.0",
+    "@lexical/code-prism": "0.42.0",
     "@lexical/link": "0.42.0",
     "@lexical/list": "0.42.0",
     "@lexical/react": "0.42.0",

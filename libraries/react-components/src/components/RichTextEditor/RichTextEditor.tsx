@@ -22,7 +22,7 @@ import { AdminClickableLinkPlugin } from './AdminClickableLinkPlugin.js';
 import { AdminComponentNode } from './AdminComponentNode.js';
 import { AdminEntityLinkNode } from './AdminEntityLinkNode.js';
 import { AdminEntityNode } from './AdminEntityNode.js';
-import { CodeHighlightPlugin } from './CodeHighlightPlugin.js';
+import { CodeHighlightPrismPlugin } from './CodeHighlightPrismPlugin.js';
 import { ComponentPlugin } from './ComponentPlugin.js';
 import { EntityLinkPlugin } from './EntityLinkPlugin.js';
 import { EntityPlugin } from './EntityPlugin.js';
@@ -99,7 +99,7 @@ export function RichTextEditor({ fieldSpec, adminOnly, value, onChange }: Props)
         />
         <AdminClickableLinkPlugin onEntityLinkClick={handleEntityLinkClick} />
         <CheckListPlugin />
-        <CodeHighlightPlugin />
+        <CodeHighlightPrismPlugin />
         <EntityLinkPlugin />
         <EntityPlugin />
         <HistoryPlugin />

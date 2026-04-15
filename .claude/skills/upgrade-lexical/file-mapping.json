@@ -29,9 +29,9 @@
     },
     {
       "playground": "packages/lexical-playground/src/plugins/CodeHighlightPrismPlugin/index.ts",
-      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
+      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
       "syncType": "manual-review",
-      "note": "Adapted version - review changes manually, don't auto-apply. Renamed upstream from CodeHighlightPlugin in v0.42.0 (#8198)"
+      "note": "Adapted version - review changes manually, don't auto-apply"
     }
   ],
   "custom-nodes": {
@@ -126,7 +126,7 @@
       "libraries/react-components/src/components/RichTextDisplay/RichTextDisplay.tsx"
     ],
     "plugins": [
-      "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
+      "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
       "libraries/react-components/src/components/RichTextEditor/ToolbarPlugin.tsx",
       "libraries/react-components/src/components/RichTextEditor/LinkPlugin.tsx",
       "libraries/react-components/src/components/RichTextEditor/ListMaxIndentLevelPlugin.tsx",
@@ -145,9 +145,9 @@
     },
     {
       "playground": "packages/lexical-playground/src/plugins/CodeHighlightPrismPlugin/index.ts",
-      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
+      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
       "syncType": "manual-review",
-      "note": "Adapted version - review changes manually, don't auto-apply. Renamed upstream from CodeHighlightPlugin in v0.42.0 (#8198)"
+      "note": "Adapted version - review changes manually, don't auto-apply"
     }
   ]
 }
