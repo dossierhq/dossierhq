@@ -26,6 +26,10 @@ function findOwningPackage(absFile) {
   return null;
 }
 
+// lint-staged tokenizes returned command strings with string-argv and spawns
+// via execa without a shell, so $, backticks, etc. are literal argv tokens —
+// no expansion. JSON.stringify produces a form string-argv parses back to the
+// original. We still reject NUL/newline since those would break tokenization.
 function quote(value) {
   if (value.includes("\0") || value.includes("\n")) {
     throw new Error(

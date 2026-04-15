@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 
 const [cwdRel, ...files] = process.argv.slice(2);
@@ -39,6 +40,15 @@ if (eslintFiles.length > 0) {
 }
 
 if (prettierFiles.length > 0) {
-  const code = run("pnpm", ["exec", "prettier", "--write", ...prettierFiles]);
+  // Resolve the root-installed prettier explicitly rather than relying on
+  // `pnpm exec` walking up from each workspace (prettier is only a root
+  // devDep).
+  const require = createRequire(import.meta.url);
+  const prettierBin = require.resolve("prettier/bin/prettier.cjs");
+  const code = run(process.execPath, [
+    prettierBin,
+    "--write",
+    ...prettierFiles,
+  ]);
   if (code !== 0) process.exit(code);
 }
