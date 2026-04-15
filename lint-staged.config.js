@@ -1,31 +1,22 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import path from "node:path";
 
 const ROOT = import.meta.dirname;
 
 const WORKSPACE_DIRS = (() => {
-  const yaml = readFileSync(path.join(ROOT, "pnpm-workspace.yaml"), "utf8");
-  const topDirs = [];
-  for (const line of yaml.split("\n")) {
-    const m = line.match(/^\s*-\s*"([^"/]+)\/\*"\s*$/);
-    if (m) topDirs.push(m[1]);
+  const result = spawnSync("pnpm", ["ls", "-r", "--depth", "-1", "--json"], {
+    cwd: ROOT,
+    encoding: "utf8",
+  });
+  if (result.status !== 0) {
+    throw new Error(
+      `Failed to list pnpm workspace packages: ${result.stderr || result.stdout}`,
+    );
   }
-  const dirs = [];
-  for (const top of topDirs) {
-    const topAbs = path.join(ROOT, top);
-    let entries;
-    try {
-      entries = readdirSync(topAbs, { withFileTypes: true });
-    } catch {
-      continue;
-    }
-    for (const entry of entries) {
-      if (!entry.isDirectory()) continue;
-      const pkgAbs = path.join(topAbs, entry.name);
-      if (existsSync(path.join(pkgAbs, "package.json"))) dirs.push(pkgAbs);
-    }
-  }
-  return dirs.sort((a, b) => b.length - a.length);
+  return JSON.parse(result.stdout)
+    .map((pkg) => pkg.path)
+    .filter((p) => p !== ROOT)
+    .sort((a, b) => b.length - a.length);
 })();
 
 function findOwningPackage(absFile) {
