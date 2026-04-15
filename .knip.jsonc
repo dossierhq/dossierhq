@@ -17,6 +17,7 @@
     },
     "apps/playground2": {
       "postcss": true,
+      "ignore": ["src/components/ui/**"],
       "ignoreDependencies": ["postcss"],
     },
     "examples/astro": {
@@ -55,7 +56,7 @@
       "entry": ["src/*.ts"],
     },
     "examples/tutorial": {
-      "entry": ["src/main.tsx", "src/SchemaTypes.ts"],
+      "entry": ["src/SchemaTypes.ts"],
       "ignoreBinaries": ["sleep"],
       "ignoreDependencies": ["nodemon"],
     },
@@ -85,7 +86,6 @@
       "entry": ["scripts/*.js"],
     },
     "libraries/libsql": {
-      "ignoreBinaries": ["test/integration/sqld"],
     },
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
@@ -98,6 +98,7 @@
       "ignoreDependencies": ["@dossierhq/test-data"],
     },
     "libraries/react-components2": {
+      "ignore": ["src/components/ui/**"],
       "ignoreDependencies": ["concurrently", "wait-on"],
     },
     "libraries/test-data": {
