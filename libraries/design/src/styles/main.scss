@@ -190,6 +190,7 @@ tr.is-sticky-row :is(td, th),
 }
 
 .rich-text {
+  --lexical-indent-base-value: 30px;
   user-select: text;
   white-space: pre-wrap;
   word-break: break-word;
@@ -210,10 +211,6 @@ tr.is-sticky-row :is(td, th),
     list-style-type: disc;
     margin-left: 1em;
     margin-bottom: 0.5rem;
-  }
-
-  .indent {
-    --lexical-indent-base-value: 30px;
   }
 
   .is-bold {
