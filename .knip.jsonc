@@ -88,8 +88,7 @@
     "libraries/leaflet": {
       "entry": ["scripts/*.js"],
     },
-    "libraries/libsql": {
-    },
+    "libraries/libsql": {},
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
       "entry": [
