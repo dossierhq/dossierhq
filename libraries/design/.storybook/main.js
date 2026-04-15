@@ -5,11 +5,7 @@ const require = createRequire(import.meta.url);
 export default {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
-  addons: [
-    getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/preset-scss'),
-    getAbsolutePath('@storybook/addon-docs'),
-  ],
+  addons: [getAbsolutePath('@storybook/addon-links'), getAbsolutePath('@storybook/addon-docs')],
 
   reactOptions: {
     strictMode: true,
