@@ -13,7 +13,6 @@
     "build": "tsc && post-process-build deno-esm-only",
     "build:watch": "tsc --watch",
     "lint": "eslint --max-warnings=0",
-    "lint:staged": "lint-staged",
     "clean": "rm -rf lib/",
     "deno:reload-dependencies": "deno cache --reload deno-external-dependencies.ts",
     "eslint:fix": "eslint --fix .",
@@ -33,11 +32,5 @@
     "@types/node": "~25.5.2",
     "eslint": "~10.2.0",
     "typescript": "~5.9.3"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx,cjs,mjs}": [
-      "eslint --fix --max-warnings=0",
-      "prettier --write"
-    ]
   }
 }
