@@ -28,10 +28,10 @@
       "note": "Used in ToolbarPlugin.tsx for determining selected node"
     },
     {
-      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPlugin/index.ts",
+      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPrismPlugin/index.ts",
       "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
       "syncType": "manual-review",
-      "note": "Adapted version - review changes manually, don't auto-apply"
+      "note": "Adapted version - review changes manually, don't auto-apply. Renamed upstream from CodeHighlightPlugin in v0.42.0 (#8198)"
     }
   ],
   "custom-nodes": {
@@ -144,10 +144,10 @@
       "note": "Used in ToolbarPlugin.tsx for determining selected node"
     },
     {
-      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPlugin/index.ts",
+      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPrismPlugin/index.ts",
       "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPlugin.tsx",
       "syncType": "manual-review",
-      "note": "Adapted version - review changes manually, don't auto-apply"
+      "note": "Adapted version - review changes manually, don't auto-apply. Renamed upstream from CodeHighlightPlugin in v0.42.0 (#8198)"
     }
   ]
 }
