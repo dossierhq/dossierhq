@@ -27,10 +27,12 @@ function findOwningPackage(absFile) {
 }
 
 function quote(value) {
-  if (/[\0-\x1f"\\]/.test(value)) {
-    throw new Error(`Unsafe character in staged path: ${value}`);
+  if (value.includes("\0") || value.includes("\n")) {
+    throw new Error(
+      `Unsafe character in staged path: ${JSON.stringify(value)}`,
+    );
   }
-  return `"${value}"`;
+  return JSON.stringify(value);
 }
 
 const RELEVANT_EXT = /\.(ts|tsx|js|jsx|cjs|mjs|json|md|ya?ml|css)$/;
@@ -39,6 +41,8 @@ export default function (stagedAbsFiles) {
   const relevant = stagedAbsFiles.filter((f) => RELEVANT_EXT.test(f));
   if (relevant.length === 0) return [];
 
+  // Files outside any workspace package (e.g. root-level config/docs) fall
+  // through to the ROOT bucket, where the wrapper runs prettier only.
   const byCwd = new Map();
   for (const abs of relevant) {
     const cwd = findOwningPackage(abs) ?? ROOT;

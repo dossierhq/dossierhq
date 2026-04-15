@@ -14,7 +14,10 @@ const cwd = path.resolve(process.cwd(), cwdRel);
 const ESLINT_EXT = /\.(ts|tsx|js|jsx|cjs|mjs)$/;
 const PRETTIER_EXT = /\.(ts|tsx|js|jsx|cjs|mjs|json|md|ya?ml|css)$/;
 
-const eslintFiles = existsSync(path.join(cwd, "eslint.config.js"))
+const hasEslintConfig = ["js", "mjs", "cjs", "ts"].some((ext) =>
+  existsSync(path.join(cwd, `eslint.config.${ext}`)),
+);
+const eslintFiles = hasEslintConfig
   ? files.filter((f) => ESLINT_EXT.test(f))
   : [];
 const prettierFiles = files.filter((f) => PRETTIER_EXT.test(f));
