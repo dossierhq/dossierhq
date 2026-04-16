@@ -366,7 +366,7 @@ importers:
         version: 10.48.0(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.60.1)
       '@spotlightjs/astro':
         specifier: ~3.2.3
-        version: 3.2.6(@sentry/astro@10.48.0(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.60.1))(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(hono@4.12.12)
+        version: 3.2.6(@sentry/astro@10.48.0(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.60.1))(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(hono@4.12.14)
       astro:
         specifier: ~6.1.6
         version: 6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
@@ -374,8 +374,8 @@ importers:
         specifier: ~12.6.2
         version: 12.6.2
       hono:
-        specifier: 4.12.12
-        version: 4.12.12
+        specifier: 4.12.14
+        version: 4.12.14
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -8571,8 +8571,8 @@ packages:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
 
-  hono@4.12.12:
-    resolution: {integrity: sha512-p1JfQMKaceuCbpJKAPKVqyqviZdS0eUxH9v82oWo1kb9xjQ5wA6iP3FNVAPDFlz5/p7d45lO+BpSk1tuSZMF4Q==}
+  hono@4.12.14:
+    resolution: {integrity: sha512-am5zfg3yu6sqn5yjKBNqhnTX7Cv+m00ox+7jbaKkrLMRJ4rAdldd1xPd/JzbBWspqaQv6RSTrgFN95EsfhC+7w==}
     engines: {node: '>=16.9.0'}
 
   html-escaper@2.0.2:
@@ -13069,9 +13069,9 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       use-sync-external-store: 1.6.0(react@19.2.5)
 
-  '@hono/node-server@1.19.9(hono@4.12.12)':
+  '@hono/node-server@1.19.9(hono@4.12.14)':
     dependencies:
-      hono: 4.12.12
+      hono: 4.12.14
 
   '@humanfs/core@0.19.1': {}
 
@@ -13724,9 +13724,9 @@ snapshots:
       '@types/react': 19.2.14
       react: 19.2.5
 
-  '@modelcontextprotocol/sdk@1.25.3(hono@4.12.12)(zod@3.25.76)':
+  '@modelcontextprotocol/sdk@1.25.3(hono@4.12.14)(zod@3.25.76)':
     dependencies:
-      '@hono/node-server': 1.19.9(hono@4.12.12)
+      '@hono/node-server': 1.19.9(hono@4.12.14)
       ajv: 8.18.0
       ajv-formats: 3.0.1(ajv@8.18.0)
       content-type: 1.0.5
@@ -16702,10 +16702,10 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@spotlightjs/astro@3.2.6(@sentry/astro@10.48.0(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.60.1))(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(hono@4.12.12)':
+  '@spotlightjs/astro@3.2.6(@sentry/astro@10.48.0(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.60.1))(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(hono@4.12.14)':
     dependencies:
       '@sentry/astro': 10.48.0(astro@6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.60.1)
-      '@spotlightjs/spotlight': 3.0.2(hono@4.12.12)
+      '@spotlightjs/spotlight': 3.0.2(hono@4.12.14)
       astro: 6.1.6(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
     transitivePeerDependencies:
       - '@cfworker/json-schema'
@@ -16714,10 +16714,10 @@ snapshots:
 
   '@spotlightjs/overlay@3.2.0': {}
 
-  '@spotlightjs/sidecar@1.12.0(hono@4.12.12)':
+  '@spotlightjs/sidecar@1.12.0(hono@4.12.14)':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
-      '@modelcontextprotocol/sdk': 1.25.3(hono@4.12.12)(zod@3.25.76)
+      '@modelcontextprotocol/sdk': 1.25.3(hono@4.12.14)(zod@3.25.76)
       '@sentry/core': 9.22.0
       '@sentry/node': 8.55.1
       kleur: 4.1.5
@@ -16728,11 +16728,11 @@ snapshots:
       - hono
       - supports-color
 
-  '@spotlightjs/spotlight@3.0.2(hono@4.12.12)':
+  '@spotlightjs/spotlight@3.0.2(hono@4.12.14)':
     dependencies:
       '@sentry/node': 8.55.1
       '@spotlightjs/overlay': 3.2.0
-      '@spotlightjs/sidecar': 1.12.0(hono@4.12.12)
+      '@spotlightjs/sidecar': 1.12.0(hono@4.12.14)
       import-meta-resolve: 4.2.0
     transitivePeerDependencies:
       - '@cfworker/json-schema'
@@ -19918,7 +19918,7 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hono@4.12.12: {}
+  hono@4.12.14: {}
 
   html-escaper@2.0.2: {}
 
