@@ -40,3 +40,5 @@ public/codejar.js
 public/database.sqlite
 public/prism.js
 tsconfig.tsbuildinfo
+
+/.turbo/
