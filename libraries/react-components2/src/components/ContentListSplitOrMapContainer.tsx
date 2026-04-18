@@ -51,7 +51,7 @@ export function ContentListSplitOrMapContainer({
 
   return (
     (contentListState.viewMode === 'split' || contentListState.viewMode === 'map') && (
-      <ResizablePanelGroup direction={lg ? 'horizontal' : 'vertical'}>
+      <ResizablePanelGroup orientation={lg ? 'horizontal' : 'vertical'}>
         <ResizablePanel minSize={20}>
           <div className="flex h-full flex-col">
             <div className="flex-1 overflow-auto">
