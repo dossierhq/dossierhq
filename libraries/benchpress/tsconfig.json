@@ -2,7 +2,8 @@
   "extends": "@dossierhq/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["node"]
   },
   "exclude": ["lib"]
 }

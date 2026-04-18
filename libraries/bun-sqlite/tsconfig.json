@@ -1,6 +1,7 @@
 {
   "extends": "@dossierhq/typescript-config/library.json",
   "compilerOptions": {
-    "outDir": "lib"
+    "outDir": "lib",
+    "types": ["bun"]
   }
 }

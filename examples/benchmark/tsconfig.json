@@ -2,8 +2,10 @@
   "extends": "@dossierhq/typescript-config/node.json",
   "compilerOptions": {
     "outDir": "lib",
+    "rootDir": "src",
     "allowImportingTsExtensions": false,
-    "noEmit": false
+    "noEmit": false,
+    "types": ["bun", "node"]
   },
   "include": ["src"]
 }

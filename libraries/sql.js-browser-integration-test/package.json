@@ -32,6 +32,6 @@
     "@types/sql.js": "~1.4.11",
     "eslint": "~10.2.0",
     "sql.js": "~1.14.1",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.3"
   }
 }

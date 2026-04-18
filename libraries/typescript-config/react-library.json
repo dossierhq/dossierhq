@@ -1,6 +1,7 @@
 {
   "extends": "./_base.json",
   "compilerOptions": {
+    "rootDir": "${configDir}/src",
     "jsx": "react-jsx"
   }
 }

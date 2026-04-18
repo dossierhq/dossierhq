@@ -60,7 +60,7 @@
     "better-sqlite3": "~12.6.2",
     "eslint": "~10.2.0",
     "graphql": "~16.13.2",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "vitest": "~4.1.4"
   }
 }

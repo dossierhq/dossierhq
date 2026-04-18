@@ -1,4 +1,6 @@
 {
   "extends": "@dossierhq/typescript-config/node.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "types": ["bun"]
+  }
 }
