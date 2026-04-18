@@ -23,9 +23,6 @@
     "format": "prettier --write .",
     "test": "npm run examples:timer-benchmark:bun && npm run examples:timer-benchmark:deno && npm run examples:timer-benchmark:node"
   },
-  "dependencies": {
-    "tslib": "~2.8.1"
-  },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",

@@ -6,7 +6,6 @@
     "moduleResolution": "bundler",
     "declaration": true,
     "sourceMap": true,
-    "importHelpers": true,
     "verbatimModuleSyntax": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

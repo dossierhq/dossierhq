@@ -41,8 +41,7 @@
     "directory": "libraries/sql.js"
   },
   "dependencies": {
-    "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.8.1"
+    "@dossierhq/sqlite-core": "workspace:*"
   },
   "peerDependencies": {
     "sql.js": ">=1"

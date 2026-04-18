@@ -41,8 +41,7 @@
     "directory": "libraries/server"
   },
   "dependencies": {
-    "@dossierhq/database-adapter": "workspace:*",
-    "tslib": "~2.8.1"
+    "@dossierhq/database-adapter": "workspace:*"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*"

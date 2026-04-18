@@ -34,6 +34,7 @@ if (eslintFiles.length > 0) {
     "eslint",
     "--fix",
     "--max-warnings=0",
+    "--no-warn-ignored",
     ...eslintFiles,
   ]);
   if (code !== 0) process.exit(code);

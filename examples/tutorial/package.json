@@ -14,7 +14,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@auth0/auth0-react": "~2.16.1",
+    "@auth0/auth0-react": "~2.16.2",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
@@ -22,7 +22,7 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~12.6.2",
+    "better-sqlite3": "~12.9.0",
     "body-parser": "~2.2.2",
     "dotenv": "~17.4.2",
     "express": "~5.2.1",

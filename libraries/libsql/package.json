@@ -39,8 +39,7 @@
     "directory": "libraries/libsql"
   },
   "dependencies": {
-    "@dossierhq/sqlite-core": "workspace:*",
-    "tslib": "~2.8.1"
+    "@dossierhq/sqlite-core": "workspace:*"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*"

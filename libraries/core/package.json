@@ -40,9 +40,6 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git",
     "directory": "libraries/core"
   },
-  "dependencies": {
-    "tslib": "~2.8.1"
-  },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",

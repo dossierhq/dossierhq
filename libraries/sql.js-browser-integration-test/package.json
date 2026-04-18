@@ -19,8 +19,7 @@
     "directory": "libraries/sql.js-browser-integration-test"
   },
   "dependencies": {
-    "@dossierhq/sql.js": "workspace:*",
-    "tslib": "~2.8.1"
+    "@dossierhq/sql.js": "workspace:*"
   },
   "devDependencies": {
     "@dossierhq/core": "workspace:*",

@@ -26,9 +26,6 @@
     "type": "git",
     "url": "git+https://github.com/dossierhq/dossierhq.git"
   },
-  "dependencies": {
-    "tslib": "~2.8.1"
-  },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",

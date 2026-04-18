@@ -38,9 +38,6 @@
     "url": "git+https://github.com/dossierhq/dossierhq.git",
     "directory": "libraries/database-adapter"
   },
-  "dependencies": {
-    "tslib": "~2.8.1"
-  },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*"
   },

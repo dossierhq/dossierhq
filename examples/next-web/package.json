@@ -23,11 +23,11 @@
     "@dossierhq/leaflet": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~12.6.2",
+    "better-sqlite3": "~12.9.0",
     "graphql": "~16.13.2",
     "graphql-voyager": "~2.1.0",
     "leaflet": "~1.9.4",
-    "next": "16.2.3",
+    "next": "16.2.4",
     "react": "19.2.5",
     "react-dom": "19.2.5"
   },

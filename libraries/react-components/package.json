@@ -55,9 +55,8 @@
     "@lexical/utils": "0.43.0",
     "leaflet": "~1.9.4",
     "lexical": "0.43.0",
-    "lodash": "~4.17.23",
-    "swr": "~2.3.8",
-    "tslib": "~2.8.1"
+    "lodash": "~4.18.1",
+    "swr": "~2.4.1"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -79,7 +78,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "~19.2.3",
     "@vitejs/plugin-react": "~6.0.1",
-    "better-sqlite3": "~12.6.2",
+    "better-sqlite3": "~12.9.0",
     "body-parser": "~2.2.2",
     "eslint": "~10.2.0",
     "react": "~19.2.5",

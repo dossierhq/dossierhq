@@ -36,7 +36,6 @@
     "directory": "libraries/integration-test"
   },
   "dependencies": {
-    "tslib": "~2.8.1",
     "uuid": "~13.0.0"
   },
   "peerDependencies": {
