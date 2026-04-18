@@ -111,29 +111,18 @@ function isFtsVirtualTableConstraintFailed(error: unknown): boolean {
   return (
     isSqliteError(error) &&
     error.code === 'SQLITE_CONSTRAINT' &&
-    (error.message === 'SQLITE_CONSTRAINT: SQLite error: constraint failed' ||
-      error.message === 'SQLITE_CONSTRAINT: constraint failed')
+    error.message.endsWith('constraint failed')
   );
 }
 
 function isUniqueViolationOfConstraint(error: unknown, constraint: UniqueConstraint): boolean {
-  if (!isSqliteError(error)) {
+  if (!isSqliteError(error) || error.code !== 'SQLITE_CONSTRAINT') {
     return false;
   }
   const qualifiedColumns = constraint.columns
     .map((column) => `${constraint.table}.${column}`)
     .join(', ');
-  if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-    const expectedMessage = `UNIQUE constraint failed: ${qualifiedColumns}`;
-    if (error.message === expectedMessage) {
-      return true;
-    }
-    return error.message === `${error.code}: ${expectedMessage}`;
-  } else if (error.code === 'SQLITE_CONSTRAINT') {
-    const expectedMessage = `${error.code}: SQLite error: UNIQUE constraint failed: ${qualifiedColumns}`;
-    return error.message === expectedMessage;
-  }
-  return false;
+  return error.message.endsWith(`UNIQUE constraint failed: ${qualifiedColumns}`);
 }
 
 export function convertQueryParameters(
