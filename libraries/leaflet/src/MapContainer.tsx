@@ -1,5 +1,5 @@
-import { control, type LeafletEvent, type LeafletMouseEvent, type Map } from 'leaflet';
-import 'leaflet.locatecontrol';
+import type { LeafletEvent, LeafletMouseEvent, Map } from 'leaflet';
+import { LocateControl as LeafletLocateControl } from 'leaflet.locatecontrol';
 import {
   Suspense,
   useEffect,
@@ -178,7 +178,7 @@ function LocateControl({ outsideMapBoundsMsg, showPopup, autoStart, title }: Loc
     if (outsideMapBoundsMsg) strings.outsideMapBoundsMsg = outsideMapBoundsMsg;
     if (title) strings.title = title;
 
-    const locateControl = control.locate({
+    const locateControl = new LeafletLocateControl({
       icon: 'icon-map-location leaflet-icon',
       iconLoading: 'icon-map-location leaflet-icon is-pulsing',
       showPopup,

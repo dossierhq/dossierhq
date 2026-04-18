@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "leaflet": "~1.9.4",
-    "leaflet.locatecontrol": "0.81.1",
+    "leaflet.locatecontrol": "0.89.0",
     "react-leaflet": "~4.2.1"
   },
   "peerDependencies": {
