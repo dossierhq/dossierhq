@@ -39,7 +39,7 @@
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/better-sqlite3": "~7.6.13",
     "@types/react": "19.2.14",
-    "rollup-plugin-visualizer": "~6.0.1",
+    "rollup-plugin-visualizer": "~7.0.1",
     "typescript": "~6.0.3"
   }
 }
