@@ -18,6 +18,8 @@ overrides:
   postcss@5.2.18: 8.4.31
   tar-fs@2.1.3: ~2.1.4
   vite@6.2.7: ~6.4.1
+  yaml@2.7.1: ~2.8.3
+  yaml@2.8.2: ~2.8.3
 
 importers:
 
@@ -9334,7 +9336,7 @@ packages:
       jiti: '>=1.21.0'
       postcss: '>=8.0.9'
       tsx: ^4.8.1
-      yaml: ^2.4.2
+      yaml: ~2.8.3
     peerDependenciesMeta:
       jiti:
         optional: true
@@ -10703,7 +10705,7 @@ packages:
       sugarss: ^5.0.0
       terser: ^5.16.0
       tsx: ^4.8.1
-      yaml: ^2.4.2
+      yaml: ~2.8.3
     peerDependenciesMeta:
       '@types/node':
         optional: true
@@ -10744,7 +10746,7 @@ packages:
       sugarss: ^5.0.0
       terser: ^5.16.0
       tsx: ^4.8.1
-      yaml: ^2.4.2
+      yaml: ~2.8.3
     peerDependenciesMeta:
       '@types/node':
         optional: true
@@ -11094,16 +11096,6 @@ packages:
   yaml@1.10.3:
     resolution: {integrity: sha512-vIYeF1u3CjlhAFekPPAk2h/Kv4T3mAkMox5OymRiJQB0spDP10LHvt+K7G9Ny6NuuMAb25/6n1qyUjAcGNf/AA==}
     engines: {node: '>= 6'}
-
-  yaml@2.7.1:
-    resolution: {integrity: sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ==}
-    engines: {node: '>= 14'}
-    hasBin: true
-
-  yaml@2.8.2:
-    resolution: {integrity: sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A==}
-    engines: {node: '>= 14.6'}
-    hasBin: true
 
   yaml@2.8.3:
     resolution: {integrity: sha512-AvbaCLOO2Otw/lW5bmh9d/WEdcDFdQp2Z2ZUH3pX9U2ihyUY0nvLv7J6TrWowklRGPYbB/IuIMfYgxaCPg5Bpg==}
@@ -18821,7 +18813,7 @@ snapshots:
       picomatch: 4.0.4
       string-argv: 0.3.2
       tinyexec: 1.1.1
-      yaml: 2.8.2
+      yaml: 2.8.3
 
   listr2@9.0.5:
     dependencies:
@@ -21772,13 +21764,9 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.12
       vscode-languageserver-types: 3.17.5
       vscode-uri: 3.1.0
-      yaml: 2.7.1
+      yaml: 2.8.3
 
   yaml@1.10.3: {}
-
-  yaml@2.7.1: {}
-
-  yaml@2.8.2: {}
 
   yaml@2.8.3: {}
 
