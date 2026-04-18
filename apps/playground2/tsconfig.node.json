@@ -7,7 +7,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "allowJs": true
+    "allowJs": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["vite.config.ts", ".eslintrc.cjs", "postcss.config.js", "tailwind.config.js"]
 }

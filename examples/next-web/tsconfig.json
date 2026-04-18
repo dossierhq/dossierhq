@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "noImplicitOverride": true,
-    "incremental": true
+    "incremental": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

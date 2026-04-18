@@ -4,7 +4,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "strictNullChecks": true,
-    "allowJs": true
+    "allowJs": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["vite.config.ts", ".eslintrc.cjs"]
 }

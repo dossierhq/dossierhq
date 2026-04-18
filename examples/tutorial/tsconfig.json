@@ -13,7 +13,8 @@
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "erasableSyntaxOnly": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -16,6 +16,7 @@
     "jsx": "react-jsx",
     "noImplicitOverride": true,
     "incremental": true,
+    "erasableSyntaxOnly": true,
     "plugins": [
       {
         "name": "next"

@@ -7,6 +7,7 @@
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "incremental": true,
+    "erasableSyntaxOnly": true,
     "outDir": "lib",
     "paths": {
       "@dossierhq/better-sqlite3": ["../../libraries/better-sqlite3/src/index.ts"],
