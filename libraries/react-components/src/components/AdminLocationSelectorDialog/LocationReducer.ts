@@ -1,12 +1,12 @@
 import type { Location } from '@dossierhq/core';
 
-export interface LocationState {
+interface LocationState {
   value: Location | null;
   latString: string;
   lngString: string;
 }
 
-export type LocationAction = UpdateValueAction | UpdateLatLngValueAction;
+type LocationAction = UpdateValueAction | UpdateLatLngValueAction;
 
 interface UpdateValueAction {
   type: 'value';
