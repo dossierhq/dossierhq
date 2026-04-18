@@ -1,7 +1,7 @@
 import { Card, Dialog, Field, Input } from '@dossierhq/design';
 import {
   useCallback,
-  useEffect,
+  useMemo,
   useState,
   type ChangeEvent,
   type ChangeEventHandler,
@@ -44,7 +44,21 @@ export function EditPatternDialog({
 }: Props) {
   const [pattern, setPattern] = useState('');
   const [existingPattern, setExistingPattern] = useState('');
-  const [status, setStatus] = useState<DialogStatus>(DialogStatus.closed);
+  const [lastSelector, setLastSelector] = useState<SchemaPatternSelector | null>(null);
+
+  if (selector !== lastSelector) {
+    const p = selector
+      ? (schemaEditorState.patterns.find((it) => it.name === selector.name)?.pattern ?? '')
+      : '';
+    setPattern(p);
+    setExistingPattern(p);
+    setLastSelector(selector);
+  }
+
+  const status: DialogStatus = useMemo(
+    () => (selector ? validatePattern(pattern, existingPattern) : DialogStatus.closed),
+    [selector, pattern, existingPattern],
+  );
 
   const handlePatternChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setPattern(event.target.value);
@@ -59,24 +73,9 @@ export function EditPatternDialog({
         dispatchSchemaEditorState(new SchemaEditorActions.ChangePatternPattern(selector, pattern));
       }
       onClose();
-      setStatus(DialogStatus.closed);
     },
     [dispatchSchemaEditorState, pattern, onClose, selector],
   );
-
-  useEffect(() => {
-    const p = selector
-      ? (schemaEditorState.patterns.find((it) => it.name === selector.name)?.pattern ?? '')
-      : '';
-    setPattern(p);
-    setExistingPattern(p);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selector]);
-
-  useEffect(() => {
-    const newStatus = selector ? validatePattern(pattern, existingPattern) : DialogStatus.closed;
-    setStatus(newStatus);
-  }, [pattern, existingPattern, selector]);
 
   return (
     <Dialog show={!!selector} form modal onClose={handleClose}>

@@ -1,14 +1,12 @@
 import type { Location } from '@dossierhq/core';
-import type { RefObject } from 'react';
 
-interface State {
-  onChangeRef: RefObject<(location: Location | null) => void>;
+export interface LocationState {
   value: Location | null;
   latString: string;
   lngString: string;
 }
 
-type Action = UpdateValueAction | UpdateLatLngValueAction;
+export type LocationAction = UpdateValueAction | UpdateLatLngValueAction;
 
 interface UpdateValueAction {
   type: 'value';
@@ -20,54 +18,28 @@ interface UpdateLatLngValueAction {
   value: string;
 }
 
-function isUpdateValueAction(action: Action): action is UpdateValueAction {
-  return action.type === 'value';
-}
-
-function isUpdateLatLngAction(action: Action): action is UpdateLatLngValueAction {
-  return action.type === 'lat' || action.type === 'lng';
-}
-
-export function initializeLocationState({
-  value,
-  onChangeRef,
-}: {
-  value: Location | null;
-  onChangeRef: RefObject<(location: Location | null) => void>;
-}): State {
+export function initializeLocationState(value: Location | null): LocationState {
   return {
-    onChangeRef,
     value,
     ...locationToStrings(value),
   };
 }
 
-export function reduceLocation(state: State, action: Action): State {
-  if (isUpdateValueAction(action)) {
+export function reduceLocation(state: LocationState, action: LocationAction): LocationState {
+  if (action.type === 'value') {
     return {
       ...state,
       value: action.value,
       ...locationToStrings(action.value),
     };
   }
-  if (isUpdateLatLngAction(action)) {
-    const newState = { ...state };
-    if (action.type === 'lat') {
-      newState.latString = action.value;
-    } else {
-      newState.lngString = action.value;
-    }
-    const location = stringsToLocation(newState);
-
-    if (location) {
-      if (!state.value || !(location.lat === state.value.lat && location.lng === state.value.lng)) {
-        newState.onChangeRef.current?.(location);
-      }
-    }
-
-    return newState;
+  const newState = { ...state };
+  if (action.type === 'lat') {
+    newState.latString = action.value;
+  } else {
+    newState.lngString = action.value;
   }
-  return state;
+  return newState;
 }
 
 function locationToStrings(location: Location | null) {
@@ -77,7 +49,7 @@ function locationToStrings(location: Location | null) {
   };
 }
 
-function stringsToLocation({
+export function stringsToLocation({
   latString,
   lngString,
 }: {

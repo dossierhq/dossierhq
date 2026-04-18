@@ -20,7 +20,6 @@ import {
   useEffect,
   useMemo,
   useReducer,
-  useRef,
   useState,
   type ChangeEvent,
 } from 'react';
@@ -37,7 +36,7 @@ import {
 import { AdminEntityMapMarker } from '../AdminEntityMapMarker/AdminEntityMapMarker.js';
 import { EntityMap } from '../EntityMap/EntityMap.js';
 import { EntityDraftMapMarker } from './EntityDraftMapMarker.js';
-import { initializeLocationState, reduceLocation } from './LocationReducer.js';
+import { initializeLocationState, reduceLocation, stringsToLocation } from './LocationReducer.js';
 
 interface AdminLocationSelectorDialogProps {
   title: string;
@@ -81,29 +80,42 @@ function Content({
   const { schema } = useContext(DossierContext);
   const entityEditorState = useContext(EntityEditorStateContext);
 
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
-
   // Lat, lng state
   const [{ latString, lngString }, dispatch] = useReducer(
     reduceLocation,
-    { value, onChangeRef },
+    value,
     initializeLocationState,
   );
   useEffect(() => {
     dispatch({ type: 'value', value });
   }, [value]);
 
+  const emitIfChanged = useCallback(
+    (nextLatString: string, nextLngString: string) => {
+      const location = stringsToLocation({ latString: nextLatString, lngString: nextLngString });
+      if (location && (!value || location.lat !== value.lat || location.lng !== value.lng)) {
+        onChange(location);
+      }
+    },
+    [value, onChange],
+  );
+
   const handleLatChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void =>
-      dispatch({ type: 'lat', value: event.currentTarget.value }),
-    [],
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const nextLat = event.currentTarget.value;
+      dispatch({ type: 'lat', value: nextLat });
+      emitIfChanged(nextLat, lngString);
+    },
+    [emitIfChanged, lngString],
   );
 
   const handleLngChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void =>
-      dispatch({ type: 'lng', value: event.currentTarget.value }),
-    [],
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const nextLng = event.currentTarget.value;
+      dispatch({ type: 'lng', value: nextLng });
+      emitIfChanged(latString, nextLng);
+    },
+    [emitIfChanged, latString],
   );
 
   // Reset signal

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useSyncExternalStore } from 'react';
 import type {
   CloudinaryUploadWidgetCallback,
   UploadWidget,
@@ -11,7 +11,12 @@ export function useInitializeUploadWidget(
   callback: CloudinaryUploadWidgetCallback,
 ): UploadWidget | null {
   const { status } = useRuntimeDependency('cloudinary-upload-widget');
-  const [uploadWidget, setUploadWidget] = useState<UploadWidget | null>(null);
+  const widgetRef = useRef<UploadWidget | null>(null);
+  const listenersRef = useRef<Set<() => void>>(new Set());
+
+  const notify = () => {
+    for (const listener of listenersRef.current) listener();
+  };
 
   useLayoutEffect(() => {
     if (status !== 'ready') {
@@ -29,14 +34,27 @@ export function useInitializeUploadWidget(
       callback,
     );
 
-    setUploadWidget(widget);
+    widgetRef.current = widget;
+    notify();
     return () => {
       void widget.destroy();
-      setUploadWidget(null);
+      widgetRef.current = null;
+      notify();
     };
     //TODO fix deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callback, status]);
 
-  return uploadWidget;
+  const subscribe = useCallback((onStoreChange: () => void) => {
+    listenersRef.current.add(onStoreChange);
+    return () => {
+      listenersRef.current.delete(onStoreChange);
+    };
+  }, []);
+
+  return useSyncExternalStore(
+    subscribe,
+    () => widgetRef.current,
+    () => null,
+  );
 }
