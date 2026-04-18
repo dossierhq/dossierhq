@@ -77,7 +77,7 @@
     "react-dom": ">=19"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^5.1.1",
+    "@chromatic-com/storybook": "^5.1.2",
     "@dossierhq/core": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/server": "workspace:*",
@@ -95,10 +95,10 @@
     "@types/react-dom": "~19.2.3",
     "@types/sql.js": "~1.4.11",
     "@vitejs/plugin-react": "~6.0.1",
-    "chromatic": "~13.3.5",
+    "chromatic": "~16.3.0",
     "concurrently": "~9.2.0",
     "eslint": "~10.2.0",
-    "postcss": "~8.5.9",
+    "postcss": "~8.5.10",
     "postcss-cli": "~11.0.1",
     "postcss-load-config": "^6.0.1",
     "postcss-remove-rules": "^1.0.0",
@@ -110,8 +110,8 @@
     "tailwindcss": "~4.2.2",
     "tailwindcss-animate": "~1.0.7",
     "typescript": "~5.9.3",
-    "vite": "8.0.7",
+    "vite": "8.0.8",
     "vitest": "~4.1.4",
-    "wait-on": "~9.0.4"
+    "wait-on": "~9.0.5"
   }
 }

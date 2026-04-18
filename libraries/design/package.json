@@ -69,7 +69,7 @@
     "react": "~19.2.5",
     "react-dom": "~19.2.5",
     "react-stately": "~3.46.0",
-    "sass": "~1.97.3",
+    "sass": "~1.99.0",
     "storybook": "~10.3.5",
     "svgo": "~4.0.1",
     "typescript": "~5.9.3",

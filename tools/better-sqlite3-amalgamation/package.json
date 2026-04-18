@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/better-sqlite3": "~7.6.13",
-    "@types/node": "~25.5.2",
+    "@types/node": "~25.6.0",
     "@vitest/coverage-v8": "~4.1.4",
     "tsx": "~4.21.0",
     "typescript": "~5.9.3",
