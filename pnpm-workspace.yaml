@@ -24,6 +24,7 @@ overrides:
   "@babel/runtime@7.26.9": "7.26.10"
   "@hono/node-server@1.19.9": "~1.19.13"
   "@modelcontextprotocol/sdk@1.17.2": "~1.26.0"
+  "brace-expansion@1.1.12": "~1.1.13"
   "jsonwebtoken@9.0.2": "9.0.3"
   "lodash@4.17.21": "~4.18.0"
   "markdown-it@14.1.0": "~14.1.1"
