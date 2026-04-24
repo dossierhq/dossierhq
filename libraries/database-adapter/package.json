@@ -45,7 +45,7 @@
     "@dossierhq/core": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "eslint": "~10.2.0",
+    "eslint": "~10.2.1",
     "typescript": "~6.0.3",
     "vitest": "~4.1.4"
   }

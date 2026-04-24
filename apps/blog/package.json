@@ -46,7 +46,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "dotenv": "~17.4.2",
-    "eslint": "~10.2.0",
+    "eslint": "~10.2.1",
     "schema-dts": "~2.0.0",
     "tsx": "~4.21.0",
     "typescript": "~6.0.3",
