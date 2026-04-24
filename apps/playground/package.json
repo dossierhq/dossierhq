@@ -29,7 +29,7 @@
     "leaflet": "~1.9.4",
     "react": "~19.2.5",
     "react-dom": "~19.2.5",
-    "react-router-dom": "~7.14.1",
+    "react-router-dom": "~7.14.2",
     "sql.js": "~1.14.1",
     "swr": "~2.4.1"
   },
