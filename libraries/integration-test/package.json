@@ -49,7 +49,7 @@
     "@dossierhq/typescript-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
     "@types/node": "~25.6.0",
-    "eslint": "~10.2.0",
+    "eslint": "~10.2.1",
     "tsx": "~4.21.0",
     "typescript": "~6.0.3"
   }
