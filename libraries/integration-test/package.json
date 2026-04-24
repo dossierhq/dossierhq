@@ -36,7 +36,7 @@
     "directory": "libraries/integration-test"
   },
   "dependencies": {
-    "uuid": "~13.0.0"
+    "uuid": "~14.0.0"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
