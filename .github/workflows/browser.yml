@@ -27,7 +27,7 @@ jobs:
           TURBO_TEAM: ${{ secrets.DOSSIERHQ_TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}
       - name: Run Chromatic for react-components2
-        uses: chromaui/action@42839e8c28caf61a16433fa96a03b312bbc47ab5 # v16.6.3
+        uses: chromaui/action@84e0c70520cf012d7cbcd0d9677b4240f893e25e # v16.9.0
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: libraries/react-components2
