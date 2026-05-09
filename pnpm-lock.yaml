@@ -1025,8 +1025,8 @@ importers:
         specifier: ~10.3.5
         version: 10.3.5(eslint@10.2.1(jiti@2.6.1))(storybook@10.3.5(@testing-library/dom@10.4.0)(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)
       eslint-plugin-turbo:
-        specifier: ^2.9.6
-        version: 2.9.6(eslint@10.2.1(jiti@2.6.1))(turbo@2.9.10)
+        specifier: ^2.9.9
+        version: 2.9.9(eslint@10.2.1(jiti@2.6.1))(turbo@2.9.10)
       globals:
         specifier: ~17.5.0
         version: 17.5.0
@@ -7152,8 +7152,8 @@ packages:
       eslint: '>=8'
       storybook: ^10.3.5
 
-  eslint-plugin-turbo@2.9.6:
-    resolution: {integrity: sha512-mntEkRe71izva2mJHZGxH2ccOdySqXiNJf5tdzRabaxhudLCeonPUdTE6aNGOhgVeL1lclxg5/ibp3C/cpe+kQ==}
+  eslint-plugin-turbo@2.9.9:
+    resolution: {integrity: sha512-CHjV79PUXv5D+eCcnk3IMfu15X+EnwDSOWcVM72gQ3Ib8J+pF6zrY7A0kOgdS2HexdaGDoqzSLiXYRyu42TaGQ==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -16843,7 +16843,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-turbo@2.9.6(eslint@10.2.1(jiti@2.6.1))(turbo@2.9.10):
+  eslint-plugin-turbo@2.9.9(eslint@10.2.1(jiti@2.6.1))(turbo@2.9.10):
     dependencies:
       dotenv: 16.0.3
       eslint: 10.2.1(jiti@2.6.1)
