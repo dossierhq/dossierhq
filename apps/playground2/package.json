@@ -47,6 +47,6 @@
     "tailwindcss-animate": "~1.0.7",
     "tsx": "~4.21.0",
     "typescript": "~6.0.3",
-    "vite": "8.0.8"
+    "vite": "8.0.10"
   }
 }
