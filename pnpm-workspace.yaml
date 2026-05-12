@@ -21,6 +21,9 @@ onlyBuiltDependencies:
   - "oxc-resolver"
   - "sharp"
 
+ignoredBuiltDependencies:
+  - browser-tabs-lock
+
 overrides:
   "@babel/core@7.26.9": "7.26.10"
   "@babel/helpers@7.26.9": "7.26.10"
