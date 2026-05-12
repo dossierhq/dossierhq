@@ -82,7 +82,8 @@ overrides:
 
 Note: Use the specific vulnerable version on the left side (e.g., `qs@6.14.0`) and the patched version on the right (e.g., `~6.14.1`).
 
-Note: We use `minimumReleaseAge` which means that we sometimes can't install the latest version with `pnpm`. If that's the case, add the dependency to the `minimumReleaseAgeExclude` list in `pnpm-workspace.yaml`.
+**If the patched version is younger than `minimumReleaseAge` (1 day) and `pnpm install` refuses it:**
+Prefer pinning the exact patched version via `overrides` rather than adding the package name to `minimumReleaseAgeExclude` in `pnpm-workspace.yaml` — listing a whole package there disables the release-age safeguard for all future versions of that package. If you must touch `minimumReleaseAgeExclude`, also check whether any existing entries can now be removed (i.e. the package has since released a version older than the threshold) and clean them up in the same change.
 
 ### Step 5: Verify the Fix
 
