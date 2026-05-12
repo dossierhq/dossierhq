@@ -6,17 +6,26 @@ on:
     paths: [".github/workflows/**"]
   pull_request:
     paths: [".github/workflows/**"]
+  schedule:
+    # Re-scan weekly so newly-published advisories against pinned actions are caught
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   zizmor:
+    name: Audit workflows
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: read
-      security-events: write
+      security-events: write # zizmor-action uploads SARIF results to GitHub code scanning
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
