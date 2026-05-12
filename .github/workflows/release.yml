@@ -1,17 +1,21 @@
 name: Release
 permissions:
-  contents: write
-  id-token: write
-  pull-requests: write
+  contents: read
 on:
   push:
     branches:
       - main
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   release:
     name: Release
     runs-on: ubuntu-slim
+    permissions:
+      contents: write # changesets/action pushes the release PR branch; Publish step runs `git push --tags`
+      id-token: write # required by npm for publishing with provenance
+      pull-requests: write # changesets/action opens/updates the "Version Packages" release PR
     steps:
       - name: Checkout Repo
         # zizmor: ignore[artipacked] changesets/action pushes the release PR branch, and the Publish step does git push --tags

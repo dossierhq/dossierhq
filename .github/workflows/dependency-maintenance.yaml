@@ -11,13 +11,18 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   pnpm-dedupe:
+    name: pnpm dedupe
     runs-on: ubuntu-slim
     timeout-minutes: 10
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # peter-evans/create-pull-request pushes the dedupe branch
+      pull-requests: write # peter-evans/create-pull-request opens the dedupe PR
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -56,13 +61,14 @@ jobs:
           labels: dependencies
 
   mise-tool-updates:
+    name: mise tool updates
     runs-on: ubuntu-slim
     # Only run weekly on Tuesday at 3 AM UTC
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.event.schedule == '0 3 * * 2')
     timeout-minutes: 10
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # peter-evans/create-pull-request pushes the tool-update branch
+      pull-requests: write # peter-evans/create-pull-request opens the tool-update PR
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
