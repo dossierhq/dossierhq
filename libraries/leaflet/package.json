@@ -55,7 +55,7 @@
     "@types/react": "19.2.14",
     "eslint": "~10.3.0",
     "mini-svg-data-uri": "~1.4.4",
-    "react": "~19.2.5",
+    "react": "~19.2.6",
     "svgo": "~4.0.1",
     "typescript": "~6.0.3"
   }
