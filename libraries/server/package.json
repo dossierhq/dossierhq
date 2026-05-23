@@ -52,7 +52,7 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@vitest/coverage-v8": "~4.1.5",
-    "eslint": "~10.3.0",
+    "eslint": "~10.4.0",
     "typescript": "~6.0.3",
     "vitest": "~4.1.5"
   }
