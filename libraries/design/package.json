@@ -59,7 +59,7 @@
     "@storybook/addon-links": "~10.3.6",
     "@storybook/react-vite": "~10.3.6",
     "@types/lodash": "~4.17.24",
-    "@types/react": "19.2.14",
+    "@types/react": "19.2.15",
     "@types/react-dom": "~19.2.3",
     "@vitejs/plugin-react": "~6.0.1",
     "bulma": "~0.9.4",
