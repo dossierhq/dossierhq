@@ -100,7 +100,7 @@
     },
     "libraries/react-components2": {
       "ignore": ["src/components/ui/**"],
-      "ignoreDependencies": ["concurrently", "wait-on"],
+      "ignoreDependencies": ["concurrently", "wait-on", "playwright"],
     },
     "libraries/test-data": {
       "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],

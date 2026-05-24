@@ -1526,6 +1526,9 @@ importers:
       eslint:
         specifier: ~10.4.0
         version: 10.4.0(jiti@2.7.0)
+      playwright:
+        specifier: ~1.59.1
+        version: 1.59.1
       postcss:
         specifier: ~8.5.10
         version: 8.5.15
