@@ -20,7 +20,7 @@
   "devDependencies": {
     "@eslint/js": "~10.0.1",
     "@next/eslint-plugin-next": "~16.2.6",
-    "@vitest/eslint-plugin": "~1.6.16",
+    "@vitest/eslint-plugin": "~1.6.18",
     "eslint": "~10.4.0",
     "eslint-plugin-react": "~7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",
