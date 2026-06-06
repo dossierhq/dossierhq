@@ -29,8 +29,8 @@
     "express-jwt": "~8.5.1",
     "jwks-rsa": "~4.0.1",
     "leaflet": "~1.9.4",
-    "react": "~19.2.6",
-    "react-dom": "~19.2.6",
+    "react": "~19.2.7",
+    "react-dom": "~19.2.7",
     "react-router-dom": "~7.14.2"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "@types/better-sqlite3": "~7.6.13",
     "@types/body-parser": "~1.19.5",
     "@types/express": "~5.0.6",
-    "@types/react": "19.2.15",
+    "@types/react": "19.2.16",
     "@types/react-dom": "~19.2.3",
     "@vitejs/plugin-react": "~6.0.2",
     "concurrently": "~9.2.0",
