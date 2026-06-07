@@ -48,9 +48,9 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/react-components": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/react": "19.2.15",
+    "@types/react": "19.2.16",
     "eslint": "~10.4.1",
-    "react": "~19.2.6",
+    "react": "~19.2.7",
     "typescript": "~6.0.3"
   }
 }
