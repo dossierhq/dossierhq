@@ -26,12 +26,6 @@
       "local": "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts",
       "syncType": "exact-copy",
       "note": "Used in ToolbarPlugin.tsx for determining selected node"
-    },
-    {
-      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPrismPlugin/index.ts",
-      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
-      "syncType": "manual-review",
-      "note": "Adapted version - review changes manually, don't auto-apply"
     }
   ],
   "custom-nodes": {
@@ -142,12 +136,6 @@
       "local": "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts",
       "syncType": "exact-copy",
       "note": "Used in ToolbarPlugin.tsx for determining selected node"
-    },
-    {
-      "playground": "packages/lexical-playground/src/plugins/CodeHighlightPrismPlugin/index.ts",
-      "local": "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
-      "syncType": "manual-review",
-      "note": "Adapted version - review changes manually, don't auto-apply"
     }
   ]
 }
