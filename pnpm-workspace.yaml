@@ -20,6 +20,7 @@ onlyBuiltDependencies:
   - "esbuild"
   - "oxc-resolver"
   - "sharp"
+  - "unrs-resolver"
 
 ignoredBuiltDependencies:
   - browser-tabs-lock
