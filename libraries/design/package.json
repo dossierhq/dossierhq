@@ -46,7 +46,7 @@
     "@fortawesome/free-solid-svg-icons": "~7.2.0",
     "@react-aria/overlays": "~3.32.0",
     "lodash": "~4.18.1",
-    "react-aria-components": "~1.17.0"
+    "react-aria-components": "~1.18.0"
   },
   "peerDependencies": {
     "react": ">=19",
@@ -67,7 +67,7 @@
     "mini-svg-data-uri": "~1.4.4",
     "react": "~19.2.7",
     "react-dom": "~19.2.7",
-    "react-stately": "~3.46.0",
+    "react-stately": "~3.47.0",
     "sass": "~1.99.0",
     "storybook": "~10.4.1",
     "svgo": "~4.0.1",
