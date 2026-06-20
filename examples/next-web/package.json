@@ -34,7 +34,7 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@types/better-sqlite3": "~7.6.13",
-    "@types/react": "19.2.16",
+    "@types/react": "19.2.17",
     "eslint": "~10.4.1",
     "typescript": "~6.0.3"
   }
