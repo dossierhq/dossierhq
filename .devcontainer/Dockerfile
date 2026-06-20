@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:bookworm@sha256:9e35ebf156350ba25b117da6869907034b6e2437b1891e3a43395af0b7d3eda4
+FROM mcr.microsoft.com/devcontainers/base:bookworm@sha256:aba0f2e0730af481edf2db5582a80c0ed2591bee78ec177f7fa7a38e8f5e1105
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends gnuplot pip postgresql-client
