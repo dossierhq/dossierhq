@@ -21,7 +21,7 @@ jobs:
             app/blog/.next/cache/
             examples/next-web/.next/cache/
           key: ${{ runner.os }}-next-${{ hashFiles('pnpm-lock.yaml') }}
-      - uses: jdx/mise-action@dba19683ed58901619b14f395a24841710cb4925 # v4.1.0
+      - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: start db
