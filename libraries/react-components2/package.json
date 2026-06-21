@@ -23,7 +23,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc && postcss src/globals.css -o lib/main.css",
+    "build": "tsc && postcss src/globals.css -o lib/main.css --config config",
     "build:watch": "tsc --watch",
     "build-storybook": "storybook build --quiet",
     "lint": "eslint --max-warnings=0",
