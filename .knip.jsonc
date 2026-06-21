@@ -101,6 +101,9 @@
     "libraries/react-components2": {
       "ignore": ["src/components/ui/**"],
       "ignoreDependencies": ["concurrently", "wait-on", "playwright"],
+      "postcss": {
+        "config": ["config/postcss.config.js"],
+      },
     },
     "libraries/test-data": {
       "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],
