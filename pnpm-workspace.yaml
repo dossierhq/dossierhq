@@ -11,20 +11,6 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude: []
 blockExoticSubdeps: true
 
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - "@sentry/cli"
-  - "@swc/core"
-  - "@tailwindcss/oxide"
-  - "better-sqlite3"
-  - "esbuild"
-  - "oxc-resolver"
-  - "sharp"
-  - "unrs-resolver"
-
-ignoredBuiltDependencies:
-  - browser-tabs-lock
-
 overrides:
   "@babel/core@7.26.9": "7.26.10"
   "@babel/helpers@7.26.9": "7.26.10"
@@ -43,3 +29,15 @@ overrides:
   "webpack@5.97.1": "~5.104.1"
   "yaml@2.7.1": "~2.8.3"
   "yaml@2.8.2": "~2.8.3"
+
+allowBuilds:
+  "@parcel/watcher": true
+  "@sentry/cli": true
+  "@swc/core": true
+  "@tailwindcss/oxide": true
+  better-sqlite3: true
+  esbuild: true
+  oxc-resolver: true
+  sharp: true
+  unrs-resolver: true
+  browser-tabs-lock: false
