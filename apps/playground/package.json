@@ -40,7 +40,7 @@
     "@types/react-dom": "~19.2.3",
     "@types/sql.js": "~1.4.11",
     "@vitejs/plugin-react-swc": "~4.3.1",
-    "eslint": "~10.4.1",
+    "eslint": "~10.5.0",
     "graphql-ws": "~6.0.8",
     "rollup-plugin-visualizer": "~7.0.1",
     "tsx": "~4.21.0",
