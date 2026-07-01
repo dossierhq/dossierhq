@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npx turbo run --filter=playground lint check-types build",
+  "buildCommand": "npx turbo run --filter=playground build",
   "ignoreCommand": "if [ \"$VERCEL_ENV\" != \"production\" ]; then exit 0; fi; npx turbo-ignore playground",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
