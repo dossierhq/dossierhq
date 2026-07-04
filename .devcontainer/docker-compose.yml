@@ -21,7 +21,7 @@ services:
 
   db:
     # TODO switch back to official postgis image when arm64 is supported
-    image: ghcr.io/baosystems/postgis:18-3.6@sha256:e1854dacbc41d8c2675ce308d09b9cf98742585609b9d1129ba66d7a372d8984
+    image: ghcr.io/baosystems/postgis:18-3.6@sha256:7debfed285fc93289e64d807997bab026d2f0daf761f2b15aa6e48240b64339c
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
