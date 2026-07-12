@@ -49,6 +49,46 @@ export const CreateStringsEntity: Story = {
   },
 };
 
+export const CreateBooleansEntity: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [{ type: 'BooleansEntity', id: crypto.randomUUID(), isNew: true }],
+    }),
+  },
+};
+
+export const CreateNumbersEntity: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [{ type: 'NumbersEntity', id: crypto.randomUUID(), isNew: true }],
+    }),
+  },
+};
+
+export const CreateLocationsEntity: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [{ type: 'LocationsEntity', id: crypto.randomUUID(), isNew: true }],
+    }),
+  },
+};
+
+export const CreateReferencesEntity: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [{ type: 'ReferencesEntity', id: crypto.randomUUID(), isNew: true }],
+    }),
+  },
+};
+
+export const CreateComponentsEntity: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [{ type: 'ComponentsEntity', id: crypto.randomUUID(), isNew: true }],
+    }),
+  },
+};
+
 export const OneOpen: Story = {
   args: {
     urlSearchParams: urlFor({ entities: [{ id: 'a94c056e-7ae4-563c-a8d7-dd7ac41f7929' }] }),

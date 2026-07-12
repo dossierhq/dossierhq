@@ -1,6 +1,14 @@
 import type { Component, DossierClient, Entity } from '@dossierhq/core';
 import { ChevronDownIcon, ChevronUpIcon, MenuIcon } from 'lucide-react';
-import { useCallback, useContext, useState, type Dispatch, type SetStateAction } from 'react';
+import {
+  useCallback,
+  useContext,
+  useId,
+  useState,
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 import { toast } from 'sonner';
 import { EntityFieldEditor } from '../components/EntityFieldEditor.js';
 import { ContentEditorDispatchContext } from '../contexts/ContentEditorDispatchContext.js';
@@ -13,13 +21,17 @@ import {
   type ContentEditorDraftState,
   type ContentEditorStateAction,
 } from '../reducers/ContentEditorReducer.js';
+import { AuthKeyPicker } from './AuthKeyPicker.js';
 import type {
   ContentEditorCommandMenuAction,
   ContentEditorCommandMenuConfig,
 } from './ContentEditorCommandMenu.js';
 import { EntityCard } from './EntityCard.js';
+import { PublishingButton } from './PublishingButton.js';
 import { Button } from './ui/button.js';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.js';
+import { Input } from './ui/input.js';
+import { Label } from './ui/label.js';
 
 interface Props {
   id?: string;
@@ -30,8 +42,9 @@ interface Props {
 export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
   const dispatchContentEditor = useContext(ContentEditorDispatchContext);
   const [showFields, setShowFields] = useState(true);
+  const nameId = useId();
+  const authKeyId = useId();
 
-  /* TODO
   const handleNameChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) =>
       dispatchContentEditor(new ContentEditorActions.SetName(draftState.id, event.target.value)),
@@ -42,7 +55,6 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
       dispatchContentEditor(new ContentEditorActions.SetAuthKey(draftState.id, authKey)),
     [dispatchContentEditor, draftState.id],
   );
-  */
 
   if (!draftState.draft) {
     return null;
@@ -73,39 +85,38 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
         />
         <CollapsibleContent className="CollapsibleContent">
           <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">
-            {/* <Field>
-        <Field.Label>Name</Field.Label>
-        <Field.Control>
-          <Input value={draftState.draft.name} onChange={handleNameChange} />
-          {draftState.draft.nameIsLinkedToField ? (
-            <Text textStyle="body2" marginTop={1}>
-              The name is linked to the field: {draftState.draft.entitySpec.nameField}.
-            </Text>
-          ) : null}
-        </Field.Control>
-      </Field> */}
-            {/* {!draftState.entity && draftState.draft.entitySpec.authKeyPattern ? (
-        <Field>
-          <Field.Label>Authorization key</Field.Label>
-          <Field.Control>
-            <AuthKeyPicker
-              patternName={draftState.draft.entitySpec.authKeyPattern}
-              value={draftState.draft.authKey}
-              onValueChange={handleAuthKeyChange}
-            />
-          </Field.Control>
-          {draftState.draft.authKey === null ? (
-            <Field.Help color="danger">Authorization key is required</Field.Help>
-          ) : null}
-        </Field>
-      ) : null} */}
-            {/* <Row gap={2} justifyContent="center">
-        <PublishingButton
-          disabled={draftState.status !== ''}
-          entity={draftState.entity}
-          entitySpec={draftState.draft.entitySpec}
-        />
-      </Row> */}
+            <div className="mb-1 flex items-baseline gap-2 py-2">
+              <Label htmlFor={nameId}>Name</Label>
+            </div>
+            <Input id={nameId} value={draftState.draft.name} onChange={handleNameChange} />
+            {draftState.draft.nameIsLinkedToField ? (
+              <p className="text-muted-foreground mt-1 text-sm">
+                The name is linked to the field: {draftState.draft.entitySpec.nameField}.
+              </p>
+            ) : null}
+            {!draftState.entity && draftState.draft.entitySpec.authKeyPattern ? (
+              <>
+                <div className="mb-1 flex items-baseline gap-2 py-2">
+                  <Label htmlFor={authKeyId}>Authorization key</Label>
+                </div>
+                <AuthKeyPicker
+                  id={authKeyId}
+                  patternName={draftState.draft.entitySpec.authKeyPattern}
+                  value={draftState.draft.authKey}
+                  onValueChange={handleAuthKeyChange}
+                />
+                {draftState.draft.authKey === null ? (
+                  <p className="mt-1 text-sm text-red-400">Authorization key is required</p>
+                ) : null}
+              </>
+            ) : null}
+            {draftState.entity ? (
+              <PublishingButton
+                disabled={draftState.status !== ''}
+                entity={draftState.entity}
+                entitySpec={draftState.draft.entitySpec}
+              />
+            ) : null}
             {draftState.draft.fields.map((field) => (
               <EntityFieldEditor
                 key={field.fieldSpec.name}
