@@ -5,12 +5,15 @@ import {
   isLocationSingleField,
   isNumberListField,
   isNumberSingleField,
+  isReferenceListField,
+  isReferenceSingleField,
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
   type FieldSpecification,
   type LocationFieldSpecification,
   type NumberFieldSpecification,
+  type ReferenceFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import type { JSX, ReactNode } from 'react';
@@ -18,6 +21,7 @@ import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
 import { LocationFieldDisplay } from './LocationFieldDisplay.js';
 import { NumberFieldDisplay } from './NumberFieldDisplay.js';
+import { ReferenceFieldDisplay } from './ReferenceFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 
 export interface FieldDisplayProps<
@@ -93,27 +97,26 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={LocationFieldDisplay}
       />
     );
-  } else if (isStringSingleField(fieldSpec, value)) {
-    /* TODO
-  else if (isReferenceSingleField(fieldSpec, value)) {
-    editor = (
-      <ReferenceFieldEditor
+  } else if (isReferenceSingleField(fieldSpec, value)) {
+    display = (
+      <ReferenceFieldDisplay
         {...props}
         fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
       />
     );
   } else if (isReferenceListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
+    display = (
+      <FieldListDisplayWrapper
         {...props}
         fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
-        AddButton={AddEntityListItemButton}
-        Editor={ReferenceFieldEditor}
+        Display={ReferenceFieldDisplay}
       />
     );
-  } else if (isRichTextSingleField(fieldSpec, value)) {
+  } else if (isStringSingleField(fieldSpec, value)) {
+    /* TODO
+  else if (isRichTextSingleField(fieldSpec, value)) {
     editor = (
       <RichTextFieldEditor
         {...props}

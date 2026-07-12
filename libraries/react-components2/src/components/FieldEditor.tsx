@@ -5,6 +5,8 @@ import {
   isLocationSingleField,
   isNumberListField,
   isNumberSingleField,
+  isReferenceListField,
+  isReferenceSingleField,
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
@@ -12,6 +14,7 @@ import {
   type LocationFieldSpecification,
   type NumberFieldSpecification,
   type PublishValidationIssue,
+  type ReferenceFieldSpecification,
   type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
@@ -20,6 +23,7 @@ import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEdit
 import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
 import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldEditor.js';
 import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
+import { AddEntityListItemButton, ReferenceFieldEditor } from './ReferenceFieldEditor.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
 
 export interface FieldEditorProps<
@@ -101,9 +105,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={LocationFieldEditor}
       />
     );
-  } else if (isStringSingleField(fieldSpec, value)) {
-    /* TODO
-  else if (isReferenceSingleField(fieldSpec, value)) {
+  } else if (isReferenceSingleField(fieldSpec, value)) {
     editor = (
       <ReferenceFieldEditor
         {...props}
@@ -113,7 +115,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isReferenceListField(fieldSpec, value)) {
     editor = (
-      <FieldListWrapper
+      <FieldListEditorWrapper
         {...props}
         fieldSpec={fieldSpec as ReferenceFieldSpecification}
         value={value}
@@ -121,7 +123,9 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={ReferenceFieldEditor}
       />
     );
-  } else if (isRichTextSingleField(fieldSpec, value)) {
+  } else if (isStringSingleField(fieldSpec, value)) {
+    /* TODO
+  else if (isRichTextSingleField(fieldSpec, value)) {
     editor = (
       <RichTextFieldEditor
         {...props}

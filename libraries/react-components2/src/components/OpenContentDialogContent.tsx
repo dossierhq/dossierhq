@@ -31,13 +31,15 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from './u
 import { VisuallyHidden } from './ui/visually-hidden.js';
 
 interface Props {
+  title?: string;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
   onOpenEntity: (entityId: string) => void;
-  onCreateEntity: (type: string) => void;
+  onCreateEntity?: (type: string) => void;
 }
 
 export function OpenContentDialogContent({
+  title,
   contentListState,
   dispatchContentList,
   onOpenEntity,
@@ -64,7 +66,7 @@ export function OpenContentDialogContent({
         onCreateEntity={onCreateEntity}
       />
       <DialogHeader>
-        <DialogTitle>Select content</DialogTitle>
+        <DialogTitle>{title ?? 'Select content'}</DialogTitle>
       </DialogHeader>
       <VisuallyHidden asChild>
         <DialogDescription>Select content to open or create new content.</DialogDescription>
@@ -73,6 +75,7 @@ export function OpenContentDialogContent({
         {md && (
           <Sidebar
             schema={schema}
+            showCreate={!!onCreateEntity}
             contentListState={contentListState}
             dispatchContentList={dispatchContentList}
             dispatchCommandMenu={dispatchCommandMenu}
@@ -80,6 +83,7 @@ export function OpenContentDialogContent({
         )}
         <main className="flex grow flex-col">
           <Toolbar
+            showCreate={!!onCreateEntity}
             contentListState={contentListState}
             dispatchContentList={dispatchContentList}
             dispatchCommandMenu={dispatchCommandMenu}
@@ -99,11 +103,13 @@ export function OpenContentDialogContent({
 
 function Sidebar({
   schema,
+  showCreate,
   contentListState,
   dispatchContentList,
   dispatchCommandMenu,
 }: {
   schema: Schema | undefined;
+  showCreate: boolean;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
   dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
@@ -112,12 +118,14 @@ function Sidebar({
     <aside className="flex w-1/5 max-w-80 min-w-72 flex-col border-r">
       <div className="mt-2 flex gap-2 px-2">
         <ShowCommandMenuButton dispatchCommandMenu={dispatchCommandMenu} />
-        <Button
-          variant="secondary"
-          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
-        >
-          Create
-        </Button>
+        {showCreate && (
+          <Button
+            variant="secondary"
+            onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
+          >
+            Create
+          </Button>
+        )}
       </div>
       <div className="flex grow flex-col gap-2 overflow-auto p-2">
         <p className="text-sm font-semibold">Filters</p>
@@ -162,10 +170,12 @@ function Sidebar({
 }
 
 function Toolbar({
+  showCreate,
   contentListState,
   dispatchContentList,
   dispatchCommandMenu,
 }: {
+  showCreate: boolean;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
   dispatchCommandMenu: Dispatch<ContentListCommandMenuAction>;
@@ -183,12 +193,14 @@ function Toolbar({
           contentListState={contentListState}
           dispatchContentList={dispatchContentList}
         />
-        <Button
-          className="md:hidden"
-          onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
-        >
-          Create
-        </Button>
+        {showCreate && (
+          <Button
+            className="md:hidden"
+            onClick={() => dispatchCommandMenu(new CommandMenuState_ShowAction([{ id: 'create' }]))}
+          >
+            Create
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ export function ContentListCommandMenu({
   dispatch: Dispatch<ContentListCommandMenuAction>;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
-  onCreateEntity: (type: string) => void;
+  onCreateEntity?: (type: string) => void;
 }) {
   useOpenCommandMenu(dispatch);
   const { schema } = useSchema();
@@ -105,14 +105,16 @@ export function ContentListCommandMenu({
         <CommandEmpty>No results found.</CommandEmpty>
         {state.currentPage?.id === 'root' && (
           <>
-            <CommandGroup heading="Suggestions">
-              <CommandItem
-                onSelect={() => dispatch(new CommandMenuState_OpenPageAction({ id: 'create' }))}
-              >
-                <PlusIcon className="mr-2 h-4 w-4" />
-                <span>Create entity</span>
-              </CommandItem>
-            </CommandGroup>
+            {onCreateEntity && (
+              <CommandGroup heading="Suggestions">
+                <CommandItem
+                  onSelect={() => dispatch(new CommandMenuState_OpenPageAction({ id: 'create' }))}
+                >
+                  <PlusIcon className="mr-2 h-4 w-4" />
+                  <span>Create entity</span>
+                </CommandItem>
+              </CommandGroup>
+            )}
             <CommandGroup heading="Filters">
               {contentListState.mode === 'full' && (
                 <CommandItem
@@ -203,7 +205,7 @@ export function ContentListCommandMenu({
             <GenericCommands dispatch={dispatch} />
           </>
         )}
-        {state.currentPage?.id === 'create' && (
+        {state.currentPage?.id === 'create' && onCreateEntity && (
           <CreateEntityCommandPage {...{ schema, dispatch, onCreateEntity }} />
         )}
         {state.currentPage?.id === 'filterStatus' && (
