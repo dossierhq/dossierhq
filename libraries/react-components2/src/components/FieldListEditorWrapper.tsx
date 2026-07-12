@@ -1,9 +1,28 @@
 import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import {
   groupValidationIssuesByTopLevelPath,
   type FieldSpecification,
   type PublishValidationIssue,
   type SaveValidationIssue,
 } from '@dossierhq/core';
+import { GripVerticalIcon } from 'lucide-react';
 import { useCallback, useMemo, type JSX, type JSXElementConstructor } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
@@ -59,68 +78,91 @@ export function FieldListEditorWrapper<TFieldSpec extends FieldSpecification, TI
     [validationIssues],
   );
 
-  //TODO drag and drop
-  // const { dragAndDropHooks: fieldsDragAndDropHooks } = useDragAndDrop({
-  //   getItems: (keys) =>
-  //     [...keys].map((key) => ({ 'application/json': JSON.stringify(value?.[key as number]) })),
-  //   onReorder: (event) => {
-  //     if (!value || event.target.dropPosition === 'on') {
-  //       return;
-  //     }
-  //     const moveIndex = [...event.keys][0] as number;
-  //     let targetIndex = event.target.key as number;
-  //     if (moveIndex === targetIndex) {
-  //       return;
-  //     }
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
 
-  //     const newValue = [...value];
-  //     const [itemToMove] = newValue.splice(moveIndex, 1);
-  //     if (targetIndex > moveIndex) {
-  //       targetIndex--;
-  //     }
+  // dnd-kit needs stable non-zero ids, so use index + 1
+  const sortableIds = useMemo(() => (value ? value.map((_, index) => index + 1) : []), [value]);
 
-  //     if (event.target.dropPosition === 'after') {
-  //       newValue.splice(targetIndex + 1, 0, itemToMove);
-  //     } else {
-  //       newValue.splice(targetIndex, 0, itemToMove);
-  //     }
-  //     onChange(newValue);
-  //   },
-  // });
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+      if (!value || !over || active.id === over.id) {
+        return;
+      }
+      const fromIndex = (active.id as number) - 1;
+      const toIndex = (over.id as number) - 1;
+      onChange(arrayMove(value, fromIndex, toIndex));
+    },
+    [value, onChange],
+  );
 
   return (
     <div className="flex flex-col gap-1 overflow-y-auto">
       {value && value.length > 0 ? (
-        <>
-          {/*<GridList aria-label={`List of values`} dragAndDropHooks={fieldsDragAndDropHooks}>*/}
-          {value.map((it, index) => {
-            //     return (
-            //       <GridListItem
-            //         key={index}
-            //         id={index}
-            //         className="nested-value-item-indentation"
-            //         marginVertical={1}
-            //         textValue={`Value ${index + 1}`}
-            //       >
-            return (
-              <Editor
-                key={index}
-                id={index === 0 ? id : undefined}
-                value={it}
-                fieldSpec={fieldSpec}
-                adminOnly={adminOnly}
-                validationIssues={indexValidationIssues.get(index) ?? noErrors}
-                // dragHandle={<GridListDragHandle />}
-                onChange={(newItemValue) => handleItemChange(newItemValue, index)}
-              />
-            );
-            // </GridListItem>
-          })}
-        </>
-      ) : // </GridList>
-      null}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={sortableIds} strategy={verticalListSortingStrategy}>
+            {value.map((it, index) => (
+              <SortableFieldListItem key={index} sortableId={index + 1}>
+                {(dragHandle) => (
+                  <Editor
+                    id={index === 0 ? id : undefined}
+                    value={it}
+                    fieldSpec={fieldSpec}
+                    adminOnly={adminOnly}
+                    validationIssues={indexValidationIssues.get(index) ?? noErrors}
+                    dragHandle={dragHandle}
+                    onChange={(newItemValue) => handleItemChange(newItemValue, index)}
+                  />
+                )}
+              </SortableFieldListItem>
+            ))}
+          </SortableContext>
+        </DndContext>
+      ) : null}
       <AddButton fieldSpec={fieldSpec} onAddItem={handleAddItem} />
       <ValidationIssuesDisplay validationIssues={rootValidationIssues} />
+    </div>
+  );
+}
+
+function SortableFieldListItem({
+  sortableId,
+  children,
+}: {
+  sortableId: number;
+  children: (dragHandle: JSX.Element) => JSX.Element;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: sortableId,
+  });
+
+  const dragHandle = (
+    <button
+      type="button"
+      aria-label="Reorder"
+      className="text-muted-foreground cursor-grab self-center active:cursor-grabbing"
+      {...attributes}
+      {...listeners}
+    >
+      <GripVerticalIcon className="size-4" />
+    </button>
+  );
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={isDragging ? 'relative z-10' : undefined}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+    >
+      {children(dragHandle)}
     </div>
   );
 }
