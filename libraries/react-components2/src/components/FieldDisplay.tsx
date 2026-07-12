@@ -1,18 +1,22 @@
 import {
   isBooleanListField,
   isBooleanSingleField,
+  isLocationListField,
+  isLocationSingleField,
   isNumberListField,
   isNumberSingleField,
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
   type FieldSpecification,
+  type LocationFieldSpecification,
   type NumberFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import type { JSX, ReactNode } from 'react';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
+import { LocationFieldDisplay } from './LocationFieldDisplay.js';
 import { NumberFieldDisplay } from './NumberFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 
@@ -72,8 +76,25 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={NumberFieldDisplay}
       />
     );
+  } else if (isLocationSingleField(fieldSpec, value)) {
+    display = (
+      <LocationFieldDisplay
+        {...props}
+        fieldSpec={fieldSpec as LocationFieldSpecification}
+        value={value}
+      />
+    );
+  } else if (isLocationListField(fieldSpec, value)) {
+    display = (
+      <FieldListDisplayWrapper
+        {...props}
+        fieldSpec={fieldSpec as LocationFieldSpecification}
+        value={value}
+        Display={LocationFieldDisplay}
+      />
+    );
   } else if (isStringSingleField(fieldSpec, value)) {
-  /* TODO
+    /* TODO
   else if (isReferenceSingleField(fieldSpec, value)) {
     editor = (
       <ReferenceFieldEditor
@@ -90,24 +111,6 @@ export function FieldDisplay(props: FieldDisplayProps) {
         value={value}
         AddButton={AddEntityListItemButton}
         Editor={ReferenceFieldEditor}
-      />
-    );
-  } else if (isLocationSingleField(fieldSpec, value)) {
-    editor = (
-      <LocationFieldEditor
-        {...props}
-        fieldSpec={fieldSpec as LocationFieldSpecification}
-        value={value}
-      />
-    );
-  } else if (isLocationListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
-        {...props}
-        fieldSpec={fieldSpec as LocationFieldSpecification}
-        value={value}
-        AddButton={AddLocationListItemButton}
-        Editor={LocationFieldEditor}
       />
     );
   } else if (isRichTextSingleField(fieldSpec, value)) {
