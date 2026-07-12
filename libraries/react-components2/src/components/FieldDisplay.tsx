@@ -19,7 +19,8 @@ import {
   type ReferenceFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
-import type { JSX, ReactNode } from 'react';
+import { useContext, type JSX, type ReactNode } from 'react';
+import { DossierContext } from '../contexts/DossierContext.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { ComponentFieldDisplay } from './ComponentFieldDisplay.js';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
@@ -41,13 +42,11 @@ export interface FieldDisplayProps<
 export function FieldDisplay(props: FieldDisplayProps) {
   const { fieldSpec, value } = props;
 
-  /*TODO
   const { adapter } = useContext(DossierContext);
-  const overriddenEditor = adapter.renderFieldEditor(props);
-  if (overriddenEditor) {
-    return overriddenEditor;
+  const overriddenDisplay = adapter?.renderFieldDisplay(props);
+  if (overriddenDisplay) {
+    return overriddenDisplay;
   }
-  */
 
   let display: JSX.Element;
   if (isBooleanSingleField(fieldSpec, value)) {

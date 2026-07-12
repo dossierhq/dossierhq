@@ -21,7 +21,8 @@ import {
   type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
-import type { JSX, ReactNode } from 'react';
+import { useContext, type JSX, type ReactNode } from 'react';
+import { DossierContext } from '../contexts/DossierContext.js';
 import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
@@ -46,13 +47,11 @@ export interface FieldEditorProps<
 export function FieldEditor(props: FieldEditorProps) {
   const { fieldSpec, value } = props;
 
-  /*TODO
   const { adapter } = useContext(DossierContext);
-  const overriddenEditor = adapter.renderFieldEditor(props);
+  const overriddenEditor = adapter?.renderFieldEditor(props);
   if (overriddenEditor) {
     return overriddenEditor;
   }
-  */
 
   let editor: JSX.Element;
   if (isBooleanSingleField(fieldSpec, value)) {
