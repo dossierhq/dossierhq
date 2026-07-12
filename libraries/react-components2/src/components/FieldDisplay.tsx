@@ -1,11 +1,19 @@
 import {
+  isBooleanListField,
+  isBooleanSingleField,
+  isNumberListField,
+  isNumberSingleField,
   isStringListField,
   isStringSingleField,
+  type BooleanFieldSpecification,
   type FieldSpecification,
+  type NumberFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import type { JSX, ReactNode } from 'react';
+import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
+import { NumberFieldDisplay } from './NumberFieldDisplay.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 
 export interface FieldDisplayProps<
@@ -30,26 +38,43 @@ export function FieldDisplay(props: FieldDisplayProps) {
   */
 
   let display: JSX.Element;
-  /* TODO
   if (isBooleanSingleField(fieldSpec, value)) {
-    editor = (
-      <BooleanFieldEditor
+    display = (
+      <BooleanFieldDisplay
         {...props}
         fieldSpec={fieldSpec as BooleanFieldSpecification}
         value={value}
       />
     );
   } else if (isBooleanListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
+    display = (
+      <FieldListDisplayWrapper
         {...props}
         fieldSpec={fieldSpec as BooleanFieldSpecification}
         value={value}
-        AddButton={AddBooleanListItemButton}
-        Editor={BooleanFieldEditor}
+        Display={BooleanFieldDisplay}
       />
     );
-  } else if (isReferenceSingleField(fieldSpec, value)) {
+  } else if (isNumberSingleField(fieldSpec, value)) {
+    display = (
+      <NumberFieldDisplay
+        {...props}
+        fieldSpec={fieldSpec as NumberFieldSpecification}
+        value={value}
+      />
+    );
+  } else if (isNumberListField(fieldSpec, value)) {
+    display = (
+      <FieldListDisplayWrapper
+        {...props}
+        fieldSpec={fieldSpec as NumberFieldSpecification}
+        value={value}
+        Display={NumberFieldDisplay}
+      />
+    );
+  } else if (isStringSingleField(fieldSpec, value)) {
+  /* TODO
+  else if (isReferenceSingleField(fieldSpec, value)) {
     editor = (
       <ReferenceFieldEditor
         {...props}
@@ -85,24 +110,6 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Editor={LocationFieldEditor}
       />
     );
-  } else if (isNumberSingleField(fieldSpec, value)) {
-    editor = (
-      <NumberFieldEditor
-        {...props}
-        fieldSpec={fieldSpec as NumberFieldSpecification}
-        value={value}
-      />
-    );
-  } else if (isNumberListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
-        {...props}
-        fieldSpec={fieldSpec as NumberFieldSpecification}
-        value={value}
-        AddButton={AddNumberListItemButton}
-        Editor={NumberFieldEditor}
-      />
-    );
   } else if (isRichTextSingleField(fieldSpec, value)) {
     editor = (
       <RichTextFieldEditor
@@ -121,9 +128,8 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Editor={RichTextFieldEditor}
       />
     );
-  } else
+  }
   */
-  if (isStringSingleField(fieldSpec, value)) {
     display = (
       <StringFieldDisplay
         {...props}

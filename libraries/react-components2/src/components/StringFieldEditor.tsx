@@ -1,22 +1,23 @@
 import type { StringFieldSpecification } from '@dossierhq/core';
+import { XIcon } from 'lucide-react';
 import { useCallback, type ChangeEvent } from 'react';
 import type { FieldEditorProps } from './FieldEditor.js';
 import { Button } from './ui/button.js';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu.js';
 import { Input } from './ui/input.js';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select.js';
 import { Textarea } from './ui/textarea.js';
 import { ValidationIssuesDisplay } from './ValidationIssuesDisplay.js';
 
 type Props = FieldEditorProps<StringFieldSpecification, string>;
 
 export function StringFieldEditor(props: Props) {
-  const {
-    id,
-    fieldSpec,
-    value,
-    validationIssues,
-    // dragHandle,
-    onChange,
-  } = props;
+  const { id, fieldSpec, value, validationIssues, dragHandle, onChange } = props;
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,107 +26,89 @@ export function StringFieldEditor(props: Props) {
     [onChange],
   );
 
-  //TODO
-  // if (fieldSpec.values.length > 0) {
-  //   return <StringValueFieldEditor {...props} />;
-  // }
-  //
+  if (fieldSpec.values.length > 0) {
+    return <StringValueFieldEditor {...props} />;
+  }
+
   return (
     <>
-      {fieldSpec.multiline ? (
-        <Textarea id={id} value={value ?? ''} onChange={handleChange} />
-      ) : (
-        <Input id={id} value={value ?? ''} onChange={handleChange} />
-      )}
+      <div className="flex items-center gap-2">
+        {dragHandle}
+        {fieldSpec.multiline ? (
+          <Textarea id={id} className="flex-grow" value={value ?? ''} onChange={handleChange} />
+        ) : (
+          <Input id={id} className="flex-grow" value={value ?? ''} onChange={handleChange} />
+        )}
+      </div>
       <ValidationIssuesDisplay validationIssues={validationIssues} />
     </>
   );
-
-  /*TODO
-return (
-  <>
-    {fieldSpec.multiline ? (
-      <>
-        {dragHandle}
-        <TextArea value={value ?? ''} onChange={handleChange} />
-      </>
-    ) : (
-      <Row>
-        {dragHandle}
-        <Input
-          className={toFlexItemClassName({ flexGrow: 1 })}
-          value={value ?? ''}
-          onChange={handleChange}
-        />
-      </Row>
-    )}
-    <ValidationIssuesDisplay validationIssues={validationIssues} />
-  </>
-);
-*/
 }
 
-/*TODO
 function StringValueFieldEditor({
-fieldSpec,
-value,
-validationIssues,
-dragHandle,
-onChange,
+  id,
+  fieldSpec,
+  value,
+  validationIssues,
+  dragHandle,
+  onChange,
 }: Props) {
-const handleItemClick = useCallback(
-  (item: { id: string }) => {
-    onChange(item.id);
-  },
-  [onChange],
-);
-const handleClear = useCallback(() => onChange(null), [onChange]);
+  const handleClear = useCallback(() => onChange(null), [onChange]);
 
-return (
-  <HoverRevealContainer>
-    {dragHandle ? (
-      <HoverRevealContainer.Item forceVisible alignSelf="center">
+  return (
+    <>
+      <div className="group flex items-center gap-2">
         {dragHandle}
-      </HoverRevealContainer.Item>
-    ) : null}
-    <HoverRevealContainer.Item flexGrow={1} forceVisible>
-      <ButtonDropdown
-        items={fieldSpec.values.map((item) => ({ id: item.value }))}
-        renderItem={(item) => item.id}
-        onItemClick={handleItemClick}
-      >
-        {value ? value : <i>Not set</i>}
-      </ButtonDropdown>
+        <Select value={value ?? ''} onValueChange={onChange}>
+          <SelectTrigger id={id}>
+            <SelectValue placeholder="Not set" />
+          </SelectTrigger>
+          <SelectContent>
+            {fieldSpec.values.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.value}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Clear"
+          className="size-6 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+          onClick={handleClear}
+        >
+          <XIcon />
+        </Button>
+      </div>
       <ValidationIssuesDisplay validationIssues={validationIssues} />
-    </HoverRevealContainer.Item>
-    <HoverRevealContainer.Item>
-      <Delete onClick={handleClear} />
-    </HoverRevealContainer.Item>
-  </HoverRevealContainer>
-);
+    </>
+  );
 }
-*/
+
 export function AddStringListItemButton({
-  fieldSpec: _,
+  fieldSpec,
   onAddItem,
 }: {
   fieldSpec: StringFieldSpecification;
   onAddItem: (value: string | null) => void;
 }) {
-  /*
   if (fieldSpec.values.length > 0) {
     return (
-      <ButtonDropdown
-        className={toFlexItemClassName({ alignSelf: 'flex-start' })}
-        items={fieldSpec.values.map((item) => ({ id: item.value }))}
-        renderItem={(item) => item.id}
-        onItemClick={(item) => onAddItem(item.id)}
-      >
-        Add
-      </ButtonDropdown>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button className="self-start">Add</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          {fieldSpec.values.map((item) => (
+            <DropdownMenuItem key={item.value} onSelect={() => onAddItem(item.value)}>
+              {item.value}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   }
-  */
 
   return (
     <Button className="self-start" onClick={() => onAddItem(null)}>

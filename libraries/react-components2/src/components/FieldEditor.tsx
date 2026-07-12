@@ -1,13 +1,21 @@
 import {
+  isBooleanListField,
+  isBooleanSingleField,
+  isNumberListField,
+  isNumberSingleField,
   isStringListField,
   isStringSingleField,
+  type BooleanFieldSpecification,
   type FieldSpecification,
+  type NumberFieldSpecification,
   type PublishValidationIssue,
   type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import type { JSX, ReactNode } from 'react';
+import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
 import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
+import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
 
 export interface FieldEditorProps<
@@ -35,7 +43,6 @@ export function FieldEditor(props: FieldEditorProps) {
   */
 
   let editor: JSX.Element;
-  /* TODO
   if (isBooleanSingleField(fieldSpec, value)) {
     editor = (
       <BooleanFieldEditor
@@ -46,7 +53,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isBooleanListField(fieldSpec, value)) {
     editor = (
-      <FieldListWrapper
+      <FieldListEditorWrapper
         {...props}
         fieldSpec={fieldSpec as BooleanFieldSpecification}
         value={value}
@@ -54,7 +61,27 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={BooleanFieldEditor}
       />
     );
-  } else if (isReferenceSingleField(fieldSpec, value)) {
+  } else if (isNumberSingleField(fieldSpec, value)) {
+    editor = (
+      <NumberFieldEditor
+        {...props}
+        fieldSpec={fieldSpec as NumberFieldSpecification}
+        value={value}
+      />
+    );
+  } else if (isNumberListField(fieldSpec, value)) {
+    editor = (
+      <FieldListEditorWrapper
+        {...props}
+        fieldSpec={fieldSpec as NumberFieldSpecification}
+        value={value}
+        AddButton={AddNumberListItemButton}
+        Editor={NumberFieldEditor}
+      />
+    );
+  } else if (isStringSingleField(fieldSpec, value)) {
+  /* TODO
+  else if (isReferenceSingleField(fieldSpec, value)) {
     editor = (
       <ReferenceFieldEditor
         {...props}
@@ -90,24 +117,6 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={LocationFieldEditor}
       />
     );
-  } else if (isNumberSingleField(fieldSpec, value)) {
-    editor = (
-      <NumberFieldEditor
-        {...props}
-        fieldSpec={fieldSpec as NumberFieldSpecification}
-        value={value}
-      />
-    );
-  } else if (isNumberListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
-        {...props}
-        fieldSpec={fieldSpec as NumberFieldSpecification}
-        value={value}
-        AddButton={AddNumberListItemButton}
-        Editor={NumberFieldEditor}
-      />
-    );
   } else if (isRichTextSingleField(fieldSpec, value)) {
     editor = (
       <RichTextFieldEditor
@@ -126,9 +135,8 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={RichTextFieldEditor}
       />
     );
-  } else
+  }
   */
-  if (isStringSingleField(fieldSpec, value)) {
     editor = (
       <StringFieldEditor
         {...props}
