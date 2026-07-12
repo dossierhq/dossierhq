@@ -8,7 +8,11 @@ import {
   type PromiseResult,
   type Result,
 } from '@dossierhq/core';
-import { DossierProvider, useCachingDossierMiddleware } from '@dossierhq/react-components2';
+import {
+  DossierProvider,
+  PublishedDossierProvider,
+  useCachingDossierMiddleware,
+} from '@dossierhq/react-components2';
 import type { CreateSessionPayload, Server } from '@dossierhq/server';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useSWRConfig, type Cache } from 'swr';
@@ -73,8 +77,11 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
         [LoggingClientMiddleware as DossierClientMiddleware<ClientContext>, cachingMiddleware],
       ),
     };
+    const publishedArgs = {
+      publishedClient: server.createPublishedDossierClient(() => Promise.resolve(sessionResult)),
+    };
 
-    return { dossierArgs };
+    return { dossierArgs, publishedArgs };
   }, [server, cachingMiddleware, sessionResult]);
 
   if (!args || sessionResult === uninitializedSession) {
@@ -82,7 +89,9 @@ export function DossierSharedProvider({ children }: { children: React.ReactNode 
   }
   return (
     <LoginContext.Provider value={login}>
-      <DossierProvider {...args.dossierArgs}>{children}</DossierProvider>
+      <DossierProvider {...args.dossierArgs}>
+        <PublishedDossierProvider {...args.publishedArgs}>{children}</PublishedDossierProvider>
+      </DossierProvider>
     </LoginContext.Provider>
   );
 }

@@ -1,9 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ChangelogListRoute } from './routes/ChangelogListRoute.js';
 import { ContentEditorRoute } from './routes/ContentEditorRoute.js';
 import { ContentListRoute } from './routes/ContentListRoute.js';
 import { IndexRoute } from './routes/IndexRoute.js';
 import { LoginRoute } from './routes/LoginRoute.js';
+import { PublishedContentDisplayRoute } from './routes/PublishedContentDisplayRoute.js';
+import { PublishedContentListRoute } from './routes/PublishedContentListRoute.js';
 import { RootLayout } from './routes/RootLayout.js';
+import { SchemaEditorRoute } from './routes/SchemaEditorRoute.js';
 import { ServerLayout } from './routes/ServerLayout.js';
 import { ServerRoute } from './routes/ServerRoute.js';
 import { ROUTE } from './utils/RouteUtils.js';
@@ -21,6 +25,13 @@ const router = createBrowserRouter([
           { index: true, element: <ServerRoute /> },
           { path: ROUTE.contentList.route, element: <ContentListRoute /> },
           { path: ROUTE.contentEditor.route, element: <ContentEditorRoute /> },
+          { path: ROUTE.publishedContentList.route, element: <PublishedContentListRoute /> },
+          {
+            path: ROUTE.publishedContentDisplay.route,
+            element: <PublishedContentDisplayRoute />,
+          },
+          { path: ROUTE.schemaEditor.route, element: <SchemaEditorRoute /> },
+          { path: ROUTE.changelog.route, element: <ChangelogListRoute /> },
           { path: ROUTE.login.route, element: <LoginRoute /> },
         ],
       },

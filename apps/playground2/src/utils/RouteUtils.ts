@@ -1,4 +1,7 @@
-import { addContentEditorParamsToURLSearchParams } from '@dossierhq/react-components2';
+import {
+  addContentDisplayParamsToURLSearchParams,
+  addContentEditorParamsToURLSearchParams,
+} from '@dossierhq/react-components2';
 
 export const ROUTE = {
   index: {
@@ -14,6 +17,26 @@ export const ROUTE = {
   login: {
     route: 'login/:userId',
     url: (serverName: string, userId: string) => `/${serverName}/login/${userId}`,
+  },
+  publishedContentList: {
+    route: 'published-content',
+    url: (serverName: string) => `/${serverName}/published-content`,
+  },
+  publishedContentDisplay: {
+    route: 'published-content/display',
+    url: (serverName: string, entityIds: string[]) => {
+      const p = new URLSearchParams();
+      addContentDisplayParamsToURLSearchParams(p, { entityIds });
+      return `/${serverName}/published-content/display?${p.toString()}`;
+    },
+  },
+  schemaEditor: {
+    route: 'schema',
+    url: (serverName: string) => `/${serverName}/schema`,
+  },
+  changelog: {
+    route: 'changelog',
+    url: (serverName: string) => `/${serverName}/changelog`,
   },
   contentEditor: {
     route: 'content/edit',
