@@ -1,8 +1,5 @@
 import type { PublishedSchema, Schema } from '@dossierhq/core';
 import { useReducer, type Dispatch } from 'react';
-import { useDisplaySchema } from '../hooks/useDisplaySchema.js';
-import { useLoadContentList } from '../hooks/useLoadContentList.js';
-import { usePublishedLoadContentList } from '../hooks/usePublishedLoadContentList.js';
 import { useResponsive } from '../hooks/useResponsive.js';
 import {
   CommandMenuState_ShowAction,
@@ -28,28 +25,22 @@ import { EntityStatusSelector } from './EntityStatusSelector.js';
 import { ShowCommandMenuButton } from './ShowCommandMenuButton.js';
 import { ThemeToggle } from './ThemeToggle.js';
 import { Button } from './ui/button.js';
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog.js';
-import { VisuallyHidden } from './ui/visually-hidden.js';
 
 interface Props {
-  title?: string;
+  schema: Schema | PublishedSchema | undefined;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
-  onOpenEntity: (entityId: string) => void;
+  onOpenEntity: (id: string) => void;
   onCreateEntity?: (type: string) => void;
 }
 
-export function OpenContentDialogContent({
-  title,
+export function ContentListScreenLayout({
+  schema,
   contentListState,
   dispatchContentList,
   onOpenEntity,
   onCreateEntity,
 }: Props) {
-  const { schema } = useDisplaySchema();
-  useLoadContentList(contentListState, dispatchContentList);
-  usePublishedLoadContentList(contentListState, dispatchContentList);
-
   const [commandMenuState, dispatchCommandMenu] = useReducer(
     reduceCommandMenuState<ContentListCommandMenuConfig>,
     { id: 'root' },
@@ -59,7 +50,7 @@ export function OpenContentDialogContent({
   const md = useResponsive('md');
   const lg = useResponsive('lg');
   return (
-    <DialogContent className="grid-rows-[auto_1fr]" size="maximize">
+    <div className="flex h-dvh w-dvw overflow-hidden">
       <ContentListCommandMenu
         state={commandMenuState}
         dispatch={dispatchCommandMenu}
@@ -67,39 +58,31 @@ export function OpenContentDialogContent({
         dispatchContentList={dispatchContentList}
         onCreateEntity={onCreateEntity}
       />
-      <DialogHeader>
-        <DialogTitle>{title ?? 'Select content'}</DialogTitle>
-      </DialogHeader>
-      <VisuallyHidden asChild>
-        <DialogDescription>Select content to open or create new content.</DialogDescription>
-      </VisuallyHidden>
-      <div className="-m-6 mt-0 flex overflow-hidden">
-        {md && (
-          <Sidebar
-            schema={schema}
-            showCreate={!!onCreateEntity}
-            contentListState={contentListState}
-            dispatchContentList={dispatchContentList}
-            dispatchCommandMenu={dispatchCommandMenu}
-          />
-        )}
-        <main className="flex grow flex-col">
-          <Toolbar
-            showCreate={!!onCreateEntity}
-            contentListState={contentListState}
-            dispatchContentList={dispatchContentList}
-            dispatchCommandMenu={dispatchCommandMenu}
-          />
-          <ContentListSplitOrMapContainer
-            schema={schema}
-            lg={lg}
-            contentListState={contentListState}
-            dispatchContentList={dispatchContentList}
-            onOpenEntity={onOpenEntity}
-          />
-        </main>
-      </div>
-    </DialogContent>
+      {md && (
+        <Sidebar
+          schema={schema}
+          showCreate={!!onCreateEntity}
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
+          dispatchCommandMenu={dispatchCommandMenu}
+        />
+      )}
+      <main className="flex grow flex-col">
+        <Toolbar
+          showCreate={!!onCreateEntity}
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
+          dispatchCommandMenu={dispatchCommandMenu}
+        />
+        <ContentListSplitOrMapContainer
+          schema={schema}
+          lg={lg}
+          contentListState={contentListState}
+          dispatchContentList={dispatchContentList}
+          onOpenEntity={onOpenEntity}
+        />
+      </main>
+    </div>
   );
 }
 
@@ -131,10 +114,12 @@ function Sidebar({
       </div>
       <div className="flex grow flex-col gap-2 overflow-auto p-2">
         <p className="text-sm font-semibold">Filters</p>
-        <EntityStatusSelector
-          contentListState={contentListState}
-          dispatchContentList={dispatchContentList}
-        />
+        {contentListState.mode === 'full' && (
+          <EntityStatusSelector
+            contentListState={contentListState}
+            dispatchContentList={dispatchContentList}
+          />
+        )}
         <ContentTypesSelector
           schema={schema}
           contentListState={contentListState}

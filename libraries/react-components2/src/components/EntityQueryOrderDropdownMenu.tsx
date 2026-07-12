@@ -1,4 +1,4 @@
-import { EntityQueryOrder } from '@dossierhq/core';
+import { EntityQueryOrder, PublishedEntityQueryOrder } from '@dossierhq/core';
 import { ArrowDownNarrowWideIcon, ArrowDownWideNarrowIcon } from 'lucide-react';
 import type { Dispatch } from 'react';
 import { Button } from '../components/ui/button.js';
@@ -27,7 +27,10 @@ export function EntityQueryOrderDropdownMenu({
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
 }) {
-  const currentOrder = contentListState.query.order ?? EntityQueryOrder.updatedAt;
+  const isPublished = contentListState.mode === 'published';
+  const currentOrder =
+    contentListState.query.order ??
+    (isPublished ? PublishedEntityQueryOrder.name : EntityQueryOrder.updatedAt);
   const currentReverse = contentListState.query.reverse ?? false;
   const fieldDisplay = {
     name: 'Name',
@@ -72,7 +75,7 @@ export function EntityQueryOrderDropdownMenu({
         >
           <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="createdAt">Created</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="updatedAt">Updated</DropdownMenuRadioItem>
+          {!isPublished && <DropdownMenuRadioItem value="updatedAt">Updated</DropdownMenuRadioItem>}
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

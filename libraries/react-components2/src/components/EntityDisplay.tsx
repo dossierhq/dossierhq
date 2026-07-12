@@ -1,6 +1,7 @@
+import type { FieldSpecification } from '@dossierhq/core';
 import { FileTextIcon } from 'lucide-react';
-import { useEntity } from '../hooks/useEntity.js';
-import { useSchema } from '../hooks/useSchema.js';
+import { useDisplayEntity } from '../hooks/useDisplayEntity.js';
+import { useDisplaySchema } from '../hooks/useDisplaySchema.js';
 import { cn } from '../lib/utils.js';
 import { EmptyStateMessage } from './EmptyStateMessage.js';
 import { EntityCard } from './EntityCard.js';
@@ -12,8 +13,8 @@ interface Props {
 }
 
 export function EntityDisplay({ className, entityId }: Props) {
-  const { entity } = useEntity(entityId ? { id: entityId } : undefined);
-  const { schema } = useSchema();
+  const { entity } = useDisplayEntity(entityId ? { id: entityId } : undefined);
+  const { schema } = useDisplaySchema();
   if (!entityId) {
     return (
       <div className={cn(className, 'flex flex-col items-center justify-center')}>
@@ -35,18 +36,18 @@ export function EntityDisplay({ className, entityId }: Props) {
       <EntityCard
         className="mb-2"
         name={entity.info.name}
-        status={entity.info.status}
+        status={'status' in entity.info ? entity.info.status : undefined}
         type={entity.info.type}
-        date={entity.info.updatedAt}
-        dateKind="updated"
+        date={'updatedAt' in entity.info ? entity.info.updatedAt : entity.info.createdAt}
+        dateKind={'updatedAt' in entity.info ? 'updated' : 'created'}
         valid={entity.info.valid}
       />
       <div className="mb-6 w-full rounded-lg bg-slate-100 p-2 dark:bg-slate-800">
         {entitySpec.fields.map((fieldSpec) => (
           <EntityFieldDisplay
             key={fieldSpec.name}
-            fieldSpec={fieldSpec}
-            value={entity.fields[fieldSpec.name]}
+            fieldSpec={fieldSpec as FieldSpecification}
+            value={(entity.fields as Record<string, unknown>)[fieldSpec.name]}
           />
         ))}
       </div>

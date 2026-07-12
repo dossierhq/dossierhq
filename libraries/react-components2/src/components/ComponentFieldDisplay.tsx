@@ -1,12 +1,17 @@
-import { FieldType, type Component, type ComponentFieldSpecification } from '@dossierhq/core';
+import {
+  FieldType,
+  type Component,
+  type ComponentFieldSpecification,
+  type FieldSpecification,
+} from '@dossierhq/core';
 import { Fragment } from 'react';
-import { useSchema } from '../hooks/useSchema.js';
+import { useDisplaySchema } from '../hooks/useDisplaySchema.js';
 import { FieldDisplay, type FieldDisplayProps } from './FieldDisplay.js';
 
 type Props = FieldDisplayProps<ComponentFieldSpecification, Component>;
 
 export function ComponentFieldDisplay({ id, value }: Props) {
-  const { schema } = useSchema();
+  const { schema } = useDisplaySchema();
 
   if (!schema || !value) {
     return null;
@@ -24,7 +29,10 @@ export function ComponentFieldDisplay({ id, value }: Props) {
       <div className="flex flex-col gap-1 border-l-2 pl-3">
         {componentSpec.fields.map((componentFieldSpec) => {
           const fieldDisplay = (
-            <FieldDisplay fieldSpec={componentFieldSpec} value={value[componentFieldSpec.name]} />
+            <FieldDisplay
+              fieldSpec={componentFieldSpec as FieldSpecification}
+              value={value[componentFieldSpec.name]}
+            />
           );
           return (
             <Fragment key={componentFieldSpec.name}>

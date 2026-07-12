@@ -5,6 +5,8 @@ import {
   type DossierClient,
   type DossierClientMiddleware,
   type Logger,
+  type PublishedDossierClient,
+  type PublishedDossierClientMiddleware,
 } from '@dossierhq/core';
 import { BackgroundEntityProcessorPlugin, createServer } from '@dossierhq/server';
 import { createSqlJsAdapter } from '@dossierhq/sql.js';
@@ -14,6 +16,7 @@ import type { Database, SqlJsStatic } from 'sql.js';
 import initSqlJs from 'sql.js/dist/sql-wasm';
 import sqlJsWasm from 'sql.js/dist/sql-wasm.wasm?url';
 import { DossierProvider } from '../components/DossierProvider.js';
+import { PublishedDossierProvider } from '../components/PublishedDossierProvider.js';
 import { useCachingDossierMiddleware } from '../hooks/useCachingDossierMiddleware.js';
 
 let sqlPromise: Promise<SqlJsStatic> | null = null;
@@ -28,9 +31,12 @@ async function getSql() {
 
 export function StoryDossierProvider({ children }: { children: ReactNode }) {
   const cachingMiddleware = useCachingDossierMiddleware();
-  const [init, setInit] = useState<{ db: Database; client: DossierClient; logger: Logger } | null>(
-    null,
-  );
+  const [init, setInit] = useState<{
+    db: Database;
+    client: DossierClient;
+    publishedClient: PublishedDossierClient;
+    logger: Logger;
+  } | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -59,8 +65,11 @@ export function StoryDossierProvider({ children }: { children: ReactNode }) {
         LoggingClientMiddleware as DossierClientMiddleware<ClientContext>,
         cachingMiddleware,
       ]);
+      const publishedClient = server.createPublishedDossierClient(session.context, [
+        LoggingClientMiddleware as PublishedDossierClientMiddleware<ClientContext>,
+      ]);
 
-      setInit({ db, client, logger });
+      setInit({ db, client, publishedClient, logger });
     })();
   }, [cachingMiddleware]);
 
@@ -70,7 +79,9 @@ export function StoryDossierProvider({ children }: { children: ReactNode }) {
 
   return (
     <DossierProvider client={init.client} logger={init.logger}>
-      {children}
+      <PublishedDossierProvider publishedClient={init.publishedClient} logger={init.logger}>
+        {children}
+      </PublishedDossierProvider>
     </DossierProvider>
   );
 }

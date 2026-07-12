@@ -1,4 +1,4 @@
-import type { Schema } from '@dossierhq/core';
+import type { PublishedSchema, Schema } from '@dossierhq/core';
 import { Command as CommandPrimitive } from 'cmdk';
 import { XIcon } from 'lucide-react';
 import {
@@ -24,7 +24,7 @@ export function ContentTypesSelector({
   contentListState,
   dispatchContentList,
 }: {
-  schema: Schema | undefined;
+  schema: Schema | PublishedSchema | undefined;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
 }) {

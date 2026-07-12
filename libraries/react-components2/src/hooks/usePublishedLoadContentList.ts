@@ -2,10 +2,10 @@ import type {
   Connection,
   Edge,
   Entity,
-  EntityQuery,
   EntitySamplingPayload,
-  EntitySharedQuery,
   ErrorType,
+  PublishedEntityQuery,
+  PublishedEntitySharedQuery,
 } from '@dossierhq/core';
 import { useEffect, type Dispatch } from 'react';
 import {
@@ -13,26 +13,31 @@ import {
   type ContentListState,
   type ContentListStateAction,
 } from '../reducers/ContentListReducer.js';
-import { useEntities } from './useEntities.js';
-import { useEntitiesSample } from './useEntitiesSample.js';
-import { useEntitiesTotalCount } from './useEntitiesTotalCount.js';
+import { usePublishedEntities } from './usePublishedEntities.js';
+import { usePublishedEntitiesSample } from './usePublishedEntitiesSample.js';
+import { usePublishedEntitiesTotalCount } from './usePublishedEntitiesTotalCount.js';
 
-export function useLoadContentList(
+export function usePublishedLoadContentList(
   searchEntityState: ContentListState,
   dispatchContentList: Dispatch<ContentListStateAction>,
 ) {
-  const enabled = searchEntityState.mode === 'full';
+  const enabled = searchEntityState.mode === 'published';
 
   // search
   const searchQuery =
-    enabled && searchEntityState.paging ? (searchEntityState.query as EntityQuery) : undefined;
-  const { connection, connectionError } = useEntities(searchQuery, searchEntityState.paging);
-  const { totalCount } = useEntitiesTotalCount(searchQuery);
+    enabled && searchEntityState.paging
+      ? (searchEntityState.query as PublishedEntityQuery)
+      : undefined;
+  const { connection, connectionError } = usePublishedEntities(
+    searchQuery,
+    searchEntityState.paging,
+  );
+  const { totalCount } = usePublishedEntitiesTotalCount(searchQuery);
 
   // sample
   const sampleQuery =
-    enabled && !searchQuery ? (searchEntityState.query as EntitySharedQuery) : undefined;
-  const { entitiesSample, entitiesSampleError } = useEntitiesSample(
+    enabled && !searchQuery ? (searchEntityState.query as PublishedEntitySharedQuery) : undefined;
+  const { entitiesSample, entitiesSampleError } = usePublishedEntitiesSample(
     sampleQuery,
     searchEntityState.sampling,
   );

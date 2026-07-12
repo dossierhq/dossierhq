@@ -1,4 +1,4 @@
-import { EntityQueryOrder, type Schema } from '@dossierhq/core';
+import { EntityQueryOrder, type PublishedSchema, type Schema } from '@dossierhq/core';
 import { lazy, Suspense, useState, type Dispatch } from 'react';
 import type { ContentListState, ContentListStateAction } from '../reducers/ContentListReducer.js';
 import { ContentList } from './ContentList.js';
@@ -18,7 +18,7 @@ export function ContentListSplitOrMapContainer({
   dispatchContentList,
   onOpenEntity,
 }: {
-  schema: Schema | undefined;
+  schema: Schema | PublishedSchema | undefined;
   lg: boolean;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;

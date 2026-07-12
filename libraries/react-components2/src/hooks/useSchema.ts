@@ -15,14 +15,14 @@ type FetcherKey = string;
 type FetcherData = SchemaWithMigrations;
 type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
 
-export function useSchema(): {
+export function useSchema(enabled = true): {
   schema: FetcherData | undefined;
   schemaError: FetcherError | undefined;
 } {
   const { client } = useContext(DossierContext);
   const fetcher = useCallback((_action: FetcherKey) => fetchSchema(client), [client]);
-  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey>(
-    CACHE_KEYS.getSchemaSpecification,
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    enabled ? CACHE_KEYS.getSchemaSpecification : null,
     fetcher,
   );
 
