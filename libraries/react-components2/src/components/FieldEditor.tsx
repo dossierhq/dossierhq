@@ -1,6 +1,8 @@
 import {
   isBooleanListField,
   isBooleanSingleField,
+  isComponentListField,
+  isComponentSingleField,
   isLocationListField,
   isLocationSingleField,
   isNumberListField,
@@ -10,6 +12,7 @@ import {
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
+  type ComponentFieldSpecification,
   type FieldSpecification,
   type LocationFieldSpecification,
   type NumberFieldSpecification,
@@ -20,6 +23,7 @@ import {
 } from '@dossierhq/core';
 import type { JSX, ReactNode } from 'react';
 import { AddBooleanListItemButton, BooleanFieldEditor } from './BooleanFieldEditor.js';
+import { AddComponentListItemButton, ComponentFieldEditor } from './ComponentFieldEditor.js';
 import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
 import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldEditor.js';
 import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
@@ -162,7 +166,6 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={StringFieldEditor}
       />
     );
-    /*
   } else if (isComponentSingleField(fieldSpec, value)) {
     editor = (
       <ComponentFieldEditor
@@ -173,7 +176,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isComponentListField(fieldSpec, value)) {
     editor = (
-      <FieldListWrapper
+      <FieldListEditorWrapper
         {...props}
         fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
@@ -181,7 +184,6 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={ComponentFieldEditor}
       />
     );
-  */
   } else {
     editor = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }

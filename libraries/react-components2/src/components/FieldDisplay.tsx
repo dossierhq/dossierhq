@@ -1,6 +1,8 @@
 import {
   isBooleanListField,
   isBooleanSingleField,
+  isComponentListField,
+  isComponentSingleField,
   isLocationListField,
   isLocationSingleField,
   isNumberListField,
@@ -10,6 +12,7 @@ import {
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
+  type ComponentFieldSpecification,
   type FieldSpecification,
   type LocationFieldSpecification,
   type NumberFieldSpecification,
@@ -18,6 +21,7 @@ import {
 } from '@dossierhq/core';
 import type { JSX, ReactNode } from 'react';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
+import { ComponentFieldDisplay } from './ComponentFieldDisplay.js';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
 import { LocationFieldDisplay } from './LocationFieldDisplay.js';
 import { NumberFieldDisplay } from './NumberFieldDisplay.js';
@@ -152,26 +156,23 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={StringFieldDisplay}
       />
     );
-    /*
   } else if (isComponentSingleField(fieldSpec, value)) {
-    editor = (
-      <ComponentFieldEditor
+    display = (
+      <ComponentFieldDisplay
         {...props}
         fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
       />
     );
   } else if (isComponentListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
+    display = (
+      <FieldListDisplayWrapper
         {...props}
         fieldSpec={fieldSpec as ComponentFieldSpecification}
         value={value}
-        AddButton={AddComponentListItemButton}
-        Editor={ComponentFieldEditor}
+        Display={ComponentFieldDisplay}
       />
     );
-  */
   } else {
     display = <div>{`${fieldSpec.type} (list: ${!!fieldSpec.list})`} is not supported</div>;
   }
