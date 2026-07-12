@@ -76,7 +76,8 @@ export const CreateLocationsEntity: Story = {
 export const CreateReferencesEntity: Story = {
   args: {
     urlSearchParams: urlFor({
-      entities: [{ type: 'ReferencesEntity', id: crypto.randomUUID(), isNew: true }],
+      // the shipped catalog.sqlite uses the old name for the references entity type
+      entities: [{ type: 'EntitiesEntity', id: crypto.randomUUID(), isNew: true }],
     }),
   },
 };
