@@ -1,0 +1,7074 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AddFieldAction > add field to existing component type (with existing fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddFieldAction > add field to existing component type (with existing fields) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddFieldAction > add field to existing component type (without any fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddFieldAction > add field to existing component type (without any fields) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (with existing fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (with existing fields) 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (without any fields) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddFieldAction > add field to existing entity type (without any fields) 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddIndexAction > add index to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "index",
+    "name": "myIndex",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [
+    {
+      "name": "myIndex",
+      "status": "new",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddIndexAction > add index to empty schema 2`] = `
+{
+  "indexes": [
+    {
+      "name": "myIndex",
+      "type": "unique",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`AddPatternAction > add pattern to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "my-pattern",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": null,
+      "name": "my-pattern",
+      "pattern": "",
+      "status": "new",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddPatternAction > add pattern to empty schema 2`] = `
+{
+  "patterns": [
+    {
+      "name": "my-pattern",
+      "pattern": "",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`AddTypeAction > add component type to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add component type to empty schema 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`AddTypeAction > add component type to schema with existing type 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Bar",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add component type to schema with existing type 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddTypeAction > add entity type to empty schema 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add entity type to empty schema 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`AddTypeAction > add entity type to schema with existing type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add entity type to schema with existing type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`AddTypeAction > add two component types (orders) 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Anaconda",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Anaconda",
+      "status": "new",
+    },
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "ZooKeeper",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add two component types (orders) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Anaconda",
+    },
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "ZooKeeper",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`AddTypeAction > add two entity types (orders) 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Anaconda",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Anaconda",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "ZooKeeper",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`AddTypeAction > add two entity types (orders) 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Anaconda",
+      "nameField": null,
+      "publishable": true,
+    },
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "ZooKeeper",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`ChangeFieldAdminOnlyAction > make existing field admin only 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": true,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Boolean",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAdminOnlyAction > make existing field admin only 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": true,
+          "name": "field",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": true,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAdminOnlyAction > make new field admin only in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": true,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a existing component field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "component",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "component",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a existing component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "name": "component",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a new component field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "status": "new",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedComponentTypes > change component types of a new component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new entity field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "status": "new",
+          "type": "Reference",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of a new entity field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "type": "Reference",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing entity field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "entity",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "status": "changed",
+          "type": "Reference",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedEntityTypesAction > change entity types of existing entity field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "name": "entity",
+          "required": false,
+          "type": "Reference",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a new rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "new",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of a new rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of existing rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "foo",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "changed",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedLinkEntityTypesAction > change link entity types of existing rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [
+            "Foo",
+          ],
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of a new rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Foo",
+          ],
+          "list": false,
+          "name": "foo",
+          "required": false,
+          "richTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "entity",
+          ],
+          "status": "new",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of a new rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [
+            "Foo",
+          ],
+          "linkEntityTypes": [],
+          "name": "foo",
+          "required": false,
+          "richTextNodes": [
+            "entity",
+            "linebreak",
+            "paragraph",
+            "root",
+            "tab",
+            "text",
+          ],
+          "type": "RichText",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of an existing rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "rt",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "heading",
+          ],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "rt",
+          "required": false,
+          "richTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "entity",
+            "heading",
+          ],
+          "status": "changed",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (add entity) of an existing rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "rt",
+          "required": false,
+          "richTextNodes": [
+            "entity",
+            "heading",
+            "linebreak",
+            "paragraph",
+            "root",
+            "tab",
+            "text",
+          ],
+          "type": "RichText",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entity) of an existing rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "rt",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "entity",
+            "heading",
+          ],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "rt",
+          "required": false,
+          "richTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "heading",
+          ],
+          "status": "changed",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldAllowedRichTextNodesAction > change node types (remove entity) of an existing rich text field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "rt",
+          "required": false,
+          "richTextNodes": [
+            "heading",
+            "linebreak",
+            "paragraph",
+            "root",
+            "tab",
+            "text",
+          ],
+          "type": "RichText",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldIndexAction > set index on existing string field 1`] = `
+{
+  "activeSelector": {
+    "kind": "index",
+    "name": "anIndex",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "existing",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "status": "new",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldIndexAction > set index on existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "type": "unique",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldIndexAction > set index on new string field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "existing",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "anIndex",
+      "status": "",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldIndexAction > set index on new string field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "existing",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": "anIndex",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldIntegerAction > make existing integer field into float 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "Number",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldIntegerAction > make existing integer field into float 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "name": "bar",
+          "required": false,
+          "type": "Number",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldIntegerAction > make new integer field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": true,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Number",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldIntegerAction > make new integer field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": true,
+          "name": "bar",
+          "required": false,
+          "type": "Number",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldMatchPattern > change pattern on existing string field 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "anotherPattern",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "anotherPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": null,
+      "name": "anotherPattern",
+      "pattern": "^hello$",
+      "status": "new",
+    },
+    {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^.+$",
+      },
+      "name": "aPattern",
+      "pattern": "^.+$",
+      "status": "",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldMatchPattern > change pattern on existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "anotherPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "anotherPattern",
+      "pattern": "^hello$",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldMatchPattern > set pattern on new string field in existing entity type 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "aPattern",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "matchPattern": "aPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": null,
+      "name": "aPattern",
+      "pattern": "^.*$",
+      "status": "new",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldMatchPattern > set pattern on new string field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "aPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "aPattern",
+      "pattern": "^.*$",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldMultilineAction > change multiline in existing string field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": true,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldMultilineAction > change multiline in existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": true,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldMultilineAction > make new multiline field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": true,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldMultilineAction > make new multiline field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": true,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldRequiredAction > make existing field required 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": true,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldRequiredAction > make existing field required 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": true,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldRequiredAction > make new field required in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": true,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldRequiredAction > make new field required in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": true,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to entity (new field of existing entity type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Reference",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to entity (new field of existing entity type) 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "name": "bar",
+          "required": false,
+          "type": "Reference",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing component type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Location",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing component type) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "type": "Location",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing entity type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Location",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to location list (new field of existing entity type) 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": true,
+          "name": "bar",
+          "required": false,
+          "type": "Location",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to number (new field of existing component type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Number",
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to number (new field of existing component type) 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "integer": false,
+          "name": "bar",
+          "required": false,
+          "type": "Number",
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to value (new field of existing entity type) 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "list": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldTypeAction > from string to value (new field of existing entity type) 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "name": "bar",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldValues > set values on existing string field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [
+            {
+              "value": "hello",
+            },
+            {
+              "value": "world",
+            },
+          ],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldValues > set values on existing string field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [
+            {
+              "value": "hello",
+            },
+            {
+              "value": "world",
+            },
+          ],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeFieldValues > set values on new string field in existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "new",
+          "type": "String",
+          "values": [
+            {
+              "value": "bar",
+            },
+            {
+              "value": "baz",
+            },
+            {
+              "value": "foo",
+            },
+          ],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeFieldValues > set values on new string field in existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "type": "String",
+          "values": [
+            {
+              "value": "bar",
+            },
+            {
+              "value": "baz",
+            },
+            {
+              "value": "foo",
+            },
+          ],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangePatternPatternAction > change pattern of existing pattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "aPattern",
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^this is a pattern$",
+      },
+      "name": "aPattern",
+      "pattern": "^this is a new pattern$",
+      "status": "changed",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangePatternPatternAction > change pattern of existing pattern 2`] = `
+{
+  "patterns": [
+    {
+      "name": "aPattern",
+      "pattern": "^this is a new pattern$",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangePatternPatternAction > change pattern of new pattern 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": null,
+      "name": "foo",
+      "pattern": "^this is a new pattern$",
+      "status": "new",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangePatternPatternAction > change pattern of new pattern 2`] = `
+{
+  "patterns": [
+    {
+      "name": "foo",
+      "pattern": "^this is a new pattern$",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make existing component type admin only 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": true,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make existing component type admin only 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": true,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": false,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make existing entity type admin only 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": false,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new component type admin only 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new component type admin only 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAdminOnlyAction > make new entity type admin only 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": "aPattern",
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^this is a pattern$",
+      },
+      "name": "aPattern",
+      "pattern": "^this is a pattern$",
+      "status": "",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "my-pattern",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": "my-pattern",
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": null,
+      "name": "my-pattern",
+      "pattern": "",
+      "status": "new",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeAuthKeyPatternAction > change pattern for new entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": "my-pattern",
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "my-pattern",
+      "pattern": "",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`ChangeTypeNameField > make new string the name field in new type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "TitleOnly",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "nameField": "title",
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeNameField > make new string the name field in new type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "TitleOnly",
+      "nameField": "title",
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`ChangeTypeNameField > make other field is-name, and switch back 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "TitleOnly",
+      "existingNameField": "title",
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "other",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "nameField": "other",
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ChangeTypeNameField > make other field is-name, and switch back 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "other",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "TitleOnly",
+      "nameField": "other",
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ChangeTypeNameField > make other field is-name, and switch back 3`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "TitleOnly",
+      "existingNameField": "title",
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "other",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "nameField": "title",
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteFieldAction > add and delete field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`DeleteFieldAction > add field, set as name field and delete field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`DeleteFieldAction > delete existing component field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [
+        "field",
+      ],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteFieldAction > delete existing component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Foo",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "componentType": "Foo",
+          "field": "field",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteFieldAction > delete existing entity name field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [
+        "title",
+      ],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": "title",
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteFieldAction > delete existing entity name field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteField",
+          "entityType": "Foo",
+          "field": "title",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteIndexAction > delete index used 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "fieldB",
+      ],
+      "existingName": "ComponentType",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "ComponentType",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [
+    "anIndex",
+  ],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "fieldA",
+      ],
+      "existingName": "EntityType",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityType",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteIndexAction > delete index used 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "ComponentType",
+    },
+  ],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "transientMigrations": [
+    {
+      "action": "deleteIndex",
+      "index": "anIndex",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": "patternA",
+      "existingFieldOrder": [
+        "fieldA",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeletePatternAction > delete pattern used as authKeyPattern and matchPattern 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [
+    "Foo",
+  ],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "componentType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [
+    "ToBeDeleted",
+  ],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "richText",
+        "component",
+      ],
+      "existingName": "Referencing",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "changed",
+          "type": "RichText",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "list": false,
+          "name": "component",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "Referencing",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteTypeAction > delete existing component type referenced by another type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "name": "component",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Referencing",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "componentType": "ToBeDeleted",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [
+    "Foo",
+  ],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type 2`] = `
+{
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "Foo",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "entity",
+        "richText",
+      ],
+      "existingName": "Referencing",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "status": "changed",
+          "type": "Reference",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "changed",
+          "type": "RichText",
+        },
+      ],
+      "kind": "component",
+      "name": "Referencing",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [
+    "ToBeDeleted",
+  ],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`DeleteTypeAction > delete existing entity type referenced by another type 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "name": "entity",
+          "required": false,
+          "type": "Reference",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [],
+          "name": "richText",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Referencing",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "deleteType",
+          "entityType": "ToBeDeleted",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added component type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added component type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "richText",
+        "component",
+      ],
+      "existingName": "Existing",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "",
+          "type": "RichText",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "list": false,
+          "name": "component",
+          "required": false,
+          "status": "",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "Existing",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`DeleteTypeAction > delete newly added entity type referenced by another type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "entity",
+        "richText",
+      ],
+      "existingName": "Existing",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [],
+          "list": false,
+          "name": "entity",
+          "required": false,
+          "status": "",
+          "type": "Reference",
+        },
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingRichTextNodesWithPlaceholders": [],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Existing",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`RenameFieldAction > add and rename field 1`] = `
+{
+  "activeSelector": {
+    "fieldName": "baz",
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "baz",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameFieldAction > add and rename field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "baz",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameFieldAction > add field, set as name field and rename 1`] = `
+{
+  "activeSelector": {
+    "fieldName": "baz",
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "multiline": false,
+          "name": "baz",
+          "required": false,
+          "status": "new",
+          "type": "String",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": "baz",
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameFieldAction > add field, set as name field and rename 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "baz",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": "baz",
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameFieldAction > rename existing component field 1`] = `
+{
+  "activeSelector": {
+    "fieldName": "newName",
+    "kind": "component",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "newName",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "Foo",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameFieldAction > rename existing component field 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "componentType": "Foo",
+          "field": "oldName",
+          "newName": "newName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameFieldAction > rename existing entity name field 1`] = `
+{
+  "activeSelector": {
+    "fieldName": "newName",
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "newName",
+      ],
+      "existingName": "Foo",
+      "existingNameField": "newName",
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": "newName",
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameFieldAction > rename existing entity name field 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "newName",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": "newName",
+      "publishable": true,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameField",
+          "entityType": "Foo",
+          "field": "oldName",
+          "newName": "newName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameIndexAction > rename existing index 1`] = `
+{
+  "activeSelector": {
+    "kind": "index",
+    "name": "newName",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "fieldA",
+      ],
+      "existingName": "EntityType",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newName",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityType",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newName",
+      "status": "changed",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameIndexAction > rename existing index 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": "newName",
+          "matchPattern": null,
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "EntityType",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "indexes": [
+    {
+      "name": "newName",
+      "type": "unique",
+    },
+  ],
+  "transientMigrations": [
+    {
+      "action": "renameIndex",
+      "index": "oldName",
+      "newName": "newName",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPattern 1`] = `
+{
+  "activeSelector": {
+    "kind": "pattern",
+    "name": "patternC",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": "patternC",
+      "deletedFields": [],
+      "existingAuthKeyPattern": "patternA",
+      "existingFieldOrder": [
+        "fieldA",
+        "fieldB",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "patternC",
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "changed",
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "list": false,
+          "matchPattern": "patternB",
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "patternB",
+        "pattern": "^patternB$",
+      },
+      "name": "patternB",
+      "pattern": "^patternB$",
+      "status": "",
+    },
+    {
+      "existingPatternSpec": {
+        "name": "patternA",
+        "pattern": "^patternA$",
+      },
+      "name": "patternC",
+      "pattern": "^patternA$",
+      "status": "changed",
+    },
+  ],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenamePatternAction > rename pattern used as authKeyPattern and matchPattern 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": "patternC",
+      "fields": [
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "patternC",
+          "multiline": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+        {
+          "adminOnly": false,
+          "index": null,
+          "matchPattern": "patternB",
+          "multiline": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "patterns": [
+    {
+      "name": "patternC",
+      "pattern": "^patternA$",
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameTypeAction > add and rename component type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "new",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Bar",
+      "status": "new",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > add and rename component type with fields referring to itself 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "linkEntityTypes": undefined,
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "new",
+          "type": "Reference",
+        },
+      ],
+      "kind": "entity",
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with fields referring to itself 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "Reference",
+        },
+      ],
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with link fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": undefined,
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "self",
+          "required": false,
+          "richTextNodesWithPlaceholders": [],
+          "status": "new",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > add and rename entity type with link fields referring to itself 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "linkEntityTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "richTextNodes": [],
+          "type": "RichText",
+        },
+      ],
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`RenameTypeAction > add and rename type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 2,
+  "activeSelectorMenuScrollSignal": 2,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": null,
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+      "status": "new",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > add and rename type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "Bar",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 1,
+}
+`;
+
+exports[`RenameTypeAction > rename existing component type 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "fields": [],
+      "kind": "component",
+      "name": "Bar",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > rename existing component type 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [],
+      "name": "Bar",
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "componentType": "Foo",
+          "newName": "Bar",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameTypeAction > rename existing component type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "component",
+    "typeName": "Bar",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "self",
+      ],
+      "existingName": "Foo",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Bar",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingName": "Baz",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "Baz",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > rename existing component type with fields referring to itself 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Bar",
+    },
+  ],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Bar",
+          ],
+          "name": "field",
+          "required": false,
+          "type": "Component",
+        },
+      ],
+      "name": "Baz",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "componentType": "Foo",
+          "newName": "Bar",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "NewName",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "OldName",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "NewName",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [],
+      "name": "NewName",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "OldName",
+          "newName": "NewName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type with fields referring to itself 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "NewName",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "field",
+      ],
+      "existingName": "Referencing",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "linkEntityTypes": undefined,
+          "list": false,
+          "name": "field",
+          "required": false,
+          "status": "changed",
+          "type": "Reference",
+        },
+      ],
+      "kind": "component",
+      "name": "Referencing",
+      "status": "changed",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "self",
+      ],
+      "existingName": "OldName",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "linkEntityTypes": undefined,
+          "list": false,
+          "name": "self",
+          "required": false,
+          "status": "changed",
+          "type": "Reference",
+        },
+      ],
+      "kind": "entity",
+      "name": "NewName",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`RenameTypeAction > rename existing entity type with fields referring to itself 2`] = `
+{
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "name": "field",
+          "required": false,
+          "type": "Reference",
+        },
+      ],
+      "name": "Referencing",
+    },
+  ],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "NewName",
+          ],
+          "name": "self",
+          "required": false,
+          "type": "Reference",
+        },
+      ],
+      "name": "NewName",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "migrations": [
+    {
+      "actions": [
+        {
+          "action": "renameType",
+          "entityType": "OldName",
+          "newName": "NewName",
+        },
+      ],
+      "version": 2,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ReorderFieldsAction > three fields, move first to middle 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "fieldA",
+        "fieldB",
+        "fieldC",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "",
+          "type": "Boolean",
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "",
+          "type": "Boolean",
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "fieldC",
+          "required": false,
+          "status": "",
+          "type": "Boolean",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ReorderFieldsAction > three fields, move first to middle 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "Boolean",
+        },
+        {
+          "adminOnly": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "Boolean",
+        },
+        {
+          "adminOnly": false,
+          "name": "fieldC",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`ReorderFieldsAction > two fields, move last to first 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "fieldA",
+        "fieldB",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "fieldB",
+          "required": false,
+          "status": "",
+          "type": "Boolean",
+        },
+        {
+          "adminOnly": false,
+          "list": false,
+          "name": "fieldA",
+          "required": false,
+          "status": "",
+          "type": "Boolean",
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "changed",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "changed",
+}
+`;
+
+exports[`ReorderFieldsAction > two fields, move last to first 2`] = `
+{
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "fields": [
+        {
+          "adminOnly": false,
+          "name": "fieldB",
+          "required": false,
+          "type": "Boolean",
+        },
+        {
+          "adminOnly": false,
+          "name": "fieldA",
+          "required": false,
+          "type": "Boolean",
+        },
+      ],
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+    },
+  ],
+  "version": 2,
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > add type, save, force update 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "NewType",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 1,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "NewType",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "NewType",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": SchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [],
+          "name": "NewType",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "migrations": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > delete component type, save, force update 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": SchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "deleteType",
+              "componentType": "Hello",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 2,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > delete entity type, save, force update 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": SchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [],
+      "indexes": [],
+      "migrations": [
+        {
+          "actions": [
+            {
+              "action": "deleteType",
+              "entityType": "Hello",
+            },
+          ],
+          "version": 2,
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 2,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SchemaEditorReducer scenarios > delete index, save, force update 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "Hello",
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
+            "name": "title",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "Hello",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": SchemaWithMigrations {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Hello",
+        },
+      ],
+      "entityTypes": [],
+      "indexes": [],
+      "migrations": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 2,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SetActiveSelectorAction > set to type 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`SetActiveSelectorAction > set to type with editor scroll 1`] = `
+{
+  "activeSelector": {
+    "kind": "entity",
+    "typeName": "Foo",
+  },
+  "activeSelectorEditorScrollSignal": 1,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > add empty schema 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 0,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > component type field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "component",
+      ],
+      "existingName": "Component",
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Component",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "componentTypes": [
+              "Component",
+            ],
+            "list": false,
+            "name": "component",
+            "required": false,
+            "type": "Component",
+          },
+          "list": false,
+          "name": "component",
+          "required": false,
+          "status": "",
+          "type": "Component",
+        },
+      ],
+      "kind": "component",
+      "name": "Component",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "component",
+      ],
+      "existingName": "EntityWithComponent",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [
+            "Component",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "componentTypes": [
+              "Component",
+            ],
+            "list": false,
+            "name": "component",
+            "required": false,
+            "type": "Component",
+          },
+          "list": false,
+          "name": "component",
+          "required": false,
+          "status": "",
+          "type": "Component",
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityWithComponent",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "componentTypes": [
+                "Component",
+              ],
+              "list": false,
+              "name": "component",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "Component",
+        },
+      ],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "componentTypes": [
+                "Component",
+              ],
+              "list": false,
+              "name": "component",
+              "required": false,
+              "type": "Component",
+            },
+          ],
+          "name": "EntityWithComponent",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > entity type field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "reference",
+      ],
+      "existingName": "ValueReference",
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "EntityReference",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "entityTypes": [
+              "EntityReference",
+            ],
+            "list": false,
+            "name": "reference",
+            "required": false,
+            "type": "Reference",
+          },
+          "list": false,
+          "name": "reference",
+          "required": false,
+          "status": "",
+          "type": "Reference",
+        },
+      ],
+      "kind": "component",
+      "name": "ValueReference",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "reference",
+      ],
+      "existingName": "EntityReference",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "entityTypes": [
+            "EntityReference",
+          ],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "entityTypes": [
+              "EntityReference",
+            ],
+            "list": false,
+            "name": "reference",
+            "required": false,
+            "type": "Reference",
+          },
+          "list": false,
+          "name": "reference",
+          "required": false,
+          "status": "",
+          "type": "Reference",
+        },
+      ],
+      "kind": "entity",
+      "name": "EntityReference",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [
+                "EntityReference",
+              ],
+              "list": false,
+              "name": "reference",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "ValueReference",
+        },
+      ],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "entityTypes": [
+                "EntityReference",
+              ],
+              "list": false,
+              "name": "reference",
+              "required": false,
+              "type": "Reference",
+            },
+          ],
+          "name": "EntityReference",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > entity type with auth key pattern 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": "patternOne",
+      "deletedFields": [],
+      "existingAuthKeyPattern": "patternOne",
+      "existingFieldOrder": [],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "patternOne",
+        "pattern": "^foo$",
+      },
+      "name": "patternOne",
+      "pattern": "^foo$",
+      "status": "",
+    },
+  ],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": "patternOne",
+          "fields": [],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [
+        {
+          "name": "patternOne",
+          "pattern": "^foo$",
+        },
+      ],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > entity type with index and one index 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "bar",
+      ],
+      "existingName": "Foo",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": "myIndex",
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
+            "name": "bar",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": "myIndex",
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "bar",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "Foo",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [
+    {
+      "existingIndexSpec": {
+        "name": "myIndex",
+        "type": "unique",
+      },
+      "name": "myIndex",
+      "status": "",
+      "type": "unique",
+    },
+  ],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": "myIndex",
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "bar",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "Foo",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [
+        {
+          "name": "myIndex",
+          "type": "unique",
+        },
+      ],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one component type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [
+    {
+      "adminOnly": false,
+      "deletedFields": [],
+      "existingAdminOnly": false,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "TitleOnly",
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
+            "name": "title",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "component",
+      "name": "TitleOnly",
+      "status": "",
+    },
+  ],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [
+        {
+          "adminOnly": false,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "TitleOnly",
+        },
+      ],
+      "entityTypes": [],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "title",
+      ],
+      "existingName": "TitleOnly",
+      "existingNameField": "title",
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "list": false,
+            "matchPattern": null,
+            "multiline": false,
+            "name": "title",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": null,
+          "list": false,
+          "matchPattern": null,
+          "multiline": false,
+          "name": "title",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "nameField": "title",
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": null,
+              "multiline": false,
+              "name": "title",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "TitleOnly",
+          "nameField": "title",
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type with number fields 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "float",
+        "integer",
+        "floats",
+        "integers",
+      ],
+      "existingName": "Numbers",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": false,
+            "list": false,
+            "name": "float",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": false,
+          "list": false,
+          "name": "float",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": true,
+            "list": false,
+            "name": "integer",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": true,
+          "list": false,
+          "name": "integer",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": false,
+            "list": true,
+            "name": "floats",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": false,
+          "list": true,
+          "name": "floats",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "integer": true,
+            "list": true,
+            "name": "integers",
+            "required": false,
+            "type": "Number",
+          },
+          "integer": true,
+          "list": true,
+          "name": "integers",
+          "required": false,
+          "status": "",
+          "type": "Number",
+        },
+      ],
+      "kind": "entity",
+      "name": "Numbers",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "integer": false,
+              "list": false,
+              "name": "float",
+              "required": false,
+              "type": "Number",
+            },
+            {
+              "adminOnly": false,
+              "integer": true,
+              "list": false,
+              "name": "integer",
+              "required": false,
+              "type": "Number",
+            },
+            {
+              "adminOnly": false,
+              "integer": false,
+              "list": true,
+              "name": "floats",
+              "required": false,
+              "type": "Number",
+            },
+            {
+              "adminOnly": false,
+              "integer": true,
+              "list": true,
+              "name": "integers",
+              "required": false,
+              "type": "Number",
+            },
+          ],
+          "name": "Numbers",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type with rich text field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "richText",
+      ],
+      "existingName": "TitleOnly",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "componentTypes": [],
+          "entityTypes": [],
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "componentTypes": [],
+            "entityTypes": [],
+            "linkEntityTypes": [],
+            "list": false,
+            "name": "richText",
+            "required": false,
+            "richTextNodes": [
+              "entity",
+              "linebreak",
+              "list",
+              "listitem",
+              "paragraph",
+              "root",
+              "tab",
+              "text",
+            ],
+            "type": "RichText",
+          },
+          "existingRichTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "entity",
+            "list, listitem",
+          ],
+          "linkEntityTypes": [],
+          "list": false,
+          "name": "richText",
+          "required": false,
+          "richTextNodesWithPlaceholders": [
+            "root, paragraph, text, linebreak, tab",
+            "entity",
+            "list, listitem",
+          ],
+          "status": "",
+          "type": "RichText",
+        },
+      ],
+      "kind": "entity",
+      "name": "TitleOnly",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "componentTypes": [],
+              "entityTypes": [],
+              "linkEntityTypes": [],
+              "list": false,
+              "name": "richText",
+              "required": false,
+              "richTextNodes": [
+                "entity",
+                "linebreak",
+                "list",
+                "listitem",
+                "paragraph",
+                "root",
+                "tab",
+                "text",
+              ],
+              "type": "RichText",
+            },
+          ],
+          "name": "TitleOnly",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`UpdateSchemaSpecificationAction > one entity type with string field 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [
+    {
+      "authKeyPattern": null,
+      "deletedFields": [],
+      "existingAuthKeyPattern": null,
+      "existingFieldOrder": [
+        "string",
+      ],
+      "existingName": "String",
+      "existingNameField": null,
+      "existingPublishable": true,
+      "fields": [
+        {
+          "adminOnly": false,
+          "existingFieldSpec": {
+            "adminOnly": false,
+            "index": null,
+            "list": false,
+            "matchPattern": "aPattern",
+            "multiline": true,
+            "name": "string",
+            "required": false,
+            "type": "String",
+            "values": [],
+          },
+          "index": null,
+          "list": false,
+          "matchPattern": "aPattern",
+          "multiline": true,
+          "name": "string",
+          "required": false,
+          "status": "",
+          "type": "String",
+          "values": [],
+        },
+      ],
+      "kind": "entity",
+      "name": "String",
+      "nameField": null,
+      "publishable": true,
+      "status": "",
+    },
+  ],
+  "indexes": [],
+  "patterns": [
+    {
+      "existingPatternSpec": {
+        "name": "aPattern",
+        "pattern": "^a-pattern$",
+      },
+      "name": "aPattern",
+      "pattern": "^a-pattern$",
+      "status": "",
+    },
+  ],
+  "schema": Schema {
+    "cachedPatternRegExps": {},
+    "cachedPublishedSchema": null,
+    "spec": {
+      "componentTypes": [],
+      "entityTypes": [
+        {
+          "authKeyPattern": null,
+          "fields": [
+            {
+              "adminOnly": false,
+              "index": null,
+              "list": false,
+              "matchPattern": "aPattern",
+              "multiline": true,
+              "name": "string",
+              "required": false,
+              "type": "String",
+              "values": [],
+            },
+          ],
+          "name": "String",
+          "nameField": null,
+          "publishable": true,
+        },
+      ],
+      "indexes": [],
+      "patterns": [
+        {
+          "name": "aPattern",
+          "pattern": "^a-pattern$",
+        },
+      ],
+      "schemaKind": "full",
+      "version": 1,
+    },
+  },
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "",
+}
+`;
+
+exports[`initializeSchemaEditorState > no args 1`] = `
+{
+  "activeSelector": null,
+  "activeSelectorEditorScrollSignal": 0,
+  "activeSelectorMenuScrollSignal": 0,
+  "componentTypes": [],
+  "deletedComponentTypes": [],
+  "deletedEntityTypes": [],
+  "deletedIndexes": [],
+  "entityTypes": [],
+  "indexes": [],
+  "patterns": [],
+  "schema": null,
+  "schemaWillBeUpdatedDueToSave": false,
+  "status": "uninitialized",
+}
+`;
