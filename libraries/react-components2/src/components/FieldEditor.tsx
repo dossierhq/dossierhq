@@ -9,6 +9,8 @@ import {
   isNumberSingleField,
   isReferenceListField,
   isReferenceSingleField,
+  isRichTextListField,
+  isRichTextSingleField,
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
@@ -18,6 +20,7 @@ import {
   type NumberFieldSpecification,
   type PublishValidationIssue,
   type ReferenceFieldSpecification,
+  type RichTextFieldSpecification,
   type SaveValidationIssue,
   type StringFieldSpecification,
 } from '@dossierhq/core';
@@ -29,6 +32,7 @@ import { FieldListEditorWrapper } from './FieldListEditorWrapper.js';
 import { AddLocationListItemButton, LocationFieldEditor } from './LocationFieldEditor.js';
 import { AddNumberListItemButton, NumberFieldEditor } from './NumberFieldEditor.js';
 import { AddEntityListItemButton, ReferenceFieldEditor } from './ReferenceFieldEditor.js';
+import { AddRichTextListItemButton, RichTextFieldEditor } from './RichTextFieldEditorLazy.js';
 import { AddStringListItemButton, StringFieldEditor } from './StringFieldEditor.js';
 
 export interface FieldEditorProps<
@@ -126,9 +130,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={ReferenceFieldEditor}
       />
     );
-  } else if (isStringSingleField(fieldSpec, value)) {
-    /* TODO
-  else if (isRichTextSingleField(fieldSpec, value)) {
+  } else if (isRichTextSingleField(fieldSpec, value)) {
     editor = (
       <RichTextFieldEditor
         {...props}
@@ -138,7 +140,7 @@ export function FieldEditor(props: FieldEditorProps) {
     );
   } else if (isRichTextListField(fieldSpec, value)) {
     editor = (
-      <FieldListWrapper
+      <FieldListEditorWrapper
         {...props}
         fieldSpec={fieldSpec as RichTextFieldSpecification}
         value={value}
@@ -146,8 +148,7 @@ export function FieldEditor(props: FieldEditorProps) {
         Editor={RichTextFieldEditor}
       />
     );
-  }
-  */
+  } else if (isStringSingleField(fieldSpec, value)) {
     editor = (
       <StringFieldEditor
         {...props}

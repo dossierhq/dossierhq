@@ -1411,6 +1411,30 @@ importers:
       '@dossierhq/leaflet':
         specifier: workspace:*
         version: link:../leaflet
+      '@lexical/code':
+        specifier: 0.45.0
+        version: 0.45.0
+      '@lexical/code-prism':
+        specifier: 0.45.0
+        version: 0.45.0
+      '@lexical/link':
+        specifier: 0.45.0
+        version: 0.45.0
+      '@lexical/list':
+        specifier: 0.45.0
+        version: 0.45.0
+      '@lexical/react':
+        specifier: 0.45.0
+        version: 0.45.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.23)
+      '@lexical/rich-text':
+        specifier: 0.45.0
+        version: 0.45.0
+      '@lexical/selection':
+        specifier: 0.45.0
+        version: 0.45.0
+      '@lexical/utils':
+        specifier: 0.45.0
+        version: 0.45.0
       '@radix-ui/react-alert-dialog':
         specifier: ~1.1.17
         version: 1.1.17(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1459,6 +1483,9 @@ importers:
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
+      lexical:
+        specifier: 0.45.0
+        version: 0.45.0
       lodash:
         specifier: ~4.18.1
         version: 4.18.1

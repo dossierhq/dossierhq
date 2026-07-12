@@ -81,6 +81,21 @@ export const CreateReferencesEntity: Story = {
   },
 };
 
+export const CreateRichTextsEntity: Story = {
+  args: {
+    urlSearchParams: urlFor({
+      entities: [{ type: 'RichTextsEntity', id: crypto.randomUUID(), isNew: true }],
+    }),
+  },
+};
+
+export const OpenRichTextsEntity: Story = {
+  args: {
+    // id of the 'RichTexts filled' entity in the test data
+    urlSearchParams: urlFor({ entities: [{ id: '140d5d41-5b14-50de-b12d-bb512cc76834' }] }),
+  },
+};
+
 export const CreateComponentsEntity: Story = {
   args: {
     urlSearchParams: urlFor({

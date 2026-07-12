@@ -9,6 +9,8 @@ import {
   isNumberSingleField,
   isReferenceListField,
   isReferenceSingleField,
+  isRichTextListField,
+  isRichTextSingleField,
   isStringListField,
   isStringSingleField,
   type BooleanFieldSpecification,
@@ -17,6 +19,7 @@ import {
   type LocationFieldSpecification,
   type NumberFieldSpecification,
   type ReferenceFieldSpecification,
+  type RichTextFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
 import { useContext, type JSX, type ReactNode } from 'react';
@@ -27,6 +30,7 @@ import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
 import { LocationFieldDisplay } from './LocationFieldDisplay.js';
 import { NumberFieldDisplay } from './NumberFieldDisplay.js';
 import { ReferenceFieldDisplay } from './ReferenceFieldDisplay.js';
+import { RichTextFieldDisplay } from './RichTextFieldDisplayLazy.js';
 import { StringFieldDisplay } from './StringFieldDisplay.js';
 
 export interface FieldDisplayProps<
@@ -117,28 +121,24 @@ export function FieldDisplay(props: FieldDisplayProps) {
         Display={ReferenceFieldDisplay}
       />
     );
-  } else if (isStringSingleField(fieldSpec, value)) {
-    /* TODO
-  else if (isRichTextSingleField(fieldSpec, value)) {
-    editor = (
-      <RichTextFieldEditor
+  } else if (isRichTextSingleField(fieldSpec, value)) {
+    display = (
+      <RichTextFieldDisplay
         {...props}
         fieldSpec={fieldSpec as RichTextFieldSpecification}
         value={value}
       />
     );
   } else if (isRichTextListField(fieldSpec, value)) {
-    editor = (
-      <FieldListWrapper
+    display = (
+      <FieldListDisplayWrapper
         {...props}
         fieldSpec={fieldSpec as RichTextFieldSpecification}
         value={value}
-        AddButton={AddRichTextListItemButton}
-        Editor={RichTextFieldEditor}
+        Display={RichTextFieldDisplay}
       />
     );
-  }
-  */
+  } else if (isStringSingleField(fieldSpec, value)) {
     display = (
       <StringFieldDisplay
         {...props}
