@@ -1,0 +1,44 @@
+import type {
+  ChangelogEventQuery,
+  Component,
+  DossierClient,
+  Entity,
+  ErrorResult,
+  ErrorType,
+} from '@dossierhq/core';
+import { useCallback, useContext } from 'react';
+import useSWR from 'swr';
+import { DossierContext } from '../contexts/DossierContext.js';
+import { CACHE_KEYS } from '../utils/CacheUtils.js';
+
+type FetcherKey = Readonly<[string, ChangelogEventQuery | undefined]>;
+type FetcherData = number;
+type FetcherError = ErrorResult<unknown, typeof ErrorType.Generic>;
+
+export function useChangelogEventsTotalCount(query: ChangelogEventQuery | undefined): {
+  totalCount: FetcherData | undefined;
+  totalCountError: FetcherError | undefined;
+} {
+  const { client } = useContext(DossierContext);
+  const fetcher = useCallback(
+    ([_action, query]: FetcherKey) => fetchChangelogEventsTotalCount(client, query),
+    [client],
+  );
+  const { data, error } = useSWR<FetcherData, FetcherError, FetcherKey | null>(
+    query ? CACHE_KEYS.getChangelogEventsTotalCount(query) : null,
+    fetcher,
+  );
+
+  return { totalCount: data, totalCountError: error };
+}
+
+async function fetchChangelogEventsTotalCount(
+  client: DossierClient<Entity<string, object>, Component<string, object>>,
+  query: FetcherKey[1],
+): Promise<FetcherData> {
+  const result = await client.getChangelogEventsTotalCount(query);
+  if (result.isError()) {
+    throw result; // throw result, don't convert to Error
+  }
+  return result.value;
+}
