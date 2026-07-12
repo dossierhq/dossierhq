@@ -27,6 +27,7 @@ import type {
   ContentEditorCommandMenuConfig,
 } from './ContentEditorCommandMenu.js';
 import { EntityCard } from './EntityCard.js';
+import { EntityLinks } from './EntityLinks.js';
 import { PublishingButton } from './PublishingButton.js';
 import { Button } from './ui/button.js';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible.js';
@@ -111,11 +112,14 @@ export function EntityEditor({ id, draftState, dispatchCommandMenu }: Props) {
               </>
             ) : null}
             {draftState.entity ? (
-              <PublishingButton
-                disabled={draftState.status !== ''}
-                entity={draftState.entity}
-                entitySpec={draftState.draft.entitySpec}
-              />
+              <>
+                <PublishingButton
+                  disabled={draftState.status !== ''}
+                  entity={draftState.entity}
+                  entitySpec={draftState.draft.entitySpec}
+                />
+                <EntityLinks entityReference={{ id: draftState.id }} />
+              </>
             ) : null}
             {draftState.draft.fields.map((field) => (
               <EntityFieldEditor
