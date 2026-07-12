@@ -32,7 +32,7 @@ export function $createEntityNode(reference: EntityReference): EntityNode {
   return new EntityNode(reference);
 }
 
-export function $isEntityNode(node: LexicalNode | undefined | null): node is EntityNode {
+function $isEntityNode(node: LexicalNode | undefined | null): node is EntityNode {
   return node instanceof EntityNode;
 }
 

@@ -84,7 +84,7 @@ export function CreateLinkDialog({
   );
 }
 
-export function sanitizeUrl(url: string | null): string | null {
+function sanitizeUrl(url: string | null): string | null {
   if (!url) return null;
   try {
     const urlObj = new URL(url);

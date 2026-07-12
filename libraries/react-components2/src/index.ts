@@ -19,9 +19,12 @@ export { addChangelogParamsToURLSearchParams } from './reducers/ChangelogUrlSync
 export { addContentDisplayParamsToURLSearchParams } from './reducers/ContentDisplayUrlSynchronizer.js';
 export { addContentEditorParamsToURLSearchParams } from './reducers/ContentEditorUrlSynchronizer.js';
 export { addContentListParamsToURLSearchParams } from './reducers/ContentListUrlSynchronizer.js';
-export { ChangelogListScreen } from './screens/ChangelogListScreen.js';
+export {
+  ChangelogListScreen,
+  type ChangelogListScreenProps,
+} from './screens/ChangelogListScreen.js';
 export { ContentEditorScreen } from './screens/ContentEditorScreen.js';
 export { ContentListScreen } from './screens/ContentListScreen.js';
 export { PublishedContentDisplayScreen } from './screens/PublishedContentDisplayScreen.js';
 export { PublishedContentListScreen } from './screens/PublishedContentListScreen.js';
-export { SchemaEditorScreen } from './screens/SchemaEditorScreen.js';
+export { SchemaEditorScreen, type SchemaEditorScreenProps } from './screens/SchemaEditorScreen.js';

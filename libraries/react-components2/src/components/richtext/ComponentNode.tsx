@@ -41,7 +41,7 @@ export function $createComponentNode(data: Component): ComponentNode {
   return new ComponentNode(data);
 }
 
-export function $isComponentNode(node: LexicalNode | undefined | null): node is ComponentNode {
+function $isComponentNode(node: LexicalNode | undefined | null): node is ComponentNode {
   return node instanceof ComponentNode;
 }
 
