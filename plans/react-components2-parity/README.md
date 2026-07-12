@@ -1,6 +1,19 @@
 # Plan: Bring `react-components2` to parity with `react-components`
 
-Status: proposed · Last updated: 2026-07-12
+Status: in progress — library-side parity implemented (workstreams 1–6 plus exports); consumer
+migration (workstream 7 tasks 2–4) remains · Last updated: 2026-07-12
+
+Progress (2026-07-12, branch `react-components2-parity`):
+
+- [x] WS1 — all field types incl. lists, enums, drag-and-drop reorder
+- [x] WS2 — name/auth-key/publishing/entity-links, adapter extension point
+      (open: reducer conflict handling `ContentEditorReducer.ts:555`, loader error states)
+- [x] WS3 — lexical rich text editor/display, lazy-loaded
+- [x] WS4 — published provider/hooks/screens with DisplayModeContext
+- [x] WS5 — schema editor (reducer snapshots byte-identical to legacy)
+- [x] WS6 — changelog screen + per-entity changelog (open: version-diff dialog)
+- [~] WS7 — full public API exported, playground2 wired, README/changeset done
+  (open: migrate blog/astro/next-web/tutorial, port cloudinary, deprecate legacy)
 
 ## Goal
 
