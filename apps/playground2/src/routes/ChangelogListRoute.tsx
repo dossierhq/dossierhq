@@ -1,6 +1,7 @@
 import { ChangelogListScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { NavBar } from '../components/NavBar.js';
 
 export function ChangelogListRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,6 +14,7 @@ export function ChangelogListRoute() {
   return (
     <ThemeProvider>
       <ChangelogListScreen
+        header={<NavBar current="changelog" />}
         urlSearchParams={searchParams}
         onUrlSearchParamsChange={handleSearchParamsChange}
       />

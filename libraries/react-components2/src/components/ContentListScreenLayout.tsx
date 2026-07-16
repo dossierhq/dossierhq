@@ -22,11 +22,12 @@ import { ContentListViewModeToggle } from './ContentListViewModeToggle.js';
 import { ContentTypesSelector } from './ContentTypesSelector.js';
 import { EntityQueryOrderDropdownMenu } from './EntityQueryOrderDropdownMenu.js';
 import { EntityStatusSelector } from './EntityStatusSelector.js';
+import { ScreenChrome, type ScreenChromeProps } from './ScreenChrome.js';
 import { ShowCommandMenuButton } from './ShowCommandMenuButton.js';
 import { ThemeToggle } from './ThemeToggle.js';
 import { Button } from './ui/button.js';
 
-interface Props {
+interface Props extends ScreenChromeProps {
   schema: Schema | PublishedSchema | undefined;
   contentListState: ContentListState;
   dispatchContentList: Dispatch<ContentListStateAction>;
@@ -40,6 +41,8 @@ export function ContentListScreenLayout({
   dispatchContentList,
   onOpenEntity,
   onCreateEntity,
+  header,
+  footer,
 }: Props) {
   const [commandMenuState, dispatchCommandMenu] = useReducer(
     reduceCommandMenuState<ContentListCommandMenuConfig>,
@@ -50,7 +53,7 @@ export function ContentListScreenLayout({
   const md = useResponsive('md');
   const lg = useResponsive('lg');
   return (
-    <div className="flex h-dvh w-dvw overflow-hidden">
+    <ScreenChrome header={header} footer={footer}>
       <ContentListCommandMenu
         state={commandMenuState}
         dispatch={dispatchCommandMenu}
@@ -82,7 +85,7 @@ export function ContentListScreenLayout({
           onOpenEntity={onOpenEntity}
         />
       </main>
-    </div>
+    </ScreenChrome>
   );
 }
 

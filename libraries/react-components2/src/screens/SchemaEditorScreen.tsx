@@ -14,6 +14,7 @@ import {
 import { SchemaIndexEditor } from '../components/SchemaIndexEditor.js';
 import { SchemaPatternEditor } from '../components/SchemaPatternEditor.js';
 import { SchemaTypeEditor } from '../components/SchemaTypeEditor.js';
+import { ScreenChrome, type ScreenChromeProps } from '../components/ScreenChrome.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { TypeDraftStatusBadge } from '../components/TypeDraftStatusBadge.js';
 import { Button } from '../components/ui/button.js';
@@ -45,11 +46,15 @@ import {
   type SchemaTypeSelector,
 } from '../reducers/SchemaEditorReducer.js';
 
-export interface SchemaEditorScreenProps {
+export interface SchemaEditorScreenProps extends ScreenChromeProps {
   onEditorHasChangesChange: (hasChanges: boolean) => void;
 }
 
-export function SchemaEditorScreen({ onEditorHasChangesChange }: SchemaEditorScreenProps) {
+export function SchemaEditorScreen({
+  onEditorHasChangesChange,
+  header,
+  footer,
+}: SchemaEditorScreenProps) {
   const { schema } = useSchema();
   const [schemaEditorState, dispatchSchemaEditorState] = useReducer(
     reduceSchemaEditorState,
@@ -132,7 +137,7 @@ export function SchemaEditorScreen({ onEditorHasChangesChange }: SchemaEditorScr
   return (
     <>
       <Toaster />
-      <div className="flex h-dvh w-dvw overflow-hidden">
+      <ScreenChrome header={header} footer={footer}>
         {md && (
           <aside className="flex w-1/5 max-w-80 min-w-72 flex-col border-r">
             <div className="mt-2 flex flex-col gap-2 px-2">
@@ -215,7 +220,7 @@ export function SchemaEditorScreen({ onEditorHasChangesChange }: SchemaEditorScr
             </div>
           )}
         </main>
-      </div>
+      </ScreenChrome>
       <AddOrRenameTypeDialog
         selector={addOrRenameTypeSelector}
         schemaEditorState={schemaEditorState}

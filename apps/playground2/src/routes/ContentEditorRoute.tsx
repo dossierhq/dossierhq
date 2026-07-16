@@ -1,6 +1,7 @@
 import { ContentEditorScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { NavBar } from '../components/NavBar.js';
 import { ScreenChangesContext } from '../contexts/ScreenChangesContext.js';
 
 export function ContentEditorRoute() {
@@ -18,7 +19,7 @@ export function ContentEditorRoute() {
         value={hasChanges ? 'Changes will be lost, are you sure you want to leave the page?' : null}
       >
         <ContentEditorScreen
-          // header={<NavBar current="content" />}
+          header={<NavBar current="content" />}
           urlSearchParams={searchParams}
           onUrlSearchParamsChange={handleSearchParamsChange}
           onEditorHasChangesChange={setHasChanges}

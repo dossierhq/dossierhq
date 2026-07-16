@@ -1,8 +1,8 @@
 import { FullscreenContainer, Message, Text, toSpacingClassName } from '@dossierhq/design';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DatabaseInfoMessage } from '../components/DatabaseInfoMessage.js';
+import { NavBar } from '../components/NavBar.js';
 import { assertIsDefined } from '../utils/AssertUtils.js';
-import { ROUTE } from '../utils/RouteUtils.js';
 
 export function ServerRoute() {
   const { serverName } = useParams<{ serverName: string }>();
@@ -10,12 +10,7 @@ export function ServerRoute() {
   return (
     <FullscreenContainer>
       <FullscreenContainer.Row fullWidth>
-        <nav style={{ display: 'flex', gap: '1rem', padding: '0.5rem 1rem' }}>
-          <Link to={ROUTE.contentList.url(serverName)}>Content</Link>
-          <Link to={ROUTE.publishedContentList.url(serverName)}>Published content</Link>
-          <Link to={ROUTE.schemaEditor.url(serverName)}>Schema</Link>
-          <Link to={ROUTE.changelog.url(serverName)}>Changelog</Link>
-        </nav>
+        <NavBar current="home" />
       </FullscreenContainer.Row>
       <FullscreenContainer.ScrollableRow>
         <FullscreenContainer.Row paddingVertical={5} paddingHorizontal={2}>

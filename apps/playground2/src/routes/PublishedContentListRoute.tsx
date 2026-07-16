@@ -1,6 +1,7 @@
 import { PublishedContentListScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useCallback } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { NavBar } from '../components/NavBar.js';
 import { assertIsDefined } from '../utils/AssertUtils.js';
 import { ROUTE } from '../utils/RouteUtils.js';
 
@@ -25,6 +26,7 @@ export function PublishedContentListRoute() {
   return (
     <ThemeProvider>
       <PublishedContentListScreen
+        header={<NavBar current="published-content" />}
         urlSearchParams={searchParams}
         onUrlSearchParamsChange={handleSearchParamsChange}
         onOpenEntity={handleEntityOpen}

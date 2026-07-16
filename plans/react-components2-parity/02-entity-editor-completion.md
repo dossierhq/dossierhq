@@ -79,10 +79,13 @@ links, robust draft handling, and the adapter extension point.
 
 ### 7. Screen chrome parity check
 
-- Legacy had `header`/`footer` slots on every screen; ContentEditorScreen/ContentListScreen
+- ~~Legacy had `header`/`footer` slots on every screen; ContentEditorScreen/ContentListScreen
   in react-components2 don't. Decide once (recommendation: add optional `header`/`footer`
   ReactNode props for parity — consumers like playground put nav bars there) and apply to
-  all screens in later workstreams too.
+  all screens in later workstreams too.~~ **Decided 2026-07-16: added optional
+  `header`/`footer` props to all six screens.** Screens keep owning the viewport; the shared
+  `components/ScreenChrome.tsx` now holds the `h-dvh w-dvw` column and slots header/footer
+  around the screen body. playground2 renders a ported `NavBar` there.
 - Entity history dialog is deliberately deferred to workstream 6.
 
 ## Testing & stories

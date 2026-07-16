@@ -5,6 +5,7 @@ import { useCallback, useEffect, useReducer, useRef, type JSX } from 'react';
 import { ChangelogList } from '../components/ChangelogList.js';
 import { ConnectionPagingButtons } from '../components/ConnectionPagingButtons.js';
 import { ConnectionPagingCount } from '../components/ConnectionPagingCount.js';
+import { ScreenChrome, type ScreenChromeProps } from '../components/ScreenChrome.js';
 import { useLoadChangelog } from '../hooks/useLoadChangelog.js';
 import { ChangelogStateActions, reduceChangelogState } from '../reducers/ChangelogReducer.js';
 import {
@@ -12,7 +13,7 @@ import {
   useChangelogCallOnUrlSearchQueryParamChange,
 } from '../reducers/ChangelogUrlSynchronizer.js';
 
-export interface ChangelogListScreenProps {
+export interface ChangelogListScreenProps extends ScreenChromeProps {
   urlSearchParams?: Readonly<URLSearchParams>;
   onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
 }
@@ -20,6 +21,8 @@ export interface ChangelogListScreenProps {
 export function ChangelogListScreen({
   urlSearchParams,
   onUrlSearchParamsChange,
+  header,
+  footer,
 }: ChangelogListScreenProps): JSX.Element | null {
   const [changelogState, dispatchChangelog] = useReducer(
     reduceChangelogState,
@@ -47,7 +50,7 @@ export function ChangelogListScreen({
   const isEmpty = changelogState.edges?.length === 0;
 
   return (
-    <div className="flex h-dvh w-dvw flex-col overflow-hidden">
+    <ScreenChrome className="flex-col" header={header} footer={footer}>
       <div ref={scrollContainerRef} className="flex-1 overflow-auto">
         <ChangelogList
           className={isEmpty ? 'container h-full p-2' : 'container min-h-full w-full p-2'}
@@ -69,6 +72,6 @@ export function ChangelogListScreen({
           onPagingChange={handlePagingChange}
         />
       </div>
-    </div>
+    </ScreenChrome>
   );
 }

@@ -12,7 +12,8 @@ Progress (2026-07-12, branch `react-components2-parity`):
 - [x] WS4 — published provider/hooks/screens with DisplayModeContext
 - [x] WS5 — schema editor (reducer snapshots byte-identical to legacy)
 - [x] WS6 — changelog screen + per-entity changelog (open: version-diff dialog)
-- [~] WS7 — full public API exported, playground2 wired, README/changeset done
+- [~] WS7 — full public API exported, playground2 wired (incl. NavBar via the new screen
+  `header`/`footer` props), README/changeset done
   (open: migrate blog/astro/next-web/tutorial, port cloudinary, deprecate legacy)
 
 ## Goal

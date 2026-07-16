@@ -9,6 +9,7 @@ import { ContentEditorLoader } from '../components/ContentEditorLoader.js';
 import { EmptyStateMessage } from '../components/EmptyStateMessage.js';
 import { EntityEditor } from '../components/EntityEditor.js';
 import { OpenContentDialogContent } from '../components/OpenContentDialogContent.js';
+import { ScreenChrome, type ScreenChromeProps } from '../components/ScreenChrome.js';
 import { ShowCommandMenuButton } from '../components/ShowCommandMenuButton.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
@@ -33,15 +34,19 @@ import {
 import { reduceContentListState } from '../reducers/ContentListReducer.js';
 import { initializeContentListStateFromUrlQuery } from '../reducers/ContentListUrlSynchronizer.js';
 
+export interface ContentEditorScreenProps extends ScreenChromeProps {
+  urlSearchParams?: Readonly<URLSearchParams> | null;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
+  onEditorHasChangesChange: (hasChanges: boolean) => void;
+}
+
 export function ContentEditorScreen({
   urlSearchParams,
   onUrlSearchParamsChange,
   onEditorHasChangesChange,
-}: {
-  urlSearchParams?: Readonly<URLSearchParams> | null;
-  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
-  onEditorHasChangesChange: (hasChanges: boolean) => void;
-}) {
+  header,
+  footer,
+}: ContentEditorScreenProps) {
   const [contentListState, dispatchContentList] = useReducer(
     reduceContentListState,
     { mode: 'full', urlSearchParams },
@@ -93,7 +98,7 @@ export function ContentEditorScreen({
           dispatch={dispatchCommandMenu}
         />
         <Toaster />
-        <div className="flex h-dvh w-dvw overflow-hidden">
+        <ScreenChrome header={header} footer={footer}>
           {md && <Sidebar dispatchCommandMenu={dispatchCommandMenu} />}
           <main className="flex grow flex-col">
             {!md && <Toolbar dispatchCommandMenu={dispatchCommandMenu} />}
@@ -121,7 +126,7 @@ export function ContentEditorScreen({
               </div>
             )}
           </main>
-        </div>
+        </ScreenChrome>
         {contentEditorState.showOpenDialog && (
           <Dialog
             open

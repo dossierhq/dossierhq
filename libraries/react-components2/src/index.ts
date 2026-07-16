@@ -2,6 +2,7 @@ export { DossierProvider } from './components/DossierProvider.js';
 export type { FieldDisplayProps } from './components/FieldDisplay.js';
 export type { FieldEditorProps } from './components/FieldEditor.js';
 export { PublishedDossierProvider } from './components/PublishedDossierProvider.js';
+export type { ScreenChromeProps } from './components/ScreenChrome.js';
 export { ThemeProvider } from './components/ThemeProvider.js';
 export {
   DossierContext,
@@ -23,8 +24,17 @@ export {
   ChangelogListScreen,
   type ChangelogListScreenProps,
 } from './screens/ChangelogListScreen.js';
-export { ContentEditorScreen } from './screens/ContentEditorScreen.js';
-export { ContentListScreen } from './screens/ContentListScreen.js';
-export { PublishedContentDisplayScreen } from './screens/PublishedContentDisplayScreen.js';
-export { PublishedContentListScreen } from './screens/PublishedContentListScreen.js';
+export {
+  ContentEditorScreen,
+  type ContentEditorScreenProps,
+} from './screens/ContentEditorScreen.js';
+export { ContentListScreen, type ContentListScreenProps } from './screens/ContentListScreen.js';
+export {
+  PublishedContentDisplayScreen,
+  type PublishedContentDisplayScreenProps,
+} from './screens/PublishedContentDisplayScreen.js';
+export {
+  PublishedContentListScreen,
+  type PublishedContentListScreenProps,
+} from './screens/PublishedContentListScreen.js';
 export { SchemaEditorScreen, type SchemaEditorScreenProps } from './screens/SchemaEditorScreen.js';

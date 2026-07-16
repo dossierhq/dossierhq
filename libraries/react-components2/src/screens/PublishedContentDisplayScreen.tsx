@@ -5,6 +5,7 @@ import { useEffect, useReducer, useState, type Dispatch } from 'react';
 import { EmptyStateMessage } from '../components/EmptyStateMessage.js';
 import { EntityDisplay } from '../components/EntityDisplay.js';
 import { OpenContentDialogContent } from '../components/OpenContentDialogContent.js';
+import { ScreenChrome, type ScreenChromeProps } from '../components/ScreenChrome.js';
 import { ThemeToggle } from '../components/ThemeToggle.js';
 import { Button } from '../components/ui/button.js';
 import { Dialog } from '../components/ui/dialog.js';
@@ -23,13 +24,17 @@ import {
   reduceContentListState,
 } from '../reducers/ContentListReducer.js';
 
+export interface PublishedContentDisplayScreenProps extends ScreenChromeProps {
+  urlSearchParams?: Readonly<URLSearchParams> | null;
+  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
+}
+
 export function PublishedContentDisplayScreen({
   urlSearchParams,
   onUrlSearchParamsChange,
-}: {
-  urlSearchParams?: Readonly<URLSearchParams> | null;
-  onUrlSearchParamsChange?: (urlSearchParams: Readonly<URLSearchParams>) => void;
-}) {
+  header,
+  footer,
+}: PublishedContentDisplayScreenProps) {
   const [contentDisplayState, dispatchContentDisplay] = useReducer(
     reduceContentDisplayState,
     urlSearchParams,
@@ -53,7 +58,7 @@ export function PublishedContentDisplayScreen({
 
   return (
     <DisplayModeContext.Provider value="published">
-      <div className="flex h-dvh w-dvw flex-col overflow-hidden">
+      <ScreenChrome className="flex-col" header={header} footer={footer}>
         <Toolbar dispatchContentDisplay={dispatchContentDisplay} />
         {entityIds.length === 0 ? (
           <div className="flex grow flex-col items-center justify-center p-2">
@@ -87,7 +92,7 @@ export function PublishedContentDisplayScreen({
             </div>
           </div>
         )}
-      </div>
+      </ScreenChrome>
     </DisplayModeContext.Provider>
   );
 }
