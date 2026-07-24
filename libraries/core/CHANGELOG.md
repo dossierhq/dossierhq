@@ -1,5 +1,7 @@
 # Change Log - @dossierhq/core
 
+## 1.0.0
+
 ## 0.7.21
 
 ### Patch Changes
