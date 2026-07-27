@@ -995,8 +995,8 @@ importers:
         specifier: ~10.4.1
         version: 10.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.11.1)(@testing-library/dom@10.4.0)(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       svgo:
-        specifier: ~4.0.1
-        version: 4.0.1
+        specifier: ~4.0.2
+        version: 4.0.2
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -1147,8 +1147,8 @@ importers:
         specifier: ~19.2.7
         version: 19.2.7
       svgo:
-        specifier: ~4.0.1
-        version: 4.0.1
+        specifier: ~4.0.2
+        version: 4.0.2
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -10789,6 +10789,10 @@ packages:
     resolution: {integrity: sha512-21IYA3Q5cQf089Z6tgaUTr7lDAyzoTPx5HRtbhsME8Udispad8dC/+sziTNugOEx54ilvatQ9YCzl4KQLPcRHA==}
     engines: {node: '>=11.0.0'}
 
+  sax@1.6.1:
+    resolution: {integrity: sha512-42tBVwLWnaQvW5zc4HbZrTuWccECCZfBi92FDuwtqxasH+JbPB3/FOKb1m222K42R4WxuxzzMsTswfzgtSu64Q==}
+    engines: {node: '>=11.0.0'}
+
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
 
@@ -11142,6 +11146,11 @@ packages:
 
   svgo@4.0.1:
     resolution: {integrity: sha512-XDpWUOPC6FEibaLzjfe0ucaV0YrOjYotGJO1WpF0Zd+n6ZGEQUsSugaoLq9QkEZtAfQIxT42UChcssDVPP3+/w==}
+    engines: {node: '>=16'}
+    hasBin: true
+
+  svgo@4.0.2:
+    resolution: {integrity: sha512-ekx94z1rRc5LDi6oSUaeRnYhd0UOJxdtQCL2rF8xpWxD3TPAsISWOrxezqGovqS38GRZOdpDfvQe3ts6F7nsng==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -22077,6 +22086,8 @@ snapshots:
 
   sax@1.5.0: {}
 
+  sax@1.6.1: {}
+
   scheduler@0.27.0: {}
 
   schema-dts-lib@1.0.0(typescript@6.0.3):
@@ -22508,6 +22519,16 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.1
       sax: 1.5.0
+
+  svgo@4.0.2:
+    dependencies:
+      commander: 11.1.0
+      css-select: 5.2.2
+      css-tree: 3.2.1
+      css-what: 6.2.2
+      csso: 5.0.5
+      picocolors: 1.1.1
+      sax: 1.6.1
 
   swr@2.4.1(react@19.2.7):
     dependencies:
