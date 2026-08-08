@@ -1,5 +1,7 @@
 # Change Log - @dossierhq/postgres-tools
 
+## 1.0.0
+
 ## 0.7.21
 
 ## 0.7.20

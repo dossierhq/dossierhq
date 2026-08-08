@@ -1,6 +1,6 @@
 {
   "name": "@dossierhq/sqlite-core",
-  "version": "0.7.21",
+  "version": "1.0.0",
   "description": "A library used by concrete SQLite adapters for Dossier.",
   "keywords": [
     "dossier",
