@@ -1,5 +1,12 @@
 # Change Log - @dossierhq/better-sqlite3
 
+## 1.0.0
+
+### Patch Changes
+
+- @dossierhq/core@1.0.0
+- @dossierhq/sqlite-core@1.0.0
+
 ## 0.7.21
 
 ### Patch Changes
