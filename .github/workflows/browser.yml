@@ -21,11 +21,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Install Playwright Browsers
+        # Run the binary from node_modules directly so the version pinned in
+        # pnpm-lock.yaml is used. `npx playwright` fetched its own copy instead,
+        # which downloaded a mismatched browser build and hung until the job
+        # timed out. This downloads browsers, it doesn't install packages.
         run: |
           cd libraries/sql.js-browser-integration-test
-          pnpm exec playwright install --with-deps chromium firefox webkit
+          ./node_modules/.bin/playwright install --with-deps chromium firefox webkit
           cd ../react-components2
-          pnpm exec playwright install --with-deps chromium firefox webkit
+          ./node_modules/.bin/playwright install --with-deps chromium firefox webkit
       - name: build
         run: |
           npx turbo run --filter=@dossierhq/sql.js-browser-integration-test --filter=@dossierhq/react-components2 lint check-types build test test-integration
