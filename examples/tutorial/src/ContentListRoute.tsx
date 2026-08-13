@@ -1,5 +1,4 @@
-import type { Entity } from '@dossierhq/core';
-import { ContentListScreen } from '@dossierhq/react-components';
+import { ContentListScreen } from '@dossierhq/react-components2';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
@@ -13,7 +12,7 @@ export function ContentListRoute() {
     [navigate],
   );
   const handleEntityOpen = useCallback(
-    (entity: Entity) => navigate(`/edit-content?id=${entity.id}`),
+    (id: string) => navigate(`/edit-content?id=${id}`),
     [navigate],
   );
 

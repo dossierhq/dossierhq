@@ -1,26 +1,34 @@
-import type { PublishedEntity } from '@dossierhq/core';
-import { NotificationContainer } from '@dossierhq/design';
-import { PublishedContentListScreen } from '@dossierhq/react-components';
+import {
+  addContentDisplayParamsToURLSearchParams,
+  PublishedContentListScreen,
+  ThemeProvider,
+} from '@dossierhq/react-components2';
+import { useCallback } from 'react';
 import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
 import { AppPublishedDossierProvider } from './AppPublishedDossierProvider.js';
 import { NavBar } from './NavBar.js';
 
 export function DossierPublishedContentListPage() {
   const [urlSearchParams, setSearchParams] = useUrlSearchParams();
+
+  const handleOpenEntity = useCallback((id: string) => {
+    const displayUrlSearchParams = new URLSearchParams();
+    addContentDisplayParamsToURLSearchParams(displayUrlSearchParams, { entityIds: [id] });
+    window.location.assign(
+      `/dossier/published-content/display?${displayUrlSearchParams.toString()}`,
+    );
+  }, []);
+
   return (
-    <AppPublishedDossierProvider>
-      <NotificationContainer>
+    <ThemeProvider>
+      <AppPublishedDossierProvider>
         <PublishedContentListScreen
           header={<NavBar current="published-content" />}
           urlSearchParams={urlSearchParams}
           onUrlSearchParamsChange={setSearchParams}
-          onOpenEntity={handleEntityOpen}
+          onOpenEntity={handleOpenEntity}
         />
-      </NotificationContainer>
-    </AppPublishedDossierProvider>
+      </AppPublishedDossierProvider>
+    </ThemeProvider>
   );
-}
-
-function handleEntityOpen(entity: PublishedEntity) {
-  window.location.assign(`/dossier/published-content/display?id=${entity.id}`);
 }

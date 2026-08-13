@@ -1,4 +1,4 @@
-import { ContentEditorScreen } from '@dossierhq/react-components';
+import { ContentEditorScreen } from '@dossierhq/react-components2';
 import Head from 'next/head';
 import { useMemo, useState, type JSX } from 'react';
 import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';

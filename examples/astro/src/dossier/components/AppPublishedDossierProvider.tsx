@@ -7,46 +7,24 @@ import {
   type PublishedDossierClient,
   type PublishedDossierClientOperation,
 } from '@dossierhq/core';
-import {
-  PublishedDossierProvider,
-  type FieldDisplayProps,
-  type PublishedDossierContextAdapter,
-  type RichTextComponentDisplayProps,
-} from '@dossierhq/react-components';
-import { useMemo, type JSX } from 'react';
+import { PublishedDossierProvider } from '@dossierhq/react-components2';
+import { useMemo } from 'react';
 import { fetchJsonResult } from '../utils/fetchJsonResult.js';
 
 type BackendContext = ClientContext;
 
 const logger = createConsoleLogger(console);
 
-class PublishedContextAdapter implements PublishedDossierContextAdapter {
-  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
-    return null;
-  }
-
-  renderPublishedRichTextComponentDisplay({
-    value: _value,
-  }: RichTextComponentDisplayProps): JSX.Element | null {
-    return null;
-  }
-}
-
 export function AppPublishedDossierProvider({ children }: { children: React.ReactNode }) {
   const args = useMemo(
     () => ({
       publishedClient: createBackendPublishedClient(),
-      adapter: new PublishedContextAdapter(),
     }),
     [],
   );
 
-  const { publishedClient } = args;
-  if (!publishedClient) {
-    return null;
-  }
   return (
-    <PublishedDossierProvider {...args} publishedClient={publishedClient}>
+    <PublishedDossierProvider publishedClient={args.publishedClient} logger={logger}>
       {children}
     </PublishedDossierProvider>
   );

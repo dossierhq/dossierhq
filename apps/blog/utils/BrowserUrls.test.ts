@@ -1,8 +1,16 @@
 import { describe, expect, test } from 'vitest';
-import { BrowserUrls } from './BrowserUrls.js';
+import { canonicalUrl } from './BrowserUrls.js';
 
-describe('BrowserUrls', () => {
-  test('editPage', () => {
-    expect(BrowserUrls.editPage(['id1', 'id2'])).toBe('/dossier/content/edit?id=id1&id=id2');
+describe('canonicalUrl', () => {
+  test('root', () => {
+    expect(canonicalUrl('/')).toBe('https://www.dossierhq.dev');
+  });
+
+  test('path', () => {
+    expect(canonicalUrl('/docs')).toBe('https://www.dossierhq.dev/docs');
+  });
+
+  test('throws on url not starting with /', () => {
+    expect(() => canonicalUrl('docs')).toThrow('URL must start with /');
   });
 });

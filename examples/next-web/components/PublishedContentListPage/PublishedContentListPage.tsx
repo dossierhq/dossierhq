@@ -1,5 +1,4 @@
-import type { PublishedEntity } from '@dossierhq/core';
-import { PublishedContentListScreen } from '@dossierhq/react-components';
+import { PublishedContentListScreen } from '@dossierhq/react-components2';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, type JSX } from 'react';
@@ -13,7 +12,7 @@ export default function PublishedContentListPage(): JSX.Element | null {
   const { onUrlSearchParamsChange, urlSearchParams } = useUrlSearchParams();
 
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => router.push(BrowserUrls.publishedContentDisplay([entity.id])),
+    (id: string) => router.push(BrowserUrls.publishedContentDisplay([id])),
     [router],
   );
 

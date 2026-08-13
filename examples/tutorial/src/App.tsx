@@ -1,5 +1,5 @@
 import { Auth0Provider } from '@auth0/auth0-react';
-import { NotificationContainer } from '@dossierhq/design';
+import { ThemeProvider } from '@dossierhq/react-components2';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AppAdminProvider } from './AppAdminProvider.js';
 import { AppPublishedProvider } from './AppPublishedProvider.js';
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <NotificationContainer>
+    <ThemeProvider>
       <Auth0Provider
         domain={import.meta.env.VITE_AUTH0_DOMAIN}
         clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
@@ -38,6 +38,6 @@ export default function App() {
           </AppPublishedProvider>
         </AppAdminProvider>
       </Auth0Provider>
-    </NotificationContainer>
+    </ThemeProvider>
   );
 }

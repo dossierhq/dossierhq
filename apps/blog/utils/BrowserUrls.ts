@@ -5,19 +5,15 @@ export const BrowserUrls = {
   blog: '/blog',
   blogPost: (slug: string) => `/blog/${slug}`,
   changelog: '/dossier/changelog',
+  contentEditor: '/dossier/content/edit',
   docs: '/docs',
-  editPage: (ids: string[]): string => `/dossier/content/edit?id=${ids.join('&id=')}`,
-  editPageNew: (entityType: string, id: string): string =>
-    `/dossier/content/edit?new=${entityType}:${id}`,
-  isEditPage: (url: string): boolean => url.startsWith('/dossier/content/edit'),
   glossary: '/docs/glossary',
   glossaryTerm: (slug: string) => `/docs/glossary#${slug}`,
   github: 'https://github.com/dossierhq/dossierhq#readme',
   limitations: '/docs/limitations',
   playground: () => ensureEnvVar(process.env.NEXT_PUBLIC_PLAYGROUND_URL),
   publishedContent: '/dossier/published-content',
-  publishedEntityDisplay: (ids: string[]): string =>
-    `/dossier/published-content/display?id=${ids.join('&id=')}`,
+  publishedContentDisplay: '/dossier/published-content/display',
   schemaEditor: '/dossier/schema',
 };
 

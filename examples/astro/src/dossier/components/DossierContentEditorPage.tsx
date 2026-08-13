@@ -1,5 +1,4 @@
-import { NotificationContainer } from '@dossierhq/design';
-import { ContentEditorScreen } from '@dossierhq/react-components';
+import { ContentEditorScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useState } from 'react';
 import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
 import { AppAdminDossierProvider } from './AppAdminDossierProvider.js';
@@ -12,15 +11,15 @@ export function DossierContentEditorPage() {
   //TODO warn if hasChanges
 
   return (
-    <AppAdminDossierProvider>
-      <NotificationContainer>
+    <ThemeProvider>
+      <AppAdminDossierProvider>
         <ContentEditorScreen
           header={<NavBar current="content" />}
           urlSearchParams={urlSearchParams}
           onUrlSearchParamsChange={setSearchParams}
           onEditorHasChangesChange={setHasChanges}
         />
-      </NotificationContainer>
-    </AppAdminDossierProvider>
+      </AppAdminDossierProvider>
+    </ThemeProvider>
   );
 }

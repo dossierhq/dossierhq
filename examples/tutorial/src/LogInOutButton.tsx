@@ -1,5 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from '@dossierhq/design';
+
+const buttonClassName =
+  'bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-8 shrink-0 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors';
 
 export function LogInOutButton() {
   const { loginWithRedirect, isAuthenticated, isLoading, logout } = useAuth0();
@@ -9,10 +11,18 @@ export function LogInOutButton() {
   }
   if (isAuthenticated) {
     return (
-      <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+      <button
+        type="button"
+        className={buttonClassName}
+        onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+      >
         Log out
-      </Button>
+      </button>
     );
   }
-  return <Button onClick={() => loginWithRedirect()}>Log in</Button>;
+  return (
+    <button type="button" className={buttonClassName} onClick={() => loginWithRedirect()}>
+      Log in
+    </button>
+  );
 }

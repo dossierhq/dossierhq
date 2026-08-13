@@ -14,7 +14,8 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./lib/index.js"
+    ".": "./lib/index.js",
+    "./main.css": "./lib/main.css"
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
@@ -22,7 +23,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && postcss src/main.css -o lib/main.css",
     "build:watch": "tsc --watch",
     "lint": "eslint --max-warnings=0",
     "clean": "rm -rf lib/",
@@ -37,7 +38,7 @@
   },
   "dependencies": {
     "@cloudinary/url-gen": "~1.22.0",
-    "@dossierhq/design": "workspace:*"
+    "lucide-react": "~1.8.0"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
@@ -46,11 +47,15 @@
   "devDependencies": {
     "@dossierhq/core": "workspace:*",
     "@dossierhq/eslint-config": "workspace:*",
-    "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "~4.3.0",
     "@types/react": "19.2.17",
     "eslint": "~10.8.0",
+    "postcss": "~8.5.6",
+    "postcss-cli": "~11.0.1",
     "react": "~19.2.7",
+    "tailwindcss": "~4.3.0",
     "typescript": "~6.0.3"
   }
 }

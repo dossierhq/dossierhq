@@ -1,8 +1,5 @@
-import '@dossierhq/design/main.css';
-import '@dossierhq/leaflet/icons.css';
-import '@dossierhq/leaflet/main.css';
-import '@dossierhq/react-components/main.css';
-import 'leaflet/dist/leaflet.css';
+import '@dossierhq/react-components2/main.css';
+import './main.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

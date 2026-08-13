@@ -1,4 +1,4 @@
-import { ChangelogListScreen } from '@dossierhq/react-components';
+import { ChangelogListScreen } from '@dossierhq/react-components2';
 import Head from 'next/head';
 import type { JSX } from 'react';
 import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';
