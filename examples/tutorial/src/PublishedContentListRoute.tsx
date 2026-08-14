@@ -1,5 +1,4 @@
-import type { PublishedEntity } from '@dossierhq/core';
-import { PublishedContentListScreen } from '@dossierhq/react-components';
+import { PublishedContentListScreen } from '@dossierhq/react-components2';
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
@@ -9,7 +8,7 @@ export function PublishedContentListRoute() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleEntityOpen = useCallback(
-    (entity: PublishedEntity) => navigate(`/published-content/display?id=${entity.id}`),
+    (id: string) => navigate(`/published-content/display?id=${id}`),
     [navigate],
   );
 

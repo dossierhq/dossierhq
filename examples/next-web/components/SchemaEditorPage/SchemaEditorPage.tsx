@@ -1,4 +1,4 @@
-import { SchemaEditorScreen } from '@dossierhq/react-components';
+import { SchemaEditorScreen } from '@dossierhq/react-components2';
 import Head from 'next/head';
 import { useState } from 'react';
 import { AppAdminDossierProvider } from '../../contexts/AppAdminDossierProvider';

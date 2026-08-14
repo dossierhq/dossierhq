@@ -1,4 +1,4 @@
-import { SchemaEditorScreen } from '@dossierhq/react-components';
+import { SchemaEditorScreen } from '@dossierhq/react-components2';
 import { useState } from 'react';
 import { Navbar } from './Navbar.js';
 import { ScreenChangesContext } from './ScreenChangesContext.js';

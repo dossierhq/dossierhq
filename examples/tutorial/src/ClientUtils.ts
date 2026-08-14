@@ -12,7 +12,7 @@ import {
   type DossierClientOperation,
   type PublishedDossierClientOperation,
 } from '@dossierhq/core';
-import { useCachingDossierMiddleware } from '@dossierhq/react-components';
+import { useCachingDossierMiddleware } from '@dossierhq/react-components2';
 import { useMemo } from 'react';
 import type { AppDossierClient, AppPublishedDossierClient } from './SchemaTypes.js';
 

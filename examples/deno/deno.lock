@@ -1,13 +1,13 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "npm:tslib@2.4": "2.4.1",
     "npm:tslib@2.5": "2.5.0",
-    "npm:tslib@2.6": "2.6.0",
-    "npm:tslib@~2.6.2": "2.6.2",
+    "npm:tslib@2.6": "2.6.3",
+    "npm:tslib@~2.6.2": "2.6.3",
     "npm:tslib@~2.6.3": "2.6.3",
     "npm:uuid@10.0": "10.0.0",
-    "npm:uuid@9.0": "9.0.0",
+    "npm:uuid@9.0": "9.0.1",
     "npm:uuid@~9.0.1": "9.0.1"
   },
   "npm": {
@@ -17,23 +17,18 @@
     "tslib@2.5.0": {
       "integrity": "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
     },
-    "tslib@2.6.0": {
-      "integrity": "sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA=="
-    },
-    "tslib@2.6.2": {
-      "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q=="
-    },
     "tslib@2.6.3": {
       "integrity": "sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ=="
     },
     "uuid@10.0.0": {
-      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ=="
-    },
-    "uuid@9.0.0": {
-      "integrity": "sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg=="
+      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
+      "deprecated": true,
+      "bin": true
     },
     "uuid@9.0.1": {
-      "integrity": "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA=="
+      "integrity": "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==",
+      "deprecated": true,
+      "bin": true
     }
   },
   "remote": {
@@ -222,6 +217,9 @@
     "dependencies": [
       "npm:tslib@~2.6.3",
       "npm:uuid@10.0"
-    ]
+    ],
+    "links": {
+      "npm:@dossierhq/deno-postgres@1.0.1": {}
+    }
   }
 }

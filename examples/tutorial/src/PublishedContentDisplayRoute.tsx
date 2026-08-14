@@ -1,4 +1,4 @@
-import { PublishedContentDisplayScreen } from '@dossierhq/react-components';
+import { PublishedContentDisplayScreen } from '@dossierhq/react-components2';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';

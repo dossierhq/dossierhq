@@ -1,5 +1,4 @@
-import type { Entity } from '@dossierhq/core';
-import { ContentListScreen } from '@dossierhq/react-components';
+import { ContentListScreen } from '@dossierhq/react-components2';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, type JSX } from 'react';
@@ -17,7 +16,7 @@ export default function ContentListPage(): JSX.Element | null {
     [router],
   );
   const handleEntityOpen = useCallback(
-    (entity: Entity) => router.push(BrowserUrls.contentEditor([entity.id])),
+    (id: string) => router.push(BrowserUrls.contentEditor([id])),
     [router],
   );
 

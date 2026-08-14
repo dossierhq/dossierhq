@@ -1,4 +1,4 @@
-import { PublishedContentDisplayScreen } from '@dossierhq/react-components';
+import { PublishedContentDisplayScreen } from '@dossierhq/react-components2';
 import Head from 'next/head';
 import type { JSX } from 'react';
 import { AppPublishedDossierProvider } from '../../contexts/AppPublishedDossierProvider';

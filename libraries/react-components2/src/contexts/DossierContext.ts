@@ -29,7 +29,7 @@ export interface DossierContextAdapter {
   /** Return null to fall back to the built-in editor. */
   renderFieldEditor(props: FieldEditorProps): ReactNode | null;
   /** Return null to fall back to the built-in display. */
-  renderFieldDisplay(props: FieldDisplayProps): ReactNode | null;
+  renderFieldDisplay?(props: FieldDisplayProps): ReactNode | null;
   /** Return null to fall back to the built-in editor. */
   renderRichTextComponentEditor?(props: RichTextComponentEditorProps): ReactNode | null;
   /** Return null to fall back to the built-in display. */

@@ -1,15 +1,16 @@
-import { useWindowEventListener } from '@dossierhq/design';
-import { useCallback } from 'react';
+import { useEffect } from 'react';
 
-export function useBeforeUnload(message: string | null) {
-  const handleBeforeUnload = useCallback(
-    (event: BeforeUnloadEvent) => {
-      if (message) {
-        event.returnValue = message;
-      }
-    },
-    [message],
-  );
+/** Warns before closing/reloading the tab while `message` is set. */
+export function useBeforeUnload(message: string | null): void {
+  useEffect(() => {
+    if (!message) return;
 
-  useWindowEventListener('beforeunload', handleBeforeUnload);
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = message;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [message]);
 }

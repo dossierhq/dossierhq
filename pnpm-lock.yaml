@@ -75,12 +75,6 @@ importers:
       '@dossierhq/design':
         specifier: workspace:*
         version: link:../../libraries/design
-      '@dossierhq/leaflet':
-        specifier: workspace:*
-        version: link:../../libraries/leaflet
-      '@dossierhq/react-components':
-        specifier: workspace:*
-        version: link:../../libraries/react-components
       '@dossierhq/react-components2':
         specifier: workspace:*
         version: link:../../libraries/react-components2
@@ -93,9 +87,6 @@ importers:
       codejar:
         specifier: ~4.3.0
         version: 4.3.0
-      leaflet:
-        specifier: ~1.9.4
-        version: 1.9.4
       lexical:
         specifier: 0.45.0
         version: 0.45.0
@@ -118,6 +109,9 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
+      '@tailwindcss/postcss':
+        specifier: ~4.3.0
+        version: 4.3.0
       '@types/better-sqlite3':
         specifier: ~7.6.13
         version: 7.6.13
@@ -133,9 +127,18 @@ importers:
       eslint:
         specifier: ~10.8.0
         version: 10.8.0(jiti@2.7.0)(supports-color@8.1.1)
+      postcss:
+        specifier: ~8.5.6
+        version: 8.5.25
       schema-dts:
         specifier: ~2.0.0
         version: 2.0.0(typescript@6.0.3)
+      tailwindcss:
+        specifier: ~4.3.0
+        version: 4.3.0
+      tailwindcss-animate:
+        specifier: ~1.0.7
+        version: 1.0.7(tailwindcss@4.3.0)
       tsx:
         specifier: ~4.21.0
         version: 4.21.0
@@ -354,15 +357,6 @@ importers:
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../../libraries/core
-      '@dossierhq/design':
-        specifier: workspace:*
-        version: link:../../libraries/design
-      '@dossierhq/leaflet':
-        specifier: workspace:*
-        version: link:../../libraries/leaflet
-      '@dossierhq/react-components':
-        specifier: workspace:*
-        version: link:../../libraries/react-components
       '@dossierhq/react-components2':
         specifier: workspace:*
         version: link:../../libraries/react-components2
@@ -384,9 +378,6 @@ importers:
       hono:
         specifier: 4.12.34
         version: 4.12.34
-      leaflet:
-        specifier: ~1.9.4
-        version: 1.9.4
       react:
         specifier: ~19.2.7
         version: 19.2.7
@@ -397,6 +388,9 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
+      '@tailwindcss/vite':
+        specifier: ~4.3.0
+        version: 4.3.0(vite@6.4.3(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
       '@types/better-sqlite3':
         specifier: ~7.6.13
         version: 7.6.13
@@ -406,6 +400,12 @@ importers:
       rollup-plugin-visualizer:
         specifier: ~7.0.1
         version: 7.0.1(rolldown@1.0.3)(rollup@4.62.0)
+      tailwindcss:
+        specifier: ~4.3.0
+        version: 4.3.0
+      tailwindcss-animate:
+        specifier: ~1.0.7
+        version: 1.0.7(tailwindcss@4.3.0)
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -577,18 +577,12 @@ importers:
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../../libraries/core
-      '@dossierhq/design':
-        specifier: workspace:*
-        version: link:../../libraries/design
       '@dossierhq/graphql':
         specifier: workspace:*
         version: link:../../libraries/graphql
-      '@dossierhq/leaflet':
+      '@dossierhq/react-components2':
         specifier: workspace:*
-        version: link:../../libraries/leaflet
-      '@dossierhq/react-components':
-        specifier: workspace:*
-        version: link:../../libraries/react-components
+        version: link:../../libraries/react-components2
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../../libraries/server
@@ -601,9 +595,6 @@ importers:
       graphql-voyager:
         specifier: ~2.1.0
         version: 2.1.0(@types/react@19.2.17)(graphql@16.13.2)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(supports-color@8.1.1)
-      leaflet:
-        specifier: ~1.9.4
-        version: 1.9.4
       next:
         specifier: 16.3.0
         version: 16.3.0(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@playwright/test@1.62.1)(@types/node@25.6.0)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(sass@1.99.0)
@@ -617,6 +608,9 @@ importers:
       '@dossierhq/eslint-config':
         specifier: workspace:*
         version: link:../../libraries/eslint-config
+      '@tailwindcss/postcss':
+        specifier: ~4.3.0
+        version: 4.3.0
       '@types/better-sqlite3':
         specifier: ~7.6.13
         version: 7.6.13
@@ -626,6 +620,15 @@ importers:
       eslint:
         specifier: ~10.8.0
         version: 10.8.0(jiti@2.7.0)(supports-color@8.1.1)
+      postcss:
+        specifier: ~8.5.6
+        version: 8.5.25
+      tailwindcss:
+        specifier: ~4.3.0
+        version: 4.3.0
+      tailwindcss-animate:
+        specifier: ~1.0.7
+        version: 1.0.7(tailwindcss@4.3.0)
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -644,15 +647,9 @@ importers:
       '@dossierhq/core':
         specifier: workspace:*
         version: link:../../libraries/core
-      '@dossierhq/design':
+      '@dossierhq/react-components2':
         specifier: workspace:*
-        version: link:../../libraries/design
-      '@dossierhq/leaflet':
-        specifier: workspace:*
-        version: link:../../libraries/leaflet
-      '@dossierhq/react-components':
-        specifier: workspace:*
-        version: link:../../libraries/react-components
+        version: link:../../libraries/react-components2
       '@dossierhq/server':
         specifier: workspace:*
         version: link:../../libraries/server
@@ -674,9 +671,6 @@ importers:
       jwks-rsa:
         specifier: ~4.0.1
         version: 4.0.1(supports-color@5.5.0)
-      leaflet:
-        specifier: ~1.9.4
-        version: 1.9.4
       react:
         specifier: ~19.2.7
         version: 19.2.7
@@ -690,6 +684,9 @@ importers:
       '@dossierhq/typescript-generator':
         specifier: workspace:*
         version: link:../../libraries/typescript-generator
+      '@tailwindcss/vite':
+        specifier: ~4.3.0
+        version: 4.3.0(vite@8.0.16(@types/node@25.6.0)(esbuild@0.28.1)(jiti@2.7.0)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
       '@types/better-sqlite3':
         specifier: ~7.6.13
         version: 7.6.13
@@ -714,6 +711,12 @@ importers:
       nodemon:
         specifier: ~3.1.14
         version: 3.1.14
+      tailwindcss:
+        specifier: ~4.3.0
+        version: 4.3.0
+      tailwindcss-animate:
+        specifier: ~1.0.7
+        version: 1.0.7(tailwindcss@4.3.0)
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -812,9 +815,9 @@ importers:
       '@cloudinary/url-gen':
         specifier: ~1.22.0
         version: 1.22.0
-      '@dossierhq/design':
-        specifier: workspace:*
-        version: link:../design
+      lucide-react:
+        specifier: ~1.8.0
+        version: 1.8.0(react@19.2.7)
     devDependencies:
       '@dossierhq/core':
         specifier: workspace:*
@@ -822,21 +825,33 @@ importers:
       '@dossierhq/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@dossierhq/react-components':
+      '@dossierhq/react-components2':
         specifier: workspace:*
-        version: link:../react-components
+        version: link:../react-components2
       '@dossierhq/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@tailwindcss/postcss':
+        specifier: ~4.3.0
+        version: 4.3.0
       '@types/react':
         specifier: 19.2.17
         version: 19.2.17
       eslint:
         specifier: ~10.8.0
         version: 10.8.0(jiti@2.7.0)(supports-color@8.1.1)
+      postcss:
+        specifier: ~8.5.6
+        version: 8.5.25
+      postcss-cli:
+        specifier: ~11.0.1
+        version: 11.0.1(jiti@2.7.0)(postcss@8.5.25)(tsx@4.21.0)
       react:
         specifier: ~19.2.7
         version: 19.2.7
+      tailwindcss:
+        specifier: ~4.3.0
+        version: 4.3.0
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -16220,6 +16235,13 @@ snapshots:
       '@tailwindcss/oxide': 4.3.0
       postcss: 8.5.25
       tailwindcss: 4.3.0
+
+  '@tailwindcss/vite@4.3.0(vite@6.4.3(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
+    dependencies:
+      '@tailwindcss/node': 4.3.0
+      '@tailwindcss/oxide': 4.3.0
+      tailwindcss: 4.3.0
+      vite: 6.4.3(@types/node@25.6.0)(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
 
   '@tailwindcss/vite@4.3.0(vite@8.0.16(@types/node@25.6.0)(esbuild@0.28.1)(jiti@2.7.0)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
