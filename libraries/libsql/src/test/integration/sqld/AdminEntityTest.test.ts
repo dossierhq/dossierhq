@@ -22,7 +22,7 @@ beforeAll(async () => {
   readOnlyEntityRepository = (
     await createReadOnlyEntityRepository(createDossierClientProvider(serverInit.server))
   ).valueOrThrow();
-}, 30_000);
+});
 afterAll(async () => {
   if (serverInit) {
     (await serverInit.server.shutdown()).throwIfError();
