@@ -1,5 +1,4 @@
-import { NotificationContainer } from '@dossierhq/design';
-import { SchemaEditorScreen } from '@dossierhq/react-components';
+import { SchemaEditorScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useState } from 'react';
 import { AppAdminDossierProvider } from './AppAdminDossierProvider.js';
 import { NavBar } from './NavBar.js';
@@ -7,13 +6,13 @@ import { NavBar } from './NavBar.js';
 export function DossierSchemaEditorPage() {
   const [_hasChanges, setHasChanges] = useState(false);
   return (
-    <AppAdminDossierProvider>
-      <NotificationContainer>
+    <ThemeProvider>
+      <AppAdminDossierProvider>
         <SchemaEditorScreen
           header={<NavBar current="schema" />}
           onEditorHasChangesChange={setHasChanges}
         />
-      </NotificationContainer>
-    </AppAdminDossierProvider>
+      </AppAdminDossierProvider>
+    </ThemeProvider>
   );
 }

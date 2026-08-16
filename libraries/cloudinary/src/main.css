@@ -1,0 +1,8 @@
+/* Utilities for this package's own components only. Host apps also load
+   @dossierhq/react-components2/main.css, which supplies preflight and the rest,
+   so preflight is deliberately not imported here. */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import '@dossierhq/react-components2/theme.css';
+
+@source './components';

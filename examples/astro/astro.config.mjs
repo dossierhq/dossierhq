@@ -2,6 +2,7 @@ import node from '@astrojs/node';
 import react from '@astrojs/react';
 import sentry from '@sentry/astro';
 import spotlightjs from '@spotlightjs/astro';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { visualizer } from 'rollup-plugin-visualizer';
 
@@ -12,6 +13,7 @@ export default defineConfig({
   }),
   integrations: [sentry(), spotlightjs(), react({ include: ['**/src/dossier/**'] })],
   vite: {
+    plugins: [tailwindcss()],
     build: {
       chunkSizeWarningLimit: 900,
       sourcemap: true,

@@ -1,3 +1,5 @@
+'use client';
+
 import { CloudinaryImageFieldDisplay } from '@dossierhq/cloudinary';
 import {
   convertJsonPublishedDossierClientResult,
@@ -13,8 +15,8 @@ import {
   type FieldDisplayProps,
   type PublishedDossierContextAdapter,
   type RichTextComponentDisplayProps,
-} from '@dossierhq/react-components';
-import { JSX, useMemo } from 'react';
+} from '@dossierhq/react-components2';
+import { useMemo, type ReactNode } from 'react';
 import { CLOUDINARY_CLOUD_NAME } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
@@ -25,19 +27,19 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class PublishedContextAdapter implements PublishedDossierContextAdapter {
-  renderPublishedFieldDisplay(props: FieldDisplayProps): JSX.Element | null {
+  renderPublishedFieldDisplay(props: FieldDisplayProps): ReactNode | null {
     const { fieldSpec, value } = props;
     if (isComponentItemField(fieldSpec, value) && value && isPublishedCloudinaryImage(value)) {
-      return CloudinaryImageFieldDisplay({ cloudName: CLOUDINARY_CLOUD_NAME, value });
+      return <CloudinaryImageFieldDisplay cloudName={CLOUDINARY_CLOUD_NAME} value={value} />;
     }
     return null;
   }
 
   renderPublishedRichTextComponentDisplay({
     value,
-  }: RichTextComponentDisplayProps): JSX.Element | null {
+  }: RichTextComponentDisplayProps): ReactNode | null {
     if (value && isPublishedCloudinaryImage(value)) {
-      return CloudinaryImageFieldDisplay({ cloudName: CLOUDINARY_CLOUD_NAME, value });
+      return <CloudinaryImageFieldDisplay cloudName={CLOUDINARY_CLOUD_NAME} value={value} />;
     }
     return null;
   }
@@ -52,12 +54,12 @@ export function AppPublishedDossierProvider({ children }: { children: React.Reac
     [],
   );
 
-  const { publishedClient } = args;
-  if (!publishedClient) {
-    return null;
-  }
   return (
-    <PublishedDossierProvider {...args} publishedClient={publishedClient}>
+    <PublishedDossierProvider
+      publishedClient={args.publishedClient}
+      adapter={args.adapter}
+      logger={logger}
+    >
       {children}
     </PublishedDossierProvider>
   );

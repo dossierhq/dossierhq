@@ -1,4 +1,3 @@
-import { FullscreenContainer } from '@dossierhq/design';
 import { Voyager, voyagerIntrospectionQuery } from 'graphql-voyager';
 import Head from 'next/head';
 import type { JSX } from 'react';
@@ -10,12 +9,14 @@ export default function VoyagerPage(): JSX.Element {
       <Head>
         <title>Voyager</title>
       </Head>
-      <FullscreenContainer>
-        <FullscreenContainer.Row fullWidth>
+      <div className="flex h-screen flex-col">
+        <div className="shrink-0">
           <NavBar current="voyager" />
-        </FullscreenContainer.Row>
-        <Voyager introspection={introspection} />
-      </FullscreenContainer>
+        </div>
+        <div className="flex-1 overflow-auto">
+          <Voyager introspection={introspection} />
+        </div>
+      </div>
     </>
   );
 }

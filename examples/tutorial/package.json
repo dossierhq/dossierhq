@@ -18,9 +18,7 @@
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
     "@dossierhq/core": "workspace:*",
-    "@dossierhq/design": "workspace:*",
-    "@dossierhq/leaflet": "workspace:*",
-    "@dossierhq/react-components": "workspace:*",
+    "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "better-sqlite3": "~12.9.0",
     "body-parser": "~2.2.2",
@@ -28,13 +26,13 @@
     "express": "~5.2.1",
     "express-jwt": "~8.5.1",
     "jwks-rsa": "~4.0.1",
-    "leaflet": "~1.9.4",
     "react": "~19.2.7",
     "react-dom": "~19.2.7",
     "react-router-dom": "~7.14.2"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
+    "@tailwindcss/vite": "~4.3.0",
     "@types/better-sqlite3": "~7.6.13",
     "@types/body-parser": "~1.19.5",
     "@types/express": "~5.0.6",
@@ -43,6 +41,8 @@
     "@vitejs/plugin-react": "~6.0.2",
     "concurrently": "~9.2.0",
     "nodemon": "~3.1.14",
+    "tailwindcss": "~4.3.0",
+    "tailwindcss-animate": "~1.0.7",
     "typescript": "~6.0.3",
     "vite": "8.0.16"
   }

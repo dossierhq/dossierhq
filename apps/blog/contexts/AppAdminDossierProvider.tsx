@@ -1,3 +1,5 @@
+'use client';
+
 import {
   CloudinaryImageFieldEditor,
   CloudinaryImageFieldEditorWithoutClear,
@@ -21,8 +23,8 @@ import {
   type DossierContextAdapter,
   type FieldEditorProps,
   type RichTextComponentEditorProps,
-} from '@dossierhq/react-components';
-import { JSX, useMemo } from 'react';
+} from '@dossierhq/react-components2';
+import { useMemo, type ReactNode } from 'react';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config/CloudinaryConfig';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
@@ -33,7 +35,7 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class AdminContextAdapter implements DossierContextAdapter {
-  renderFieldEditor(props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(props: FieldEditorProps): ReactNode | null {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&
@@ -43,29 +45,29 @@ class AdminContextAdapter implements DossierContextAdapter {
     ) {
       return (
         <CloudinaryImageFieldEditor
-          {...{
-            ...props,
-            cloudName: CLOUDINARY_CLOUD_NAME,
-            uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-            fieldSpec,
-            value,
-          }}
+          {...props}
+          cloudName={CLOUDINARY_CLOUD_NAME}
+          uploadPreset={CLOUDINARY_UPLOAD_PRESET}
+          fieldSpec={fieldSpec}
+          value={value}
         />
       );
     }
     return null;
   }
 
-  renderRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
+  renderRichTextComponentEditor(props: RichTextComponentEditorProps): ReactNode | null {
     const { value, validationIssues, onChange } = props;
     if (isCloudinaryImage(value)) {
-      return CloudinaryImageFieldEditorWithoutClear({
-        cloudName: CLOUDINARY_CLOUD_NAME,
-        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-        value,
-        validationIssues,
-        onChange,
-      });
+      return (
+        <CloudinaryImageFieldEditorWithoutClear
+          cloudName={CLOUDINARY_CLOUD_NAME}
+          uploadPreset={CLOUDINARY_UPLOAD_PRESET}
+          value={value}
+          validationIssues={validationIssues}
+          onChange={onChange}
+        />
+      );
     }
     return null;
   }
@@ -82,12 +84,8 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
     [cachingMiddleware],
   );
 
-  const { client } = args;
-  if (!client) {
-    return null;
-  }
   return (
-    <DossierProvider {...args} client={client}>
+    <DossierProvider client={args.client} adapter={args.adapter} logger={logger}>
       {children}
     </DossierProvider>
   );

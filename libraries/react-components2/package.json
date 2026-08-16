@@ -15,7 +15,8 @@
   "sideEffects": false,
   "exports": {
     ".": "./lib/index.js",
-    "./main.css": "./lib/main.css"
+    "./main.css": "./lib/main.css",
+    "./theme.css": "./src/theme.css"
   },
   "types": "./lib/index.d.ts",
   "license": "MIT",
