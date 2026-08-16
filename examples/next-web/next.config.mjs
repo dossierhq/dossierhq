@@ -3,7 +3,7 @@ const config = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   experimental: {
-    optimizePackageImports: ['@dossierhq/design', '@dossierhq/react-components'],
+    optimizePackageImports: ['@dossierhq/react-components2'],
   },
 };
 

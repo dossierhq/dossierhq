@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+
+@import '@dossierhq/react-components2/theme.css';

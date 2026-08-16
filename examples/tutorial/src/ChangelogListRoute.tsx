@@ -1,4 +1,4 @@
-import { ChangelogListScreen } from '@dossierhq/react-components';
+import { ChangelogListScreen } from '@dossierhq/react-components2';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';
 

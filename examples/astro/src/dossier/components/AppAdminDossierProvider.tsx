@@ -10,29 +10,13 @@ import {
   type ErrorType,
   type Result,
 } from '@dossierhq/core';
-import {
-  DossierProvider,
-  useCachingDossierMiddleware,
-  type DossierContextAdapter,
-  type FieldEditorProps,
-  type RichTextComponentEditorProps,
-} from '@dossierhq/react-components';
-import { useMemo, type JSX } from 'react';
-import { fetchJsonResult } from '../utils/fetchJsonResult.ts';
+import { DossierProvider, useCachingDossierMiddleware } from '@dossierhq/react-components2';
+import { useMemo } from 'react';
+import { fetchJsonResult } from '../utils/fetchJsonResult.js';
 
 type BackendContext = ClientContext;
 
 const logger = createConsoleLogger(console);
-
-class AdminContextAdapter implements DossierContextAdapter {
-  renderFieldEditor(_props: FieldEditorProps): JSX.Element | null {
-    return null;
-  }
-
-  renderRichTextComponentEditor(_props: RichTextComponentEditorProps): JSX.Element | null {
-    return null;
-  }
-}
 
 export function AppAdminDossierProvider({ children }: { children: React.ReactNode }) {
   const cachingMiddleware = useCachingDossierMiddleware();
@@ -40,17 +24,12 @@ export function AppAdminDossierProvider({ children }: { children: React.ReactNod
   const args = useMemo(
     () => ({
       client: createBackendDossierClient(cachingMiddleware),
-      adapter: new AdminContextAdapter(),
     }),
     [cachingMiddleware],
   );
 
-  const { client } = args;
-  if (!client) {
-    return null;
-  }
   return (
-    <DossierProvider {...args} client={client}>
+    <DossierProvider client={args.client} logger={logger}>
       {children}
     </DossierProvider>
   );

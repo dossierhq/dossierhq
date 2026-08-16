@@ -14,9 +14,8 @@ import {
   useCachingDossierMiddleware,
   type DossierContextAdapter,
   type FieldEditorProps,
-  type RichTextComponentEditorProps,
-} from '@dossierhq/react-components';
-import { useMemo, type JSX } from 'react';
+} from '@dossierhq/react-components2';
+import { useMemo, type ReactNode } from 'react';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
 
@@ -25,11 +24,7 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class AdminContextAdapter implements DossierContextAdapter {
-  renderFieldEditor(_props: FieldEditorProps): JSX.Element | null {
-    return null;
-  }
-
-  renderRichTextComponentEditor(_props: RichTextComponentEditorProps): JSX.Element | null {
+  renderFieldEditor(_props: FieldEditorProps): ReactNode | null {
     return null;
   }
 }

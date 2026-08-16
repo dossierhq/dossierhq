@@ -28,6 +28,8 @@ import {
 } from 'lexical';
 import { useCallback, useContext, useMemo, type JSX } from 'react';
 import { DossierContext } from '../../contexts/DossierContext.js';
+import { useDisplayAdapter } from '../../hooks/useDisplayAdapter.js';
+import { useDisplaySchema } from '../../hooks/useDisplaySchema.js';
 import { useSchema } from '../../hooks/useSchema.js';
 import { ComponentFieldDisplay } from '../ComponentFieldDisplay.js';
 import { ComponentFieldEditorWithoutClear } from '../ComponentFieldEditor.js';
@@ -64,10 +66,16 @@ function ComponentNodeComponent({
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const { adapter } = useContext(DossierContext);
-  const { schema } = useSchema();
+  const { renderRichTextComponentDisplay } = useDisplayAdapter();
+  const { schema } = useDisplaySchema();
+  // validation needs the full schema, and only ever runs while editing
+  const { schema: fullSchema } = useSchema(isEditable);
   const { adminOnly: richTextAdminOnly } = useContext(RichTextEditorContext);
   const componentSpec = schema?.getComponentTypeSpecification(data.type);
-  const adminOnly = richTextAdminOnly || !!componentSpec?.adminOnly;
+  // published component specs can't be admin only, so the field is absent there
+  const adminOnly =
+    richTextAdminOnly ||
+    !!(componentSpec && 'adminOnly' in componentSpec && componentSpec.adminOnly);
 
   const setValue = useCallback(
     (value: Component) => {
@@ -82,8 +90,8 @@ function ComponentNodeComponent({
   );
 
   const validationIssues = useMemo(() => {
-    return isEditable ? validateComponent(schema, adminOnly, data) : [];
-  }, [isEditable, schema, adminOnly, data]);
+    return isEditable && fullSchema ? validateComponent(fullSchema, adminOnly, data) : [];
+  }, [isEditable, fullSchema, adminOnly, data]);
 
   let content;
   if (isEditable) {
@@ -101,7 +109,7 @@ function ComponentNodeComponent({
       />
     );
   } else {
-    const overriddenDisplay = adapter?.renderRichTextComponentDisplay?.({ value: data });
+    const overriddenDisplay = renderRichTextComponentDisplay({ value: data });
     content = overriddenDisplay ?? (
       <ComponentFieldDisplay
         // ComponentFieldDisplay doesn't use the field spec, only the value

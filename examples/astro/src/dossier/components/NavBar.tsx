@@ -1,45 +1,51 @@
-import { Navbar as DesignNavbar } from '@dossierhq/design';
-import { useState } from 'react';
+import type { ReactNode } from 'react';
 
 interface Props {
   current: 'home' | 'content' | 'published-content' | 'schema' | 'changelog';
 }
 
 export function NavBar({ current }: Props) {
-  const [active, setActive] = useState(false);
   return (
-    <DesignNavbar>
-      <DesignNavbar.Brand>
-        <DesignNavbar.Item active={current === 'home'}>
-          {NavItemRender('Home', '/dossier/')}
-        </DesignNavbar.Item>
-        <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
-      </DesignNavbar.Brand>
-      <DesignNavbar.Menu active={active}>
-        <DesignNavbar.Item active={current === 'content'}>
-          {NavItemRender('Content', '/dossier/content/')}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'published-content'}>
-          {NavItemRender('Published content', '/dossier/published-content/')}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'schema'}>
-          {NavItemRender('Schema', '/dossier/schema')}
-        </DesignNavbar.Item>
-        <DesignNavbar.Item active={current === 'changelog'}>
-          {NavItemRender('Changelog', '/dossier/changelog')}
-        </DesignNavbar.Item>
-      </DesignNavbar.Menu>
-    </DesignNavbar>
+    <nav className="flex shrink-0 flex-wrap items-center gap-1 border-b px-2 py-1.5">
+      <NavLink active={current === 'home'} href="/dossier/">
+        Home
+      </NavLink>
+      <NavLink active={current === 'content'} href="/dossier/content/">
+        Content
+      </NavLink>
+      <NavLink active={current === 'published-content'} href="/dossier/published-content/">
+        Published content
+      </NavLink>
+      <NavLink active={current === 'schema'} href="/dossier/schema">
+        Schema
+      </NavLink>
+      <NavLink active={current === 'changelog'} href="/dossier/changelog">
+        Changelog
+      </NavLink>
+    </nav>
   );
 }
 
-function NavItemRender(text: string, href: string) {
-  const renderer = ({ className }: { className: string }) => {
-    return (
-      <a className={className} href={href}>
-        {text}
-      </a>
-    );
-  };
-  return renderer;
+function NavLink({
+  active,
+  href,
+  children,
+}: {
+  active: boolean;
+  href: string;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      className={
+        active
+          ? 'bg-accent text-accent-foreground rounded-md px-3 py-1.5 text-sm font-medium transition-colors'
+          : 'text-muted-foreground hover:text-foreground rounded-md px-3 py-1.5 text-sm font-medium transition-colors'
+      }
+      aria-current={active ? 'page' : undefined}
+      href={href}
+    >
+      {children}
+    </a>
+  );
 }

@@ -8,8 +8,8 @@ import {
   type DossierContextAdapter,
   type FieldEditorProps,
   type RichTextComponentEditorProps,
-} from '@dossierhq/react-components';
-import { useMemo, type JSX } from 'react';
+} from '@dossierhq/react-components2';
+import { useMemo, type ReactNode } from 'react';
 import { useDossierClient } from './ClientUtils.js';
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from './CloudinaryConfig.js';
 import { isCloudinaryImage } from './SchemaTypes.js';
@@ -37,7 +37,7 @@ export function AppAdminProvider({ children }: Props) {
 }
 
 class AdminAdapter implements DossierContextAdapter {
-  renderFieldEditor(props: FieldEditorProps): JSX.Element | null {
+  renderFieldEditor(props: FieldEditorProps): ReactNode | null {
     const { fieldSpec, value } = props;
     if (
       fieldSpec.type === FieldType.Component &&
@@ -45,28 +45,32 @@ class AdminAdapter implements DossierContextAdapter {
       value &&
       isCloudinaryImage(value)
     ) {
-      return CloudinaryImageFieldEditor({
-        ...props,
-        cloudName: CLOUDINARY_CLOUD_NAME,
-        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-        fieldSpec,
-        value,
-      });
+      return (
+        <CloudinaryImageFieldEditor
+          {...props}
+          cloudName={CLOUDINARY_CLOUD_NAME}
+          uploadPreset={CLOUDINARY_UPLOAD_PRESET}
+          fieldSpec={fieldSpec}
+          value={value}
+        />
+      );
     }
 
     return null;
   }
 
-  renderRichTextComponentEditor(props: RichTextComponentEditorProps): JSX.Element | null {
+  renderRichTextComponentEditor(props: RichTextComponentEditorProps): ReactNode | null {
     const { value, validationIssues, onChange } = props;
     if (isCloudinaryImage(value)) {
-      return CloudinaryImageFieldEditorWithoutClear({
-        cloudName: CLOUDINARY_CLOUD_NAME,
-        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-        validationIssues,
-        value,
-        onChange,
-      });
+      return (
+        <CloudinaryImageFieldEditorWithoutClear
+          cloudName={CLOUDINARY_CLOUD_NAME}
+          uploadPreset={CLOUDINARY_UPLOAD_PRESET}
+          validationIssues={validationIssues}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     return null;
   }

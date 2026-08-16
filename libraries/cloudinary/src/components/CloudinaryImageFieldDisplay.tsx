@@ -1,6 +1,6 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { name } from '@cloudinary/url-gen/actions/namedTransformation';
-import { Column, IconButton, Row, Text } from '@dossierhq/design';
+import { ExternalLinkIcon } from 'lucide-react';
 import type { JSX } from 'react';
 import type { PublishedCloudinaryImage } from '../types/CloudinaryImageComponent.js';
 
@@ -20,12 +20,19 @@ export function CloudinaryImageFieldDisplay({ cloudName, value }: Props): JSX.El
   const fullImageUrl = cld.image(publicId).toURL();
 
   return (
-    <Column>
-      <Row gap={2}>
-        <img src={thumbnailImageUrl} alt={value.alt ?? ''} />
-        <IconButton icon="openInNewWindow" onClick={() => window.open(fullImageUrl, '_blank')} />
-      </Row>
-      <Text textStyle="subtitle2">{`${value.width} × ${value.height} px`}</Text>
-    </Column>
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2">
+        <img className="max-w-full rounded-md" src={thumbnailImageUrl} alt={value.alt ?? ''} />
+        <button
+          type="button"
+          aria-label="Open image in new window"
+          className="text-muted-foreground hover:bg-accent hover:text-accent-foreground inline-flex size-8 items-center justify-center rounded-md"
+          onClick={() => window.open(fullImageUrl, '_blank')}
+        >
+          <ExternalLinkIcon className="size-4" />
+        </button>
+      </div>
+      <p className="text-muted-foreground text-sm">{`${value.width} × ${value.height} px`}</p>
+    </div>
   );
 }

@@ -1,0 +1,9 @@
+/* Tailwind for the Dossier admin route group only. The public site is styled by
+   @dossierhq/design, so sources are restricted to keep preflight and generated
+   utilities out of it. */
+@import 'tailwindcss';
+@plugin 'tailwindcss-animate';
+@import '@dossierhq/react-components2/theme.css';
+
+@source '../app/(dossier)';
+@source '../contexts';

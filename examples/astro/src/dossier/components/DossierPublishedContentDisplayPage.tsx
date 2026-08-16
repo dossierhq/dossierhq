@@ -1,5 +1,4 @@
-import { NotificationContainer } from '@dossierhq/design';
-import { PublishedContentDisplayScreen } from '@dossierhq/react-components';
+import { PublishedContentDisplayScreen, ThemeProvider } from '@dossierhq/react-components2';
 import { useUrlSearchParams } from '../hooks/useUrlSearchParams.js';
 import { AppPublishedDossierProvider } from './AppPublishedDossierProvider.js';
 import { NavBar } from './NavBar.js';
@@ -7,14 +6,14 @@ import { NavBar } from './NavBar.js';
 export function DossierPublishedContentDisplayPage() {
   const [urlSearchParams, setSearchParams] = useUrlSearchParams();
   return (
-    <AppPublishedDossierProvider>
-      <NotificationContainer>
+    <ThemeProvider>
+      <AppPublishedDossierProvider>
         <PublishedContentDisplayScreen
           header={<NavBar current="published-content" />}
           urlSearchParams={urlSearchParams}
           onUrlSearchParamsChange={setSearchParams}
         />
-      </NotificationContainer>
-    </AppPublishedDossierProvider>
+      </AppPublishedDossierProvider>
+    </ThemeProvider>
   );
 }

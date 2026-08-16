@@ -1,4 +1,4 @@
-import { ContentEditorScreen } from '@dossierhq/react-components';
+import { ContentEditorScreen } from '@dossierhq/react-components2';
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from './Navbar.js';

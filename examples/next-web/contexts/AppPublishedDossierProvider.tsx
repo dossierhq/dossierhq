@@ -10,9 +10,8 @@ import {
   PublishedDossierProvider,
   type FieldDisplayProps,
   type PublishedDossierContextAdapter,
-  type RichTextComponentDisplayProps,
-} from '@dossierhq/react-components';
-import { useMemo, type JSX } from 'react';
+} from '@dossierhq/react-components2';
+import { useMemo, type ReactNode } from 'react';
 import { BackendUrls } from '../utils/BackendUrls';
 import { fetchJsonResult } from '../utils/BackendUtils';
 
@@ -21,13 +20,7 @@ type BackendContext = ClientContext;
 const logger = createConsoleLogger(console);
 
 class PublishedContextAdapter implements PublishedDossierContextAdapter {
-  renderPublishedFieldDisplay(_props: FieldDisplayProps): JSX.Element | null {
-    return null;
-  }
-
-  renderPublishedRichTextComponentDisplay(
-    _props: RichTextComponentDisplayProps,
-  ): JSX.Element | null {
+  renderPublishedFieldDisplay(_props: FieldDisplayProps): ReactNode | null {
     return null;
   }
 }

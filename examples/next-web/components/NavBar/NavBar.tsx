@@ -1,6 +1,5 @@
-import { Navbar as DesignNavbar } from '@dossierhq/design';
 import Link from 'next/link';
-import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { ENABLE_WEB_INTERFACE } from '../../config/WebInterfaceConfig';
 import { BrowserUrls } from '../../utils/BrowserUrls';
 
@@ -16,50 +15,57 @@ interface Props {
 }
 
 export function NavBar({ current }: Props) {
-  const [active, setActive] = useState(false);
   return (
-    <DesignNavbar>
-      <DesignNavbar.Brand>
-        <DesignNavbar.Item active={current === 'home'}>
-          {NavItemRender(process.env.NEXT_PUBLIC_SITE_NAME ?? 'Home', BrowserUrls.home)}
-        </DesignNavbar.Item>
-        <DesignNavbar.Burger active={active} onClick={() => setActive(!active)} />
-      </DesignNavbar.Brand>
-      <DesignNavbar.Menu active={active}>
-        {ENABLE_WEB_INTERFACE ? (
-          <>
-            <DesignNavbar.Item active={current === 'content'}>
-              {NavItemRender('Content', BrowserUrls.contentList)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'published-content'}>
-              {NavItemRender('Published content', BrowserUrls.publishedContentList)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'schema'}>
-              {NavItemRender('Schema', BrowserUrls.schemaEditor)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'changelog'}>
-              {NavItemRender('Changelog', BrowserUrls.changelogList)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'graphiql'}>
-              {NavItemRender('GraphiQL', BrowserUrls.graphiql)}
-            </DesignNavbar.Item>
-            <DesignNavbar.Item active={current === 'voyager'}>
-              {NavItemRender('Voyager', BrowserUrls.voyager)}
-            </DesignNavbar.Item>
-          </>
-        ) : null}
-      </DesignNavbar.Menu>
-    </DesignNavbar>
+    <nav className="flex shrink-0 flex-wrap items-center gap-1 border-b px-2 py-1.5">
+      <NavLink active={current === 'home'} href={BrowserUrls.home}>
+        {process.env.NEXT_PUBLIC_SITE_NAME ?? 'Home'}
+      </NavLink>
+      {ENABLE_WEB_INTERFACE ? (
+        <>
+          <NavLink active={current === 'content'} href={BrowserUrls.contentList}>
+            Content
+          </NavLink>
+          <NavLink active={current === 'published-content'} href={BrowserUrls.publishedContentList}>
+            Published content
+          </NavLink>
+          <NavLink active={current === 'schema'} href={BrowserUrls.schemaEditor}>
+            Schema
+          </NavLink>
+          <NavLink active={current === 'changelog'} href={BrowserUrls.changelogList}>
+            Changelog
+          </NavLink>
+          <NavLink active={current === 'graphiql'} href={BrowserUrls.graphiql}>
+            GraphiQL
+          </NavLink>
+          <NavLink active={current === 'voyager'} href={BrowserUrls.voyager}>
+            Voyager
+          </NavLink>
+        </>
+      ) : null}
+    </nav>
   );
 }
 
-function NavItemRender(text: string, href: string) {
-  const renderer = ({ className }: { className: string }) => {
-    return (
-      <Link className={className} href={href}>
-        {text}
-      </Link>
-    );
-  };
-  return renderer;
+function NavLink({
+  active,
+  href,
+  children,
+}: {
+  active: boolean;
+  href: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link
+      className={
+        active
+          ? 'bg-accent text-accent-foreground rounded-md px-3 py-1.5 text-sm font-medium transition-colors'
+          : 'text-muted-foreground hover:text-foreground rounded-md px-3 py-1.5 text-sm font-medium transition-colors'
+      }
+      aria-current={active ? 'page' : undefined}
+      href={href}
+    >
+      {children}
+    </Link>
+  );
 }

@@ -22,8 +22,8 @@ import {
   type RichTextFieldSpecification,
   type StringFieldSpecification,
 } from '@dossierhq/core';
-import { useContext, type JSX, type ReactNode } from 'react';
-import { DossierContext } from '../contexts/DossierContext.js';
+import { type JSX, type ReactNode } from 'react';
+import { useDisplayAdapter } from '../hooks/useDisplayAdapter.js';
 import { BooleanFieldDisplay } from './BooleanFieldDisplay.js';
 import { ComponentFieldDisplay } from './ComponentFieldDisplay.js';
 import { FieldListDisplayWrapper } from './FieldListDisplayWrapper.js';
@@ -46,8 +46,8 @@ export interface FieldDisplayProps<
 export function FieldDisplay(props: FieldDisplayProps) {
   const { fieldSpec, value } = props;
 
-  const { adapter } = useContext(DossierContext);
-  const overriddenDisplay = adapter?.renderFieldDisplay(props);
+  const { renderFieldDisplay } = useDisplayAdapter();
+  const overriddenDisplay = renderFieldDisplay(props);
   if (overriddenDisplay) {
     return overriddenDisplay;
   }
