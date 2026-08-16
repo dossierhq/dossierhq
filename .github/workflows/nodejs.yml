@@ -43,6 +43,14 @@ jobs:
         env:
           TURBO_TEAM: ${{ secrets.DOSSIERHQ_TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.DOSSIERHQ_TURBO_TOKEN }}
+      - name: upload sqld logs
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sqld-logs
+          path: libraries/libsql/databases/sqld-*/log.txt
+          if-no-files-found: ignore
+          retention-days: 7
       - name: knip
         run: npm run knip || true
       - name: check for uncommitted changes after build
