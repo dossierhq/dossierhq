@@ -1,12 +1,52 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Mapping of Lexical playground files to local copies and auto-discovery configuration",
+  "description": "Mapping of Lexical playground files to local copies, packages holding Lexical version pins, and auto-discovery configuration",
+  "dependency-packages": {
+    "description": "Every package.json that pins Lexical versions. ALL of these must be bumped together in the same commit, otherwise the monorepo ends up on split Lexical versions.",
+    "packages": [
+      {
+        "path": "libraries/react-components/package.json",
+        "deps": [
+          "lexical",
+          "@lexical/code",
+          "@lexical/code-prism",
+          "@lexical/link",
+          "@lexical/list",
+          "@lexical/react",
+          "@lexical/rich-text",
+          "@lexical/selection",
+          "@lexical/utils"
+        ]
+      },
+      {
+        "path": "libraries/react-components2/package.json",
+        "deps": [
+          "lexical",
+          "@lexical/code",
+          "@lexical/code-prism",
+          "@lexical/link",
+          "@lexical/list",
+          "@lexical/react",
+          "@lexical/rich-text",
+          "@lexical/selection",
+          "@lexical/utils"
+        ]
+      },
+      {
+        "path": "apps/blog/package.json",
+        "deps": ["lexical"]
+      }
+    ],
+    "verify": "After editing, no Lexical pin should reference the old version: grep -h 'lexical' <each package.json> | grep -c '<old-version>' must be 0",
+    "note": "Versions are pinned exactly (no ^ or ~). pnpm-workspace.yaml currently has no Lexical overrides - re-check on each upgrade."
+  },
   "auto-discover": {
     "enabled": true,
     "description": "Automatically discover files importing from @lexical packages",
     "patterns": [
       "libraries/react-components/src/**/*.{ts,tsx}",
-      "apps/blog/src/**/*.{ts,tsx}"
+      "libraries/react-components2/src/**/*.{ts,tsx}",
+      "apps/blog/**/*.{ts,tsx}"
     ],
     "exclude": [
       "**/*.test.ts",
@@ -16,6 +56,7 @@
       "**/node_modules/**",
       "**/.next/**",
       "**/dist/**",
+      "**/lib/**",
       "**/build/**"
     ],
     "importPatterns": ["from\\s+['\"]@lexical/", "from\\s+['\"]lexical['\"]"]
@@ -26,10 +67,25 @@
       "local": "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts",
       "syncType": "exact-copy",
       "note": "Used in ToolbarPlugin.tsx for determining selected node"
+    },
+    {
+      "playground": "packages/lexical-playground/src/utils/getSelectedNode.ts",
+      "local": "libraries/react-components2/src/components/richtext/lexical-playground/getSelectedNode.ts",
+      "syncType": "exact-copy",
+      "note": "Second copy of the same playground file, for react-components2. Kept byte-identical to the react-components copy - apply the same diff to both."
     }
   ],
+  "local-formatting": {
+    "description": "Our copies are reformatted by prettier/eslint, so they never match the playground byte-for-byte. Differences that are expected and must NOT be 'fixed' when syncing:",
+    "expected-differences": [
+      "Prettier formatting (spacing inside braces, line width)",
+      "Import ordering enforced by our eslint config (@lexical/* sorted before lexical)",
+      "`import type` used for type-only imports (upstream adopted this in 0.47.0)"
+    ],
+    "guidance": "Compare semantics, not bytes. Diff the playground file between the two version tags and apply only that delta."
+  },
   "custom-nodes": {
-    "description": "Custom Lexical nodes that need validation after upgrades",
+    "description": "Custom Lexical nodes that need validation after upgrades. All extend ElementNode or DecoratorBlockNode and use the classic static getType()/clone()/importJSON() protocol (not the newer $config() protocol).",
     "editor-nodes": [
       {
         "path": "libraries/react-components/src/components/RichTextEditor/AdminEntityLinkNode.tsx",
@@ -40,13 +96,13 @@
       {
         "path": "libraries/react-components/src/components/RichTextEditor/AdminEntityNode.tsx",
         "type": "EntityNode",
-        "baseClass": "DecoratorNode",
+        "baseClass": "DecoratorBlockNode",
         "note": "Editor version - renders admin entities"
       },
       {
         "path": "libraries/react-components/src/components/RichTextEditor/AdminComponentNode.tsx",
         "type": "ComponentNode",
-        "baseClass": "DecoratorNode",
+        "baseClass": "DecoratorBlockNode",
         "note": "Editor version - renders admin components"
       }
     ],
@@ -60,14 +116,34 @@
       {
         "path": "libraries/react-components/src/components/RichTextDisplay/PublishedEntityNode.tsx",
         "type": "EntityNode",
-        "baseClass": "DecoratorNode",
+        "baseClass": "DecoratorBlockNode",
         "note": "Display version - read-only entities"
       },
       {
         "path": "libraries/react-components/src/components/RichTextDisplay/PublishedComponentNode.tsx",
         "type": "ComponentNode",
-        "baseClass": "DecoratorNode",
+        "baseClass": "DecoratorBlockNode",
         "note": "Display version - read-only components"
+      }
+    ],
+    "react-components2-nodes": [
+      {
+        "path": "libraries/react-components2/src/components/richtext/EntityLinkNode.tsx",
+        "type": "EntityLinkNode",
+        "baseClass": "ElementNode",
+        "note": "Shared by editor and display in react-components2"
+      },
+      {
+        "path": "libraries/react-components2/src/components/richtext/EntityNode.tsx",
+        "type": "EntityNode",
+        "baseClass": "DecoratorBlockNode",
+        "note": "Shared by editor and display in react-components2"
+      },
+      {
+        "path": "libraries/react-components2/src/components/richtext/ComponentNode.tsx",
+        "type": "ComponentNode",
+        "baseClass": "DecoratorBlockNode",
+        "note": "Shared by editor and display in react-components2"
       }
     ],
     "validation": {
@@ -110,32 +186,74 @@
           "signature": "override updateDOM(prevNode: ThisType, dom: HTMLElement, config: EditorConfig): boolean",
           "note": "Required if DOM needs updates when node changes"
         }
-      ]
+      ],
+      "watch-for": "Lexical is migrating built-in nodes to the $config() protocol (#8640, landed in 0.49.0). ElementNode and DecoratorBlockNode were NOT migrated, so our nodes still use the static protocol. If a future release migrates those base classes, all 9 custom nodes above need porting."
     }
   },
   "known-file-groups": {
-    "description": "Common file patterns discovered in codebase analysis",
-    "main-components": [
-      "libraries/react-components/src/components/RichTextEditor/RichTextEditor.tsx",
-      "libraries/react-components/src/components/RichTextDisplay/RichTextDisplay.tsx"
-    ],
-    "plugins": [
-      "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
-      "libraries/react-components/src/components/RichTextEditor/ToolbarPlugin.tsx",
-      "libraries/react-components/src/components/RichTextEditor/LinkPlugin.tsx",
-      "libraries/react-components/src/components/RichTextEditor/ListMaxIndentLevelPlugin.tsx",
-      "libraries/react-components/src/components/RichTextEditor/AutoLinkPlugin.tsx"
-    ],
-    "utilities": [
-      "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts"
-    ]
-  },
-  "files": [
-    {
-      "playground": "packages/lexical-playground/src/utils/getSelectedNode.ts",
-      "local": "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts",
-      "syncType": "exact-copy",
-      "note": "Used in ToolbarPlugin.tsx for determining selected node"
+    "description": "Lexical-importing files, verified against the tree as of Lexical 0.49.0",
+    "react-components": {
+      "main-components": [
+        "libraries/react-components/src/components/RichTextEditor/RichTextEditor.tsx",
+        "libraries/react-components/src/components/RichTextDisplay/RichTextDisplay.tsx"
+      ],
+      "plugins": [
+        "libraries/react-components/src/components/RichTextEditor/ToolbarPlugin.tsx",
+        "libraries/react-components/src/components/RichTextEditor/CodeHighlightPrismPlugin.tsx",
+        "libraries/react-components/src/components/RichTextEditor/ComponentPlugin.tsx",
+        "libraries/react-components/src/components/RichTextEditor/EntityLinkPlugin.tsx",
+        "libraries/react-components/src/components/RichTextEditor/EntityPlugin.tsx",
+        "libraries/react-components/src/components/RichTextEditor/AdminClickableLinkPlugin.tsx",
+        "libraries/react-components/src/components/RichTextDisplay/PublishedClickableLinkPlugin.tsx"
+      ],
+      "utilities": [
+        "libraries/react-components/src/third-party/lexical-playground/utils/getSelectedNode.ts"
+      ]
+    },
+    "react-components2": {
+      "main-components": [
+        "libraries/react-components2/src/components/richtext/RichTextFieldEditor.tsx",
+        "libraries/react-components2/src/components/richtext/RichTextFieldDisplay.tsx"
+      ],
+      "plugins": [
+        "libraries/react-components2/src/components/richtext/ToolbarPlugin.tsx",
+        "libraries/react-components2/src/components/richtext/CodeHighlightPrismPlugin.tsx",
+        "libraries/react-components2/src/components/richtext/ComponentPlugin.tsx",
+        "libraries/react-components2/src/components/richtext/EntityLinkPlugin.tsx",
+        "libraries/react-components2/src/components/richtext/EntityPlugin.tsx",
+        "libraries/react-components2/src/components/richtext/ClickableLinkPlugin.tsx"
+      ],
+      "utilities": [
+        "libraries/react-components2/src/components/richtext/lexical-playground/getSelectedNode.ts",
+        "libraries/react-components2/src/components/richtext/theme.ts",
+        "libraries/react-components2/src/components/richtext/CreateLinkDialog.tsx"
+      ]
+    },
+    "blog": {
+      "main-components": [
+        "apps/blog/app/(public)/ServerRichTextRenderer.tsx",
+        "apps/blog/style/ArticleLexicalTheme.ts"
+      ]
     }
-  ]
+  },
+  "verification": {
+    "description": "Commands to run after bumping. The aggregate turbo tasks report FULL TURBO from cache, so force-run the Lexical-covering tests directly.",
+    "commands": [
+      "pnpm install",
+      "pnpm -w build",
+      "pnpm -w test",
+      "pnpm -w lint"
+    ],
+    "force-run-tests": [
+      "cd libraries/react-components2 && pnpm vitest run src/components/richtext",
+      "cd libraries/react-components && pnpm vitest run"
+    ],
+    "note": "react-components2's richTextRoundTrip.test.ts serializes/deserializes every custom node, so it is the key regression check for node-protocol changes."
+  },
+  "playground-repo": {
+    "path": "/Users/jonas/dev/explore/lexical",
+    "remote": "upstream",
+    "note": "The remote is named 'upstream' (not 'origin'), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch upstream --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
+    "tagFormat": "v{version}"
+  }
 }

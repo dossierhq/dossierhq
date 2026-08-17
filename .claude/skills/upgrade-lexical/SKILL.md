@@ -60,16 +60,19 @@ This skill automates the incremental upgrade of Lexical dependencies while synch
 
 ### Phase 2: Playground Repository Health Check
 
-9. Check the Lexical mono repo (including playground) repo. Ask the user for the location if you don't know it:
+9. Check the Lexical mono repo (including playground). Its location and remote
+   name are in `playground-repo` in `file-mapping.json`; ask the user only if
+   that path no longer exists.
    - ✓ Verify repo exists
    - ✓ Check `git status` - warn if uncommitted changes
-   - ✓ Check `git branch --show-current` - warn if not on main/master
-   - ✓ Check `git fetch --dry-run` - suggest pull if behind
-   - ✓ Verify target version tag exists (try both `v{version}` and `{version}`)
+   - ✓ Only tags are needed, so a detached HEAD is fine - do NOT require a branch
+   - ✓ Fetch tags from the configured remote (`git fetch <remote> --tags`). The
+     remote is **not** named `origin`, so `git fetch --dry-run` fails outright;
+     use the name from `playground-repo.remote`.
+   - ✓ Verify both `v{current}` and `v{target}` tags exist after fetching
    - ✓ Check if playground files in mapping exist in target version
 10. If any checks fail:
     - Show specific error and suggested fix command
-    - Example fix: "Run: cd /Users/jonas/dev/explore/lexical && git checkout main"
     - Ask user to fix before proceeding or skip playground sync
 
 ### Phase 2.5: File Discovery
@@ -117,18 +120,13 @@ This skill automates the incremental upgrade of Lexical dependencies while synch
 
 ### Phase 5: Update Dependencies
 
-18. Update Lexical dependencies in `libraries/react-components/package.json`:
-    - lexical
-    - @lexical/code
-    - @lexical/link
-    - @lexical/list
-    - @lexical/react
-    - @lexical/rich-text
-    - @lexical/selection
-    - @lexical/utils
+18. Update the Lexical version pins in **every** package listed under
+    `dependency-packages.packages` in `file-mapping.json`. Do not work from a
+    remembered list — read the file. Missing one package silently leaves the
+    monorepo on split Lexical versions.
 
-19. Update Lexical dependency in `apps/blog/package.json`:
-    - lexical
+19. Verify no stale pins remain: for each package, grep its Lexical lines and
+    confirm zero matches for the old version (see `dependency-packages.verify`).
 
 20. Check `pnpm-workspace.yaml` for any version overrides that might conflict:
     - If overrides exist for Lexical packages, warn the user
@@ -141,7 +139,8 @@ This skill automates the incremental upgrade of Lexical dependencies while synch
 22. Build the project:
     - Run `pnpm -w build`
     - If errors occur:
-      - Load error-patterns.json
+      - Load error-patterns.json if it exists (it currently does not - skip
+        straight to generic troubleshooting in that case)
       - Match error output against known patterns
       - For each matched pattern:
         - Show error description and cause
@@ -157,6 +156,10 @@ This skill automates the incremental upgrade of Lexical dependencies while synch
 
 23. Run tests:
     - Run `pnpm -w test`
+    - `pnpm -w build` already runs the test tasks, so `pnpm -w test` usually
+      reports `FULL TURBO` from cache and proves nothing on its own. Force-run
+      the Lexical-covering suites listed in `verification.force-run-tests` in
+      `file-mapping.json` and report those results.
     - If failures occur:
       - Check for snapshot update needs
       - Match against test-related error patterns
