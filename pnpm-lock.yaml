@@ -9125,9 +9125,6 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  launch-editor@2.11.1:
-    resolution: {integrity: sha512-SEET7oNfgSaB6Ym0jufAdCeo3meJVeCaaDyzRygy0xsp2BFKCprcfHljTq4QkzTLUxEKkFK6OK4811YM2oSrRg==}
-
   launch-editor@2.14.1:
     resolution: {integrity: sha512-QWBrQsMpH7gPr965dsKD/3cKWiNoTjpATQf++Xq63N6sKRGMwlVXz41O1IZTMfZQgBctD/K5Zt06+/I6pP6+HA==}
 
@@ -15808,7 +15805,7 @@ snapshots:
       '@sentry/core': 9.22.0
       '@sentry/node': 8.55.1(supports-color@8.1.1)
       kleur: 4.1.5
-      launch-editor: 2.11.1
+      launch-editor: 2.14.1
       zod: 3.25.76
     transitivePeerDependencies:
       - '@cfworker/json-schema'
@@ -19535,11 +19532,6 @@ snapshots:
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
-
-  launch-editor@2.11.1:
-    dependencies:
-      picocolors: 1.1.1
-      shell-quote: 1.8.3
 
   launch-editor@2.14.1:
     dependencies:
