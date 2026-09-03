@@ -437,8 +437,8 @@ importers:
         specifier: workspace:*
         version: link:../../libraries/server
       '@faker-js/faker':
-        specifier: ~10.4.0
-        version: 10.4.0
+        specifier: ~10.5.0
+        version: 10.5.0
       benchpress:
         specifier: workspace:*
         version: link:../../libraries/benchpress
@@ -1798,8 +1798,8 @@ importers:
         specifier: workspace:*
         version: link:../typescript-generator
       '@faker-js/faker':
-        specifier: ~10.4.0
-        version: 10.4.0
+        specifier: ~10.5.0
+        version: 10.5.0
       '@types/better-sqlite3':
         specifier: ~7.6.13
         version: 7.6.13
@@ -3069,8 +3069,8 @@ packages:
     resolution: {integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@faker-js/faker@10.4.0':
-    resolution: {integrity: sha512-sDBWI3yLy8EcDzgobvJTWq1MJYzAkQdpjXuPukga9wXonhpMRvd1Izuo2Qgwey2OiEoRIBr35RMU9HJRoOHzpw==}
+  '@faker-js/faker@10.5.0':
+    resolution: {integrity: sha512-bsxD8WLS5lIj7aaoCx1YJkktqYj5vlBUE6HWzu2Q51ksrGJ0H737ECCKlFU7Yf8Br45z9t99frBp/J7kzbMPAg==}
     engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@fastify/otel@0.18.0':
@@ -12866,7 +12866,7 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@faker-js/faker@10.4.0': {}
+  '@faker-js/faker@10.5.0': {}
 
   '@fastify/otel@0.18.0(@opentelemetry/api@1.9.1)(supports-color@8.1.1)':
     dependencies:
