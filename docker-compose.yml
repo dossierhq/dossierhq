@@ -1,7 +1,7 @@
 services:
   postgres:
     # TODO switch back to official postgis image when arm64 is supported
-    image: ghcr.io/baosystems/postgis:18-3.6@sha256:a5c148641f1cbe2338dcd9c3e8293c890dc1c0d3b65ccecbf92a28cd68730e0a
+    image: ghcr.io/baosystems/postgis:18-3.6@sha256:ecdca4f41104c7ae2f92907409b5b09a962df6b505d1393df39236a8153315e5
     ports:
       - published: 5432
         target: 5432
