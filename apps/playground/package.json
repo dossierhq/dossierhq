@@ -27,8 +27,8 @@
     "graphiql": "~5.2.2",
     "graphql": "~16.13.2",
     "leaflet": "~1.9.4",
-    "react": "~19.2.7",
-    "react-dom": "~19.2.7",
+    "react": "~19.2.8",
+    "react-dom": "~19.2.8",
     "react-router-dom": "~7.14.2",
     "sql.js": "~1.14.1",
     "swr": "~2.4.1"
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@graphiql/toolkit": "~0.11.1",
-    "@types/react": "19.2.17",
-    "@types/react-dom": "~19.2.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "~19.2.5",
     "@types/sql.js": "~1.4.11",
     "@vitejs/plugin-react-swc": "~4.3.1",
     "eslint": "~10.8.0",
