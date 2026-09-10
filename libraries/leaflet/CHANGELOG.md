@@ -1,5 +1,7 @@
 # Change Log - @dossierhq/leaflet
 
+## 0.8.0
+
 ## 0.7.21
 
 ## 0.7.20
