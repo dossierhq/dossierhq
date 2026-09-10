@@ -58,6 +58,6 @@
     "eslint": "~10.9.1",
     "graphql": "~16.13.2",
     "typescript": "~6.0.3",
-    "vitest": "~4.1.7"
+    "vitest": "~4.1.11"
   }
 }
