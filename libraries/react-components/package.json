@@ -79,7 +79,7 @@
     "@types/react-dom": "~19.2.5",
     "@vitejs/plugin-react": "~6.0.2",
     "better-sqlite3": "~12.9.0",
-    "body-parser": "~2.2.2",
+    "body-parser": "~2.3.0",
     "eslint": "~10.9.1",
     "react": "~19.2.8",
     "react-dom": "~19.2.8",

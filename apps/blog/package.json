@@ -49,7 +49,7 @@
     "schema-dts": "~2.0.0",
     "tailwindcss": "~4.3.0",
     "tailwindcss-animate": "~1.0.7",
-    "tsx": "~4.21.0",
+    "tsx": "~4.23.13",
     "typescript": "~6.0.3",
     "vitest": "~4.1.11"
   }
