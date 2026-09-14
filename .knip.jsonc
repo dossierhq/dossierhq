@@ -1,13 +1,9 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreBinaries": [
-    "concurrently",
-    "http-server",
     "magenta,blue",
     "mise",
     "playwright",
-    "storybook-static",
-    "wait-on",
   ],
   "workspaces": {
     ".": {
@@ -20,7 +16,6 @@
     "apps/playground2": {
       "postcss": true,
       "ignore": ["src/components/ui/**"],
-      "ignoreDependencies": ["postcss"],
     },
     "examples/astro": {
       "entry": ["src/generated/SchemaTypes.ts"],
@@ -59,7 +54,6 @@
     },
     "examples/tutorial": {
       "entry": ["src/SchemaTypes.ts"],
-      "ignoreBinaries": ["sleep"],
       "ignoreDependencies": ["nodemon"],
     },
     "libraries/benchpress": {},
@@ -87,7 +81,9 @@
     "libraries/leaflet": {
       "entry": ["scripts/*.js"],
     },
-    "libraries/libsql": {},
+    "libraries/libsql": {
+      "ignoreBinaries": ["sqld"],
+    },
     "libraries/pg": { "ignoreDependencies": ["@dossierhq/postgres-tools"] },
     "libraries/react-components": {
       "entry": [
@@ -108,13 +104,7 @@
     "libraries/test-data": {
       "entry": ["src/**/*-generator.ts", "src/**/schema-types.ts"],
     },
-    "tools/better-sqlite3-amalgamation": {
-      "ignoreDependencies": [
-        "@dossierhq/better-sqlite3",
-        "@dossierhq/core",
-        "@dossierhq/server",
-      ],
-    },
+    "tools/better-sqlite3-amalgamation": {},
     "tools/tree-shake-tester": {
       "entry": ["test-cases/*.js"],
       "ignoreDependencies": [
