@@ -88,13 +88,20 @@ jobs:
             echo "Updated packageManager to pnpm@$PNPM_VERSION"
           fi
 
+      # pnpm records its own version under packageManagerDependencies in
+      # pnpm-lock.yaml, so a pnpm bump without this leaves the lockfile stale.
+      # mise exec picks up the freshly bumped version rather than the one
+      # mise-action put on PATH before the bump.
+      - name: Update pnpm lockfile
+        run: mise exec -- pnpm install --lockfile-only
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           commit-message: "chore(tools): Update tool versions"
           title: "chore(tools): Update tool versions"
           body: |
-            This automated PR updates tool versions in `.tool-versions` using `mise up --bump`.
+            This automated PR updates tool versions in `.tool-versions` using `mise up --bump`, and syncs the pnpm version in `package.json` and `pnpm-lock.yaml`.
 
             Please review the changes and merge if CI passes.
           branch: automated/mise-tool-updates
