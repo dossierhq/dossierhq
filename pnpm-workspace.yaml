@@ -6,6 +6,8 @@ packages:
   - "tools/*"
 
 minimumReleaseAge: 1440
+# strict mode breaks Dependabot's `pnpm update --no-save`; remove once dependabot/dependabot-core#16375 is fixed
+minimumReleaseAgeStrict: false
 # excluding a whole dependency disables minimumReleaseAge for all future versions; prefer pinning a specific version via overrides
 # clean up entries here once they're no longer needed
 minimumReleaseAgeExclude: []
