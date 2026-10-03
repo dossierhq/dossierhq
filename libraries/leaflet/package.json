@@ -52,10 +52,10 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@types/leaflet": "~1.9.14",
-    "@types/react": "19.2.18",
+    "@types/react": "19.3.0",
     "eslint": "~10.11.0",
     "mini-svg-data-uri": "~1.4.4",
-    "react": "~19.2.8",
+    "react": "~19.3.0",
     "svgo": "~4.1.0",
     "typescript": "~6.0.3"
   }
