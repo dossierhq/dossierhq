@@ -192,7 +192,7 @@
     }
   },
   "known-file-groups": {
-    "description": "Lexical-importing files, verified against the tree as of Lexical 0.49.0",
+    "description": "Lexical-importing files, verified against the tree as of Lexical 0.52.0",
     "react-components": {
       "main-components": [
         "libraries/react-components/src/components/RichTextEditor/RichTextEditor.tsx",
@@ -238,7 +238,8 @@
     },
     "deprecations": {
       "LexicalComposer": "Deprecated in 0.51.0 (#9168) in favour of LexicalExtensionComposer. Still used by RichTextEditor.tsx, RichTextDisplay.tsx, RichTextFieldEditor.tsx, RichTextFieldDisplay.tsx. Not removed yet; migrate when upstream announces removal."
-    }
+    },
+    "toolbar-note": "Both ToolbarPlugin.tsx files are adapted from packages/lexical-playground/src/plugins/ToolbarPlugin/index.tsx. When the playground toolbar changes its SELECTION_CHANGE_COMMAND / registerUpdateListener wiring, mirror it: in 0.52.0 (#9219) the handler became `$onUpdate(() => newEditor.read('latest', $updateToolbar))` because selection notifications now run before reconciliation."
   },
   "verification": {
     "description": "Commands to run after bumping. The aggregate turbo tasks report FULL TURBO from cache, so force-run the Lexical-covering tests directly.",

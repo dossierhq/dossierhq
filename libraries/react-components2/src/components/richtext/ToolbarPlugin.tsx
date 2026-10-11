@@ -27,6 +27,7 @@ import {
   $getSelection,
   $isRangeSelection,
   $isRootOrShadowRoot,
+  $onUpdate,
   COMMAND_PRIORITY_CRITICAL,
   FORMAT_TEXT_COMMAND,
   SELECTION_CHANGE_COMMAND,
@@ -176,8 +177,10 @@ export function ToolbarPlugin({ fieldSpec }: { fieldSpec: RichTextFieldSpecifica
     return mergeRegister(
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
-        (_payload, _newEditor) => {
-          $updateToolbar();
+        (_payload, newEditor) => {
+          // SELECTION_CHANGE_COMMAND runs before reconciliation (Lexical 0.52.0), so defer the
+          // DOM-dependent toolbar update until the pending update has committed
+          $onUpdate(() => newEditor.read('latest', $updateToolbar));
           return false;
         },
         COMMAND_PRIORITY_CRITICAL,
