@@ -187,11 +187,12 @@
           "note": "Required if DOM needs updates when node changes"
         }
       ],
-      "watch-for": "Lexical is migrating built-in nodes to the $config() protocol (#8640, landed in 0.49.0). ElementNode and DecoratorBlockNode were NOT migrated, so our nodes still use the static protocol. If a future release migrates those base classes, all 9 custom nodes above need porting."
+      "watch-for": "Lexical is migrating built-in nodes to the $config() protocol (#8640, landed in 0.49.0). ElementNode and DecoratorBlockNode were NOT migrated, so our nodes still use the static protocol. If a future release migrates those base classes, all 9 custom nodes above need porting.",
+      "vendored-types": "libraries/core/src/third-party/Lexical.ts vendors Lexical's Serialized* types without depending on lexical. Keep it in step with packages/lexical/src/LexicalNode.ts: 0.51.0 made SerializedLexicalNode a type alias (implicit index signature) so that custom ElementNode exportJSON overrides stay assignable to the new exportJSON(compact) overloads. If a build fails with TS2416 on exportJSON, diff that file against upstream first."
     }
   },
   "known-file-groups": {
-    "description": "Lexical-importing files, verified against the tree as of Lexical 0.49.0",
+    "description": "Lexical-importing files, verified against the tree as of Lexical 0.52.0",
     "react-components": {
       "main-components": [
         "libraries/react-components/src/components/RichTextEditor/RichTextEditor.tsx",
@@ -234,7 +235,11 @@
         "apps/blog/app/(public)/ServerRichTextRenderer.tsx",
         "apps/blog/style/ArticleLexicalTheme.ts"
       ]
-    }
+    },
+    "deprecations": {
+      "LexicalComposer": "Deprecated in 0.51.0 (#9168) in favour of LexicalExtensionComposer. Still used by RichTextEditor.tsx, RichTextDisplay.tsx, RichTextFieldEditor.tsx, RichTextFieldDisplay.tsx. Not removed yet; migrate when upstream announces removal."
+    },
+    "toolbar-note": "Both ToolbarPlugin.tsx files are adapted from packages/lexical-playground/src/plugins/ToolbarPlugin/index.tsx. When the playground toolbar changes its SELECTION_CHANGE_COMMAND / registerUpdateListener wiring, mirror it: in 0.52.0 (#9219) the handler became `$onUpdate(() => newEditor.read('latest', $updateToolbar))` because selection notifications now run before reconciliation."
   },
   "verification": {
     "description": "Commands to run after bumping. The aggregate turbo tasks report FULL TURBO from cache, so force-run the Lexical-covering tests directly.",
@@ -252,8 +257,8 @@
   },
   "playground-repo": {
     "path": "/Users/jonas/dev/explore/lexical",
-    "remote": "upstream",
-    "note": "The remote is named 'upstream' (not 'origin'), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch upstream --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
+    "remote": "origin",
+    "note": "The remote is named 'origin' (it was 'upstream' earlier), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch origin --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
     "tagFormat": "v{version}"
   }
 }
