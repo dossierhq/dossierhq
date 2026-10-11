@@ -252,8 +252,8 @@
   },
   "playground-repo": {
     "path": "/Users/jonas/dev/explore/lexical",
-    "remote": "upstream",
-    "note": "The remote is named 'upstream' (not 'origin'), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch upstream --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
+    "remote": "origin",
+    "note": "The remote is named 'origin' (it was 'upstream' earlier), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch origin --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
     "tagFormat": "v{version}"
   }
 }
