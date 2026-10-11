@@ -17,10 +17,13 @@ export type SerializedRootNode<T extends SerializedLexicalNode = SerializedLexic
 
 // packages/lexical/src/LexicalNode.ts
 
-export interface SerializedLexicalNode {
+// A type alias rather than an interface, matching Lexical >= 0.51.0: an alias gets an implicit
+// index signature, which is what lets `SerializedElementNode['children']` satisfy Lexical's
+// `SerializedPartialNode[]` in `exportJSON(compact)` overrides of custom nodes.
+export type SerializedLexicalNode = {
   type: string;
   version: number;
-}
+};
 
 // packages/lexical/src/nodes/LexicalElementNode.ts
 
