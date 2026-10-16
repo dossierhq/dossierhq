@@ -508,7 +508,7 @@ importers:
         version: 0.9.10(prettier@3.8.3)(typescript@6.0.3)
       '@astrojs/node':
         specifier: ~11.1.7
-        version: 11.1.7(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)
+        version: 11.1.7(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)
       '@astrojs/react':
         specifier: ~7.0.1
         version: 7.0.1(@types/node@25.6.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
@@ -526,13 +526,13 @@ importers:
         version: link:../../libraries/server
       '@sentry/astro':
         specifier: ~10.74.0
-        version: 10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1)
+        version: 10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1)
       '@spotlightjs/astro':
         specifier: ~3.2.3
-        version: 3.2.6(@sentry/astro@10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)
+        version: 3.2.6(@sentry/astro@10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)
       astro:
-        specifier: ~7.3.7
-        version: 7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+        specifier: ~7.3.8
+        version: 7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
       better-sqlite3:
         specifier: ~12.9.0
         version: 12.9.0
@@ -6957,8 +6957,8 @@ packages:
   ast-v8-to-istanbul@1.0.6:
     resolution: {integrity: sha512-fvpl29helSO2w/z7utIbrkNXILdrLwDwAMH2I/zPKlGf5244+gf+B4cyS1sANcrPY2h+hWCGSgC8N61s/+AF9A==}
 
-  astro@7.3.7:
-    resolution: {integrity: sha512-MyxnNzy+HHkLa8iNVcGTXbmSTlkjqkXJyRcMU3EwprbsF7gh3M03DKLAGVcVTmATF8jV1Fen0rkala1JiEyMSg==}
+  astro@7.3.8:
+    resolution: {integrity: sha512-LHzDHSaV+YzZiR3EFndDYTLLeNeuMtP1qX1FLcCNUUHOCqTTIWPczy2UV3zpA5VqvJe5cWZolqM9Z8JFqR2i9w==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     peerDependencies:
@@ -11696,10 +11696,10 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.5
 
-  '@astrojs/node@11.1.7(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)':
+  '@astrojs/node@11.1.7(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)':
     dependencies:
       '@astrojs/internal-helpers': 0.12.0
-      astro: 7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+      astro: 7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
       send: 1.2.1(supports-color@8.1.1)
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -15008,14 +15008,14 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.60.4':
     optional: true
 
-  '@sentry/astro@10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1)':
+  '@sentry/astro@10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1)':
     dependencies:
       '@sentry/browser': 10.74.0
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.74.0
       '@sentry/node': 10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(supports-color@8.1.1)
       '@sentry/vite-plugin': 5.4.0(rollup@4.60.4)(supports-color@8.1.1)
-      astro: 7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+      astro: 7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
     transitivePeerDependencies:
       - '@opentelemetry/core'
       - '@opentelemetry/exporter-trace-otlp-http'
@@ -15279,11 +15279,11 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@spotlightjs/astro@3.2.6(@sentry/astro@10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)':
+  '@spotlightjs/astro@3.2.6(@sentry/astro@10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(supports-color@8.1.1)':
     dependencies:
-      '@sentry/astro': 10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1)
+      '@sentry/astro': 10.74.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))(rollup@4.60.4)(supports-color@8.1.1)
       '@spotlightjs/spotlight': 3.0.2(supports-color@8.1.1)
-      astro: 7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+      astro: 7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
     transitivePeerDependencies:
       - '@cfworker/json-schema'
       - supports-color
@@ -16388,7 +16388,7 @@ snapshots:
       estree-walker: 3.0.3
       js-tokens: 10.0.0
 
-  astro@7.3.7(@types/node@25.6.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4):
+  astro@7.3.8(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4):
     dependencies:
       '@astrojs/compiler-rs': 0.5.1
       '@astrojs/internal-helpers': 0.12.0
@@ -16408,7 +16408,6 @@ snapshots:
       diff: 9.0.0
       dset: 3.1.4
       es-module-lexer: 3.0.2
-      esbuild: 0.28.2
       find-proc: 0.2.0
       flattie: 1.1.1
       fontace: 0.4.1
@@ -16464,6 +16463,7 @@ snapshots:
       - '@vitejs/devtools'
       - aws4fetch
       - db0
+      - esbuild
       - idb-keyval
       - ioredis
       - jiti
