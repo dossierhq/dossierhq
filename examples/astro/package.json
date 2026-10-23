@@ -28,8 +28,8 @@
     "astro": "~7.3.8",
     "better-sqlite3": "~12.9.0",
     "hono": "4.13.7",
-    "react": "~19.3.0",
-    "react-dom": "~19.3.0"
+    "react": "~19.3.1",
+    "react-dom": "~19.3.1"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
