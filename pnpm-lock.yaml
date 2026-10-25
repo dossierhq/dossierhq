@@ -381,7 +381,7 @@ importers:
         version: 1.4.11
       '@vitejs/plugin-react-swc':
         specifier: ~4.3.1
-        version: 4.3.3(@swc/helpers@0.5.23)(vite@8.0.16(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))
+        version: 4.3.3(@swc/helpers@0.5.23)(vite@8.1.6(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))
       eslint:
         specifier: ~10.13.0
         version: 10.13.0(jiti@2.7.0)(supports-color@8.1.1)
@@ -398,8 +398,8 @@ importers:
         specifier: ~6.0.3
         version: 6.0.3
       vite:
-        specifier: 8.0.16
-        version: 8.0.16(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+        specifier: 8.1.6
+        version: 8.1.6(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
 
   apps/playground2:
     dependencies:
@@ -16476,11 +16476,11 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vitejs/plugin-react-swc@4.3.3(@swc/helpers@0.5.23)(vite@8.0.16(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))':
+  '@vitejs/plugin-react-swc@4.3.3(@swc/helpers@0.5.23)(vite@8.1.6(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
       '@swc/core': 1.16.2(@swc/helpers@0.5.23)
-      vite: 8.0.16(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+      vite: 8.1.6(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
     transitivePeerDependencies:
       - '@swc/helpers'
 
