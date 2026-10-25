@@ -463,7 +463,7 @@ importers:
         version: 1.4.11
       '@vitejs/plugin-react':
         specifier: ~6.0.2
-        version: 6.0.5(babel-plugin-react-compiler@1.0.0)(vite@8.0.16(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))
+        version: 6.0.5(babel-plugin-react-compiler@1.0.0)(vite@8.1.6(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4))
       babel-plugin-react-compiler:
         specifier: 1.0.0
         version: 1.0.0
@@ -498,8 +498,8 @@ importers:
         specifier: ~6.0.3
         version: 6.0.3
       vite:
-        specifier: 8.0.16
-        version: 8.0.16(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
+        specifier: 8.1.6
+        version: 8.1.6(@types/node@25.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.99.0)(tsx@4.23.13)(yaml@2.8.4)
 
   examples/astro:
     dependencies:
