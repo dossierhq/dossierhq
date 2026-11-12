@@ -30,10 +30,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: start db
+        timeout-minutes: 3
         run: |
           cd tools/generic-tools/
           npm run db:start &
           npm run db:wait
+        env:
+          DB_WAIT_TIMEOUT_SECONDS: 120
       - name: setup db
         run: |
           cd tools/generic-tools/
