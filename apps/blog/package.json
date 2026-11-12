@@ -20,7 +20,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@antonz/codapi": "~0.20.0",
+    "@antonz/codapi": "~0.20.1",
     "@cloudinary/url-gen": "~1.22.0",
     "@dossierhq/better-sqlite3": "workspace:*",
     "@dossierhq/cloudinary": "workspace:*",
@@ -28,10 +28,10 @@
     "@dossierhq/design": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/server": "workspace:*",
-    "better-sqlite3": "~12.9.0",
-    "codejar": "~4.3.0",
+    "better-sqlite3": "~13.1.1",
+    "codejar": "~5.0.0",
     "lexical": "0.53.0",
-    "next": "16.4.5",
+    "next": "16.4.6",
     "prismjs": "~1.30.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
@@ -39,18 +39,18 @@
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@tailwindcss/postcss": "~4.3.0",
-    "@types/better-sqlite3": "~7.6.13",
+    "@tailwindcss/postcss": "~4.3.5",
+    "@types/better-sqlite3": "~9.6.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "dotenv": "~17.4.2",
+    "dotenv": "~18.0.10",
     "eslint": "~10.14.0",
-    "postcss": "~8.5.6",
-    "schema-dts": "~2.0.0",
-    "tailwindcss": "~4.3.0",
+    "postcss": "~8.5.32",
+    "schema-dts": "~2.1.0",
+    "tailwindcss": "~4.3.5",
     "tailwindcss-animate": "~1.0.7",
-    "tsx": "~4.23.13",
+    "tsx": "~4.23.15",
     "typescript": "~6.0.3",
-    "vitest": "~4.1.12"
+    "vitest": "~5.1.0"
   }
 }

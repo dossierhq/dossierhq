@@ -224,11 +224,7 @@ export type AppPublishedDossierExceptionClient = PublishedDossierExceptionClient
 export type AppPublishedUniqueIndexes = 'articleSlug' | 'blogSlug' | 'glossarySlug';
 
 export type AppPublishedEntity =
-  | PublishedArticle
-  | PublishedAuthor
-  | PublishedBlogPost
-  | PublishedChapter
-  | PublishedGlossaryTerm;
+  PublishedArticle | PublishedAuthor | PublishedBlogPost | PublishedChapter | PublishedGlossaryTerm;
 
 export interface PublishedArticleFields {
   title: string;
@@ -347,10 +343,7 @@ export function assertIsPublishedGlossaryTerm(
 }
 
 export type AppPublishedComponent =
-  | PublishedArticleTocItem
-  | PublishedCloudinaryImage
-  | PublishedCodapiSnippet
-  | PublishedTocItem;
+  PublishedArticleTocItem | PublishedCloudinaryImage | PublishedCodapiSnippet | PublishedTocItem;
 
 export interface PublishedArticleTocItemFields {
   title: string;

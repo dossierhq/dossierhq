@@ -61,6 +61,12 @@ export default defineConfig({
       'graphiql',
       '@graphiql/react',
     ],
-    exclude: ['monaco-editor', 'monaco-graphql'],
+    // The worker setup modules use `?worker` imports that Vite must process itself
+    exclude: [
+      'monaco-editor',
+      'monaco-graphql',
+      'graphiql/setup-workers/vite',
+      '@graphiql/react/setup-workers/vite',
+    ],
   },
 });

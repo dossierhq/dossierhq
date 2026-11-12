@@ -52,12 +52,12 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/better-sqlite3": "~7.6.13",
-    "@vitest/coverage-v8": "~4.1.7",
-    "better-sqlite3": "~12.9.0",
+    "@types/better-sqlite3": "~9.6.0",
+    "@vitest/coverage-v8": "~5.1.0",
+    "better-sqlite3": "~13.1.1",
     "eslint": "~10.14.0",
-    "graphql": "~16.13.2",
+    "graphql": "~17.1.0",
     "typescript": "~6.0.3",
-    "vitest": "~4.1.12"
+    "vitest": "~5.1.0"
   }
 }

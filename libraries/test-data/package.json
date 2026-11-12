@@ -37,14 +37,14 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
     "@dossierhq/typescript-generator": "workspace:*",
-    "@faker-js/faker": "~10.5.0",
-    "@types/better-sqlite3": "~7.6.13",
-    "better-sqlite3": "~12.9.0",
-    "cloudinary": "~2.10.0",
-    "dotenv": "~17.4.2",
+    "@faker-js/faker": "~10.6.0",
+    "@types/better-sqlite3": "~9.6.0",
+    "better-sqlite3": "~13.1.1",
+    "cloudinary": "~2.11.0",
+    "dotenv": "~18.0.10",
     "eslint": "~10.14.0",
-    "tsx": "~4.23.13",
+    "tsx": "~4.23.15",
     "typescript": "~6.0.3",
-    "uuid": "~14.0.0"
+    "uuid": "~14.0.3"
   }
 }

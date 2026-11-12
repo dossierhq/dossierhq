@@ -1,10 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreBinaries": [
-    "magenta,blue",
-    "mise",
-    "playwright",
-  ],
+  "ignoreBinaries": ["mise", "playwright"],
   "workspaces": {
     ".": {
       "entry": ["lint-staged-pkg.mjs"],

@@ -199,10 +199,7 @@ export function assertIsStringsEntity(
 }
 
 export type AppComponent =
-  | AdminOnlyComponent
-  | CloudinaryImage
-  | NestedComponent
-  | StringsComponent;
+  AdminOnlyComponent | CloudinaryImage | NestedComponent | StringsComponent;
 
 export interface AdminOnlyComponentFields {
   text: string | null;

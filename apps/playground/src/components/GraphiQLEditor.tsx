@@ -3,31 +3,10 @@ import { GraphQLSchemaGenerator, type SessionGraphQLContext } from '@dossierhq/g
 import { DossierContext, PublishedDossierContext } from '@dossierhq/react-components';
 import type { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
 import { GraphiQL } from 'graphiql';
+import 'graphiql/setup-workers/vite';
 import 'graphiql/style.css';
 import { graphql } from 'graphql';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-
-// Setup Monaco Editor workers for Vite
-if (!window.MonacoEnvironment) {
-  window.MonacoEnvironment = {
-    getWorker(_workerId: string, label: string) {
-      const getWorkerModule = (moduleUrl: string) => {
-        return new Worker(new URL(moduleUrl, import.meta.url), {
-          type: 'module',
-        });
-      };
-
-      switch (label) {
-        case 'json':
-          return getWorkerModule('monaco-editor/esm/vs/language/json/json.worker.js');
-        case 'graphql':
-          return getWorkerModule('monaco-graphql/esm/graphql.worker.js');
-        default:
-          return getWorkerModule('monaco-editor/esm/vs/editor/editor.worker.js');
-      }
-    },
-  };
-}
 
 const DEFAULT_QUERY = `# Welcome to GraphiQL
 #
