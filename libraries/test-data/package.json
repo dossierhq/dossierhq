@@ -41,7 +41,7 @@
     "@types/better-sqlite3": "~9.6.0",
     "better-sqlite3": "~13.1.1",
     "cloudinary": "~2.11.0",
-    "dotenv": "~17.4.2",
+    "dotenv": "~18.0.10",
     "eslint": "~10.14.0",
     "tsx": "~4.23.15",
     "typescript": "~6.0.3",
