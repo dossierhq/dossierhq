@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@cloudinary/url-gen": "~1.22.0",
-    "lucide-react": "~1.8.0"
+    "lucide-react": "~1.72.0"
   },
   "peerDependencies": {
     "@dossierhq/core": "workspace:*",
