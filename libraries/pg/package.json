@@ -58,7 +58,7 @@
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/pg": "~8.20.4",
+    "@types/pg": "~8.23.1",
     "dotenv": "~17.4.2",
     "eslint": "~10.14.0",
     "pg": "~8.20.0",

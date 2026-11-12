@@ -26,7 +26,7 @@
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-storybook": "~10.6.7",
     "eslint-plugin-turbo": "^2.11.10",
-    "globals": "~17.5.0",
+    "globals": "~17.14.0",
     "typescript-eslint": "~8.72.2"
   }
 }

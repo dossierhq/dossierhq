@@ -61,17 +61,17 @@
     "@types/lodash": "~4.17.27",
     "@types/react": "19.3.0",
     "@types/react-dom": "~19.3.0",
-    "@vitejs/plugin-react": "~6.0.5",
+    "@vitejs/plugin-react": "~6.3.0",
     "bulma": "~0.9.4",
     "eslint": "~10.14.0",
     "mini-svg-data-uri": "~1.4.4",
     "react": "~19.3.1",
     "react-dom": "~19.3.1",
     "react-stately": "~3.51.0",
-    "sass": "~1.99.0",
+    "sass": "~1.108.2",
     "storybook": "~10.6.7",
     "svgo": "~4.1.0",
     "typescript": "~6.0.3",
-    "vite": "8.1.6"
+    "vite": "8.3.8"
   }
 }
