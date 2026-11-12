@@ -8,6 +8,7 @@ import {
   GraphQLUnionType,
   isCompositeType,
   Kind,
+  versionInfo,
   type ASTNode,
   type FieldNode,
   type FragmentSpreadNode,
@@ -42,9 +43,18 @@ const debug = (..._args: unknown[]) => {
 
 const DEBUG_ENABLED = false;
 
+function getVariableValue(resolveInfo: GraphQLResolveInfo, name: string): unknown {
+  // graphql 17 changed variableValues from a plain map to { sources, coerced }
+  const variableValues: unknown = resolveInfo.variableValues;
+  if (versionInfo.major >= 17) {
+    return (variableValues as { coerced: Record<string, unknown> }).coerced[name];
+  }
+  return (variableValues as Record<string, unknown>)[name];
+}
+
 function getArgVal(resolveInfo: GraphQLResolveInfo, argument: any) {
   if (argument.kind === 'Variable') {
-    return resolveInfo.variableValues[argument.name.value];
+    return getVariableValue(resolveInfo, argument.name.value);
   } else if (argument.kind === 'BooleanValue') {
     return argument.value;
   }

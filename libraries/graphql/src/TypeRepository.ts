@@ -5,10 +5,10 @@ import {
   isInterfaceType,
   isOutputType,
   type GraphQLEnumValueConfigMap,
-  type GraphQLInputType,
   type GraphQLInterfaceType,
+  type GraphQLNamedInputType,
+  type GraphQLNamedOutputType,
   type GraphQLNamedType,
-  type GraphQLOutputType,
 } from 'graphql';
 import { toAdminComponentInputTypeName, toAdminTypeName, toEnumName } from './NameGenerator.js';
 
@@ -34,7 +34,7 @@ export class TypeRepository {
     return type;
   }
 
-  getOutputType(name: string): GraphQLOutputType {
+  getOutputType(name: string): GraphQLNamedOutputType {
     const type = this.getType(name);
     if (isOutputType(type)) {
       return type;
@@ -50,7 +50,7 @@ export class TypeRepository {
     throw new Error(`Type ${name} is not an enum type`);
   }
 
-  getInputType(name: string): GraphQLInputType {
+  getInputType(name: string): GraphQLNamedInputType {
     const type = this.getType(name);
     if (isInputType(type)) {
       return type;
@@ -70,7 +70,7 @@ export class TypeRepository {
     return names.map((name) => this.getInterface(name));
   }
 
-  getOrCreateEntityUnion(isAdmin: boolean, names: string[]): GraphQLOutputType {
+  getOrCreateEntityUnion(isAdmin: boolean, names: string[]): GraphQLNamedOutputType {
     if (names.length === 0) {
       return this.getOutputType(toAdminTypeName('Entity', isAdmin));
     }
@@ -103,7 +103,7 @@ export class TypeRepository {
     return enumType;
   }
 
-  getOrCreateValueUnion(isAdmin: boolean, names: string[]): GraphQLOutputType {
+  getOrCreateValueUnion(isAdmin: boolean, names: string[]): GraphQLNamedOutputType {
     if (names.length === 0) {
       return this.getOutputType(toAdminTypeName('Component', isAdmin));
     }
@@ -136,7 +136,7 @@ export class TypeRepository {
     return enumType;
   }
 
-  getValueInputType(names: string[]): GraphQLInputType | null {
+  getValueInputType(names: string[]): GraphQLNamedInputType | null {
     const uniqueNames = [...new Set(names)];
     if (uniqueNames.length !== 1) {
       return null; //There's no support for polymorphism on input types

@@ -351,10 +351,10 @@ importers:
         version: link:../../libraries/test-data
       graphiql:
         specifier: ~6.0.1
-        version: 6.0.1(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+        version: 6.0.1(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
       graphql:
-        specifier: ~16.13.2
-        version: 16.13.2
+        specifier: ~17.1.0
+        version: 17.1.0
       leaflet:
         specifier: ~1.9.4
         version: 1.9.4
@@ -379,7 +379,7 @@ importers:
         version: link:../../libraries/eslint-config
       '@graphiql/toolkit':
         specifier: ~1.0.1
-        version: 1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)
+        version: 1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0
@@ -397,7 +397,7 @@ importers:
         version: 10.14.0(jiti@2.7.0)(supports-color@8.1.1)
       graphql-ws:
         specifier: ~6.4.2
-        version: 6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2)
+        version: 6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2)
       rollup-plugin-visualizer:
         specifier: ~7.1.3
         version: 7.1.3(rolldown@1.2.19)(rollup@4.68.2)
@@ -719,7 +719,7 @@ importers:
         version: 5.3.0(supports-color@8.1.1)
       graphql-http:
         specifier: ~1.23.1
-        version: 1.23.1(graphql@16.13.2)
+        version: 1.23.1(graphql@17.1.0)
     devDependencies:
       '@dossierhq/eslint-config':
         specifier: workspace:*
@@ -761,11 +761,11 @@ importers:
         specifier: ~13.1.1
         version: 13.1.1
       graphql:
-        specifier: ~16.13.2
-        version: 16.13.2
+        specifier: ~17.1.0
+        version: 17.1.0
       graphql-voyager:
         specifier: ~2.1.0
-        version: 2.1.0(@types/react@19.3.0)(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)
+        version: 2.1.0(@types/react@19.3.0)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1)
       next:
         specifier: 16.4.6
         version: 16.4.6(@babel/core@7.29.13(supports-color@8.1.1))(@opentelemetry/api@1.10.0)(@playwright/test@1.65.0)(@types/node@26.6.6)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.108.2)
@@ -1256,8 +1256,8 @@ importers:
         specifier: ~10.14.0
         version: 10.14.0(jiti@2.7.0)(supports-color@8.1.1)
       graphql:
-        specifier: ~16.13.2
-        version: 16.13.2
+        specifier: ~17.1.0
+        version: 17.1.0
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -8110,9 +8110,9 @@ packages:
       ws:
         optional: true
 
-  graphql@16.13.2:
-    resolution: {integrity: sha512-5bJ+nf/UCpAjHM8i06fl7eLyVC9iuNAjm9qzkiu2ZGhM0VscSvS6WDPfAwkdkBuoXGM9FJSbKl6wylMwP9Ktig==}
-    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
+  graphql@17.1.0:
+    resolution: {integrity: sha512-JKCOa7rSQNrket/JFhuua86hljUO+IIpyUHfKxlKD6FEfbrLX8jc1FDrA0KPKI+s8OspBCF/5npYccAICHXPpQ==}
+    engines: {node: ^22.0.0 || ^24.0.0 || >=26.0.0}
 
   h3@1.15.11:
     resolution: {integrity: sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==}
@@ -12244,10 +12244,10 @@ snapshots:
     dependencies:
       '@fortawesome/fontawesome-common-types': 7.3.1
 
-  '@graphiql/plugin-collections@1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
+  '@graphiql/plugin-collections@1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
     dependencies:
-      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      graphql: 16.13.2
+      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      graphql: 17.1.0
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       zod: 4.6.7
@@ -12257,11 +12257,11 @@ snapshots:
       - immer
       - use-sync-external-store
 
-  '@graphiql/plugin-doc-explorer@1.0.0(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
+  '@graphiql/plugin-doc-explorer@1.0.0(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
     dependencies:
-      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
       '@headlessui/react': 2.2.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      graphql: 16.13.2
+      graphql: 17.1.0
       react: 19.3.1
       react-compiler-runtime: 1.0.0(react@19.3.1)
       react-dom: 19.3.1(react@19.3.1)
@@ -12271,10 +12271,10 @@ snapshots:
       - immer
       - use-sync-external-store
 
-  '@graphiql/plugin-history@1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/node@26.6.6)(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
+  '@graphiql/plugin-history@1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/node@26.6.6)(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
     dependencies:
-      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      '@graphiql/toolkit': 1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)
+      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      '@graphiql/toolkit': 1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)
       clsx: 2.1.1
       react: 19.3.1
       react-compiler-runtime: 1.0.0(react@19.3.1)
@@ -12288,17 +12288,17 @@ snapshots:
       - immer
       - use-sync-external-store
 
-  '@graphiql/plugin-query-builder@1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@graphiql/plugin-query-builder@1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      graphql: 16.13.2
+      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      graphql: 17.1.0
       react: 19.3.1
       react-compiler-runtime: 1.0.0(react@19.3.1)
       react-dom: 19.3.1(react@19.3.1)
 
-  '@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
+  '@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))':
     dependencies:
-      '@graphiql/toolkit': 1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)
+      '@graphiql/toolkit': 1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)
       '@radix-ui/react-dialog': 1.3.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-dropdown-menu': 2.2.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@radix-ui/react-tooltip': 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -12306,12 +12306,12 @@ snapshots:
       clsx: 2.1.1
       framer-motion: 14.12.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       get-value: 4.1.0
-      graphql: 16.13.2
-      graphql-language-service: 6.0.1(graphql@16.13.2)
+      graphql: 17.1.0
+      graphql-language-service: 6.0.1(graphql@17.1.0)
       jsonc-parser: 3.3.1
       markdown-it: 15.0.3
       monaco-editor: 0.57.0
-      monaco-graphql: 2.0.1(graphql@16.13.2)(monaco-editor@0.57.0)(prettier@3.10.0)
+      monaco-graphql: 2.0.1(graphql@17.1.0)(monaco-editor@0.57.0)(prettier@3.10.0)
       prettier: 3.10.0
       react: 19.3.1
       react-compiler-runtime: 1.0.0(react@19.3.1)
@@ -12327,13 +12327,13 @@ snapshots:
       - remix
       - use-sync-external-store
 
-  '@graphiql/toolkit@1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)':
+  '@graphiql/toolkit@1.0.1(@types/node@26.6.6)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)':
     dependencies:
       '@n1ru4l/push-pull-async-iterable-iterator': 3.2.0
-      graphql: 16.13.2
+      graphql: 17.1.0
       meros: 1.3.2(@types/node@26.6.6)
     optionalDependencies:
-      graphql-ws: 6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2)
+      graphql-ws: 6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2)
     transitivePeerDependencies:
       - '@types/node'
 
@@ -17381,15 +17381,15 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphiql@6.0.1(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)):
+  graphiql@6.0.1(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)):
     dependencies:
-      '@graphiql/plugin-collections': 1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      '@graphiql/plugin-doc-explorer': 1.0.0(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      '@graphiql/plugin-history': 1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/node@26.6.6)(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
-      '@graphiql/plugin-query-builder': 1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2))(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      '@graphiql/plugin-collections': 1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      '@graphiql/plugin-doc-explorer': 1.0.0(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/react@19.3.0)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      '@graphiql/plugin-history': 1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(@types/node@26.6.6)(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
+      '@graphiql/plugin-query-builder': 1.0.1(@graphiql/react@1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1)))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@graphiql/react': 1.0.2(@types/node@26.6.6)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2))(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
       clsx: 2.1.1
-      graphql: 16.13.2
+      graphql: 17.1.0
       react: 19.3.1
       react-compiler-runtime: 1.0.0(react@19.3.1)
       react-dom: 19.3.1(react@19.3.1)
@@ -17402,17 +17402,17 @@ snapshots:
       - remix
       - use-sync-external-store
 
-  graphql-http@1.23.1(graphql@16.13.2):
+  graphql-http@1.23.1(graphql@17.1.0):
     dependencies:
-      graphql: 16.13.2
+      graphql: 17.1.0
 
-  graphql-language-service@6.0.1(graphql@16.13.2):
+  graphql-language-service@6.0.1(graphql@17.1.0):
     dependencies:
       debounce-promise: 3.1.2
-      graphql: 16.13.2
+      graphql: 17.1.0
       vscode-languageserver-types: 3.18.5
 
-  graphql-voyager@2.1.0(@types/react@19.3.0)(graphql@16.13.2)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1):
+  graphql-voyager@2.1.0(@types/react@19.3.0)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(supports-color@8.1.1):
     dependencies:
       '@emotion/react': 11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1)
       '@emotion/styled': 11.13.0(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1)
@@ -17420,7 +17420,7 @@ snapshots:
       '@mui/lab': 5.0.0-alpha.169(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@mui/material@5.16.7(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@mui/material': 5.16.7(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       commonmark: 0.30.0
-      graphql: 16.13.2
+      graphql: 17.1.0
       react: 19.3.1
       svg-pan-zoom: 3.6.1
     transitivePeerDependencies:
@@ -17428,14 +17428,14 @@ snapshots:
       - react-dom
       - supports-color
 
-  graphql-ws@6.4.2(crossws@0.3.5)(graphql@16.13.2)(ws@8.22.2):
+  graphql-ws@6.4.2(crossws@0.3.5)(graphql@17.1.0)(ws@8.22.2):
     dependencies:
-      graphql: 16.13.2
+      graphql: 17.1.0
     optionalDependencies:
       crossws: 0.3.5
       ws: 8.22.2
 
-  graphql@16.13.2: {}
+  graphql@17.1.0: {}
 
   h3@1.15.11:
     dependencies:
@@ -18631,10 +18631,10 @@ snapshots:
       dompurify: 3.4.15
       marked: 14.0.0
 
-  monaco-graphql@2.0.1(graphql@16.13.2)(monaco-editor@0.57.0)(prettier@3.10.0):
+  monaco-graphql@2.0.1(graphql@17.1.0)(monaco-editor@0.57.0)(prettier@3.10.0):
     dependencies:
-      graphql: 16.13.2
-      graphql-language-service: 6.0.1(graphql@16.13.2)
+      graphql: 17.1.0
+      graphql-language-service: 6.0.1(graphql@17.1.0)
       minimatch: 11.0.8
       monaco-editor: 0.57.0
       prettier: 3.10.0
