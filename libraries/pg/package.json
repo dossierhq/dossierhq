@@ -58,12 +58,12 @@
     "@dossierhq/postgres-tools": "workspace:*",
     "@dossierhq/server": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@types/pg": "~8.20.0",
+    "@types/pg": "~8.20.4",
     "dotenv": "~17.4.2",
     "eslint": "~10.14.0",
     "pg": "~8.20.0",
     "typescript": "~6.0.3",
-    "uuid": "~14.0.0",
+    "uuid": "~14.0.3",
     "vitest": "~4.1.12"
   }
 }

@@ -24,26 +24,26 @@
     "@dossierhq/server": "workspace:*",
     "@dossierhq/sql.js": "workspace:*",
     "@dossierhq/test-data": "workspace:*",
-    "graphiql": "~5.2.2",
+    "graphiql": "~5.2.4",
     "graphql": "~16.13.2",
     "leaflet": "~1.9.4",
     "react": "~19.3.1",
     "react-dom": "~19.3.1",
-    "react-router-dom": "~7.18.3",
-    "sql.js": "~1.14.1",
-    "swr": "~2.4.1"
+    "react-router-dom": "~7.18.5",
+    "sql.js": "~1.14.2",
+    "swr": "~2.4.2"
   },
   "devDependencies": {
     "@dossierhq/eslint-config": "workspace:*",
-    "@graphiql/toolkit": "~0.11.1",
+    "@graphiql/toolkit": "~0.11.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "~19.3.0",
     "@types/sql.js": "~1.4.11",
-    "@vitejs/plugin-react-swc": "~4.3.1",
+    "@vitejs/plugin-react-swc": "~4.3.3",
     "eslint": "~10.14.0",
     "graphql-ws": "~6.0.8",
     "rollup-plugin-visualizer": "~7.0.1",
-    "tsx": "~4.23.13",
+    "tsx": "~4.23.15",
     "typescript": "~6.0.3",
     "vite": "8.1.6"
   }

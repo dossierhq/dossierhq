@@ -49,13 +49,13 @@
     "@dossierhq/eslint-config": "workspace:*",
     "@dossierhq/react-components2": "workspace:*",
     "@dossierhq/typescript-config": "workspace:*",
-    "@tailwindcss/postcss": "~4.3.0",
+    "@tailwindcss/postcss": "~4.3.5",
     "@types/react": "19.3.0",
     "eslint": "~10.14.0",
-    "postcss": "~8.5.6",
+    "postcss": "~8.5.32",
     "postcss-cli": "~11.0.1",
     "react": "~19.3.1",
-    "tailwindcss": "~4.3.0",
+    "tailwindcss": "~4.3.5",
     "typescript": "~6.0.3"
   }
 }

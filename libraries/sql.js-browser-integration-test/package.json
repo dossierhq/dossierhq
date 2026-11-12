@@ -30,7 +30,7 @@
     "@playwright/test": "~1.62.1",
     "@types/sql.js": "~1.4.11",
     "eslint": "~10.14.0",
-    "sql.js": "~1.14.1",
+    "sql.js": "~1.14.2",
     "typescript": "~6.0.3"
   }
 }

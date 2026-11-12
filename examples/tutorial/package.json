@@ -28,20 +28,20 @@
     "jwks-rsa": "~4.0.1",
     "react": "~19.3.1",
     "react-dom": "~19.3.1",
-    "react-router-dom": "~7.18.3"
+    "react-router-dom": "~7.18.5"
   },
   "devDependencies": {
     "@dossierhq/typescript-generator": "workspace:*",
-    "@tailwindcss/vite": "~4.3.0",
+    "@tailwindcss/vite": "~4.3.5",
     "@types/better-sqlite3": "~7.6.13",
-    "@types/body-parser": "~1.19.5",
+    "@types/body-parser": "~1.19.6",
     "@types/express": "~5.0.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "~19.3.0",
-    "@vitejs/plugin-react": "~6.0.2",
-    "concurrently": "~9.2.0",
+    "@vitejs/plugin-react": "~6.0.5",
+    "concurrently": "~9.2.5",
     "nodemon": "~3.1.14",
-    "tailwindcss": "~4.3.0",
+    "tailwindcss": "~4.3.5",
     "tailwindcss-animate": "~1.0.7",
     "typescript": "~6.0.3",
     "vite": "8.1.6"
