@@ -187,7 +187,7 @@
           "note": "Required if DOM needs updates when node changes"
         }
       ],
-      "watch-for": "Lexical is migrating built-in nodes to the $config() protocol (#8640, landed in 0.49.0). ElementNode and DecoratorBlockNode were NOT migrated, so our nodes still use the static protocol. If a future release migrates those base classes, all 9 custom nodes above need porting.",
+      "watch-for": "Lexical is migrating built-in nodes to the $config() protocol (#8640, landed in 0.49.0). ElementNode and DecoratorBlockNode DO define $config() (already in 0.52.0, extended in 0.53.0), yet our subclasses using static getType()/clone()/importJSON() keep working - that alone is not a reason to port. Port the 9 custom nodes only if upstream deprecates or removes the static protocol for subclasses; richTextRoundTrip.test.ts is the check.",
       "vendored-types": "libraries/core/src/third-party/Lexical.ts vendors Lexical's Serialized* types without depending on lexical. Keep it in step with packages/lexical/src/LexicalNode.ts: 0.51.0 made SerializedLexicalNode a type alias (implicit index signature) so that custom ElementNode exportJSON overrides stay assignable to the new exportJSON(compact) overloads. If a build fails with TS2416 on exportJSON, diff that file against upstream first."
     }
   },
@@ -257,8 +257,8 @@
   },
   "playground-repo": {
     "path": "/Users/jonas/dev/explore/lexical",
-    "remote": "origin",
-    "note": "The remote is named 'origin' (it was 'upstream' earlier), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch origin --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
+    "remote": "upstream",
+    "note": "The facebook/lexical remote is named 'upstream' ('jonasb' is a fork; there is no 'origin'), and the checkout is usually on a detached HEAD at an old tag. Fetch tags with `git fetch upstream --tags` before diffing; do not assume `git fetch --dry-run` or a branch check will work.",
     "tagFormat": "v{version}"
   }
 }
