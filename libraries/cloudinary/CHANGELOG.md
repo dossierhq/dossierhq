@@ -1,5 +1,22 @@
 # Change Log - @dossierhq/cloudinary
 
+## 0.8.0
+
+### Minor Changes
+
+- 8a41956: **Breaking:** move to `@dossierhq/react-components2`. `CloudinaryImageFieldEditor` and
+  `CloudinaryImageFieldDisplay` are rewritten with Tailwind and no longer depend on
+  `@dossierhq/design`, and `FieldEditorProps` is now imported from
+  `@dossierhq/react-components2`.
+  
+  Consumers must import the new stylesheet: `import '@dossierhq/cloudinary/main.css';`.
+  Without it the components render unstyled. The stylesheet deliberately omits Tailwind's
+  preflight, since host apps already load it via `@dossierhq/react-components2/main.css`.
+
+### Patch Changes
+
+- @dossierhq/core@0.8.0
+
 ## 0.7.21
 
 ### Patch Changes

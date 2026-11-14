@@ -1,5 +1,12 @@
 # Change Log - @dossierhq/graphql
 
+## 0.8.0
+
+### Patch Changes
+
+- f56586b: Support graphql 17. `@skip`/`@include` directives using variables are now evaluated correctly with graphql 17, where `info.variableValues` changed shape. graphql 16 remains supported.
+- @dossierhq/core@0.8.0
+
 ## 0.7.21
 
 ### Patch Changes
