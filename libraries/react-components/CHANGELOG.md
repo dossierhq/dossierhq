@@ -1,5 +1,13 @@
 # Change Log - @dossierhq/react-components
 
+## 0.8.0
+
+### Patch Changes
+
+- @dossierhq/core@0.8.0
+  - @dossierhq/design@0.8.0
+  - @dossierhq/leaflet@0.8.0
+
 ## 0.7.21
 
 ### Patch Changes
