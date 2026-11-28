@@ -1,5 +1,9 @@
 # Change Log - @dossierhq/postgres-tools
 
+## 0.8.0
+
+No changes in this release.
+
 ## 0.7.21
 
 ## 0.7.20
